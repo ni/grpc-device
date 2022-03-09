@@ -1,3 +1,5 @@
+"""Metadata mutation."""
+
 from collections import namedtuple
 from typing import Optional
 
@@ -83,6 +85,12 @@ RESERVED_WORDS = [
     "while",
 ]
 
+# These are all of the coerced narrow numerics used in RFmx and DAQmx.
+# This will not account for other aliases of narrow numerics.
+# Note that params can also be marked coerced instead of updating this list.
+# uint8 is not included because it can be represented as a byte.
+KNOWN_COERCED_NARROW_NUMERIC_TYPES = ["int16", "uInt16", "int8"]
+
 
 def sanitize_names(parameters):
     """Sanitize name fields on a list of parameter objects.
@@ -115,20 +123,14 @@ def mark_size_params(parameters):
             "passed-in-by-ptr",
             "ivi-dance-with-a-twist",
         }:
-            size_param = get_size_param(param, parameters)
+            size_param = _get_size_param(param, parameters)
             size_param["is_size_param"] = True
             if mechanism == "passed-in-by-ptr":
                 size_param["pointer"] = True
 
 
-# These are all of the coerced narrow numerics used in RFmx and DAQmx.
-# This will not account for other aliases of narrow numerics.
-# Note that params can also be marked coerced instead of updating this list.
-# uint8 is not included because it can be represented as a byte.
-KNOWN_COERCED_NARROW_NUMERIC_TYPES = ["int16", "uInt16", "int8"]
-
-
 def mark_coerced_narrow_numeric_parameters(parameters: dict) -> None:
+    """Mark parameters with narrow numeric types as coerced."""
     for param in parameters:
         param_type = common_helpers.get_underlying_type(param)
         if param_type in KNOWN_COERCED_NARROW_NUMERIC_TYPES:
@@ -143,7 +145,7 @@ def mark_non_proto_params(parameters):
     for param in parameters:
         mechanism = common_helpers.get_size_mechanism(param)
         if mechanism in {"len", "ivi-dance", "ivi-dance-with-a-twist"}:
-            size_param = get_size_param(param, parameters)
+            size_param = _get_size_param(param, parameters)
             if size_param["direction"] == "in":
                 # Output size_params can still be included in the proto
                 # as information.
@@ -161,12 +163,13 @@ def mark_non_proto_params(parameters):
                 size_param["linked_params_are_optional"] = is_optional
 
 
-def get_size_param(param, parameters):
+def _get_size_param(param, parameters):
     named_params = {p["name"]: p for p in parameters}
     return named_params.get(param["size"]["value"], None)
 
 
 def mark_mapped_enum_params(parameters, enums):
+    """Mark enum paramaters as mapped-enum if the enum has mappings."""
     for param in (p for p in parameters if "enum" in p):
         enum_name = param["enum"]
         enum = enums[enum_name]
@@ -176,6 +179,7 @@ def mark_mapped_enum_params(parameters, enums):
 
 
 def populate_grpc_types(parameters, config):
+    """Set the grpc_type of each parameter that doesn't already have it set."""
     for parameter in parameters:
         if "callback_params" in parameter:
             populate_grpc_types(parameter["callback_params"], config)
@@ -184,26 +188,26 @@ def populate_grpc_types(parameters, config):
         parameter["grpc_type"] = common_helpers.get_grpc_type(parameter["type"], config)
 
 
-def get_short_enum_type_name(typename: str) -> str:
+def _get_short_enum_type_name(typename: str) -> str:
     if typename in ["char[]", "const char[]", "char"]:
         return "String"
     stripped_name = common_helpers.strip_prefix(typename, "Vi")
     return common_helpers.ensure_pascal_case(stripped_name)
 
 
-def remove_leading_group_name(enum_value_name, group_name):
+def _remove_leading_group_name(enum_value_name, group_name):
     return common_helpers.strip_prefix(enum_value_name, f"{group_name.upper()}_")
 
 
-def add_leading_enum_name(enum_value_name, enum_name, enum):
+def _add_leading_enum_name(enum_value_name, enum_name, enum):
     enum_value_prefix = enum.get(
         "enum-value-prefix", common_helpers.pascal_to_snake(enum_name).upper()
     )
     return f"{enum_value_prefix}_{enum_value_name}"
 
 
-def add_attribute_values_enums(enums, attribute_enums_by_type, group_name):
-    """Update enums metadata to add new enums that will be used value parameter of SetAttribute APIs."""
+def _add_attribute_values_enums(enums, attribute_enums_by_type, group_name):
+    """Add new enums to enums metadata, for use as the value parameter of SetAttribute APIs."""
     for type_name in attribute_enums_by_type:
         unmapped_values = {}
         mapped_values = {}
@@ -213,20 +217,20 @@ def add_attribute_values_enums(enums, attribute_enums_by_type, group_name):
             for value in enum["values"]:
                 # Remove the leading group name (if any) because it will be redundant in the
                 # aggregate enum.
-                value_name = remove_leading_group_name(value["name"], group_name)
+                value_name = _remove_leading_group_name(value["name"], group_name)
                 # Add a leading enum to differentiate sub-enums within the aggregate values enum.
-                value_name = add_leading_enum_name(value_name, enum_name, enum)
+                value_name = _add_leading_enum_name(value_name, enum_name, enum)
                 if is_mapped_enum:
                     mapped_values[value_name] = value["value"]
                 else:
                     unmapped_values[value_name] = value["value"]
 
-        shortened_type_name = get_short_enum_type_name(type_name)
+        shortened_type_name = _get_short_enum_type_name(type_name)
         enum_value_prefix = (f"{group_name}_{shortened_type_name}").upper()
-        unmapped_enum_name = get_attribute_values_enum_name(group_name, type_name)
-        mapped_enum_name = get_attribute_values_enum_name(group_name, type_name, is_mapped=True)
-        add_enum(unmapped_enum_name, unmapped_values, enums, enum_value_prefix)
-        add_enum(mapped_enum_name, mapped_values, enums, enum_value_prefix, is_mapped=True)
+        unmapped_enum_name = _get_attribute_values_enum_name(group_name, type_name)
+        mapped_enum_name = _get_attribute_values_enum_name(group_name, type_name, is_mapped=True)
+        _add_enum(unmapped_enum_name, unmapped_values, enums, enum_value_prefix)
+        _add_enum(mapped_enum_name, mapped_values, enums, enum_value_prefix, is_mapped=True)
 
 
 AttributeReferencingParameter = namedtuple(
@@ -235,27 +239,27 @@ AttributeReferencingParameter = namedtuple(
 
 
 class AttributeAccessorExpander:
-    """Wraps an _attribute_type_map of:
+    """Wraps an _attribute_type_map of: group -> type -> attributes.
 
-    group -> type -> attributes
-
-    and implements the metadata_mutations to add_attribute_values_enums, expand_attribute_function_value_param,
-    and patch_attribute_enum_type.
+    Also implements the metadata_mutations to _add_attribute_values_enums,
+    _expand_attribute_function_value_param, and patch_attribute_enum_type.
     """
 
-    def __init__(self, metadata):
+    def __init__(self, metadata):  # noqa: D107
         self._config = metadata["config"]
         self._enums = metadata["enums"]
         self._attribute_type_map = {}
 
         for group in common_helpers.get_attribute_groups(metadata):
             attribute_enums_by_type = common_helpers.get_attribute_enums_by_type(group.attributes)
-            add_attribute_values_enums(self._enums, attribute_enums_by_type, group.name)
+            _add_attribute_values_enums(self._enums, attribute_enums_by_type, group.name)
             self._attribute_type_map[group.name] = attribute_enums_by_type
 
-    def get_attribute_reference_parameter(
+    def _get_attribute_reference_parameter(
         self, parameters
     ) -> Optional[AttributeReferencingParameter]:
+        """Get the parameter that references an attribute, if there is one."""
+
         def try_resolve_attribute_reference(parameter) -> Optional[AttributeReferencingParameter]:
             param_type = parameter["grpc_type"]
             # All attribute parameters must have a grpc_type of {group_name}Attributes.
@@ -272,22 +276,28 @@ class AttributeAccessorExpander:
         return next(valid_references, None)
 
     def patch_attribute_enum_type(self, function_name, func):
-        """
-        If a driver splits attribute enums by type,
-        then the referencing functions need to be updated to match:
-        ScaleAttributes -> ScaleAttributesInt32, ScaleAttributesDouble, etc.
+        """Update the attribute parameter to point to the proper enum name.
+
+        Only applies for drivers that splits attribute enums by type.
+
+        For example, DAQmx has a Get/Set/ResetBufferAttributeUInt32 functions. The parameter that
+        selects _which_ attribute needs to use the proper attribute enum. The input says that the
+        grpc_type is BufferAttribute, but the generated code splits the enums by type, with a
+        special group for Reset functions. So in this example, the Get and Set functions' attribute
+        enum would be BufferUInt32Attribute, and the Reset function's attribute enum would be
+        BufferResetAttribute.
         """
         if not common_helpers.get_split_attributes_by_type(self._config):
             return
         parameters = func["parameters"]
-        attribute_reference = self.get_attribute_reference_parameter(parameters)
+        attribute_reference = self._get_attribute_reference_parameter(parameters)
         if attribute_reference:
             group = attribute_reference.attribute_group
             attribute_param = attribute_reference.parameter
             if function_name.startswith("Reset"):
                 sub_group = "Reset"
             else:
-                value_param = get_attribute_function_value_param(func)
+                value_param = _get_attribute_function_value_param(func)
                 sub_group = common_helpers.get_grpc_type_name_for_identifier(
                     value_param["type"], self._config
                 )
@@ -303,10 +313,11 @@ class AttributeAccessorExpander:
                 )
 
     def expand_attribute_value_params(self, func):
+        """Update the attrVal parameter to use the proper enum, if available."""
         parameters = func["parameters"]
-        attribute_reference = self.get_attribute_reference_parameter(parameters)
+        attribute_reference = self._get_attribute_reference_parameter(parameters)
         if attribute_reference:
-            expand_attribute_function_value_param(
+            _expand_attribute_function_value_param(
                 func,
                 self._enums,
                 self._attribute_type_map[attribute_reference.attribute_group],
@@ -314,11 +325,11 @@ class AttributeAccessorExpander:
             )
 
 
-def expand_attribute_function_value_param(
+def _expand_attribute_function_value_param(
     function, enums, attribute_enums_by_type, service_class_prefix
 ):
     """For SetAttribute and CheckAttribute, update function metadata to mark value param as enum."""
-    value_param = get_attribute_function_value_param(function)
+    value_param = _get_attribute_function_value_param(function)
     if not value_param:
         return
     if value_param["direction"] == "out":
@@ -332,8 +343,8 @@ def expand_attribute_function_value_param(
     else:
         param_type = common_helpers.get_underlying_type(value_param)
     if param_type in attribute_enums_by_type:
-        enum_name = get_attribute_values_enum_name(service_class_prefix, param_type)
-        mapped_enum_name = get_attribute_values_enum_name(
+        enum_name = _get_attribute_values_enum_name(service_class_prefix, param_type)
+        mapped_enum_name = _get_attribute_values_enum_name(
             service_class_prefix, param_type, is_mapped=True
         )
         enum_exists = enum_name in enums
@@ -344,11 +355,12 @@ def expand_attribute_function_value_param(
             value_param["mapped-enum"] = mapped_enum_name
         if not enum_exists and not mapped_enum_exists:
             # Ideally there must be an enum associated with this parameter for SetAttribute* API.
-            # Since the enum is empty, users will be passing in raw values. Make it clear via naming.
-            value_param["name"] = value_param["name"] + "_raw"
+            # Since the enum is empty, users will be passing in raw values. Make it clear via
+            # naming.
+            value_param["name"] += "_raw"
 
 
-def get_attribute_function_value_param(function):
+def _get_attribute_function_value_param(function):
     return next(
         (
             param
@@ -359,13 +371,13 @@ def get_attribute_function_value_param(function):
     )
 
 
-def get_attribute_values_enum_name(group_name, type, is_mapped=False):
+def _get_attribute_values_enum_name(group_name, type, is_mapped=False):
     enum_name_suffix = "Mapped" if is_mapped else ""
-    shortened_type_name = get_short_enum_type_name(type)
+    shortened_type_name = _get_short_enum_type_name(type)
     return group_name + shortened_type_name + "AttributeValues" + enum_name_suffix
 
 
-def add_enum(enum_name, enum_values, enums, enum_value_prefix, is_mapped=False):
+def _add_enum(enum_name, enum_values, enums, enum_value_prefix, is_mapped=False):
     if not enum_values:
         return
     values = [{"name": name, "value": enum_values[name]} for name in enum_values]

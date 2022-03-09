@@ -38,7 +38,7 @@ public:
 
   NiRFmxNRService(
     NiRFmxNRLibraryInterface* library,
-    ResourceRepositorySharedPtr session_repository,
+    ResourceRepositorySharedPtr resource_repository,
     ViSessionResourceRepositorySharedPtr vi_session_resource_repository,
     const NiRFmxNRFeatureToggles& feature_toggles = {});
   virtual ~NiRFmxNRService();

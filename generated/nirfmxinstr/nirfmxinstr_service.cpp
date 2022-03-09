@@ -11,6 +11,7 @@
 #include <iostream>
 #include <atomic>
 #include <vector>
+#include "custom/nirfmx_errors.h"
 #include <server/converters.h>
 
 namespace nirfmxinstr_grpc {
@@ -25,11 +26,11 @@ namespace nirfmxinstr_grpc {
 
   NiRFmxInstrService::NiRFmxInstrService(
       NiRFmxInstrLibraryInterface* library,
-      ResourceRepositorySharedPtr session_repository, 
+      ResourceRepositorySharedPtr resource_repository,
       ViSessionResourceRepositorySharedPtr vi_session_resource_repository,
       const NiRFmxInstrFeatureToggles& feature_toggles)
       : library_(library),
-      session_repository_(session_repository),
+      session_repository_(resource_repository),
       vi_session_resource_repository_(vi_session_resource_repository),
       feature_toggles_(feature_toggles)
   {
@@ -62,7 +63,7 @@ namespace nirfmxinstr_grpc {
           return ::grpc::Status::OK;
         }
         int32 selector_string_length = status;
-      
+
         std::string selector_string;
         if (selector_string_length > 0) {
             selector_string.resize(selector_string_length - 1);
@@ -103,7 +104,7 @@ namespace nirfmxinstr_grpc {
           return ::grpc::Status::OK;
         }
         int32 selector_string_out_length = status;
-      
+
         std::string selector_string_out;
         if (selector_string_out_length > 0) {
             selector_string_out.resize(selector_string_out_length - 1);
@@ -144,7 +145,7 @@ namespace nirfmxinstr_grpc {
           return ::grpc::Status::OK;
         }
         int32 selector_string_out_length = status;
-      
+
         std::string selector_string_out;
         if (selector_string_out_length > 0) {
             selector_string_out.resize(selector_string_out_length - 1);
@@ -185,7 +186,7 @@ namespace nirfmxinstr_grpc {
           return ::grpc::Status::OK;
         }
         int32 selector_string_out_length = status;
-      
+
         std::string selector_string_out;
         if (selector_string_out_length > 0) {
             selector_string_out.resize(selector_string_out_length - 1);
@@ -980,7 +981,7 @@ namespace nirfmxinstr_grpc {
             response->attr_val_raw().begin(),
             response->attr_val_raw().begin() + actual_array_size,
             google::protobuf::RepeatedFieldBackInserter(response->mutable_attr_val()),
-            [&](auto x) { 
+            [&](auto x) {
                 return checked_convert_attr_val(x);
             });
           response->mutable_attr_val()->Resize(actual_array_size, 0);
@@ -1118,7 +1119,7 @@ namespace nirfmxinstr_grpc {
             attr_val.begin(),
             attr_val.begin() + actual_array_size,
             google::protobuf::RepeatedFieldBackInserter(response->mutable_attr_val()),
-            [&](auto x) { 
+            [&](auto x) {
                 return x;
             });
           response->mutable_attr_val()->Resize(actual_array_size, 0);
@@ -1167,7 +1168,7 @@ namespace nirfmxinstr_grpc {
             if (shrunk_size != current_size) {
               response->mutable_attr_val()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -1213,7 +1214,7 @@ namespace nirfmxinstr_grpc {
             if (shrunk_size != current_size) {
               response->mutable_attr_val()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -1244,7 +1245,7 @@ namespace nirfmxinstr_grpc {
           return ::grpc::Status::OK;
         }
         int32 array_size = status;
-      
+
         std::string attr_val;
         if (array_size > 0) {
             attr_val.resize(array_size - 1);
@@ -1481,7 +1482,7 @@ namespace nirfmxinstr_grpc {
           return ::grpc::Status::OK;
         }
         int32 array_size = status;
-      
+
         std::string available_ports;
         if (array_size > 0) {
             available_ports.resize(array_size - 1);
@@ -1522,7 +1523,7 @@ namespace nirfmxinstr_grpc {
           return ::grpc::Status::OK;
         }
         int32 error_description_buffer_size = status;
-      
+
         int32 error_code {};
         std::string error_description;
         if (error_description_buffer_size > 0) {
@@ -1566,7 +1567,7 @@ namespace nirfmxinstr_grpc {
           return ::grpc::Status::OK;
         }
         int32 error_description_buffer_size = status;
-      
+
         std::string error_description;
         if (error_description_buffer_size > 0) {
             error_description.resize(error_description_buffer_size - 1);
@@ -1672,7 +1673,7 @@ namespace nirfmxinstr_grpc {
             response->personality_raw().begin(),
             response->personality_raw().begin() + actual_personality_array_size,
             google::protobuf::RepeatedFieldBackInserter(response->mutable_personality()),
-            [&](auto x) { 
+            [&](auto x) {
                 return static_cast<nirfmxinstr_grpc::Personality>(x);
             });
           response->mutable_personality()->Resize(actual_personality_array_size, 0);
@@ -1875,7 +1876,7 @@ namespace nirfmxinstr_grpc {
       int32 is_new_session {};
       auto init_lambda = [&] () {
         niRFmxInstrHandle instrument;
-        int status = library_->Initialize(resource_name, option_string, &instrument, &is_new_session);
+        auto status = library_->Initialize(resource_name, option_string, &instrument, &is_new_session);
         return std::make_tuple(status, instrument);
       };
       uint32_t session_id = 0;
@@ -1885,6 +1886,11 @@ namespace nirfmxinstr_grpc {
       response->set_status(status);
       if (status_ok(status)) {
         response->mutable_instrument()->set_id(session_id);
+        response->set_is_new_session(is_new_session);
+      }
+      else {
+        const auto last_error_buffer = get_last_error(library_);
+        response->set_error_message(last_error_buffer.data());
       }
       return ::grpc::Status::OK;
     }
@@ -1906,7 +1912,7 @@ namespace nirfmxinstr_grpc {
 
       auto init_lambda = [&] () {
         niRFmxInstrHandle instrument;
-        int status = library_->InitializeFromNIRFSASession(nirfsa_session, &instrument);
+        auto status = library_->InitializeFromNIRFSASession(nirfsa_session, &instrument);
         return std::make_tuple(status, instrument);
       };
       uint32_t session_id = 0;
@@ -1916,6 +1922,10 @@ namespace nirfmxinstr_grpc {
       response->set_status(status);
       if (status_ok(status)) {
         response->mutable_instrument()->set_id(session_id);
+      }
+      else {
+        const auto last_error_buffer = get_last_error(library_);
+        response->set_error_message(last_error_buffer.data());
       }
       return ::grpc::Status::OK;
     }
@@ -1943,7 +1953,7 @@ namespace nirfmxinstr_grpc {
 
       auto init_lambda = [&] () {
         niRFmxInstrHandle instrument;
-        int status = library_->InitializeFromNIRFSASessionArray(nirfsa_sessions.data(), number_of_nirfsa_sessions, &instrument);
+        auto status = library_->InitializeFromNIRFSASessionArray(nirfsa_sessions.data(), number_of_nirfsa_sessions, &instrument);
         return std::make_tuple(status, instrument);
       };
       uint32_t session_id = 0;
@@ -1953,6 +1963,10 @@ namespace nirfmxinstr_grpc {
       response->set_status(status);
       if (status_ok(status)) {
         response->mutable_instrument()->set_id(session_id);
+      }
+      else {
+        const auto last_error_buffer = get_last_error(library_);
+        response->set_error_message(last_error_buffer.data());
       }
       return ::grpc::Status::OK;
     }
@@ -2589,7 +2603,7 @@ namespace nirfmxinstr_grpc {
         attr_val_raw.begin(),
         attr_val_raw.end(),
         std::back_inserter(attr_val),
-        [](auto x) { 
+        [](auto x) {
               if (x < std::numeric_limits<int8>::min() || x > std::numeric_limits<int8>::max()) {
                   std::string message("value ");
                   message.append(std::to_string(x));
@@ -2918,7 +2932,7 @@ namespace nirfmxinstr_grpc {
   NiRFmxInstrFeatureToggles::NiRFmxInstrFeatureToggles(
     const nidevice_grpc::FeatureToggles& feature_toggles)
     : is_enabled(
-        feature_toggles.is_feature_enabled("nirfmxinstr", CodeReadiness::kNextRelease))
+        feature_toggles.is_feature_enabled("nirfmxinstr", CodeReadiness::kRelease))
   {
   }
 } // namespace nirfmxinstr_grpc

@@ -6,10 +6,8 @@ config = data["config"]
 
 namespace = f"{config['namespace_component']}_grpc"
 module_name = config["module_name"]
-resource_repository_type = service_helpers.get_driver_shared_resource_repository_ptr_type(config)
+resource_repository_deps = service_helpers.get_driver_shared_resource_repository_ptr_deps(config, data["functions"])
 service_class_prefix = config["service_class_prefix"]
-
-cross_driver_session_deps = service_helpers.get_cross_driver_session_dependencies(data["functions"])
 %>\
 
 //---------------------------------------------------------------------
@@ -29,17 +27,15 @@ namespace ${namespace} {
 namespace {
 struct LibraryAndService {
   LibraryAndService(
-    const ${resource_repository_type}& resource_repository,
-% for cross_driver_dep in cross_driver_session_deps:
-    const ${cross_driver_dep.resource_repository_type}& ${cross_driver_dep.local_name},
+% for resource_handle_type in resource_repository_deps:
+    const ${resource_repository_deps[resource_handle_type].resource_repository_type}& ${resource_repository_deps[resource_handle_type].local_name},
 % endfor
     const ${service_class_prefix}FeatureToggles& feature_toggles) 
       : library(), 
       service(
         &library, 
-        resource_repository, 
-% for cross_driver_dep in cross_driver_session_deps:
-        ${cross_driver_dep.local_name},
+% for resource_handle_type in resource_repository_deps:
+        ${resource_repository_deps[resource_handle_type].local_name},
 % endfor
         feature_toggles) {
   }
@@ -50,9 +46,8 @@ struct LibraryAndService {
 
 std::shared_ptr<void> register_service(
   grpc::ServerBuilder& builder, 
-  const ${resource_repository_type}& resource_repository,
-% for cross_driver_dep in cross_driver_session_deps:
-  const ${cross_driver_dep.resource_repository_type}& ${cross_driver_dep.local_name},
+% for resource_handle_type in resource_repository_deps:
+  const ${resource_repository_deps[resource_handle_type].resource_repository_type}& ${resource_repository_deps[resource_handle_type].local_name},
 % endfor
   const nidevice_grpc::FeatureToggles& feature_toggles)
 {
@@ -61,9 +56,8 @@ std::shared_ptr<void> register_service(
   if (toggles.is_enabled)
   {
     auto library_and_service_ptr = std::make_shared<LibraryAndService>(
-      resource_repository,
-% for cross_driver_dep in cross_driver_session_deps:
-      ${cross_driver_dep.local_name},
+% for resource_handle_type in resource_repository_deps:
+      ${resource_repository_deps[resource_handle_type].local_name},
 % endfor
       toggles);
     auto& service = library_and_service_ptr->service;

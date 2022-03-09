@@ -35,24 +35,31 @@ struct NiFakeNonIviFeatureToggles
 class NiFakeNonIviService final : public NiFakeNonIvi::WithCallbackMethod_ReadStream<NiFakeNonIvi::WithCallbackMethod_RegisterCallback<NiFakeNonIvi::Service>> {
 public:
   using ResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<FakeHandle>>;
+  using SecondarySessionHandleResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<SecondarySessionHandle>>;
   using FakeCrossDriverHandleResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<FakeCrossDriverHandle>>;
 
   NiFakeNonIviService(
     NiFakeNonIviLibraryInterface* library,
-    ResourceRepositorySharedPtr session_repository,
+    ResourceRepositorySharedPtr resource_repository,
+    SecondarySessionHandleResourceRepositorySharedPtr secondary_session_handle_resource_repository,
     FakeCrossDriverHandleResourceRepositorySharedPtr fake_cross_driver_handle_resource_repository,
     const NiFakeNonIviFeatureToggles& feature_toggles = {});
   virtual ~NiFakeNonIviService();
   
   ::grpc::Status Close(::grpc::ServerContext* context, const CloseRequest* request, CloseResponse* response) override;
+  ::grpc::Status CloseSecondarySession(::grpc::ServerContext* context, const CloseSecondarySessionRequest* request, CloseSecondarySessionResponse* response) override;
   ::grpc::Status GetCrossDriverSession(::grpc::ServerContext* context, const GetCrossDriverSessionRequest* request, GetCrossDriverSessionResponse* response) override;
+  ::grpc::Status GetLatestErrorMessage(::grpc::ServerContext* context, const GetLatestErrorMessageRequest* request, GetLatestErrorMessageResponse* response) override;
+  ::grpc::Status GetStringAsReturnedValue(::grpc::ServerContext* context, const GetStringAsReturnedValueRequest* request, GetStringAsReturnedValueResponse* response) override;
   ::grpc::Status GetMarbleAttributeDouble(::grpc::ServerContext* context, const GetMarbleAttributeDoubleRequest* request, GetMarbleAttributeDoubleResponse* response) override;
   ::grpc::Status GetMarbleAttributeInt32(::grpc::ServerContext* context, const GetMarbleAttributeInt32Request* request, GetMarbleAttributeInt32Response* response) override;
   ::grpc::Status GetMarbleAttributeInt32Array(::grpc::ServerContext* context, const GetMarbleAttributeInt32ArrayRequest* request, GetMarbleAttributeInt32ArrayResponse* response) override;
   ::grpc::Status Init(::grpc::ServerContext* context, const InitRequest* request, InitResponse* response) override;
   ::grpc::Status InitFromCrossDriverSession(::grpc::ServerContext* context, const InitFromCrossDriverSessionRequest* request, InitFromCrossDriverSessionResponse* response) override;
   ::grpc::Status InitFromCrossDriverSessionArray(::grpc::ServerContext* context, const InitFromCrossDriverSessionArrayRequest* request, InitFromCrossDriverSessionArrayResponse* response) override;
+  ::grpc::Status InitSecondarySession(::grpc::ServerContext* context, const InitSecondarySessionRequest* request, InitSecondarySessionResponse* response) override;
   ::grpc::Status InitWithHandleNameAsSessionName(::grpc::ServerContext* context, const InitWithHandleNameAsSessionNameRequest* request, InitWithHandleNameAsSessionNameResponse* response) override;
+  ::grpc::Status InitWithReturnedSession(::grpc::ServerContext* context, const InitWithReturnedSessionRequest* request, InitWithReturnedSessionResponse* response) override;
   ::grpc::Status InputArraysWithNarrowIntegerTypes(::grpc::ServerContext* context, const InputArraysWithNarrowIntegerTypesRequest* request, InputArraysWithNarrowIntegerTypesResponse* response) override;
   ::grpc::Status IotaWithCustomSize(::grpc::ServerContext* context, const IotaWithCustomSizeRequest* request, IotaWithCustomSizeResponse* response) override;
   ::grpc::Status OutputArraysWithNarrowIntegerTypes(::grpc::ServerContext* context, const OutputArraysWithNarrowIntegerTypesRequest* request, OutputArraysWithNarrowIntegerTypesResponse* response) override;
@@ -77,6 +84,7 @@ public:
 private:
   NiFakeNonIviLibraryInterface* library_;
   ResourceRepositorySharedPtr session_repository_;
+  SecondarySessionHandleResourceRepositorySharedPtr secondary_session_handle_resource_repository_;
   FakeCrossDriverHandleResourceRepositorySharedPtr fake_cross_driver_handle_resource_repository_;
   std::map<std::int32_t, std::string> mobileosnames_input_map_ { {1, "Android"},{2, "iOS"},{3, "None"}, };
   std::map<std::string, std::int32_t> mobileosnames_output_map_ { {"Android", 1},{"iOS", 2},{"None", 3}, };

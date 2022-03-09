@@ -38,7 +38,7 @@ public:
 
   NiRFmxWLANService(
     NiRFmxWLANLibraryInterface* library,
-    ResourceRepositorySharedPtr session_repository,
+    ResourceRepositorySharedPtr resource_repository,
     ViSessionResourceRepositorySharedPtr vi_session_resource_repository,
     const NiRFmxWLANFeatureToggles& feature_toggles = {});
   virtual ~NiRFmxWLANService();

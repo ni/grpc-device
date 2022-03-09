@@ -1,55 +1,62 @@
-# Demonstrates how to acquire analog data using the grpc asyncio API and RegisterEveryNSamplesEvent.
-#
-# The gRPC API is built from the C API. NI-DAQmx documentation is installed with the driver at:
-# C:\Program Files (x86)\National Instruments\NI-DAQ\docs\cdaqmx.chm
-#
-# Getting Started:
-#
-# To run this example, install "NI-DAQmx Driver" on the server machine.
-# Link: https://www.ni.com/en-us/support/downloads/drivers/download.ni-daqmx.html
-#
-# For instructions on how to use protoc to generate gRPC client interfaces, see our "Creating a gRPC Client" wiki page.
-# Link: https://github.com/ni/grpc-device/wiki/Creating-a-gRPC-Client
-#
-# Refer to the NI DAQmx gRPC Wiki for the latest C Function Reference:
-# Link: https://github.com/ni/grpc-device/wiki/NI-DAQMX-C-Function-Reference
-#
-# To run this example without hardware: create a simulated device in NI MAX on the server (Windows only).
-#
-# Running from command line:
-#
-# Server machine's IP address, port number, and physical channel name can be passed as separate command line arguments.
-#   > python analog-input-every-n-samples.py <server_address> <port_number> <physical_channel_name>
-# To acquire data from multiple channels, pass in a list or range of channels (i.e., Dev1/ai0:3).
-# If they are not passed in as command line arguments, then by default the server address will be "localhost:31763", with "Dev1/ai0" as the physical channel name
+r"""Acquire analog data using the grpc asyncio API and RegisterEveryNSamplesEvent.
+
+The gRPC API is built from the C API. NI-DAQmx documentation is installed with the driver at:
+  C:\Program Files (x86)\National Instruments\NI-DAQ\docs\cdaqmx.chm
+
+Getting Started:
+
+To run this example, install "NI-DAQmx Driver" on the server machine:
+  https://www.ni.com/en-us/support/downloads/drivers/download.ni-daqmx.html
+
+For instructions on how to use protoc to generate gRPC client interfaces, see our "Creating a gRPC
+Client" wiki page:
+  https://github.com/ni/grpc-device/wiki/Creating-a-gRPC-Client
+
+Refer to the NI DAQmx gRPC Wiki for the latest C Function Reference:
+  https://github.com/ni/grpc-device/wiki/NI-DAQMX-C-Function-Reference
+
+To run this example without hardware: create a simulated device in NI MAX on the server (Windows
+only).
+
+Running from command line:
+
+Server machine's IP address, port number, and physical channel name can be passed as separate
+command line arguments.
+  > python analog-input-every-n-samples.py <server_address> <port_number> <physical_channel_name>
+To acquire data from multiple channels, pass in a list or range of channels (i.e., Dev1/ai0:3).
+If they are not passed in as command line arguments, then by default the server address will be
+"localhost:31763", with "Dev1/ai0" as the physical channel name.
+"""
+
 import asyncio
-import grpc
 import sys
 
+import grpc
 import nidaqmx_pb2 as nidaqmx_types
 import nidaqmx_pb2_grpc as grpc_nidaqmx
 
-server_address = "localhost"
-server_port = "31763"
-physical_channel = "Dev1/ai0"
+SERVER_ADDRESS = "localhost"
+SERVER_PORT = "31763"
+PHYSICAL_CHANNEL = "Dev1/ai0"
 
 if len(sys.argv) >= 2:
-    server_address = sys.argv[1]
+    SERVER_ADDRESS = sys.argv[1]
 if len(sys.argv) >= 3:
-    server_port = sys.argv[2]
+    SERVER_PORT = sys.argv[2]
 if len(sys.argv) >= 4:
-    physical_channel = sys.argv[3]
+    PHYSICAL_CHANNEL = sys.argv[3]
 
 
-async def main():
+async def _main():
     client = None
     task = None
 
-    async with grpc.aio.insecure_channel(f"{server_address}:{server_port}") as channel:
+    async with grpc.aio.insecure_channel(f"{SERVER_ADDRESS}:{SERVER_PORT}") as channel:
         try:
             client = grpc_nidaqmx.NiDAQmxStub(channel)
 
             async def raise_if_error(response):
+                """Raise an exception if an error was returned."""
                 if response.status:
                     response = await client.GetErrorString(
                         nidaqmx_types.GetErrorStringRequest(error_code=response.status)
@@ -57,6 +64,7 @@ async def main():
                     raise Exception(f"Error: {response.error_string}")
 
             async def raise_if_error_async(awaitable_call):
+                """Await response, then raise an exception if an error was returned."""
                 response = await awaitable_call
                 await raise_if_error(response)
                 return response
@@ -70,7 +78,7 @@ async def main():
                 client.CreateAIVoltageChan(
                     nidaqmx_types.CreateAIVoltageChanRequest(
                         task=task,
-                        physical_channel=physical_channel,
+                        physical_channel=PHYSICAL_CHANNEL,
                         min_val=-10.0,
                         max_val=10.0,
                         terminal_config=nidaqmx_types.InputTermCfgWithDefault.INPUT_TERM_CFG_WITH_DEFAULT_CFG_DEFAULT,
@@ -79,14 +87,14 @@ async def main():
                 )
             )
 
-            TOTAL_SAMPLES_PER_CHANNEL = 1000
-            SAMPLES_PER_CHANNEL_PER_READ = 100
+            total_samples_per_channel = 1000
+            samples_per_channel_per_read = 100
             await raise_if_error_async(
                 client.CfgSampClkTiming(
                     nidaqmx_types.CfgSampClkTimingRequest(
                         task=task,
                         sample_mode=nidaqmx_types.AcquisitionType.ACQUISITION_TYPE_FINITE_SAMPS,
-                        samps_per_chan=TOTAL_SAMPLES_PER_CHANNEL,
+                        samps_per_chan=total_samples_per_channel,
                         active_edge=nidaqmx_types.Edge1.EDGE1_RISING,
                         rate=100,
                     )
@@ -96,12 +104,13 @@ async def main():
             every_n_samples_stream = client.RegisterEveryNSamplesEvent(
                 nidaqmx_types.RegisterEveryNSamplesEventRequest(
                     task=task,
-                    n_samples=SAMPLES_PER_CHANNEL_PER_READ,
+                    n_samples=samples_per_channel_per_read,
                     every_n_samples_event_type=nidaqmx_types.EVERY_N_SAMPLES_EVENT_TYPE_ACQUIRED_INTO_BUFFER,
                 )
             )
 
-            # Wait for initial_metadata to ensure that the callback is registered before starting the task.
+            # Wait for initial_metadata to ensure that the callback is registered before starting
+            # the task.
             await every_n_samples_stream.initial_metadata()
 
             done_event_stream = client.RegisterDoneEvent(
@@ -133,10 +142,10 @@ async def main():
                                 client.ReadAnalogF64(
                                     nidaqmx_types.ReadAnalogF64Request(
                                         task=task,
-                                        num_samps_per_chan=SAMPLES_PER_CHANNEL_PER_READ,
+                                        num_samps_per_chan=samples_per_channel_per_read,
                                         fill_mode=nidaqmx_types.GroupBy.GROUP_BY_GROUP_BY_CHANNEL,
                                         array_size_in_samps=number_of_channels
-                                        * SAMPLES_PER_CHANNEL_PER_READ,
+                                        * samples_per_channel_per_read,
                                     )
                                 )
                             )
@@ -150,7 +159,7 @@ async def main():
 
                         # Unregister the event stream when all samples are read.
                         samps_per_chan_read += read_response.samps_per_chan_read
-                        if samps_per_chan_read >= TOTAL_SAMPLES_PER_CHANNEL:
+                        if samps_per_chan_read >= total_samples_per_channel:
                             every_n_samples_stream.cancel()
                 except asyncio.CancelledError:
                     pass
@@ -172,7 +181,7 @@ async def main():
         except grpc.RpcError as rpc_error:
             error_message = rpc_error.details()
             if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
-                error_message = f"Failed to connect to server on {server_address}:{server_port}"
+                error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"
             elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
                 error_message = (
                     "The operation is not implemented or is not supported/enabled in this service"
@@ -185,6 +194,6 @@ async def main():
 
 
 ## Run main
-futures = [main()]
+futures = [_main()]
 loop = asyncio.get_event_loop()
 loop.run_until_complete(asyncio.wait(futures))

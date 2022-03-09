@@ -25,10 +25,10 @@ namespace nidcpower_grpc {
 
   NiDCPowerService::NiDCPowerService(
       NiDCPowerLibraryInterface* library,
-      ResourceRepositorySharedPtr session_repository, 
+      ResourceRepositorySharedPtr resource_repository,
       const NiDCPowerFeatureToggles& feature_toggles)
       : library_(library),
-      session_repository_(session_repository),
+      session_repository_(resource_repository),
       feature_toggles_(feature_toggles)
   {
   }
@@ -769,7 +769,7 @@ namespace nidcpower_grpc {
 
       auto init_lambda = [&] () {
         ViSession vi;
-        int status = library_->InitializeWithIndependentChannels(resource_name, reset, option_string, &vi);
+        auto status = library_->InitializeWithIndependentChannels(resource_name, reset, option_string, &vi);
         return std::make_tuple(status, vi);
       };
       uint32_t session_id = 0;
@@ -2181,7 +2181,7 @@ namespace nidcpower_grpc {
           return ::grpc::Status::OK;
         }
         ViInt32 size = status;
-      
+
         response->mutable_configuration()->Resize(size, 0);
         ViAddr* configuration = reinterpret_cast<ViAddr*>(response->mutable_configuration()->mutable_data());
         status = library_->ExportAttributeConfigurationBuffer(vi, size, configuration);
@@ -2435,7 +2435,7 @@ namespace nidcpower_grpc {
           return ::grpc::Status::OK;
         }
         ViInt32 buffer_size = status;
-      
+
         std::string attribute_value;
         if (buffer_size > 0) {
             attribute_value.resize(buffer_size - 1);
@@ -2477,7 +2477,7 @@ namespace nidcpower_grpc {
           return ::grpc::Status::OK;
         }
         ViInt32 buffer_size = status;
-      
+
         std::string channel_name;
         if (buffer_size > 0) {
             channel_name.resize(buffer_size - 1);
@@ -2519,7 +2519,7 @@ namespace nidcpower_grpc {
           return ::grpc::Status::OK;
         }
         ViInt32 buffer_size = status;
-      
+
         std::string channel_name;
         if (buffer_size > 0) {
             channel_name.resize(buffer_size - 1);
@@ -2560,7 +2560,7 @@ namespace nidcpower_grpc {
           return ::grpc::Status::OK;
         }
         ViInt32 buffer_size = status;
-      
+
         ViStatus code {};
         std::string description;
         if (buffer_size > 0) {
@@ -2680,7 +2680,7 @@ namespace nidcpower_grpc {
           return ::grpc::Status::OK;
         }
         ViInt32 buffer_size = status;
-      
+
         std::string coercion_record;
         if (buffer_size > 0) {
             coercion_record.resize(buffer_size - 1);
@@ -2721,7 +2721,7 @@ namespace nidcpower_grpc {
           return ::grpc::Status::OK;
         }
         ViInt32 buffer_size = status;
-      
+
         std::string interchange_warning;
         if (buffer_size > 0) {
             interchange_warning.resize(buffer_size - 1);
@@ -2854,7 +2854,7 @@ namespace nidcpower_grpc {
 
       auto init_lambda = [&] () {
         ViSession vi;
-        int status = library_->InitializeWithChannels(resource_name, channels, reset, option_string, &vi);
+        auto status = library_->InitializeWithChannels(resource_name, channels, reset, option_string, &vi);
         return std::make_tuple(status, vi);
       };
       uint32_t session_id = 0;

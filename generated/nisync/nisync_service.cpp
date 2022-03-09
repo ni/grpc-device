@@ -25,10 +25,10 @@ namespace nisync_grpc {
 
   NiSyncService::NiSyncService(
       NiSyncLibraryInterface* library,
-      ResourceRepositorySharedPtr session_repository, 
+      ResourceRepositorySharedPtr resource_repository,
       const NiSyncFeatureToggles& feature_toggles)
       : library_(library),
-      session_repository_(session_repository),
+      session_repository_(resource_repository),
       feature_toggles_(feature_toggles)
   {
   }
@@ -57,7 +57,7 @@ namespace nisync_grpc {
 
       auto init_lambda = [&] () {
         ViSession vi;
-        int status = library_->Init(resource_name, id_query, reset_device, &vi);
+        auto status = library_->Init(resource_name, id_query, reset_device, &vi);
         return std::make_tuple(status, vi);
       };
       uint32_t session_id = 0;
@@ -1093,7 +1093,7 @@ namespace nisync_grpc {
           return ::grpc::Status::OK;
         }
         ViUInt32 buffer_size = status;
-      
+
         std::string time_reference_names;
         if (buffer_size > 0) {
             time_reference_names.resize(buffer_size - 1);
@@ -1211,7 +1211,7 @@ namespace nisync_grpc {
           return ::grpc::Status::OK;
         }
         ViInt32 buffer_size = status;
-      
+
         std::string value;
         if (buffer_size > 0) {
             value.resize(buffer_size - 1);
@@ -1548,7 +1548,7 @@ namespace nisync_grpc {
 
       auto init_lambda = [&] () {
         ViSession vi;
-        int status = library_->InitExtCal(resource_name, password, &vi);
+        auto status = library_->InitExtCal(resource_name, password, &vi);
         return std::make_tuple(status, vi);
       };
       uint32_t session_id = 0;

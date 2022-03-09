@@ -29,8 +29,10 @@ class NiXnetLibraryInterface {
   virtual nxStatus_t DbAddAlias(const char databaseAlias[], const char databaseFilepath[], u32 defaultBaudRate) = 0;
   virtual nxStatus_t DbAddAlias64(const char databaseAlias[], const char databaseFilepath[], u64 defaultBaudRate) = 0;
   virtual nxStatus_t DbCloseDatabase(nxDatabaseRef_t databaseRef, u32 closeAllRefs) = 0;
+  virtual nxStatus_t DbCreateObject(nxDatabaseRef_t parentObjectRef, u32 objectClass, const char objectName[], nxDatabaseRef_t* dbObjectRef) = 0;
   virtual nxStatus_t DbDeleteObject(nxDatabaseRef_t dbObjectRef) = 0;
   virtual nxStatus_t DbDeploy(const char ipAddress[], const char databaseAlias[], u32 waitForComplete, u32* percentComplete) = 0;
+  virtual nxStatus_t DbFindObject(nxDatabaseRef_t parentObjectRef, u32 objectClass, const char objectName[], nxDatabaseRef_t* dbObjectRef) = 0;
   virtual nxStatus_t DbGetDatabaseListSizes(const char ipAddress[], u32* sizeofAliasBuffer, u32* sizeofFilepathBuffer) = 0;
   virtual nxStatus_t DbGetPropertySize(nxDatabaseRef_t dbObjectRef, u32 propertyID, u32* propertySize) = 0;
   virtual nxStatus_t DbMerge(nxDatabaseRef_t targetClusterRef, nxDatabaseRef_t sourceObjRef, u32 copyMode, char prefix[], u32 waitForComplete, u32* percentComplete) = 0;

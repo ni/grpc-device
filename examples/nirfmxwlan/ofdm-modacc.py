@@ -1,41 +1,48 @@
-# Steps:
-# 1. Open a new RFmx session.
-# 2. Configure the Frequency Reference properties (Clock Source and Clock Frequency).
-# 3. Configure the basic signal properties  (Center Frequency, Reference Level and External Attenuation).
-# 4. Configure IQ Power Edge Trigger properties (Trigger Delay, IQ Power Edge Level, Minimum Quiet Time).
-# 5. Configure Standard and Channel Bandwidth Properties.
-# 6. Select OFDMModAcc measurement and enable the traces.
-# 7. Configure the Measurement Interval.
-# 8. Configure Frequency Error Estimation Method.
-# 9. Configure Amplitude Tracking Enabled.
-# 10. Configure Phase Tracking Enabled.
-# 11. Configure Symbol Clock Error Correction Enabled.
-# 12. Configure Channel Estimation Type.
-# 13. Configure Averaging parameters.
-# 14. Initiate Measurement.
-# 15. Fetch OFDMModAcc Measurements.
-# 16. Close the RFmx Session.
-#
-# The gRPC API is built from the C API. RFmx WLAN documentation is installed with the driver at:
-# C:\Program Files (x86)\National Instruments\RFmx\WLAN\Documentation\rfmxwlancvi.chm
-#
-# Getting Started:
-#
-# To run this example, install "RFmx WLAN" on the server machine.
-# Link: https://www.ni.com/en-us/support/downloads/software-products/download.rfmx-wlan.html
-#
-# For instructions on how to use protoc to generate gRPC client interfaces, see our "Creating a gRPC Client" wiki page.
-# Link: https://github.com/ni/grpc-device/wiki/Creating-a-gRPC-Client
-#
-# Refer to the NI-RFmxWLAN gRPC Wiki for the latest C Function Reference:
-# Link: https://github.com/ni/grpc-device/wiki/NI-RFmxWLAN-C-Function-Reference
-#
-# Running from command line:
-#
-# Server machine's IP address, port number, and physical channel name can be passed as separate command line arguments.
-#   > python ofdm-modacc.py <server_address> <port_number> <physical_channel_name>
-# If they are not passed in as command line arguments, then by default the server address will be "localhost:31763", with "SimulatedDevice" as the resource name
+r"""Fetch OFDM ModAcc data.
 
+Steps:
+  1. Open a new RFmx session.
+  2. Configure the Frequency Reference properties (Clock Source and Clock Frequency).
+  3. Configure the basic signal properties  (Center Frequency, Reference Level and External
+     Attenuation).
+  4. Configure IQ Power Edge Trigger properties (Trigger Delay, IQ Power Edge Level, Minimum Quiet
+     Time).
+  5. Configure Standard and Channel Bandwidth Properties.
+  6. Select OFDMModAcc measurement and enable the traces.
+  7. Configure the Measurement Interval.
+  8. Configure Frequency Error Estimation Method.
+  9. Configure Amplitude Tracking Enabled.
+  10. Configure Phase Tracking Enabled.
+  11. Configure Symbol Clock Error Correction Enabled.
+  12. Configure Channel Estimation Type.
+  13. Configure Averaging parameters.
+  14. Initiate Measurement.
+  15. Fetch OFDMModAcc Measurements.
+  16. Close the RFmx Session.
+
+The gRPC API is built from the C API. RFmx WLAN documentation is installed with the driver at:
+  C:\Program Files (x86)\National Instruments\RFmx\WLAN\Documentation\rfmxwlancvi.chm
+
+Getting Started:
+
+To run this example, install "RFmx WLAN" on the server machine:
+  https://www.ni.com/en-us/support/downloads/software-products/download.rfmx-wlan.html
+
+For instructions on how to use protoc to generate gRPC client interfaces, see our "Creating a gRPC
+Client" wiki page:
+  https://github.com/ni/grpc-device/wiki/Creating-a-gRPC-Client
+
+Refer to the NI-RFmxWLAN gRPC Wiki for the latest C Function Reference:
+  https://github.com/ni/grpc-device/wiki/NI-RFmxWLAN-C-Function-Reference
+
+Running from command line:
+
+Server machine's IP address, port number, and physical channel name can be passed as separate
+command line arguments.
+  > python ofdm-modacc.py <server_address> <port_number> <resource_name>
+If they are not passed in as command line arguments, then by default the server address will be
+"localhost:31763", with "SimulatedDevice" as the resource name.
+"""
 
 import sys
 
@@ -45,32 +52,41 @@ import nirfmxinstr_pb2_grpc as grpc_nirfmxinstr
 import nirfmxwlan_pb2 as nirfmxwlan_types
 import nirfmxwlan_pb2_grpc as grpc_nirfmxwlan
 
-server_address = "localhost"
-server_port = "31763"
-session_name = "RFmxWLANSession"
+SERVER_ADDRESS = "localhost"
+SERVER_PORT = "31763"
+SESSION_NAME = "RFmxWLANSession"
 
 # Resource name and options for a simulated 5663 client.
-resource = "SimulatedDevice"
-options = "Simulate=1,DriverSetup=Model:5663"
+RESOURCE = "SimulatedDevice"
+OPTIONS = "Simulate=1,DriverSetup=Model:5663"
 
 # Read in cmd args
 if len(sys.argv) >= 2:
-    server_address = sys.argv[1]
+    SERVER_ADDRESS = sys.argv[1]
 if len(sys.argv) >= 3:
-    server_port = sys.argv[2]
+    SERVER_PORT = sys.argv[2]
 if len(sys.argv) >= 4:
-    resource = sys.argv[3]
-    options = ""
+    RESOURCE = sys.argv[3]
+    OPTIONS = ""
 
 # Create a gRPC channel + client.
-channel = grpc.insecure_channel(f"{server_address}:{server_port}")
+channel = grpc.insecure_channel(f"{SERVER_ADDRESS}:{SERVER_PORT}")
 client = grpc_nirfmxwlan.NiRFmxWLANStub(channel)
 instr_client = grpc_nirfmxinstr.NiRFmxInstrStub(channel)
 instr = None
 
 
-# Raise an exception if an error was returned
+def raise_if_initialization_error(response):
+    """Raise an exception if an error was returned from Initialize."""
+    if response.status < 0:
+        raise RuntimeError(f"Error: {response.error_message or response.status}")
+    if response.status > 0:
+        sys.stderr.write(f"Warning: {response.error_message or response.status}\n")
+    return response
+
+
 def raise_if_error(response):
+    """Raise an exception if an error was returned."""
     if response.status != 0:
         error_response = client.GetError(
             nirfmxwlan_types.GetErrorRequest(
@@ -86,10 +102,10 @@ def raise_if_error(response):
 
 
 try:
-    initialize_response = raise_if_error(
+    initialize_response = raise_if_initialization_error(
         instr_client.Initialize(
             nirfmxinstr_types.InitializeRequest(
-                session_name=session_name, resource_name=resource, option_string=options
+                session_name=SESSION_NAME, resource_name=RESOURCE, option_string=OPTIONS
             )
         )
     )
@@ -439,7 +455,7 @@ try:
 except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
-        error_message = f"Failed to connect to server on {server_address}:{server_port}"
+        error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"
     elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
         error_message = (
             "The operation is not implemented or is not supported/enabled in this service"

@@ -28,10 +28,10 @@ namespace nidaqmx_grpc {
 
   NiDAQmxService::NiDAQmxService(
       NiDAQmxLibraryInterface* library,
-      ResourceRepositorySharedPtr session_repository, 
+      ResourceRepositorySharedPtr resource_repository,
       const NiDAQmxFeatureToggles& feature_toggles)
       : library_(library),
-      session_repository_(session_repository),
+      session_repository_(resource_repository),
       feature_toggles_(feature_toggles)
   {
   }
@@ -104,7 +104,7 @@ namespace nidaqmx_grpc {
           return ::grpc::Status::OK;
         }
         uInt32 device_name_out_buffer_size = status;
-      
+
         std::string device_name_out;
         if (device_name_out_buffer_size > 0) {
             device_name_out.resize(device_name_out_buffer_size - 1);
@@ -6692,7 +6692,7 @@ namespace nidaqmx_grpc {
 
       auto init_lambda = [&] () {
         TaskHandle task;
-        int status = library_->CreateTask(session_name, &task);
+        auto status = library_->CreateTask(session_name, &task);
         return std::make_tuple(status, task);
       };
       uint32_t session_id = 0;
@@ -6744,7 +6744,7 @@ namespace nidaqmx_grpc {
 
       auto init_lambda = [&] () {
         TaskHandle task;
-        int status = ((NiDAQmxLibrary*)library_)->CreateWatchdogTimerTask(device_name, session_name, &task, timeout, get_lines_if(exp_states, 0), get_expState_if(exp_states, 0), get_lines_if(exp_states, 1), get_expState_if(exp_states, 1), get_lines_if(exp_states, 2), get_expState_if(exp_states, 2), get_lines_if(exp_states, 3), get_expState_if(exp_states, 3), get_lines_if(exp_states, 4), get_expState_if(exp_states, 4), get_lines_if(exp_states, 5), get_expState_if(exp_states, 5), get_lines_if(exp_states, 6), get_expState_if(exp_states, 6), get_lines_if(exp_states, 7), get_expState_if(exp_states, 7), get_lines_if(exp_states, 8), get_expState_if(exp_states, 8), get_lines_if(exp_states, 9), get_expState_if(exp_states, 9), get_lines_if(exp_states, 10), get_expState_if(exp_states, 10), get_lines_if(exp_states, 11), get_expState_if(exp_states, 11), get_lines_if(exp_states, 12), get_expState_if(exp_states, 12), get_lines_if(exp_states, 13), get_expState_if(exp_states, 13), get_lines_if(exp_states, 14), get_expState_if(exp_states, 14), get_lines_if(exp_states, 15), get_expState_if(exp_states, 15), get_lines_if(exp_states, 16), get_expState_if(exp_states, 16), get_lines_if(exp_states, 17), get_expState_if(exp_states, 17), get_lines_if(exp_states, 18), get_expState_if(exp_states, 18), get_lines_if(exp_states, 19), get_expState_if(exp_states, 19), get_lines_if(exp_states, 20), get_expState_if(exp_states, 20), get_lines_if(exp_states, 21), get_expState_if(exp_states, 21), get_lines_if(exp_states, 22), get_expState_if(exp_states, 22), get_lines_if(exp_states, 23), get_expState_if(exp_states, 23), get_lines_if(exp_states, 24), get_expState_if(exp_states, 24), get_lines_if(exp_states, 25), get_expState_if(exp_states, 25), get_lines_if(exp_states, 26), get_expState_if(exp_states, 26), get_lines_if(exp_states, 27), get_expState_if(exp_states, 27), get_lines_if(exp_states, 28), get_expState_if(exp_states, 28), get_lines_if(exp_states, 29), get_expState_if(exp_states, 29), get_lines_if(exp_states, 30), get_expState_if(exp_states, 30), get_lines_if(exp_states, 31), get_expState_if(exp_states, 31), get_lines_if(exp_states, 32), get_expState_if(exp_states, 32), get_lines_if(exp_states, 33), get_expState_if(exp_states, 33), get_lines_if(exp_states, 34), get_expState_if(exp_states, 34), get_lines_if(exp_states, 35), get_expState_if(exp_states, 35), get_lines_if(exp_states, 36), get_expState_if(exp_states, 36), get_lines_if(exp_states, 37), get_expState_if(exp_states, 37), get_lines_if(exp_states, 38), get_expState_if(exp_states, 38), get_lines_if(exp_states, 39), get_expState_if(exp_states, 39), get_lines_if(exp_states, 40), get_expState_if(exp_states, 40), get_lines_if(exp_states, 41), get_expState_if(exp_states, 41), get_lines_if(exp_states, 42), get_expState_if(exp_states, 42), get_lines_if(exp_states, 43), get_expState_if(exp_states, 43), get_lines_if(exp_states, 44), get_expState_if(exp_states, 44), get_lines_if(exp_states, 45), get_expState_if(exp_states, 45), get_lines_if(exp_states, 46), get_expState_if(exp_states, 46), get_lines_if(exp_states, 47), get_expState_if(exp_states, 47), get_lines_if(exp_states, 48), get_expState_if(exp_states, 48), get_lines_if(exp_states, 49), get_expState_if(exp_states, 49), get_lines_if(exp_states, 50), get_expState_if(exp_states, 50), get_lines_if(exp_states, 51), get_expState_if(exp_states, 51), get_lines_if(exp_states, 52), get_expState_if(exp_states, 52), get_lines_if(exp_states, 53), get_expState_if(exp_states, 53), get_lines_if(exp_states, 54), get_expState_if(exp_states, 54), get_lines_if(exp_states, 55), get_expState_if(exp_states, 55), get_lines_if(exp_states, 56), get_expState_if(exp_states, 56), get_lines_if(exp_states, 57), get_expState_if(exp_states, 57), get_lines_if(exp_states, 58), get_expState_if(exp_states, 58), get_lines_if(exp_states, 59), get_expState_if(exp_states, 59), get_lines_if(exp_states, 60), get_expState_if(exp_states, 60), get_lines_if(exp_states, 61), get_expState_if(exp_states, 61), get_lines_if(exp_states, 62), get_expState_if(exp_states, 62), get_lines_if(exp_states, 63), get_expState_if(exp_states, 63), get_lines_if(exp_states, 64), get_expState_if(exp_states, 64), get_lines_if(exp_states, 65), get_expState_if(exp_states, 65), get_lines_if(exp_states, 66), get_expState_if(exp_states, 66), get_lines_if(exp_states, 67), get_expState_if(exp_states, 67), get_lines_if(exp_states, 68), get_expState_if(exp_states, 68), get_lines_if(exp_states, 69), get_expState_if(exp_states, 69), get_lines_if(exp_states, 70), get_expState_if(exp_states, 70), get_lines_if(exp_states, 71), get_expState_if(exp_states, 71), get_lines_if(exp_states, 72), get_expState_if(exp_states, 72), get_lines_if(exp_states, 73), get_expState_if(exp_states, 73), get_lines_if(exp_states, 74), get_expState_if(exp_states, 74), get_lines_if(exp_states, 75), get_expState_if(exp_states, 75), get_lines_if(exp_states, 76), get_expState_if(exp_states, 76), get_lines_if(exp_states, 77), get_expState_if(exp_states, 77), get_lines_if(exp_states, 78), get_expState_if(exp_states, 78), get_lines_if(exp_states, 79), get_expState_if(exp_states, 79), get_lines_if(exp_states, 80), get_expState_if(exp_states, 80), get_lines_if(exp_states, 81), get_expState_if(exp_states, 81), get_lines_if(exp_states, 82), get_expState_if(exp_states, 82), get_lines_if(exp_states, 83), get_expState_if(exp_states, 83), get_lines_if(exp_states, 84), get_expState_if(exp_states, 84), get_lines_if(exp_states, 85), get_expState_if(exp_states, 85), get_lines_if(exp_states, 86), get_expState_if(exp_states, 86), get_lines_if(exp_states, 87), get_expState_if(exp_states, 87), get_lines_if(exp_states, 88), get_expState_if(exp_states, 88), get_lines_if(exp_states, 89), get_expState_if(exp_states, 89), get_lines_if(exp_states, 90), get_expState_if(exp_states, 90), get_lines_if(exp_states, 91), get_expState_if(exp_states, 91), get_lines_if(exp_states, 92), get_expState_if(exp_states, 92), get_lines_if(exp_states, 93), get_expState_if(exp_states, 93), get_lines_if(exp_states, 94), get_expState_if(exp_states, 94), get_lines_if(exp_states, 95), get_expState_if(exp_states, 95), get_lines_if(exp_states, 96), get_expState_if(exp_states, 96));
+        auto status = ((NiDAQmxLibrary*)library_)->CreateWatchdogTimerTask(device_name, session_name, &task, timeout, get_lines_if(exp_states, 0), get_expState_if(exp_states, 0), get_lines_if(exp_states, 1), get_expState_if(exp_states, 1), get_lines_if(exp_states, 2), get_expState_if(exp_states, 2), get_lines_if(exp_states, 3), get_expState_if(exp_states, 3), get_lines_if(exp_states, 4), get_expState_if(exp_states, 4), get_lines_if(exp_states, 5), get_expState_if(exp_states, 5), get_lines_if(exp_states, 6), get_expState_if(exp_states, 6), get_lines_if(exp_states, 7), get_expState_if(exp_states, 7), get_lines_if(exp_states, 8), get_expState_if(exp_states, 8), get_lines_if(exp_states, 9), get_expState_if(exp_states, 9), get_lines_if(exp_states, 10), get_expState_if(exp_states, 10), get_lines_if(exp_states, 11), get_expState_if(exp_states, 11), get_lines_if(exp_states, 12), get_expState_if(exp_states, 12), get_lines_if(exp_states, 13), get_expState_if(exp_states, 13), get_lines_if(exp_states, 14), get_expState_if(exp_states, 14), get_lines_if(exp_states, 15), get_expState_if(exp_states, 15), get_lines_if(exp_states, 16), get_expState_if(exp_states, 16), get_lines_if(exp_states, 17), get_expState_if(exp_states, 17), get_lines_if(exp_states, 18), get_expState_if(exp_states, 18), get_lines_if(exp_states, 19), get_expState_if(exp_states, 19), get_lines_if(exp_states, 20), get_expState_if(exp_states, 20), get_lines_if(exp_states, 21), get_expState_if(exp_states, 21), get_lines_if(exp_states, 22), get_expState_if(exp_states, 22), get_lines_if(exp_states, 23), get_expState_if(exp_states, 23), get_lines_if(exp_states, 24), get_expState_if(exp_states, 24), get_lines_if(exp_states, 25), get_expState_if(exp_states, 25), get_lines_if(exp_states, 26), get_expState_if(exp_states, 26), get_lines_if(exp_states, 27), get_expState_if(exp_states, 27), get_lines_if(exp_states, 28), get_expState_if(exp_states, 28), get_lines_if(exp_states, 29), get_expState_if(exp_states, 29), get_lines_if(exp_states, 30), get_expState_if(exp_states, 30), get_lines_if(exp_states, 31), get_expState_if(exp_states, 31), get_lines_if(exp_states, 32), get_expState_if(exp_states, 32), get_lines_if(exp_states, 33), get_expState_if(exp_states, 33), get_lines_if(exp_states, 34), get_expState_if(exp_states, 34), get_lines_if(exp_states, 35), get_expState_if(exp_states, 35), get_lines_if(exp_states, 36), get_expState_if(exp_states, 36), get_lines_if(exp_states, 37), get_expState_if(exp_states, 37), get_lines_if(exp_states, 38), get_expState_if(exp_states, 38), get_lines_if(exp_states, 39), get_expState_if(exp_states, 39), get_lines_if(exp_states, 40), get_expState_if(exp_states, 40), get_lines_if(exp_states, 41), get_expState_if(exp_states, 41), get_lines_if(exp_states, 42), get_expState_if(exp_states, 42), get_lines_if(exp_states, 43), get_expState_if(exp_states, 43), get_lines_if(exp_states, 44), get_expState_if(exp_states, 44), get_lines_if(exp_states, 45), get_expState_if(exp_states, 45), get_lines_if(exp_states, 46), get_expState_if(exp_states, 46), get_lines_if(exp_states, 47), get_expState_if(exp_states, 47), get_lines_if(exp_states, 48), get_expState_if(exp_states, 48), get_lines_if(exp_states, 49), get_expState_if(exp_states, 49), get_lines_if(exp_states, 50), get_expState_if(exp_states, 50), get_lines_if(exp_states, 51), get_expState_if(exp_states, 51), get_lines_if(exp_states, 52), get_expState_if(exp_states, 52), get_lines_if(exp_states, 53), get_expState_if(exp_states, 53), get_lines_if(exp_states, 54), get_expState_if(exp_states, 54), get_lines_if(exp_states, 55), get_expState_if(exp_states, 55), get_lines_if(exp_states, 56), get_expState_if(exp_states, 56), get_lines_if(exp_states, 57), get_expState_if(exp_states, 57), get_lines_if(exp_states, 58), get_expState_if(exp_states, 58), get_lines_if(exp_states, 59), get_expState_if(exp_states, 59), get_lines_if(exp_states, 60), get_expState_if(exp_states, 60), get_lines_if(exp_states, 61), get_expState_if(exp_states, 61), get_lines_if(exp_states, 62), get_expState_if(exp_states, 62), get_lines_if(exp_states, 63), get_expState_if(exp_states, 63), get_lines_if(exp_states, 64), get_expState_if(exp_states, 64), get_lines_if(exp_states, 65), get_expState_if(exp_states, 65), get_lines_if(exp_states, 66), get_expState_if(exp_states, 66), get_lines_if(exp_states, 67), get_expState_if(exp_states, 67), get_lines_if(exp_states, 68), get_expState_if(exp_states, 68), get_lines_if(exp_states, 69), get_expState_if(exp_states, 69), get_lines_if(exp_states, 70), get_expState_if(exp_states, 70), get_lines_if(exp_states, 71), get_expState_if(exp_states, 71), get_lines_if(exp_states, 72), get_expState_if(exp_states, 72), get_lines_if(exp_states, 73), get_expState_if(exp_states, 73), get_lines_if(exp_states, 74), get_expState_if(exp_states, 74), get_lines_if(exp_states, 75), get_expState_if(exp_states, 75), get_lines_if(exp_states, 76), get_expState_if(exp_states, 76), get_lines_if(exp_states, 77), get_expState_if(exp_states, 77), get_lines_if(exp_states, 78), get_expState_if(exp_states, 78), get_lines_if(exp_states, 79), get_expState_if(exp_states, 79), get_lines_if(exp_states, 80), get_expState_if(exp_states, 80), get_lines_if(exp_states, 81), get_expState_if(exp_states, 81), get_lines_if(exp_states, 82), get_expState_if(exp_states, 82), get_lines_if(exp_states, 83), get_expState_if(exp_states, 83), get_lines_if(exp_states, 84), get_expState_if(exp_states, 84), get_lines_if(exp_states, 85), get_expState_if(exp_states, 85), get_lines_if(exp_states, 86), get_expState_if(exp_states, 86), get_lines_if(exp_states, 87), get_expState_if(exp_states, 87), get_lines_if(exp_states, 88), get_expState_if(exp_states, 88), get_lines_if(exp_states, 89), get_expState_if(exp_states, 89), get_lines_if(exp_states, 90), get_expState_if(exp_states, 90), get_lines_if(exp_states, 91), get_expState_if(exp_states, 91), get_lines_if(exp_states, 92), get_expState_if(exp_states, 92), get_lines_if(exp_states, 93), get_expState_if(exp_states, 93), get_lines_if(exp_states, 94), get_expState_if(exp_states, 94), get_lines_if(exp_states, 95), get_expState_if(exp_states, 95), get_lines_if(exp_states, 96), get_expState_if(exp_states, 96));
         return std::make_tuple(status, task);
       };
       uint32_t session_id = 0;
@@ -6776,7 +6776,7 @@ namespace nidaqmx_grpc {
 
       auto init_lambda = [&] () {
         TaskHandle task;
-        int status = library_->CreateWatchdogTimerTaskEx(device_name, session_name, &task, timeout);
+        auto status = library_->CreateWatchdogTimerTaskEx(device_name, session_name, &task, timeout);
         return std::make_tuple(status, task);
       };
       uint32_t session_id = 0;
@@ -7120,7 +7120,7 @@ namespace nidaqmx_grpc {
           response->channel_type_array_raw().begin(),
           response->channel_type_array_raw().begin() + array_size_copy,
           google::protobuf::RepeatedFieldBackInserter(response->mutable_channel_type_array()),
-          [&](auto x) { 
+          [&](auto x) {
               return static_cast<nidaqmx_grpc::PowerUpChannelType>(x);
           });
       }
@@ -7193,7 +7193,7 @@ namespace nidaqmx_grpc {
           return ::grpc::Status::OK;
         }
         uInt32 port_list_size = status;
-      
+
         std::string port_list;
         if (port_list_size > 0) {
             port_list.resize(port_list_size - 1);
@@ -7378,7 +7378,7 @@ namespace nidaqmx_grpc {
           return ::grpc::Status::OK;
         }
         uInt32 size = status;
-      
+
         std::string value;
         if (size > 0) {
             value.resize(size - 1);
@@ -7569,7 +7569,7 @@ namespace nidaqmx_grpc {
           return ::grpc::Status::OK;
         }
         uInt32 size = status;
-      
+
         response->mutable_value()->Resize(size, 0);
         float64* value = response->mutable_value()->mutable_data();
         status = library_->GetChanAttributeDoubleArray(task, channel, attribute, value, size);
@@ -7676,7 +7676,7 @@ namespace nidaqmx_grpc {
           return ::grpc::Status::OK;
         }
         uInt32 size = status;
-      
+
         std::string value;
         if (size > 0) {
             value.resize(size - 1);
@@ -7863,7 +7863,7 @@ namespace nidaqmx_grpc {
           return ::grpc::Status::OK;
         }
         uInt32 size = status;
-      
+
         response->mutable_value()->Resize(size, 0);
         float64* value = response->mutable_value()->mutable_data();
         status = library_->GetDeviceAttributeDoubleArray(device_name, attribute, value, size);
@@ -7966,7 +7966,7 @@ namespace nidaqmx_grpc {
           return ::grpc::Status::OK;
         }
         uInt32 size = status;
-      
+
         response->mutable_value_raw()->Resize(size, 0);
         int32* value = reinterpret_cast<int32*>(response->mutable_value_raw()->mutable_data());
         status = library_->GetDeviceAttributeInt32Array(device_name, attribute, value, size);
@@ -7987,7 +7987,7 @@ namespace nidaqmx_grpc {
             response->value_raw().begin(),
             response->value_raw().begin() + size,
             google::protobuf::RepeatedFieldBackInserter(response->mutable_value()),
-            [&](auto x) { 
+            [&](auto x) {
                 return checked_convert_value(x);
             });
         }
@@ -8035,7 +8035,7 @@ namespace nidaqmx_grpc {
           return ::grpc::Status::OK;
         }
         uInt32 size = status;
-      
+
         std::string value;
         if (size > 0) {
             value.resize(size - 1);
@@ -8136,7 +8136,7 @@ namespace nidaqmx_grpc {
           return ::grpc::Status::OK;
         }
         uInt32 size = status;
-      
+
         response->mutable_value()->Resize(size, 0);
         uInt32* value = reinterpret_cast<uInt32*>(response->mutable_value()->mutable_data());
         status = library_->GetDeviceAttributeUInt32Array(device_name, attribute, value, size);
@@ -8283,7 +8283,7 @@ namespace nidaqmx_grpc {
           return ::grpc::Status::OK;
         }
         uInt32 port_list_size = status;
-      
+
         std::string port_list;
         if (port_list_size > 0) {
             port_list.resize(port_list_size - 1);
@@ -8323,7 +8323,7 @@ namespace nidaqmx_grpc {
           return ::grpc::Status::OK;
         }
         uInt32 buffer_size = status;
-      
+
         std::string error_string;
         if (buffer_size > 0) {
             error_string.resize(buffer_size - 1);
@@ -8518,7 +8518,7 @@ namespace nidaqmx_grpc {
           return ::grpc::Status::OK;
         }
         uInt32 size = status;
-      
+
         std::string value;
         if (size > 0) {
             value.resize(size - 1);
@@ -8600,7 +8600,7 @@ namespace nidaqmx_grpc {
           return ::grpc::Status::OK;
         }
         uInt32 buffer_size = status;
-      
+
         std::string error_string;
         if (buffer_size > 0) {
             error_string.resize(buffer_size - 1);
@@ -8688,7 +8688,7 @@ namespace nidaqmx_grpc {
           return ::grpc::Status::OK;
         }
         int32 buffer_size = status;
-      
+
         std::string buffer;
         if (buffer_size > 0) {
             buffer.resize(buffer_size - 1);
@@ -8730,7 +8730,7 @@ namespace nidaqmx_grpc {
           return ::grpc::Status::OK;
         }
         int32 buffer_size = status;
-      
+
         std::string buffer;
         if (buffer_size > 0) {
             buffer.resize(buffer_size - 1);
@@ -8772,7 +8772,7 @@ namespace nidaqmx_grpc {
           return ::grpc::Status::OK;
         }
         int32 buffer_size = status;
-      
+
         std::string buffer;
         if (buffer_size > 0) {
             buffer.resize(buffer_size - 1);
@@ -8873,7 +8873,7 @@ namespace nidaqmx_grpc {
           return ::grpc::Status::OK;
         }
         uInt32 size = status;
-      
+
         std::string value;
         if (size > 0) {
             value.resize(size - 1);
@@ -8974,7 +8974,7 @@ namespace nidaqmx_grpc {
           return ::grpc::Status::OK;
         }
         uInt32 size = status;
-      
+
         std::string value;
         if (size > 0) {
             value.resize(size - 1);
@@ -9075,7 +9075,7 @@ namespace nidaqmx_grpc {
           return ::grpc::Status::OK;
         }
         uInt32 size = status;
-      
+
         std::string value;
         if (size > 0) {
             value.resize(size - 1);
@@ -9176,7 +9176,7 @@ namespace nidaqmx_grpc {
           return ::grpc::Status::OK;
         }
         uInt32 size = status;
-      
+
         std::string value(size, '\0');
         status = library_->GetPhysicalChanAttributeBytes(physical_channel, attribute, (uInt8*)value.data(), size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(size)) {
@@ -9273,7 +9273,7 @@ namespace nidaqmx_grpc {
           return ::grpc::Status::OK;
         }
         uInt32 size = status;
-      
+
         response->mutable_value()->Resize(size, 0);
         float64* value = response->mutable_value()->mutable_data();
         status = library_->GetPhysicalChanAttributeDoubleArray(physical_channel, attribute, value, size);
@@ -9376,7 +9376,7 @@ namespace nidaqmx_grpc {
           return ::grpc::Status::OK;
         }
         uInt32 size = status;
-      
+
         response->mutable_value_raw()->Resize(size, 0);
         int32* value = reinterpret_cast<int32*>(response->mutable_value_raw()->mutable_data());
         status = library_->GetPhysicalChanAttributeInt32Array(physical_channel, attribute, value, size);
@@ -9397,7 +9397,7 @@ namespace nidaqmx_grpc {
             response->value_raw().begin(),
             response->value_raw().begin() + size,
             google::protobuf::RepeatedFieldBackInserter(response->mutable_value()),
-            [&](auto x) { 
+            [&](auto x) {
                 return checked_convert_value(x);
             });
         }
@@ -9445,7 +9445,7 @@ namespace nidaqmx_grpc {
           return ::grpc::Status::OK;
         }
         uInt32 size = status;
-      
+
         std::string value;
         if (size > 0) {
             value.resize(size - 1);
@@ -9546,7 +9546,7 @@ namespace nidaqmx_grpc {
           return ::grpc::Status::OK;
         }
         uInt32 size = status;
-      
+
         response->mutable_value()->Resize(size, 0);
         uInt32* value = reinterpret_cast<uInt32*>(response->mutable_value()->mutable_data());
         status = library_->GetPhysicalChanAttributeUInt32Array(physical_channel, attribute, value, size);
@@ -9737,7 +9737,7 @@ namespace nidaqmx_grpc {
           return ::grpc::Status::OK;
         }
         uInt32 size = status;
-      
+
         std::string value;
         if (size > 0) {
             value.resize(size - 1);
@@ -10082,7 +10082,7 @@ namespace nidaqmx_grpc {
           return ::grpc::Status::OK;
         }
         uInt32 size = status;
-      
+
         response->mutable_value()->Resize(size, 0);
         float64* value = response->mutable_value()->mutable_data();
         status = library_->GetScaleAttributeDoubleArray(scale_name, attribute, value, size);
@@ -10185,7 +10185,7 @@ namespace nidaqmx_grpc {
           return ::grpc::Status::OK;
         }
         uInt32 size = status;
-      
+
         std::string value;
         if (size > 0) {
             value.resize(size - 1);
@@ -10342,7 +10342,7 @@ namespace nidaqmx_grpc {
           return ::grpc::Status::OK;
         }
         uInt32 size = status;
-      
+
         std::string value;
         if (size > 0) {
             value.resize(size - 1);
@@ -10486,7 +10486,7 @@ namespace nidaqmx_grpc {
           return ::grpc::Status::OK;
         }
         uInt32 size = status;
-      
+
         std::string value;
         if (size > 0) {
             value.resize(size - 1);
@@ -10814,7 +10814,7 @@ namespace nidaqmx_grpc {
           return ::grpc::Status::OK;
         }
         uInt32 size = status;
-      
+
         std::string value;
         if (size > 0) {
             value.resize(size - 1);
@@ -11055,7 +11055,7 @@ namespace nidaqmx_grpc {
           return ::grpc::Status::OK;
         }
         uInt32 size = status;
-      
+
         std::string value;
         if (size > 0) {
             value.resize(size - 1);
@@ -11330,7 +11330,7 @@ namespace nidaqmx_grpc {
           return ::grpc::Status::OK;
         }
         uInt32 size = status;
-      
+
         response->mutable_value()->Resize(size, 0);
         float64* value = response->mutable_value()->mutable_data();
         status = library_->GetTrigAttributeDoubleArray(task, attribute, value, size);
@@ -11435,7 +11435,7 @@ namespace nidaqmx_grpc {
           return ::grpc::Status::OK;
         }
         uInt32 size = status;
-      
+
         response->mutable_value_raw()->Resize(size, 0);
         int32* value = reinterpret_cast<int32*>(response->mutable_value_raw()->mutable_data());
         status = library_->GetTrigAttributeInt32Array(task, attribute, value, size);
@@ -11456,7 +11456,7 @@ namespace nidaqmx_grpc {
             response->value_raw().begin(),
             response->value_raw().begin() + size,
             google::protobuf::RepeatedFieldBackInserter(response->mutable_value()),
-            [&](auto x) { 
+            [&](auto x) {
                 return checked_convert_value(x);
             });
         }
@@ -11505,7 +11505,7 @@ namespace nidaqmx_grpc {
           return ::grpc::Status::OK;
         }
         uInt32 size = status;
-      
+
         std::string value;
         if (size > 0) {
             value.resize(size - 1);
@@ -11790,7 +11790,7 @@ namespace nidaqmx_grpc {
           return ::grpc::Status::OK;
         }
         uInt32 size = status;
-      
+
         std::string value;
         if (size > 0) {
             value.resize(size - 1);
@@ -11985,7 +11985,7 @@ namespace nidaqmx_grpc {
           return ::grpc::Status::OK;
         }
         uInt32 size = status;
-      
+
         std::string value;
         if (size > 0) {
             value.resize(size - 1);
@@ -12129,7 +12129,7 @@ namespace nidaqmx_grpc {
 
       auto init_lambda = [&] () {
         TaskHandle task;
-        int status = library_->LoadTask(session_name, &task);
+        auto status = library_->LoadTask(session_name, &task);
         return std::make_tuple(status, task);
       };
       uint32_t session_id = 0;
@@ -12258,7 +12258,7 @@ namespace nidaqmx_grpc {
           read_array.begin(),
           read_array.begin() + array_size_in_samps,
           google::protobuf::RepeatedFieldBackInserter(response->mutable_read_array()),
-          [&](auto x) { 
+          [&](auto x) {
               return x;
           });
         response->set_samps_per_chan_read(samps_per_chan_read);
@@ -12356,7 +12356,7 @@ namespace nidaqmx_grpc {
           read_array.begin(),
           read_array.begin() + array_size_in_samps,
           google::protobuf::RepeatedFieldBackInserter(response->mutable_read_array()),
-          [&](auto x) { 
+          [&](auto x) {
               return x;
           });
         response->set_samps_per_chan_read(samps_per_chan_read);
@@ -12946,7 +12946,7 @@ namespace nidaqmx_grpc {
           read_array.begin(),
           read_array.begin() + array_size_in_samps,
           google::protobuf::RepeatedFieldBackInserter(response->mutable_read_array()),
-          [&](auto x) { 
+          [&](auto x) {
               return x;
           });
         response->set_samps_per_chan_read(samps_per_chan_read);
@@ -17105,7 +17105,7 @@ namespace nidaqmx_grpc {
         write_array_raw.begin(),
         write_array_raw.end(),
         std::back_inserter(write_array),
-        [](auto x) { 
+        [](auto x) {
               if (x < std::numeric_limits<int16>::min() || x > std::numeric_limits<int16>::max()) {
                   std::string message("value ");
                   message.append(std::to_string(x));
@@ -17213,7 +17213,7 @@ namespace nidaqmx_grpc {
         write_array_raw.begin(),
         write_array_raw.end(),
         std::back_inserter(write_array),
-        [](auto x) { 
+        [](auto x) {
               if (x < std::numeric_limits<uInt16>::min() || x > std::numeric_limits<uInt16>::max()) {
                   std::string message("value ");
                   message.append(std::to_string(x));
@@ -17595,7 +17595,7 @@ namespace nidaqmx_grpc {
         write_array_raw.begin(),
         write_array_raw.end(),
         std::back_inserter(write_array),
-        [](auto x) { 
+        [](auto x) {
               if (x < std::numeric_limits<uInt16>::min() || x > std::numeric_limits<uInt16>::max()) {
                   std::string message("value ");
                   message.append(std::to_string(x));

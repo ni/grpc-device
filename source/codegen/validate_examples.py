@@ -1,3 +1,5 @@
+"""Script for validating the examples."""
+
 from argparse import ArgumentParser
 from contextlib import contextmanager
 from os import getcwd, chdir, system as _system_core
@@ -36,7 +38,7 @@ def _create_stage_dir(staging_dir):
         chdir(initial_dir)
 
 
-def validate_examples(driver_glob_expression: str, ip_address: str, device_name: str) -> None:
+def _validate_examples(driver_glob_expression: str, ip_address: str, device_name: str) -> None:
     staging_dir = Path(__file__).parent.parent.parent / "build" / "validate_examples"
     staging_dir = staging_dir.resolve()
 
@@ -45,7 +47,10 @@ def validate_examples(driver_glob_expression: str, ip_address: str, device_name:
     with _create_stage_dir(staging_dir):
         _system("poetry new .")
         _system("poetry add grpcio")
-        _system("poetry add --dev grpcio-tools black mypy mypy-protobuf types-protobuf grpc-stubs")
+        _system("poetry add --dev grpcio-tools mypy mypy-protobuf types-protobuf grpc-stubs")
+        # black requires python >=3.6.2, so only ask it to be installed for python >=3.6.2, or else
+        # poetry can give a SolverProblemError and fail the "install" step
+        _system('poetry add --dev --python ">=3.6.2" black')
         _system("poetry install")
 
         stage_client_files(staging_dir, True)
@@ -96,7 +101,7 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    validate_examples(args.pattern, args.server, args.device)
+    _validate_examples(args.pattern, args.server, args.device)
 
     if any(_FAILED_COMMANDS):
         for code, command in _FAILED_COMMANDS:

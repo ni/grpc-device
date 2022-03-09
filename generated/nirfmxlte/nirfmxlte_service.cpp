@@ -11,6 +11,7 @@
 #include <iostream>
 #include <atomic>
 #include <vector>
+#include "custom/nirfmx_errors.h"
 #include <server/converters.h>
 
 namespace nirfmxlte_grpc {
@@ -25,11 +26,11 @@ namespace nirfmxlte_grpc {
 
   NiRFmxLTEService::NiRFmxLTEService(
       NiRFmxLTELibraryInterface* library,
-      ResourceRepositorySharedPtr session_repository, 
+      ResourceRepositorySharedPtr resource_repository,
       ViSessionResourceRepositorySharedPtr vi_session_resource_repository,
       const NiRFmxLTEFeatureToggles& feature_toggles)
       : library_(library),
-      session_repository_(session_repository),
+      session_repository_(resource_repository),
       vi_session_resource_repository_(vi_session_resource_repository),
       feature_toggles_(feature_toggles)
   {
@@ -897,7 +898,7 @@ namespace nirfmxlte_grpc {
           return ::grpc::Status::OK;
         }
         int32 selector_string_out_length = status;
-      
+
         std::string selector_string_out;
         if (selector_string_out_length > 0) {
             selector_string_out.resize(selector_string_out_length - 1);
@@ -938,7 +939,7 @@ namespace nirfmxlte_grpc {
           return ::grpc::Status::OK;
         }
         int32 selector_string_out_length = status;
-      
+
         std::string selector_string_out;
         if (selector_string_out_length > 0) {
             selector_string_out.resize(selector_string_out_length - 1);
@@ -979,7 +980,7 @@ namespace nirfmxlte_grpc {
           return ::grpc::Status::OK;
         }
         int32 selector_string_out_length = status;
-      
+
         std::string selector_string_out;
         if (selector_string_out_length > 0) {
             selector_string_out.resize(selector_string_out_length - 1);
@@ -1020,7 +1021,7 @@ namespace nirfmxlte_grpc {
           return ::grpc::Status::OK;
         }
         int32 selector_string_out_length = status;
-      
+
         std::string selector_string_out;
         if (selector_string_out_length > 0) {
             selector_string_out.resize(selector_string_out_length - 1);
@@ -1061,7 +1062,7 @@ namespace nirfmxlte_grpc {
           return ::grpc::Status::OK;
         }
         int32 selector_string_length = status;
-      
+
         std::string selector_string;
         if (selector_string_length > 0) {
             selector_string.resize(selector_string_length - 1);
@@ -1102,7 +1103,7 @@ namespace nirfmxlte_grpc {
           return ::grpc::Status::OK;
         }
         int32 selector_string_out_length = status;
-      
+
         std::string selector_string_out;
         if (selector_string_out_length > 0) {
             selector_string_out.resize(selector_string_out_length - 1);
@@ -1143,7 +1144,7 @@ namespace nirfmxlte_grpc {
           return ::grpc::Status::OK;
         }
         int32 selector_string_out_length = status;
-      
+
         std::string selector_string_out;
         if (selector_string_out_length > 0) {
             selector_string_out.resize(selector_string_out_length - 1);
@@ -3106,27 +3107,6 @@ namespace nirfmxlte_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiRFmxLTEService::CfgSubblockFrequencyDefinition(::grpc::ServerContext* context, const CfgSubblockFrequencyDefinitionRequest* request, CfgSubblockFrequencyDefinitionResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
-      int32 subblock_frequency_definition = request->subblock_frequency_definition();
-      auto status = library_->CfgSubblockFrequencyDefinition(instrument, selector_string, subblock_frequency_definition);
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxLTEService::CfgTransmitAntennaToAnalyze(::grpc::ServerContext* context, const CfgTransmitAntennaToAnalyzeRequest* request, CfgTransmitAntennaToAnalyzeResponse* response)
   {
     if (context->IsCancelled()) {
@@ -3658,7 +3638,7 @@ namespace nirfmxlte_grpc {
             response->attr_val_raw().begin(),
             response->attr_val_raw().begin() + actual_array_size,
             google::protobuf::RepeatedFieldBackInserter(response->mutable_attr_val()),
-            [&](auto x) { 
+            [&](auto x) {
                 return checked_convert_attr_val(x);
             });
           response->mutable_attr_val()->Resize(actual_array_size, 0);
@@ -3796,7 +3776,7 @@ namespace nirfmxlte_grpc {
             attr_val.begin(),
             attr_val.begin() + actual_array_size,
             google::protobuf::RepeatedFieldBackInserter(response->mutable_attr_val()),
-            [&](auto x) { 
+            [&](auto x) {
                 return x;
             });
           response->mutable_attr_val()->Resize(actual_array_size, 0);
@@ -3845,7 +3825,7 @@ namespace nirfmxlte_grpc {
             if (shrunk_size != current_size) {
               response->mutable_attr_val()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -3891,7 +3871,7 @@ namespace nirfmxlte_grpc {
             if (shrunk_size != current_size) {
               response->mutable_attr_val()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -3922,7 +3902,7 @@ namespace nirfmxlte_grpc {
           return ::grpc::Status::OK;
         }
         int32 array_size = status;
-      
+
         std::string attr_val;
         if (array_size > 0) {
             attr_val.resize(array_size - 1);
@@ -4158,7 +4138,7 @@ namespace nirfmxlte_grpc {
           return ::grpc::Status::OK;
         }
         int32 error_description_buffer_size = status;
-      
+
         int32 error_code {};
         std::string error_description;
         if (error_description_buffer_size > 0) {
@@ -4202,7 +4182,7 @@ namespace nirfmxlte_grpc {
           return ::grpc::Status::OK;
         }
         int32 error_description_buffer_size = status;
-      
+
         std::string error_description;
         if (error_description_buffer_size > 0) {
             error_description.resize(error_description_buffer_size - 1);
@@ -4239,7 +4219,7 @@ namespace nirfmxlte_grpc {
       int32 is_new_session {};
       auto init_lambda = [&] () {
         niRFmxInstrHandle instrument;
-        int status = library_->Initialize(resource_name, option_string, &instrument, &is_new_session);
+        auto status = library_->Initialize(resource_name, option_string, &instrument, &is_new_session);
         return std::make_tuple(status, instrument);
       };
       uint32_t session_id = 0;
@@ -4249,6 +4229,11 @@ namespace nirfmxlte_grpc {
       response->set_status(status);
       if (status_ok(status)) {
         response->mutable_instrument()->set_id(session_id);
+        response->set_is_new_session(is_new_session);
+      }
+      else {
+        const auto last_error_buffer = get_last_error(library_);
+        response->set_error_message(last_error_buffer.data());
       }
       return ::grpc::Status::OK;
     }
@@ -4270,7 +4255,7 @@ namespace nirfmxlte_grpc {
 
       auto init_lambda = [&] () {
         niRFmxInstrHandle instrument;
-        int status = library_->InitializeFromNIRFSASession(nirfsa_session, &instrument);
+        auto status = library_->InitializeFromNIRFSASession(nirfsa_session, &instrument);
         return std::make_tuple(status, instrument);
       };
       uint32_t session_id = 0;
@@ -4280,6 +4265,10 @@ namespace nirfmxlte_grpc {
       response->set_status(status);
       if (status_ok(status)) {
         response->mutable_instrument()->set_id(session_id);
+      }
+      else {
+        const auto last_error_buffer = get_last_error(library_);
+        response->set_error_message(last_error_buffer.data());
       }
       return ::grpc::Status::OK;
     }
@@ -4586,7 +4575,7 @@ namespace nirfmxlte_grpc {
             if (shrunk_size != current_size) {
               response->mutable_csrs_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -4932,7 +4921,7 @@ namespace nirfmxlte_grpc {
             if (shrunk_size != current_size) {
               response->mutable_pbch_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -4978,7 +4967,7 @@ namespace nirfmxlte_grpc {
             if (shrunk_size != current_size) {
               response->mutable_pcfich_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -5024,7 +5013,7 @@ namespace nirfmxlte_grpc {
             if (shrunk_size != current_size) {
               response->mutable_pdcch_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -5070,7 +5059,7 @@ namespace nirfmxlte_grpc {
             if (shrunk_size != current_size) {
               response->mutable_phich_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -5820,7 +5809,7 @@ namespace nirfmxlte_grpc {
             if (shrunk_size != current_size) {
               response->mutable_data_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           response->set_data_constellation_actual_array_size(data_constellation_actual_array_size);
           convert_to_grpc(dmrs_constellation, response->mutable_dmrs_constellation());
           {
@@ -5829,7 +5818,7 @@ namespace nirfmxlte_grpc {
             if (shrunk_size != current_size) {
               response->mutable_dmrs_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           response->set_dmrs_constellation_actual_array_size(dmrs_constellation_actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -5956,7 +5945,7 @@ namespace nirfmxlte_grpc {
             if (shrunk_size != current_size) {
               response->mutable_qam1024_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -6067,7 +6056,7 @@ namespace nirfmxlte_grpc {
             if (shrunk_size != current_size) {
               response->mutable_qam16_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -6113,7 +6102,7 @@ namespace nirfmxlte_grpc {
             if (shrunk_size != current_size) {
               response->mutable_qam256_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -6159,7 +6148,7 @@ namespace nirfmxlte_grpc {
             if (shrunk_size != current_size) {
               response->mutable_qam64_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -6290,7 +6279,7 @@ namespace nirfmxlte_grpc {
             if (shrunk_size != current_size) {
               response->mutable_qpsk_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -6339,7 +6328,7 @@ namespace nirfmxlte_grpc {
             if (shrunk_size != current_size) {
               response->mutable_data_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           response->set_data_constellation_actual_array_size(data_constellation_actual_array_size);
           convert_to_grpc(dmrs_constellation, response->mutable_dmrs_constellation());
           {
@@ -6348,7 +6337,7 @@ namespace nirfmxlte_grpc {
             if (shrunk_size != current_size) {
               response->mutable_dmrs_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           response->set_dmrs_constellation_actual_array_size(dmrs_constellation_actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -6607,7 +6596,7 @@ namespace nirfmxlte_grpc {
             if (shrunk_size != current_size) {
               response->mutable_data_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           response->set_data_constellation_actual_array_size(data_constellation_actual_array_size);
           convert_to_grpc(dmrs_constellation, response->mutable_dmrs_constellation());
           {
@@ -6616,7 +6605,7 @@ namespace nirfmxlte_grpc {
             if (shrunk_size != current_size) {
               response->mutable_dmrs_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           response->set_dmrs_constellation_actual_array_size(dmrs_constellation_actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -6801,7 +6790,7 @@ namespace nirfmxlte_grpc {
             bits.begin(),
             bits.begin() + actual_array_size,
             google::protobuf::RepeatedFieldBackInserter(response->mutable_bits()),
-            [&](auto x) { 
+            [&](auto x) {
                 return x;
             });
           response->mutable_bits()->Resize(actual_array_size, 0);
@@ -7008,7 +6997,7 @@ namespace nirfmxlte_grpc {
             if (shrunk_size != current_size) {
               response->mutable_srs_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -7355,7 +7344,7 @@ namespace nirfmxlte_grpc {
             if (shrunk_size != current_size) {
               response->mutable_sss_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           convert_to_grpc(pss_constellation, response->mutable_pss_constellation());
           {
             auto shrunk_size = actual_array_size;
@@ -7363,7 +7352,7 @@ namespace nirfmxlte_grpc {
             if (shrunk_size != current_size) {
               response->mutable_pss_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           response->set_actual_array_size(actual_array_size);
         }
         return ::grpc::Status::OK;
@@ -7850,7 +7839,7 @@ namespace nirfmxlte_grpc {
             response->measurement_status_raw().begin(),
             response->measurement_status_raw().begin() + actual_array_size,
             google::protobuf::RepeatedFieldBackInserter(response->mutable_measurement_status()),
-            [&](auto x) { 
+            [&](auto x) {
                 return static_cast<nirfmxlte_grpc::PvtMeasurementStatus>(x);
             });
           response->mutable_measurement_status()->Resize(actual_array_size, 0);
@@ -8734,7 +8723,7 @@ namespace nirfmxlte_grpc {
             response->measurement_status_raw().begin(),
             response->measurement_status_raw().begin() + actual_array_size,
             google::protobuf::RepeatedFieldBackInserter(response->mutable_measurement_status()),
-            [&](auto x) { 
+            [&](auto x) {
                 return static_cast<nirfmxlte_grpc::SemLowerOffsetMeasurementStatus>(x);
             });
           response->mutable_measurement_status()->Resize(actual_array_size, 0);
@@ -9041,7 +9030,7 @@ namespace nirfmxlte_grpc {
             response->measurement_status_raw().begin(),
             response->measurement_status_raw().begin() + actual_array_size,
             google::protobuf::RepeatedFieldBackInserter(response->mutable_measurement_status()),
-            [&](auto x) { 
+            [&](auto x) {
                 return static_cast<nirfmxlte_grpc::SemUpperOffsetMeasurementStatus>(x);
             });
           response->mutable_measurement_status()->Resize(actual_array_size, 0);
@@ -9490,7 +9479,7 @@ namespace nirfmxlte_grpc {
         attr_val_raw.begin(),
         attr_val_raw.end(),
         std::back_inserter(attr_val),
-        [](auto x) { 
+        [](auto x) {
               if (x < std::numeric_limits<int8>::min() || x > std::numeric_limits<int8>::max()) {
                   std::string message("value ");
                   message.append(std::to_string(x));
@@ -10089,7 +10078,7 @@ namespace nirfmxlte_grpc {
   NiRFmxLTEFeatureToggles::NiRFmxLTEFeatureToggles(
     const nidevice_grpc::FeatureToggles& feature_toggles)
     : is_enabled(
-        feature_toggles.is_feature_enabled("nirfmxlte", CodeReadiness::kNextRelease))
+        feature_toggles.is_feature_enabled("nirfmxlte", CodeReadiness::kRelease))
   {
   }
 } // namespace nirfmxlte_grpc

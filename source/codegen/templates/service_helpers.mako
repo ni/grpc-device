@@ -20,27 +20,30 @@
 ${initialize_input_params(function_name, parameters)}
 ${initialize_output_params(output_parameters_to_initialize)}\
       auto init_lambda = [&] () {
+## If the session is not returned, it's an output param and need to be declared before calling.
+% if not service_helpers.is_session_returned_from_function(parameters):
         ${resource_handle_type} ${session_output_var_name};
-% if common_helpers.can_mock_function(parameters):
-        int status = library_->${function_name}(${service_helpers.create_args(parameters)});
-% else:
-        int status = ((${config['service_class_prefix']}Library*)library_)->${function_name}(${service_helpers.create_args(parameters)});
 % endif
+${call_library_method(
+  function_name=function_name, 
+  function_data=function_data, 
+  arg_string=service_helpers.create_args(parameters),
+  indent_level=1,
+  library_lval=service_helpers.get_library_lval_for_potentially_umockable_function(config, parameters))
+}\
         return std::make_tuple(status, ${session_output_var_name});
       };
       uint32_t session_id = 0;
       const std::string& grpc_device_session_name = request->${session_field_name}();
       auto cleanup_lambda = [&] (${resource_handle_type} id) { library_->${close_function_call}; };
-      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
-      response->set_status(status);
-      if (status_ok(status)) {
-        response->mutable_${session_output_var_name}()->set_id(session_id);
-      }
+      int status = ${service_helpers.session_repository_field_name(session_output_param, config)}->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
+${populate_response(output_parameters=output_parameters, init_method=True)}\
       return ::grpc::Status::OK;\
 </%def>
 
 <%def name="define_cross_driver_init_method_body(function_name, function_data, parameters)">\
 <%
+  config = data['config']
   initiating_driver_input_param = next(p for p in parameters if common_helpers.is_input_parameter(p) and p['grpc_type'] == 'nidevice_grpc.Session')
   output_parameters = [p for p in parameters if common_helpers.is_output_parameter(p)]
   session_output_param = next(p for p in output_parameters if p['grpc_type'] == 'nidevice_grpc.Session')
@@ -52,7 +55,7 @@ ${initialize_output_params(output_parameters_to_initialize)}\
 %>\
 ${initialize_input_params(function_name, parameters)}
 ${initialize_output_params(output_parameters_to_initialize)}\
-      auto initiating_session_id = session_repository_->access_session_id(${initiating_driver_c_name}.id(), ${initiating_driver_c_name}.name());
+      auto initiating_session_id = ${service_helpers.session_repository_field_name(initiating_driver_input_param, config)}->access_session_id(${initiating_driver_c_name}.id(), ${initiating_driver_c_name}.name());
       auto init_lambda = [&] () {
         ${cross_driver_dep.resource_handle_type} ${session_output_var_name};
         int status = library_->${function_name}(${service_helpers.create_args(parameters)});
@@ -77,31 +80,35 @@ ${initialize_output_params(output_parameters_to_initialize)}\
 ${initialize_input_params(function_name, non_ivi_params)}\
 
       while (true) {
-        auto status = library_->${function_name}(${service_helpers.create_args_for_ivi_dance(parameters)});
+${call_library_method(
+  function_name=function_name,
+  function_data=function_data,
+  arg_string=service_helpers.create_args_for_ivi_dance(parameters),
+  indent_level=1)
+}\
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
         ${size_param['type']} ${common_helpers.get_cpp_local_name(size_param)} = status;
-      
+
 <%block filter="common_helpers.indent(1)">\
 ${initialize_output_params(output_parameters)}\
 </%block>\
-        status = library_->${function_name}(${service_helpers.create_args(parameters)});
+${call_library_method(
+  function_name=function_name,
+  function_data=function_data,
+  arg_string=service_helpers.create_args(parameters),
+  indent_level=1,
+  declare_outputs=False)
+}\
         ## We cast status into ${common_helpers.get_cpp_local_name(size_param)} above, so it's safe to cast
         ## back to status's type here. (we do this to avoid a compiler warning)
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(${common_helpers.get_cpp_local_name(size_param)})) {
           // buffer is now too small, try again
           continue;
         }
-        response->set_status(status);
-% if output_parameters:
-        if (status_ok(status)) {
-<%block filter="common_helpers.indent(1)">\
-${set_response_values(output_parameters)}\
-</%block>\
-        }
-% endif
+${populate_response(output_parameters=output_parameters, indent_level=1)}\
         return ::grpc::Status::OK;
       }\
 </%def>
@@ -118,7 +125,12 @@ ${set_response_values(output_parameters)}\
 ${initialize_input_params(function_name, non_ivi_params)}\
 ${initialize_output_params(scalar_output_parameters)}\
       while (true) {
-        auto status = library_->${function_name}(${service_helpers.create_args_for_ivi_dance_with_a_twist(parameters)});
+${call_library_method(
+  function_name=function_name, 
+  function_data=function_data, 
+  arg_string=service_helpers.create_args_for_ivi_dance_with_a_twist(parameters),
+  indent_level=1)
+}\
         if (status < 0) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -131,19 +143,18 @@ ${initialize_output_params(array_output_parameters)}\
         auto ${ivi_param_set.size_param_name} = ${ivi_param_set.twist_param_name};
 %   endif
 % endfor
-        status = library_->${function_name}(${service_helpers.create_args(parameters)});
+${call_library_method(
+  function_name=function_name,
+  function_data=function_data,
+  arg_string=service_helpers.create_args(parameters),
+  indent_level=1,
+  declare_outputs=False)
+}\
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
         }
-        response->set_status(status);
-% if output_parameters:
-        if (status_ok(status)) {
-<%block filter="common_helpers.indent(1)">\
-${set_response_values(output_parameters)}\
-</%block>\
-        }
-% endif
+${populate_response(output_parameters=output_parameters, indent_level=1)}\
         return ::grpc::Status::OK;
       }\
 </%def>
@@ -151,7 +162,7 @@ ${set_response_values(output_parameters)}\
 
 <%def name="define_async_callback_method_body(function_name, function_data, parameters, config)">\
 <%
-  (input_parameters, callback_parameters) = service_helpers.get_callback_method_parameters(function_data)
+  callback_parameters = service_helpers.get_callback_method_parameters(function_data)
   response_parameters = common_helpers.filter_parameters_for_grpc_fields(callback_parameters)
   request_type = service_helpers.get_request_type(function_name)
   response_type = service_helpers.get_response_type(function_name)
@@ -176,7 +187,7 @@ ${set_response_values(output_parameters)}\
             ${response_type} callback_response;
             auto response = &callback_response;
 <%block filter="common_helpers.indent(2)">\
-${set_response_values(output_parameters=response_parameters)}\
+${set_response_values(output_parameters=response_parameters, init_method=False)}\
 </%block>\
             queue_write(callback_response);
             return 0;
@@ -186,7 +197,13 @@ ${set_response_values(output_parameters=response_parameters)}\
 ${initialize_input_params(function_name, parameters)}\
 </%block>\
 
-        auto status = library->${function_name}(${service_helpers.create_args(parameters)});
+${call_library_method(
+  function_name=function_name,
+  function_data=function_data,
+  arg_string=service_helpers.create_args(parameters),
+  library_lval="library",
+  indent_level=1)
+}\
 
         // SendInitialMetadata after the driver call so that WaitForInitialMetadata can be used to ensure that calls are serialized.
         StartSendInitialMetadata();
@@ -220,17 +237,13 @@ ${initialize_input_params(function_name, parameters)}\
 ${initialize_input_params(function_name, parameters)}\
 ${initialize_output_params(output_parameters)}\
 ${set_output_vararg_parameter_sizes(parameters)}\
-% if common_helpers.can_mock_function(parameters):
-      auto status = library_->${function_name}(${service_helpers.create_args(parameters)});
-% else:
-      auto status = ((${config['service_class_prefix']}Library*)library_)->${function_name}(${service_helpers.create_args(parameters)});
-% endif
-      response->set_status(status);
-% if output_parameters:
-      if (status_ok(status)) {
-${set_response_values(output_parameters=output_parameters)}\
-      }
-% endif
+${call_library_method(
+  function_name=function_name,
+  function_data=function_data,
+  arg_string=service_helpers.create_args(parameters),
+  library_lval=service_helpers.get_library_lval_for_potentially_umockable_function(config, parameters))
+}\
+${populate_response(output_parameters=output_parameters)}\
       return ::grpc::Status::OK;\
 </%def>
 
@@ -247,15 +260,14 @@ ${initialize_output_params(output_parameters)}\
   session_param = common_helpers.get_first_session_param(parameters)
   session_param_name = f'{common_helpers.get_cpp_local_name(session_param)}_grpc_session'
 %>\
-      session_repository_->remove_session(${session_param_name}.id(), ${session_param_name}.name());
+      ${service_helpers.session_repository_field_name(session_param, config)}->remove_session(${session_param_name}.id(), ${session_param_name}.name());
 % endif
-      auto status = library_->${function_name}(${service_helpers.create_args(parameters)});
-      response->set_status(status);
-% if output_parameters:
-      if (status_ok(status)) {
-${set_response_values(output_parameters=output_parameters)}\
-      }
-% endif
+${call_library_method(
+  function_name=function_name, 
+  function_data=function_data, 
+  arg_string=service_helpers.create_args(parameters))
+}\
+${populate_response(output_parameters=output_parameters)}\
       return ::grpc::Status::OK;\
 </%def>
 
@@ -288,7 +300,7 @@ ${initialize_len_input_param(parameter, parameters)}
 ${initialize_two_dimension_input_param(function_name, parameter, parameters)}
 % elif 'hardcoded_value' in parameter:
 ${initialize_hardcoded_parameter(parameter)}
-% elif parameter.get('pointer', False):
+% elif service_helpers.is_size_param_passed_by_ptr(parameter):
 ${initialize_pointer_input_parameter(parameter)}
 % else:
 ${initialize_standard_input_param(function_name, parameter)}
@@ -347,7 +359,7 @@ ${initialize_standard_input_param(function_name, parameter)}
 
 
 ## Initialize an enum array input parameter.
-## This is a straight copy and does not support all of the features of enum parameters 
+## This is a straight copy and does not support all of the features of enum parameters
 ## (i.e. mapped enums, _raw fields, etc.)
 <%def name="initialize_enum_array_input_param(function_name, parameter)">\
 <%
@@ -398,7 +410,7 @@ ${initialize_standard_input_param(function_name, parameter)}
 %   else:
           ${parameter_name} = static_cast<${parameter['type']}>(${enum_request_snippet});
 %   endif
-%   if validate_attribute_enum: 
+%   if validate_attribute_enum:
 ## "raw" attributes always validate non-raw enum values before passing to driver
 ## this can be important if (a) the driver can't handle all validation scenarios
 ## and (b) the caller passes/casts an invalid enum value.
@@ -428,7 +440,7 @@ ${initialize_standard_input_param(function_name, parameter)}
 % else:
           ${parameter_name} = static_cast<${parameter['type']}>(${raw_request_snippet});
 % endif
-% if validate_attribute_enum: # raw validation can be overriden with a toggle.
+% if validate_attribute_enum: # raw validation can be overridden with a toggle.
           auto ${parameter_name}_is_valid = ${check_enum_is_valid} || feature_toggles_.is_allow_undefined_attributes_enabled;
           ${parameter_name} = ${parameter_name}_is_valid ? ${parameter_name} : 0;
 % endif
@@ -446,7 +458,7 @@ ${initialize_standard_input_param(function_name, parameter)}
 <%
   parameter_name = common_helpers.get_cpp_local_name(parameter)
   size_sources = common_helpers.get_grpc_field_names_for_param_names(
-    parameters, 
+    parameters,
     parameter["determine_size_from"]
   )
   size_field_name = common_helpers.get_grpc_field_name_from_str(size_sources[-1])
@@ -496,7 +508,7 @@ ${initialize_standard_input_param(function_name, parameter)}
       auto total_length = std::accumulate(request->${size_field_name}().cbegin(), request->${size_field_name}().cend(), 0);
 
       if (total_length != request->${parameter_name}_size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The total size of the two-dimensional array ${parameter_name} does not match the exected size from the sum of ${size_field_name}");
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The total size of the two-dimensional array ${parameter_name} does not match the expected size from the sum of ${size_field_name}");
       }
 </%def>
 
@@ -515,6 +527,7 @@ ${initialize_standard_input_param(function_name, parameter)}
 ## Initialize an input parameter for an API call.
 <%def name="initialize_standard_input_param(function_name, parameter)">\
 <%
+  config = data['config']
   parameter_name = common_helpers.get_cpp_local_name(parameter)
   field_name = common_helpers.get_grpc_field_name(parameter)
   request_snippet = f'request->{field_name}()'
@@ -536,7 +549,7 @@ ${initialize_standard_input_param(function_name, parameter)}
         ${parameter_name}_request.begin(),
         ${parameter_name}_request.end(),
         std::back_inserter(${parameter_name}),
-        [&](auto session) { return ${service_helpers.session_repository_field_name(parameter)}->access_session(session.id(), session.name()); }); \
+        [&](auto session) { return ${service_helpers.session_repository_field_name(parameter, config)}->access_session(session.id(), session.name()); }); \
 % elif c_type == 'ViBoolean[]':
       auto ${parameter_name}_request = ${request_snippet};
       std::vector<${c_type_underlying_type}> ${parameter_name};
@@ -559,7 +572,7 @@ ${initialize_standard_input_param(function_name, parameter)}
       ${c_type} ${parameter_name} = (${c_type})${request_snippet};\
 % elif grpc_type == 'nidevice_grpc.Session':
       auto ${parameter_name}_grpc_session = ${request_snippet};
-      ${c_type} ${parameter_name} = ${service_helpers.session_repository_field_name(parameter)}->access_session(${parameter_name}_grpc_session.id(), ${parameter_name}_grpc_session.name());\
+      ${c_type} ${parameter_name} = ${service_helpers.session_repository_field_name(parameter, config)}->access_session(${parameter_name}_grpc_session.id(), ${parameter_name}_grpc_session.name());\
 % elif is_array and common_helpers.is_driver_typedef_with_same_size_but_different_qualifiers(c_type_underlying_type):
       auto ${parameter_name} = const_cast<${c_type_pointer}>(reinterpret_cast<const ${c_type_pointer}>(${request_snippet}.data()));\
 %elif c_type in ['const int32[]', 'const uInt32[]']:
@@ -584,7 +597,7 @@ ${initialize_standard_input_param(function_name, parameter)}
         ${parameter_name}_raw.begin(),
         ${parameter_name}_raw.end(),
         std::back_inserter(${parameter_name}),
-        [](auto x) { 
+        [](auto x) {
               if (x < std::numeric_limits<${c_element_type_that_needs_coercion}>::min() || x > std::numeric_limits<${c_element_type_that_needs_coercion}>::max()) {
                   std::string message("value ");
                   message.append(std::to_string(x));
@@ -617,6 +630,9 @@ ${initialize_standard_input_param(function_name, parameter)}
 
 ## Initialize the output parameters for an API call.
 <%def name="initialize_output_params(output_parameters)">\
+<%
+  output_parameters = common_helpers.get_driver_api_params(output_parameters)
+%>\
 % for parameter in output_parameters:
 <%
   parameter_name = common_helpers.get_cpp_local_name(parameter)
@@ -669,9 +685,37 @@ ${initialize_standard_input_param(function_name, parameter)}
 % endfor
 </%def>
 
-## Set output parameters updated through API call on the gRPC response message.
-<%def name="set_response_values(output_parameters)">\
+
+## Handles populating the response message after calling the driver API.
+<%def name="populate_response(output_parameters, indent_level=0, init_method=False)">\
 <%
+  get_last_error_output = service_helpers.get_last_error_output_param(output_parameters)
+  normal_outputs = [p for p in output_parameters if p is not get_last_error_output]
+%>\
+<%block filter="common_helpers.indent(indent_level)">\
+      response->set_status(status);
+%if output_parameters:
+      if (status_ok(status)) {
+${set_response_values(normal_outputs, init_method)}\
+      }
+%   if get_last_error_output:
+<%
+  get_last_error_output_name = common_helpers.get_grpc_field_name(get_last_error_output)
+%>\
+      else {
+        const auto last_error_buffer = get_last_error(library_);
+        response->set_${get_last_error_output_name}(last_error_buffer.data());
+      }
+%   endif
+%endif
+</%block>\
+</%def>
+
+
+## Set output parameters updated through API call on the gRPC response message.
+<%def name="set_response_values(output_parameters, init_method)">\
+<%
+  output_parameters = [p for p in output_parameters if service_helpers.should_copy_to_response(p)]
   config = data['config']
   enums = data['enums']
   namespace_prefix = config["namespace_component"] + "_grpc::"
@@ -759,8 +803,10 @@ ${copy_to_response_with_transform(source_buffer=parameter_name, parameter_name=p
         convert_to_grpc(${parameter_name}, response->mutable_${parameter_name}());
 %   elif common_helpers.is_string_arg(parameter):
         response->set_${parameter_name}(${parameter_name});
-%   elif parameter['type'] == 'ViSession':
-        auto session_id = session_repository_->resolve_session_id(${parameter_name});
+%   elif parameter['grpc_type'] == 'nidevice_grpc.Session':
+%      if not init_method: # Non-init methods need to resolve the session ID from the out param.
+        auto session_id = ${service_helpers.session_repository_field_name(parameter, config)}->resolve_session_id(${parameter_name});
+%      endif
         response->mutable_${parameter_name}()->set_id(session_id);
 %   elif common_helpers.is_array(parameter['type']):
 %     if common_helpers.get_size_mechanism(parameter) == 'passed-in-by-ptr':
@@ -792,7 +838,7 @@ ${copy_to_response_with_transform(source_buffer=parameter_name, parameter_name=p
           if (shrunk_size != current_size) {
             response->mutable_${parameter_name}()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
           }
-        }        
+        }
 %     else:
 ## This code doesn't handle all parameter types (i.e., enums), see what initialize_output_params() does for that.
         response->mutable_${parameter_name}()->Resize(${size}, 0);
@@ -813,7 +859,33 @@ ${copy_to_response_with_transform(source_buffer=parameter_name, parameter_name=p
           ${source_buffer}.begin(),
           ${source_buffer}.begin() + ${size},
           google::protobuf::RepeatedFieldBackInserter(response->mutable_${parameter_name}()),
-          [&](auto x) { 
+          [&](auto x) {
               return ${transform_x};
           });
+</%def>
+
+## Call the driver library method function_name.
+## function_name: name of the function.
+## function_data: function metadata.
+## arg_string: comma separated argument list to pass to the function (see service_helpers.create_args),
+## indent_level: (Optional) levels of additional indentation for the call snippet.
+## library_lval: (Optional) variable or expression to use as the left-hand-side for the library pointer (default: this->library_).
+## declare_outputs: (Optional) If this is true, variables will be declared as "auto". If false, variables will just be assigned (default: False).
+<%def name="call_library_method(
+  function_name, 
+  function_data, 
+  arg_string, 
+  indent_level=0,
+  library_lval='library_',
+  declare_outputs=True)">\
+<%
+  return_value_name = service_helpers.get_return_value_name(function_data)
+  auto_decl = "auto " if declare_outputs else ""
+%>\
+<%block filter="common_helpers.indent(indent_level)">\
+      ${auto_decl}${return_value_name} = ${library_lval}->${function_name}(${arg_string});
+% if service_helpers.has_status_expression(function_data):
+      ${auto_decl}status = ${service_helpers.get_status_expression(function_data)};
+% endif
+</%block>\
 </%def>

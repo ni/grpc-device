@@ -687,7 +687,6 @@ TEST_F(NiRFmxLTEDriverApiTests, SemAdvancedNonContiguousMultiCarrierFromExample_
   constexpr auto NUMBER_OF_SUBBLOCKS = 2;
   constexpr auto NUMBER_OF_OFFSET_SEGMENT = 4;
   std::vector<float64> subblocks_center_frequency{1.95e+9, 30e+6};
-  std::vector<int> subblocks_frequency_definition{NIRFMXLTE_INT32_SUBBLOCK_FREQUENCY_DEFINITION_ABSOLUTE, NIRFMXLTE_INT32_SUBBLOCK_FREQUENCY_DEFINITION_RELATIVE};
   std::vector<int32> subblocks_sideband(4, SEM_OFFSET_SIDEBAND_BOTH);
   std::vector<int32> subblocks_rbw_filter_type(4, SEM_OFFSET_RBW_FILTER_TYPE_GAUSSIAN);
   auto session = init_session(stub(), PXI_5663E);
@@ -700,7 +699,6 @@ TEST_F(NiRFmxLTEDriverApiTests, SemAdvancedNonContiguousMultiCarrierFromExample_
     auto subblock_string_response = client::build_subblock_string(stub(), "", i);
     EXPECT_SUCCESS(session, subblock_string_response);
     EXPECT_SUCCESS(session, client::cfg_frequency(stub(), session, subblock_string_response.selector_string_out(), subblocks_center_frequency[i]));
-    EXPECT_SUCCESS(session, client::cfg_subblock_frequency_definition(stub(), session, subblock_string_response.selector_string_out(), subblocks_frequency_definition[i]));
     EXPECT_SUCCESS(session, client::cfg_component_carrier_spacing(stub(), session, subblock_string_response.selector_string_out(), COMPONENT_CARRIER_SPACING_TYPE_NOMINAL, -1));
     EXPECT_SUCCESS(session, client::cfg_number_of_component_carriers(stub(), session, subblock_string_response.selector_string_out(), NUMBER_OF_COMPONENT_CARRIERS));
     EXPECT_SUCCESS(session, client::cfg_component_carrier_array(stub(), session, subblock_string_response.selector_string_out(), {20e+6}, {0.0}, std::vector<int32>()));
@@ -985,7 +983,6 @@ TEST_F(NiRFmxLTEDriverApiTests, ULModAccMIMOFromExample_FetchData_DataLooksReaso
   const auto NUMBER_OF_COMPONENT_CARRIERS = 1;
   std::vector<std::string> subblock_string_vec;
   const std::vector<float64> center_frequency_vec{1.95e9, 30e6};
-  const std::vector<int32> subblock_frequency_definition_vec{NIRFMXLTE_INT32_SUBBLOCK_FREQUENCY_DEFINITION_ABSOLUTE, NIRFMXLTE_INT32_SUBBLOCK_FREQUENCY_DEFINITION_RELATIVE};
   ModAccFetchPUSCHConstellationTraceResponse mod_acc_fetch_pusch_constellation_trace_response;
   auto session = init_session(stub(), PXI_5663E);
   EXPECT_SUCCESS(session, client::cfg_frequency_reference(stub(), session, "", FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK, 10e6));
@@ -1001,7 +998,6 @@ TEST_F(NiRFmxLTEDriverApiTests, ULModAccMIMOFromExample_FetchData_DataLooksReaso
     subblock_string_vec.push_back(subblock_string_response.selector_string_out());
     EXPECT_SUCCESS(session, subblock_string_response);
     EXPECT_SUCCESS(session, client::cfg_frequency(stub(), session, subblock_string_vec[i], center_frequency_vec[i]));
-    EXPECT_SUCCESS(session, client::cfg_subblock_frequency_definition(stub(), session, subblock_string_vec[i], subblock_frequency_definition_vec[i]));
     EXPECT_SUCCESS(session, client::cfg_component_carrier_spacing(stub(), session, subblock_string_vec[i], COMPONENT_CARRIER_SPACING_TYPE_NOMINAL, -1));
     EXPECT_SUCCESS(session, client::cfg_band(stub(), session, subblock_string_vec[i], 1));
     EXPECT_SUCCESS(session, client::cfg_number_of_component_carriers(stub(), session, subblock_string_vec[i], NUMBER_OF_COMPONENT_CARRIERS));

@@ -33,6 +33,22 @@ close(const StubPtr& stub, const nidevice_grpc::Session& handle)
   return response;
 }
 
+CloseSecondarySessionResponse
+close_secondary_session(const StubPtr& stub, const nidevice_grpc::Session& secondary_session_handle)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CloseSecondarySessionRequest{};
+  request.mutable_secondary_session_handle()->CopyFrom(secondary_session_handle);
+
+  auto response = CloseSecondarySessionResponse{};
+
+  raise_if_error(
+      stub->CloseSecondarySession(&context, request, &response));
+
+  return response;
+}
+
 GetCrossDriverSessionResponse
 get_cross_driver_session(const StubPtr& stub, const nidevice_grpc::Session& handle)
 {
@@ -45,6 +61,36 @@ get_cross_driver_session(const StubPtr& stub, const nidevice_grpc::Session& hand
 
   raise_if_error(
       stub->GetCrossDriverSession(&context, request, &response));
+
+  return response;
+}
+
+GetLatestErrorMessageResponse
+get_latest_error_message(const StubPtr& stub)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetLatestErrorMessageRequest{};
+
+  auto response = GetLatestErrorMessageResponse{};
+
+  raise_if_error(
+      stub->GetLatestErrorMessage(&context, request, &response));
+
+  return response;
+}
+
+GetStringAsReturnedValueResponse
+get_string_as_returned_value(const StubPtr& stub)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetStringAsReturnedValueRequest{};
+
+  auto response = GetStringAsReturnedValueResponse{};
+
+  raise_if_error(
+      stub->GetStringAsReturnedValue(&context, request, &response));
 
   return response;
 }
@@ -169,6 +215,21 @@ init_from_cross_driver_session_array(const StubPtr& stub, const std::vector<nide
   return response;
 }
 
+InitSecondarySessionResponse
+init_secondary_session(const StubPtr& stub)
+{
+  ::grpc::ClientContext context;
+
+  auto request = InitSecondarySessionRequest{};
+
+  auto response = InitSecondarySessionResponse{};
+
+  raise_if_error(
+      stub->InitSecondarySession(&context, request, &response));
+
+  return response;
+}
+
 InitWithHandleNameAsSessionNameResponse
 init_with_handle_name_as_session_name(const StubPtr& stub, const pb::string& handle_name)
 {
@@ -181,6 +242,22 @@ init_with_handle_name_as_session_name(const StubPtr& stub, const pb::string& han
 
   raise_if_error(
       stub->InitWithHandleNameAsSessionName(&context, request, &response));
+
+  return response;
+}
+
+InitWithReturnedSessionResponse
+init_with_returned_session(const StubPtr& stub, const pb::string& handle_name)
+{
+  ::grpc::ClientContext context;
+
+  auto request = InitWithReturnedSessionRequest{};
+  request.set_handle_name(handle_name);
+
+  auto response = InitWithReturnedSessionResponse{};
+
+  raise_if_error(
+      stub->InitWithReturnedSession(&context, request, &response));
 
   return response;
 }

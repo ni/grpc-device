@@ -11,6 +11,7 @@
 #include <iostream>
 #include <atomic>
 #include <vector>
+#include "custom/nifake_non_ivi_errors.h"
 #include <server/converters.h>
 #include <server/callback_router.h>
 #include <server/server_reactor.h>
@@ -22,13 +23,18 @@ namespace nifake_non_ivi_grpc {
   using nidevice_grpc::converters::convert_to_grpc;
   using nidevice_grpc::converters::MatchState;
 
+  const auto kErrorReadBufferTooSmall = -200229;
+  const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
+
   NiFakeNonIviService::NiFakeNonIviService(
       NiFakeNonIviLibraryInterface* library,
-      ResourceRepositorySharedPtr session_repository, 
+      ResourceRepositorySharedPtr resource_repository,
+      SecondarySessionHandleResourceRepositorySharedPtr secondary_session_handle_resource_repository,
       FakeCrossDriverHandleResourceRepositorySharedPtr fake_cross_driver_handle_resource_repository,
       const NiFakeNonIviFeatureToggles& feature_toggles)
       : library_(library),
-      session_repository_(session_repository),
+      session_repository_(resource_repository),
+      secondary_session_handle_resource_repository_(secondary_session_handle_resource_repository),
       fake_cross_driver_handle_resource_repository_(fake_cross_driver_handle_resource_repository),
       feature_toggles_(feature_toggles)
   {
@@ -66,6 +72,26 @@ namespace nifake_non_ivi_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiFakeNonIviService::CloseSecondarySession(::grpc::ServerContext* context, const CloseSecondarySessionRequest* request, CloseSecondarySessionResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto secondary_session_handle_grpc_session = request->secondary_session_handle();
+      SecondarySessionHandle secondary_session_handle = secondary_session_handle_resource_repository_->access_session(secondary_session_handle_grpc_session.id(), secondary_session_handle_grpc_session.name());
+      secondary_session_handle_resource_repository_->remove_session(secondary_session_handle_grpc_session.id(), secondary_session_handle_grpc_session.name());
+      auto status = library_->CloseSecondarySession(secondary_session_handle);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiFakeNonIviService::GetCrossDriverSession(::grpc::ServerContext* context, const GetCrossDriverSessionRequest* request, GetCrossDriverSessionResponse* response)
   {
     if (context->IsCancelled()) {
@@ -87,6 +113,68 @@ namespace nifake_non_ivi_grpc {
       response->set_status(status);
       if (status == 0) {
         response->mutable_cross_driver_session()->set_id(session_id);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeNonIviService::GetLatestErrorMessage(::grpc::ServerContext* context, const GetLatestErrorMessageRequest* request, GetLatestErrorMessageResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+
+      while (true) {
+        auto status = library_->GetLatestErrorMessage(nullptr, 0);
+        if (status < 0) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        uInt32 size = status;
+
+        std::string message;
+        if (size > 0) {
+            message.resize(size - 1);
+        }
+        status = library_->GetLatestErrorMessage((char*)message.data(), size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(size)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        response->set_status(status);
+        if (status_ok(status)) {
+          response->set_message(message);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_message()));
+        }
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeNonIviService::GetStringAsReturnedValue(::grpc::ServerContext* context, const GetStringAsReturnedValueRequest* request, GetStringAsReturnedValueResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      std::string buf(512 - 1, '\0');
+      auto string_out = library_->GetStringAsReturnedValue((char*)buf.data());
+      auto status = string_out ? 0 : -1;
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_string_out(string_out);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_string_out()));
       }
       return ::grpc::Status::OK;
     }
@@ -230,7 +318,7 @@ namespace nifake_non_ivi_grpc {
           response->value_raw().begin(),
           response->value_raw().begin() + 10,
           google::protobuf::RepeatedFieldBackInserter(response->mutable_value()),
-          [&](auto x) { 
+          [&](auto x) {
               return checked_convert_value(x);
           });
       }
@@ -253,7 +341,7 @@ namespace nifake_non_ivi_grpc {
 
       auto init_lambda = [&] () {
         FakeHandle handle;
-        int status = library_->Init(session_name, &handle);
+        auto status = library_->Init(session_name, &handle);
         return std::make_tuple(status, handle);
       };
       uint32_t session_id = 0;
@@ -263,6 +351,10 @@ namespace nifake_non_ivi_grpc {
       response->set_status(status);
       if (status_ok(status)) {
         response->mutable_handle()->set_id(session_id);
+      }
+      else {
+        const auto last_error_buffer = get_last_error(library_);
+        response->set_error_message(last_error_buffer.data());
       }
       return ::grpc::Status::OK;
     }
@@ -284,7 +376,7 @@ namespace nifake_non_ivi_grpc {
 
       auto init_lambda = [&] () {
         FakeHandle handle;
-        int status = library_->InitFromCrossDriverSession(cross_driver_session, &handle);
+        auto status = library_->InitFromCrossDriverSession(cross_driver_session, &handle);
         return std::make_tuple(status, handle);
       };
       uint32_t session_id = 0;
@@ -321,7 +413,7 @@ namespace nifake_non_ivi_grpc {
 
       auto init_lambda = [&] () {
         FakeHandle handle;
-        int status = library_->InitFromCrossDriverSessionArray(cross_driver_session_array.data(), number_of_cross_driver_sessions, &handle);
+        auto status = library_->InitFromCrossDriverSessionArray(cross_driver_session_array.data(), number_of_cross_driver_sessions, &handle);
         return std::make_tuple(status, handle);
       };
       uint32_t session_id = 0;
@@ -331,6 +423,35 @@ namespace nifake_non_ivi_grpc {
       response->set_status(status);
       if (status_ok(status)) {
         response->mutable_handle()->set_id(session_id);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeNonIviService::InitSecondarySession(::grpc::ServerContext* context, const InitSecondarySessionRequest* request, InitSecondarySessionResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+
+      auto init_lambda = [&] () {
+        SecondarySessionHandle secondary_session_handle;
+        auto status = library_->InitSecondarySession(&secondary_session_handle);
+        return std::make_tuple(status, secondary_session_handle);
+      };
+      uint32_t session_id = 0;
+      const std::string& grpc_device_session_name = request->session_name();
+      auto cleanup_lambda = [&] (SecondarySessionHandle id) { library_->CloseSecondarySession(id); };
+      int status = secondary_session_handle_resource_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->mutable_secondary_session_handle()->set_id(session_id);
       }
       return ::grpc::Status::OK;
     }
@@ -351,7 +472,37 @@ namespace nifake_non_ivi_grpc {
 
       auto init_lambda = [&] () {
         FakeHandle handle;
-        int status = library_->InitWithHandleNameAsSessionName(handle_name, &handle);
+        auto status = library_->InitWithHandleNameAsSessionName(handle_name, &handle);
+        return std::make_tuple(status, handle);
+      };
+      uint32_t session_id = 0;
+      const std::string& grpc_device_session_name = request->handle_name();
+      auto cleanup_lambda = [&] (FakeHandle id) { library_->Close(id); };
+      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->mutable_handle()->set_id(session_id);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeNonIviService::InitWithReturnedSession(::grpc::ServerContext* context, const InitWithReturnedSessionRequest* request, InitWithReturnedSessionResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto handle_name = request->handle_name().c_str();
+
+      auto init_lambda = [&] () {
+        auto handle = library_->InitWithReturnedSession(handle_name);
+        auto status = handle == 0xDEADBEEF ? -1 : 0;
         return std::make_tuple(status, handle);
       };
       uint32_t session_id = 0;
@@ -384,7 +535,7 @@ namespace nifake_non_ivi_grpc {
         u16_array_raw.begin(),
         u16_array_raw.end(),
         std::back_inserter(u16_array),
-        [](auto x) { 
+        [](auto x) {
               if (x < std::numeric_limits<myUInt16>::min() || x > std::numeric_limits<myUInt16>::max()) {
                   std::string message("value ");
                   message.append(std::to_string(x));
@@ -402,7 +553,7 @@ namespace nifake_non_ivi_grpc {
         i16_array_raw.begin(),
         i16_array_raw.end(),
         std::back_inserter(i16_array),
-        [](auto x) { 
+        [](auto x) {
               if (x < std::numeric_limits<myInt16>::min() || x > std::numeric_limits<myInt16>::max()) {
                   std::string message("value ");
                   message.append(std::to_string(x));
@@ -420,7 +571,7 @@ namespace nifake_non_ivi_grpc {
         i8_array_raw.begin(),
         i8_array_raw.end(),
         std::back_inserter(i8_array),
-        [](auto x) { 
+        [](auto x) {
               if (x < std::numeric_limits<myInt8>::min() || x > std::numeric_limits<myInt8>::max()) {
                   std::string message("value ");
                   message.append(std::to_string(x));
@@ -489,7 +640,7 @@ namespace nifake_non_ivi_grpc {
           u16_data.begin(),
           u16_data.begin() + number_of_u16_samples,
           google::protobuf::RepeatedFieldBackInserter(response->mutable_u16_data()),
-          [&](auto x) { 
+          [&](auto x) {
               return x;
           });
         response->mutable_i16_data()->Clear();
@@ -498,7 +649,7 @@ namespace nifake_non_ivi_grpc {
           i16_data.begin(),
           i16_data.begin() + number_of_i16_samples,
           google::protobuf::RepeatedFieldBackInserter(response->mutable_i16_data()),
-          [&](auto x) { 
+          [&](auto x) {
               return x;
           });
         response->mutable_i8_data()->Clear();
@@ -507,7 +658,7 @@ namespace nifake_non_ivi_grpc {
           i8_data.begin(),
           i8_data.begin() + number_of_i8_samples,
           google::protobuf::RepeatedFieldBackInserter(response->mutable_i8_data()),
-          [&](auto x) { 
+          [&](auto x) {
               return x;
           });
       }
@@ -580,7 +731,7 @@ namespace nifake_non_ivi_grpc {
           u16_data.begin(),
           u16_data.begin() + array_size_copy,
           google::protobuf::RepeatedFieldBackInserter(response->mutable_u16_data()),
-          [&](auto x) { 
+          [&](auto x) {
               return x;
           });
       }

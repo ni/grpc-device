@@ -26,10 +26,10 @@ namespace nifake_grpc {
 
   NiFakeService::NiFakeService(
       NiFakeLibraryInterface* library,
-      ResourceRepositorySharedPtr session_repository, 
+      ResourceRepositorySharedPtr resource_repository,
       const NiFakeFeatureToggles& feature_toggles)
       : library_(library),
-      session_repository_(session_repository),
+      session_repository_(resource_repository),
       feature_toggles_(feature_toggles)
   {
   }
@@ -319,7 +319,7 @@ namespace nifake_grpc {
           return ::grpc::Status::OK;
         }
         ViInt32 size_in_bytes = status;
-      
+
         std::string configuration(size_in_bytes, '\0');
         status = library_->ExportAttributeConfigurationBuffer(vi, size_in_bytes, (ViInt8*)configuration.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(size_in_bytes)) {
@@ -481,7 +481,7 @@ namespace nifake_grpc {
           return ::grpc::Status::OK;
         }
         ViInt32 buffer_size = status;
-      
+
         std::string a_string;
         if (buffer_size > 0) {
             a_string.resize(buffer_size - 1);
@@ -518,7 +518,7 @@ namespace nifake_grpc {
       auto total_length = std::accumulate(request->array_lengths().cbegin(), request->array_lengths().cend(), 0);
 
       if (total_length != request->array_size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The total size of the two-dimensional array array does not match the exected size from the sum of array_lengths");
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The total size of the two-dimensional array array does not match the expected size from the sum of array_lengths");
       }
 
       auto array_lengths = const_cast<ViInt32*>(reinterpret_cast<const ViInt32*>(request->array_lengths().data()));
@@ -604,7 +604,7 @@ namespace nifake_grpc {
             if (shrunk_size != current_size) {
               response->mutable_array_out()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           response->set_actual_size(actual_size);
         }
         return ::grpc::Status::OK;
@@ -808,7 +808,7 @@ namespace nifake_grpc {
           return ::grpc::Status::OK;
         }
         ViInt32 array_size = status;
-      
+
         response->mutable_array_out()->Resize(array_size, 0);
         ViReal64* array_out = response->mutable_array_out()->mutable_data();
         status = library_->GetArrayUsingIviDance(vi, array_size, array_out);
@@ -997,7 +997,7 @@ namespace nifake_grpc {
           return ::grpc::Status::OK;
         }
         ViInt32 buffer_size = status;
-      
+
         std::string attribute_value;
         if (buffer_size > 0) {
             attribute_value.resize(buffer_size - 1);
@@ -1255,7 +1255,7 @@ namespace nifake_grpc {
 
       auto init_lambda = [&] () {
         ViSession vi;
-        int status = library_->InitWithOptions(resource_name, id_query, reset_device, option_string, &vi);
+        auto status = library_->InitWithOptions(resource_name, id_query, reset_device, option_string, &vi);
         return std::make_tuple(status, vi);
       };
       uint32_t session_id = 0;
@@ -1286,7 +1286,7 @@ namespace nifake_grpc {
 
       auto init_lambda = [&] () {
         ViSession vi;
-        int status = library_->InitExtCal(resource_name, calibration_password, &vi);
+        auto status = library_->InitExtCal(resource_name, calibration_password, &vi);
         return std::make_tuple(status, vi);
       };
       uint32_t session_id = 0;
@@ -1336,7 +1336,7 @@ namespace nifake_grpc {
 
       auto init_lambda = [&] () {
         ViSession vi;
-        int status = library_->InitWithVarArgs(resource_name, &vi, get_stringArg_if(name_and_turtle, 0), get_turtle_if(name_and_turtle, 0), get_stringArg_if(name_and_turtle, 1), get_turtle_if(name_and_turtle, 1), get_stringArg_if(name_and_turtle, 2), get_turtle_if(name_and_turtle, 2), get_stringArg_if(name_and_turtle, 3), get_turtle_if(name_and_turtle, 3));
+        auto status = library_->InitWithVarArgs(resource_name, &vi, get_stringArg_if(name_and_turtle, 0), get_turtle_if(name_and_turtle, 0), get_stringArg_if(name_and_turtle, 1), get_turtle_if(name_and_turtle, 1), get_stringArg_if(name_and_turtle, 2), get_turtle_if(name_and_turtle, 2), get_stringArg_if(name_and_turtle, 3), get_turtle_if(name_and_turtle, 3));
         return std::make_tuple(status, vi);
       };
       uint32_t session_id = 0;
@@ -1802,7 +1802,7 @@ namespace nifake_grpc {
           return ::grpc::Status::OK;
         }
         ViInt32 string_size = status;
-      
+
         ViBoolean a_boolean {};
         ViInt32 an_int32 {};
         ViInt64 an_int64 {};

@@ -1,3 +1,5 @@
+"""Stage client files."""
+
 from argparse import ArgumentParser
 from pathlib import Path
 from shutil import copy2, copytree
@@ -51,7 +53,7 @@ class _ArtifactReadiness:
         )
 
 
-class ArtifactLocations:
+class _ArtifactLocations:
     repo_root: Path
 
     def __init__(self, repo_root: Path):
@@ -75,7 +77,7 @@ class ArtifactLocations:
 
 
 def _get_release_proto_files(
-    artifact_locations: ArtifactLocations, readiness: _ArtifactReadiness
+    artifact_locations: _ArtifactLocations, readiness: _ArtifactReadiness
 ) -> List[Path]:
 
     release_driver_dirs = readiness.get_release_ready_subdirs(artifact_locations.generated_files)
@@ -83,14 +85,15 @@ def _get_release_proto_files(
 
 
 def _get_release_example_directories(
-    artifact_locations: ArtifactLocations, readiness: _ArtifactReadiness
+    artifact_locations: _ArtifactLocations, readiness: _ArtifactReadiness
 ) -> Iterable[Path]:
     return readiness.get_release_ready_subdirs(artifact_locations.examples)
 
 
 def stage_client_files(output_path: Path, include_prerelease: bool):
+    """Stage the client files into the given output path."""
     repo_root = Path(__file__).parent.parent.parent
-    artifact_locations = ArtifactLocations(repo_root)
+    artifact_locations = _ArtifactLocations(repo_root)
     readiness = _ArtifactReadiness(artifact_locations.metadata_dir, include_prerelease)
 
     proto_path = output_path / "proto"

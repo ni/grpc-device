@@ -299,6 +299,24 @@ db_close_database(const StubPtr& stub, const nidevice_grpc::Session& database_re
   return response;
 }
 
+DbCreateObjectResponse
+db_create_object(const StubPtr& stub, const nidevice_grpc::Session& parent_object_ref, const pb::uint32& object_class, const pb::string& object_name)
+{
+  ::grpc::ClientContext context;
+
+  auto request = DbCreateObjectRequest{};
+  request.mutable_parent_object_ref()->CopyFrom(parent_object_ref);
+  request.set_object_class(object_class);
+  request.set_object_name(object_name);
+
+  auto response = DbCreateObjectResponse{};
+
+  raise_if_error(
+      stub->DbCreateObject(&context, request, &response));
+
+  return response;
+}
+
 DbDeleteObjectResponse
 db_delete_object(const StubPtr& stub, const nidevice_grpc::Session& db_object_ref)
 {
@@ -329,6 +347,24 @@ db_deploy(const StubPtr& stub, const pb::string& ip_address, const pb::string& d
 
   raise_if_error(
       stub->DbDeploy(&context, request, &response));
+
+  return response;
+}
+
+DbFindObjectResponse
+db_find_object(const StubPtr& stub, const nidevice_grpc::Session& parent_object_ref, const pb::uint32& object_class, const pb::string& object_name)
+{
+  ::grpc::ClientContext context;
+
+  auto request = DbFindObjectRequest{};
+  request.mutable_parent_object_ref()->CopyFrom(parent_object_ref);
+  request.set_object_class(object_class);
+  request.set_object_name(object_name);
+
+  auto response = DbFindObjectResponse{};
+
+  raise_if_error(
+      stub->DbFindObject(&context, request, &response));
 
   return response;
 }

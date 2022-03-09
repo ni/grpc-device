@@ -1,40 +1,45 @@
-# Steps:
-# 1. Open a new RFmx Session.
-# 2. Configure Frequency Reference.
-# 3. Configure basic signal properties(Center Frequency and External Attenuation).
-# 4. Configure Trigger Type and Trigger Parameters.
-# 5. Configure Packet Type.
-# 6. Configure Data Rate.
-# 7. Configure Payload Length.
-# 8. Configure Direction Finding.
-# 9. Configure Reference Level.
-# 10. Select TXP measurement and enable Traces.
-# 11. Configure TXP Burst Synchronization Type.
-# 12. Configure Averaging Parameters for TXP measurement.
-# 13. Initiate the Measurement.
-# 14. Fetch TXP Measurements and Trace.
-# 15. Close RFmx Session.
-#
-# The gRPC API is built from the C API. RFmx Bluetooth documentation is installed with the driver at:
-# C:\Program Files (x86)\National Instruments\RFmx\BT\Documentation\rfmxbtcvi.chm
-#
-# Getting Started:
-#
-# To run this example, install "RFmx Bluetooth" on the server machine.
-# Link: https://www.ni.com/en-us/support/downloads/software-products/download.rfmx-bluetooth.html
-#
-# For instructions on how to use protoc to generate gRPC client interfaces, see our "Creating a gRPC Client" wiki page.
-# Link: https://github.com/ni/grpc-device/wiki/Creating-a-gRPC-Client
-#
-# Refer to the NI-RFmxBluetooth gRPC Wiki for the latest C Function Reference:
-# Link: https://github.com/ni/grpc-device/wiki/NI-RFmxBluetooth-C-Function-Reference
-#
-# Running from command line:
-#
-# Server machine's IP address, port number, and physical channel name can be passed as separate command line arguments.
-#   > python txp-basic.py <server_address> <port_number> <physical_channel_name>
-# If they are not passed in as command line arguments, then by default the server address will be "localhost:31763", with "SimulatedDevice" as the resource name
+r"""Fetch TXP data.
 
+Steps:
+  1. Open a new RFmx Session.
+  2. Configure Frequency Reference.
+  3. Configure basic signal properties(Center Frequency and External Attenuation).
+  4. Configure Trigger Type and Trigger Parameters.
+  5. Configure Packet Type.
+  6. Configure Data Rate.
+  7. Configure Payload Length.
+  8. Configure Direction Finding.
+  9. Configure Reference Level.
+  10. Select TXP measurement and enable Traces.
+  11. Configure TXP Burst Synchronization Type.
+  12. Configure Averaging Parameters for TXP measurement.
+  13. Initiate the Measurement.
+  14. Fetch TXP Measurements and Trace.
+  15. Close RFmx Session.
+
+The gRPC API is built from the C API. RFmx Bluetooth documentation is installed with the driver at:
+  C:\Program Files (x86)\National Instruments\RFmx\BT\Documentation\rfmxbtcvi.chm
+
+Getting Started:
+
+To run this example, install "RFmx Bluetooth" on the server machine:
+  https://www.ni.com/en-us/support/downloads/software-products/download.rfmx-bluetooth.html
+
+For instructions on how to use protoc to generate gRPC client interfaces, see our "Creating a gRPC
+Client" wiki page:
+  https://github.com/ni/grpc-device/wiki/Creating-a-gRPC-Client
+
+Refer to the NI-RFmxBluetooth gRPC Wiki for the latest C Function Reference:
+  https://github.com/ni/grpc-device/wiki/NI-RFmxBluetooth-C-Function-Reference
+
+Running from command line:
+
+Server machine's IP address, port number, and physical channel name can be passed as separate
+command line arguments.
+  > python txp-basic.py <server_address> <port_number> <resource_name>
+If they are not passed in as command line arguments, then by default the server address will be
+"localhost:31763", with "SimulatedDevice" as the resource name.
+"""
 
 import sys
 
@@ -42,31 +47,40 @@ import grpc
 import nirfmxbluetooth_pb2 as nirfmxbluetooth_types
 import nirfmxbluetooth_pb2_grpc as grpc_nirfmxbluetooth
 
-server_address = "localhost"
-server_port = "31763"
-session_name = "RFmxBluetoothSession"
+SERVER_ADDRESS = "localhost"
+SERVER_PORT = "31763"
+SESSION_NAME = "RFmxBluetoothSession"
 
 # Resource name and options for a simulated 5663 client.
-resource = "SimulatedDevice"
-options = "Simulate=1,DriverSetup=Model:5663"
+RESOURCE = "SimulatedDevice"
+OPTIONS = "Simulate=1,DriverSetup=Model:5663"
 
 # Read in cmd args
 if len(sys.argv) >= 2:
-    server_address = sys.argv[1]
+    SERVER_ADDRESS = sys.argv[1]
 if len(sys.argv) >= 3:
-    server_port = sys.argv[2]
+    SERVER_PORT = sys.argv[2]
 if len(sys.argv) >= 4:
     resource = sys.argv[3]
-    options = ""
+    OPTIONS = ""
 
 # Create a gRPC channel + client.
-channel = grpc.insecure_channel(f"{server_address}:{server_port}")
+channel = grpc.insecure_channel(f"{SERVER_ADDRESS}:{SERVER_PORT}")
 client = grpc_nirfmxbluetooth.NiRFmxBluetoothStub(channel)
 instr = None
 
 
-# Raise an exception if an error was returned
+def raise_if_initialization_error(response):
+    """Raise an exception if an error was returned from Initialize."""
+    if response.status < 0:
+        raise RuntimeError(f"Error: {response.error_message or response.status}")
+    if response.status > 0:
+        sys.stderr.write(f"Warning: {response.error_message or response.status}\n")
+    return response
+
+
 def raise_if_error(response):
+    """Raise an exception if an error was returned."""
     if response.status != 0:
         error_response = client.GetError(
             nirfmxbluetooth_types.GetErrorRequest(
@@ -85,10 +99,10 @@ try:
     auto_level = True
     basic_rate_packets = True
 
-    initialize_response = raise_if_error(
+    initialize_response = raise_if_initialization_error(
         client.Initialize(
             nirfmxbluetooth_types.InitializeRequest(
-                session_name=session_name, resource_name=resource, option_string=options
+                session_name=SESSION_NAME, resource_name=RESOURCE, option_string=OPTIONS
             )
         )
     )
@@ -248,7 +262,7 @@ try:
     )
     edrgfsk_average_power_mean = txp_fetch_edr_powers_response.edr_gfsk_average_power_mean
     edrdpsk_average_power_mean = txp_fetch_edr_powers_response.edr_dpsk_average_power_mean
-    edR__dpsK__gfsk_average_power_ratio_mean = (
+    edr_dpsk_gfsk_average_power_ratio_mean = (
         txp_fetch_edr_powers_response.edr_dpsk_gfsk_average_power_ratio_mean
     )
     txp_fetch_lecte_reference_period_powers_response = raise_if_error(
@@ -303,7 +317,7 @@ try:
         print(f"EDR GFSK Average Power Mean (dBm)               : {edrgfsk_average_power_mean}")
         print(f"EDR DPSK Average Power Mean (dBm)               : {edrdpsk_average_power_mean}")
         print(
-            f"EDR DPSK GFSK Average Power Ratio Mean (dB)     : {edR__dpsK__gfsk_average_power_ratio_mean}"
+            f"EDR DPSK GFSK Average Power Ratio Mean (dB)     : {edr_dpsk_gfsk_average_power_ratio_mean}"
         )
 
     # These results are invalid for basic rate packets.
@@ -329,7 +343,7 @@ try:
 except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
-        error_message = f"Failed to connect to server on {server_address}:{server_port}"
+        error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"
     elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
         error_message = (
             "The operation is not implemented or is not supported/enabled in this service"

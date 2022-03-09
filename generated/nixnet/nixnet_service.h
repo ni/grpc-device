@@ -33,11 +33,13 @@ struct NiXnetFeatureToggles
 
 class NiXnetService final : public NiXnet::Service {
 public:
-  using ResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<ViSession>>;
+  using ResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<nxSessionRef_t>>;
+  using nxDatabaseRef_tResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<nxDatabaseRef_t>>;
 
   NiXnetService(
     NiXnetLibraryInterface* library,
-    ResourceRepositorySharedPtr session_repository,
+    ResourceRepositorySharedPtr resource_repository,
+    nxDatabaseRef_tResourceRepositorySharedPtr nx_database_ref_t_resource_repository,
     const NiXnetFeatureToggles& feature_toggles = {});
   virtual ~NiXnetService();
   
@@ -55,8 +57,10 @@ public:
   ::grpc::Status DbAddAlias(::grpc::ServerContext* context, const DbAddAliasRequest* request, DbAddAliasResponse* response) override;
   ::grpc::Status DbAddAlias64(::grpc::ServerContext* context, const DbAddAlias64Request* request, DbAddAlias64Response* response) override;
   ::grpc::Status DbCloseDatabase(::grpc::ServerContext* context, const DbCloseDatabaseRequest* request, DbCloseDatabaseResponse* response) override;
+  ::grpc::Status DbCreateObject(::grpc::ServerContext* context, const DbCreateObjectRequest* request, DbCreateObjectResponse* response) override;
   ::grpc::Status DbDeleteObject(::grpc::ServerContext* context, const DbDeleteObjectRequest* request, DbDeleteObjectResponse* response) override;
   ::grpc::Status DbDeploy(::grpc::ServerContext* context, const DbDeployRequest* request, DbDeployResponse* response) override;
+  ::grpc::Status DbFindObject(::grpc::ServerContext* context, const DbFindObjectRequest* request, DbFindObjectResponse* response) override;
   ::grpc::Status DbGetDatabaseListSizes(::grpc::ServerContext* context, const DbGetDatabaseListSizesRequest* request, DbGetDatabaseListSizesResponse* response) override;
   ::grpc::Status DbGetPropertySize(::grpc::ServerContext* context, const DbGetPropertySizeRequest* request, DbGetPropertySizeResponse* response) override;
   ::grpc::Status DbMerge(::grpc::ServerContext* context, const DbMergeRequest* request, DbMergeResponse* response) override;
@@ -86,6 +90,7 @@ public:
 private:
   NiXnetLibraryInterface* library_;
   ResourceRepositorySharedPtr session_repository_;
+  nxDatabaseRef_tResourceRepositorySharedPtr nx_database_ref_t_resource_repository_;
   template <typename TEnum>
   void CopyBytesToEnums(const std::string& input, google::protobuf::RepeatedField<TEnum>* output);
   std::map<std::int32_t, std::int32_t> dbpropertyvalue_input_map_ { {0, 0},{1, 0},{2, 1},{3, 2},{4, 4294967294},{5, 0},{6, 1},{7, 2},{8, 3},{9, 0},{10, 1},{11, 1},{12, 2},{13, 3},{14, 4},{15, 0},{16, 1},{17, 2},{18, 0},{19, 1},{20, 0},{21, 1},{22, 2},{23, 3},{24, 2},{25, 3},{26, 4},{27, 5},{28, 6},{29, 0},{30, 1},{31, 2},{32, 0},{33, 1},{34, 2},{35, 3}, };

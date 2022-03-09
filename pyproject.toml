@@ -3,4 +3,4 @@ line-length = 100
 exclude = "source/codegen/metadata/"
 
 [tool.mypy]
-mypy_path = "$MYPY_CONFIG_FILE_DIR/source/codegen/"
+mypy_path = "$MYPY_CONFIG_FILE_DIR/source/codegen/:$MYPY_CONFIG_FILE_DIR/../grpc-device-example-template/"

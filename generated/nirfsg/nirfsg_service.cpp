@@ -25,10 +25,10 @@ namespace nirfsg_grpc {
 
   NiRFSGService::NiRFSGService(
       NiRFSGLibraryInterface* library,
-      ResourceRepositorySharedPtr session_repository, 
+      ResourceRepositorySharedPtr resource_repository,
       const NiRFSGFeatureToggles& feature_toggles)
       : library_(library),
-      session_repository_(session_repository),
+      session_repository_(resource_repository),
       feature_toggles_(feature_toggles)
   {
   }
@@ -1736,7 +1736,7 @@ namespace nirfsg_grpc {
           return ::grpc::Status::OK;
         }
         ViInt32 buf_size = status;
-      
+
         std::string value;
         if (buf_size > 0) {
             value.resize(buf_size - 1);
@@ -1778,7 +1778,7 @@ namespace nirfsg_grpc {
           return ::grpc::Status::OK;
         }
         ViInt32 buffer_size = status;
-      
+
         std::string name;
         if (buffer_size > 0) {
             name.resize(buffer_size - 1);
@@ -1835,7 +1835,7 @@ namespace nirfsg_grpc {
             if (shrunk_size != current_size) {
               response->mutable_sparameters()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
             }
-          }        
+          }
           response->set_number_of_sparameters(number_of_sparameters);
           response->set_number_of_ports(number_of_ports);
         }
@@ -1865,7 +1865,7 @@ namespace nirfsg_grpc {
           return ::grpc::Status::OK;
         }
         ViInt32 error_description_buffer_size = status;
-      
+
         ViStatus error_code {};
         std::string error_description;
         if (error_description_buffer_size > 0) {
@@ -2065,7 +2065,7 @@ namespace nirfsg_grpc {
           return ::grpc::Status::OK;
         }
         ViInt32 buffer_size = status;
-      
+
         std::string terminal_name;
         if (buffer_size > 0) {
             terminal_name.resize(buffer_size - 1);
@@ -2258,7 +2258,7 @@ namespace nirfsg_grpc {
 
       auto init_lambda = [&] () {
         ViSession new_vi;
-        int status = library_->Init(resource_name, id_query, reset_device, &new_vi);
+        auto status = library_->Init(resource_name, id_query, reset_device, &new_vi);
         return std::make_tuple(status, new_vi);
       };
       uint32_t session_id = 0;
@@ -2291,7 +2291,7 @@ namespace nirfsg_grpc {
 
       auto init_lambda = [&] () {
         ViSession vi;
-        int status = library_->InitWithOptions(resource_name, id_query, reset_device, option_string, &vi);
+        auto status = library_->InitWithOptions(resource_name, id_query, reset_device, option_string, &vi);
         return std::make_tuple(status, vi);
       };
       uint32_t session_id = 0;

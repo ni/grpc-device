@@ -2239,6 +2239,12 @@ functions = {
                 'direction': 'out',
                 'name': 'isNewSession',
                 'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'get_last_error': True,
+                'name': 'errorMessage',
+                'type': 'char[]'
             }
         ],
         'returns': 'int32'
@@ -2259,6 +2265,12 @@ functions = {
                 'grpc_name': 'instrument',
                 'name': 'handleOut',
                 'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'out',
+                'get_last_error': True,
+                'name': 'errorMessage',
+                'type': 'char[]'
             }
         ],
         'returns': 'int32'

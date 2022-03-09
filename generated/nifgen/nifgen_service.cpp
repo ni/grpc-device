@@ -25,10 +25,10 @@ namespace nifgen_grpc {
 
   NiFgenService::NiFgenService(
       NiFgenLibraryInterface* library,
-      ResourceRepositorySharedPtr session_repository, 
+      ResourceRepositorySharedPtr resource_repository,
       const NiFgenFeatureToggles& feature_toggles)
       : library_(library),
-      session_repository_(session_repository),
+      session_repository_(resource_repository),
       feature_toggles_(feature_toggles)
   {
   }
@@ -1702,7 +1702,7 @@ namespace nifgen_grpc {
           return ::grpc::Status::OK;
         }
         ViInt32 size_in_bytes = status;
-      
+
         response->mutable_configuration()->Resize(size_in_bytes, 0);
         ViAddr* configuration = reinterpret_cast<ViAddr*>(response->mutable_configuration()->mutable_data());
         status = library_->ExportAttributeConfigurationBuffer(vi, size_in_bytes, configuration);
@@ -1924,7 +1924,7 @@ namespace nifgen_grpc {
           return ::grpc::Status::OK;
         }
         ViInt32 array_size = status;
-      
+
         std::string attribute_value;
         if (array_size > 0) {
             attribute_value.resize(array_size - 1);
@@ -1966,7 +1966,7 @@ namespace nifgen_grpc {
           return ::grpc::Status::OK;
         }
         ViInt32 buffer_size = status;
-      
+
         std::string channel_string;
         if (buffer_size > 0) {
             channel_string.resize(buffer_size - 1);
@@ -2007,7 +2007,7 @@ namespace nifgen_grpc {
           return ::grpc::Status::OK;
         }
         ViInt32 error_description_buffer_size = status;
-      
+
         ViStatus error_code {};
         std::string error_description;
         if (error_description_buffer_size > 0) {
@@ -2190,7 +2190,7 @@ namespace nifgen_grpc {
           return ::grpc::Status::OK;
         }
         ViInt32 buffer_size = status;
-      
+
         std::string coercion_record;
         if (buffer_size > 0) {
             coercion_record.resize(buffer_size - 1);
@@ -2231,7 +2231,7 @@ namespace nifgen_grpc {
           return ::grpc::Status::OK;
         }
         ViInt32 buffer_size = status;
-      
+
         std::string interchange_warning;
         if (buffer_size > 0) {
             interchange_warning.resize(buffer_size - 1);
@@ -2410,7 +2410,7 @@ namespace nifgen_grpc {
 
       auto init_lambda = [&] () {
         ViSession vi;
-        int status = library_->Init(resource_name, id_query, reset_device, &vi);
+        auto status = library_->Init(resource_name, id_query, reset_device, &vi);
         return std::make_tuple(status, vi);
       };
       uint32_t session_id = 0;
@@ -2443,7 +2443,7 @@ namespace nifgen_grpc {
 
       auto init_lambda = [&] () {
         ViSession vi;
-        int status = library_->InitWithOptions(resource_name, id_query, reset_device, option_string, &vi);
+        auto status = library_->InitWithOptions(resource_name, id_query, reset_device, option_string, &vi);
         return std::make_tuple(status, vi);
       };
       uint32_t session_id = 0;
@@ -2476,7 +2476,7 @@ namespace nifgen_grpc {
 
       auto init_lambda = [&] () {
         ViSession vi;
-        int status = library_->InitializeWithChannels(resource_name, channel_name, reset_device, option_string, &vi);
+        auto status = library_->InitializeWithChannels(resource_name, channel_name, reset_device, option_string, &vi);
         return std::make_tuple(status, vi);
       };
       uint32_t session_id = 0;

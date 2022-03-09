@@ -1,92 +1,91 @@
-# This example performs continuous measure record.
-#
-# The gRPC API is built from the C API. NI-DCPower documentation is installed with the driver at:
-# C:\Program Files (x86)\IVI Foundation\IVI\Drivers\niDCPower\Documentation\NIDCPowerCref.chm
-#
-# Getting Started:
-#
-# To run this example, install "NI-DCPower Driver" on the server machine.
-# Link : https://www.ni.com/en-in/support/downloads/drivers/download.ni-dcpower.html
-#
-# For instructions on how to use protoc to generate gRPC client interfaces, see our "Creating a gRPC Client" wiki page.
-# Link: https://github.com/ni/grpc-device/wiki/Creating-a-gRPC-Client
-#
-# Refer to the NI DCPOWER gRPC Wiki for the latest C Function Reference:
-# Link: https://github.com/ni/grpc-device/wiki/NI-DCPOWER-C-Function-Reference
-#
-# Running from command line:
-#
-# Server machine's IP address, port number, and resource name can be passed as separate command line arguments.
-#   > python measure-record.py <server_address> <port_number> <resource_name>
-# If they are not passed in as command line arguments, then by default the server address will be "localhost:31763", with "SimulatedDCPower" as the resource name
+r"""Perform continuous measure record.
 
-import grpc
+The gRPC API is built from the C API. NI-DCPower documentation is installed with the driver at:
+  C:\Program Files (x86)\IVI Foundation\IVI\Drivers\niDCPower\Documentation\NIDCPowerCref.chm
+
+Getting Started:
+
+To run this example, install "NI-DCPower Driver" on the server machine:
+  https://www.ni.com/en-in/support/downloads/drivers/download.ni-dcpower.html
+
+For instructions on how to use protoc to generate gRPC client interfaces, see our "Creating a gRPC
+Client" wiki page:
+  https://github.com/ni/grpc-device/wiki/Creating-a-gRPC-Client
+
+Refer to the NI DCPOWER gRPC Wiki for the latest C Function Reference:
+  https://github.com/ni/grpc-device/wiki/NI-DCPOWER-C-Function-Reference
+
+Running from command line:
+
+Server machine's IP address, port number, and resource name can be passed as separate command line
+arguments.
+  > python measure-record.py <server_address> <port_number> <resource_name>
+If they are not passed in as command line arguments, then by default the server address will be
+"localhost:31763", with "SimulatedDCPower" as the resource name.
+"""
+
+import math
 import sys
 import time
+
+import grpc
+import matplotlib.pyplot as plt
 import nidcpower_pb2 as nidcpower_types
 import nidcpower_pb2_grpc as grpc_nidcpower
-import matplotlib.pyplot as plt
-import keyword
 import numpy as np
-import math
 
-server_address = "localhost"
-server_port = "31763"
-session_name = "NI-DCPower-Session"
+SERVER_ADDRESS = "localhost"
+SERVER_PORT = "31763"
+SESSION_NAME = "NI-DCPower-Session"
 
-# Resource name, channel name and options for a simulated 4147 client. Change them according to NI-DCPower model.
-resource = "SimulatedDCPower"
-options = "Simulate=1,DriverSetup=Model:4147;BoardType:PXIe"
-channels = "0"
+# Resource name, channel name and options for a simulated 4147 client. Change them according to
+# NI-DCPower model.
+RESOURCE = "SimulatedDCPower"
+OPTIONS = "Simulate=1,DriverSetup=Model:4147;BoardType:PXIe"
+CHANNELS = "0"
 
 # Parameters
-record_length = 10
-buffer_multiplier = 10
-voltage_level = 5.0
+RECORD_LENGTH = 10
+BUFFER_MULTIPLIER = 10
+VOLTAGE_LEVEL = 5.0
 
 # Read in cmd args
 if len(sys.argv) >= 2:
-    server_address = sys.argv[1]
+    SERVER_ADDRESS = sys.argv[1]
 if len(sys.argv) >= 3:
-    server_port = sys.argv[2]
+    SERVER_PORT = sys.argv[2]
 if len(sys.argv) >= 4:
-    resource = sys.argv[3]
-    options = ""
-
-# Checks for errors. If any, throws an exception to stop the execution.
-any_error = False
+    RESOURCE = sys.argv[3]
+    OPTIONS = ""
 
 
-def CheckForError(vi, status):
-    global any_error
-    if status != 0 and not any_error:
-        any_error = True
-        ThrowOnError(vi, status)
+def check_for_error(vi, status):
+    """Raise an exception if the status indicates an error."""
+    if status != 0:
+        error_message_response = client.ErrorMessage(
+            nidcpower_types.ErrorMessageRequest(vi=vi, error_code=status)
+        )
+        raise Exception(error_message_response.error_message)
 
 
-def ThrowOnError(vi, error_code):
-    error_message_request = nidcpower_types.ErrorMessageRequest(vi=vi, error_code=error_code)
-    error_message_response = client.ErrorMessage(error_message_request)
-    raise Exception(error_message_response.error_message)
-
-
-# Create the communication channel for the remote host and create connections to the NI-DCPower and session services.
-channel = grpc.insecure_channel(f"{server_address}:{server_port}")
+# Create the communication channel for the remote host and create connections to the NI-DCPower and
+# session services.
+channel = grpc.insecure_channel(f"{SERVER_ADDRESS}:{SERVER_PORT}")
 client = grpc_nidcpower.NiDCPowerStub(channel)
 
 try:
     # Initialize the session.
     initialize_with_channels_response = client.InitializeWithChannels(
         nidcpower_types.InitializeWithChannelsRequest(
-            session_name=session_name,
-            resource_name=resource,
-            channels=channels,
+            session_name=SESSION_NAME,
+            resource_name=RESOURCE,
+            channels=CHANNELS,
             reset=False,
-            option_string=options,
+            option_string=OPTIONS,
         )
     )
     vi = initialize_with_channels_response.vi
-    CheckForError(vi, initialize_with_channels_response.status)
+    check_for_error(vi, initialize_with_channels_response.status)
 
     # Specify when the measure unit should acquire measurements.
     configure_measure_when = client.SetAttributeViInt32(
@@ -96,23 +95,23 @@ try:
             attribute_value=nidcpower_types.NiDCPowerInt32AttributeValues.NIDCPOWER_INT32_MEASURE_WHEN_VAL_AUTOMATICALLY_AFTER_SOURCE_COMPLETE,
         )
     )
-    CheckForError(vi, configure_measure_when.status)
+    check_for_error(vi, configure_measure_when.status)
 
     # set the voltage level.
     configure_voltage_level = client.ConfigureVoltageLevel(
-        nidcpower_types.ConfigureVoltageLevelRequest(vi=vi, level=voltage_level)
+        nidcpower_types.ConfigureVoltageLevelRequest(vi=vi, level=VOLTAGE_LEVEL)
     )
-    CheckForError(vi, configure_voltage_level.status)
+    check_for_error(vi, configure_voltage_level.status)
 
     # Sspecify how many measurements compose a measure record.
     configure_measure_record_length = client.SetAttributeViInt32(
         nidcpower_types.SetAttributeViInt32Request(
             vi=vi,
             attribute_id=nidcpower_types.NiDCPowerAttribute.NIDCPOWER_ATTRIBUTE_MEASURE_RECORD_LENGTH,
-            attribute_value=record_length,
+            attribute_value=RECORD_LENGTH,
         )
     )
-    CheckForError(vi, configure_measure_record_length.status)
+    check_for_error(vi, configure_measure_record_length.status)
 
     # Specify whether to take continuous measurements. Set it to False for continuous measurement.
     configure_measure_record_length_is_finite = client.SetAttributeViBoolean(
@@ -122,7 +121,7 @@ try:
             attribute_value=False,
         )
     )
-    CheckForError(vi, configure_measure_record_length_is_finite.status)
+    check_for_error(vi, configure_measure_record_length_is_finite.status)
 
     # commit the session.
     commit_response = client.Commit(
@@ -130,7 +129,7 @@ try:
             vi=vi,
         )
     )
-    CheckForError(vi, commit_response.status)
+    check_for_error(vi, commit_response.status)
 
     # get measure_record_delta_time.
     get_measure_record_delta_time = client.GetAttributeViReal64(
@@ -139,7 +138,7 @@ try:
             attribute_id=nidcpower_types.NiDCPowerAttribute.NIDCPOWER_ATTRIBUTE_MEASURE_RECORD_DELTA_TIME,
         )
     )
-    CheckForError(vi, get_measure_record_delta_time.status)
+    check_for_error(vi, get_measure_record_delta_time.status)
 
     # initiate the session.
     initiate_response = client.Initiate(
@@ -147,7 +146,7 @@ try:
             vi=vi,
         )
     )
-    CheckForError(vi, initiate_response.status)
+    check_for_error(vi, initiate_response.status)
 
     # Setup a plot to draw the captured waveform.
     fig = plt.figure("Waveform Graph")
@@ -157,16 +156,16 @@ try:
     # Handle closing of plot window.
     closed = False
 
-    def on_close(event):
+    def _on_close(event):
         global closed
         closed = True
 
-    fig.canvas.mpl_connect("close_event", on_close)
+    fig.canvas.mpl_connect("close_event", _on_close)
 
     print("\nReading values in loop. CTRL+C or Close window to stop.\n")
 
     # Create a buffer for fetching the values.
-    y_axis = [0] * (record_length * buffer_multiplier)
+    y_axis = [0.0] * (RECORD_LENGTH * BUFFER_MULTIPLIER)
     x_start = 0
 
     try:
@@ -178,18 +177,18 @@ try:
             plt.ylabel("Amplitude")
 
             fetch_multiple_response = client.FetchMultiple(
-                nidcpower_types.FetchMultipleRequest(vi=vi, timeout=10, count=record_length)
+                nidcpower_types.FetchMultipleRequest(vi=vi, timeout=10, count=RECORD_LENGTH)
             )
-            CheckForError(vi, fetch_multiple_response.status)
+            check_for_error(vi, fetch_multiple_response.status)
 
             # Append the fetched values in the buffer.
             y_axis.extend(fetch_multiple_response.voltage_measurements)
-            y_axis = y_axis[record_length:]
+            y_axis = y_axis[RECORD_LENGTH:]
 
             # Updating the precision of the fetched values.
             y_axis_new = []
             for value in y_axis:
-                if value < voltage_level:
+                if value < VOLTAGE_LEVEL:
                     y_axis_new.append(math.floor(value * 100) / 100)
                 else:
                     y_axis_new.append(math.ceil(value * 100) / 100)
@@ -197,9 +196,9 @@ try:
             # Plotting
             y_axis = y_axis_new
             x_axis = np.arange(
-                start=x_start, stop=x_start + record_length * buffer_multiplier, step=1
+                start=x_start, stop=x_start + RECORD_LENGTH * BUFFER_MULTIPLIER, step=1
             )
-            x_start = x_start + record_length
+            x_start = x_start + RECORD_LENGTH
             plt.plot(x_axis, y_axis)
             plt.pause(0.001)
             time.sleep(0.1)
@@ -212,7 +211,7 @@ try:
 except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
-        error_message = f"Failed to connect to server on {server_address}:{server_port}"
+        error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"
     elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
         error_message = (
             "The operation is not implemented or is not supported/enabled in this service"
@@ -222,4 +221,4 @@ except grpc.RpcError as rpc_error:
 finally:
     if "vi" in vars() and vi.id != 0:
         # close the session.
-        CheckForError(vi, (client.Close(nidcpower_types.CloseRequest(vi=vi))).status)
+        check_for_error(vi, (client.Close(nidcpower_types.CloseRequest(vi=vi))).status)

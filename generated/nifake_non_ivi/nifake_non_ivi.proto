@@ -18,14 +18,19 @@ import "google/protobuf/timestamp.proto";
 
 service NiFakeNonIvi {
   rpc Close(CloseRequest) returns (CloseResponse);
+  rpc CloseSecondarySession(CloseSecondarySessionRequest) returns (CloseSecondarySessionResponse);
   rpc GetCrossDriverSession(GetCrossDriverSessionRequest) returns (GetCrossDriverSessionResponse);
+  rpc GetLatestErrorMessage(GetLatestErrorMessageRequest) returns (GetLatestErrorMessageResponse);
+  rpc GetStringAsReturnedValue(GetStringAsReturnedValueRequest) returns (GetStringAsReturnedValueResponse);
   rpc GetMarbleAttributeDouble(GetMarbleAttributeDoubleRequest) returns (GetMarbleAttributeDoubleResponse);
   rpc GetMarbleAttributeInt32(GetMarbleAttributeInt32Request) returns (GetMarbleAttributeInt32Response);
   rpc GetMarbleAttributeInt32Array(GetMarbleAttributeInt32ArrayRequest) returns (GetMarbleAttributeInt32ArrayResponse);
   rpc Init(InitRequest) returns (InitResponse);
   rpc InitFromCrossDriverSession(InitFromCrossDriverSessionRequest) returns (InitFromCrossDriverSessionResponse);
   rpc InitFromCrossDriverSessionArray(InitFromCrossDriverSessionArrayRequest) returns (InitFromCrossDriverSessionArrayResponse);
+  rpc InitSecondarySession(InitSecondarySessionRequest) returns (InitSecondarySessionResponse);
   rpc InitWithHandleNameAsSessionName(InitWithHandleNameAsSessionNameRequest) returns (InitWithHandleNameAsSessionNameResponse);
+  rpc InitWithReturnedSession(InitWithReturnedSessionRequest) returns (InitWithReturnedSessionResponse);
   rpc InputArraysWithNarrowIntegerTypes(InputArraysWithNarrowIntegerTypesRequest) returns (InputArraysWithNarrowIntegerTypesResponse);
   rpc IotaWithCustomSize(IotaWithCustomSizeRequest) returns (IotaWithCustomSizeResponse);
   rpc OutputArraysWithNarrowIntegerTypes(OutputArraysWithNarrowIntegerTypesRequest) returns (OutputArraysWithNarrowIntegerTypesResponse);
@@ -114,6 +119,14 @@ message CloseResponse {
   int32 status = 1;
 }
 
+message CloseSecondarySessionRequest {
+  nidevice_grpc.Session secondary_session_handle = 1;
+}
+
+message CloseSecondarySessionResponse {
+  int32 status = 1;
+}
+
 message GetCrossDriverSessionRequest {
   string session_name = 1;
   nidevice_grpc.Session handle = 2;
@@ -122,6 +135,22 @@ message GetCrossDriverSessionRequest {
 message GetCrossDriverSessionResponse {
   int32 status = 1;
   nidevice_grpc.Session cross_driver_session = 2;
+}
+
+message GetLatestErrorMessageRequest {
+}
+
+message GetLatestErrorMessageResponse {
+  int32 status = 1;
+  string message = 2;
+}
+
+message GetStringAsReturnedValueRequest {
+}
+
+message GetStringAsReturnedValueResponse {
+  int32 status = 1;
+  string string_out = 2;
 }
 
 message GetMarbleAttributeDoubleRequest {
@@ -172,6 +201,7 @@ message InitRequest {
 message InitResponse {
   int32 status = 1;
   nidevice_grpc.Session handle = 2;
+  string error_message = 3;
 }
 
 message InitFromCrossDriverSessionRequest {
@@ -194,11 +224,29 @@ message InitFromCrossDriverSessionArrayResponse {
   nidevice_grpc.Session handle = 2;
 }
 
+message InitSecondarySessionRequest {
+  string session_name = 1;
+}
+
+message InitSecondarySessionResponse {
+  int32 status = 1;
+  nidevice_grpc.Session secondary_session_handle = 2;
+}
+
 message InitWithHandleNameAsSessionNameRequest {
   string handle_name = 1;
 }
 
 message InitWithHandleNameAsSessionNameResponse {
+  int32 status = 1;
+  nidevice_grpc.Session handle = 2;
+}
+
+message InitWithReturnedSessionRequest {
+  string handle_name = 1;
+}
+
+message InitWithReturnedSessionResponse {
   int32 status = 1;
   nidevice_grpc.Session handle = 2;
 }

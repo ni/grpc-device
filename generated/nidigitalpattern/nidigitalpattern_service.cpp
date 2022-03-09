@@ -25,10 +25,10 @@ namespace nidigitalpattern_grpc {
 
   NiDigitalService::NiDigitalService(
       NiDigitalLibraryInterface* library,
-      ResourceRepositorySharedPtr session_repository, 
+      ResourceRepositorySharedPtr resource_repository,
       const NiDigitalFeatureToggles& feature_toggles)
       : library_(library),
-      session_repository_(session_repository),
+      session_repository_(resource_repository),
       feature_toggles_(feature_toggles)
   {
   }
@@ -1767,7 +1767,7 @@ namespace nidigitalpattern_grpc {
           return ::grpc::Status::OK;
         }
         ViInt32 buffer_size = status;
-      
+
         std::string value;
         if (buffer_size > 0) {
             value.resize(buffer_size - 1);
@@ -1809,7 +1809,7 @@ namespace nidigitalpattern_grpc {
           return ::grpc::Status::OK;
         }
         ViInt32 name_buffer_size = status;
-      
+
         std::string name;
         if (name_buffer_size > 0) {
             name.resize(name_buffer_size - 1);
@@ -1851,7 +1851,7 @@ namespace nidigitalpattern_grpc {
           return ::grpc::Status::OK;
         }
         ViInt32 name_buffer_size = status;
-      
+
         std::string names;
         if (name_buffer_size > 0) {
             names.resize(name_buffer_size - 1);
@@ -1892,7 +1892,7 @@ namespace nidigitalpattern_grpc {
           return ::grpc::Status::OK;
         }
         ViInt32 error_description_buffer_size = status;
-      
+
         ViStatus error_code {};
         std::string error_description;
         if (error_description_buffer_size > 0) {
@@ -2038,7 +2038,7 @@ namespace nidigitalpattern_grpc {
           return ::grpc::Status::OK;
         }
         ViInt32 name_buffer_size = status;
-      
+
         std::string name;
         if (name_buffer_size > 0) {
             name.resize(name_buffer_size - 1);
@@ -2080,7 +2080,7 @@ namespace nidigitalpattern_grpc {
           return ::grpc::Status::OK;
         }
         ViInt32 pin_list_buffer_size = status;
-      
+
         std::string pin_list;
         if (pin_list_buffer_size > 0) {
             pin_list.resize(pin_list_buffer_size - 1);
@@ -2122,7 +2122,7 @@ namespace nidigitalpattern_grpc {
           return ::grpc::Status::OK;
         }
         ViInt32 name_buffer_size = status;
-      
+
         std::string name;
         if (name_buffer_size > 0) {
             name.resize(name_buffer_size - 1);
@@ -2395,7 +2395,7 @@ namespace nidigitalpattern_grpc {
           return ::grpc::Status::OK;
         }
         ViInt32 name_buffer_size = status;
-      
+
         std::string name;
         if (name_buffer_size > 0) {
             name.resize(name_buffer_size - 1);
@@ -2456,7 +2456,7 @@ namespace nidigitalpattern_grpc {
 
       auto init_lambda = [&] () {
         ViSession vi;
-        int status = library_->Init(resource_name, id_query, reset_device, &vi);
+        auto status = library_->Init(resource_name, id_query, reset_device, &vi);
         return std::make_tuple(status, vi);
       };
       uint32_t session_id = 0;
@@ -2489,7 +2489,7 @@ namespace nidigitalpattern_grpc {
 
       auto init_lambda = [&] () {
         ViSession vi;
-        int status = library_->InitWithOptions(resource_name, id_query, reset_device, option_string, &vi);
+        auto status = library_->InitWithOptions(resource_name, id_query, reset_device, option_string, &vi);
         return std::make_tuple(status, vi);
       };
       uint32_t session_id = 0;

@@ -6,9 +6,8 @@ config = data["config"]
 
 include_guard_name = service_helpers.get_include_guard_name(config, "_SERVICE_REGISTRAR_H")
 namespace = f"{config['namespace_component']}_grpc"
-resource_handle_type = service_helpers.get_resource_handle_type(config)
-resource_repository_type = service_helpers.get_driver_shared_resource_repository_ptr_type(config)
-cross_driver_session_deps = service_helpers.get_cross_driver_session_dependencies(data["functions"])
+resource_handle_types = service_helpers.get_resource_handle_types(config)
+resource_repository_deps = service_helpers.get_driver_shared_resource_repository_ptr_deps(config, data["functions"])
 %>\
 
 //---------------------------------------------------------------------
@@ -23,7 +22,7 @@ cross_driver_session_deps = service_helpers.get_cross_driver_session_dependencie
 
 #include <memory>
 
-#include <${config["c_header"]}> // for ${resource_handle_type}
+#include <${config["c_header"]}> // for ${", ".join(resource_handle_types)}
 
 namespace grpc {
 class ServerBuilder;
@@ -34,9 +33,8 @@ using CodeReadiness = nidevice_grpc::FeatureToggles::CodeReadiness;
 
 std::shared_ptr<void> register_service(
   grpc::ServerBuilder& server_builder, 
-  const ${resource_repository_type}& resource_repository,
-% for cross_driver_dep in cross_driver_session_deps:
-  const ${cross_driver_dep.resource_repository_type}& ${cross_driver_dep.local_name},
+% for resource_handle_type in resource_repository_deps:
+  const ${resource_repository_deps[resource_handle_type].resource_repository_type}& ${resource_repository_deps[resource_handle_type].local_name},
 % endfor
   const nidevice_grpc::FeatureToggles& feature_toggles);
 

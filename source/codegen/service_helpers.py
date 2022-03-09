@@ -1,14 +1,18 @@
+"""Helpers for creating service .h/.cpp files."""
+
 from typing import Any, Dict, List, NamedTuple, Optional
 
 import common_helpers
 
 
 def get_include_guard_name(config, suffix):
+    """Get an appropriate #include guard name."""
     include_guard_name = config["namespace_component"] + "_grpc" + suffix
     return include_guard_name.upper()
 
 
 def get_c_element_type_for_array_that_needs_coercion(parameter):
+    """Get the C element type for the given parameter, if it's an array that needs coercion."""
     if not parameter.get("coerced", False):
         return None
     if not common_helpers.is_array(parameter["type"]):
@@ -17,6 +21,7 @@ def get_c_element_type_for_array_that_needs_coercion(parameter):
 
 
 def get_c_element_type(parameter):
+    """Get the C element type for the given parameter."""
     stripped_type = parameter["type"]
     stripped_type = common_helpers.strip_prefix(stripped_type, "const ")
     stripped_type = common_helpers.strip_suffix(stripped_type, "*")
@@ -25,6 +30,7 @@ def get_c_element_type(parameter):
 
 
 def is_scalar_input_that_needs_coercion(parameter: dict) -> bool:
+    """Whether the parameter is a scalar input that needs coercion."""
     return (
         common_helpers.is_input_parameter(parameter)
         and parameter.get("coerced", False)
@@ -33,13 +39,14 @@ def is_scalar_input_that_needs_coercion(parameter: dict) -> bool:
 
 
 def is_input_array_that_needs_coercion(parameter):
+    """Whether the parameter is an input array that needs coercion."""
     return (
         common_helpers.is_input_parameter(parameter)
         and get_c_element_type_for_array_that_needs_coercion(parameter) is not None
     )
 
 
-def is_input_that_needs_coercion(parameter, custom_types: list):
+def _is_input_that_needs_coercion(parameter, custom_types: list):
     if not common_helpers.is_input_parameter(parameter):
         return False
     if parameter.get("coerced", False):
@@ -57,6 +64,7 @@ def is_input_that_needs_coercion(parameter, custom_types: list):
 
 
 def is_output_array_that_needs_coercion(parameter):
+    """Whether the parameter is an output array that needs coercion."""
     return (
         common_helpers.is_output_parameter(parameter)
         and get_c_element_type_for_array_that_needs_coercion(parameter) is not None
@@ -64,6 +72,7 @@ def is_output_array_that_needs_coercion(parameter):
 
 
 def create_args_for_callback(parameters):
+    """Get the args needed for a CallbackRouter handler."""
     return ", ".join([f'{p["type"]} {common_helpers.get_grpc_field_name(p)}' for p in parameters])
 
 
@@ -84,7 +93,7 @@ def _is_array_that_requires_conversion(parameter):
     return False
 
 
-def create_standard_arg(parameter):
+def _create_standard_arg(parameter):
     parameter_name = common_helpers.get_cpp_local_name(parameter)
     is_array = common_helpers.is_array(parameter["type"])
     is_output = common_helpers.is_output_parameter(parameter)
@@ -98,11 +107,7 @@ def create_standard_arg(parameter):
         return f"CallbackRouter::handle_callback, "
     elif "callback_token" in parameter:
         return f"handler->token(), "
-    elif (
-        not is_output
-        and common_helpers.is_pointer_parameter(parameter)
-        and "hardcoded_value" not in parameter
-    ):
+    elif is_size_param_passed_by_ptr(parameter):
         return f"&{parameter_name}_copy, "
     elif not is_array and is_output:
         return f"&{parameter_name}, "
@@ -110,6 +115,8 @@ def create_standard_arg(parameter):
 
 
 def create_args(parameters):
+    """Get the args needed to call the library function."""
+    parameters = common_helpers.get_driver_api_params(parameters)
     result = ""
     have_expanded_varargs = False
     for parameter in parameters:
@@ -125,8 +132,8 @@ def create_args(parameters):
             repeated_parameters = [
                 p for p in parameters if common_helpers.is_repeating_parameter(p)
             ]
-            # We need to pass one extra set of arguments because the last parameters have to be nullptr's
-            # so the callee knows we're done passing arguments.
+            # We need to pass one extra set of arguments because the last parameters have to be
+            # nullptr's so the callee knows we're done passing arguments.
             max_length = parameter["max_length"] + 1
             for i in range(max_length):
                 for parameter in repeated_parameters:
@@ -135,11 +142,12 @@ def create_args(parameters):
                     else:
                         result += f'get_{parameter["name"]}_if({parameter["name"]}Vector, {i}), '
         else:
-            result = f"{result}{create_standard_arg(parameter)}"
+            result = f"{result}{_create_standard_arg(parameter)}"
     return result[:-2]
 
 
 def create_args_for_ivi_dance(parameters):
+    """Get the args needed to call the ivi-dance library function."""
     result = ""
     for parameter in parameters:
         if parameter.get("is_size_param", False):
@@ -147,11 +155,12 @@ def create_args_for_ivi_dance(parameters):
         elif common_helpers.is_output_parameter(parameter):
             result = f"{result}nullptr, "
         else:
-            result = result + create_standard_arg(parameter)
+            result = result + _create_standard_arg(parameter)
     return result[:-2]
 
 
 def create_args_for_ivi_dance_with_a_twist(parameters):
+    """Get the args needed to call the ivi-dance-with-a-twist library function."""
     result = ""
     ivi_twist_array_params = [
         p for p in parameters if common_helpers.get_size_mechanism(p) == "ivi-dance-with-a-twist"
@@ -171,11 +180,15 @@ def create_args_for_ivi_dance_with_a_twist(parameters):
         elif name in sizes:
             result = f"{result}0, "
         else:
-            result = result + create_standard_arg(parameter)
+            result = result + _create_standard_arg(parameter)
     return result[:-2]
 
 
 def create_params(parameters, expand_varargs=True):
+    """Get the params needed for defining the library function."""
+    parameters = common_helpers.get_driver_api_params(parameters)
+    if not len(parameters):
+        return ""
     repeated_parameters = [p for p in parameters if common_helpers.is_repeating_parameter(p)]
     # Some methods have both input and output repeated varargs parameters,
     # so only expand them once.
@@ -183,10 +196,10 @@ def create_params(parameters, expand_varargs=True):
         parameters[-1]
     ) and common_helpers.is_repeated_varargs_parameter(parameters[-2]):
         parameters = parameters[:-1]
-    return ", ".join(create_param(p, expand_varargs, repeated_parameters) for p in parameters)
+    return ", ".join(_create_param(p, expand_varargs, repeated_parameters) for p in parameters)
 
 
-def get_array_param_size(parameter) -> str:
+def _get_array_param_size(parameter) -> str:
     if "size" in parameter and parameter["size"]["mechanism"] == "fixed":
         return parameter["size"]["value"]
 
@@ -194,6 +207,12 @@ def get_array_param_size(parameter) -> str:
 
 
 def expand_varargs_parameters(parameters):
+    """Get a modified list of parameters, with repeating_parameters repeated max_length times.
+
+    The max_length value comes from the first repeated_var_args parameter. Each repeated parameter
+    gets a number (starting at zero) appended to the parameter name.
+    """
+    parameters = common_helpers.get_driver_api_params(parameters)
     if not common_helpers.has_repeated_varargs_parameter(parameters):
         return parameters
     # omit the varargs parameters that we're going to expand
@@ -207,7 +226,7 @@ def expand_varargs_parameters(parameters):
     return new_parameters
 
 
-def create_param(parameter, expand_varargs=True, repeated_parameters=None):
+def _create_param(parameter, expand_varargs=True, repeated_parameters=None):
     type = parameter["type"]
     name = parameter["cppName"]
     if common_helpers.is_struct(parameter):
@@ -220,7 +239,7 @@ def create_param(parameter, expand_varargs=True, repeated_parameters=None):
                 for parameter in repeated_parameters:
                     real_field_name = parameter["cppName"]
                     parameter["cppName"] = f"{real_field_name}{i}"
-                    s += create_param(parameter, expand_varargs=False) + ", "
+                    s += _create_param(parameter, expand_varargs=False) + ", "
                     parameter["cppName"] = real_field_name
             return s[:-2]
         else:
@@ -236,7 +255,7 @@ def create_param(parameter, expand_varargs=True, repeated_parameters=None):
         return f"{type} {name}"
 
 
-def format_value(value):
+def _format_value(value):
     if isinstance(value, str):
         value = f'"{value}"'
     if isinstance(value, float):
@@ -245,33 +264,31 @@ def format_value(value):
 
 
 def get_input_lookup_values(enum_data):
+    """Get an initializer list for a std::map that maps enum value index to enum value value."""
     out_value_format = ""
-    index = 1
     is_int = isinstance(enum_data["values"][0]["value"], int)
     if is_int:
         out_value_format = "{0, 0},"
-    for value in enum_data["values"]:
-        formated_value = str(format_value(value["value"]))
-        out_value_format = out_value_format + "{" + str(index) + ", " + formated_value + "},"
-        index = index + 1
+    for i, value in enumerate(enum_data["values"]):
+        formated_value = str(_format_value(value["value"]))
+        out_value_format += f"{{{i + 1}, {formated_value}}},"
     return out_value_format
 
 
 def get_output_lookup_values(enum_data):
+    """Get an initializer list for a std::map that maps enum value value to enum value index."""
     out_value_format = ""
-    index = 1
     is_int = isinstance(enum_data["values"][0]["value"], int)
     if is_int:
         out_value_format = "{0, 0},"
-    for value in enum_data["values"]:
-        formated_value = format_value(value["value"])
-        out_value_format = out_value_format + "{" + str(formated_value) + ", " + str(index) + "},"
-        index = index + 1
+    for i, value in enumerate(enum_data["values"]):
+        formated_value = _format_value(value["value"])
+        out_value_format += f"{{{formated_value}, {i + 1}}},"
     return out_value_format
 
 
 def filter_api_functions(functions, only_mockable_functions=True):
-    """Return function metadata only for functions to include for generating the function types to the API library."""
+    """Filter function metadata to only include those to be generated into the API library."""
 
     def filter_function(function):
         if function.get("codegen_method", "") == "no":
@@ -294,40 +311,49 @@ def filter_proto_rpc_functions_to_generate(functions):
 
 
 def get_cname(functions, method_name, c_function_prefix):
+    """Get the C name of the function."""
     if "cname" in functions[method_name]:
         return functions[method_name]["cname"]
     return c_function_prefix + method_name
 
 
 def is_private_method(function_data):
+    """Whether the function is private."""
     return function_data.get("codegen_method", "") == "private"
 
 
 def is_custom_close_method(function_data):
+    """Whether the function is a custom_close_method."""
     return function_data.get("custom_close_method", False)
 
 
 def requires_checked_conversion(parameters, custom_types):
-    return any([is_input_that_needs_coercion(p, custom_types) for p in parameters])
+    """Whether any parameter needs coercion."""
+    return any([_is_input_that_needs_coercion(p, custom_types) for p in parameters])
 
 
 def get_request_param(method_name):
+    """Get a parameter for taking in a Request object for the function with the given name."""
     return f"const {get_request_type(method_name)}* request"
 
 
 def get_request_type(method_name):
+    """Get the name of the Request class for the function with the given name."""
     return f"{method_name}Request"
 
 
 def get_response_param(method_name):
+    """Get a parameter for taking in a Response object for the function with the given name."""
     return f"{get_response_type(method_name)}* response"
 
 
 def get_response_type(method_name):
+    """Get the name of the Response class for the function with the given name."""
     return f"{method_name}Response"
 
 
 def get_async_functions(functions):
+    """Filter the functions to include only async functions (those with a streaming response)."""
     return {
         name: data
         for name, data in functions.items()
@@ -336,6 +362,7 @@ def get_async_functions(functions):
 
 
 def get_functions_with_two_dimension_param(functions):
+    """Filter the functions to include only those with a two-dimension array parameter."""
     return {
         name: data
         for name, data in functions.items()
@@ -344,37 +371,44 @@ def get_functions_with_two_dimension_param(functions):
 
 
 def get_callback_method_parameters(function_data):
+    """Get the parameters of the given function's callback function parameter."""
     parameters = function_data["parameters"]
-    input_parameters = [p for p in parameters if common_helpers.is_input_parameter(p)]
     callback_ptr_parameter = next((p for p in parameters if "callback_params" in p))
     output_parameters = callback_ptr_parameter["callback_params"]
 
-    return input_parameters, output_parameters
+    return output_parameters
 
 
 def create_param_type_list(parameters):
+    """Get a comma-separated list of parameter types."""
     return ", ".join([p["type"] for p in parameters])
 
 
 def get_feature_toggles(config: dict) -> Dict[str, str]:
+    """Get the feature_toggles config setting."""
     return config.get("feature_toggles", {})
 
 
 def get_toggle_member_name(fully_qualified_toggle_name: str) -> str:
+    """Get the member name to use for the given toggle, in the FeatureToggles class."""
     toggle_name = fully_qualified_toggle_name.split(".")[-1]
     return f"is_{toggle_name}_enabled"
 
 
 def get_driver_service_readiness(config: dict) -> str:
+    """Get the C++ constant representing the driver's code_readiness."""
     readiness = common_helpers.get_driver_readiness(config)
     return to_cpp_readiness(readiness)
 
 
 def to_cpp_readiness(user_readiness: str) -> str:
+    """Get the C++ constant representing the given code_readiness."""
     return f"CodeReadiness::k{user_readiness}"
 
 
 def get_enums_to_map(functions: dict, enums: dict) -> List[str]:
+    """Get a list of the enums used by functions, for which mappings should be generated."""
+
     def get_enum_or_default(enum_name: str) -> dict:
         # Enums that are added during metadata mutation (like attributes)
         # may not be in the enum dictionary. Assume they don't generate-mappings.
@@ -389,6 +423,7 @@ def get_enums_to_map(functions: dict, enums: dict) -> List[str]:
 
 
 def get_bitfield_value_to_name_mapping(parameter: dict, enums: dict) -> Dict[int, str]:
+    """Get a mapping from bitfield values to the corresponding C++ enum value constants."""
     enum_name = parameter["bitfield_as_enum_array"]
     enum = enums[enum_name]
     enum_value_prefix = common_helpers.get_enum_value_prefix(enum_name, enum)
@@ -401,25 +436,61 @@ def get_bitfield_value_to_name_mapping(parameter: dict, enums: dict) -> Dict[int
     }
 
 
-def get_resource_handle_type(config: dict) -> str:
-    return config.get("resource_handle_type", "ViSession")
+def get_resource_handle_types(config: dict) -> List[str]:
+    """Get the resource_handle_type config setting."""
+    resource_handle_type = config.get("resource_handle_type", ["ViSession"])
+    if isinstance(resource_handle_type, str):
+        return [resource_handle_type]
+    else:
+        return resource_handle_type
 
 
-def get_shared_resource_repository_ptr_type(resource_handle_type: str) -> str:
+def _get_shared_resource_repository_ptr_type(resource_handle_type: str) -> str:
     resource_repository_type = f"nidevice_grpc::SessionResourceRepository<{resource_handle_type}>"
     return f"std::shared_ptr<{resource_repository_type}>"
 
 
-def get_driver_shared_resource_repository_ptr_type(driver_config: dict) -> str:
-    return get_shared_resource_repository_ptr_type(get_resource_handle_type(driver_config))
-
-
-class CrossDriverSessionDependency(NamedTuple):
+class CrossDriverSessionDependency(NamedTuple):  # noqa: D101
     resource_handle_type: str
     resource_repository_alias: str
     resource_repository_type: str
     field_name: str
     local_name: str
+
+
+SessionRepositoryHandleTypeDependencyMap = Dict[str, CrossDriverSessionDependency]
+
+
+def get_driver_shared_resource_repository_ptr_deps(
+    driver_config: dict, functions: dict
+) -> SessionRepositoryHandleTypeDependencyMap:
+    """Get handle-type to CrossDriverSessionDependency map used by this driver.
+
+    Combine resource_handle_type and cross_driver_session types in single map since both
+    of them together decide repositories required by driver. Combining into single map also
+    helps remove duplicates.
+    """
+    resource_repository_deps = [
+        _create_cross_driver_session_dependency(resource_handle_type)
+        for resource_handle_type in get_resource_handle_types(driver_config)
+    ]
+
+    resource_repository_deps[0] = CrossDriverSessionDependency(
+        resource_repository_deps[0].resource_handle_type,
+        "ResourceRepositorySharedPtr",
+        resource_repository_deps[0].resource_repository_type,
+        "session_repository_",
+        "resource_repository",
+    )
+
+    resource_repository_type_dependency_map = {
+        d.resource_handle_type: d for d in resource_repository_deps
+    }
+
+    for d in get_cross_driver_session_dependencies(functions):
+        resource_repository_type_dependency_map.update({d.resource_handle_type: d})
+
+    return resource_repository_type_dependency_map
 
 
 def _create_cross_driver_session_dependency(
@@ -428,40 +499,48 @@ def _create_cross_driver_session_dependency(
     return CrossDriverSessionDependency(
         resource_handle_type,
         f"{resource_handle_type}ResourceRepositorySharedPtr",
-        get_shared_resource_repository_ptr_type(resource_handle_type),
+        _get_shared_resource_repository_ptr_type(resource_handle_type),
         f"{common_helpers.pascal_to_snake(resource_handle_type)}_resource_repository_",
         f"{common_helpers.pascal_to_snake(resource_handle_type)}_resource_repository",
     )
 
 
-def get_cross_driver_session_type(parameter: dict) -> Optional[str]:
+def _get_cross_driver_session_type(parameter: dict) -> Optional[str]:
     return parameter.get("cross_driver_session")
 
 
-def get_cross_driver_session_dependencies(
-    functions: dict,
-) -> List[CrossDriverSessionDependency]:
+def get_cross_driver_session_dependencies(functions: dict) -> List[CrossDriverSessionDependency]:
+    """Get a list of cross-driver session dependencies needed by any function parameter."""
+    cross_driver_session_types = (
+        _get_cross_driver_session_type(p) for f in functions.values() for p in f["parameters"]
+    )
     return sorted(
-        set(
-            _create_cross_driver_session_dependency(get_cross_driver_session_type(p))
-            for f in functions.values()
-            for p in f["parameters"]
-            if get_cross_driver_session_type(p)
-        )
+        set(_create_cross_driver_session_dependency(t) for t in cross_driver_session_types if t)
     )
 
 
 def get_cross_driver_session_dependency(parameter: dict) -> CrossDriverSessionDependency:
+    """Get the cross-driver session dependency needed by the given parameter."""
     return _create_cross_driver_session_dependency(parameter["cross_driver_session"])
 
 
-def session_repository_field_name(param: dict) -> str:
-    cross_driver_session_type = get_cross_driver_session_type(param)
+def session_repository_field_name(param: dict, config: dict) -> str:
+    """Get the name of the session repository field used for the given parameter."""
+    cross_driver_session_type = _get_cross_driver_session_type(param)
 
     if cross_driver_session_type:
         return get_cross_driver_session_dependency(param).field_name
     else:
-        return "session_repository_"
+        resource_handle_deps = get_driver_shared_resource_repository_ptr_deps(
+            config,
+            functions={},  # This is called for retrieving session repo field name for specific parameter, functions is not needed
+        )
+        resource_handle_dep = next(
+            resource_handle_deps[resource_handle_type]
+            for resource_handle_type in resource_handle_deps
+            if resource_handle_type == common_helpers.get_underlying_type(param)
+        )
+        return resource_handle_dep.field_name
 
 
 SessionRepositoryHandleTypeMap = Dict[str, Dict[str, Any]]
@@ -470,16 +549,88 @@ SessionRepositoryHandleTypeMap = Dict[str, Dict[str, Any]]
 def list_session_repository_handle_types(
     driver_configs: List[dict],
 ) -> SessionRepositoryHandleTypeMap:
-    session_repository_handle_type_map = {}  # type: Dict[str, Dict[str, Any]]
+    """Get per-handle type config info, for the resource handle types used by the given configs.
+
+    The included config info keys are: local_name and windows_only.
+    """
+    session_repository_handle_type_map = {}  # type: SessionRepositoryHandleTypeMap
     for config in driver_configs:
-        handle_type = get_resource_handle_type(config)
-        if handle_type in session_repository_handle_type_map:
-            old_windows_only = session_repository_handle_type_map[handle_type]["windows_only"]
-            new_windows_only = config.get("windows_only", False) and old_windows_only
-            session_repository_handle_type_map[handle_type]["windows_only"] = new_windows_only
-        else:
-            session_repository_handle_type_map[handle_type] = {
-                "local_name": f"{common_helpers.pascal_to_snake(handle_type)}_repository",
-                "windows_only": config.get("windows_only", False),
-            }
+        handle_types = get_resource_handle_types(config)
+        for handle_type in handle_types:
+            if handle_type in session_repository_handle_type_map:
+                old_windows_only = session_repository_handle_type_map[handle_type]["windows_only"]
+                new_windows_only = config.get("windows_only", False) and old_windows_only
+                session_repository_handle_type_map[handle_type]["windows_only"] = new_windows_only
+            else:
+                session_repository_handle_type_map[handle_type] = {
+                    "local_name": f"{common_helpers.pascal_to_snake(handle_type)}_repository",
+                    "windows_only": config.get("windows_only", False),
+                }
     return session_repository_handle_type_map
+
+
+def _get_return_value_parameter(parameters: List[dict]) -> Optional[dict]:
+    return next((p for p in parameters if common_helpers.is_return_value(p)), None)
+
+
+def get_return_value_name(function_data: dict) -> str:
+    """Get the name of the return value for function_data. The default is "status"."""
+    return_param = _get_return_value_parameter(function_data["parameters"])
+    return return_param["name"] if return_param else "status"
+
+
+def has_status_expression(function_data: dict) -> bool:
+    """Whether function_data has a custom status_expression."""
+    return "status_expression" in function_data
+
+
+def get_status_expression(function_data: dict) -> str:
+    """Get the custom status_expression for function_data.
+
+    The default is to use the value of status returned from the driver function.
+
+    Raises if "status_expression" is not present.
+    """
+    return function_data["status_expression"]
+
+
+def get_library_lval_for_potentially_umockable_function(config: dict, parameters: List[dict]):
+    """Get the variable or expression to use as the left-hand-side for the library pointer.
+
+    Returns library_ if parameters can be mocked and called through the shared interface,
+    otherwise typecasts library to the concrete type.
+    """
+    return (
+        "library_"
+        if common_helpers.can_mock_function(parameters)
+        else f"(({config['service_class_prefix']}Library*)library_)"
+    )
+
+
+def is_session_returned_from_function(parameters: List[dict]) -> bool:
+    """Whether parameters includes a return_value parameter with grpc_type nidevice_grpc.Session."""
+    return_param = _get_return_value_parameter(parameters)
+    return return_param["grpc_type"] == "nidevice_grpc.Session" if return_param else False
+
+
+def should_copy_to_response(parameter: dict) -> bool:
+    """Whether the value of parameter should be copied to the Response message."""
+    is_included_in_response_proto = parameter.get("include_in_proto", True)
+    # Repeating parameters do a special mapping in the copy logic.
+    # They should execute that map/copy logic even if include_in_proto is False.
+    is_mapped_as_repeating_parameter = common_helpers.is_repeating_parameter(parameter)
+    return is_included_in_response_proto or is_mapped_as_repeating_parameter
+
+
+def is_size_param_passed_by_ptr(parameter: dict) -> bool:
+    """Return whether parameters is a size param passed-by-pointer."""
+    return parameter.get("is_size_param") and parameter.get("pointer")
+
+
+def get_last_error_output_param(parameters: List[dict]) -> Optional[dict]:
+    """Get the get_last_error parameter if any (or None)."""
+    get_last_error_outputs = [
+        p for p in parameters if common_helpers.is_get_last_error_output_param(p)
+    ]
+    assert len(get_last_error_outputs) <= 1, "Only one get_last_error output is supported"
+    return get_last_error_outputs[0] if get_last_error_outputs else None

@@ -25,10 +25,10 @@ namespace nitclk_grpc {
 
   NiTClkService::NiTClkService(
       NiTClkLibraryInterface* library,
-      ResourceRepositorySharedPtr session_repository, 
+      ResourceRepositorySharedPtr resource_repository,
       const NiTClkFeatureToggles& feature_toggles)
       : library_(library),
-      session_repository_(session_repository),
+      session_repository_(resource_repository),
       feature_toggles_(feature_toggles)
   {
   }
@@ -161,7 +161,7 @@ namespace nitclk_grpc {
           return ::grpc::Status::OK;
         }
         ViUInt32 error_string_size = status;
-      
+
         std::string error_string;
         if (error_string_size > 0) {
             error_string.resize(error_string_size - 1);

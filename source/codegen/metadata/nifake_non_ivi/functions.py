@@ -10,6 +10,18 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'CloseSecondarySession': {
+        'custom_close_method': True,
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.Session',
+                'name': 'secondarySessionHandle',
+                'type': 'SecondarySessionHandle',
+            },
+        ],
+        'returns': 'int32',
+    },
     'GetCrossDriverSession': {
         'init_method': True,
         'parameters': [
@@ -27,6 +39,47 @@ functions = {
             },
         ],
         'returns': 'int32'
+    },
+    'GetLatestErrorMessage': {
+        'parameters': [
+            {
+                'direction': 'out',
+                'name': 'message',
+                'size': {
+                    'mechanism': 'ivi-dance',
+                    'value': 'size'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'size',
+                'type': 'uInt32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetStringAsReturnedValue': {
+        'status_expression': 'string_out ? 0 : -1',
+        'parameters': [
+            {
+                'direction': 'out',
+                'include_in_proto': False,
+                'name': 'buf',
+                'size': {
+                    'mechanism': 'fixed',
+                    'value': '512'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'string_out',
+                'return_value': True,
+                'type': 'const char[]'
+            },
+        ],
+        'returns': 'const char*'
     },
     'GetMarbleAttributeDouble': {
         'parameters': [
@@ -108,6 +161,12 @@ functions = {
                 'direction': 'out',
                 'name': 'handle',
                 'type': 'FakeHandle'
+            },
+            {
+                'direction': 'out',
+                'get_last_error': True,
+                'name': 'errorMessage',
+                'type': 'char[]'
             }
         ],
         'returns': 'int32'
@@ -157,6 +216,19 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'InitSecondarySession': {
+        'init_method': True,
+        'custom_close': 'CloseSecondarySession(id)',
+        'parameters': [
+            {
+                'direction': 'out',
+                'grpc_type': 'nidevice_grpc.Session',
+                'name': 'secondarySessionHandle',
+                'type': 'SecondarySessionHandle',
+            },
+        ],
+        'returns': 'int32',
+    },
     'InitWithHandleNameAsSessionName': {
         'init_method': True,
         'parameters': [
@@ -173,6 +245,26 @@ functions = {
             }
         ],
         'returns': 'int32'
+    },
+    'InitWithReturnedSession': {     
+        'init_method' : True,
+        'status_expression': 'handle == 0xDEADBEEF ? -1 : 0',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'handleName',
+                'type': 'const char[]',
+                'is_session_name': True
+            },
+            {
+                'direction': 'out',
+                'grpc_type': 'nidevice_grpc.Session',
+                'name': 'handle',
+                'return_value': True,
+                'type': 'FakeHandle'
+            },
+        ],
+    'returns': 'FakeHandle'
     },
     'InputArraysWithNarrowIntegerTypes': {
         'parameters': [

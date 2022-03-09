@@ -108,7 +108,6 @@ class NiRFmxLTELibrary : public nirfmxlte_grpc::NiRFmxLTELibraryInterface {
   int32 CfgRFAttenuation(niRFmxInstrHandle instrumentHandle, char channelName[], int32 rfAttenuationAuto, float64 rfAttenuationValue);
   int32 CfgReferenceLevel(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 referenceLevel);
   int32 CfgSoftwareEdgeTrigger(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 triggerDelay, int32 enableTrigger);
-  int32 CfgSubblockFrequencyDefinition(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 subblockFrequencyDefinition);
   int32 CfgTransmitAntennaToAnalyze(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 transmitAntennaToAnalyze);
   int32 CfgeNodeBCategory(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 eNodeBCategory);
   int32 CheckMeasurementStatus(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* isDone);
@@ -396,7 +395,6 @@ class NiRFmxLTELibrary : public nirfmxlte_grpc::NiRFmxLTELibraryInterface {
   using CfgRFAttenuationPtr = decltype(&RFmxLTE_CfgRFAttenuation);
   using CfgReferenceLevelPtr = decltype(&RFmxLTE_CfgReferenceLevel);
   using CfgSoftwareEdgeTriggerPtr = decltype(&RFmxLTE_CfgSoftwareEdgeTrigger);
-  using CfgSubblockFrequencyDefinitionPtr = decltype(&RFmxLTE_CfgSubblockFrequencyDefinition);
   using CfgTransmitAntennaToAnalyzePtr = decltype(&RFmxLTE_CfgTransmitAntennaToAnalyze);
   using CfgeNodeBCategoryPtr = decltype(&RFmxLTE_CfgeNodeBCategory);
   using CheckMeasurementStatusPtr = decltype(&RFmxLTE_CheckMeasurementStatus);
@@ -684,7 +682,6 @@ class NiRFmxLTELibrary : public nirfmxlte_grpc::NiRFmxLTELibraryInterface {
     CfgRFAttenuationPtr CfgRFAttenuation;
     CfgReferenceLevelPtr CfgReferenceLevel;
     CfgSoftwareEdgeTriggerPtr CfgSoftwareEdgeTrigger;
-    CfgSubblockFrequencyDefinitionPtr CfgSubblockFrequencyDefinition;
     CfgTransmitAntennaToAnalyzePtr CfgTransmitAntennaToAnalyze;
     CfgeNodeBCategoryPtr CfgeNodeBCategory;
     CheckMeasurementStatusPtr CheckMeasurementStatus;
