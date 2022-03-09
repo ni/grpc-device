@@ -216,31 +216,5 @@ inline SockOptDataHolder convert_from_grpc(const SockOptData& input)
   return SockOptDataHolder(input);
 }
 
-inline void convert_to_grpc(void* optval, SockOptData* data, SocketOptions option, nxsocklen_t optlen)
-{
-  switch (option) {
-    case SocketOptions::SOCKET_OPTIONS_RX_DATA:
-    case SocketOptions::SOCKET_OPTIONS_RCV_BUF:
-    case SocketOptions::SOCKET_OPTIONS_SND_BUF: {
-      int32_t data_int = *(int32_t*)(optval);
-      data->set_data_int32(data_int);
-      break;
-    }
-    case SocketOptions::SOCKET_OPTIONS_NON_BLOCK:
-    case SocketOptions::SOCKET_OPTIONS_LINGER:
-    case SocketOptions::SOCKET_OPTIONS_REUSE_ADDR: {
-      bool data_bool = *(bool*)(optval);
-      data->set_data_bool(data_bool);
-      break;
-    }
-    case SocketOptions::SOCKET_OPTIONS_BIND_TO_DEVICE:
-    case SocketOptions::SOCKET_OPTIONS_ERROR: {
-      const char* string = (char*)(optval);
-      data->set_data_string(string);
-      break;
-    }
-  }
-}
-
 }  // namespace nixnetsocket_grpc
 #endif /* NIDEVICE_GRPC_DEVICE_XNET_SOCKET_CONVERTERS_H */

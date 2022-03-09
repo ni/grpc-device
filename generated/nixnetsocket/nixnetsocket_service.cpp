@@ -128,47 +128,6 @@ namespace nixnetsocket_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiXnetSocketService::GetSocketOption(::grpc::ServerContext* context, const GetSocketOptionRequest* request, GetSocketOptionResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto socket_grpc_session = request->socket();
-      nxSOCKET socket = session_repository_->access_session(socket_grpc_session.id(), socket_grpc_session.name());
-      int32_t level = request->level();
-      int32_t opt_name;
-      switch (request->opt_name_enum_case()) {
-        case nixnetsocket_grpc::GetSocketOptionRequest::OptNameEnumCase::kOptName: {
-          opt_name = static_cast<int32_t>(request->opt_name());
-          break;
-        }
-        case nixnetsocket_grpc::GetSocketOptionRequest::OptNameEnumCase::kOptNameRaw: {
-          opt_name = static_cast<int32_t>(request->opt_name_raw());
-          break;
-        }
-        case nixnetsocket_grpc::GetSocketOptionRequest::OptNameEnumCase::OPT_NAME_ENUM_NOT_SET: {
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for opt_name was not specified or out of range");
-          break;
-        }
-      }
-
-      void* optval;
-      nxsocklen_t optlen {};
-      auto status = library_->GetSocketOption(socket, level, opt_name, &optval, &optlen);
-      response->set_status(status);
-      if (status_ok(status)) {
-        convert_to_grpc(optval, response->mutable_optval(), request->opt_name(), optlen);
-      }
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
   ::grpc::Status NiXnetSocketService::IsSet(::grpc::ServerContext* context, const IsSetRequest* request, IsSetResponse* response)
   {
     if (context->IsCancelled()) {

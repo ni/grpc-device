@@ -18,7 +18,7 @@ message SockAddr {
 }
 
 message SockOptData {
-  SocketOptions opt = 1;
+  int32 opt = 1;
   oneof data {
     int32 data_int32 = 2;
     bool data_bool = 3;

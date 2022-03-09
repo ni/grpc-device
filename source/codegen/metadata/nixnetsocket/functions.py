@@ -71,6 +71,7 @@ functions = {
     },
     'GetSocketOption': {
         'cname': 'nxgetsockopt',
+        "codegen_method": "CustomCode",
         'parameters': [
             {
                 'direction': 'in',
