@@ -42,6 +42,16 @@ public:
   virtual ~NiXnetSocketService();
   
   ::grpc::Status Bind(::grpc::ServerContext* context, const BindRequest* request, BindResponse* response) override;
+  ::grpc::Status Accept(::grpc::ServerContext* context, const AcceptRequest* request, AcceptResponse* response) override;
+  ::grpc::Status Connect(::grpc::ServerContext* context, const ConnectRequest* request, ConnectResponse* response) override;
+  ::grpc::Status Listen(::grpc::ServerContext* context, const ListenRequest* request, ListenResponse* response) override;
+  ::grpc::Status SendTo(::grpc::ServerContext* context, const SendToRequest* request, SendToResponse* response) override;
+  ::grpc::Status Send(::grpc::ServerContext* context, const SendRequest* request, SendResponse* response) override;
+  ::grpc::Status RecVFrom(::grpc::ServerContext* context, const RecVFromRequest* request, RecVFromResponse* response) override;
+  ::grpc::Status RecV(::grpc::ServerContext* context, const RecVRequest* request, RecVResponse* response) override;
+  ::grpc::Status GetSockName(::grpc::ServerContext* context, const GetSockNameRequest* request, GetSockNameResponse* response) override;
+  ::grpc::Status GetPeerName(::grpc::ServerContext* context, const GetPeerNameRequest* request, GetPeerNameResponse* response) override;
+  ::grpc::Status Shutdown(::grpc::ServerContext* context, const ShutdownRequest* request, ShutdownResponse* response) override;
   ::grpc::Status Close(::grpc::ServerContext* context, const CloseRequest* request, CloseResponse* response) override;
   ::grpc::Status GetLastErrorNum(::grpc::ServerContext* context, const GetLastErrorNumRequest* request, GetLastErrorNumResponse* response) override;
   ::grpc::Status GetLastErrorStr(::grpc::ServerContext* context, const GetLastErrorStrRequest* request, GetLastErrorStrResponse* response) override;

@@ -18,6 +18,16 @@ import "google/protobuf/duration.proto";
 
 service NiXnetSocket {
   rpc Bind(BindRequest) returns (BindResponse);
+  rpc Accept(AcceptRequest) returns (AcceptResponse);
+  rpc Connect(ConnectRequest) returns (ConnectResponse);
+  rpc Listen(ListenRequest) returns (ListenResponse);
+  rpc SendTo(SendToRequest) returns (SendToResponse);
+  rpc Send(SendRequest) returns (SendResponse);
+  rpc RecVFrom(RecVFromRequest) returns (RecVFromResponse);
+  rpc RecV(RecVRequest) returns (RecVResponse);
+  rpc GetSockName(GetSockNameRequest) returns (GetSockNameResponse);
+  rpc GetPeerName(GetPeerNameRequest) returns (GetPeerNameResponse);
+  rpc Shutdown(ShutdownRequest) returns (ShutdownResponse);
   rpc Close(CloseRequest) returns (CloseResponse);
   rpc GetLastErrorNum(GetLastErrorNumRequest) returns (GetLastErrorNumResponse);
   rpc GetLastErrorStr(GetLastErrorStrRequest) returns (GetLastErrorStrResponse);
@@ -55,6 +65,102 @@ message BindRequest {
 }
 
 message BindResponse {
+  int32 status = 1;
+}
+
+message AcceptRequest {
+  nidevice_grpc.Session socket = 1;
+  SockAddr addr = 2;
+}
+
+message AcceptResponse {
+  int32 status = 1;
+}
+
+message ConnectRequest {
+  nidevice_grpc.Session socket = 1;
+  SockAddr name = 2;
+}
+
+message ConnectResponse {
+  int32 status = 1;
+}
+
+message ListenRequest {
+  nidevice_grpc.Session socket = 1;
+  int32 backlog = 2;
+}
+
+message ListenResponse {
+  int32 status = 1;
+}
+
+message SendToRequest {
+  nidevice_grpc.Session socket = 1;
+  string dataptr = 2;
+  int32 flags = 3;
+  SockAddr to = 4;
+}
+
+message SendToResponse {
+  int32 status = 1;
+}
+
+message SendRequest {
+  nidevice_grpc.Session socket = 1;
+  string dataptr = 2;
+  int32 flags = 3;
+}
+
+message SendResponse {
+  int32 status = 1;
+}
+
+message RecVFromRequest {
+  nidevice_grpc.Session socket = 1;
+  string mem = 2;
+  int32 flags = 3;
+  SockAddr from = 4;
+}
+
+message RecVFromResponse {
+  int32 status = 1;
+}
+
+message RecVRequest {
+  nidevice_grpc.Session socket = 1;
+  string mem = 2;
+  int32 flags = 3;
+}
+
+message RecVResponse {
+  int32 status = 1;
+}
+
+message GetSockNameRequest {
+  nidevice_grpc.Session socket = 1;
+  SockAddr addr = 2;
+}
+
+message GetSockNameResponse {
+  int32 status = 1;
+}
+
+message GetPeerNameRequest {
+  nidevice_grpc.Session socket = 1;
+  SockAddr addr = 2;
+}
+
+message GetPeerNameResponse {
+  int32 status = 1;
+}
+
+message ShutdownRequest {
+  nidevice_grpc.Session socket = 1;
+  int32 how = 2;
+}
+
+message ShutdownResponse {
   int32 status = 1;
 }
 
