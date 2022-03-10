@@ -148,7 +148,7 @@ functions = {
         ],
         'returns': 'int32_t'
     },
-    'RecV': {
+    'Recv': {
         'cname': 'nxrecv',
         'parameters': [
             {

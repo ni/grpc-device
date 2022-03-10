@@ -22,7 +22,7 @@ class NiXnetSocketMockLibrary : public nixnetsocket_grpc::NiXnetSocketLibraryInt
   MOCK_METHOD(int32_t, Listen, (nxSOCKET socket, int32_t backlog), (override));
   MOCK_METHOD(int32_t, SendTo, (nxSOCKET socket, char dataptr[], int32_t size, int32_t flags, nxsockaddr* to, nxsocklen_t tolen), (override));
   MOCK_METHOD(int32_t, Send, (nxSOCKET socket, char dataptr[], int32_t size, int32_t flags), (override));
-  MOCK_METHOD(int32_t, RecV, (nxSOCKET socket, char mem[], int32_t size, int32_t flags), (override));
+  MOCK_METHOD(int32_t, Recv, (nxSOCKET socket, char mem[], int32_t size, int32_t flags), (override));
   MOCK_METHOD(int32_t, Shutdown, (nxSOCKET socket, int32_t how), (override));
   MOCK_METHOD(int32_t, Close, (nxSOCKET socket), (override));
   MOCK_METHOD(int32_t, GetLastErrorNum, (), (override));

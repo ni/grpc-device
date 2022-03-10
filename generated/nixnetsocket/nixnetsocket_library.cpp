@@ -26,7 +26,7 @@ NiXnetSocketLibrary::NiXnetSocketLibrary() : shared_library_(kLibraryName)
   function_pointers_.Listen = reinterpret_cast<ListenPtr>(shared_library_.get_function_pointer("nxlisten"));
   function_pointers_.SendTo = reinterpret_cast<SendToPtr>(shared_library_.get_function_pointer("nxsendto"));
   function_pointers_.Send = reinterpret_cast<SendPtr>(shared_library_.get_function_pointer("nxsend"));
-  function_pointers_.RecV = reinterpret_cast<RecVPtr>(shared_library_.get_function_pointer("nxrecv"));
+  function_pointers_.Recv = reinterpret_cast<RecvPtr>(shared_library_.get_function_pointer("nxrecv"));
   function_pointers_.Shutdown = reinterpret_cast<ShutdownPtr>(shared_library_.get_function_pointer("nxshutdown"));
   function_pointers_.Close = reinterpret_cast<ClosePtr>(shared_library_.get_function_pointer("nxclose"));
   function_pointers_.GetLastErrorNum = reinterpret_cast<GetLastErrorNumPtr>(shared_library_.get_function_pointer("nxgetlasterrornum"));
@@ -107,15 +107,15 @@ int32_t NiXnetSocketLibrary::Send(nxSOCKET socket, char dataptr[], int32_t size,
 #endif
 }
 
-int32_t NiXnetSocketLibrary::RecV(nxSOCKET socket, char mem[], int32_t size, int32_t flags)
+int32_t NiXnetSocketLibrary::Recv(nxSOCKET socket, char mem[], int32_t size, int32_t flags)
 {
-  if (!function_pointers_.RecV) {
+  if (!function_pointers_.Recv) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxrecv.");
   }
 #if defined(_MSC_VER)
   return nxrecv(socket, mem, size, flags);
 #else
-  return function_pointers_.RecV(socket, mem, size, flags);
+  return function_pointers_.Recv(socket, mem, size, flags);
 #endif
 }
 
