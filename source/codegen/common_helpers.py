@@ -1086,7 +1086,7 @@ def get_driver_api_params(parameters: List[dict]) -> List[dict]:
     Excludes:
     * Return values.
     * Outputs that are calculated/populated after the API call.
-    * Meta params (proto only)
+    * Proto only params.
     """
     return [
         p
