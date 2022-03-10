@@ -370,7 +370,7 @@ functions = {
         ],
         'returns': 'int32_t'
     },
-    'SetSocketOption': {
+    'SetSockOpt': {
         'cname': 'nxsetsockopt',
         'parameters': [
             {

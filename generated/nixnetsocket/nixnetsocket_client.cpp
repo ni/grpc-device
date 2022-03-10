@@ -241,20 +241,20 @@ select(const StubPtr& stub, const std::vector<nidevice_grpc::Session>& read_fds,
   return response;
 }
 
-SetSocketOptionResponse
-set_socket_option(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::int32& level, const SockOptData& opt_data)
+SetSockOptResponse
+set_sock_opt(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::int32& level, const SockOptData& opt_data)
 {
   ::grpc::ClientContext context;
 
-  auto request = SetSocketOptionRequest{};
+  auto request = SetSockOptRequest{};
   request.mutable_socket()->CopyFrom(socket);
   request.set_level(level);
   request.mutable_opt_data()->CopyFrom(opt_data);
 
-  auto response = SetSocketOptionResponse{};
+  auto response = SetSockOptResponse{};
 
   raise_if_error(
-      stub->SetSocketOption(&context, request, &response));
+      stub->SetSockOpt(&context, request, &response));
 
   return response;
 }

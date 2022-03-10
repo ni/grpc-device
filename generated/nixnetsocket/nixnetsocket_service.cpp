@@ -436,7 +436,7 @@ namespace nixnetsocket_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiXnetSocketService::SetSocketOption(::grpc::ServerContext* context, const SetSocketOptionRequest* request, SetSocketOptionResponse* response)
+  ::grpc::Status NiXnetSocketService::SetSockOpt(::grpc::ServerContext* context, const SetSockOptRequest* request, SetSockOptResponse* response)
   {
     if (context->IsCancelled()) {
       return ::grpc::Status::CANCELLED;
@@ -449,7 +449,7 @@ namespace nixnetsocket_grpc {
       auto optname = opt_data.name();
       auto optval = opt_data.data();
       auto optlen = opt_data.size();
-      auto status = library_->SetSocketOption(socket, level, optname, optval, optlen);
+      auto status = library_->SetSockOpt(socket, level, optname, optval, optlen);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
