@@ -69,6 +69,78 @@ functions = {
         ],
         'returns': 'char*'
     },
+    'IsSet': {
+        'cname': 'nxfd_isset',
+        'status_expression': '0',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'fd',
+                'type': 'nxSOCKET'
+            },
+            {
+                'direction': 'in',
+                'name': 'set',
+                'pointer': True,
+                'supports_standard_copy_convert': True,
+                'additional_arguments_to_copy_convert': ['session_repository_'],
+                'type': 'nxfd_set'
+            },
+            {
+                'direction': 'out',
+                'name': 'is_set',
+                'return_value': True,
+                'type': 'int32_t'
+            }
+        ],
+        'returns': 'int32_t'
+    },
+    'Select': {
+        'cname': 'nxselect',
+        'parameters': [
+            {
+                'direction': 'in',
+                'hardcoded_value': '0',
+                'include_in_proto': False,
+                'name': 'nfds',
+                'type': 'int32_t'
+            },
+            {
+                'direction': 'in',
+                'name': 'read_fds',
+                'pointer': True,
+                'supports_standard_copy_convert': True,
+                'additional_arguments_to_copy_convert': ['session_repository_'],
+                'type': 'nxfd_set'
+            },
+            {
+                'direction': 'in',
+                'name': 'write_fds',
+                'pointer': True,
+                'supports_standard_copy_convert': True,
+                'additional_arguments_to_copy_convert': ['session_repository_'],
+                'type': 'nxfd_set'
+            },
+            {
+                'direction': 'in',
+                'name': 'except_fds',
+                'pointer': True,
+                'supports_standard_copy_convert': True,
+                'additional_arguments_to_copy_convert': ['session_repository_'],
+                'type': 'nxfd_set'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'pointer': True,
+                'supports_standard_copy_convert': True,
+                'type': 'nxtimeval'
+            },
+        ],
+        'returns': 'int32_t'
+
+
+    },
     'Socket': {
         'cname': 'nxsocket',
         'init_method': True,

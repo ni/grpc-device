@@ -25,6 +25,8 @@ NiXnetSocketLibrary::NiXnetSocketLibrary() : shared_library_(kLibraryName)
   function_pointers_.Close = reinterpret_cast<ClosePtr>(shared_library_.get_function_pointer("nxclose"));
   function_pointers_.GetLastErrorNum = reinterpret_cast<GetLastErrorNumPtr>(shared_library_.get_function_pointer("nxgetlasterrornum"));
   function_pointers_.GetLastErrorStr = reinterpret_cast<GetLastErrorStrPtr>(shared_library_.get_function_pointer("nxgetlasterrorstr"));
+  function_pointers_.IsSet = reinterpret_cast<IsSetPtr>(shared_library_.get_function_pointer("nxfd_isset"));
+  function_pointers_.Select = reinterpret_cast<SelectPtr>(shared_library_.get_function_pointer("nxselect"));
   function_pointers_.Socket = reinterpret_cast<SocketPtr>(shared_library_.get_function_pointer("nxsocket"));
 }
 
@@ -84,6 +86,30 @@ char* NiXnetSocketLibrary::GetLastErrorStr(char buf[], size_t bufLen)
   return nxgetlasterrorstr(buf, bufLen);
 #else
   return function_pointers_.GetLastErrorStr(buf, bufLen);
+#endif
+}
+
+int32_t NiXnetSocketLibrary::IsSet(nxSOCKET fd, nxfd_set* set)
+{
+  if (!function_pointers_.IsSet) {
+    throw nidevice_grpc::LibraryLoadException("Could not find nxfd_isset.");
+  }
+#if defined(_MSC_VER)
+  return nxfd_isset(fd, set);
+#else
+  return function_pointers_.IsSet(fd, set);
+#endif
+}
+
+int32_t NiXnetSocketLibrary::Select(int32_t nfds, nxfd_set* read_fds, nxfd_set* write_fds, nxfd_set* except_fds, nxtimeval* timeout)
+{
+  if (!function_pointers_.Select) {
+    throw nidevice_grpc::LibraryLoadException("Could not find nxselect.");
+  }
+#if defined(_MSC_VER)
+  return nxselect(nfds, read_fds, write_fds, except_fds, timeout);
+#else
+  return function_pointers_.Select(nfds, read_fds, write_fds, except_fds, timeout);
 #endif
 }
 

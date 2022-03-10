@@ -12,6 +12,7 @@ config = {
     'additional_headers': { "custom/xnetsocket_converters.h": ["service.cpp"] },
     'type_to_grpc_type': {
         'nxSOCKET': 'nidevice_grpc.Session',
+        'nxfd_set': 'repeated nidevice_grpc.Session',
         'nxIpStackRef_t': 'nidevice_grpc.Session',
         'char[]': 'string',
         'int32_t': 'int32',
@@ -22,7 +23,8 @@ config = {
         'uint32_t': 'uint32',
         'uint16_t': 'uint16',
         'int64_t': 'int64',
-        'nxsockaddr': 'SockAddr'
+        'nxsockaddr': 'SockAddr',
+        'nxtimeval': 'google.protobuf.Duration'
     },
     'code_readiness': 'NextRelease',
     'driver_name': 'NI-XNETSOCKET',

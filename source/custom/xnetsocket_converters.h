@@ -1,14 +1,21 @@
 #ifndef NIDEVICE_GRPC_DEVICE_XNET_SOCKET_CONVERTERS_H
 #define NIDEVICE_GRPC_DEVICE_XNET_SOCKET_CONVERTERS_H
-
+#include <google/protobuf/repeated_field.h>
+#include <google/protobuf/util/time_util.h>
 #include <nixnetsocket.pb.h>
 #include <nxsocket.h>
 #include <server/converters.h>
+#include <server/session_resource_repository.h>
 
 #include <algorithm>
 #include <cstring>
+#include <memory>
 
 namespace nixnetsocket_grpc {
+
+// Add underscore to usings so they don't conflict with including files in the same namespace.
+namespace pb_ = ::google::protobuf;
+using ResourceRepositorySharedPtr_ = std::shared_ptr<nidevice_grpc::SessionResourceRepository<nxSOCKET>>;
 
 // This class allows us to have something allocated on the stack that can be used as an
 // nxsockaddr* and initialized from a grpc SockAddr using standard codegen and copy convert routines.
@@ -78,10 +85,69 @@ struct SockAddrHolder {
   } addr;
 };
 
+struct SetHolder {
+  SetHolder(
+      const pb_::RepeatedPtrField<nidevice_grpc::Session>& input,
+      const ResourceRepositorySharedPtr_& resource_repository)
+  {
+    nxFD_ZERO(&set);
+    for (const auto& session : input) {
+      const auto socket = resource_repository->access_session(session.id(), session.name());
+      nxFD_SET(socket, &set);
+    }
+  }
+
+  operator nxfd_set*()
+  {
+    return &set;
+  }
+
+  operator const nxfd_set*() const
+  {
+    return &set;
+  }
+
+  nxfd_set set;
+};
+
+struct TimeValHolder {
+  TimeValHolder(const pb_::Duration& input)
+  {
+    time_val.tv_sec = input.seconds();
+    time_val.tv_usec = input.nanos() / 1000;
+  }
+
+  operator nxtimeval*()
+  {
+    return &time_val;
+  }
+
+  operator const nxtimeval*() const
+  {
+    return &time_val;
+  }
+
+  nxtimeval time_val;
+};
+
 template <typename TSockAddr>
 inline SockAddrHolder convert_from_grpc(const SockAddr& input)
 {
   return SockAddrHolder(input);
+}
+
+template <typename TSet>
+inline SetHolder convert_from_grpc(
+    const pb_::RepeatedPtrField<nidevice_grpc::Session>& input,
+    const ResourceRepositorySharedPtr_& resource_repository)
+{
+  return SetHolder(input, resource_repository);
+}
+
+template <typename TSet>
+inline TimeValHolder convert_from_grpc(const pb_::Duration& input)
+{
+  return TimeValHolder(input);
 }
 }  // namespace nixnetsocket_grpc
 #endif /* NIDEVICE_GRPC_DEVICE_XNET_SOCKET_CONVERTERS_H */
