@@ -388,7 +388,7 @@ functions = {
                 'name': 'opt_data',
                 'grpc_type': 'SockOptData',
                 'supports_standard_copy_convert': True,
-                'meta_param': True,
+                'proto_only': True,
                 'type': 'SockOptDataHolder'
             },
             {
