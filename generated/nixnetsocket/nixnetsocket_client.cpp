@@ -34,6 +34,112 @@ bind(const StubPtr& stub, const nidevice_grpc::Session& socket, const SockAddr& 
   return response;
 }
 
+ConnectResponse
+connect(const StubPtr& stub, const nidevice_grpc::Session& socket, const SockAddr& name)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ConnectRequest{};
+  request.mutable_socket()->CopyFrom(socket);
+  request.mutable_name()->CopyFrom(name);
+
+  auto response = ConnectResponse{};
+
+  raise_if_error(
+      stub->Connect(&context, request, &response));
+
+  return response;
+}
+
+ListenResponse
+listen(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::int32& backlog)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ListenRequest{};
+  request.mutable_socket()->CopyFrom(socket);
+  request.set_backlog(backlog);
+
+  auto response = ListenResponse{};
+
+  raise_if_error(
+      stub->Listen(&context, request, &response));
+
+  return response;
+}
+
+SendToResponse
+send_to(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::string& dataptr, const pb::int32& flags, const SockAddr& to)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SendToRequest{};
+  request.mutable_socket()->CopyFrom(socket);
+  request.set_dataptr(dataptr);
+  request.set_flags(flags);
+  request.mutable_to()->CopyFrom(to);
+
+  auto response = SendToResponse{};
+
+  raise_if_error(
+      stub->SendTo(&context, request, &response));
+
+  return response;
+}
+
+SendResponse
+send(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::string& dataptr, const pb::int32& flags)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SendRequest{};
+  request.mutable_socket()->CopyFrom(socket);
+  request.set_dataptr(dataptr);
+  request.set_flags(flags);
+
+  auto response = SendResponse{};
+
+  raise_if_error(
+      stub->Send(&context, request, &response));
+
+  return response;
+}
+
+RecvResponse
+recv(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::string& mem, const pb::int32& flags)
+{
+  ::grpc::ClientContext context;
+
+  auto request = RecvRequest{};
+  request.mutable_socket()->CopyFrom(socket);
+  request.set_mem(mem);
+  request.set_flags(flags);
+
+  auto response = RecvResponse{};
+
+  raise_if_error(
+      stub->Recv(&context, request, &response));
+
+  return response;
+}
+
+ShutdownResponse
+shutdown(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::int32& how)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ShutdownRequest{};
+  request.mutable_socket()->CopyFrom(socket);
+  request.set_how(how);
+
+  auto response = ShutdownResponse{};
+
+  raise_if_error(
+      stub->Shutdown(&context, request, &response));
+
+  return response;
+}
+
 CloseResponse
 close(const StubPtr& stub, const nidevice_grpc::Session& socket)
 {

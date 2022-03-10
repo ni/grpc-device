@@ -18,6 +18,12 @@ import "google/protobuf/duration.proto";
 
 service NiXnetSocket {
   rpc Bind(BindRequest) returns (BindResponse);
+  rpc Connect(ConnectRequest) returns (ConnectResponse);
+  rpc Listen(ListenRequest) returns (ListenResponse);
+  rpc SendTo(SendToRequest) returns (SendToResponse);
+  rpc Send(SendRequest) returns (SendResponse);
+  rpc Recv(RecvRequest) returns (RecvResponse);
+  rpc Shutdown(ShutdownRequest) returns (ShutdownResponse);
   rpc Close(CloseRequest) returns (CloseResponse);
   rpc GetLastErrorNum(GetLastErrorNumRequest) returns (GetLastErrorNumResponse);
   rpc GetLastErrorStr(GetLastErrorStrRequest) returns (GetLastErrorStrResponse);
@@ -55,6 +61,64 @@ message BindRequest {
 }
 
 message BindResponse {
+  int32 status = 1;
+}
+
+message ConnectRequest {
+  nidevice_grpc.Session socket = 1;
+  SockAddr name = 2;
+}
+
+message ConnectResponse {
+  int32 status = 1;
+}
+
+message ListenRequest {
+  nidevice_grpc.Session socket = 1;
+  int32 backlog = 2;
+}
+
+message ListenResponse {
+  int32 status = 1;
+}
+
+message SendToRequest {
+  nidevice_grpc.Session socket = 1;
+  bytes dataptr = 2;
+  int32 flags = 3;
+  SockAddr to = 4;
+}
+
+message SendToResponse {
+  int32 status = 1;
+}
+
+message SendRequest {
+  nidevice_grpc.Session socket = 1;
+  bytes dataptr = 2;
+  int32 flags = 3;
+}
+
+message SendResponse {
+  int32 status = 1;
+}
+
+message RecvRequest {
+  nidevice_grpc.Session socket = 1;
+  bytes mem = 2;
+  int32 flags = 3;
+}
+
+message RecvResponse {
+  int32 status = 1;
+}
+
+message ShutdownRequest {
+  nidevice_grpc.Session socket = 1;
+  int32 how = 2;
+}
+
+message ShutdownResponse {
   int32 status = 1;
 }
 
