@@ -22,6 +22,7 @@ using StubPtr = std::unique_ptr<NiXnetSocket::Stub>;
 using namespace nidevice_grpc::experimental::client;
 
 
+AcceptResponse accept(const StubPtr& stub, const nidevice_grpc::Session& socket);
 BindResponse bind(const StubPtr& stub, const nidevice_grpc::Session& socket, const SockAddr& name);
 CloseResponse close(const StubPtr& stub, const nidevice_grpc::Session& socket);
 GetLastErrorNumResponse get_last_error_num(const StubPtr& stub);

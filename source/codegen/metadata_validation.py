@@ -77,6 +77,7 @@ PARAM_SCHEMA = Schema(
         Optional("grpc_name"): str,
         Optional("return_value"): bool,
         Optional("supports_standard_copy_convert"): bool,
+        Optional("supports_standard_output_allocation"): bool,
         Optional("get_last_error"): bool,
         Optional("additional_arguments_to_copy_convert"): [str],
     }

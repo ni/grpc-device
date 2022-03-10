@@ -41,6 +41,7 @@ public:
     const NiXnetSocketFeatureToggles& feature_toggles = {});
   virtual ~NiXnetSocketService();
   
+  ::grpc::Status Accept(::grpc::ServerContext* context, const AcceptRequest* request, AcceptResponse* response) override;
   ::grpc::Status Bind(::grpc::ServerContext* context, const BindRequest* request, BindResponse* response) override;
   ::grpc::Status Close(::grpc::ServerContext* context, const CloseRequest* request, CloseResponse* response) override;
   ::grpc::Status GetLastErrorNum(::grpc::ServerContext* context, const GetLastErrorNumRequest* request, GetLastErrorNumResponse* response) override;

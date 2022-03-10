@@ -1,4 +1,29 @@
 functions = {
+    'Accept': {
+        'cname': 'nxaccept',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'socket',
+                'type': 'nxSOCKET'
+            },
+            {
+                'direction': 'out',
+                'grpc_type': 'SockAddr',
+                'name': 'addr',
+                'supports_standard_output_allocation': True,
+                'supports_standard_copy_convert': True,
+                'type': 'nxsockaddr'
+            },
+            {
+                'direction': 'out',
+                'name': 'addrlen',
+                'include_in_proto': False,
+                'type': 'nxsocklen_t'
+            },
+        ],
+        'returns': 'int32_t'
+    },
     'Bind': {
         'cname': 'nxbind',
         'parameters': [

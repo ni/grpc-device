@@ -637,8 +637,11 @@ ${initialize_standard_input_param(function_name, parameter)}
 <%
   parameter_name = common_helpers.get_cpp_local_name(parameter)
   underlying_param_type = common_helpers.get_underlying_type_name(parameter["type"])
+  grpc_type = parameter["grpc_type"]
 %>\
-%   if common_helpers.is_repeating_parameter(parameter):
+%   if common_helpers.supports_standard_output_allocation_routines(parameter):
+      auto ${parameter_name} = allocate_output_storage<${underlying_param_type}, ${grpc_type}>();
+%   elif common_helpers.is_repeating_parameter(parameter):
       auto get_${parameter_name}_if = [](std::vector<${underlying_param_type}>& vector, int n) -> ${underlying_param_type}* {
             if (vector.size() > n) {
 ## Note that this code will not handle every datatype, but it works for all
@@ -657,7 +660,7 @@ ${initialize_standard_input_param(function_name, parameter)}
 %     if common_helpers.supports_standard_copy_conversion_routines(parameter):
       std::vector<${underlying_param_type}> ${parameter_name}(${size}, ${underlying_param_type}());
 ## Byte arrays are leveraging a string as a buffer, so we don't need to take special consideration of the null terminator.
-%     elif parameter['grpc_type'] == 'bytes':
+%     elif grpc_type == 'bytes':
       std::string ${parameter_name}(${size}, '\0');
 ## Driver string APIs require room in the buffer for the null terminator. We need to account for that when sizing the string.
 %     elif common_helpers.is_string_arg(parameter) and common_helpers.get_size_mechanism(parameter) == 'fixed':

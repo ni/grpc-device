@@ -17,6 +17,7 @@ import "session.proto";
 import "google/protobuf/duration.proto";
 
 service NiXnetSocket {
+  rpc Accept(AcceptRequest) returns (AcceptResponse);
   rpc Bind(BindRequest) returns (BindResponse);
   rpc Close(CloseRequest) returns (CloseResponse);
   rpc GetLastErrorNum(GetLastErrorNumRequest) returns (GetLastErrorNumResponse);
@@ -47,6 +48,15 @@ message SockAddr {
     SockAddrIPv4 ipv4 = 1;
     SockAddrIPv6 ipv6 = 2;
   }
+}
+
+message AcceptRequest {
+  nidevice_grpc.Session socket = 1;
+}
+
+message AcceptResponse {
+  int32 status = 1;
+  SockAddr addr = 2;
 }
 
 message BindRequest {
