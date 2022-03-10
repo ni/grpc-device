@@ -50,7 +50,7 @@ message SockAddr {
   }
 }
 
-enum SockOptNames {
+enum SockOptName {
   SOCK_OPT_NAMES_UNSPECIFIED = 0;
   SOCK_OPT_NAMES_RX_DATA = 257;
   SOCK_OPT_NAMES_RCV_BUF = 258;
@@ -63,7 +63,7 @@ enum SockOptNames {
 }
 
 message SockOptData {
-  SockOptNames opt_name = 1;
+  SockOptName opt_name = 1;
   oneof data {
     int32 data_int32 = 2;
     bool data_bool = 3;

@@ -253,7 +253,7 @@ struct SockOptDataHolder {
   }
 
   // size() method is used to simplify codegen calculating the size of the
-  // selected data.
+  // populated data.
   nxsocklen_t size() const
   {
     switch (opt_data.data_case()) {
