@@ -216,8 +216,6 @@ inline TimeValInputConverter convert_from_grpc(const pb_::Duration& input)
   return TimeValInputConverter(input);
 }
 
-// This class allows us to have something allocated on the stack that can be used as an
-// nxsockaddr* and initialized from a grpc SockAddr using standard codegen and copy convert routines.
 struct SockOptDataHolder {
   SockOptData opt_data;
   int32_t data_int;
@@ -233,7 +231,7 @@ struct SockOptDataHolder {
 
   int32_t name() const
   {
-    return opt_data.opt();
+    return opt_data.opt_name();
   }
 
   void* data()
