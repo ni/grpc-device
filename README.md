@@ -15,6 +15,11 @@ For more detailed information on the server and API design refer to the [wiki](h
 | NI-Digital Pattern Driver | 20.6.0 | Not Supported | Not Supported |
 | NI-DMM                    | 20.0.0 | 20.1.0        | 20.5.0        |
 | NI-FGEN                   | 20.0.0 | Not Supported | Not Supported |
+| NI-RFmx Bluetooth         | 21.5.0 | Not Supported | Not Supported |
+| NI-RFmx LTE               | 21.5.0 | Not Supported | Not Supported |
+| NI-RFmx NR                | 21.5.0 | Not Supported | Not Supported |
+| NI-RFmx SpecAn            | 21.5.0 | Not Supported | Not Supported |
+| NI-RFmx WLAN              | 21.5.0 | Not Supported | Not Supported |
 | NI-RFSA                   | 21.0.0 | 21.0.0        | Not Supported |
 | NI-RFSG                   | 21.0.0 | 21.0.0        | Not Supported |
 | NI-SCOPE                  | 20.7.0 | 20.1.0        | 20.7.0        |
