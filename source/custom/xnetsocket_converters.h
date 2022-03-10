@@ -236,22 +236,20 @@ struct SockOptDataHolder {
 
   void* data()
   {
-    void* dummy_pointer;
     switch (opt_data.data_case()) {
       case SockOptData::DataCase::kDataInt32:
-        dummy_pointer = &data_int;
-        break;
-      case SockOptData::DataCase::kDataString:
-        dummy_pointer = &data_string;
+        return &data_int;
         break;
       case SockOptData::DataCase::kDataBool:
-        dummy_pointer = &data_bool;
+        return &data_bool;
         break;
-      default:
-        // pass dummy_pointer
+      case SockOptData::DataCase::kDataString:
+        return data_string.data();
+        break;
+      case SockOptData::DataCase::DATA_NOT_SET:
+        return nullptr;
         break;
     }
-    return dummy_pointer;
   }
 
   // size() method is used to simplify codegen calculating the size of the
