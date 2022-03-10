@@ -342,6 +342,8 @@ TEST(XnetConvertersTests, SockOptDataWithString_ConvertFromGrpc_DataLooksReasona
   EXPECT_EQ(DEVICE_NAME, opt_data.data_string);
   EXPECT_EQ(DEVICE_NAME.size(), opt_data.size());
   EXPECT_EQ(opt_data.data_string.data(), opt_data.data());
+  char* dereferenced_data = (char*)(opt_data.data());
+  EXPECT_STREQ(DEVICE_NAME.c_str(), dereferenced_data);
 }
 
 TEST(XnetConvertersTests, SockOptDataWithDataUnset_ConvertFromGrpc_NullPtrAndEmptyValues)

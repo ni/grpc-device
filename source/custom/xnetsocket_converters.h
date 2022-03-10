@@ -244,7 +244,7 @@ struct SockOptDataHolder {
         return &data_bool;
         break;
       case SockOptData::DataCase::kDataString:
-        return data_string.data();
+        return &data_string[0];
         break;
       case SockOptData::DataCase::DATA_NOT_SET:
         return nullptr;
