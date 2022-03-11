@@ -30,8 +30,6 @@ SendResponse send(const StubPtr& stub, const nidevice_grpc::Session& socket, con
 RecvResponse recv(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::string& mem, const pb::int32& flags);
 ShutdownResponse shutdown(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::int32& how);
 CloseResponse close(const StubPtr& stub, const nidevice_grpc::Session& socket);
-GetLastErrorNumResponse get_last_error_num(const StubPtr& stub);
-GetLastErrorStrResponse get_last_error_str(const StubPtr& stub, const pb::uint64& buf_len);
 IpStackClearResponse ip_stack_clear(const StubPtr& stub, const nidevice_grpc::Session& stack_ref);
 IpStackCreateResponse ip_stack_create(const StubPtr& stub, const pb::string& stack_name, const pb::string& config);
 IsSetResponse is_set(const StubPtr& stub, const nidevice_grpc::Session& fd, const std::vector<nidevice_grpc::Session>& set);

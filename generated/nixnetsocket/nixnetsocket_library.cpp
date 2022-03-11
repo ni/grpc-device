@@ -150,11 +150,7 @@ int32_t NiXnetSocketLibrary::GetLastErrorNum()
   if (!function_pointers_.GetLastErrorNum) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxgetlasterrornum.");
   }
-#if defined(_MSC_VER)
-  return nxgetlasterrornum();
-#else
   return function_pointers_.GetLastErrorNum();
-#endif
 }
 
 char* NiXnetSocketLibrary::GetLastErrorStr(char buf[], size_t bufLen)
@@ -162,11 +158,7 @@ char* NiXnetSocketLibrary::GetLastErrorStr(char buf[], size_t bufLen)
   if (!function_pointers_.GetLastErrorStr) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxgetlasterrorstr.");
   }
-#if defined(_MSC_VER)
-  return nxgetlasterrorstr(buf, bufLen);
-#else
   return function_pointers_.GetLastErrorStr(buf, bufLen);
-#endif
 }
 
 int32_t NiXnetSocketLibrary::IpStackClear(nxIpStackRef_t stack_ref)

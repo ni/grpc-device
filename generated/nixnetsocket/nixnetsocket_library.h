@@ -43,8 +43,8 @@ class NiXnetSocketLibrary : public nixnetsocket_grpc::NiXnetSocketLibraryInterfa
   using RecvPtr = decltype(&nxrecv);
   using ShutdownPtr = decltype(&nxshutdown);
   using ClosePtr = decltype(&nxclose);
-  using GetLastErrorNumPtr = decltype(&nxgetlasterrornum);
-  using GetLastErrorStrPtr = decltype(&nxgetlasterrorstr);
+  using GetLastErrorNumPtr = int32_t (*)();
+  using GetLastErrorStrPtr = char* (*)(char buf[], size_t bufLen);
   using IpStackClearPtr = decltype(&nxIpStackClear);
   using IpStackCreatePtr = decltype(&nxIpStackCreate);
   using IsSetPtr = decltype(&nxfd_isset);

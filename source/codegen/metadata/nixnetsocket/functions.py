@@ -208,11 +208,13 @@ functions = {
         'returns': 'int32_t'
     },
     'GetLastErrorNum': {
+        'codegen_method': 'private',
         'cname': 'nxgetlasterrornum',
         'parameters': [],
         'returns': 'int32_t'
     },
     'GetLastErrorStr': {
+        'codegen_method': 'private',
         'cname': 'nxgetlasterrorstr',
         'status_expression': 'error ? 0 : -1',
         'parameters': [

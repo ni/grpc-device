@@ -4232,8 +4232,8 @@ namespace nirfmxlte_grpc {
         response->set_is_new_session(is_new_session);
       }
       else {
-        const auto last_error_buffer = get_last_error(library_);
-        response->set_error_message(last_error_buffer.data());
+        const auto error_message = get_last_error_message(library_);
+        response->set_error_message(error_message);
       }
       return ::grpc::Status::OK;
     }
@@ -4267,8 +4267,8 @@ namespace nirfmxlte_grpc {
         response->mutable_instrument()->set_id(session_id);
       }
       else {
-        const auto last_error_buffer = get_last_error(library_);
-        response->set_error_message(last_error_buffer.data());
+        const auto error_message = get_last_error_message(library_);
+        response->set_error_message(error_message);
       }
       return ::grpc::Status::OK;
     }

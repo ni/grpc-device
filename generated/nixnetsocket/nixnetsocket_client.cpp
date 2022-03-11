@@ -156,37 +156,6 @@ close(const StubPtr& stub, const nidevice_grpc::Session& socket)
   return response;
 }
 
-GetLastErrorNumResponse
-get_last_error_num(const StubPtr& stub)
-{
-  ::grpc::ClientContext context;
-
-  auto request = GetLastErrorNumRequest{};
-
-  auto response = GetLastErrorNumResponse{};
-
-  raise_if_error(
-      stub->GetLastErrorNum(&context, request, &response));
-
-  return response;
-}
-
-GetLastErrorStrResponse
-get_last_error_str(const StubPtr& stub, const pb::uint64& buf_len)
-{
-  ::grpc::ClientContext context;
-
-  auto request = GetLastErrorStrRequest{};
-  request.set_buf_len(buf_len);
-
-  auto response = GetLastErrorStrResponse{};
-
-  raise_if_error(
-      stub->GetLastErrorStr(&context, request, &response));
-
-  return response;
-}
-
 IpStackClearResponse
 ip_stack_clear(const StubPtr& stub, const nidevice_grpc::Session& stack_ref)
 {
