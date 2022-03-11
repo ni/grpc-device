@@ -62,6 +62,12 @@ namespace nixnetsocket_grpc {
       if (status_ok(status)) {
         convert_to_grpc(addr, response->mutable_addr());
       }
+      else {
+        const auto error_message = get_last_error_message(library_);
+        response->set_error_message(error_message);
+        const auto error_num = get_last_error_num(library_);
+        response->set_error_num(error_num);
+      }
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {

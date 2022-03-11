@@ -63,6 +63,8 @@ message AcceptRequest {
 message AcceptResponse {
   int32 status = 1;
   SockAddr addr = 2;
+  string error_message = 3;
+  int32 error_num = 4;
 }
 
 message BindRequest {
