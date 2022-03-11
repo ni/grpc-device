@@ -445,7 +445,7 @@ namespace nixnetsocket_grpc {
       auto socket_grpc_session = request->socket();
       nxSOCKET socket = session_repository_->access_session(socket_grpc_session.id(), socket_grpc_session.name());
       int32_t level = request->level();
-      auto opt_data = convert_from_grpc<SockOptDataHolder>(request->opt_data());
+      auto opt_data = convert_from_grpc<SockOptDataInputConverter>(request->opt_data());
       auto optname = opt_data.name();
       auto optval = opt_data.data();
       auto optlen = opt_data.size();

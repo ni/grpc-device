@@ -389,7 +389,7 @@ functions = {
                 'grpc_type': 'SockOptData',
                 'supports_standard_copy_convert': True,
                 'proto_only': True,
-                'type': 'SockOptDataHolder'
+                'type': 'SockOptDataInputConverter'
             },
             {
                 'direction': 'in',

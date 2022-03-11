@@ -308,7 +308,7 @@ TEST(XnetConvertersTests, SockOptDataWithInt_ConvertFromGrpc_DataLooksReasonable
   SockOptData sock_opt_data = create_sock_opt_data(OptName::OPT_NAME_SO_RCV_BUF);
   sock_opt_data.set_data_int32(RCV_BUF_SIZE);
 
-  auto opt_data = convert_from_grpc<SockOptDataHolder>(sock_opt_data);
+  auto opt_data = convert_from_grpc<SockOptDataInputConverter>(sock_opt_data);
 
   EXPECT_EQ(OptName::OPT_NAME_SO_RCV_BUF, opt_data.name());
   EXPECT_EQ(RCV_BUF_SIZE, opt_data.data_int);
@@ -322,7 +322,7 @@ TEST(XnetConvertersTests, SockOptDataWithBool_ConvertFromGrpc_DataLooksReasonabl
   SockOptData sock_opt_data = create_sock_opt_data(OptName::OPT_NAME_SO_REUSE_ADDR);
   sock_opt_data.set_data_bool(REUSE_ADDR);
 
-  auto opt_data = convert_from_grpc<SockOptDataHolder>(sock_opt_data);
+  auto opt_data = convert_from_grpc<SockOptDataInputConverter>(sock_opt_data);
 
   EXPECT_EQ(OptName::OPT_NAME_SO_REUSE_ADDR, opt_data.name());
   EXPECT_EQ(REUSE_ADDR, opt_data.data_bool);
@@ -336,7 +336,7 @@ TEST(XnetConvertersTests, SockOptDataWithString_ConvertFromGrpc_DataLooksReasona
   SockOptData sock_opt_data = create_sock_opt_data(OptName::OPT_NAME_SO_BIND_TO_DEVICE);
   sock_opt_data.set_data_string(DEVICE_NAME);
 
-  auto opt_data = convert_from_grpc<SockOptDataHolder>(sock_opt_data);
+  auto opt_data = convert_from_grpc<SockOptDataInputConverter>(sock_opt_data);
 
   EXPECT_EQ(OptName::OPT_NAME_SO_BIND_TO_DEVICE, opt_data.name());
   EXPECT_EQ(DEVICE_NAME, opt_data.data_string);
@@ -351,7 +351,7 @@ TEST(XnetConvertersTests, SockOptDataWithDataUnset_ConvertFromGrpc_NullPtrAndEmp
   SockOptData sock_opt_data = create_sock_opt_data(OptName::OPT_NAME_SO_NON_BLOCK);
   // Avoid setting the oneof data field
 
-  auto opt_data = convert_from_grpc<SockOptDataHolder>(sock_opt_data);
+  auto opt_data = convert_from_grpc<SockOptDataInputConverter>(sock_opt_data);
 
   EXPECT_EQ(OptName::OPT_NAME_SO_NON_BLOCK, opt_data.name());
   EXPECT_EQ("", opt_data.data_string);

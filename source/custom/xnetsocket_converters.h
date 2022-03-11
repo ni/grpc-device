@@ -216,13 +216,13 @@ inline TimeValInputConverter convert_from_grpc(const pb_::Duration& input)
   return TimeValInputConverter(input);
 }
 
-struct SockOptDataHolder {
+struct SockOptDataInputConverter {
   SockOptData opt_data;
   int32_t data_int;
   bool data_bool;
   std::string data_string;
 
-  SockOptDataHolder(const SockOptData& input) : opt_data(input)
+  SockOptDataInputConverter(const SockOptData& input) : opt_data(input)
   {
     data_int = opt_data.data_int32();
     data_bool = opt_data.data_bool();
@@ -273,9 +273,9 @@ struct SockOptDataHolder {
 };
 
 template <typename TSockOptData>
-inline SockOptDataHolder convert_from_grpc(const SockOptData& input)
+inline SockOptDataInputConverter convert_from_grpc(const SockOptData& input)
 {
-  return SockOptDataHolder(input);
+  return SockOptDataInputConverter(input);
 }
 
 }  // namespace nixnetsocket_grpc
