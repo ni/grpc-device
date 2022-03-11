@@ -336,16 +336,13 @@ TEST(XnetConvertersTests, SockOptDataWithString_ConvertFromGrpc_DataLooksReasona
   EXPECT_STREQ(DEVICE_NAME.c_str(), dereferenced_data);
 }
 
-TEST(XnetConvertersTests, SockOptDataWithDataUnset_ConvertFromGrpc_NullPtrAndEmptyValues)
+TEST(XnetConvertersTests, SockOptDataWithDataUnset_ConvertFromGrpc_NullPtrDataAndZeroSize)
 {
   SockOptData sock_opt_data = SockOptData{};
   // Avoid setting the oneof data field
 
   auto opt_data = convert_from_grpc<SockOptDataInputConverter>(sock_opt_data);
 
-  EXPECT_EQ("", opt_data.data_string);
-  EXPECT_EQ(0, opt_data.data_int);
-  EXPECT_EQ(false, opt_data.data_bool);
   EXPECT_EQ(0, opt_data.size());
   EXPECT_EQ(nullptr, opt_data.data());
 }

@@ -217,21 +217,25 @@ inline TimeValInputConverter convert_from_grpc(const pb_::Duration& input)
 }
 
 struct SockOptDataInputConverter {
-  SockOptData opt_data;
-  int32_t data_int;
-  bool data_bool;
-  std::string data_string;
-
-  SockOptDataInputConverter(const SockOptData& input) : opt_data(input)
+  SockOptDataInputConverter(const SockOptData& input)
   {
-    data_int = opt_data.data_int32();
-    data_bool = opt_data.data_bool();
-    data_string = std::string(opt_data.data_string());
+    data_case = input.data_case();
+    switch (data_case) {
+      case SockOptData::DataCase::kDataInt32:
+        data_int = input.data_int32();
+        break;
+      case SockOptData::DataCase::kDataBool:
+        data_bool = input.data_bool();
+        break;
+      case SockOptData::DataCase::kDataString:
+        data_string = std::string(input.data_string());
+        break;
+    }
   }
 
   void* data()
   {
-    switch (opt_data.data_case()) {
+    switch (data_case) {
       case SockOptData::DataCase::kDataInt32:
         return &data_int;
         break;
@@ -251,12 +255,12 @@ struct SockOptDataInputConverter {
   // populated data.
   nxsocklen_t size() const
   {
-    switch (opt_data.data_case()) {
+    switch (data_case) {
       case SockOptData::DataCase::kDataInt32:
         return sizeof(int32_t);
         break;
       case SockOptData::DataCase::kDataString:
-        return opt_data.data_string().size();
+        return data_string.size();
         break;
       case SockOptData::DataCase::kDataBool:
         return sizeof(bool);
@@ -265,6 +269,11 @@ struct SockOptDataInputConverter {
         break;
     }
   }
+
+  SockOptData::DataCase data_case;
+  int32_t data_int;
+  bool data_bool;
+  std::string data_string;
 };
 
 template <typename TSockOptData>
