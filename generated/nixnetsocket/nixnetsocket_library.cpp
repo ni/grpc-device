@@ -34,6 +34,8 @@ NiXnetSocketLibrary::NiXnetSocketLibrary() : shared_library_(kLibraryName)
   function_pointers_.GetLastErrorStr = reinterpret_cast<GetLastErrorStrPtr>(shared_library_.get_function_pointer("nxgetlasterrorstr"));
   function_pointers_.IpStackClear = reinterpret_cast<IpStackClearPtr>(shared_library_.get_function_pointer("nxIpStackClear"));
   function_pointers_.IpStackCreate = reinterpret_cast<IpStackCreatePtr>(shared_library_.get_function_pointer("nxIpStackCreate"));
+  function_pointers_.IpStackGetInfo = reinterpret_cast<IpStackGetInfoPtr>(shared_library_.get_function_pointer("nxIpStackGetInfo"));
+  function_pointers_.IpStackWaitForInterface = reinterpret_cast<IpStackWaitForInterfacePtr>(shared_library_.get_function_pointer("nxIpStackWaitForInterface"));
   function_pointers_.IsSet = reinterpret_cast<IsSetPtr>(shared_library_.get_function_pointer("nxfd_isset"));
   function_pointers_.Select = reinterpret_cast<SelectPtr>(shared_library_.get_function_pointer("nxselect"));
   function_pointers_.Socket = reinterpret_cast<SocketPtr>(shared_library_.get_function_pointer("nxsocket"));
@@ -195,6 +197,30 @@ int32_t NiXnetSocketLibrary::IpStackCreate(char stack_name[], char config[], nxI
   return nxIpStackCreate(stack_name, config, stack_ref);
 #else
   return function_pointers_.IpStackCreate(stack_name, config, stack_ref);
+#endif
+}
+
+int32_t NiXnetSocketLibrary::IpStackGetInfo(nxIpStackRef_t stack_ref, uint32_t info_id, nxVirtualInterface_t** virtual_interfaces)
+{
+  if (!function_pointers_.IpStackGetInfo) {
+    throw nidevice_grpc::LibraryLoadException("Could not find nxIpStackGetInfo.");
+  }
+#if defined(_MSC_VER)
+  return nxIpStackGetInfo(stack_ref, info_id, virtual_interfaces);
+#else
+  return function_pointers_.IpStackGetInfo(stack_ref, info_id, virtual_interfaces);
+#endif
+}
+
+int32_t NiXnetSocketLibrary::IpStackWaitForInterface(nxIpStackRef_t stack_ref, const char localInterface[], int32_t timeoutMs)
+{
+  if (!function_pointers_.IpStackWaitForInterface) {
+    throw nidevice_grpc::LibraryLoadException("Could not find nxIpStackWaitForInterface.");
+  }
+#if defined(_MSC_VER)
+  return nxIpStackWaitForInterface(stack_ref, localInterface, timeoutMs);
+#else
+  return function_pointers_.IpStackWaitForInterface(stack_ref, localInterface, timeoutMs);
 #endif
 }
 

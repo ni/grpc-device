@@ -54,6 +54,8 @@ public:
   ::grpc::Status Close(::grpc::ServerContext* context, const CloseRequest* request, CloseResponse* response) override;
   ::grpc::Status IpStackClear(::grpc::ServerContext* context, const IpStackClearRequest* request, IpStackClearResponse* response) override;
   ::grpc::Status IpStackCreate(::grpc::ServerContext* context, const IpStackCreateRequest* request, IpStackCreateResponse* response) override;
+  ::grpc::Status IpStackGetInfo(::grpc::ServerContext* context, const IpStackGetInfoRequest* request, IpStackGetInfoResponse* response) override;
+  ::grpc::Status IpStackWaitForInterface(::grpc::ServerContext* context, const IpStackWaitForInterfaceRequest* request, IpStackWaitForInterfaceResponse* response) override;
   ::grpc::Status IsSet(::grpc::ServerContext* context, const IsSetRequest* request, IsSetResponse* response) override;
   ::grpc::Status Select(::grpc::ServerContext* context, const SelectRequest* request, SelectResponse* response) override;
   ::grpc::Status Socket(::grpc::ServerContext* context, const SocketRequest* request, SocketResponse* response) override;

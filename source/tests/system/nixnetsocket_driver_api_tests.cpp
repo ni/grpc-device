@@ -3,6 +3,7 @@
 #include <gtest/gtest.h>
 #include <nixnetsocket/nixnetsocket_client.h>
 
+#include <fstream>
 #include <iostream>
 #include <nlohmann/json.hpp>
 
@@ -42,6 +43,11 @@ const auto SIMPLE_INTERFACE_CONFIG = R"(
                     "address": "192.22.33.44",
                     "subnetMask": "255.0.0.0"
                   }
+                ],
+                "gatewayAddresses": [
+                  {
+                    "address": "10.2.129.1"
+                  }
                 ]
               }
             }
@@ -49,17 +55,67 @@ const auto SIMPLE_INTERFACE_CONFIG = R"(
         }
 )"_json;
 
-std::string create_simple_config(const std::string& interface_name)
+const auto MULTI_ADDRESS_INTERFACE_CONFIG = R"(      
+        {
+          "address": "inherit",
+          "VLANs": [
+            {
+              "IPv4": {
+                "mode": "static",
+                "staticAddresses": [
+                  {
+                    "address": "192.22.11.22",
+                    "subnetMask": "255.0.0.0"
+                  },
+                  {
+                    "address": "192.23.45.67",
+                    "subnetMask": "255.0.0.0"
+                  }
+                ],
+                "gatewayAddresses": [
+                  {
+                    "address": "10.2.129.1"
+                  }
+                ]
+              },
+              "IPv6": {
+                "mode": "enabled",
+                "staticAddresses": [
+                  {
+                    "address": "2001:DB8:0:0:8:800:200C:417A/32"
+                  }
+                ],
+                "gatewayAddresses": [
+                  {
+                    "address": "FF01::1"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+)"_json;
+
+json create_interface_config(const std::string& interface_name, const json& interface_macs_config)
 {
   auto interface_config = json{};
   interface_config["name"] = interface_name;
-  interface_config["MACs"] = std::vector<json>{SIMPLE_INTERFACE_CONFIG};
+  interface_config["MACs"] = std::vector<json>{interface_macs_config};
+  return interface_config;
+}
 
+std::string create_config(const std::vector<json>& interfaces_config)
+{
   auto config = json{};
   config["schema"] = SCHEMA;
-  config["xnetInterfaces"] = std::vector<json>{interface_config};
+  config["xnetInterfaces"] = interfaces_config;
 
   return config.dump();
+}
+
+std::string create_simple_config(const std::string& interface_name)
+{
+  return create_config({create_interface_config(interface_name, SIMPLE_INTERFACE_CONFIG)});
 }
 
 class NiXnetSocketDriverApiTests : public ::testing::Test {
@@ -127,9 +183,10 @@ class NiXnetSocketNoHardwareTests : public NiXnetSocketDriverApiTests {
   }
 };
 
-#define EXPECT_SUCCESS(response)       \
-  if (1) {                             \
-    EXPECT_EQ(0, (response).status()); \
+#define EXPECT_SUCCESS(response)               \
+  if (1) {                                     \
+    EXPECT_EQ(0, (response).status());         \
+    EXPECT_EQ("", (response).error_message()); \
   }
 
 #define EXPECT_XNET_ERROR(error, response) \
@@ -211,7 +268,7 @@ TEST_F(NiXnetSocketNoHardwareTests, InvalidEmptyConfigJson_IpStackCreate_Returns
 {
   constexpr auto TEST_CONFIG = "{}";
   constexpr auto JSON_OBJECT_MISSING_VALUE = -13017;
-  const auto stack_response = client::ip_stack_create(stub(), "test", "{}");
+  const auto stack_response = client::ip_stack_create(stub(), "", "{}");
 
   EXPECT_XNET_ERROR(JSON_OBJECT_MISSING_VALUE, stack_response);
 }
@@ -220,14 +277,14 @@ TEST_F(NiXnetSocketNoHardwareTests, ValidConfigJsonForMissingDevice_IpStackCreat
 {
   const auto TEST_CONFIG = create_simple_config("ENET6");
   constexpr auto INVALID_INTERFACE_NAME = -1074384758;
-  const auto stack_response = client::ip_stack_create(stub(), "test", TEST_CONFIG);
+  const auto stack_response = client::ip_stack_create(stub(), "", TEST_CONFIG);
 
   EXPECT_XNET_ERROR(INVALID_INTERFACE_NAME, stack_response);
 }
 
 TEST_F(NiXnetSocketLoopbackTests, IpStackCreate_CreateSocketWithIpStack_Succeeds)
 {
-  const auto stack_response = client::ip_stack_create(stub(), "test", create_simple_config("ENET1"));
+  const auto stack_response = client::ip_stack_create(stub(), "", create_simple_config("ENET1"));
 
   const auto socket_response = socket(stub(), stack_response.stack_ref());
 
@@ -237,7 +294,7 @@ TEST_F(NiXnetSocketLoopbackTests, IpStackCreate_CreateSocketWithIpStack_Succeeds
 
 TEST_F(NiXnetSocketLoopbackTests, IpStackCreateAndClear_CreateSocketWithIpStack_Fails)
 {
-  const auto create_stack_response = client::ip_stack_create(stub(), "test", create_simple_config("ENET1"));
+  const auto create_stack_response = client::ip_stack_create(stub(), "", create_simple_config("ENET1"));
   const auto clear_stack_response = client::ip_stack_clear(stub(), create_stack_response.stack_ref());
 
   const auto socket_response = socket(stub(), create_stack_response.stack_ref());
@@ -245,6 +302,45 @@ TEST_F(NiXnetSocketLoopbackTests, IpStackCreateAndClear_CreateSocketWithIpStack_
   EXPECT_SUCCESS(create_stack_response);
   EXPECT_SUCCESS(clear_stack_response);
   EXPECT_XNET_ERROR(GENERIC_NXSOCKET_ERROR, socket_response);
+}
+
+TEST_F(NiXnetSocketLoopbackTests, StackInfo)
+{
+  const auto create_stack_response = client::ip_stack_create(
+      stub(),
+      "",
+      create_config(
+          {create_interface_config("ENET1", MULTI_ADDRESS_INTERFACE_CONFIG)}));
+  const auto wait_response = client::ip_stack_wait_for_interface(stub(), create_stack_response.stack_ref(), "", 5000);
+  const auto stack_info_response = client::ip_stack_get_info(stub(), create_stack_response.stack_ref());
+
+  EXPECT_SUCCESS(create_stack_response);
+  EXPECT_SUCCESS(stack_info_response);
+  EXPECT_SUCCESS(wait_response);
+  EXPECT_EQ(1, stack_info_response.virtual_interfaces_size());
+  const auto virtual_interface = stack_info_response.virtual_interfaces()[0];
+  EXPECT_EQ("ENET1", virtual_interface.xnet_interface_name());
+  EXPECT_EQ("00:80:2f:30:f4:58", virtual_interface.mac_address());
+  EXPECT_EQ(1500, virtual_interface.mac_mtu());
+  EXPECT_EQ(1, virtual_interface.if_index());
+  EXPECT_EQ(4, virtual_interface.ip_addresses_size());
+  const auto ipv4_address = virtual_interface.ip_addresses()[0];
+  EXPECT_EQ(2 /* nxAF_INET */, ipv4_address.family());
+  EXPECT_EQ("192.22.11.22", ipv4_address.address());
+  EXPECT_EQ("255.0.0.0", ipv4_address.net_mask());
+  EXPECT_EQ(8, ipv4_address.prefix_length());
+  const auto ipv6_address = virtual_interface.ip_addresses()[2];
+  EXPECT_EQ(10 /* nxAF_INET6 */, ipv6_address.family());
+  EXPECT_EQ("2001:db8::8:800:200c:417a", ipv6_address.address());
+  EXPECT_EQ("ffff:ffff::", ipv6_address.net_mask());
+  EXPECT_EQ(32, ipv6_address.prefix_length());
+  EXPECT_EQ(2, virtual_interface.gateway_addresses_size());
+  const auto ipv4_gateway_address = virtual_interface.gateway_addresses()[0];
+  EXPECT_EQ(2 /* nxAF_INET */, ipv4_gateway_address.family());
+  EXPECT_EQ("10.2.129.1", ipv4_gateway_address.address());
+  const auto ipv6_gateway_address = virtual_interface.gateway_addresses()[1];
+  EXPECT_EQ(10 /* nxAF_INET6 */, ipv6_gateway_address.family());
+  EXPECT_EQ("ff01::1", ipv6_gateway_address.address());
 }
 
 }  // namespace

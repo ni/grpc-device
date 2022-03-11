@@ -33,9 +33,9 @@ def is_input_parameter(parameter):
     return "in" in parameter["direction"]
 
 
-def is_pointer_parameter(parameter):
-    """Whether the parameter is a pointer parameter."""
-    return is_output_parameter(parameter) or parameter.get("pointer", False)
+def levels_of_pointer_indirection(parameter: dict) -> int:
+    """Levels of pointer indirection for pointer. I.e. number of '*'s."""
+    return [is_output_parameter(parameter), parameter.get("pointer", False)].count(True)
 
 
 def is_repeated_varargs_parameter(parameter: dict):
