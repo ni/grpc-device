@@ -23,7 +23,10 @@ service NiXnetSocket {
   rpc Listen(ListenRequest) returns (ListenResponse);
   rpc SendTo(SendToRequest) returns (SendToResponse);
   rpc Send(SendRequest) returns (SendResponse);
+  rpc RecVFrom(RecVFromRequest) returns (RecVFromResponse);
   rpc Recv(RecvRequest) returns (RecvResponse);
+  rpc GetSockName(GetSockNameRequest) returns (GetSockNameResponse);
+  rpc GetPeerName(GetPeerNameRequest) returns (GetPeerNameResponse);
   rpc Shutdown(ShutdownRequest) returns (ShutdownResponse);
   rpc Close(CloseRequest) returns (CloseResponse);
   rpc IpStackClear(IpStackClearRequest) returns (IpStackClearResponse);
@@ -125,6 +128,19 @@ message SendResponse {
   int32 error_num = 3;
 }
 
+message RecVFromRequest {
+  nidevice_grpc.Session socket = 1;
+  bytes mem = 2;
+  int32 flags = 3;
+}
+
+message RecVFromResponse {
+  int32 status = 1;
+  SockAddr from = 2;
+  string error_message = 3;
+  int32 error_num = 4;
+}
+
 message RecvRequest {
   nidevice_grpc.Session socket = 1;
   bytes mem = 2;
@@ -135,6 +151,28 @@ message RecvResponse {
   int32 status = 1;
   string error_message = 2;
   int32 error_num = 3;
+}
+
+message GetSockNameRequest {
+  nidevice_grpc.Session socket = 1;
+}
+
+message GetSockNameResponse {
+  int32 status = 1;
+  SockAddr addr = 2;
+  string error_message = 3;
+  int32 error_num = 4;
+}
+
+message GetPeerNameRequest {
+  nidevice_grpc.Session socket = 1;
+}
+
+message GetPeerNameResponse {
+  int32 status = 1;
+  SockAddr addr = 2;
+  string error_message = 3;
+  int32 error_num = 4;
 }
 
 message ShutdownRequest {

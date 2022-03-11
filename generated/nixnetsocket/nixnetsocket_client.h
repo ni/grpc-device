@@ -28,7 +28,10 @@ ConnectResponse connect(const StubPtr& stub, const nidevice_grpc::Session& socke
 ListenResponse listen(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::int32& backlog);
 SendToResponse send_to(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::string& dataptr, const pb::int32& flags, const SockAddr& to);
 SendResponse send(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::string& dataptr, const pb::int32& flags);
+RecVFromResponse rec_v_from(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::string& mem, const pb::int32& flags);
 RecvResponse recv(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::string& mem, const pb::int32& flags);
+GetSockNameResponse get_sock_name(const StubPtr& stub, const nidevice_grpc::Session& socket);
+GetPeerNameResponse get_peer_name(const StubPtr& stub, const nidevice_grpc::Session& socket);
 ShutdownResponse shutdown(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::int32& how);
 CloseResponse close(const StubPtr& stub, const nidevice_grpc::Session& socket);
 IpStackClearResponse ip_stack_clear(const StubPtr& stub, const nidevice_grpc::Session& stack_ref);

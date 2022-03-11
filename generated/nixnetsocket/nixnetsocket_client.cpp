@@ -121,6 +121,24 @@ send(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::string
   return response;
 }
 
+RecVFromResponse
+rec_v_from(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::string& mem, const pb::int32& flags)
+{
+  ::grpc::ClientContext context;
+
+  auto request = RecVFromRequest{};
+  request.mutable_socket()->CopyFrom(socket);
+  request.set_mem(mem);
+  request.set_flags(flags);
+
+  auto response = RecVFromResponse{};
+
+  raise_if_error(
+      stub->RecVFrom(&context, request, &response));
+
+  return response;
+}
+
 RecvResponse
 recv(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::string& mem, const pb::int32& flags)
 {
@@ -135,6 +153,38 @@ recv(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::string
 
   raise_if_error(
       stub->Recv(&context, request, &response));
+
+  return response;
+}
+
+GetSockNameResponse
+get_sock_name(const StubPtr& stub, const nidevice_grpc::Session& socket)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetSockNameRequest{};
+  request.mutable_socket()->CopyFrom(socket);
+
+  auto response = GetSockNameResponse{};
+
+  raise_if_error(
+      stub->GetSockName(&context, request, &response));
+
+  return response;
+}
+
+GetPeerNameResponse
+get_peer_name(const StubPtr& stub, const nidevice_grpc::Session& socket)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetPeerNameRequest{};
+  request.mutable_socket()->CopyFrom(socket);
+
+  auto response = GetPeerNameResponse{};
+
+  raise_if_error(
+      stub->GetPeerName(&context, request, &response));
 
   return response;
 }

@@ -21,7 +21,10 @@ class NiXnetSocketLibraryInterface {
   virtual int32_t Listen(nxSOCKET socket, int32_t backlog) = 0;
   virtual int32_t SendTo(nxSOCKET socket, char dataptr[], int32_t size, int32_t flags, nxsockaddr* to, nxsocklen_t tolen) = 0;
   virtual int32_t Send(nxSOCKET socket, char dataptr[], int32_t size, int32_t flags) = 0;
+  virtual int32_t RecVFrom(nxSOCKET socket, char mem[], int32_t size, int32_t flags, nxsockaddr* from, nxsocklen_t* fromlen) = 0;
   virtual int32_t Recv(nxSOCKET socket, char mem[], int32_t size, int32_t flags) = 0;
+  virtual int32_t GetSockName(nxSOCKET socket, nxsockaddr* addr, nxsocklen_t* addrlen) = 0;
+  virtual int32_t GetPeerName(nxSOCKET socket, nxsockaddr* addr, nxsocklen_t* addrlen) = 0;
   virtual int32_t Shutdown(nxSOCKET socket, int32_t how) = 0;
   virtual int32_t Close(nxSOCKET socket) = 0;
   virtual int32_t GetLastErrorNum() = 0;

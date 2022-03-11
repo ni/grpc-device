@@ -173,6 +173,52 @@ functions = {
         ],
         'returns': 'int32_t'
     },
+    'RecVFrom': {
+        'cname': 'nxrecvfrom',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'socket',
+                'type': 'nxSOCKET'
+            },
+            {
+                'direction': 'in',
+                'name': 'mem',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'size'
+                },
+                'pointer': True,
+                'grpc_type': 'bytes',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'size',
+                'type': 'int32_t'
+            },
+            {
+                'direction': 'in',
+                'name': 'flags',
+                'type': 'int32_t'
+            },
+            {
+                'direction': 'out',
+                'grpc_type': 'SockAddr',
+                'name': 'from',
+                'supports_standard_output_allocation': True,
+                'supports_standard_copy_convert': True,
+                'type': 'nxsockaddr'
+            },
+            {
+                'direction': 'out',
+                'name': 'fromlen',
+                'include_in_proto': False,
+                'type': 'nxsocklen_t'
+            },
+        ],
+        'returns': 'int32_t'
+    },
     'Recv': {
         'cname': 'nxrecv',
         'parameters': [
@@ -201,6 +247,56 @@ functions = {
                 'direction': 'in',
                 'name': 'flags',
                 'type': 'int32_t'
+            },
+        ],
+        'returns': 'int32_t'
+    },
+    'GetSockName': {
+        'cname': 'nxgetsockname',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'socket',
+                'type': 'nxSOCKET'
+            },
+            {
+                'direction': 'out',
+                'grpc_type': 'SockAddr',
+                'name': 'addr',
+                'supports_standard_output_allocation': True,
+                'supports_standard_copy_convert': True,
+                'type': 'nxsockaddr'
+            },
+            {
+                'direction': 'out',
+                'name': 'addrlen',
+                'include_in_proto': False,
+                'type': 'nxsocklen_t'
+            },
+        ],
+        'returns': 'int32_t'
+    },
+    'GetPeerName': {
+        'cname': 'nxgetpeername',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'socket',
+                'type': 'nxSOCKET'
+            },
+            {
+                'direction': 'out',
+                'grpc_type': 'SockAddr',
+                'name': 'addr',
+                'supports_standard_output_allocation': True,
+                'supports_standard_copy_convert': True,
+                'type': 'nxsockaddr'
+            },
+            {
+                'direction': 'out',
+                'name': 'addrlen',
+                'include_in_proto': False,
+                'type': 'nxsocklen_t'
             },
         ],
         'returns': 'int32_t'
