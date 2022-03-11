@@ -24,9 +24,11 @@ namespace nixnetsocket_grpc {
   NiXnetSocketService::NiXnetSocketService(
       NiXnetSocketLibraryInterface* library,
       ResourceRepositorySharedPtr resource_repository,
+      nxIpStackRef_tResourceRepositorySharedPtr nx_ip_stack_ref_t_resource_repository,
       const NiXnetSocketFeatureToggles& feature_toggles)
       : library_(library),
       session_repository_(resource_repository),
+      nx_ip_stack_ref_t_resource_repository_(nx_ip_stack_ref_t_resource_repository),
       feature_toggles_(feature_toggles)
   {
   }
@@ -257,6 +259,57 @@ namespace nixnetsocket_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiXnetSocketService::IpStackClear(::grpc::ServerContext* context, const IpStackClearRequest* request, IpStackClearResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto stack_ref_grpc_session = request->stack_ref();
+      nxIpStackRef_t stack_ref = nx_ip_stack_ref_t_resource_repository_->access_session(stack_ref_grpc_session.id(), stack_ref_grpc_session.name());
+      nx_ip_stack_ref_t_resource_repository_->remove_session(stack_ref_grpc_session.id(), stack_ref_grpc_session.name());
+      auto status = library_->IpStackClear(stack_ref);
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiXnetSocketService::IpStackCreate(::grpc::ServerContext* context, const IpStackCreateRequest* request, IpStackCreateResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      char* stack_name = (char*)request->stack_name().c_str();
+      char* config = (char*)request->config().c_str();
+
+      auto init_lambda = [&] () {
+        nxIpStackRef_t stack_ref;
+        auto status = library_->IpStackCreate(stack_name, config, &stack_ref);
+        return std::make_tuple(status, stack_ref);
+      };
+      uint32_t session_id = 0;
+      const std::string& grpc_device_session_name = request->session_name();
+      auto cleanup_lambda = [&] (nxIpStackRef_t id) { library_->IpStackClear(id); };
+      int status = nx_ip_stack_ref_t_resource_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->mutable_stack_ref()->set_id(session_id);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiXnetSocketService::IsSet(::grpc::ServerContext* context, const IsSetRequest* request, IsSetResponse* response)
   {
     if (context->IsCancelled()) {
@@ -309,7 +362,8 @@ namespace nixnetsocket_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto stack_ref = nullptr;
+      auto stack_ref_grpc_session = request->stack_ref();
+      nxIpStackRef_t stack_ref = nx_ip_stack_ref_t_resource_repository_->access_session(stack_ref_grpc_session.id(), stack_ref_grpc_session.name());
       int32_t domain = request->domain();
       int32_t type = request->type();
       int32_t prototcol = request->prototcol();

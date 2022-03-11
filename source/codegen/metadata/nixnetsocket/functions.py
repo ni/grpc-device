@@ -240,6 +240,39 @@ functions = {
         ],
         'returns': 'char*'
     },
+    'IpStackClear': {
+        'custom_close_method': True,
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'stack_ref',
+                'type': 'nxIpStackRef_t'
+            },
+        ],
+        'returns': 'int32_t'
+    },
+    'IpStackCreate': {
+        'custom_close': 'IpStackClear(id)',
+        'init_method': True,
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'stack_name',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'config',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'stack_ref',
+                'type': 'nxIpStackRef_t'
+            },
+        ],
+        'returns': 'int32_t'
+    },
     'IsSet': {
         'cname': 'nxfd_isset',
         'status_expression': '0',
@@ -309,8 +342,6 @@ functions = {
             },
         ],
         'returns': 'int32_t'
-
-
     },
     'Socket': {
         'cname': 'nxsocket',
@@ -319,8 +350,6 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'hardcoded_value': 'nullptr',
-                'include_in_proto': False,
                 'name': 'stack_ref',
                 'type': 'nxIpStackRef_t'
             },
@@ -341,7 +370,6 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_type': 'nidevice_grpc.Session',
                 'name': 'socket',
                 'return_value': True,
                 'type': 'nxSOCKET'

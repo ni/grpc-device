@@ -34,10 +34,12 @@ struct NiXnetSocketFeatureToggles
 class NiXnetSocketService final : public NiXnetSocket::Service {
 public:
   using ResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<nxSOCKET>>;
+  using nxIpStackRef_tResourceRepositorySharedPtr = std::shared_ptr<nidevice_grpc::SessionResourceRepository<nxIpStackRef_t>>;
 
   NiXnetSocketService(
     NiXnetSocketLibraryInterface* library,
     ResourceRepositorySharedPtr resource_repository,
+    nxIpStackRef_tResourceRepositorySharedPtr nx_ip_stack_ref_t_resource_repository,
     const NiXnetSocketFeatureToggles& feature_toggles = {});
   virtual ~NiXnetSocketService();
   
@@ -51,12 +53,15 @@ public:
   ::grpc::Status Close(::grpc::ServerContext* context, const CloseRequest* request, CloseResponse* response) override;
   ::grpc::Status GetLastErrorNum(::grpc::ServerContext* context, const GetLastErrorNumRequest* request, GetLastErrorNumResponse* response) override;
   ::grpc::Status GetLastErrorStr(::grpc::ServerContext* context, const GetLastErrorStrRequest* request, GetLastErrorStrResponse* response) override;
+  ::grpc::Status IpStackClear(::grpc::ServerContext* context, const IpStackClearRequest* request, IpStackClearResponse* response) override;
+  ::grpc::Status IpStackCreate(::grpc::ServerContext* context, const IpStackCreateRequest* request, IpStackCreateResponse* response) override;
   ::grpc::Status IsSet(::grpc::ServerContext* context, const IsSetRequest* request, IsSetResponse* response) override;
   ::grpc::Status Select(::grpc::ServerContext* context, const SelectRequest* request, SelectResponse* response) override;
   ::grpc::Status Socket(::grpc::ServerContext* context, const SocketRequest* request, SocketResponse* response) override;
 private:
   NiXnetSocketLibraryInterface* library_;
   ResourceRepositorySharedPtr session_repository_;
+  nxIpStackRef_tResourceRepositorySharedPtr nx_ip_stack_ref_t_resource_repository_;
 
   NiXnetSocketFeatureToggles feature_toggles_;
 };

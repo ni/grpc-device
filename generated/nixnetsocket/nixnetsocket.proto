@@ -27,6 +27,8 @@ service NiXnetSocket {
   rpc Close(CloseRequest) returns (CloseResponse);
   rpc GetLastErrorNum(GetLastErrorNumRequest) returns (GetLastErrorNumResponse);
   rpc GetLastErrorStr(GetLastErrorStrRequest) returns (GetLastErrorStrResponse);
+  rpc IpStackClear(IpStackClearRequest) returns (IpStackClearResponse);
+  rpc IpStackCreate(IpStackCreateRequest) returns (IpStackCreateResponse);
   rpc IsSet(IsSetRequest) returns (IsSetResponse);
   rpc Select(SelectRequest) returns (SelectResponse);
   rpc Socket(SocketRequest) returns (SocketResponse);
@@ -146,6 +148,25 @@ message GetLastErrorStrResponse {
   string error = 2;
 }
 
+message IpStackClearRequest {
+  nidevice_grpc.Session stack_ref = 1;
+}
+
+message IpStackClearResponse {
+  int32 status = 1;
+}
+
+message IpStackCreateRequest {
+  string session_name = 1;
+  string stack_name = 2;
+  string config = 3;
+}
+
+message IpStackCreateResponse {
+  int32 status = 1;
+  nidevice_grpc.Session stack_ref = 2;
+}
+
 message IsSetRequest {
   nidevice_grpc.Session fd = 1;
   repeated nidevice_grpc.Session set = 2;
@@ -169,9 +190,10 @@ message SelectResponse {
 
 message SocketRequest {
   string session_name = 1;
-  int32 domain = 2;
-  int32 type = 3;
-  int32 prototcol = 4;
+  nidevice_grpc.Session stack_ref = 2;
+  int32 domain = 3;
+  int32 type = 4;
+  int32 prototcol = 5;
 }
 
 message SocketResponse {
