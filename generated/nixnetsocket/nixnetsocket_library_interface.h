@@ -16,9 +16,17 @@ class NiXnetSocketLibraryInterface {
   virtual ~NiXnetSocketLibraryInterface() {}
 
   virtual int32_t Bind(nxSOCKET socket, nxsockaddr* name, nxsocklen_t namelen) = 0;
+  virtual int32_t Connect(nxSOCKET socket, nxsockaddr* name, nxsocklen_t namelen) = 0;
+  virtual int32_t Listen(nxSOCKET socket, int32_t backlog) = 0;
+  virtual int32_t SendTo(nxSOCKET socket, char dataptr[], int32_t size, int32_t flags, nxsockaddr* to, nxsocklen_t tolen) = 0;
+  virtual int32_t Send(nxSOCKET socket, char dataptr[], int32_t size, int32_t flags) = 0;
+  virtual int32_t Recv(nxSOCKET socket, char mem[], int32_t size, int32_t flags) = 0;
+  virtual int32_t Shutdown(nxSOCKET socket, int32_t how) = 0;
   virtual int32_t Close(nxSOCKET socket) = 0;
   virtual int32_t GetLastErrorNum() = 0;
   virtual char* GetLastErrorStr(char buf[], size_t bufLen) = 0;
+  virtual int32_t IpStackClear(nxIpStackRef_t stack_ref) = 0;
+  virtual int32_t IpStackCreate(char stack_name[], char config[], nxIpStackRef_t* stack_ref) = 0;
   virtual int32_t IsSet(nxSOCKET fd, nxfd_set* set) = 0;
   virtual int32_t Select(int32_t nfds, nxfd_set* read_fds, nxfd_set* write_fds, nxfd_set* except_fds, nxtimeval* timeout) = 0;
   virtual nxSOCKET Socket(nxIpStackRef_t stack_ref, int32_t domain, int32_t type, int32_t prototcol) = 0;

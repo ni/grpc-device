@@ -22,9 +22,17 @@ NiXnetSocketLibrary::NiXnetSocketLibrary() : shared_library_(kLibraryName)
     return;
   }
   function_pointers_.Bind = reinterpret_cast<BindPtr>(shared_library_.get_function_pointer("nxbind"));
+  function_pointers_.Connect = reinterpret_cast<ConnectPtr>(shared_library_.get_function_pointer("nxconnect"));
+  function_pointers_.Listen = reinterpret_cast<ListenPtr>(shared_library_.get_function_pointer("nxlisten"));
+  function_pointers_.SendTo = reinterpret_cast<SendToPtr>(shared_library_.get_function_pointer("nxsendto"));
+  function_pointers_.Send = reinterpret_cast<SendPtr>(shared_library_.get_function_pointer("nxsend"));
+  function_pointers_.Recv = reinterpret_cast<RecvPtr>(shared_library_.get_function_pointer("nxrecv"));
+  function_pointers_.Shutdown = reinterpret_cast<ShutdownPtr>(shared_library_.get_function_pointer("nxshutdown"));
   function_pointers_.Close = reinterpret_cast<ClosePtr>(shared_library_.get_function_pointer("nxclose"));
   function_pointers_.GetLastErrorNum = reinterpret_cast<GetLastErrorNumPtr>(shared_library_.get_function_pointer("nxgetlasterrornum"));
   function_pointers_.GetLastErrorStr = reinterpret_cast<GetLastErrorStrPtr>(shared_library_.get_function_pointer("nxgetlasterrorstr"));
+  function_pointers_.IpStackClear = reinterpret_cast<IpStackClearPtr>(shared_library_.get_function_pointer("nxIpStackClear"));
+  function_pointers_.IpStackCreate = reinterpret_cast<IpStackCreatePtr>(shared_library_.get_function_pointer("nxIpStackCreate"));
   function_pointers_.IsSet = reinterpret_cast<IsSetPtr>(shared_library_.get_function_pointer("nxfd_isset"));
   function_pointers_.Select = reinterpret_cast<SelectPtr>(shared_library_.get_function_pointer("nxselect"));
   function_pointers_.Socket = reinterpret_cast<SocketPtr>(shared_library_.get_function_pointer("nxsocket"));
@@ -50,6 +58,78 @@ int32_t NiXnetSocketLibrary::Bind(nxSOCKET socket, nxsockaddr* name, nxsocklen_t
   return nxbind(socket, name, namelen);
 #else
   return function_pointers_.Bind(socket, name, namelen);
+#endif
+}
+
+int32_t NiXnetSocketLibrary::Connect(nxSOCKET socket, nxsockaddr* name, nxsocklen_t namelen)
+{
+  if (!function_pointers_.Connect) {
+    throw nidevice_grpc::LibraryLoadException("Could not find nxconnect.");
+  }
+#if defined(_MSC_VER)
+  return nxconnect(socket, name, namelen);
+#else
+  return function_pointers_.Connect(socket, name, namelen);
+#endif
+}
+
+int32_t NiXnetSocketLibrary::Listen(nxSOCKET socket, int32_t backlog)
+{
+  if (!function_pointers_.Listen) {
+    throw nidevice_grpc::LibraryLoadException("Could not find nxlisten.");
+  }
+#if defined(_MSC_VER)
+  return nxlisten(socket, backlog);
+#else
+  return function_pointers_.Listen(socket, backlog);
+#endif
+}
+
+int32_t NiXnetSocketLibrary::SendTo(nxSOCKET socket, char dataptr[], int32_t size, int32_t flags, nxsockaddr* to, nxsocklen_t tolen)
+{
+  if (!function_pointers_.SendTo) {
+    throw nidevice_grpc::LibraryLoadException("Could not find nxsendto.");
+  }
+#if defined(_MSC_VER)
+  return nxsendto(socket, dataptr, size, flags, to, tolen);
+#else
+  return function_pointers_.SendTo(socket, dataptr, size, flags, to, tolen);
+#endif
+}
+
+int32_t NiXnetSocketLibrary::Send(nxSOCKET socket, char dataptr[], int32_t size, int32_t flags)
+{
+  if (!function_pointers_.Send) {
+    throw nidevice_grpc::LibraryLoadException("Could not find nxsend.");
+  }
+#if defined(_MSC_VER)
+  return nxsend(socket, dataptr, size, flags);
+#else
+  return function_pointers_.Send(socket, dataptr, size, flags);
+#endif
+}
+
+int32_t NiXnetSocketLibrary::Recv(nxSOCKET socket, char mem[], int32_t size, int32_t flags)
+{
+  if (!function_pointers_.Recv) {
+    throw nidevice_grpc::LibraryLoadException("Could not find nxrecv.");
+  }
+#if defined(_MSC_VER)
+  return nxrecv(socket, mem, size, flags);
+#else
+  return function_pointers_.Recv(socket, mem, size, flags);
+#endif
+}
+
+int32_t NiXnetSocketLibrary::Shutdown(nxSOCKET socket, int32_t how)
+{
+  if (!function_pointers_.Shutdown) {
+    throw nidevice_grpc::LibraryLoadException("Could not find nxshutdown.");
+  }
+#if defined(_MSC_VER)
+  return nxshutdown(socket, how);
+#else
+  return function_pointers_.Shutdown(socket, how);
 #endif
 }
 
@@ -79,6 +159,30 @@ char* NiXnetSocketLibrary::GetLastErrorStr(char buf[], size_t bufLen)
     throw nidevice_grpc::LibraryLoadException("Could not find nxgetlasterrorstr.");
   }
   return function_pointers_.GetLastErrorStr(buf, bufLen);
+}
+
+int32_t NiXnetSocketLibrary::IpStackClear(nxIpStackRef_t stack_ref)
+{
+  if (!function_pointers_.IpStackClear) {
+    throw nidevice_grpc::LibraryLoadException("Could not find nxIpStackClear.");
+  }
+#if defined(_MSC_VER)
+  return nxIpStackClear(stack_ref);
+#else
+  return function_pointers_.IpStackClear(stack_ref);
+#endif
+}
+
+int32_t NiXnetSocketLibrary::IpStackCreate(char stack_name[], char config[], nxIpStackRef_t* stack_ref)
+{
+  if (!function_pointers_.IpStackCreate) {
+    throw nidevice_grpc::LibraryLoadException("Could not find nxIpStackCreate.");
+  }
+#if defined(_MSC_VER)
+  return nxIpStackCreate(stack_name, config, stack_ref);
+#else
+  return function_pointers_.IpStackCreate(stack_name, config, stack_ref);
+#endif
 }
 
 int32_t NiXnetSocketLibrary::IsSet(nxSOCKET fd, nxfd_set* set)
