@@ -134,7 +134,7 @@ functions = {
         'returns': 'nxStatus_t'
     },
     'ConvertFramesToSignalsSinglePoint': {
-        'codegen_method': 'no',
+        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
@@ -148,12 +148,14 @@ functions = {
                     'mechanism': 'len',
                     'value': 'numberOfBytesForFrames'
                 },
-                'type': 'void[]'
+                'type': 'void[]',
+                'grpc_type': 'repeated Frame'
             },
             {
                 'direction': 'in',
                 'name': 'numberOfBytesForFrames',
-                'type': 'u32'
+                'type': 'u32',
+                'include_in_proto': False
             },
             {
                 'direction': 'out',

@@ -107,6 +107,25 @@ convert_byte_array_to_frames_single_point(const StubPtr& stub, const nidevice_gr
   return response;
 }
 
+ConvertFramesToSignalsSinglePointResponse
+convert_frames_to_signals_single_point(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const std::vector<Frame>& frame_buffer, const pb::uint32& size_of_value_buffer, const pb::uint32& size_of_timestamp_buffer)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ConvertFramesToSignalsSinglePointRequest{};
+  request.mutable_session_ref()->CopyFrom(session_ref);
+  copy_array(frame_buffer, request.mutable_frame_buffer());
+  request.set_size_of_value_buffer(size_of_value_buffer);
+  request.set_size_of_timestamp_buffer(size_of_timestamp_buffer);
+
+  auto response = ConvertFramesToSignalsSinglePointResponse{};
+
+  raise_if_error(
+      stub->ConvertFramesToSignalsSinglePoint(&context, request, &response));
+
+  return response;
+}
+
 ConvertSignalsToFramesSinglePointResponse
 convert_signals_to_frames_single_point(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const std::vector<double>& value_buffer, const pb::uint32& size_of_buffer)
 {

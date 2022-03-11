@@ -25,6 +25,7 @@ NiXnetLibrary::NiXnetLibrary() : shared_library_(kLibraryName)
   function_pointers_.Clear = reinterpret_cast<ClearPtr>(shared_library_.get_function_pointer("nxClear"));
   function_pointers_.ConnectTerminals = reinterpret_cast<ConnectTerminalsPtr>(shared_library_.get_function_pointer("nxConnectTerminals"));
   function_pointers_.ConvertByteArrayToFramesSinglePoint = reinterpret_cast<ConvertByteArrayToFramesSinglePointPtr>(shared_library_.get_function_pointer("nxConvertByteArrayToFramesSinglePoint"));
+  function_pointers_.ConvertFramesToSignalsSinglePoint = reinterpret_cast<ConvertFramesToSignalsSinglePointPtr>(shared_library_.get_function_pointer("nxConvertFramesToSignalsSinglePoint"));
   function_pointers_.ConvertSignalsToFramesSinglePoint = reinterpret_cast<ConvertSignalsToFramesSinglePointPtr>(shared_library_.get_function_pointer("nxConvertSignalsToFramesSinglePoint"));
   function_pointers_.ConvertTimestamp100nsTo1ns = reinterpret_cast<ConvertTimestamp100nsTo1nsPtr>(shared_library_.get_function_pointer("nxConvertTimestamp100nsTo1ns"));
   function_pointers_.ConvertTimestamp1nsTo100ns = reinterpret_cast<ConvertTimestamp1nsTo100nsPtr>(shared_library_.get_function_pointer("nxConvertTimestamp1nsTo100ns"));
@@ -117,6 +118,18 @@ nxStatus_t NiXnetLibrary::ConvertByteArrayToFramesSinglePoint(nxSessionRef_t ses
   return nxConvertByteArrayToFramesSinglePoint(sessionRef, valueBuffer, sizeOfValueBuffer, buffer, sizeOfBuffer, numberOfBytesReturned);
 #else
   return function_pointers_.ConvertByteArrayToFramesSinglePoint(sessionRef, valueBuffer, sizeOfValueBuffer, buffer, sizeOfBuffer, numberOfBytesReturned);
+#endif
+}
+
+nxStatus_t NiXnetLibrary::ConvertFramesToSignalsSinglePoint(nxSessionRef_t sessionRef, void* frameBuffer, u32 numberOfBytesForFrames, f64 valueBuffer[], u32 sizeOfValueBuffer, nxTimestamp100ns_t timestampBuffer[], u32 sizeOfTimestampBuffer)
+{
+  if (!function_pointers_.ConvertFramesToSignalsSinglePoint) {
+    throw nidevice_grpc::LibraryLoadException("Could not find nxConvertFramesToSignalsSinglePoint.");
+  }
+#if defined(_MSC_VER)
+  return nxConvertFramesToSignalsSinglePoint(sessionRef, frameBuffer, numberOfBytesForFrames, valueBuffer, sizeOfValueBuffer, timestampBuffer, sizeOfTimestampBuffer);
+#else
+  return function_pointers_.ConvertFramesToSignalsSinglePoint(sessionRef, frameBuffer, numberOfBytesForFrames, valueBuffer, sizeOfValueBuffer, timestampBuffer, sizeOfTimestampBuffer);
 #endif
 }
 
