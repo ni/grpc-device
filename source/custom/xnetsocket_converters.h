@@ -197,9 +197,9 @@ inline SockAddrInputConverter convert_from_grpc(const SockAddr& input)
   return SockAddrInputConverter(input);
 }
 
-inline void convert_to_grpc(const SockAddrOutputConverter& input, SockAddr* output)
+inline void convert_to_grpc(const SockAddrOutputConverter& storage, SockAddr* output)
 {
-  input.to_grpc(*output);
+  storage.to_grpc(*output);
 }
 
 template <typename TTimeVal>
