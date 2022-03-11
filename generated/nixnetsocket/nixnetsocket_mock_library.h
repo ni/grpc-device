@@ -17,6 +17,7 @@ namespace unit {
 
 class NiXnetSocketMockLibrary : public nixnetsocket_grpc::NiXnetSocketLibraryInterface {
  public:
+  MOCK_METHOD(int32_t, Accept, (nxSOCKET socket, nxsockaddr* addr, nxsocklen_t* addrlen), (override));
   MOCK_METHOD(int32_t, Bind, (nxSOCKET socket, nxsockaddr* name, nxsocklen_t namelen), (override));
   MOCK_METHOD(int32_t, Connect, (nxSOCKET socket, nxsockaddr* name, nxsocklen_t namelen), (override));
   MOCK_METHOD(int32_t, Listen, (nxSOCKET socket, int32_t backlog), (override));

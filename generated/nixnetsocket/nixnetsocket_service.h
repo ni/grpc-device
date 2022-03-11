@@ -43,6 +43,7 @@ public:
     const NiXnetSocketFeatureToggles& feature_toggles = {});
   virtual ~NiXnetSocketService();
   
+  ::grpc::Status Accept(::grpc::ServerContext* context, const AcceptRequest* request, AcceptResponse* response) override;
   ::grpc::Status Bind(::grpc::ServerContext* context, const BindRequest* request, BindResponse* response) override;
   ::grpc::Status Connect(::grpc::ServerContext* context, const ConnectRequest* request, ConnectResponse* response) override;
   ::grpc::Status Listen(::grpc::ServerContext* context, const ListenRequest* request, ListenResponse* response) override;

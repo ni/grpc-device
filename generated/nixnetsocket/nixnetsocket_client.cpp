@@ -17,6 +17,22 @@
 
 namespace nixnetsocket_grpc::experimental::client {
 
+AcceptResponse
+accept(const StubPtr& stub, const nidevice_grpc::Session& socket)
+{
+  ::grpc::ClientContext context;
+
+  auto request = AcceptRequest{};
+  request.mutable_socket()->CopyFrom(socket);
+
+  auto response = AcceptResponse{};
+
+  raise_if_error(
+      stub->Accept(&context, request, &response));
+
+  return response;
+}
+
 BindResponse
 bind(const StubPtr& stub, const nidevice_grpc::Session& socket, const SockAddr& name)
 {

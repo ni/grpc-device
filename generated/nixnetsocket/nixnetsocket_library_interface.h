@@ -15,6 +15,7 @@ class NiXnetSocketLibraryInterface {
  public:
   virtual ~NiXnetSocketLibraryInterface() {}
 
+  virtual int32_t Accept(nxSOCKET socket, nxsockaddr* addr, nxsocklen_t* addrlen) = 0;
   virtual int32_t Bind(nxSOCKET socket, nxsockaddr* name, nxsocklen_t namelen) = 0;
   virtual int32_t Connect(nxSOCKET socket, nxsockaddr* name, nxsocklen_t namelen) = 0;
   virtual int32_t Listen(nxSOCKET socket, int32_t backlog) = 0;

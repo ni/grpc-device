@@ -18,6 +18,7 @@ class NiXnetSocketLibrary : public nixnetsocket_grpc::NiXnetSocketLibraryInterfa
   virtual ~NiXnetSocketLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);
+  int32_t Accept(nxSOCKET socket, nxsockaddr* addr, nxsocklen_t* addrlen);
   int32_t Bind(nxSOCKET socket, nxsockaddr* name, nxsocklen_t namelen);
   int32_t Connect(nxSOCKET socket, nxsockaddr* name, nxsocklen_t namelen);
   int32_t Listen(nxSOCKET socket, int32_t backlog);
@@ -35,6 +36,7 @@ class NiXnetSocketLibrary : public nixnetsocket_grpc::NiXnetSocketLibraryInterfa
   nxSOCKET Socket(nxIpStackRef_t stack_ref, int32_t domain, int32_t type, int32_t prototcol);
 
  private:
+  using AcceptPtr = decltype(&nxaccept);
   using BindPtr = decltype(&nxbind);
   using ConnectPtr = decltype(&nxconnect);
   using ListenPtr = decltype(&nxlisten);
@@ -52,6 +54,7 @@ class NiXnetSocketLibrary : public nixnetsocket_grpc::NiXnetSocketLibraryInterfa
   using SocketPtr = decltype(&nxsocket);
 
   typedef struct FunctionPointers {
+    AcceptPtr Accept;
     BindPtr Bind;
     ConnectPtr Connect;
     ListenPtr Listen;

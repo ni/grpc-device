@@ -17,6 +17,7 @@
 
 namespace nixnetsocket_grpc {
 
+  using nidevice_grpc::converters::allocate_output_storage;
   using nidevice_grpc::converters::calculate_linked_array_size;
   using nidevice_grpc::converters::convert_from_grpc;
   using nidevice_grpc::converters::convert_to_grpc;
@@ -42,6 +43,36 @@ namespace nixnetsocket_grpc {
   inline bool status_ok(int32 status)
   {
     return status >= 0;
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiXnetSocketService::Accept(::grpc::ServerContext* context, const AcceptRequest* request, AcceptResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto socket_grpc_session = request->socket();
+      nxSOCKET socket = session_repository_->access_session(socket_grpc_session.id(), socket_grpc_session.name());
+      auto addr = allocate_output_storage<nxsockaddr, SockAddr>();
+      nxsocklen_t addrlen {};
+      auto status = library_->Accept(socket, &addr, &addrlen);
+      response->set_status(status);
+      if (status_ok(status)) {
+        convert_to_grpc(addr, response->mutable_addr());
+      }
+      else {
+        const auto error_message = get_last_error_message(library_);
+        response->set_error_message(error_message);
+        const auto error_num = get_last_error_num(library_);
+        response->set_error_num(error_num);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
   }
 
   //---------------------------------------------------------------------

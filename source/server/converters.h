@@ -288,6 +288,22 @@ inline CVIAbsoluteTime convert_from_grpc(const google::protobuf::Timestamp& valu
   return cviTime;
 }
 
+// TypeToStorageType should be specialized to define a (TDriverType, TGrpcType)->StorageType mapping, which
+// will be used by allocate_output_storage.
+template <typename TDriverType, typename TGrpcType>
+struct TypeToStorageType {
+  using StorageType = TDriverType;
+};
+
+// Constructs a default implementation of TypeToStorageType<TDriverType>::StorageType to use as an output_param.
+// This should be customized by specializing the TypeToStorageType struct.
+template <typename TDriverType, typename TGrpcType>
+typename TypeToStorageType<TDriverType, TGrpcType>::StorageType allocate_output_storage()
+{
+  using StorageType = typename TypeToStorageType<TDriverType, TGrpcType>::StorageType;
+  return StorageType{};
+}
+
 }  // namespace converters
 }  // namespace nidevice_grpc
 

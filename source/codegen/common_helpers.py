@@ -135,6 +135,11 @@ def supports_standard_copy_conversion_routines(parameter: dict) -> bool:
     )
 
 
+def supports_standard_output_allocation_routines(parameter: dict) -> bool:
+    """Whether the parameter can be allocated as an output param with allocate_output_storage."""
+    return parameter.get("supports_standard_output_allocation", False)
+
+
 def _any_function_uses_grpc_type(functions, type_name):
     return any(p["grpc_type"] == type_name for f in functions for p in functions[f]["parameters"])
 
