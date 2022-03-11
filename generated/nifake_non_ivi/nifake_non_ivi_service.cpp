@@ -354,8 +354,8 @@ namespace nifake_non_ivi_grpc {
         response->mutable_handle()->set_id(session_id);
       }
       else {
-        const auto last_error_buffer = get_last_error(library_);
-        response->set_error_message(last_error_buffer.data());
+        const auto error_message = get_last_error(library_);
+        response->set_error_message(error_message);
       }
       return ::grpc::Status::OK;
     }

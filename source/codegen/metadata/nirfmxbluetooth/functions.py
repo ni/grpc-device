@@ -2242,7 +2242,7 @@ functions = {
             },
             {
                 'direction': 'out',
-                'get_last_error': True,
+                'get_last_error': 'get_last_error_message',
                 'name': 'errorMessage',
                 'type': 'char[]'
             }
@@ -2268,7 +2268,7 @@ functions = {
             },
             {
                 'direction': 'out',
-                'get_last_error': True,
+                'get_last_error': 'get_last_error_message',
                 'name': 'errorMessage',
                 'type': 'char[]'
             }

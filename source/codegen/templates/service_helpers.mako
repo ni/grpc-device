@@ -692,8 +692,8 @@ ${initialize_standard_input_param(function_name, parameter)}
 ## Handles populating the response message after calling the driver API.
 <%def name="populate_response(output_parameters, indent_level=0, init_method=False)">\
 <%
-  get_last_error_output = service_helpers.get_last_error_output_param(output_parameters)
-  normal_outputs = [p for p in output_parameters if p is not get_last_error_output]
+  get_last_error_outputs = service_helpers.get_last_error_output_params(output_parameters)
+  normal_outputs = [p for p in output_parameters if not p in get_last_error_outputs]
 %>\
 <%block filter="common_helpers.indent(indent_level)">\
       response->set_status(status);
@@ -701,13 +701,16 @@ ${initialize_standard_input_param(function_name, parameter)}
       if (status_ok(status)) {
 ${set_response_values(normal_outputs, init_method)}\
       }
-%   if get_last_error_output:
+%   if any(get_last_error_outputs):
+      else {
+%     for get_last_error_output in get_last_error_outputs:
 <%
   get_last_error_output_name = common_helpers.get_grpc_field_name(get_last_error_output)
+  get_last_error_method_name = get_last_error_output["get_last_error"]
 %>\
-      else {
-        const auto last_error_buffer = get_last_error(library_);
-        response->set_${get_last_error_output_name}(last_error_buffer.data());
+        const auto ${get_last_error_output_name} = ${get_last_error_method_name}(library_);
+        response->set_${get_last_error_output_name}(${get_last_error_output_name});
+%     endfor
       }
 %   endif
 %endif

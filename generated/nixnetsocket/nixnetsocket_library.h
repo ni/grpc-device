@@ -20,9 +20,17 @@ class NiXnetSocketLibrary : public nixnetsocket_grpc::NiXnetSocketLibraryInterfa
   ::grpc::Status check_function_exists(std::string functionName);
   int32_t Accept(nxSOCKET socket, nxsockaddr* addr, nxsocklen_t* addrlen);
   int32_t Bind(nxSOCKET socket, nxsockaddr* name, nxsocklen_t namelen);
+  int32_t Connect(nxSOCKET socket, nxsockaddr* name, nxsocklen_t namelen);
+  int32_t Listen(nxSOCKET socket, int32_t backlog);
+  int32_t SendTo(nxSOCKET socket, char dataptr[], int32_t size, int32_t flags, nxsockaddr* to, nxsocklen_t tolen);
+  int32_t Send(nxSOCKET socket, char dataptr[], int32_t size, int32_t flags);
+  int32_t Recv(nxSOCKET socket, char mem[], int32_t size, int32_t flags);
+  int32_t Shutdown(nxSOCKET socket, int32_t how);
   int32_t Close(nxSOCKET socket);
   int32_t GetLastErrorNum();
   char* GetLastErrorStr(char buf[], size_t bufLen);
+  int32_t IpStackClear(nxIpStackRef_t stack_ref);
+  int32_t IpStackCreate(char stack_name[], char config[], nxIpStackRef_t* stack_ref);
   int32_t IsSet(nxSOCKET fd, nxfd_set* set);
   int32_t Select(int32_t nfds, nxfd_set* read_fds, nxfd_set* write_fds, nxfd_set* except_fds, nxtimeval* timeout);
   nxSOCKET Socket(nxIpStackRef_t stack_ref, int32_t domain, int32_t type, int32_t prototcol);
@@ -30,9 +38,17 @@ class NiXnetSocketLibrary : public nixnetsocket_grpc::NiXnetSocketLibraryInterfa
  private:
   using AcceptPtr = decltype(&nxaccept);
   using BindPtr = decltype(&nxbind);
+  using ConnectPtr = decltype(&nxconnect);
+  using ListenPtr = decltype(&nxlisten);
+  using SendToPtr = decltype(&nxsendto);
+  using SendPtr = decltype(&nxsend);
+  using RecvPtr = decltype(&nxrecv);
+  using ShutdownPtr = decltype(&nxshutdown);
   using ClosePtr = decltype(&nxclose);
-  using GetLastErrorNumPtr = decltype(&nxgetlasterrornum);
-  using GetLastErrorStrPtr = decltype(&nxgetlasterrorstr);
+  using GetLastErrorNumPtr = int32_t (*)();
+  using GetLastErrorStrPtr = char* (*)(char buf[], size_t bufLen);
+  using IpStackClearPtr = decltype(&nxIpStackClear);
+  using IpStackCreatePtr = decltype(&nxIpStackCreate);
   using IsSetPtr = decltype(&nxfd_isset);
   using SelectPtr = decltype(&nxselect);
   using SocketPtr = decltype(&nxsocket);
@@ -40,9 +56,17 @@ class NiXnetSocketLibrary : public nixnetsocket_grpc::NiXnetSocketLibraryInterfa
   typedef struct FunctionPointers {
     AcceptPtr Accept;
     BindPtr Bind;
+    ConnectPtr Connect;
+    ListenPtr Listen;
+    SendToPtr SendTo;
+    SendPtr Send;
+    RecvPtr Recv;
+    ShutdownPtr Shutdown;
     ClosePtr Close;
     GetLastErrorNumPtr GetLastErrorNum;
     GetLastErrorStrPtr GetLastErrorStr;
+    IpStackClearPtr IpStackClear;
+    IpStackCreatePtr IpStackCreate;
     IsSetPtr IsSet;
     SelectPtr Select;
     SocketPtr Socket;
