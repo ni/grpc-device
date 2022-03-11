@@ -446,7 +446,22 @@ namespace nixnetsocket_grpc {
       nxSOCKET socket = session_repository_->access_session(socket_grpc_session.id(), socket_grpc_session.name());
       int32_t level = request->level();
       auto opt_data = convert_from_grpc<SockOptDataInputConverter>(request->opt_data());
-      auto optname = opt_data.name();
+      int32_t optname;
+      switch (request->optname_enum_case()) {
+        case nixnetsocket_grpc::SetSockOptRequest::OptnameEnumCase::kOptname: {
+          optname = static_cast<int32_t>(request->optname());
+          break;
+        }
+        case nixnetsocket_grpc::SetSockOptRequest::OptnameEnumCase::kOptnameRaw: {
+          optname = static_cast<int32_t>(request->optname_raw());
+          break;
+        }
+        case nixnetsocket_grpc::SetSockOptRequest::OptnameEnumCase::OPTNAME_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for optname was not specified or out of range");
+          break;
+        }
+      }
+
       auto optval = opt_data.data();
       auto optlen = opt_data.size();
       auto status = library_->SetSockOpt(socket, level, optname, optval, optlen);

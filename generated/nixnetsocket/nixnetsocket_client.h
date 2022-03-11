@@ -35,7 +35,7 @@ IpStackClearResponse ip_stack_clear(const StubPtr& stub, const nidevice_grpc::Se
 IpStackCreateResponse ip_stack_create(const StubPtr& stub, const pb::string& stack_name, const pb::string& config);
 IsSetResponse is_set(const StubPtr& stub, const nidevice_grpc::Session& fd, const std::vector<nidevice_grpc::Session>& set);
 SelectResponse select(const StubPtr& stub, const std::vector<nidevice_grpc::Session>& read_fds, const std::vector<nidevice_grpc::Session>& write_fds, const std::vector<nidevice_grpc::Session>& except_fds, const google::protobuf::Duration& timeout);
-SetSockOptResponse set_sock_opt(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::int32& level, const SockOptData& opt_data);
+SetSockOptResponse set_sock_opt(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::int32& level, const SockOptData& opt_data, const simple_variant<OptName, pb::int32>& optname);
 SocketResponse socket(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const pb::int32& domain, const pb::int32& type, const pb::int32& prototcol);
 
 } // namespace nixnetsocket_grpc::experimental::client

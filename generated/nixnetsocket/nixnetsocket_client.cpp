@@ -242,7 +242,7 @@ select(const StubPtr& stub, const std::vector<nidevice_grpc::Session>& read_fds,
 }
 
 SetSockOptResponse
-set_sock_opt(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::int32& level, const SockOptData& opt_data)
+set_sock_opt(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::int32& level, const SockOptData& opt_data, const simple_variant<OptName, pb::int32>& optname)
 {
   ::grpc::ClientContext context;
 
@@ -250,6 +250,14 @@ set_sock_opt(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb
   request.mutable_socket()->CopyFrom(socket);
   request.set_level(level);
   request.mutable_opt_data()->CopyFrom(opt_data);
+  const auto optname_ptr = optname.get_if<OptName>();
+  const auto optname_raw_ptr = optname.get_if<pb::int32>();
+  if (optname_ptr) {
+    request.set_optname(*optname_ptr);
+  }
+  else if (optname_raw_ptr) {
+    request.set_optname_raw(*optname_raw_ptr);
+  }
 
   auto response = SetSockOptResponse{};
 

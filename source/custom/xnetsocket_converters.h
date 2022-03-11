@@ -229,11 +229,6 @@ struct SockOptDataInputConverter {
     data_string = std::string(opt_data.data_string());
   }
 
-  int32_t name() const
-  {
-    return opt_data.opt_name();
-  }
-
   void* data()
   {
     switch (opt_data.data_case()) {

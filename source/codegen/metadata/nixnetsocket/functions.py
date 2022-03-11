@@ -394,9 +394,8 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'optname',
-                'hardcoded_value': 'opt_data.name()',
-                'include_in_proto': False,
-                'type': 'int32_t'
+                'type': 'int32_t',
+                'enum': 'OptName'
             },
             {
                 'direction': 'in',

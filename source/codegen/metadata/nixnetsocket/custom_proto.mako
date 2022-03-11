@@ -17,23 +17,7 @@ message SockAddr {
   }
 }
 
-enum OptName {
-  OPT_NAME_UNSPECIFIED = 0;
-  OPT_NAME_TCP_NODELAY = 1;
-  OPT_NAME_IP_MULTICAST_TTL = 6;
-  OPT_NAME_IPV6_MULTICAST_HOPS = 15;
-  OPT_NAME_SO_RX_DATA = 257;
-  OPT_NAME_SO_RCV_BUF = 258;
-  OPT_NAME_SO_SND_BUF = 259;
-  OPT_NAME_SO_NON_BLOCK = 260;
-  OPT_NAME_SO_BIND_TO_DEVICE = 261;
-  OPT_NAME_SO_ERROR = 262;
-  OPT_NAME_SO_LINGER = 263;
-  OPT_NAME_SO_REUSE_ADDR = 264;
-}
-
 message SockOptData {
-  OptName opt_name = 1;
   oneof data {
     int32 data_int32 = 2;
     bool data_bool = 3;
