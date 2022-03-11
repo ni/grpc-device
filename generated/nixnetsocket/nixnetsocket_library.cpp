@@ -36,6 +36,7 @@ NiXnetSocketLibrary::NiXnetSocketLibrary() : shared_library_(kLibraryName)
   function_pointers_.IpStackCreate = reinterpret_cast<IpStackCreatePtr>(shared_library_.get_function_pointer("nxIpStackCreate"));
   function_pointers_.IsSet = reinterpret_cast<IsSetPtr>(shared_library_.get_function_pointer("nxfd_isset"));
   function_pointers_.Select = reinterpret_cast<SelectPtr>(shared_library_.get_function_pointer("nxselect"));
+  function_pointers_.SetSockOpt = reinterpret_cast<SetSockOptPtr>(shared_library_.get_function_pointer("nxsetsockopt"));
   function_pointers_.Socket = reinterpret_cast<SocketPtr>(shared_library_.get_function_pointer("nxsocket"));
 }
 
@@ -219,6 +220,18 @@ int32_t NiXnetSocketLibrary::Select(int32_t nfds, nxfd_set* read_fds, nxfd_set* 
   return nxselect(nfds, read_fds, write_fds, except_fds, timeout);
 #else
   return function_pointers_.Select(nfds, read_fds, write_fds, except_fds, timeout);
+#endif
+}
+
+int32_t NiXnetSocketLibrary::SetSockOpt(nxSOCKET socket, int32_t level, int32_t optname, void* optval, nxsocklen_t optlen)
+{
+  if (!function_pointers_.SetSockOpt) {
+    throw nidevice_grpc::LibraryLoadException("Could not find nxsetsockopt.");
+  }
+#if defined(_MSC_VER)
+  return nxsetsockopt(socket, level, optname, optval, optlen);
+#else
+  return function_pointers_.SetSockOpt(socket, level, optname, optval, optlen);
 #endif
 }
 

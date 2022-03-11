@@ -294,6 +294,59 @@ TEST(XnetConvertersTests, UnknownAddress_ConvertToGrpc_ConvertsToUnsetAddress)
 
   EXPECT_EQ(SockAddr::AddrCase::ADDR_NOT_SET, grpc_data.addr_case());
 }
+
+TEST(XnetConvertersTests, SockOptDataWithInt_ConvertFromGrpc_DataLooksReasonable)
+{
+  const int32_t RCV_BUF_SIZE = 1000;
+  SockOptData sock_opt_data = SockOptData{};
+  sock_opt_data.set_data_int32(RCV_BUF_SIZE);
+
+  auto opt_data = convert_from_grpc<SockOptDataInputConverter>(sock_opt_data);
+
+  EXPECT_EQ(RCV_BUF_SIZE, opt_data.data_int);
+  EXPECT_EQ(sizeof(int32_t), opt_data.size());
+  EXPECT_EQ(&(opt_data.data_int), opt_data.data());
+}
+
+TEST(XnetConvertersTests, SockOptDataWithBool_ConvertFromGrpc_DataLooksReasonable)
+{
+  const bool REUSE_ADDR = true;
+  SockOptData sock_opt_data = SockOptData{};
+  sock_opt_data.set_data_bool(REUSE_ADDR);
+
+  auto opt_data = convert_from_grpc<SockOptDataInputConverter>(sock_opt_data);
+
+  EXPECT_EQ(REUSE_ADDR, opt_data.data_bool);
+  EXPECT_EQ(sizeof(bool), opt_data.size());
+  EXPECT_EQ(&(opt_data.data_bool), opt_data.data());
+}
+
+TEST(XnetConvertersTests, SockOptDataWithString_ConvertFromGrpc_DataLooksReasonable)
+{
+  const std::string DEVICE_NAME = "I'm a Device";
+  SockOptData sock_opt_data = SockOptData{};
+  sock_opt_data.set_data_string(DEVICE_NAME);
+
+  auto opt_data = convert_from_grpc<SockOptDataInputConverter>(sock_opt_data);
+
+  EXPECT_EQ(DEVICE_NAME, opt_data.data_string);
+  EXPECT_EQ(DEVICE_NAME.size(), opt_data.size());
+  EXPECT_EQ(opt_data.data_string.data(), opt_data.data());
+  char* dereferenced_data = (char*)(opt_data.data());
+  EXPECT_STREQ(DEVICE_NAME.c_str(), dereferenced_data);
+}
+
+TEST(XnetConvertersTests, SockOptDataWithDataUnset_ConvertFromGrpc_NullPtrDataAndZeroSize)
+{
+  SockOptData sock_opt_data = SockOptData{};
+  // Avoid setting the oneof data field
+
+  auto opt_data = convert_from_grpc<SockOptDataInputConverter>(sock_opt_data);
+
+  EXPECT_EQ(0, opt_data.size());
+  EXPECT_EQ(nullptr, opt_data.data());
+}
+
 }  // namespace
 }  // namespace unit
 }  // namespace tests

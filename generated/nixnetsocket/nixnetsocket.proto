@@ -30,11 +30,27 @@ service NiXnetSocket {
   rpc IpStackCreate(IpStackCreateRequest) returns (IpStackCreateResponse);
   rpc IsSet(IsSetRequest) returns (IsSetResponse);
   rpc Select(SelectRequest) returns (SelectResponse);
+  rpc SetSockOpt(SetSockOptRequest) returns (SetSockOptResponse);
   rpc Socket(SocketRequest) returns (SocketResponse);
 }
 
 enum NiXnetSocketAttribute {
   NIXNETSOCKET_ATTRIBUTE_UNSPECIFIED = 0;
+}
+
+enum OptName {
+  OPT_NAME_UNSPECIFIED = 0;
+  OPT_NAME_TCP_NODELAY = 1;
+  OPT_NAME_IP_MULTICAST_TTL  = 6;
+  OPT_NAME_IPV6_MULTICAST_HOPS = 15;
+  OPT_NAME_SO_RX_DATA = 257;
+  OPT_NAME_SO_RCV_BUF = 258;
+  OPT_NAME_SO_SND_BUF = 259;
+  OPT_NAME_SO_NON_BLOCK = 260;
+  OPT_NAME_SO_BIND_TO_DEVICE = 261;
+  OPT_NAME_SO_ERROR = 262;
+  OPT_NAME_SO_LINGER = 263;
+  OPT_NAME_SO_REUSE_ADDR = 264;
 }
 
 message SockAddrIPv4 {
@@ -53,6 +69,14 @@ message SockAddr {
   oneof addr {
     SockAddrIPv4 ipv4 = 1;
     SockAddrIPv6 ipv6 = 2;
+  }
+}
+
+message SockOptData {
+  oneof data {
+    int32 data_int32 = 2;
+    bool data_bool = 3;
+    string data_string = 4;
   }
 }
 
@@ -201,6 +225,22 @@ message SelectRequest {
 }
 
 message SelectResponse {
+  int32 status = 1;
+  string error_message = 2;
+  int32 error_num = 3;
+}
+
+message SetSockOptRequest {
+  nidevice_grpc.Session socket = 1;
+  int32 level = 2;
+  SockOptData opt_data = 3;
+  oneof optname_enum {
+    OptName optname = 4;
+    int32 optname_raw = 5;
+  }
+}
+
+message SetSockOptResponse {
   int32 status = 1;
   string error_message = 2;
   int32 error_num = 3;
