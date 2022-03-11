@@ -27,7 +27,7 @@ NiXnetSocketLibrary::NiXnetSocketLibrary() : shared_library_(kLibraryName)
   function_pointers_.Listen = reinterpret_cast<ListenPtr>(shared_library_.get_function_pointer("nxlisten"));
   function_pointers_.SendTo = reinterpret_cast<SendToPtr>(shared_library_.get_function_pointer("nxsendto"));
   function_pointers_.Send = reinterpret_cast<SendPtr>(shared_library_.get_function_pointer("nxsend"));
-  function_pointers_.RecVFrom = reinterpret_cast<RecVFromPtr>(shared_library_.get_function_pointer("nxrecvfrom"));
+  function_pointers_.RecvFrom = reinterpret_cast<RecvFromPtr>(shared_library_.get_function_pointer("nxrecvfrom"));
   function_pointers_.Recv = reinterpret_cast<RecvPtr>(shared_library_.get_function_pointer("nxrecv"));
   function_pointers_.GetSockName = reinterpret_cast<GetSockNamePtr>(shared_library_.get_function_pointer("nxgetsockname"));
   function_pointers_.GetPeerName = reinterpret_cast<GetPeerNamePtr>(shared_library_.get_function_pointer("nxgetpeername"));
@@ -125,15 +125,15 @@ int32_t NiXnetSocketLibrary::Send(nxSOCKET socket, char dataptr[], int32_t size,
 #endif
 }
 
-int32_t NiXnetSocketLibrary::RecVFrom(nxSOCKET socket, char mem[], int32_t size, int32_t flags, nxsockaddr* from, nxsocklen_t* fromlen)
+int32_t NiXnetSocketLibrary::RecvFrom(nxSOCKET socket, char mem[], int32_t size, int32_t flags, nxsockaddr* from, nxsocklen_t* fromlen)
 {
-  if (!function_pointers_.RecVFrom) {
+  if (!function_pointers_.RecvFrom) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxrecvfrom.");
   }
 #if defined(_MSC_VER)
   return nxrecvfrom(socket, mem, size, flags, from, fromlen);
 #else
-  return function_pointers_.RecVFrom(socket, mem, size, flags, from, fromlen);
+  return function_pointers_.RecvFrom(socket, mem, size, flags, from, fromlen);
 #endif
 }
 

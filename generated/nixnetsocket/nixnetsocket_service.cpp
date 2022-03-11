@@ -225,7 +225,7 @@ namespace nixnetsocket_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiXnetSocketService::RecVFrom(::grpc::ServerContext* context, const RecVFromRequest* request, RecVFromResponse* response)
+  ::grpc::Status NiXnetSocketService::RecvFrom(::grpc::ServerContext* context, const RecvFromRequest* request, RecvFromResponse* response)
   {
     if (context->IsCancelled()) {
       return ::grpc::Status::CANCELLED;
@@ -238,7 +238,7 @@ namespace nixnetsocket_grpc {
       int32_t flags = request->flags();
       auto from = allocate_output_storage<nxsockaddr, SockAddr>();
       nxsocklen_t fromlen {};
-      auto status = library_->RecVFrom(socket, mem, size, flags, &from, &fromlen);
+      auto status = library_->RecvFrom(socket, mem, size, flags, &from, &fromlen);
       response->set_status(status);
       if (status_ok(status)) {
         convert_to_grpc(from, response->mutable_from());

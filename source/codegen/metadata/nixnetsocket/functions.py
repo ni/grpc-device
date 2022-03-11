@@ -173,7 +173,7 @@ functions = {
         ],
         'returns': 'int32_t'
     },
-    'RecVFrom': {
+    'RecvFrom': {
         'cname': 'nxrecvfrom',
         'parameters': [
             {

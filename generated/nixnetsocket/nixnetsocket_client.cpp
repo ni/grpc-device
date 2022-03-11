@@ -121,20 +121,20 @@ send(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::string
   return response;
 }
 
-RecVFromResponse
-rec_v_from(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::string& mem, const pb::int32& flags)
+RecvFromResponse
+recv_from(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::string& mem, const pb::int32& flags)
 {
   ::grpc::ClientContext context;
 
-  auto request = RecVFromRequest{};
+  auto request = RecvFromRequest{};
   request.mutable_socket()->CopyFrom(socket);
   request.set_mem(mem);
   request.set_flags(flags);
 
-  auto response = RecVFromResponse{};
+  auto response = RecvFromResponse{};
 
   raise_if_error(
-      stub->RecVFrom(&context, request, &response));
+      stub->RecvFrom(&context, request, &response));
 
   return response;
 }

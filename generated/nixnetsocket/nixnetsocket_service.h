@@ -49,7 +49,7 @@ public:
   ::grpc::Status Listen(::grpc::ServerContext* context, const ListenRequest* request, ListenResponse* response) override;
   ::grpc::Status SendTo(::grpc::ServerContext* context, const SendToRequest* request, SendToResponse* response) override;
   ::grpc::Status Send(::grpc::ServerContext* context, const SendRequest* request, SendResponse* response) override;
-  ::grpc::Status RecVFrom(::grpc::ServerContext* context, const RecVFromRequest* request, RecVFromResponse* response) override;
+  ::grpc::Status RecvFrom(::grpc::ServerContext* context, const RecvFromRequest* request, RecvFromResponse* response) override;
   ::grpc::Status Recv(::grpc::ServerContext* context, const RecvRequest* request, RecvResponse* response) override;
   ::grpc::Status GetSockName(::grpc::ServerContext* context, const GetSockNameRequest* request, GetSockNameResponse* response) override;
   ::grpc::Status GetPeerName(::grpc::ServerContext* context, const GetPeerNameRequest* request, GetPeerNameResponse* response) override;
