@@ -102,6 +102,7 @@ FUNCTION_SCHEMA = Schema(
         Optional("custom_close_method"): bool,
         Optional("python_name"): str,
         Optional("status_expression"): str,
+        Optional("include_in_client"): bool,
     }
 )
 

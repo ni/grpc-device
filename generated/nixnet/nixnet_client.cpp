@@ -502,30 +502,6 @@ future_time_trigger(const StubPtr& stub, const nidevice_grpc::Session& session_r
   return response;
 }
 
-GetPropertyResponse
-get_property(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const simple_variant<Property, pb::uint32>& property_id)
-{
-  ::grpc::ClientContext context;
-
-  auto request = GetPropertyRequest{};
-  request.mutable_session_ref()->CopyFrom(session_ref);
-  const auto property_id_ptr = property_id.get_if<Property>();
-  const auto property_id_raw_ptr = property_id.get_if<pb::uint32>();
-  if (property_id_ptr) {
-    request.set_property_id(*property_id_ptr);
-  }
-  else if (property_id_raw_ptr) {
-    request.set_property_id_raw(*property_id_raw_ptr);
-  }
-
-  auto response = GetPropertyResponse{};
-
-  raise_if_error(
-      stub->GetProperty(&context, request, &response));
-
-  return response;
-}
-
 GetPropertySizeResponse
 get_property_size(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const simple_variant<Property, pb::uint32>& property_id)
 {

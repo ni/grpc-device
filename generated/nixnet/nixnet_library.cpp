@@ -36,20 +36,25 @@ NiXnetLibrary::NiXnetLibrary() : shared_library_(kLibraryName)
   function_pointers_.DbDeploy = reinterpret_cast<DbDeployPtr>(shared_library_.get_function_pointer("nxdbDeploy"));
   function_pointers_.DbFindObject = reinterpret_cast<DbFindObjectPtr>(shared_library_.get_function_pointer("nxdbFindObject"));
   function_pointers_.DbGetDatabaseListSizes = reinterpret_cast<DbGetDatabaseListSizesPtr>(shared_library_.get_function_pointer("nxdbGetDatabaseListSizes"));
+  function_pointers_.DbGetProperty = reinterpret_cast<DbGetPropertyPtr>(shared_library_.get_function_pointer("nxdbGetProperty"));
   function_pointers_.DbGetPropertySize = reinterpret_cast<DbGetPropertySizePtr>(shared_library_.get_function_pointer("nxdbGetPropertySize"));
   function_pointers_.DbMerge = reinterpret_cast<DbMergePtr>(shared_library_.get_function_pointer("nxdbMerge"));
   function_pointers_.DbOpenDatabase = reinterpret_cast<DbOpenDatabasePtr>(shared_library_.get_function_pointer("nxdbOpenDatabase"));
   function_pointers_.DbRemoveAlias = reinterpret_cast<DbRemoveAliasPtr>(shared_library_.get_function_pointer("nxdbRemoveAlias"));
   function_pointers_.DbSaveDatabase = reinterpret_cast<DbSaveDatabasePtr>(shared_library_.get_function_pointer("nxdbSaveDatabase"));
+  function_pointers_.DbSetProperty = reinterpret_cast<DbSetPropertyPtr>(shared_library_.get_function_pointer("nxdbSetProperty"));
   function_pointers_.DbUndeploy = reinterpret_cast<DbUndeployPtr>(shared_library_.get_function_pointer("nxdbUndeploy"));
   function_pointers_.DisconnectTerminals = reinterpret_cast<DisconnectTerminalsPtr>(shared_library_.get_function_pointer("nxDisconnectTerminals"));
   function_pointers_.Flush = reinterpret_cast<FlushPtr>(shared_library_.get_function_pointer("nxFlush"));
   function_pointers_.FutureTimeTrigger = reinterpret_cast<FutureTimeTriggerPtr>(shared_library_.get_function_pointer("nxFutureTimeTrigger"));
   function_pointers_.GetProperty = reinterpret_cast<GetPropertyPtr>(shared_library_.get_function_pointer("nxGetProperty"));
   function_pointers_.GetPropertySize = reinterpret_cast<GetPropertySizePtr>(shared_library_.get_function_pointer("nxGetPropertySize"));
+  function_pointers_.GetSubProperty = reinterpret_cast<GetSubPropertyPtr>(shared_library_.get_function_pointer("nxGetSubProperty"));
   function_pointers_.GetSubPropertySize = reinterpret_cast<GetSubPropertySizePtr>(shared_library_.get_function_pointer("nxGetSubPropertySize"));
   function_pointers_.ReadSignalSinglePoint = reinterpret_cast<ReadSignalSinglePointPtr>(shared_library_.get_function_pointer("nxReadSignalSinglePoint"));
   function_pointers_.ReadSignalWaveform = reinterpret_cast<ReadSignalWaveformPtr>(shared_library_.get_function_pointer("nxReadSignalWaveform"));
+  function_pointers_.SetProperty = reinterpret_cast<SetPropertyPtr>(shared_library_.get_function_pointer("nxSetProperty"));
+  function_pointers_.SetSubProperty = reinterpret_cast<SetSubPropertyPtr>(shared_library_.get_function_pointer("nxSetSubProperty"));
   function_pointers_.Start = reinterpret_cast<StartPtr>(shared_library_.get_function_pointer("nxStart"));
   function_pointers_.Stop = reinterpret_cast<StopPtr>(shared_library_.get_function_pointer("nxStop"));
   function_pointers_.SystemClose = reinterpret_cast<SystemClosePtr>(shared_library_.get_function_pointer("nxSystemClose"));
@@ -251,6 +256,18 @@ nxStatus_t NiXnetLibrary::DbGetDatabaseListSizes(const char ipAddress[], u32* si
 #endif
 }
 
+nxStatus_t NiXnetLibrary::DbGetProperty(nxDatabaseRef_t dbObjectRef, u32 propertyID, u32 propertySize, void* propertyValue)
+{
+  if (!function_pointers_.DbGetProperty) {
+    throw nidevice_grpc::LibraryLoadException("Could not find nxdbGetProperty.");
+  }
+#if defined(_MSC_VER)
+  return nxdbGetProperty(dbObjectRef, propertyID, propertySize, propertyValue);
+#else
+  return function_pointers_.DbGetProperty(dbObjectRef, propertyID, propertySize, propertyValue);
+#endif
+}
+
 nxStatus_t NiXnetLibrary::DbGetPropertySize(nxDatabaseRef_t dbObjectRef, u32 propertyID, u32* propertySize)
 {
   if (!function_pointers_.DbGetPropertySize) {
@@ -308,6 +325,18 @@ nxStatus_t NiXnetLibrary::DbSaveDatabase(nxDatabaseRef_t databaseRef, const char
   return nxdbSaveDatabase(databaseRef, dbFilepath);
 #else
   return function_pointers_.DbSaveDatabase(databaseRef, dbFilepath);
+#endif
+}
+
+nxStatus_t NiXnetLibrary::DbSetProperty(nxDatabaseRef_t dbObjectRef, u32 propertyID, u32 propertySize, void* propertyValue)
+{
+  if (!function_pointers_.DbSetProperty) {
+    throw nidevice_grpc::LibraryLoadException("Could not find nxdbSetProperty.");
+  }
+#if defined(_MSC_VER)
+  return nxdbSetProperty(dbObjectRef, propertyID, propertySize, propertyValue);
+#else
+  return function_pointers_.DbSetProperty(dbObjectRef, propertyID, propertySize, propertyValue);
 #endif
 }
 
@@ -383,6 +412,18 @@ nxStatus_t NiXnetLibrary::GetPropertySize(nxSessionRef_t sessionRef, u32 propert
 #endif
 }
 
+nxStatus_t NiXnetLibrary::GetSubProperty(nxSessionRef_t sessionRef, u32 activeIndex, u32 propertyID, u32 propertySize, void* propertyValue)
+{
+  if (!function_pointers_.GetSubProperty) {
+    throw nidevice_grpc::LibraryLoadException("Could not find nxGetSubProperty.");
+  }
+#if defined(_MSC_VER)
+  return nxGetSubProperty(sessionRef, activeIndex, propertyID, propertySize, propertyValue);
+#else
+  return function_pointers_.GetSubProperty(sessionRef, activeIndex, propertyID, propertySize, propertyValue);
+#endif
+}
+
 nxStatus_t NiXnetLibrary::GetSubPropertySize(nxSessionRef_t sessionRef, u32 activeIndex, u32 propertyID, u32* propertySize)
 {
   if (!function_pointers_.GetSubPropertySize) {
@@ -416,6 +457,30 @@ nxStatus_t NiXnetLibrary::ReadSignalWaveform(nxSessionRef_t sessionRef, f64 time
   return nxReadSignalWaveform(sessionRef, timeout, startTime, deltaTime, valueBuffer, sizeOfValueBuffer, numberOfValuesReturned);
 #else
   return function_pointers_.ReadSignalWaveform(sessionRef, timeout, startTime, deltaTime, valueBuffer, sizeOfValueBuffer, numberOfValuesReturned);
+#endif
+}
+
+nxStatus_t NiXnetLibrary::SetProperty(nxSessionRef_t sessionRef, u32 propertyID, u32 propertySize, void* propertyValue)
+{
+  if (!function_pointers_.SetProperty) {
+    throw nidevice_grpc::LibraryLoadException("Could not find nxSetProperty.");
+  }
+#if defined(_MSC_VER)
+  return nxSetProperty(sessionRef, propertyID, propertySize, propertyValue);
+#else
+  return function_pointers_.SetProperty(sessionRef, propertyID, propertySize, propertyValue);
+#endif
+}
+
+nxStatus_t NiXnetLibrary::SetSubProperty(nxSessionRef_t sessionRef, u32 activeIndex, u32 propertyID, u32 propertySize, void* propertyValue)
+{
+  if (!function_pointers_.SetSubProperty) {
+    throw nidevice_grpc::LibraryLoadException("Could not find nxSetSubProperty.");
+  }
+#if defined(_MSC_VER)
+  return nxSetSubProperty(sessionRef, activeIndex, propertyID, propertySize, propertyValue);
+#else
+  return function_pointers_.SetSubProperty(sessionRef, activeIndex, propertyID, propertySize, propertyValue);
 #endif
 }
 

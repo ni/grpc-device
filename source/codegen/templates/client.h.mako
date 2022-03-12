@@ -7,6 +7,7 @@ from client_helpers import ParamMechanism
 config = data['config']
 functions = data['functions']
 enums = data["enums"]
+functions = client_helpers._filter_functions_to_include_in_client(functions)
 
 service_class_prefix = config["service_class_prefix"]
 include_guard_name = service_helpers.get_include_guard_name(config, "_CLIENT_H")
@@ -50,6 +51,7 @@ using namespace nidevice_grpc::experimental::client;
   stub_param = f"const {stub_ptr_alias}& stub"
   is_streaming = common_helpers.has_streaming_response(f)
   client_params = client_helpers.get_client_parameters(f, enums)
+  include_in_client = functions[function].get('include_in_client', True)
 %>\
 %   if is_streaming:
 ${client_helpers.streaming_response_type(response_type)} ${client_method_name}(${client_helpers.create_streaming_params(client_params)});
