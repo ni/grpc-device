@@ -7,7 +7,7 @@ from client_helpers import ParamMechanism
 config = data['config']
 functions = data['functions']
 enums = data['enums']
-functions = client_helpers._filter_functions_to_include_in_client(functions)
+functions = client_helpers.filter_functions_to_include_in_client(functions)
 
 module_name = config["module_name"]
 service_class_prefix = config["service_class_prefix"]

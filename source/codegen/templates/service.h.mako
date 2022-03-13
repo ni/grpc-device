@@ -61,7 +61,7 @@ struct ${service_class_prefix}FeatureToggles
 };
 
 % if type_from_enum != "":  
-enum Type { ${type_from_enum} };
+enum TypeIdentifier { ${type_from_enum} };
 
 % endif
 class ${service_class_prefix}Service final : public ${base_class_name} {
@@ -111,7 +111,7 @@ private:
   std::map<${enum_value}, std::int32_t> ${enum.lower()}_output_map_ { ${service_helpers.get_output_lookup_values(enums[enum])} };
 % endfor
 % for enum in enums_mapped_to_type:
-  std::map<std::uint32_t, Type> ${enum.lower()}_type_map_ { ${service_helpers.generate_enum_oneof_selector_map(enums[enum])} };
+  std::map<std::uint32_t, TypeIdentifier> ${enum.lower()}_type_map_ { ${service_helpers.generate_enum_oneof_selector_map(enums[enum])} };
 % endfor
 
   ${service_class_prefix}FeatureToggles feature_toggles_;
