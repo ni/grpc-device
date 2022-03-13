@@ -619,7 +619,7 @@ functions = {
     },
     'DbGetProperty': {
         'cname': 'nxdbGetProperty',
-        'codegen_method': 'CustomCodeButNoProtoMessage',
+        'codegen_method': 'CustomCodeCustomProtoMessage',
         'include_in_client': False,
         'parameters': [
             {
@@ -758,7 +758,7 @@ functions = {
     },
     'DbSetProperty': {
         'cname': 'nxdbSetProperty',
-        'codegen_method': 'CustomCodeButNoProtoMessage',
+        'codegen_method': 'CustomCodeCustomProtoMessage',
         'include_in_client': False,
         'parameters': [
             {
@@ -860,7 +860,7 @@ functions = {
         'returns': 'nxStatus_t'
     },
     'GetProperty': {
-        'codegen_method': 'CustomCodeButNoProtoMessage',
+        'codegen_method': 'CustomCodeCustomProtoMessage',
         'include_in_client': False,
         'parameters': [
             {
@@ -915,7 +915,7 @@ functions = {
         'returns': 'nxStatus_t'
     },
     'GetSubProperty': {
-        'codegen_method': 'CustomCodeButNoProtoMessage',
+        'codegen_method': 'CustomCodeCustomProtoMessage',
         'include_in_client': False,
         'parameters': [
             {
@@ -1225,7 +1225,7 @@ functions = {
         'returns': 'nxStatus_t'
     },
     'SetProperty': {
-        'codegen_method': 'CustomCodeButNoProtoMessage',
+        'codegen_method': 'CustomCodeCustomProtoMessage',
         'include_in_client': False,
         'parameters': [
             {
@@ -1259,7 +1259,7 @@ functions = {
         'returns': 'nxStatus_t'
     },
     'SetSubProperty': {
-        'codegen_method': 'CustomCodeButNoProtoMessage',
+        'codegen_method': 'CustomCodeCustomProtoMessage',
         'include_in_client': False,
         'parameters': [
             {

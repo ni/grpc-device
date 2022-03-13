@@ -1,8 +1,8 @@
-message u32Array {
+message U32Array {
     repeated uint32 u32_array = 1;
 }
 
-message refArray {
+message RefArray {
     repeated nidevice_grpc.Session ref = 1;
 }
 
@@ -24,7 +24,7 @@ message GetPropertyResponse {
         int32 i32_scalar = 6;
         double f64_scalar = 7;
         string string_array = 8;
-        u32Array u32_array = 9;
+        U32Array u32_array = 9;
     }
 }
 
@@ -42,7 +42,7 @@ message SetPropertyRequest {
         int32 i32_scalar = 8;
         double f64_scalar = 9;
         string string_array = 10;
-        u32Array u32_array = 11;
+        U32Array u32_array = 11;
     }
 }
 
@@ -84,7 +84,7 @@ message DbGetPropertyResponse {
         string str = 4;
         uint64 u64_scalar = 5;
         double f64_scalar = 6;
-        u32Array u32_array = 7;
+        U32Array u32_array = 7;
         bytes u8_array = 8;
     }
 }
@@ -119,7 +119,7 @@ message DbSetPropertyRequest {
         string str = 6;
         uint64 u64_scalar = 7;
         double f64_scalar = 8;
-        u32Array u32_array = 9;
+        U32Array u32_array = 9;
         bytes u8_array = 10;
     }
 }

@@ -88,7 +88,7 @@ FUNCTION_SCHEMA = Schema(
         "returns": str,
         Optional("cname"): str,
         Optional("codegen_method"): And(
-            str, lambda s: s in ("public", "private", "CustomCode", "no", "python-only", "CustomCodeButNoProtoMessage")
+            str, lambda s: s in ("public", "private", "CustomCode", "no", "python-only", "CustomCodeCustomProtoMessage")
         ),
         Optional("init_method"): bool,
         Optional("stream_response"): bool,

@@ -8,8 +8,8 @@ functions = data['functions']
 
 function_enums = common_helpers.get_function_enums(functions)
 enums_to_map = service_helpers.get_enums_to_map(functions, enums)
-enums_to_map_type = service_helpers.get_enums_to_map_type(enums)
-type_from_enum = service_helpers.get_type_from_enum(enums)
+enums_mapped_to_type = service_helpers.generate_mapping_enums_to_type(enums)
+type_from_enum = service_helpers.get_distinct_types_from_enums(enums)
 service_class_prefix = config["service_class_prefix"]
 driver_library_interface = common_helpers.get_library_interface_type_name(config)
 include_guard_name = service_helpers.get_include_guard_name(config, "_SERVICE_H")
@@ -110,8 +110,8 @@ private:
   std::map<std::int32_t, ${enum_value}> ${enum.lower()}_input_map_ { ${service_helpers.get_input_lookup_values(enums[enum])} };
   std::map<${enum_value}, std::int32_t> ${enum.lower()}_output_map_ { ${service_helpers.get_output_lookup_values(enums[enum])} };
 % endfor
-% for enum in enums_to_map_type:
-  std::map<std::uint32_t, Type> ${enum.lower()}_type_map_ { ${service_helpers.get_id_type_value(enums[enum])} };
+% for enum in enums_mapped_to_type:
+  std::map<std::uint32_t, Type> ${enum.lower()}_type_map_ { ${service_helpers.generate_enum_oneof_selector_map(enums[enum])} };
 % endfor
 
   ${service_class_prefix}FeatureToggles feature_toggles_;
