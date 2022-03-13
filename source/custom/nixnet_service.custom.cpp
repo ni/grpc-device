@@ -37,6 +37,10 @@ void GetLinComm(const u32* input, nixnet_grpc::LinComm *output)
     output->set_schedule_index(nxLINComm_Get2_ScheduleIndex(input[1]));
 }
 
+// ReadState API has an output parameter of type void * called StateValue. Based on the value of StateID, 
+// StateValue can point to u32, nxTimestamp100ns_t,  _nxFlexRayStats_t etc, which are of different sizes.
+// Based on the StateID, we are setting the size of StateValue and after calling the ReadState API, the 
+// response is set appropriately.
 ::grpc::Status NiXnetService::ReadState(::grpc::ServerContext* context, const ReadStateRequest* request, ReadStateResponse* response)
 {
     if (context->IsCancelled()) {
@@ -109,6 +113,10 @@ void GetLinComm(const u32* input, nixnet_grpc::LinComm *output)
                 state_value, raw_value = &time_local_network;
                 break;
             }
+            default:{
+                return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for state_id was not specified or out of range");
+                break;
+            }
         }
         nxStatus_t fault {};
         auto status = library_->ReadState(session_ref, state_id, state_size, state_value, &fault);
@@ -161,6 +169,10 @@ void GetLinComm(const u32* input, nixnet_grpc::LinComm *output)
             } 
             case nixnet_grpc::ReadState::READ_STATE_STATE_TIME_START_2 :{
                 convert_to_grpc(*(_nxTimeLocalNetwork_t*)state_value, response->mutable_state_value()->mutable_time_start2());
+                break;
+            }
+            default:{
+                return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for state_id was not specified or out of range");
                 break;
             }
         }
