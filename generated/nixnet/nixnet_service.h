@@ -99,4 +99,11 @@ private:
 
 } // namespace nixnet_grpc
 
+namespace nidevice_grpc {
+namespace converters {
+template <>
+void convert_to_grpc(const _nxTimeLocalNetwork_t& input, nixnet_grpc::TimeLocalNetwork* output);
+} // namespace converters
+} // namespace nidevice_grpc
+
 #endif  // NIXNET_GRPC_SERVICE_H

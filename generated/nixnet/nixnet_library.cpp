@@ -420,7 +420,7 @@ nxStatus_t NiXnetLibrary::ReadState(nxSessionRef_t sessionRef, u32 stateID, u32 
 #endif
 }
 
-nxStatus_t NiXnetLibrary::ReadStateTimeTrigger(nxSessionRef_t sessionRef, f64 timeout, u32 stateSize, void* stateValue)
+nxStatus_t NiXnetLibrary::ReadStateTimeTrigger(nxSessionRef_t sessionRef, f64 timeout, u32 stateSize, _nxTimeLocalNetwork_t* stateValue)
 {
   if (!function_pointers_.ReadStateTimeTrigger) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxReadStateTimeTrigger.");

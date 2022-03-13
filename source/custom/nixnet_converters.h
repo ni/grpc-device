@@ -9,8 +9,6 @@ template <>
 void convert_to_grpc(const _nxFlexRayStats_t& input, nixnet_grpc::FlexRayStats *output);
 template <>
 void convert_to_grpc(const _nxJ1939CommState_t& input, nixnet_grpc::J1939CommState *output);
-template <>
-void convert_to_grpc(const _nxTimeLocalNetwork_t& input, nixnet_grpc::TimeLocalNetwork *output);
 } // namespace converters
 } // namespace nidevice_grpc
 

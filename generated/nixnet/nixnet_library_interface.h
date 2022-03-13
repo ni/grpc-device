@@ -44,7 +44,7 @@ class NiXnetLibraryInterface {
   virtual nxStatus_t ReadSignalSinglePoint(nxSessionRef_t sessionRef, f64 valueBuffer[], u32 sizeOfValueBuffer, nxTimestamp100ns_t timestampBuffer[], u32 sizeOfTimestampBuffer) = 0;
   virtual nxStatus_t ReadSignalWaveform(nxSessionRef_t sessionRef, f64 timeout, nxTimestamp100ns_t* startTime, f64* deltaTime, f64 valueBuffer[], u32 sizeOfValueBuffer, u32* numberOfValuesReturned) = 0;
   virtual nxStatus_t ReadState(nxSessionRef_t sessionRef, u32 stateID, u32 stateSize, void* stateValue, nxStatus_t* fault) = 0;
-  virtual nxStatus_t ReadStateTimeTrigger(nxSessionRef_t sessionRef, f64 timeout, u32 stateSize, void* stateValue) = 0;
+  virtual nxStatus_t ReadStateTimeTrigger(nxSessionRef_t sessionRef, f64 timeout, u32 stateSize, _nxTimeLocalNetwork_t* stateValue) = 0;
   virtual nxStatus_t Start(nxSessionRef_t sessionRef, u32 scope) = 0;
   virtual nxStatus_t Stop(nxSessionRef_t sessionRef, u32 scope) = 0;
   virtual nxStatus_t SystemClose(nxSessionRef_t systemRef) = 0;

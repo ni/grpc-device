@@ -1170,7 +1170,6 @@ functions = {
         'returns': 'nxStatus_t'
     },
     'ReadStateTimeTrigger': {
-        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
@@ -1195,7 +1194,7 @@ functions = {
                     'mechanism': 'passed-in',
                     'value': 'stateSize'
                 },
-                'type': 'void *',
+                'type': 'struct _nxTimeLocalNetwork_t',
                 'grpc_type' : 'TimeLocalNetwork'
             }
         ],
