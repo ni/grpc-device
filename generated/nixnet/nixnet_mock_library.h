@@ -31,6 +31,7 @@ class NiXnetMockLibrary : public nixnet_grpc::NiXnetLibraryInterface {
   MOCK_METHOD(nxStatus_t, DbDeleteObject, (nxDatabaseRef_t dbObjectRef), (override));
   MOCK_METHOD(nxStatus_t, DbDeploy, (const char ipAddress[], const char databaseAlias[], u32 waitForComplete, u32* percentComplete), (override));
   MOCK_METHOD(nxStatus_t, DbFindObject, (nxDatabaseRef_t parentObjectRef, u32 objectClass, const char objectName[], nxDatabaseRef_t* dbObjectRef), (override));
+  MOCK_METHOD(nxStatus_t, DbGetDatabaseList, (const char ipAddress[], u32 sizeofAliasBuffer, char aliasBuffer[], u32 sizeofFilepathBuffer, char filepathBuffer[], u32* numberOfDatabases), (override));
   MOCK_METHOD(nxStatus_t, DbGetDatabaseListSizes, (const char ipAddress[], u32* sizeofAliasBuffer, u32* sizeofFilepathBuffer), (override));
   MOCK_METHOD(nxStatus_t, DbGetProperty, (nxDatabaseRef_t dbObjectRef, u32 propertyID, u32 propertySize, void* propertyValue), (override));
   MOCK_METHOD(nxStatus_t, DbGetPropertySize, (nxDatabaseRef_t dbObjectRef, u32 propertyID, u32* propertySize), (override));

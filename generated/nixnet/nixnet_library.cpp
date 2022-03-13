@@ -35,6 +35,7 @@ NiXnetLibrary::NiXnetLibrary() : shared_library_(kLibraryName)
   function_pointers_.DbDeleteObject = reinterpret_cast<DbDeleteObjectPtr>(shared_library_.get_function_pointer("nxdbDeleteObject"));
   function_pointers_.DbDeploy = reinterpret_cast<DbDeployPtr>(shared_library_.get_function_pointer("nxdbDeploy"));
   function_pointers_.DbFindObject = reinterpret_cast<DbFindObjectPtr>(shared_library_.get_function_pointer("nxdbFindObject"));
+  function_pointers_.DbGetDatabaseList = reinterpret_cast<DbGetDatabaseListPtr>(shared_library_.get_function_pointer("nxdbGetDatabaseList"));
   function_pointers_.DbGetDatabaseListSizes = reinterpret_cast<DbGetDatabaseListSizesPtr>(shared_library_.get_function_pointer("nxdbGetDatabaseListSizes"));
   function_pointers_.DbGetProperty = reinterpret_cast<DbGetPropertyPtr>(shared_library_.get_function_pointer("nxdbGetProperty"));
   function_pointers_.DbGetPropertySize = reinterpret_cast<DbGetPropertySizePtr>(shared_library_.get_function_pointer("nxdbGetPropertySize"));
@@ -241,6 +242,18 @@ nxStatus_t NiXnetLibrary::DbFindObject(nxDatabaseRef_t parentObjectRef, u32 obje
   return nxdbFindObject(parentObjectRef, objectClass, objectName, dbObjectRef);
 #else
   return function_pointers_.DbFindObject(parentObjectRef, objectClass, objectName, dbObjectRef);
+#endif
+}
+
+nxStatus_t NiXnetLibrary::DbGetDatabaseList(const char ipAddress[], u32 sizeofAliasBuffer, char aliasBuffer[], u32 sizeofFilepathBuffer, char filepathBuffer[], u32* numberOfDatabases)
+{
+  if (!function_pointers_.DbGetDatabaseList) {
+    throw nidevice_grpc::LibraryLoadException("Could not find nxdbGetDatabaseList.");
+  }
+#if defined(_MSC_VER)
+  return nxdbGetDatabaseList(ipAddress, sizeofAliasBuffer, aliasBuffer, sizeofFilepathBuffer, filepathBuffer, numberOfDatabases);
+#else
+  return function_pointers_.DbGetDatabaseList(ipAddress, sizeofAliasBuffer, aliasBuffer, sizeofFilepathBuffer, filepathBuffer, numberOfDatabases);
 #endif
 }
 

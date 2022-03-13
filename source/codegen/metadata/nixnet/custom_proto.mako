@@ -127,3 +127,14 @@ message DbSetPropertyRequest {
 message DbSetPropertyResponse {
     int32 status = 1;
 }
+
+message DbGetDatabaseListRequest {
+    string ip_address = 1;    
+}
+
+message DbGetDatabaseListResponse {
+    int32 status = 1;
+    string alias_buffer = 2;
+    string file_path_buffer = 3;
+    uint32 number_of_databases = 4;
+}

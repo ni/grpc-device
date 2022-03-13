@@ -553,7 +553,8 @@ functions = {
     },
     'DbGetDatabaseList': {
         'cname': 'nxdbGetDatabaseList',
-        'codegen_method': 'no',
+        'codegen_method': 'CustomCodeCustomProtoMessage',
+        'include_in_client': False,
         'parameters': [
             {
                 'direction': 'in',

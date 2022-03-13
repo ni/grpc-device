@@ -32,6 +32,7 @@ class NiXnetLibrary : public nixnet_grpc::NiXnetLibraryInterface {
   nxStatus_t DbDeleteObject(nxDatabaseRef_t dbObjectRef);
   nxStatus_t DbDeploy(const char ipAddress[], const char databaseAlias[], u32 waitForComplete, u32* percentComplete);
   nxStatus_t DbFindObject(nxDatabaseRef_t parentObjectRef, u32 objectClass, const char objectName[], nxDatabaseRef_t* dbObjectRef);
+  nxStatus_t DbGetDatabaseList(const char ipAddress[], u32 sizeofAliasBuffer, char aliasBuffer[], u32 sizeofFilepathBuffer, char filepathBuffer[], u32* numberOfDatabases);
   nxStatus_t DbGetDatabaseListSizes(const char ipAddress[], u32* sizeofAliasBuffer, u32* sizeofFilepathBuffer);
   nxStatus_t DbGetProperty(nxDatabaseRef_t dbObjectRef, u32 propertyID, u32 propertySize, void* propertyValue);
   nxStatus_t DbGetPropertySize(nxDatabaseRef_t dbObjectRef, u32 propertyID, u32* propertySize);
@@ -76,6 +77,7 @@ class NiXnetLibrary : public nixnet_grpc::NiXnetLibraryInterface {
   using DbDeleteObjectPtr = decltype(&nxdbDeleteObject);
   using DbDeployPtr = decltype(&nxdbDeploy);
   using DbFindObjectPtr = decltype(&nxdbFindObject);
+  using DbGetDatabaseListPtr = decltype(&nxdbGetDatabaseList);
   using DbGetDatabaseListSizesPtr = decltype(&nxdbGetDatabaseListSizes);
   using DbGetPropertyPtr = decltype(&nxdbGetProperty);
   using DbGetPropertySizePtr = decltype(&nxdbGetPropertySize);
@@ -120,6 +122,7 @@ class NiXnetLibrary : public nixnet_grpc::NiXnetLibraryInterface {
     DbDeleteObjectPtr DbDeleteObject;
     DbDeployPtr DbDeploy;
     DbFindObjectPtr DbFindObject;
+    DbGetDatabaseListPtr DbGetDatabaseList;
     DbGetDatabaseListSizesPtr DbGetDatabaseListSizes;
     DbGetPropertyPtr DbGetProperty;
     DbGetPropertySizePtr DbGetPropertySize;

@@ -625,4 +625,39 @@ inline bool status_ok(int32 status)
   }
 }
 
+//---------------------------------------------------------------------
+//---------------------------------------------------------------------
+::grpc::Status NiXnetService::DbGetDatabaseList(::grpc::ServerContext* context, const DbGetDatabaseListRequest* request, DbGetDatabaseListResponse* response)
+{
+  if (context->IsCancelled()) {
+    return ::grpc::Status::CANCELLED;
+  }
+  try {
+    auto ip_address = request->ip_address().c_str();
+    u32 size_of_alias_buffer{};
+    u32 size_of_file_path_buffer{};
+    auto status = library_->DbGetDatabaseListSizes(ip_address, &size_of_alias_buffer, &size_of_file_path_buffer);
+    if (!status_ok(status)) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+    } 
+
+    std::string alias_buffer(size_of_alias_buffer, '\0');
+    std::string file_path_buffer(size_of_file_path_buffer, '\0');
+    u32 number_of_databases{};
+
+    status = library_->DbGetDatabaseList(ip_address, size_of_alias_buffer, const_cast<char*>(alias_buffer.c_str()), size_of_file_path_buffer, const_cast<char*>(file_path_buffer.c_str()), &number_of_databases);
+    response->set_status(status);
+    if (status_ok(status)) {
+      response->set_alias_buffer(alias_buffer.c_str());
+      response->set_file_path_buffer(file_path_buffer.c_str());
+      response->set_number_of_databases(number_of_databases);    
+    }
+    return ::grpc::Status::OK;
+  }
+  catch (nidevice_grpc::LibraryLoadException& ex) {
+    return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+  }
+}
+
 }  // namespace nixnet_grpc
