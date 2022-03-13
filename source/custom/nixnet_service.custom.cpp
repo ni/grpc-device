@@ -102,7 +102,7 @@ inline bool status_ok(int32 status)
       }
       case string_: {
         std::string property_value = "";
-        property_value.resize(property_size, '0');
+        property_value.resize(property_size, '\0');
         status = library_->GetProperty(session_ref, property_id, property_size, property_value.data());
         if (!status_ok(status)) {
           response->set_status(status);
@@ -125,7 +125,7 @@ inline bool status_ok(int32 status)
       }
       case string_array_: {
         std::string property_value = "";
-        property_value.resize(property_size, '0');
+        property_value.resize(property_size, '\0');
         status = library_->GetProperty(session_ref, property_id, property_size, property_value.data());
         if (!status_ok(status)) {
           response->set_status(status);
@@ -200,7 +200,7 @@ inline bool status_ok(int32 status)
       }
       case string_: {
         std::string property_value = "";
-        property_value.resize(property_size, '0');
+        property_value.resize(property_size, '\0');
         status = library_->GetSubProperty(session_ref, active_index, property_id, property_size, property_value.data());
         if (!status_ok(status)) {
           response->set_status(status);
@@ -294,7 +294,7 @@ inline bool status_ok(int32 status)
       }
       case string_: {
         std::string property_value = "";
-        property_value.resize(property_size, '0');
+        property_value.resize(property_size, '\0');
         status = library_->DbGetProperty(dbobject_ref, property_id, property_size, property_value.data());
         if (!status_ok(status)) {
           response->set_status(status);

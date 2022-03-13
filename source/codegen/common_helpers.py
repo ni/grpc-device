@@ -423,6 +423,7 @@ def filter_proto_rpc_functions(functions):
         if function.get("codegen_method", "public") in functions_for_proto
     ]
 
+
 def filter_proto_rpc_functions_for_message(functions):
     """Return function metadata only for functions to include for generating proto rpc methods."""
     functions_for_proto = {"public", "CustomCode"}
@@ -431,6 +432,7 @@ def filter_proto_rpc_functions_for_message(functions):
         for name, function in functions.items()
         if function.get("codegen_method", "public") in functions_for_proto
     ]
+
 
 def get_attribute_enums_by_type(attributes):
     """Return a dict of attribute data types that use enum, along with set of enums used."""

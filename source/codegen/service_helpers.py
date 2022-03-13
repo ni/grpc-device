@@ -246,9 +246,10 @@ def _create_param(parameter, expand_varargs=True, repeated_parameters=None):
             return "..."
     elif common_helpers.is_array(type):
         array_size = _get_array_param_size(parameter)
-        if type[:-2] == "void": # Having void[] in C++ is not allowed, hence using it as void*
+        if type[:-2] == "void":  # Having void[] in C++ is not allowed, hence using it as void*
             return f"{type[:-2]}* {name}"
-        else: return f"{type[:-2]} {name}[{array_size}]"
+        else:
+            return f"{type[:-2]} {name}[{array_size}]"
     elif common_helpers.is_pointer_parameter(parameter):
         return f"{type}* {name}"
     else:
@@ -286,11 +287,12 @@ def get_output_lookup_values(enum_data):
         out_value_format += f"{{{formated_value}, {i + 1}}},"
     return out_value_format
 
+
 def generate_enum_oneof_selector_map(enum_data):
-    """"Get an initializer list for a std::map that maps enum value value to enum value type."""
+    """ "Get an initializer list for a std::map that maps enum value value to enum value type."""
     id_type_content = ""
     for i, value in enumerate(enum_data["values"]):
-        formated_value = _format_value(value['value'])
+        formated_value = _format_value(value["value"])
         type = value["type"]
         id_type_content += f"{{{formated_value}, {type}_}},"
     return id_type_content
@@ -430,7 +432,8 @@ def get_enums_to_map(functions: dict, enums: dict) -> List[str]:
     function_enums = common_helpers.get_function_enums(functions)
     return [e for e in function_enums if should_generate_mappings(e)]
 
-def generate_mapping_enums_to_type(enums: dict) ->List[str]:
+
+def generate_mapping_enums_to_type(enums: dict) -> List[str]:
     """Get a list of the enums used by functions, for which mappings should be generated."""
     list_of_enums: List[str] = []
     for enum_name in enums.keys():
@@ -438,8 +441,9 @@ def generate_mapping_enums_to_type(enums: dict) ->List[str]:
             list_of_enums.append(enum_name)
     return list_of_enums
 
+
 def get_distinct_types_from_enums(enums: dict) -> str:
-    """return a comma seperated string of different data types used in enums value type field"""
+    """Return a comma seperated string of different data types used in enums value type field."""
     s = ""
     distinct_type = set()
     for enum_name in enums.keys():
@@ -450,6 +454,7 @@ def get_distinct_types_from_enums(enums: dict) -> str:
                     s += f"{type}_, "
                     distinct_type.add(type)
     return s
+
 
 def get_bitfield_value_to_name_mapping(parameter: dict, enums: dict) -> Dict[int, str]:
     """Get a mapping from bitfield values to the corresponding C++ enum value constants."""

@@ -177,11 +177,11 @@ def streaming_response_type(response_type: str) -> str:
     """Wrap the given response type with a reader for streaming functions."""
     return f"std::unique_ptr<grpc::ClientReader<{response_type}>>"
 
-def _filter_functions_to_include_in_client(functions: dict) -> dict:
-    """include only those functions which dont have 'include_in_client' tag in metadata"""
+
+def filter_functions_to_include_in_client(functions: dict) -> dict:
+    """Include only those functions which dont have 'include_in_client' tag in metadata."""
     filtered_functions = {}
     for func_name in functions.keys():
-        if functions[func_name].get('include_in_client', True) == True:
+        if functions[func_name].get("include_in_client", True) is True:
             filtered_functions[func_name] = functions[func_name]
     return filtered_functions
-  
