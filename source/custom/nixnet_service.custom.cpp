@@ -133,7 +133,7 @@ inline bool status_ok(int32 status)
         break;
       }
       case db_ref_: {
-        auto initiating_session_id = nx_database_ref_t_resource_repository_->access_session_id(session_ref_grpc_session.id(), session_ref_grpc_session.name());
+        auto initiating_session_id = session_repository_->access_session_id(session_ref_grpc_session.id(), session_ref_grpc_session.name());
         auto init_lambda = [&]() {
           nxDatabaseRef_t property_value;
           status = library_->GetProperty(session_ref, property_id, property_size, &property_value);
@@ -149,7 +149,32 @@ inline bool status_ok(int32 status)
         break;
       }
       case db_ref_array_: {
-
+        int32_t number_of_elements = property_size / sizeof(nxDatabaseRef_t);
+        auto initiating_session_id = session_repository_->access_session_id(session_ref_grpc_session.id(), session_ref_grpc_session.name());
+        std::vector<nxDatabaseRef_t> property_value_vector(number_of_elements, 0U);
+        nxDatabaseRef_t* property_value = static_cast<nxDatabaseRef_t*>(property_value_vector.data());
+        status = library_->GetProperty(session_ref, property_id, property_size, property_value);
+        response->mutable_db_ref_array()->mutable_db_ref()->Clear();
+        response->mutable_db_ref_array()->mutable_db_ref()->Reserve(number_of_elements);
+        std::transform(
+          property_value_vector.begin(),
+          property_value_vector.end(),
+          google::protobuf::RepeatedFieldBackInserter(response->mutable_db_ref_array()->mutable_db_ref()),
+          [&](auto x) {
+            auto init_lambda = [&]() {
+              return std::make_tuple(status, x);
+            };
+            uint32_t session_id{};
+            status = nx_database_ref_t_resource_repository_->add_dependent_session("", init_lambda, initiating_session_id, session_id);
+            nidevice_grpc::Session dependent_session{};
+            dependent_session.set_id(session_id);
+            return dependent_session;
+          });
+        if (!status_ok(status)) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        break;
       }
     }
     response->set_status(status);
@@ -243,7 +268,7 @@ inline bool status_ok(int32 status)
   }
   try {
     auto dbobject_ref_grpc_session = request->dbobject_ref();
-    nxDatabaseRef_t dbobject_ref = session_repository_->access_session(dbobject_ref_grpc_session.id(), dbobject_ref_grpc_session.name());
+    nxDatabaseRef_t dbobject_ref = nx_database_ref_t_resource_repository_->access_session(dbobject_ref_grpc_session.id(), dbobject_ref_grpc_session.name());
     u32 property_id;
     switch (request->dbproperty_id_enum_case()) {
       case nixnet_grpc::DbGetPropertyRequest::DbpropertyIdEnumCase::kPropertyId: {
@@ -340,6 +365,50 @@ inline bool status_ok(int32 status)
         }
         response->set_u8_array(property_value);
       }
+      case db_ref_: {
+        auto initiating_session_id = nx_database_ref_t_resource_repository_->access_session_id(dbobject_ref_grpc_session.id(), dbobject_ref_grpc_session.name());
+        auto init_lambda = [&]() {
+          nxDatabaseRef_t property_value;
+          status = library_->GetProperty(dbobject_ref, property_id, property_size, &property_value);
+          return std::make_tuple(status, property_value);
+        };
+        uint32_t session_id = 0;
+        status = nx_database_ref_t_resource_repository_->add_dependent_session("", init_lambda, initiating_session_id, session_id);
+        if (!status_ok(status)) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        response->mutable_db_ref()->set_id(session_id);
+        break;
+      }
+      case db_ref_array_: {
+        int32_t number_of_elements = property_size / sizeof(nxDatabaseRef_t);
+        auto initiating_session_id = nx_database_ref_t_resource_repository_->access_session_id(dbobject_ref_grpc_session.id(), dbobject_ref_grpc_session.name());
+        std::vector<nxDatabaseRef_t> property_value_vector(number_of_elements, 0U);
+        nxDatabaseRef_t* property_value = static_cast<nxDatabaseRef_t*>(property_value_vector.data());
+        status = library_->GetProperty(dbobject_ref, property_id, property_size, property_value);
+        response->mutable_db_ref_array()->mutable_db_ref()->Clear();
+        response->mutable_db_ref_array()->mutable_db_ref()->Reserve(number_of_elements);
+        std::transform(
+          property_value_vector.begin(),
+          property_value_vector.end(),
+          google::protobuf::RepeatedFieldBackInserter(response->mutable_db_ref_array()->mutable_db_ref()),
+          [&](auto x) {
+            auto init_lambda = [&]() {
+              return std::make_tuple(status, x);
+            };
+            uint32_t session_id{};
+            status = nx_database_ref_t_resource_repository_->add_dependent_session("", init_lambda, initiating_session_id, session_id);
+            nidevice_grpc::Session dependent_session{};
+            dependent_session.set_id(session_id);
+            return dependent_session;
+          });
+        if (!status_ok(status)) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        break;
+      }
     }
     response->set_status(status);
     return ::grpc::Status::OK;
@@ -430,7 +499,7 @@ inline bool status_ok(int32 status)
       }
       case string_: {
         std::string property_value = request->str();
-        status = library_->SetProperty(session_ref, property_id, property_size, const_cast<char*>(property_value.c_str()));
+        status = library_->SetProperty(session_ref, property_id, (u32)property_value.size(), const_cast<char*>(property_value.c_str()));
         if (!status_ok(status)) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -439,7 +508,8 @@ inline bool status_ok(int32 status)
       }
       case u32_array_: {
         u32* property_value = const_cast<u32*>(request->u32_array().u32_array().data());
-        status = library_->SetProperty(session_ref, property_id, property_size, property_value);
+        u32 property_value_size = (u32)request->u32_array().u32_array().size();
+        status = library_->SetProperty(session_ref, property_id, property_value_size*sizeof(u32), property_value);
         if (!status_ok(status)) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -448,7 +518,35 @@ inline bool status_ok(int32 status)
       }
       case string_array_: {
         std::string property_value = request->string_array();
-        status = library_->SetProperty(session_ref, property_id, property_size, const_cast<char*>(property_value.c_str()));
+        status = library_->SetProperty(session_ref, property_id, (u32)property_value.size(), const_cast<char*>(property_value.c_str()));
+        if (!status_ok(status)) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        break;
+      }
+      case db_ref_: {
+        auto property_value = request->db_ref();
+        nxDatabaseRef_t property_value_ref = nx_database_ref_t_resource_repository_->access_session(property_value.id(), property_value.name());
+        status = library_->SetProperty(session_ref, property_id, property_size, &property_value_ref);
+        if (!status_ok(status)) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        break;
+      }
+      case db_ref_array_: {
+        int32_t number_of_elements = request->db_ref_array().db_ref().size();
+        std::vector<nxDatabaseRef_t> property_value(number_of_elements, 0U);
+        std::transform(
+          request->db_ref_array().db_ref().begin(),
+          request->db_ref_array().db_ref().begin() + number_of_elements,
+          property_value.rbegin(),
+          [&](auto x) {
+            nxDatabaseRef_t db_ref = nx_database_ref_t_resource_repository_->access_session(x.id(), x.name());
+            return db_ref;
+          });
+        status = library_->SetProperty(session_ref, property_id, number_of_elements*sizeof(nxDatabaseRef_t), static_cast<nxDatabaseRef_t*>(property_value.data()));
         if (!status_ok(status)) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -457,7 +555,7 @@ inline bool status_ok(int32 status)
       }
     }
     response->set_status(status);
-    return ::grpc::Status::OK;
+    return ::grpc::Status::OK; 
   }
   catch (nidevice_grpc::LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -519,7 +617,7 @@ inline bool status_ok(int32 status)
       }
       case string_: {
         std::string property_value = request->str();
-        status = library_->SetSubProperty(session_ref, active_index, property_id, property_size, const_cast<char*>(property_value.c_str()));
+        status = library_->SetSubProperty(session_ref, active_index, property_id, (u32)property_value.size(), const_cast<char*>(property_value.c_str()));
         if (!status_ok(status)) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -607,7 +705,7 @@ inline bool status_ok(int32 status)
       }
       case string_: {
         std::string property_value = request->str();
-        status = library_->DbSetProperty(dbobject_ref, property_id, property_size, const_cast<char*>(property_value.c_str()));
+        status = library_->DbSetProperty(dbobject_ref, property_id, (u32)property_value.size(), const_cast<char*>(property_value.c_str()));
         if (!status_ok(status)) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -616,7 +714,8 @@ inline bool status_ok(int32 status)
       }
       case u32_array_: {
         u32* property_value = const_cast<u32*>(request->u32_array().u32_array().data());
-        status = library_->DbSetProperty(dbobject_ref, property_id, property_size, property_value);
+        u32 property_value_buffer_size = (u32)(request->u32_array().u32_array().size())*sizeof(u32);
+        status = library_->DbSetProperty(dbobject_ref, property_id, property_value_buffer_size, property_value);
         if (!status_ok(status)) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -625,11 +724,40 @@ inline bool status_ok(int32 status)
       }
       case u8_array_: {
         u8* property_value = (u8*)request->u8_array().c_str();
-        status = library_->DbSetProperty(dbobject_ref, property_id, property_size, property_value);
+        u32 property_value_buffer_size = (u32)(request->u8_array().size());
+        status = library_->DbSetProperty(dbobject_ref, property_id, property_value_buffer_size, property_value);
         if (!status_ok(status)) {
           response->set_status(status);
           return ::grpc::Status::OK;
         }
+      }
+      case db_ref_: {
+        auto property_value = request->db_ref();
+        nxDatabaseRef_t property_value_ref = nx_database_ref_t_resource_repository_->access_session(property_value.id(), property_value.name());
+        status = library_->SetProperty(dbobject_ref, property_id, property_size, &property_value_ref);
+        if (!status_ok(status)) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        break;
+      }
+      case db_ref_array_: {
+        int32_t number_of_elements = request->db_ref_array().db_ref().size();
+        std::vector<nxDatabaseRef_t> property_value(number_of_elements, 0U);
+        std::transform(
+          request->db_ref_array().db_ref().begin(),
+          request->db_ref_array().db_ref().begin() + number_of_elements,
+          property_value.rbegin(),
+          [&](auto x) {
+            nxDatabaseRef_t db_ref = nx_database_ref_t_resource_repository_->access_session(x.id(), x.name());
+            return db_ref;
+          });
+        status = library_->SetProperty(dbobject_ref, property_id, number_of_elements*sizeof(nxDatabaseRef_t), static_cast<nxDatabaseRef_t*>(property_value.data()));
+        if (!status_ok(status)) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        break;
       }
     }
     response->set_status(status);

@@ -45,6 +45,8 @@ message SetPropertyRequest {
         double f64_scalar = 9;
         string string_array = 10;
         U32Array u32_array = 11;
+        nidevice_grpc.Session db_ref = 12;
+        DbRefArray db_ref_array = 13;
     }
 }
 
@@ -88,6 +90,8 @@ message DbGetPropertyResponse {
         double f64_scalar = 6;
         U32Array u32_array = 7;
         bytes u8_array = 8;
+        nidevice_grpc.Session db_ref = 9;
+        DbRefArray db_ref_array = 10;
     }
 }
 
@@ -123,6 +127,8 @@ message DbSetPropertyRequest {
         double f64_scalar = 8;
         U32Array u32_array = 9;
         bytes u8_array = 10;
+        nidevice_grpc.Session db_ref = 11;
+        DbRefArray db_ref_array = 12;
     }
 }
 
