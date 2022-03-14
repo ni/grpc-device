@@ -90,7 +90,7 @@ connect_terminals(const StubPtr& stub, const nidevice_grpc::Session& session_ref
 }
 
 ConvertByteArrayToFramesSinglePointResponse
-convert_byte_array_to_frames_single_point(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const pb::string& value_buffer, const pb::uint32& size_of_buffer)
+convert_byte_array_to_frames_single_point(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const pb::string& value_buffer, const pb::uint32& size_of_buffer, const simple_variant<FrameType, pb::uint32>& frame_type)
 {
   ::grpc::ClientContext context;
 
@@ -98,6 +98,14 @@ convert_byte_array_to_frames_single_point(const StubPtr& stub, const nidevice_gr
   request.mutable_session_ref()->CopyFrom(session_ref);
   request.set_value_buffer(value_buffer);
   request.set_size_of_buffer(size_of_buffer);
+  const auto frame_type_ptr = frame_type.get_if<FrameType>();
+  const auto frame_type_raw_ptr = frame_type.get_if<pb::uint32>();
+  if (frame_type_ptr) {
+    request.set_frame_type(*frame_type_ptr);
+  }
+  else if (frame_type_raw_ptr) {
+    request.set_frame_type_raw(*frame_type_raw_ptr);
+  }
 
   auto response = ConvertByteArrayToFramesSinglePointResponse{};
 
@@ -127,7 +135,7 @@ convert_frames_to_signals_single_point(const StubPtr& stub, const nidevice_grpc:
 }
 
 ConvertSignalsToFramesSinglePointResponse
-convert_signals_to_frames_single_point(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const std::vector<double>& value_buffer, const pb::uint32& size_of_buffer)
+convert_signals_to_frames_single_point(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const std::vector<double>& value_buffer, const pb::uint32& size_of_buffer, const simple_variant<FrameType, pb::uint32>& frame_type)
 {
   ::grpc::ClientContext context;
 
@@ -135,6 +143,14 @@ convert_signals_to_frames_single_point(const StubPtr& stub, const nidevice_grpc:
   request.mutable_session_ref()->CopyFrom(session_ref);
   copy_array(value_buffer, request.mutable_value_buffer());
   request.set_size_of_buffer(size_of_buffer);
+  const auto frame_type_ptr = frame_type.get_if<FrameType>();
+  const auto frame_type_raw_ptr = frame_type.get_if<pb::uint32>();
+  if (frame_type_ptr) {
+    request.set_frame_type(*frame_type_ptr);
+  }
+  else if (frame_type_raw_ptr) {
+    request.set_frame_type_raw(*frame_type_raw_ptr);
+  }
 
   auto response = ConvertSignalsToFramesSinglePointResponse{};
 

@@ -847,6 +847,15 @@ enum WriteState {
   WRITE_STATE_STATE_ETHERNET_WAKE = 1245317;
 }
 
+enum FrameType {
+  FRAME_TYPE_UNSPECIFIED = 0;
+  FRAME_TYPE_CAN = 1;
+  FRAME_TYPE_LIN = 2;
+  FRAME_TYPE_FLEX_RAY = 3;
+  FRAME_TYPE_J1939 = 4;
+  FRAME_TYPE_ENET = 5;
+}
+
 message Frame {
   uint64 timestamp = 1;
   uint32 identifier = 2;
@@ -872,39 +881,6 @@ message FrameBuffer {
     Frame j1939 = 4;
     EnetFrame enet = 5;
   }
-}
-
-message ConvertByteArrayToFramesSinglePointRequest {
-  nidevice_grpc.Session session_ref = 1;
-  bytes value_buffer = 2;
-  uint32 size_of_buffer = 3;
-  FrameType frame_type = 4;
-}
-
-message ConvertByteArrayToFramesSinglePointResponse {
-  int32 status = 1;
-  repeated FrameBuffer frame_buffer = 2;
-}
-
-message ConvertSignalsToFramesSinglePointRequest {
-  nidevice_grpc.Session session_ref = 1;
-  repeated double value_buffer = 2;
-  uint32 size_of_buffer = 3;
-  FrameType frame_type = 4;
-}
-
-message ConvertSignalsToFramesSinglePointResponse {
-  int32 status = 1;
-  repeated FrameBuffer frame_buffer = 2;
-}
-
-enum FrameType {
-  FRAME_TYPE_UNSPECIFIED = 0;
-  FRAME_TYPE_CAN = 1;
-  FRAME_TYPE_LIN = 2;
-  FRAME_TYPE_FLEX_RAY = 3;
-  FRAME_TYPE_J1939 = 4;
-  FRAME_TYPE_ENET = 5;
 }
 
 message BlinkRequest {
@@ -943,6 +919,21 @@ message ConnectTerminalsResponse {
   int32 status = 1;
 }
 
+message ConvertByteArrayToFramesSinglePointRequest {
+  nidevice_grpc.Session session_ref = 1;
+  bytes value_buffer = 2;
+  uint32 size_of_buffer = 3;
+  oneof frame_type_enum {
+    FrameType frame_type = 4;
+    uint32 frame_type_raw = 5;
+  }
+}
+
+message ConvertByteArrayToFramesSinglePointResponse {
+  int32 status = 1;
+  repeated FrameBuffer buffer = 2;
+}
+
 message ConvertFramesToSignalsSinglePointRequest {
   nidevice_grpc.Session session_ref = 1;
   repeated FrameBuffer frame_buffer = 2;
@@ -954,6 +945,21 @@ message ConvertFramesToSignalsSinglePointResponse {
   int32 status = 1;
   repeated double value_buffer = 2;
   repeated uint64 timestamp_buffer = 3;
+}
+
+message ConvertSignalsToFramesSinglePointRequest {
+  nidevice_grpc.Session session_ref = 1;
+  repeated double value_buffer = 2;
+  uint32 size_of_buffer = 3;
+  oneof frame_type_enum {
+    FrameType frame_type = 4;
+    uint32 frame_type_raw = 5;
+  }
+}
+
+message ConvertSignalsToFramesSinglePointResponse {
+  int32 status = 1;
+  repeated FrameBuffer buffer = 2;
 }
 
 message ConvertTimestamp100nsTo1nsRequest {

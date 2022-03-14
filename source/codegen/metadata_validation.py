@@ -59,6 +59,7 @@ PARAM_SCHEMA = Schema(
         Optional("grpc_raw_field_number"): And(str, Use(int)),
         Optional("type_in_documentation"): str,
         Optional("include_in_proto"): bool,
+        Optional("proto_only"): bool,
         Optional("is_session_handle"): bool,
         Optional("is_session_name"): bool,
         Optional("repeating_argument"): bool,

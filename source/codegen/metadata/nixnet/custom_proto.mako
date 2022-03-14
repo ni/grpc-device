@@ -24,36 +24,3 @@ message FrameBuffer {
     EnetFrame enet = 5;
   }
 }
-
-message ConvertByteArrayToFramesSinglePointRequest {
-  nidevice_grpc.Session session_ref = 1;
-  bytes value_buffer = 2;
-  uint32 size_of_buffer = 3;
-  FrameType frame_type = 4;
-}
-
-message ConvertByteArrayToFramesSinglePointResponse {
-  int32 status = 1;
-  repeated FrameBuffer frame_buffer = 2;
-}
-
-message ConvertSignalsToFramesSinglePointRequest {
-  nidevice_grpc.Session session_ref = 1;
-  repeated double value_buffer = 2;
-  uint32 size_of_buffer = 3;
-  FrameType frame_type = 4;
-}
-
-message ConvertSignalsToFramesSinglePointResponse {
-  int32 status = 1;
-  repeated FrameBuffer frame_buffer = 2;
-}
-
-enum FrameType {
-  FRAME_TYPE_UNSPECIFIED = 0;
-  FRAME_TYPE_CAN = 1;
-  FRAME_TYPE_LIN = 2;
-  FRAME_TYPE_FLEX_RAY = 3;
-  FRAME_TYPE_J1939 = 4;
-  FRAME_TYPE_ENET = 5;
-}

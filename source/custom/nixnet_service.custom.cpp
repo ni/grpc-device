@@ -45,7 +45,7 @@ void convert_to_grpc(const std::string& input, google::protobuf::RepeatedPtrFiel
     auto status = library_->ConvertByteArrayToFramesSinglePoint(session_ref, value_buffer, size_of_value_buffer, (void*)buffer.c_str(), size_of_buffer, &number_of_bytes_returned);
     response->set_status(status);
     if (status == 0) {
-      convert_to_grpc(buffer, response->mutable_frame_buffer(), number_of_bytes_returned, frame_type);
+      convert_to_grpc(buffer, response->mutable_buffer(), number_of_bytes_returned, frame_type);
     }
     return ::grpc::Status::OK;
   }
@@ -74,7 +74,7 @@ void convert_to_grpc(const std::string& input, google::protobuf::RepeatedPtrFiel
     auto status = library_->ConvertSignalsToFramesSinglePoint(session_ref, value_buffer, size_of_value_buffer, (void*)buffer.c_str(), size_of_buffer, &number_of_bytes_returned);
     response->set_status(status);
     if (status == 0) {
-      convert_to_grpc(buffer, response->mutable_frame_buffer(), number_of_bytes_returned, frame_type);
+      convert_to_grpc(buffer, response->mutable_buffer(), number_of_bytes_returned, frame_type);
     }
     return ::grpc::Status::OK;
   }

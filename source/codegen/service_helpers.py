@@ -196,7 +196,7 @@ def create_params(parameters, expand_varargs=True):
         parameters[-1]
     ) and common_helpers.is_repeated_varargs_parameter(parameters[-2]):
         parameters = parameters[:-1]
-    return ", ".join(_create_param(p, expand_varargs, repeated_parameters) for p in parameters)
+    return ", ".join(_create_param(p, expand_varargs, repeated_parameters) for p in parameters if not p.get("proto_only", False))
 
 
 def _get_array_param_size(parameter) -> str:

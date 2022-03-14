@@ -193,7 +193,7 @@ convert_signal_response = client.ConvertSignalsToFramesSinglePoint(
 )
 
 
-for f in convert_signal_response.frame_buffer:
+for f in convert_signal_response.buffer:
    print(f.can.identifier)
    print(f.can.payload)
    print(len(f.can.payload))
