@@ -233,11 +233,11 @@ message SelectResponse {
 message SetSockOptRequest {
   nidevice_grpc.Session socket = 1;
   int32 level = 2;
-  SockOptData opt_data = 3;
   oneof optname_enum {
-    OptName optname = 4;
-    int32 optname_raw = 5;
+    OptName optname = 3;
+    int32 optname_raw = 4;
   }
+  SockOptData opt_data = 5;
 }
 
 message SetSockOptResponse {

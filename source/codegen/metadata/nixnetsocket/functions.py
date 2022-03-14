@@ -385,17 +385,17 @@ functions = {
             },
             {
                 'direction': 'in',
+                'name': 'optname',
+                'type': 'int32_t',
+                'enum': 'OptName'
+            },
+            {
+                'direction': 'in',
                 'name': 'opt_data',
                 'grpc_type': 'SockOptData',
                 'supports_standard_copy_convert': True,
                 'proto_only': True,
                 'type': 'SockOptDataInputConverter'
-            },
-            {
-                'direction': 'in',
-                'name': 'optname',
-                'type': 'int32_t',
-                'enum': 'OptName'
             },
             {
                 'direction': 'in',
