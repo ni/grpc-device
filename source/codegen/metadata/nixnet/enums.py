@@ -92,7 +92,7 @@ enums = {
         'values': [
             {
                 'name': 'DATABASE_CLST_REFS',
-                'type': 'ref_array',
+                'type': 'db_ref_array',
                 'value': 100663298
             },
             {
@@ -152,12 +152,12 @@ enums = {
             },
             {
                 'name': 'CLST_DATABASE_REF',
-                'type': 'ref',
+                'type': 'db_ref',
                 'value': 83951618
             },
             {
                 'name': 'CLST_ECU_REFS',
-                'type': 'ref_array',
+                'type': 'db_ref_array',
                 'value': 100728835
             },
             {
@@ -352,12 +352,12 @@ enums = {
             },
             {
                 'name': 'CLST_FRM_REFS',
-                'type': 'ref_array',
+                'type': 'db_ref_array',
                 'value': 100728836
             },
             {
                 'name': 'CLST_LIN_SCHEDULES',
-                'type': 'ref_array',
+                'type': 'db_ref_array',
                 'value': 100728944
             },
             {
@@ -372,7 +372,7 @@ enums = {
             },
             {
                 'name': 'CLST_PDU_REFS',
-                'type': 'ref_array',
+                'type': 'db_ref_array',
                 'value': 100728840
             },
             {
@@ -387,7 +387,7 @@ enums = {
             },
             {
                 'name': 'CLST_SIG_REFS',
-                'type': 'ref_array',
+                'type': 'db_ref_array',
                 'value': 100728839
             },
             {
@@ -417,7 +417,7 @@ enums = {
             },
             {
                 'name': 'FRM_CLUSTER_REF',
-                'type': 'ref',
+                'type': 'db_ref',
                 'value': 84017153
             },
             {
@@ -497,7 +497,7 @@ enums = {
             },
             {
                 'name': 'FRM_MUX_DATA_MUX_SIG_REF',
-                'type': 'ref',
+                'type': 'db_ref',
                 'value': 84017217
             },
             {
@@ -507,12 +507,12 @@ enums = {
             },
             {
                 'name': 'FRM_MUX_STATIC_SIG_REFS',
-                'type': 'ref_array',
+                'type': 'db_ref_array',
                 'value': 100794434
             },
             {
                 'name': 'FRM_MUX_SUBFRAME_REFS',
-                'type': 'ref_array',
+                'type': 'db_ref_array',
                 'value': 100794435
             },
             {
@@ -532,7 +532,7 @@ enums = {
             },
             {
                 'name': 'FRM_PDU_REFS',
-                'type': 'ref_array',
+                'type': 'db_ref_array',
                 'value': 100794464
             },
             {
@@ -542,7 +542,7 @@ enums = {
             },
             {
                 'name': 'FRM_SIG_REFS',
-                'type': 'ref_array',
+                'type': 'db_ref_array',
                 'value': 100794376
             },
             {
@@ -577,7 +577,7 @@ enums = {
             },
             {
                 'name': 'SIG_FRAME_REF',
-                'type': 'ref',
+                'type': 'parent_ref',
                 'value': 84082693
             },
             {
@@ -607,7 +607,7 @@ enums = {
             },
             {
                 'name': 'SIG_MUX_SUBFRM_REF',
-                'type': 'ref',
+                'type': 'db_ref',
                 'value': 84082739
             },
             {
@@ -627,7 +627,7 @@ enums = {
             },
             {
                 'name': 'SIG_PDU_REF',
-                'type': 'ref',
+                'type': 'parent_ref',
                 'value': 84082705
             },
             {
@@ -657,12 +657,12 @@ enums = {
             },
             {
                 'name': 'SUBFRM_DYN_SIG_REFS',
-                'type': 'ref_array',
+                'type': 'db_ref_array',
                 'value': 100925441
             },
             {
                 'name': 'SUBFRM_FRM_REF',
-                'type': 'ref',
+                'type': 'db_ref',
                 'value': 84148226
             },
             {
@@ -682,12 +682,12 @@ enums = {
             },
             {
                 'name': 'SUBFRM_PDU_REF',
-                'type': 'ref',
+                'type': 'db_ref',
                 'value': 84148229
             },
             {
                 'name': 'ECU_CLST_REF',
-                'type': 'ref',
+                'type': 'db_ref',
                 'value': 84213761
             },
             {
@@ -712,7 +712,7 @@ enums = {
             },
             {
                 'name': 'ECU_FLEX_RAY_STARTUP_FRAME_REF',
-                'type': 'ref',
+                'type': 'db_ref',
                 'value': 84213777
             },
             {
@@ -727,12 +727,12 @@ enums = {
             },
             {
                 'name': 'ECU_RX_FRM_REFS',
-                'type': 'ref_array',
+                'type': 'db_ref_array',
                 'value': 100990979
             },
             {
                 'name': 'ECU_TX_FRM_REFS',
-                'type': 'ref_array',
+                'type': 'db_ref_array',
                 'value': 100990980
             },
             {
@@ -1752,7 +1752,7 @@ enums = {
             },
             {
                 'name': 'SESSION_INTF_OUT_STRM_LIST',
-                'type': 'ref_array',
+                'type': 'db_ref_array',
                 'value': 101711889
             },
             {
@@ -1827,7 +1827,7 @@ enums = {
             },
             {
                 'name': 'SESSION_J1939_ECU',
-                'type': 'ref',
+                'type': 'db_ref',
                 'value': 84934803
             },
             {
@@ -1917,37 +1917,37 @@ enums = {
             },
             {
                 'name': 'SYS_DEV_REFS',
-                'type': 'ref_array',
+                'type': 'dev_ref_array',
                 'value': 101777410
             },
             {
                 'name': 'SYS_INTF_REFS',
-                'type': 'ref_array',
+                'type': 'intf_ref_array',
                 'value': 101777411
             },
             {
                 'name': 'SYS_INTF_REFS_ALL',
-                'type': 'ref_array',
+                'type': 'intf_ref_array',
                 'value': 101777421
             },
             {
                 'name': 'SYS_INTF_REFS_CAN',
-                'type': 'ref_array',
+                'type': 'intf_ref_array',
                 'value': 101777412
             },
             {
                 'name': 'SYS_INTF_REFS_ETHERNET',
-                'type': 'ref_array',
+                'type': 'intf_ref_array',
                 'value': 101777409
             },
             {
                 'name': 'SYS_INTF_REFS_FLEX_RAY',
-                'type': 'ref_array',
+                'type': 'intf_ref_array',
                 'value': 101777413
             },
             {
                 'name': 'SYS_INTF_REFS_LIN',
-                'type': 'ref_array',
+                'type': 'intf_ref_array',
                 'value': 101777415
             },
             {
@@ -1982,12 +1982,12 @@ enums = {
             },
             {
                 'name': 'DEV_INTF_REFS',
-                'type': 'ref_array',
+                'type': 'intf_ref_array',
                 'value': 101842946
             },
             {
                 'name': 'DEV_INTF_REFS_ALL',
-                'type': 'ref_array',
+                'type': 'intf_ref_array',
                 'value': 101842952
             },
             {
@@ -2032,7 +2032,7 @@ enums = {
             },
             {
                 'name': 'INTF_DEV_REF',
-                'type': 'ref',
+                'type': 'dev_ref',
                 'value': 85131265
             },
             {

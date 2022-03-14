@@ -2,8 +2,8 @@ message U32Array {
     repeated uint32 u32_array = 1;
 }
 
-message RefArray {
-    repeated nidevice_grpc.Session ref = 1;
+message DbRefArray {
+    repeated nidevice_grpc.Session db_ref = 1;
 }
 
 message GetPropertyRequest {
@@ -25,6 +25,8 @@ message GetPropertyResponse {
         double f64_scalar = 7;
         string string_array = 8;
         U32Array u32_array = 9;
+        nidevice_grpc.Session db_ref = 10;
+        DbRefArray db_ref_array = 11;
     }
 }
 
