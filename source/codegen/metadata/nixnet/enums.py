@@ -87,7 +87,7 @@ enums = {
             }
         ]
     },
-    'DBProperty': {
+    'DBProperties': {
         'values': [
             {
                 'name': 'DATABASE_CLST_REFS',
@@ -928,7 +928,7 @@ enums = {
             }
         ]
     },
-    'Property': {
+    'Properties': {
         'values': [
             {
                 'name': 'SESSION_APPLICATION_PROTOCOL',
@@ -2709,7 +2709,7 @@ enums = {
             }
         ]
     },
-    'SubProperty': {
+    'SubProperties': {
         'values': [
             {
                 'name': 'SESSION_SUB_CAN_START_TIME_OFF',

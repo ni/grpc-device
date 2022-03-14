@@ -628,7 +628,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'DBProperty',
+                'enum': 'DBProperties',
                 'name': 'propertyID',
                 'type': 'u32'
             },
@@ -656,7 +656,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'DBProperty',
+                'enum': 'DBProperties',
                 'name': 'propertyID',
                 'type': 'u32'
             },
@@ -761,7 +761,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'DBProperty',
+                'enum': 'DBProperties',
                 'name': 'propertyID',
                 'type': 'u32'
             },
@@ -857,7 +857,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'Property',
+                'enum': 'Properties',
                 'name': 'propertyID',
                 'type': 'u32'
             },
@@ -884,7 +884,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'Property',
+                'enum': 'Properties',
                 'name': 'propertyID',
                 'type': 'u32'
             },
@@ -911,7 +911,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'SubProperty',
+                'enum': 'SubProperties',
                 'name': 'propertyID',
                 'type': 'u32'
             },
@@ -943,7 +943,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'SubProperty',
+                'enum': 'SubProperties',
                 'name': 'propertyID',
                 'type': 'u32'
             },
@@ -970,7 +970,7 @@ functions = {
                     'mechanism': 'passed-in',
                     'value': 'sizeOfBuffer'
                 },
-                'type': 'u8[]'
+                'type': 'void[]'
             },
             {
                 'direction': 'in',
@@ -1210,7 +1210,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'Property',
+                'enum': 'Properties',
                 'name': 'propertyID',
                 'type': 'u32'
             },
@@ -1242,7 +1242,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'SubProperty',
+                'enum': 'SubProperties',
                 'name': 'propertyID',
                 'type': 'u32'
             },
