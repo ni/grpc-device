@@ -2,7 +2,7 @@
 import grpc
 import nixnet_pb2 as nixnet_types
 import nixnet_pb2_grpc as grpc_nixnet
-import msvcrt
+import getch
 
 # Parameters
 INTERFACE = "FlexRay2"
@@ -29,7 +29,7 @@ key_SlotId = 1
 status_t = 0
 value_Buffer = [0] * NUM_SIGNALS
 timeStamp_Buffer = [None] * NUM_SIGNALS
-channel = grpc.insecure_channel(f"localhost:31764")
+channel = grpc.insecure_channel(f"10.164.75.8:31763")
 client = grpc_nixnet.NiXnetStub(channel)
 
 # Display parameters that will be used for the example.
@@ -54,21 +54,19 @@ else:
     displayerror_andexit(response.status,"CreateSession")
 
 #Set the Key Slot
-# TO-DO set property not implemented yet
-status_t = client.SetProperty(
-    m_SessionRef,
-    nixnet_types.PROPERTIES_SESSION_INTF_FLEX_RAY_KEY_SLOT_ID,
-    key_SlotId.__sizeof__(), 
-    key_SlotId
-    )
+response = client.SetProperty(
+    nixnet_types.SetPropertyRequest(
+        session_ref = m_SessionRef,
+        property_id = nixnet_types.PROPERTY_SESSION_INTF_FLEX_RAY_KEY_SLOT_ID,
+        u32_scalar = key_SlotId
+    ))
 
-if status_t != SUCCESS:
-    displayerror_andexit(status_t, "SetProperty")
+if response.status != SUCCESS:
+    displayerror_andexit(response.status, "SetProperty")
 
 print("\nPress any key to transmit new signal values or q to quit\n")
   
-while msvcrt.getwch() != 'q':
-
+while not (getch.getch()).decode('UTF-8') == 'q':
     # Update the signal data
     response = client.ReadSignalSinglePoint(
         nixnet_types.ReadSignalSinglePointRequest(

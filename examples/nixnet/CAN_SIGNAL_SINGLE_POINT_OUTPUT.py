@@ -2,7 +2,7 @@
 import grpc
 import nixnet_pb2 as nixnet_types
 import nixnet_pb2_grpc as grpc_nixnet
-import msvcrt
+import getch
 
 
 # Parameters
@@ -23,7 +23,6 @@ def displayerror_andexit(Status, Source):
     print("\nExecution stopped.\nPress any key to quit\n")
 
     client.Clear(nixnet_types.ClearRequest(session_ref = m_SessionRef))
-    msvcrt.getch()
     exit(1)
 
 i = 0
@@ -54,7 +53,7 @@ else:
     
 print("\nPress any key to transmit new signal values or q to quit\n")
 
-while msvcrt.getwch() != 'q':
+while not (getch.getch()).decode('UTF-8') == 'q':
     value_Buffer[0] = float(i)
     value_Buffer[1] = float(i*10)
     #value_Buffer = [1,2]
