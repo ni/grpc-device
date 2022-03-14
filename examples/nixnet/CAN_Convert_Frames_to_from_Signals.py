@@ -96,24 +96,25 @@ print("\nFrames to Convert\nID\tData\t\n");
    # // the objects properties. The frame IDs correspond to
    # // CANEventFrame1 and CANEventFrame2 from the database.
 
-frame1 = nixnet_types.Frame(
+frame1 = nixnet_types.FrameBuffer(
+   can = nixnet_types.Frame(
    timestamp=0,
    flags=0,
    identifier=66,
    type=0x00, #nxFrameType_CAN_Data
-   payload_length=8,
    payload=bytes([0,1,2,3,4,5,6,7])
+   )
 )
 
-frame2 = nixnet_types.Frame(
+frame2 = nixnet_types.FrameBuffer(
+   can = nixnet_types.Frame(
    timestamp=0,
    flags=0,
-   identifier=66,
+   identifier=67,
    type=0x00, #nxFrameType_CAN_Data
-   payload_length=4,
-   payload=bytes([8,9,10,11])
+   payload=bytes([0x43, 0x44])
+   )
 )
-
 
 # l_pFrame = (nxFrameVar_t *)l_Buffer;
 # l_pFrame->Timestamp = 0;
@@ -186,16 +187,16 @@ convert_signal_response = client.ConvertSignalsToFramesSinglePoint(
    nixnet_types.ConvertSignalsToFramesSinglePointRequest(
       session_ref=session_ref,
       value_buffer=convert_frame_response.value_buffer,
-      size_of_buffer=NUM_FRAMES * 24
+      size_of_buffer=NUM_FRAMES * 24,
+      frame_type = nixnet_types.FrameType.FRAME_TYPE_CAN
    )
 )
 
 
-for f in convert_signal_response.buffer:
-   print(f.identifier)
-   print(f.payload_length)
-   print(f.payload)
-   print(len(f.payload))
+for f in convert_signal_response.frame_buffer:
+   print(f.can.identifier)
+   print(f.can.payload)
+   print(len(f.can.payload))
    # DisplayErrorAndExit(l_Status, "nxConvertFramesToSignalsSinglePoint");
 
 #    // Convert the signal values back to frames

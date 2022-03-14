@@ -30,6 +30,9 @@ struct FrameHolder {
       case FrameBuffer::kEnet:
         InitializeEnetFrames(input);
         break;
+      default:
+        // TODO: error
+        break;
     }
   }
 
@@ -101,7 +104,7 @@ struct FrameHolder {
       u16 frame_size = grpc_frame.enet().length();
       frame_data.resize(frame_size, 0);
       nxFrameEnet_t* current_frame = (nxFrameEnet_t*)frame_data.data();
-      // The Length field in ENET frame is big-endian. Typecast to u16 before doing the conversion 
+      // The Length field in ENET write frame is big-endian. Typecast to u16 before doing the conversion 
       // as lengh field is 16 bits and BigToHostOrder16 works only for 16 bits.
       current_frame->Length = BigToHostOrder16(frame_size);
       current_frame->Type = grpc_frame.enet().type();
@@ -120,7 +123,8 @@ struct FrameHolder {
 
   void ConvertFrame(const Frame& input, std::vector<uint8_t>& output)
   {
-    auto frame_size = nxFrameSize(input.payload_length());
+    auto payload_length = input.payload().length();
+    auto frame_size = nxFrameSize(payload_length);
     output.resize(frame_size, 0);
     nxFrameVar_t* current_frame = (nxFrameVar_t*)output.data();
     current_frame->Timestamp = input.timestamp();
@@ -128,9 +132,9 @@ struct FrameHolder {
     current_frame->Type = input.type();
     current_frame->Flags = input.flags();
     current_frame->Info = input.info();
-    nxFrameSetPayloadLength(current_frame, input.payload_length());
-    for (uint32_t i = 0; i < input.payload_length(); i++) {
-      current_frame->Payload[i] = input.payload().c_str()[i];
+    nxFrameSetPayloadLength(current_frame, payload_length);
+    for (uint32_t i = 0; i < payload_length; i++) {
+      current_frame->Payload[i] = input.payload()[i];
     }
   }
 

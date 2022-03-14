@@ -189,8 +189,8 @@ functions = {
         'returns': 'nxStatus_t'
     },
     'ConvertSignalsToFramesSinglePoint': {
-        # 'codegen_method': 'Custom',
-        'codegen_method': 'no',
+        'codegen_method': 'Custom',
+        # 'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',

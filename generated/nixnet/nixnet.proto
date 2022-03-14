@@ -21,6 +21,7 @@ service NiXnet {
   rpc ConnectTerminals(ConnectTerminalsRequest) returns (ConnectTerminalsResponse);
   rpc ConvertByteArrayToFramesSinglePoint(ConvertByteArrayToFramesSinglePointRequest) returns (ConvertByteArrayToFramesSinglePointResponse);
   rpc ConvertFramesToSignalsSinglePoint(ConvertFramesToSignalsSinglePointRequest) returns (ConvertFramesToSignalsSinglePointResponse);
+  rpc ConvertSignalsToFramesSinglePoint(ConvertSignalsToFramesSinglePointRequest) returns (ConvertSignalsToFramesSinglePointResponse);
   rpc ConvertTimestamp100nsTo1ns(ConvertTimestamp100nsTo1nsRequest) returns (ConvertTimestamp100nsTo1nsResponse);
   rpc ConvertTimestamp1nsTo100ns(ConvertTimestamp1nsTo100nsRequest) returns (ConvertTimestamp1nsTo100nsResponse);
   rpc CreateSession(CreateSessionRequest) returns (CreateSessionResponse);
@@ -852,8 +853,7 @@ message Frame {
   uint32 type = 3;
   uint32 flags = 4;
   uint32 info = 5;
-  uint32 payload_length = 6;
-  bytes payload = 7;
+  bytes payload = 6;
 }
 
 message EnetFrame {

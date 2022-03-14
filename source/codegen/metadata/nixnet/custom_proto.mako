@@ -4,8 +4,7 @@ message Frame {
   uint32 type = 3;
   uint32 flags = 4;
   uint32 info = 5;
-  uint32 payload_length = 6;
-  bytes payload = 7;
+  bytes payload = 6;
 }
 
 message EnetFrame {

@@ -20,6 +20,7 @@ class NiXnetLibraryInterface {
   virtual nxStatus_t ConnectTerminals(nxSessionRef_t sessionRef, const char source[], const char destination[]) = 0;
   virtual nxStatus_t ConvertByteArrayToFramesSinglePoint(nxSessionRef_t sessionRef, u8 valueBuffer[], u32 sizeOfValueBuffer, void* buffer, u32 sizeOfBuffer, u32* numberOfBytesReturned) = 0;
   virtual nxStatus_t ConvertFramesToSignalsSinglePoint(nxSessionRef_t sessionRef, void* frameBuffer, u32 numberOfBytesForFrames, f64 valueBuffer[], u32 sizeOfValueBuffer, nxTimestamp100ns_t timestampBuffer[], u32 sizeOfTimestampBuffer) = 0;
+  virtual nxStatus_t ConvertSignalsToFramesSinglePoint(nxSessionRef_t sessionRef, f64 valueBuffer[], u32 sizeOfValueBuffer, void* buffer, u32 sizeOfBuffer, u32* numberOfBytesReturned) = 0;
   virtual nxStatus_t ConvertTimestamp100nsTo1ns(nxTimestamp100ns_t from, nxTimestamp1ns_t* to) = 0;
   virtual nxStatus_t ConvertTimestamp1nsTo100ns(nxTimestamp1ns_t from, nxTimestamp100ns_t* to) = 0;
   virtual nxStatus_t CreateSession(const char databaseName[], const char clusterName[], const char list[], const char interfaceParameter[], u32 mode, nxSessionRef_t* sessionRef) = 0;
