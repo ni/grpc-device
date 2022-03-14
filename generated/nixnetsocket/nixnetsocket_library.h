@@ -29,6 +29,7 @@ class NiXnetSocketLibrary : public nixnetsocket_grpc::NiXnetSocketLibraryInterfa
   int32_t Close(nxSOCKET socket);
   int32_t GetLastErrorNum();
   char* GetLastErrorStr(char buf[], size_t bufLen);
+  int32_t GetSockOpt(nxSOCKET socket, int32_t level, int32_t optname, void* optval, nxsocklen_t* optlen);
   int32_t IpStackClear(nxIpStackRef_t stack_ref);
   int32_t IpStackCreate(char stack_name[], char config[], nxIpStackRef_t* stack_ref);
   int32_t IsSet(nxSOCKET fd, nxfd_set* set);
@@ -48,6 +49,7 @@ class NiXnetSocketLibrary : public nixnetsocket_grpc::NiXnetSocketLibraryInterfa
   using ClosePtr = decltype(&nxclose);
   using GetLastErrorNumPtr = int32_t (*)();
   using GetLastErrorStrPtr = char* (*)(char buf[], size_t bufLen);
+  using GetSockOptPtr = decltype(&nxgetsockopt);
   using IpStackClearPtr = decltype(&nxIpStackClear);
   using IpStackCreatePtr = decltype(&nxIpStackCreate);
   using IsSetPtr = decltype(&nxfd_isset);
@@ -67,6 +69,7 @@ class NiXnetSocketLibrary : public nixnetsocket_grpc::NiXnetSocketLibraryInterfa
     ClosePtr Close;
     GetLastErrorNumPtr GetLastErrorNum;
     GetLastErrorStrPtr GetLastErrorStr;
+    GetSockOptPtr GetSockOpt;
     IpStackClearPtr IpStackClear;
     IpStackCreatePtr IpStackCreate;
     IsSetPtr IsSet;

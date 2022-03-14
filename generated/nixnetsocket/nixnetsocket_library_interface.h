@@ -26,6 +26,7 @@ class NiXnetSocketLibraryInterface {
   virtual int32_t Close(nxSOCKET socket) = 0;
   virtual int32_t GetLastErrorNum() = 0;
   virtual char* GetLastErrorStr(char buf[], size_t bufLen) = 0;
+  virtual int32_t GetSockOpt(nxSOCKET socket, int32_t level, int32_t optname, void* optval, nxsocklen_t* optlen) = 0;
   virtual int32_t IpStackClear(nxIpStackRef_t stack_ref) = 0;
   virtual int32_t IpStackCreate(char stack_name[], char config[], nxIpStackRef_t* stack_ref) = 0;
   virtual int32_t IsSet(nxSOCKET fd, nxfd_set* set) = 0;

@@ -282,6 +282,30 @@ inline SockOptDataInputConverter convert_from_grpc(const SockOptData& input)
   return SockOptDataInputConverter(input);
 }
 
+// This class allows us to have something allocated on the stack that provides backing
+// storage for a void* opt_val output param and converts it to the SockOptData grpc-type.
+struct SockOptDataOutputConverter {
+  SockOptDataOutputConverter()
+  {
+  }
+
+  void* data()
+  {
+    // TODO: Point to backing data field (int, bool, or string)
+    return nullptr;
+  }
+
+  void to_grpc(SockOptData& output) const
+  {
+    output.set_data_bool(true);
+  }
+};
+
+inline void convert_to_grpc(const SockOptDataOutputConverter& storage, SockOptData* output)
+{
+  storage.to_grpc(*output);
+}
+
 }  // namespace nixnetsocket_grpc
 
 // Template specializations go in nidevice_grpc::converters.
@@ -292,6 +316,13 @@ namespace converters {
 template <>
 struct TypeToStorageType<nxsockaddr, nixnetsocket_grpc::SockAddr> {
   using StorageType = nixnetsocket_grpc::SockAddrOutputConverter;
+};
+
+// Specialization of TypeToStorageType so that allocate_storage_type will
+// allocate SockOptDataOutputConverters for void* output params.
+template <>
+struct TypeToStorageType<void*, nixnetsocket_grpc::SockOptData> {
+  using StorageType = nixnetsocket_grpc::SockOptDataOutputConverter;
 };
 }  // namespace converters
 }  // namespace nidevice_grpc

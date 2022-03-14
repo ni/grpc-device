@@ -32,6 +32,7 @@ NiXnetSocketLibrary::NiXnetSocketLibrary() : shared_library_(kLibraryName)
   function_pointers_.Close = reinterpret_cast<ClosePtr>(shared_library_.get_function_pointer("nxclose"));
   function_pointers_.GetLastErrorNum = reinterpret_cast<GetLastErrorNumPtr>(shared_library_.get_function_pointer("nxgetlasterrornum"));
   function_pointers_.GetLastErrorStr = reinterpret_cast<GetLastErrorStrPtr>(shared_library_.get_function_pointer("nxgetlasterrorstr"));
+  function_pointers_.GetSockOpt = reinterpret_cast<GetSockOptPtr>(shared_library_.get_function_pointer("nxgetsockopt"));
   function_pointers_.IpStackClear = reinterpret_cast<IpStackClearPtr>(shared_library_.get_function_pointer("nxIpStackClear"));
   function_pointers_.IpStackCreate = reinterpret_cast<IpStackCreatePtr>(shared_library_.get_function_pointer("nxIpStackCreate"));
   function_pointers_.IsSet = reinterpret_cast<IsSetPtr>(shared_library_.get_function_pointer("nxfd_isset"));
@@ -173,6 +174,18 @@ char* NiXnetSocketLibrary::GetLastErrorStr(char buf[], size_t bufLen)
     throw nidevice_grpc::LibraryLoadException("Could not find nxgetlasterrorstr.");
   }
   return function_pointers_.GetLastErrorStr(buf, bufLen);
+}
+
+int32_t NiXnetSocketLibrary::GetSockOpt(nxSOCKET socket, int32_t level, int32_t optname, void* optval, nxsocklen_t* optlen)
+{
+  if (!function_pointers_.GetSockOpt) {
+    throw nidevice_grpc::LibraryLoadException("Could not find nxgetsockopt.");
+  }
+#if defined(_MSC_VER)
+  return nxgetsockopt(socket, level, optname, optval, optlen);
+#else
+  return function_pointers_.GetSockOpt(socket, level, optname, optval, optlen);
+#endif
 }
 
 int32_t NiXnetSocketLibrary::IpStackClear(nxIpStackRef_t stack_ref)
