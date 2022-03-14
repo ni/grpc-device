@@ -55,6 +55,7 @@ class NiXnetMockLibrary : public nixnet_grpc::NiXnetLibraryInterface {
   MOCK_METHOD(nxStatus_t, WriteSignalSinglePoint, (nxSessionRef_t sessionRef, f64 valueBuffer[], u32 sizeOfValueBuffer), (override));
   MOCK_METHOD(nxStatus_t, WriteSignalWaveform, (nxSessionRef_t sessionRef, f64 timeout, f64 valueBuffer[], u32 sizeOfValueBuffer), (override));
   MOCK_METHOD(nxStatus_t, WriteSignalXY, (nxSessionRef_t sessionRef, f64 timeout, f64 valueBuffer[], u32 sizeOfValueBuffer, nxTimestamp100ns_t timestampBuffer[], u32 sizeOfTimestampBuffer, u32 numPairsBuffer[], u32 sizeOfNumPairsBuffer), (override));
+  MOCK_METHOD(nxStatus_t, WriteState, (nxSessionRef_t sessionRef, u32 stateID, u32 stateSize, void* stateValue), (override));
 };
 
 }  // namespace unit

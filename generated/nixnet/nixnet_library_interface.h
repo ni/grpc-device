@@ -53,6 +53,7 @@ class NiXnetLibraryInterface {
   virtual nxStatus_t WriteSignalSinglePoint(nxSessionRef_t sessionRef, f64 valueBuffer[], u32 sizeOfValueBuffer) = 0;
   virtual nxStatus_t WriteSignalWaveform(nxSessionRef_t sessionRef, f64 timeout, f64 valueBuffer[], u32 sizeOfValueBuffer) = 0;
   virtual nxStatus_t WriteSignalXY(nxSessionRef_t sessionRef, f64 timeout, f64 valueBuffer[], u32 sizeOfValueBuffer, nxTimestamp100ns_t timestampBuffer[], u32 sizeOfTimestampBuffer, u32 numPairsBuffer[], u32 sizeOfNumPairsBuffer) = 0;
+  virtual nxStatus_t WriteState(nxSessionRef_t sessionRef, u32 stateID, u32 stateSize, void* stateValue) = 0;
 };
 
 }  // namespace nixnet_grpc

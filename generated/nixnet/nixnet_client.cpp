@@ -818,5 +818,30 @@ write_signal_xy(const StubPtr& stub, const nidevice_grpc::Session& session_ref, 
   return response;
 }
 
+WriteStateResponse
+write_state(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const simple_variant<WriteState, pb::uint32>& state_id, const WriteStateValue& state_value)
+{
+  ::grpc::ClientContext context;
+
+  auto request = WriteStateRequest{};
+  request.mutable_session_ref()->CopyFrom(session_ref);
+  const auto state_id_ptr = state_id.get_if<WriteState>();
+  const auto state_id_raw_ptr = state_id.get_if<pb::uint32>();
+  if (state_id_ptr) {
+    request.set_state_id(*state_id_ptr);
+  }
+  else if (state_id_raw_ptr) {
+    request.set_state_id_raw(*state_id_raw_ptr);
+  }
+  request.mutable_state_value()->CopyFrom(state_value);
+
+  auto response = WriteStateResponse{};
+
+  raise_if_error(
+      stub->WriteState(&context, request, &response));
+
+  return response;
+}
+
 
 } // namespace nixnet_grpc::experimental::client

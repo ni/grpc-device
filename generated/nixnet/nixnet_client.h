@@ -60,6 +60,7 @@ WaitResponse wait(const StubPtr& stub, const nidevice_grpc::Session& session_ref
 WriteSignalSinglePointResponse write_signal_single_point(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const std::vector<double>& value_buffer);
 WriteSignalWaveformResponse write_signal_waveform(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const simple_variant<TimeOut, double>& timeout, const std::vector<double>& value_buffer);
 WriteSignalXYResponse write_signal_xy(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const simple_variant<TimeOut, double>& timeout, const std::vector<double>& value_buffer, const std::vector<pb::uint64>& timestamp_buffer, const std::vector<pb::uint32>& num_pairs_buffer);
+WriteStateResponse write_state(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const simple_variant<WriteState, pb::uint32>& state_id, const WriteStateValue& state_value);
 
 } // namespace nixnet_grpc::experimental::client
 

@@ -43,7 +43,7 @@ message LinComm{
     uint32 schedule_index = 8;
 }
 
-message StateValue {
+message ReadStateValue {
     oneof value{
         uint64 time_current = 1;
         uint64 time_communicating = 2;
@@ -58,5 +58,15 @@ message StateValue {
         TimeLocalNetwork time_communicating2 = 11;
         TimeLocalNetwork time_start2 = 12;
         bytes raw_value = 13;
+    }
+}
+
+message WriteStateValue {
+    oneof value{
+        uint32 lin_schedule_change = 1;
+        uint32 flex_ray_symbol = 2;
+        uint32 lin_diagnostic_schedule_change = 3;
+        uint32 ethernet_sleep = 4;
+        uint32 ethernet_wake = 5;
     }
 }

@@ -59,6 +59,7 @@ NiXnetLibrary::NiXnetLibrary() : shared_library_(kLibraryName)
   function_pointers_.WriteSignalSinglePoint = reinterpret_cast<WriteSignalSinglePointPtr>(shared_library_.get_function_pointer("nxWriteSignalSinglePoint"));
   function_pointers_.WriteSignalWaveform = reinterpret_cast<WriteSignalWaveformPtr>(shared_library_.get_function_pointer("nxWriteSignalWaveform"));
   function_pointers_.WriteSignalXY = reinterpret_cast<WriteSignalXYPtr>(shared_library_.get_function_pointer("nxWriteSignalXY"));
+  function_pointers_.WriteState = reinterpret_cast<WriteStatePtr>(shared_library_.get_function_pointer("nxWriteState"));
 }
 
 NiXnetLibrary::~NiXnetLibrary()
@@ -525,6 +526,18 @@ nxStatus_t NiXnetLibrary::WriteSignalXY(nxSessionRef_t sessionRef, f64 timeout, 
   return nxWriteSignalXY(sessionRef, timeout, valueBuffer, sizeOfValueBuffer, timestampBuffer, sizeOfTimestampBuffer, numPairsBuffer, sizeOfNumPairsBuffer);
 #else
   return function_pointers_.WriteSignalXY(sessionRef, timeout, valueBuffer, sizeOfValueBuffer, timestampBuffer, sizeOfTimestampBuffer, numPairsBuffer, sizeOfNumPairsBuffer);
+#endif
+}
+
+nxStatus_t NiXnetLibrary::WriteState(nxSessionRef_t sessionRef, u32 stateID, u32 stateSize, void* stateValue)
+{
+  if (!function_pointers_.WriteState) {
+    throw nidevice_grpc::LibraryLoadException("Could not find nxWriteState.");
+  }
+#if defined(_MSC_VER)
+  return nxWriteState(sessionRef, stateID, stateSize, stateValue);
+#else
+  return function_pointers_.WriteState(sessionRef, stateID, stateSize, stateValue);
 #endif
 }
 

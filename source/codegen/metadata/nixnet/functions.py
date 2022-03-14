@@ -1159,7 +1159,7 @@ functions = {
                     'mechanism': 'passed-in',
                     'value': 'stateSize'
                 },
-                'grpc_type' : 'StateValue'
+                'grpc_type' : 'ReadStateValue'
             },
             {
                 'direction': 'out',
@@ -1514,7 +1514,7 @@ functions = {
         'returns': 'nxStatus_t'
     },
     'WriteState': {
-        'codegen_method': 'no',
+        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
@@ -1534,14 +1534,13 @@ functions = {
             },
             {
                 'direction': 'in',
-                #'enum': 'StateValue',
                 'name': 'stateValue',
                 'size': {
                     'mechanism': 'len',
                     'value': 'stateSize'
                 },
                 'type': 'void *',
-                'grpc_type' : 'StateValue'
+                'grpc_type' : 'WriteStateValue'
             }
         ],
         'returns': 'nxStatus_t'

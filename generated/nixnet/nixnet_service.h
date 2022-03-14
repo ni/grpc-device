@@ -81,6 +81,7 @@ public:
   ::grpc::Status WriteSignalSinglePoint(::grpc::ServerContext* context, const WriteSignalSinglePointRequest* request, WriteSignalSinglePointResponse* response) override;
   ::grpc::Status WriteSignalWaveform(::grpc::ServerContext* context, const WriteSignalWaveformRequest* request, WriteSignalWaveformResponse* response) override;
   ::grpc::Status WriteSignalXY(::grpc::ServerContext* context, const WriteSignalXYRequest* request, WriteSignalXYResponse* response) override;
+  ::grpc::Status WriteState(::grpc::ServerContext* context, const WriteStateRequest* request, WriteStateResponse* response) override;
 private:
   NiXnetLibraryInterface* library_;
   ResourceRepositorySharedPtr session_repository_;
