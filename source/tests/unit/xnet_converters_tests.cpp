@@ -397,6 +397,19 @@ TEST(XnetConvertersTests, StringSockOptData_ConvertToGrpc_ConvertsToSockOptDataW
   EXPECT_EQ(DEVICE_NAME, grpc_data.data_string());
 }
 
+TEST(XnetConvertersTests, SockOptDataWithUnknownOptName_ConvertToGrpc_ConvertsToUnsetSockOptData)
+{
+  constexpr auto UNKNOWN_OPT_NAME = -1;
+  auto storage = allocate_output_storage<void*, SockOptData>(UNKNOWN_OPT_NAME);
+  void* data_pointer = storage.data();
+  EXPECT_EQ(nullptr, data_pointer);
+
+  auto grpc_data = SockOptData{};
+  convert_to_grpc(storage, &grpc_data);
+
+  EXPECT_EQ(SockOptData::DataCase::DATA_NOT_SET, grpc_data.data_case());
+}
+
 }  // namespace
 }  // namespace unit
 }  // namespace tests
