@@ -285,20 +285,71 @@ inline SockOptDataInputConverter convert_from_grpc(const SockOptData& input)
 // This class allows us to have something allocated on the stack that provides backing
 // storage for a void* opt_val output param and converts it to the SockOptData grpc-type.
 struct SockOptDataOutputConverter {
-  SockOptDataOutputConverter()
+  SockOptDataOutputConverter(int32_t opt_name) : opt_name(opt_name)
   {
   }
 
   void* data()
   {
-    // TODO: Point to backing data field (int, bool, or string)
-    return nullptr;
+    switch (opt_name) {
+      case OptName::OPT_NAME_SO_RX_DATA:
+      case OptName::OPT_NAME_SO_RCV_BUF:
+      case OptName::OPT_NAME_SO_SND_BUF: {
+        return &data_int;
+        break;
+      }
+      case OptName::OPT_NAME_SO_NON_BLOCK:
+      case OptName::OPT_NAME_SO_LINGER:
+      case OptName::OPT_NAME_SO_REUSE_ADDR: {
+        // TODO: Bool version
+        return &data_bool;
+        break;
+      }
+      case OptName::OPT_NAME_SO_BIND_TO_DEVICE:
+      case OptName::OPT_NAME_SO_ERROR: {
+        // TODO: string version
+        data_string = std::string(256 - 1, '\0');  // Guessing here that max is 256... don't know how to figure out actual max size for string options.
+        return &data_string[0];
+        break;
+      }
+      default:
+        return nullptr;
+        break;
+    }
   }
 
   void to_grpc(SockOptData& output) const
   {
-    output.set_data_bool(true);
+    switch (opt_name) {
+      case OptName::OPT_NAME_SO_RX_DATA:
+      case OptName::OPT_NAME_SO_RCV_BUF:
+      case OptName::OPT_NAME_SO_SND_BUF: {
+        output.set_data_int32(data_int);
+        break;
+      }
+      case OptName::OPT_NAME_SO_NON_BLOCK:
+      case OptName::OPT_NAME_SO_LINGER:
+      case OptName::OPT_NAME_SO_REUSE_ADDR: {
+        // TODO: Bool version
+        output.set_data_bool(data_bool);
+        break;
+      }
+      case OptName::OPT_NAME_SO_BIND_TO_DEVICE:
+      case OptName::OPT_NAME_SO_ERROR: {
+        // TODO: string version
+        output.set_data_string(data_string);
+        nidevice_grpc::converters::trim_trailing_nulls(*(output.mutable_data_string()));
+        break;
+      }
+      default:
+        break;
+    }
   }
+
+  int32_t opt_name;
+  int32_t data_int;
+  bool data_bool;
+  std::string data_string;
 };
 
 inline void convert_to_grpc(const SockOptDataOutputConverter& storage, SockOptData* output)
