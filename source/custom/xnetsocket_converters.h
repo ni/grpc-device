@@ -292,23 +292,24 @@ struct SockOptDataOutputConverter {
   void* data()
   {
     switch (opt_name) {
+      case OptName::OPT_NAME_IP_MULTICAST_TTL:
+      case OptName::OPT_NAME_IPV6_MULTICAST_HOPS:
       case OptName::OPT_NAME_SO_RX_DATA:
       case OptName::OPT_NAME_SO_RCV_BUF:
-      case OptName::OPT_NAME_SO_SND_BUF: {
+      case OptName::OPT_NAME_SO_SND_BUF:
+      case OptName::OPT_NAME_TCP_NODELAY: {
         return &data_int;
         break;
       }
-      case OptName::OPT_NAME_SO_NON_BLOCK:
       case OptName::OPT_NAME_SO_LINGER:
+      case OptName::OPT_NAME_SO_NON_BLOCK:
       case OptName::OPT_NAME_SO_REUSE_ADDR: {
-        // TODO: Bool version
         return &data_bool;
         break;
       }
       case OptName::OPT_NAME_SO_BIND_TO_DEVICE:
       case OptName::OPT_NAME_SO_ERROR: {
-        // TODO: string version
-        data_string = std::string(256 - 1, '\0');  // Guessing here that max is 256... don't know how to figure out actual max size for string options.
+        data_string = std::string(256 - 1, '\0');  // TODO: What's the max string size to allocate for a sock opt?
         return &data_string[0];
         break;
       }
@@ -321,22 +322,23 @@ struct SockOptDataOutputConverter {
   void to_grpc(SockOptData& output) const
   {
     switch (opt_name) {
+      case OptName::OPT_NAME_IP_MULTICAST_TTL:
+      case OptName::OPT_NAME_IPV6_MULTICAST_HOPS:
       case OptName::OPT_NAME_SO_RX_DATA:
       case OptName::OPT_NAME_SO_RCV_BUF:
-      case OptName::OPT_NAME_SO_SND_BUF: {
+      case OptName::OPT_NAME_SO_SND_BUF:
+      case OptName::OPT_NAME_TCP_NODELAY: {
         output.set_data_int32(data_int);
         break;
       }
-      case OptName::OPT_NAME_SO_NON_BLOCK:
       case OptName::OPT_NAME_SO_LINGER:
+      case OptName::OPT_NAME_SO_NON_BLOCK:
       case OptName::OPT_NAME_SO_REUSE_ADDR: {
-        // TODO: Bool version
         output.set_data_bool(data_bool);
         break;
       }
       case OptName::OPT_NAME_SO_BIND_TO_DEVICE:
       case OptName::OPT_NAME_SO_ERROR: {
-        // TODO: string version
         output.set_data_string(data_string);
         nidevice_grpc::converters::trim_trailing_nulls(*(output.mutable_data_string()));
         break;
