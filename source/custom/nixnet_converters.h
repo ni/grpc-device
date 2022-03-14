@@ -11,64 +11,162 @@ namespace nixnet_grpc {
 // This class allows us to have something allocated on the stack that can be used as an
 // nxsockaddr* and initialized from a grpc SockAddr using standard codegen and copy convert routines.
 struct FrameHolder {
-    FrameHolder(const pb_::RepeatedPtrField<Frame>& input)
-    {
-        // TODO: pending verification of copy operation
-        std::vector<uint8_t> frame_data;
-        for(auto grpc_frame : input) {
-
-            auto frame_size = nxFrameSize(grpc_frame.payload_length());
-            frame_data.resize(frame_size, 0);
-            nxFrameVar_t* current_frame = (nxFrameVar_t*)frame_data.data();
-            current_frame->Timestamp = grpc_frame.timestamp();
-            current_frame->Identifier = grpc_frame.identifier();
-            current_frame->Type = grpc_frame.type();
-            current_frame->Flags = grpc_frame.flags();
-            current_frame->Info = grpc_frame.info();
-            nxFrameSetPayloadLength(current_frame, grpc_frame.payload_length());
-            for(uint32_t i=0; i<grpc_frame.payload_length(); i++) {
-                current_frame->Payload[i] = grpc_frame.payload().c_str()[i];
-                std::cout << (u8)grpc_frame.payload().c_str()[i] << "-";
-            } 
-
-            // TODO: optimize to use single vector instead of copying every frame to main vector
-            frame_buffer.insert(frame_buffer.end(), frame_data.begin(), frame_data.end());
-        }
+  FrameHolder(const pb_::RepeatedPtrField<FrameBuffer>& input)
+  {
+    // TODO: pending verification of copy operation
+    switch (input[0].frame_case()) {
+      case FrameBuffer::kCan:
+        InitializeCanFrames(input);
+        break;
+      case FrameBuffer::kLin:
+        InitializeLinFrames(input);
+        break;
+      case FrameBuffer::kFlexRay:
+        InitializeFlexRayFrames(input);
+        break;
+      case FrameBuffer::kJ1939:
+        InitializeJ1939Frames(input);
+        break;
+      case FrameBuffer::kEnet:
+        InitializeEnetFrames(input);
+        break;
     }
+  }
+
+  void InitializeCanFrames(const pb_::RepeatedPtrField<FrameBuffer>& input)
+  {
+    std::vector<uint8_t> frame_data;
+    for (auto grpc_frame : input) {
+      if (!grpc_frame.has_can()) {
+        // TODO: return error, frames inconsistent
+      }
+      ConvertFrame(grpc_frame.can(), frame_data);
+
+      // TODO: optimize to use single vector instead of copying every frame to main vector
+      frame_buffer.insert(frame_buffer.end(), frame_data.begin(), frame_data.end());
+    }
+  }
+
+  void InitializeLinFrames(const pb_::RepeatedPtrField<FrameBuffer>& input)
+  {
+    std::vector<uint8_t> frame_data;
+    for (auto grpc_frame : input) {
+      if (!grpc_frame.has_lin()) {
+        // TODO: return error, frames inconsistent
+      }
+      ConvertFrame(grpc_frame.lin(), frame_data);
+
+      // TODO: optimize to use single vector instead of copying every frame to main vector
+      frame_buffer.insert(frame_buffer.end(), frame_data.begin(), frame_data.end());
+    }
+  }
+
+  void InitializeFlexRayFrames(const pb_::RepeatedPtrField<FrameBuffer>& input)
+  {
+    std::vector<uint8_t> frame_data;
+    for (auto grpc_frame : input) {
+      if (!grpc_frame.has_flex_ray()) {
+        // TODO: return error, frames inconsistent
+      }
+      ConvertFrame(grpc_frame.flex_ray(), frame_data);
+
+      // TODO: optimize to use single vector instead of copying every frame to main vector
+      frame_buffer.insert(frame_buffer.end(), frame_data.begin(), frame_data.end());
+    }
+  }
+
+  void InitializeJ1939Frames(const pb_::RepeatedPtrField<FrameBuffer>& input)
+  {
+    std::vector<uint8_t> frame_data;
+    for (auto grpc_frame : input) {
+      if (!grpc_frame.has_j1939()) {
+        // TODO: return error, frames inconsistent
+      }
+      ConvertFrame(grpc_frame.j1939(), frame_data);
+
+      // TODO: optimize to use single vector instead of copying every frame to main vector
+      frame_buffer.insert(frame_buffer.end(), frame_data.begin(), frame_data.end());
+    }
+  }
+
+  void InitializeEnetFrames(const pb_::RepeatedPtrField<FrameBuffer>& input)
+  {
+    std::vector<uint8_t> frame_data;
+    for (auto grpc_frame : input) {
+      if (!grpc_frame.has_enet()) {
+        // TODO: return error, frames inconsistent
+      }
+
+      // grpc_frame.enet().l
+      u16 frame_size = grpc_frame.enet().length();
+      frame_data.resize(frame_size, 0);
+      nxFrameEnet_t* current_frame = (nxFrameEnet_t*)frame_data.data();
+      // The Length field in ENET frame is big-endian. Typecast to u16 before doing the conversion 
+      // as lengh field is 16 bits and BigToHostOrder16 works only for 16 bits.
+      current_frame->Length = BigToHostOrder16(frame_size);
+      current_frame->Type = grpc_frame.enet().type();
+      current_frame->DeviceTimestamp = grpc_frame.enet().device_timestamp();
+      current_frame->NetworkTimestamp = grpc_frame.enet().network_timestamp();
+      current_frame->Flags = grpc_frame.enet().flags();
+      auto payloadSize = frame_size - sizeof(nxFrameEnet_t);
+      for(int i=0;i<payloadSize;i++) {
+        current_frame->FrameData[i] = grpc_frame.enet().frame_data()[i];
+      }
+
+      // TODO: optimize to use single vector instead of copying every frame to main vector
+      frame_buffer.insert(frame_buffer.end(), frame_data.begin(), frame_data.end());
+    }
+  }
+
+  void ConvertFrame(const Frame& input, std::vector<uint8_t>& output)
+  {
+    auto frame_size = nxFrameSize(input.payload_length());
+    output.resize(frame_size, 0);
+    nxFrameVar_t* current_frame = (nxFrameVar_t*)output.data();
+    current_frame->Timestamp = input.timestamp();
+    current_frame->Identifier = input.identifier();
+    current_frame->Type = input.type();
+    current_frame->Flags = input.flags();
+    current_frame->Info = input.info();
+    nxFrameSetPayloadLength(current_frame, input.payload_length());
+    for (uint32_t i = 0; i < input.payload_length(); i++) {
+      current_frame->Payload[i] = input.payload().c_str()[i];
+    }
+  }
 
   // Implicit conversion to nxsockaddr* simplifies codegen because these are passed by pointer to
   // the driver.
   operator void*()
   {
-      return frame_buffer.data();
+    return frame_buffer.data();
   }
 
   operator const void*() const
   {
-      return frame_buffer.data();
+    return frame_buffer.data();
   }
 
   // size() method is used to simplify codegen calculating the size of the
   // selected frame buffer.
   uint32_t size() const
   {
-      // size_of_buffer param for all frame APIs is uint32, we can't possibly exceed that.
-        return (uint32_t)frame_buffer.size();
+    // size_of_buffer param for all frame APIs is uint32, we can't possibly exceed that.
+    return (uint32_t)frame_buffer.size();
   }
 
   std::vector<uint8_t> frame_buffer;
 };
-} // namespace nixnet_grpc
+}  // namespace nixnet_grpc
 
 namespace nidevice_grpc {
 namespace converters {
 
 template <typename TFrame>
-nixnet_grpc::FrameHolder convert_from_grpc(const pb_::RepeatedPtrField<nixnet_grpc::Frame>& input);
+nixnet_grpc::FrameHolder convert_from_grpc(const pb_::RepeatedPtrField<nixnet_grpc::FrameBuffer>& input);
 template <typename TFrame>
-void convert_to_grpc(const nxFrameVar_t& input, nixnet_grpc::Frame* output);
+void convert_to_grpc(const void* input, nixnet_grpc::FrameBuffer* output, nixnet_grpc::FrameType frame_type);
 
-} // namespace converters
-} // namespace nidevice_grpc
+}  // namespace converters
+}  // namespace nidevice_grpc
 
-#endif /* NIDEVICE_GRPC_DEVICE_NIXNET_CONVERTERS_H */ 
+#endif /* NIDEVICE_GRPC_DEVICE_NIXNET_CONVERTERS_H */

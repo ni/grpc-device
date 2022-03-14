@@ -48,7 +48,7 @@ functions = {
         'returns': 'nxStatus_t'
     },
     'ConvertByteArrayToFramesSinglePoint': {
-        'codegen_method': 'CustomCode',
+        'codegen_method': 'Custom',
         'parameters': [
             {
                 'direction': 'in',
@@ -149,7 +149,7 @@ functions = {
                     'value': 'numberOfBytesForFrames'
                 },
                 'type': 'void[]',
-                'grpc_type': 'repeated Frame'
+                'grpc_type': 'repeated FrameBuffer'
             },
             {
                 'direction': 'in',
@@ -189,7 +189,8 @@ functions = {
         'returns': 'nxStatus_t'
     },
     'ConvertSignalsToFramesSinglePoint': {
-        'codegen_method': 'CustomCode',
+        # 'codegen_method': 'Custom',
+        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',

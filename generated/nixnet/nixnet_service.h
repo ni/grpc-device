@@ -48,7 +48,6 @@ public:
   ::grpc::Status ConnectTerminals(::grpc::ServerContext* context, const ConnectTerminalsRequest* request, ConnectTerminalsResponse* response) override;
   ::grpc::Status ConvertByteArrayToFramesSinglePoint(::grpc::ServerContext* context, const ConvertByteArrayToFramesSinglePointRequest* request, ConvertByteArrayToFramesSinglePointResponse* response) override;
   ::grpc::Status ConvertFramesToSignalsSinglePoint(::grpc::ServerContext* context, const ConvertFramesToSignalsSinglePointRequest* request, ConvertFramesToSignalsSinglePointResponse* response) override;
-  ::grpc::Status ConvertSignalsToFramesSinglePoint(::grpc::ServerContext* context, const ConvertSignalsToFramesSinglePointRequest* request, ConvertSignalsToFramesSinglePointResponse* response) override;
   ::grpc::Status ConvertTimestamp100nsTo1ns(::grpc::ServerContext* context, const ConvertTimestamp100nsTo1nsRequest* request, ConvertTimestamp100nsTo1nsResponse* response) override;
   ::grpc::Status ConvertTimestamp1nsTo100ns(::grpc::ServerContext* context, const ConvertTimestamp1nsTo100nsRequest* request, ConvertTimestamp1nsTo100nsResponse* response) override;
   ::grpc::Status CreateSession(::grpc::ServerContext* context, const CreateSessionRequest* request, CreateSessionResponse* response) override;
