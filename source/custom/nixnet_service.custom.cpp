@@ -117,7 +117,7 @@ u32 GetStateSize(u32 state_id)
         response->mutable_state_value()->mutable_raw_value()->resize(state_size,0);
         nxStatus_t fault {};
 
-        auto status = library_->ReadState(session_ref, state_id, state_size, response->mutable_state_value()->mutable_raw_value()->data(), &fault);
+        auto status = library_->ReadState(session_ref, state_id, state_size, const_cast<char*>(response->mutable_state_value()->mutable_raw_value()->data()), &fault);
 
         response->set_status(status);
         if (status == 0) {
