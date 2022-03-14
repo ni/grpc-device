@@ -100,21 +100,21 @@ struct FrameHolder {
         // TODO: return error, frames inconsistent
       }
 
-      // grpc_frame.enet().l
-      u16 frame_size = grpc_frame.enet().length();
+      auto enet_header_length = sizeof(nxFrameEnet_t) - 1;  // last byte in nxFrameEnet_t is u8 FrameData[1]
+      u16 frame_size = enet_header_length + grpc_frame.enet().frame_data().length();
       frame_data.resize(frame_size, 0);
       nxFrameEnet_t* current_frame = (nxFrameEnet_t*)frame_data.data();
-      // The Length field in ENET write frame is big-endian. Typecast to u16 before doing the conversion 
+      // The Length field in ENET write frame is big-endian. Typecast to u16 before doing the conversion
       // as lengh field is 16 bits and BigToHostOrder16 works only for 16 bits.
       current_frame->Length = BigToHostOrder16(frame_size);
       current_frame->Type = grpc_frame.enet().type();
       current_frame->DeviceTimestamp = grpc_frame.enet().device_timestamp();
       current_frame->NetworkTimestamp = grpc_frame.enet().network_timestamp();
       current_frame->Flags = grpc_frame.enet().flags();
-      auto payloadSize = frame_size - sizeof(nxFrameEnet_t);
-      for(int i=0;i<payloadSize;i++) {
-        current_frame->FrameData[i] = grpc_frame.enet().frame_data()[i];
-      }
+      std::memcpy(
+          current_frame->FrameData,
+          grpc_frame.enet().frame_data().data(),
+          grpc_frame.enet().frame_data().length());
 
       // TODO: optimize to use single vector instead of copying every frame to main vector
       frame_buffer.insert(frame_buffer.end(), frame_data.begin(), frame_data.end());
@@ -133,9 +133,10 @@ struct FrameHolder {
     current_frame->Flags = input.flags();
     current_frame->Info = input.info();
     nxFrameSetPayloadLength(current_frame, payload_length);
-    for (uint32_t i = 0; i < payload_length; i++) {
-      current_frame->Payload[i] = input.payload()[i];
-    }
+    std::memcpy(
+        current_frame->Payload,
+        input.payload().data(),
+        payload_length);
   }
 
   // Implicit conversion to nxsockaddr* simplifies codegen because these are passed by pointer to

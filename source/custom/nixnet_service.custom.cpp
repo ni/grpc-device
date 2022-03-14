@@ -128,7 +128,6 @@ void convert_to_grpc(const void* input, nixnet_grpc::FrameBuffer* output, nixnet
   if (frame_type == nixnet_grpc::FrameType::FRAME_TYPE_ENET) {
     nixnet_grpc::EnetFrame* enet_frame = new nixnet_grpc::EnetFrame();
     nxFrameEnet_t* nxEnetFrame = (nxFrameEnet_t*)input;
-    enet_frame->set_length(nxEnetFrame->Length);
     enet_frame->set_type(nxEnetFrame->Type);
     enet_frame->set_device_timestamp(nxEnetFrame->DeviceTimestamp);
     enet_frame->set_network_timestamp(nxEnetFrame->NetworkTimestamp);
