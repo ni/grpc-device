@@ -465,7 +465,6 @@ struct AddrInfoOutputConverter {
 
   void to_grpc(pb_::RepeatedPtrField<AddrInfo>& output)
   {
-    auto curr_addr_info_ptr = addr_info_ptr;
     for (
         auto curr_addr_info_ptr = addr_info_ptr;
         curr_addr_info_ptr != nullptr;
@@ -505,8 +504,8 @@ struct AddrInfoOutputConverter {
       }
     }
     // Free the address info after we've read it.
-    nxfreeaddrinfo(curr_addr_info_ptr);
-    curr_addr_info_ptr = nullptr;
+    nxfreeaddrinfo(addr_info_ptr);
+    addr_info_ptr = nullptr;
   }
 
   nxaddrinfo* addr_info_ptr;
