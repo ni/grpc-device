@@ -568,7 +568,7 @@ def list_session_repository_handle_types(
 
 
 def get_function_return_type(function_data: dict) -> str:
-    """Get the return type for function_data"""
+    """Get the return type for function_data."""
     return function_data["returns"]
 
 
