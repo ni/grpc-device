@@ -304,7 +304,7 @@ TEST_F(NiXnetSocketLoopbackTests, IpStackCreateAndClear_CreateSocketWithIpStack_
   EXPECT_XNET_ERROR(GENERIC_NXSOCKET_ERROR, socket_response);
 }
 
-TEST_F(NiXnetSocketLoopbackTests, StackInfo)
+TEST_F(NiXnetSocketLoopbackTests, MultiAddressIpStack_GetInfo_ReturnsExpectedInfo)
 {
   const auto create_stack_response = client::ip_stack_create(
       stub(),
@@ -312,6 +312,7 @@ TEST_F(NiXnetSocketLoopbackTests, StackInfo)
       create_config(
           {create_interface_config("ENET1", MULTI_ADDRESS_INTERFACE_CONFIG)}));
   const auto wait_response = client::ip_stack_wait_for_interface(stub(), create_stack_response.stack_ref(), "", 5000);
+
   const auto stack_info_response = client::ip_stack_get_info(stub(), create_stack_response.stack_ref());
 
   EXPECT_SUCCESS(create_stack_response);
