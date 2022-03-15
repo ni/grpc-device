@@ -2,7 +2,7 @@
 import grpc
 import nixnet_pb2 as nixnet_types
 import nixnet_pb2_grpc as grpc_nixnet
-import msvcrt
+import getch
 
 # Parameters
 INTERFACE = "LIN1"
@@ -20,15 +20,14 @@ def displayerror_andexit(Status, Source):
     status_string = [None] * 1024
     # TODO Convert statustostring is pending
     # nixnet_types.StatustoString(Status,status_string.__sizeof__(),Source) 
-    #print("\n\nERROR at {}!\n{}\n", Source, status_string)
+    print("\n\nERROR at {}!\n{}\n", Source, status_string)
     print("\nExecution stopped.\nPress any key to quit\n")
 
     client.Clear(nixnet_types.ClearRequest(session_ref = m_SessionRef))
-    msvcrt.getch()
     exit(1)
 
 i = 0
-channel = grpc.insecure_channel(f"localhost:31764")
+channel = grpc.insecure_channel(f"10.164.75.8:31763")
 client = grpc_nixnet.NiXnetStub(channel)
 
 # Change this to set the interface to slave mode
@@ -64,13 +63,13 @@ if response.status != SUCCESS:
 else:
     if IsMaster != 0:
         # Set the schedule - this will also automatically enable master mode
-        # TO-DO Write State is to be converted
+        WriteStateValueObject =  nixnet_types.WriteStateValue(lin_schedule_change = ScheduleIndex)
         response = client.WriteState(
-            m_SessionRef,
-            nixnet_types.WRITE_STATE_STATE_LIN_SCHEDULE_CHANGE,
-            ScheduleIndex.__sizeof__(),
-            ScheduleIndex
-        )
+            nixnet_types.WriteStateRequest(
+                session_ref = m_SessionRef,
+                state_id = nixnet_types.WRITE_STATE_STATE_LIN_SCHEDULE_CHANGE,
+                state_value = WriteStateValueObject
+            ))
 
         if response.status != SUCCESS:
             displayerror_andexit(response.status,"WriteState")
@@ -79,7 +78,7 @@ else:
 print("\nPress any key to transmit new signal values or q to quit\n")
 print("Values are incremented from 0 to 10 in this example.\n")
   
-while msvcrt.getwch() != 'q':
+while not (getch.getch()).decode('UTF-8') == 'q':
     value_Buffer[0] = float(i)
     value_Buffer[1] = float(i*10)
 

@@ -21,7 +21,6 @@ def displayerror_andexit(Status, Source):
     print("\nExecution stopped.\nPress any key to quit\n")
 
     client.Clear(nixnet_types.ClearRequest(session_ref = m_SessionRef))
-    msvcrt.getwch()
     exit(1)
 
 m_SessionRef = 0
