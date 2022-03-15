@@ -45,6 +45,7 @@ service NiXnet {
   rpc ReadSignalSinglePoint(ReadSignalSinglePointRequest) returns (ReadSignalSinglePointResponse);
   rpc ReadSignalWaveform(ReadSignalWaveformRequest) returns (ReadSignalWaveformResponse);
   rpc Start(StartRequest) returns (StartResponse);
+  rpc StatusToString(StatusToStringRequest) returns (StatusToStringResponse);
   rpc Stop(StopRequest) returns (StopResponse);
   rpc SystemClose(SystemCloseRequest) returns (SystemCloseResponse);
   rpc SystemOpen(SystemOpenRequest) returns (SystemOpenResponse);
@@ -1180,6 +1181,15 @@ message StartRequest {
 
 message StartResponse {
   int32 status = 1;
+}
+
+message StatusToStringRequest {
+  int32 status_id = 1;
+}
+
+message StatusToStringResponse {
+  int32 status = 1;
+  string status_description = 2;
 }
 
 message StopRequest {

@@ -566,6 +566,9 @@ def list_session_repository_handle_types(
                 }
     return session_repository_handle_type_map
 
+def get_function_return_type(function_data: dict) -> str:
+    """Get the return type for function_data"""
+    return function_data["returns"]
 
 def _get_return_value_parameter(parameters: List[dict]) -> Optional[dict]:
     return next((p for p in parameters if common_helpers.is_return_value(p)), None)

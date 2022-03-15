@@ -50,6 +50,7 @@ NiXnetLibrary::NiXnetLibrary() : shared_library_(kLibraryName)
   function_pointers_.ReadSignalSinglePoint = reinterpret_cast<ReadSignalSinglePointPtr>(shared_library_.get_function_pointer("nxReadSignalSinglePoint"));
   function_pointers_.ReadSignalWaveform = reinterpret_cast<ReadSignalWaveformPtr>(shared_library_.get_function_pointer("nxReadSignalWaveform"));
   function_pointers_.Start = reinterpret_cast<StartPtr>(shared_library_.get_function_pointer("nxStart"));
+  function_pointers_.StatusToString = reinterpret_cast<StatusToStringPtr>(shared_library_.get_function_pointer("nxStatusToString"));
   function_pointers_.Stop = reinterpret_cast<StopPtr>(shared_library_.get_function_pointer("nxStop"));
   function_pointers_.SystemClose = reinterpret_cast<SystemClosePtr>(shared_library_.get_function_pointer("nxSystemClose"));
   function_pointers_.SystemOpen = reinterpret_cast<SystemOpenPtr>(shared_library_.get_function_pointer("nxSystemOpen"));
@@ -415,6 +416,18 @@ nxStatus_t NiXnetLibrary::Start(nxSessionRef_t sessionRef, u32 scope)
   return nxStart(sessionRef, scope);
 #else
   return function_pointers_.Start(sessionRef, scope);
+#endif
+}
+
+void NiXnetLibrary::StatusToString(nxStatus_t statusID, u32 sizeofString, char statusDescription[2048])
+{
+  if (!function_pointers_.StatusToString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find nxStatusToString.");
+  }
+#if defined(_MSC_VER)
+  return nxStatusToString(statusID, sizeofString, statusDescription);
+#else
+  return function_pointers_.StatusToString(statusID, sizeofString, statusDescription);
 #endif
 }
 

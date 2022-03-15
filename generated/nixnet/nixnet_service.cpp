@@ -980,6 +980,30 @@ namespace nixnet_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiXnetService::StatusToString(::grpc::ServerContext* context, const StatusToStringRequest* request, StatusToStringResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      nxStatus_t status_id = request->status_id();
+      auto sizeof_string = 2048U;
+      std::string status_description(2048 - 1, '\0');
+      library_->StatusToString(status_id, sizeof_string, (char*)status_description.data());
+      response->set_status(0);
+      if (status_ok(0)) {
+        response->set_status_description(status_description);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_status_description()));
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiXnetService::Stop(::grpc::ServerContext* context, const StopRequest* request, StopResponse* response)
   {
     if (context->IsCancelled()) {

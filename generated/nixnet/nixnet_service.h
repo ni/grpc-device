@@ -72,6 +72,7 @@ public:
   ::grpc::Status ReadSignalSinglePoint(::grpc::ServerContext* context, const ReadSignalSinglePointRequest* request, ReadSignalSinglePointResponse* response) override;
   ::grpc::Status ReadSignalWaveform(::grpc::ServerContext* context, const ReadSignalWaveformRequest* request, ReadSignalWaveformResponse* response) override;
   ::grpc::Status Start(::grpc::ServerContext* context, const StartRequest* request, StartResponse* response) override;
+  ::grpc::Status StatusToString(::grpc::ServerContext* context, const StatusToStringRequest* request, StatusToStringResponse* response) override;
   ::grpc::Status Stop(::grpc::ServerContext* context, const StopRequest* request, StopResponse* response) override;
   ::grpc::Status SystemClose(::grpc::ServerContext* context, const SystemCloseRequest* request, SystemCloseResponse* response) override;
   ::grpc::Status SystemOpen(::grpc::ServerContext* context, const SystemOpenRequest* request, SystemOpenResponse* response) override;

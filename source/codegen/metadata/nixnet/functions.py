@@ -1276,15 +1276,16 @@ functions = {
         'returns': 'nxStatus_t'
     },
     'StatusToString': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'status',
+                'name': 'statusID',
                 'type': 'nxStatus_t'
             },
             {
                 'direction': 'in',
+                'include_in_proto': False,
+                'hardcoded_value': '2048U',
                 'name': 'sizeofString',
                 'type': 'u32'
             },

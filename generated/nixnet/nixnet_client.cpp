@@ -618,6 +618,22 @@ start(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const simp
   return response;
 }
 
+StatusToStringResponse
+status_to_string(const StubPtr& stub, const pb::int32& status_id)
+{
+  ::grpc::ClientContext context;
+
+  auto request = StatusToStringRequest{};
+  request.set_status_id(status_id);
+
+  auto response = StatusToStringResponse{};
+
+  raise_if_error(
+      stub->StatusToString(&context, request, &response));
+
+  return response;
+}
+
 StopResponse
 stop(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const simple_variant<StartStopScope, pb::uint32>& scope)
 {

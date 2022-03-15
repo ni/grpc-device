@@ -46,6 +46,7 @@ class NiXnetMockLibrary : public nixnet_grpc::NiXnetLibraryInterface {
   MOCK_METHOD(nxStatus_t, ReadSignalSinglePoint, (nxSessionRef_t sessionRef, f64 valueBuffer[], u32 sizeOfValueBuffer, nxTimestamp100ns_t timestampBuffer[], u32 sizeOfTimestampBuffer), (override));
   MOCK_METHOD(nxStatus_t, ReadSignalWaveform, (nxSessionRef_t sessionRef, f64 timeout, nxTimestamp100ns_t* startTime, f64* deltaTime, f64 valueBuffer[], u32 sizeOfValueBuffer, u32* numberOfValuesReturned), (override));
   MOCK_METHOD(nxStatus_t, Start, (nxSessionRef_t sessionRef, u32 scope), (override));
+  MOCK_METHOD(void, StatusToString, (nxStatus_t statusID, u32 sizeofString, char statusDescription[2048]), (override));
   MOCK_METHOD(nxStatus_t, Stop, (nxSessionRef_t sessionRef, u32 scope), (override));
   MOCK_METHOD(nxStatus_t, SystemClose, (nxSessionRef_t systemRef), (override));
   MOCK_METHOD(nxStatus_t, SystemOpen, (nxSessionRef_t* systemRef), (override));

@@ -51,6 +51,7 @@ GetSubPropertySizeResponse get_sub_property_size(const StubPtr& stub, const nide
 ReadSignalSinglePointResponse read_signal_single_point(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const pb::uint32& size_of_value_buffer, const pb::uint32& size_of_timestamp_buffer);
 ReadSignalWaveformResponse read_signal_waveform(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const simple_variant<TimeOut, double>& timeout, const pb::uint32& size_of_value_buffer);
 StartResponse start(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const simple_variant<StartStopScope, pb::uint32>& scope);
+StatusToStringResponse status_to_string(const StubPtr& stub, const pb::int32& status_id);
 StopResponse stop(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const simple_variant<StartStopScope, pb::uint32>& scope);
 SystemCloseResponse system_close(const StubPtr& stub, const nidevice_grpc::Session& system_ref);
 SystemOpenResponse system_open(const StubPtr& stub);
