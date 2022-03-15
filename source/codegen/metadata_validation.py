@@ -77,8 +77,10 @@ PARAM_SCHEMA = Schema(
         Optional("grpc_name"): str,
         Optional("return_value"): bool,
         Optional("supports_standard_copy_convert"): bool,
-        Optional("get_last_error"): bool,
+        Optional("supports_standard_output_allocation"): bool,
+        Optional("get_last_error"): str,
         Optional("additional_arguments_to_copy_convert"): [str],
+        Optional("proto_only"): bool,
     }
 )
 
@@ -211,9 +213,11 @@ def _validate_function(function_name: str, metadata: dict):
                 if "type" not in parameter:
                     if "grpc_type" not in parameter:
                         raise Exception(f"parameter {parameter['name']} has no type or grpc_type!")
-                    if not parameter.get("repeated_var_args", False):
+                    if not parameter.get("repeated_var_args", False) and not parameter.get(
+                        "proto_only", False
+                    ):
                         raise Exception(
-                            f"parameter {parameter['name']} has no type and repeated_var_args is not set!"
+                            f"parameter {parameter['name']} has no type and repeated_var_args or meta_param is not set!"
                         )
                 if "enum" in parameter:
                     if parameter["enum"] not in metadata["enums"]:

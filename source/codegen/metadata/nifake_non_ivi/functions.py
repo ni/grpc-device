@@ -164,7 +164,7 @@ functions = {
             },
             {
                 'direction': 'out',
-                'get_last_error': True,
+                'get_last_error': 'get_last_error',
                 'name': 'errorMessage',
                 'type': 'char[]'
             }
