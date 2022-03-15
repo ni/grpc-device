@@ -135,6 +135,38 @@ namespace nixnetsocket_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiXnetSocketService::GetAddrInfo(::grpc::ServerContext* context, const GetAddrInfoRequest* request, GetAddrInfoResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto stack_ref_grpc_session = request->stack_ref();
+      nxIpStackRef_t stack_ref = nx_ip_stack_ref_t_resource_repository_->access_session(stack_ref_grpc_session.id(), stack_ref_grpc_session.name());
+      auto node = request->node().c_str();
+      auto service = request->service().c_str();
+      auto hints = convert_from_grpc<nxaddrinfo>(request->hints());
+      auto res = allocate_output_storage<nxaddrinfo, google::protobuf::RepeatedPtrField<AddrInfo>>();
+      auto status = library_->GetAddrInfo(stack_ref, node, service, hints, &res);
+      response->set_status(status);
+      if (status_ok(status)) {
+        convert_to_grpc(res, response->mutable_res());
+      }
+      else {
+        const auto error_message = get_last_error_message(library_);
+        response->set_error_message(error_message);
+        const auto error_num = get_last_error_num(library_);
+        response->set_error_num(error_num);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiXnetSocketService::Listen(::grpc::ServerContext* context, const ListenRequest* request, ListenResponse* response)
   {
     if (context->IsCancelled()) {

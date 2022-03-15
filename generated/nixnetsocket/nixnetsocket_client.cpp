@@ -67,6 +67,25 @@ connect(const StubPtr& stub, const nidevice_grpc::Session& socket, const SockAdd
   return response;
 }
 
+GetAddrInfoResponse
+get_addr_info(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const pb::string& node, const pb::string& service, const AddrInfoHint& hints)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetAddrInfoRequest{};
+  request.mutable_stack_ref()->CopyFrom(stack_ref);
+  request.set_node(node);
+  request.set_service(service);
+  request.mutable_hints()->CopyFrom(hints);
+
+  auto response = GetAddrInfoResponse{};
+
+  raise_if_error(
+      stub->GetAddrInfo(&context, request, &response));
+
+  return response;
+}
+
 ListenResponse
 listen(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::int32& backlog)
 {

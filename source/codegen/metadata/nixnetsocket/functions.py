@@ -76,6 +76,43 @@ functions = {
         ],
         'returns': 'int32_t'
     },
+    'GetAddrInfo': {
+        'cname': 'nxgetaddrinfo',
+        'parameters': [
+            {
+                'direction': 'in', 
+                'name': 'stack_ref', 
+                'type': 'nxIpStackRef_t'
+            },
+            {
+                'direction': 'in',
+                'name': 'node',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'service',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'hints',
+                'supports_standard_copy_convert': True,
+                'grpc_type': 'AddrInfoHint',
+                'pointer': True,
+                'type': 'nxaddrinfo'
+            },
+            {
+                'direction': 'out',
+                'name': 'res',
+                'supports_standard_copy_convert': True,
+                'supports_standard_output_allocation': True,
+                'pointer': True,
+                'type': 'nxaddrinfo'
+            }
+        ],
+        'returns': 'int32_t'
+    },
     'Listen': {
         'cname': 'nxlisten',
         'parameters': [

@@ -423,7 +423,100 @@ struct SockOptDataOutputConverter {
   nxlinger data_linger;
 };
 
-inline void convert_to_grpc(const SockOptDataOutputConverter& storage, SockOptData* output)
+inline void convert_to_grpc(const SockOptDataOutputConverter& storage, SockOptData* output) struct AddrInfoHintInputConverter {
+  AddrInfoHintInputConverter(const AddrInfoHint& input)
+  {
+    addr_info.ai_flags = input.flags();
+    addr_info.ai_family = input.family();
+    addr_info.ai_socktype = input.sock_type();
+    addr_info.ai_protocol = input.protocol();
+
+    // Other addr_info fields for the hint should be 0 or null
+    addr_info.ai_addrlen = 0;
+    addr_info.ai_addr = NULL;
+    addr_info.ai_canonname = NULL;
+    addr_info.ai_next = NULL;
+  }
+
+  operator nxaddrinfo*()
+  {
+    return &addr_info;
+  }
+
+  operator const nxaddrinfo*() const
+  {
+    return &addr_info;
+  }
+
+  nxaddrinfo addr_info;
+};
+
+template <typename TAddrInfoHint>
+inline AddrInfoHintInputConverter convert_from_grpc(const AddrInfoHint& input)
+{
+  return AddrInfoHintInputConverter(input);
+}
+
+struct AddrInfoOutputConverter {
+  AddrInfoOutputConverter() : addr_info_ptr(nullptr)
+  {
+  }
+
+  nxaddrinfo** operator&()
+  {
+    return &addr_info_ptr;
+  }
+
+  void to_grpc(pb_::RepeatedPtrField<AddrInfo>& output)
+  {
+    auto curr_addr_info_ptr = addr_info_ptr;
+    for (
+        auto curr_addr_info_ptr = addr_info_ptr;
+        curr_addr_info_ptr != nullptr;
+        curr_addr_info_ptr = curr_addr_info_ptr->ai_next) {
+      auto curr_grpc_addr_info = output.Add();
+      curr_grpc_addr_info->set_flags(curr_addr_info_ptr->ai_flags);
+      curr_grpc_addr_info->set_family(curr_addr_info_ptr->ai_family);
+      curr_grpc_addr_info->set_sock_type(curr_addr_info_ptr->ai_socktype);
+      curr_grpc_addr_info->set_protocol(curr_addr_info_ptr->ai_protocol);
+      curr_grpc_addr_info->set_canon_name(curr_addr_info_ptr->ai_canonname);
+
+      // Copy out the SockAddr.
+      // Copied logic from SockAddrOutputConverter.
+      auto addr_info_addr = curr_grpc_addr_info->mutable_addr();
+      switch (curr_addr_info_ptr->ai_addr->sa_family) {
+        case nxAF_INET: {
+          auto ipv4_input = reinterpret_cast<const nxsockaddr_in*>(curr_addr_info_ptr->ai_addr);
+          auto ipv4_output = addr_info_addr->mutable_ipv4();
+          ipv4_output->set_port(ipv4_input->sin_port);
+          ipv4_output->set_addr(ipv4_input->sin_addr.addr);
+        } break;
+        case nxAF_INET6: {
+          const auto ipv6_input = reinterpret_cast<const nxsockaddr_in6*>(curr_addr_info_ptr->ai_addr);
+          auto ipv6_output = addr_info_addr->mutable_ipv6();
+          ipv6_output->set_port(ipv6_input->sin6_port);
+          ipv6_output->set_flow_info(ipv6_input->sin6_flowinfo);
+          // Reinterpret unsigned char to char.
+          auto addr_out = reinterpret_cast<const char*>(ipv6_input->sin6_addr.addr);
+          auto addr_size = sizeof(ipv6_input->sin6_addr.addr);
+          ipv6_output->set_addr(
+              {&addr_out[0],
+               &addr_out[addr_size]});
+          ipv6_output->set_scope_id(ipv6_input->sin6_scope_id);
+        } break;
+        default:
+          break;
+      }
+    }
+    // Free the address info after we've read it.
+    nxfreeaddrinfo(curr_addr_info_ptr);
+    curr_addr_info_ptr = nullptr;
+  }
+
+  nxaddrinfo* addr_info_ptr;
+};
+
+inline void convert_to_grpc(AddrInfoOutputConverter& storage, pb_::RepeatedPtrField<AddrInfo>* output)
 {
   storage.to_grpc(*output);
 }
@@ -444,11 +537,17 @@ template <>
 struct TypeToStorageType<nxVirtualInterface_t, google::protobuf::RepeatedPtrField<nixnetsocket_grpc::VirtualInterface>> {
   using StorageType = nixnetsocket_grpc::VirtualInterfaceOutputConverter;
 };
+
 // Specialization of TypeToStorageType so that allocate_storage_type will
 // allocate SockOptDataOutputConverters for void* output params.
 template <>
 struct TypeToStorageType<void*, nixnetsocket_grpc::SockOptData> {
   using StorageType = nixnetsocket_grpc::SockOptDataOutputConverter;
+};
+
+template <>
+struct TypeToStorageType<nxaddrinfo, google::protobuf::RepeatedPtrField<nixnetsocket_grpc::AddrInfo>> {
+  using StorageType = nixnetsocket_grpc::AddrInfoOutputConverter;
 };
 }  // namespace converters
 }  // namespace nidevice_grpc

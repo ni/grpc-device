@@ -62,3 +62,19 @@ message SockOptData {
     Linger data_linger = 4;
   }
 }
+
+message AddrInfo {
+  int32 flags = 1;
+  int32 family = 2;
+  int32 sock_type = 3;
+  int32 protocol = 4;
+  SockAddr addr = 5;
+  string canon_name = 6;
+}
+
+message AddrInfoHint {
+  int32 flags = 1;
+  int32 family = 2;
+  int32 sock_type = 3;
+  int32 protocol = 4;
+}
