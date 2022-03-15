@@ -24,7 +24,10 @@ class NiXnetSocketLibrary : public nixnetsocket_grpc::NiXnetSocketLibraryInterfa
   int32_t Listen(nxSOCKET socket, int32_t backlog);
   int32_t SendTo(nxSOCKET socket, char dataptr[], int32_t size, int32_t flags, nxsockaddr* to, nxsocklen_t tolen);
   int32_t Send(nxSOCKET socket, char dataptr[], int32_t size, int32_t flags);
+  int32_t RecvFrom(nxSOCKET socket, char mem[], int32_t size, int32_t flags, nxsockaddr* from, nxsocklen_t* fromlen);
   int32_t Recv(nxSOCKET socket, char mem[], int32_t size, int32_t flags);
+  int32_t GetSockName(nxSOCKET socket, nxsockaddr* addr, nxsocklen_t* addrlen);
+  int32_t GetPeerName(nxSOCKET socket, nxsockaddr* addr, nxsocklen_t* addrlen);
   int32_t Shutdown(nxSOCKET socket, int32_t how);
   int32_t Close(nxSOCKET socket);
   int32_t GetLastErrorNum();
@@ -43,7 +46,10 @@ class NiXnetSocketLibrary : public nixnetsocket_grpc::NiXnetSocketLibraryInterfa
   using ListenPtr = decltype(&nxlisten);
   using SendToPtr = decltype(&nxsendto);
   using SendPtr = decltype(&nxsend);
+  using RecvFromPtr = decltype(&nxrecvfrom);
   using RecvPtr = decltype(&nxrecv);
+  using GetSockNamePtr = decltype(&nxgetsockname);
+  using GetPeerNamePtr = decltype(&nxgetpeername);
   using ShutdownPtr = decltype(&nxshutdown);
   using ClosePtr = decltype(&nxclose);
   using GetLastErrorNumPtr = int32_t (*)();
@@ -62,7 +68,10 @@ class NiXnetSocketLibrary : public nixnetsocket_grpc::NiXnetSocketLibraryInterfa
     ListenPtr Listen;
     SendToPtr SendTo;
     SendPtr Send;
+    RecvFromPtr RecvFrom;
     RecvPtr Recv;
+    GetSockNamePtr GetSockName;
+    GetPeerNamePtr GetPeerName;
     ShutdownPtr Shutdown;
     ClosePtr Close;
     GetLastErrorNumPtr GetLastErrorNum;
