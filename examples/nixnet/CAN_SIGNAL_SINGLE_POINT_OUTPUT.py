@@ -1,10 +1,7 @@
 r"""
- This example writes a signal value when a keyboard character is pressed.This is used to demonstrate a 
- signal single point output session. This example uses hardcoded signal names that use the NIXNET_example 
- database. To use your own database, you need to add an alias to your database file using the NI-XNET 
- Database Editor and then modify the database name and signals used here. Please make sure that the bus 
- is properly terminated as this example does not enable the on-board termination. Also ensure that the 
- transceivers are externally powered when using C Series modules.
+ This example writes a signal value when a keyboard character is pressed.
+ This is used to demonstrate a signal single point output session. 
+ This example uses hardcoded signal names that use the NIXNET_example database. 
 
 The gRPC API is built from the C API. NI-XNET documentation is installed with the driver at:
   C:\Program Files (x86)\IVI Foundation\IVI\Drivers\niXNET\Documentation\NIXNETCref.chm
@@ -31,8 +28,8 @@ If they are not passed in as command line arguments, then by default the server 
 
 import sys
 
-import grpc
 import getch
+import grpc
 import nixnet_pb2 as nixnet_types
 import nixnet_pb2_grpc as grpc_nixnet
 
