@@ -87,7 +87,7 @@ enums = {
             }
         ]
     },
-    'DBProperties': {
+    'DBProperty': {
         'values': [
             {
                 'name': 'DATABASE_CLST_REFS',
@@ -928,7 +928,7 @@ enums = {
             }
         ]
     },
-    'Properties': {
+    'Property': {
         'values': [
             {
                 'name': 'SESSION_APPLICATION_PROTOCOL',
@@ -2549,7 +2549,27 @@ enums = {
             }
         ]
     },
-    'ReadStateValue': {
+    'StartStopScope': {
+        'values': [
+            {
+                'name': 'START_STOP_NORMAL',
+                'value': 0
+            },
+            {
+                'name': 'START_STOP_SESSION_ONLY',
+                'value': 1
+            },
+            {
+                'name': 'START_STOP_INTERFACE_ONLY',
+                'value': 2
+            },
+            {
+                'name': 'START_STOP_SESSION_ONLY_BLOCKING',
+                'value': 3
+            }
+        ]
+    },
+    'StateValue': {
         'values': [
             {
                 'name': 'SESSION_INFO_STATE_STOPPED',
@@ -2689,27 +2709,7 @@ enums = {
             }
         ]
     },
-    'StartStopScope': {
-        'values': [
-            {
-                'name': 'START_STOP_NORMAL',
-                'value': 0
-            },
-            {
-                'name': 'START_STOP_SESSION_ONLY',
-                'value': 1
-            },
-            {
-                'name': 'START_STOP_INTERFACE_ONLY',
-                'value': 2
-            },
-            {
-                'name': 'START_STOP_SESSION_ONLY_BLOCKING',
-                'value': 3
-            }
-        ]
-    },
-    'SubProperties': {
+    'SubProperty': {
         'values': [
             {
                 'name': 'SESSION_SUB_CAN_START_TIME_OFF',
