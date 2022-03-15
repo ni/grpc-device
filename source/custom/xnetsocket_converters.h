@@ -433,9 +433,9 @@ inline void convert_to_grpc(const SockOptDataOutputConverter& storage, SockOptDa
 
     // Other addr_info fields for the hint should be 0 or null
     addr_info.ai_addrlen = 0;
-    addr_info.ai_addr = NULL;
-    addr_info.ai_canonname = NULL;
-    addr_info.ai_next = NULL;
+    addr_info.ai_addr = nullptr;
+    addr_info.ai_canonname = nullptr;
+    addr_info.ai_next = nullptr;
   }
 
   operator nxaddrinfo*()
