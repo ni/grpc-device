@@ -27,8 +27,8 @@ ClearResponse clear(const StubPtr& stub, const nidevice_grpc::Session& session_r
 ConnectTerminalsResponse connect_terminals(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const simple_variant<TerminalName, std::string>& source, const simple_variant<TerminalName, std::string>& destination);
 ConvertTimestamp100nsTo1nsResponse convert_timestamp100ns_to1ns(const StubPtr& stub, const pb::uint64& from);
 ConvertTimestamp1nsTo100nsResponse convert_timestamp1ns_to100ns(const StubPtr& stub, const pb::uint64& from);
-CreateSessionResponse create_session(const StubPtr& stub, const pb::string& database_name, const pb::string& cluster_name, const pb::string& list, const pb::string& interface, const simple_variant<CreateSessionMode, pb::uint32>& mode);
-CreateSessionByRefResponse create_session_by_ref(const StubPtr& stub, const std::vector<nidevice_grpc::Session>& array_of_database_ref, const pb::string& interface, const simple_variant<CreateSessionMode, pb::uint32>& mode);
+CreateSessionResponse create_session(const StubPtr& stub, const pb::string& database_name, const pb::string& cluster_name, const pb::string& list, const pb::string& interface_name, const simple_variant<CreateSessionMode, pb::uint32>& mode);
+CreateSessionByRefResponse create_session_by_ref(const StubPtr& stub, const std::vector<nidevice_grpc::Session>& array_of_database_ref, const pb::string& interface_name, const simple_variant<CreateSessionMode, pb::uint32>& mode);
 DbAddAliasResponse db_add_alias(const StubPtr& stub, const pb::string& database_alias, const pb::string& database_filepath, const pb::uint32& default_baud_rate);
 DbAddAlias64Response db_add_alias64(const StubPtr& stub, const pb::string& database_alias, const pb::string& database_filepath, const pb::uint64& default_baud_rate);
 DbCloseDatabaseResponse db_close_database(const StubPtr& stub, const nidevice_grpc::Session& database_ref, const pb::uint32& close_all_refs);

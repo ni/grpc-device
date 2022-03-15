@@ -221,7 +221,7 @@ namespace nixnet_grpc {
       auto database_name = request->database_name().c_str();
       auto cluster_name = request->cluster_name().c_str();
       auto list = request->list().c_str();
-      auto interface_parameter = request->interface().c_str();
+      auto interface_name = request->interface_name().c_str();
       u32 mode;
       switch (request->mode_enum_case()) {
         case nixnet_grpc::CreateSessionRequest::ModeEnumCase::kMode: {
@@ -241,7 +241,7 @@ namespace nixnet_grpc {
 
       auto init_lambda = [&] () {
         nxSessionRef_t session_ref;
-        auto status = library_->CreateSession(database_name, cluster_name, list, interface_parameter, mode, &session_ref);
+        auto status = library_->CreateSession(database_name, cluster_name, list, interface_name, mode, &session_ref);
         return std::make_tuple(status, session_ref);
       };
       uint32_t session_id = 0;
@@ -275,7 +275,7 @@ namespace nixnet_grpc {
         array_of_database_ref_request.end(),
         std::back_inserter(array_of_database_ref),
         [&](auto session) { return nx_database_ref_t_resource_repository_->access_session(session.id(), session.name()); }); 
-      auto interface_parameter = request->interface().c_str();
+      auto interface_name = request->interface_name().c_str();
       u32 mode;
       switch (request->mode_enum_case()) {
         case nixnet_grpc::CreateSessionByRefRequest::ModeEnumCase::kMode: {
@@ -295,7 +295,7 @@ namespace nixnet_grpc {
 
       auto init_lambda = [&] () {
         nxSessionRef_t session_ref;
-        auto status = library_->CreateSessionByRef(number_of_database_ref, array_of_database_ref.data(), interface_parameter, mode, &session_ref);
+        auto status = library_->CreateSessionByRef(number_of_database_ref, array_of_database_ref.data(), interface_name, mode, &session_ref);
         return std::make_tuple(status, session_ref);
       };
       uint32_t session_id = 0;
