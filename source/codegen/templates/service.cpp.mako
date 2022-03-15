@@ -54,6 +54,7 @@ resource_repository_deps = service_helpers.get_driver_shared_resource_repository
 
 namespace ${config["namespace_component"]}_grpc {
 
+  using nidevice_grpc::converters::allocate_output_storage;
   using nidevice_grpc::converters::calculate_linked_array_size;
   using nidevice_grpc::converters::convert_from_grpc;
   using nidevice_grpc::converters::convert_to_grpc;

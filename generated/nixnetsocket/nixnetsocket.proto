@@ -14,17 +14,46 @@ option csharp_namespace = "NationalInstruments.Grpc.NiXnetSocket";
 package nixnetsocket_grpc;
 
 import "session.proto";
+import "google/protobuf/duration.proto";
 
 service NiXnetSocket {
+  rpc Accept(AcceptRequest) returns (AcceptResponse);
   rpc Bind(BindRequest) returns (BindResponse);
+  rpc Connect(ConnectRequest) returns (ConnectResponse);
+  rpc Listen(ListenRequest) returns (ListenResponse);
+  rpc SendTo(SendToRequest) returns (SendToResponse);
+  rpc Send(SendRequest) returns (SendResponse);
+  rpc RecvFrom(RecvFromRequest) returns (RecvFromResponse);
+  rpc Recv(RecvRequest) returns (RecvResponse);
+  rpc GetSockName(GetSockNameRequest) returns (GetSockNameResponse);
+  rpc GetPeerName(GetPeerNameRequest) returns (GetPeerNameResponse);
+  rpc Shutdown(ShutdownRequest) returns (ShutdownResponse);
   rpc Close(CloseRequest) returns (CloseResponse);
-  rpc GetLastErrorNum(GetLastErrorNumRequest) returns (GetLastErrorNumResponse);
-  rpc GetLastErrorStr(GetLastErrorStrRequest) returns (GetLastErrorStrResponse);
+  rpc IpStackClear(IpStackClearRequest) returns (IpStackClearResponse);
+  rpc IpStackCreate(IpStackCreateRequest) returns (IpStackCreateResponse);
+  rpc IsSet(IsSetRequest) returns (IsSetResponse);
+  rpc Select(SelectRequest) returns (SelectResponse);
+  rpc SetSockOpt(SetSockOptRequest) returns (SetSockOptResponse);
   rpc Socket(SocketRequest) returns (SocketResponse);
 }
 
 enum NiXnetSocketAttribute {
   NIXNETSOCKET_ATTRIBUTE_UNSPECIFIED = 0;
+}
+
+enum OptName {
+  OPT_NAME_UNSPECIFIED = 0;
+  OPT_NAME_TCP_NODELAY = 1;
+  OPT_NAME_IP_MULTICAST_TTL  = 6;
+  OPT_NAME_IPV6_MULTICAST_HOPS = 15;
+  OPT_NAME_SO_RX_DATA = 257;
+  OPT_NAME_SO_RCV_BUF = 258;
+  OPT_NAME_SO_SND_BUF = 259;
+  OPT_NAME_SO_NON_BLOCK = 260;
+  OPT_NAME_SO_BIND_TO_DEVICE = 261;
+  OPT_NAME_SO_ERROR = 262;
+  OPT_NAME_SO_LINGER = 263;
+  OPT_NAME_SO_REUSE_ADDR = 264;
 }
 
 message SockAddrIPv4 {
@@ -46,6 +75,25 @@ message SockAddr {
   }
 }
 
+message SockOptData {
+  oneof data {
+    int32 data_int32 = 2;
+    bool data_bool = 3;
+    string data_string = 4;
+  }
+}
+
+message AcceptRequest {
+  nidevice_grpc.Session socket = 1;
+}
+
+message AcceptResponse {
+  int32 status = 1;
+  SockAddr addr = 2;
+  string error_message = 3;
+  int32 error_num = 4;
+}
+
 message BindRequest {
   nidevice_grpc.Session socket = 1;
   SockAddr name = 2;
@@ -53,6 +101,113 @@ message BindRequest {
 
 message BindResponse {
   int32 status = 1;
+  string error_message = 2;
+  int32 error_num = 3;
+}
+
+message ConnectRequest {
+  nidevice_grpc.Session socket = 1;
+  SockAddr name = 2;
+}
+
+message ConnectResponse {
+  int32 status = 1;
+  string error_message = 2;
+  int32 error_num = 3;
+}
+
+message ListenRequest {
+  nidevice_grpc.Session socket = 1;
+  int32 backlog = 2;
+}
+
+message ListenResponse {
+  int32 status = 1;
+  string error_message = 2;
+  int32 error_num = 3;
+}
+
+message SendToRequest {
+  nidevice_grpc.Session socket = 1;
+  bytes dataptr = 2;
+  int32 flags = 3;
+  SockAddr to = 4;
+}
+
+message SendToResponse {
+  int32 status = 1;
+  string error_message = 2;
+  int32 error_num = 3;
+}
+
+message SendRequest {
+  nidevice_grpc.Session socket = 1;
+  bytes dataptr = 2;
+  int32 flags = 3;
+}
+
+message SendResponse {
+  int32 status = 1;
+  string error_message = 2;
+  int32 error_num = 3;
+}
+
+message RecvFromRequest {
+  nidevice_grpc.Session socket = 1;
+  bytes mem = 2;
+  int32 flags = 3;
+}
+
+message RecvFromResponse {
+  int32 status = 1;
+  SockAddr from = 2;
+  string error_message = 3;
+  int32 error_num = 4;
+}
+
+message RecvRequest {
+  nidevice_grpc.Session socket = 1;
+  bytes mem = 2;
+  int32 flags = 3;
+}
+
+message RecvResponse {
+  int32 status = 1;
+  string error_message = 2;
+  int32 error_num = 3;
+}
+
+message GetSockNameRequest {
+  nidevice_grpc.Session socket = 1;
+}
+
+message GetSockNameResponse {
+  int32 status = 1;
+  SockAddr addr = 2;
+  string error_message = 3;
+  int32 error_num = 4;
+}
+
+message GetPeerNameRequest {
+  nidevice_grpc.Session socket = 1;
+}
+
+message GetPeerNameResponse {
+  int32 status = 1;
+  SockAddr addr = 2;
+  string error_message = 3;
+  int32 error_num = 4;
+}
+
+message ShutdownRequest {
+  nidevice_grpc.Session socket = 1;
+  int32 how = 2;
+}
+
+message ShutdownResponse {
+  int32 status = 1;
+  string error_message = 2;
+  int32 error_num = 3;
 }
 
 message CloseRequest {
@@ -61,33 +216,86 @@ message CloseRequest {
 
 message CloseResponse {
   int32 status = 1;
+  string error_message = 2;
+  int32 error_num = 3;
 }
 
-message GetLastErrorNumRequest {
+message IpStackClearRequest {
+  nidevice_grpc.Session stack_ref = 1;
 }
 
-message GetLastErrorNumResponse {
+message IpStackClearResponse {
   int32 status = 1;
+  string error_message = 2;
+  int32 error_num = 3;
 }
 
-message GetLastErrorStrRequest {
-  uint64 buf_len = 1;
+message IpStackCreateRequest {
+  string session_name = 1;
+  string stack_name = 2;
+  string config = 3;
 }
 
-message GetLastErrorStrResponse {
+message IpStackCreateResponse {
   int32 status = 1;
-  string error = 2;
+  nidevice_grpc.Session stack_ref = 2;
+  string error_message = 3;
+  int32 error_num = 4;
+}
+
+message IsSetRequest {
+  nidevice_grpc.Session fd = 1;
+  repeated nidevice_grpc.Session set = 2;
+}
+
+message IsSetResponse {
+  int32 status = 1;
+  int32 is_set = 2;
+  string error_message = 3;
+  int32 error_num = 4;
+}
+
+message SelectRequest {
+  repeated nidevice_grpc.Session read_fds = 1;
+  repeated nidevice_grpc.Session write_fds = 2;
+  repeated nidevice_grpc.Session except_fds = 3;
+  google.protobuf.Duration timeout = 4;
+}
+
+message SelectResponse {
+  int32 status = 1;
+  string error_message = 2;
+  int32 error_num = 3;
+}
+
+message SetSockOptRequest {
+  nidevice_grpc.Session socket = 1;
+  int32 level = 2;
+  SockOptData opt_data = 3;
+  oneof optname_enum {
+    OptName optname = 4;
+    int32 optname_raw = 5;
+  }
+}
+
+message SetSockOptResponse {
+  int32 status = 1;
+  string error_message = 2;
+  int32 error_num = 3;
 }
 
 message SocketRequest {
   string session_name = 1;
-  int32 domain = 2;
-  int32 type = 3;
-  int32 prototcol = 4;
+  nidevice_grpc.Session stack_ref = 2;
+  int32 domain = 3;
+  int32 type = 4;
+  int32 prototcol = 5;
 }
 
 message SocketResponse {
   int32 status = 1;
   nidevice_grpc.Session socket = 2;
+  string error_message = 3;
+  int32 error_num = 4;
 }
 

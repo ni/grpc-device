@@ -542,6 +542,8 @@ ${initialize_standard_input_param(function_name, parameter)}
       auto ${parameter_name} = ${request_snippet}.c_str();\
 % elif common_helpers.is_string_arg(parameter):
       ${c_type_pointer} ${parameter_name} = (${c_type_pointer})${request_snippet}.c_str();\
+% elif common_helpers.supports_standard_copy_conversion_routines(parameter):
+      auto ${parameter_name} = convert_from_grpc<${c_type_underlying_type}>(${str.join(", ", [request_snippet] + parameter.get("additional_arguments_to_copy_convert", []))});\
 % elif grpc_type == 'repeated nidevice_grpc.Session':
       auto ${parameter_name}_request = ${request_snippet};
       std::vector<${c_type_underlying_type}> ${parameter_name};
@@ -566,8 +568,6 @@ ${initialize_standard_input_param(function_name, parameter)}
         ${parameter_name}_request.end(),
         std::back_inserter(${parameter_name}),
         [](auto x) { return (${c_type_underlying_type})x; }); \
- % elif common_helpers.supports_standard_copy_conversion_routines(parameter):
-      auto ${parameter_name} = convert_from_grpc<${c_type_underlying_type}>(${request_snippet});\
 % elif c_type in ['ViChar', 'ViInt8', 'ViInt16']:
       ${c_type} ${parameter_name} = (${c_type})${request_snippet};\
 % elif grpc_type == 'nidevice_grpc.Session':
@@ -637,8 +637,11 @@ ${initialize_standard_input_param(function_name, parameter)}
 <%
   parameter_name = common_helpers.get_cpp_local_name(parameter)
   underlying_param_type = common_helpers.get_underlying_type_name(parameter["type"])
+  grpc_type = parameter["grpc_type"]
 %>\
-%   if common_helpers.is_repeating_parameter(parameter):
+%   if common_helpers.supports_standard_output_allocation_routines(parameter):
+      auto ${parameter_name} = allocate_output_storage<${underlying_param_type}, ${grpc_type}>();
+%   elif common_helpers.is_repeating_parameter(parameter):
       auto get_${parameter_name}_if = [](std::vector<${underlying_param_type}>& vector, int n) -> ${underlying_param_type}* {
             if (vector.size() > n) {
 ## Note that this code will not handle every datatype, but it works for all
@@ -657,7 +660,7 @@ ${initialize_standard_input_param(function_name, parameter)}
 %     if common_helpers.supports_standard_copy_conversion_routines(parameter):
       std::vector<${underlying_param_type}> ${parameter_name}(${size}, ${underlying_param_type}());
 ## Byte arrays are leveraging a string as a buffer, so we don't need to take special consideration of the null terminator.
-%     elif parameter['grpc_type'] == 'bytes':
+%     elif grpc_type == 'bytes':
       std::string ${parameter_name}(${size}, '\0');
 ## Driver string APIs require room in the buffer for the null terminator. We need to account for that when sizing the string.
 %     elif common_helpers.is_string_arg(parameter) and common_helpers.get_size_mechanism(parameter) == 'fixed':
@@ -689,8 +692,8 @@ ${initialize_standard_input_param(function_name, parameter)}
 ## Handles populating the response message after calling the driver API.
 <%def name="populate_response(output_parameters, indent_level=0, init_method=False)">\
 <%
-  get_last_error_output = service_helpers.get_last_error_output_param(output_parameters)
-  normal_outputs = [p for p in output_parameters if p is not get_last_error_output]
+  get_last_error_outputs = service_helpers.get_last_error_output_params(output_parameters)
+  normal_outputs = [p for p in output_parameters if not p in get_last_error_outputs]
 %>\
 <%block filter="common_helpers.indent(indent_level)">\
       response->set_status(status);
@@ -698,13 +701,16 @@ ${initialize_standard_input_param(function_name, parameter)}
       if (status_ok(status)) {
 ${set_response_values(normal_outputs, init_method)}\
       }
-%   if get_last_error_output:
+%   if any(get_last_error_outputs):
+      else {
+%     for get_last_error_output in get_last_error_outputs:
 <%
   get_last_error_output_name = common_helpers.get_grpc_field_name(get_last_error_output)
+  get_last_error_method_name = get_last_error_output["get_last_error"]
 %>\
-      else {
-        const auto last_error_buffer = get_last_error(library_);
-        response->set_${get_last_error_output_name}(last_error_buffer.data());
+        const auto ${get_last_error_output_name} = ${get_last_error_method_name}(library_);
+        response->set_${get_last_error_output_name}(${get_last_error_output_name});
+%     endfor
       }
 %   endif
 %endif

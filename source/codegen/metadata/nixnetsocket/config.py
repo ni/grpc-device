@@ -9,9 +9,23 @@ config = {
     'namespace_component': 'nixnetsocket',
     'close_function': 'Close',
     'custom_types': [],
-    'additional_headers': { "custom/xnetsocket_converters.h": ["service.cpp"] },
+    'additional_headers': { 
+        "custom/xnetsocket_converters.h": ["service.cpp"],
+        "custom/xnetsocket_errors.h": ["service.cpp"] 
+    },
+    'get_last_error': [
+        {
+            'name': 'error_message',
+            'type': 'char[]'
+        }, 
+        {
+            'name': 'error_num', 
+            'type': 'int32_t'
+        }
+    ],
     'type_to_grpc_type': {
         'nxSOCKET': 'nidevice_grpc.Session',
+        'nxfd_set': 'repeated nidevice_grpc.Session',
         'nxIpStackRef_t': 'nidevice_grpc.Session',
         'char[]': 'string',
         'int32_t': 'int32',
@@ -22,14 +36,15 @@ config = {
         'uint32_t': 'uint32',
         'uint16_t': 'uint16',
         'int64_t': 'int64',
-        'nxsockaddr': 'SockAddr'
+        'nxsockaddr': 'SockAddr',
+        'nxtimeval': 'google.protobuf.Duration'
     },
     'code_readiness': 'NextRelease',
     'driver_name': 'NI-XNETSOCKET',
     'extra_errors_used': [
     ],
     'init_function': 'Socket',
-    'resource_handle_type': 'nxSOCKET',
+    'resource_handle_type': ['nxSOCKET', 'nxIpStackRef_t'],
     'status_ok': 'status >= 0',
     'library_info': {
         'Linux': {

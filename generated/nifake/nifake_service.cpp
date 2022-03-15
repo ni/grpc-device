@@ -16,6 +16,7 @@
 
 namespace nifake_grpc {
 
+  using nidevice_grpc::converters::allocate_output_storage;
   using nidevice_grpc::converters::calculate_linked_array_size;
   using nidevice_grpc::converters::convert_from_grpc;
   using nidevice_grpc::converters::convert_to_grpc;
@@ -174,14 +175,7 @@ namespace nifake_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViInt32 number_of_elements = request->number_of_elements();
-      auto an_array_request = request->an_array();
-      std::vector<ViBoolean> an_array;
-      std::transform(
-        an_array_request.begin(),
-        an_array_request.end(),
-        std::back_inserter(an_array),
-        [](auto x) { return x ? VI_TRUE : VI_FALSE; });
-
+      auto an_array = convert_from_grpc<ViBoolean>(request->an_array());
       auto status = library_->BoolArrayInputFunction(vi, number_of_elements, an_array.data());
       response->set_status(status);
       return ::grpc::Status::OK;

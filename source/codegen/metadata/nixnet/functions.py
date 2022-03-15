@@ -628,7 +628,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'DBProperties',
+                'enum': 'DBProperty',
                 'name': 'propertyID',
                 'type': 'u32'
             },
@@ -656,7 +656,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'DBProperties',
+                'enum': 'DBProperty',
                 'name': 'propertyID',
                 'type': 'u32'
             },
@@ -761,7 +761,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'DBProperties',
+                'enum': 'DBProperty',
                 'name': 'propertyID',
                 'type': 'u32'
             },
@@ -857,7 +857,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'Properties',
+                'enum': 'Property',
                 'name': 'propertyID',
                 'type': 'u32'
             },
@@ -884,7 +884,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'Properties',
+                'enum': 'Property',
                 'name': 'propertyID',
                 'type': 'u32'
             },
@@ -911,7 +911,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'SubProperties',
+                'enum': 'SubProperty',
                 'name': 'propertyID',
                 'type': 'u32'
             },
@@ -943,7 +943,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'SubProperties',
+                'enum': 'SubProperty',
                 'name': 'propertyID',
                 'type': 'u32'
             },
@@ -1213,7 +1213,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'Properties',
+                'enum': 'Property',
                 'name': 'propertyID',
                 'type': 'u32'
             },
@@ -1245,7 +1245,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'SubProperties',
+                'enum': 'SubProperty',
                 'name': 'propertyID',
                 'type': 'u32'
             },

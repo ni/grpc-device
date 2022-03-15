@@ -16,3 +16,11 @@ message SockAddr {
     SockAddrIPv6 ipv6 = 2;
   }
 }
+
+message SockOptData {
+  oneof data {
+    int32 data_int32 = 2;
+    bool data_bool = 3;
+    string data_string = 4;
+  }
+}

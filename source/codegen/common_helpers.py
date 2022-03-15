@@ -47,6 +47,11 @@ def is_repeated_varargs_parameter(parameter: dict):
     return parameter.get("repeated_var_args", False)
 
 
+def is_proto_only_paramater(parameter: dict):
+    """Whether the parameter is only included in the proto file and not the driver API."""
+    return parameter.get("proto_only", False)
+
+
 def is_repeating_parameter(parameter: dict):
     """Whether the parameter is a repeating parameter.
 
@@ -135,14 +140,26 @@ def supports_standard_copy_conversion_routines(parameter: dict) -> bool:
     )
 
 
-def any_function_uses_timestamp(functions):
-    """Whether the function has any parameters whose type is a timestamp."""
-    for function in functions:
-        if any(
-            p["grpc_type"] == "google.protobuf.Timestamp" for p in functions[function]["parameters"]
-        ):
-            return True
-    return False
+def supports_standard_output_allocation_routines(parameter: dict) -> bool:
+    """Whether the parameter can be allocated as an output param with allocate_output_storage."""
+    return parameter.get("supports_standard_output_allocation", False)
+
+
+def _any_function_uses_grpc_type(functions, type_name):
+    return any(p["grpc_type"] == type_name for f in functions for p in functions[f]["parameters"])
+
+
+def list_external_proto_dependencies(functions: dict) -> List[str]:
+    """Return a list of external proto files required by the functions dictionary."""
+    mappings = {
+        "google.protobuf.Timestamp": "google/protobuf/timestamp.proto",
+        "google.protobuf.Duration": "google/protobuf/duration.proto",
+    }
+    return [
+        proto_name
+        for type_name, proto_name in mappings.items()
+        if _any_function_uses_grpc_type(functions, type_name)
+    ]
 
 
 def get_custom_types(config: dict) -> List[Dict[str, Any]]:
@@ -1069,5 +1086,12 @@ def get_driver_api_params(parameters: List[dict]) -> List[dict]:
     Excludes:
     * Return values.
     * Outputs that are calculated/populated after the API call.
+    * Proto only params.
     """
-    return [p for p in parameters if not (is_return_value(p) or is_get_last_error_output_param(p))]
+    return [
+        p
+        for p in parameters
+        if not (
+            is_return_value(p) or is_get_last_error_output_param(p) or is_proto_only_paramater(p)
+        )
+    ]
