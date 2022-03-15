@@ -47,6 +47,11 @@ def is_repeated_varargs_parameter(parameter: dict):
     return parameter.get("repeated_var_args", False)
 
 
+def is_proto_only_paramater(parameter: dict):
+    """Whether the parameter is only included in the proto file and not the driver API."""
+    return parameter.get("proto_only", False)
+
+
 def is_repeating_parameter(parameter: dict):
     """Whether the parameter is a repeating parameter.
 
@@ -133,6 +138,11 @@ def supports_standard_copy_conversion_routines(parameter: dict) -> bool:
         or is_struct(parameter)
         or parameter["grpc_type"] == "repeated bool"
     )
+
+
+def supports_standard_output_allocation_routines(parameter: dict) -> bool:
+    """Whether the parameter can be allocated as an output param with allocate_output_storage."""
+    return parameter.get("supports_standard_output_allocation", False)
 
 
 def _any_function_uses_grpc_type(functions, type_name):
@@ -1076,5 +1086,12 @@ def get_driver_api_params(parameters: List[dict]) -> List[dict]:
     Excludes:
     * Return values.
     * Outputs that are calculated/populated after the API call.
+    * Proto only params.
     """
-    return [p for p in parameters if not (is_return_value(p) or is_get_last_error_output_param(p))]
+    return [
+        p
+        for p in parameters
+        if not (
+            is_return_value(p) or is_get_last_error_output_param(p) or is_proto_only_paramater(p)
+        )
+    ]

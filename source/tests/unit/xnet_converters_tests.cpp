@@ -7,6 +7,9 @@
 using namespace nixnetsocket_grpc;
 using namespace ::testing;
 namespace pb = ::google::protobuf;
+using nidevice_grpc::converters::allocate_output_storage;
+using nidevice_grpc::converters::convert_from_grpc;
+using nidevice_grpc::converters::convert_to_grpc;
 
 namespace ni {
 namespace tests {
@@ -43,7 +46,7 @@ SockAddr create_addr_ipv6(pb::uint32 port, pb::uint32 flow_info, const std::vect
 }
 
 void EXPECT_IPV6_ADDR(
-    const SockAddrHolder& converted_addr,
+    const SockAddrInputConverter& converted_addr,
     pb::uint32 port,
     pb::uint32 flow_info,
     const std::vector<char>& address,
@@ -232,6 +235,118 @@ TEST(XnetConvertersTests, DurationWithSubMicroSecondResolution_ConvertFromGrpc_C
   EXPECT_EQ(SECONDS, timeval_ptr->tv_sec);
   EXPECT_EQ(MICROS, timeval_ptr->tv_usec);
 }
+
+TEST(XnetConvertersTests, IPv4Address_ConvertToGrpc_ConvertsToIPv4Address)
+{
+  constexpr auto PORT = 100;
+  constexpr auto ADDR = 1234567;
+  auto storage = allocate_output_storage<nxsockaddr, SockAddr>();
+  auto ptr_to_storage = reinterpret_cast<nxsockaddr_in*>(&storage);
+  ptr_to_storage->sin_family = nxAF_INET;
+  ptr_to_storage->sin_port = PORT;
+  ptr_to_storage->sin_addr.addr = ADDR;
+
+  auto grpc_data = SockAddr{};
+  convert_to_grpc(storage, &grpc_data);
+
+  EXPECT_EQ(SockAddr::AddrCase::kIpv4, grpc_data.addr_case());
+  EXPECT_EQ(PORT, grpc_data.ipv4().port());
+  EXPECT_EQ(ADDR, grpc_data.ipv4().addr());
+}
+
+TEST(XnetConvertersTests, IPv6Address_ConvertToGrpc_ConvertsToIPv6Address)
+{
+  constexpr auto PORT = 100;
+  constexpr auto FLOW_INFO = 999;
+  const auto ADDRESS = std::vector<char>{0x0, 0x1, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7, 0x8, 0x9, 0xA, 0xB, 0xC, 0xD, 0xE, 0xF};
+  constexpr auto SCOPE_ID = 777;
+  auto storage = allocate_output_storage<nxsockaddr, SockAddr>();
+  auto ptr_to_storage = reinterpret_cast<nxsockaddr_in6*>(&storage);
+  ptr_to_storage->sin6_family = nxAF_INET6;
+  ptr_to_storage->sin6_port = PORT;
+  std::memcpy(
+      ptr_to_storage->sin6_addr.addr,
+      ADDRESS.data(),
+      sizeof(ptr_to_storage->sin6_addr.addr));
+  ptr_to_storage->sin6_flowinfo = FLOW_INFO;
+  ptr_to_storage->sin6_scope_id = SCOPE_ID;
+
+  auto grpc_data = SockAddr{};
+  convert_to_grpc(storage, &grpc_data);
+
+  EXPECT_EQ(SockAddr::AddrCase::kIpv6, grpc_data.addr_case());
+  EXPECT_EQ(PORT, grpc_data.ipv6().port());
+  EXPECT_EQ(FLOW_INFO, grpc_data.ipv6().flow_info());
+  EXPECT_THAT(
+      grpc_data.ipv6().addr(),
+      ElementsAreArray(ADDRESS.data(), ADDRESS.size()));
+  EXPECT_EQ(SCOPE_ID, grpc_data.ipv6().scope_id());
+}
+
+TEST(XnetConvertersTests, UnknownAddress_ConvertToGrpc_ConvertsToUnsetAddress)
+{
+  auto storage = allocate_output_storage<nxsockaddr, SockAddr>();
+  auto ptr_to_storage = &storage;
+  ptr_to_storage->sa_family = nxAF_UNSPEC;
+
+  auto grpc_data = SockAddr{};
+  convert_to_grpc(storage, &grpc_data);
+
+  EXPECT_EQ(SockAddr::AddrCase::ADDR_NOT_SET, grpc_data.addr_case());
+}
+
+TEST(XnetConvertersTests, SockOptDataWithInt_ConvertFromGrpc_DataLooksReasonable)
+{
+  const int32_t RCV_BUF_SIZE = 1000;
+  SockOptData sock_opt_data = SockOptData{};
+  sock_opt_data.set_data_int32(RCV_BUF_SIZE);
+
+  auto opt_data = convert_from_grpc<SockOptDataInputConverter>(sock_opt_data);
+
+  EXPECT_EQ(RCV_BUF_SIZE, opt_data.data_int);
+  EXPECT_EQ(sizeof(int32_t), opt_data.size());
+  EXPECT_EQ(&(opt_data.data_int), opt_data.data());
+}
+
+TEST(XnetConvertersTests, SockOptDataWithBool_ConvertFromGrpc_DataLooksReasonable)
+{
+  const bool REUSE_ADDR = true;
+  SockOptData sock_opt_data = SockOptData{};
+  sock_opt_data.set_data_bool(REUSE_ADDR);
+
+  auto opt_data = convert_from_grpc<SockOptDataInputConverter>(sock_opt_data);
+
+  EXPECT_EQ(REUSE_ADDR, opt_data.data_bool);
+  EXPECT_EQ(sizeof(bool), opt_data.size());
+  EXPECT_EQ(&(opt_data.data_bool), opt_data.data());
+}
+
+TEST(XnetConvertersTests, SockOptDataWithString_ConvertFromGrpc_DataLooksReasonable)
+{
+  const std::string DEVICE_NAME = "I'm a Device";
+  SockOptData sock_opt_data = SockOptData{};
+  sock_opt_data.set_data_string(DEVICE_NAME);
+
+  auto opt_data = convert_from_grpc<SockOptDataInputConverter>(sock_opt_data);
+
+  EXPECT_EQ(DEVICE_NAME, opt_data.data_string);
+  EXPECT_EQ(DEVICE_NAME.size(), opt_data.size());
+  EXPECT_EQ(opt_data.data_string.data(), opt_data.data());
+  char* dereferenced_data = (char*)(opt_data.data());
+  EXPECT_STREQ(DEVICE_NAME.c_str(), dereferenced_data);
+}
+
+TEST(XnetConvertersTests, SockOptDataWithDataUnset_ConvertFromGrpc_NullPtrDataAndZeroSize)
+{
+  SockOptData sock_opt_data = SockOptData{};
+  // Avoid setting the oneof data field
+
+  auto opt_data = convert_from_grpc<SockOptDataInputConverter>(sock_opt_data);
+
+  EXPECT_EQ(0, opt_data.size());
+  EXPECT_EQ(nullptr, opt_data.data());
+}
+
 }  // namespace
 }  // namespace unit
 }  // namespace tests

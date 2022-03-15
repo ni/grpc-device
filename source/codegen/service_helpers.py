@@ -629,10 +629,9 @@ def is_size_param_passed_by_ptr(parameter: dict) -> bool:
     return parameter.get("is_size_param") and parameter.get("pointer")
 
 
-def get_last_error_output_param(parameters: List[dict]) -> Optional[dict]:
-    """Get the get_last_error parameter if any (or None)."""
+def get_last_error_output_params(parameters: List[dict]) -> List[dict]:
+    """Return list of get_last_error parameters."""
     get_last_error_outputs = [
         p for p in parameters if common_helpers.is_get_last_error_output_param(p)
     ]
-    assert len(get_last_error_outputs) <= 1, "Only one get_last_error output is supported"
-    return get_last_error_outputs[0] if get_last_error_outputs else None
+    return get_last_error_outputs

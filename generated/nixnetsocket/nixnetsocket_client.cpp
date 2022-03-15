@@ -17,6 +17,22 @@
 
 namespace nixnetsocket_grpc::experimental::client {
 
+AcceptResponse
+accept(const StubPtr& stub, const nidevice_grpc::Session& socket)
+{
+  ::grpc::ClientContext context;
+
+  auto request = AcceptRequest{};
+  request.mutable_socket()->CopyFrom(socket);
+
+  auto response = AcceptResponse{};
+
+  raise_if_error(
+      stub->Accept(&context, request, &response));
+
+  return response;
+}
+
 BindResponse
 bind(const StubPtr& stub, const nidevice_grpc::Session& socket, const SockAddr& name)
 {
@@ -105,6 +121,24 @@ send(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::string
   return response;
 }
 
+RecvFromResponse
+recv_from(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::string& mem, const pb::int32& flags)
+{
+  ::grpc::ClientContext context;
+
+  auto request = RecvFromRequest{};
+  request.mutable_socket()->CopyFrom(socket);
+  request.set_mem(mem);
+  request.set_flags(flags);
+
+  auto response = RecvFromResponse{};
+
+  raise_if_error(
+      stub->RecvFrom(&context, request, &response));
+
+  return response;
+}
+
 RecvResponse
 recv(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::string& mem, const pb::int32& flags)
 {
@@ -119,6 +153,38 @@ recv(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::string
 
   raise_if_error(
       stub->Recv(&context, request, &response));
+
+  return response;
+}
+
+GetSockNameResponse
+get_sock_name(const StubPtr& stub, const nidevice_grpc::Session& socket)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetSockNameRequest{};
+  request.mutable_socket()->CopyFrom(socket);
+
+  auto response = GetSockNameResponse{};
+
+  raise_if_error(
+      stub->GetSockName(&context, request, &response));
+
+  return response;
+}
+
+GetPeerNameResponse
+get_peer_name(const StubPtr& stub, const nidevice_grpc::Session& socket)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetPeerNameRequest{};
+  request.mutable_socket()->CopyFrom(socket);
+
+  auto response = GetPeerNameResponse{};
+
+  raise_if_error(
+      stub->GetPeerName(&context, request, &response));
 
   return response;
 }
@@ -156,33 +222,35 @@ close(const StubPtr& stub, const nidevice_grpc::Session& socket)
   return response;
 }
 
-GetLastErrorNumResponse
-get_last_error_num(const StubPtr& stub)
+IpStackClearResponse
+ip_stack_clear(const StubPtr& stub, const nidevice_grpc::Session& stack_ref)
 {
   ::grpc::ClientContext context;
 
-  auto request = GetLastErrorNumRequest{};
+  auto request = IpStackClearRequest{};
+  request.mutable_stack_ref()->CopyFrom(stack_ref);
 
-  auto response = GetLastErrorNumResponse{};
+  auto response = IpStackClearResponse{};
 
   raise_if_error(
-      stub->GetLastErrorNum(&context, request, &response));
+      stub->IpStackClear(&context, request, &response));
 
   return response;
 }
 
-GetLastErrorStrResponse
-get_last_error_str(const StubPtr& stub, const pb::uint64& buf_len)
+IpStackCreateResponse
+ip_stack_create(const StubPtr& stub, const pb::string& stack_name, const pb::string& config)
 {
   ::grpc::ClientContext context;
 
-  auto request = GetLastErrorStrRequest{};
-  request.set_buf_len(buf_len);
+  auto request = IpStackCreateRequest{};
+  request.set_stack_name(stack_name);
+  request.set_config(config);
 
-  auto response = GetLastErrorStrResponse{};
+  auto response = IpStackCreateResponse{};
 
   raise_if_error(
-      stub->GetLastErrorStr(&context, request, &response));
+      stub->IpStackCreate(&context, request, &response));
 
   return response;
 }
@@ -223,12 +291,39 @@ select(const StubPtr& stub, const std::vector<nidevice_grpc::Session>& read_fds,
   return response;
 }
 
+SetSockOptResponse
+set_sock_opt(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::int32& level, const SockOptData& opt_data, const simple_variant<OptName, pb::int32>& optname)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetSockOptRequest{};
+  request.mutable_socket()->CopyFrom(socket);
+  request.set_level(level);
+  request.mutable_opt_data()->CopyFrom(opt_data);
+  const auto optname_ptr = optname.get_if<OptName>();
+  const auto optname_raw_ptr = optname.get_if<pb::int32>();
+  if (optname_ptr) {
+    request.set_optname(*optname_ptr);
+  }
+  else if (optname_raw_ptr) {
+    request.set_optname_raw(*optname_raw_ptr);
+  }
+
+  auto response = SetSockOptResponse{};
+
+  raise_if_error(
+      stub->SetSockOpt(&context, request, &response));
+
+  return response;
+}
+
 SocketResponse
-socket(const StubPtr& stub, const pb::int32& domain, const pb::int32& type, const pb::int32& prototcol)
+socket(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const pb::int32& domain, const pb::int32& type, const pb::int32& prototcol)
 {
   ::grpc::ClientContext context;
 
   auto request = SocketRequest{};
+  request.mutable_stack_ref()->CopyFrom(stack_ref);
   request.set_domain(domain);
   request.set_type(type);
   request.set_prototcol(prototcol);

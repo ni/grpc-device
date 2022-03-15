@@ -5,7 +5,7 @@
 #include <vector>
 
 template <typename TLibraryPtr>
-std::vector<char> get_last_error(TLibraryPtr& library)
+std::string get_last_error_message(TLibraryPtr& library)
 {
   std::vector<char> error_message;
   int32 error_code;
@@ -16,7 +16,7 @@ std::vector<char> get_last_error(TLibraryPtr& library)
   error_message.resize(buffer_size);
   library->GetError(NO_INSTR_HANDLE, &error_code, buffer_size, error_message.data());
 
-  return error_message;
+  return std::string(error_message.data());
 }
 
 #endif  // NIDEVICE_GRPC_DEVICE_NIRFMX_ERRORS_H
