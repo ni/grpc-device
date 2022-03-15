@@ -627,7 +627,7 @@ enums = {
             },
             {
                 'name': 'SIG_PDU_REF',
-                'type': 'parent_ref',
+                'type': 'db_ref',
                 'value': 84082705
             },
             {
