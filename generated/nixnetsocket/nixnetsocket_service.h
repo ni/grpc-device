@@ -49,7 +49,10 @@ public:
   ::grpc::Status Listen(::grpc::ServerContext* context, const ListenRequest* request, ListenResponse* response) override;
   ::grpc::Status SendTo(::grpc::ServerContext* context, const SendToRequest* request, SendToResponse* response) override;
   ::grpc::Status Send(::grpc::ServerContext* context, const SendRequest* request, SendResponse* response) override;
+  ::grpc::Status RecvFrom(::grpc::ServerContext* context, const RecvFromRequest* request, RecvFromResponse* response) override;
   ::grpc::Status Recv(::grpc::ServerContext* context, const RecvRequest* request, RecvResponse* response) override;
+  ::grpc::Status GetSockName(::grpc::ServerContext* context, const GetSockNameRequest* request, GetSockNameResponse* response) override;
+  ::grpc::Status GetPeerName(::grpc::ServerContext* context, const GetPeerNameRequest* request, GetPeerNameResponse* response) override;
   ::grpc::Status Shutdown(::grpc::ServerContext* context, const ShutdownRequest* request, ShutdownResponse* response) override;
   ::grpc::Status Close(::grpc::ServerContext* context, const CloseRequest* request, CloseResponse* response) override;
   ::grpc::Status IpStackClear(::grpc::ServerContext* context, const IpStackClearRequest* request, IpStackClearResponse* response) override;
