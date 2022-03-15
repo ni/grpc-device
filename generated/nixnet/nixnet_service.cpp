@@ -968,7 +968,7 @@ namespace nixnet_grpc {
         }
       }
 
-      u32 state_size = request->state_size();
+      auto state_size = sizeof(nxTimeLocalNetwork_t);
       _nxTimeLocalNetwork_t state_value {};
       auto status = library_->ReadStateTimeTrigger(session_ref, timeout, state_size, &state_value);
       response->set_status(status);

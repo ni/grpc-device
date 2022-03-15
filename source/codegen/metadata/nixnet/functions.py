@@ -1149,7 +1149,8 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'stateSize',
-                'type': 'u32'
+                'type': 'u32',
+                'include_in_proto': False
             },
             {
                 'direction': 'out',
@@ -1185,7 +1186,9 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'stateSize',
-                'type': 'u32'
+                'type': 'u32',
+                'hardcoded_value': 'sizeof(nxTimeLocalNetwork_t)',
+                'include_in_proto': False
             },
             {
                 'direction': 'out',

@@ -50,14 +50,14 @@ message ReadStateValue {
         uint64 time_start = 3;
         CanComm can_comm = 4;
         FlexRayComm flex_ray_comm = 5;
-        FlexRayStats flex_ray_stat = 6;
+        FlexRayStats flex_ray_stats = 6;
         LinComm lin_comm = 7;
         uint32 session_info = 8;
-        J1939CommState comm_stat = 9;
+        J1939CommState j1939_comm_state = 9;
         TimeLocalNetwork time_current2 = 10;
         TimeLocalNetwork time_communicating2 = 11;
         TimeLocalNetwork time_start2 = 12;
-        bytes raw_value = 13;
+        bytes state_value_raw = 13;
     }
 }
 

@@ -595,7 +595,7 @@ read_signal_waveform(const StubPtr& stub, const nidevice_grpc::Session& session_
 }
 
 ReadStateResponse
-read_state(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const simple_variant<ReadState, pb::uint32>& state_id, const pb::uint32& state_size)
+read_state(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const simple_variant<ReadState, pb::uint32>& state_id)
 {
   ::grpc::ClientContext context;
 
@@ -609,7 +609,6 @@ read_state(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const
   else if (state_id_raw_ptr) {
     request.set_state_id_raw(*state_id_raw_ptr);
   }
-  request.set_state_size(state_size);
 
   auto response = ReadStateResponse{};
 
@@ -620,7 +619,7 @@ read_state(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const
 }
 
 ReadStateTimeTriggerResponse
-read_state_time_trigger(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const simple_variant<TimeOut, double>& timeout, const pb::uint32& state_size)
+read_state_time_trigger(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const simple_variant<TimeOut, double>& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -634,7 +633,6 @@ read_state_time_trigger(const StubPtr& stub, const nidevice_grpc::Session& sessi
   else if (timeout_raw_ptr) {
     request.set_timeout_raw(*timeout_raw_ptr);
   }
-  request.set_state_size(state_size);
 
   auto response = ReadStateTimeTriggerResponse{};
 
