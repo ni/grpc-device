@@ -109,7 +109,7 @@ nxStatus_t NiXnetLibrary::ConnectTerminals(nxSessionRef_t sessionRef, const char
 #endif
 }
 
-nxStatus_t NiXnetLibrary::ConvertByteArrayToFramesSinglePoint(nxSessionRef_t sessionRef, u8 valueBuffer[], u32 sizeOfValueBuffer, void* buffer, u32 sizeOfBuffer, u32* numberOfBytesReturned)
+nxStatus_t NiXnetLibrary::ConvertByteArrayToFramesSinglePoint(nxSessionRef_t sessionRef, u8 valueBuffer[], u32 sizeOfValueBuffer, u8 buffer[], u32 sizeOfBuffer, u32* numberOfBytesReturned)
 {
   if (!function_pointers_.ConvertByteArrayToFramesSinglePoint) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxConvertByteArrayToFramesSinglePoint.");
@@ -133,7 +133,7 @@ nxStatus_t NiXnetLibrary::ConvertFramesToSignalsSinglePoint(nxSessionRef_t sessi
 #endif
 }
 
-nxStatus_t NiXnetLibrary::ConvertSignalsToFramesSinglePoint(nxSessionRef_t sessionRef, f64 valueBuffer[], u32 sizeOfValueBuffer, void* buffer, u32 sizeOfBuffer, u32* numberOfBytesReturned)
+nxStatus_t NiXnetLibrary::ConvertSignalsToFramesSinglePoint(nxSessionRef_t sessionRef, f64 valueBuffer[], u32 sizeOfValueBuffer, u8 buffer[], u32 sizeOfBuffer, u32* numberOfBytesReturned)
 {
   if (!function_pointers_.ConvertSignalsToFramesSinglePoint) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxConvertSignalsToFramesSinglePoint.");

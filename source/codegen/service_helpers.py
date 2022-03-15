@@ -120,6 +120,8 @@ def create_args(parameters):
     result = ""
     have_expanded_varargs = False
     for parameter in parameters:
+        if parameter.get("proto_only", False):
+            continue
         if parameter.get("repeating_argument", False):
             continue
         parameter_name = common_helpers.get_cpp_local_name(parameter)

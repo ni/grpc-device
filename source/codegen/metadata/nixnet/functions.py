@@ -48,7 +48,7 @@ functions = {
         'returns': 'nxStatus_t'
     },
     'ConvertByteArrayToFramesSinglePoint': {
-        'codegen_method': 'CustomCode',
+        # 'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
@@ -77,8 +77,10 @@ functions = {
                     'mechanism': 'passed-in',
                     'value': 'sizeOfBuffer'
                 },
-                'type': 'void[]',
-                'grpc_type': 'repeated FrameBuffer'
+                'type': 'u8[]',
+                'grpc_type': 'repeated FrameBuffer',
+                'supports_standard_copy_convert': True,
+                'additional_arguments_to_copy_convert': ['number_of_bytes_returned', 'frame_type']
             },
             {
                 'direction': 'in',
@@ -141,7 +143,6 @@ functions = {
         'returns': 'nxStatus_t'
     },
     'ConvertFramesToSignalsSinglePoint': {
-        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
@@ -156,7 +157,8 @@ functions = {
                     'value': 'numberOfBytesForFrames'
                 },
                 'type': 'void[]',
-                'grpc_type': 'repeated FrameBuffer'
+                'grpc_type': 'repeated FrameBuffer',
+                'supports_standard_copy_convert': True,
             },
             {
                 'direction': 'in',
@@ -196,7 +198,6 @@ functions = {
         'returns': 'nxStatus_t'
     },
     'ConvertSignalsToFramesSinglePoint': {
-        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
@@ -224,8 +225,10 @@ functions = {
                     'mechanism': 'passed-in',
                     'value': 'sizeOfBuffer'
                 },
-                'type': 'void[]',
-                'grpc_type': 'repeated FrameBuffer'
+                'type': 'u8[]',
+                'grpc_type': 'repeated FrameBuffer',
+                'supports_standard_copy_convert': True,
+                'additional_arguments_to_copy_convert': ['number_of_bytes_returned', 'frame_type']
             },
             {
                 'direction': 'in',

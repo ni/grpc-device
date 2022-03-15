@@ -151,6 +151,11 @@ struct FrameHolder {
     return frame_buffer.data();
   }
 
+  void* data()
+  {
+    return frame_buffer.data();
+  }
+
   // size() method is used to simplify codegen calculating the size of the
   // selected frame buffer.
   uint32_t size() const
@@ -161,15 +166,19 @@ struct FrameHolder {
 
   std::vector<uint8_t> frame_buffer;
 };
+// template <>
+void convert_to_grpc(std::vector<u8>& input, google::protobuf::RepeatedPtrField<nixnet_grpc::FrameBuffer>* output, u32 number_of_bytes, u32 frame_type);
+// template <>
+void convert_to_grpc(const void* input, nixnet_grpc::FrameBuffer* output, u32 frame_type);
+template <typename TFrame>
+nixnet_grpc::FrameHolder convert_from_grpc(const pb_::RepeatedPtrField<nixnet_grpc::FrameBuffer>& input)
+{
+  return nixnet_grpc::FrameHolder(input);
+}
 }  // namespace nixnet_grpc
 
 namespace nidevice_grpc {
 namespace converters {
-
-template <typename TFrame>
-nixnet_grpc::FrameHolder convert_from_grpc(const pb_::RepeatedPtrField<nixnet_grpc::FrameBuffer>& input);
-template <typename TFrame>
-void convert_to_grpc(const void* input, nixnet_grpc::FrameBuffer* output, nixnet_grpc::FrameType frame_type);
 
 }  // namespace converters
 }  // namespace nidevice_grpc
