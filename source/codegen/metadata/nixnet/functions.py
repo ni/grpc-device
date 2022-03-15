@@ -48,7 +48,6 @@ functions = {
         'returns': 'nxStatus_t'
     },
     'ConvertByteArrayToFramesSinglePoint': {
-        # 'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',

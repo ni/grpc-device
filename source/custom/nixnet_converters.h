@@ -8,12 +8,10 @@ namespace pb_ = ::google::protobuf;
 
 namespace nixnet_grpc {
 
-// This class allows us to have something allocated on the stack that can be used as an
-// nxsockaddr* and initialized from a grpc SockAddr using standard codegen and copy convert routines.
 struct FrameHolder {
   FrameHolder(const pb_::RepeatedPtrField<FrameBuffer>& input)
   {
-    // TODO: pending verification of copy operation
+    // all frames in repeated field must be of same type
     switch (input[0].frame_case()) {
       case FrameBuffer::kCan:
         InitializeCanFrames(input);
@@ -31,7 +29,7 @@ struct FrameHolder {
         InitializeEnetFrames(input);
         break;
       default:
-        // TODO: error
+        throw std::invalid_argument("The value for FrameBuffer not specified or not supported");
         break;
     }
   }
@@ -41,11 +39,10 @@ struct FrameHolder {
     std::vector<uint8_t> frame_data;
     for (auto grpc_frame : input) {
       if (!grpc_frame.has_can()) {
-        // TODO: return error, frames inconsistent
+        throw std::invalid_argument("All FrameBuffer instances in repeated field should have same oneof set for the frame");
       }
       ConvertFrame(grpc_frame.can(), frame_data);
 
-      // TODO: optimize to use single vector instead of copying every frame to main vector
       frame_buffer.insert(frame_buffer.end(), frame_data.begin(), frame_data.end());
     }
   }
@@ -55,11 +52,10 @@ struct FrameHolder {
     std::vector<uint8_t> frame_data;
     for (auto grpc_frame : input) {
       if (!grpc_frame.has_lin()) {
-        // TODO: return error, frames inconsistent
+        throw std::invalid_argument("All FrameBuffer instances in repeated field should have same oneof set for the frame");
       }
       ConvertFrame(grpc_frame.lin(), frame_data);
 
-      // TODO: optimize to use single vector instead of copying every frame to main vector
       frame_buffer.insert(frame_buffer.end(), frame_data.begin(), frame_data.end());
     }
   }
@@ -69,11 +65,10 @@ struct FrameHolder {
     std::vector<uint8_t> frame_data;
     for (auto grpc_frame : input) {
       if (!grpc_frame.has_flex_ray()) {
-        // TODO: return error, frames inconsistent
+        throw std::invalid_argument("All FrameBuffer instances in repeated field should have same oneof set for the frame");
       }
       ConvertFrame(grpc_frame.flex_ray(), frame_data);
 
-      // TODO: optimize to use single vector instead of copying every frame to main vector
       frame_buffer.insert(frame_buffer.end(), frame_data.begin(), frame_data.end());
     }
   }
@@ -83,11 +78,10 @@ struct FrameHolder {
     std::vector<uint8_t> frame_data;
     for (auto grpc_frame : input) {
       if (!grpc_frame.has_j1939()) {
-        // TODO: return error, frames inconsistent
+        throw std::invalid_argument("All FrameBuffer instances in repeated field should have same oneof set for the frame");
       }
       ConvertFrame(grpc_frame.j1939(), frame_data);
 
-      // TODO: optimize to use single vector instead of copying every frame to main vector
       frame_buffer.insert(frame_buffer.end(), frame_data.begin(), frame_data.end());
     }
   }
@@ -95,13 +89,13 @@ struct FrameHolder {
   void InitializeEnetFrames(const pb_::RepeatedPtrField<FrameBuffer>& input)
   {
     std::vector<uint8_t> frame_data;
+    const u16 EnetHeaderLength = sizeof(nxFrameEnet_t) - 1;  // last byte in nxFrameEnet_t is u8 FrameData[1]
     for (auto grpc_frame : input) {
       if (!grpc_frame.has_enet()) {
-        // TODO: return error, frames inconsistent
+        throw std::invalid_argument("All FrameBuffer instances in repeated field should have same oneof set for the frame");
       }
 
-      auto enet_header_length = sizeof(nxFrameEnet_t) - 1;  // last byte in nxFrameEnet_t is u8 FrameData[1]
-      u16 frame_size = enet_header_length + grpc_frame.enet().frame_data().length();
+      u16 frame_size = EnetHeaderLength + grpc_frame.enet().frame_data().length();
       frame_data.resize(frame_size, 0);
       nxFrameEnet_t* current_frame = (nxFrameEnet_t*)frame_data.data();
       // The Length field in ENET write frame is big-endian. Typecast to u16 before doing the conversion
@@ -116,7 +110,6 @@ struct FrameHolder {
           grpc_frame.enet().frame_data().data(),
           grpc_frame.enet().frame_data().length());
 
-      // TODO: optimize to use single vector instead of copying every frame to main vector
       frame_buffer.insert(frame_buffer.end(), frame_data.begin(), frame_data.end());
     }
   }
@@ -139,18 +132,6 @@ struct FrameHolder {
         payload_length);
   }
 
-  // Implicit conversion to nxsockaddr* simplifies codegen because these are passed by pointer to
-  // the driver.
-  operator void*()
-  {
-    return frame_buffer.data();
-  }
-
-  operator const void*() const
-  {
-    return frame_buffer.data();
-  }
-
   void* data()
   {
     return frame_buffer.data();
@@ -166,21 +147,18 @@ struct FrameHolder {
 
   std::vector<uint8_t> frame_buffer;
 };
+
 // template <>
 void convert_to_grpc(std::vector<u8>& input, google::protobuf::RepeatedPtrField<nixnet_grpc::FrameBuffer>* output, u32 number_of_bytes, u32 frame_type);
+
 // template <>
 void convert_to_grpc(const void* input, nixnet_grpc::FrameBuffer* output, u32 frame_type);
+
 template <typename TFrame>
 nixnet_grpc::FrameHolder convert_from_grpc(const pb_::RepeatedPtrField<nixnet_grpc::FrameBuffer>& input)
 {
   return nixnet_grpc::FrameHolder(input);
 }
 }  // namespace nixnet_grpc
-
-namespace nidevice_grpc {
-namespace converters {
-
-}  // namespace converters
-}  // namespace nidevice_grpc
 
 #endif /* NIDEVICE_GRPC_DEVICE_NIXNET_CONVERTERS_H */
