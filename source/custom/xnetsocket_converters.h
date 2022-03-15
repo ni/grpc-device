@@ -431,11 +431,7 @@ inline void convert_to_grpc(const SockOptDataOutputConverter& storage, SockOptDa
     addr_info.ai_socktype = input.sock_type();
     addr_info.ai_protocol = input.protocol();
 
-    // Other addr_info fields for the hint should be 0 or null
-    addr_info.ai_addrlen = 0;
-    addr_info.ai_addr = nullptr;
-    addr_info.ai_canonname = nullptr;
-    addr_info.ai_next = nullptr;
+    // Other addr_info fields for the hint should be left unset.
   }
 
   operator nxaddrinfo*()
@@ -448,7 +444,7 @@ inline void convert_to_grpc(const SockOptDataOutputConverter& storage, SockOptDa
     return &addr_info;
   }
 
-  nxaddrinfo addr_info;
+  nxaddrinfo addr_info{};
 };
 
 template <typename TAddrInfoHint>
