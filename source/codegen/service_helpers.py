@@ -444,16 +444,13 @@ def generate_mapping_enums_to_type(enums: dict) -> List[str]:
 
 def get_distinct_types_from_enums(enums: dict) -> str:
     """Return a comma seperated string of different data types used in enums value type field."""
-    s = ""
     distinct_type = set()
     for enum_name in enums.keys():
         if "generate-mapping-type" in enums[enum_name]:
             for i, value in enumerate(enums[enum_name]["values"]):
                 type = value["type"]
-                if type not in distinct_type:
-                    s += f"{type}_, "
-                    distinct_type.add(type)
-    return s
+                distinct_type.add(f"{type}_")
+    return str.join(", ", sorted(distinct_type))
 
 
 def get_bitfield_value_to_name_mapping(parameter: dict, enums: dict) -> Dict[int, str]:

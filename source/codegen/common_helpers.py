@@ -435,7 +435,7 @@ def filter_proto_rpc_functions(functions):
 
 
 def filter_proto_rpc_functions_for_message(functions):
-    """Return function metadata only for functions to include for generating proto rpc methods."""
+    """Return function metadata only for functions to include for generating proto rpc messages."""
     functions_for_proto = {"public", "CustomCode"}
     return [
         name

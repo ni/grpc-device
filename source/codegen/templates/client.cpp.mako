@@ -47,7 +47,6 @@ namespace ${namespace} {
   stub_param = f"const {stub_ptr_alias}& stub"
   is_streaming = common_helpers.has_streaming_response(f)
   client_params = client_helpers.get_client_parameters(f, enums)
-  include_in_client = functions[function].get('include_in_client', True)
 %>\
 %   if is_streaming:
 ${client_helpers.streaming_response_type(response_type)}
