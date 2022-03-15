@@ -1,11 +1,49 @@
+r"""
+ This example writes a signal value when a keyboard character is pressed.This is used to demonstrate a 
+ signal single point output session. This example uses hardcoded signal names that use the NIXNET_example 
+ database. To use your own database, you need to add an alias to your database file using the NI-XNET 
+ Database Editor and then modify the database name and signals used here. Please make sure that the bus 
+ is properly terminated as this example does not enable the on-board termination. Also ensure that the 
+ transceivers are externally powered when using C Series modules.
+
+The gRPC API is built from the C API. NI-XNET documentation is installed with the driver at:
+  C:\Program Files (x86)\IVI Foundation\IVI\Drivers\niXNET\Documentation\NIXNETCref.chm
+Getting Started:
+
+To run this example, install "NI-DCPower Driver" on the server machine:
+  https://www.ni.com/en-in/support/downloads/drivers/download.ni-xnet.html
+
+For instructions on how to use protoc to generate gRPC client interfaces, see our "Creating a gRPC
+Client" wiki page:
+  https://github.com/ni/grpc-device/wiki/Creating-a-gRPC-Client
+
+Refer to the NI DCPOWER gRPC Wiki for the latest C Function Reference:
+  https://github.com/ni/grpc-device/wiki/NI-XNET-C-Function-Reference
+
+ Running from command line:
+
+Server machine's IP address, port number, and resource name can be passed as separate command line
+arguments.
+  > python measure-record.py <server_address> <port_number>
+If they are not passed in as command line arguments, then by default the server address will be
+"localhost:31763"
+"""
+
+import sys
 
 import grpc
+import getch
 import nixnet_pb2 as nixnet_types
 import nixnet_pb2_grpc as grpc_nixnet
-import getch
 
 SERVER_ADDRESS = "localhost"
 SERVER_PORT = "31763"
+
+# Read in cmd args
+if len(sys.argv) >= 2:
+    SERVER_ADDRESS = sys.argv[1]
+if len(sys.argv) >= 3:
+    SERVER_PORT = sys.argv[2]
 
 # Parameters
 INTERFACE = "CAN1"
@@ -16,19 +54,18 @@ NUM_SIGNALS = 2
 SUCCESS = 0
 
 # Display Error Function
-def displayerror_andexit(Status, Source):
+def display_error_andexit(status, source):
+    """Display error message and exit."""
     status_string = [None] * 1024
-    nixnet_types.StatustoString(Status,status_string.__sizeof__(),Source) 
-    print("\n\nERROR at {}!\n{}\n", Source, status_string)
-    print(Status)
+    nixnet_types.StatustoString(status, status_string.__sizeof__(), source) 
+    print("\n\nERROR at {}!\n{}\n", source, status_string)
     print("\nExecution stopped.\nPress any key to quit\n")
-
-    client.Clear(nixnet_types.ClearRequest(session_ref = m_SessionRef))
+    client.Clear(nixnet_types.ClearRequest(session_ref = session_reference))
     exit(1)
 
 i = 0
-m_SessionRef = 0
-value_Buffer = [0] * NUM_SIGNALS
+session_reference = 0
+value_buffer = [0] * NUM_SIGNALS
 
 # Create the communication channel for the remote host and create connections to the NI-DCPower and
 # session services.
@@ -48,40 +85,38 @@ CreateSession_Response = client.CreateSession(
         mode = nixnet_types.CREATE_SESSION_MODE_MODE_SIGNAL_OUT_SINGLE_POINT
     ))
 
-m_SessionRef = CreateSession_Response.session_ref
+session_reference = CreateSession_Response.session_ref
 
 if CreateSession_Response.status == SUCCESS:
     print("Session Created Successfully.\n")
 else:
-    displayerror_andexit(CreateSession_Response.status,"CreateSession")
+    display_error_andexit(CreateSession_Response.status,"CreateSession")
     
 print("\nPress any key to transmit new signal values or q to quit\n")
 
 while not (getch.getch()).decode('UTF-8') == 'q':
-    value_Buffer[0] = float(i)
-    value_Buffer[1] = float(i*10)
+    value_buffer[0] = float(i)
+    value_buffer[1] = float(i*10)
     
     # Update the signal data
     response = client.WriteSignalSinglePoint(
         nixnet_types.WriteSignalSinglePointRequest(
-            session_ref = m_SessionRef,
-            value_buffer = value_Buffer
+            session_ref = session_reference,
+            value_buffer = value_buffer
         ))
     
     if response.status == SUCCESS: 
         print("Signals sent:")
-        print("Signal 1: ", value_Buffer[0])
-        print("Signal 2: ", value_Buffer[1],end="\n\n")
-        i += 1
-        if i > 10 :
-            i = 0
+        print(f"Signal 1: {value_buffer[0]}")
+        print(f"Signal 2: {value_buffer[1]}", end="\n\n")
+        i = i+1 if i<10 else 0
     else:
-        displayerror_andexit(response.status,"WriteSignalSinglePoint")
+        display_error_andexit(response.status,"WriteSignalSinglePoint")
             
 # Clears the X-NET Session
-response = client.Clear(nixnet_types.ClearRequest(session_ref = m_SessionRef))
+response = client.Clear(nixnet_types.ClearRequest(session_ref = session_reference))
 if response.status == SUCCESS:
     print("Session cleared successfully!\n")
 else:
-    displayerror_andexit(response.status,"Clear")
+    display_error_andexit(response.status,"Clear")
 
