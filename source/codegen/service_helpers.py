@@ -656,7 +656,7 @@ def should_copy_to_response(parameter: dict) -> bool:
 
 def is_size_param_passed_by_ptr(parameter: dict) -> bool:
     """Return whether parameters is a size param passed-by-pointer."""
-    return parameter.get("is_size_param") and parameter.get("pointer")
+    return parameter.get("is_size_param", False) and parameter.get("pointer", False)
 
 
 def get_last_error_output_params(parameters: List[dict]) -> List[dict]:
@@ -670,7 +670,9 @@ def get_last_error_output_params(parameters: List[dict]) -> List[dict]:
 def get_protobuf_cpplib_type(grpc_type: str) -> str:
     """Return the C++ type used grpc generated code for the given protobuf type.
 
-    Note: this implementation is incomplete.
+    Note: this implementation is incomplete. It only handles the default case
+    where the grpc_type name is the same as the cpplib typename and repeated
+    message types. Add other mappings as needed.
     """
     stripped_repeated = common_helpers.strip_prefix(grpc_type, "repeated ")
     if stripped_repeated != grpc_type:
