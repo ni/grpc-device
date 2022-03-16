@@ -990,8 +990,9 @@ namespace nixnet_grpc {
       auto sizeof_string = 2048U;
       std::string status_description(2048 - 1, '\0');
       library_->StatusToString(status_id, sizeof_string, (char*)status_description.data());
-      response->set_status(0);
-      if (status_ok(0)) {
+      auto status = 0;
+      response->set_status(status);
+      if (status_ok(status)) {
         response->set_status_description(status_description);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_status_description()));
       }

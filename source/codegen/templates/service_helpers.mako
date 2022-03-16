@@ -694,13 +694,11 @@ ${initialize_standard_input_param(function_name, parameter)}
 <%
   get_last_error_outputs = service_helpers.get_last_error_output_params(output_parameters)
   normal_outputs = [p for p in output_parameters if not p in get_last_error_outputs]
-  return_type = service_helpers.get_function_return_type(function_data)
-  status = "status" if return_type != "void" else "0"
 %>\
 <%block filter="common_helpers.indent(indent_level)">\
-      response->set_status(${status});
+      response->set_status(status);
 %if output_parameters:
-      if (status_ok(${status})) {
+      if (status_ok(status)) {
 ${set_response_values(normal_outputs, init_method)}\
       }
 %   if any(get_last_error_outputs):

@@ -1315,6 +1315,7 @@ functions = {
         'returns': 'nxStatus_t'
     },
     'StatusToString': {
+        'status_expression' : '0',
         'parameters': [
             {
                 'direction': 'in',
