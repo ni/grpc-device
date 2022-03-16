@@ -62,7 +62,7 @@ def check_for_error(status):
 
 
 i = 0
-value_buffer = [0] * NUM_SIGNALS
+value_buffer = [0.0] * NUM_SIGNALS
 
 # Create the communication channel for the remote host and create connections to the NI-XNET and
 # session services.
