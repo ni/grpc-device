@@ -280,6 +280,40 @@ ip_stack_create(const StubPtr& stub, const pb::string& stack_name, const pb::str
   return response;
 }
 
+IpStackGetInfoResponse
+ip_stack_get_info(const StubPtr& stub, const nidevice_grpc::Session& stack_ref)
+{
+  ::grpc::ClientContext context;
+
+  auto request = IpStackGetInfoRequest{};
+  request.mutable_stack_ref()->CopyFrom(stack_ref);
+
+  auto response = IpStackGetInfoResponse{};
+
+  raise_if_error(
+      stub->IpStackGetInfo(&context, request, &response));
+
+  return response;
+}
+
+IpStackWaitForInterfaceResponse
+ip_stack_wait_for_interface(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const pb::string& local_interface, const pb::int32& timeout_ms)
+{
+  ::grpc::ClientContext context;
+
+  auto request = IpStackWaitForInterfaceRequest{};
+  request.mutable_stack_ref()->CopyFrom(stack_ref);
+  request.set_local_interface(local_interface);
+  request.set_timeout_ms(timeout_ms);
+
+  auto response = IpStackWaitForInterfaceResponse{};
+
+  raise_if_error(
+      stub->IpStackWaitForInterface(&context, request, &response));
+
+  return response;
+}
+
 IsSetResponse
 is_set(const StubPtr& stub, const nidevice_grpc::Session& fd, const std::vector<nidevice_grpc::Session>& set)
 {
