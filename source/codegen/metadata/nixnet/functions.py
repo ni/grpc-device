@@ -487,7 +487,8 @@ functions = {
     },
     'DbGetDBCAttribute': {
         'cname': 'nxdbGetDBCAttribute',
-        'codegen_method': 'no',
+        'codegen_method': 'CustomCodeCustomProtoMessage',
+        'include_in_client': False,
         'parameters': [
             {
                 'direction': 'in',
@@ -507,6 +508,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'include_in_proto': False,
                 'name': 'attributeTextSize',
                 'type': 'u32'
             },
