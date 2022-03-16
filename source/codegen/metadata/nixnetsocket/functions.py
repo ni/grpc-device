@@ -434,6 +434,18 @@ functions = {
         ],
         'returns': 'int32_t'
     },
+    'IpStackFreeInfo': {
+        'codegen_method': 'private',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'firstVirtualInterface',
+                'pointer': True,
+                'type': 'nxVirtualInterface_t',
+            },
+        ],
+        'returns': 'int32_t'
+    },
     'IpStackGetInfo': {
         'parameters': [
             {
@@ -453,6 +465,7 @@ functions = {
                 'name': 'virtual_interfaces',
                 'pointer': True,
                 'supports_standard_output_allocation': True,
+                'additional_arguments_to_output_allocation': ['library_'],
                 'supports_standard_copy_convert': True,
                 'type': 'nxVirtualInterface_t',
             },

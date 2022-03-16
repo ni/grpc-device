@@ -3,6 +3,7 @@
 #include <google/protobuf/repeated_field.h>
 #include <google/protobuf/util/time_util.h>
 #include <nixnetsocket.pb.h>
+#include <nixnetsocket/nixnetsocket_library_interface.h>
 #include <nxsocket.h>
 #include <server/converters.h>
 #include <server/session_resource_repository.h>
@@ -192,7 +193,7 @@ struct TimeValInputConverter {
 };
 
 struct VirtualInterfaceOutputConverter {
-  VirtualInterfaceOutputConverter() : virtual_interface_ptr(nullptr)
+  VirtualInterfaceOutputConverter(NiXnetSocketLibraryInterface* library) : virtual_interface_ptr(nullptr), library(library)
   {
   }
 
@@ -234,11 +235,12 @@ struct VirtualInterfaceOutputConverter {
       }
     }
     // Free the stack info after we've read it.
-    nxIpStackFreeInfo(virtual_interface_ptr);
+    library->IpStackFreeInfo(virtual_interface_ptr);
     virtual_interface_ptr = nullptr;
   }
 
   nxVirtualInterface_t* virtual_interface_ptr;
+  NiXnetSocketLibraryInterface* library;
 };
 
 template <typename TSockAddr>
@@ -315,7 +317,7 @@ struct SockOptDataInputConverter {
         return sizeof(int32_t);
         break;
       case SockOptData::DataCase::kDataString:
-        return data_string.size();
+        return static_cast<nxsocklen_t>(data_string.size());
         break;
       case SockOptData::DataCase::kDataBool:
         return sizeof(bool);

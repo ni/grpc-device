@@ -525,7 +525,7 @@ namespace nixnetsocket_grpc {
       auto stack_ref_grpc_session = request->stack_ref();
       nxIpStackRef_t stack_ref = nx_ip_stack_ref_t_resource_repository_->access_session(stack_ref_grpc_session.id(), stack_ref_grpc_session.name());
       auto info_id = nxIPSTACK_INFO_ID;
-      auto virtual_interfaces = allocate_output_storage<nxVirtualInterface_t, google::protobuf::RepeatedPtrField<VirtualInterface>>();
+      auto virtual_interfaces = allocate_output_storage<nxVirtualInterface_t, google::protobuf::RepeatedPtrField<VirtualInterface>>(library_);
       auto status = library_->IpStackGetInfo(stack_ref, info_id, &virtual_interfaces);
       response->set_status(status);
       if (status_ok(status)) {
