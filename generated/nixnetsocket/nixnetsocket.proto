@@ -29,6 +29,7 @@ service NiXnetSocket {
   rpc GetPeerName(GetPeerNameRequest) returns (GetPeerNameResponse);
   rpc Shutdown(ShutdownRequest) returns (ShutdownResponse);
   rpc Close(CloseRequest) returns (CloseResponse);
+  rpc GetSockOpt(GetSockOptRequest) returns (GetSockOptResponse);
   rpc IpStackClear(IpStackClearRequest) returns (IpStackClearResponse);
   rpc IpStackCreate(IpStackCreateRequest) returns (IpStackCreateResponse);
   rpc IsSet(IsSetRequest) returns (IsSetResponse);
@@ -220,6 +221,22 @@ message CloseResponse {
   int32 error_num = 3;
 }
 
+message GetSockOptRequest {
+  nidevice_grpc.Session socket = 1;
+  int32 level = 2;
+  oneof optname_enum {
+    OptName optname = 3;
+    int32 optname_raw = 4;
+  }
+}
+
+message GetSockOptResponse {
+  int32 status = 1;
+  SockOptData optval = 2;
+  string error_message = 3;
+  int32 error_num = 4;
+}
+
 message IpStackClearRequest {
   nidevice_grpc.Session stack_ref = 1;
 }
@@ -271,11 +288,11 @@ message SelectResponse {
 message SetSockOptRequest {
   nidevice_grpc.Session socket = 1;
   int32 level = 2;
-  SockOptData opt_data = 3;
   oneof optname_enum {
-    OptName optname = 4;
-    int32 optname_raw = 5;
+    OptName optname = 3;
+    int32 optname_raw = 4;
   }
+  SockOptData opt_data = 5;
 }
 
 message SetSockOptResponse {

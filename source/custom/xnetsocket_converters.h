@@ -282,6 +282,83 @@ inline SockOptDataInputConverter convert_from_grpc(const SockOptData& input)
   return SockOptDataInputConverter(input);
 }
 
+// This class allows us to have something allocated on the stack that provides backing
+// storage for a void* opt_val output param and converts it to the SockOptData grpc-type.
+struct SockOptDataOutputConverter {
+  SockOptDataOutputConverter(int32_t opt_name) : opt_name(opt_name)
+  {
+  }
+
+  void* data()
+  {
+    switch (opt_name) {
+      case OptName::OPT_NAME_IP_MULTICAST_TTL:
+      case OptName::OPT_NAME_IPV6_MULTICAST_HOPS:
+      case OptName::OPT_NAME_SO_RX_DATA:
+      case OptName::OPT_NAME_SO_RCV_BUF:
+      case OptName::OPT_NAME_SO_SND_BUF:
+      case OptName::OPT_NAME_TCP_NODELAY: {
+        return &data_int;
+        break;
+      }
+      case OptName::OPT_NAME_SO_LINGER:
+      case OptName::OPT_NAME_SO_NON_BLOCK:
+      case OptName::OPT_NAME_SO_REUSE_ADDR: {
+        return &data_bool;
+        break;
+      }
+      case OptName::OPT_NAME_SO_BIND_TO_DEVICE:
+      case OptName::OPT_NAME_SO_ERROR: {
+        data_string = std::string(256 - 1, '\0');  // TODO: What's the max string size to allocate for a sock opt?
+        return &data_string[0];
+        break;
+      }
+      default:
+        return nullptr;
+        break;
+    }
+  }
+
+  void to_grpc(SockOptData& output) const
+  {
+    switch (opt_name) {
+      case OptName::OPT_NAME_IP_MULTICAST_TTL:
+      case OptName::OPT_NAME_IPV6_MULTICAST_HOPS:
+      case OptName::OPT_NAME_SO_RX_DATA:
+      case OptName::OPT_NAME_SO_RCV_BUF:
+      case OptName::OPT_NAME_SO_SND_BUF:
+      case OptName::OPT_NAME_TCP_NODELAY: {
+        output.set_data_int32(data_int);
+        break;
+      }
+      case OptName::OPT_NAME_SO_LINGER:
+      case OptName::OPT_NAME_SO_NON_BLOCK:
+      case OptName::OPT_NAME_SO_REUSE_ADDR: {
+        output.set_data_bool(data_bool);
+        break;
+      }
+      case OptName::OPT_NAME_SO_BIND_TO_DEVICE:
+      case OptName::OPT_NAME_SO_ERROR: {
+        output.set_data_string(data_string);
+        nidevice_grpc::converters::trim_trailing_nulls(*(output.mutable_data_string()));
+        break;
+      }
+      default:
+        break;
+    }
+  }
+
+  int32_t opt_name;
+  int32_t data_int;
+  bool data_bool;
+  std::string data_string;
+};
+
+inline void convert_to_grpc(const SockOptDataOutputConverter& storage, SockOptData* output)
+{
+  storage.to_grpc(*output);
+}
+
 }  // namespace nixnetsocket_grpc
 
 // Template specializations go in nidevice_grpc::converters.
@@ -292,6 +369,13 @@ namespace converters {
 template <>
 struct TypeToStorageType<nxsockaddr, nixnetsocket_grpc::SockAddr> {
   using StorageType = nixnetsocket_grpc::SockAddrOutputConverter;
+};
+
+// Specialization of TypeToStorageType so that allocate_storage_type will
+// allocate SockOptDataOutputConverters for void* output params.
+template <>
+struct TypeToStorageType<void*, nixnetsocket_grpc::SockOptData> {
+  using StorageType = nixnetsocket_grpc::SockOptDataOutputConverter;
 };
 }  // namespace converters
 }  // namespace nidevice_grpc

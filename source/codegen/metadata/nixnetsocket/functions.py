@@ -363,6 +363,44 @@ functions = {
         ],
         'returns': 'char*'
     },
+    'GetSockOpt': {
+        'cname': 'nxgetsockopt',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'socket',
+                'type': 'nxSOCKET'
+            },
+            {
+                'direction': 'in',
+                'name': 'level',
+                'type': 'int32_t'
+            },
+            {
+                'direction': 'in',
+                'name': 'optname',
+                'type': 'int32_t',
+                'enum': 'OptName'
+            },
+            {
+                'direction': 'out',
+                'name': 'optval',
+                'grpc_type': 'SockOptData',
+                'supports_standard_output_allocation': True,
+                "additional_arguments_to_output_allocation": ["optname"],
+                'supports_standard_copy_convert': True,
+                'pointer': True,
+                'type': 'void *'
+            },
+            {
+                'direction': 'out',
+                'name': 'optlen',
+                'include_in_proto': False,
+                'type': 'nxsocklen_t'
+            }
+        ],
+        'returns': 'int32_t'
+    },
     'IpStackClear': {
         'custom_close_method': True,
         'parameters': [
@@ -481,17 +519,17 @@ functions = {
             },
             {
                 'direction': 'in',
+                'name': 'optname',
+                'type': 'int32_t',
+                'enum': 'OptName'
+            },
+            {
+                'direction': 'in',
                 'name': 'opt_data',
                 'grpc_type': 'SockOptData',
                 'supports_standard_copy_convert': True,
                 'proto_only': True,
                 'type': 'SockOptDataInputConverter'
-            },
-            {
-                'direction': 'in',
-                'name': 'optname',
-                'type': 'int32_t',
-                'enum': 'OptName'
             },
             {
                 'direction': 'in',

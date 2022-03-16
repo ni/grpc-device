@@ -245,6 +245,8 @@ def _create_param(parameter, expand_varargs=True, repeated_parameters=None):
         else:
             return "..."
     elif common_helpers.is_array(type):
+        if type == "void *":
+            return f"void* {name}"
         array_size = _get_array_param_size(parameter)
         if type[:-2] == "void":  # Having void[] in C++ is not allowed, hence using it as void*
             return f"{type[:-2]}* {name}"
