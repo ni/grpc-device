@@ -48,6 +48,7 @@ functions = {
         'returns': 'nxStatus_t'
     },
     'ConvertByteArrayToFramesSinglePoint': {
+        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -61,8 +62,7 @@ functions = {
                     'mechanism': 'len',
                     'value': 'sizeOfValueBuffer'
                 },
-                'type': 'u8[]',
-                'grpc_type': 'bytes'
+                'type': 'u8[]'
             },
             {
                 'direction': 'in',
@@ -76,10 +76,7 @@ functions = {
                     'mechanism': 'passed-in',
                     'value': 'sizeOfBuffer'
                 },
-                'type': 'u8[]',
-                'grpc_type': 'repeated FrameBuffer',
-                'supports_standard_copy_convert': True,
-                'additional_arguments_to_copy_convert': ['number_of_bytes_returned', 'frame_type']
+                'type': 'void[]'
             },
             {
                 'direction': 'in',
@@ -89,14 +86,6 @@ functions = {
             {
                 'direction': 'out',
                 'name': 'numberOfBytesReturned',
-                'include_in_proto': False,
-                'type': 'u32'
-            },
-            {
-                'direction': 'in',
-                'name': 'frameType',
-                'proto_only': True,
-                'enum': 'FrameType',
                 'type': 'u32'
             }
         ],

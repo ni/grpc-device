@@ -169,49 +169,6 @@ namespace nixnet_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiXnetService::ConvertByteArrayToFramesSinglePoint(::grpc::ServerContext* context, const ConvertByteArrayToFramesSinglePointRequest* request, ConvertByteArrayToFramesSinglePointResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto session_ref_grpc_session = request->session_ref();
-      nxSessionRef_t session_ref = session_repository_->access_session(session_ref_grpc_session.id(), session_ref_grpc_session.name());
-      u8* value_buffer = (u8*)request->value_buffer().c_str();
-      u32 size_of_value_buffer = static_cast<u32>(request->value_buffer().size());
-      u32 size_of_buffer = request->size_of_buffer();
-      u32 frame_type;
-      switch (request->frame_type_enum_case()) {
-        case nixnet_grpc::ConvertByteArrayToFramesSinglePointRequest::FrameTypeEnumCase::kFrameType: {
-          frame_type = static_cast<u32>(request->frame_type());
-          break;
-        }
-        case nixnet_grpc::ConvertByteArrayToFramesSinglePointRequest::FrameTypeEnumCase::kFrameTypeRaw: {
-          frame_type = static_cast<u32>(request->frame_type_raw());
-          break;
-        }
-        case nixnet_grpc::ConvertByteArrayToFramesSinglePointRequest::FrameTypeEnumCase::FRAME_TYPE_ENUM_NOT_SET: {
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for frame_type was not specified or out of range");
-          break;
-        }
-      }
-
-      std::vector<u8> buffer(size_of_buffer, u8());
-      u32 number_of_bytes_returned {};
-      auto status = library_->ConvertByteArrayToFramesSinglePoint(session_ref, value_buffer, size_of_value_buffer, buffer.data(), size_of_buffer, &number_of_bytes_returned);
-      response->set_status(status);
-      if (status_ok(status)) {
-        convert_to_grpc(buffer, response->mutable_buffer(), number_of_bytes_returned, frame_type);
-      }
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
   ::grpc::Status NiXnetService::ConvertFramesToSignalsSinglePoint(::grpc::ServerContext* context, const ConvertFramesToSignalsSinglePointRequest* request, ConvertFramesToSignalsSinglePointResponse* response)
   {
     if (context->IsCancelled()) {

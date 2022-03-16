@@ -25,7 +25,6 @@ using namespace nidevice_grpc::experimental::client;
 BlinkResponse blink(const StubPtr& stub, const nidevice_grpc::Session& interface_ref, const simple_variant<BlinkMode, pb::uint32>& modifier);
 ClearResponse clear(const StubPtr& stub, const nidevice_grpc::Session& session_ref);
 ConnectTerminalsResponse connect_terminals(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const simple_variant<TerminalName, std::string>& source, const simple_variant<TerminalName, std::string>& destination);
-ConvertByteArrayToFramesSinglePointResponse convert_byte_array_to_frames_single_point(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const pb::string& value_buffer, const pb::uint32& size_of_buffer, const simple_variant<FrameType, pb::uint32>& frame_type);
 ConvertFramesToSignalsSinglePointResponse convert_frames_to_signals_single_point(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const std::vector<FrameBuffer>& frame_buffer, const pb::uint32& size_of_value_buffer, const pb::uint32& size_of_timestamp_buffer);
 ConvertSignalsToFramesSinglePointResponse convert_signals_to_frames_single_point(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const std::vector<double>& value_buffer, const pb::uint32& size_of_buffer, const simple_variant<FrameType, pb::uint32>& frame_type);
 ConvertTimestamp100nsTo1nsResponse convert_timestamp100ns_to1ns(const StubPtr& stub, const pb::uint64& from);
