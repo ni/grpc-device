@@ -566,19 +566,19 @@ functions = {
                 'direction': 'in',
                 'name': 'domain',
                 'type': 'int32_t',
-                'enum': 'AddressFamilies'
+                'enum': 'AddressFamily'
             },
             {
                 'direction': 'in',
                 'name': 'type',
                 'type': 'int32_t',
-                'enum': 'SocketProtocolTypes'
+                'enum': 'SocketProtocolType'
             },
             {
                 'direction': 'in',
                 'name': 'prototcol',
                 'type': 'int32_t',
-                'enum': 'IPProtocols'
+                'enum': 'IPProtocol'
             },
             {
                 'direction': 'out',

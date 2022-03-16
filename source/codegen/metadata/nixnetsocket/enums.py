@@ -12,7 +12,7 @@ enums = {
             }
         ]
     },
-     'IPStackInffoStringFormat': {
+     'IPStackInfoStringFormat': {
         'enum-value-prefix': 'IPSTACK_INFO_STR_FORMAT',
         'values': [
             {
@@ -25,66 +25,58 @@ enums = {
             }
         ]
     },
-    'AddressFamilies': {
+    'AddressFamily': {
         'values': [
             {
-                'name': 'AF_UNSPEC',
-                'value': 0
-            },
-            {
-                'name': 'AF_INET',
+                'name': 'INET',
                 'value': 2
             },
             {
-                'name': 'AF_INET6',
+                'name': 'INET6',
                 'value': 10
             }
         ]
     },
-    'ProtocolFamilies': {
+    'ProtocolFamily': {
         'values': [
             {
-                'name': 'PF_UNSPEC',
-                'value': 0
-            },
-            {
-                'name': 'PF_INET',
+                'name': 'INET',
                 'value': 2
             },
             {
-                'name': 'PF_INET6',
+                'name': 'INET6',
                 'value': 10
             }
         ]
     },
-    'IPProtocols': {
+    'IPProtocol': {
         'values': [
             {
-                'name': 'IPPROTO_IP',
+                'name': 'IP',
                 'value': 0
             },
             {
-                'name': 'IPPROTO_TCP',
+                'name': 'TCP',
                 'value': 6
             },
             {
-                'name': 'IPPROTO_UDP',
+                'name': 'UDP',
                 'value': 8
             },
             {
-                'name': 'IPPROTO_IPV6',
+                'name': 'IPV6',
                 'value': 12
             }
         ]
     },
-    'SocketProtocolTypes': {
+    'SocketProtocolType': {
         'values': [
             {
-                'name': 'SOCK_STREAM',
+                'name': 'STREAM',
                 'value': 1
             },
             {
-                'name': 'SOCK_DGRAM',
+                'name': 'DGRAM',
                 'value': 2
             }
         ]
@@ -92,7 +84,7 @@ enums = {
     'SocketOptionLevel': {
         'values': [
             {
-                'name': 'SOL_SOCKET',
+                'name': 'SOCKET',
                 'value': 13
             }
         ]
@@ -125,6 +117,14 @@ enums = {
             },
             {
                 'name': 'IPV6_LEAVE_GROUP',
+                'value': 13
+            },
+            {
+                'name': 'IPV6_ADD_MEMBERSHIP',
+                'value': 12
+            },
+            {
+                'name': 'IPV6_DROP_MEMBERSHIP',
                 'value': 13
             },
             {
@@ -176,15 +176,15 @@ enums = {
     'Shutdown': {
         'values': [
             {
-                'name': 'SHUT_RD',
+                'name': 'RD',
                 'value': 0
             },
             {
-                'name': 'SHUT_WR',
+                'name': 'WR',
                 'value': 1
             },
             {
-                'name': 'SHUT_RDWR',
+                'name': 'RDWR',
                 'value': 2
             }
         ]

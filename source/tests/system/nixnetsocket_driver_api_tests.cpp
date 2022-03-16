@@ -140,7 +140,7 @@ class NiXnetSocketNoHardwareTests : public NiXnetSocketDriverApiTests {
 SocketResponse
 socket(client::StubPtr& stub, const nidevice_grpc::Session& stack)
 {
-  return client::socket(stub, stack, ADDRESS_FAMILIES_AF_INET, SOCKET_PROTOCOL_TYPES_SOCK_STREAM, IP_PROTOCOLS_IPPROTO_TCP);
+  return client::socket(stub, stack, ADDRESS_FAMILY_INET, SOCKET_PROTOCOL_TYPE_STREAM, IP_PROTOCOL_TCP);
 }
 
 SocketResponse socket(client::StubPtr& stub)

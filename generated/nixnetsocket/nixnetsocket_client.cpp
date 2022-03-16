@@ -364,13 +364,13 @@ set_sock_opt(const StubPtr& stub, const nidevice_grpc::Session& socket, const si
 }
 
 SocketResponse
-socket(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const simple_variant<AddressFamilies, pb::int32>& domain, const simple_variant<SocketProtocolTypes, pb::int32>& type, const simple_variant<IPProtocols, pb::int32>& prototcol)
+socket(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const simple_variant<AddressFamily, pb::int32>& domain, const simple_variant<SocketProtocolType, pb::int32>& type, const simple_variant<IPProtocol, pb::int32>& prototcol)
 {
   ::grpc::ClientContext context;
 
   auto request = SocketRequest{};
   request.mutable_stack_ref()->CopyFrom(stack_ref);
-  const auto domain_ptr = domain.get_if<AddressFamilies>();
+  const auto domain_ptr = domain.get_if<AddressFamily>();
   const auto domain_raw_ptr = domain.get_if<pb::int32>();
   if (domain_ptr) {
     request.set_domain(*domain_ptr);
@@ -378,7 +378,7 @@ socket(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const simpl
   else if (domain_raw_ptr) {
     request.set_domain_raw(*domain_raw_ptr);
   }
-  const auto type_ptr = type.get_if<SocketProtocolTypes>();
+  const auto type_ptr = type.get_if<SocketProtocolType>();
   const auto type_raw_ptr = type.get_if<pb::int32>();
   if (type_ptr) {
     request.set_type(*type_ptr);
@@ -386,7 +386,7 @@ socket(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const simpl
   else if (type_raw_ptr) {
     request.set_type_raw(*type_raw_ptr);
   }
-  const auto prototcol_ptr = prototcol.get_if<IPProtocols>();
+  const auto prototcol_ptr = prototcol.get_if<IPProtocol>();
   const auto prototcol_raw_ptr = prototcol.get_if<pb::int32>();
   if (prototcol_ptr) {
     request.set_prototcol(*prototcol_ptr);

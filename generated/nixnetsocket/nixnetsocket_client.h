@@ -40,7 +40,7 @@ IpStackCreateResponse ip_stack_create(const StubPtr& stub, const pb::string& sta
 IsSetResponse is_set(const StubPtr& stub, const nidevice_grpc::Session& fd, const std::vector<nidevice_grpc::Session>& set);
 SelectResponse select(const StubPtr& stub, const std::vector<nidevice_grpc::Session>& read_fds, const std::vector<nidevice_grpc::Session>& write_fds, const std::vector<nidevice_grpc::Session>& except_fds, const google::protobuf::Duration& timeout);
 SetSockOptResponse set_sock_opt(const StubPtr& stub, const nidevice_grpc::Session& socket, const simple_variant<SocketOptionLevel, pb::int32>& level, const simple_variant<OptName, pb::int32>& optname, const SockOptData& opt_data);
-SocketResponse socket(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const simple_variant<AddressFamilies, pb::int32>& domain, const simple_variant<SocketProtocolTypes, pb::int32>& type, const simple_variant<IPProtocols, pb::int32>& prototcol);
+SocketResponse socket(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const simple_variant<AddressFamily, pb::int32>& domain, const simple_variant<SocketProtocolType, pb::int32>& type, const simple_variant<IPProtocol, pb::int32>& prototcol);
 
 } // namespace nixnetsocket_grpc::experimental::client
 
