@@ -140,17 +140,15 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'frameBuffer',
-                'size': {
-                    'mechanism': 'len',
-                    'value': 'numberOfBytesForFrames'
-                },
-                'type': 'void[]',
+                'type': 'u8',
+                'pointer': True,
                 'grpc_type': 'repeated FrameBuffer',
                 'supports_standard_copy_convert': True,
             },
             {
                 'direction': 'in',
                 'name': 'numberOfBytesForFrames',
+                'hardcoded_value': 'frame_buffer.size()',
                 'type': 'u32',
                 'include_in_proto': False
             },

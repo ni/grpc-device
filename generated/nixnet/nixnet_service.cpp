@@ -177,15 +177,15 @@ namespace nixnet_grpc {
     try {
       auto session_ref_grpc_session = request->session_ref();
       nxSessionRef_t session_ref = session_repository_->access_session(session_ref_grpc_session.id(), session_ref_grpc_session.name());
-      auto frame_buffer = convert_from_grpc<void>(request->frame_buffer());
-      u32 number_of_bytes_for_frames = static_cast<u32>(request->frame_buffer().size());
+      auto frame_buffer = convert_from_grpc<u8>(request->frame_buffer());
+      auto number_of_bytes_for_frames = frame_buffer.size();
       u32 size_of_value_buffer = request->size_of_value_buffer();
       u32 size_of_timestamp_buffer = request->size_of_timestamp_buffer();
       response->mutable_value_buffer()->Resize(size_of_value_buffer, 0);
       f64* value_buffer = response->mutable_value_buffer()->mutable_data();
       response->mutable_timestamp_buffer()->Resize(size_of_timestamp_buffer, 0);
       nxTimestamp100ns_t* timestamp_buffer = reinterpret_cast<nxTimestamp100ns_t*>(response->mutable_timestamp_buffer()->mutable_data());
-      auto status = library_->ConvertFramesToSignalsSinglePoint(session_ref, frame_buffer.data(), number_of_bytes_for_frames, value_buffer, size_of_value_buffer, timestamp_buffer, size_of_timestamp_buffer);
+      auto status = library_->ConvertFramesToSignalsSinglePoint(session_ref, frame_buffer, number_of_bytes_for_frames, value_buffer, size_of_value_buffer, timestamp_buffer, size_of_timestamp_buffer);
       response->set_status(status);
       if (status_ok(status)) {
       }

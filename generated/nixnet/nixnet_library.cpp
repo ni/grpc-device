@@ -115,7 +115,7 @@ nxStatus_t NiXnetLibrary::ConnectTerminals(nxSessionRef_t sessionRef, const char
 #endif
 }
 
-nxStatus_t NiXnetLibrary::ConvertFramesToSignalsSinglePoint(nxSessionRef_t sessionRef, void* frameBuffer, u32 numberOfBytesForFrames, f64 valueBuffer[], u32 sizeOfValueBuffer, nxTimestamp100ns_t timestampBuffer[], u32 sizeOfTimestampBuffer)
+nxStatus_t NiXnetLibrary::ConvertFramesToSignalsSinglePoint(nxSessionRef_t sessionRef, u8* frameBuffer, u32 numberOfBytesForFrames, f64 valueBuffer[], u32 sizeOfValueBuffer, nxTimestamp100ns_t timestampBuffer[], u32 sizeOfTimestampBuffer)
 {
   if (!function_pointers_.ConvertFramesToSignalsSinglePoint) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxConvertFramesToSignalsSinglePoint.");

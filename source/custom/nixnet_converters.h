@@ -132,7 +132,14 @@ struct FrameHolder {
         payload_length);
   }
 
-  void* data()
+  // Implicit conversion to u8* simplifies codegen because these are passed by pointer to
+  // the driver.
+  operator u8*()
+  {
+    return frame_buffer.data();
+  }
+
+  operator const u8*() const
   {
     return frame_buffer.data();
   }
