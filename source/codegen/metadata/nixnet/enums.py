@@ -1127,7 +1127,7 @@ enums = {
             },
             {
                 'name': 'SESSION_INTF_ENET_EPT_RECEIVE_FILTER',
-                'type': 'structure',
+                'type': 'nxEptRxFilter_Element_t_array',
                 'value': 202375356
             },
             {
