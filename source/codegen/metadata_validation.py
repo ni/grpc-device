@@ -91,7 +91,16 @@ FUNCTION_SCHEMA = Schema(
         "returns": str,
         Optional("cname"): str,
         Optional("codegen_method"): And(
-            str, lambda s: s in ("public", "private", "CustomCode", "no", "python-only")
+            str,
+            lambda s: s
+            in (
+                "public",
+                "private",
+                "CustomCode",
+                "no",
+                "python-only",
+                "CustomCodeCustomProtoMessage",
+            ),
         ),
         Optional("init_method"): bool,
         Optional("stream_response"): bool,
@@ -105,6 +114,7 @@ FUNCTION_SCHEMA = Schema(
         Optional("custom_close_method"): bool,
         Optional("python_name"): str,
         Optional("status_expression"): str,
+        Optional("include_in_client"): bool,
     }
 )
 
@@ -143,10 +153,12 @@ ENUM_SCHEMA = Schema(
                 "value": Or(str, int, float),
                 Optional("python_name"): str,
                 Optional("documentation"): DOCUMENTATION_SCHEMA,
+                Optional("type"): str,
             }
         ],
         Optional("generate-mappings"): bool,
         Optional("enum-value-prefix"): str,
+        Optional("generate-mapping-type"): bool,
     }
 )
 
