@@ -277,7 +277,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'interface_name',
+                'name': 'interface',
                 'type': 'const char[]'
             },
             {
@@ -313,7 +313,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'interface_name',
+                'name': 'interface',
                 'type': 'const char[]'
             },
             {

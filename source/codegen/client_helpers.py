@@ -6,6 +6,7 @@ from enum import Enum
 from typing import List, Tuple
 
 import common_helpers
+import metadata_mutation
 
 
 class ParamMechanism(Enum):  # noqa: D101
@@ -16,7 +17,7 @@ class ParamMechanism(Enum):  # noqa: D101
     COPY = 4
 
 
-ClientParam = namedtuple("ClientParam", ["name", "type", "mechanism"])
+ClientParam = namedtuple("ClientParam", ["name", "cppName", "type", "mechanism"])
 
 
 PROTOBUF_PRIM_TYPES = ["bool", "double", "float"]
@@ -40,7 +41,7 @@ PROTOBUF_TYPE_TO_CPP_TYPE = {
 
 
 def _to_parameter_list(client_params: List[ClientParam]) -> List[str]:
-    param_list = [f"{p.type} {p.name}" for p in client_params]
+    param_list = [f"{p.type} {p.cppName}" for p in client_params]
 
     return param_list
 
@@ -130,11 +131,12 @@ def _get_param_mechanism(param: dict) -> ParamMechanism:
 
 def _create_client_param(param: dict, enums: dict) -> ClientParam:
     name = common_helpers.get_grpc_field_name(param)
+    cppName = common_helpers.get_grpc_client_field_name(param)
     param_type = _get_cpp_client_param_type(param, enums)
     param_type = _const_ref_t(param_type)
     param_mechanism = _get_param_mechanism(param)
 
-    return ClientParam(name, param_type, param_mechanism)
+    return ClientParam(name, cppName, param_type, param_mechanism)
 
 
 def _is_grpc_array(param: dict) -> bool:
@@ -148,11 +150,16 @@ def stub_ptr_alias():
 
 def get_client_parameters(func: dict, enums: dict) -> List[ClientParam]:
     """Create a list of ClientParam objects for the given function."""
+    _get_sanitized_client_parameters(func["parameters"])
     inputs = [p for p in func["parameters"] if common_helpers.is_input_parameter(p)]
 
     inputs = common_helpers.filter_parameters_for_grpc_fields(inputs)
 
     return [_create_client_param(p, enums) for p in inputs]
+
+
+def _get_sanitized_client_parameters(parameters):
+    metadata_mutation.sanitize_names(parameters)
 
 
 def _split_types_from_variant(variant_type: str) -> Tuple[str, str]:

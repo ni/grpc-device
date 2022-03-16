@@ -742,7 +742,7 @@ configure_trigger_software(const StubPtr& stub, const nidevice_grpc::Session& vi
 }
 
 ConfigureTriggerVideoResponse
-configure_trigger_video(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& trigger_source, const bool& enable_dc_restore, const simple_variant<VideoSignalFormat, pb::int32>& signal_format, const simple_variant<VideoTriggerEvent, pb::int32>& event, const pb::int32& line_number, const simple_variant<VideoPolarity, pb::int32>& polarity, const simple_variant<TriggerCoupling, pb::int32>& trigger_coupling, const double& holdoff, const double& delay)
+configure_trigger_video(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& trigger_source, const bool& enable_dc_restore, const simple_variant<VideoSignalFormat, pb::int32>& signal_format, const simple_variant<VideoTriggerEvent, pb::int32>& event_parameter, const pb::int32& line_number, const simple_variant<VideoPolarity, pb::int32>& polarity, const simple_variant<TriggerCoupling, pb::int32>& trigger_coupling, const double& holdoff, const double& delay)
 {
   ::grpc::ClientContext context;
 
@@ -758,13 +758,13 @@ configure_trigger_video(const StubPtr& stub, const nidevice_grpc::Session& vi, c
   else if (signal_format_raw_ptr) {
     request.set_signal_format_raw(*signal_format_raw_ptr);
   }
-  const auto event_ptr = event.get_if<VideoTriggerEvent>();
-  const auto event_raw_ptr = event.get_if<pb::int32>();
-  if (event_ptr) {
-    request.set_event(*event_ptr);
+  const auto event_parameter_ptr = event_parameter.get_if<VideoTriggerEvent>();
+  const auto event_parameter_raw_ptr = event_parameter.get_if<pb::int32>();
+  if (event_parameter_ptr) {
+    request.set_event(*event_parameter_ptr);
   }
-  else if (event_raw_ptr) {
-    request.set_event_raw(*event_raw_ptr);
+  else if (event_parameter_raw_ptr) {
+    request.set_event_raw(*event_parameter_raw_ptr);
   }
   request.set_line_number(line_number);
   const auto polarity_ptr = polarity.get_if<VideoPolarity>();
