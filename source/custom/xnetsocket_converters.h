@@ -282,7 +282,7 @@ struct SockOptDataInputConverter {
         data_int = input.data_int32();
         break;
       case SockOptData::DataCase::kDataBool:
-        data_bool = input.data_bool();
+        data_int = input.data_bool() ? 1 : 0;
         break;
       case SockOptData::DataCase::kDataString:
         data_string = std::string(input.data_string());
@@ -294,10 +294,8 @@ struct SockOptDataInputConverter {
   {
     switch (data_case) {
       case SockOptData::DataCase::kDataInt32:
-        return &data_int;
-        break;
       case SockOptData::DataCase::kDataBool:
-        return &data_bool;
+        return &data_int;
         break;
       case SockOptData::DataCase::kDataString:
         return &data_string[0];
@@ -314,13 +312,12 @@ struct SockOptDataInputConverter {
   {
     switch (data_case) {
       case SockOptData::DataCase::kDataInt32:
+      case SockOptData::DataCase::kDataBool:
         return sizeof(int32_t);
         break;
       case SockOptData::DataCase::kDataString:
         return static_cast<nxsocklen_t>(data_string.size());
         break;
-      case SockOptData::DataCase::kDataBool:
-        return sizeof(bool);
       default:
         return 0;
         break;
@@ -329,7 +326,6 @@ struct SockOptDataInputConverter {
 
   SockOptData::DataCase data_case;
   int32_t data_int;
-  bool data_bool;
   std::string data_string;
 };
 
@@ -361,7 +357,7 @@ struct SockOptDataOutputConverter {
       case OptName::OPT_NAME_SO_LINGER:
       case OptName::OPT_NAME_SO_NON_BLOCK:
       case OptName::OPT_NAME_SO_REUSE_ADDR: {
-        return &data_bool;
+        return &data_int;
         break;
       }
       case OptName::OPT_NAME_SO_BIND_TO_DEVICE:
@@ -391,7 +387,7 @@ struct SockOptDataOutputConverter {
       case OptName::OPT_NAME_SO_LINGER:
       case OptName::OPT_NAME_SO_NON_BLOCK:
       case OptName::OPT_NAME_SO_REUSE_ADDR: {
-        output.set_data_bool(data_bool);
+        output.set_data_bool(data_int == 0 ? false : true);
         break;
       }
       case OptName::OPT_NAME_SO_BIND_TO_DEVICE:
@@ -407,7 +403,6 @@ struct SockOptDataOutputConverter {
 
   int32_t opt_name;
   int32_t data_int;
-  bool data_bool;
   std::string data_string;
 };
 
