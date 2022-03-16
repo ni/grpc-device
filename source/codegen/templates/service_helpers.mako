@@ -641,7 +641,7 @@ ${initialize_standard_input_param(function_name, parameter)}
   grpc_cpp_lib_type = service_helpers.get_protobuf_cpplib_type(grpc_type)
 %>\
 %   if common_helpers.supports_standard_output_allocation_routines(parameter):
-      auto ${parameter_name} = allocate_output_storage<${underlying_param_type}, ${grpc_cpp_lib_type}>();
+      auto ${parameter_name} = allocate_output_storage<${underlying_param_type}, ${grpc_cpp_lib_type}>(${str.join(", ", parameter.get("additional_arguments_to_output_allocation", []))});
 %   elif common_helpers.is_repeating_parameter(parameter):
       auto get_${parameter_name}_if = [](std::vector<${underlying_param_type}>& vector, int n) -> ${underlying_param_type}* {
             if (vector.size() > n) {

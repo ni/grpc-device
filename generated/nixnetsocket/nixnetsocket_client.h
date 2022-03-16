@@ -34,13 +34,14 @@ GetSockNameResponse get_sock_name(const StubPtr& stub, const nidevice_grpc::Sess
 GetPeerNameResponse get_peer_name(const StubPtr& stub, const nidevice_grpc::Session& socket);
 ShutdownResponse shutdown(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::int32& how);
 CloseResponse close(const StubPtr& stub, const nidevice_grpc::Session& socket);
+GetSockOptResponse get_sock_opt(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::int32& level, const simple_variant<OptName, pb::int32>& optname);
 IpStackClearResponse ip_stack_clear(const StubPtr& stub, const nidevice_grpc::Session& stack_ref);
 IpStackCreateResponse ip_stack_create(const StubPtr& stub, const pb::string& stack_name, const pb::string& config);
 IpStackGetInfoResponse ip_stack_get_info(const StubPtr& stub, const nidevice_grpc::Session& stack_ref);
 IpStackWaitForInterfaceResponse ip_stack_wait_for_interface(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const pb::string& local_interface, const pb::int32& timeout_ms);
 IsSetResponse is_set(const StubPtr& stub, const nidevice_grpc::Session& fd, const std::vector<nidevice_grpc::Session>& set);
 SelectResponse select(const StubPtr& stub, const std::vector<nidevice_grpc::Session>& read_fds, const std::vector<nidevice_grpc::Session>& write_fds, const std::vector<nidevice_grpc::Session>& except_fds, const google::protobuf::Duration& timeout);
-SetSockOptResponse set_sock_opt(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::int32& level, const SockOptData& opt_data, const simple_variant<OptName, pb::int32>& optname);
+SetSockOptResponse set_sock_opt(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::int32& level, const simple_variant<OptName, pb::int32>& optname, const SockOptData& opt_data);
 SocketResponse socket(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const pb::int32& domain, const pb::int32& type, const pb::int32& prototcol);
 
 } // namespace nixnetsocket_grpc::experimental::client
