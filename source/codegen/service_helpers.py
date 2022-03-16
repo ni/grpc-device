@@ -246,7 +246,10 @@ def _create_param(parameter, expand_varargs=True, repeated_parameters=None):
             return "..."
     elif common_helpers.is_array(type):
         array_size = _get_array_param_size(parameter)
-        return f"{type[:-2]} {name}[{array_size}]"
+        if type[:-2] == "void":  # Having void[] in C++ is not allowed, hence using it as void*
+            return f"{type[:-2]}* {name}"
+        else:
+            return f"{type[:-2]} {name}[{array_size}]"
     elif common_helpers.is_pointer_parameter(parameter):
         return f"{type}* {name}"
     else:
@@ -283,6 +286,16 @@ def get_output_lookup_values(enum_data):
         formated_value = _format_value(value["value"])
         out_value_format += f"{{{formated_value}, {i + 1}}},"
     return out_value_format
+
+
+def generate_enum_oneof_selector_map(enum_data):
+    """ "Get an initializer list for a std::map that maps enum value value to enum value type."""
+    id_type_content = ""
+    for i, value in enumerate(enum_data["values"]):
+        formated_value = _format_value(value["value"])
+        type = value["type"]
+        id_type_content += f"{{{formated_value}, {type}_}},"
+    return id_type_content
 
 
 def filter_api_functions(functions, only_mockable_functions=True):
@@ -418,6 +431,26 @@ def get_enums_to_map(functions: dict, enums: dict) -> List[str]:
 
     function_enums = common_helpers.get_function_enums(functions)
     return [e for e in function_enums if should_generate_mappings(e)]
+
+
+def generate_mapping_enums_to_type(enums: dict) -> List[str]:
+    """Get a list of the enums used by functions, for which mappings should be generated."""
+    list_of_enums: List[str] = []
+    for enum_name in enums.keys():
+        if "generate-mapping-type" in enums[enum_name]:
+            list_of_enums.append(enum_name)
+    return list_of_enums
+
+
+def get_distinct_types_from_enums(enums: dict) -> str:
+    """Return a comma seperated string of different data types used in enums value type field."""
+    distinct_type = set()
+    for enum_name in enums.keys():
+        if "generate-mapping-type" in enums[enum_name]:
+            for i, value in enumerate(enums[enum_name]["values"]):
+                type = value["type"]
+                distinct_type.add(f"{type}_")
+    return str.join(", ", sorted(distinct_type))
 
 
 def get_bitfield_value_to_name_mapping(parameter: dict, enums: dict) -> Dict[int, str]:
