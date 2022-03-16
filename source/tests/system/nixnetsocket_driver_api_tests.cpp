@@ -68,7 +68,7 @@ const auto MULTI_ADDRESS_INTERFACE_CONFIG = R"(
                     "subnetMask": "255.0.0.0"
                   },
                   {
-                    "address": "192.23.45.67",
+                    "address": "10.23.45.67",
                     "subnetMask": "255.0.0.0"
                   }
                 ],
@@ -330,6 +330,11 @@ TEST_F(NiXnetSocketLoopbackTests, MultiAddressIpStack_GetInfo_ReturnsExpectedInf
   EXPECT_EQ("192.22.11.22", ipv4_address.address());
   EXPECT_EQ("255.0.0.0", ipv4_address.net_mask());
   EXPECT_EQ(8, ipv4_address.prefix_length());
+  const auto second_ipv4_address = virtual_interface.ip_addresses()[1];
+  EXPECT_EQ(2 /* nxAF_INET */, second_ipv4_address.family());
+  EXPECT_EQ("10.23.45.67", second_ipv4_address.address());
+  EXPECT_EQ("255.0.0.0", second_ipv4_address.net_mask());
+  EXPECT_EQ(8, second_ipv4_address.prefix_length());
   const auto ipv6_address = virtual_interface.ip_addresses()[2];
   EXPECT_EQ(10 /* nxAF_INET6 */, ipv6_address.family());
   EXPECT_EQ("2001:db8::8:800:200c:417a", ipv6_address.address());
