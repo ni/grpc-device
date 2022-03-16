@@ -173,6 +173,52 @@ functions = {
         ],
         'returns': 'int32_t'
     },
+    'RecvFrom': {
+        'cname': 'nxrecvfrom',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'socket',
+                'type': 'nxSOCKET'
+            },
+            {
+                'direction': 'in',
+                'name': 'mem',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'size'
+                },
+                'pointer': True,
+                'grpc_type': 'bytes',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'size',
+                'type': 'int32_t'
+            },
+            {
+                'direction': 'in',
+                'name': 'flags',
+                'type': 'int32_t'
+            },
+            {
+                'direction': 'out',
+                'grpc_type': 'SockAddr',
+                'name': 'from',
+                'supports_standard_output_allocation': True,
+                'supports_standard_copy_convert': True,
+                'type': 'nxsockaddr'
+            },
+            {
+                'direction': 'out',
+                'name': 'fromlen',
+                'include_in_proto': False,
+                'type': 'nxsocklen_t'
+            },
+        ],
+        'returns': 'int32_t'
+    },
     'Recv': {
         'cname': 'nxrecv',
         'parameters': [
@@ -201,6 +247,56 @@ functions = {
                 'direction': 'in',
                 'name': 'flags',
                 'type': 'int32_t'
+            },
+        ],
+        'returns': 'int32_t'
+    },
+    'GetSockName': {
+        'cname': 'nxgetsockname',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'socket',
+                'type': 'nxSOCKET'
+            },
+            {
+                'direction': 'out',
+                'grpc_type': 'SockAddr',
+                'name': 'addr',
+                'supports_standard_output_allocation': True,
+                'supports_standard_copy_convert': True,
+                'type': 'nxsockaddr'
+            },
+            {
+                'direction': 'out',
+                'name': 'addrlen',
+                'include_in_proto': False,
+                'type': 'nxsocklen_t'
+            },
+        ],
+        'returns': 'int32_t'
+    },
+    'GetPeerName': {
+        'cname': 'nxgetpeername',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'socket',
+                'type': 'nxSOCKET'
+            },
+            {
+                'direction': 'out',
+                'grpc_type': 'SockAddr',
+                'name': 'addr',
+                'supports_standard_output_allocation': True,
+                'supports_standard_copy_convert': True,
+                'type': 'nxsockaddr'
+            },
+            {
+                'direction': 'out',
+                'name': 'addrlen',
+                'include_in_proto': False,
+                'type': 'nxsocklen_t'
             },
         ],
         'returns': 'int32_t'
@@ -412,6 +508,51 @@ functions = {
                 'supports_standard_copy_convert': True,
                 'type': 'nxtimeval'
             },
+        ],
+        'returns': 'int32_t'
+    },
+    'SetSockOpt': {
+        'cname': 'nxsetsockopt',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'socket',
+                'type': 'nxSOCKET'
+            },
+            {
+                'direction': 'in',
+                'name': 'level',
+                'type': 'int32_t'
+            },
+            {
+                'direction': 'in',
+                'name': 'opt_data',
+                'grpc_type': 'SockOptData',
+                'supports_standard_copy_convert': True,
+                'proto_only': True,
+                'type': 'SockOptDataInputConverter'
+            },
+            {
+                'direction': 'in',
+                'name': 'optname',
+                'type': 'int32_t',
+                'enum': 'OptName'
+            },
+            {
+                'direction': 'in',
+                'name': 'optval',
+                'hardcoded_value': 'opt_data.data()',
+                'include_in_proto': False,
+                'pointer': True,
+                'type': 'void'
+            },
+            {
+                'direction': 'in',
+                'name': 'optlen',
+                'hardcoded_value': 'opt_data.size()',
+                'include_in_proto': False,
+                'type': 'nxsocklen_t'
+            }
         ],
         'returns': 'int32_t'
     },

@@ -47,6 +47,11 @@ def is_repeated_varargs_parameter(parameter: dict):
     return parameter.get("repeated_var_args", False)
 
 
+def is_proto_only_paramater(parameter: dict):
+    """Whether the parameter is only included in the proto file and not the driver API."""
+    return parameter.get("proto_only", False)
+
+
 def is_repeating_parameter(parameter: dict):
     """Whether the parameter is a repeating parameter.
 
@@ -421,6 +426,16 @@ def pascal_to_snake(pascal_string):
 
 def filter_proto_rpc_functions(functions):
     """Return function metadata only for functions to include for generating proto rpc methods."""
+    functions_for_proto = {"public", "CustomCode", "CustomCodeCustomProtoMessage"}
+    return [
+        name
+        for name, function in functions.items()
+        if function.get("codegen_method", "public") in functions_for_proto
+    ]
+
+
+def filter_proto_rpc_functions_for_message(functions):
+    """Return function metadata only for functions to include for generating proto rpc messages."""
     functions_for_proto = {"public", "CustomCode"}
     return [
         name
@@ -1081,5 +1096,12 @@ def get_driver_api_params(parameters: List[dict]) -> List[dict]:
     Excludes:
     * Return values.
     * Outputs that are calculated/populated after the API call.
+    * Proto only params.
     """
-    return [p for p in parameters if not (is_return_value(p) or is_get_last_error_output_param(p))]
+    return [
+        p
+        for p in parameters
+        if not (
+            is_return_value(p) or is_get_last_error_output_param(p) or is_proto_only_paramater(p)
+        )
+    ]

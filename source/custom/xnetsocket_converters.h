@@ -271,6 +271,72 @@ inline void convert_to_grpc(VirtualInterfaceOutputConverter& storage, pb_::Repea
   storage.to_grpc(*output);
 }
 
+struct SockOptDataInputConverter {
+  SockOptDataInputConverter(const SockOptData& input)
+  {
+    data_case = input.data_case();
+    switch (data_case) {
+      case SockOptData::DataCase::kDataInt32:
+        data_int = input.data_int32();
+        break;
+      case SockOptData::DataCase::kDataBool:
+        data_bool = input.data_bool();
+        break;
+      case SockOptData::DataCase::kDataString:
+        data_string = std::string(input.data_string());
+        break;
+    }
+  }
+
+  void* data()
+  {
+    switch (data_case) {
+      case SockOptData::DataCase::kDataInt32:
+        return &data_int;
+        break;
+      case SockOptData::DataCase::kDataBool:
+        return &data_bool;
+        break;
+      case SockOptData::DataCase::kDataString:
+        return &data_string[0];
+        break;
+      case SockOptData::DataCase::DATA_NOT_SET:
+        return nullptr;
+        break;
+    }
+  }
+
+  // size() method is used to simplify codegen calculating the size of the
+  // populated data.
+  nxsocklen_t size() const
+  {
+    switch (data_case) {
+      case SockOptData::DataCase::kDataInt32:
+        return sizeof(int32_t);
+        break;
+      case SockOptData::DataCase::kDataString:
+        return data_string.size();
+        break;
+      case SockOptData::DataCase::kDataBool:
+        return sizeof(bool);
+      default:
+        return 0;
+        break;
+    }
+  }
+
+  SockOptData::DataCase data_case;
+  int32_t data_int;
+  bool data_bool;
+  std::string data_string;
+};
+
+template <typename TSockOptData>
+inline SockOptDataInputConverter convert_from_grpc(const SockOptData& input)
+{
+  return SockOptDataInputConverter(input);
+}
+
 }  // namespace nixnetsocket_grpc
 
 // Template specializations go in nidevice_grpc::converters.

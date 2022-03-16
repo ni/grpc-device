@@ -121,6 +121,24 @@ send(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::string
   return response;
 }
 
+RecvFromResponse
+recv_from(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::string& mem, const pb::int32& flags)
+{
+  ::grpc::ClientContext context;
+
+  auto request = RecvFromRequest{};
+  request.mutable_socket()->CopyFrom(socket);
+  request.set_mem(mem);
+  request.set_flags(flags);
+
+  auto response = RecvFromResponse{};
+
+  raise_if_error(
+      stub->RecvFrom(&context, request, &response));
+
+  return response;
+}
+
 RecvResponse
 recv(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::string& mem, const pb::int32& flags)
 {
@@ -135,6 +153,38 @@ recv(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::string
 
   raise_if_error(
       stub->Recv(&context, request, &response));
+
+  return response;
+}
+
+GetSockNameResponse
+get_sock_name(const StubPtr& stub, const nidevice_grpc::Session& socket)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetSockNameRequest{};
+  request.mutable_socket()->CopyFrom(socket);
+
+  auto response = GetSockNameResponse{};
+
+  raise_if_error(
+      stub->GetSockName(&context, request, &response));
+
+  return response;
+}
+
+GetPeerNameResponse
+get_peer_name(const StubPtr& stub, const nidevice_grpc::Session& socket)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetPeerNameRequest{};
+  request.mutable_socket()->CopyFrom(socket);
+
+  auto response = GetPeerNameResponse{};
+
+  raise_if_error(
+      stub->GetPeerName(&context, request, &response));
 
   return response;
 }
@@ -271,6 +321,32 @@ select(const StubPtr& stub, const std::vector<nidevice_grpc::Session>& read_fds,
 
   raise_if_error(
       stub->Select(&context, request, &response));
+
+  return response;
+}
+
+SetSockOptResponse
+set_sock_opt(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::int32& level, const SockOptData& opt_data, const simple_variant<OptName, pb::int32>& optname)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetSockOptRequest{};
+  request.mutable_socket()->CopyFrom(socket);
+  request.set_level(level);
+  request.mutable_opt_data()->CopyFrom(opt_data);
+  const auto optname_ptr = optname.get_if<OptName>();
+  const auto optname_raw_ptr = optname.get_if<pb::int32>();
+  if (optname_ptr) {
+    request.set_optname(*optname_ptr);
+  }
+  else if (optname_raw_ptr) {
+    request.set_optname_raw(*optname_raw_ptr);
+  }
+
+  auto response = SetSockOptResponse{};
+
+  raise_if_error(
+      stub->SetSockOpt(&context, request, &response));
 
   return response;
 }

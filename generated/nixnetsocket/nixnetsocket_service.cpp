@@ -225,6 +225,39 @@ namespace nixnetsocket_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiXnetSocketService::RecvFrom(::grpc::ServerContext* context, const RecvFromRequest* request, RecvFromResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto socket_grpc_session = request->socket();
+      nxSOCKET socket = session_repository_->access_session(socket_grpc_session.id(), socket_grpc_session.name());
+      char* mem = (char*)request->mem().c_str();
+      int32_t size = static_cast<int32_t>(request->mem().size());
+      int32_t flags = request->flags();
+      auto from = allocate_output_storage<nxsockaddr, SockAddr>();
+      nxsocklen_t fromlen {};
+      auto status = library_->RecvFrom(socket, mem, size, flags, &from, &fromlen);
+      response->set_status(status);
+      if (status_ok(status)) {
+        convert_to_grpc(from, response->mutable_from());
+      }
+      else {
+        const auto error_message = get_last_error_message(library_);
+        response->set_error_message(error_message);
+        const auto error_num = get_last_error_num(library_);
+        response->set_error_num(error_num);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiXnetSocketService::Recv(::grpc::ServerContext* context, const RecvRequest* request, RecvResponse* response)
   {
     if (context->IsCancelled()) {
@@ -239,6 +272,66 @@ namespace nixnetsocket_grpc {
       auto status = library_->Recv(socket, mem, size, flags);
       response->set_status(status);
       if (status_ok(status)) {
+      }
+      else {
+        const auto error_message = get_last_error_message(library_);
+        response->set_error_message(error_message);
+        const auto error_num = get_last_error_num(library_);
+        response->set_error_num(error_num);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiXnetSocketService::GetSockName(::grpc::ServerContext* context, const GetSockNameRequest* request, GetSockNameResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto socket_grpc_session = request->socket();
+      nxSOCKET socket = session_repository_->access_session(socket_grpc_session.id(), socket_grpc_session.name());
+      auto addr = allocate_output_storage<nxsockaddr, SockAddr>();
+      nxsocklen_t addrlen {};
+      auto status = library_->GetSockName(socket, &addr, &addrlen);
+      response->set_status(status);
+      if (status_ok(status)) {
+        convert_to_grpc(addr, response->mutable_addr());
+      }
+      else {
+        const auto error_message = get_last_error_message(library_);
+        response->set_error_message(error_message);
+        const auto error_num = get_last_error_num(library_);
+        response->set_error_num(error_num);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiXnetSocketService::GetPeerName(::grpc::ServerContext* context, const GetPeerNameRequest* request, GetPeerNameResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto socket_grpc_session = request->socket();
+      nxSOCKET socket = session_repository_->access_session(socket_grpc_session.id(), socket_grpc_session.name());
+      auto addr = allocate_output_storage<nxsockaddr, SockAddr>();
+      nxsocklen_t addrlen {};
+      auto status = library_->GetPeerName(socket, &addr, &addrlen);
+      response->set_status(status);
+      if (status_ok(status)) {
+        convert_to_grpc(addr, response->mutable_addr());
       }
       else {
         const auto error_message = get_last_error_message(library_);
@@ -477,6 +570,53 @@ namespace nixnetsocket_grpc {
       auto except_fds = convert_from_grpc<nxfd_set>(request->except_fds(), session_repository_);
       auto timeout = convert_from_grpc<nxtimeval>(request->timeout());
       auto status = library_->Select(nfds, read_fds, write_fds, except_fds, timeout);
+      response->set_status(status);
+      if (status_ok(status)) {
+      }
+      else {
+        const auto error_message = get_last_error_message(library_);
+        response->set_error_message(error_message);
+        const auto error_num = get_last_error_num(library_);
+        response->set_error_num(error_num);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiXnetSocketService::SetSockOpt(::grpc::ServerContext* context, const SetSockOptRequest* request, SetSockOptResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto socket_grpc_session = request->socket();
+      nxSOCKET socket = session_repository_->access_session(socket_grpc_session.id(), socket_grpc_session.name());
+      int32_t level = request->level();
+      auto opt_data = convert_from_grpc<SockOptDataInputConverter>(request->opt_data());
+      int32_t optname;
+      switch (request->optname_enum_case()) {
+        case nixnetsocket_grpc::SetSockOptRequest::OptnameEnumCase::kOptname: {
+          optname = static_cast<int32_t>(request->optname());
+          break;
+        }
+        case nixnetsocket_grpc::SetSockOptRequest::OptnameEnumCase::kOptnameRaw: {
+          optname = static_cast<int32_t>(request->optname_raw());
+          break;
+        }
+        case nixnetsocket_grpc::SetSockOptRequest::OptnameEnumCase::OPTNAME_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for optname was not specified or out of range");
+          break;
+        }
+      }
+
+      auto optval = opt_data.data();
+      auto optlen = opt_data.size();
+      auto status = library_->SetSockOpt(socket, level, optname, optval, optlen);
       response->set_status(status);
       if (status_ok(status)) {
       }

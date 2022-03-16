@@ -80,6 +80,7 @@ PARAM_SCHEMA = Schema(
         Optional("supports_standard_output_allocation"): bool,
         Optional("get_last_error"): str,
         Optional("additional_arguments_to_copy_convert"): [str],
+        Optional("proto_only"): bool,
     }
 )
 
@@ -89,7 +90,16 @@ FUNCTION_SCHEMA = Schema(
         "returns": str,
         Optional("cname"): str,
         Optional("codegen_method"): And(
-            str, lambda s: s in ("public", "private", "CustomCode", "no", "python-only")
+            str,
+            lambda s: s
+            in (
+                "public",
+                "private",
+                "CustomCode",
+                "no",
+                "python-only",
+                "CustomCodeCustomProtoMessage",
+            ),
         ),
         Optional("init_method"): bool,
         Optional("stream_response"): bool,
@@ -103,6 +113,7 @@ FUNCTION_SCHEMA = Schema(
         Optional("custom_close_method"): bool,
         Optional("python_name"): str,
         Optional("status_expression"): str,
+        Optional("include_in_client"): bool,
     }
 )
 
@@ -141,10 +152,12 @@ ENUM_SCHEMA = Schema(
                 "value": Or(str, int, float),
                 Optional("python_name"): str,
                 Optional("documentation"): DOCUMENTATION_SCHEMA,
+                Optional("type"): str,
             }
         ],
         Optional("generate-mappings"): bool,
         Optional("enum-value-prefix"): str,
+        Optional("generate-mapping-type"): bool,
     }
 )
 
@@ -200,9 +213,11 @@ def _validate_function(function_name: str, metadata: dict):
                 if "type" not in parameter:
                     if "grpc_type" not in parameter:
                         raise Exception(f"parameter {parameter['name']} has no type or grpc_type!")
-                    if not parameter.get("repeated_var_args", False):
+                    if not parameter.get("repeated_var_args", False) and not parameter.get(
+                        "proto_only", False
+                    ):
                         raise Exception(
-                            f"parameter {parameter['name']} has no type and repeated_var_args is not set!"
+                            f"parameter {parameter['name']} has no type and repeated_var_args or meta_param is not set!"
                         )
                 if "enum" in parameter:
                     if parameter["enum"] not in metadata["enums"]:

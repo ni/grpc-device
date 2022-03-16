@@ -28,7 +28,10 @@ ConnectResponse connect(const StubPtr& stub, const nidevice_grpc::Session& socke
 ListenResponse listen(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::int32& backlog);
 SendToResponse send_to(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::string& dataptr, const pb::int32& flags, const SockAddr& to);
 SendResponse send(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::string& dataptr, const pb::int32& flags);
+RecvFromResponse recv_from(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::string& mem, const pb::int32& flags);
 RecvResponse recv(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::string& mem, const pb::int32& flags);
+GetSockNameResponse get_sock_name(const StubPtr& stub, const nidevice_grpc::Session& socket);
+GetPeerNameResponse get_peer_name(const StubPtr& stub, const nidevice_grpc::Session& socket);
 ShutdownResponse shutdown(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::int32& how);
 CloseResponse close(const StubPtr& stub, const nidevice_grpc::Session& socket);
 IpStackClearResponse ip_stack_clear(const StubPtr& stub, const nidevice_grpc::Session& stack_ref);
@@ -37,6 +40,7 @@ IpStackGetInfoResponse ip_stack_get_info(const StubPtr& stub, const nidevice_grp
 IpStackWaitForInterfaceResponse ip_stack_wait_for_interface(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const pb::string& local_interface, const pb::int32& timeout_ms);
 IsSetResponse is_set(const StubPtr& stub, const nidevice_grpc::Session& fd, const std::vector<nidevice_grpc::Session>& set);
 SelectResponse select(const StubPtr& stub, const std::vector<nidevice_grpc::Session>& read_fds, const std::vector<nidevice_grpc::Session>& write_fds, const std::vector<nidevice_grpc::Session>& except_fds, const google::protobuf::Duration& timeout);
+SetSockOptResponse set_sock_opt(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::int32& level, const SockOptData& opt_data, const simple_variant<OptName, pb::int32>& optname);
 SocketResponse socket(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const pb::int32& domain, const pb::int32& type, const pb::int32& prototcol);
 
 } // namespace nixnetsocket_grpc::experimental::client
