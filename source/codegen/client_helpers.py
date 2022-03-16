@@ -131,12 +131,12 @@ def _get_param_mechanism(param: dict) -> ParamMechanism:
 
 def _create_client_param(param: dict, enums: dict) -> ClientParam:
     name = common_helpers.get_grpc_field_name(param)
-    cppName = common_helpers.get_grpc_client_field_name(param)
+    cppname = common_helpers.get_grpc_client_field_name(param)
     param_type = _get_cpp_client_param_type(param, enums)
     param_type = _const_ref_t(param_type)
     param_mechanism = _get_param_mechanism(param)
 
-    return ClientParam(name, cppName, param_type, param_mechanism)
+    return ClientParam(name, cppname, param_type, param_mechanism)
 
 
 def _is_grpc_array(param: dict) -> bool:
