@@ -30,6 +30,7 @@ service NiXnet {
   rpc DbDeleteObject(DbDeleteObjectRequest) returns (DbDeleteObjectResponse);
   rpc DbDeploy(DbDeployRequest) returns (DbDeployResponse);
   rpc DbFindObject(DbFindObjectRequest) returns (DbFindObjectResponse);
+  rpc DbGetDBCAttributeSize(DbGetDBCAttributeSizeRequest) returns (DbGetDBCAttributeSizeResponse);
   rpc DbGetDatabaseList(DbGetDatabaseListRequest) returns (DbGetDatabaseListResponse);
   rpc DbGetDatabaseListSizes(DbGetDatabaseListSizesRequest) returns (DbGetDatabaseListSizesResponse);
   rpc DbGetProperty(DbGetPropertyRequest) returns (DbGetPropertyResponse);
@@ -1128,6 +1129,20 @@ message DbFindObjectRequest {
 message DbFindObjectResponse {
   int32 status = 1;
   nidevice_grpc.Session db_object_ref = 2;
+}
+
+message DbGetDBCAttributeSizeRequest {
+  nidevice_grpc.Session db_object_ref = 1;
+  oneof mode_enum {
+    GetDBCAttributeMode mode = 2;
+    uint32 mode_raw = 3;
+  }
+  string attribute_name = 4;
+}
+
+message DbGetDBCAttributeSizeResponse {
+  int32 status = 1;
+  uint32 attribute_text_size = 2;
 }
 
 message DbGetDatabaseListSizesRequest {

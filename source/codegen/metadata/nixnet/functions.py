@@ -524,7 +524,6 @@ functions = {
         'returns': 'nxStatus_t'
     },
     'DbGetDBCAttributeSize': {
-        'codegen_method': 'no',
         'cname': 'nxdbGetDBCAttributeSize',
         'parameters': [
             {
@@ -544,7 +543,7 @@ functions = {
                 'type': 'const char[]'
             },
             {
-                'direction': 'in',
+                'direction': 'out',
                 'name': 'attributeTextSize',
                 'type': 'u32'
             }

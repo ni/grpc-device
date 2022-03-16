@@ -35,6 +35,7 @@ NiXnetLibrary::NiXnetLibrary() : shared_library_(kLibraryName)
   function_pointers_.DbDeleteObject = reinterpret_cast<DbDeleteObjectPtr>(shared_library_.get_function_pointer("nxdbDeleteObject"));
   function_pointers_.DbDeploy = reinterpret_cast<DbDeployPtr>(shared_library_.get_function_pointer("nxdbDeploy"));
   function_pointers_.DbFindObject = reinterpret_cast<DbFindObjectPtr>(shared_library_.get_function_pointer("nxdbFindObject"));
+  function_pointers_.DbGetDBCAttributeSize = reinterpret_cast<DbGetDBCAttributeSizePtr>(shared_library_.get_function_pointer("nxdbGetDBCAttributeSize"));
   function_pointers_.DbGetDatabaseList = reinterpret_cast<DbGetDatabaseListPtr>(shared_library_.get_function_pointer("nxdbGetDatabaseList"));
   function_pointers_.DbGetDatabaseListSizes = reinterpret_cast<DbGetDatabaseListSizesPtr>(shared_library_.get_function_pointer("nxdbGetDatabaseListSizes"));
   function_pointers_.DbGetProperty = reinterpret_cast<DbGetPropertyPtr>(shared_library_.get_function_pointer("nxdbGetProperty"));
@@ -243,6 +244,18 @@ nxStatus_t NiXnetLibrary::DbFindObject(nxDatabaseRef_t parentObjectRef, u32 obje
   return nxdbFindObject(parentObjectRef, objectClass, objectName, dbObjectRef);
 #else
   return function_pointers_.DbFindObject(parentObjectRef, objectClass, objectName, dbObjectRef);
+#endif
+}
+
+nxStatus_t NiXnetLibrary::DbGetDBCAttributeSize(nxDatabaseRef_t dbObjectRef, u32 mode, const char attributeName[], u32* attributeTextSize)
+{
+  if (!function_pointers_.DbGetDBCAttributeSize) {
+    throw nidevice_grpc::LibraryLoadException("Could not find nxdbGetDBCAttributeSize.");
+  }
+#if defined(_MSC_VER)
+  return nxdbGetDBCAttributeSize(dbObjectRef, mode, attributeName, attributeTextSize);
+#else
+  return function_pointers_.DbGetDBCAttributeSize(dbObjectRef, mode, attributeName, attributeTextSize);
 #endif
 }
 

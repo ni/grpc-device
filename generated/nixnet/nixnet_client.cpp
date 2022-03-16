@@ -296,6 +296,31 @@ db_find_object(const StubPtr& stub, const nidevice_grpc::Session& parent_object_
   return response;
 }
 
+DbGetDBCAttributeSizeResponse
+db_get_dbc_attribute_size(const StubPtr& stub, const nidevice_grpc::Session& db_object_ref, const simple_variant<GetDBCAttributeMode, pb::uint32>& mode, const pb::string& attribute_name)
+{
+  ::grpc::ClientContext context;
+
+  auto request = DbGetDBCAttributeSizeRequest{};
+  request.mutable_db_object_ref()->CopyFrom(db_object_ref);
+  const auto mode_ptr = mode.get_if<GetDBCAttributeMode>();
+  const auto mode_raw_ptr = mode.get_if<pb::uint32>();
+  if (mode_ptr) {
+    request.set_mode(*mode_ptr);
+  }
+  else if (mode_raw_ptr) {
+    request.set_mode_raw(*mode_raw_ptr);
+  }
+  request.set_attribute_name(attribute_name);
+
+  auto response = DbGetDBCAttributeSizeResponse{};
+
+  raise_if_error(
+      stub->DbGetDBCAttributeSize(&context, request, &response));
+
+  return response;
+}
+
 DbGetDatabaseListSizesResponse
 db_get_database_list_sizes(const StubPtr& stub, const pb::string& ip_address)
 {

@@ -29,6 +29,7 @@ class NiXnetLibraryInterface {
   virtual nxStatus_t DbDeleteObject(nxDatabaseRef_t dbObjectRef) = 0;
   virtual nxStatus_t DbDeploy(const char ipAddress[], const char databaseAlias[], u32 waitForComplete, u32* percentComplete) = 0;
   virtual nxStatus_t DbFindObject(nxDatabaseRef_t parentObjectRef, u32 objectClass, const char objectName[], nxDatabaseRef_t* dbObjectRef) = 0;
+  virtual nxStatus_t DbGetDBCAttributeSize(nxDatabaseRef_t dbObjectRef, u32 mode, const char attributeName[], u32* attributeTextSize) = 0;
   virtual nxStatus_t DbGetDatabaseList(const char ipAddress[], u32 sizeofAliasBuffer, char aliasBuffer[], u32 sizeofFilepathBuffer, char filepathBuffer[], u32* numberOfDatabases) = 0;
   virtual nxStatus_t DbGetDatabaseListSizes(const char ipAddress[], u32* sizeofAliasBuffer, u32* sizeofFilepathBuffer) = 0;
   virtual nxStatus_t DbGetProperty(nxDatabaseRef_t dbObjectRef, u32 propertyID, u32 propertySize, void* propertyValue) = 0;
