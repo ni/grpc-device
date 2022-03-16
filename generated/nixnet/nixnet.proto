@@ -30,22 +30,29 @@ service NiXnet {
   rpc DbDeleteObject(DbDeleteObjectRequest) returns (DbDeleteObjectResponse);
   rpc DbDeploy(DbDeployRequest) returns (DbDeployResponse);
   rpc DbFindObject(DbFindObjectRequest) returns (DbFindObjectResponse);
+  rpc DbGetDatabaseList(DbGetDatabaseListRequest) returns (DbGetDatabaseListResponse);
   rpc DbGetDatabaseListSizes(DbGetDatabaseListSizesRequest) returns (DbGetDatabaseListSizesResponse);
+  rpc DbGetProperty(DbGetPropertyRequest) returns (DbGetPropertyResponse);
   rpc DbGetPropertySize(DbGetPropertySizeRequest) returns (DbGetPropertySizeResponse);
   rpc DbMerge(DbMergeRequest) returns (DbMergeResponse);
   rpc DbOpenDatabase(DbOpenDatabaseRequest) returns (DbOpenDatabaseResponse);
   rpc DbRemoveAlias(DbRemoveAliasRequest) returns (DbRemoveAliasResponse);
   rpc DbSaveDatabase(DbSaveDatabaseRequest) returns (DbSaveDatabaseResponse);
+  rpc DbSetProperty(DbSetPropertyRequest) returns (DbSetPropertyResponse);
   rpc DbUndeploy(DbUndeployRequest) returns (DbUndeployResponse);
   rpc DisconnectTerminals(DisconnectTerminalsRequest) returns (DisconnectTerminalsResponse);
   rpc Flush(FlushRequest) returns (FlushResponse);
   rpc FutureTimeTrigger(FutureTimeTriggerRequest) returns (FutureTimeTriggerResponse);
+  rpc GetProperty(GetPropertyRequest) returns (GetPropertyResponse);
   rpc GetPropertySize(GetPropertySizeRequest) returns (GetPropertySizeResponse);
+  rpc GetSubProperty(GetSubPropertyRequest) returns (GetSubPropertyResponse);
   rpc GetSubPropertySize(GetSubPropertySizeRequest) returns (GetSubPropertySizeResponse);
   rpc ReadSignalSinglePoint(ReadSignalSinglePointRequest) returns (ReadSignalSinglePointResponse);
   rpc ReadSignalWaveform(ReadSignalWaveformRequest) returns (ReadSignalWaveformResponse);
   rpc ReadState(ReadStateRequest) returns (ReadStateResponse);
   rpc ReadStateTimeTrigger(ReadStateTimeTriggerRequest) returns (ReadStateTimeTriggerResponse);
+  rpc SetProperty(SetPropertyRequest) returns (SetPropertyResponse);
+  rpc SetSubProperty(SetSubPropertyRequest) returns (SetSubPropertyResponse);
   rpc Start(StartRequest) returns (StartResponse);
   rpc Stop(StopRequest) returns (StopResponse);
   rpc SystemClose(SystemCloseRequest) returns (SystemCloseResponse);
@@ -231,34 +238,6 @@ enum DBProperty {
   DB_PROPERTY_ECU_NAME = 50659330;
   DB_PROPERTY_ECU_J1939_NODE_NAME = 151322665;
   DB_PROPERTY_ECU_J1939_PREFERRED_ADDRESS = 327720;
-  DB_PROPERTY_LIN_SCHED_CLST_REF = 84279301;
-  DB_PROPERTY_LIN_SCHED_COMMENT = 50724870;
-  DB_PROPERTY_LIN_SCHED_CONFIG_STATUS = 393223;
-  DB_PROPERTY_LIN_SCHED_ENTRIES = 101056513;
-  DB_PROPERTY_LIN_SCHED_NAME = 50724866;
-  DB_PROPERTY_LIN_SCHED_PRIORITY = 393219;
-  DB_PROPERTY_LIN_SCHED_RUN_MODE = 393220;
-  DB_PROPERTY_LIN_SCHED_ENTRY_COLLISION_RES_SCHED = 84344833;
-  DB_PROPERTY_LIN_SCHED_ENTRY_DELAY = 17235970;
-  DB_PROPERTY_LIN_SCHED_ENTRY_EVENT_ID = 458755;
-  DB_PROPERTY_LIN_SCHED_ENTRY_FRAMES = 101122052;
-  DB_PROPERTY_LIN_SCHED_ENTRY_NAME = 50790406;
-  DB_PROPERTY_LIN_SCHED_ENTRY_NAME_UNIQUE_TO_CLUSTER = 50790408;
-  DB_PROPERTY_LIN_SCHED_ENTRY_NC_FF_DATA_BYTES = 168230921;
-  DB_PROPERTY_LIN_SCHED_ENTRY_SCHED = 84344839;
-  DB_PROPERTY_LIN_SCHED_ENTRY_TYPE = 458757;
-  DB_PROPERTY_PDU_CLUSTER_REF = 84410372;
-  DB_PROPERTY_PDU_COMMENT = 50855938;
-  DB_PROPERTY_PDU_CONFIG_STATUS = 524295;
-  DB_PROPERTY_PDU_DEFAULT_PAYLOAD = 168296453;
-  DB_PROPERTY_PDU_FRM_REFS = 101187590;
-  DB_PROPERTY_PDU_MUX_DATA_MUX_SIG_REF = 84410377;
-  DB_PROPERTY_PDU_MUX_IS_MUXED = 34078728;
-  DB_PROPERTY_PDU_MUX_STATIC_SIG_REFS = 101187594;
-  DB_PROPERTY_PDU_MUX_SUBFRAME_REFS = 101187595;
-  DB_PROPERTY_PDU_NAME = 50855937;
-  DB_PROPERTY_PDU_PAYLOAD_LEN = 524291;
-  DB_PROPERTY_PDU_SIG_REFS = 101187589;
 }
 
 enum DBPropertyValue {
@@ -728,44 +707,6 @@ enum StartStopScope {
   START_STOP_SCOPE_START_STOP_SESSION_ONLY_BLOCKING = 3;
 }
 
-enum StateValue {
-  option allow_alias = true;
-  STATE_VALUE_SESSION_INFO_STATE_STOPPED = 0;
-  STATE_VALUE_SESSION_INFO_STATE_STARTED = 1;
-  STATE_VALUE_SESSION_INFO_STATE_MIX = 2;
-  STATE_VALUE_CAN_COMM_STATE_ERROR_ACTIVE = 0;
-  STATE_VALUE_CAN_COMM_STATE_ERROR_PASSIVE = 1;
-  STATE_VALUE_CAN_COMM_STATE_BUS_OFF = 2;
-  STATE_VALUE_CAN_COMM_STATE_INIT = 3;
-  STATE_VALUE_CAN_LAST_ERR_NONE = 0;
-  STATE_VALUE_CAN_LAST_ERR_STUFF = 1;
-  STATE_VALUE_CAN_LAST_ERR_FORM = 2;
-  STATE_VALUE_CAN_LAST_ERR_ACK = 3;
-  STATE_VALUE_CAN_LAST_ERR_BIT_1 = 4;
-  STATE_VALUE_CAN_LAST_ERR_BIT_0 = 5;
-  STATE_VALUE_CAN_LAST_ERR_CRC = 6;
-  STATE_VALUE_FLEX_RAY_POC_STATE_DEFAULT_CONFIG = 0;
-  STATE_VALUE_FLEX_RAY_POC_STATE_READY = 1;
-  STATE_VALUE_FLEX_RAY_POC_STATE_NORMAL_ACTIVE = 2;
-  STATE_VALUE_FLEX_RAY_POC_STATE_NORMAL_PASSIVE = 3;
-  STATE_VALUE_FLEX_RAY_POC_STATE_HALT = 4;
-  STATE_VALUE_FLEX_RAY_POC_STATE_MONITOR = 5;
-  STATE_VALUE_FLEX_RAY_POC_STATE_CONFIG = 15;
-  STATE_VALUE_LIN_COMM_STATE_IDLE = 0;
-  STATE_VALUE_LIN_COMM_STATE_ACTIVE = 1;
-  STATE_VALUE_LIN_COMM_STATE_INACTIVE = 2;
-  STATE_VALUE_LIN_DIAGNOSTIC_SCHEDULE_NULL = 0;
-  STATE_VALUE_LIN_DIAGNOSTIC_SCHEDULE_MASTER_REQ = 1;
-  STATE_VALUE_LIN_DIAGNOSTIC_SCHEDULE_SLAVE_RESP = 2;
-  STATE_VALUE_LIN_LAST_ERR_CODE_NONE = 0;
-  STATE_VALUE_LIN_LAST_ERR_CODE_UNKNOWN_ID = 1;
-  STATE_VALUE_LIN_LAST_ERR_CODE_FORM = 2;
-  STATE_VALUE_LIN_LAST_ERR_CODE_FRAMING = 3;
-  STATE_VALUE_LIN_LAST_ERR_CODE_READBACK = 4;
-  STATE_VALUE_LIN_LAST_ERR_CODE_TIMEOUT = 5;
-  STATE_VALUE_LIN_LAST_ERR_CODE_CRC = 6;
-}
-
 enum SubProperty {
   SUB_PROPERTY_UNSPECIFIED = 0;
   SUB_PROPERTY_SESSION_SUB_CAN_START_TIME_OFF = 17825921;
@@ -918,6 +859,155 @@ message WriteStateValue {
         uint32 ethernet_sleep = 4;
         uint32 ethernet_wake = 5;
     }
+}
+
+message U32Array {
+    repeated uint32 u32_array = 1;
+}
+
+message DbRefArray {
+    repeated nidevice_grpc.Session db_ref = 1;
+}
+
+message GetPropertyRequest {
+    nidevice_grpc.Session session_ref = 1;
+    oneof property_id_enum {
+        Property property_id = 2;
+        uint32 property_id_raw = 3;
+    }
+} 
+
+message GetPropertyResponse {
+    int32 status = 1;
+    oneof property_value {
+        uint32 u32_scalar = 2;
+        bool bool_scalar = 3;
+        string str = 4;
+        uint64 u64_scalar = 5;
+        int32 i32_scalar = 6;
+        double f64_scalar = 7;
+        string string_array = 8;
+        U32Array u32_array = 9;
+        nidevice_grpc.Session db_ref = 10;
+        DbRefArray db_ref_array = 11;
+    }
+}
+
+message SetPropertyRequest {
+    nidevice_grpc.Session session_ref = 1;
+    oneof property_id_enum {
+        Property property_id = 2;
+        uint32 property_id_raw = 3;
+    }
+    oneof property_value {
+        uint32 u32_scalar = 4;
+        bool bool_scalar = 5;
+        string str = 6;
+        uint64 u64_scalar = 7;
+        int32 i32_scalar = 8;
+        double f64_scalar = 9;
+        string string_array = 10;
+        U32Array u32_array = 11;
+        nidevice_grpc.Session db_ref = 12;
+        DbRefArray db_ref_array = 13;
+    }
+}
+
+message SetPropertyResponse {
+    int32 status = 1;
+}
+
+message GetSubPropertyRequest {
+    nidevice_grpc.Session session_ref = 1;
+    uint32 active_index = 2;
+    oneof subproperty_id_enum {
+        SubProperty property_id = 3;
+        uint32 property_id_raw = 4;
+    }
+}
+
+message GetSubPropertyResponse {
+    int32 status = 1;
+    oneof property_value {
+        uint32 u32_scalar = 2;
+        string str = 3;
+        double f64_scalar = 9;
+    }
+}
+
+message DbGetPropertyRequest {
+    nidevice_grpc.Session dbobject_ref = 1;
+    oneof dbproperty_id_enum {
+        DBProperty property_id = 2;
+        uint32 property_id_raw = 3;
+    }
+}
+
+message DbGetPropertyResponse {
+    int32 status = 1;
+    oneof property_value {
+        uint32 u32_scalar = 2;
+        bool bool_scalar = 3;
+        string str = 4;
+        uint64 u64_scalar = 5;
+        double f64_scalar = 6;
+        U32Array u32_array = 7;
+        bytes u8_array = 8;
+        nidevice_grpc.Session db_ref = 9;
+        DbRefArray db_ref_array = 10;
+    }
+}
+
+message SetSubPropertyRequest {
+    nidevice_grpc.Session session_ref = 1;
+    uint32 active_index = 2;
+    oneof subproperty_id_enum {
+        SubProperty property_id = 3;
+        uint32 property_id_raw = 4;
+    }
+    oneof property_value {
+        uint32 u32_scalar = 5;
+        string str = 6;
+        double f64_scalar = 7;
+    }
+}
+
+message SetSubPropertyResponse {
+    int32 status = 1;
+}
+
+message DbSetPropertyRequest {
+    nidevice_grpc.Session dbobject_ref = 1;
+    oneof dbproperty_id_enum {
+        DBProperty property_id = 2;
+        uint32 property_id_raw = 3;
+    }
+    oneof property_value {
+        uint32 u32_scalar = 4;
+        bool bool_scalar = 5;
+        string str = 6;
+        uint64 u64_scalar = 7;
+        double f64_scalar = 8;
+        U32Array u32_array = 9;
+        bytes u8_array = 10;
+        nidevice_grpc.Session db_ref = 11;
+        DbRefArray db_ref_array = 12;
+    }
+}
+
+message DbSetPropertyResponse {
+    int32 status = 1;
+}
+
+message DbGetDatabaseListRequest {
+    string ip_address = 1;    
+}
+
+message DbGetDatabaseListResponse {
+    int32 status = 1;
+    string alias_buffer = 2;
+    string file_path_buffer = 3;
+    uint32 number_of_databases = 4;
 }
 message TimeLocalNetwork {
   uint64 local_time = 1;

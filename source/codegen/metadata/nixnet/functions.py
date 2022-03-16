@@ -553,7 +553,8 @@ functions = {
     },
     'DbGetDatabaseList': {
         'cname': 'nxdbGetDatabaseList',
-        'codegen_method': 'no',
+        'codegen_method': 'CustomCodeCustomProtoMessage',
+        'include_in_client': False,
         'parameters': [
             {
                 'direction': 'in',
@@ -619,7 +620,8 @@ functions = {
     },
     'DbGetProperty': {
         'cname': 'nxdbGetProperty',
-        'codegen_method': 'no',
+        'codegen_method': 'CustomCodeCustomProtoMessage',
+        'include_in_client': False,
         'parameters': [
             {
                 'direction': 'in',
@@ -634,14 +636,19 @@ functions = {
             },
             {
                 'direction': 'in',
+                'include_in_proto': False,
                 'name': 'propertySize',
                 'type': 'u32'
             },
             {
                 'direction': 'out',
                 'enum': 'DBPropertyValue',
+                'size': {
+                    'mechanism': 'custom-code',
+                    'value': ''
+                },
                 'name': 'propertyValue',
-                'type': 'void[]'
+                'type': 'void *'
             }
         ],
         'returns': 'nxStatus_t'
@@ -752,7 +759,8 @@ functions = {
     },
     'DbSetProperty': {
         'cname': 'nxdbSetProperty',
-        'codegen_method': 'no',
+        'codegen_method': 'CustomCodeCustomProtoMessage',
+        'include_in_client': False,
         'parameters': [
             {
                 'direction': 'in',
@@ -767,13 +775,18 @@ functions = {
             },
             {
                 'direction': 'in',
+                'include_in_proto': False,
                 'name': 'propertySize',
                 'type': 'u32'
             },
             {
-                'direction': 'out',
+                'direction': 'in',
                 'name': 'propertyValue',
-                'type': 'void[]'
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'propertySize'
+                },
+                'type': 'void *'
             }
         ],
         'returns': 'nxStatus_t'
@@ -848,7 +861,8 @@ functions = {
         'returns': 'nxStatus_t'
     },
     'GetProperty': {
-        'codegen_method': 'no',
+        'codegen_method': 'CustomCodeCustomProtoMessage',
+        'include_in_client': False,
         'parameters': [
             {
                 'direction': 'in',
@@ -862,6 +876,7 @@ functions = {
                 'type': 'u32'
             },
             {
+                'include_in_proto': False,
                 'direction': 'in',
                 'name': 'propertySize',
                 'type': 'u32'
@@ -870,7 +885,11 @@ functions = {
                 'direction': 'out',
                 'enum': 'PropertyValue',
                 'name': 'propertyValue',
-                'type': 'void[]'
+                'size': {
+                    'mechanism': 'custom-code',
+                    'value': ''
+                },
+                'type': 'void *'
             }
         ],
         'returns': 'nxStatus_t'
@@ -897,7 +916,8 @@ functions = {
         'returns': 'nxStatus_t'
     },
     'GetSubProperty': {
-        'codegen_method': 'no',
+        'codegen_method': 'CustomCodeCustomProtoMessage',
+        'include_in_client': False,
         'parameters': [
             {
                 'direction': 'in',
@@ -917,14 +937,19 @@ functions = {
             },
             {
                 'direction': 'in',
+                'include_in_proto': False,
                 'name': 'propertySize',
                 'type': 'u32'
             },
             {
                 'direction': 'out',
                 'enum': 'SubPropertyValue',
+                'size': {
+                    'mechanism': 'custom-code',
+                    'value': ''
+                },
                 'name': 'propertyValue',
-                'type': 'void[]'
+                'type': 'void *'
             }
         ],
         'returns': 'nxStatus_t'
@@ -1204,7 +1229,8 @@ functions = {
         'returns': 'nxStatus_t'
     },
     'SetProperty': {
-        'codegen_method': 'no',
+        'codegen_method': 'CustomCodeCustomProtoMessage',
+        'include_in_client': False,
         'parameters': [
             {
                 'direction': 'in',
@@ -1219,19 +1245,26 @@ functions = {
             },
             {
                 'direction': 'in',
+                'include_in_proto': False,
                 'name': 'propertySize',
                 'type': 'u32'
             },
             {
                 'direction': 'in',
+                'enum': 'PropertyValue',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'propertySize'
+                },
                 'name': 'propertyValue',
-                'type': 'void[]'
+                'type': 'void *'
             }
         ],
         'returns': 'nxStatus_t'
     },
     'SetSubProperty': {
-        'codegen_method': 'no',
+        'codegen_method': 'CustomCodeCustomProtoMessage',
+        'include_in_client': False,
         'parameters': [
             {
                 'direction': 'in',
@@ -1251,13 +1284,19 @@ functions = {
             },
             {
                 'direction': 'in',
+                'include_in_proto': False,
                 'name': 'propertySize',
                 'type': 'u32'
             },
             {
                 'direction': 'in',
                 'name': 'propertyValue',
-                'type': 'void[]'
+                'enum': 'SubPropertyValue',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'propertySize'
+                },
+                'type': 'void *'
             }
         ],
         'returns': 'nxStatus_t'

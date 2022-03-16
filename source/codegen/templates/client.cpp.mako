@@ -7,6 +7,7 @@ from client_helpers import ParamMechanism
 config = data['config']
 functions = data['functions']
 enums = data['enums']
+functions = client_helpers.filter_functions_to_include_in_client(functions)
 
 module_name = config["module_name"]
 service_class_prefix = config["service_class_prefix"]
@@ -14,6 +15,7 @@ core_namespace = config["namespace_component"] + "_grpc"
 namespace = f"{core_namespace}::experimental::client"
 
 stub_ptr_alias = client_helpers.stub_ptr_alias()
+
 %>\
 <%namespace name="mako_helper" file="/client_helpers.mako"/>\
 
