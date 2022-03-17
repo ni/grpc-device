@@ -39,11 +39,11 @@ else()
 endif()
 
 CreateVirtualEnvironment(virtual_environment
-  REQUIREMENTS_TXT 
+  REQUIREMENTS_TXT
     ${CMAKE_SOURCE_DIR}/python_build_requirements.txt
   ENV_NAME
     venv
-  OUT_PYTHON_EXE 
+  OUT_PYTHON_EXE
     PYTHON_EXE
 )
 
@@ -101,12 +101,12 @@ set(codegen_scripts
   "${codegen_dir}/templates/proto.mako"
   "${codegen_dir}/templates/proto_helpers.mako"
   "${codegen_dir}/templates/register_all_services.h.mako"
-  "${codegen_dir}/templates/register_all_services.cpp.mako"  
+  "${codegen_dir}/templates/register_all_services.cpp.mako"
   "${codegen_dir}/templates/service.cpp.mako"
   "${codegen_dir}/templates/service_helpers.mako"
   "${codegen_dir}/templates/service.h.mako"
   "${codegen_dir}/templates/service_registrar.h.mako"
-  "${codegen_dir}/templates/service_registrar.cpp.mako"  
+  "${codegen_dir}/templates/service_registrar.cpp.mako"
   )
 
 # Populated in the api loop below.
@@ -177,16 +177,16 @@ foreach(api ${nidrivers})
 endforeach()
 
 add_custom_command(
-  OUTPUT 
+  OUTPUT
     ${service_output_dir}/register_all_services.cpp
     ${service_output_dir}/register_all_services.h
-  COMMAND 
+  COMMAND
     ${PYTHON_EXE} ${codegen_dir}/generate_shared_service_files.py ${metadata_dir}/ -o ${service_output_dir}/
-  COMMENT 
+  COMMENT
     "Generating shared service files"
   DEPENDS
     ${all_codegen_dependencies}
-    ${codegen_scripts} 
+    ${codegen_scripts}
     virtual_environment
 )
 
@@ -240,9 +240,9 @@ GenerateGrpcSources(
   PROTO
     ${session_proto}
   OUTPUT
-    "${session_proto_srcs}" 
-    "${session_proto_hdrs}" 
-    "${session_grpc_srcs}" 
+    "${session_proto_srcs}"
+    "${session_proto_hdrs}"
+    "${session_grpc_srcs}"
     "${session_grpc_hdrs}"
 )
 
@@ -416,7 +416,7 @@ add_executable(UnitTestsRunner
     "${custom_dir}/nifake_non_ivi_service.custom.cpp"
 )
 
-# ni_fake_service_tests.cpp and several DAQ cpp files exceed the MSVC limit for the number of sections 
+# ni_fake_service_tests.cpp and several DAQ cpp files exceed the MSVC limit for the number of sections
 # in an obj file defined by PE-COFF. This line disables the limit.
 if(MSVC)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /bigobj /D_SILENCE_CXX17_ITERATOR_BASE_CLASS_DEPRECATION_WARNING")
@@ -470,6 +470,11 @@ set(system_test_runner_sources
   "source/tests/system/nisync_driver_api_tests.cpp"
   "source/tests/system/nisync_session_tests.cpp"
   "source/tests/system/nitclk_driver_api_tests.cpp"
+  "source/tests/system/nixnet_can_driver_api_tests.cpp"
+  "source/tests/system/nixnet_common_driver_api_tests.cpp"
+  "source/tests/system/nixnet_ethernet_driver_api_tests.cpp"
+  "source/tests/system/nixnet_flexray_driver_api_tests.cpp"
+  "source/tests/system/nixnet_lin_driver_api_tests.cpp"
   "source/tests/system/nixnetsocket_driver_api_tests.cpp"
   "source/server/device_enumerator.cpp"
   "source/server/feature_toggles.cpp"
@@ -487,7 +492,7 @@ set(system_test_runner_sources
 
 if(WIN32)
   list(
-    APPEND 
+    APPEND
       system_test_runner_sources
         "source/tests/system/nirfmxbluetooth_driver_api_tests.cpp"
         "source/tests/system/nirfmxbluetooth_session_tests.cpp"
