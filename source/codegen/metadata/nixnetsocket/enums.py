@@ -192,51 +192,51 @@ enums = {
     'GetAddrInfoFlags': {
         'values': [
             {
-                'name': 'AI_PASSIVE',
+                'name': 'PASSIVE',
                 'value': 1
             },
             {
-                'name': 'AI_CANONNAME',
+                'name': 'CANONNAME',
                 'value': 2
             },
             {
-                'name': 'AI_NUMERICHOST',
+                'name': 'NUMERICHOST',
                 'value': 4
             },
             {
-                'name': 'AI_NUMERICSERV',
+                'name': 'NUMERICSERV',
                 'value': 8
             },
             {
-                'name': 'AI_V4MAPPED',
+                'name': 'V4MAPPED',
                 'value': 16
             },
             {
-                'name': 'AI_ALL',
+                'name': 'ALL',
                 'value': 32
             },
             {
-                'name': 'AI_ADDRCONFIG',
+                'name': 'ADDRCONFIG',
                 'value': 64
             },
             {
-                'name': 'AI_LOCALQUERY',
+                'name': 'LOCALQUERY',
                 'value': 128
             },
             {
-                'name': 'AI_PREFER_V4',
+                'name': 'PREFER_V4',
                 'value': 256
             },
             {
-                'name': 'AI_UNICAST_REPLY',
+                'name': 'UNICAST_REPLY',
                 'value': 512
             },
             {
-                'name': 'AI_SHARED_RESET',
+                'name': 'SHARED_RESET',
                 'value': 1024
             },
             {
-                'name': 'AI_BYPASS_CACHE',
+                'name': 'BYPASS_CACHE',
                 'value': 2048
             }
         ]
@@ -244,23 +244,23 @@ enums = {
     'GetNameInfoFlags': {
         'values': [
             {
-                'name': 'NI_NOFQDN',
+                'name': 'NOFQDN',
                 'value': 1
             },
             {
-                'name': 'NI_NUMERICHOST',
+                'name': 'NUMERICHOST',
                 'value': 2
             },
             {
-                'name': 'NI_NAMEREQD',
+                'name': 'NAMEREQD',
                 'value': 4
             },
             {
-                'name': 'NI_NUMERICSERV',
+                'name': 'NUMERICSERV',
                 'value': 8
             },
             {
-                'name': 'NI_DGRAM',
+                'name': 'DGRAM',
                 'value': 16
             }
         ]
