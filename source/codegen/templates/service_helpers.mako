@@ -491,8 +491,15 @@ ${initialize_standard_input_param(function_name, parameter)}
 % else:
 <%
   size_field_name = size_sources[-1]
+  size_from_param_name = parameter["determine_size_from"][0] if isinstance(parameter["determine_size_from"], list) else parameter["determine_size_from"]
+  size_field_param = common_helpers.get_param_with_name(parameters, size_from_param_name)
+  size_field_param_underlying_type = common_helpers.get_underlying_type(size_field_param)
 %>\
+  %if common_helpers.get_size_mechanism(size_field_param) == "len-in-bytes":
+      ${parameter['type']} ${parameter_name} = static_cast<${parameter['type']}>(request->${size_field_name}().size()) * sizeof(${size_field_param_underlying_type});\
+  %else:
       ${parameter['type']} ${parameter_name} = static_cast<${parameter['type']}>(request->${size_field_name}().size());\
+  %endif
 % endif
 </%def>
 

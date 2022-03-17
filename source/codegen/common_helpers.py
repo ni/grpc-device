@@ -287,6 +287,7 @@ def is_unsupported_size_mechanism_type(size_mechanism: str) -> bool:
     return size_mechanism not in {
         "fixed",
         "len",
+        "len-in-bytes",
         "ivi-dance",
         "passed-in",
         "passed-in-by-ptr",

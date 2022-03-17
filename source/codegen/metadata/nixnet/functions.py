@@ -59,7 +59,7 @@ functions = {
                 'direction': 'in',
                 'name': 'valueBuffer',
                 'size': {
-                    'mechanism': 'len',
+                    'mechanism': 'len-in-bytes',
                     'value': 'sizeOfValueBuffer'
                 },
                 'type': 'u8[]'
@@ -142,7 +142,7 @@ functions = {
                 'direction': 'in',
                 'name': 'frameBuffer',
                 'size': {
-                    'mechanism': 'len',
+                    'mechanism': 'len-in-bytes',
                     'value': 'numberOfBytesForFrames'
                 },
                 'type': 'void[]'
@@ -195,7 +195,7 @@ functions = {
                 'direction': 'in',
                 'name': 'valueBuffer',
                 'size': {
-                    'mechanism': 'len',
+                    'mechanism': 'len-in-bytes',
                     'value': 'sizeOfValueBuffer'
                 },
                 'type': 'f64[]'
@@ -783,7 +783,7 @@ functions = {
                 'direction': 'in',
                 'name': 'propertyValue',
                 'size': {
-                    'mechanism': 'len',
+                    'mechanism': 'len-in-bytes',
                     'value': 'propertySize'
                 },
                 'type': 'void *'
@@ -1454,7 +1454,7 @@ functions = {
                 'direction': 'in',
                 'name': 'valueBuffer',
                 'size': {
-                    'mechanism': 'len',
+                    'mechanism': 'len-in-bytes',
                     'value': 'sizeOfValueBuffer'
                 },
                 'type': 'f64[]'
@@ -1484,7 +1484,7 @@ functions = {
                 'direction': 'in',
                 'name': 'valueBuffer',
                 'size': {
-                    'mechanism': 'len',
+                    'mechanism': 'len-in-bytes',
                     'value': 'sizeOfValueBuffer'
                 },
                 'type': 'f64[]'
@@ -1514,7 +1514,7 @@ functions = {
                 'direction': 'in',
                 'name': 'valueBuffer',
                 'size': {
-                    'mechanism': 'len',
+                    'mechanism': 'len-in-bytes',
                     'value': 'sizeOfValueBuffer'
                 },
                 'type': 'f64[]'
@@ -1528,7 +1528,7 @@ functions = {
                 'direction': 'in',
                 'name': 'timestampBuffer',
                 'size': {
-                    'mechanism': 'len',
+                    'mechanism': 'len-in-bytes',
                     'value': 'sizeOfTimestampBuffer'
                 },
                 'type': 'nxTimestamp100ns_t[]'
@@ -1542,7 +1542,7 @@ functions = {
                 'direction': 'in',
                 'name': 'numPairsBuffer',
                 'size': {
-                    'mechanism': 'len',
+                    'mechanism': 'len-in-bytes',
                     'value': 'sizeOfNumPairsBuffer'
                 },
                 'type': 'u32[]'
@@ -1578,7 +1578,7 @@ functions = {
                 'direction': 'in',
                 'name': 'stateValue',
                 'size': {
-                    'mechanism': 'len',
+                    'mechanism': 'len-in-bytes',
                     'value': 'stateSize'
                 },
                 'type': 'void *',
