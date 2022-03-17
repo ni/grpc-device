@@ -19,7 +19,6 @@ Refer to the NI XNET gRPC Wiki for the latest C Function Reference:
   https://github.com/ni/grpc-device/wiki/NI-XNET-C-Function-Reference
 
  Running from command line:
-
 Server machine's IP address and port number can be passed as separate command line
 arguments.
   > python can-signal-single-point-output.py <server_address> <port_number>
