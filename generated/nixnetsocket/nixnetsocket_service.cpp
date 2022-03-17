@@ -404,6 +404,53 @@ namespace nixnetsocket_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiXnetSocketService::GetSockOpt(::grpc::ServerContext* context, const GetSockOptRequest* request, GetSockOptResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto socket_grpc_session = request->socket();
+      nxSOCKET socket = session_repository_->access_session(socket_grpc_session.id(), socket_grpc_session.name());
+      int32_t level = request->level();
+      int32_t optname;
+      switch (request->optname_enum_case()) {
+        case nixnetsocket_grpc::GetSockOptRequest::OptnameEnumCase::kOptname: {
+          optname = static_cast<int32_t>(request->optname());
+          break;
+        }
+        case nixnetsocket_grpc::GetSockOptRequest::OptnameEnumCase::kOptnameRaw: {
+          optname = static_cast<int32_t>(request->optname_raw());
+          break;
+        }
+        case nixnetsocket_grpc::GetSockOptRequest::OptnameEnumCase::OPTNAME_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for optname was not specified or out of range");
+          break;
+        }
+      }
+
+      auto optval = allocate_output_storage<void *, SockOptData>(optname);
+      nxsocklen_t optlen {};
+      auto status = library_->GetSockOpt(socket, level, optname, optval.data(), &optlen);
+      response->set_status(status);
+      if (status_ok(status)) {
+        convert_to_grpc(optval, response->mutable_optval());
+      }
+      else {
+        const auto error_message = get_last_error_message(library_);
+        response->set_error_message(error_message);
+        const auto error_num = get_last_error_num(library_);
+        response->set_error_num(error_num);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiXnetSocketService::IpStackClear(::grpc::ServerContext* context, const IpStackClearRequest* request, IpStackClearResponse* response)
   {
     if (context->IsCancelled()) {
@@ -453,6 +500,65 @@ namespace nixnetsocket_grpc {
       response->set_status(status);
       if (status_ok(status)) {
         response->mutable_stack_ref()->set_id(session_id);
+      }
+      else {
+        const auto error_message = get_last_error_message(library_);
+        response->set_error_message(error_message);
+        const auto error_num = get_last_error_num(library_);
+        response->set_error_num(error_num);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiXnetSocketService::IpStackGetInfo(::grpc::ServerContext* context, const IpStackGetInfoRequest* request, IpStackGetInfoResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto stack_ref_grpc_session = request->stack_ref();
+      nxIpStackRef_t stack_ref = nx_ip_stack_ref_t_resource_repository_->access_session(stack_ref_grpc_session.id(), stack_ref_grpc_session.name());
+      auto info_id = nxIPSTACK_INFO_ID;
+      auto virtual_interfaces = allocate_output_storage<nxVirtualInterface_t, google::protobuf::RepeatedPtrField<VirtualInterface>>(library_);
+      auto status = library_->IpStackGetInfo(stack_ref, info_id, &virtual_interfaces);
+      response->set_status(status);
+      if (status_ok(status)) {
+        convert_to_grpc(virtual_interfaces, response->mutable_virtual_interfaces());
+      }
+      else {
+        const auto error_message = get_last_error_message(library_);
+        response->set_error_message(error_message);
+        const auto error_num = get_last_error_num(library_);
+        response->set_error_num(error_num);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiXnetSocketService::IpStackWaitForInterface(::grpc::ServerContext* context, const IpStackWaitForInterfaceRequest* request, IpStackWaitForInterfaceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto stack_ref_grpc_session = request->stack_ref();
+      nxIpStackRef_t stack_ref = nx_ip_stack_ref_t_resource_repository_->access_session(stack_ref_grpc_session.id(), stack_ref_grpc_session.name());
+      auto local_interface = request->local_interface().c_str();
+      int32_t timeout_ms = request->timeout_ms();
+      auto status = library_->IpStackWaitForInterface(stack_ref, local_interface, timeout_ms);
+      response->set_status(status);
+      if (status_ok(status)) {
       }
       else {
         const auto error_message = get_last_error_message(library_);
@@ -538,7 +644,6 @@ namespace nixnetsocket_grpc {
       auto socket_grpc_session = request->socket();
       nxSOCKET socket = session_repository_->access_session(socket_grpc_session.id(), socket_grpc_session.name());
       int32_t level = request->level();
-      auto opt_data = convert_from_grpc<SockOptDataInputConverter>(request->opt_data());
       int32_t optname;
       switch (request->optname_enum_case()) {
         case nixnetsocket_grpc::SetSockOptRequest::OptnameEnumCase::kOptname: {
@@ -555,6 +660,7 @@ namespace nixnetsocket_grpc {
         }
       }
 
+      auto opt_data = convert_from_grpc<SockOptDataInputConverter>(request->opt_data());
       auto optval = opt_data.data();
       auto optlen = opt_data.size();
       auto status = library_->SetSockOpt(socket, level, optname, optval, optlen);

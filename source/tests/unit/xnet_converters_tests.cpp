@@ -347,6 +347,69 @@ TEST(XnetConvertersTests, SockOptDataWithDataUnset_ConvertFromGrpc_NullPtrDataAn
   EXPECT_EQ(nullptr, opt_data.data());
 }
 
+TEST(XnetConvertersTests, Int32SockOptData_ConvertToGrpc_ConvertsToSockOptDataWithIntValue)
+{
+  constexpr auto RX_DATA = 100;
+  auto storage = allocate_output_storage<void*, SockOptData>(OptName::OPT_NAME_SO_RX_DATA);
+  void* data_pointer = storage.data();
+  EXPECT_EQ(data_pointer, &(storage.data_int));
+  auto int_pointer = reinterpret_cast<int32_t*>(data_pointer);
+  *int_pointer = RX_DATA;
+
+  auto grpc_data = SockOptData{};
+  convert_to_grpc(storage, &grpc_data);
+
+  EXPECT_EQ(SockOptData::DataCase::kDataInt32, grpc_data.data_case());
+  EXPECT_EQ(RX_DATA, grpc_data.data_int32());
+}
+
+TEST(XnetConvertersTests, BoolSockOptData_ConvertToGrpc_ConvertsToSockOptDataWithBoolValue)
+{
+  constexpr auto LINGER = true;
+  auto storage = allocate_output_storage<void*, SockOptData>(OptName::OPT_NAME_SO_LINGER);
+  void* data_pointer = storage.data();
+  EXPECT_EQ(data_pointer, &(storage.data_bool));
+  auto bool_pointer = reinterpret_cast<bool*>(data_pointer);
+  *bool_pointer = LINGER;
+
+  auto grpc_data = SockOptData{};
+  convert_to_grpc(storage, &grpc_data);
+
+  EXPECT_EQ(SockOptData::DataCase::kDataBool, grpc_data.data_case());
+  EXPECT_EQ(LINGER, grpc_data.data_bool());
+}
+
+TEST(XnetConvertersTests, StringSockOptData_ConvertToGrpc_ConvertsToSockOptDataWithStringValue)
+{
+  const std::string DEVICE_NAME = "I'm a Device";
+  constexpr auto MAX_SOCK_OPT_STRING_SIZE = 255;
+  auto storage = allocate_output_storage<void*, SockOptData>(OptName::OPT_NAME_SO_BIND_TO_DEVICE);
+  void* data_pointer = storage.data();
+  EXPECT_EQ(MAX_SOCK_OPT_STRING_SIZE, storage.data_string.size());
+  EXPECT_EQ(data_pointer, &(storage.data_string[0]));
+  auto string_pointer = reinterpret_cast<char*>(data_pointer);
+  strcpy(string_pointer, DEVICE_NAME.c_str());
+
+  auto grpc_data = SockOptData{};
+  convert_to_grpc(storage, &grpc_data);
+
+  EXPECT_EQ(SockOptData::DataCase::kDataString, grpc_data.data_case());
+  EXPECT_EQ(DEVICE_NAME, grpc_data.data_string());
+}
+
+TEST(XnetConvertersTests, SockOptDataWithUnknownOptName_ConvertToGrpc_ConvertsToUnsetSockOptData)
+{
+  constexpr auto UNKNOWN_OPT_NAME = -1;
+  auto storage = allocate_output_storage<void*, SockOptData>(UNKNOWN_OPT_NAME);
+  void* data_pointer = storage.data();
+  EXPECT_EQ(nullptr, data_pointer);
+
+  auto grpc_data = SockOptData{};
+  convert_to_grpc(storage, &grpc_data);
+
+  EXPECT_EQ(SockOptData::DataCase::DATA_NOT_SET, grpc_data.data_case());
+}
+
 }  // namespace
 }  // namespace unit
 }  // namespace tests

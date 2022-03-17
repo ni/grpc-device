@@ -1168,7 +1168,7 @@ functions = {
         'returns': 'nxStatus_t'
     },
     'ReadState': {
-        'codegen_method': 'no',
+        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
@@ -1184,17 +1184,18 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'stateSize',
-                'type': 'u32'
+                'type': 'u32',
+                'include_in_proto': False
             },
             {
                 'direction': 'out',
-                'enum': 'StateValue',
                 'name': 'stateValue',
+                'type': 'void *',
                 'size': {
                     'mechanism': 'passed-in',
                     'value': 'stateSize'
                 },
-                'type': 'void[]'
+                'grpc_type' : 'ReadStateValue'
             },
             {
                 'direction': 'out',
@@ -1205,7 +1206,6 @@ functions = {
         'returns': 'nxStatus_t'
     },
     'ReadStateTimeTrigger': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -1221,7 +1221,9 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'stateSize',
-                'type': 'u32'
+                'type': 'u32',
+                'hardcoded_value': 'sizeof(nxTimeLocalNetwork_t)',
+                'include_in_proto': False
             },
             {
                 'direction': 'out',
@@ -1230,7 +1232,8 @@ functions = {
                     'mechanism': 'passed-in',
                     'value': 'stateSize'
                 },
-                'type': 'void[]'
+                'type': 'struct _nxTimeLocalNetwork_t',
+                'grpc_type' : 'TimeLocalNetwork'
             }
         ],
         'returns': 'nxStatus_t'
@@ -1563,7 +1566,7 @@ functions = {
         'returns': 'nxStatus_t'
     },
     'WriteState': {
-        'codegen_method': 'no',
+        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
@@ -1583,13 +1586,13 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'StateValue',
                 'name': 'stateValue',
                 'size': {
                     'mechanism': 'len',
                     'value': 'stateSize'
                 },
-                'type': 'void[]'
+                'type': 'void *',
+                'grpc_type' : 'WriteStateValue'
             }
         ],
         'returns': 'nxStatus_t'

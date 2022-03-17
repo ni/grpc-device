@@ -222,6 +222,31 @@ close(const StubPtr& stub, const nidevice_grpc::Session& socket)
   return response;
 }
 
+GetSockOptResponse
+get_sock_opt(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::int32& level, const simple_variant<OptName, pb::int32>& optname)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetSockOptRequest{};
+  request.mutable_socket()->CopyFrom(socket);
+  request.set_level(level);
+  const auto optname_ptr = optname.get_if<OptName>();
+  const auto optname_raw_ptr = optname.get_if<pb::int32>();
+  if (optname_ptr) {
+    request.set_optname(*optname_ptr);
+  }
+  else if (optname_raw_ptr) {
+    request.set_optname_raw(*optname_raw_ptr);
+  }
+
+  auto response = GetSockOptResponse{};
+
+  raise_if_error(
+      stub->GetSockOpt(&context, request, &response));
+
+  return response;
+}
+
 IpStackClearResponse
 ip_stack_clear(const StubPtr& stub, const nidevice_grpc::Session& stack_ref)
 {
@@ -251,6 +276,40 @@ ip_stack_create(const StubPtr& stub, const pb::string& stack_name, const pb::str
 
   raise_if_error(
       stub->IpStackCreate(&context, request, &response));
+
+  return response;
+}
+
+IpStackGetInfoResponse
+ip_stack_get_info(const StubPtr& stub, const nidevice_grpc::Session& stack_ref)
+{
+  ::grpc::ClientContext context;
+
+  auto request = IpStackGetInfoRequest{};
+  request.mutable_stack_ref()->CopyFrom(stack_ref);
+
+  auto response = IpStackGetInfoResponse{};
+
+  raise_if_error(
+      stub->IpStackGetInfo(&context, request, &response));
+
+  return response;
+}
+
+IpStackWaitForInterfaceResponse
+ip_stack_wait_for_interface(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const pb::string& local_interface, const pb::int32& timeout_ms)
+{
+  ::grpc::ClientContext context;
+
+  auto request = IpStackWaitForInterfaceRequest{};
+  request.mutable_stack_ref()->CopyFrom(stack_ref);
+  request.set_local_interface(local_interface);
+  request.set_timeout_ms(timeout_ms);
+
+  auto response = IpStackWaitForInterfaceResponse{};
+
+  raise_if_error(
+      stub->IpStackWaitForInterface(&context, request, &response));
 
   return response;
 }
@@ -292,14 +351,13 @@ select(const StubPtr& stub, const std::vector<nidevice_grpc::Session>& read_fds,
 }
 
 SetSockOptResponse
-set_sock_opt(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::int32& level, const SockOptData& opt_data, const simple_variant<OptName, pb::int32>& optname)
+set_sock_opt(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::int32& level, const simple_variant<OptName, pb::int32>& optname, const SockOptData& opt_data)
 {
   ::grpc::ClientContext context;
 
   auto request = SetSockOptRequest{};
   request.mutable_socket()->CopyFrom(socket);
   request.set_level(level);
-  request.mutable_opt_data()->CopyFrom(opt_data);
   const auto optname_ptr = optname.get_if<OptName>();
   const auto optname_raw_ptr = optname.get_if<pb::int32>();
   if (optname_ptr) {
@@ -308,6 +366,7 @@ set_sock_opt(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb
   else if (optname_raw_ptr) {
     request.set_optname_raw(*optname_raw_ptr);
   }
+  request.mutable_opt_data()->CopyFrom(opt_data);
 
   auto response = SetSockOptResponse{};
 

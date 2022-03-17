@@ -168,4 +168,13 @@ nixnet_grpc::FrameHolder convert_from_grpc(const pb_::RepeatedPtrField<nixnet_gr
 }
 }  // namespace nixnet_grpc
 
+namespace nidevice_grpc {
+namespace converters {
+template <>
+void convert_to_grpc(const _nxFlexRayStats_t& input, nixnet_grpc::FlexRayStats *output);
+template <>
+void convert_to_grpc(const _nxJ1939CommState_t& input, nixnet_grpc::J1939CommState *output);
+} // namespace converters
+} // namespace nidevice_grpc
+
 #endif /* NIDEVICE_GRPC_DEVICE_NIXNET_CONVERTERS_H */
