@@ -1402,7 +1402,6 @@ functions = {
         'returns': 'nxStatus_t'
     },
     'WriteSignalSinglePoint': {
-        'codegen_method' : 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
