@@ -78,6 +78,8 @@ public:
   ::grpc::Status GetSubPropertySize(::grpc::ServerContext* context, const GetSubPropertySizeRequest* request, GetSubPropertySizeResponse* response) override;
   ::grpc::Status ReadSignalSinglePoint(::grpc::ServerContext* context, const ReadSignalSinglePointRequest* request, ReadSignalSinglePointResponse* response) override;
   ::grpc::Status ReadSignalWaveform(::grpc::ServerContext* context, const ReadSignalWaveformRequest* request, ReadSignalWaveformResponse* response) override;
+  ::grpc::Status ReadState(::grpc::ServerContext* context, const ReadStateRequest* request, ReadStateResponse* response) override;
+  ::grpc::Status ReadStateTimeTrigger(::grpc::ServerContext* context, const ReadStateTimeTriggerRequest* request, ReadStateTimeTriggerResponse* response) override;
   ::grpc::Status SetProperty(::grpc::ServerContext* context, const SetPropertyRequest* request, SetPropertyResponse* response) override;
   ::grpc::Status SetSubProperty(::grpc::ServerContext* context, const SetSubPropertyRequest* request, SetSubPropertyResponse* response) override;
   ::grpc::Status Start(::grpc::ServerContext* context, const StartRequest* request, StartResponse* response) override;
@@ -88,12 +90,11 @@ public:
   ::grpc::Status WriteSignalSinglePoint(::grpc::ServerContext* context, const WriteSignalSinglePointRequest* request, WriteSignalSinglePointResponse* response) override;
   ::grpc::Status WriteSignalWaveform(::grpc::ServerContext* context, const WriteSignalWaveformRequest* request, WriteSignalWaveformResponse* response) override;
   ::grpc::Status WriteSignalXY(::grpc::ServerContext* context, const WriteSignalXYRequest* request, WriteSignalXYResponse* response) override;
+  ::grpc::Status WriteState(::grpc::ServerContext* context, const WriteStateRequest* request, WriteStateResponse* response) override;
 private:
   NiXnetLibraryInterface* library_;
   ResourceRepositorySharedPtr session_repository_;
   nxDatabaseRef_tResourceRepositorySharedPtr nx_database_ref_t_resource_repository_;
-  template <typename TEnum>
-  void CopyBytesToEnums(const std::string& input, google::protobuf::RepeatedField<TEnum>* output);
   std::map<std::int32_t, std::int32_t> dbpropertyvalue_input_map_ { {0, 0},{1, 0},{2, 1},{3, 2},{4, 4294967294},{5, 0},{6, 1},{7, 2},{8, 3},{9, 0},{10, 1},{11, 1},{12, 2},{13, 3},{14, 4},{15, 0},{16, 1},{17, 2},{18, 0},{19, 1},{20, 0},{21, 1},{22, 2},{23, 3},{24, 2},{25, 3},{26, 4},{27, 5},{28, 6},{29, 0},{30, 1},{31, 2},{32, 0},{33, 1},{34, 2},{35, 3}, };
   std::map<std::int32_t, std::int32_t> dbpropertyvalue_output_map_ { {0, 0},{0, 1},{1, 2},{2, 3},{4294967294, 4},{0, 5},{1, 6},{2, 7},{3, 8},{0, 9},{1, 10},{1, 11},{2, 12},{3, 13},{4, 14},{0, 15},{1, 16},{2, 17},{0, 18},{1, 19},{0, 20},{1, 21},{2, 22},{3, 23},{2, 24},{3, 25},{4, 26},{5, 27},{6, 28},{0, 29},{1, 30},{2, 31},{0, 32},{1, 33},{2, 34},{3, 35}, };
   std::map<std::int32_t, std::int32_t> propertyvalue_input_map_ { {0, 0},{1, 0},{2, 1},{3, 2},{4, 0},{5, 1},{6, 2},{7, 1},{8, 2},{9, 4},{10, 0},{11, 1},{12, 2},{13, 3},{14, 0},{15, 1},{16, 2},{17, 3},{18, 4},{19, 5},{20, 0},{21, 1},{22, 0},{23, 1},{24, 3},{25, 4},{26, 4294967295},{27, 4294967294},{28, 0},{29, 1},{30, 2},{31, 3},{32, 0},{33, 1},{34, 1},{35, 2},{36, 3},{37, 4},{38, 5},{39, 13},{40, 14},{41, 1},{42, 2},{43, 3},{44, 4},{45, 6},{46, 13},{47, 14},{48, 0},{49, 1},{50, 0},{51, 1},{52, 2},{53, 3},{54, 0},{55, 1},{56, 2},{57, 3},{58, 4},{59, 0},{60, 1},{61, 2},{62, 0},{63, 1},{64, 0},{65, 1},{66, 2},{67, 3},{68, 0},{69, 1},{70, 0},{71, 1},{72, 2},{73, 0},{74, 1},{75, 0},{76, 1},{77, 2},{78, 4},{79, 32},{80, 256},{81, 2048},{82, 16384},{83, 1},{84, 8},{85, 64},{86, 512},{87, 4096},{88, 2},{89, 16},{90, 128},{91, 1024},{92, 8192},{93, 2147483648},{94, 0},{95, 1},{96, 0},{97, 1},{98, 2},{99, 0},{100, 1},{101, 2},{102, 0},{103, 1},{104, 0},{105, 1},{106, 0},{107, 1},{108, 0},{109, 1},{110, 0},{111, 32},{112, 33},{113, 34},{114, 35},{115, 36},{116, 37},{117, 38},{118, 39},{119, 40},{120, 41},{121, 42},{122, 43},{123, 44},{124, 45},{125, 46},{126, 47},{127, 48},{128, 49},{129, 254},{130, 0},{131, 1},{132, 2},{133, 3},{134, 4},{135, 5},{136, 6},{137, 7},{138, 8},{139, 9},{140, 10},{141, 11},{142, 12},{143, 3},{144, 6},{145, 7},{146, 9},{147, -3},{148, -2},{149, -1},{150, 0},{151, 1},{152, -3},{153, -2},{154, -1},{155, 0},{156, 1},{157, -3},{158, -2},{159, -1},{160, 0},{161, 1},{162, 0},{163, 1},{164, 0},{165, 1}, };
@@ -108,5 +109,12 @@ private:
 };
 
 } // namespace nixnet_grpc
+
+namespace nidevice_grpc {
+namespace converters {
+template <>
+void convert_to_grpc(const _nxTimeLocalNetwork_t& input, nixnet_grpc::TimeLocalNetwork* output);
+} // namespace converters
+} // namespace nidevice_grpc
 
 #endif  // NIXNET_GRPC_SERVICE_H

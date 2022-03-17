@@ -3,6 +3,7 @@
 #include <google/protobuf/repeated_field.h>
 #include <google/protobuf/util/time_util.h>
 #include <nixnetsocket.pb.h>
+#include <nixnetsocket/nixnetsocket_library_interface.h>
 #include <nxsocket.h>
 #include <server/converters.h>
 #include <server/session_resource_repository.h>
@@ -191,6 +192,57 @@ struct TimeValInputConverter {
   nxtimeval time_val;
 };
 
+struct VirtualInterfaceOutputConverter {
+  VirtualInterfaceOutputConverter(NiXnetSocketLibraryInterface* library) : virtual_interface_ptr(nullptr), library(library)
+  {
+  }
+
+  nxVirtualInterface_t** operator&()
+  {
+    return &virtual_interface_ptr;
+  }
+
+  void to_grpc(pb_::RepeatedPtrField<VirtualInterface>& output)
+  {
+    auto curr_vi_ptr = virtual_interface_ptr;
+    for (
+        auto curr_vi_ptr = virtual_interface_ptr;
+        curr_vi_ptr != nullptr;
+        curr_vi_ptr = curr_vi_ptr->nextVirtualInterface) {
+      auto curr_grpc_vi = output.Add();
+      curr_grpc_vi->set_xnet_interface_name(curr_vi_ptr->xnetInterfaceName);
+      curr_grpc_vi->set_mac_address(curr_vi_ptr->macAddress);
+      curr_grpc_vi->set_mac_mtu(curr_vi_ptr->macMTU);
+      curr_grpc_vi->set_operational_status(curr_vi_ptr->operationalStatus);
+      curr_grpc_vi->set_if_index(curr_vi_ptr->ifIndex);
+      for (
+          auto curr_ip_addr_ptr = curr_vi_ptr->firstIPAddress;
+          curr_ip_addr_ptr != nullptr;
+          curr_ip_addr_ptr = curr_ip_addr_ptr->nextIPAddress) {
+        auto curr_grpc_ip_addr = curr_grpc_vi->add_ip_addresses();
+        curr_grpc_ip_addr->set_family(curr_ip_addr_ptr->family);
+        curr_grpc_ip_addr->set_address(curr_ip_addr_ptr->address);
+        curr_grpc_ip_addr->set_net_mask(curr_ip_addr_ptr->netmask);
+        curr_grpc_ip_addr->set_prefix_length(curr_ip_addr_ptr->prefixLength);
+      }
+      for (
+          auto curr_gateway_addr = curr_vi_ptr->firstGatewayAddress;
+          curr_gateway_addr != nullptr;
+          curr_gateway_addr = curr_gateway_addr->nextGatewayAddress) {
+        auto curr_grpc_gateway_addr = curr_grpc_vi->add_gateway_addresses();
+        curr_grpc_gateway_addr->set_family(curr_gateway_addr->family);
+        curr_grpc_gateway_addr->set_address(curr_gateway_addr->address);
+      }
+    }
+    // Free the stack info after we've read it.
+    library->IpStackFreeInfo(virtual_interface_ptr);
+    virtual_interface_ptr = nullptr;
+  }
+
+  nxVirtualInterface_t* virtual_interface_ptr;
+  NiXnetSocketLibraryInterface* library;
+};
+
 template <typename TSockAddr>
 inline SockAddrInputConverter convert_from_grpc(const SockAddr& input)
 {
@@ -214,6 +266,11 @@ template <typename TTimeVal>
 inline TimeValInputConverter convert_from_grpc(const pb_::Duration& input)
 {
   return TimeValInputConverter(input);
+}
+
+inline void convert_to_grpc(VirtualInterfaceOutputConverter& storage, pb_::RepeatedPtrField<VirtualInterface>* output)
+{
+  storage.to_grpc(*output);
 }
 
 struct SockOptDataInputConverter {
@@ -260,7 +317,7 @@ struct SockOptDataInputConverter {
         return sizeof(int32_t);
         break;
       case SockOptData::DataCase::kDataString:
-        return data_string.size();
+        return static_cast<nxsocklen_t>(data_string.size());
         break;
       case SockOptData::DataCase::kDataBool:
         return sizeof(bool);
@@ -371,6 +428,10 @@ struct TypeToStorageType<nxsockaddr, nixnetsocket_grpc::SockAddr> {
   using StorageType = nixnetsocket_grpc::SockAddrOutputConverter;
 };
 
+template <>
+struct TypeToStorageType<nxVirtualInterface_t, google::protobuf::RepeatedPtrField<nixnetsocket_grpc::VirtualInterface>> {
+  using StorageType = nixnetsocket_grpc::VirtualInterfaceOutputConverter;
+};
 // Specialization of TypeToStorageType so that allocate_storage_type will
 // allocate SockOptDataOutputConverters for void* output params.
 template <>
