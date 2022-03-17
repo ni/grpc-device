@@ -62,7 +62,7 @@ functions = {
                     'mechanism': 'len',
                     'value': 'sizeOfValueBuffer'
                 },
-                'type': 'void[]'
+                'type': 'u8[]'
             },
             {
                 'direction': 'in',
@@ -120,7 +120,7 @@ functions = {
                     'mechanism': 'passed-in',
                     'value': 'sizeOfValueBuffer'
                 },
-                'type': 'void[]'
+                'type': 'u8[]'
             },
             {
                 'direction': 'in',

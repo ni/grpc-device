@@ -43,15 +43,6 @@ namespace nixnet_grpc {
     return status >= 0;
   }
 
-  template <typename TEnum>
-  void NiXnetService::CopyBytesToEnums(const std::string& input, google::protobuf::RepeatedField<TEnum>* output)
-  {
-    for (auto item : input)
-    {
-      output->Add(item);
-    }
-  }
-
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiXnetService::Blink(::grpc::ServerContext* context, const BlinkRequest* request, BlinkResponse* response)

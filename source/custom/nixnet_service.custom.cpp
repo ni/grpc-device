@@ -92,14 +92,13 @@ u32 GetStateSize(u32 state_id)
     }
     default: {
       return ::grpc::INVALID_ARGUMENT;
-      break;
     }
   }
   return state_size;
 }
 
 // ReadState API has an output parameter of type void * called StateValue. Based on the value of StateID,
-// StateValue can point to u32, nxTimestamp100ns_t,  _nxFlexRayStats_t etc, which are of different sizes.
+// StateValue can point to u32, nxTimestamp100ns_t, _nxFlexRayStats_t ,etc, which are of different sizes.
 // Based on the StateID, we are setting the size of StateValue and after calling the ReadState API, the
 // response is set appropriately.
 ::grpc::Status NiXnetService::ReadState(::grpc::ServerContext* context, const ReadStateRequest* request, ReadStateResponse* response)
@@ -190,7 +189,6 @@ u32 GetStateSize(u32 state_id)
         }
         default: {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for state_id was not specified or out of range");
-          break;
         }
       }
       response->set_fault(fault);
@@ -268,7 +266,6 @@ u32 GetStateSize(u32 state_id)
       }
       default: {
         return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for state_id was not specified or out of range");
-        break;
       }
     }
     auto status = library_->WriteState(session_ref, state_id, state_size, &state_value);
