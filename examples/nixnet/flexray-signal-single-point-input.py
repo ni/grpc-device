@@ -61,7 +61,7 @@ def check_for_error(status):
         raise Exception(error_message_response.status_description)
 
 
-key_SlotId = 1
+keyslot_id = 1
 value_buffer = [0.0] * NUM_SIGNALS
 time_stamp_buffer = [None] * NUM_SIGNALS
 
@@ -72,7 +72,7 @@ client = grpc_nixnet.NiXnetStub(channel)
 
 # Display parameters that will be used for the example.
 print("Interface: " + INTERFACE, "Database: " + DATABASE, "Signal List: " + SIGNAL_LIST, sep="\n")
-print("KeySlotId:", key_SlotId)
+print("KeySlotId:", keyslot_id)
 
 try:
     # Create an XNET session in SignalOutSinglePoint mode
@@ -95,7 +95,7 @@ try:
         nixnet_types.SetPropertyRequest(
             session_ref=session_reference,
             property_id=nixnet_types.PROPERTY_SESSION_INTF_FLEX_RAY_KEY_SLOT_ID,
-            u32_scalar=key_SlotId,
+            u32_scalar=keyslot_id,
         )
     )
     check_for_error(set_property_response.status)
