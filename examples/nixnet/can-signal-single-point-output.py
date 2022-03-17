@@ -51,7 +51,7 @@ SIGNAL_LIST = "CANEventSignal1,CANEventSignal2"
 NUM_SIGNALS = 2
 SUCCESS = 0
 
-# Display Error Function
+
 def check_for_error(status):
     """Raise an exception if the status indicates an error."""
     if status != 0:
@@ -118,7 +118,7 @@ except grpc.RpcError as rpc_error:
     print(f"{error_message}")
 
 finally:
-    if "session_refernce" in vars() and session_reference.id != 0:
+    if "session_reference" in vars() and session_reference.id != 0:
         # clear the XNET session.
         check_for_error(
             client.Clear(nixnet_types.ClearRequest(session_ref=session_reference)).status
