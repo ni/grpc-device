@@ -1,0 +1,139 @@
+r""" Read Signal Data.
+ 
+ This example reads a signal value when a keyboard character is pressed.
+ This is used to demonstrate a signal single point output session. 
+ This example uses hardcoded signal names that use the NIXNET_example database. 
+ Also ensure that the transceivers are externally powered when using C Series modules.
+
+The gRPC API is built from the C API. NI-XNET documentation is installed with the driver at:
+  C:\Users\Public\Documents\National Instruments\NI-XNET\Documentation\NI-XNET Manual.chm
+
+Getting Started:
+To run this example, install "NI-XNET Driver" on the server machine:
+  https://www.ni.com/en-in/support/downloads/drivers/download.ni-xnet.html
+
+For instructions on how to use protoc to generate gRPC client interfaces, see our "Creating a gRPC
+Client" wiki page:
+  https://github.com/ni/grpc-device/wiki/Creating-a-gRPC-Client
+
+Refer to the NI XNET gRPC Wiki for the latest C Function Reference:
+  https://github.com/ni/grpc-device/wiki/NI-XNET-C-Function-Reference
+ 
+ Running from command line:
+Server machine's IP address and port number can be passed as separate command line
+arguments.
+  > python flexray-signal-single-point-input.py <server_address> <port_number>
+If they are not passed in as command line arguments, then by default the server address will be
+"localhost:31763"
+"""
+
+import sys
+
+import getch
+import grpc
+import nixnet_pb2 as nixnet_types
+import nixnet_pb2_grpc as grpc_nixnet
+
+SERVER_ADDRESS = "localhost"
+SERVER_PORT = "31763"
+
+# Read in cmd args
+if len(sys.argv) >= 2:
+    SERVER_ADDRESS = sys.argv[1]
+if len(sys.argv) >= 3:
+    SERVER_PORT = sys.argv[2]
+
+# Parameters
+INTERFACE = "FlexRay2"
+DATABASE = "NIXNET_example"
+CLUSTER = "FlexRay_Cluster"
+SIGNAL_LIST = "FlexRayEventSignal1,FlexRayEventSignal2"
+NUM_SIGNALS = 2
+SUCCESS = 0
+
+
+def check_for_error(status):
+    """Raise an exception if the status indicates an error."""
+    if status != 0:
+        error_message_response = client.StatusToString(
+            nixnet_types.StatusToStringRequest(status_id=status)
+        )
+        raise Exception(error_message_response.status_description)
+
+
+key_SlotId = 1
+value_Buffer = [0.0] * NUM_SIGNALS
+timeStamp_Buffer = [None] * NUM_SIGNALS
+
+# Create the communication channel for the remote host and create connections to the NI-XNET and
+# session services.
+channel = grpc.insecure_channel(f"{SERVER_ADDRESS}:{SERVER_PORT}")
+client = grpc_nixnet.NiXnetStub(channel)
+
+# Display parameters that will be used for the example.
+print("Interface: " + INTERFACE, "Database: " + DATABASE, "Signal List: " + SIGNAL_LIST, sep="\n")
+print("KeySlotId:", key_SlotId)
+
+try:
+    # Create an XNET session in SignalOutSinglePoint mode
+    create_session_response = client.CreateSession(
+        nixnet_types.CreateSessionRequest(
+            database_name=DATABASE,
+            cluster_name=CLUSTER,
+            list=SIGNAL_LIST,
+            interface_name=INTERFACE,
+            mode=nixnet_types.CREATE_SESSION_MODE_MODE_SIGNAL_IN_SINGLE_POINT,
+        )
+    )
+    check_for_error(create_session_response.status)
+
+    session_reference = create_session_response.session_ref
+    print("Session Created Successfully.\n")
+
+    # Set the Key Slot
+    set_property_response = client.SetProperty(
+        nixnet_types.SetPropertyRequest(
+            session_ref=session_reference,
+            property_id=nixnet_types.PROPERTY_SESSION_INTF_FLEX_RAY_KEY_SLOT_ID,
+            u32_scalar=key_SlotId,
+        )
+    )
+    check_for_error(set_property_response.status)
+
+    print("\nPress any key to transmit new signal values or q to quit\n")
+
+    while not (getch.getch()).decode("UTF-8") == "q":
+        # Update the signal data
+        read_signal_response = client.ReadSignalSinglePoint(
+            nixnet_types.ReadSignalSinglePointRequest(
+                session_ref=session_reference,
+                size_of_value_buffer=value_Buffer.__sizeof__(),
+                size_of_timestamp_buffer=timeStamp_Buffer.__sizeof__(),
+            )
+        )
+        check_for_error(read_signal_response.status)
+
+        value_Buffer = read_signal_response.value_buffer
+        timeStamp_Buffer = read_signal_response.timestamp_buffer
+
+        print("Signals received:")
+        print("Signal 1: ", value_Buffer[0])
+        print("Signal 2: ", value_Buffer[1], end="\n\n")
+
+except grpc.RpcError as rpc_error:
+    error_message = rpc_error.details()
+    if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
+        error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"
+    elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
+        error_message = (
+            "The operation is not implemented or is not supported/enabled in this service"
+        )
+    print(f"{error_message}")
+
+finally:
+    if "session_reference" in vars() and session_reference.id != 0:
+        # clear the XNET session.
+        check_for_error(
+            client.Clear(nixnet_types.ClearRequest(session_ref=session_reference)).status
+        )
+        print("Session cleared successfully!\n")
