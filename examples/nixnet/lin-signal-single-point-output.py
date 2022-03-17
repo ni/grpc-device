@@ -62,7 +62,7 @@ def check_for_error(status):
 
 
 i = 0
-value_Buffer = [0] * NUM_SIGNALS
+value_buffer = [0] * NUM_SIGNALS
 
 # Create the communication channel for the remote host and create connections to the NI-XNET and
 # session services.
@@ -117,20 +117,20 @@ try:
     print("Values are incremented from 0 to 10 in this example.\n")
 
     while not (getch.getch()).decode("UTF-8") == "q":
-        value_Buffer[0] = float(i)
-        value_Buffer[1] = float(i * 10)
+        value_buffer[0] = float(i)
+        value_buffer[1] = float(i * 10)
 
         # Update the signal data
         write_signal_response = client.WriteSignalSinglePoint(
             nixnet_types.WriteSignalSinglePointRequest(
-                session_ref=session_reference, value_buffer=value_Buffer
+                session_ref=session_reference, value_buffer=value_buffer
             )
         )
         check_for_error(write_signal_response.status)
 
         print("Signals sent:")
-        print("Signal 1: ", value_Buffer[0])
-        print("Signal 2: ", value_Buffer[1], end="\n\n")
+        print(f"Signal 1: {value_buffer[0]}")
+        print(f"Signal 2: {value_buffer[1]}", end="\n\n")
         i = i + 1 if i < 10 else 0
 
 except grpc.RpcError as rpc_error:

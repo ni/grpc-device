@@ -62,8 +62,8 @@ def check_for_error(status):
 
 
 key_SlotId = 1
-value_Buffer = [0.0] * NUM_SIGNALS
-timeStamp_Buffer = [None] * NUM_SIGNALS
+value_buffer = [0.0] * NUM_SIGNALS
+time_stamp_buffer = [None] * NUM_SIGNALS
 
 # Create the communication channel for the remote host and create connections to the NI-XNET and
 # session services.
@@ -107,18 +107,18 @@ try:
         read_signal_response = client.ReadSignalSinglePoint(
             nixnet_types.ReadSignalSinglePointRequest(
                 session_ref=session_reference,
-                size_of_value_buffer=value_Buffer.__sizeof__(),
-                size_of_timestamp_buffer=timeStamp_Buffer.__sizeof__(),
+                size_of_value_buffer=value_buffer.__sizeof__(),
+                size_of_timestamp_buffer=time_stamp_buffer.__sizeof__(),
             )
         )
         check_for_error(read_signal_response.status)
 
-        value_Buffer = read_signal_response.value_buffer
-        timeStamp_Buffer = read_signal_response.timestamp_buffer
+        value_buffer = read_signal_response.value_buffer
+        time_stamp_buffer = read_signal_response.timestamp_buffer
 
         print("Signals received:")
-        print("Signal 1: ", value_Buffer[0])
-        print("Signal 2: ", value_Buffer[1], end="\n\n")
+        print(f"Signal 1: {value_buffer[0]}")
+        print(f"Signal 2: {value_buffer[1]}", end="\n\n")
 
 except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
