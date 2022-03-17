@@ -44,11 +44,45 @@ enum NiXnetSocketAttribute {
   NIXNETSOCKET_ATTRIBUTE_UNSPECIFIED = 0;
 }
 
+enum AddressFamily {
+  ADDRESS_FAMILY_UNSPECIFIED = 0;
+  ADDRESS_FAMILY_INET = 2;
+  ADDRESS_FAMILY_INET6 = 10;
+}
+
+enum IPProtocol {
+  IP_PROTOCOL_IP = 0;
+  IP_PROTOCOL_TCP = 6;
+  IP_PROTOCOL_UDP = 8;
+  IP_PROTOCOL_IPV6 = 12;
+}
+
+enum SocketProtocolType {
+  SOCKET_PROTOCOL_TYPE_UNSPECIFIED = 0;
+  SOCKET_PROTOCOL_TYPE_STREAM = 1;
+  SOCKET_PROTOCOL_TYPE_DGRAM = 2;
+}
+
+enum SocketOptionLevel {
+  SOCKET_OPTION_LEVEL_UNSPECIFIED = 0;
+  SOCKET_OPTION_LEVEL_SOCKET = 13;
+}
+
 enum OptName {
+  option allow_alias = true;
   OPT_NAME_UNSPECIFIED = 0;
   OPT_NAME_TCP_NODELAY = 1;
-  OPT_NAME_IP_MULTICAST_TTL  = 6;
+  OPT_NAME_IP_ADD_MEMBERSHIP = 3;
+  OPT_NAME_IP_DROP_MEMBERSHIP = 4;
+  OPT_NAME_IP_MULTICAST_IF = 5;
+  OPT_NAME_IP_MULTICAST_TTL = 6;
+  OPT_NAME_IPV6_JOIN_GROUP = 12;
+  OPT_NAME_IPV6_LEAVE_GROUP = 13;
+  OPT_NAME_IPV6_ADD_MEMBERSHIP = 12;
+  OPT_NAME_IPV6_DROP_MEMBERSHIP = 13;
+  OPT_NAME_IPV6_MULTICAST_IF = 14;
   OPT_NAME_IPV6_MULTICAST_HOPS = 15;
+  OPT_NAME_IPV6_V6ONLY = 16;
   OPT_NAME_SO_RX_DATA = 257;
   OPT_NAME_SO_RCV_BUF = 258;
   OPT_NAME_SO_SND_BUF = 259;
@@ -57,6 +91,12 @@ enum OptName {
   OPT_NAME_SO_ERROR = 262;
   OPT_NAME_SO_LINGER = 263;
   OPT_NAME_SO_REUSE_ADDR = 264;
+}
+
+enum Shutdown {
+  SHUTDOWN_RD = 0;
+  SHUTDOWN_WR = 1;
+  SHUTDOWN_RDWR = 2;
 }
 
 message IPAddress {
@@ -236,7 +276,10 @@ message GetPeerNameResponse {
 
 message ShutdownRequest {
   nidevice_grpc.Session socket = 1;
-  int32 how = 2;
+  oneof how_enum {
+    Shutdown how = 2;
+    int32 how_raw = 3;
+  }
 }
 
 message ShutdownResponse {
@@ -257,10 +300,13 @@ message CloseResponse {
 
 message GetSockOptRequest {
   nidevice_grpc.Session socket = 1;
-  int32 level = 2;
+  oneof level_enum {
+    SocketOptionLevel level = 2;
+    int32 level_raw = 3;
+  }
   oneof optname_enum {
-    OptName optname = 3;
-    int32 optname_raw = 4;
+    OptName optname = 4;
+    int32 optname_raw = 5;
   }
 }
 
@@ -344,12 +390,15 @@ message SelectResponse {
 
 message SetSockOptRequest {
   nidevice_grpc.Session socket = 1;
-  int32 level = 2;
-  oneof optname_enum {
-    OptName optname = 3;
-    int32 optname_raw = 4;
+  oneof level_enum {
+    SocketOptionLevel level = 2;
+    int32 level_raw = 3;
   }
-  SockOptData opt_data = 5;
+  oneof optname_enum {
+    OptName optname = 4;
+    int32 optname_raw = 5;
+  }
+  SockOptData opt_data = 6;
 }
 
 message SetSockOptResponse {
@@ -361,9 +410,18 @@ message SetSockOptResponse {
 message SocketRequest {
   string session_name = 1;
   nidevice_grpc.Session stack_ref = 2;
-  int32 domain = 3;
-  int32 type = 4;
-  int32 prototcol = 5;
+  oneof domain_enum {
+    AddressFamily domain = 3;
+    int32 domain_raw = 4;
+  }
+  oneof type_enum {
+    SocketProtocolType type = 5;
+    int32 type_raw = 6;
+  }
+  oneof prototcol_enum {
+    IPProtocol prototcol = 7;
+    int32 prototcol_raw = 8;
+  }
 }
 
 message SocketResponse {
