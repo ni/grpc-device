@@ -487,8 +487,7 @@ functions = {
     },
     'DbGetDBCAttribute': {
         'cname': 'nxdbGetDBCAttribute',
-        'codegen_method': 'CustomCodeCustomProtoMessage',
-        'include_in_client': False,
+        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
@@ -513,7 +512,7 @@ functions = {
                 'type': 'u32'
             },
             {
-                'direction': 'in',
+                'direction': 'out',
                 'name': 'attributeText',
                 'type': 'char[]'
             },

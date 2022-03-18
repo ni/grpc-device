@@ -296,6 +296,31 @@ db_find_object(const StubPtr& stub, const nidevice_grpc::Session& parent_object_
   return response;
 }
 
+DbGetDBCAttributeResponse
+db_get_dbc_attribute(const StubPtr& stub, const nidevice_grpc::Session& db_object_ref, const simple_variant<GetDBCAttributeMode, pb::uint32>& mode, const pb::string& attribute_name)
+{
+  ::grpc::ClientContext context;
+
+  auto request = DbGetDBCAttributeRequest{};
+  request.mutable_db_object_ref()->CopyFrom(db_object_ref);
+  const auto mode_ptr = mode.get_if<GetDBCAttributeMode>();
+  const auto mode_raw_ptr = mode.get_if<pb::uint32>();
+  if (mode_ptr) {
+    request.set_mode(*mode_ptr);
+  }
+  else if (mode_raw_ptr) {
+    request.set_mode_raw(*mode_raw_ptr);
+  }
+  request.set_attribute_name(attribute_name);
+
+  auto response = DbGetDBCAttributeResponse{};
+
+  raise_if_error(
+      stub->DbGetDBCAttribute(&context, request, &response));
+
+  return response;
+}
+
 DbGetDBCAttributeSizeResponse
 db_get_dbc_attribute_size(const StubPtr& stub, const nidevice_grpc::Session& db_object_ref, const simple_variant<GetDBCAttributeMode, pb::uint32>& mode, const pb::string& attribute_name)
 {

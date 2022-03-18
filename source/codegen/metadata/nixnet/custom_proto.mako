@@ -146,18 +146,3 @@ message DbGetDatabaseListResponse {
     string file_path_buffer = 3;
     uint32 number_of_databases = 4;
 }
-
-message DbGetDBCAttributeRequest {
-    nidevice_grpc.Session db_object_ref = 1;
-    oneof mode_enum {
-        GetDBCAttributeMode mode = 2;
-        uint32 mode_raw = 3;
-    }
-    string attribute_name = 4;
-}
-
-message DbGetDBCAttributeResponse {
-    int32 status = 1;
-    string attribute_text = 2;
-    uint32 is_default = 3;
-}

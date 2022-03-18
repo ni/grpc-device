@@ -975,20 +975,8 @@ message DbGetDatabaseListResponse {
     uint32 number_of_databases = 4;
 }
 
-message DbGetDBCAttributeRequest {
-    nidevice_grpc.Session db_object_ref = 1;
-    oneof mode_enum {
-        GetDBCAttributeMode mode = 2;
-        uint32 mode_raw = 3;
-    }
-    string attribute_name = 4;
-}
 
-message DbGetDBCAttributeResponse {
-    int32 status = 1;
-    string attribute_text = 2;
-    uint32 is_default = 3;
-}
+
 message BlinkRequest {
   nidevice_grpc.Session interface_ref = 1;
   oneof modifier_enum {
@@ -1145,6 +1133,21 @@ message DbFindObjectRequest {
 message DbFindObjectResponse {
   int32 status = 1;
   nidevice_grpc.Session db_object_ref = 2;
+}
+
+message DbGetDBCAttributeRequest {
+  nidevice_grpc.Session db_object_ref = 1;
+  oneof mode_enum {
+    GetDBCAttributeMode mode = 2;
+    uint32 mode_raw = 3;
+  }
+  string attribute_name = 4;
+}
+
+message DbGetDBCAttributeResponse {
+  int32 status = 1;
+  string attribute_text = 2;
+  uint32 is_default = 3;
 }
 
 message DbGetDBCAttributeSizeRequest {
