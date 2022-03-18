@@ -48,6 +48,8 @@ public:
   ::grpc::Status Blink(::grpc::ServerContext* context, const BlinkRequest* request, BlinkResponse* response) override;
   ::grpc::Status Clear(::grpc::ServerContext* context, const ClearRequest* request, ClearResponse* response) override;
   ::grpc::Status ConnectTerminals(::grpc::ServerContext* context, const ConnectTerminalsRequest* request, ConnectTerminalsResponse* response) override;
+  ::grpc::Status ConvertByteArrayToFramesSinglePoint(::grpc::ServerContext* context, const ConvertByteArrayToFramesSinglePointRequest* request, ConvertByteArrayToFramesSinglePointResponse* response) override;
+  ::grpc::Status ConvertFramesToByteArraySinglePoint(::grpc::ServerContext* context, const ConvertFramesToByteArraySinglePointRequest* request, ConvertFramesToByteArraySinglePointResponse* response) override;
   ::grpc::Status ConvertFramesToSignalsSinglePoint(::grpc::ServerContext* context, const ConvertFramesToSignalsSinglePointRequest* request, ConvertFramesToSignalsSinglePointResponse* response) override;
   ::grpc::Status ConvertSignalsToFramesSinglePoint(::grpc::ServerContext* context, const ConvertSignalsToFramesSinglePointRequest* request, ConvertSignalsToFramesSinglePointResponse* response) override;
   ::grpc::Status ConvertTimestamp100nsTo1ns(::grpc::ServerContext* context, const ConvertTimestamp100nsTo1nsRequest* request, ConvertTimestamp100nsTo1nsResponse* response) override;
@@ -90,6 +92,7 @@ public:
   ::grpc::Status SystemClose(::grpc::ServerContext* context, const SystemCloseRequest* request, SystemCloseResponse* response) override;
   ::grpc::Status SystemOpen(::grpc::ServerContext* context, const SystemOpenRequest* request, SystemOpenResponse* response) override;
   ::grpc::Status Wait(::grpc::ServerContext* context, const WaitRequest* request, WaitResponse* response) override;
+  ::grpc::Status WriteFrame(::grpc::ServerContext* context, const WriteFrameRequest* request, WriteFrameResponse* response) override;
   ::grpc::Status WriteSignalSinglePoint(::grpc::ServerContext* context, const WriteSignalSinglePointRequest* request, WriteSignalSinglePointResponse* response) override;
   ::grpc::Status WriteSignalWaveform(::grpc::ServerContext* context, const WriteSignalWaveformRequest* request, WriteSignalWaveformResponse* response) override;
   ::grpc::Status WriteSignalXY(::grpc::ServerContext* context, const WriteSignalXYRequest* request, WriteSignalXYResponse* response) override;

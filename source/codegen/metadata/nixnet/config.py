@@ -20,6 +20,7 @@ config = {
         'u32': 'uint32',
         'u64': 'uint64',
         'u8': 'uint32',
+        'u8[]': 'bytes',
         'f64': 'double',
         'char[]': 'string',
         'const char[]': 'string',
