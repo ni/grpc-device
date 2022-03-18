@@ -974,9 +974,6 @@ message DbGetDatabaseListResponse {
     string file_path_buffer = 3;
     uint32 number_of_databases = 4;
 }
-
-
-
 message BlinkRequest {
   nidevice_grpc.Session interface_ref = 1;
   oneof modifier_enum {

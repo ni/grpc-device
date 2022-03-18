@@ -514,6 +514,10 @@ functions = {
             {
                 'direction': 'out',
                 'name': 'attributeText',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'attributeTextSize'
+                },
                 'type': 'char[]'
             },
             {
