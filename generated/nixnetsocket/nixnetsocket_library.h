@@ -32,8 +32,12 @@ class NiXnetSocketLibrary : public nixnetsocket_grpc::NiXnetSocketLibraryInterfa
   int32_t Close(nxSOCKET socket);
   int32_t GetLastErrorNum();
   char* GetLastErrorStr(char buf[], size_t bufLen);
+  int32_t GetSockOpt(nxSOCKET socket, int32_t level, int32_t optname, void* optval, nxsocklen_t* optlen);
   int32_t IpStackClear(nxIpStackRef_t stack_ref);
   int32_t IpStackCreate(char stack_name[], char config[], nxIpStackRef_t* stack_ref);
+  int32_t IpStackFreeInfo(nxVirtualInterface_t* firstVirtualInterface);
+  int32_t IpStackGetInfo(nxIpStackRef_t stack_ref, uint32_t info_id, nxVirtualInterface_t** virtual_interfaces);
+  int32_t IpStackWaitForInterface(nxIpStackRef_t stack_ref, const char localInterface[], int32_t timeoutMs);
   int32_t IsSet(nxSOCKET fd, nxfd_set* set);
   int32_t Select(int32_t nfds, nxfd_set* read_fds, nxfd_set* write_fds, nxfd_set* except_fds, nxtimeval* timeout);
   int32_t SetSockOpt(nxSOCKET socket, int32_t level, int32_t optname, void* optval, nxsocklen_t optlen);
@@ -54,8 +58,12 @@ class NiXnetSocketLibrary : public nixnetsocket_grpc::NiXnetSocketLibraryInterfa
   using ClosePtr = decltype(&nxclose);
   using GetLastErrorNumPtr = int32_t (*)();
   using GetLastErrorStrPtr = char* (*)(char buf[], size_t bufLen);
+  using GetSockOptPtr = decltype(&nxgetsockopt);
   using IpStackClearPtr = decltype(&nxIpStackClear);
   using IpStackCreatePtr = decltype(&nxIpStackCreate);
+  using IpStackFreeInfoPtr = int32_t (*)(nxVirtualInterface_t* firstVirtualInterface);
+  using IpStackGetInfoPtr = decltype(&nxIpStackGetInfo);
+  using IpStackWaitForInterfacePtr = decltype(&nxIpStackWaitForInterface);
   using IsSetPtr = decltype(&nxfd_isset);
   using SelectPtr = decltype(&nxselect);
   using SetSockOptPtr = decltype(&nxsetsockopt);
@@ -76,8 +84,12 @@ class NiXnetSocketLibrary : public nixnetsocket_grpc::NiXnetSocketLibraryInterfa
     ClosePtr Close;
     GetLastErrorNumPtr GetLastErrorNum;
     GetLastErrorStrPtr GetLastErrorStr;
+    GetSockOptPtr GetSockOpt;
     IpStackClearPtr IpStackClear;
     IpStackCreatePtr IpStackCreate;
+    IpStackFreeInfoPtr IpStackFreeInfo;
+    IpStackGetInfoPtr IpStackGetInfo;
+    IpStackWaitForInterfacePtr IpStackWaitForInterface;
     IsSetPtr IsSet;
     SelectPtr Select;
     SetSockOptPtr SetSockOpt;

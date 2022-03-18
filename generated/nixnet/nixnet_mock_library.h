@@ -20,6 +20,8 @@ class NiXnetMockLibrary : public nixnet_grpc::NiXnetLibraryInterface {
   MOCK_METHOD(nxStatus_t, Blink, (nxSessionRef_t interfaceRef, u32 modifier), (override));
   MOCK_METHOD(nxStatus_t, Clear, (nxSessionRef_t sessionRef), (override));
   MOCK_METHOD(nxStatus_t, ConnectTerminals, (nxSessionRef_t sessionRef, const char source[], const char destination[]), (override));
+  MOCK_METHOD(nxStatus_t, ConvertFramesToSignalsSinglePoint, (nxSessionRef_t sessionRef, u8* frameBuffer, u32 numberOfBytesForFrames, f64 valueBuffer[], u32 sizeOfValueBuffer, nxTimestamp100ns_t timestampBuffer[], u32 sizeOfTimestampBuffer), (override));
+  MOCK_METHOD(nxStatus_t, ConvertSignalsToFramesSinglePoint, (nxSessionRef_t sessionRef, f64 valueBuffer[], u32 sizeOfValueBuffer, u8 buffer[], u32 sizeOfBuffer, u32* numberOfBytesReturned), (override));
   MOCK_METHOD(nxStatus_t, ConvertTimestamp100nsTo1ns, (nxTimestamp100ns_t from, nxTimestamp1ns_t* to), (override));
   MOCK_METHOD(nxStatus_t, ConvertTimestamp1nsTo100ns, (nxTimestamp1ns_t from, nxTimestamp100ns_t* to), (override));
   MOCK_METHOD(nxStatus_t, CreateSession, (const char databaseName[], const char clusterName[], const char list[], const char interfaceParameter[], u32 mode, nxSessionRef_t* sessionRef), (override));
@@ -52,6 +54,8 @@ class NiXnetMockLibrary : public nixnet_grpc::NiXnetLibraryInterface {
   MOCK_METHOD(nxStatus_t, GetSubPropertySize, (nxSessionRef_t sessionRef, u32 activeIndex, u32 propertyID, u32* propertySize), (override));
   MOCK_METHOD(nxStatus_t, ReadSignalSinglePoint, (nxSessionRef_t sessionRef, f64 valueBuffer[], u32 sizeOfValueBuffer, nxTimestamp100ns_t timestampBuffer[], u32 sizeOfTimestampBuffer), (override));
   MOCK_METHOD(nxStatus_t, ReadSignalWaveform, (nxSessionRef_t sessionRef, f64 timeout, nxTimestamp100ns_t* startTime, f64* deltaTime, f64 valueBuffer[], u32 sizeOfValueBuffer, u32* numberOfValuesReturned), (override));
+  MOCK_METHOD(nxStatus_t, ReadState, (nxSessionRef_t sessionRef, u32 stateID, u32 stateSize, void* stateValue, nxStatus_t* fault), (override));
+  MOCK_METHOD(nxStatus_t, ReadStateTimeTrigger, (nxSessionRef_t sessionRef, f64 timeout, u32 stateSize, _nxTimeLocalNetwork_t* stateValue), (override));
   MOCK_METHOD(nxStatus_t, SetProperty, (nxSessionRef_t sessionRef, u32 propertyID, u32 propertySize, void* propertyValue), (override));
   MOCK_METHOD(nxStatus_t, SetSubProperty, (nxSessionRef_t sessionRef, u32 activeIndex, u32 propertyID, u32 propertySize, void* propertyValue), (override));
   MOCK_METHOD(nxStatus_t, Start, (nxSessionRef_t sessionRef, u32 scope), (override));
@@ -63,6 +67,7 @@ class NiXnetMockLibrary : public nixnet_grpc::NiXnetLibraryInterface {
   MOCK_METHOD(nxStatus_t, WriteSignalSinglePoint, (nxSessionRef_t sessionRef, f64 valueBuffer[], u32 sizeOfValueBuffer), (override));
   MOCK_METHOD(nxStatus_t, WriteSignalWaveform, (nxSessionRef_t sessionRef, f64 timeout, f64 valueBuffer[], u32 sizeOfValueBuffer), (override));
   MOCK_METHOD(nxStatus_t, WriteSignalXY, (nxSessionRef_t sessionRef, f64 timeout, f64 valueBuffer[], u32 sizeOfValueBuffer, nxTimestamp100ns_t timestampBuffer[], u32 sizeOfTimestampBuffer, u32 numPairsBuffer[], u32 sizeOfNumPairsBuffer), (override));
+  MOCK_METHOD(nxStatus_t, WriteState, (nxSessionRef_t sessionRef, u32 stateID, u32 stateSize, void* stateValue), (override));
 };
 
 }  // namespace unit

@@ -37,7 +37,8 @@ config = {
         'uint16_t': 'uint16',
         'int64_t': 'int64',
         'nxsockaddr': 'SockAddr',
-        'nxtimeval': 'google.protobuf.Duration'
+        'nxtimeval': 'google.protobuf.Duration',
+        'nxVirtualInterface_t': 'repeated VirtualInterface'
     },
     'code_readiness': 'NextRelease',
     'driver_name': 'NI-XNETSOCKET',

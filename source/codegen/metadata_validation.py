@@ -59,6 +59,7 @@ PARAM_SCHEMA = Schema(
         Optional("grpc_raw_field_number"): And(str, Use(int)),
         Optional("type_in_documentation"): str,
         Optional("include_in_proto"): bool,
+        Optional("proto_only"): bool,
         Optional("is_session_handle"): bool,
         Optional("is_session_name"): bool,
         Optional("repeating_argument"): bool,
@@ -80,6 +81,7 @@ PARAM_SCHEMA = Schema(
         Optional("supports_standard_output_allocation"): bool,
         Optional("get_last_error"): str,
         Optional("additional_arguments_to_copy_convert"): [str],
+        Optional("additional_arguments_to_output_allocation"): [str],
         Optional("proto_only"): bool,
     }
 )
@@ -217,7 +219,7 @@ def _validate_function(function_name: str, metadata: dict):
                         "proto_only", False
                     ):
                         raise Exception(
-                            f"parameter {parameter['name']} has no type and repeated_var_args or meta_param is not set!"
+                            f"parameter {parameter['name']} has no type and repeated_var_args or proto_only is not set!"
                         )
                 if "enum" in parameter:
                     if parameter["enum"] not in metadata["enums"]:
