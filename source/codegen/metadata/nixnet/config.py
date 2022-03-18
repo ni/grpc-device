@@ -11,6 +11,7 @@ config = {
     'code_readiness': 'NextRelease',
     'driver_name': 'NI-XNET',
     'status_ok': 'status >= 0',
+    'additional_headers': { 'custom/nixnet_converters.h': ['service.cpp'] },
     'resource_handle_type': ['nxSessionRef_t', 'nxDatabaseRef_t'],
     'type_to_grpc_type': {
         'nxSessionRef_t': 'nidevice_grpc.Session',
@@ -27,6 +28,29 @@ config = {
         'nxTimestamp1ns_t': 'uint64',
         'nxTimestamp100ns_t': 'uint64'
     },
+    'custom_types': [
+        {
+            'name': '_nxTimeLocalNetwork_t',
+            'grpc_name': 'TimeLocalNetwork',
+            'fields': [
+                {
+                    'type': 'nxTimestamp1ns_t',
+                    'name': 'LocalTime',
+                    'grpc_name': 'local_time'
+                },
+                {
+                    'type': 'nxTimestamp1ns_t',
+                    'name': 'NetworkTime',
+                    'grpc_name': 'network_time'
+                },
+                {
+                    'type': 'u32',
+                    'name': 'Flags',
+                    'grpc_name': 'flags'
+                }
+            ]
+        }
+    ],
     'library_info': {
         'Linux': {
             '64bit': {

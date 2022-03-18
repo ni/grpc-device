@@ -131,7 +131,6 @@ functions = {
         'returns': 'nxStatus_t'
     },
     'ConvertFramesToSignalsSinglePoint': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -141,16 +140,17 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'frameBuffer',
-                'size': {
-                    'mechanism': 'len',
-                    'value': 'numberOfBytesForFrames'
-                },
-                'type': 'void[]'
+                'type': 'u8',
+                'pointer': True,
+                'grpc_type': 'repeated FrameBuffer',
+                'supports_standard_copy_convert': True,
             },
             {
                 'direction': 'in',
                 'name': 'numberOfBytesForFrames',
-                'type': 'u32'
+                'hardcoded_value': 'frame_buffer.size()',
+                'type': 'u32',
+                'include_in_proto': False
             },
             {
                 'direction': 'out',
@@ -184,7 +184,6 @@ functions = {
         'returns': 'nxStatus_t'
     },
     'ConvertSignalsToFramesSinglePoint': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -212,7 +211,10 @@ functions = {
                     'mechanism': 'passed-in',
                     'value': 'sizeOfBuffer'
                 },
-                'type': 'void[]'
+                'type': 'u8[]',
+                'grpc_type': 'repeated FrameBuffer',
+                'supports_standard_copy_convert': True,
+                'additional_arguments_to_copy_convert': ['number_of_bytes_returned', 'frame_type']
             },
             {
                 'direction': 'in',
@@ -222,6 +224,14 @@ functions = {
             {
                 'direction': 'out',
                 'name': 'numberOfBytesReturned',
+                'type': 'u32',
+                'include_in_proto': False
+            },
+            {
+                'direction': 'in',
+                'name': 'frameType',
+                'proto_only': True,
+                'enum': 'FrameType',
                 'type': 'u32'
             }
         ],
@@ -1158,7 +1168,7 @@ functions = {
         'returns': 'nxStatus_t'
     },
     'ReadState': {
-        'codegen_method': 'no',
+        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
@@ -1174,17 +1184,18 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'stateSize',
-                'type': 'u32'
+                'type': 'u32',
+                'include_in_proto': False
             },
             {
                 'direction': 'out',
-                'enum': 'StateValue',
                 'name': 'stateValue',
+                'type': 'void *',
                 'size': {
                     'mechanism': 'passed-in',
                     'value': 'stateSize'
                 },
-                'type': 'void[]'
+                'grpc_type' : 'ReadStateValue'
             },
             {
                 'direction': 'out',
@@ -1195,7 +1206,6 @@ functions = {
         'returns': 'nxStatus_t'
     },
     'ReadStateTimeTrigger': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -1211,7 +1221,9 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'stateSize',
-                'type': 'u32'
+                'type': 'u32',
+                'hardcoded_value': 'sizeof(nxTimeLocalNetwork_t)',
+                'include_in_proto': False
             },
             {
                 'direction': 'out',
@@ -1220,7 +1232,8 @@ functions = {
                     'mechanism': 'passed-in',
                     'value': 'stateSize'
                 },
-                'type': 'void[]'
+                'type': 'struct _nxTimeLocalNetwork_t',
+                'grpc_type' : 'TimeLocalNetwork'
             }
         ],
         'returns': 'nxStatus_t'
@@ -1553,7 +1566,7 @@ functions = {
         'returns': 'nxStatus_t'
     },
     'WriteState': {
-        'codegen_method': 'no',
+        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
@@ -1573,13 +1586,13 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'StateValue',
                 'name': 'stateValue',
                 'size': {
                     'mechanism': 'len',
                     'value': 'stateSize'
                 },
-                'type': 'void[]'
+                'type': 'void *',
+                'grpc_type' : 'WriteStateValue'
             }
         ],
         'returns': 'nxStatus_t'

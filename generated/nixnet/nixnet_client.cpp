@@ -89,6 +89,51 @@ connect_terminals(const StubPtr& stub, const nidevice_grpc::Session& session_ref
   return response;
 }
 
+ConvertFramesToSignalsSinglePointResponse
+convert_frames_to_signals_single_point(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const std::vector<FrameBuffer>& frame_buffer, const pb::uint32& size_of_value_buffer, const pb::uint32& size_of_timestamp_buffer)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ConvertFramesToSignalsSinglePointRequest{};
+  request.mutable_session_ref()->CopyFrom(session_ref);
+  copy_array(frame_buffer, request.mutable_frame_buffer());
+  request.set_size_of_value_buffer(size_of_value_buffer);
+  request.set_size_of_timestamp_buffer(size_of_timestamp_buffer);
+
+  auto response = ConvertFramesToSignalsSinglePointResponse{};
+
+  raise_if_error(
+      stub->ConvertFramesToSignalsSinglePoint(&context, request, &response));
+
+  return response;
+}
+
+ConvertSignalsToFramesSinglePointResponse
+convert_signals_to_frames_single_point(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const std::vector<double>& value_buffer, const pb::uint32& size_of_buffer, const simple_variant<FrameType, pb::uint32>& frame_type)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ConvertSignalsToFramesSinglePointRequest{};
+  request.mutable_session_ref()->CopyFrom(session_ref);
+  copy_array(value_buffer, request.mutable_value_buffer());
+  request.set_size_of_buffer(size_of_buffer);
+  const auto frame_type_ptr = frame_type.get_if<FrameType>();
+  const auto frame_type_raw_ptr = frame_type.get_if<pb::uint32>();
+  if (frame_type_ptr) {
+    request.set_frame_type(*frame_type_ptr);
+  }
+  else if (frame_type_raw_ptr) {
+    request.set_frame_type_raw(*frame_type_raw_ptr);
+  }
+
+  auto response = ConvertSignalsToFramesSinglePointResponse{};
+
+  raise_if_error(
+      stub->ConvertSignalsToFramesSinglePoint(&context, request, &response));
+
+  return response;
+}
+
 ConvertTimestamp100nsTo1nsResponse
 convert_timestamp100ns_to1ns(const StubPtr& stub, const pb::uint64& from)
 {
@@ -594,6 +639,54 @@ read_signal_waveform(const StubPtr& stub, const nidevice_grpc::Session& session_
   return response;
 }
 
+ReadStateResponse
+read_state(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const simple_variant<ReadState, pb::uint32>& state_id)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ReadStateRequest{};
+  request.mutable_session_ref()->CopyFrom(session_ref);
+  const auto state_id_ptr = state_id.get_if<ReadState>();
+  const auto state_id_raw_ptr = state_id.get_if<pb::uint32>();
+  if (state_id_ptr) {
+    request.set_state_id(*state_id_ptr);
+  }
+  else if (state_id_raw_ptr) {
+    request.set_state_id_raw(*state_id_raw_ptr);
+  }
+
+  auto response = ReadStateResponse{};
+
+  raise_if_error(
+      stub->ReadState(&context, request, &response));
+
+  return response;
+}
+
+ReadStateTimeTriggerResponse
+read_state_time_trigger(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const simple_variant<TimeOut, double>& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ReadStateTimeTriggerRequest{};
+  request.mutable_session_ref()->CopyFrom(session_ref);
+  const auto timeout_ptr = timeout.get_if<TimeOut>();
+  const auto timeout_raw_ptr = timeout.get_if<double>();
+  if (timeout_ptr) {
+    request.set_timeout(*timeout_ptr);
+  }
+  else if (timeout_raw_ptr) {
+    request.set_timeout_raw(*timeout_raw_ptr);
+  }
+
+  auto response = ReadStateTimeTriggerResponse{};
+
+  raise_if_error(
+      stub->ReadStateTimeTrigger(&context, request, &response));
+
+  return response;
+}
+
 StartResponse
 start(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const simple_variant<StartStopScope, pb::uint32>& scope)
 {
@@ -764,6 +857,31 @@ write_signal_xy(const StubPtr& stub, const nidevice_grpc::Session& session_ref, 
 
   raise_if_error(
       stub->WriteSignalXY(&context, request, &response));
+
+  return response;
+}
+
+WriteStateResponse
+write_state(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const simple_variant<WriteState, pb::uint32>& state_id, const WriteStateValue& state_value)
+{
+  ::grpc::ClientContext context;
+
+  auto request = WriteStateRequest{};
+  request.mutable_session_ref()->CopyFrom(session_ref);
+  const auto state_id_ptr = state_id.get_if<WriteState>();
+  const auto state_id_raw_ptr = state_id.get_if<pb::uint32>();
+  if (state_id_ptr) {
+    request.set_state_id(*state_id_ptr);
+  }
+  else if (state_id_raw_ptr) {
+    request.set_state_id_raw(*state_id_raw_ptr);
+  }
+  request.mutable_state_value()->CopyFrom(state_value);
+
+  auto response = WriteStateResponse{};
+
+  raise_if_error(
+      stub->WriteState(&context, request, &response));
 
   return response;
 }

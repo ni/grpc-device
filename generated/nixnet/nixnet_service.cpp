@@ -11,6 +11,7 @@
 #include <iostream>
 #include <atomic>
 #include <vector>
+#include "custom/nixnet_converters.h"
 #include <server/converters.h>
 
 namespace nixnet_grpc {
@@ -41,15 +42,6 @@ namespace nixnet_grpc {
   inline bool status_ok(int32 status)
   {
     return status >= 0;
-  }
-
-  template <typename TEnum>
-  void NiXnetService::CopyBytesToEnums(const std::string& input, google::protobuf::RepeatedField<TEnum>* output)
-  {
-    for (auto item : input)
-    {
-      output->Add(item);
-    }
   }
 
   //---------------------------------------------------------------------
@@ -159,6 +151,78 @@ namespace nixnet_grpc {
 
       auto status = library_->ConnectTerminals(session_ref, source, destination);
       response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiXnetService::ConvertFramesToSignalsSinglePoint(::grpc::ServerContext* context, const ConvertFramesToSignalsSinglePointRequest* request, ConvertFramesToSignalsSinglePointResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_ref_grpc_session = request->session_ref();
+      nxSessionRef_t session_ref = session_repository_->access_session(session_ref_grpc_session.id(), session_ref_grpc_session.name());
+      auto frame_buffer = convert_from_grpc<u8>(request->frame_buffer());
+      auto number_of_bytes_for_frames = frame_buffer.size();
+      u32 size_of_value_buffer = request->size_of_value_buffer();
+      u32 size_of_timestamp_buffer = request->size_of_timestamp_buffer();
+      response->mutable_value_buffer()->Resize(size_of_value_buffer, 0);
+      f64* value_buffer = response->mutable_value_buffer()->mutable_data();
+      response->mutable_timestamp_buffer()->Resize(size_of_timestamp_buffer, 0);
+      nxTimestamp100ns_t* timestamp_buffer = reinterpret_cast<nxTimestamp100ns_t*>(response->mutable_timestamp_buffer()->mutable_data());
+      auto status = library_->ConvertFramesToSignalsSinglePoint(session_ref, frame_buffer, number_of_bytes_for_frames, value_buffer, size_of_value_buffer, timestamp_buffer, size_of_timestamp_buffer);
+      response->set_status(status);
+      if (status_ok(status)) {
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiXnetService::ConvertSignalsToFramesSinglePoint(::grpc::ServerContext* context, const ConvertSignalsToFramesSinglePointRequest* request, ConvertSignalsToFramesSinglePointResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_ref_grpc_session = request->session_ref();
+      nxSessionRef_t session_ref = session_repository_->access_session(session_ref_grpc_session.id(), session_ref_grpc_session.name());
+      auto value_buffer = const_cast<f64*>(request->value_buffer().data());
+      u32 size_of_value_buffer = static_cast<u32>(request->value_buffer().size());
+      u32 size_of_buffer = request->size_of_buffer();
+      u32 frame_type;
+      switch (request->frame_type_enum_case()) {
+        case nixnet_grpc::ConvertSignalsToFramesSinglePointRequest::FrameTypeEnumCase::kFrameType: {
+          frame_type = static_cast<u32>(request->frame_type());
+          break;
+        }
+        case nixnet_grpc::ConvertSignalsToFramesSinglePointRequest::FrameTypeEnumCase::kFrameTypeRaw: {
+          frame_type = static_cast<u32>(request->frame_type_raw());
+          break;
+        }
+        case nixnet_grpc::ConvertSignalsToFramesSinglePointRequest::FrameTypeEnumCase::FRAME_TYPE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for frame_type was not specified or out of range");
+          break;
+        }
+      }
+
+      std::vector<u8> buffer(size_of_buffer, u8());
+      u32 number_of_bytes_returned {};
+      auto status = library_->ConvertSignalsToFramesSinglePoint(session_ref, value_buffer, size_of_value_buffer, buffer.data(), size_of_buffer, &number_of_bytes_returned);
+      response->set_status(status);
+      if (status_ok(status)) {
+        convert_to_grpc(buffer, response->mutable_buffer(), number_of_bytes_returned, frame_type);
+      }
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -945,6 +1009,46 @@ namespace nixnet_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiXnetService::ReadStateTimeTrigger(::grpc::ServerContext* context, const ReadStateTimeTriggerRequest* request, ReadStateTimeTriggerResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_ref_grpc_session = request->session_ref();
+      nxSessionRef_t session_ref = session_repository_->access_session(session_ref_grpc_session.id(), session_ref_grpc_session.name());
+      f64 timeout;
+      switch (request->timeout_enum_case()) {
+        case nixnet_grpc::ReadStateTimeTriggerRequest::TimeoutEnumCase::kTimeout: {
+          timeout = static_cast<f64>(request->timeout());
+          break;
+        }
+        case nixnet_grpc::ReadStateTimeTriggerRequest::TimeoutEnumCase::kTimeoutRaw: {
+          timeout = static_cast<f64>(request->timeout_raw());
+          break;
+        }
+        case nixnet_grpc::ReadStateTimeTriggerRequest::TimeoutEnumCase::TIMEOUT_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for timeout was not specified or out of range");
+          break;
+        }
+      }
+
+      auto state_size = sizeof(nxTimeLocalNetwork_t);
+      _nxTimeLocalNetwork_t state_value {};
+      auto status = library_->ReadStateTimeTrigger(session_ref, timeout, state_size, &state_value);
+      response->set_status(status);
+      if (status_ok(status)) {
+        convert_to_grpc(state_value, response->mutable_state_value());
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiXnetService::Start(::grpc::ServerContext* context, const StartRequest* request, StartResponse* response)
   {
     if (context->IsCancelled()) {
@@ -1210,4 +1314,17 @@ namespace nixnet_grpc {
   {
   }
 } // namespace nixnet_grpc
+
+namespace nidevice_grpc {
+namespace converters {
+template <>
+void convert_to_grpc(const _nxTimeLocalNetwork_t& input, nixnet_grpc::TimeLocalNetwork* output) 
+{
+  output->set_local_time(input.LocalTime);
+  output->set_network_time(input.NetworkTime);
+  output->set_flags(input.Flags);
+}
+
+} // converters
+} // nidevice_grpc
 
