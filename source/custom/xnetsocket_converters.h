@@ -291,6 +291,19 @@ struct SockOptDataInputConverter {
         data_linger.l_linger = input.data_linger().l_linger();
         data_linger.l_onoff = input.data_linger().l_onoff();
         break;
+      case SockOptData::DataCase::kDataIpmreq:
+        data_ipmreq.imr_multiaddr.addr = input.data_ipmreq().imr_multiaddr();
+        data_ipmreq.imr_interface.addr = input.data_ipmreq().imr_interface();
+        break;
+      case SockOptData::DataCase::kDataIpv6Mreq:
+        std::memcpy(
+            data_ipv6mreq.ipv6mr_multiaddr.addr,
+            input.data_ipv6mreq().ipv6mr_multiaddr().data(),
+            std::min(
+                sizeof(data_ipv6mreq.ipv6mr_multiaddr.addr),
+                static_cast<size_t>(input.data_ipv6mreq().ipv6mr_multiaddr().size())));
+        data_ipv6mreq.ipv6mr_interface = input.data_ipv6mreq().ipv6mr_interface();
+        break;
     }
   }
 
@@ -306,6 +319,12 @@ struct SockOptDataInputConverter {
         break;
       case SockOptData::DataCase::kDataLinger:
         return &data_linger;
+        break;
+      case SockOptData::DataCase::kDataIpmreq:
+        return &data_ipmreq;
+        break;
+      case SockOptData::DataCase::kDataIpv6Mreq:
+        return &data_ipv6mreq;
         break;
       case SockOptData::DataCase::DATA_NOT_SET:
         return nullptr;
@@ -327,6 +346,10 @@ struct SockOptDataInputConverter {
         break;
       case SockOptData::DataCase::kDataLinger:
         return sizeof(data_linger);
+      case SockOptData::DataCase::kDataIpmreq:
+        return sizeof(data_ipmreq);
+      case SockOptData::DataCase::kDataIpv6Mreq:
+        return sizeof(data_ipv6mreq);
       default:
         return 0;
         break;
@@ -337,6 +360,8 @@ struct SockOptDataInputConverter {
   int32_t data_int;
   std::string data_string;
   nxlinger data_linger;
+  nxip_mreq data_ipmreq;
+  nxipv6_mreq data_ipv6mreq;
 };
 
 template <typename TSockOptData>

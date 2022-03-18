@@ -155,12 +155,24 @@ message Linger {
   int32 l_linger = 2;
 }
 
+message IPMReq {
+  uint32 imr_multiaddr = 1;
+  uint32 imr_interface = 2;
+}
+
+message IPv6MReq {
+  bytes ipv6mr_multiaddr = 1;
+  int32 ipv6mr_interface = 2;
+}
+
 message SockOptData {
   oneof data {
     int32 data_int32 = 1;
     bool data_bool = 2;
     string data_string = 3;
     Linger data_linger = 4;
+    IPMReq data_ipmreq = 5;
+    IPv6MReq data_ipv6mreq = 6;
   }
 }
 
