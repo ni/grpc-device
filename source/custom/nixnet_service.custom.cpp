@@ -15,8 +15,6 @@
 
 namespace nixnet_grpc {
 using nidevice_grpc::converters::convert_to_grpc;
-
-using nidevice_grpc::converters::convert_to_grpc;
 using nidevice_grpc::converters::convert_from_grpc;
 
 // Returns true if it's safe to use outputs of a method with the given status.
