@@ -400,7 +400,7 @@ namespace nixnetsocket_grpc {
       auto socket_grpc_session = request->socket();
       nxSOCKET socket = session_repository_->access_session(socket_grpc_session.id(), socket_grpc_session.name());
       auto addr = allocate_output_storage<nxsockaddr, SockAddr>();
-      nxsocklen_t addrlen {};
+      auto addrlen = static_cast<nxsocklen_t>(sizeof(addr.storage));
       auto status = library_->GetPeerName(socket, &addr, &addrlen);
       response->set_status(status);
       if (status_ok(status)) {
