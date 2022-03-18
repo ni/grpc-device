@@ -1056,7 +1056,7 @@ u32 GetStateSize(u32 state_id)
     response->set_status(status);
     if (status_ok(status)) {
       response->set_alias_buffer(alias_buffer.c_str());
-      response->set_file_path_buffer(file_path_buffer.c_str());
+      response->set_filepath_buffer(file_path_buffer.c_str());
       response->set_number_of_databases(number_of_databases);
     }
     return ::grpc::Status::OK;
