@@ -608,7 +608,7 @@ def _get_return_value_parameter(parameters: List[dict]) -> Optional[dict]:
 def get_return_value_name(function_data: dict) -> str:
     """Get the name of the return value for function_data. The default is "status"."""
     return_param = _get_return_value_parameter(function_data["parameters"])
-    return return_param["name"] if return_param else "status"
+    return common_helpers.get_cpp_local_name(return_param) if return_param else "status"
 
 
 def has_status_expression(function_data: dict) -> bool:

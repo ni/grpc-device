@@ -24,6 +24,8 @@ NiXnetSocketLibrary::NiXnetSocketLibrary() : shared_library_(kLibraryName)
   function_pointers_.Accept = reinterpret_cast<AcceptPtr>(shared_library_.get_function_pointer("nxaccept"));
   function_pointers_.Bind = reinterpret_cast<BindPtr>(shared_library_.get_function_pointer("nxbind"));
   function_pointers_.Connect = reinterpret_cast<ConnectPtr>(shared_library_.get_function_pointer("nxconnect"));
+  function_pointers_.InetAToN = reinterpret_cast<InetAToNPtr>(shared_library_.get_function_pointer("nxinet_aton"));
+  function_pointers_.InetPToN = reinterpret_cast<InetPToNPtr>(shared_library_.get_function_pointer("nxinet_pton"));
   function_pointers_.Listen = reinterpret_cast<ListenPtr>(shared_library_.get_function_pointer("nxlisten"));
   function_pointers_.SendTo = reinterpret_cast<SendToPtr>(shared_library_.get_function_pointer("nxsendto"));
   function_pointers_.Send = reinterpret_cast<SendPtr>(shared_library_.get_function_pointer("nxsend"));
@@ -58,7 +60,7 @@ NiXnetSocketLibrary::~NiXnetSocketLibrary()
     : ::grpc::Status(::grpc::NOT_FOUND, "Could not find the function " + functionName);
 }
 
-int32_t NiXnetSocketLibrary::Accept(nxSOCKET socket, nxsockaddr* addr, nxsocklen_t* addrlen)
+nxSOCKET NiXnetSocketLibrary::Accept(nxSOCKET socket, nxsockaddr* addr, nxsocklen_t* addrlen)
 {
   if (!function_pointers_.Accept) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxaccept.");
@@ -91,6 +93,30 @@ int32_t NiXnetSocketLibrary::Connect(nxSOCKET socket, nxsockaddr* name, nxsockle
   return nxconnect(socket, name, namelen);
 #else
   return function_pointers_.Connect(socket, name, namelen);
+#endif
+}
+
+int32_t NiXnetSocketLibrary::InetAToN(nxIpStackRef_t stack_ref, const char cp[], nxin_addr* name)
+{
+  if (!function_pointers_.InetAToN) {
+    throw nidevice_grpc::LibraryLoadException("Could not find nxinet_aton.");
+  }
+#if defined(_MSC_VER)
+  return nxinet_aton(stack_ref, cp, name);
+#else
+  return function_pointers_.InetAToN(stack_ref, cp, name);
+#endif
+}
+
+int32_t NiXnetSocketLibrary::InetPToN(nxIpStackRef_t stack_ref, int32_t af, const char src[], void* dst)
+{
+  if (!function_pointers_.InetPToN) {
+    throw nidevice_grpc::LibraryLoadException("Could not find nxinet_pton.");
+  }
+#if defined(_MSC_VER)
+  return nxinet_pton(stack_ref, af, src, dst);
+#else
+  return function_pointers_.InetPToN(stack_ref, af, src, dst);
 #endif
 }
 

@@ -20,6 +20,8 @@ service NiXnetSocket {
   rpc Accept(AcceptRequest) returns (AcceptResponse);
   rpc Bind(BindRequest) returns (BindResponse);
   rpc Connect(ConnectRequest) returns (ConnectResponse);
+  rpc InetAToN(InetAToNRequest) returns (InetAToNResponse);
+  rpc InetPToN(InetPToNRequest) returns (InetPToNResponse);
   rpc Listen(ListenRequest) returns (ListenResponse);
   rpc SendTo(SendToRequest) returns (SendToResponse);
   rpc Send(SendRequest) returns (SendResponse);
@@ -82,15 +84,30 @@ message VirtualInterface {
   repeated GatewayAddress gateway_addresses = 8;
 }
 
+message IPv6Addr {
+  bytes addr = 1;
+}
+
+message IPv4Addr {
+  uint32 addr = 1;
+}
+
+message Addr {
+  oneof addr {
+    IPv4Addr ipv4 = 1;
+    IPv6Addr ipv6 = 2;
+  }
+}
+
 message SockAddrIPv4 {
   uint32 port = 1;
-  uint32 addr = 2;
+  IPv4Addr addr = 2;
 }
 
 message SockAddrIPv6 {
   uint32 port = 1;
   uint32 flow_info = 2;
-  bytes addr = 3;
+  IPv6Addr addr = 3;
   uint32 scope_id = 4;
 }
 
@@ -119,14 +136,16 @@ message SockOptData {
 }
 
 message AcceptRequest {
-  nidevice_grpc.Session socket = 1;
+  string session_name = 1;
+  nidevice_grpc.Session socket = 2;
 }
 
 message AcceptResponse {
   int32 status = 1;
   SockAddr addr = 2;
-  string error_message = 3;
-  int32 error_num = 4;
+  nidevice_grpc.Session socket = 3;
+  string error_message = 4;
+  int32 error_num = 5;
 }
 
 message BindRequest {
@@ -149,6 +168,31 @@ message ConnectResponse {
   int32 status = 1;
   string error_message = 2;
   int32 error_num = 3;
+}
+
+message InetAToNRequest {
+  nidevice_grpc.Session stack_ref = 1;
+  string cp = 2;
+}
+
+message InetAToNResponse {
+  int32 status = 1;
+  IPv4Addr name = 2;
+  string error_message = 3;
+  int32 error_num = 4;
+}
+
+message InetPToNRequest {
+  nidevice_grpc.Session stack_ref = 1;
+  int32 af = 2;
+  string src = 3;
+}
+
+message InetPToNResponse {
+  int32 status = 1;
+  Addr dst = 2;
+  string error_message = 3;
+  int32 error_num = 4;
 }
 
 message ListenRequest {
@@ -189,27 +233,29 @@ message SendResponse {
 
 message RecvFromRequest {
   nidevice_grpc.Session socket = 1;
-  bytes mem = 2;
+  int32 size = 2;
   int32 flags = 3;
 }
 
 message RecvFromResponse {
   int32 status = 1;
-  SockAddr from = 2;
-  string error_message = 3;
-  int32 error_num = 4;
+  bytes mem = 2;
+  SockAddr from = 3;
+  string error_message = 4;
+  int32 error_num = 5;
 }
 
 message RecvRequest {
   nidevice_grpc.Session socket = 1;
-  bytes mem = 2;
+  int32 size = 2;
   int32 flags = 3;
 }
 
 message RecvResponse {
   int32 status = 1;
-  string error_message = 2;
-  int32 error_num = 3;
+  bytes mem = 2;
+  string error_message = 3;
+  int32 error_num = 4;
 }
 
 message GetSockNameRequest {

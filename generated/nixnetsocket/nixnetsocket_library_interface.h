@@ -15,9 +15,11 @@ class NiXnetSocketLibraryInterface {
  public:
   virtual ~NiXnetSocketLibraryInterface() {}
 
-  virtual int32_t Accept(nxSOCKET socket, nxsockaddr* addr, nxsocklen_t* addrlen) = 0;
+  virtual nxSOCKET Accept(nxSOCKET socket, nxsockaddr* addr, nxsocklen_t* addrlen) = 0;
   virtual int32_t Bind(nxSOCKET socket, nxsockaddr* name, nxsocklen_t namelen) = 0;
   virtual int32_t Connect(nxSOCKET socket, nxsockaddr* name, nxsocklen_t namelen) = 0;
+  virtual int32_t InetAToN(nxIpStackRef_t stack_ref, const char cp[], nxin_addr* name) = 0;
+  virtual int32_t InetPToN(nxIpStackRef_t stack_ref, int32_t af, const char src[], void* dst) = 0;
   virtual int32_t Listen(nxSOCKET socket, int32_t backlog) = 0;
   virtual int32_t SendTo(nxSOCKET socket, char dataptr[], int32_t size, int32_t flags, nxsockaddr* to, nxsocklen_t tolen) = 0;
   virtual int32_t Send(nxSOCKET socket, char dataptr[], int32_t size, int32_t flags) = 0;

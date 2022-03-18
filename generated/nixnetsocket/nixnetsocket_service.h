@@ -46,6 +46,8 @@ public:
   ::grpc::Status Accept(::grpc::ServerContext* context, const AcceptRequest* request, AcceptResponse* response) override;
   ::grpc::Status Bind(::grpc::ServerContext* context, const BindRequest* request, BindResponse* response) override;
   ::grpc::Status Connect(::grpc::ServerContext* context, const ConnectRequest* request, ConnectResponse* response) override;
+  ::grpc::Status InetAToN(::grpc::ServerContext* context, const InetAToNRequest* request, InetAToNResponse* response) override;
+  ::grpc::Status InetPToN(::grpc::ServerContext* context, const InetPToNRequest* request, InetPToNResponse* response) override;
   ::grpc::Status Listen(::grpc::ServerContext* context, const ListenRequest* request, ListenResponse* response) override;
   ::grpc::Status SendTo(::grpc::ServerContext* context, const SendToRequest* request, SendToResponse* response) override;
   ::grpc::Status Send(::grpc::ServerContext* context, const SendRequest* request, SendResponse* response) override;

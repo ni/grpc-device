@@ -74,6 +74,7 @@ PARAM_SCHEMA = Schema(
         Optional("callback_token"): bool,
         Optional("use_in_python_api"): bool,
         Optional("cross_driver_session"): str,
+        Optional("cpp_local_name"): str,
         Optional("grpc_name"): str,
         Optional("return_value"): bool,
         Optional("supports_standard_copy_convert"): bool,

@@ -21,7 +21,7 @@ TEST(XnetConvertersTests, IPv4GrpcSockAddr_ConvertFromGrpc_CreatesIPv4NXSockAddr
   constexpr auto ADDRESS = 0xAABBCCDD;
   auto grpc_sock_addr = SockAddr{};
   grpc_sock_addr.mutable_ipv4()->set_port(PORT);
-  grpc_sock_addr.mutable_ipv4()->set_addr(ADDRESS);
+  grpc_sock_addr.mutable_ipv4()->mutable_addr()->set_addr(ADDRESS);
 
   auto converted_addr = convert_from_grpc<nxsockaddr>(grpc_sock_addr);
   auto addr_ptr = static_cast<nxsockaddr*>(converted_addr);
@@ -39,7 +39,7 @@ SockAddr create_addr_ipv6(pb::uint32 port, pb::uint32 flow_info, const std::vect
   auto ipv6_addr = SockAddrIPv6{};
   ipv6_addr.set_port(port);
   ipv6_addr.set_flow_info(flow_info);
-  ipv6_addr.set_addr({address.cbegin(), address.cend()});
+  ipv6_addr.mutable_addr()->set_addr({address.cbegin(), address.cend()});
   ipv6_addr.set_scope_id(scope_id);
   grpc_sock_addr.mutable_ipv6()->CopyFrom(ipv6_addr);
   return grpc_sock_addr;
@@ -251,7 +251,7 @@ TEST(XnetConvertersTests, IPv4Address_ConvertToGrpc_ConvertsToIPv4Address)
 
   EXPECT_EQ(SockAddr::AddrCase::kIpv4, grpc_data.addr_case());
   EXPECT_EQ(PORT, grpc_data.ipv4().port());
-  EXPECT_EQ(ADDR, grpc_data.ipv4().addr());
+  EXPECT_EQ(ADDR, grpc_data.ipv4().addr().addr());
 }
 
 TEST(XnetConvertersTests, IPv6Address_ConvertToGrpc_ConvertsToIPv6Address)
@@ -278,7 +278,7 @@ TEST(XnetConvertersTests, IPv6Address_ConvertToGrpc_ConvertsToIPv6Address)
   EXPECT_EQ(PORT, grpc_data.ipv6().port());
   EXPECT_EQ(FLOW_INFO, grpc_data.ipv6().flow_info());
   EXPECT_THAT(
-      grpc_data.ipv6().addr(),
+      grpc_data.ipv6().addr().addr(),
       ElementsAreArray(ADDRESS.data(), ADDRESS.size()));
   EXPECT_EQ(SCOPE_ID, grpc_data.ipv6().scope_id());
 }
@@ -388,7 +388,7 @@ TEST(XnetConvertersTests, StringSockOptData_ConvertToGrpc_ConvertsToSockOptDataW
   EXPECT_EQ(MAX_SOCK_OPT_STRING_SIZE, storage.data_string.size());
   EXPECT_EQ(data_pointer, &(storage.data_string[0]));
   auto string_pointer = reinterpret_cast<char*>(data_pointer);
-  strcpy(string_pointer, DEVICE_NAME.c_str());
+  strcpy_s(string_pointer, DEVICE_NAME.size() + 1, DEVICE_NAME.c_str());
 
   auto grpc_data = SockOptData{};
   convert_to_grpc(storage, &grpc_data);

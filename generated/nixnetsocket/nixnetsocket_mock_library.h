@@ -17,9 +17,11 @@ namespace unit {
 
 class NiXnetSocketMockLibrary : public nixnetsocket_grpc::NiXnetSocketLibraryInterface {
  public:
-  MOCK_METHOD(int32_t, Accept, (nxSOCKET socket, nxsockaddr* addr, nxsocklen_t* addrlen), (override));
+  MOCK_METHOD(nxSOCKET, Accept, (nxSOCKET socket, nxsockaddr* addr, nxsocklen_t* addrlen), (override));
   MOCK_METHOD(int32_t, Bind, (nxSOCKET socket, nxsockaddr* name, nxsocklen_t namelen), (override));
   MOCK_METHOD(int32_t, Connect, (nxSOCKET socket, nxsockaddr* name, nxsocklen_t namelen), (override));
+  MOCK_METHOD(int32_t, InetAToN, (nxIpStackRef_t stack_ref, const char cp[], nxin_addr* name), (override));
+  MOCK_METHOD(int32_t, InetPToN, (nxIpStackRef_t stack_ref, int32_t af, const char src[], void* dst), (override));
   MOCK_METHOD(int32_t, Listen, (nxSOCKET socket, int32_t backlog), (override));
   MOCK_METHOD(int32_t, SendTo, (nxSOCKET socket, char dataptr[], int32_t size, int32_t flags, nxsockaddr* to, nxsocklen_t tolen), (override));
   MOCK_METHOD(int32_t, Send, (nxSOCKET socket, char dataptr[], int32_t size, int32_t flags), (override));
