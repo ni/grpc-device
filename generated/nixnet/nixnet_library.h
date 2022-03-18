@@ -21,6 +21,8 @@ class NiXnetLibrary : public nixnet_grpc::NiXnetLibraryInterface {
   nxStatus_t Blink(nxSessionRef_t interfaceRef, u32 modifier);
   nxStatus_t Clear(nxSessionRef_t sessionRef);
   nxStatus_t ConnectTerminals(nxSessionRef_t sessionRef, const char source[], const char destination[]);
+  nxStatus_t ConvertFramesToSignalsSinglePoint(nxSessionRef_t sessionRef, u8* frameBuffer, u32 numberOfBytesForFrames, f64 valueBuffer[], u32 sizeOfValueBuffer, nxTimestamp100ns_t timestampBuffer[], u32 sizeOfTimestampBuffer);
+  nxStatus_t ConvertSignalsToFramesSinglePoint(nxSessionRef_t sessionRef, f64 valueBuffer[], u32 sizeOfValueBuffer, u8 buffer[], u32 sizeOfBuffer, u32* numberOfBytesReturned);
   nxStatus_t ConvertTimestamp100nsTo1ns(nxTimestamp100ns_t from, nxTimestamp1ns_t* to);
   nxStatus_t ConvertTimestamp1nsTo100ns(nxTimestamp1ns_t from, nxTimestamp100ns_t* to);
   nxStatus_t CreateSession(const char databaseName[], const char clusterName[], const char list[], const char interfaceParameter[], u32 mode, nxSessionRef_t* sessionRef);
@@ -32,6 +34,8 @@ class NiXnetLibrary : public nixnet_grpc::NiXnetLibraryInterface {
   nxStatus_t DbDeleteObject(nxDatabaseRef_t dbObjectRef);
   nxStatus_t DbDeploy(const char ipAddress[], const char databaseAlias[], u32 waitForComplete, u32* percentComplete);
   nxStatus_t DbFindObject(nxDatabaseRef_t parentObjectRef, u32 objectClass, const char objectName[], nxDatabaseRef_t* dbObjectRef);
+  nxStatus_t DbGetDBCAttribute(nxDatabaseRef_t dbObjectRef, u32 mode, const char attributeName[], u32 attributeTextSize, char attributeText[], u32* isDefault);
+  nxStatus_t DbGetDBCAttributeSize(nxDatabaseRef_t dbObjectRef, u32 mode, const char attributeName[], u32* attributeTextSize);
   nxStatus_t DbGetDatabaseList(const char ipAddress[], u32 sizeofAliasBuffer, char aliasBuffer[], u32 sizeofFilepathBuffer, char filepathBuffer[], u32* numberOfDatabases);
   nxStatus_t DbGetDatabaseListSizes(const char ipAddress[], u32* sizeofAliasBuffer, u32* sizeofFilepathBuffer);
   nxStatus_t DbGetProperty(nxDatabaseRef_t dbObjectRef, u32 propertyID, u32 propertySize, void* propertyValue);
@@ -51,9 +55,12 @@ class NiXnetLibrary : public nixnet_grpc::NiXnetLibraryInterface {
   nxStatus_t GetSubPropertySize(nxSessionRef_t sessionRef, u32 activeIndex, u32 propertyID, u32* propertySize);
   nxStatus_t ReadSignalSinglePoint(nxSessionRef_t sessionRef, f64 valueBuffer[], u32 sizeOfValueBuffer, nxTimestamp100ns_t timestampBuffer[], u32 sizeOfTimestampBuffer);
   nxStatus_t ReadSignalWaveform(nxSessionRef_t sessionRef, f64 timeout, nxTimestamp100ns_t* startTime, f64* deltaTime, f64 valueBuffer[], u32 sizeOfValueBuffer, u32* numberOfValuesReturned);
+  nxStatus_t ReadState(nxSessionRef_t sessionRef, u32 stateID, u32 stateSize, void* stateValue, nxStatus_t* fault);
+  nxStatus_t ReadStateTimeTrigger(nxSessionRef_t sessionRef, f64 timeout, u32 stateSize, _nxTimeLocalNetwork_t* stateValue);
   nxStatus_t SetProperty(nxSessionRef_t sessionRef, u32 propertyID, u32 propertySize, void* propertyValue);
   nxStatus_t SetSubProperty(nxSessionRef_t sessionRef, u32 activeIndex, u32 propertyID, u32 propertySize, void* propertyValue);
   nxStatus_t Start(nxSessionRef_t sessionRef, u32 scope);
+  void StatusToString(nxStatus_t statusID, u32 sizeofString, char statusDescription[2048]);
   nxStatus_t Stop(nxSessionRef_t sessionRef, u32 scope);
   nxStatus_t SystemClose(nxSessionRef_t systemRef);
   nxStatus_t SystemOpen(nxSessionRef_t* systemRef);
@@ -61,11 +68,14 @@ class NiXnetLibrary : public nixnet_grpc::NiXnetLibraryInterface {
   nxStatus_t WriteSignalSinglePoint(nxSessionRef_t sessionRef, f64 valueBuffer[], u32 sizeOfValueBuffer);
   nxStatus_t WriteSignalWaveform(nxSessionRef_t sessionRef, f64 timeout, f64 valueBuffer[], u32 sizeOfValueBuffer);
   nxStatus_t WriteSignalXY(nxSessionRef_t sessionRef, f64 timeout, f64 valueBuffer[], u32 sizeOfValueBuffer, nxTimestamp100ns_t timestampBuffer[], u32 sizeOfTimestampBuffer, u32 numPairsBuffer[], u32 sizeOfNumPairsBuffer);
+  nxStatus_t WriteState(nxSessionRef_t sessionRef, u32 stateID, u32 stateSize, void* stateValue);
 
  private:
   using BlinkPtr = decltype(&nxBlink);
   using ClearPtr = decltype(&nxClear);
   using ConnectTerminalsPtr = decltype(&nxConnectTerminals);
+  using ConvertFramesToSignalsSinglePointPtr = decltype(&nxConvertFramesToSignalsSinglePoint);
+  using ConvertSignalsToFramesSinglePointPtr = decltype(&nxConvertSignalsToFramesSinglePoint);
   using ConvertTimestamp100nsTo1nsPtr = decltype(&nxConvertTimestamp100nsTo1ns);
   using ConvertTimestamp1nsTo100nsPtr = decltype(&nxConvertTimestamp1nsTo100ns);
   using CreateSessionPtr = decltype(&nxCreateSession);
@@ -77,6 +87,8 @@ class NiXnetLibrary : public nixnet_grpc::NiXnetLibraryInterface {
   using DbDeleteObjectPtr = decltype(&nxdbDeleteObject);
   using DbDeployPtr = decltype(&nxdbDeploy);
   using DbFindObjectPtr = decltype(&nxdbFindObject);
+  using DbGetDBCAttributePtr = decltype(&nxdbGetDBCAttribute);
+  using DbGetDBCAttributeSizePtr = decltype(&nxdbGetDBCAttributeSize);
   using DbGetDatabaseListPtr = decltype(&nxdbGetDatabaseList);
   using DbGetDatabaseListSizesPtr = decltype(&nxdbGetDatabaseListSizes);
   using DbGetPropertyPtr = decltype(&nxdbGetProperty);
@@ -96,9 +108,12 @@ class NiXnetLibrary : public nixnet_grpc::NiXnetLibraryInterface {
   using GetSubPropertySizePtr = decltype(&nxGetSubPropertySize);
   using ReadSignalSinglePointPtr = decltype(&nxReadSignalSinglePoint);
   using ReadSignalWaveformPtr = decltype(&nxReadSignalWaveform);
+  using ReadStatePtr = decltype(&nxReadState);
+  using ReadStateTimeTriggerPtr = decltype(&nxReadStateTimeTrigger);
   using SetPropertyPtr = decltype(&nxSetProperty);
   using SetSubPropertyPtr = decltype(&nxSetSubProperty);
   using StartPtr = decltype(&nxStart);
+  using StatusToStringPtr = decltype(&nxStatusToString);
   using StopPtr = decltype(&nxStop);
   using SystemClosePtr = decltype(&nxSystemClose);
   using SystemOpenPtr = decltype(&nxSystemOpen);
@@ -106,11 +121,14 @@ class NiXnetLibrary : public nixnet_grpc::NiXnetLibraryInterface {
   using WriteSignalSinglePointPtr = decltype(&nxWriteSignalSinglePoint);
   using WriteSignalWaveformPtr = decltype(&nxWriteSignalWaveform);
   using WriteSignalXYPtr = decltype(&nxWriteSignalXY);
+  using WriteStatePtr = decltype(&nxWriteState);
 
   typedef struct FunctionPointers {
     BlinkPtr Blink;
     ClearPtr Clear;
     ConnectTerminalsPtr ConnectTerminals;
+    ConvertFramesToSignalsSinglePointPtr ConvertFramesToSignalsSinglePoint;
+    ConvertSignalsToFramesSinglePointPtr ConvertSignalsToFramesSinglePoint;
     ConvertTimestamp100nsTo1nsPtr ConvertTimestamp100nsTo1ns;
     ConvertTimestamp1nsTo100nsPtr ConvertTimestamp1nsTo100ns;
     CreateSessionPtr CreateSession;
@@ -122,6 +140,8 @@ class NiXnetLibrary : public nixnet_grpc::NiXnetLibraryInterface {
     DbDeleteObjectPtr DbDeleteObject;
     DbDeployPtr DbDeploy;
     DbFindObjectPtr DbFindObject;
+    DbGetDBCAttributePtr DbGetDBCAttribute;
+    DbGetDBCAttributeSizePtr DbGetDBCAttributeSize;
     DbGetDatabaseListPtr DbGetDatabaseList;
     DbGetDatabaseListSizesPtr DbGetDatabaseListSizes;
     DbGetPropertyPtr DbGetProperty;
@@ -141,9 +161,12 @@ class NiXnetLibrary : public nixnet_grpc::NiXnetLibraryInterface {
     GetSubPropertySizePtr GetSubPropertySize;
     ReadSignalSinglePointPtr ReadSignalSinglePoint;
     ReadSignalWaveformPtr ReadSignalWaveform;
+    ReadStatePtr ReadState;
+    ReadStateTimeTriggerPtr ReadStateTimeTrigger;
     SetPropertyPtr SetProperty;
     SetSubPropertyPtr SetSubProperty;
     StartPtr Start;
+    StatusToStringPtr StatusToString;
     StopPtr Stop;
     SystemClosePtr SystemClose;
     SystemOpenPtr SystemOpen;
@@ -151,6 +174,7 @@ class NiXnetLibrary : public nixnet_grpc::NiXnetLibraryInterface {
     WriteSignalSinglePointPtr WriteSignalSinglePoint;
     WriteSignalWaveformPtr WriteSignalWaveform;
     WriteSignalXYPtr WriteSignalXY;
+    WriteStatePtr WriteState;
   } FunctionLoadStatus;
 
   nidevice_grpc::SharedLibrary shared_library_;

@@ -312,7 +312,8 @@ functions = {
              {
                 'direction': 'in',
                 'name': 'how',
-                'type': 'int32_t'
+                'type': 'int32_t',
+                'enum': 'Shutdown'
             },
         ],
         'returns': 'int32_t'
@@ -374,7 +375,8 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'level',
-                'type': 'int32_t'
+                'type': 'int32_t',
+                'enum': 'SocketOptionLevel'
             },
             {
                 'direction': 'in',
@@ -573,7 +575,8 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'level',
-                'type': 'int32_t'
+                'type': 'int32_t',
+                'enum': 'SocketOptionLevel'
             },
             {
                 'direction': 'in',
@@ -620,17 +623,20 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'domain',
-                'type': 'int32_t'
+                'type': 'int32_t',
+                'enum': 'AddressFamily'
             },
             {
                 'direction': 'in',
                 'name': 'type',
-                'type': 'int32_t'
+                'type': 'int32_t',
+                'enum': 'SocketProtocolType'
             },
             {
                 'direction': 'in',
                 'name': 'prototcol',
-                'type': 'int32_t'
+                'type': 'int32_t',
+                'enum': 'IPProtocol'
             },
             {
                 'direction': 'out',

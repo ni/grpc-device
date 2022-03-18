@@ -24,6 +24,8 @@ NiXnetLibrary::NiXnetLibrary() : shared_library_(kLibraryName)
   function_pointers_.Blink = reinterpret_cast<BlinkPtr>(shared_library_.get_function_pointer("nxBlink"));
   function_pointers_.Clear = reinterpret_cast<ClearPtr>(shared_library_.get_function_pointer("nxClear"));
   function_pointers_.ConnectTerminals = reinterpret_cast<ConnectTerminalsPtr>(shared_library_.get_function_pointer("nxConnectTerminals"));
+  function_pointers_.ConvertFramesToSignalsSinglePoint = reinterpret_cast<ConvertFramesToSignalsSinglePointPtr>(shared_library_.get_function_pointer("nxConvertFramesToSignalsSinglePoint"));
+  function_pointers_.ConvertSignalsToFramesSinglePoint = reinterpret_cast<ConvertSignalsToFramesSinglePointPtr>(shared_library_.get_function_pointer("nxConvertSignalsToFramesSinglePoint"));
   function_pointers_.ConvertTimestamp100nsTo1ns = reinterpret_cast<ConvertTimestamp100nsTo1nsPtr>(shared_library_.get_function_pointer("nxConvertTimestamp100nsTo1ns"));
   function_pointers_.ConvertTimestamp1nsTo100ns = reinterpret_cast<ConvertTimestamp1nsTo100nsPtr>(shared_library_.get_function_pointer("nxConvertTimestamp1nsTo100ns"));
   function_pointers_.CreateSession = reinterpret_cast<CreateSessionPtr>(shared_library_.get_function_pointer("nxCreateSession"));
@@ -35,6 +37,8 @@ NiXnetLibrary::NiXnetLibrary() : shared_library_(kLibraryName)
   function_pointers_.DbDeleteObject = reinterpret_cast<DbDeleteObjectPtr>(shared_library_.get_function_pointer("nxdbDeleteObject"));
   function_pointers_.DbDeploy = reinterpret_cast<DbDeployPtr>(shared_library_.get_function_pointer("nxdbDeploy"));
   function_pointers_.DbFindObject = reinterpret_cast<DbFindObjectPtr>(shared_library_.get_function_pointer("nxdbFindObject"));
+  function_pointers_.DbGetDBCAttribute = reinterpret_cast<DbGetDBCAttributePtr>(shared_library_.get_function_pointer("nxdbGetDBCAttribute"));
+  function_pointers_.DbGetDBCAttributeSize = reinterpret_cast<DbGetDBCAttributeSizePtr>(shared_library_.get_function_pointer("nxdbGetDBCAttributeSize"));
   function_pointers_.DbGetDatabaseList = reinterpret_cast<DbGetDatabaseListPtr>(shared_library_.get_function_pointer("nxdbGetDatabaseList"));
   function_pointers_.DbGetDatabaseListSizes = reinterpret_cast<DbGetDatabaseListSizesPtr>(shared_library_.get_function_pointer("nxdbGetDatabaseListSizes"));
   function_pointers_.DbGetProperty = reinterpret_cast<DbGetPropertyPtr>(shared_library_.get_function_pointer("nxdbGetProperty"));
@@ -54,9 +58,12 @@ NiXnetLibrary::NiXnetLibrary() : shared_library_(kLibraryName)
   function_pointers_.GetSubPropertySize = reinterpret_cast<GetSubPropertySizePtr>(shared_library_.get_function_pointer("nxGetSubPropertySize"));
   function_pointers_.ReadSignalSinglePoint = reinterpret_cast<ReadSignalSinglePointPtr>(shared_library_.get_function_pointer("nxReadSignalSinglePoint"));
   function_pointers_.ReadSignalWaveform = reinterpret_cast<ReadSignalWaveformPtr>(shared_library_.get_function_pointer("nxReadSignalWaveform"));
+  function_pointers_.ReadState = reinterpret_cast<ReadStatePtr>(shared_library_.get_function_pointer("nxReadState"));
+  function_pointers_.ReadStateTimeTrigger = reinterpret_cast<ReadStateTimeTriggerPtr>(shared_library_.get_function_pointer("nxReadStateTimeTrigger"));
   function_pointers_.SetProperty = reinterpret_cast<SetPropertyPtr>(shared_library_.get_function_pointer("nxSetProperty"));
   function_pointers_.SetSubProperty = reinterpret_cast<SetSubPropertyPtr>(shared_library_.get_function_pointer("nxSetSubProperty"));
   function_pointers_.Start = reinterpret_cast<StartPtr>(shared_library_.get_function_pointer("nxStart"));
+  function_pointers_.StatusToString = reinterpret_cast<StatusToStringPtr>(shared_library_.get_function_pointer("nxStatusToString"));
   function_pointers_.Stop = reinterpret_cast<StopPtr>(shared_library_.get_function_pointer("nxStop"));
   function_pointers_.SystemClose = reinterpret_cast<SystemClosePtr>(shared_library_.get_function_pointer("nxSystemClose"));
   function_pointers_.SystemOpen = reinterpret_cast<SystemOpenPtr>(shared_library_.get_function_pointer("nxSystemOpen"));
@@ -64,6 +71,7 @@ NiXnetLibrary::NiXnetLibrary() : shared_library_(kLibraryName)
   function_pointers_.WriteSignalSinglePoint = reinterpret_cast<WriteSignalSinglePointPtr>(shared_library_.get_function_pointer("nxWriteSignalSinglePoint"));
   function_pointers_.WriteSignalWaveform = reinterpret_cast<WriteSignalWaveformPtr>(shared_library_.get_function_pointer("nxWriteSignalWaveform"));
   function_pointers_.WriteSignalXY = reinterpret_cast<WriteSignalXYPtr>(shared_library_.get_function_pointer("nxWriteSignalXY"));
+  function_pointers_.WriteState = reinterpret_cast<WriteStatePtr>(shared_library_.get_function_pointer("nxWriteState"));
 }
 
 NiXnetLibrary::~NiXnetLibrary()
@@ -110,6 +118,30 @@ nxStatus_t NiXnetLibrary::ConnectTerminals(nxSessionRef_t sessionRef, const char
   return nxConnectTerminals(sessionRef, source, destination);
 #else
   return function_pointers_.ConnectTerminals(sessionRef, source, destination);
+#endif
+}
+
+nxStatus_t NiXnetLibrary::ConvertFramesToSignalsSinglePoint(nxSessionRef_t sessionRef, u8* frameBuffer, u32 numberOfBytesForFrames, f64 valueBuffer[], u32 sizeOfValueBuffer, nxTimestamp100ns_t timestampBuffer[], u32 sizeOfTimestampBuffer)
+{
+  if (!function_pointers_.ConvertFramesToSignalsSinglePoint) {
+    throw nidevice_grpc::LibraryLoadException("Could not find nxConvertFramesToSignalsSinglePoint.");
+  }
+#if defined(_MSC_VER)
+  return nxConvertFramesToSignalsSinglePoint(sessionRef, frameBuffer, numberOfBytesForFrames, valueBuffer, sizeOfValueBuffer, timestampBuffer, sizeOfTimestampBuffer);
+#else
+  return function_pointers_.ConvertFramesToSignalsSinglePoint(sessionRef, frameBuffer, numberOfBytesForFrames, valueBuffer, sizeOfValueBuffer, timestampBuffer, sizeOfTimestampBuffer);
+#endif
+}
+
+nxStatus_t NiXnetLibrary::ConvertSignalsToFramesSinglePoint(nxSessionRef_t sessionRef, f64 valueBuffer[], u32 sizeOfValueBuffer, u8 buffer[], u32 sizeOfBuffer, u32* numberOfBytesReturned)
+{
+  if (!function_pointers_.ConvertSignalsToFramesSinglePoint) {
+    throw nidevice_grpc::LibraryLoadException("Could not find nxConvertSignalsToFramesSinglePoint.");
+  }
+#if defined(_MSC_VER)
+  return nxConvertSignalsToFramesSinglePoint(sessionRef, valueBuffer, sizeOfValueBuffer, buffer, sizeOfBuffer, numberOfBytesReturned);
+#else
+  return function_pointers_.ConvertSignalsToFramesSinglePoint(sessionRef, valueBuffer, sizeOfValueBuffer, buffer, sizeOfBuffer, numberOfBytesReturned);
 #endif
 }
 
@@ -242,6 +274,30 @@ nxStatus_t NiXnetLibrary::DbFindObject(nxDatabaseRef_t parentObjectRef, u32 obje
   return nxdbFindObject(parentObjectRef, objectClass, objectName, dbObjectRef);
 #else
   return function_pointers_.DbFindObject(parentObjectRef, objectClass, objectName, dbObjectRef);
+#endif
+}
+
+nxStatus_t NiXnetLibrary::DbGetDBCAttribute(nxDatabaseRef_t dbObjectRef, u32 mode, const char attributeName[], u32 attributeTextSize, char attributeText[], u32* isDefault)
+{
+  if (!function_pointers_.DbGetDBCAttribute) {
+    throw nidevice_grpc::LibraryLoadException("Could not find nxdbGetDBCAttribute.");
+  }
+#if defined(_MSC_VER)
+  return nxdbGetDBCAttribute(dbObjectRef, mode, attributeName, attributeTextSize, attributeText, isDefault);
+#else
+  return function_pointers_.DbGetDBCAttribute(dbObjectRef, mode, attributeName, attributeTextSize, attributeText, isDefault);
+#endif
+}
+
+nxStatus_t NiXnetLibrary::DbGetDBCAttributeSize(nxDatabaseRef_t dbObjectRef, u32 mode, const char attributeName[], u32* attributeTextSize)
+{
+  if (!function_pointers_.DbGetDBCAttributeSize) {
+    throw nidevice_grpc::LibraryLoadException("Could not find nxdbGetDBCAttributeSize.");
+  }
+#if defined(_MSC_VER)
+  return nxdbGetDBCAttributeSize(dbObjectRef, mode, attributeName, attributeTextSize);
+#else
+  return function_pointers_.DbGetDBCAttributeSize(dbObjectRef, mode, attributeName, attributeTextSize);
 #endif
 }
 
@@ -473,6 +529,30 @@ nxStatus_t NiXnetLibrary::ReadSignalWaveform(nxSessionRef_t sessionRef, f64 time
 #endif
 }
 
+nxStatus_t NiXnetLibrary::ReadState(nxSessionRef_t sessionRef, u32 stateID, u32 stateSize, void* stateValue, nxStatus_t* fault)
+{
+  if (!function_pointers_.ReadState) {
+    throw nidevice_grpc::LibraryLoadException("Could not find nxReadState.");
+  }
+#if defined(_MSC_VER)
+  return nxReadState(sessionRef, stateID, stateSize, stateValue, fault);
+#else
+  return function_pointers_.ReadState(sessionRef, stateID, stateSize, stateValue, fault);
+#endif
+}
+
+nxStatus_t NiXnetLibrary::ReadStateTimeTrigger(nxSessionRef_t sessionRef, f64 timeout, u32 stateSize, _nxTimeLocalNetwork_t* stateValue)
+{
+  if (!function_pointers_.ReadStateTimeTrigger) {
+    throw nidevice_grpc::LibraryLoadException("Could not find nxReadStateTimeTrigger.");
+  }
+#if defined(_MSC_VER)
+  return nxReadStateTimeTrigger(sessionRef, timeout, stateSize, stateValue);
+#else
+  return function_pointers_.ReadStateTimeTrigger(sessionRef, timeout, stateSize, stateValue);
+#endif
+}
+
 nxStatus_t NiXnetLibrary::SetProperty(nxSessionRef_t sessionRef, u32 propertyID, u32 propertySize, void* propertyValue)
 {
   if (!function_pointers_.SetProperty) {
@@ -506,6 +586,18 @@ nxStatus_t NiXnetLibrary::Start(nxSessionRef_t sessionRef, u32 scope)
   return nxStart(sessionRef, scope);
 #else
   return function_pointers_.Start(sessionRef, scope);
+#endif
+}
+
+void NiXnetLibrary::StatusToString(nxStatus_t statusID, u32 sizeofString, char statusDescription[2048])
+{
+  if (!function_pointers_.StatusToString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find nxStatusToString.");
+  }
+#if defined(_MSC_VER)
+  return nxStatusToString(statusID, sizeofString, statusDescription);
+#else
+  return function_pointers_.StatusToString(statusID, sizeofString, statusDescription);
 #endif
 }
 
@@ -590,6 +682,18 @@ nxStatus_t NiXnetLibrary::WriteSignalXY(nxSessionRef_t sessionRef, f64 timeout, 
   return nxWriteSignalXY(sessionRef, timeout, valueBuffer, sizeOfValueBuffer, timestampBuffer, sizeOfTimestampBuffer, numPairsBuffer, sizeOfNumPairsBuffer);
 #else
   return function_pointers_.WriteSignalXY(sessionRef, timeout, valueBuffer, sizeOfValueBuffer, timestampBuffer, sizeOfTimestampBuffer, numPairsBuffer, sizeOfNumPairsBuffer);
+#endif
+}
+
+nxStatus_t NiXnetLibrary::WriteState(nxSessionRef_t sessionRef, u32 stateID, u32 stateSize, void* stateValue)
+{
+  if (!function_pointers_.WriteState) {
+    throw nidevice_grpc::LibraryLoadException("Could not find nxWriteState.");
+  }
+#if defined(_MSC_VER)
+  return nxWriteState(sessionRef, stateID, stateSize, stateValue);
+#else
+  return function_pointers_.WriteState(sessionRef, stateID, stateSize, stateValue);
 #endif
 }
 

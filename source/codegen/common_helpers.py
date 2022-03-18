@@ -1057,6 +1057,14 @@ def get_grpc_field_name(param: dict) -> str:
     return param.get("grpc_name", _camel_to_snake(param["name"]))
 
 
+def get_grpc_client_field_name(param: dict) -> str:
+    """Get the name of the protobuf field for the given param.
+
+    This will be a snake_case_string, that can be used in the client generated files.
+    """
+    return param.get("grpc_name", _camel_to_snake(param["cppName"]))
+
+
 def get_grpc_field_name_from_str(field_name: str) -> str:
     """Get the default grpc_name for the given parameter name."""
     # NOTE: Does not account for "grpc_name" overrides, but can be used to get a proto name from a
