@@ -6,7 +6,6 @@ from enum import Enum
 from typing import List, Tuple
 
 import common_helpers
-import metadata_mutation
 
 
 class ParamMechanism(Enum):  # noqa: D101
@@ -150,16 +149,11 @@ def stub_ptr_alias():
 
 def get_client_parameters(func: dict, enums: dict) -> List[ClientParam]:
     """Create a list of ClientParam objects for the given function."""
-    _get_sanitized_client_parameters(func["parameters"])
     inputs = [p for p in func["parameters"] if common_helpers.is_input_parameter(p)]
 
     inputs = common_helpers.filter_parameters_for_grpc_fields(inputs)
 
     return [_create_client_param(p, enums) for p in inputs]
-
-
-def _get_sanitized_client_parameters(parameters):
-    metadata_mutation.sanitize_names(parameters)
 
 
 def _split_types_from_variant(variant_type: str) -> Tuple[str, str]:

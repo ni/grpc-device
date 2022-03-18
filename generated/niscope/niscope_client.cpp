@@ -338,7 +338,7 @@ check_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi
 }
 
 CheckAttributeViStringResponse
-check_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttribute& attribute_id, const pb::string& value_raw)
+check_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttribute& attribute_id, const pb::string& value)
 {
   ::grpc::ClientContext context;
 
@@ -346,7 +346,7 @@ check_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi,
   request.mutable_vi()->CopyFrom(vi);
   request.set_channel_list(channel_list);
   request.set_attribute_id(attribute_id);
-  request.set_value_raw(value_raw);
+  request.set_value_raw(value);
 
   auto response = CheckAttributeViStringResponse{};
 
@@ -1854,7 +1854,7 @@ set_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, 
 }
 
 SetAttributeViStringResponse
-set_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttribute& attribute_id, const pb::string& value_raw)
+set_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttribute& attribute_id, const pb::string& value)
 {
   ::grpc::ClientContext context;
 
@@ -1862,7 +1862,7 @@ set_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, c
   request.mutable_vi()->CopyFrom(vi);
   request.set_channel_list(channel_list);
   request.set_attribute_id(attribute_id);
-  request.set_value_raw(value_raw);
+  request.set_value_raw(value);
 
   auto response = SetAttributeViStringResponse{};
 
