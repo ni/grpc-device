@@ -39,6 +39,8 @@ NiXnetLibrary::NiXnetLibrary() : shared_library_(kLibraryName)
   function_pointers_.DbDeleteObject = reinterpret_cast<DbDeleteObjectPtr>(shared_library_.get_function_pointer("nxdbDeleteObject"));
   function_pointers_.DbDeploy = reinterpret_cast<DbDeployPtr>(shared_library_.get_function_pointer("nxdbDeploy"));
   function_pointers_.DbFindObject = reinterpret_cast<DbFindObjectPtr>(shared_library_.get_function_pointer("nxdbFindObject"));
+  function_pointers_.DbGetDBCAttribute = reinterpret_cast<DbGetDBCAttributePtr>(shared_library_.get_function_pointer("nxdbGetDBCAttribute"));
+  function_pointers_.DbGetDBCAttributeSize = reinterpret_cast<DbGetDBCAttributeSizePtr>(shared_library_.get_function_pointer("nxdbGetDBCAttributeSize"));
   function_pointers_.DbGetDatabaseList = reinterpret_cast<DbGetDatabaseListPtr>(shared_library_.get_function_pointer("nxdbGetDatabaseList"));
   function_pointers_.DbGetDatabaseListSizes = reinterpret_cast<DbGetDatabaseListSizesPtr>(shared_library_.get_function_pointer("nxdbGetDatabaseListSizes"));
   function_pointers_.DbGetProperty = reinterpret_cast<DbGetPropertyPtr>(shared_library_.get_function_pointer("nxdbGetProperty"));
@@ -64,6 +66,7 @@ NiXnetLibrary::NiXnetLibrary() : shared_library_(kLibraryName)
   function_pointers_.SetProperty = reinterpret_cast<SetPropertyPtr>(shared_library_.get_function_pointer("nxSetProperty"));
   function_pointers_.SetSubProperty = reinterpret_cast<SetSubPropertyPtr>(shared_library_.get_function_pointer("nxSetSubProperty"));
   function_pointers_.Start = reinterpret_cast<StartPtr>(shared_library_.get_function_pointer("nxStart"));
+  function_pointers_.StatusToString = reinterpret_cast<StatusToStringPtr>(shared_library_.get_function_pointer("nxStatusToString"));
   function_pointers_.Stop = reinterpret_cast<StopPtr>(shared_library_.get_function_pointer("nxStop"));
   function_pointers_.SystemClose = reinterpret_cast<SystemClosePtr>(shared_library_.get_function_pointer("nxSystemClose"));
   function_pointers_.SystemOpen = reinterpret_cast<SystemOpenPtr>(shared_library_.get_function_pointer("nxSystemOpen"));
@@ -299,6 +302,30 @@ nxStatus_t NiXnetLibrary::DbFindObject(nxDatabaseRef_t parentObjectRef, u32 obje
   return nxdbFindObject(parentObjectRef, objectClass, objectName, dbObjectRef);
 #else
   return function_pointers_.DbFindObject(parentObjectRef, objectClass, objectName, dbObjectRef);
+#endif
+}
+
+nxStatus_t NiXnetLibrary::DbGetDBCAttribute(nxDatabaseRef_t dbObjectRef, u32 mode, const char attributeName[], u32 attributeTextSize, char attributeText[], u32* isDefault)
+{
+  if (!function_pointers_.DbGetDBCAttribute) {
+    throw nidevice_grpc::LibraryLoadException("Could not find nxdbGetDBCAttribute.");
+  }
+#if defined(_MSC_VER)
+  return nxdbGetDBCAttribute(dbObjectRef, mode, attributeName, attributeTextSize, attributeText, isDefault);
+#else
+  return function_pointers_.DbGetDBCAttribute(dbObjectRef, mode, attributeName, attributeTextSize, attributeText, isDefault);
+#endif
+}
+
+nxStatus_t NiXnetLibrary::DbGetDBCAttributeSize(nxDatabaseRef_t dbObjectRef, u32 mode, const char attributeName[], u32* attributeTextSize)
+{
+  if (!function_pointers_.DbGetDBCAttributeSize) {
+    throw nidevice_grpc::LibraryLoadException("Could not find nxdbGetDBCAttributeSize.");
+  }
+#if defined(_MSC_VER)
+  return nxdbGetDBCAttributeSize(dbObjectRef, mode, attributeName, attributeTextSize);
+#else
+  return function_pointers_.DbGetDBCAttributeSize(dbObjectRef, mode, attributeName, attributeTextSize);
 #endif
 }
 
@@ -599,6 +626,18 @@ nxStatus_t NiXnetLibrary::Start(nxSessionRef_t sessionRef, u32 scope)
   return nxStart(sessionRef, scope);
 #else
   return function_pointers_.Start(sessionRef, scope);
+#endif
+}
+
+void NiXnetLibrary::StatusToString(nxStatus_t statusID, u32 sizeofString, char statusDescription[2048])
+{
+  if (!function_pointers_.StatusToString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find nxStatusToString.");
+  }
+#if defined(_MSC_VER)
+  return nxStatusToString(statusID, sizeofString, statusDescription);
+#else
+  return function_pointers_.StatusToString(statusID, sizeofString, statusDescription);
 #endif
 }
 

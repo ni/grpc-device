@@ -507,7 +507,7 @@ functions = {
     },
     'DbGetDBCAttribute': {
         'cname': 'nxdbGetDBCAttribute',
-        'codegen_method': 'no',
+        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
@@ -527,12 +527,17 @@ functions = {
             },
             {
                 'direction': 'in',
+                'include_in_proto': False,
                 'name': 'attributeTextSize',
                 'type': 'u32'
             },
             {
-                'direction': 'in',
+                'direction': 'out',
                 'name': 'attributeText',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'attributeTextSize'
+                },
                 'type': 'char[]'
             },
             {
@@ -544,7 +549,6 @@ functions = {
         'returns': 'nxStatus_t'
     },
     'DbGetDBCAttributeSize': {
-        'codegen_method': 'no',
         'cname': 'nxdbGetDBCAttributeSize',
         'parameters': [
             {
@@ -564,7 +568,7 @@ functions = {
                 'type': 'const char[]'
             },
             {
-                'direction': 'in',
+                'direction': 'out',
                 'name': 'attributeTextSize',
                 'type': 'u32'
             }
@@ -1348,15 +1352,17 @@ functions = {
         'returns': 'nxStatus_t'
     },
     'StatusToString': {
-        'codegen_method': 'no',
+        'status_expression' : '0',
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'status',
+                'name': 'statusID',
                 'type': 'nxStatus_t'
             },
             {
                 'direction': 'in',
+                'include_in_proto': False,
+                'hardcoded_value': '2048U',
                 'name': 'sizeofString',
                 'type': 'u32'
             },

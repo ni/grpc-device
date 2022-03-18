@@ -211,7 +211,7 @@ convert_timestamp1ns_to100ns(const StubPtr& stub, const pb::uint64& from)
 }
 
 CreateSessionResponse
-create_session(const StubPtr& stub, const pb::string& database_name, const pb::string& cluster_name, const pb::string& list, const pb::string& interface, const simple_variant<CreateSessionMode, pb::uint32>& mode)
+create_session(const StubPtr& stub, const pb::string& database_name, const pb::string& cluster_name, const pb::string& list, const pb::string& interface_parameter, const simple_variant<CreateSessionMode, pb::uint32>& mode)
 {
   ::grpc::ClientContext context;
 
@@ -219,7 +219,7 @@ create_session(const StubPtr& stub, const pb::string& database_name, const pb::s
   request.set_database_name(database_name);
   request.set_cluster_name(cluster_name);
   request.set_list(list);
-  request.set_interface(interface);
+  request.set_interface(interface_parameter);
   const auto mode_ptr = mode.get_if<CreateSessionMode>();
   const auto mode_raw_ptr = mode.get_if<pb::uint32>();
   if (mode_ptr) {
@@ -238,13 +238,13 @@ create_session(const StubPtr& stub, const pb::string& database_name, const pb::s
 }
 
 CreateSessionByRefResponse
-create_session_by_ref(const StubPtr& stub, const std::vector<nidevice_grpc::Session>& array_of_database_ref, const pb::string& interface, const simple_variant<CreateSessionMode, pb::uint32>& mode)
+create_session_by_ref(const StubPtr& stub, const std::vector<nidevice_grpc::Session>& array_of_database_ref, const pb::string& interface_parameter, const simple_variant<CreateSessionMode, pb::uint32>& mode)
 {
   ::grpc::ClientContext context;
 
   auto request = CreateSessionByRefRequest{};
   copy_array(array_of_database_ref, request.mutable_array_of_database_ref());
-  request.set_interface(interface);
+  request.set_interface(interface_parameter);
   const auto mode_ptr = mode.get_if<CreateSessionMode>();
   const auto mode_raw_ptr = mode.get_if<pb::uint32>();
   if (mode_ptr) {
@@ -381,6 +381,56 @@ db_find_object(const StubPtr& stub, const nidevice_grpc::Session& parent_object_
 
   raise_if_error(
       stub->DbFindObject(&context, request, &response));
+
+  return response;
+}
+
+DbGetDBCAttributeResponse
+db_get_dbc_attribute(const StubPtr& stub, const nidevice_grpc::Session& db_object_ref, const simple_variant<GetDBCAttributeMode, pb::uint32>& mode, const pb::string& attribute_name)
+{
+  ::grpc::ClientContext context;
+
+  auto request = DbGetDBCAttributeRequest{};
+  request.mutable_db_object_ref()->CopyFrom(db_object_ref);
+  const auto mode_ptr = mode.get_if<GetDBCAttributeMode>();
+  const auto mode_raw_ptr = mode.get_if<pb::uint32>();
+  if (mode_ptr) {
+    request.set_mode(*mode_ptr);
+  }
+  else if (mode_raw_ptr) {
+    request.set_mode_raw(*mode_raw_ptr);
+  }
+  request.set_attribute_name(attribute_name);
+
+  auto response = DbGetDBCAttributeResponse{};
+
+  raise_if_error(
+      stub->DbGetDBCAttribute(&context, request, &response));
+
+  return response;
+}
+
+DbGetDBCAttributeSizeResponse
+db_get_dbc_attribute_size(const StubPtr& stub, const nidevice_grpc::Session& db_object_ref, const simple_variant<GetDBCAttributeMode, pb::uint32>& mode, const pb::string& attribute_name)
+{
+  ::grpc::ClientContext context;
+
+  auto request = DbGetDBCAttributeSizeRequest{};
+  request.mutable_db_object_ref()->CopyFrom(db_object_ref);
+  const auto mode_ptr = mode.get_if<GetDBCAttributeMode>();
+  const auto mode_raw_ptr = mode.get_if<pb::uint32>();
+  if (mode_ptr) {
+    request.set_mode(*mode_ptr);
+  }
+  else if (mode_raw_ptr) {
+    request.set_mode_raw(*mode_raw_ptr);
+  }
+  request.set_attribute_name(attribute_name);
+
+  auto response = DbGetDBCAttributeSizeResponse{};
+
+  raise_if_error(
+      stub->DbGetDBCAttributeSize(&context, request, &response));
 
   return response;
 }
@@ -784,6 +834,22 @@ start(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const simp
 
   raise_if_error(
       stub->Start(&context, request, &response));
+
+  return response;
+}
+
+StatusToStringResponse
+status_to_string(const StubPtr& stub, const pb::int32& status_id)
+{
+  ::grpc::ClientContext context;
+
+  auto request = StatusToStringRequest{};
+  request.set_status_id(status_id);
+
+  auto response = StatusToStringResponse{};
+
+  raise_if_error(
+      stub->StatusToString(&context, request, &response));
 
   return response;
 }

@@ -619,6 +619,46 @@ namespace nixnet_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiXnetService::DbGetDBCAttributeSize(::grpc::ServerContext* context, const DbGetDBCAttributeSizeRequest* request, DbGetDBCAttributeSizeResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto db_object_ref_grpc_session = request->db_object_ref();
+      nxDatabaseRef_t db_object_ref = nx_database_ref_t_resource_repository_->access_session(db_object_ref_grpc_session.id(), db_object_ref_grpc_session.name());
+      u32 mode;
+      switch (request->mode_enum_case()) {
+        case nixnet_grpc::DbGetDBCAttributeSizeRequest::ModeEnumCase::kMode: {
+          mode = static_cast<u32>(request->mode());
+          break;
+        }
+        case nixnet_grpc::DbGetDBCAttributeSizeRequest::ModeEnumCase::kModeRaw: {
+          mode = static_cast<u32>(request->mode_raw());
+          break;
+        }
+        case nixnet_grpc::DbGetDBCAttributeSizeRequest::ModeEnumCase::MODE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for mode was not specified or out of range");
+          break;
+        }
+      }
+
+      auto attribute_name = request->attribute_name().c_str();
+      u32 attribute_text_size {};
+      auto status = library_->DbGetDBCAttributeSize(db_object_ref, mode, attribute_name, &attribute_text_size);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_attribute_text_size(attribute_text_size);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiXnetService::DbGetDatabaseListSizes(::grpc::ServerContext* context, const DbGetDatabaseListSizesRequest* request, DbGetDatabaseListSizesResponse* response)
   {
     if (context->IsCancelled()) {
@@ -1201,6 +1241,31 @@ namespace nixnet_grpc {
 
       auto status = library_->Start(session_ref, scope);
       response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiXnetService::StatusToString(::grpc::ServerContext* context, const StatusToStringRequest* request, StatusToStringResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      nxStatus_t status_id = request->status_id();
+      auto sizeof_string = 2048U;
+      std::string status_description(2048 - 1, '\0');
+      library_->StatusToString(status_id, sizeof_string, (char*)status_description.data());
+      auto status = 0;
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_status_description(status_description);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_status_description()));
+      }
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {

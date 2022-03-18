@@ -63,6 +63,8 @@ public:
   ::grpc::Status DbDeleteObject(::grpc::ServerContext* context, const DbDeleteObjectRequest* request, DbDeleteObjectResponse* response) override;
   ::grpc::Status DbDeploy(::grpc::ServerContext* context, const DbDeployRequest* request, DbDeployResponse* response) override;
   ::grpc::Status DbFindObject(::grpc::ServerContext* context, const DbFindObjectRequest* request, DbFindObjectResponse* response) override;
+  ::grpc::Status DbGetDBCAttribute(::grpc::ServerContext* context, const DbGetDBCAttributeRequest* request, DbGetDBCAttributeResponse* response) override;
+  ::grpc::Status DbGetDBCAttributeSize(::grpc::ServerContext* context, const DbGetDBCAttributeSizeRequest* request, DbGetDBCAttributeSizeResponse* response) override;
   ::grpc::Status DbGetDatabaseList(::grpc::ServerContext* context, const DbGetDatabaseListRequest* request, DbGetDatabaseListResponse* response) override;
   ::grpc::Status DbGetDatabaseListSizes(::grpc::ServerContext* context, const DbGetDatabaseListSizesRequest* request, DbGetDatabaseListSizesResponse* response) override;
   ::grpc::Status DbGetProperty(::grpc::ServerContext* context, const DbGetPropertyRequest* request, DbGetPropertyResponse* response) override;
@@ -88,6 +90,7 @@ public:
   ::grpc::Status SetProperty(::grpc::ServerContext* context, const SetPropertyRequest* request, SetPropertyResponse* response) override;
   ::grpc::Status SetSubProperty(::grpc::ServerContext* context, const SetSubPropertyRequest* request, SetSubPropertyResponse* response) override;
   ::grpc::Status Start(::grpc::ServerContext* context, const StartRequest* request, StartResponse* response) override;
+  ::grpc::Status StatusToString(::grpc::ServerContext* context, const StatusToStringRequest* request, StatusToStringResponse* response) override;
   ::grpc::Status Stop(::grpc::ServerContext* context, const StopRequest* request, StopResponse* response) override;
   ::grpc::Status SystemClose(::grpc::ServerContext* context, const SystemCloseRequest* request, SystemCloseResponse* response) override;
   ::grpc::Status SystemOpen(::grpc::ServerContext* context, const SystemOpenRequest* request, SystemOpenResponse* response) override;

@@ -36,6 +36,8 @@ class NiXnetLibrary : public nixnet_grpc::NiXnetLibraryInterface {
   nxStatus_t DbDeleteObject(nxDatabaseRef_t dbObjectRef);
   nxStatus_t DbDeploy(const char ipAddress[], const char databaseAlias[], u32 waitForComplete, u32* percentComplete);
   nxStatus_t DbFindObject(nxDatabaseRef_t parentObjectRef, u32 objectClass, const char objectName[], nxDatabaseRef_t* dbObjectRef);
+  nxStatus_t DbGetDBCAttribute(nxDatabaseRef_t dbObjectRef, u32 mode, const char attributeName[], u32 attributeTextSize, char attributeText[], u32* isDefault);
+  nxStatus_t DbGetDBCAttributeSize(nxDatabaseRef_t dbObjectRef, u32 mode, const char attributeName[], u32* attributeTextSize);
   nxStatus_t DbGetDatabaseList(const char ipAddress[], u32 sizeofAliasBuffer, char aliasBuffer[], u32 sizeofFilepathBuffer, char filepathBuffer[], u32* numberOfDatabases);
   nxStatus_t DbGetDatabaseListSizes(const char ipAddress[], u32* sizeofAliasBuffer, u32* sizeofFilepathBuffer);
   nxStatus_t DbGetProperty(nxDatabaseRef_t dbObjectRef, u32 propertyID, u32 propertySize, void* propertyValue);
@@ -61,6 +63,7 @@ class NiXnetLibrary : public nixnet_grpc::NiXnetLibraryInterface {
   nxStatus_t SetProperty(nxSessionRef_t sessionRef, u32 propertyID, u32 propertySize, void* propertyValue);
   nxStatus_t SetSubProperty(nxSessionRef_t sessionRef, u32 activeIndex, u32 propertyID, u32 propertySize, void* propertyValue);
   nxStatus_t Start(nxSessionRef_t sessionRef, u32 scope);
+  void StatusToString(nxStatus_t statusID, u32 sizeofString, char statusDescription[2048]);
   nxStatus_t Stop(nxSessionRef_t sessionRef, u32 scope);
   nxStatus_t SystemClose(nxSessionRef_t systemRef);
   nxStatus_t SystemOpen(nxSessionRef_t* systemRef);
@@ -90,6 +93,8 @@ class NiXnetLibrary : public nixnet_grpc::NiXnetLibraryInterface {
   using DbDeleteObjectPtr = decltype(&nxdbDeleteObject);
   using DbDeployPtr = decltype(&nxdbDeploy);
   using DbFindObjectPtr = decltype(&nxdbFindObject);
+  using DbGetDBCAttributePtr = decltype(&nxdbGetDBCAttribute);
+  using DbGetDBCAttributeSizePtr = decltype(&nxdbGetDBCAttributeSize);
   using DbGetDatabaseListPtr = decltype(&nxdbGetDatabaseList);
   using DbGetDatabaseListSizesPtr = decltype(&nxdbGetDatabaseListSizes);
   using DbGetPropertyPtr = decltype(&nxdbGetProperty);
@@ -115,6 +120,7 @@ class NiXnetLibrary : public nixnet_grpc::NiXnetLibraryInterface {
   using SetPropertyPtr = decltype(&nxSetProperty);
   using SetSubPropertyPtr = decltype(&nxSetSubProperty);
   using StartPtr = decltype(&nxStart);
+  using StatusToStringPtr = decltype(&nxStatusToString);
   using StopPtr = decltype(&nxStop);
   using SystemClosePtr = decltype(&nxSystemClose);
   using SystemOpenPtr = decltype(&nxSystemOpen);
@@ -144,6 +150,8 @@ class NiXnetLibrary : public nixnet_grpc::NiXnetLibraryInterface {
     DbDeleteObjectPtr DbDeleteObject;
     DbDeployPtr DbDeploy;
     DbFindObjectPtr DbFindObject;
+    DbGetDBCAttributePtr DbGetDBCAttribute;
+    DbGetDBCAttributeSizePtr DbGetDBCAttributeSize;
     DbGetDatabaseListPtr DbGetDatabaseList;
     DbGetDatabaseListSizesPtr DbGetDatabaseListSizes;
     DbGetPropertyPtr DbGetProperty;
@@ -169,6 +177,7 @@ class NiXnetLibrary : public nixnet_grpc::NiXnetLibraryInterface {
     SetPropertyPtr SetProperty;
     SetSubPropertyPtr SetSubProperty;
     StartPtr Start;
+    StatusToStringPtr StatusToString;
     StopPtr Stop;
     SystemClosePtr SystemClose;
     SystemOpenPtr SystemOpen;
