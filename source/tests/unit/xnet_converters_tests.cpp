@@ -4,6 +4,8 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
+#include <string>
+
 using namespace nixnetsocket_grpc;
 using namespace ::testing;
 namespace pb = ::google::protobuf;
@@ -254,6 +256,14 @@ TEST(XnetConvertersTests, IPv4Address_ConvertToGrpc_ConvertsToIPv4Address)
   EXPECT_EQ(ADDR, grpc_data.ipv4().addr().addr());
 }
 
+void copy_ipv6_addr(unsigned char* dst, const char* src)
+{
+  std::memcpy(
+      dst,
+      src,
+      sizeof(nxin6_addr::addr));
+}
+
 TEST(XnetConvertersTests, IPv6Address_ConvertToGrpc_ConvertsToIPv6Address)
 {
   constexpr auto PORT = 100;
@@ -264,10 +274,7 @@ TEST(XnetConvertersTests, IPv6Address_ConvertToGrpc_ConvertsToIPv6Address)
   auto ptr_to_storage = reinterpret_cast<nxsockaddr_in6*>(&storage);
   ptr_to_storage->sin6_family = nxAF_INET6;
   ptr_to_storage->sin6_port = PORT;
-  std::memcpy(
-      ptr_to_storage->sin6_addr.addr,
-      ADDRESS.data(),
-      sizeof(ptr_to_storage->sin6_addr.addr));
+  copy_ipv6_addr(ptr_to_storage->sin6_addr.addr, ADDRESS.data());
   ptr_to_storage->sin6_flowinfo = FLOW_INFO;
   ptr_to_storage->sin6_scope_id = SCOPE_ID;
 
@@ -408,6 +415,71 @@ TEST(XnetConvertersTests, SockOptDataWithUnknownOptName_ConvertToGrpc_ConvertsTo
   convert_to_grpc(storage, &grpc_data);
 
   EXPECT_EQ(SockOptData::DataCase::DATA_NOT_SET, grpc_data.data_case());
+}
+
+TEST(XnetConvertersTests, AddrOutputConverterWithIPv4Address_ConvertToGrpc_PopulatesIPv4Address)
+{
+  constexpr auto ADDRESS = 0x55667788;
+  auto converter = allocate_output_storage<void, Addr>(nxAF_INET);
+  auto data_ptr = reinterpret_cast<nxin_addr*>(static_cast<void*>(&converter));
+  data_ptr->addr = ADDRESS;
+
+  auto grpc_addr = nixnetsocket_grpc::Addr{};
+  converter.to_grpc(grpc_addr);
+
+  EXPECT_EQ(nixnetsocket_grpc::Addr::AddrCase::kIpv4, grpc_addr.addr_case());
+  EXPECT_EQ(ADDRESS, grpc_addr.ipv4().addr());
+}
+
+TEST(XnetConvertersTests, AddrOutputConverterWithIPv6Address_ConvertToGrpc_PopulatesIPv6Address)
+{
+  const auto ADDRESS = std::vector<char>{0x0, 0x1, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7, 0x8, 0x9, 0xA, 0xB, 0xC, 0xD, 0xE, 0xF};
+  auto converter = allocate_output_storage<void, Addr>(nxAF_INET6);
+  auto data_ptr = reinterpret_cast<nxin6_addr*>(static_cast<void*>(&converter));
+  copy_ipv6_addr(data_ptr->addr, ADDRESS.data());
+
+  auto grpc_addr = nixnetsocket_grpc::Addr{};
+  converter.to_grpc(grpc_addr);
+
+  EXPECT_EQ(nixnetsocket_grpc::Addr::AddrCase::kIpv6, grpc_addr.addr_case());
+  EXPECT_THAT(
+      grpc_addr.ipv6().addr(),
+      ElementsAreArray(ADDRESS.data(), ADDRESS.size()));
+}
+
+TEST(XnetConvertersTests, AddrOutputConverterWithUnspecifiedFamily_ConvertToGrpc_DoesNotSetAddrCase)
+{
+  auto converter = allocate_output_storage<void, Addr>(nxAF_UNSPEC);
+  auto data_ptr = reinterpret_cast<nxin6_addr*>(static_cast<void*>(&converter));
+
+  auto grpc_addr = nixnetsocket_grpc::Addr{};
+  converter.to_grpc(grpc_addr);
+
+  EXPECT_EQ(nixnetsocket_grpc::Addr::AddrCase::ADDR_NOT_SET, grpc_addr.addr_case());
+}
+
+TEST(XnetConvertersTests, AddrOutputConverterWithBogusFamily_ConvertToGrpc_DoesNotSetAddrCase)
+{
+  auto converter = allocate_output_storage<void, Addr>(42);
+  auto data_ptr = reinterpret_cast<nxin6_addr*>(static_cast<void*>(&converter));
+
+  auto grpc_addr = nixnetsocket_grpc::Addr{};
+  converter.to_grpc(grpc_addr);
+
+  EXPECT_EQ(nixnetsocket_grpc::Addr::AddrCase::ADDR_NOT_SET, grpc_addr.addr_case());
+}
+
+TEST(XnetConvertersTests, IPv4AddrOutputConverter_ConvertToGrpc_PopulatesAddress)
+{
+  constexpr auto ADDRESS = 0x11001122;
+  auto converter = allocate_output_storage<nxin_addr, IPv4Addr>();
+  auto data_ptr = &converter;
+  data_ptr->addr = ADDRESS;
+
+  auto grpc_addr = nixnetsocket_grpc::IPv4Addr{};
+  converter.to_grpc(grpc_addr);
+
+  EXPECT_EQ(ADDRESS, grpc_addr.addr());
 }
 
 }  // namespace
