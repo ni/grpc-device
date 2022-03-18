@@ -417,7 +417,7 @@ TEST(XnetConvertersTests, SockOptDataWithUnknownOptName_ConvertToGrpc_ConvertsTo
   EXPECT_EQ(SockOptData::DataCase::DATA_NOT_SET, grpc_data.data_case());
 }
 
-TEST(XnetConvertersTests, AddrOutputConverterWithIPv4Address_ConvertToGrpc_PopulatesIPv4Address)
+TEST(XnetConvertersTests, AddrOutputConverterWithIPv4Address_ConvertToGrpc_ConvertsToIPv4Address)
 {
   constexpr auto ADDRESS = 0x55667788;
   auto converter = allocate_output_storage<void, Addr>(nxAF_INET);
@@ -431,7 +431,7 @@ TEST(XnetConvertersTests, AddrOutputConverterWithIPv4Address_ConvertToGrpc_Popul
   EXPECT_EQ(ADDRESS, grpc_addr.ipv4().addr());
 }
 
-TEST(XnetConvertersTests, AddrOutputConverterWithIPv6Address_ConvertToGrpc_PopulatesIPv6Address)
+TEST(XnetConvertersTests, AddrOutputConverterWithIPv6Address_ConvertToGrpc_ConvertsToIPv6Address)
 {
   const auto ADDRESS = std::vector<char>{0x0, 0x1, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7, 0x8, 0x9, 0xA, 0xB, 0xC, 0xD, 0xE, 0xF};
   auto converter = allocate_output_storage<void, Addr>(nxAF_INET6);
@@ -469,7 +469,7 @@ TEST(XnetConvertersTests, AddrOutputConverterWithBogusFamily_ConvertToGrpc_DoesN
   EXPECT_EQ(nixnetsocket_grpc::Addr::AddrCase::ADDR_NOT_SET, grpc_addr.addr_case());
 }
 
-TEST(XnetConvertersTests, IPv4AddrOutputConverter_ConvertToGrpc_PopulatesAddress)
+TEST(XnetConvertersTests, IPv4AddrOutputConverter_ConvertToGrpc_ConvertsToAddress)
 {
   constexpr auto ADDRESS = 0x11001122;
   auto converter = allocate_output_storage<nxin_addr, IPv4Addr>();
