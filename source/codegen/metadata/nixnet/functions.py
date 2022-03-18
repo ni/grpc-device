@@ -131,7 +131,6 @@ functions = {
         'returns': 'nxStatus_t'
     },
     'ConvertFramesToSignalsSinglePoint': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -141,16 +140,17 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'frameBuffer',
-                'size': {
-                    'mechanism': 'len',
-                    'value': 'numberOfBytesForFrames'
-                },
-                'type': 'void[]'
+                'type': 'u8',
+                'pointer': True,
+                'grpc_type': 'repeated FrameBuffer',
+                'supports_standard_copy_convert': True,
             },
             {
                 'direction': 'in',
                 'name': 'numberOfBytesForFrames',
-                'type': 'u32'
+                'hardcoded_value': 'frame_buffer.size()',
+                'type': 'u32',
+                'include_in_proto': False
             },
             {
                 'direction': 'out',
@@ -184,7 +184,6 @@ functions = {
         'returns': 'nxStatus_t'
     },
     'ConvertSignalsToFramesSinglePoint': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -212,7 +211,10 @@ functions = {
                     'mechanism': 'passed-in',
                     'value': 'sizeOfBuffer'
                 },
-                'type': 'void[]'
+                'type': 'u8[]',
+                'grpc_type': 'repeated FrameBuffer',
+                'supports_standard_copy_convert': True,
+                'additional_arguments_to_copy_convert': ['number_of_bytes_returned', 'frame_type']
             },
             {
                 'direction': 'in',
@@ -222,6 +224,14 @@ functions = {
             {
                 'direction': 'out',
                 'name': 'numberOfBytesReturned',
+                'type': 'u32',
+                'include_in_proto': False
+            },
+            {
+                'direction': 'in',
+                'name': 'frameType',
+                'proto_only': True,
+                'enum': 'FrameType',
                 'type': 'u32'
             }
         ],
