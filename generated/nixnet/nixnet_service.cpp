@@ -44,15 +44,6 @@ namespace nixnet_grpc {
     return status >= 0;
   }
 
-  template <typename TEnum>
-  void NiXnetService::CopyBytesToEnums(const std::string& input, google::protobuf::RepeatedField<TEnum>* output)
-  {
-    for (auto item : input)
-    {
-      output->Add(item);
-    }
-  }
-
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiXnetService::Blink(::grpc::ServerContext* context, const BlinkRequest* request, BlinkResponse* response)
@@ -1018,6 +1009,46 @@ namespace nixnet_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiXnetService::ReadStateTimeTrigger(::grpc::ServerContext* context, const ReadStateTimeTriggerRequest* request, ReadStateTimeTriggerResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_ref_grpc_session = request->session_ref();
+      nxSessionRef_t session_ref = session_repository_->access_session(session_ref_grpc_session.id(), session_ref_grpc_session.name());
+      f64 timeout;
+      switch (request->timeout_enum_case()) {
+        case nixnet_grpc::ReadStateTimeTriggerRequest::TimeoutEnumCase::kTimeout: {
+          timeout = static_cast<f64>(request->timeout());
+          break;
+        }
+        case nixnet_grpc::ReadStateTimeTriggerRequest::TimeoutEnumCase::kTimeoutRaw: {
+          timeout = static_cast<f64>(request->timeout_raw());
+          break;
+        }
+        case nixnet_grpc::ReadStateTimeTriggerRequest::TimeoutEnumCase::TIMEOUT_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for timeout was not specified or out of range");
+          break;
+        }
+      }
+
+      auto state_size = sizeof(nxTimeLocalNetwork_t);
+      _nxTimeLocalNetwork_t state_value {};
+      auto status = library_->ReadStateTimeTrigger(session_ref, timeout, state_size, &state_value);
+      response->set_status(status);
+      if (status_ok(status)) {
+        convert_to_grpc(state_value, response->mutable_state_value());
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiXnetService::Start(::grpc::ServerContext* context, const StartRequest* request, StartResponse* response)
   {
     if (context->IsCancelled()) {
@@ -1283,4 +1314,17 @@ namespace nixnet_grpc {
   {
   }
 } // namespace nixnet_grpc
+
+namespace nidevice_grpc {
+namespace converters {
+template <>
+void convert_to_grpc(const _nxTimeLocalNetwork_t& input, nixnet_grpc::TimeLocalNetwork* output) 
+{
+  output->set_local_time(input.LocalTime);
+  output->set_network_time(input.NetworkTime);
+  output->set_flags(input.Flags);
+}
+
+} // converters
+} // nidevice_grpc
 

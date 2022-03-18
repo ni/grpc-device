@@ -28,6 +28,29 @@ config = {
         'nxTimestamp1ns_t': 'uint64',
         'nxTimestamp100ns_t': 'uint64'
     },
+    'custom_types': [
+        {
+            'name': '_nxTimeLocalNetwork_t',
+            'grpc_name': 'TimeLocalNetwork',
+            'fields': [
+                {
+                    'type': 'nxTimestamp1ns_t',
+                    'name': 'LocalTime',
+                    'grpc_name': 'local_time'
+                },
+                {
+                    'type': 'nxTimestamp1ns_t',
+                    'name': 'NetworkTime',
+                    'grpc_name': 'network_time'
+                },
+                {
+                    'type': 'u32',
+                    'name': 'Flags',
+                    'grpc_name': 'flags'
+                }
+            ]
+        }
+    ],
     'library_info': {
         'Linux': {
             '64bit': {

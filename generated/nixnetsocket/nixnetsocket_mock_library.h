@@ -31,8 +31,12 @@ class NiXnetSocketMockLibrary : public nixnetsocket_grpc::NiXnetSocketLibraryInt
   MOCK_METHOD(int32_t, Close, (nxSOCKET socket), (override));
   MOCK_METHOD(int32_t, GetLastErrorNum, (), (override));
   MOCK_METHOD(char*, GetLastErrorStr, (char buf[], size_t bufLen), (override));
+  MOCK_METHOD(int32_t, GetSockOpt, (nxSOCKET socket, int32_t level, int32_t optname, void* optval, nxsocklen_t* optlen), (override));
   MOCK_METHOD(int32_t, IpStackClear, (nxIpStackRef_t stack_ref), (override));
   MOCK_METHOD(int32_t, IpStackCreate, (char stack_name[], char config[], nxIpStackRef_t* stack_ref), (override));
+  MOCK_METHOD(int32_t, IpStackFreeInfo, (nxVirtualInterface_t* firstVirtualInterface), (override));
+  MOCK_METHOD(int32_t, IpStackGetInfo, (nxIpStackRef_t stack_ref, uint32_t info_id, nxVirtualInterface_t** virtual_interfaces), (override));
+  MOCK_METHOD(int32_t, IpStackWaitForInterface, (nxIpStackRef_t stack_ref, const char localInterface[], int32_t timeoutMs), (override));
   MOCK_METHOD(int32_t, IsSet, (nxSOCKET fd, nxfd_set* set), (override));
   MOCK_METHOD(int32_t, Select, (int32_t nfds, nxfd_set* read_fds, nxfd_set* write_fds, nxfd_set* except_fds, nxtimeval* timeout), (override));
   MOCK_METHOD(int32_t, SetSockOpt, (nxSOCKET socket, int32_t level, int32_t optname, void* optval, nxsocklen_t optlen), (override));

@@ -52,6 +52,8 @@ class NiXnetMockLibrary : public nixnet_grpc::NiXnetLibraryInterface {
   MOCK_METHOD(nxStatus_t, GetSubPropertySize, (nxSessionRef_t sessionRef, u32 activeIndex, u32 propertyID, u32* propertySize), (override));
   MOCK_METHOD(nxStatus_t, ReadSignalSinglePoint, (nxSessionRef_t sessionRef, f64 valueBuffer[], u32 sizeOfValueBuffer, nxTimestamp100ns_t timestampBuffer[], u32 sizeOfTimestampBuffer), (override));
   MOCK_METHOD(nxStatus_t, ReadSignalWaveform, (nxSessionRef_t sessionRef, f64 timeout, nxTimestamp100ns_t* startTime, f64* deltaTime, f64 valueBuffer[], u32 sizeOfValueBuffer, u32* numberOfValuesReturned), (override));
+  MOCK_METHOD(nxStatus_t, ReadState, (nxSessionRef_t sessionRef, u32 stateID, u32 stateSize, void* stateValue, nxStatus_t* fault), (override));
+  MOCK_METHOD(nxStatus_t, ReadStateTimeTrigger, (nxSessionRef_t sessionRef, f64 timeout, u32 stateSize, _nxTimeLocalNetwork_t* stateValue), (override));
   MOCK_METHOD(nxStatus_t, SetProperty, (nxSessionRef_t sessionRef, u32 propertyID, u32 propertySize, void* propertyValue), (override));
   MOCK_METHOD(nxStatus_t, SetSubProperty, (nxSessionRef_t sessionRef, u32 activeIndex, u32 propertyID, u32 propertySize, void* propertyValue), (override));
   MOCK_METHOD(nxStatus_t, Start, (nxSessionRef_t sessionRef, u32 scope), (override));
@@ -62,6 +64,7 @@ class NiXnetMockLibrary : public nixnet_grpc::NiXnetLibraryInterface {
   MOCK_METHOD(nxStatus_t, WriteSignalSinglePoint, (nxSessionRef_t sessionRef, f64 valueBuffer[], u32 sizeOfValueBuffer), (override));
   MOCK_METHOD(nxStatus_t, WriteSignalWaveform, (nxSessionRef_t sessionRef, f64 timeout, f64 valueBuffer[], u32 sizeOfValueBuffer), (override));
   MOCK_METHOD(nxStatus_t, WriteSignalXY, (nxSessionRef_t sessionRef, f64 timeout, f64 valueBuffer[], u32 sizeOfValueBuffer, nxTimestamp100ns_t timestampBuffer[], u32 sizeOfTimestampBuffer, u32 numPairsBuffer[], u32 sizeOfNumPairsBuffer), (override));
+  MOCK_METHOD(nxStatus_t, WriteState, (nxSessionRef_t sessionRef, u32 stateID, u32 stateSize, void* stateValue), (override));
 };
 
 }  // namespace unit
