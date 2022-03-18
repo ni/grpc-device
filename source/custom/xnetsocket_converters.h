@@ -326,7 +326,7 @@ struct SockOptDataInputConverter {
       case SockOptData::DataCase::kDataIpv6Mreq:
         return &data_ipv6mreq;
         break;
-      case SockOptData::DataCase::DATA_NOT_SET:
+      default:
         return nullptr;
         break;
     }
@@ -385,12 +385,15 @@ struct SockOptDataOutputConverter {
       case OptName::OPT_NAME_SO_RX_DATA:
       case OptName::OPT_NAME_SO_RCV_BUF:
       case OptName::OPT_NAME_SO_SND_BUF:
-      case OptName::OPT_NAME_TCP_NODELAY: {
+      case OptName::OPT_NAME_TCP_NODELAY:
+      case OptName::OPT_NAME_IP_MULTICAST_IF:
+      case OptName::OPT_NAME_IPV6_MULTICAST_IF: {
         return &data_int;
         break;
       }
       case OptName::OPT_NAME_SO_NON_BLOCK:
-      case OptName::OPT_NAME_SO_REUSE_ADDR: {
+      case OptName::OPT_NAME_SO_REUSE_ADDR:
+      case OptName::OPT_NAME_IPV6_V6ONLY: {
         return &data_int;
         break;
       }
@@ -402,6 +405,15 @@ struct SockOptDataOutputConverter {
       }
       case OptName::OPT_NAME_SO_LINGER: {
         return &data_linger;
+      }
+      case OptName::OPT_NAME_IP_ADD_MEMBERSHIP:
+      case OptName::OPT_NAME_IP_DROP_MEMBERSHIP: {
+        return &data_ipmreq;
+      }
+      // IPV6 Add and Drop membership also cover Join Group and Leave Group OptName values
+      case OptName::OPT_NAME_IPV6_ADD_MEMBERSHIP:
+      case OptName::OPT_NAME_IPV6_DROP_MEMBERSHIP: {
+        return &data_ipv6mreq;
       }
       default:
         return nullptr;
@@ -417,12 +429,15 @@ struct SockOptDataOutputConverter {
       case OptName::OPT_NAME_SO_RX_DATA:
       case OptName::OPT_NAME_SO_RCV_BUF:
       case OptName::OPT_NAME_SO_SND_BUF:
-      case OptName::OPT_NAME_TCP_NODELAY: {
+      case OptName::OPT_NAME_TCP_NODELAY:
+      case OptName::OPT_NAME_IP_MULTICAST_IF:
+      case OptName::OPT_NAME_IPV6_MULTICAST_IF: {
         output.set_data_int32(data_int);
         break;
       }
       case OptName::OPT_NAME_SO_NON_BLOCK:
-      case OptName::OPT_NAME_SO_REUSE_ADDR: {
+      case OptName::OPT_NAME_SO_REUSE_ADDR:
+      case OptName::OPT_NAME_IPV6_V6ONLY: {
         output.set_data_bool(data_int == 0 ? false : true);
         break;
       }
@@ -437,6 +452,23 @@ struct SockOptDataOutputConverter {
         output.mutable_data_linger()->set_l_onoff(data_linger.l_onoff);
         break;
       }
+      case OptName::OPT_NAME_IP_ADD_MEMBERSHIP:
+      case OptName::OPT_NAME_IP_DROP_MEMBERSHIP: {
+        output.mutable_data_ipmreq()->set_imr_multiaddr(data_ipmreq.imr_multiaddr.addr);
+        output.mutable_data_ipmreq()->set_imr_interface(data_ipmreq.imr_interface.addr);
+        break;
+      }
+      case OptName::OPT_NAME_IPV6_ADD_MEMBERSHIP:
+      case OptName::OPT_NAME_IPV6_DROP_MEMBERSHIP: {
+        // Reinterpret unsigned char to char.
+        auto multiaddr_out = reinterpret_cast<const char*>(data_ipv6mreq.ipv6mr_multiaddr.addr);
+        auto multiaddr_size = sizeof(data_ipv6mreq.ipv6mr_multiaddr.addr);
+        output.mutable_data_ipv6mreq()->set_ipv6mr_multiaddr(
+            {&multiaddr_out[0],
+             &multiaddr_out[multiaddr_size]});
+        output.mutable_data_ipv6mreq()->set_ipv6mr_interface(data_ipv6mreq.ipv6mr_interface);
+        break;
+      }
       default:
         break;
     }
@@ -446,6 +478,8 @@ struct SockOptDataOutputConverter {
   int32_t data_int;
   std::string data_string;
   nxlinger data_linger;
+  nxip_mreq data_ipmreq;
+  nxipv6_mreq data_ipv6mreq;
 };
 
 inline void convert_to_grpc(const SockOptDataOutputConverter& storage, SockOptData* output)
