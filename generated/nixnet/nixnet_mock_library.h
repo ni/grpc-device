@@ -33,6 +33,8 @@ class NiXnetMockLibrary : public nixnet_grpc::NiXnetLibraryInterface {
   MOCK_METHOD(nxStatus_t, DbDeleteObject, (nxDatabaseRef_t dbObjectRef), (override));
   MOCK_METHOD(nxStatus_t, DbDeploy, (const char ipAddress[], const char databaseAlias[], u32 waitForComplete, u32* percentComplete), (override));
   MOCK_METHOD(nxStatus_t, DbFindObject, (nxDatabaseRef_t parentObjectRef, u32 objectClass, const char objectName[], nxDatabaseRef_t* dbObjectRef), (override));
+  MOCK_METHOD(nxStatus_t, DbGetDBCAttribute, (nxDatabaseRef_t dbObjectRef, u32 mode, const char attributeName[], u32 attributeTextSize, char attributeText[], u32* isDefault), (override));
+  MOCK_METHOD(nxStatus_t, DbGetDBCAttributeSize, (nxDatabaseRef_t dbObjectRef, u32 mode, const char attributeName[], u32* attributeTextSize), (override));
   MOCK_METHOD(nxStatus_t, DbGetDatabaseList, (const char ipAddress[], u32 sizeofAliasBuffer, char aliasBuffer[], u32 sizeofFilepathBuffer, char filepathBuffer[], u32* numberOfDatabases), (override));
   MOCK_METHOD(nxStatus_t, DbGetDatabaseListSizes, (const char ipAddress[], u32* sizeofAliasBuffer, u32* sizeofFilepathBuffer), (override));
   MOCK_METHOD(nxStatus_t, DbGetProperty, (nxDatabaseRef_t dbObjectRef, u32 propertyID, u32 propertySize, void* propertyValue), (override));
@@ -57,6 +59,7 @@ class NiXnetMockLibrary : public nixnet_grpc::NiXnetLibraryInterface {
   MOCK_METHOD(nxStatus_t, SetProperty, (nxSessionRef_t sessionRef, u32 propertyID, u32 propertySize, void* propertyValue), (override));
   MOCK_METHOD(nxStatus_t, SetSubProperty, (nxSessionRef_t sessionRef, u32 activeIndex, u32 propertyID, u32 propertySize, void* propertyValue), (override));
   MOCK_METHOD(nxStatus_t, Start, (nxSessionRef_t sessionRef, u32 scope), (override));
+  MOCK_METHOD(void, StatusToString, (nxStatus_t statusID, u32 sizeofString, char statusDescription[2048]), (override));
   MOCK_METHOD(nxStatus_t, Stop, (nxSessionRef_t sessionRef, u32 scope), (override));
   MOCK_METHOD(nxStatus_t, SystemClose, (nxSessionRef_t systemRef), (override));
   MOCK_METHOD(nxStatus_t, SystemOpen, (nxSessionRef_t* systemRef), (override));

@@ -1066,6 +1066,56 @@ u32 GetStateSize(u32 state_id)
   }
 }
 
+//---------------------------------------------------------------------
+//---------------------------------------------------------------------
+::grpc::Status NiXnetService::DbGetDBCAttribute(::grpc::ServerContext* context, const DbGetDBCAttributeRequest* request, DbGetDBCAttributeResponse* response)
+{
+  if (context->IsCancelled()) {
+    return ::grpc::Status::CANCELLED;
+  }
+  try {
+    auto db_object_ref_grpc_session = request->db_object_ref();
+    nxDatabaseRef_t db_object_ref = nx_database_ref_t_resource_repository_->access_session(db_object_ref_grpc_session.id(), db_object_ref_grpc_session.name());
+    u32 mode;
+    switch (request->mode_enum_case()) {
+      case nixnet_grpc::DbGetDBCAttributeRequest::ModeEnumCase::kMode: {
+        mode = static_cast<u32>(request->mode());
+        break;
+      }
+      case nixnet_grpc::DbGetDBCAttributeRequest::ModeEnumCase::kModeRaw: {
+        mode = static_cast<u32>(request->mode_raw());
+        break;
+      }
+      case nixnet_grpc::DbGetDBCAttributeRequest::ModeEnumCase::MODE_ENUM_NOT_SET: {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for mode was not specified or out of range");
+        break;
+      }
+    }
+
+    auto attribute_name = request->attribute_name().c_str();
+    u32 attribute_text_size {};
+    auto status = library_->DbGetDBCAttributeSize(db_object_ref, mode, attribute_name, &attribute_text_size);
+    if (!status_ok(status)) {
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+
+    std::string attribute_text(attribute_text_size, '\0');
+    u32 is_default{};
+      
+    status = library_->DbGetDBCAttribute(db_object_ref, mode, attribute_name, attribute_text_size, const_cast<char*>(attribute_text.c_str()), &is_default);
+    response->set_status(status);
+    if (status_ok(status)) {
+      response->set_is_default(is_default);
+      response->set_attribute_text(attribute_text.c_str());
+    }
+    return ::grpc::Status::OK;
+  }
+  catch (nidevice_grpc::LibraryLoadException& ex) {
+    return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+  }
+}
+
 // template <>
 void convert_to_grpc(std::vector<u8>& input, google::protobuf::RepeatedPtrField<nixnet_grpc::FrameBuffer>* output, u32 number_of_bytes, u32 frame_type)
 {

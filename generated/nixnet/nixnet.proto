@@ -32,6 +32,8 @@ service NiXnet {
   rpc DbDeleteObject(DbDeleteObjectRequest) returns (DbDeleteObjectResponse);
   rpc DbDeploy(DbDeployRequest) returns (DbDeployResponse);
   rpc DbFindObject(DbFindObjectRequest) returns (DbFindObjectResponse);
+  rpc DbGetDBCAttribute(DbGetDBCAttributeRequest) returns (DbGetDBCAttributeResponse);
+  rpc DbGetDBCAttributeSize(DbGetDBCAttributeSizeRequest) returns (DbGetDBCAttributeSizeResponse);
   rpc DbGetDatabaseList(DbGetDatabaseListRequest) returns (DbGetDatabaseListResponse);
   rpc DbGetDatabaseListSizes(DbGetDatabaseListSizesRequest) returns (DbGetDatabaseListSizesResponse);
   rpc DbGetProperty(DbGetPropertyRequest) returns (DbGetPropertyResponse);
@@ -56,6 +58,7 @@ service NiXnet {
   rpc SetProperty(SetPropertyRequest) returns (SetPropertyResponse);
   rpc SetSubProperty(SetSubPropertyRequest) returns (SetSubPropertyResponse);
   rpc Start(StartRequest) returns (StartResponse);
+  rpc StatusToString(StatusToStringRequest) returns (StatusToStringResponse);
   rpc Stop(StopRequest) returns (StopResponse);
   rpc SystemClose(SystemCloseRequest) returns (SystemCloseResponse);
   rpc SystemOpen(SystemOpenRequest) returns (SystemOpenResponse);
@@ -1240,6 +1243,35 @@ message DbFindObjectResponse {
   nidevice_grpc.Session db_object_ref = 2;
 }
 
+message DbGetDBCAttributeRequest {
+  nidevice_grpc.Session db_object_ref = 1;
+  oneof mode_enum {
+    GetDBCAttributeMode mode = 2;
+    uint32 mode_raw = 3;
+  }
+  string attribute_name = 4;
+}
+
+message DbGetDBCAttributeResponse {
+  int32 status = 1;
+  string attribute_text = 2;
+  uint32 is_default = 3;
+}
+
+message DbGetDBCAttributeSizeRequest {
+  nidevice_grpc.Session db_object_ref = 1;
+  oneof mode_enum {
+    GetDBCAttributeMode mode = 2;
+    uint32 mode_raw = 3;
+  }
+  string attribute_name = 4;
+}
+
+message DbGetDBCAttributeSizeResponse {
+  int32 status = 1;
+  uint32 attribute_text_size = 2;
+}
+
 message DbGetDatabaseListSizesRequest {
   string ip_address = 1;
 }
@@ -1445,6 +1477,15 @@ message StartRequest {
 
 message StartResponse {
   int32 status = 1;
+}
+
+message StatusToStringRequest {
+  int32 status_id = 1;
+}
+
+message StatusToStringResponse {
+  int32 status = 1;
+  string status_description = 2;
 }
 
 message StopRequest {
