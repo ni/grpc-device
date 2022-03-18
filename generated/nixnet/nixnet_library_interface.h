@@ -48,6 +48,7 @@ class NiXnetLibraryInterface {
   virtual nxStatus_t GetPropertySize(nxSessionRef_t sessionRef, u32 propertyID, u32* propertySize) = 0;
   virtual nxStatus_t GetSubProperty(nxSessionRef_t sessionRef, u32 activeIndex, u32 propertyID, u32 propertySize, void* propertyValue) = 0;
   virtual nxStatus_t GetSubPropertySize(nxSessionRef_t sessionRef, u32 activeIndex, u32 propertyID, u32* propertySize) = 0;
+  virtual nxStatus_t ReadFrame(nxSessionRef_t sessionRef, u8 buffer[], u32 sizeOfBuffer, f64 timeout, u32* numberOfBytesReturned) = 0;
   virtual nxStatus_t ReadSignalSinglePoint(nxSessionRef_t sessionRef, f64 valueBuffer[], u32 sizeOfValueBuffer, nxTimestamp100ns_t timestampBuffer[], u32 sizeOfTimestampBuffer) = 0;
   virtual nxStatus_t ReadSignalWaveform(nxSessionRef_t sessionRef, f64 timeout, nxTimestamp100ns_t* startTime, f64* deltaTime, f64 valueBuffer[], u32 sizeOfValueBuffer, u32* numberOfValuesReturned) = 0;
   virtual nxStatus_t ReadState(nxSessionRef_t sessionRef, u32 stateID, u32 stateSize, void* stateValue, nxStatus_t* fault) = 0;

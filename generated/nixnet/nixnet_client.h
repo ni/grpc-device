@@ -50,6 +50,7 @@ FlushResponse flush(const StubPtr& stub, const nidevice_grpc::Session& session_r
 FutureTimeTriggerResponse future_time_trigger(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const pb::uint64& when, const simple_variant<TimeScale, pb::uint32>& timescale);
 GetPropertySizeResponse get_property_size(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const simple_variant<Property, pb::uint32>& property_id);
 GetSubPropertySizeResponse get_sub_property_size(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const pb::uint32& active_index, const simple_variant<SubProperty, pb::uint32>& property_id);
+ReadFrameResponse read_frame(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const pb::uint32& size_of_buffer, const simple_variant<TimeOut, double>& timeout, const simple_variant<FrameType, pb::uint32>& frame_type);
 ReadSignalSinglePointResponse read_signal_single_point(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const pb::uint32& size_of_value_buffer, const pb::uint32& size_of_timestamp_buffer);
 ReadSignalWaveformResponse read_signal_waveform(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const simple_variant<TimeOut, double>& timeout, const pb::uint32& size_of_value_buffer);
 ReadStateResponse read_state(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const simple_variant<ReadState, pb::uint32>& state_id);

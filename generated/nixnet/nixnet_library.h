@@ -51,6 +51,7 @@ class NiXnetLibrary : public nixnet_grpc::NiXnetLibraryInterface {
   nxStatus_t GetPropertySize(nxSessionRef_t sessionRef, u32 propertyID, u32* propertySize);
   nxStatus_t GetSubProperty(nxSessionRef_t sessionRef, u32 activeIndex, u32 propertyID, u32 propertySize, void* propertyValue);
   nxStatus_t GetSubPropertySize(nxSessionRef_t sessionRef, u32 activeIndex, u32 propertyID, u32* propertySize);
+  nxStatus_t ReadFrame(nxSessionRef_t sessionRef, u8 buffer[], u32 sizeOfBuffer, f64 timeout, u32* numberOfBytesReturned);
   nxStatus_t ReadSignalSinglePoint(nxSessionRef_t sessionRef, f64 valueBuffer[], u32 sizeOfValueBuffer, nxTimestamp100ns_t timestampBuffer[], u32 sizeOfTimestampBuffer);
   nxStatus_t ReadSignalWaveform(nxSessionRef_t sessionRef, f64 timeout, nxTimestamp100ns_t* startTime, f64* deltaTime, f64 valueBuffer[], u32 sizeOfValueBuffer, u32* numberOfValuesReturned);
   nxStatus_t ReadState(nxSessionRef_t sessionRef, u32 stateID, u32 stateSize, void* stateValue, nxStatus_t* fault);
@@ -101,6 +102,7 @@ class NiXnetLibrary : public nixnet_grpc::NiXnetLibraryInterface {
   using GetPropertySizePtr = decltype(&nxGetPropertySize);
   using GetSubPropertyPtr = decltype(&nxGetSubProperty);
   using GetSubPropertySizePtr = decltype(&nxGetSubPropertySize);
+  using ReadFramePtr = decltype(&nxReadFrame);
   using ReadSignalSinglePointPtr = decltype(&nxReadSignalSinglePoint);
   using ReadSignalWaveformPtr = decltype(&nxReadSignalWaveform);
   using ReadStatePtr = decltype(&nxReadState);
@@ -151,6 +153,7 @@ class NiXnetLibrary : public nixnet_grpc::NiXnetLibraryInterface {
     GetPropertySizePtr GetPropertySize;
     GetSubPropertyPtr GetSubProperty;
     GetSubPropertySizePtr GetSubPropertySize;
+    ReadFramePtr ReadFrame;
     ReadSignalSinglePointPtr ReadSignalSinglePoint;
     ReadSignalWaveformPtr ReadSignalWaveform;
     ReadStatePtr ReadState;

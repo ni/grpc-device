@@ -78,6 +78,7 @@ public:
   ::grpc::Status GetPropertySize(::grpc::ServerContext* context, const GetPropertySizeRequest* request, GetPropertySizeResponse* response) override;
   ::grpc::Status GetSubProperty(::grpc::ServerContext* context, const GetSubPropertyRequest* request, GetSubPropertyResponse* response) override;
   ::grpc::Status GetSubPropertySize(::grpc::ServerContext* context, const GetSubPropertySizeRequest* request, GetSubPropertySizeResponse* response) override;
+  ::grpc::Status ReadFrame(::grpc::ServerContext* context, const ReadFrameRequest* request, ReadFrameResponse* response) override;
   ::grpc::Status ReadSignalSinglePoint(::grpc::ServerContext* context, const ReadSignalSinglePointRequest* request, ReadSignalSinglePointResponse* response) override;
   ::grpc::Status ReadSignalWaveform(::grpc::ServerContext* context, const ReadSignalWaveformRequest* request, ReadSignalWaveformResponse* response) override;
   ::grpc::Status ReadState(::grpc::ServerContext* context, const ReadStateRequest* request, ReadStateResponse* response) override;

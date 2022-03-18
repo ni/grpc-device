@@ -54,6 +54,7 @@ NiXnetLibrary::NiXnetLibrary() : shared_library_(kLibraryName)
   function_pointers_.GetPropertySize = reinterpret_cast<GetPropertySizePtr>(shared_library_.get_function_pointer("nxGetPropertySize"));
   function_pointers_.GetSubProperty = reinterpret_cast<GetSubPropertyPtr>(shared_library_.get_function_pointer("nxGetSubProperty"));
   function_pointers_.GetSubPropertySize = reinterpret_cast<GetSubPropertySizePtr>(shared_library_.get_function_pointer("nxGetSubPropertySize"));
+  function_pointers_.ReadFrame = reinterpret_cast<ReadFramePtr>(shared_library_.get_function_pointer("nxReadFrame"));
   function_pointers_.ReadSignalSinglePoint = reinterpret_cast<ReadSignalSinglePointPtr>(shared_library_.get_function_pointer("nxReadSignalSinglePoint"));
   function_pointers_.ReadSignalWaveform = reinterpret_cast<ReadSignalWaveformPtr>(shared_library_.get_function_pointer("nxReadSignalWaveform"));
   function_pointers_.ReadState = reinterpret_cast<ReadStatePtr>(shared_library_.get_function_pointer("nxReadState"));
@@ -475,6 +476,18 @@ nxStatus_t NiXnetLibrary::GetSubPropertySize(nxSessionRef_t sessionRef, u32 acti
   return nxGetSubPropertySize(sessionRef, activeIndex, propertyID, propertySize);
 #else
   return function_pointers_.GetSubPropertySize(sessionRef, activeIndex, propertyID, propertySize);
+#endif
+}
+
+nxStatus_t NiXnetLibrary::ReadFrame(nxSessionRef_t sessionRef, u8 buffer[], u32 sizeOfBuffer, f64 timeout, u32* numberOfBytesReturned)
+{
+  if (!function_pointers_.ReadFrame) {
+    throw nidevice_grpc::LibraryLoadException("Could not find nxReadFrame.");
+  }
+#if defined(_MSC_VER)
+  return nxReadFrame(sessionRef, buffer, sizeOfBuffer, timeout, numberOfBytesReturned);
+#else
+  return function_pointers_.ReadFrame(sessionRef, buffer, sizeOfBuffer, timeout, numberOfBytesReturned);
 #endif
 }
 

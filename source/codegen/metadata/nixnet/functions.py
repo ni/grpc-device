@@ -148,7 +148,7 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'numberOfBytesForFrames',
-                'hardcoded_value': 'frame_buffer.size()',
+                'hardcoded_value': 'frame_buffer.size()', 
                 'type': 'u32',
                 'include_in_proto': False
             },
@@ -991,7 +991,6 @@ functions = {
         'returns': 'nxStatus_t'
     },
     'ReadFrame': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -1005,7 +1004,10 @@ functions = {
                     'mechanism': 'passed-in',
                     'value': 'sizeOfBuffer'
                 },
-                'type': 'void[]'
+                'type': 'u8[]',
+                'grpc_type': 'repeated FrameBuffer',
+                'supports_standard_copy_convert': True,
+                'additional_arguments_to_copy_convert': ['number_of_bytes_returned', 'frame_type']
             },
             {
                 'direction': 'in',
@@ -1021,8 +1023,16 @@ functions = {
             {
                 'direction': 'out',
                 'name': 'numberOfBytesReturned',
+                'type': 'u32',
+                'include_in_proto': False
+            },
+            {
+                'direction': 'in',
+                'name': 'frameType',
+                'proto_only': True,
+                'enum': 'FrameType',
                 'type': 'u32'
-            }
+            }       
         ],
         'returns': 'nxStatus_t'
     },
