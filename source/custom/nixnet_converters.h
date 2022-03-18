@@ -14,6 +14,16 @@ void convert_to_grpc(const nxEptRxFilter_Element_t& input, nixnet_grpc::EptRxFil
   output->mutable_destination_mac()->copy((char*)input.DestinationMAC, sizeof(nxMACAddress_t));
 }
 
+template <>
+nxEptRxFilter_Element_t convert_from_grpc(const nixnet_grpc::EptRxFilter& input)
+{
+  auto output = nxEptRxFilter_Element_t();
+  output.UseFlags = input.use_flags();
+  output.VID = input.vid();
+  output.Priority = input.priority();
+  memcpy(output.DestinationMAC, input.destination_mac().c_str(), sizeof(nxMACAddress_t));
+  return output;
+}
 }  // namespace converters
 }  // namespace nidevice_grpc
 

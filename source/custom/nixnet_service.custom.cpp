@@ -12,6 +12,7 @@
 namespace nixnet_grpc {
 
 using nidevice_grpc::converters::convert_to_grpc;
+using nidevice_grpc::converters::convert_from_grpc;
 
 // Returns true if it's safe to use outputs of a method with the given status.
 inline bool status_ok(int32 status)
@@ -183,7 +184,7 @@ inline bool status_ok(int32 status)
         int32_t number_of_elements = property_size / sizeof(nxEptRxFilter_Element_t);
         std::vector<nxEptRxFilter_Element_t> property_value_vector(number_of_elements);
         nxEptRxFilter_Element_t* property_value = static_cast<nxEptRxFilter_Element_t*>(property_value_vector.data());
-        // status = library_->GetProperty(session_ref, property_id, property_size, &property_value);
+        status = library_->GetProperty(session_ref, property_id, property_size, &property_value);
         if (status_ok(status)) {
           convert_to_grpc(property_value_vector, response->mutable_ept_rx_filter_array()->mutable_ept_rx_filter());
         }
@@ -564,6 +565,12 @@ inline bool status_ok(int32 status)
           response->set_status(status);
           return ::grpc::Status::OK;
         }
+        break;
+      }
+      case nxEptRxFilter_Element_t_array_: {
+        int32_t property_size = request->ept_rx_filter_array().ept_rx_filter().size() * sizeof(nxEptRxFilter_Element_t);
+        auto property_value = convert_from_grpc<nxEptRxFilter_Element_t>(request->ept_rx_filter_array().ept_rx_filter());
+        status = library_->SetProperty(session_ref, property_id, property_size, property_value.data());
         break;
       }
     }
