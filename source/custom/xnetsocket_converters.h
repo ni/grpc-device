@@ -282,10 +282,14 @@ struct SockOptDataInputConverter {
         data_int = input.data_int32();
         break;
       case SockOptData::DataCase::kDataBool:
-        data_bool = input.data_bool();
+        data_int = input.data_bool() ? 1 : 0;
         break;
       case SockOptData::DataCase::kDataString:
         data_string = std::string(input.data_string());
+        break;
+      case SockOptData::DataCase::kDataLinger:
+        data_linger.l_linger = input.data_linger().l_linger();
+        data_linger.l_onoff = input.data_linger().l_onoff();
         break;
     }
   }
@@ -294,13 +298,14 @@ struct SockOptDataInputConverter {
   {
     switch (data_case) {
       case SockOptData::DataCase::kDataInt32:
-        return &data_int;
-        break;
       case SockOptData::DataCase::kDataBool:
-        return &data_bool;
+        return &data_int;
         break;
       case SockOptData::DataCase::kDataString:
         return &data_string[0];
+        break;
+      case SockOptData::DataCase::kDataLinger:
+        return &data_linger;
         break;
       case SockOptData::DataCase::DATA_NOT_SET:
         return nullptr;
@@ -314,13 +319,14 @@ struct SockOptDataInputConverter {
   {
     switch (data_case) {
       case SockOptData::DataCase::kDataInt32:
-        return sizeof(int32_t);
+      case SockOptData::DataCase::kDataBool:
+        return sizeof(data_int);
         break;
       case SockOptData::DataCase::kDataString:
         return static_cast<nxsocklen_t>(data_string.size());
         break;
-      case SockOptData::DataCase::kDataBool:
-        return sizeof(bool);
+      case SockOptData::DataCase::kDataLinger:
+        return sizeof(data_linger);
       default:
         return 0;
         break;
@@ -329,8 +335,8 @@ struct SockOptDataInputConverter {
 
   SockOptData::DataCase data_case;
   int32_t data_int;
-  bool data_bool;
   std::string data_string;
+  nxlinger data_linger;
 };
 
 template <typename TSockOptData>
@@ -358,10 +364,9 @@ struct SockOptDataOutputConverter {
         return &data_int;
         break;
       }
-      case OptName::OPT_NAME_SO_LINGER:
       case OptName::OPT_NAME_SO_NON_BLOCK:
       case OptName::OPT_NAME_SO_REUSE_ADDR: {
-        return &data_bool;
+        return &data_int;
         break;
       }
       case OptName::OPT_NAME_SO_BIND_TO_DEVICE:
@@ -369,6 +374,9 @@ struct SockOptDataOutputConverter {
         data_string = std::string(256 - 1, '\0');  // TODO: What's the max string size to allocate for a sock opt?
         return &data_string[0];
         break;
+      }
+      case OptName::OPT_NAME_SO_LINGER: {
+        return &data_linger;
       }
       default:
         return nullptr;
@@ -388,16 +396,20 @@ struct SockOptDataOutputConverter {
         output.set_data_int32(data_int);
         break;
       }
-      case OptName::OPT_NAME_SO_LINGER:
       case OptName::OPT_NAME_SO_NON_BLOCK:
       case OptName::OPT_NAME_SO_REUSE_ADDR: {
-        output.set_data_bool(data_bool);
+        output.set_data_bool(data_int == 0 ? false : true);
         break;
       }
       case OptName::OPT_NAME_SO_BIND_TO_DEVICE:
       case OptName::OPT_NAME_SO_ERROR: {
         output.set_data_string(data_string);
         nidevice_grpc::converters::trim_trailing_nulls(*(output.mutable_data_string()));
+        break;
+      }
+      case OptName::OPT_NAME_SO_LINGER: {
+        output.mutable_data_linger()->set_l_linger(data_linger.l_linger);
+        output.mutable_data_linger()->set_l_onoff(data_linger.l_onoff);
         break;
       }
       default:
@@ -407,8 +419,8 @@ struct SockOptDataOutputConverter {
 
   int32_t opt_name;
   int32_t data_int;
-  bool data_bool;
   std::string data_string;
+  nxlinger data_linger;
 };
 
 inline void convert_to_grpc(const SockOptDataOutputConverter& storage, SockOptData* output)

@@ -150,11 +150,17 @@ message AddrInfo {
   string canon_name = 6;
 }
 
+message Linger {
+  int32 l_onoff = 1;
+  int32 l_linger = 2;
+}
+
 message SockOptData {
   oneof data {
-    int32 data_int32 = 2;
-    bool data_bool = 3;
-    string data_string = 4;
+    int32 data_int32 = 1;
+    bool data_bool = 2;
+    string data_string = 3;
+    Linger data_linger = 4;
   }
 }
 
