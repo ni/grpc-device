@@ -89,7 +89,7 @@ functions = {
                 'direction': 'out',
                 'name': 'numberOfBytesReturned',
                 'type': 'u32',
-                 'include_in_proto': False
+                'include_in_proto': False
             },
             {
                 'direction': 'in',
@@ -158,7 +158,7 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'numberOfBytesForFrames',
-                'hardcoded_value': 'frame_buffer.size()', 
+                'hardcoded_value': 'frame_buffer.size()',
                 'type': 'u32',
                 'include_in_proto': False
             },
@@ -1046,7 +1046,7 @@ functions = {
                 'proto_only': True,
                 'enum': 'FrameType',
                 'type': 'u32'
-            }       
+            }
         ],
         'returns': 'nxStatus_t'
     },
