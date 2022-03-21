@@ -19,31 +19,32 @@ Refer to the NI XNET gRPC Wiki for the latest C Function Reference:
   https://github.com/ni/grpc-device/wiki/NI-XNET-C-Function-Reference
 
  Running from command line:
-Server machine's IP address and port number can be passed as separate command line
+Server machine's IP address, port number, and interface name can be passed as separate command line
 arguments.
-  > python can-signal-single-point-output.py <server_address> <port_number>
+  > python can-signal-single-point-output.py <server_address> <port_number> <interface_name>
 If they are not passed in as command line arguments, then by default the server address will be
 "localhost:31763"
 """
 
 import sys
 
-import getch
 import grpc
 import nixnet_pb2 as nixnet_types
 import nixnet_pb2_grpc as grpc_nixnet
 
 SERVER_ADDRESS = "localhost"
 SERVER_PORT = "31763"
+INTERFACE = "CAN1"
 
 # Read in cmd args
 if len(sys.argv) >= 2:
     SERVER_ADDRESS = sys.argv[1]
 if len(sys.argv) >= 3:
     SERVER_PORT = sys.argv[2]
+if len(sys.argv) >= 4:
+    INTERFACE = sys.argv[3]
 
 # Parameters
-INTERFACE = "CAN1"
 DATABASE = "NIXNET_example"
 CLUSTER = "CAN_Cluster"
 SIGNAL_LIST = "CANEventSignal1,CANEventSignal2"
@@ -87,9 +88,8 @@ try:
     session_reference = create_session_response.session_ref
 
     print("Session Created Successfully.\n")
-    print("\nPress any key to transmit new signal values or q to quit\n")
 
-    while not (getch.getch()).decode("UTF-8") == "q":
+    while i < 10:
         value_buffer[0] = float(i)
         value_buffer[1] = float(i * 10)
 
@@ -104,7 +104,7 @@ try:
         print("Signals sent:")
         print(f"Signal 1: {value_buffer[0]}")
         print(f"Signal 2: {value_buffer[1]}", end="\n\n")
-        i = i + 1 if i < 10 else 0
+        i = i + 1
 
 except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
