@@ -414,7 +414,7 @@ TEST(XnetConvertersTests, StringSockOptData_ConvertToGrpc_ConvertsToSockOptDataW
   EXPECT_EQ(MAX_SOCK_OPT_STRING_SIZE, storage.data_string.size());
   EXPECT_EQ(data_pointer, &(storage.data_string[0]));
   auto string_pointer = reinterpret_cast<char*>(data_pointer);
-  strcpy_s(string_pointer, DEVICE_NAME.size() + 1, DEVICE_NAME.c_str());
+  strncpy(string_pointer, DEVICE_NAME.c_str(), DEVICE_NAME.size() + 1);
 
   auto grpc_data = SockOptData{};
   convert_to_grpc(storage, &grpc_data);
