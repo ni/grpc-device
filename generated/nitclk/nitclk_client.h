@@ -30,9 +30,9 @@ GetAttributeViStringResponse get_attribute_vi_string(const StubPtr& stub, const 
 GetExtendedErrorInfoResponse get_extended_error_info(const StubPtr& stub);
 InitiateResponse initiate(const StubPtr& stub, const std::vector<nidevice_grpc::Session>& sessions);
 IsDoneResponse is_done(const StubPtr& stub, const std::vector<nidevice_grpc::Session>& sessions);
-SetAttributeViReal64Response set_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::string& channel_name, const NiTClkAttribute& attribute_id, const double& value_raw);
+SetAttributeViReal64Response set_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::string& channel_name, const NiTClkAttribute& attribute_id, const double& value);
 SetAttributeViSessionResponse set_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::string& channel_name, const NiTClkAttribute& attribute_id, const nidevice_grpc::Session& value);
-SetAttributeViStringResponse set_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::string& channel_name, const NiTClkAttribute& attribute_id, const pb::string& value_raw);
+SetAttributeViStringResponse set_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::string& channel_name, const NiTClkAttribute& attribute_id, const pb::string& value);
 SetupForSyncPulseSenderSynchronizeResponse setup_for_sync_pulse_sender_synchronize(const StubPtr& stub, const std::vector<nidevice_grpc::Session>& sessions, const double& min_time);
 SynchronizeResponse synchronize(const StubPtr& stub, const std::vector<nidevice_grpc::Session>& sessions, const double& min_tclk_period);
 SynchronizeToSyncPulseSenderResponse synchronize_to_sync_pulse_sender(const StubPtr& stub, const std::vector<nidevice_grpc::Session>& sessions, const double& min_time);

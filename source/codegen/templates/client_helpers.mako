@@ -9,7 +9,8 @@ from client_helpers import ParamMechanism
 <%def name="build_request(client_params)">\
 %   for param in client_params:
 <%
-  field_name = common_helpers.get_grpc_field_name_from_str(param.name)
+  field_name = common_helpers.get_grpc_field_name_from_str(param.cppName)
+  grpc_field_name = common_helpers.get_grpc_field_name_from_str(param.name)
 %>\
 %     if param.mechanism == ParamMechanism.ARRAY:
   copy_array(${field_name}, request.mutable_${field_name}());
@@ -23,15 +24,15 @@ from client_helpers import ParamMechanism
   const auto ${field_name}_ptr = ${field_name}.get_if<${enum_type}>();
   const auto ${field_name}_raw_ptr = ${field_name}.get_if<${raw_type}>();
   if (${field_name}_ptr) {
-    request.set_${field_name}${maybe_mapped_suffix}(*${field_name}_ptr);
+    request.set_${grpc_field_name}${maybe_mapped_suffix}(*${field_name}_ptr);
   }
   else if (${field_name}_raw_ptr) {
-    request.set_${field_name}_raw(*${field_name}_raw_ptr);
+    request.set_${grpc_field_name}_raw(*${field_name}_raw_ptr);
   }
 %     elif param.mechanism == ParamMechanism.COPY:
-  request.mutable_${field_name}()->CopyFrom(${field_name});
+  request.mutable_${grpc_field_name}()->CopyFrom(${field_name});
 %     else:
-  request.set_${field_name}(${field_name});
+  request.set_${grpc_field_name}(${field_name});
 %     endif
 %   endfor
 </%def>

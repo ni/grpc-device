@@ -11,6 +11,7 @@
 #include <iostream>
 #include <atomic>
 #include <vector>
+#include "custom/nixnet_converters.h"
 #include <server/converters.h>
 
 namespace nixnet_grpc {
@@ -150,6 +151,78 @@ namespace nixnet_grpc {
 
       auto status = library_->ConnectTerminals(session_ref, source, destination);
       response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiXnetService::ConvertFramesToSignalsSinglePoint(::grpc::ServerContext* context, const ConvertFramesToSignalsSinglePointRequest* request, ConvertFramesToSignalsSinglePointResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_ref_grpc_session = request->session_ref();
+      nxSessionRef_t session_ref = session_repository_->access_session(session_ref_grpc_session.id(), session_ref_grpc_session.name());
+      auto frame_buffer = convert_from_grpc<u8>(request->frame_buffer());
+      auto number_of_bytes_for_frames = frame_buffer.size();
+      u32 size_of_value_buffer = request->size_of_value_buffer();
+      u32 size_of_timestamp_buffer = request->size_of_timestamp_buffer();
+      response->mutable_value_buffer()->Resize(size_of_value_buffer, 0);
+      f64* value_buffer = response->mutable_value_buffer()->mutable_data();
+      response->mutable_timestamp_buffer()->Resize(size_of_timestamp_buffer, 0);
+      nxTimestamp100ns_t* timestamp_buffer = reinterpret_cast<nxTimestamp100ns_t*>(response->mutable_timestamp_buffer()->mutable_data());
+      auto status = library_->ConvertFramesToSignalsSinglePoint(session_ref, frame_buffer, number_of_bytes_for_frames, value_buffer, size_of_value_buffer, timestamp_buffer, size_of_timestamp_buffer);
+      response->set_status(status);
+      if (status_ok(status)) {
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiXnetService::ConvertSignalsToFramesSinglePoint(::grpc::ServerContext* context, const ConvertSignalsToFramesSinglePointRequest* request, ConvertSignalsToFramesSinglePointResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_ref_grpc_session = request->session_ref();
+      nxSessionRef_t session_ref = session_repository_->access_session(session_ref_grpc_session.id(), session_ref_grpc_session.name());
+      auto value_buffer = const_cast<f64*>(request->value_buffer().data());
+      u32 size_of_value_buffer = static_cast<u32>(request->value_buffer().size() * sizeof(f64));
+      u32 size_of_buffer = request->size_of_buffer();
+      u32 frame_type;
+      switch (request->frame_type_enum_case()) {
+        case nixnet_grpc::ConvertSignalsToFramesSinglePointRequest::FrameTypeEnumCase::kFrameType: {
+          frame_type = static_cast<u32>(request->frame_type());
+          break;
+        }
+        case nixnet_grpc::ConvertSignalsToFramesSinglePointRequest::FrameTypeEnumCase::kFrameTypeRaw: {
+          frame_type = static_cast<u32>(request->frame_type_raw());
+          break;
+        }
+        case nixnet_grpc::ConvertSignalsToFramesSinglePointRequest::FrameTypeEnumCase::FRAME_TYPE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for frame_type was not specified or out of range");
+          break;
+        }
+      }
+
+      std::vector<u8> buffer(size_of_buffer, u8());
+      u32 number_of_bytes_returned {};
+      auto status = library_->ConvertSignalsToFramesSinglePoint(session_ref, value_buffer, size_of_value_buffer, buffer.data(), size_of_buffer, &number_of_bytes_returned);
+      response->set_status(status);
+      if (status_ok(status)) {
+        convert_to_grpc(buffer, response->mutable_buffer(), number_of_bytes_returned, frame_type);
+      }
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -467,6 +540,46 @@ namespace nixnet_grpc {
       response->set_status(status);
       if (status == 0) {
         response->mutable_db_object_ref()->set_id(session_id);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiXnetService::DbGetDBCAttributeSize(::grpc::ServerContext* context, const DbGetDBCAttributeSizeRequest* request, DbGetDBCAttributeSizeResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto db_object_ref_grpc_session = request->db_object_ref();
+      nxDatabaseRef_t db_object_ref = nx_database_ref_t_resource_repository_->access_session(db_object_ref_grpc_session.id(), db_object_ref_grpc_session.name());
+      u32 mode;
+      switch (request->mode_enum_case()) {
+        case nixnet_grpc::DbGetDBCAttributeSizeRequest::ModeEnumCase::kMode: {
+          mode = static_cast<u32>(request->mode());
+          break;
+        }
+        case nixnet_grpc::DbGetDBCAttributeSizeRequest::ModeEnumCase::kModeRaw: {
+          mode = static_cast<u32>(request->mode_raw());
+          break;
+        }
+        case nixnet_grpc::DbGetDBCAttributeSizeRequest::ModeEnumCase::MODE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for mode was not specified or out of range");
+          break;
+        }
+      }
+
+      auto attribute_name = request->attribute_name().c_str();
+      u32 attribute_text_size {};
+      auto status = library_->DbGetDBCAttributeSize(db_object_ref, mode, attribute_name, &attribute_text_size);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_attribute_text_size(attribute_text_size);
       }
       return ::grpc::Status::OK;
     }
@@ -1011,6 +1124,31 @@ namespace nixnet_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiXnetService::StatusToString(::grpc::ServerContext* context, const StatusToStringRequest* request, StatusToStringResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      nxStatus_t status_id = request->status_id();
+      auto sizeof_string = 2048U;
+      std::string status_description(2048 - 1, '\0');
+      library_->StatusToString(status_id, sizeof_string, (char*)status_description.data());
+      auto status = 0;
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_status_description(status_description);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_status_description()));
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiXnetService::Stop(::grpc::ServerContext* context, const StopRequest* request, StopResponse* response)
   {
     if (context->IsCancelled()) {
@@ -1145,7 +1283,7 @@ namespace nixnet_grpc {
       auto session_ref_grpc_session = request->session_ref();
       nxSessionRef_t session_ref = session_repository_->access_session(session_ref_grpc_session.id(), session_ref_grpc_session.name());
       auto value_buffer = const_cast<f64*>(request->value_buffer().data());
-      u32 size_of_value_buffer = static_cast<u32>(request->value_buffer().size());
+      u32 size_of_value_buffer = static_cast<u32>(request->value_buffer().size() * sizeof(f64));
       auto status = library_->WriteSignalSinglePoint(session_ref, value_buffer, size_of_value_buffer);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1182,7 +1320,7 @@ namespace nixnet_grpc {
       }
 
       auto value_buffer = const_cast<f64*>(request->value_buffer().data());
-      u32 size_of_value_buffer = static_cast<u32>(request->value_buffer().size());
+      u32 size_of_value_buffer = static_cast<u32>(request->value_buffer().size() * sizeof(f64));
       auto status = library_->WriteSignalWaveform(session_ref, timeout, value_buffer, size_of_value_buffer);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1219,11 +1357,11 @@ namespace nixnet_grpc {
       }
 
       auto value_buffer = const_cast<f64*>(request->value_buffer().data());
-      u32 size_of_value_buffer = static_cast<u32>(request->value_buffer().size());
+      u32 size_of_value_buffer = static_cast<u32>(request->value_buffer().size() * sizeof(f64));
       auto timestamp_buffer = const_cast<nxTimestamp100ns_t*>(reinterpret_cast<const nxTimestamp100ns_t*>(request->timestamp_buffer().data()));
-      u32 size_of_timestamp_buffer = static_cast<u32>(request->timestamp_buffer().size());
+      u32 size_of_timestamp_buffer = static_cast<u32>(request->timestamp_buffer().size() * sizeof(nxTimestamp100ns_t));
       auto num_pairs_buffer = const_cast<u32*>(request->num_pairs_buffer().data());
-      u32 size_of_num_pairs_buffer = static_cast<u32>(request->num_pairs_buffer().size());
+      u32 size_of_num_pairs_buffer = static_cast<u32>(request->num_pairs_buffer().size() * sizeof(u32));
       auto status = library_->WriteSignalXY(session_ref, timeout, value_buffer, size_of_value_buffer, timestamp_buffer, size_of_timestamp_buffer, num_pairs_buffer, size_of_num_pairs_buffer);
       response->set_status(status);
       return ::grpc::Status::OK;

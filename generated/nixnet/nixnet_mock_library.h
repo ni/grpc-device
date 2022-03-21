@@ -20,6 +20,12 @@ class NiXnetMockLibrary : public nixnet_grpc::NiXnetLibraryInterface {
   MOCK_METHOD(nxStatus_t, Blink, (nxSessionRef_t interfaceRef, u32 modifier), (override));
   MOCK_METHOD(nxStatus_t, Clear, (nxSessionRef_t sessionRef), (override));
   MOCK_METHOD(nxStatus_t, ConnectTerminals, (nxSessionRef_t sessionRef, const char source[], const char destination[]), (override));
+  MOCK_METHOD(nxStatus_t, ConvertTimestamp100nsTo1ns, (nxTimestamp100ns_t from, nxTimestamp1ns_t* to), (override));
+  MOCK_METHOD(nxStatus_t, ConvertTimestamp1nsTo100ns, (nxTimestamp1ns_t from, nxTimestamp100ns_t* to), (override));
+  MOCK_METHOD(nxStatus_t, ConvertFramesToSignalsSinglePoint, (nxSessionRef_t sessionRef, u8* frameBuffer, u32 numberOfBytesForFrames, f64 valueBuffer[], u32 sizeOfValueBuffer, nxTimestamp100ns_t timestampBuffer[], u32 sizeOfTimestampBuffer), (override));
+  MOCK_METHOD(nxStatus_t, ConvertSignalsToFramesSinglePoint, (nxSessionRef_t sessionRef, f64 valueBuffer[], u32 sizeOfValueBuffer, u8 buffer[], u32 sizeOfBuffer, u32* numberOfBytesReturned), (override));
+  MOCK_METHOD(nxStatus_t, ConvertTimestamp100nsTo1ns, (nxTimestamp100ns_t from, nxTimestamp1ns_t* to), (override));
+  MOCK_METHOD(nxStatus_t, ConvertTimestamp1nsTo100ns, (nxTimestamp1ns_t from, nxTimestamp100ns_t* to), (override));
   MOCK_METHOD(nxStatus_t, ConvertTimestamp100nsTo1ns, (nxTimestamp100ns_t from_timestamp_100ns, nxTimestamp1ns_t* to_timestamp_1ns), (override));
   MOCK_METHOD(nxStatus_t, ConvertTimestamp1nsTo100ns, (nxTimestamp1ns_t from_timestamp_1ns, nxTimestamp100ns_t* to_timestamp_100ns), (override));
   MOCK_METHOD(nxStatus_t, CreateSession, (const char databaseName[], const char clusterName[], const char list[], const char interfaceParameter[], u32 mode, nxSessionRef_t* sessionRef), (override));
@@ -31,6 +37,8 @@ class NiXnetMockLibrary : public nixnet_grpc::NiXnetLibraryInterface {
   MOCK_METHOD(nxStatus_t, DbDeleteObject, (nxDatabaseRef_t dbObjectRef), (override));
   MOCK_METHOD(nxStatus_t, DbDeploy, (const char ipAddress[], const char databaseAlias[], u32 waitForComplete, u32* percentComplete), (override));
   MOCK_METHOD(nxStatus_t, DbFindObject, (nxDatabaseRef_t parentObjectRef, u32 objectClass, const char objectName[], nxDatabaseRef_t* dbObjectRef), (override));
+  MOCK_METHOD(nxStatus_t, DbGetDBCAttribute, (nxDatabaseRef_t dbObjectRef, u32 mode, const char attributeName[], u32 attributeTextSize, char attributeText[], u32* isDefault), (override));
+  MOCK_METHOD(nxStatus_t, DbGetDBCAttributeSize, (nxDatabaseRef_t dbObjectRef, u32 mode, const char attributeName[], u32* attributeTextSize), (override));
   MOCK_METHOD(nxStatus_t, DbGetDatabaseList, (const char ipAddress[], u32 sizeofAliasBuffer, char aliasBuffer[], u32 sizeofFilepathBuffer, char filepathBuffer[], u32* numberOfDatabases), (override));
   MOCK_METHOD(nxStatus_t, DbGetDatabaseListSizes, (const char ipAddress[], u32* sizeofAliasBuffer, u32* sizeofFilepathBuffer), (override));
   MOCK_METHOD(nxStatus_t, DbGetProperty, (nxDatabaseRef_t dbObjectRef, u32 propertyID, u32 propertySize, void* propertyValue), (override));
@@ -55,6 +63,7 @@ class NiXnetMockLibrary : public nixnet_grpc::NiXnetLibraryInterface {
   MOCK_METHOD(nxStatus_t, SetProperty, (nxSessionRef_t sessionRef, u32 propertyID, u32 propertySize, void* propertyValue), (override));
   MOCK_METHOD(nxStatus_t, SetSubProperty, (nxSessionRef_t sessionRef, u32 activeIndex, u32 propertyID, u32 propertySize, void* propertyValue), (override));
   MOCK_METHOD(nxStatus_t, Start, (nxSessionRef_t sessionRef, u32 scope), (override));
+  MOCK_METHOD(void, StatusToString, (nxStatus_t statusID, u32 sizeofString, char statusDescription[2048]), (override));
   MOCK_METHOD(nxStatus_t, Stop, (nxSessionRef_t sessionRef, u32 scope), (override));
   MOCK_METHOD(nxStatus_t, SystemClose, (nxSessionRef_t systemRef), (override));
   MOCK_METHOD(nxStatus_t, SystemOpen, (nxSessionRef_t* systemRef), (override));
