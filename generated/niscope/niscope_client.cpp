@@ -338,7 +338,7 @@ check_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi
 }
 
 CheckAttributeViStringResponse
-check_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttribute& attribute_id, const pb::string& value_raw)
+check_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttribute& attribute_id, const pb::string& value)
 {
   ::grpc::ClientContext context;
 
@@ -346,7 +346,7 @@ check_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi,
   request.mutable_vi()->CopyFrom(vi);
   request.set_channel_list(channel_list);
   request.set_attribute_id(attribute_id);
-  request.set_value_raw(value_raw);
+  request.set_value_raw(value);
 
   auto response = CheckAttributeViStringResponse{};
 
@@ -742,7 +742,7 @@ configure_trigger_software(const StubPtr& stub, const nidevice_grpc::Session& vi
 }
 
 ConfigureTriggerVideoResponse
-configure_trigger_video(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& trigger_source, const bool& enable_dc_restore, const simple_variant<VideoSignalFormat, pb::int32>& signal_format, const simple_variant<VideoTriggerEvent, pb::int32>& event, const pb::int32& line_number, const simple_variant<VideoPolarity, pb::int32>& polarity, const simple_variant<TriggerCoupling, pb::int32>& trigger_coupling, const double& holdoff, const double& delay)
+configure_trigger_video(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& trigger_source, const bool& enable_dc_restore, const simple_variant<VideoSignalFormat, pb::int32>& signal_format, const simple_variant<VideoTriggerEvent, pb::int32>& event_parameter, const pb::int32& line_number, const simple_variant<VideoPolarity, pb::int32>& polarity, const simple_variant<TriggerCoupling, pb::int32>& trigger_coupling, const double& holdoff, const double& delay)
 {
   ::grpc::ClientContext context;
 
@@ -758,13 +758,13 @@ configure_trigger_video(const StubPtr& stub, const nidevice_grpc::Session& vi, c
   else if (signal_format_raw_ptr) {
     request.set_signal_format_raw(*signal_format_raw_ptr);
   }
-  const auto event_ptr = event.get_if<VideoTriggerEvent>();
-  const auto event_raw_ptr = event.get_if<pb::int32>();
-  if (event_ptr) {
-    request.set_event(*event_ptr);
+  const auto event_parameter_ptr = event_parameter.get_if<VideoTriggerEvent>();
+  const auto event_parameter_raw_ptr = event_parameter.get_if<pb::int32>();
+  if (event_parameter_ptr) {
+    request.set_event(*event_parameter_ptr);
   }
-  else if (event_raw_ptr) {
-    request.set_event_raw(*event_raw_ptr);
+  else if (event_parameter_raw_ptr) {
+    request.set_event_raw(*event_parameter_raw_ptr);
   }
   request.set_line_number(line_number);
   const auto polarity_ptr = polarity.get_if<VideoPolarity>();
@@ -1854,7 +1854,7 @@ set_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, 
 }
 
 SetAttributeViStringResponse
-set_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttribute& attribute_id, const pb::string& value_raw)
+set_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttribute& attribute_id, const pb::string& value)
 {
   ::grpc::ClientContext context;
 
@@ -1862,7 +1862,7 @@ set_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, c
   request.mutable_vi()->CopyFrom(vi);
   request.set_channel_list(channel_list);
   request.set_attribute_id(attribute_id);
-  request.set_value_raw(value_raw);
+  request.set_value_raw(value);
 
   auto response = SetAttributeViStringResponse{};
 

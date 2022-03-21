@@ -16,7 +16,7 @@ class ParamMechanism(Enum):  # noqa: D101
     COPY = 4
 
 
-ClientParam = namedtuple("ClientParam", ["name", "type", "mechanism"])
+ClientParam = namedtuple("ClientParam", ["name", "cppName", "type", "mechanism"])
 
 
 PROTOBUF_PRIM_TYPES = ["bool", "double", "float"]
@@ -40,7 +40,7 @@ PROTOBUF_TYPE_TO_CPP_TYPE = {
 
 
 def _to_parameter_list(client_params: List[ClientParam]) -> List[str]:
-    param_list = [f"{p.type} {p.name}" for p in client_params]
+    param_list = [f"{p.type} {p.cppName}" for p in client_params]
 
     return param_list
 
@@ -130,11 +130,12 @@ def _get_param_mechanism(param: dict) -> ParamMechanism:
 
 def _create_client_param(param: dict, enums: dict) -> ClientParam:
     name = common_helpers.get_grpc_field_name(param)
+    cppname = common_helpers.get_grpc_client_field_name(param)
     param_type = _get_cpp_client_param_type(param, enums)
     param_type = _const_ref_t(param_type)
     param_mechanism = _get_param_mechanism(param)
 
-    return ClientParam(name, param_type, param_mechanism)
+    return ClientParam(name, cppname, param_type, param_mechanism)
 
 
 def _is_grpc_array(param: dict) -> bool:
@@ -176,3 +177,12 @@ def get_enum_raw_type(param: ClientParam) -> str:
 def streaming_response_type(response_type: str) -> str:
     """Wrap the given response type with a reader for streaming functions."""
     return f"std::unique_ptr<grpc::ClientReader<{response_type}>>"
+
+
+def filter_functions_to_include_in_client(functions: dict) -> dict:
+    """Include only those functions which dont have 'include_in_client' tag in metadata."""
+    filtered_functions = {}
+    for func_name in functions.keys():
+        if functions[func_name].get("include_in_client", True) is True:
+            filtered_functions[func_name] = functions[func_name]
+    return filtered_functions

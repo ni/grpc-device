@@ -120,6 +120,8 @@ def create_args(parameters):
     result = ""
     have_expanded_varargs = False
     for parameter in parameters:
+        if parameter.get("proto_only", False):
+            continue
         if parameter.get("repeating_argument", False):
             continue
         parameter_name = common_helpers.get_cpp_local_name(parameter)
@@ -196,7 +198,11 @@ def create_params(parameters, expand_varargs=True):
         parameters[-1]
     ) and common_helpers.is_repeated_varargs_parameter(parameters[-2]):
         parameters = parameters[:-1]
-    return ", ".join(_create_param(p, expand_varargs, repeated_parameters) for p in parameters)
+    return ", ".join(
+        _create_param(p, expand_varargs, repeated_parameters)
+        for p in parameters
+        if not p.get("proto_only", False)
+    )
 
 
 def _get_array_param_size(parameter) -> str:
@@ -245,12 +251,16 @@ def _create_param(parameter, expand_varargs=True, repeated_parameters=None):
         else:
             return "..."
     elif common_helpers.is_array(type):
+        if type == "void *":
+            return f"void* {name}"
         array_size = _get_array_param_size(parameter)
-        return f"{type[:-2]} {name}[{array_size}]"
-    elif common_helpers.is_pointer_parameter(parameter):
-        return f"{type}* {name}"
+        if type[:-2] == "void":  # Having void[] in C++ is not allowed, hence using it as void*
+            return f"{type[:-2]}* {name}"
+        else:
+            return f"{type[:-2]} {name}[{array_size}]"
     else:
-        return f"{type} {name}"
+        pointer_qualifier = "*" * common_helpers.levels_of_pointer_indirection(parameter)
+        return f"{type}{pointer_qualifier} {name}"
 
 
 def _format_value(value):
@@ -283,6 +293,16 @@ def get_output_lookup_values(enum_data):
         formated_value = _format_value(value["value"])
         out_value_format += f"{{{formated_value}, {i + 1}}},"
     return out_value_format
+
+
+def generate_enum_oneof_selector_map(enum_data):
+    """ "Get an initializer list for a std::map that maps enum value value to enum value type."""
+    id_type_content = ""
+    for i, value in enumerate(enum_data["values"]):
+        formated_value = _format_value(value["value"])
+        type = value["type"]
+        id_type_content += f"{{{formated_value}, {type}_}},"
+    return id_type_content
 
 
 def filter_api_functions(functions, only_mockable_functions=True):
@@ -418,6 +438,26 @@ def get_enums_to_map(functions: dict, enums: dict) -> List[str]:
 
     function_enums = common_helpers.get_function_enums(functions)
     return [e for e in function_enums if should_generate_mappings(e)]
+
+
+def generate_mapping_enums_to_type(enums: dict) -> List[str]:
+    """Get a list of the enums used by functions, for which mappings should be generated."""
+    list_of_enums: List[str] = []
+    for enum_name in enums.keys():
+        if "generate-mapping-type" in enums[enum_name]:
+            list_of_enums.append(enum_name)
+    return list_of_enums
+
+
+def get_distinct_types_from_enums(enums: dict) -> str:
+    """Return a comma seperated string of different data types used in enums value type field."""
+    distinct_type = set()
+    for enum_name in enums.keys():
+        if "generate-mapping-type" in enums[enum_name]:
+            for i, value in enumerate(enums[enum_name]["values"]):
+                type = value["type"]
+                distinct_type.add(f"{type}_")
+    return str.join(", ", sorted(distinct_type))
 
 
 def get_bitfield_value_to_name_mapping(parameter: dict, enums: dict) -> Dict[int, str]:
@@ -567,6 +607,11 @@ def list_session_repository_handle_types(
     return session_repository_handle_type_map
 
 
+def get_function_return_type(function_data: dict) -> str:
+    """Get the return type for function_data."""
+    return function_data["returns"]
+
+
 def _get_return_value_parameter(parameters: List[dict]) -> Optional[dict]:
     return next((p for p in parameters if common_helpers.is_return_value(p)), None)
 
@@ -622,7 +667,7 @@ def should_copy_to_response(parameter: dict) -> bool:
 
 def is_size_param_passed_by_ptr(parameter: dict) -> bool:
     """Return whether parameters is a size param passed-by-pointer."""
-    return parameter.get("is_size_param") and parameter.get("pointer")
+    return parameter.get("is_size_param", False) and parameter.get("pointer", False)
 
 
 def get_last_error_output_params(parameters: List[dict]) -> List[dict]:
@@ -631,3 +676,16 @@ def get_last_error_output_params(parameters: List[dict]) -> List[dict]:
         p for p in parameters if common_helpers.is_get_last_error_output_param(p)
     ]
     return get_last_error_outputs
+
+
+def get_protobuf_cpplib_type(grpc_type: str) -> str:
+    """Return the C++ type used grpc generated code for the given protobuf type.
+
+    Note: this implementation is incomplete. It only handles the default case
+    where the grpc_type name is the same as the cpplib typename and repeated
+    message types. Add other mappings as needed.
+    """
+    stripped_repeated = common_helpers.strip_prefix(grpc_type, "repeated ")
+    if stripped_repeated != grpc_type:
+        return f"google::protobuf::RepeatedPtrField<{stripped_repeated}>"
+    return grpc_type

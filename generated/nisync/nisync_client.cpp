@@ -912,7 +912,7 @@ get_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, c
 }
 
 SetAttributeViInt32Response
-set_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& active_item, const NiSyncAttribute& attribute, const pb::int32& value_raw)
+set_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& active_item, const NiSyncAttribute& attribute, const pb::int32& value)
 {
   ::grpc::ClientContext context;
 
@@ -920,7 +920,7 @@ set_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, co
   request.mutable_vi()->CopyFrom(vi);
   request.set_active_item(active_item);
   request.set_attribute(attribute);
-  request.set_value_raw(value_raw);
+  request.set_value_raw(value);
 
   auto response = SetAttributeViInt32Response{};
 
@@ -931,7 +931,7 @@ set_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, co
 }
 
 SetAttributeViReal64Response
-set_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& active_item, const NiSyncAttribute& attribute, const double& value_raw)
+set_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& active_item, const NiSyncAttribute& attribute, const double& value)
 {
   ::grpc::ClientContext context;
 
@@ -939,7 +939,7 @@ set_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, c
   request.mutable_vi()->CopyFrom(vi);
   request.set_active_item(active_item);
   request.set_attribute(attribute);
-  request.set_value_raw(value_raw);
+  request.set_value_raw(value);
 
   auto response = SetAttributeViReal64Response{};
 
@@ -969,7 +969,7 @@ set_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, 
 }
 
 SetAttributeViStringResponse
-set_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& active_item, const NiSyncAttribute& attribute, const pb::string& value_raw)
+set_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& active_item, const NiSyncAttribute& attribute, const pb::string& value)
 {
   ::grpc::ClientContext context;
 
@@ -977,7 +977,7 @@ set_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, c
   request.mutable_vi()->CopyFrom(vi);
   request.set_active_item(active_item);
   request.set_attribute(attribute);
-  request.set_value_raw(value_raw);
+  request.set_value_raw(value);
 
   auto response = SetAttributeViStringResponse{};
 

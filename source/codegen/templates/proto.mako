@@ -55,7 +55,7 @@ ${mako_helper.insert_custom_template_if_found()}\
 ${mako_helper.define_custom_type(custom_type)}\
 
 % endfor
-% for function in common_helpers.filter_proto_rpc_functions(functions):
+% for function in common_helpers.filter_proto_rpc_functions_for_message(functions):
 <%
   input_parameters, output_parameters = proto_helpers.get_parameters(functions[function])
 %>\
