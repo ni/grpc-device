@@ -59,7 +59,7 @@ functions = {
                 'direction': 'in',
                 'name': 'valueBuffer',
                 'size': {
-                    'mechanism': 'len',
+                    'mechanism': 'len-in-bytes',
                     'value': 'sizeOfValueBuffer'
                 },
                 'type': 'u8[]'
@@ -131,7 +131,6 @@ functions = {
         'returns': 'nxStatus_t'
     },
     'ConvertFramesToSignalsSinglePoint': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -141,16 +140,17 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'frameBuffer',
-                'size': {
-                    'mechanism': 'len',
-                    'value': 'numberOfBytesForFrames'
-                },
-                'type': 'void[]'
+                'type': 'u8',
+                'pointer': True,
+                'grpc_type': 'repeated FrameBuffer',
+                'supports_standard_copy_convert': True,
             },
             {
                 'direction': 'in',
                 'name': 'numberOfBytesForFrames',
-                'type': 'u32'
+                'hardcoded_value': 'frame_buffer.size()',
+                'type': 'u32',
+                'include_in_proto': False
             },
             {
                 'direction': 'out',
@@ -184,7 +184,6 @@ functions = {
         'returns': 'nxStatus_t'
     },
     'ConvertSignalsToFramesSinglePoint': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -195,7 +194,7 @@ functions = {
                 'direction': 'in',
                 'name': 'valueBuffer',
                 'size': {
-                    'mechanism': 'len',
+                    'mechanism': 'len-in-bytes',
                     'value': 'sizeOfValueBuffer'
                 },
                 'type': 'f64[]'
@@ -212,7 +211,10 @@ functions = {
                     'mechanism': 'passed-in',
                     'value': 'sizeOfBuffer'
                 },
-                'type': 'void[]'
+                'type': 'u8[]',
+                'grpc_type': 'repeated FrameBuffer',
+                'supports_standard_copy_convert': True,
+                'additional_arguments_to_copy_convert': ['number_of_bytes_returned', 'frame_type']
             },
             {
                 'direction': 'in',
@@ -222,6 +224,14 @@ functions = {
             {
                 'direction': 'out',
                 'name': 'numberOfBytesReturned',
+                'type': 'u32',
+                'include_in_proto': False
+            },
+            {
+                'direction': 'in',
+                'name': 'frameType',
+                'proto_only': True,
+                'enum': 'FrameType',
                 'type': 'u32'
             }
         ],
@@ -487,7 +497,7 @@ functions = {
     },
     'DbGetDBCAttribute': {
         'cname': 'nxdbGetDBCAttribute',
-        'codegen_method': 'no',
+        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
@@ -507,12 +517,17 @@ functions = {
             },
             {
                 'direction': 'in',
+                'include_in_proto': False,
                 'name': 'attributeTextSize',
                 'type': 'u32'
             },
             {
-                'direction': 'in',
+                'direction': 'out',
                 'name': 'attributeText',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'attributeTextSize'
+                },
                 'type': 'char[]'
             },
             {
@@ -524,7 +539,6 @@ functions = {
         'returns': 'nxStatus_t'
     },
     'DbGetDBCAttributeSize': {
-        'codegen_method': 'no',
         'cname': 'nxdbGetDBCAttributeSize',
         'parameters': [
             {
@@ -544,7 +558,7 @@ functions = {
                 'type': 'const char[]'
             },
             {
-                'direction': 'in',
+                'direction': 'out',
                 'name': 'attributeTextSize',
                 'type': 'u32'
             }
@@ -553,7 +567,8 @@ functions = {
     },
     'DbGetDatabaseList': {
         'cname': 'nxdbGetDatabaseList',
-        'codegen_method': 'no',
+        'codegen_method': 'CustomCodeCustomProtoMessage',
+        'include_in_client': False,
         'parameters': [
             {
                 'direction': 'in',
@@ -619,7 +634,8 @@ functions = {
     },
     'DbGetProperty': {
         'cname': 'nxdbGetProperty',
-        'codegen_method': 'no',
+        'codegen_method': 'CustomCodeCustomProtoMessage',
+        'include_in_client': False,
         'parameters': [
             {
                 'direction': 'in',
@@ -628,20 +644,25 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'DBProperties',
+                'enum': 'DBProperty',
                 'name': 'propertyID',
                 'type': 'u32'
             },
             {
                 'direction': 'in',
+                'include_in_proto': False,
                 'name': 'propertySize',
                 'type': 'u32'
             },
             {
                 'direction': 'out',
                 'enum': 'DBPropertyValue',
+                'size': {
+                    'mechanism': 'custom-code',
+                    'value': ''
+                },
                 'name': 'propertyValue',
-                'type': 'void[]'
+                'type': 'void *'
             }
         ],
         'returns': 'nxStatus_t'
@@ -656,7 +677,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'DBProperties',
+                'enum': 'DBProperty',
                 'name': 'propertyID',
                 'type': 'u32'
             },
@@ -752,7 +773,8 @@ functions = {
     },
     'DbSetProperty': {
         'cname': 'nxdbSetProperty',
-        'codegen_method': 'no',
+        'codegen_method': 'CustomCodeCustomProtoMessage',
+        'include_in_client': False,
         'parameters': [
             {
                 'direction': 'in',
@@ -761,19 +783,24 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'DBProperties',
+                'enum': 'DBProperty',
                 'name': 'propertyID',
                 'type': 'u32'
             },
             {
                 'direction': 'in',
+                'include_in_proto': False,
                 'name': 'propertySize',
                 'type': 'u32'
             },
             {
-                'direction': 'out',
+                'direction': 'in',
                 'name': 'propertyValue',
-                'type': 'void[]'
+                'size': {
+                    'mechanism': 'len-in-bytes',
+                    'value': 'propertySize'
+                },
+                'type': 'void *'
             }
         ],
         'returns': 'nxStatus_t'
@@ -848,7 +875,8 @@ functions = {
         'returns': 'nxStatus_t'
     },
     'GetProperty': {
-        'codegen_method': 'no',
+        'codegen_method': 'CustomCodeCustomProtoMessage',
+        'include_in_client': False,
         'parameters': [
             {
                 'direction': 'in',
@@ -857,11 +885,12 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'Properties',
+                'enum': 'Property',
                 'name': 'propertyID',
                 'type': 'u32'
             },
             {
+                'include_in_proto': False,
                 'direction': 'in',
                 'name': 'propertySize',
                 'type': 'u32'
@@ -870,7 +899,11 @@ functions = {
                 'direction': 'out',
                 'enum': 'PropertyValue',
                 'name': 'propertyValue',
-                'type': 'void[]'
+                'size': {
+                    'mechanism': 'custom-code',
+                    'value': ''
+                },
+                'type': 'void *'
             }
         ],
         'returns': 'nxStatus_t'
@@ -884,7 +917,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'Properties',
+                'enum': 'Property',
                 'name': 'propertyID',
                 'type': 'u32'
             },
@@ -897,7 +930,8 @@ functions = {
         'returns': 'nxStatus_t'
     },
     'GetSubProperty': {
-        'codegen_method': 'no',
+        'codegen_method': 'CustomCodeCustomProtoMessage',
+        'include_in_client': False,
         'parameters': [
             {
                 'direction': 'in',
@@ -911,20 +945,25 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'SubProperties',
+                'enum': 'SubProperty',
                 'name': 'propertyID',
                 'type': 'u32'
             },
             {
                 'direction': 'in',
+                'include_in_proto': False,
                 'name': 'propertySize',
                 'type': 'u32'
             },
             {
                 'direction': 'out',
                 'enum': 'SubPropertyValue',
+                'size': {
+                    'mechanism': 'custom-code',
+                    'value': ''
+                },
                 'name': 'propertyValue',
-                'type': 'void[]'
+                'type': 'void *'
             }
         ],
         'returns': 'nxStatus_t'
@@ -943,7 +982,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'SubProperties',
+                'enum': 'SubProperty',
                 'name': 'propertyID',
                 'type': 'u32'
             },
@@ -1133,7 +1172,7 @@ functions = {
         'returns': 'nxStatus_t'
     },
     'ReadState': {
-        'codegen_method': 'no',
+        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
@@ -1149,17 +1188,18 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'stateSize',
-                'type': 'u32'
+                'type': 'u32',
+                'include_in_proto': False
             },
             {
                 'direction': 'out',
-                'enum': 'ReadStateValue',
                 'name': 'stateValue',
+                'type': 'void *',
                 'size': {
                     'mechanism': 'passed-in',
                     'value': 'stateSize'
                 },
-                'type': 'void[]'
+                'grpc_type' : 'ReadStateValue'
             },
             {
                 'direction': 'out',
@@ -1170,7 +1210,6 @@ functions = {
         'returns': 'nxStatus_t'
     },
     'ReadStateTimeTrigger': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -1186,7 +1225,9 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'stateSize',
-                'type': 'u32'
+                'type': 'u32',
+                'hardcoded_value': 'sizeof(nxTimeLocalNetwork_t)',
+                'include_in_proto': False
             },
             {
                 'direction': 'out',
@@ -1195,13 +1236,15 @@ functions = {
                     'mechanism': 'passed-in',
                     'value': 'stateSize'
                 },
-                'type': 'void[]'
+                'type': 'struct _nxTimeLocalNetwork_t',
+                'grpc_type' : 'TimeLocalNetwork'
             }
         ],
         'returns': 'nxStatus_t'
     },
     'SetProperty': {
-        'codegen_method': 'no',
+        'codegen_method': 'CustomCodeCustomProtoMessage',
+        'include_in_client': False,
         'parameters': [
             {
                 'direction': 'in',
@@ -1210,25 +1253,32 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'Properties',
+                'enum': 'Property',
                 'name': 'propertyID',
                 'type': 'u32'
             },
             {
                 'direction': 'in',
+                'include_in_proto': False,
                 'name': 'propertySize',
                 'type': 'u32'
             },
             {
                 'direction': 'in',
+                'enum': 'PropertyValue',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'propertySize'
+                },
                 'name': 'propertyValue',
-                'type': 'void[]'
+                'type': 'void *'
             }
         ],
         'returns': 'nxStatus_t'
     },
     'SetSubProperty': {
-        'codegen_method': 'no',
+        'codegen_method': 'CustomCodeCustomProtoMessage',
+        'include_in_client': False,
         'parameters': [
             {
                 'direction': 'in',
@@ -1242,19 +1292,25 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'SubProperties',
+                'enum': 'SubProperty',
                 'name': 'propertyID',
                 'type': 'u32'
             },
             {
                 'direction': 'in',
+                'include_in_proto': False,
                 'name': 'propertySize',
                 'type': 'u32'
             },
             {
                 'direction': 'in',
                 'name': 'propertyValue',
-                'type': 'void[]'
+                'enum': 'SubPropertyValue',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'propertySize'
+                },
+                'type': 'void *'
             }
         ],
         'returns': 'nxStatus_t'
@@ -1276,15 +1332,17 @@ functions = {
         'returns': 'nxStatus_t'
     },
     'StatusToString': {
-        'codegen_method': 'no',
+        'status_expression' : '0',
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'status',
+                'name': 'statusID',
                 'type': 'nxStatus_t'
             },
             {
                 'direction': 'in',
+                'include_in_proto': False,
+                'hardcoded_value': '2048U',
                 'name': 'sizeofString',
                 'type': 'u32'
             },
@@ -1412,7 +1470,7 @@ functions = {
                 'direction': 'in',
                 'name': 'valueBuffer',
                 'size': {
-                    'mechanism': 'len',
+                    'mechanism': 'len-in-bytes',
                     'value': 'sizeOfValueBuffer'
                 },
                 'type': 'f64[]'
@@ -1442,7 +1500,7 @@ functions = {
                 'direction': 'in',
                 'name': 'valueBuffer',
                 'size': {
-                    'mechanism': 'len',
+                    'mechanism': 'len-in-bytes',
                     'value': 'sizeOfValueBuffer'
                 },
                 'type': 'f64[]'
@@ -1472,7 +1530,7 @@ functions = {
                 'direction': 'in',
                 'name': 'valueBuffer',
                 'size': {
-                    'mechanism': 'len',
+                    'mechanism': 'len-in-bytes',
                     'value': 'sizeOfValueBuffer'
                 },
                 'type': 'f64[]'
@@ -1486,7 +1544,7 @@ functions = {
                 'direction': 'in',
                 'name': 'timestampBuffer',
                 'size': {
-                    'mechanism': 'len',
+                    'mechanism': 'len-in-bytes',
                     'value': 'sizeOfTimestampBuffer'
                 },
                 'type': 'nxTimestamp100ns_t[]'
@@ -1500,7 +1558,7 @@ functions = {
                 'direction': 'in',
                 'name': 'numPairsBuffer',
                 'size': {
-                    'mechanism': 'len',
+                    'mechanism': 'len-in-bytes',
                     'value': 'sizeOfNumPairsBuffer'
                 },
                 'type': 'u32[]'
@@ -1514,7 +1572,7 @@ functions = {
         'returns': 'nxStatus_t'
     },
     'WriteState': {
-        'codegen_method': 'no',
+        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
@@ -1534,13 +1592,13 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'ReadStateValue',
                 'name': 'stateValue',
                 'size': {
-                    'mechanism': 'len',
+                    'mechanism': 'len-in-bytes',
                     'value': 'stateSize'
                 },
-                'type': 'void[]'
+                'type': 'void *',
+                'grpc_type' : 'WriteStateValue'
             }
         ],
         'returns': 'nxStatus_t'

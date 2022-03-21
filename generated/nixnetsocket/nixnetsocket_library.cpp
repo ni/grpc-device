@@ -27,13 +27,20 @@ NiXnetSocketLibrary::NiXnetSocketLibrary() : shared_library_(kLibraryName)
   function_pointers_.Listen = reinterpret_cast<ListenPtr>(shared_library_.get_function_pointer("nxlisten"));
   function_pointers_.SendTo = reinterpret_cast<SendToPtr>(shared_library_.get_function_pointer("nxsendto"));
   function_pointers_.Send = reinterpret_cast<SendPtr>(shared_library_.get_function_pointer("nxsend"));
+  function_pointers_.RecvFrom = reinterpret_cast<RecvFromPtr>(shared_library_.get_function_pointer("nxrecvfrom"));
   function_pointers_.Recv = reinterpret_cast<RecvPtr>(shared_library_.get_function_pointer("nxrecv"));
+  function_pointers_.GetSockName = reinterpret_cast<GetSockNamePtr>(shared_library_.get_function_pointer("nxgetsockname"));
+  function_pointers_.GetPeerName = reinterpret_cast<GetPeerNamePtr>(shared_library_.get_function_pointer("nxgetpeername"));
   function_pointers_.Shutdown = reinterpret_cast<ShutdownPtr>(shared_library_.get_function_pointer("nxshutdown"));
   function_pointers_.Close = reinterpret_cast<ClosePtr>(shared_library_.get_function_pointer("nxclose"));
   function_pointers_.GetLastErrorNum = reinterpret_cast<GetLastErrorNumPtr>(shared_library_.get_function_pointer("nxgetlasterrornum"));
   function_pointers_.GetLastErrorStr = reinterpret_cast<GetLastErrorStrPtr>(shared_library_.get_function_pointer("nxgetlasterrorstr"));
+  function_pointers_.GetSockOpt = reinterpret_cast<GetSockOptPtr>(shared_library_.get_function_pointer("nxgetsockopt"));
   function_pointers_.IpStackClear = reinterpret_cast<IpStackClearPtr>(shared_library_.get_function_pointer("nxIpStackClear"));
   function_pointers_.IpStackCreate = reinterpret_cast<IpStackCreatePtr>(shared_library_.get_function_pointer("nxIpStackCreate"));
+  function_pointers_.IpStackFreeInfo = reinterpret_cast<IpStackFreeInfoPtr>(shared_library_.get_function_pointer("nxIpStackFreeInfo"));
+  function_pointers_.IpStackGetInfo = reinterpret_cast<IpStackGetInfoPtr>(shared_library_.get_function_pointer("nxIpStackGetInfo"));
+  function_pointers_.IpStackWaitForInterface = reinterpret_cast<IpStackWaitForInterfacePtr>(shared_library_.get_function_pointer("nxIpStackWaitForInterface"));
   function_pointers_.IsSet = reinterpret_cast<IsSetPtr>(shared_library_.get_function_pointer("nxfd_isset"));
   function_pointers_.Select = reinterpret_cast<SelectPtr>(shared_library_.get_function_pointer("nxselect"));
   function_pointers_.SetSockOpt = reinterpret_cast<SetSockOptPtr>(shared_library_.get_function_pointer("nxsetsockopt"));
@@ -123,6 +130,18 @@ int32_t NiXnetSocketLibrary::Send(nxSOCKET socket, char dataptr[], int32_t size,
 #endif
 }
 
+int32_t NiXnetSocketLibrary::RecvFrom(nxSOCKET socket, char mem[], int32_t size, int32_t flags, nxsockaddr* from, nxsocklen_t* fromlen)
+{
+  if (!function_pointers_.RecvFrom) {
+    throw nidevice_grpc::LibraryLoadException("Could not find nxrecvfrom.");
+  }
+#if defined(_MSC_VER)
+  return nxrecvfrom(socket, mem, size, flags, from, fromlen);
+#else
+  return function_pointers_.RecvFrom(socket, mem, size, flags, from, fromlen);
+#endif
+}
+
 int32_t NiXnetSocketLibrary::Recv(nxSOCKET socket, char mem[], int32_t size, int32_t flags)
 {
   if (!function_pointers_.Recv) {
@@ -132,6 +151,30 @@ int32_t NiXnetSocketLibrary::Recv(nxSOCKET socket, char mem[], int32_t size, int
   return nxrecv(socket, mem, size, flags);
 #else
   return function_pointers_.Recv(socket, mem, size, flags);
+#endif
+}
+
+int32_t NiXnetSocketLibrary::GetSockName(nxSOCKET socket, nxsockaddr* addr, nxsocklen_t* addrlen)
+{
+  if (!function_pointers_.GetSockName) {
+    throw nidevice_grpc::LibraryLoadException("Could not find nxgetsockname.");
+  }
+#if defined(_MSC_VER)
+  return nxgetsockname(socket, addr, addrlen);
+#else
+  return function_pointers_.GetSockName(socket, addr, addrlen);
+#endif
+}
+
+int32_t NiXnetSocketLibrary::GetPeerName(nxSOCKET socket, nxsockaddr* addr, nxsocklen_t* addrlen)
+{
+  if (!function_pointers_.GetPeerName) {
+    throw nidevice_grpc::LibraryLoadException("Could not find nxgetpeername.");
+  }
+#if defined(_MSC_VER)
+  return nxgetpeername(socket, addr, addrlen);
+#else
+  return function_pointers_.GetPeerName(socket, addr, addrlen);
 #endif
 }
 
@@ -175,6 +218,18 @@ char* NiXnetSocketLibrary::GetLastErrorStr(char buf[], size_t bufLen)
   return function_pointers_.GetLastErrorStr(buf, bufLen);
 }
 
+int32_t NiXnetSocketLibrary::GetSockOpt(nxSOCKET socket, int32_t level, int32_t optname, void* optval, nxsocklen_t* optlen)
+{
+  if (!function_pointers_.GetSockOpt) {
+    throw nidevice_grpc::LibraryLoadException("Could not find nxgetsockopt.");
+  }
+#if defined(_MSC_VER)
+  return nxgetsockopt(socket, level, optname, optval, optlen);
+#else
+  return function_pointers_.GetSockOpt(socket, level, optname, optval, optlen);
+#endif
+}
+
 int32_t NiXnetSocketLibrary::IpStackClear(nxIpStackRef_t stack_ref)
 {
   if (!function_pointers_.IpStackClear) {
@@ -196,6 +251,38 @@ int32_t NiXnetSocketLibrary::IpStackCreate(char stack_name[], char config[], nxI
   return nxIpStackCreate(stack_name, config, stack_ref);
 #else
   return function_pointers_.IpStackCreate(stack_name, config, stack_ref);
+#endif
+}
+
+int32_t NiXnetSocketLibrary::IpStackFreeInfo(nxVirtualInterface_t* firstVirtualInterface)
+{
+  if (!function_pointers_.IpStackFreeInfo) {
+    throw nidevice_grpc::LibraryLoadException("Could not find nxIpStackFreeInfo.");
+  }
+  return function_pointers_.IpStackFreeInfo(firstVirtualInterface);
+}
+
+int32_t NiXnetSocketLibrary::IpStackGetInfo(nxIpStackRef_t stack_ref, uint32_t info_id, nxVirtualInterface_t** virtual_interfaces)
+{
+  if (!function_pointers_.IpStackGetInfo) {
+    throw nidevice_grpc::LibraryLoadException("Could not find nxIpStackGetInfo.");
+  }
+#if defined(_MSC_VER)
+  return nxIpStackGetInfo(stack_ref, info_id, virtual_interfaces);
+#else
+  return function_pointers_.IpStackGetInfo(stack_ref, info_id, virtual_interfaces);
+#endif
+}
+
+int32_t NiXnetSocketLibrary::IpStackWaitForInterface(nxIpStackRef_t stack_ref, const char localInterface[], int32_t timeoutMs)
+{
+  if (!function_pointers_.IpStackWaitForInterface) {
+    throw nidevice_grpc::LibraryLoadException("Could not find nxIpStackWaitForInterface.");
+  }
+#if defined(_MSC_VER)
+  return nxIpStackWaitForInterface(stack_ref, localInterface, timeoutMs);
+#else
+  return function_pointers_.IpStackWaitForInterface(stack_ref, localInterface, timeoutMs);
 #endif
 }
 

@@ -33,9 +33,9 @@ def is_input_parameter(parameter):
     return "in" in parameter["direction"]
 
 
-def is_pointer_parameter(parameter):
-    """Whether the parameter is a pointer parameter."""
-    return is_output_parameter(parameter) or parameter.get("pointer", False)
+def levels_of_pointer_indirection(parameter: dict) -> int:
+    """Levels of pointer indirection for pointer. I.e. number of '*'s."""
+    return [is_output_parameter(parameter), parameter.get("pointer", False)].count(True)
 
 
 def is_repeated_varargs_parameter(parameter: dict):
@@ -287,6 +287,7 @@ def is_unsupported_size_mechanism_type(size_mechanism: str) -> bool:
     return size_mechanism not in {
         "fixed",
         "len",
+        "len-in-bytes",
         "ivi-dance",
         "passed-in",
         "passed-in-by-ptr",
@@ -426,6 +427,16 @@ def pascal_to_snake(pascal_string):
 
 def filter_proto_rpc_functions(functions):
     """Return function metadata only for functions to include for generating proto rpc methods."""
+    functions_for_proto = {"public", "CustomCode", "CustomCodeCustomProtoMessage"}
+    return [
+        name
+        for name, function in functions.items()
+        if function.get("codegen_method", "public") in functions_for_proto
+    ]
+
+
+def filter_proto_rpc_functions_for_message(functions):
+    """Return function metadata only for functions to include for generating proto rpc messages."""
     functions_for_proto = {"public", "CustomCode"}
     return [
         name
@@ -1045,6 +1056,14 @@ def get_grpc_field_name(param: dict) -> str:
     from a Request/Response message.
     """
     return param.get("grpc_name", _camel_to_snake(param["name"]))
+
+
+def get_grpc_client_field_name(param: dict) -> str:
+    """Get the name of the protobuf field for the given param.
+
+    This will be a snake_case_string, that can be used in the client generated files.
+    """
+    return param.get("grpc_name", _camel_to_snake(param["cppName"]))
 
 
 def get_grpc_field_name_from_str(field_name: str) -> str:
