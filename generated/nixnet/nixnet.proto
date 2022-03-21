@@ -53,6 +53,7 @@ service NiXnet {
   rpc GetSubPropertySize(GetSubPropertySizeRequest) returns (GetSubPropertySizeResponse);
   rpc ReadSignalSinglePoint(ReadSignalSinglePointRequest) returns (ReadSignalSinglePointResponse);
   rpc ReadSignalWaveform(ReadSignalWaveformRequest) returns (ReadSignalWaveformResponse);
+  rpc ReadSignalXY(ReadSignalXYRequest) returns (ReadSignalXYResponse);
   rpc ReadState(ReadStateRequest) returns (ReadStateResponse);
   rpc ReadStateTimeTrigger(ReadStateTimeTriggerRequest) returns (ReadStateTimeTriggerResponse);
   rpc SetProperty(SetPropertyRequest) returns (SetPropertyResponse);
@@ -1413,8 +1414,7 @@ message GetSubPropertySizeResponse {
 
 message ReadSignalSinglePointRequest {
   nidevice_grpc.Session session_ref = 1;
-  uint32 size_of_value_buffer = 2;
-  uint32 size_of_timestamp_buffer = 3;
+  uint32 number_of_signals = 2;
 }
 
 message ReadSignalSinglePointResponse {
@@ -1429,7 +1429,6 @@ message ReadSignalWaveformRequest {
     TimeOut timeout = 2;
     double timeout_raw = 3;
   }
-  uint32 size_of_value_buffer = 4;
 }
 
 message ReadSignalWaveformResponse {
@@ -1437,7 +1436,21 @@ message ReadSignalWaveformResponse {
   uint64 start_time = 2;
   double delta_time = 3;
   repeated double value_buffer = 4;
-  uint32 number_of_values_returned = 5;
+}
+
+message ReadSignalXYRequest {
+  nidevice_grpc.Session session_ref = 1;
+  uint64 time_limit = 2;
+  uint32 number_of_values = 3;
+  uint32 number_of_timestamps = 4;
+  uint32 number_of_signals = 5;
+}
+
+message ReadSignalXYResponse {
+  int32 status = 1;
+  repeated double value_buffer = 2;
+  repeated uint64 timestamp_buffer = 3;
+  repeated uint32 num_pairs_buffer = 4;
 }
 
 message ReadStateRequest {

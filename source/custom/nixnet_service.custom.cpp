@@ -1180,6 +1180,12 @@ void convert_to_grpc(const void* input, nixnet_grpc::FrameBuffer* output, u32 fr
     }
   }
 }
+
+u32 determine_size_from_request(u32 number_of_signals, u32 number_of_values, u32 number_of_timestamps)
+{
+  u32 buffer_size = number_of_signals * sizeof(f64);
+  return (number_of_values <= number_of_timestamps) ? buffer_size * number_of_values : buffer_size * number_of_timestamps;
+}
 }  // namespace nixnet_grpc
 
 namespace nidevice_grpc {

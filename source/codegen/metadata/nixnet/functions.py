@@ -1038,31 +1038,41 @@ functions = {
                 'type': 'nxSessionRef_t'
             },
             {
+                'direction': 'in',
+                'name': 'numberOfSignals',
+                'type': 'u32',
+                'proto_only': True
+            },
+            {
                 'direction': 'out',
                 'name': 'valueBuffer',
                 'size': {
-                    'mechanism': 'passed-in',
-                    'value': 'sizeOfValueBuffer'
+                    'mechanism': 'custom-code',
+                    'value': 'size_of_value_buffer / sizeof(f64)'
                 },
                 'type': 'f64[]'
             },
             {
                 'direction': 'in',
+                'include_in_proto': False,
                 'name': 'sizeOfValueBuffer',
+                'hardcoded_value': 'number_of_signals * sizeof(f64)',
                 'type': 'u32'
             },
             {
                 'direction': 'out',
                 'name': 'timestampBuffer',
                 'size': {
-                    'mechanism': 'passed-in',
-                    'value': 'sizeOfTimestampBuffer'
+                    'mechanism': 'custom-code',
+                    'value': 'size_of_timestamp_buffer / sizeof(f64)'
                 },
                 'type': 'nxTimestamp100ns_t[]'
             },
             {
                 'direction': 'in',
                 'name': 'sizeOfTimestampBuffer',
+                'include_in_proto': False,
+                'hardcoded_value': 'number_of_signals * sizeof(f64)',
                 'type': 'u32'
             }
         ],
@@ -1095,26 +1105,28 @@ functions = {
                 'direction': 'out',
                 'name': 'valueBuffer',
                 'size': {
-                    'mechanism': 'passed-in',
-                    'value': 'sizeOfValueBuffer'
+                    'mechanism': 'custom-code',
+                    'value': 'size_of_value_buffer / sizeof(f64)'
                 },
                 'type': 'f64[]'
             },
             {
                 'direction': 'in',
+                'include_in_proto': False,
+                'hardcoded_value': 'number_of_values * sizeof(f64)',
                 'name': 'sizeOfValueBuffer',
                 'type': 'u32'
             },
             {
                 'direction': 'out',
                 'name': 'numberOfValuesReturned',
+                'include_in_proto': False,
                 'type': 'u32'
             }
         ],
         'returns': 'nxStatus_t'
     },
     'ReadSignalXY': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -1124,19 +1136,40 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'timeLimit',
+                'pointer': True,
                 'type': 'nxTimestamp100ns_t'
+            },
+            {
+                'direction': 'in',
+                'name': 'numberOfValues',
+                'type': 'u32',
+                'proto_only': True
+            },
+            {
+                'direction': 'in',
+                'name': 'numberOfTimestamps',
+                'type': 'u32',
+                'proto_only': True
+            },
+            {
+                'direction': 'in',
+                'name': 'numberOfSignals',
+                'type': 'u32',
+                'proto_only': True
             },
             {
                 'direction': 'out',
                 'name': 'valueBuffer',
                 'size': {
-                    'mechanism': 'passed-in',
-                    'value': 'sizeOfValueBuffer'
+                    'mechanism': 'custom-code',
+                    'value': 'size_of_value_buffer / sizeof(f64)'
                 },
                 'type': 'f64[]'
             },
             {
                 'direction': 'in',
+                'include_in_proto': False,
+                'hardcoded_value': 'determine_size_from_request(number_of_signals, number_of_values, number_of_timestamps)',
                 'name': 'sizeOfValueBuffer',
                 'type': 'u32'
             },
@@ -1144,28 +1177,32 @@ functions = {
                 'direction': 'out',
                 'name': 'timestampBuffer',
                 'size': {
-                    'mechanism': 'passed-in',
-                    'value': 'sizeOfTimestampBuffer'
+                    'mechanism': 'custom-code',
+                    'value': 'size_of_timestamp_buffer / sizeof(f64)'
                 },
                 'type': 'nxTimestamp100ns_t[]'
             },
             {
                 'direction': 'in',
+                'include_in_proto': False,
                 'name': 'sizeOfTimestampBuffer',
+                'hardcoded_value': 'determine_size_from_request(number_of_signals, number_of_values, number_of_timestamps)',
                 'type': 'u32'
             },
             {
                 'direction': 'out',
                 'name': 'numPairsBuffer',
                 'size': {
-                    'mechanism': 'passed-in',
-                    'value': 'sizeOfNumPairsBuffer'
+                    'mechanism': 'custom-code',
+                    'value': 'size_of_num_pairs_buffer / sizeof(u32)'
                 },
                 'type': 'u32[]'
             },
             {
                 'direction': 'in',
                 'name': 'sizeOfNumPairsBuffer',
+                'include_in_proto': False,
+                'hardcoded_value': 'number_of_signals * sizeof(u32)',
                 'type': 'u32'
             }
         ],

@@ -5087,7 +5087,7 @@ namespace nirfmxlte_grpc {
       auto reserved2 = nullptr;
       float64 rs_transmit_power {};
       float64 ofdm_symbol_transmit_power {};
-      auto status = library_->ModAccFetchDownlinkTransmitPower(instrument, selector_string, timeout, &rs_transmit_power, &ofdm_symbol_transmit_power, reserved1, reserved2);
+      auto status = library_->ModAccFetchDownlinkTransmitPower(instrument, selector_string, timeout, &rs_transmit_power, &ofdm_symbol_transmit_power, &reserved1, &reserved2);
       response->set_status(status);
       if (status_ok(status)) {
         response->set_rs_transmit_power(rs_transmit_power);
