@@ -100,6 +100,22 @@ enum Shutdown {
   SHUTDOWN_RDWR = 2;
 }
 
+enum GetAddrInfoFlags {
+  GET_ADDR_INFO_FLAGS_UNSPECIFIED = 0;
+  GET_ADDR_INFO_FLAGS_PASSIVE = 1;
+  GET_ADDR_INFO_FLAGS_CANONNAME = 2;
+  GET_ADDR_INFO_FLAGS_NUMERICHOST = 4;
+  GET_ADDR_INFO_FLAGS_NUMERICSERV = 8;
+  GET_ADDR_INFO_FLAGS_V4MAPPED = 16;
+  GET_ADDR_INFO_FLAGS_ALL = 32;
+  GET_ADDR_INFO_FLAGS_ADDRCONFIG = 64;
+  GET_ADDR_INFO_FLAGS_LOCALQUERY = 128;
+  GET_ADDR_INFO_FLAGS_PREFER_V4 = 256;
+  GET_ADDR_INFO_FLAGS_UNICAST_REPLY = 512;
+  GET_ADDR_INFO_FLAGS_SHARED_RESET = 1024;
+  GET_ADDR_INFO_FLAGS_BYPASS_CACHE = 2048;
+}
+
 message IPAddress {
   uint32 family = 1;
   string address = 2;
@@ -143,19 +159,19 @@ message SockAddr {
 }
 
 message AddrInfo {
-  int32 flags = 1;
-  int32 family = 2;
-  int32 sock_type = 3;
-  int32 protocol = 4;
+  GetAddrInfoFlags flags = 1;
+  AddressFamily family = 2;
+  SocketProtocolType sock_type = 3;
+  IPProtocol protocol = 4;
   SockAddr addr = 5;
   string canon_name = 6;
 }
 
 message AddrInfoHint {
-  int32 flags = 1;
-  int32 family = 2;
-  int32 sock_type = 3;
-  int32 protocol = 4;
+  GetAddrInfoFlags flags = 1;
+  AddressFamily family = 2;
+  SocketProtocolType sock_type = 3;
+  IPProtocol protocol = 4;
 }
 
 message Linger {
