@@ -20,31 +20,32 @@ Refer to the NI XNET gRPC Wiki for the latest C Function Reference:
   https://github.com/ni/grpc-device/wiki/NI-XNET-C-Function-Reference
  
  Running from command line:
-Server machine's IP address and port number can be passed as separate command line
+Server machine's IP address, port number, and interface name can be passed as separate command line
 arguments.
-  > python lin-signal-single-point-output.py <server_address> <port_number>
+  > python lin-signal-single-point-output.py <server_address> <port_number> <interface_name>
 If they are not passed in as command line arguments, then by default the server address will be
 "localhost:31763"
 """
 
 import sys
 
-import getch
 import grpc
 import nixnet_pb2 as nixnet_types
 import nixnet_pb2_grpc as grpc_nixnet
 
 SERVER_ADDRESS = "localhost"
 SERVER_PORT = "31763"
+INTERFACE = "LIN1"
 
 # Read in cmd args
 if len(sys.argv) >= 2:
     SERVER_ADDRESS = sys.argv[1]
 if len(sys.argv) >= 3:
     SERVER_PORT = sys.argv[2]
+if len(sys.argv) >= 4:
+    INTERFACE = sys.argv[3]
 
 # Parameters
-INTERFACE = "LIN1"
 DATABASE = "NIXNET_exampleLDF"
 CLUSTER = "Cluster"
 SIGNAL_LIST = "MasterSignal1_U16,MasterSignal2_U16"
@@ -62,7 +63,7 @@ def check_for_error(status):
 
 
 i = 0
-value_buffer = [0] * NUM_SIGNALS
+value_buffer = [0.0] * NUM_SIGNALS
 
 # Create the communication channel for the remote host and create connections to the NI-XNET and
 # session services.
@@ -92,20 +93,20 @@ try:
             database_name=DATABASE,
             cluster_name=CLUSTER,
             list=SIGNAL_LIST,
-            interface_name=INTERFACE,
+            interface=INTERFACE,
             mode=nixnet_types.CREATE_SESSION_MODE_MODE_SIGNAL_OUT_SINGLE_POINT,
         )
     )
     check_for_error(create_session_response.status)
 
-    session_reference = create_session_response.session_ref
+    session = create_session_response.session_ref
 
     if IsMaster != 0:
         # Set the schedule - this will also automatically enable master mode
         WriteStateValueObject = nixnet_types.WriteStateValue(lin_schedule_change=ScheduleIndex)
         write_state_response = client.WriteState(
             nixnet_types.WriteStateRequest(
-                session_ref=session_reference,
+                session_ref=session,
                 state_id=nixnet_types.WRITE_STATE_STATE_LIN_SCHEDULE_CHANGE,
                 state_value=WriteStateValueObject,
             )
@@ -113,17 +114,16 @@ try:
         check_for_error(write_state_response.status)
         print("Session Created Successfully. \n")
 
-    print("\nPress any key to transmit new signal values or q to quit\n")
     print("Values are incremented from 0 to 10 in this example.\n")
 
-    while not (getch.getch()).decode("UTF-8") == "q":
+    while i <= 10:
         value_buffer[0] = float(i)
         value_buffer[1] = float(i * 10)
 
         # Update the signal data
         write_signal_response = client.WriteSignalSinglePoint(
             nixnet_types.WriteSignalSinglePointRequest(
-                session_ref=session_reference, value_buffer=value_buffer
+                session_ref=session, value_buffer=value_buffer
             )
         )
         check_for_error(write_signal_response.status)
@@ -131,7 +131,7 @@ try:
         print("Signals sent:")
         print(f"Signal 1: {value_buffer[0]}")
         print(f"Signal 2: {value_buffer[1]}", end="\n\n")
-        i = i + 1 if i < 10 else 0
+        i = i + 1
 
 except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
@@ -144,9 +144,7 @@ except grpc.RpcError as rpc_error:
     print(f"{error_message}")
 
 finally:
-    if "session_reference" in vars() and session_reference.id != 0:
+    if session:
         # clear the XNET session.
-        check_for_error(
-            client.Clear(nixnet_types.ClearRequest(session_ref=session_reference)).status
-        )
+        check_for_error(client.Clear(nixnet_types.ClearRequest(session_ref=session)).status)
         print("Session cleared successfully!\n")

@@ -20,31 +20,32 @@ Refer to the NI XNET gRPC Wiki for the latest C Function Reference:
   https://github.com/ni/grpc-device/wiki/NI-XNET-C-Function-Reference
  
  Running from command line:
-Server machine's IP address and port number can be passed as separate command line
+Server machine's IP address, port number, and interface name can be passed as separate command line
 arguments.
-  > python flexray-signal-single-point-input.py <server_address> <port_number>
+  > python flexray-signal-single-point-input.py <server_address> <port_number> <interface_name>
 If they are not passed in as command line arguments, then by default the server address will be
 "localhost:31763"
 """
 
 import sys
 
-import getch
 import grpc
 import nixnet_pb2 as nixnet_types
 import nixnet_pb2_grpc as grpc_nixnet
 
 SERVER_ADDRESS = "localhost"
 SERVER_PORT = "31763"
+INTERFACE = "FlexRay2"
 
 # Read in cmd args
 if len(sys.argv) >= 2:
     SERVER_ADDRESS = sys.argv[1]
 if len(sys.argv) >= 3:
     SERVER_PORT = sys.argv[2]
+if len(sys.argv) >= 4:
+    INTERFACE = sys.argv[3]
 
 # Parameters
-INTERFACE = "FlexRay2"
 DATABASE = "NIXNET_example"
 CLUSTER = "FlexRay_Cluster"
 SIGNAL_LIST = "FlexRayEventSignal1,FlexRayEventSignal2"
@@ -61,6 +62,7 @@ def check_for_error(status):
         raise Exception(error_message_response.status_description)
 
 
+i = 0
 keyslot_id = 1
 value_buffer = [0.0] * NUM_SIGNALS
 time_stamp_buffer = [None] * NUM_SIGNALS
@@ -81,32 +83,30 @@ try:
             database_name=DATABASE,
             cluster_name=CLUSTER,
             list=SIGNAL_LIST,
-            interface_name=INTERFACE,
+            interface=INTERFACE,
             mode=nixnet_types.CREATE_SESSION_MODE_MODE_SIGNAL_IN_SINGLE_POINT,
         )
     )
     check_for_error(create_session_response.status)
 
-    session_reference = create_session_response.session_ref
+    session = create_session_response.session_ref
     print("Session Created Successfully.\n")
 
     # Set the Key Slot
     set_property_response = client.SetProperty(
         nixnet_types.SetPropertyRequest(
-            session_ref=session_reference,
+            session_ref=session,
             property_id=nixnet_types.PROPERTY_SESSION_INTF_FLEX_RAY_KEY_SLOT_ID,
             u32_scalar=keyslot_id,
         )
     )
     check_for_error(set_property_response.status)
 
-    print("\nPress any key to transmit new signal values or q to quit\n")
-
-    while not (getch.getch()).decode("UTF-8") == "q":
+    while i < 10:
         # Update the signal data
         read_signal_response = client.ReadSignalSinglePoint(
             nixnet_types.ReadSignalSinglePointRequest(
-                session_ref=session_reference,
+                session_ref=session,
                 size_of_value_buffer=value_buffer.__sizeof__(),
                 size_of_timestamp_buffer=time_stamp_buffer.__sizeof__(),
             )
@@ -119,6 +119,7 @@ try:
         print("Signals received:")
         print(f"Signal 1: {value_buffer[0]}")
         print(f"Signal 2: {value_buffer[1]}", end="\n\n")
+        i = i + 1
 
 except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
@@ -131,9 +132,7 @@ except grpc.RpcError as rpc_error:
     print(f"{error_message}")
 
 finally:
-    if "session_reference" in vars() and session_reference.id != 0:
+    if session:
         # clear the XNET session.
-        check_for_error(
-            client.Clear(nixnet_types.ClearRequest(session_ref=session_reference)).status
-        )
+        check_for_error(client.Clear(nixnet_types.ClearRequest(session_ref=session)).status)
         print("Session cleared successfully!\n")
