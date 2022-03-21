@@ -2,7 +2,6 @@
 #include <google/protobuf/util/time_util.h>
 #include <gtest/gtest.h>
 #undef interface
-#include <nixnet.h>
 #include <nixnet/nixnet_client.h>
 
 #include <iostream>
@@ -12,6 +11,7 @@
 
 #include "device_server.h"
 #include "enumerate_devices.h"
+#include "nixnet_utilities.h"
 
 using namespace nixnet_grpc;
 namespace client = nixnet_grpc::experimental::client;
@@ -94,17 +94,6 @@ class NiXnetCANDriverApiTests : public ::testing::Test {
   std::unique_ptr<NiXnet::Stub> stub_;
 };
 
-#define EXPECT_SUCCESS(response_)    \
-  ([this](auto& response) {          \
-    EXPECT_EQ(0, response.status()); \
-    return response;                 \
-  })(response_)
-
-#define EXPECT_XNET_ERROR(error, response) \
-  if (1) {                                 \
-    EXPECT_EQ(error, (response).status()); \
-  }
-
 void claim_by_address(::nidevice_grpc::Session session, u64 node_name, u32 in_node_addr, u32* out_node_addr)
 {
   //EXPECT_SUCCESS(client::set_property(stub(), session, PROPERTY_SESSION_J1939_NAME, sizeof(node_name), &node_name));
@@ -121,7 +110,7 @@ void claim_by_address(::nidevice_grpc::Session session, u64 node_name, u32 in_no
   while (!(*out_node_addr < 254) && (++attempts <= 300) && (get_property_response.status() == 0));
   */
 
-  EXPECT_GE(*out_node_addr, 254);
+  EXPECT_GE(*out_node_addr, 254U);
 }
 
 TEST_F(NiXnetCANDriverApiTests, ConvertFramesToFromSignalsFromExample_FetchData_DataLooksReasonable)
@@ -129,14 +118,13 @@ TEST_F(NiXnetCANDriverApiTests, ConvertFramesToFromSignalsFromExample_FetchData_
   constexpr auto NUM_FRAMES = 2;
   constexpr auto NUM_SIGNALS = 2;
   nixnet_grpc::Frame* frame = NULL;
-  u8 buffer_conv[NUM_FRAMES * sizeof(nxFrameCAN_t)];
   std::vector<nixnet_grpc::FrameBuffer> frames;
   auto session = EXPECT_SUCCESS(client::create_session(stub(), "NIXNET_example", "CAN_Cluster", "CANEventSignal1,CANEventSignal3", "", CREATE_SESSION_MODE_MODE_SIGNAL_CONVERSION_SINGLE_POINT)).session_ref();
   frame = new nixnet_grpc::Frame();
   frame->set_timestamp(0);
   frame->set_flags(0);
   frame->set_identifier(66);
-  frame->set_type(nxFrameType_CAN_Data);
+  frame->set_type(FRAME_TYPE_CAN);
   frame->set_payload("\0\1\2\3\4\5\6\7");
   frames.push_back(nixnet_grpc::FrameBuffer());
   frames.back().set_allocated_can(frame);
@@ -144,13 +132,13 @@ TEST_F(NiXnetCANDriverApiTests, ConvertFramesToFromSignalsFromExample_FetchData_
   frame->set_timestamp(0);
   frame->set_flags(0);
   frame->set_identifier(67);
-  frame->set_type(nxFrameType_CAN_Data);
+  frame->set_type(FRAME_TYPE_CAN);
   frame->set_payload("\0\1");
   frames.push_back(nixnet_grpc::FrameBuffer());
   frames.back().set_allocated_can(frame);
   auto convert_frames_to_signals_single_point_response = EXPECT_SUCCESS(client::convert_frames_to_signals_single_point(stub(), session, frames, NUM_SIGNALS, NUM_SIGNALS));
   std::vector<f64> value_buffer_copy(convert_frames_to_signals_single_point_response.value_buffer().begin(), convert_frames_to_signals_single_point_response.value_buffer().end());
-  auto convert_signals_to_frames_single_point_response = EXPECT_SUCCESS(client::convert_signals_to_frames_single_point(stub(), session, value_buffer_copy, sizeof(buffer_conv), FRAME_TYPE_CAN));
+  auto convert_signals_to_frames_single_point_response = EXPECT_SUCCESS(client::convert_signals_to_frames_single_point(stub(), session, value_buffer_copy, NUM_FRAMES, FRAME_TYPE_CAN));
   EXPECT_SUCCESS(client::clear(stub(), session));
 
   EXPECT_EQ(999, convert_frames_to_signals_single_point_response.timestamp_buffer_size());
@@ -197,14 +185,14 @@ TEST_F(NiXnetCANDriverApiTests, FrameSinglePointOutputFromExample_FetchData_Data
   frame->set_timestamp(0);
   frame->set_flags(0);
   frame->set_identifier(66);
-  frame->set_type(nxFrameType_CAN_Data);
+  frame->set_type(FRAME_TYPE_CAN);
   frames.push_back(nixnet_grpc::FrameBuffer());
   frames.back().set_allocated_can(frame);
   frame = new nixnet_grpc::Frame();
   frame->set_timestamp(0);
   frame->set_flags(0);
   frame->set_identifier(67);
-  frame->set_type(nxFrameType_CAN_Data);
+  frame->set_type(FRAME_TYPE_CAN);
   frames.push_back(nixnet_grpc::FrameBuffer());
   frames.back().set_allocated_can(frame);
   for (int i = 0; i < 20; ++i) {
@@ -249,14 +237,14 @@ TEST_F(NiXnetCANDriverApiTests, FrameStreamOutputFromExample_FetchData_DataLooks
   frame->set_timestamp(0);
   frame->set_flags(0);
   frame->set_identifier(4);
-  frame->set_type(nxFrameType_CAN_Data);
+  frame->set_type(FRAME_TYPE_CAN);
   frames.push_back(nixnet_grpc::FrameBuffer());
   frames.back().set_allocated_can(frame);
   frame = new nixnet_grpc::Frame();
   frame->set_timestamp(0);
   frame->set_flags(0);
   frame->set_identifier(5);
-  frame->set_type(nxFrameType_CAN_Data);
+  frame->set_type(FRAME_TYPE_CAN);
   frames.push_back(nixnet_grpc::FrameBuffer());
   frames.back().set_allocated_can(frame);
   for (int i = 0; i < 20; ++i) {
@@ -501,7 +489,6 @@ TEST_F(NiXnetCANDriverApiTests, J1939FrameInputQueuedFromExample_FetchData_DataL
   unsigned int num_of_frames_received = 0;
   u32 num_bytes_per_frame = 0;
   nixnet_grpc::Frame* frame = NULL;
-  nxStatus_t status = 0;
   u16 payload_length = 0;
   u32 num_bytes = 0;
   std::vector<nixnet_grpc::FrameBuffer> frames;
@@ -529,7 +516,6 @@ TEST_F(NiXnetCANDriverApiTests, J1939FrameInputQueuedFromExample_FetchData_DataL
 TEST_F(NiXnetCANDriverApiTests, J1939FrameOutputQueuedFromExample_FetchData_DataLooksReasonable)
 {
   nixnet_grpc::Frame* frame = NULL;
-  nxStatus_t status = 0;
   std::vector<nixnet_grpc::FrameBuffer> frames;
   u64 node_name = 2;
   u32 in_address = 2;
@@ -537,7 +523,7 @@ TEST_F(NiXnetCANDriverApiTests, J1939FrameOutputQueuedFromExample_FetchData_Data
   auto session = EXPECT_SUCCESS(client::create_session(stub(), "NIXNET_example", "J1939_Over_CAN", "J1939_Transport_BAM", "CAN1", CREATE_SESSION_MODE_MODE_FRAME_OUT_QUEUED)).session_ref();
   claim_by_address(session, node_name, in_address, &out_address);
   frame = new nixnet_grpc::Frame();
-  frame->set_type(nxFrameType_J1939_Data);
+  frame->set_type(FRAME_TYPE_J1939);
   frame->set_payload("\0\1\2\3\4\5\6\7\x8\x9\xA\xB\xD\xD\xE\xF");
   frames.push_back(nixnet_grpc::FrameBuffer());
   frames.back().set_allocated_j1939(frame);
@@ -552,7 +538,6 @@ TEST_F(NiXnetCANDriverApiTests, J1939FrameStreamInputFromExample_FetchData_DataL
   unsigned int j = 0;
   u32 num_bytes_per_frame = 0;
   nixnet_grpc::Frame* frame = NULL;
-  nxStatus_t status = 0;
   u16 payload_length = 0;
   u32 num_bytes = 0;
   std::vector<nixnet_grpc::FrameBuffer> frames;
@@ -582,7 +567,6 @@ TEST_F(NiXnetCANDriverApiTests, J1939FrameStreamOutputFromExample_FetchData_Data
 {
   constexpr auto PAYLOAD_SIZE_1 = 256;
   nixnet_grpc::Frame* frame = NULL;
-  nxStatus_t status = 0;
   std::vector<nixnet_grpc::FrameBuffer> frames;
   u64 node_name = 4;
   u32 in_address = 4;
@@ -594,7 +578,7 @@ TEST_F(NiXnetCANDriverApiTests, J1939FrameStreamOutputFromExample_FetchData_Data
   frame = new nixnet_grpc::Frame();
   frame->set_timestamp(0);
   frame->set_flags(0);
-  frame->set_type(nxFrameType_J1939_Data);
+  frame->set_type(FRAME_TYPE_J1939);
   frame->set_identifier(0x18FAFF00);
   for (int i = 0; i < PAYLOAD_SIZE_1; ++i) {
     payload[i] = (u8)i;
@@ -613,7 +597,6 @@ TEST_F(NiXnetCANDriverApiTests, J1939FrameStreamOutputFromExample_FetchData_Data
 TEST_F(NiXnetCANDriverApiTests, J1939SignalSinglePointInputFromExample_FetchData_DataLooksReasonable)
 {
   constexpr auto NUM_SIGNALS = 2;
-  nxStatus_t status = 0;
   u64 node_name = 5;
   u32 in_address = 5;
   u32 out_address = 0;
@@ -637,7 +620,6 @@ TEST_F(NiXnetCANDriverApiTests, J1939SignalSinglePointOutputFromExample_FetchDat
 {
   constexpr auto NUM_SIGNALS = 2;
   std::vector<f64> value_vtr(NUM_SIGNALS);
-  nxStatus_t status = 0;
   u64 node_name = 6;
   u32 in_address = 6;
   u32 out_address = 0;

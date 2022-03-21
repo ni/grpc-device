@@ -2,7 +2,6 @@
 #include <google/protobuf/util/time_util.h>
 #include <gtest/gtest.h>
 #undef interface
-#include <nixnet.h>
 #include <nixnet/nixnet_client.h>
 
 #include <iostream>
@@ -12,11 +11,13 @@
 
 #include "device_server.h"
 #include "enumerate_devices.h"
+#include "nixnet_utilities.h"
 
 using namespace nixnet_grpc;
 namespace client = nixnet_grpc::experimental::client;
 namespace pb = google::protobuf;
 using namespace ::testing;
+using namespace nixnet_utilities;
 using nlohmann::json;
 
 namespace ni {
@@ -59,67 +60,6 @@ std::string create_simple_config(const std::string& interface_name)
   return config.dump();
 }
 
-GetPropertyResponse get_property(const client::StubPtr& stub, const nidevice_grpc::Session& session_ref, const client::simple_variant<nixnet_grpc::Property, pb::uint32>& property_id)
-{
-  ::grpc::ClientContext context;
-
-  auto request = GetPropertyRequest{};
-  request.mutable_session_ref()->CopyFrom(session_ref);
-  const auto property_id_ptr = property_id.get_if<nixnet_grpc::Property>();
-  const auto property_id_raw_ptr = property_id.get_if<pb::uint32>();
-  if (property_id_ptr) {
-    request.set_property_id(*property_id_ptr);
-  }
-  else if (property_id_raw_ptr) {
-    request.set_property_id_raw(*property_id_raw_ptr);
-  }
-
-  auto response = GetPropertyResponse{};
-
-  client::raise_if_error(
-      stub->GetProperty(&context, request, &response));
-
-  return response;
-}
-
-DbGetPropertyResponse db_get_property(const client::StubPtr& stub, const nidevice_grpc::Session& dbobject_ref, const client::simple_variant<nixnet_grpc::DBProperty, pb::uint32>& property_id)
-{
-  ::grpc::ClientContext context;
-
-  auto request = DbGetPropertyRequest{};
-  request.mutable_dbobject_ref()->CopyFrom(dbobject_ref);
-  const auto property_id_ptr = property_id.get_if<nixnet_grpc::DBProperty>();
-  const auto property_id_raw_ptr = property_id.get_if<pb::uint32>();
-  if (property_id_ptr) {
-    request.set_property_id(*property_id_ptr);
-  }
-  else if (property_id_raw_ptr) {
-    request.set_property_id_raw(*property_id_raw_ptr);
-  }
-
-  auto response = DbGetPropertyResponse{};
-
-  client::raise_if_error(
-      stub->DbGetProperty(&context, request, &response));
-
-  return response;
-}
-
-DbGetDatabaseListResponse db_get_database_list(const client::StubPtr& stub, const std::string& ip_address)
-{
-  ::grpc::ClientContext context;
-
-  auto request = DbGetDatabaseListRequest{};
-  request.set_ip_address(ip_address);
-
-  auto response = DbGetDatabaseListResponse{};
-
-  client::raise_if_error(
-      stub->DbGetDatabaseList(&context, request, &response));
-
-  return response;
-}
-
 class NiXnetCommonDriverApiTests : public ::testing::Test {
  protected:
   NiXnetCommonDriverApiTests()
@@ -151,39 +91,19 @@ class NiXnetCommonDriverApiTests : public ::testing::Test {
   std::unique_ptr<NiXnet::Stub> stub_;
 };
 
-#define EXPECT_SUCCESS(response_)    \
-  ([](auto& response) {              \
-    EXPECT_EQ(0, response.status()); \
-    return response;                 \
-  })(response_)
-
-#define EXPECT_XNET_ERROR(error, response) \
-  if (1) {                                 \
-    EXPECT_EQ(error, (response).status()); \
-  }
-
-std::vector<u32> get_property_u32_vtr(const client::StubPtr& stub, const nidevice_grpc::Session& session_ref, const client::simple_variant<nixnet_grpc::Property, pb::uint32>& property_id)
+DbGetDatabaseListResponse db_get_database_list(const client::StubPtr& stub, const std::string& ip_address)
 {
-  auto array = EXPECT_SUCCESS(get_property(stub, session_ref, property_id)).u32_array().u32_array();
-  return std::vector<u32>(array.begin(), array.end());
-}
+  ::grpc::ClientContext context;
 
-std::vector<nidevice_grpc::Session> get_property_db_ref_vtr(const client::StubPtr& stub, const nidevice_grpc::Session& session_ref, const client::simple_variant<nixnet_grpc::Property, pb::uint32>& property_id)
-{
-  auto array = EXPECT_SUCCESS(get_property(stub, session_ref, property_id)).db_ref_array().db_ref();
-  return std::vector<nidevice_grpc::Session>(array.begin(), array.end());
-}
+  auto request = DbGetDatabaseListRequest{};
+  request.set_ip_address(ip_address);
 
-std::vector<u32> db_get_property_u32_vtr(const client::StubPtr& stub, const nidevice_grpc::Session& database_ref, const client::simple_variant<nixnet_grpc::DBProperty, pb::uint32>& property_id)
-{
-  auto array = EXPECT_SUCCESS(db_get_property(stub, database_ref, property_id)).u32_array().u32_array();
-  return std::vector<u32>(array.begin(), array.end());
-}
+  auto response = DbGetDatabaseListResponse{};
 
-std::vector<nidevice_grpc::Session> db_get_property_db_ref_vtr(const client::StubPtr& stub, const nidevice_grpc::Session& database_ref, const client::simple_variant<nixnet_grpc::DBProperty, pb::uint32>& property_id)
-{
-  auto array = EXPECT_SUCCESS(db_get_property(stub, database_ref, property_id)).db_ref_array().db_ref();
-  return std::vector<nidevice_grpc::Session>(array.begin(), array.end());
+  client::raise_if_error(
+      stub->DbGetDatabaseList(&context, request, &response));
+
+  return response;
 }
 
 TEST_F(NiXnetCommonDriverApiTests, XNETDatabaseBrowserFromExample_FetchData_DataLooksReasonable)

@@ -2,7 +2,6 @@
 #include <google/protobuf/util/time_util.h>
 #include <gtest/gtest.h>
 #undef interface
-#include <nixnet.h>
 #include <nixnet/nixnet_client.h>
 
 #include <iostream>
@@ -12,6 +11,7 @@
 
 #include "device_server.h"
 #include "enumerate_devices.h"
+#include "nixnet_utilities.h"
 
 using namespace nixnet_grpc;
 namespace client = nixnet_grpc::experimental::client;
@@ -26,6 +26,7 @@ namespace {
 
 typedef pb::uint8 u8;
 typedef pb::uint32 u32;
+typedef pb::uint64 u64;
 typedef double f64;
 
 constexpr auto SCHEMA = "file:///NIXNET_Documentation/xnetIpStackSchema-03.json";
@@ -92,17 +93,6 @@ class NiXnetFlexRayDriverApiTests : public ::testing::Test {
   std::unique_ptr<NiXnet::Stub> stub_;
 };
 
-#define EXPECT_SUCCESS(response_)    \
-  ([this](auto& response) {          \
-    EXPECT_EQ(0, response.status()); \
-    return response;                 \
-  })(response_)
-
-#define EXPECT_XNET_ERROR(error, response) \
-  if (1) {                                 \
-    EXPECT_EQ(error, (response).status()); \
-  }
-
 TEST_F(NiXnetFlexRayDriverApiTests, ConvertFramesToFromSignalsFromExample_FetchData_DataLooksReasonable)
 {
   constexpr auto NUM_SIGNALS = 2;
@@ -113,17 +103,19 @@ TEST_F(NiXnetFlexRayDriverApiTests, ConvertFramesToFromSignalsFromExample_FetchD
   auto session = EXPECT_SUCCESS(client::create_session(stub(), "NIXNET_example", "FlexRay_Cluster", "FlexRayCyclicSignal3,FlexRayEventSignal1", "", CREATE_SESSION_MODE_MODE_SIGNAL_CONVERSION_SINGLE_POINT)).session_ref();
   frame = new nixnet_grpc::Frame();
   frame->set_timestamp(0);
-  frame->set_flags(nxFrameFlags_FlexRay_ChA | nxFrameFlags_FlexRay_ChB);
+  // TODO: set flags
+  //frame->set_flags(nxFrameFlags_FlexRay_ChA | nxFrameFlags_FlexRay_ChB);
   frame->set_identifier(4);
-  frame->set_type(nxFrameType_FlexRay_Data);
+  frame->set_type(FRAME_TYPE_FLEX_RAY);
   frame->set_payload("\0\1\2\3\4\5\6\7");
   frames.push_back(nixnet_grpc::FrameBuffer());
   frames.back().set_allocated_flex_ray(frame);
   frame = new nixnet_grpc::Frame();
   frame->set_timestamp(0);
-  frame->set_flags(nxFrameFlags_FlexRay_ChA | nxFrameFlags_FlexRay_ChB);
+  // TODO: set flags
+  //frame->set_flags(nxFrameFlags_FlexRay_ChA | nxFrameFlags_FlexRay_ChB);
   frame->set_identifier(5);
-  frame->set_type(nxFrameType_FlexRay_Data);
+  frame->set_type(FRAME_TYPE_FLEX_RAY);
   frame->set_payload("\0\1\2\3\4\5\6\7");
   frames.push_back(nixnet_grpc::FrameBuffer());
   frames.back().set_allocated_flex_ray(frame);
@@ -178,7 +170,7 @@ TEST_F(NiXnetFlexRayDriverApiTests, FrameSinglePointOutputFromExample_FetchData_
   frame->set_timestamp(0);
   frame->set_flags(0);
   frame->set_identifier(5);
-  frame->set_type(nxFrameType_FlexRay_Data);
+  frame->set_type(FRAME_TYPE_FLEX_RAY);
   frame->set_payload("\0\1\2\3\4\5\6\7");
   frames.push_back(nixnet_grpc::FrameBuffer());
   frames.back().set_allocated_flex_ray(frame);
@@ -186,7 +178,7 @@ TEST_F(NiXnetFlexRayDriverApiTests, FrameSinglePointOutputFromExample_FetchData_
   frame->set_timestamp(0);
   frame->set_flags(0);
   frame->set_identifier(6);
-  frame->set_type(nxFrameType_FlexRay_Data);
+  frame->set_type(FRAME_TYPE_FLEX_RAY);
   frame->set_payload("\0\1\2\3\4\5\6\7");
   frames.push_back(nixnet_grpc::FrameBuffer());
   frames.back().set_allocated_flex_ray(frame);

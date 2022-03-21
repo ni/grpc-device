@@ -2,7 +2,6 @@
 #include <google/protobuf/util/time_util.h>
 #include <gtest/gtest.h>
 #undef interface
-#include <nixnet.h>
 #include <nixnet/nixnet_client.h>
 
 #include <iostream>
@@ -12,11 +11,13 @@
 
 #include "device_server.h"
 #include "enumerate_devices.h"
+#include "nixnet_utilities.h"
 
 using namespace nixnet_grpc;
 namespace client = nixnet_grpc::experimental::client;
 namespace pb = google::protobuf;
 using namespace ::testing;
+using namespace nixnet_utilities;
 using nlohmann::json;
 
 namespace ni {
@@ -93,39 +94,29 @@ class NiXnetEthernetDriverApiTests : public ::testing::Test {
   std::unique_ptr<NiXnet::Stub> stub_;
 };
 
-#define EXPECT_SUCCESS(response_)    \
-  ([this](auto& response) {          \
-    EXPECT_EQ(0, response.status()); \
-    return response;                 \
-  })(response_)
-
-#define EXPECT_XNET_ERROR(error, response) \
-  if (1) {                                 \
-    EXPECT_EQ(error, (response).status()); \
-  }
-
 TEST_F(NiXnetEthernetDriverApiTests, FrameStreamInputLoggerFromExample_FetchData_DataLooksReasonable)
 {
   constexpr u16 VLAN_ID = 2;
   constexpr u32 ENABLE_VID_AND_PRIORITY = 3;
   constexpr u8 PCP = 3;
-  char log_path[] = "C:\\Users\\Public\\Documents\\log.pcap";
-  nxEptRxFilter_Element_t rx_filter;
-  nxMACAddress_t mac = "AA:BB:CC:DD:EE:FF";
+  std::string log_path = "C:\\Users\\Public\\Documents\\log.pcap";
   auto session = EXPECT_SUCCESS(client::create_session(stub(), NULL, NULL, NULL, "ENET4", CREATE_SESSION_MODE_MODE_FRAME_IN_STREAM)).session_ref();
-  rx_filter.UseFlags = ENABLE_VID_AND_PRIORITY;
-  rx_filter.VID = VLAN_ID;
-  rx_filter.Priority = PCP;
-  memcpy(rx_filter.DestinationMAC, mac, sizeof(nxMACAddress_t));
-  //EXPECT_SUCCESS(client::set_property(stub(), session, PROPERTY_SESSION_INTF_ENET_EPT_RECEIVE_FILTER, sizeof(nxEptRxFilter_Element_t), &rx_filter));
-  //EXPECT_SUCCESS(client::set_property(stub(), session, PROPERTY_SESSION_ENET_LOG_MODE, sizeof(u32), &nxEnetLogMode_Log));
-  //EXPECT_SUCCESS(client::set_property(stub(), session, PROPERTY_SESSION_ENET_LOG_OPERATION, sizeof(u32), &nxEnetLogOperation_CreateOrReplace));
-  //EXPECT_SUCCESS(client::set_property(stub(), session, PROPERTY_SESSION_ENET_LOG_FILE, sizeof(log_path), &log_path));
+  /*
+  std::vector<EptRxFilter> rx_filter(1);
+  rx_filter[0].set_use_flags(ENABLE_VID_AND_PRIORITY);
+  rx_filter[0].set_vid(VLAN_ID);
+  rx_filter[0].set_priority(PCP);
+  rx_filter[0].set_destination_mac("AA:BB:CC:DD:EE:FF");
+  EXPECT_SUCCESS(client::set_property(stub(), session, PROPERTY_SESSION_INTF_ENET_EPT_RECEIVE_FILTER, rx_filter));
+  */
+  EXPECT_SUCCESS(set_property(stub(), session, PROPERTY_SESSION_ENET_LOG_MODE, PROPERTY_VALUE_ENET_LOG_MODE_LOG));
+  EXPECT_SUCCESS(set_property(stub(), session, PROPERTY_SESSION_ENET_LOG_OPERATION, PROPERTY_VALUE_ENET_LOG_OPERATION_CREATE_OR_REPLACE));
+  EXPECT_SUCCESS(set_property(stub(), session, PROPERTY_SESSION_ENET_LOG_FILE, log_path));
   EXPECT_SUCCESS(client::start(stub(), session, 0));
-  //auto get_property_response = EXPECT_SUCCESS(client::get_property(stub(), session, PROPERTY_SESSION_ENET_NUM_FRAMES_RECEIVED, sizeof(u64)));
+  auto get_property_response = EXPECT_SUCCESS(get_property(stub(), session, PROPERTY_SESSION_ENET_NUM_FRAMES_RECEIVED));
   EXPECT_SUCCESS(client::clear(stub(), session));
 
-  //EXPECT_EQ(0 /* void[] */, get_property_response.property_value());
+  EXPECT_EQ(0, get_property_response.u64_scalar());
 }
 
 TEST_F(NiXnetEthernetDriverApiTests, FrameStreamInputReaderFromExample_FetchData_DataLooksReasonable)
@@ -133,14 +124,15 @@ TEST_F(NiXnetEthernetDriverApiTests, FrameStreamInputReaderFromExample_FetchData
   constexpr u16 VLAN_ID = 2;
   constexpr u32 ENABLE_VID_AND_PRIORITY = 3;
   constexpr u8 PCP = 3;
-  nxEptRxFilter_Element_t rx_filter;
-  nxMACAddress_t mac = "AA:BB:CC:DD:EE:FF";
   auto session = EXPECT_SUCCESS(client::create_session(stub(), NULL, NULL, NULL, "ENET4", CREATE_SESSION_MODE_MODE_FRAME_IN_STREAM)).session_ref();
-  rx_filter.UseFlags = ENABLE_VID_AND_PRIORITY;
-  rx_filter.VID = VLAN_ID;
-  rx_filter.Priority = PCP;
-  memcpy(rx_filter.DestinationMAC, mac, sizeof(nxMACAddress_t));
-  //EXPECT_SUCCESS(client::set_property(stub(), session, PROPERTY_SESSION_INTF_ENET_EPT_RECEIVE_FILTER, sizeof(nxEptRxFilter_Element_t), &rx_filter));
+  /*
+  std::vector<EptRxFilter> rx_filter(1);
+  rx_filter[0].set_use_flags(ENABLE_VID_AND_PRIORITY);
+  rx_filter[0].set_vid(VLAN_ID);
+  rx_filter[0].set_priority(PCP);
+  rx_filter[0].set_destination_mac("AA:BB:CC:DD:EE:FF");
+  EXPECT_SUCCESS(client::set_property(stub(), session, PROPERTY_SESSION_INTF_ENET_EPT_RECEIVE_FILTER, rx_filter));
+  */
   //auto read_frame_response = EXPECT_SUCCESS(client::read_frame(stub(), session, 250, TIME_OUT_TIMEOUT_NONE));
   EXPECT_SUCCESS(client::clear(stub(), session));
 
@@ -167,7 +159,7 @@ TEST_F(NiXnetEthernetDriverApiTests, FrameStreamOutputFromExample_FetchData_Data
   frame->set_device_timestamp(0);
   frame->set_network_timestamp(0);
   frame->set_flags(0);
-  frame->set_type(nxEnetFrameType_Data);
+  frame->set_type(0);  // TODO: 0 is nxEnetFrameType_Data
   frame->set_frame_data(payload);
   frames.push_back(nixnet_grpc::FrameBuffer());
   frames.back().set_allocated_enet(frame);
@@ -176,7 +168,7 @@ TEST_F(NiXnetEthernetDriverApiTests, FrameStreamOutputFromExample_FetchData_Data
   frame->set_device_timestamp(0);
   frame->set_network_timestamp(0);
   frame->set_flags(0);
-  frame->set_type(nxEnetFrameType_Data);
+  frame->set_type(0);  // TODO: 0 is nxEnetFrameType_Data
   frame->set_frame_data(payload);
   frames.push_back(nixnet_grpc::FrameBuffer());
   frames.back().set_allocated_enet(frame);
