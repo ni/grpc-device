@@ -354,6 +354,40 @@ TEST(XnetConvertersTests, SockOptDataWithLinger_ConvertFromGrpc_DataLooksReasona
   EXPECT_EQ(L_ONOFF, dereferenced_data->l_onoff);
 }
 
+TEST(XnetConvertersTests, SockOptDataWithIPMReq_ConvertFromGrpc_DataLooksReasonable)
+{
+  constexpr auto IMR_MULTIADDR = 22;
+  constexpr auto IMR_INTERFACE = 1;
+  SockOptData sock_opt_data = SockOptData{};
+  sock_opt_data.mutable_data_ipmreq()->set_imr_multiaddr(IMR_MULTIADDR);
+  sock_opt_data.mutable_data_ipmreq()->set_imr_interface(IMR_INTERFACE);
+
+  auto opt_data = convert_from_grpc<SockOptDataInputConverter>(sock_opt_data);
+
+  EXPECT_EQ(sizeof(nxip_mreq), opt_data.size());
+  EXPECT_EQ(&opt_data.data_ipmreq, opt_data.data());
+  nxip_mreq* dereferenced_data = (nxip_mreq*)(opt_data.data());
+  EXPECT_EQ(IMR_MULTIADDR, dereferenced_data->imr_multiaddr.addr);
+  EXPECT_EQ(IMR_INTERFACE, dereferenced_data->imr_interface.addr);
+}
+
+TEST(XnetConvertersTests, SockOptDataWithIPV6MReq_ConvertFromGrpc_DataLooksReasonable)
+{
+  const auto IPV6MR_MULTIADDR = std::vector<char>{0x0, 0x1, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7, 0x8, 0x9, 0xA, 0xB, 0xC, 0xD, 0xE, 0xF};
+  constexpr auto IPV6MR_INTERFACE = 1;
+  SockOptData sock_opt_data = SockOptData{};
+  sock_opt_data.mutable_data_ipv6mreq()->set_ipv6mr_multiaddr({IPV6MR_MULTIADDR.cbegin(), IPV6MR_MULTIADDR.cend()});
+  sock_opt_data.mutable_data_ipv6mreq()->set_ipv6mr_interface(IPV6MR_INTERFACE);
+
+  auto opt_data = convert_from_grpc<SockOptDataInputConverter>(sock_opt_data);
+
+  EXPECT_EQ(sizeof(nxipv6_mreq), opt_data.size());
+  EXPECT_EQ(&opt_data.data_ipv6mreq, opt_data.data());
+  nxipv6_mreq* dereferenced_data = (nxipv6_mreq*)(opt_data.data());
+  EXPECT_THAT(dereferenced_data->ipv6mr_multiaddr.addr, ElementsAreArray(IPV6MR_MULTIADDR.data(), IPV6MR_MULTIADDR.size()));
+  EXPECT_EQ(IPV6MR_INTERFACE, dereferenced_data->ipv6mr_interface);
+}
+
 TEST(XnetConvertersTests, SockOptDataWithDataUnset_ConvertFromGrpc_NullPtrDataAndZeroSize)
 {
   SockOptData sock_opt_data = SockOptData{};
@@ -433,6 +467,47 @@ TEST(XnetConvertersTests, LingerSockOptData_ConvertToGrpc_ConvertsToSockOptDataW
   EXPECT_EQ(SockOptData::DataCase::kDataLinger, grpc_data.data_case());
   EXPECT_EQ(L_LINGER, grpc_data.data_linger().l_linger());
   EXPECT_EQ(L_ONOFF, grpc_data.data_linger().l_onoff());
+}
+
+TEST(XnetConvertersTests, IPMReqSockOptData_ConvertToGrpc_ConvertsToSockOptDataWithIPMReqValue)
+{
+  constexpr auto IMR_MULTIADDR = 22;
+  constexpr auto IMR_INTERFACE = 1;
+  auto storage = allocate_output_storage<void*, SockOptData>(OptName::OPT_NAME_IP_ADD_MEMBERSHIP);
+  void* data_pointer = storage.data();
+  EXPECT_EQ(data_pointer, &(storage.data_ipmreq));
+  auto ipmreq_pointer = reinterpret_cast<nxip_mreq*>(data_pointer);
+  ipmreq_pointer->imr_multiaddr.addr = IMR_MULTIADDR;
+  ipmreq_pointer->imr_interface.addr = IMR_INTERFACE;
+
+  auto grpc_data = SockOptData{};
+  convert_to_grpc(storage, &grpc_data);
+
+  EXPECT_EQ(SockOptData::DataCase::kDataIpmreq, grpc_data.data_case());
+  EXPECT_EQ(IMR_MULTIADDR, grpc_data.data_ipmreq().imr_multiaddr());
+  EXPECT_EQ(IMR_INTERFACE, grpc_data.data_ipmreq().imr_interface());
+}
+
+TEST(XnetConvertersTests, IPV6MReqSockOptData_ConvertToGrpc_ConvertsToSockOptDataWithIPMReqValue)
+{
+  const auto IPV6MR_MULTIADDR = std::vector<char>{0x0, 0x1, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7, 0x8, 0x9, 0xA, 0xB, 0xC, 0xD, 0xE, 0xF};
+  constexpr auto IPV6MR_INTERFACE = 1;
+  auto storage = allocate_output_storage<void*, SockOptData>(OptName::OPT_NAME_IPV6_ADD_MEMBERSHIP);
+  void* data_pointer = storage.data();
+  EXPECT_EQ(data_pointer, &(storage.data_ipv6mreq));
+  auto ipv6mreq_pointer = reinterpret_cast<nxipv6_mreq*>(data_pointer);
+  std::memcpy(
+      ipv6mreq_pointer->ipv6mr_multiaddr.addr,
+      IPV6MR_MULTIADDR.data(),
+      sizeof(ipv6mreq_pointer->ipv6mr_multiaddr.addr));
+  ipv6mreq_pointer->ipv6mr_interface = IPV6MR_INTERFACE;
+
+  auto grpc_data = SockOptData{};
+  convert_to_grpc(storage, &grpc_data);
+
+  EXPECT_EQ(SockOptData::DataCase::kDataIpv6Mreq, grpc_data.data_case());
+  EXPECT_THAT(grpc_data.data_ipv6mreq().ipv6mr_multiaddr(), ElementsAreArray(IPV6MR_MULTIADDR.data(), IPV6MR_MULTIADDR.size()));
+  EXPECT_EQ(IPV6MR_INTERFACE, grpc_data.data_ipv6mreq().ipv6mr_interface());
 }
 
 TEST(XnetConvertersTests, SockOptDataWithUnknownOptName_ConvertToGrpc_ConvertsToUnsetSockOptData)
