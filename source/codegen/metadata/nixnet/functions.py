@@ -567,7 +567,7 @@ functions = {
     },
     'DbGetDatabaseList': {
         'cname': 'nxdbGetDatabaseList',
-        'codegen_method': 'CustomCodeCustomProtoMessage',
+        'codegen_method': 'CustomCode',
         'include_in_client': False,
         'parameters': [
             {
@@ -578,7 +578,8 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'sizeofAliasBuffer',
-                'type': 'u32'
+                'type': 'u32',
+                'include_in_proto': False
             },
             {
                 'direction': 'out',
@@ -592,7 +593,8 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'sizeofFilepathBuffer',
-                'type': 'u32'
+                'type': 'u32',
+                'include_in_proto': False
             },
             {
                 'direction': 'out',
