@@ -208,9 +208,9 @@ u32 GetStateSize(u32 state_id)
 //---------------------------------------------------------------------
 //---------------------------------------------------------------------
 // WriteState API has an input of type void * called StateValue. There are different possible values for 
-// StateValue based on Based on the value of StateID passed in by user. We have defined complex message
+// StateValue based on the value of StateID passed in by user. We have defined complex message
 // for StateValue with fields correponding to each of these StateIds in oneof. We have to assert that 
-// correct StateValue oneof is by user based on StateId passed in. This requires custom implementation.
+// correct StateValue oneof is set by user based on StateId passed in. This requires custom implementation.
 ::grpc::Status NiXnetService::WriteState(::grpc::ServerContext* context, const WriteStateRequest* request, WriteStateResponse* response)
 {
   if (context->IsCancelled()) {
