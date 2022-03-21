@@ -116,27 +116,27 @@ nxStatus_t NiXnetLibrary::ConnectTerminals(nxSessionRef_t sessionRef, const char
 #endif
 }
 
-nxStatus_t NiXnetLibrary::ConvertTimestamp100nsTo1ns(nxTimestamp100ns_t from, nxTimestamp1ns_t* to)
+nxStatus_t NiXnetLibrary::ConvertTimestamp100nsTo1ns(nxTimestamp100ns_t from_timestamp_100ns, nxTimestamp1ns_t* to_timestamp_1ns)
 {
   if (!function_pointers_.ConvertTimestamp100nsTo1ns) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxConvertTimestamp100nsTo1ns.");
   }
 #if defined(_MSC_VER)
-  return nxConvertTimestamp100nsTo1ns(from, to);
+  return nxConvertTimestamp100nsTo1ns(from_timestamp_100ns, to_timestamp_1ns);
 #else
-  return function_pointers_.ConvertTimestamp100nsTo1ns(from, to);
+  return function_pointers_.ConvertTimestamp100nsTo1ns(from_timestamp_100ns, to_timestamp_1ns);
 #endif
 }
 
-nxStatus_t NiXnetLibrary::ConvertTimestamp1nsTo100ns(nxTimestamp1ns_t from, nxTimestamp100ns_t* to)
+nxStatus_t NiXnetLibrary::ConvertTimestamp1nsTo100ns(nxTimestamp1ns_t from_timestamp_1ns, nxTimestamp100ns_t* to_timestamp_100ns)
 {
   if (!function_pointers_.ConvertTimestamp1nsTo100ns) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxConvertTimestamp1nsTo100ns.");
   }
 #if defined(_MSC_VER)
-  return nxConvertTimestamp1nsTo100ns(from, to);
+  return nxConvertTimestamp1nsTo100ns(from_timestamp_1ns, to_timestamp_100ns);
 #else
-  return function_pointers_.ConvertTimestamp1nsTo100ns(from, to);
+  return function_pointers_.ConvertTimestamp1nsTo100ns(from_timestamp_1ns, to_timestamp_100ns);
 #endif
 }
 

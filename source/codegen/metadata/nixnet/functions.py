@@ -231,12 +231,12 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'from',
+                'name': 'from_timestamp_100ns',
                 'type': 'nxTimestamp100ns_t'
             },
             {
                 'direction': 'out',
-                'name': 'to',
+                'name': 'to_timestamp_1ns',
                 'type': 'nxTimestamp1ns_t'
             }
         ],
@@ -246,12 +246,12 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'from',
+                'name': 'from_timestamp_1ns',
                 'type': 'nxTimestamp1ns_t'
             },
             {
                 'direction': 'out',
-                'name': 'to',
+                'name': 'to_timestamp_100ns',
                 'type': 'nxTimestamp100ns_t'
             }
         ],

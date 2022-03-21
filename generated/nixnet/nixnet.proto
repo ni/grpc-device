@@ -1052,21 +1052,21 @@ message ConnectTerminalsResponse {
 }
 
 message ConvertTimestamp100nsTo1nsRequest {
-  uint64 from = 1;
+  uint64 from_timestamp_100ns = 1;
 }
 
 message ConvertTimestamp100nsTo1nsResponse {
   int32 status = 1;
-  uint64 to = 2;
+  uint64 to_timestamp_1ns = 2;
 }
 
 message ConvertTimestamp1nsTo100nsRequest {
-  uint64 from = 1;
+  uint64 from_timestamp_1ns = 1;
 }
 
 message ConvertTimestamp1nsTo100nsResponse {
   int32 status = 1;
-  uint64 to = 2;
+  uint64 to_timestamp_100ns = 2;
 }
 
 message CreateSessionRequest {

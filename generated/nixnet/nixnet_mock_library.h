@@ -20,8 +20,8 @@ class NiXnetMockLibrary : public nixnet_grpc::NiXnetLibraryInterface {
   MOCK_METHOD(nxStatus_t, Blink, (nxSessionRef_t interfaceRef, u32 modifier), (override));
   MOCK_METHOD(nxStatus_t, Clear, (nxSessionRef_t sessionRef), (override));
   MOCK_METHOD(nxStatus_t, ConnectTerminals, (nxSessionRef_t sessionRef, const char source[], const char destination[]), (override));
-  MOCK_METHOD(nxStatus_t, ConvertTimestamp100nsTo1ns, (nxTimestamp100ns_t from, nxTimestamp1ns_t* to), (override));
-  MOCK_METHOD(nxStatus_t, ConvertTimestamp1nsTo100ns, (nxTimestamp1ns_t from, nxTimestamp100ns_t* to), (override));
+  MOCK_METHOD(nxStatus_t, ConvertTimestamp100nsTo1ns, (nxTimestamp100ns_t from_timestamp_100ns, nxTimestamp1ns_t* to_timestamp_1ns), (override));
+  MOCK_METHOD(nxStatus_t, ConvertTimestamp1nsTo100ns, (nxTimestamp1ns_t from_timestamp_1ns, nxTimestamp100ns_t* to_timestamp_100ns), (override));
   MOCK_METHOD(nxStatus_t, CreateSession, (const char databaseName[], const char clusterName[], const char list[], const char interfaceParameter[], u32 mode, nxSessionRef_t* sessionRef), (override));
   MOCK_METHOD(nxStatus_t, CreateSessionByRef, (u32 numberOfDatabaseRef, nxDatabaseRef_t arrayOfDatabaseRef[], const char interfaceParameter[], u32 mode, nxSessionRef_t* sessionRef), (override));
   MOCK_METHOD(nxStatus_t, DbAddAlias, (const char databaseAlias[], const char databaseFilepath[], u32 defaultBaudRate), (override));
