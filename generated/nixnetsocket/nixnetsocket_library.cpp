@@ -26,6 +26,7 @@ NiXnetSocketLibrary::NiXnetSocketLibrary() : shared_library_(kLibraryName)
   function_pointers_.Connect = reinterpret_cast<ConnectPtr>(shared_library_.get_function_pointer("nxconnect"));
   function_pointers_.FreeAddrInfo = reinterpret_cast<FreeAddrInfoPtr>(shared_library_.get_function_pointer("nxfreeaddrinfo"));
   function_pointers_.GetAddrInfo = reinterpret_cast<GetAddrInfoPtr>(shared_library_.get_function_pointer("nxgetaddrinfo"));
+  function_pointers_.GetNameInfo = reinterpret_cast<GetNameInfoPtr>(shared_library_.get_function_pointer("nxgetnameinfo"));
   function_pointers_.Listen = reinterpret_cast<ListenPtr>(shared_library_.get_function_pointer("nxlisten"));
   function_pointers_.SendTo = reinterpret_cast<SendToPtr>(shared_library_.get_function_pointer("nxsendto"));
   function_pointers_.Send = reinterpret_cast<SendPtr>(shared_library_.get_function_pointer("nxsend"));
@@ -113,6 +114,18 @@ int32_t NiXnetSocketLibrary::GetAddrInfo(nxIpStackRef_t stack_ref, const char no
   return nxgetaddrinfo(stack_ref, node, service, hints, res);
 #else
   return function_pointers_.GetAddrInfo(stack_ref, node, service, hints, res);
+#endif
+}
+
+int32_t NiXnetSocketLibrary::GetNameInfo(nxIpStackRef_t stack_ref, nxsockaddr* addr, nxsocklen_t addr_len, char host[], nxsocklen_t host_len, char serv[], nxsocklen_t serv_len, int32_t flags)
+{
+  if (!function_pointers_.GetNameInfo) {
+    throw nidevice_grpc::LibraryLoadException("Could not find nxgetnameinfo.");
+  }
+#if defined(_MSC_VER)
+  return nxgetnameinfo(stack_ref, addr, addr_len, host, host_len, serv, serv_len, flags);
+#else
+  return function_pointers_.GetNameInfo(stack_ref, addr, addr_len, host, host_len, serv, serv_len, flags);
 #endif
 }
 

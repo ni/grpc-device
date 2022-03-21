@@ -21,6 +21,7 @@ service NiXnetSocket {
   rpc Bind(BindRequest) returns (BindResponse);
   rpc Connect(ConnectRequest) returns (ConnectResponse);
   rpc GetAddrInfo(GetAddrInfoRequest) returns (GetAddrInfoResponse);
+  rpc GetNameInfo(GetNameInfoRequest) returns (GetNameInfoResponse);
   rpc Listen(ListenRequest) returns (ListenResponse);
   rpc SendTo(SendToRequest) returns (SendToResponse);
   rpc Send(SendRequest) returns (SendResponse);
@@ -233,6 +234,22 @@ message GetAddrInfoResponse {
   repeated AddrInfo res = 2;
   string error_message = 3;
   int32 error_num = 4;
+}
+
+message GetNameInfoRequest {
+  nidevice_grpc.Session stack_ref = 1;
+  SockAddr addr = 2;
+  int32 host_len = 3;
+  int32 serv_len = 4;
+  int32 flags = 5;
+}
+
+message GetNameInfoResponse {
+  int32 status = 1;
+  string host = 2;
+  string serv = 3;
+  string error_message = 4;
+  int32 error_num = 5;
 }
 
 message ListenRequest {

@@ -136,7 +136,7 @@ struct SockAddrOutputConverter {
 
   // Overriding the address_of operator is like a implicit conversion for output
   // params. This works with our default output param passing codegen that passes
-  // this as nxaccepr(sock, &addr, &addrlen);
+  // this as nxaccept(sock, &addr, &addrlen);
   nxsockaddr* operator&()
   {
     return storage_cast<nxsockaddr>();

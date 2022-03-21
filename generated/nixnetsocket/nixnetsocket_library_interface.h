@@ -20,6 +20,7 @@ class NiXnetSocketLibraryInterface {
   virtual int32_t Connect(nxSOCKET socket, nxsockaddr* name, nxsocklen_t namelen) = 0;
   virtual int32_t FreeAddrInfo(nxaddrinfo* res) = 0;
   virtual int32_t GetAddrInfo(nxIpStackRef_t stack_ref, const char node[], const char service[], nxaddrinfo* hints, nxaddrinfo** res) = 0;
+  virtual int32_t GetNameInfo(nxIpStackRef_t stack_ref, nxsockaddr* addr, nxsocklen_t addr_len, char host[], nxsocklen_t host_len, char serv[], nxsocklen_t serv_len, int32_t flags) = 0;
   virtual int32_t Listen(nxSOCKET socket, int32_t backlog) = 0;
   virtual int32_t SendTo(nxSOCKET socket, char dataptr[], int32_t size, int32_t flags, nxsockaddr* to, nxsocklen_t tolen) = 0;
   virtual int32_t Send(nxSOCKET socket, char dataptr[], int32_t size, int32_t flags) = 0;

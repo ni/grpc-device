@@ -86,6 +86,26 @@ get_addr_info(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, cons
   return response;
 }
 
+GetNameInfoResponse
+get_name_info(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const SockAddr& addr, const pb::int32& host_len, const pb::int32& serv_len, const pb::int32& flags)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetNameInfoRequest{};
+  request.mutable_stack_ref()->CopyFrom(stack_ref);
+  request.mutable_addr()->CopyFrom(addr);
+  request.set_host_len(host_len);
+  request.set_serv_len(serv_len);
+  request.set_flags(flags);
+
+  auto response = GetNameInfoResponse{};
+
+  raise_if_error(
+      stub->GetNameInfo(&context, request, &response));
+
+  return response;
+}
+
 ListenResponse
 listen(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::int32& backlog)
 {
