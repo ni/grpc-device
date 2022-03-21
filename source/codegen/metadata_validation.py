@@ -339,6 +339,7 @@ def _validate_parameter_size(parameter: dict, function_name: str, metadata: dict
         mechanism = size["mechanism"]
         if mechanism in [
             "len",
+            "len-in-bytes",
             "ivi-dance",
             "ivi-dance-with-a-twist",
             "passed-in",
@@ -386,7 +387,7 @@ def _validate_parameter_size(parameter: dict, function_name: str, metadata: dict
                     f"parameter {parameter['name']} is an input but has mechanism {mechanism}!"
                 )
         else:
-            if mechanism == "len":
+            if mechanism in ["len", "len-in-bytes"]:
                 raise Exception(
                     f"parameter {parameter['name']} is an output but has mechanism {mechanism}!"
                 )

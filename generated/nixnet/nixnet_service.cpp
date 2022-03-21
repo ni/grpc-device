@@ -198,7 +198,7 @@ namespace nixnet_grpc {
       auto session_ref_grpc_session = request->session_ref();
       nxSessionRef_t session_ref = session_repository_->access_session(session_ref_grpc_session.id(), session_ref_grpc_session.name());
       auto value_buffer = const_cast<f64*>(request->value_buffer().data());
-      u32 size_of_value_buffer = static_cast<u32>(request->value_buffer().size());
+      u32 size_of_value_buffer = static_cast<u32>(request->value_buffer().size() * sizeof(f64));
       u32 size_of_buffer = request->size_of_buffer();
       u32 frame_type;
       switch (request->frame_type_enum_case()) {
@@ -1283,7 +1283,7 @@ namespace nixnet_grpc {
       auto session_ref_grpc_session = request->session_ref();
       nxSessionRef_t session_ref = session_repository_->access_session(session_ref_grpc_session.id(), session_ref_grpc_session.name());
       auto value_buffer = const_cast<f64*>(request->value_buffer().data());
-      u32 size_of_value_buffer = static_cast<u32>(request->value_buffer().size());
+      u32 size_of_value_buffer = static_cast<u32>(request->value_buffer().size() * sizeof(f64));
       auto status = library_->WriteSignalSinglePoint(session_ref, value_buffer, size_of_value_buffer);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1320,7 +1320,7 @@ namespace nixnet_grpc {
       }
 
       auto value_buffer = const_cast<f64*>(request->value_buffer().data());
-      u32 size_of_value_buffer = static_cast<u32>(request->value_buffer().size());
+      u32 size_of_value_buffer = static_cast<u32>(request->value_buffer().size() * sizeof(f64));
       auto status = library_->WriteSignalWaveform(session_ref, timeout, value_buffer, size_of_value_buffer);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1357,11 +1357,11 @@ namespace nixnet_grpc {
       }
 
       auto value_buffer = const_cast<f64*>(request->value_buffer().data());
-      u32 size_of_value_buffer = static_cast<u32>(request->value_buffer().size());
+      u32 size_of_value_buffer = static_cast<u32>(request->value_buffer().size() * sizeof(f64));
       auto timestamp_buffer = const_cast<nxTimestamp100ns_t*>(reinterpret_cast<const nxTimestamp100ns_t*>(request->timestamp_buffer().data()));
-      u32 size_of_timestamp_buffer = static_cast<u32>(request->timestamp_buffer().size());
+      u32 size_of_timestamp_buffer = static_cast<u32>(request->timestamp_buffer().size() * sizeof(nxTimestamp100ns_t));
       auto num_pairs_buffer = const_cast<u32*>(request->num_pairs_buffer().data());
-      u32 size_of_num_pairs_buffer = static_cast<u32>(request->num_pairs_buffer().size());
+      u32 size_of_num_pairs_buffer = static_cast<u32>(request->num_pairs_buffer().size() * sizeof(u32));
       auto status = library_->WriteSignalXY(session_ref, timeout, value_buffer, size_of_value_buffer, timestamp_buffer, size_of_timestamp_buffer, num_pairs_buffer, size_of_num_pairs_buffer);
       response->set_status(status);
       return ::grpc::Status::OK;
