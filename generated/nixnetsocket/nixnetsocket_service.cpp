@@ -146,7 +146,7 @@ namespace nixnetsocket_grpc {
       auto node = request->node().c_str();
       auto service = request->service().c_str();
       auto hints = convert_from_grpc<nxaddrinfo>(request->hints());
-      auto res = allocate_output_storage<nxaddrinfo, google::protobuf::RepeatedPtrField<AddrInfo>>();
+      auto res = allocate_output_storage<nxaddrinfo, google::protobuf::RepeatedPtrField<AddrInfo>>(library_);
       auto status = library_->GetAddrInfo(stack_ref, node, service, hints, &res);
       response->set_status(status);
       if (status_ok(status)) {

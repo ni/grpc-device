@@ -21,6 +21,7 @@ class NiXnetSocketLibrary : public nixnetsocket_grpc::NiXnetSocketLibraryInterfa
   int32_t Accept(nxSOCKET socket, nxsockaddr* addr, nxsocklen_t* addrlen);
   int32_t Bind(nxSOCKET socket, nxsockaddr* name, nxsocklen_t namelen);
   int32_t Connect(nxSOCKET socket, nxsockaddr* name, nxsocklen_t namelen);
+  int32_t FreeAddrInfo(nxaddrinfo* res);
   int32_t GetAddrInfo(nxIpStackRef_t stack_ref, const char node[], const char service[], nxaddrinfo* hints, nxaddrinfo** res);
   int32_t Listen(nxSOCKET socket, int32_t backlog);
   int32_t SendTo(nxSOCKET socket, char dataptr[], int32_t size, int32_t flags, nxsockaddr* to, nxsocklen_t tolen);
@@ -48,6 +49,7 @@ class NiXnetSocketLibrary : public nixnetsocket_grpc::NiXnetSocketLibraryInterfa
   using AcceptPtr = decltype(&nxaccept);
   using BindPtr = decltype(&nxbind);
   using ConnectPtr = decltype(&nxconnect);
+  using FreeAddrInfoPtr = int32_t (*)(nxaddrinfo* res);
   using GetAddrInfoPtr = decltype(&nxgetaddrinfo);
   using ListenPtr = decltype(&nxlisten);
   using SendToPtr = decltype(&nxsendto);
@@ -75,6 +77,7 @@ class NiXnetSocketLibrary : public nixnetsocket_grpc::NiXnetSocketLibraryInterfa
     AcceptPtr Accept;
     BindPtr Bind;
     ConnectPtr Connect;
+    FreeAddrInfoPtr FreeAddrInfo;
     GetAddrInfoPtr GetAddrInfo;
     ListenPtr Listen;
     SendToPtr SendTo;

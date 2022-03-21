@@ -459,7 +459,7 @@ inline AddrInfoHintInputConverter convert_from_grpc(const AddrInfoHint& input)
 }
 
 struct AddrInfoOutputConverter {
-  AddrInfoOutputConverter() : addr_info_ptr(nullptr)
+  AddrInfoOutputConverter(NiXnetSocketLibraryInterface* library) : addr_info_ptr(nullptr), library(library)
   {
   }
 
@@ -509,11 +509,12 @@ struct AddrInfoOutputConverter {
       }
     }
     // Free the address info after we've read it.
-    nxfreeaddrinfo(addr_info_ptr);
+    library->FreeAddrInfo(addr_info_ptr);
     addr_info_ptr = nullptr;
   }
 
   nxaddrinfo* addr_info_ptr;
+  NiXnetSocketLibraryInterface* library;
 };
 
 inline void convert_to_grpc(AddrInfoOutputConverter& storage, pb_::RepeatedPtrField<AddrInfo>* output)

@@ -76,6 +76,19 @@ functions = {
         ],
         'returns': 'int32_t'
     },
+    'FreeAddrInfo': {
+        'codegen_method': 'private',
+        'cname': 'nxfreeaddrinfo',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'res',
+                'type': 'nxaddrinfo',
+                'pointer': True
+            }
+        ],
+        'returns': 'int32_t'
+    },
     'GetAddrInfo': {
         'cname': 'nxgetaddrinfo',
         'parameters': [
@@ -107,6 +120,7 @@ functions = {
                 'name': 'res',
                 'supports_standard_copy_convert': True,
                 'supports_standard_output_allocation': True,
+                'additional_arguments_to_output_allocation': ['library_'],
                 'pointer': True,
                 'type': 'nxaddrinfo'
             }
