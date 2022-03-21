@@ -17,6 +17,7 @@ using namespace nixnet_grpc;
 namespace client = nixnet_grpc::experimental::client;
 namespace pb = google::protobuf;
 using namespace ::testing;
+using namespace ::nixnet_utilities;
 using nlohmann::json;
 
 namespace ni {
@@ -142,7 +143,7 @@ TEST_F(NiXnetFlexRayDriverApiTests, FrameSinglePointInputFromExample_FetchData_D
   nixnet_grpc::Frame* frame = NULL;
   u32 num_bytes = 0;
   auto session = EXPECT_SUCCESS(client::create_session(stub(), "NIXNET_example", "FlexRay_Cluster", "FlexRayEventFrame1,FlexRayEventFrame2", "FlexRay2", CREATE_SESSION_MODE_MODE_FRAME_IN_SINGLE_POINT)).session_ref();
-  //EXPECT_SUCCESS(client::set_property(stub(), session, PROPERTY_SESSION_INTF_FLEX_RAY_KEY_SLOT_ID, sizeof(1), &1));
+  EXPECT_SUCCESS(set_property(stub(), session, PROPERTY_SESSION_INTF_FLEX_RAY_KEY_SLOT_ID, (u32)1));
   /*
   std::vector<ReadFrameResponse> read_frame_response_vtr;
   for (int i = 0; i < 20; ++i) {
@@ -165,7 +166,7 @@ TEST_F(NiXnetFlexRayDriverApiTests, FrameSinglePointOutputFromExample_FetchData_
   char payload1[PAYLOAD_SIZE_1 + 1] = {0};
   char payload2[PAYLOAD_SIZE_2 + 1] = {0};
   auto session = EXPECT_SUCCESS(client::create_session(stub(), "NIXNET_example", "FlexRay_Cluster", "FlexRayEventFrame1,FlexRayEventFrame2", "FlexRay1", CREATE_SESSION_MODE_MODE_FRAME_OUT_SINGLE_POINT)).session_ref();
-  //EXPECT_SUCCESS(client::set_property(stub(), session, PROPERTY_SESSION_INTF_FLEX_RAY_KEY_SLOT_ID, sizeof(2), &2));
+  EXPECT_SUCCESS(set_property(stub(), session, PROPERTY_SESSION_INTF_FLEX_RAY_KEY_SLOT_ID, (u32)2));
   frame = new nixnet_grpc::Frame();
   frame->set_timestamp(0);
   frame->set_flags(0);
@@ -205,7 +206,7 @@ TEST_F(NiXnetFlexRayDriverApiTests, FrameStreamInputFromExample_FetchData_DataLo
   std::vector<nixnet_grpc::FrameBuffer> frames;
   u32 num_bytes = 0;
   auto session = EXPECT_SUCCESS(client::create_session(stub(), "NIXNET_example", "FlexRay_Cluster", NULL, "FlexRay2", CREATE_SESSION_MODE_MODE_FRAME_IN_STREAM)).session_ref();
-  //EXPECT_SUCCESS(client::set_property(stub(), session, PROPERTY_SESSION_INTF_FLEX_RAY_KEY_SLOT_ID, sizeof(1), &1));
+  EXPECT_SUCCESS(set_property(stub(), session, PROPERTY_SESSION_INTF_FLEX_RAY_KEY_SLOT_ID, (u32)1));
   /*
   std::vector<ReadFrameResponse> read_frame_response_vtr;
   for (int i = 0; i < 20; ++i) {
@@ -229,7 +230,7 @@ TEST_F(NiXnetFlexRayDriverApiTests, InputOutputSamePortFromExample_FetchData_Dat
   std::vector<f64> output_value_vtr(NUM_SIGNALS_OUT);
   auto session = EXPECT_SUCCESS(client::create_session(stub(), "NIXNET_example", "FlexRay_Cluster", "FlexRayEventSignal1,FlexRayCyclicSignal1", "FlexRay1", CREATE_SESSION_MODE_MODE_SIGNAL_IN_SINGLE_POINT)).session_ref();
   auto session = EXPECT_SUCCESS(client::create_session(stub(), "NIXNET_example", "FlexRay_Cluster", "FlexRayCyclicSignal3,FlexRayCyclicSignal4", "FlexRay1", CREATE_SESSION_MODE_MODE_SIGNAL_OUT_SINGLE_POINT)).session_ref();
-  //EXPECT_SUCCESS(client::set_property(stub(), session, PROPERTY_SESSION_INTF_FLEX_RAY_KEY_SLOT_ID, sizeof(2), &2));
+  EXPECT_SUCCESS(set_property(stub(), session, PROPERTY_SESSION_INTF_FLEX_RAY_KEY_SLOT_ID, (u32)2));
   std::vector<ReadSignalSinglePointResponse> read_signal_single_point_response_vtr;
   while ('q' != (typed_char = tolower(_getch()))) {
     switch (typed_char) {
@@ -269,8 +270,8 @@ TEST_F(NiXnetFlexRayDriverApiTests, LoopbackTestFromExample_FetchData_DataLooksR
   std::vector<f64> output_value_vtr(NUM_SIGNALS_OUT);
   auto input_session = EXPECT_SUCCESS(client::create_session(stub(), "NIXNET_example", "FlexRay_Cluster", "FlexRayEventSignal1,FlexRayEventSignal2", "FlexRay1", CREATE_SESSION_MODE_MODE_SIGNAL_IN_SINGLE_POINT)).session_ref();
   auto output_session = EXPECT_SUCCESS(client::create_session(stub(), "NIXNET_example", "FlexRay_Cluster", "FlexRayEventSignal1,FlexRayEventSignal2", "FlexRay2", CREATE_SESSION_MODE_MODE_SIGNAL_OUT_SINGLE_POINT)).session_ref();
-  //EXPECT_SUCCESS(client::set_property(stub(), input_session, PROPERTY_SESSION_INTF_FLEX_RAY_KEY_SLOT_ID, sizeof(2), &2));
-  //EXPECT_SUCCESS(client::set_property(stub(), output_session, PROPERTY_SESSION_INTF_FLEX_RAY_KEY_SLOT_ID, sizeof(1), &1));
+  EXPECT_SUCCESS(set_property(stub(), input_session, PROPERTY_SESSION_INTF_FLEX_RAY_KEY_SLOT_ID, (u32)2));
+  EXPECT_SUCCESS(set_property(stub(), output_session, PROPERTY_SESSION_INTF_FLEX_RAY_KEY_SLOT_ID, (u32)1));
   EXPECT_SUCCESS(client::start(stub(), input_session, START_STOP_SCOPE_START_STOP_NORMAL));
   std::vector<ReadSignalSinglePointResponse> read_signal_single_point_response_vtr;
   for (int i = 0; i < 20; ++i) {
@@ -298,7 +299,7 @@ TEST_F(NiXnetFlexRayDriverApiTests, PDUSinglePointInputFromExample_FetchData_Dat
   std::vector<nixnet_grpc::FrameBuffer> frames;
   u32 num_bytes = 0;
   auto session = EXPECT_SUCCESS(client::create_session(stub(), "NIXNET_example", "FlexRay_Cluster", "FlexRayCyclicFrame1_pdu,FlexRayCyclicFrame2_pdu", "FlexRay2", CREATE_SESSION_MODE_MODE_FRAME_IN_SINGLE_POINT)).session_ref();
-  //EXPECT_SUCCESS(client::set_property(stub(), session, PROPERTY_SESSION_INTF_FLEX_RAY_KEY_SLOT_ID, sizeof(1), &1));
+  EXPECT_SUCCESS(set_property(stub(), session, PROPERTY_SESSION_INTF_FLEX_RAY_KEY_SLOT_ID, (u32)1));
   /*
   std::vector<ReadFrameResponse> read_frame_response_vtr;
   for (int i = 0; i < 20; ++i) {
@@ -319,7 +320,7 @@ TEST_F(NiXnetFlexRayDriverApiTests, PDUSinglePointOutputFromExample_FetchData_Da
   nixnet_grpc::Frame* frame = NULL;
   std::vector<nixnet_grpc::FrameBuffer> frames;
   auto session = EXPECT_SUCCESS(client::create_session(stub(), "NIXNET_example", "FlexRay_Cluster", "FlexRayCyclicFrame1_pdu,FlexRayCyclicFrame2_pdu", "FlexRay1", CREATE_SESSION_MODE_MODE_FRAME_OUT_SINGLE_POINT)).session_ref();
-  //EXPECT_SUCCESS(client::set_property(stub(), session, PROPERTY_SESSION_INTF_FLEX_RAY_KEY_SLOT_ID, sizeof(2), &2));
+  EXPECT_SUCCESS(set_property(stub(), session, PROPERTY_SESSION_INTF_FLEX_RAY_KEY_SLOT_ID, (u32)2));
   EXPECT_SUCCESS(client::start(stub(), session, START_STOP_SCOPE_START_STOP_NORMAL));
   auto wait_response = EXPECT_SUCCESS(client::wait(stub(), session, WAIT_CONDITION_CONDITION_INTF_COMMUNICATING, 0, 10.0));
   frame = new nixnet_grpc::Frame();
@@ -342,7 +343,7 @@ TEST_F(NiXnetFlexRayDriverApiTests, SignalSinglePointInputFromExample_FetchData_
 {
   constexpr auto NUM_SIGNALS = 2;
   auto session = EXPECT_SUCCESS(client::create_session(stub(), "NIXNET_example", "FlexRay_Cluster", "FlexRayEventSignal1,FlexRayEventSignal2", "FlexRay2", CREATE_SESSION_MODE_MODE_SIGNAL_IN_SINGLE_POINT)).session_ref();
-  //EXPECT_SUCCESS(client::set_property(stub(), session, PROPERTY_SESSION_INTF_FLEX_RAY_KEY_SLOT_ID, sizeof(1), &1));
+  EXPECT_SUCCESS(set_property(stub(), session, PROPERTY_SESSION_INTF_FLEX_RAY_KEY_SLOT_ID, (u32)1));
   std::vector<ReadSignalSinglePointResponse> read_signal_single_point_response_vtr;
   for (int i = 0; i < 20; ++i) {
     read_signal_single_point_response_vtr.push_back(EXPECT_SUCCESS(client::read_signal_single_point(stub(), session, NUM_SIGNALS, NUM_SIGNALS)));
@@ -362,7 +363,7 @@ TEST_F(NiXnetFlexRayDriverApiTests, SignalWaveformInputFromExample_FetchData_Dat
   constexpr auto NUM_SAMP = 100;
   constexpr auto NUM_SIGNALS = 2;
   auto session = EXPECT_SUCCESS(client::create_session(stub(), "NIXNET_example", "FlexRay_Cluster", "FlexRayCyclicSignal1,FlexRayCyclicSignal2", "FlexRay2", CREATE_SESSION_MODE_MODE_SIGNAL_IN_WAVEFORM)).session_ref();
-  //EXPECT_SUCCESS(client::set_property(stub(), session, PROPERTY_SESSION_INTF_FLEX_RAY_KEY_SLOT_ID, sizeof(1), &1));
+  EXPECT_SUCCESS(set_property(stub(), session, PROPERTY_SESSION_INTF_FLEX_RAY_KEY_SLOT_ID, (u32)1));
   std::vector<ReadSignalWaveformResponse> read_signal_waveform_response_vtr;
   for (int i = 0; i < 20; ++i) {
     read_signal_waveform_response_vtr.push_back(EXPECT_SUCCESS(client::read_signal_waveform(stub(), session, 1.0, NUM_SIGNALS * NUM_SAMP)));
@@ -386,7 +387,7 @@ TEST_F(NiXnetFlexRayDriverApiTests, SignalWaveformOutputFromExample_FetchData_Da
   f64 max_out = 10.0;
   std::vector<f64> value_vtr(NUM_SIGNALS * NUM_SAMP);
   auto session = EXPECT_SUCCESS(client::create_session(stub(), "NIXNET_example", "FlexRay_Cluster", "FlexRayCyclicSignal1,FlexRayCyclicSignal2", "FlexRay1", CREATE_SESSION_MODE_MODE_SIGNAL_OUT_WAVEFORM)).session_ref();
-  //EXPECT_SUCCESS(client::set_property(stub(), session, PROPERTY_SESSION_INTF_FLEX_RAY_KEY_SLOT_ID, sizeof(2), &2));
+  EXPECT_SUCCESS(set_property(stub(), session, PROPERTY_SESSION_INTF_FLEX_RAY_KEY_SLOT_ID, (u32)2));
   increment_out = (max_out - min_out) / NUM_SAMP;
   for (int i = 0; i < NUM_SAMP; ++i) {
     value_vtr[i] = min_out + (increment_out * i);
@@ -403,7 +404,7 @@ TEST_F(NiXnetFlexRayDriverApiTests, SignalXYInputFromExample_FetchData_DataLooks
   constexpr auto NUM_SAMP = 1000;
   constexpr auto NUM_SIGNALS = 1;
   auto session = EXPECT_SUCCESS(client::create_session(stub(), "NIXNET_example", "FlexRay_Cluster", "FlexRayCyclicSignal1", "FlexRay2", CREATE_SESSION_MODE_MODE_SIGNAL_IN_XY)).session_ref();
-  //EXPECT_SUCCESS(client::set_property(stub(), session, PROPERTY_SESSION_INTF_FLEX_RAY_KEY_SLOT_ID, sizeof(1), &1));
+  EXPECT_SUCCESS(set_property(stub(), session, PROPERTY_SESSION_INTF_FLEX_RAY_KEY_SLOT_ID, (u32)1));
   /*
   std::vector<ReadSignalXYResponse> read_signal_xy_response_vtr;
   for (int i = 0; i < 20; ++i) {
@@ -437,7 +438,7 @@ TEST_F(NiXnetFlexRayDriverApiTests, SignalXYOutputFromExample_FetchData_DataLook
   f64 max_out = 40.0;
   std::vector<f64> value_vtr(NUM_SAMP);
   auto session = EXPECT_SUCCESS(client::create_session(stub(), "NIXNET_example", "FlexRay_Cluster", "FlexRayCyclicSignal1", "FlexRay1", CREATE_SESSION_MODE_MODE_SIGNAL_OUT_XY)).session_ref();
-  //EXPECT_SUCCESS(client::set_property(stub(), session, PROPERTY_SESSION_INTF_FLEX_RAY_KEY_SLOT_ID, sizeof(2), &2));
+  EXPECT_SUCCESS(set_property(stub(), session, PROPERTY_SESSION_INTF_FLEX_RAY_KEY_SLOT_ID, (u32)2));
   num_pairs_vtr[0] = NUM_SAMP;
   increment_out = (max_out - min_out) / NUM_SAMP;
   for (int i = 0; i < NUM_SAMP; ++i) {
@@ -465,7 +466,7 @@ TEST_F(NiXnetFlexRayDriverApiTests, SynchronizeWithDAQmxFromExample_FetchData_Da
   auto session = EXPECT_SUCCESS(client::create_session(stub(), "NIXNET_example", "FlexRay_Cluster", "FlexRayCyclicSignal3,FlexRayCyclicSignal4", "FlexRay2", CREATE_SESSION_MODE_MODE_SIGNAL_IN_WAVEFORM)).session_ref();
   EXPECT_SUCCESS(client::connect_terminals(stub(), session, "PXI_Trig0", "MasterTimebase"));
   EXPECT_SUCCESS(client::connect_terminals(stub(), session, "PXI_Trig1", "StartTrigger"));
-  //EXPECT_SUCCESS(client::set_property(stub(), session, PROPERTY_SESSION_INTF_FLEX_RAY_KEY_SLOT_ID, sizeof(1), &1));
+  EXPECT_SUCCESS(set_property(stub(), session, PROPERTY_SESSION_INTF_FLEX_RAY_KEY_SLOT_ID, (u32)1));
   EXPECT_SUCCESS(client::start(stub(), session, START_STOP_SCOPE_START_STOP_NORMAL));
   DAQmxErrChk(DAQmxStartTask(m_DaqTask));
   std::vector<ReadSignalWaveformResponse> read_signal_waveform_response_vtr;

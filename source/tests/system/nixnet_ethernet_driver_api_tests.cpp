@@ -17,7 +17,7 @@ using namespace nixnet_grpc;
 namespace client = nixnet_grpc::experimental::client;
 namespace pb = google::protobuf;
 using namespace ::testing;
-using namespace nixnet_utilities;
+using namespace ::nixnet_utilities;
 using nlohmann::json;
 
 namespace ni {

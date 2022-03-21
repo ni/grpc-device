@@ -17,6 +17,7 @@ using namespace nixnet_grpc;
 namespace client = nixnet_grpc::experimental::client;
 namespace pb = google::protobuf;
 using namespace ::testing;
+using namespace ::nixnet_utilities;
 using nlohmann::json;
 
 namespace ni {
@@ -198,7 +199,7 @@ TEST_F(NiXnetLINDriverApiTests, FrameStreamInputFromExample_FetchData_DataLooksR
   unsigned int num_bytes = 0;
   std::vector<nixnet_grpc::FrameBuffer> frames;
   auto session = EXPECT_SUCCESS(client::create_session(stub(), "NIXNET_exampleLDF", "Cluster", "", "LIN2", CREATE_SESSION_MODE_MODE_FRAME_IN_STREAM)).session_ref();
-  //EXPECT_SUCCESS(client::set_property(stub(), session, PROPERTY_SESSION_INTF_LIN_NO_RESPONSE_TO_IN_STRM, sizeof(1), &1));
+  EXPECT_SUCCESS(set_property(stub(), session, PROPERTY_SESSION_INTF_LIN_NO_RESPONSE_TO_IN_STRM, (u32)1));
   /*
   std::vector<ReadFrameResponse> read_frame_response_vtr;
   for (int i = 0; i < 20; ++i) {

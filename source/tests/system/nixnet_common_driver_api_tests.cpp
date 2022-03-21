@@ -17,7 +17,7 @@ using namespace nixnet_grpc;
 namespace client = nixnet_grpc::experimental::client;
 namespace pb = google::protobuf;
 using namespace ::testing;
-using namespace nixnet_utilities;
+using namespace ::nixnet_utilities;
 using nlohmann::json;
 
 namespace ni {
@@ -123,12 +123,12 @@ TEST_F(NiXnetCommonDriverApiTests, XNETDatabaseBrowserFromExample_FetchData_Data
     std::getline(aliases_comma_separated, alias, ',');
     alias_vtr.push_back(alias);
   }
-  std::vector<std::string> file_path_vtr;
-  auto file_paths_comma_separated = std::stringstream(db_get_database_list_response.file_path_buffer());
-  while (file_paths_comma_separated.good()) {
-    std::string file_path;
-    std::getline(file_paths_comma_separated, file_path, ',');
-    file_path_vtr.push_back(file_path);
+  std::vector<std::string> filepath_vtr;
+  auto filepaths_comma_separated = std::stringstream(db_get_database_list_response.filepath_buffer());
+  while (filepaths_comma_separated.good()) {
+    std::string filepath;
+    std::getline(filepaths_comma_separated, filepath, ',');
+    filepath_vtr.push_back(filepath);
   }
   std::vector<std::string> cluster_name_vtr;
   std::vector<std::string> frame_name_vtr;
@@ -158,7 +158,7 @@ TEST_F(NiXnetCommonDriverApiTests, XNETDatabaseBrowserFromExample_FetchData_Data
 
   EXPECT_EQ(999, interface_name_vtr.size());
   EXPECT_EQ(999, alias_vtr.size());
-  EXPECT_EQ(999, file_path_vtr.size());
+  EXPECT_EQ(999, filepath_vtr.size());
   EXPECT_EQ(999, cluster_name_vtr.size());
   EXPECT_EQ(999, frame_name_vtr.size());
   EXPECT_EQ(999, signal_name_vtr.size());

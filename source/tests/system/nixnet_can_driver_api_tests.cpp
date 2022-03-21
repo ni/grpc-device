@@ -17,6 +17,7 @@ using namespace nixnet_grpc;
 namespace client = nixnet_grpc::experimental::client;
 namespace pb = google::protobuf;
 using namespace ::testing;
+using namespace ::nixnet_utilities;
 using nlohmann::json;
 
 namespace ni {
@@ -89,26 +90,27 @@ class NiXnetCANDriverApiTests : public ::testing::Test {
     return stub_;
   }
 
+  void claim_by_address(::nidevice_grpc::Session session, u64 node_name, u32 in_node_addr, u32* out_node_addr);
+
  private:
   DeviceServerInterface* device_server_;
   std::unique_ptr<NiXnet::Stub> stub_;
 };
 
-void claim_by_address(::nidevice_grpc::Session session, u64 node_name, u32 in_node_addr, u32* out_node_addr)
+void NiXnetCANDriverApiTests::claim_by_address(::nidevice_grpc::Session session, u64 node_name, u32 in_node_addr, u32* out_node_addr)
 {
-  //EXPECT_SUCCESS(client::set_property(stub(), session, PROPERTY_SESSION_J1939_NAME, sizeof(node_name), &node_name));
-  //EXPECT_SUCCESS(client::set_property(stub(), session, PROPERTY_SESSION_J1939_ADDRESS, sizeof(in_node_addr), &in_node_addr));
+  EXPECT_SUCCESS(set_property(stub(), session, PROPERTY_SESSION_J1939_NAME, node_name));
+  EXPECT_SUCCESS(set_property(stub(), session, PROPERTY_SESSION_J1939_ADDRESS, in_node_addr));
 
   u16 attempts = 0;
-  /*
-  do
-  {
+  while (true) {
     Sleep(5);
-    auto get_property_response = EXPECT_SUCCESS(client::get_property(stub(), session, PROPERTY_SESSION_J1939_ADDRESS, sizeof(*out_node_addr)));
-    *out_node_addr = (u32*)get_property_response.property_value();
+    auto get_property_response = EXPECT_SUCCESS(get_property(stub(), session, PROPERTY_SESSION_J1939_ADDRESS));
+    *out_node_addr = get_property_response.u32_scalar();
+    if (*out_node_addr < 254 || ++attempts > 300 || get_property_response.status() != 0) {
+      break;
+    }
   }
-  while (!(*out_node_addr < 254) && (++attempts <= 300) && (get_property_response.status() == 0));
-  */
 
   EXPECT_GE(*out_node_addr, 254U);
 }
@@ -209,7 +211,7 @@ TEST_F(NiXnetCANDriverApiTests, FrameStreamInputFromExample_FetchData_DataLooksR
   std::vector<nixnet_grpc::FrameBuffer> frames;
   u32 num_bytes = 0;
   auto session = EXPECT_SUCCESS(client::create_session(stub(), ":memory:", "", "", "CAN2", CREATE_SESSION_MODE_MODE_FRAME_IN_STREAM)).session_ref();
-  //EXPECT_SUCCESS(client::set_property(stub(), session, PROPERTY_SESSION_INTF_BAUD_RATE_64, sizeof(u64), &125000));
+  EXPECT_SUCCESS(set_property(stub(), session, PROPERTY_SESSION_INTF_BAUD_RATE_64, (u64)125000));
   /*
   std::vector<ReadFrameResponse> read_frame_response_vtr;
   for (int i = 0; i < 20; ++i) {
@@ -232,7 +234,7 @@ TEST_F(NiXnetCANDriverApiTests, FrameStreamOutputFromExample_FetchData_DataLooks
   nixnet_grpc::Frame* frame = NULL;
   std::vector<nixnet_grpc::FrameBuffer> frames;
   auto session = EXPECT_SUCCESS(client::create_session(stub(), ":memory:", "", "", "CAN1", CREATE_SESSION_MODE_MODE_FRAME_OUT_STREAM)).session_ref();
-  //EXPECT_SUCCESS(client::set_property(stub(), session, PROPERTY_SESSION_INTF_BAUD_RATE_64, sizeof(u64), &125000));
+  EXPECT_SUCCESS(set_property(stub(), session, PROPERTY_SESSION_INTF_BAUD_RATE_64, (u64)125000));
   frame = new nixnet_grpc::Frame();
   frame->set_timestamp(0);
   frame->set_flags(0);
@@ -545,7 +547,7 @@ TEST_F(NiXnetCANDriverApiTests, J1939FrameStreamInputFromExample_FetchData_DataL
   u32 in_address = 3;
   u32 out_address = 0;
   auto session = EXPECT_SUCCESS(client::create_session(stub(), ":can_j1939:", "", "", "CAN2", CREATE_SESSION_MODE_MODE_FRAME_IN_STREAM)).session_ref();
-  //EXPECT_SUCCESS(client::set_property(stub(), session, PROPERTY_SESSION_INTF_BAUD_RATE_64, sizeof(u64), &250000));
+  EXPECT_SUCCESS(set_property(stub(), session, PROPERTY_SESSION_INTF_BAUD_RATE_64, (u64)250000));
   claim_by_address(session, node_name, in_address, &out_address);
   /*
   std::vector<ReadFrameResponse> read_frame_response_vtr;
@@ -573,7 +575,7 @@ TEST_F(NiXnetCANDriverApiTests, J1939FrameStreamOutputFromExample_FetchData_Data
   u32 out_address = 0;
   char payload[PAYLOAD_SIZE_1 + 1];
   auto session = EXPECT_SUCCESS(client::create_session(stub(), ":can_j1939:", "", "", "CAN1", CREATE_SESSION_MODE_MODE_FRAME_OUT_STREAM)).session_ref();
-  //EXPECT_SUCCESS(client::set_property(stub(), session, PROPERTY_SESSION_INTF_BAUD_RATE_64, sizeof(u64), &250000));
+  EXPECT_SUCCESS(set_property(stub(), session, PROPERTY_SESSION_INTF_BAUD_RATE_64, (u64)250000));
   claim_by_address(session, node_name, in_address, &out_address);
   frame = new nixnet_grpc::Frame();
   frame->set_timestamp(0);
