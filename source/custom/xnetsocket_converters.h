@@ -87,6 +87,33 @@ struct SockAddrInputConverter {
   } addr;
 };
 
+void convert_to_grpc(const nxsockaddr_storage* storage_ptr, SockAddr& output)
+{
+  switch (storage_ptr->ss_family) {
+    case nxAF_INET: {
+      auto ipv4_input = reinterpret_cast<const nxsockaddr_in*>(storage_ptr);
+      auto ipv4_output = output.mutable_ipv4();
+      ipv4_output->set_port(ipv4_input->sin_port);
+      ipv4_output->set_addr(ipv4_input->sin_addr.addr);
+    } break;
+    case nxAF_INET6: {
+      const auto ipv6_input = reinterpret_cast<const nxsockaddr_in6*>(storage_ptr);
+      auto ipv6_output = output.mutable_ipv6();
+      ipv6_output->set_port(ipv6_input->sin6_port);
+      ipv6_output->set_flow_info(ipv6_input->sin6_flowinfo);
+      // Reinterpret unsigned char to char.
+      auto addr_out = reinterpret_cast<const char*>(ipv6_input->sin6_addr.addr);
+      auto addr_size = sizeof(ipv6_input->sin6_addr.addr);
+      ipv6_output->set_addr(
+          {&addr_out[0],
+           &addr_out[addr_size]});
+      ipv6_output->set_scope_id(ipv6_input->sin6_scope_id);
+    } break;
+    default:
+      break;
+  }
+}
+
 // This class allows us to have something allocated on the stack that provides backing
 // storage for an nxsockaddr output param and converts it to the SockAddr grpc-type.
 struct SockAddrOutputConverter {
@@ -117,29 +144,7 @@ struct SockAddrOutputConverter {
 
   void to_grpc(SockAddr& output) const
   {
-    switch (storage.ss_family) {
-      case nxAF_INET: {
-        auto ipv4_input = storage_cast<const nxsockaddr_in>();
-        auto ipv4_output = output.mutable_ipv4();
-        ipv4_output->set_port(ipv4_input->sin_port);
-        ipv4_output->set_addr(ipv4_input->sin_addr.addr);
-      } break;
-      case nxAF_INET6: {
-        const auto ipv6_input = storage_cast<const nxsockaddr_in6>();
-        auto ipv6_output = output.mutable_ipv6();
-        ipv6_output->set_port(ipv6_input->sin6_port);
-        ipv6_output->set_flow_info(ipv6_input->sin6_flowinfo);
-        // Reinterpret unsigned char to char.
-        auto addr_out = reinterpret_cast<const char*>(ipv6_input->sin6_addr.addr);
-        auto addr_size = sizeof(ipv6_input->sin6_addr.addr);
-        ipv6_output->set_addr(
-            {&addr_out[0],
-             &addr_out[addr_size]});
-        ipv6_output->set_scope_id(ipv6_input->sin6_scope_id);
-      } break;
-      default:
-        break;
-    }
+    convert_to_grpc(&storage, output);
   }
 
   // nxsockaddr_storage is a type specifically designed to be large enough to hold
@@ -481,32 +486,7 @@ struct AddrInfoOutputConverter {
       curr_grpc_addr_info->set_protocol((IPProtocol)curr_addr_info_ptr->ai_protocol);
       curr_grpc_addr_info->set_canon_name(curr_addr_info_ptr->ai_canonname);
 
-      // Copy out the SockAddr.
-      // Copied logic from SockAddrOutputConverter.
-      auto addr_info_addr = curr_grpc_addr_info->mutable_addr();
-      switch (curr_addr_info_ptr->ai_addr->sa_family) {
-        case nxAF_INET: {
-          auto ipv4_input = reinterpret_cast<const nxsockaddr_in*>(curr_addr_info_ptr->ai_addr);
-          auto ipv4_output = addr_info_addr->mutable_ipv4();
-          ipv4_output->set_port(ipv4_input->sin_port);
-          ipv4_output->set_addr(ipv4_input->sin_addr.addr);
-        } break;
-        case nxAF_INET6: {
-          const auto ipv6_input = reinterpret_cast<const nxsockaddr_in6*>(curr_addr_info_ptr->ai_addr);
-          auto ipv6_output = addr_info_addr->mutable_ipv6();
-          ipv6_output->set_port(ipv6_input->sin6_port);
-          ipv6_output->set_flow_info(ipv6_input->sin6_flowinfo);
-          // Reinterpret unsigned char to char.
-          auto addr_out = reinterpret_cast<const char*>(ipv6_input->sin6_addr.addr);
-          auto addr_size = sizeof(ipv6_input->sin6_addr.addr);
-          ipv6_output->set_addr(
-              {&addr_out[0],
-               &addr_out[addr_size]});
-          ipv6_output->set_scope_id(ipv6_input->sin6_scope_id);
-        } break;
-        default:
-          break;
-      }
+      convert_to_grpc(reinterpret_cast<const nxsockaddr_storage*>(curr_addr_info_ptr->ai_addr), *(curr_grpc_addr_info->mutable_addr()));
     }
     // Free the address info after we've read it.
     library->FreeAddrInfo(addr_info_ptr);
