@@ -423,7 +423,12 @@ struct SockOptDataOutputConverter {
   nxlinger data_linger;
 };
 
-inline void convert_to_grpc(const SockOptDataOutputConverter& storage, SockOptData* output) struct AddrInfoHintInputConverter {
+inline void convert_to_grpc(const SockOptDataOutputConverter& storage, SockOptData* output)
+{
+  storage.to_grpc(*output);
+}
+
+struct AddrInfoHintInputConverter {
   AddrInfoHintInputConverter(const AddrInfoHint& input)
   {
     addr_info.ai_flags = input.flags();
@@ -532,7 +537,6 @@ template <>
 struct TypeToStorageType<nxVirtualInterface_t, google::protobuf::RepeatedPtrField<nixnetsocket_grpc::VirtualInterface>> {
   using StorageType = nixnetsocket_grpc::VirtualInterfaceOutputConverter;
 };
-
 // Specialization of TypeToStorageType so that allocate_storage_type will
 // allocate SockOptDataOutputConverters for void* output params.
 template <>
