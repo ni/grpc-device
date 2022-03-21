@@ -491,8 +491,18 @@ ${initialize_standard_input_param(function_name, parameter)}
 % else:
 <%
   size_field_name = size_sources[-1]
+  linked_array_param_name = parameter["determine_size_from"]
+  linked_array_param = common_helpers.get_param_with_name(parameters, linked_array_param_name[-1])
+  calculate_len_in_bytes = common_helpers.get_size_mechanism(linked_array_param) == "len-in-bytes"
+  linked_array_param_underlying_type = common_helpers.get_underlying_type(linked_array_param)
+  if len(linked_array_param_name) > 1 and calculate_len_in_bytes:
+    raise f"{parameter['name']} has 'len-in-bytes' set but has more than one 'determine-size-from' values!"
 %>\
+  %if calculate_len_in_bytes:
+      ${parameter['type']} ${parameter_name} = static_cast<${parameter['type']}>(request->${size_field_name}().size() * sizeof(${linked_array_param_underlying_type}));\
+  %else:
       ${parameter['type']} ${parameter_name} = static_cast<${parameter['type']}>(request->${size_field_name}().size());\
+  %endif
 % endif
 </%def>
 

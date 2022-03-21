@@ -99,8 +99,11 @@ u32 GetStateSize(u32 state_id)
   return state_size;
 }
 
+
+//---------------------------------------------------------------------
+//---------------------------------------------------------------------
 // ReadState API has an output parameter of type void * called StateValue. Based on the value of StateID,
-// StateValue can point to u32, nxTimestamp100ns_t, _nxFlexRayStats_t ,etc, which are of different sizes.
+// StateValue can point to u32, nxTimestamp100ns_t, _nxFlexRayStats_t, etc. which are of different sizes.
 // Based on the StateID, we are setting the size of StateValue and after calling the ReadState API, the
 // response is set appropriately.
 ::grpc::Status NiXnetService::ReadState(::grpc::ServerContext* context, const ReadStateRequest* request, ReadStateResponse* response)
@@ -204,6 +207,10 @@ u32 GetStateSize(u32 state_id)
 
 //---------------------------------------------------------------------
 //---------------------------------------------------------------------
+// WriteState API has an input of type void * called StateValue. There are different possible values for 
+// StateValue based on the value of StateID passed in by user. We have defined complex message
+// for StateValue with fields correponding to each of these StateIds in oneof. We have to assert that 
+// correct StateValue oneof is set by user based on StateId passed in. This requires custom implementation.
 ::grpc::Status NiXnetService::WriteState(::grpc::ServerContext* context, const WriteStateRequest* request, WriteStateResponse* response)
 {
   if (context->IsCancelled()) {
@@ -281,6 +288,10 @@ u32 GetStateSize(u32 state_id)
 
 //---------------------------------------------------------------------
 //---------------------------------------------------------------------
+// GetProperty API has an output of type void * which has different possible values based on PropertyId
+// passed in by user. We have defined complex message with oneof corresponding to each of these possible
+// value types. Based on PropertyId passed in, we need to interpret data returned by library and populate
+// corresponding fields in the response. This requires custom implementation.
 ::grpc::Status NiXnetService::GetProperty(::grpc::ServerContext* context, const GetPropertyRequest* request, GetPropertyResponse* response)
 {
   if (context->IsCancelled()) {
@@ -450,6 +461,7 @@ u32 GetStateSize(u32 state_id)
 
 //---------------------------------------------------------------------
 //---------------------------------------------------------------------
+// Custom implementation reason same as GetProperty API.
 ::grpc::Status NiXnetService::GetSubProperty(::grpc::ServerContext* context, const GetSubPropertyRequest* request, GetSubPropertyResponse* response)
 {
   if (context->IsCancelled()) {
@@ -524,6 +536,7 @@ u32 GetStateSize(u32 state_id)
 
 //---------------------------------------------------------------------
 //---------------------------------------------------------------------
+// Custom implementation reason same as GetProperty API.
 ::grpc::Status NiXnetService::DbGetProperty(::grpc::ServerContext* context, const DbGetPropertyRequest* request, DbGetPropertyResponse* response)
 {
   if (context->IsCancelled()) {
@@ -683,6 +696,10 @@ u32 GetStateSize(u32 state_id)
 
 //---------------------------------------------------------------------
 //---------------------------------------------------------------------
+// SetProperty API has an input of type void * which has different possible values based on PropertyId
+// passed in by user. We have defined complex message with oneof corresponding to each of these possible
+// value types. We need to read data from correct oneof based on property PropertyId passed in by user.
+// This requires custom implementation.
 ::grpc::Status NiXnetService::SetProperty(::grpc::ServerContext* context, const SetPropertyRequest* request, SetPropertyResponse* response)
 {
   if (context->IsCancelled()) {
@@ -827,6 +844,7 @@ u32 GetStateSize(u32 state_id)
 
 //---------------------------------------------------------------------
 //---------------------------------------------------------------------
+// Custom implementation reason same as SetProperty API.
 ::grpc::Status NiXnetService::SetSubProperty(::grpc::ServerContext* context, const SetSubPropertyRequest* request, SetSubPropertyResponse* response)
 {
   if (context->IsCancelled()) {
@@ -898,6 +916,7 @@ u32 GetStateSize(u32 state_id)
 
 //---------------------------------------------------------------------
 //---------------------------------------------------------------------
+// Custom implementation reason same as SetProperty API.
 ::grpc::Status NiXnetService::DbSetProperty(::grpc::ServerContext* context, const DbSetPropertyRequest* request, DbSetPropertyResponse* response)
 {
   if (context->IsCancelled()) {
@@ -1033,6 +1052,9 @@ u32 GetStateSize(u32 state_id)
 
 //---------------------------------------------------------------------
 //---------------------------------------------------------------------
+// This API uses size mechanism similar to `ivi-datance` but needs to call a different API to get
+// buffer size. This could potentially be implemented as `xnet-dance` in codegen. Right now no codegen
+// mechanism exists, so added a custom implementation for now.
 ::grpc::Status NiXnetService::DbGetDatabaseList(::grpc::ServerContext* context, const DbGetDatabaseListRequest* request, DbGetDatabaseListResponse* response)
 {
   if (context->IsCancelled()) {
@@ -1056,7 +1078,7 @@ u32 GetStateSize(u32 state_id)
     response->set_status(status);
     if (status_ok(status)) {
       response->set_alias_buffer(alias_buffer.c_str());
-      response->set_file_path_buffer(file_path_buffer.c_str());
+      response->set_filepath_buffer(file_path_buffer.c_str());
       response->set_number_of_databases(number_of_databases);
     }
     return ::grpc::Status::OK;
@@ -1068,6 +1090,7 @@ u32 GetStateSize(u32 state_id)
 
 //---------------------------------------------------------------------
 //---------------------------------------------------------------------
+// Custom implementation reason same as DbGetDatabaseList API.
 ::grpc::Status NiXnetService::DbGetDBCAttribute(::grpc::ServerContext* context, const DbGetDBCAttributeRequest* request, DbGetDBCAttributeResponse* response)
 {
   if (context->IsCancelled()) {
@@ -1116,7 +1139,6 @@ u32 GetStateSize(u32 state_id)
   }
 }
 
-// template <>
 void convert_to_grpc(std::vector<u8>& input, google::protobuf::RepeatedPtrField<nixnet_grpc::FrameBuffer>* output, u32 number_of_bytes, u32 frame_type)
 {
   auto buffer_ptr = (void*)input.data();
@@ -1134,7 +1156,6 @@ void convert_to_grpc(std::vector<u8>& input, google::protobuf::RepeatedPtrField<
   }
 }
 
-// template <>
 void convert_to_grpc(const void* input, nixnet_grpc::FrameBuffer* output, u32 frame_type)
 {
   if (frame_type == nixnet_grpc::FrameType::FRAME_TYPE_ENET) {
