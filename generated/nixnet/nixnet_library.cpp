@@ -134,7 +134,6 @@ nxStatus_t NiXnetLibrary::ConvertFramesToSignalsSinglePoint(nxSessionRef_t sessi
 }
 
 nxStatus_t NiXnetLibrary::ConvertSignalsToFramesSinglePoint(nxSessionRef_t sessionRef, f64 valueBuffer[], u32 sizeOfValueBuffer, u8 buffer[], u32 sizeOfBuffer, u32* numberOfBytesReturned)
-nxStatus_t NiXnetLibrary::ConvertTimestamp100nsTo1ns(nxTimestamp100ns_t from_timestamp_100ns, nxTimestamp1ns_t* to_timestamp_1ns)
 {
   if (!function_pointers_.ConvertSignalsToFramesSinglePoint) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxConvertSignalsToFramesSinglePoint.");
@@ -146,6 +145,7 @@ nxStatus_t NiXnetLibrary::ConvertTimestamp100nsTo1ns(nxTimestamp100ns_t from_tim
 #endif
 }
 
+nxStatus_t NiXnetLibrary::ConvertTimestamp100nsTo1ns(nxTimestamp100ns_t from_timestamp_100ns, nxTimestamp1ns_t* to_timestamp_1ns)
 {
   if (!function_pointers_.ConvertTimestamp100nsTo1ns) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxConvertTimestamp100nsTo1ns.");
