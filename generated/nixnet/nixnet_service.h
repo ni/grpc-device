@@ -48,6 +48,8 @@ public:
   ::grpc::Status Blink(::grpc::ServerContext* context, const BlinkRequest* request, BlinkResponse* response) override;
   ::grpc::Status Clear(::grpc::ServerContext* context, const ClearRequest* request, ClearResponse* response) override;
   ::grpc::Status ConnectTerminals(::grpc::ServerContext* context, const ConnectTerminalsRequest* request, ConnectTerminalsResponse* response) override;
+  ::grpc::Status ConvertFramesToSignalsSinglePoint(::grpc::ServerContext* context, const ConvertFramesToSignalsSinglePointRequest* request, ConvertFramesToSignalsSinglePointResponse* response) override;
+  ::grpc::Status ConvertSignalsToFramesSinglePoint(::grpc::ServerContext* context, const ConvertSignalsToFramesSinglePointRequest* request, ConvertSignalsToFramesSinglePointResponse* response) override;
   ::grpc::Status ConvertTimestamp100nsTo1ns(::grpc::ServerContext* context, const ConvertTimestamp100nsTo1nsRequest* request, ConvertTimestamp100nsTo1nsResponse* response) override;
   ::grpc::Status ConvertTimestamp1nsTo100ns(::grpc::ServerContext* context, const ConvertTimestamp1nsTo100nsRequest* request, ConvertTimestamp1nsTo100nsResponse* response) override;
   ::grpc::Status CreateSession(::grpc::ServerContext* context, const CreateSessionRequest* request, CreateSessionResponse* response) override;
@@ -59,6 +61,8 @@ public:
   ::grpc::Status DbDeleteObject(::grpc::ServerContext* context, const DbDeleteObjectRequest* request, DbDeleteObjectResponse* response) override;
   ::grpc::Status DbDeploy(::grpc::ServerContext* context, const DbDeployRequest* request, DbDeployResponse* response) override;
   ::grpc::Status DbFindObject(::grpc::ServerContext* context, const DbFindObjectRequest* request, DbFindObjectResponse* response) override;
+  ::grpc::Status DbGetDBCAttribute(::grpc::ServerContext* context, const DbGetDBCAttributeRequest* request, DbGetDBCAttributeResponse* response) override;
+  ::grpc::Status DbGetDBCAttributeSize(::grpc::ServerContext* context, const DbGetDBCAttributeSizeRequest* request, DbGetDBCAttributeSizeResponse* response) override;
   ::grpc::Status DbGetDatabaseList(::grpc::ServerContext* context, const DbGetDatabaseListRequest* request, DbGetDatabaseListResponse* response) override;
   ::grpc::Status DbGetDatabaseListSizes(::grpc::ServerContext* context, const DbGetDatabaseListSizesRequest* request, DbGetDatabaseListSizesResponse* response) override;
   ::grpc::Status DbGetProperty(::grpc::ServerContext* context, const DbGetPropertyRequest* request, DbGetPropertyResponse* response) override;
@@ -83,6 +87,7 @@ public:
   ::grpc::Status SetProperty(::grpc::ServerContext* context, const SetPropertyRequest* request, SetPropertyResponse* response) override;
   ::grpc::Status SetSubProperty(::grpc::ServerContext* context, const SetSubPropertyRequest* request, SetSubPropertyResponse* response) override;
   ::grpc::Status Start(::grpc::ServerContext* context, const StartRequest* request, StartResponse* response) override;
+  ::grpc::Status StatusToString(::grpc::ServerContext* context, const StatusToStringRequest* request, StatusToStringResponse* response) override;
   ::grpc::Status Stop(::grpc::ServerContext* context, const StopRequest* request, StopResponse* response) override;
   ::grpc::Status SystemClose(::grpc::ServerContext* context, const SystemCloseRequest* request, SystemCloseResponse* response) override;
   ::grpc::Status SystemOpen(::grpc::ServerContext* context, const SystemOpenRequest* request, SystemOpenResponse* response) override;

@@ -18,6 +18,8 @@ class NiXnetLibraryInterface {
   virtual nxStatus_t Blink(nxSessionRef_t interfaceRef, u32 modifier) = 0;
   virtual nxStatus_t Clear(nxSessionRef_t sessionRef) = 0;
   virtual nxStatus_t ConnectTerminals(nxSessionRef_t sessionRef, const char source[], const char destination[]) = 0;
+  virtual nxStatus_t ConvertFramesToSignalsSinglePoint(nxSessionRef_t sessionRef, u8* frameBuffer, u32 numberOfBytesForFrames, f64 valueBuffer[], u32 sizeOfValueBuffer, nxTimestamp100ns_t timestampBuffer[], u32 sizeOfTimestampBuffer) = 0;
+  virtual nxStatus_t ConvertSignalsToFramesSinglePoint(nxSessionRef_t sessionRef, f64 valueBuffer[], u32 sizeOfValueBuffer, u8 buffer[], u32 sizeOfBuffer, u32* numberOfBytesReturned) = 0;
   virtual nxStatus_t ConvertTimestamp100nsTo1ns(nxTimestamp100ns_t from, nxTimestamp1ns_t* to) = 0;
   virtual nxStatus_t ConvertTimestamp1nsTo100ns(nxTimestamp1ns_t from, nxTimestamp100ns_t* to) = 0;
   virtual nxStatus_t CreateSession(const char databaseName[], const char clusterName[], const char list[], const char interfaceParameter[], u32 mode, nxSessionRef_t* sessionRef) = 0;
@@ -29,6 +31,8 @@ class NiXnetLibraryInterface {
   virtual nxStatus_t DbDeleteObject(nxDatabaseRef_t dbObjectRef) = 0;
   virtual nxStatus_t DbDeploy(const char ipAddress[], const char databaseAlias[], u32 waitForComplete, u32* percentComplete) = 0;
   virtual nxStatus_t DbFindObject(nxDatabaseRef_t parentObjectRef, u32 objectClass, const char objectName[], nxDatabaseRef_t* dbObjectRef) = 0;
+  virtual nxStatus_t DbGetDBCAttribute(nxDatabaseRef_t dbObjectRef, u32 mode, const char attributeName[], u32 attributeTextSize, char attributeText[], u32* isDefault) = 0;
+  virtual nxStatus_t DbGetDBCAttributeSize(nxDatabaseRef_t dbObjectRef, u32 mode, const char attributeName[], u32* attributeTextSize) = 0;
   virtual nxStatus_t DbGetDatabaseList(const char ipAddress[], u32 sizeofAliasBuffer, char aliasBuffer[], u32 sizeofFilepathBuffer, char filepathBuffer[], u32* numberOfDatabases) = 0;
   virtual nxStatus_t DbGetDatabaseListSizes(const char ipAddress[], u32* sizeofAliasBuffer, u32* sizeofFilepathBuffer) = 0;
   virtual nxStatus_t DbGetProperty(nxDatabaseRef_t dbObjectRef, u32 propertyID, u32 propertySize, void* propertyValue) = 0;
@@ -53,6 +57,7 @@ class NiXnetLibraryInterface {
   virtual nxStatus_t SetProperty(nxSessionRef_t sessionRef, u32 propertyID, u32 propertySize, void* propertyValue) = 0;
   virtual nxStatus_t SetSubProperty(nxSessionRef_t sessionRef, u32 activeIndex, u32 propertyID, u32 propertySize, void* propertyValue) = 0;
   virtual nxStatus_t Start(nxSessionRef_t sessionRef, u32 scope) = 0;
+  virtual void StatusToString(nxStatus_t statusID, u32 sizeofString, char statusDescription[2048]) = 0;
   virtual nxStatus_t Stop(nxSessionRef_t sessionRef, u32 scope) = 0;
   virtual nxStatus_t SystemClose(nxSessionRef_t systemRef) = 0;
   virtual nxStatus_t SystemOpen(nxSessionRef_t* systemRef) = 0;

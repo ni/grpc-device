@@ -3219,5 +3219,29 @@ enums = {
                 'value': 1245317
             }
         ]
+    },
+    'FrameType': {
+        'values': [
+            {
+                'name': 'CAN',
+                'value': 1
+            },
+            {
+                'name': 'LIN',
+                'value': 2
+            },
+            {
+                'name': 'FLEX_RAY',
+                'value': 3
+            },
+            {
+                'name': 'J1939',
+                'value': 4
+            },
+            {
+                'name': 'ENET',
+                'value': 5
+            }
+        ]
     }
 }

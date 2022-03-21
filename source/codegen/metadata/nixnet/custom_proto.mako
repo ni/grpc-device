@@ -131,7 +131,7 @@ message GetSubPropertyRequest {
   nidevice_grpc.Session session_ref = 1;
   uint32 active_index = 2;
   oneof subproperty_id_enum {
-  SubProperty property_id = 3;
+    SubProperty property_id = 3;
     uint32 property_id_raw = 4;
   }
 }
@@ -210,7 +210,7 @@ message DbSetPropertyResponse {
 }
 
 message DbGetDatabaseListRequest {
-  string ip_address = 1;  
+  string ip_address = 1;
 }
 
 message DbGetDatabaseListResponse {
@@ -218,4 +218,31 @@ message DbGetDatabaseListResponse {
   string alias_buffer = 2;
   string file_path_buffer = 3;
   uint32 number_of_databases = 4;
+}
+
+message Frame {
+  uint64 timestamp = 1;
+  uint32 identifier = 2;
+  uint32 type = 3;
+  uint32 flags = 4;
+  uint32 info = 5;
+  bytes payload = 6;
+}
+
+message EnetFrame {
+  uint32 type = 1;
+  uint64 device_timestamp = 2;
+  uint64 network_timestamp = 3;
+  uint32 flags = 4;
+  bytes frame_data = 5;
+}
+
+message FrameBuffer {
+  oneof frame {
+    Frame can = 1;
+    Frame lin = 2;
+    Frame flex_ray = 3;
+    Frame j1939 = 4;
+    EnetFrame enet = 5;
+  }
 }

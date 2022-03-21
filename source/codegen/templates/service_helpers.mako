@@ -37,7 +37,7 @@ ${call_library_method(
       const std::string& grpc_device_session_name = request->${session_field_name}();
       auto cleanup_lambda = [&] (${resource_handle_type} id) { library_->${close_function_call}; };
       int status = ${service_helpers.session_repository_field_name(session_output_param, config)}->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
-${populate_response(output_parameters=output_parameters, init_method=True)}\
+${populate_response(function_data=function_data, output_parameters=output_parameters, init_method=True)}\
       return ::grpc::Status::OK;\
 </%def>
 
@@ -108,7 +108,7 @@ ${call_library_method(
           // buffer is now too small, try again
           continue;
         }
-${populate_response(output_parameters=output_parameters, indent_level=1)}\
+${populate_response(function_data=function_data, output_parameters=output_parameters, indent_level=1)}\
         return ::grpc::Status::OK;
       }\
 </%def>
@@ -154,7 +154,7 @@ ${call_library_method(
           // buffer is now too small, try again
           continue;
         }
-${populate_response(output_parameters=output_parameters, indent_level=1)}\
+${populate_response(function_data=function_data, output_parameters=output_parameters, indent_level=1)}\
         return ::grpc::Status::OK;
       }\
 </%def>
@@ -243,7 +243,7 @@ ${call_library_method(
   arg_string=service_helpers.create_args(parameters),
   library_lval=service_helpers.get_library_lval_for_potentially_umockable_function(config, parameters))
 }\
-${populate_response(output_parameters=output_parameters)}\
+${populate_response(function_data=function_data, output_parameters=output_parameters)}\
       return ::grpc::Status::OK;\
 </%def>
 
@@ -267,7 +267,7 @@ ${call_library_method(
   function_data=function_data, 
   arg_string=service_helpers.create_args(parameters))
 }\
-${populate_response(output_parameters=output_parameters)}\
+${populate_response(function_data=function_data, output_parameters=output_parameters)}\
       return ::grpc::Status::OK;\
 </%def>
 
@@ -701,7 +701,7 @@ ${initialize_standard_input_param(function_name, parameter)}
 
 
 ## Handles populating the response message after calling the driver API.
-<%def name="populate_response(output_parameters, indent_level=0, init_method=False)">\
+<%def name="populate_response(function_data, output_parameters, indent_level=0, init_method=False)">\
 <%
   get_last_error_outputs = service_helpers.get_last_error_output_params(output_parameters)
   normal_outputs = [p for p in output_parameters if not p in get_last_error_outputs]
@@ -817,7 +817,7 @@ ${copy_to_response_with_transform(source_buffer=raw_response_field, parameter_na
 ${initialize_response_buffer(parameter_name=parameter_name, parameter=parameter)}\
 ${copy_to_response_with_transform(source_buffer=parameter_name, parameter_name=parameter_name, transform_x="x", size=common_helpers.get_size_expression(parameter))}\
 %   elif common_helpers.supports_standard_copy_conversion_routines(parameter):
-        convert_to_grpc(${parameter_name}, response->mutable_${parameter_name}());
+        convert_to_grpc(${str.join(", ", [f'{parameter_name}', f'response->mutable_{parameter_name}()'] + parameter.get("additional_arguments_to_copy_convert", []))});
 %   elif common_helpers.is_string_arg(parameter):
         response->set_${parameter_name}(${parameter_name});
 %   elif parameter['grpc_type'] == 'nidevice_grpc.Session':
@@ -896,11 +896,16 @@ ${copy_to_response_with_transform(source_buffer=parameter_name, parameter_name=p
   library_lval='library_',
   declare_outputs=True)">\
 <%
+  return_type = service_helpers.get_function_return_type(function_data)
   return_value_name = service_helpers.get_return_value_name(function_data)
   auto_decl = "auto " if declare_outputs else ""
 %>\
 <%block filter="common_helpers.indent(indent_level)">\
+% if return_type != "void":
       ${auto_decl}${return_value_name} = ${library_lval}->${function_name}(${arg_string});
+% else:
+      ${library_lval}->${function_name}(${arg_string});
+% endif
 % if service_helpers.has_status_expression(function_data):
       ${auto_decl}status = ${service_helpers.get_status_expression(function_data)};
 % endif

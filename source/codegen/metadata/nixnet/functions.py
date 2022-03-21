@@ -131,7 +131,6 @@ functions = {
         'returns': 'nxStatus_t'
     },
     'ConvertFramesToSignalsSinglePoint': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -141,16 +140,17 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'frameBuffer',
-                'size': {
-                    'mechanism': 'len-in-bytes',
-                    'value': 'numberOfBytesForFrames'
-                },
-                'type': 'void[]'
+                'type': 'u8',
+                'pointer': True,
+                'grpc_type': 'repeated FrameBuffer',
+                'supports_standard_copy_convert': True,
             },
             {
                 'direction': 'in',
                 'name': 'numberOfBytesForFrames',
-                'type': 'u32'
+                'hardcoded_value': 'frame_buffer.size()',
+                'type': 'u32',
+                'include_in_proto': False
             },
             {
                 'direction': 'out',
@@ -184,7 +184,6 @@ functions = {
         'returns': 'nxStatus_t'
     },
     'ConvertSignalsToFramesSinglePoint': {
-        'codegen_method': 'no',
         'parameters': [
             {
                 'direction': 'in',
@@ -212,7 +211,10 @@ functions = {
                     'mechanism': 'passed-in',
                     'value': 'sizeOfBuffer'
                 },
-                'type': 'void[]'
+                'type': 'u8[]',
+                'grpc_type': 'repeated FrameBuffer',
+                'supports_standard_copy_convert': True,
+                'additional_arguments_to_copy_convert': ['number_of_bytes_returned', 'frame_type']
             },
             {
                 'direction': 'in',
@@ -222,6 +224,14 @@ functions = {
             {
                 'direction': 'out',
                 'name': 'numberOfBytesReturned',
+                'type': 'u32',
+                'include_in_proto': False
+            },
+            {
+                'direction': 'in',
+                'name': 'frameType',
+                'proto_only': True,
+                'enum': 'FrameType',
                 'type': 'u32'
             }
         ],
@@ -487,7 +497,7 @@ functions = {
     },
     'DbGetDBCAttribute': {
         'cname': 'nxdbGetDBCAttribute',
-        'codegen_method': 'no',
+        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
@@ -507,12 +517,17 @@ functions = {
             },
             {
                 'direction': 'in',
+                'include_in_proto': False,
                 'name': 'attributeTextSize',
                 'type': 'u32'
             },
             {
-                'direction': 'in',
+                'direction': 'out',
                 'name': 'attributeText',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'attributeTextSize'
+                },
                 'type': 'char[]'
             },
             {
@@ -524,7 +539,6 @@ functions = {
         'returns': 'nxStatus_t'
     },
     'DbGetDBCAttributeSize': {
-        'codegen_method': 'no',
         'cname': 'nxdbGetDBCAttributeSize',
         'parameters': [
             {
@@ -544,7 +558,7 @@ functions = {
                 'type': 'const char[]'
             },
             {
-                'direction': 'in',
+                'direction': 'out',
                 'name': 'attributeTextSize',
                 'type': 'u32'
             }
@@ -1318,15 +1332,17 @@ functions = {
         'returns': 'nxStatus_t'
     },
     'StatusToString': {
-        'codegen_method': 'no',
+        'status_expression' : '0',
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'status',
+                'name': 'statusID',
                 'type': 'nxStatus_t'
             },
             {
                 'direction': 'in',
+                'include_in_proto': False,
+                'hardcoded_value': '2048U',
                 'name': 'sizeofString',
                 'type': 'u32'
             },
