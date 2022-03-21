@@ -82,6 +82,44 @@ GetPropertyResponse get_property(const client::StubPtr& stub, const nidevice_grp
   return response;
 }
 
+DbGetPropertyResponse db_get_property(const client::StubPtr& stub, const nidevice_grpc::Session& dbobject_ref, const client::simple_variant<nixnet_grpc::DBProperty, pb::uint32>& property_id)
+{
+  ::grpc::ClientContext context;
+
+  auto request = DbGetPropertyRequest{};
+  request.mutable_dbobject_ref()->CopyFrom(dbobject_ref);
+  const auto property_id_ptr = property_id.get_if<nixnet_grpc::DBProperty>();
+  const auto property_id_raw_ptr = property_id.get_if<pb::uint32>();
+  if (property_id_ptr) {
+    request.set_property_id(*property_id_ptr);
+  }
+  else if (property_id_raw_ptr) {
+    request.set_property_id_raw(*property_id_raw_ptr);
+  }
+
+  auto response = DbGetPropertyResponse{};
+
+  client::raise_if_error(
+      stub->DbGetProperty(&context, request, &response));
+
+  return response;
+}
+
+DbGetDatabaseListResponse db_get_database_list(const client::StubPtr& stub, const std::string& ip_address)
+{
+  ::grpc::ClientContext context;
+
+  auto request = DbGetDatabaseListRequest{};
+  request.set_ip_address(ip_address);
+
+  auto response = DbGetDatabaseListResponse{};
+
+  client::raise_if_error(
+      stub->DbGetDatabaseList(&context, request, &response));
+
+  return response;
+}
+
 class NiXnetCommonDriverApiTests : public ::testing::Test {
  protected:
   NiXnetCommonDriverApiTests()
@@ -114,7 +152,7 @@ class NiXnetCommonDriverApiTests : public ::testing::Test {
 };
 
 #define EXPECT_SUCCESS(response_)    \
-  ([this](auto& response) {          \
+  ([](auto& response) {              \
     EXPECT_EQ(0, response.status()); \
     return response;                 \
   })(response_)
@@ -124,353 +162,87 @@ class NiXnetCommonDriverApiTests : public ::testing::Test {
     EXPECT_EQ(error, (response).status()); \
   }
 
+std::vector<u32> get_property_u32_vtr(const client::StubPtr& stub, const nidevice_grpc::Session& session_ref, const client::simple_variant<nixnet_grpc::Property, pb::uint32>& property_id)
+{
+  auto array = EXPECT_SUCCESS(get_property(stub, session_ref, property_id)).u32_array().u32_array();
+  return std::vector<u32>(array.begin(), array.end());
+}
+
+std::vector<nidevice_grpc::Session> get_property_db_ref_vtr(const client::StubPtr& stub, const nidevice_grpc::Session& session_ref, const client::simple_variant<nixnet_grpc::Property, pb::uint32>& property_id)
+{
+  auto array = EXPECT_SUCCESS(get_property(stub, session_ref, property_id)).db_ref_array().db_ref();
+  return std::vector<nidevice_grpc::Session>(array.begin(), array.end());
+}
+
+std::vector<u32> db_get_property_u32_vtr(const client::StubPtr& stub, const nidevice_grpc::Session& database_ref, const client::simple_variant<nixnet_grpc::DBProperty, pb::uint32>& property_id)
+{
+  auto array = EXPECT_SUCCESS(db_get_property(stub, database_ref, property_id)).u32_array().u32_array();
+  return std::vector<u32>(array.begin(), array.end());
+}
+
+std::vector<nidevice_grpc::Session> db_get_property_db_ref_vtr(const client::StubPtr& stub, const nidevice_grpc::Session& database_ref, const client::simple_variant<nixnet_grpc::DBProperty, pb::uint32>& property_id)
+{
+  auto array = EXPECT_SUCCESS(db_get_property(stub, database_ref, property_id)).db_ref_array().db_ref();
+  return std::vector<nidevice_grpc::Session>(array.begin(), array.end());
+}
+
 TEST_F(NiXnetCommonDriverApiTests, XNETDatabaseBrowserFromExample_FetchData_DataLooksReasonable)
 {
-  char** interface_name_array = NULL;
-  char** db_filepath_array = NULL;
-  char** db_alias_array = NULL;
-  char** cluster_name_array = NULL;
-  char** frame_name_array = NULL;
-  char** signal_name_array = NULL;
-  char** lin_schedule_name_array = NULL;
-  u32 number_of_interfaces = 0;
-  u32 number_of_db_filepaths = 0;
-  u32 number_of_db_aliases = 0;
-  u32 number_of_clusters = 0;
-  u32 number_of_frames = 0;
-  u32 number_of_signals = 0;
-  u32 number_of_lin_schedules = 0;
-  nxStatus_t status = 0;
-  u32 array_pos = 0;
-  u32 property_size = 0;
-  unsigned int local_NumberOfInterfaces = 0;
-  char** interface_names = NULL;
-  nxSessionRef_t system_ref = 0;
-  u32 alias_list_size = 0;
-  u32 filepath_list_size = 0;
-  u32 num_databases = 0;
-  char* alias_list = NULL;
-  char* filepath_list = NULL;
-  char* temp_ptr = NULL;
-  char** alias_array = NULL;
-  size_t tempLen = 0;
-  char** filepath_array = NULL;
-  unsigned int local_NumberOfClusters = 0;
-  char** cluster_names = NULL;
-  nxDatabaseRef_t database_ref = 0;
-  nxDatabaseRef_t* cluster_refs = NULL;
-  unsigned int filtering = 0;
-  unsigned int correct_protocol = 0;
-  u32 protocol = 0;
-  unsigned int local_NumberOfFrames = 0;
-  char** frame_names = NULL;
-  nxDatabaseRef_t cluster_ref = 0;
-  nxDatabaseRef_t* frame_refs = NULL;
-  unsigned int local_NumberOfSignals = 0;
-  char** signal_names = NULL;
-  nxDatabaseRef_t frame_ref = 0;
-  nxDatabaseRef_t* signal_refs = NULL;
-  unsigned int total_number_of_schedules = 0;
-  char** schedule_names = NULL;
-  nxDatabaseRef_t* schedule_refs = NULL;
-  {
-    array_pos = 0;
-    property_size = 0;
-    local_NumberOfInterfaces = 0;
-    interface_names = NULL;
-    system_ref = 0;
-    auto session = EXPECT_SUCCESS(client::system_open(stub())).system_ref();
-    auto get_property_size_response = EXPECT_SUCCESS(client::get_property_size(stub(), session, PROPERTY_SYS_INTF_REFS));
-    local_NumberOfInterfaces = (unsigned int)(property_size / sizeof(u32));
-    if (0 < local_NumberOfInterfaces) {
-      auto get_property_response = EXPECT_SUCCESS(get_property(stub(), session, PROPERTY_SYS_INTF_REFS));
-      interface_names = (char**)malloc(local_NumberOfInterfaces * sizeof(char*));
-      for (int i = 0; i < local_NumberOfInterfaces; ++i) {
-        auto get_property_size_response = EXPECT_SUCCESS(client::get_property_size(stub(), session, PROPERTY_INTF_NAME));
-        interface_names[array_pos] = (char*)malloc(property_size);
-        auto get_property_response = EXPECT_SUCCESS(get_property(stub(), session, PROPERTY_INTF_NAME));
-        ++array_pos;
-      }
-    }
-    if (0 != system_ref) {
-      EXPECT_SUCCESS(client::system_close(stub(), session));
-    }
-    number_of_interfaces = array_pos;
-    interface_name_array = interface_names;
+  auto session = EXPECT_SUCCESS(client::system_open(stub())).system_ref();
+  auto interface_refs = get_property_db_ref_vtr(stub(), session, PROPERTY_SYS_INTF_REFS);
+  std::vector<std::string> interface_name_vtr;
+  for (auto interface_ref : interface_refs) {
+    interface_name_vtr.push_back(EXPECT_SUCCESS(get_property(stub(), interface_ref, PROPERTY_INTF_NAME)).str());
   }
-  {
-    alias_list_size = 0;
-    filepath_list_size = 0;
-    num_databases = 0;
-    alias_list = NULL;
-    filepath_list = NULL;
-    temp_ptr = NULL;
-    alias_array = NULL;
-    tempLen = 0;
-    auto db_get_database_list_sizes_response = EXPECT_SUCCESS(client::db_get_database_list_sizes(stub(), ""));
-    if (alias_list_size > 0 && filepath_list_size > 0) {
-      alias_list = (char*)malloc(alias_list_size);
-      filepath_list = (char*)malloc(filepath_list_size);
-      //auto db_get_database_list_response = EXPECT_SUCCESS(client::db_get_database_list(stub(), "", alias_list_size, filepath_list_size));
-      if (num_databases > 0) {
-        alias_array = (char**)malloc(num_databases * sizeof(char*));
-        temp_ptr = alias_list;
-        for (int i = 0; i < num_databases; ++i) {
-          tempLen = strcspn(temp_ptr, ",");
-          alias_array[i] = (char*)malloc(tempLen + 1);
-          strncpy(alias_array[i], temp_ptr, tempLen);
-          alias_array[i][tempLen] = (char)'\0';
-          temp_ptr += tempLen + 1;
-        }
-      }
-      else {
-        num_databases = 0;
-      }
-    }
-    number_of_db_aliases = num_databases;
-    db_alias_array = alias_array;
+  EXPECT_SUCCESS(client::system_close(stub(), session));
+  auto db_get_database_list_response = EXPECT_SUCCESS(db_get_database_list(stub(), ""));
+  auto aliases_comma_separated = std::stringstream(db_get_database_list_response.alias_buffer());
+  std::vector<std::string> alias_vtr;
+  while (aliases_comma_separated.good()) {
+    std::string alias;
+    std::getline(aliases_comma_separated, alias, ',');
+    alias_vtr.push_back(alias);
   }
-  {
-    alias_list_size = 0;
-    filepath_list_size = 0;
-    num_databases = 0;
-    alias_list = NULL;
-    filepath_list = NULL;
-    temp_ptr = NULL;
-    filepath_array = NULL;
-    tempLen = 0;
-    auto db_get_database_list_sizes_response = EXPECT_SUCCESS(client::db_get_database_list_sizes(stub(), ""));
-    if (alias_list_size > 0 && filepath_list_size > 0) {
-      alias_list = (char*)malloc(alias_list_size);
-      filepath_list = (char*)malloc(filepath_list_size);
-      //auto db_get_database_list_response = EXPECT_SUCCESS(client::db_get_database_list(stub(), "", alias_list_size, filepath_list_size));
-      if (num_databases > 0) {
-        filepath_array = (char**)malloc(num_databases * sizeof(char*));
-        temp_ptr = filepath_list;
-        for (int i = 0; i < num_databases; ++i) {
-          tempLen = strcspn(temp_ptr, ",");
-          filepath_array[i] = (char*)malloc(tempLen + 1);
-          strncpy(filepath_array[i], temp_ptr, tempLen);
-          filepath_array[i][tempLen] = (char)'\0';
-          temp_ptr += tempLen + 1;
-        }
-      }
-      else {
-        num_databases = 0;
-      }
-    }
-    number_of_db_filepaths = num_databases;
-    db_filepath_array = filepath_array;
+  std::vector<std::string> file_path_vtr;
+  auto file_paths_comma_separated = std::stringstream(db_get_database_list_response.file_path_buffer());
+  while (file_paths_comma_separated.good()) {
+    std::string file_path;
+    std::getline(file_paths_comma_separated, file_path, ',');
+    file_path_vtr.push_back(file_path);
   }
-  for (int i = 0; i < number_of_db_aliases; ++i) {
-    {
-      array_pos = 0;
-      local_NumberOfClusters = 0;
-      property_size = 0;
-      cluster_names = NULL;
-      database_ref = 0;
-      cluster_refs = NULL;
-      filtering = 0;
-      correct_protocol = 0;
-      protocol = 0;
-      EXPECT_SUCCESS(client::db_open_database(stub(), db_alias_array[i]));
-      //auto db_get_property_size_response = EXPECT_SUCCESS(client::db_get_property_size(stub(), database_ref, DB_PROPERTY_DATABASE_CLST_REFS));
-      local_NumberOfClusters = (unsigned int)(property_size / sizeof(nxDatabaseRef_t));
-      if (0 < local_NumberOfClusters) {
-        cluster_refs = (nxDatabaseRef_t*)malloc(property_size);
-        //auto db_get_property_response = EXPECT_SUCCESS(client::db_get_property(stub(), database_ref, DB_PROPERTY_DATABASE_CLST_REFS, property_size));
-        cluster_names = (char**)malloc(local_NumberOfClusters * sizeof(char*));
-        for (int j = 0; j < local_NumberOfClusters; ++j) {
-          if (filtering == 0) {
-            correct_protocol = 1;
-          }
-          else {
-            //auto db_get_property_response = EXPECT_SUCCESS(client::db_get_property(stub(), cluster_refs[j], DB_PROPERTY_CLST_PROTOCOL, (u32)sizeof(protocol)));
-            if (protocol == nxProtocol_Unknown) {
-              correct_protocol = 1;
-            }
-            else {
-              correct_protocol = 0;
-            }
-          }
-          if (correct_protocol != 0) {
-            //auto db_get_property_size_response = EXPECT_SUCCESS(client::db_get_property_size(stub(), cluster_refs[j], DB_PROPERTY_CLST_NAME));
-            if (property_size > 0) {
-              cluster_names[array_pos] = (char*)malloc(property_size);
-              //auto db_get_property_response = EXPECT_SUCCESS(client::db_get_property(stub(), cluster_refs[j], DB_PROPERTY_CLST_NAME, property_size));
-              ++array_pos;
-            }
-          }
+  std::vector<std::string> cluster_name_vtr;
+  std::vector<std::string> frame_name_vtr;
+  std::vector<std::string> signal_name_vtr;
+  std::vector<std::string> lin_schedule_name_vtr;
+  for (auto alias : alias_vtr) {
+    auto database_ref = EXPECT_SUCCESS(client::db_open_database(stub(), alias)).database_ref();
+    auto cluster_refs = db_get_property_db_ref_vtr(stub(), database_ref, DB_PROPERTY_DATABASE_CLST_REFS);
+    for (auto cluster_ref : cluster_refs) {
+      cluster_name_vtr.push_back(EXPECT_SUCCESS(db_get_property(stub(), cluster_ref, DB_PROPERTY_CLST_NAME)).str());
+      auto frame_refs = db_get_property_db_ref_vtr(stub(), cluster_ref, DB_PROPERTY_CLST_FRM_REFS);
+      for (auto frame_ref : frame_refs) {
+        frame_name_vtr.push_back(EXPECT_SUCCESS(db_get_property(stub(), frame_ref, DB_PROPERTY_FRM_NAME)).str());
+        auto signal_refs = db_get_property_db_ref_vtr(stub(), frame_ref, DB_PROPERTY_FRM_SIG_REFS);
+        for (auto signal_ref : signal_refs) {
+          signal_name_vtr.push_back(EXPECT_SUCCESS(db_get_property(stub(), signal_ref, DB_PROPERTY_SIG_NAME)).str());
         }
       }
-      if (0 != database_ref) {
-        //EXPECT_SUCCESS(client::db_close_database(stub(), database_ref, 1));
-      }
-      number_of_clusters = array_pos;
-      cluster_name_array = cluster_names;
-    }
-    for (int j = 0; j < number_of_clusters; ++j) {
-      {
-        array_pos = 0;
-        property_size = 0;
-        local_NumberOfFrames = 0;
-        frame_names = NULL;
-        database_ref = 0;
-        cluster_ref = 0;
-        frame_refs = NULL;
-        EXPECT_SUCCESS(client::db_open_database(stub(), db_alias_array[i]));
-        //EXPECT_SUCCESS(client::db_find_object(stub(), database_ref, nxClass_Cluster, cluster_name_array[j]));
-        //auto db_get_property_size_response = EXPECT_SUCCESS(client::db_get_property_size(stub(), cluster_ref, DB_PROPERTY_CLST_FRM_REFS));
-        local_NumberOfFrames = (unsigned int)(property_size / sizeof(nxDatabaseRef_t));
-        if (0 < local_NumberOfFrames) {
-          frame_refs = (nxDatabaseRef_t*)malloc(property_size);
-          //auto db_get_property_response = EXPECT_SUCCESS(client::db_get_property(stub(), cluster_ref, DB_PROPERTY_CLST_FRM_REFS, property_size));
-          frame_names = (char**)malloc(local_NumberOfFrames * sizeof(char*));
-          for (int k = 0; k < local_NumberOfFrames; ++k) {
-            //auto db_get_property_size_response = EXPECT_SUCCESS(client::db_get_property_size(stub(), frame_refs[k], DB_PROPERTY_FRM_NAME));
-            if (property_size > 0) {
-              frame_names[array_pos] = (char*)malloc(property_size);
-              //auto db_get_property_response = EXPECT_SUCCESS(client::db_get_property(stub(), frame_refs[k], DB_PROPERTY_FRM_NAME, property_size));
-              ++array_pos;
-            }
-          }
-        }
-        if (0 != database_ref) {
-          //EXPECT_SUCCESS(client::db_close_database(stub(), database_ref, 1));
-        }
-        number_of_frames = array_pos;
-        frame_name_array = frame_names;
-      }
-      for (int k = 0; k < number_of_frames; ++k) {
-        {
-          array_pos = 0;
-          property_size = 0;
-          local_NumberOfSignals = 0;
-          signal_names = NULL;
-          database_ref = 0;
-          cluster_ref = 0;
-          frame_ref = 0;
-          signal_refs = NULL;
-          EXPECT_SUCCESS(client::db_open_database(stub(), db_alias_array[i]));
-          //EXPECT_SUCCESS(client::db_find_object(stub(), database_ref, nxClass_Cluster, cluster_name_array[j]));
-          //EXPECT_SUCCESS(client::db_find_object(stub(), cluster_ref, nxClass_Frame, frame_name_array[k]));
-          //auto db_get_property_size_response = EXPECT_SUCCESS(client::db_get_property_size(stub(), frame_ref, DB_PROPERTY_FRM_SIG_REFS));
-          local_NumberOfSignals = (unsigned int)(property_size / sizeof(nxDatabaseRef_t));
-          if (0 < local_NumberOfSignals) {
-            signal_refs = (nxDatabaseRef_t*)malloc(property_size);
-            //auto db_get_property_response = EXPECT_SUCCESS(client::db_get_property(stub(), frame_ref, DB_PROPERTY_FRM_SIG_REFS, property_size));
-            signal_names = (char**)malloc(local_NumberOfSignals * sizeof(char*));
-            for (int m = 0; m < local_NumberOfSignals; ++m) {
-              //auto db_get_property_size_response = EXPECT_SUCCESS(client::db_get_property_size(stub(), signal_refs[m], DB_PROPERTY_SIG_NAME));
-              if (property_size > 0) {
-                signal_names[array_pos] = (char*)malloc(property_size);
-                //auto db_get_property_response = EXPECT_SUCCESS(client::db_get_property(stub(), signal_refs[m], DB_PROPERTY_SIG_NAME, property_size));
-                ++array_pos;
-              }
-            }
-          }
-          if (0 != database_ref) {
-            //EXPECT_SUCCESS(client::db_close_database(stub(), database_ref, 1));
-          }
-          number_of_signals = array_pos;
-          signal_name_array = signal_names;
-        }
-      }
-      {
-        array_pos = 0;
-        total_number_of_schedules = 0;
-        property_size = 0;
-        schedule_names = NULL;
-        cluster_ref = 0;
-        database_ref = 0;
-        schedule_refs = NULL;
-        EXPECT_SUCCESS(client::db_open_database(stub(), db_alias_array[i]));
-        //EXPECT_SUCCESS(client::db_find_object(stub(), database_ref, nxClass_Cluster, cluster_name_array[j]));
-        //auto db_get_property_size_response = EXPECT_SUCCESS(client::db_get_property_size(stub(), cluster_ref, DB_PROPERTY_CLST_LIN_SCHEDULES));
-        total_number_of_schedules = (unsigned int)(property_size / sizeof(nxDatabaseRef_t));
-        if (0 < total_number_of_schedules) {
-          schedule_refs = (nxDatabaseRef_t*)malloc(property_size);
-          //auto db_get_property_response = EXPECT_SUCCESS(client::db_get_property(stub(), cluster_ref, DB_PROPERTY_CLST_LIN_SCHEDULES, property_size));
-          schedule_names = (char**)malloc(total_number_of_schedules * sizeof(char*));
-          for (int k = 0; k < total_number_of_schedules; ++k) {
-            //auto db_get_property_size_response = EXPECT_SUCCESS(client::db_get_property_size(stub(), schedule_refs[k], nxPropLINSched_Name));
-            if (property_size > 0) {
-              schedule_names[array_pos] = (char*)malloc(property_size);
-              //auto db_get_property_response = EXPECT_SUCCESS(client::db_get_property(stub(), schedule_refs[k], nxPropLINSched_Name, property_size));
-              ++array_pos;
-            }
-          }
-        }
-        if (0 != database_ref) {
-          //EXPECT_SUCCESS(client::db_close_database(stub(), database_ref, 1));
-        }
-        number_of_lin_schedules = array_pos;
-        lin_schedule_name_array = schedule_names;
+      auto schedule_refs = db_get_property_db_ref_vtr(stub(), cluster_ref, DB_PROPERTY_CLST_LIN_SCHEDULES);
+      for (auto schedule_ref : schedule_refs) {
+        // TODO: replace nxPropLINSched_Name
+        //lin_schedule_name_vtr.push_back(EXPECT_SUCCESS(db_get_property(stub(), schedule_ref, nxPropLINSched_Name)).str());
       }
     }
+    EXPECT_SUCCESS(client::db_close_database(stub(), database_ref, 1));
   }
 
-  //EXPECT_EQ(0, get_property_size_response.property_size());
-  //EXPECT_EQ(999, get_property_response.property_value_size());
-  //EXPECT_EQ(999, get_property_response.property_value().size());
-  //EXPECT_EQ(0 /* void[] */, get_property_response.property_value(0));
-  //EXPECT_EQ(0, db_get_database_list_sizes_response.sizeof_filepath_buffer());
-  //EXPECT_EQ(0, db_get_database_list_sizes_response.sizeof_alias_buffer());
-  /*
-  EXPECT_EQ(0, db_get_database_list_response.number_of_databases());
-  EXPECT_EQ(999, db_get_database_list_response.filepath_buffer_size());
-  EXPECT_EQ(999, db_get_database_list_response.filepath_buffer().size());
-  EXPECT_EQ('\0', db_get_database_list_response.filepath_buffer(0));
-  EXPECT_EQ(999, db_get_database_list_response.alias_buffer_size());
-  EXPECT_EQ(999, db_get_database_list_response.alias_buffer().size());
-  EXPECT_EQ('\0', db_get_database_list_response.alias_buffer(0));
-  */
-  //EXPECT_EQ(0, db_get_database_list_sizes_response.sizeof_filepath_buffer());
-  //EXPECT_EQ(0, db_get_database_list_sizes_response.sizeof_alias_buffer());
-  /*
-  EXPECT_EQ(0, db_get_database_list_response.number_of_databases());
-  EXPECT_EQ(999, db_get_database_list_response.filepath_buffer_size());
-  EXPECT_EQ(999, db_get_database_list_response.filepath_buffer().size());
-  EXPECT_EQ('\0', db_get_database_list_response.filepath_buffer(0));
-  EXPECT_EQ(999, db_get_database_list_response.alias_buffer_size());
-  EXPECT_EQ(999, db_get_database_list_response.alias_buffer().size());
-  EXPECT_EQ('\0', db_get_database_list_response.alias_buffer(0));
-  */
-  //EXPECT_EQ(0, db_get_property_size_response.property_size());
-  //EXPECT_EQ(999, db_get_property_response.property_value_size());
-  //EXPECT_EQ(999, db_get_property_response.property_value().size());
-  //EXPECT_EQ(0 /* void[] */, db_get_property_response.property_value(0));
-  //EXPECT_EQ(999, db_get_property_response.property_value_size());
-  //EXPECT_EQ(999, db_get_property_response.property_value().size());
-  //EXPECT_EQ(0 /* void[] */, db_get_property_response.property_value(0));
-  //EXPECT_EQ(0, db_get_property_size_response.property_size());
-  //EXPECT_EQ(999, db_get_property_response.property_value_size());
-  //EXPECT_EQ(999, db_get_property_response.property_value().size());
-  //EXPECT_EQ(0 /* void[] */, db_get_property_response.property_value(0));
-  //EXPECT_EQ(0, db_get_property_size_response.property_size());
-  //EXPECT_EQ(999, db_get_property_response.property_value_size());
-  //EXPECT_EQ(999, db_get_property_response.property_value().size());
-  //EXPECT_EQ(0 /* void[] */, db_get_property_response.property_value(0));
-  //EXPECT_EQ(0, db_get_property_size_response.property_size());
-  //EXPECT_EQ(999, db_get_property_response.property_value_size());
-  //EXPECT_EQ(999, db_get_property_response.property_value().size());
-  //EXPECT_EQ(0 /* void[] */, db_get_property_response.property_value(0));
-  //EXPECT_EQ(0, db_get_property_size_response.property_size());
-  //EXPECT_EQ(999, db_get_property_response.property_value_size());
-  //EXPECT_EQ(999, db_get_property_response.property_value().size());
-  //EXPECT_EQ(0 /* void[] */, db_get_property_response.property_value(0));
-  //EXPECT_EQ(0, db_get_property_size_response.property_size());
-  //EXPECT_EQ(999, db_get_property_response.property_value_size());
-  //EXPECT_EQ(999, db_get_property_response.property_value().size());
-  //EXPECT_EQ(0 /* void[] */, db_get_property_response.property_value(0));
-  //EXPECT_EQ(0, db_get_property_size_response.property_size());
-  //EXPECT_EQ(999, db_get_property_response.property_value_size());
-  //EXPECT_EQ(999, db_get_property_response.property_value().size());
-  //EXPECT_EQ(0 /* void[] */, db_get_property_response.property_value(0));
-  //EXPECT_EQ(0, db_get_property_size_response.property_size());
-  //EXPECT_EQ(999, db_get_property_response.property_value_size());
-  //EXPECT_EQ(999, db_get_property_response.property_value().size());
-  //EXPECT_EQ(0 /* void[] */, db_get_property_response.property_value(0));
+  EXPECT_EQ(999, interface_name_vtr.size());
+  EXPECT_EQ(999, alias_vtr.size());
+  EXPECT_EQ(999, file_path_vtr.size());
+  EXPECT_EQ(999, cluster_name_vtr.size());
+  EXPECT_EQ(999, frame_name_vtr.size());
+  EXPECT_EQ(999, signal_name_vtr.size());
+  EXPECT_EQ(999, lin_schedule_name_vtr.size());
 }
 
 }  // namespace
