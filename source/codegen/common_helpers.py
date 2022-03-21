@@ -287,6 +287,7 @@ def is_unsupported_size_mechanism_type(size_mechanism: str) -> bool:
     return size_mechanism not in {
         "fixed",
         "len",
+        "len-in-bytes",
         "ivi-dance",
         "passed-in",
         "passed-in-by-ptr",
@@ -1055,6 +1056,14 @@ def get_grpc_field_name(param: dict) -> str:
     from a Request/Response message.
     """
     return param.get("grpc_name", _camel_to_snake(param["name"]))
+
+
+def get_grpc_client_field_name(param: dict) -> str:
+    """Get the name of the protobuf field for the given param.
+
+    This will be a snake_case_string, that can be used in the client generated files.
+    """
+    return param.get("grpc_name", _camel_to_snake(param["cppName"]))
 
 
 def get_grpc_field_name_from_str(field_name: str) -> str:

@@ -233,7 +233,7 @@ class NiXnetSocketNoHardwareTests : public NiXnetSocketDriverApiTests {
 SocketResponse
 socket(client::StubPtr& stub, const nidevice_grpc::Session& stack)
 {
-  return client::socket(stub, stack, 2 /* nxAF_INET */, 1 /* STREAM */, 6 /* TCP */);
+  return client::socket(stub, stack, ADDRESS_FAMILY_INET, SOCKET_PROTOCOL_TYPE_STREAM, IP_PROTOCOL_TCP);
 }
 
 SocketResponse socket(client::StubPtr& stub)

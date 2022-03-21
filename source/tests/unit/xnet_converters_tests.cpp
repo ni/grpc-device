@@ -323,9 +323,10 @@ TEST(XnetConvertersTests, SockOptDataWithBool_ConvertFromGrpc_DataLooksReasonabl
 
   auto opt_data = convert_from_grpc<SockOptDataInputConverter>(sock_opt_data);
 
-  EXPECT_EQ(REUSE_ADDR, opt_data.data_bool);
-  EXPECT_EQ(sizeof(bool), opt_data.size());
-  EXPECT_EQ(&(opt_data.data_bool), opt_data.data());
+  // Bools get translated to ints for the API (0 for False, 1 for True)
+  EXPECT_EQ(1, opt_data.data_int);
+  EXPECT_EQ(sizeof(int32_t), opt_data.size());
+  EXPECT_EQ(&(opt_data.data_int), opt_data.data());
 }
 
 TEST(XnetConvertersTests, SockOptDataWithString_ConvertFromGrpc_DataLooksReasonable)
@@ -341,6 +342,23 @@ TEST(XnetConvertersTests, SockOptDataWithString_ConvertFromGrpc_DataLooksReasona
   EXPECT_EQ(opt_data.data_string.data(), opt_data.data());
   char* dereferenced_data = (char*)(opt_data.data());
   EXPECT_STREQ(DEVICE_NAME.c_str(), dereferenced_data);
+}
+
+TEST(XnetConvertersTests, SockOptDataWithLinger_ConvertFromGrpc_DataLooksReasonable)
+{
+  constexpr auto L_LINGER = 42;
+  constexpr auto L_ONOFF = 1;
+  SockOptData sock_opt_data = SockOptData{};
+  sock_opt_data.mutable_data_linger()->set_l_linger(L_LINGER);
+  sock_opt_data.mutable_data_linger()->set_l_onoff(L_ONOFF);
+
+  auto opt_data = convert_from_grpc<SockOptDataInputConverter>(sock_opt_data);
+
+  EXPECT_EQ(sizeof(nxlinger), opt_data.size());
+  EXPECT_EQ(&opt_data.data_linger, opt_data.data());
+  nxlinger* dereferenced_data = (nxlinger*)(opt_data.data());
+  EXPECT_EQ(L_LINGER, dereferenced_data->l_linger);
+  EXPECT_EQ(L_ONOFF, dereferenced_data->l_onoff);
 }
 
 TEST(XnetConvertersTests, SockOptDataWithDataUnset_ConvertFromGrpc_NullPtrDataAndZeroSize)
@@ -372,18 +390,19 @@ TEST(XnetConvertersTests, Int32SockOptData_ConvertToGrpc_ConvertsToSockOptDataWi
 
 TEST(XnetConvertersTests, BoolSockOptData_ConvertToGrpc_ConvertsToSockOptDataWithBoolValue)
 {
-  constexpr auto LINGER = true;
-  auto storage = allocate_output_storage<void*, SockOptData>(OptName::OPT_NAME_SO_LINGER);
+  constexpr auto REUSE_ADDR = 1;
+  auto storage = allocate_output_storage<void*, SockOptData>(OptName::OPT_NAME_SO_REUSE_ADDR);
   void* data_pointer = storage.data();
-  EXPECT_EQ(data_pointer, &(storage.data_bool));
-  auto bool_pointer = reinterpret_cast<bool*>(data_pointer);
-  *bool_pointer = LINGER;
+  EXPECT_EQ(data_pointer, &(storage.data_int));
+  auto int_pointer = reinterpret_cast<int32_t*>(data_pointer);
+  *int_pointer = REUSE_ADDR;
 
   auto grpc_data = SockOptData{};
   convert_to_grpc(storage, &grpc_data);
 
   EXPECT_EQ(SockOptData::DataCase::kDataBool, grpc_data.data_case());
-  EXPECT_EQ(LINGER, grpc_data.data_bool());
+  // 1 from API is translated to true bool for gRPC.
+  EXPECT_EQ(true, grpc_data.data_bool());
 }
 
 TEST(XnetConvertersTests, StringSockOptData_ConvertToGrpc_ConvertsToSockOptDataWithStringValue)
@@ -402,6 +421,25 @@ TEST(XnetConvertersTests, StringSockOptData_ConvertToGrpc_ConvertsToSockOptDataW
 
   EXPECT_EQ(SockOptData::DataCase::kDataString, grpc_data.data_case());
   EXPECT_EQ(DEVICE_NAME, grpc_data.data_string());
+}
+
+TEST(XnetConvertersTests, LingerSockOptData_ConvertToGrpc_ConvertsToSockOptDataWithLingerValue)
+{
+  constexpr auto L_LINGER = 42;
+  constexpr auto L_ONOFF = 1;
+  auto storage = allocate_output_storage<void*, SockOptData>(OptName::OPT_NAME_SO_LINGER);
+  void* data_pointer = storage.data();
+  EXPECT_EQ(data_pointer, &(storage.data_linger));
+  auto linger_pointer = reinterpret_cast<nxlinger*>(data_pointer);
+  linger_pointer->l_linger = L_LINGER;
+  linger_pointer->l_onoff = L_ONOFF;
+
+  auto grpc_data = SockOptData{};
+  convert_to_grpc(storage, &grpc_data);
+
+  EXPECT_EQ(SockOptData::DataCase::kDataLinger, grpc_data.data_case());
+  EXPECT_EQ(L_LINGER, grpc_data.data_linger().l_linger());
+  EXPECT_EQ(L_ONOFF, grpc_data.data_linger().l_onoff());
 }
 
 TEST(XnetConvertersTests, SockOptDataWithUnknownOptName_ConvertToGrpc_ConvertsToUnsetSockOptData)

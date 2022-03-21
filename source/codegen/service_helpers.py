@@ -120,6 +120,8 @@ def create_args(parameters):
     result = ""
     have_expanded_varargs = False
     for parameter in parameters:
+        if parameter.get("proto_only", False):
+            continue
         if parameter.get("repeating_argument", False):
             continue
         parameter_name = common_helpers.get_cpp_local_name(parameter)
@@ -196,7 +198,11 @@ def create_params(parameters, expand_varargs=True):
         parameters[-1]
     ) and common_helpers.is_repeated_varargs_parameter(parameters[-2]):
         parameters = parameters[:-1]
-    return ", ".join(_create_param(p, expand_varargs, repeated_parameters) for p in parameters)
+    return ", ".join(
+        _create_param(p, expand_varargs, repeated_parameters)
+        for p in parameters
+        if not p.get("proto_only", False)
+    )
 
 
 def _get_array_param_size(parameter) -> str:
@@ -599,6 +605,11 @@ def list_session_repository_handle_types(
                     "windows_only": config.get("windows_only", False),
                 }
     return session_repository_handle_type_map
+
+
+def get_function_return_type(function_data: dict) -> str:
+    """Get the return type for function_data."""
+    return function_data["returns"]
 
 
 def _get_return_value_parameter(parameters: List[dict]) -> Optional[dict]:
