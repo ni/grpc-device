@@ -171,8 +171,8 @@ message SockOptData {
     bool data_bool = 2;
     string data_string = 3;
     Linger data_linger = 4;
-    IPMReq data_ipmreq = 5;
-    IPv6MReq data_ipv6mreq = 6;
+    IPMReq data_ip_mreq = 5;
+    IPv6MReq data_ipv6_mreq = 6;
   }
 }
 
