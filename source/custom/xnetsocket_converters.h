@@ -511,12 +511,7 @@ struct SockOptDataOutputConverter {
       }
       case OptName::OPT_NAME_IPV6_ADD_MEMBERSHIP:
       case OptName::OPT_NAME_IPV6_DROP_MEMBERSHIP: {
-        // Reinterpret unsigned char to char.
-        auto multiaddr_out = reinterpret_cast<const char*>(data_ipv6mreq.ipv6mr_multiaddr.addr);
-        auto multiaddr_size = sizeof(data_ipv6mreq.ipv6mr_multiaddr.addr);
-        output.mutable_data_ipv6_mreq()->mutable_ipv6mr_multiaddr()->set_addr(
-            {&multiaddr_out[0],
-             &multiaddr_out[multiaddr_size]});
+        copy_ipv6_addr_to_output(data_ipv6mreq.ipv6mr_multiaddr, output.mutable_data_ipv6_mreq()->mutable_ipv6mr_multiaddr());
         output.mutable_data_ipv6_mreq()->set_ipv6mr_interface(data_ipv6mreq.ipv6mr_interface);
         break;
       }

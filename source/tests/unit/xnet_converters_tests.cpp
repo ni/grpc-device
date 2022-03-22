@@ -513,6 +513,7 @@ TEST(XnetConvertersTests, IPV6MReqSockOptData_ConvertToGrpc_ConvertsToSockOptDat
   convert_to_grpc(storage, &grpc_data);
 
   EXPECT_EQ(SockOptData::DataCase::kDataIpv6Mreq, grpc_data.data_case());
+  EXPECT_EQ(grpc_data.data_ipv6_mreq().ipv6mr_multiaddr().addr().size(), IPV6MR_MULTIADDR.size());
   EXPECT_THAT(grpc_data.data_ipv6_mreq().ipv6mr_multiaddr().addr(), ElementsAreArray(IPV6MR_MULTIADDR.data(), IPV6MR_MULTIADDR.size()));
   EXPECT_EQ(IPV6MR_INTERFACE, grpc_data.data_ipv6_mreq().ipv6mr_interface());
 }
