@@ -1207,12 +1207,12 @@ enums = {
             },
             {
                 'name': 'SESSION_INTF_ENET_STATS_COUNTER_NAMES',
-                'type': 'string_array',
+                'type': 'string',
                 'value': 68157612
             },
             {
                 'name': 'SESSION_INTF_ENET_STATS_COUNTER_VALUES',
-                'type': 'string_array',
+                'type': 'string',
                 'value': 68157613
             },
             {
@@ -1242,12 +1242,12 @@ enums = {
             },
             {
                 'name': 'SESSION_INTF_ENET_STATS_PHY_COUNTER_NAMES',
-                'type': 'string_array',
+                'type': 'string',
                 'value': 68157693
             },
             {
                 'name': 'SESSION_INTF_ENET_STATS_PHY_COUNTER_VALUES',
-                'type': 'string_array',
+                'type': 'string',
                 'value': 68157694
             },
             {
@@ -1417,12 +1417,12 @@ enums = {
             },
             {
                 'name': 'SESSION_INTF_ENET_TIME_PORT_STATS_COUNTER_NAMES',
-                'type': 'string_array',
+                'type': 'string',
                 'value': 68157667
             },
             {
                 'name': 'SESSION_INTF_ENET_TIME_PORT_STATS_COUNTER_VALUES',
-                'type': 'string_array',
+                'type': 'string',
                 'value': 68157668
             },
             {
@@ -1732,7 +1732,7 @@ enums = {
             },
             {
                 'name': 'SESSION_INTF_LIN_SCHED_NAMES',
-                'type': 'string_array',
+                'type': 'string',
                 'value': 68157557
             },
             {
@@ -1777,7 +1777,7 @@ enums = {
             },
             {
                 'name': 'SESSION_LIST',
-                'type': 'string_array',
+                'type': 'string',
                 'value': 68157443
             },
             {
