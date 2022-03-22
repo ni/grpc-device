@@ -307,12 +307,12 @@ namespace nixnet_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      nxTimestamp100ns_t from = request->from();
-      nxTimestamp1ns_t to {};
-      auto status = library_->ConvertTimestamp100nsTo1ns(from, &to);
+      nxTimestamp100ns_t from_timestamp_100ns = request->from_timestamp_100ns();
+      nxTimestamp1ns_t to_timestamp_1ns {};
+      auto status = library_->ConvertTimestamp100nsTo1ns(from_timestamp_100ns, &to_timestamp_1ns);
       response->set_status(status);
       if (status_ok(status)) {
-        response->set_to(to);
+        response->set_to_timestamp_1ns(to_timestamp_1ns);
       }
       return ::grpc::Status::OK;
     }
@@ -329,12 +329,12 @@ namespace nixnet_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      nxTimestamp1ns_t from = request->from();
-      nxTimestamp100ns_t to {};
-      auto status = library_->ConvertTimestamp1nsTo100ns(from, &to);
+      nxTimestamp1ns_t from_timestamp_1ns = request->from_timestamp_1ns();
+      nxTimestamp100ns_t to_timestamp_100ns {};
+      auto status = library_->ConvertTimestamp1nsTo100ns(from_timestamp_1ns, &to_timestamp_100ns);
       response->set_status(status);
       if (status_ok(status)) {
-        response->set_to(to);
+        response->set_to_timestamp_100ns(to_timestamp_100ns);
       }
       return ::grpc::Status::OK;
     }

@@ -29,8 +29,8 @@ ConvertByteArrayToFramesSinglePointResponse convert_byte_array_to_frames_single_
 ConvertFramesToByteArraySinglePointResponse convert_frames_to_byte_array_single_point(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const std::vector<FrameBuffer>& frame_buffer, const pb::uint32& size_of_value_buffer);
 ConvertFramesToSignalsSinglePointResponse convert_frames_to_signals_single_point(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const std::vector<FrameBuffer>& frame_buffer, const pb::uint32& size_of_value_buffer, const pb::uint32& size_of_timestamp_buffer);
 ConvertSignalsToFramesSinglePointResponse convert_signals_to_frames_single_point(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const std::vector<double>& value_buffer, const pb::uint32& size_of_buffer, const simple_variant<FrameType, pb::uint32>& frame_type);
-ConvertTimestamp100nsTo1nsResponse convert_timestamp100ns_to1ns(const StubPtr& stub, const pb::uint64& from);
-ConvertTimestamp1nsTo100nsResponse convert_timestamp1ns_to100ns(const StubPtr& stub, const pb::uint64& from);
+ConvertTimestamp100nsTo1nsResponse convert_timestamp100ns_to1ns(const StubPtr& stub, const pb::uint64& from_timestamp_100ns);
+ConvertTimestamp1nsTo100nsResponse convert_timestamp1ns_to100ns(const StubPtr& stub, const pb::uint64& from_timestamp_1ns);
 CreateSessionResponse create_session(const StubPtr& stub, const pb::string& database_name, const pb::string& cluster_name, const pb::string& list, const pb::string& interface_parameter, const simple_variant<CreateSessionMode, pb::uint32>& mode);
 CreateSessionByRefResponse create_session_by_ref(const StubPtr& stub, const std::vector<nidevice_grpc::Session>& array_of_database_ref, const pb::string& interface_parameter, const simple_variant<CreateSessionMode, pb::uint32>& mode);
 DbAddAliasResponse db_add_alias(const StubPtr& stub, const pb::string& database_alias, const pb::string& database_filepath, const pb::uint32& default_baud_rate);

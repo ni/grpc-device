@@ -179,12 +179,12 @@ convert_signals_to_frames_single_point(const StubPtr& stub, const nidevice_grpc:
 }
 
 ConvertTimestamp100nsTo1nsResponse
-convert_timestamp100ns_to1ns(const StubPtr& stub, const pb::uint64& from)
+convert_timestamp100ns_to1ns(const StubPtr& stub, const pb::uint64& from_timestamp_100ns)
 {
   ::grpc::ClientContext context;
 
   auto request = ConvertTimestamp100nsTo1nsRequest{};
-  request.set_from(from);
+  request.set_from_timestamp_100ns(from_timestamp_100ns);
 
   auto response = ConvertTimestamp100nsTo1nsResponse{};
 
@@ -195,12 +195,12 @@ convert_timestamp100ns_to1ns(const StubPtr& stub, const pb::uint64& from)
 }
 
 ConvertTimestamp1nsTo100nsResponse
-convert_timestamp1ns_to100ns(const StubPtr& stub, const pb::uint64& from)
+convert_timestamp1ns_to100ns(const StubPtr& stub, const pb::uint64& from_timestamp_1ns)
 {
   ::grpc::ClientContext context;
 
   auto request = ConvertTimestamp1nsTo100nsRequest{};
-  request.set_from(from);
+  request.set_from_timestamp_1ns(from_timestamp_1ns);
 
   auto response = ConvertTimestamp1nsTo100nsResponse{};
 
