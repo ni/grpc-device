@@ -24,6 +24,8 @@ NiXnetLibrary::NiXnetLibrary() : shared_library_(kLibraryName)
   function_pointers_.Blink = reinterpret_cast<BlinkPtr>(shared_library_.get_function_pointer("nxBlink"));
   function_pointers_.Clear = reinterpret_cast<ClearPtr>(shared_library_.get_function_pointer("nxClear"));
   function_pointers_.ConnectTerminals = reinterpret_cast<ConnectTerminalsPtr>(shared_library_.get_function_pointer("nxConnectTerminals"));
+  function_pointers_.ConvertByteArrayToFramesSinglePoint = reinterpret_cast<ConvertByteArrayToFramesSinglePointPtr>(shared_library_.get_function_pointer("nxConvertByteArrayToFramesSinglePoint"));
+  function_pointers_.ConvertFramesToByteArraySinglePoint = reinterpret_cast<ConvertFramesToByteArraySinglePointPtr>(shared_library_.get_function_pointer("nxConvertFramesToByteArraySinglePoint"));
   function_pointers_.ConvertFramesToSignalsSinglePoint = reinterpret_cast<ConvertFramesToSignalsSinglePointPtr>(shared_library_.get_function_pointer("nxConvertFramesToSignalsSinglePoint"));
   function_pointers_.ConvertSignalsToFramesSinglePoint = reinterpret_cast<ConvertSignalsToFramesSinglePointPtr>(shared_library_.get_function_pointer("nxConvertSignalsToFramesSinglePoint"));
   function_pointers_.ConvertTimestamp100nsTo1ns = reinterpret_cast<ConvertTimestamp100nsTo1nsPtr>(shared_library_.get_function_pointer("nxConvertTimestamp100nsTo1ns"));
@@ -56,6 +58,7 @@ NiXnetLibrary::NiXnetLibrary() : shared_library_(kLibraryName)
   function_pointers_.GetPropertySize = reinterpret_cast<GetPropertySizePtr>(shared_library_.get_function_pointer("nxGetPropertySize"));
   function_pointers_.GetSubProperty = reinterpret_cast<GetSubPropertyPtr>(shared_library_.get_function_pointer("nxGetSubProperty"));
   function_pointers_.GetSubPropertySize = reinterpret_cast<GetSubPropertySizePtr>(shared_library_.get_function_pointer("nxGetSubPropertySize"));
+  function_pointers_.ReadFrame = reinterpret_cast<ReadFramePtr>(shared_library_.get_function_pointer("nxReadFrame"));
   function_pointers_.ReadSignalSinglePoint = reinterpret_cast<ReadSignalSinglePointPtr>(shared_library_.get_function_pointer("nxReadSignalSinglePoint"));
   function_pointers_.ReadSignalWaveform = reinterpret_cast<ReadSignalWaveformPtr>(shared_library_.get_function_pointer("nxReadSignalWaveform"));
   function_pointers_.ReadState = reinterpret_cast<ReadStatePtr>(shared_library_.get_function_pointer("nxReadState"));
@@ -68,6 +71,7 @@ NiXnetLibrary::NiXnetLibrary() : shared_library_(kLibraryName)
   function_pointers_.SystemClose = reinterpret_cast<SystemClosePtr>(shared_library_.get_function_pointer("nxSystemClose"));
   function_pointers_.SystemOpen = reinterpret_cast<SystemOpenPtr>(shared_library_.get_function_pointer("nxSystemOpen"));
   function_pointers_.Wait = reinterpret_cast<WaitPtr>(shared_library_.get_function_pointer("nxWait"));
+  function_pointers_.WriteFrame = reinterpret_cast<WriteFramePtr>(shared_library_.get_function_pointer("nxWriteFrame"));
   function_pointers_.WriteSignalSinglePoint = reinterpret_cast<WriteSignalSinglePointPtr>(shared_library_.get_function_pointer("nxWriteSignalSinglePoint"));
   function_pointers_.WriteSignalWaveform = reinterpret_cast<WriteSignalWaveformPtr>(shared_library_.get_function_pointer("nxWriteSignalWaveform"));
   function_pointers_.WriteSignalXY = reinterpret_cast<WriteSignalXYPtr>(shared_library_.get_function_pointer("nxWriteSignalXY"));
@@ -121,6 +125,30 @@ nxStatus_t NiXnetLibrary::ConnectTerminals(nxSessionRef_t sessionRef, const char
 #endif
 }
 
+nxStatus_t NiXnetLibrary::ConvertByteArrayToFramesSinglePoint(nxSessionRef_t sessionRef, u8 valueBuffer[], u32 sizeOfValueBuffer, u8 buffer[], u32 sizeOfBuffer, u32* numberOfBytesReturned)
+{
+  if (!function_pointers_.ConvertByteArrayToFramesSinglePoint) {
+    throw nidevice_grpc::LibraryLoadException("Could not find nxConvertByteArrayToFramesSinglePoint.");
+  }
+#if defined(_MSC_VER)
+  return nxConvertByteArrayToFramesSinglePoint(sessionRef, valueBuffer, sizeOfValueBuffer, buffer, sizeOfBuffer, numberOfBytesReturned);
+#else
+  return function_pointers_.ConvertByteArrayToFramesSinglePoint(sessionRef, valueBuffer, sizeOfValueBuffer, buffer, sizeOfBuffer, numberOfBytesReturned);
+#endif
+}
+
+nxStatus_t NiXnetLibrary::ConvertFramesToByteArraySinglePoint(nxSessionRef_t sessionRef, u8* frameBuffer, u32 numberOfBytesForFrames, u8 valueBuffer[], u32 sizeOfValueBuffer)
+{
+  if (!function_pointers_.ConvertFramesToByteArraySinglePoint) {
+    throw nidevice_grpc::LibraryLoadException("Could not find nxConvertFramesToByteArraySinglePoint.");
+  }
+#if defined(_MSC_VER)
+  return nxConvertFramesToByteArraySinglePoint(sessionRef, frameBuffer, numberOfBytesForFrames, valueBuffer, sizeOfValueBuffer);
+#else
+  return function_pointers_.ConvertFramesToByteArraySinglePoint(sessionRef, frameBuffer, numberOfBytesForFrames, valueBuffer, sizeOfValueBuffer);
+#endif
+}
+
 nxStatus_t NiXnetLibrary::ConvertFramesToSignalsSinglePoint(nxSessionRef_t sessionRef, u8* frameBuffer, u32 numberOfBytesForFrames, f64 valueBuffer[], u32 sizeOfValueBuffer, nxTimestamp100ns_t timestampBuffer[], u32 sizeOfTimestampBuffer)
 {
   if (!function_pointers_.ConvertFramesToSignalsSinglePoint) {
@@ -145,27 +173,27 @@ nxStatus_t NiXnetLibrary::ConvertSignalsToFramesSinglePoint(nxSessionRef_t sessi
 #endif
 }
 
-nxStatus_t NiXnetLibrary::ConvertTimestamp100nsTo1ns(nxTimestamp100ns_t from, nxTimestamp1ns_t* to)
+nxStatus_t NiXnetLibrary::ConvertTimestamp100nsTo1ns(nxTimestamp100ns_t from_timestamp_100ns, nxTimestamp1ns_t* to_timestamp_1ns)
 {
   if (!function_pointers_.ConvertTimestamp100nsTo1ns) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxConvertTimestamp100nsTo1ns.");
   }
 #if defined(_MSC_VER)
-  return nxConvertTimestamp100nsTo1ns(from, to);
+  return nxConvertTimestamp100nsTo1ns(from_timestamp_100ns, to_timestamp_1ns);
 #else
-  return function_pointers_.ConvertTimestamp100nsTo1ns(from, to);
+  return function_pointers_.ConvertTimestamp100nsTo1ns(from_timestamp_100ns, to_timestamp_1ns);
 #endif
 }
 
-nxStatus_t NiXnetLibrary::ConvertTimestamp1nsTo100ns(nxTimestamp1ns_t from, nxTimestamp100ns_t* to)
+nxStatus_t NiXnetLibrary::ConvertTimestamp1nsTo100ns(nxTimestamp1ns_t from_timestamp_1ns, nxTimestamp100ns_t* to_timestamp_100ns)
 {
   if (!function_pointers_.ConvertTimestamp1nsTo100ns) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxConvertTimestamp1nsTo100ns.");
   }
 #if defined(_MSC_VER)
-  return nxConvertTimestamp1nsTo100ns(from, to);
+  return nxConvertTimestamp1nsTo100ns(from_timestamp_1ns, to_timestamp_100ns);
 #else
-  return function_pointers_.ConvertTimestamp1nsTo100ns(from, to);
+  return function_pointers_.ConvertTimestamp1nsTo100ns(from_timestamp_1ns, to_timestamp_100ns);
 #endif
 }
 
@@ -505,6 +533,18 @@ nxStatus_t NiXnetLibrary::GetSubPropertySize(nxSessionRef_t sessionRef, u32 acti
 #endif
 }
 
+nxStatus_t NiXnetLibrary::ReadFrame(nxSessionRef_t sessionRef, u8 buffer[], u32 sizeOfBuffer, f64 timeout, u32* numberOfBytesReturned)
+{
+  if (!function_pointers_.ReadFrame) {
+    throw nidevice_grpc::LibraryLoadException("Could not find nxReadFrame.");
+  }
+#if defined(_MSC_VER)
+  return nxReadFrame(sessionRef, buffer, sizeOfBuffer, timeout, numberOfBytesReturned);
+#else
+  return function_pointers_.ReadFrame(sessionRef, buffer, sizeOfBuffer, timeout, numberOfBytesReturned);
+#endif
+}
+
 nxStatus_t NiXnetLibrary::ReadSignalSinglePoint(nxSessionRef_t sessionRef, f64 valueBuffer[], u32 sizeOfValueBuffer, nxTimestamp100ns_t timestampBuffer[], u32 sizeOfTimestampBuffer)
 {
   if (!function_pointers_.ReadSignalSinglePoint) {
@@ -646,6 +686,18 @@ nxStatus_t NiXnetLibrary::Wait(nxSessionRef_t sessionRef, u32 condition, u32 par
   return nxWait(sessionRef, condition, paramIn, timeout, paramOut);
 #else
   return function_pointers_.Wait(sessionRef, condition, paramIn, timeout, paramOut);
+#endif
+}
+
+nxStatus_t NiXnetLibrary::WriteFrame(nxSessionRef_t sessionRef, u8* buffer, u32 numberOfBytesForFrames, f64 timeout)
+{
+  if (!function_pointers_.WriteFrame) {
+    throw nidevice_grpc::LibraryLoadException("Could not find nxWriteFrame.");
+  }
+#if defined(_MSC_VER)
+  return nxWriteFrame(sessionRef, buffer, numberOfBytesForFrames, timeout);
+#else
+  return function_pointers_.WriteFrame(sessionRef, buffer, numberOfBytesForFrames, timeout);
 #endif
 }
 
