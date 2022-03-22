@@ -2,7 +2,7 @@ functions = {
     'Accept': {
         'cname': 'nxaccept',
         'init_method': True,
-        'status_expression': 'socket_out < 0 ? socket_out : 0',
+        'status_expression': 'socket_out == -1 ? -1 : 0',
         'parameters': [
             {
                 'direction': 'in',
@@ -135,6 +135,116 @@ functions = {
                 "additional_arguments_to_output_allocation": ["af"],
                 'supports_standard_copy_convert': True,
                 'type': 'void'
+            },
+        ],
+        'returns': 'int32_t'
+    },
+    'FreeAddrInfo': {
+        'codegen_method': 'private',
+        'cname': 'nxfreeaddrinfo',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'res',
+                'type': 'nxaddrinfo',
+                'pointer': True
+            }
+        ],
+        'returns': 'int32_t'
+    },
+    'GetAddrInfo': {
+        'cname': 'nxgetaddrinfo',
+        'parameters': [
+            {
+                'direction': 'in', 
+                'name': 'stack_ref', 
+                'type': 'nxIpStackRef_t'
+            },
+            {
+                'direction': 'in',
+                'name': 'node',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'service',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'hints',
+                'supports_standard_copy_convert': True,
+                'grpc_type': 'AddrInfoHint',
+                'pointer': True,
+                'type': 'nxaddrinfo'
+            },
+            {
+                'direction': 'out',
+                'name': 'res',
+                'supports_standard_copy_convert': True,
+                'supports_standard_output_allocation': True,
+                'additional_arguments_to_output_allocation': ['library_'],
+                'pointer': True,
+                'type': 'nxaddrinfo'
+            }
+        ],
+        'returns': 'int32_t'
+    },
+    'GetNameInfo': {
+        'cname': 'nxgetnameinfo',
+        'parameters': [
+            {
+                'direction': 'in', 
+                'name': 'stack_ref', 
+                'type': 'nxIpStackRef_t'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'SockAddr',
+                'name': 'addr',
+                'pointer': True,
+                'supports_standard_copy_convert': True,
+                'type': 'nxsockaddr'
+            },
+            {
+                'direction': 'in',
+                'name': 'addr_len',
+                'hardcoded_value': 'addr.size()',
+                'include_in_proto': False,
+                'type': 'nxsocklen_t'
+            },
+            {
+                'direction': 'out',
+                'name': 'host',
+                'type': 'char[]',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'host_len'
+                }
+            },
+            {
+                'direction': 'in',
+                'name': 'host_len',
+                'type': 'nxsocklen_t'
+            },
+            {
+                'direction': 'out',
+                'name': 'serv',
+                'type': 'char[]',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'serv_len'
+                }
+            },
+            {
+                'direction': 'in',
+                'name': 'serv_len',
+                'type': 'nxsocklen_t'
+            },
+            {
+                'direction': 'in',
+                'name': 'flags',
+                'type': 'int32_t'
             },
         ],
         'returns': 'int32_t'
@@ -676,7 +786,7 @@ functions = {
     'Socket': {
         'cname': 'nxsocket',
         'init_method': True,
-        'status_expression': 'socket < 0 ? socket : 0',
+        'status_expression': 'socket == -1 ? -1 : 0',
         'parameters': [
             {
                 'direction': 'in',

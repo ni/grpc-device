@@ -6,7 +6,6 @@ enums = data['enums']
 config = data['config']
 functions = data['functions']
 
-function_enums = common_helpers.get_function_enums(functions)
 enums_to_map = service_helpers.get_enums_to_map(functions, enums)
 enums_mapped_to_type = service_helpers.generate_mapping_enums_to_type(enums)
 type_from_enum = service_helpers.get_distinct_types_from_enums(enums)

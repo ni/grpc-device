@@ -60,7 +60,7 @@ namespace nixnetsocket_grpc {
       nxsocklen_t addrlen {};
       auto init_lambda = [&] () {
         auto socket_out = library_->Accept(socket, &addr, &addrlen);
-        auto status = socket_out < 0 ? socket_out : 0;
+        auto status = socket_out == -1 ? -1 : 0;
         return std::make_tuple(status, socket_out);
       };
       uint32_t session_id = 0;
@@ -190,6 +190,82 @@ namespace nixnetsocket_grpc {
       response->set_status(status);
       if (status_ok(status)) {
         convert_to_grpc(dst, response->mutable_dst());
+      }
+      else {
+        const auto error_message = get_last_error_message(library_);
+        response->set_error_message(error_message);
+        const auto error_num = get_last_error_num(library_);
+        response->set_error_num(error_num);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiXnetSocketService::GetAddrInfo(::grpc::ServerContext* context, const GetAddrInfoRequest* request, GetAddrInfoResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto stack_ref_grpc_session = request->stack_ref();
+      nxIpStackRef_t stack_ref = nx_ip_stack_ref_t_resource_repository_->access_session(stack_ref_grpc_session.id(), stack_ref_grpc_session.name());
+      auto node = request->node().c_str();
+      auto service = request->service().c_str();
+      auto hints = convert_from_grpc<nxaddrinfo>(request->hints());
+      auto res = allocate_output_storage<nxaddrinfo, google::protobuf::RepeatedPtrField<AddrInfo>>(library_);
+      auto status = library_->GetAddrInfo(stack_ref, node, service, hints, &res);
+      response->set_status(status);
+      if (status_ok(status)) {
+        convert_to_grpc(res, response->mutable_res());
+      }
+      else {
+        const auto error_message = get_last_error_message(library_);
+        response->set_error_message(error_message);
+        const auto error_num = get_last_error_num(library_);
+        response->set_error_num(error_num);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiXnetSocketService::GetNameInfo(::grpc::ServerContext* context, const GetNameInfoRequest* request, GetNameInfoResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto stack_ref_grpc_session = request->stack_ref();
+      nxIpStackRef_t stack_ref = nx_ip_stack_ref_t_resource_repository_->access_session(stack_ref_grpc_session.id(), stack_ref_grpc_session.name());
+      auto addr = convert_from_grpc<nxsockaddr>(request->addr());
+      auto addr_len = addr.size();
+      nxsocklen_t host_len = request->host_len();
+      nxsocklen_t serv_len = request->serv_len();
+      int32_t flags = request->flags();
+      std::string host;
+      if (host_len > 0) {
+          host.resize(host_len - 1);
+      }
+      std::string serv;
+      if (serv_len > 0) {
+          serv.resize(serv_len - 1);
+      }
+      auto status = library_->GetNameInfo(stack_ref, addr, addr_len, (char*)host.data(), host_len, (char*)serv.data(), serv_len, flags);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_host(host);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_host()));
+        response->set_serv(serv);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_serv()));
       }
       else {
         const auto error_message = get_last_error_message(library_);
@@ -859,7 +935,7 @@ namespace nixnetsocket_grpc {
 
       auto init_lambda = [&] () {
         auto socket = library_->Socket(stack_ref, domain, type, prototcol);
-        auto status = socket < 0 ? socket : 0;
+        auto status = socket == -1 ? -1 : 0;
         return std::make_tuple(status, socket);
       };
       uint32_t session_id = 0;

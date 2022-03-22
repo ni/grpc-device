@@ -48,6 +48,8 @@ public:
   ::grpc::Status Connect(::grpc::ServerContext* context, const ConnectRequest* request, ConnectResponse* response) override;
   ::grpc::Status InetAToN(::grpc::ServerContext* context, const InetAToNRequest* request, InetAToNResponse* response) override;
   ::grpc::Status InetPToN(::grpc::ServerContext* context, const InetPToNRequest* request, InetPToNResponse* response) override;
+  ::grpc::Status GetAddrInfo(::grpc::ServerContext* context, const GetAddrInfoRequest* request, GetAddrInfoResponse* response) override;
+  ::grpc::Status GetNameInfo(::grpc::ServerContext* context, const GetNameInfoRequest* request, GetNameInfoResponse* response) override;
   ::grpc::Status Listen(::grpc::ServerContext* context, const ListenRequest* request, ListenResponse* response) override;
   ::grpc::Status SendTo(::grpc::ServerContext* context, const SendToRequest* request, SendToResponse* response) override;
   ::grpc::Status Send(::grpc::ServerContext* context, const SendRequest* request, SendResponse* response) override;

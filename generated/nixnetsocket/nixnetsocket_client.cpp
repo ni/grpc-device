@@ -102,6 +102,45 @@ inet_p_to_n(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const 
   return response;
 }
 
+GetAddrInfoResponse
+get_addr_info(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const pb::string& node, const pb::string& service, const AddrInfoHint& hints)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetAddrInfoRequest{};
+  request.mutable_stack_ref()->CopyFrom(stack_ref);
+  request.set_node(node);
+  request.set_service(service);
+  request.mutable_hints()->CopyFrom(hints);
+
+  auto response = GetAddrInfoResponse{};
+
+  raise_if_error(
+      stub->GetAddrInfo(&context, request, &response));
+
+  return response;
+}
+
+GetNameInfoResponse
+get_name_info(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const SockAddr& addr, const pb::int32& host_len, const pb::int32& serv_len, const pb::int32& flags)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetNameInfoRequest{};
+  request.mutable_stack_ref()->CopyFrom(stack_ref);
+  request.mutable_addr()->CopyFrom(addr);
+  request.set_host_len(host_len);
+  request.set_serv_len(serv_len);
+  request.set_flags(flags);
+
+  auto response = GetNameInfoResponse{};
+
+  raise_if_error(
+      stub->GetNameInfo(&context, request, &response));
+
+  return response;
+}
+
 ListenResponse
 listen(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::int32& backlog)
 {

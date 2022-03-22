@@ -174,6 +174,10 @@ template <>
 void convert_to_grpc(const _nxFlexRayStats_t& input, nixnet_grpc::FlexRayStats *output);
 template <>
 void convert_to_grpc(const _nxJ1939CommState_t& input, nixnet_grpc::J1939CommState *output);
+template <>
+void convert_to_grpc(const nxEptRxFilter_Element_t& input, nixnet_grpc::EptRxFilter* output);
+template <>
+nxEptRxFilter_Element_t convert_from_grpc(const nixnet_grpc::EptRxFilter& input);
 } // namespace converters
 } // namespace nidevice_grpc
 
