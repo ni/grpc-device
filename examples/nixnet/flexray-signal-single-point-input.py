@@ -64,8 +64,6 @@ def check_for_error(status):
 
 i = 0
 keyslot_id = 1
-value_buffer = [0.0] * NUM_SIGNALS
-time_stamp_buffer = [None] * NUM_SIGNALS
 
 # Create the communication channel for the remote host and create connections to the NI-XNET and
 # session services.
@@ -107,8 +105,8 @@ try:
         read_signal_response = client.ReadSignalSinglePoint(
             nixnet_types.ReadSignalSinglePointRequest(
                 session_ref=session,
-                size_of_value_buffer=len(value_buffer) * SIZE_OF_F64_IN_C,
-                size_of_timestamp_buffer=len(time_stamp_buffer) * SIZE_OF_F64_IN_C,
+                size_of_value_buffer=NUM_SIGNALS * SIZE_OF_F64_IN_C,
+                size_of_timestamp_buffer=NUM_SIGNALS * SIZE_OF_F64_IN_C,
             )
         )
         check_for_error(read_signal_response.status)
