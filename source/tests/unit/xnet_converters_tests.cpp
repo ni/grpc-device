@@ -525,13 +525,17 @@ TEST(XnetConvertersTests, IPv4AddrOutputConverter_ConvertToGrpc_ConvertsToAddres
 
 TEST(XnetConvertersTests, IpStackInfoStringOutputConverter_ConvertToGrpc_ConvertsToAndFreesInfoString)
 {
-  auto IP_INFO_STRING = "This is the info about the driver!"s;
+  const auto IP_INFO_STRING = "This is the info about the driver!"s;
+  // Copy to buffer including null terminator.
+  auto IP_INFO_BUFFER = std::vector<char>{
+      IP_INFO_STRING.c_str(),
+      IP_INFO_STRING.c_str() + IP_INFO_STRING.length() + 1};
   NiXnetSocketMockLibrary library;
   auto converter = allocate_output_storage<nixnetsocket_grpc::IpStackInfoString, std::string>(&library);
   auto data_ptr = converter.data();
-  *data_ptr = IP_INFO_STRING.data();
+  *data_ptr = IP_INFO_BUFFER.data();
 
-  EXPECT_CALL(library, IpStackFreeAllStacksInfoStr(IP_INFO_STRING.data()));
+  EXPECT_CALL(library, IpStackFreeAllStacksInfoStr(IP_INFO_BUFFER.data()));
   auto converted_data = std::string{};
   converter.to_grpc(converted_data);
 
