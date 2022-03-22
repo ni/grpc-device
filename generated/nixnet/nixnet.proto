@@ -19,6 +19,8 @@ service NiXnet {
   rpc Blink(BlinkRequest) returns (BlinkResponse);
   rpc Clear(ClearRequest) returns (ClearResponse);
   rpc ConnectTerminals(ConnectTerminalsRequest) returns (ConnectTerminalsResponse);
+  rpc ConvertByteArrayToFramesSinglePoint(ConvertByteArrayToFramesSinglePointRequest) returns (ConvertByteArrayToFramesSinglePointResponse);
+  rpc ConvertFramesToByteArraySinglePoint(ConvertFramesToByteArraySinglePointRequest) returns (ConvertFramesToByteArraySinglePointResponse);
   rpc ConvertFramesToSignalsSinglePoint(ConvertFramesToSignalsSinglePointRequest) returns (ConvertFramesToSignalsSinglePointResponse);
   rpc ConvertSignalsToFramesSinglePoint(ConvertSignalsToFramesSinglePointRequest) returns (ConvertSignalsToFramesSinglePointResponse);
   rpc ConvertTimestamp100nsTo1ns(ConvertTimestamp100nsTo1nsRequest) returns (ConvertTimestamp100nsTo1nsResponse);
@@ -51,6 +53,7 @@ service NiXnet {
   rpc GetPropertySize(GetPropertySizeRequest) returns (GetPropertySizeResponse);
   rpc GetSubProperty(GetSubPropertyRequest) returns (GetSubPropertyResponse);
   rpc GetSubPropertySize(GetSubPropertySizeRequest) returns (GetSubPropertySizeResponse);
+  rpc ReadFrame(ReadFrameRequest) returns (ReadFrameResponse);
   rpc ReadSignalSinglePoint(ReadSignalSinglePointRequest) returns (ReadSignalSinglePointResponse);
   rpc ReadSignalWaveform(ReadSignalWaveformRequest) returns (ReadSignalWaveformResponse);
   rpc ReadState(ReadStateRequest) returns (ReadStateResponse);
@@ -63,6 +66,7 @@ service NiXnet {
   rpc SystemClose(SystemCloseRequest) returns (SystemCloseResponse);
   rpc SystemOpen(SystemOpenRequest) returns (SystemOpenResponse);
   rpc Wait(WaitRequest) returns (WaitResponse);
+  rpc WriteFrame(WriteFrameRequest) returns (WriteFrameResponse);
   rpc WriteSignalSinglePoint(WriteSignalSinglePointRequest) returns (WriteSignalSinglePointResponse);
   rpc WriteSignalWaveform(WriteSignalWaveformRequest) returns (WriteSignalWaveformResponse);
   rpc WriteSignalXY(WriteSignalXYRequest) returns (WriteSignalXYResponse);
@@ -883,6 +887,17 @@ message DbRefArray {
   repeated nidevice_grpc.Session db_ref = 1;
 }
 
+message EptRxFilter {
+  uint32 use_flags = 1;
+  uint32 vid = 2;
+  uint32 priority = 3;
+  string destination_mac = 4;    
+}
+
+message EptRxFilterArray {
+  repeated EptRxFilter ept_rx_filter = 1;
+}
+
 message GetPropertyRequest {
   nidevice_grpc.Session session_ref = 1;
   oneof property_id_enum {
@@ -904,6 +919,7 @@ message GetPropertyResponse {
     U32Array u32_array = 9;
     nidevice_grpc.Session db_ref = 10;
     DbRefArray db_ref_array = 11;
+    EptRxFilterArray ept_rx_filter_array = 12;
   }
 }
 
@@ -924,6 +940,7 @@ message SetPropertyRequest {
     U32Array u32_array = 11;
     nidevice_grpc.Session db_ref = 12;
     DbRefArray db_ref_array = 13;
+    EptRxFilterArray ept_rx_filter_array = 14;
   }
 }
 
@@ -1082,6 +1099,32 @@ message ConnectTerminalsResponse {
   int32 status = 1;
 }
 
+message ConvertByteArrayToFramesSinglePointRequest {
+  nidevice_grpc.Session session_ref = 1;
+  bytes value_buffer = 2;
+  uint32 size_of_buffer = 3;
+  oneof frame_type_enum {
+    FrameType frame_type = 4;
+    uint32 frame_type_raw = 5;
+  }
+}
+
+message ConvertByteArrayToFramesSinglePointResponse {
+  int32 status = 1;
+  repeated FrameBuffer buffer = 2;
+}
+
+message ConvertFramesToByteArraySinglePointRequest {
+  nidevice_grpc.Session session_ref = 1;
+  repeated FrameBuffer frame_buffer = 2;
+  uint32 size_of_value_buffer = 3;
+}
+
+message ConvertFramesToByteArraySinglePointResponse {
+  int32 status = 1;
+  bytes value_buffer = 2;
+}
+
 message ConvertFramesToSignalsSinglePointRequest {
   nidevice_grpc.Session session_ref = 1;
   repeated FrameBuffer frame_buffer = 2;
@@ -1111,21 +1154,21 @@ message ConvertSignalsToFramesSinglePointResponse {
 }
 
 message ConvertTimestamp100nsTo1nsRequest {
-  uint64 from = 1;
+  uint64 from_timestamp_100ns = 1;
 }
 
 message ConvertTimestamp100nsTo1nsResponse {
   int32 status = 1;
-  uint64 to = 2;
+  uint64 to_timestamp_1ns = 2;
 }
 
 message ConvertTimestamp1nsTo100nsRequest {
-  uint64 from = 1;
+  uint64 from_timestamp_1ns = 1;
 }
 
 message ConvertTimestamp1nsTo100nsResponse {
   int32 status = 1;
-  uint64 to = 2;
+  uint64 to_timestamp_100ns = 2;
 }
 
 message CreateSessionRequest {
@@ -1411,6 +1454,24 @@ message GetSubPropertySizeResponse {
   uint32 property_size = 2;
 }
 
+message ReadFrameRequest {
+  nidevice_grpc.Session session_ref = 1;
+  uint32 size_of_buffer = 2;
+  oneof timeout_enum {
+    TimeOut timeout = 3;
+    double timeout_raw = 4;
+  }
+  oneof frame_type_enum {
+    FrameType frame_type = 5;
+    uint32 frame_type_raw = 6;
+  }
+}
+
+message ReadFrameResponse {
+  int32 status = 1;
+  repeated FrameBuffer buffer = 2;
+}
+
 message ReadSignalSinglePointRequest {
   nidevice_grpc.Session session_ref = 1;
   uint32 size_of_value_buffer = 2;
@@ -1530,6 +1591,19 @@ message WaitRequest {
 message WaitResponse {
   int32 status = 1;
   uint32 param_out = 2;
+}
+
+message WriteFrameRequest {
+  nidevice_grpc.Session session_ref = 1;
+  repeated FrameBuffer buffer = 2;
+  oneof timeout_enum {
+    TimeOut timeout = 3;
+    double timeout_raw = 4;
+  }
+}
+
+message WriteFrameResponse {
+  int32 status = 1;
 }
 
 message WriteSignalSinglePointRequest {
