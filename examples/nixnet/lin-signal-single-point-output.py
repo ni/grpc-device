@@ -1,6 +1,6 @@
 r""" Write Signal Data.
  
- This example writes a signal value when a keyboard character is pressed.
+ This example writes a signal value for 10 times.
  This is used to demonstrate a signal single point output session. 
  This example uses hardcoded signal names that use the NIXNET_example database. 
  Also ensure that the transceivers are externally powered when using C Series modules.
@@ -50,7 +50,6 @@ DATABASE = "NIXNET_exampleLDF"
 CLUSTER = "Cluster"
 SIGNAL_LIST = "MasterSignal1_U16,MasterSignal2_U16"
 NUM_SIGNALS = 2
-SUCCESS = 0
 
 
 def check_for_error(status):
@@ -100,19 +99,19 @@ try:
     check_for_error(create_session_response.status)
 
     session = create_session_response.session_ref
+    print("Session Created Successfully. \n")
 
     if IsMaster != 0:
         # Set the schedule - this will also automatically enable master mode
-        WriteStateValueObject = nixnet_types.WriteStateValue(lin_schedule_change=ScheduleIndex)
+        write_state_value = nixnet_types.WriteStateValue(lin_schedule_change=ScheduleIndex)
         write_state_response = client.WriteState(
             nixnet_types.WriteStateRequest(
                 session_ref=session,
                 state_id=nixnet_types.WRITE_STATE_STATE_LIN_SCHEDULE_CHANGE,
-                state_value=WriteStateValueObject,
+                state_value=write_state_value,
             )
         )
         check_for_error(write_state_response.status)
-        print("Session Created Successfully. \n")
 
     print("Values are incremented from 0 to 10 in this example.\n")
 
@@ -144,7 +143,7 @@ except grpc.RpcError as rpc_error:
     print(f"{error_message}")
 
 finally:
-    if session:
+    if "session" in vars() and session.id != 0:
         # clear the XNET session.
         check_for_error(client.Clear(nixnet_types.ClearRequest(session_ref=session)).status)
         print("Session cleared successfully!\n")

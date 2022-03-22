@@ -1,7 +1,7 @@
 r""" Read Signal Data.
  
- This example reads a signal value when a keyboard character is pressed.
- This is used to demonstrate a signal single point output session. 
+ This example reads a signal value for 10 times.
+ This is used to demonstrate a signal single point input session. 
  This example uses hardcoded signal names that use the NIXNET_example database. 
  Also ensure that the transceivers are externally powered when using C Series modules.
 
@@ -50,7 +50,7 @@ DATABASE = "NIXNET_example"
 CLUSTER = "FlexRay_Cluster"
 SIGNAL_LIST = "FlexRayEventSignal1,FlexRayEventSignal2"
 NUM_SIGNALS = 2
-SUCCESS = 0
+SIZE_OF_F64_IN_C = 8
 
 
 def check_for_error(status):
@@ -65,7 +65,7 @@ def check_for_error(status):
 i = 0
 keyslot_id = 1
 value_buffer = [0.0] * NUM_SIGNALS
-time_stamp_buffer = [None] * NUM_SIGNALS
+time_stamp_buffer = [] * NUM_SIGNALS
 
 # Create the communication channel for the remote host and create connections to the NI-XNET and
 # session services.
@@ -107,14 +107,13 @@ try:
         read_signal_response = client.ReadSignalSinglePoint(
             nixnet_types.ReadSignalSinglePointRequest(
                 session_ref=session,
-                size_of_value_buffer=value_buffer.__sizeof__(),
-                size_of_timestamp_buffer=time_stamp_buffer.__sizeof__(),
+                size_of_value_buffer=len(value_buffer) * SIZE_OF_F64_IN_C,
+                size_of_timestamp_buffer=len(time_stamp_buffer) * SIZE_OF_F64_IN_C,
             )
         )
         check_for_error(read_signal_response.status)
 
         value_buffer = read_signal_response.value_buffer
-        time_stamp_buffer = read_signal_response.timestamp_buffer
 
         print("Signals received:")
         print(f"Signal 1: {value_buffer[0]}")
@@ -132,7 +131,7 @@ except grpc.RpcError as rpc_error:
     print(f"{error_message}")
 
 finally:
-    if session:
+    if "session" in vars() and session.id != 0:
         # clear the XNET session.
         check_for_error(client.Clear(nixnet_types.ClearRequest(session_ref=session)).status)
         print("Session cleared successfully!\n")
