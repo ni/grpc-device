@@ -21,10 +21,12 @@ class NiXnetLibrary : public nixnet_grpc::NiXnetLibraryInterface {
   nxStatus_t Blink(nxSessionRef_t interfaceRef, u32 modifier);
   nxStatus_t Clear(nxSessionRef_t sessionRef);
   nxStatus_t ConnectTerminals(nxSessionRef_t sessionRef, const char source[], const char destination[]);
+  nxStatus_t ConvertByteArrayToFramesSinglePoint(nxSessionRef_t sessionRef, u8 valueBuffer[], u32 sizeOfValueBuffer, u8 buffer[], u32 sizeOfBuffer, u32* numberOfBytesReturned);
+  nxStatus_t ConvertFramesToByteArraySinglePoint(nxSessionRef_t sessionRef, u8* frameBuffer, u32 numberOfBytesForFrames, u8 valueBuffer[], u32 sizeOfValueBuffer);
   nxStatus_t ConvertFramesToSignalsSinglePoint(nxSessionRef_t sessionRef, u8* frameBuffer, u32 numberOfBytesForFrames, f64 valueBuffer[], u32 sizeOfValueBuffer, nxTimestamp100ns_t timestampBuffer[], u32 sizeOfTimestampBuffer);
   nxStatus_t ConvertSignalsToFramesSinglePoint(nxSessionRef_t sessionRef, f64 valueBuffer[], u32 sizeOfValueBuffer, u8 buffer[], u32 sizeOfBuffer, u32* numberOfBytesReturned);
-  nxStatus_t ConvertTimestamp100nsTo1ns(nxTimestamp100ns_t from, nxTimestamp1ns_t* to);
-  nxStatus_t ConvertTimestamp1nsTo100ns(nxTimestamp1ns_t from, nxTimestamp100ns_t* to);
+  nxStatus_t ConvertTimestamp100nsTo1ns(nxTimestamp100ns_t from_timestamp_100ns, nxTimestamp1ns_t* to_timestamp_1ns);
+  nxStatus_t ConvertTimestamp1nsTo100ns(nxTimestamp1ns_t from_timestamp_1ns, nxTimestamp100ns_t* to_timestamp_100ns);
   nxStatus_t CreateSession(const char databaseName[], const char clusterName[], const char list[], const char interfaceParameter[], u32 mode, nxSessionRef_t* sessionRef);
   nxStatus_t CreateSessionByRef(u32 numberOfDatabaseRef, nxDatabaseRef_t arrayOfDatabaseRef[], const char interfaceParameter[], u32 mode, nxSessionRef_t* sessionRef);
   nxStatus_t DbAddAlias(const char databaseAlias[], const char databaseFilepath[], u32 defaultBaudRate);
@@ -53,6 +55,7 @@ class NiXnetLibrary : public nixnet_grpc::NiXnetLibraryInterface {
   nxStatus_t GetPropertySize(nxSessionRef_t sessionRef, u32 propertyID, u32* propertySize);
   nxStatus_t GetSubProperty(nxSessionRef_t sessionRef, u32 activeIndex, u32 propertyID, u32 propertySize, void* propertyValue);
   nxStatus_t GetSubPropertySize(nxSessionRef_t sessionRef, u32 activeIndex, u32 propertyID, u32* propertySize);
+  nxStatus_t ReadFrame(nxSessionRef_t sessionRef, u8 buffer[], u32 sizeOfBuffer, f64 timeout, u32* numberOfBytesReturned);
   nxStatus_t ReadSignalSinglePoint(nxSessionRef_t sessionRef, f64 valueBuffer[], u32 sizeOfValueBuffer, nxTimestamp100ns_t timestampBuffer[], u32 sizeOfTimestampBuffer);
   nxStatus_t ReadSignalWaveform(nxSessionRef_t sessionRef, f64 timeout, nxTimestamp100ns_t* startTime, f64* deltaTime, f64 valueBuffer[], u32 sizeOfValueBuffer, u32* numberOfValuesReturned);
   nxStatus_t ReadSignalXY(nxSessionRef_t sessionRef, nxTimestamp100ns_t* timeLimit, f64 valueBuffer[], u32 sizeOfValueBuffer, nxTimestamp100ns_t timestampBuffer[], u32 sizeOfTimestampBuffer, u32 numPairsBuffer[], u32 sizeOfNumPairsBuffer);
@@ -66,6 +69,7 @@ class NiXnetLibrary : public nixnet_grpc::NiXnetLibraryInterface {
   nxStatus_t SystemClose(nxSessionRef_t systemRef);
   nxStatus_t SystemOpen(nxSessionRef_t* systemRef);
   nxStatus_t Wait(nxSessionRef_t sessionRef, u32 condition, u32 paramIn, f64 timeout, u32* paramOut);
+  nxStatus_t WriteFrame(nxSessionRef_t sessionRef, u8* buffer, u32 numberOfBytesForFrames, f64 timeout);
   nxStatus_t WriteSignalSinglePoint(nxSessionRef_t sessionRef, f64 valueBuffer[], u32 sizeOfValueBuffer);
   nxStatus_t WriteSignalWaveform(nxSessionRef_t sessionRef, f64 timeout, f64 valueBuffer[], u32 sizeOfValueBuffer);
   nxStatus_t WriteSignalXY(nxSessionRef_t sessionRef, f64 timeout, f64 valueBuffer[], u32 sizeOfValueBuffer, nxTimestamp100ns_t timestampBuffer[], u32 sizeOfTimestampBuffer, u32 numPairsBuffer[], u32 sizeOfNumPairsBuffer);
@@ -75,6 +79,8 @@ class NiXnetLibrary : public nixnet_grpc::NiXnetLibraryInterface {
   using BlinkPtr = decltype(&nxBlink);
   using ClearPtr = decltype(&nxClear);
   using ConnectTerminalsPtr = decltype(&nxConnectTerminals);
+  using ConvertByteArrayToFramesSinglePointPtr = decltype(&nxConvertByteArrayToFramesSinglePoint);
+  using ConvertFramesToByteArraySinglePointPtr = decltype(&nxConvertFramesToByteArraySinglePoint);
   using ConvertFramesToSignalsSinglePointPtr = decltype(&nxConvertFramesToSignalsSinglePoint);
   using ConvertSignalsToFramesSinglePointPtr = decltype(&nxConvertSignalsToFramesSinglePoint);
   using ConvertTimestamp100nsTo1nsPtr = decltype(&nxConvertTimestamp100nsTo1ns);
@@ -107,6 +113,7 @@ class NiXnetLibrary : public nixnet_grpc::NiXnetLibraryInterface {
   using GetPropertySizePtr = decltype(&nxGetPropertySize);
   using GetSubPropertyPtr = decltype(&nxGetSubProperty);
   using GetSubPropertySizePtr = decltype(&nxGetSubPropertySize);
+  using ReadFramePtr = decltype(&nxReadFrame);
   using ReadSignalSinglePointPtr = decltype(&nxReadSignalSinglePoint);
   using ReadSignalWaveformPtr = decltype(&nxReadSignalWaveform);
   using ReadSignalXYPtr = decltype(&nxReadSignalXY);
@@ -120,6 +127,7 @@ class NiXnetLibrary : public nixnet_grpc::NiXnetLibraryInterface {
   using SystemClosePtr = decltype(&nxSystemClose);
   using SystemOpenPtr = decltype(&nxSystemOpen);
   using WaitPtr = decltype(&nxWait);
+  using WriteFramePtr = decltype(&nxWriteFrame);
   using WriteSignalSinglePointPtr = decltype(&nxWriteSignalSinglePoint);
   using WriteSignalWaveformPtr = decltype(&nxWriteSignalWaveform);
   using WriteSignalXYPtr = decltype(&nxWriteSignalXY);
@@ -129,6 +137,8 @@ class NiXnetLibrary : public nixnet_grpc::NiXnetLibraryInterface {
     BlinkPtr Blink;
     ClearPtr Clear;
     ConnectTerminalsPtr ConnectTerminals;
+    ConvertByteArrayToFramesSinglePointPtr ConvertByteArrayToFramesSinglePoint;
+    ConvertFramesToByteArraySinglePointPtr ConvertFramesToByteArraySinglePoint;
     ConvertFramesToSignalsSinglePointPtr ConvertFramesToSignalsSinglePoint;
     ConvertSignalsToFramesSinglePointPtr ConvertSignalsToFramesSinglePoint;
     ConvertTimestamp100nsTo1nsPtr ConvertTimestamp100nsTo1ns;
@@ -161,6 +171,7 @@ class NiXnetLibrary : public nixnet_grpc::NiXnetLibraryInterface {
     GetPropertySizePtr GetPropertySize;
     GetSubPropertyPtr GetSubProperty;
     GetSubPropertySizePtr GetSubPropertySize;
+    ReadFramePtr ReadFrame;
     ReadSignalSinglePointPtr ReadSignalSinglePoint;
     ReadSignalWaveformPtr ReadSignalWaveform;
     ReadSignalXYPtr ReadSignalXY;
@@ -174,6 +185,7 @@ class NiXnetLibrary : public nixnet_grpc::NiXnetLibraryInterface {
     SystemClosePtr SystemClose;
     SystemOpenPtr SystemOpen;
     WaitPtr Wait;
+    WriteFramePtr WriteFrame;
     WriteSignalSinglePointPtr WriteSignalSinglePoint;
     WriteSignalWaveformPtr WriteSignalWaveform;
     WriteSignalXYPtr WriteSignalXY;
