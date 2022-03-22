@@ -161,20 +161,19 @@ TEST_F(NiXnetCANDriverApiTests, FrameSinglePointInputFromExample_FetchData_DataL
   unsigned int num_bytes = 0;
   std::vector<nixnet_grpc::FrameBuffer> frames;
   auto session = EXPECT_SUCCESS(client::create_session(stub(), "NIXNET_example", "CAN_Cluster", "CANEventFrame1,CANEventFrame2", "CAN2", CREATE_SESSION_MODE_MODE_FRAME_IN_SINGLE_POINT)).session_ref();
-  /*
+  /* TODO
   std::vector<ReadFrameResponse> read_frame_response_vtr;
   for (int i = 0; i < 20; ++i) {
-    read_frame_response_vtr.push_back(EXPECT_SUCCESS(client::read_frame(stub(), session, NUM_FRAMES, TIME_OUT_TIMEOUT_NONE)));
+    read_frame_response_vtr.push_back(EXPECT_SUCCESS(client::read_frame(stub(), session, NUM_FRAMES, TIME_OUT_TIMEOUT_NONE, FRAME_TYPE_CAN)));
   }
   */
   EXPECT_SUCCESS(client::clear(stub(), session));
 
   /*
-  EXPECT_EQ(0, read_frame_response_vtr[0].number_of_bytes_returned());
   EXPECT_EQ(999, read_frame_response_vtr[0].buffer_size());
   EXPECT_EQ(999, read_frame_response_vtr[0].buffer().size());
+  //EXPECT_EQ(FrameBuffer(), read_frame_response_vtr[0].buffer(0));
   */
-  //EXPECT_EQ(0 /* void[] */, read_frame_response_vtr[0].buffer(0));
 }
 
 TEST_F(NiXnetCANDriverApiTests, FrameSinglePointOutputFromExample_FetchData_DataLooksReasonable)
@@ -200,7 +199,9 @@ TEST_F(NiXnetCANDriverApiTests, FrameSinglePointOutputFromExample_FetchData_Data
   for (int i = 0; i < 20; ++i) {
     frames[0].mutable_can()->set_payload("\0\1\2\3\4\5\6\7");
     frames[1].mutable_can()->set_payload("\0\1");
-    //EXPECT_SUCCESS(client::write_frame(stub(), session, frames, 10.0));
+    /* TODO
+    EXPECT_SUCCESS(client::write_frame(stub(), session, frames, 10.0));
+    */
   }
   EXPECT_SUCCESS(client::clear(stub(), session));
 }
@@ -212,20 +213,19 @@ TEST_F(NiXnetCANDriverApiTests, FrameStreamInputFromExample_FetchData_DataLooksR
   u32 num_bytes = 0;
   auto session = EXPECT_SUCCESS(client::create_session(stub(), ":memory:", "", "", "CAN2", CREATE_SESSION_MODE_MODE_FRAME_IN_STREAM)).session_ref();
   EXPECT_SUCCESS(set_property(stub(), session, PROPERTY_SESSION_INTF_BAUD_RATE_64, (u64)125000));
-  /*
+  /* TODO
   std::vector<ReadFrameResponse> read_frame_response_vtr;
   for (int i = 0; i < 20; ++i) {
-    read_frame_response_vtr.push_back(EXPECT_SUCCESS(client::read_frame(stub(), session, 250, TIME_OUT_TIMEOUT_NONE)));
+    read_frame_response_vtr.push_back(EXPECT_SUCCESS(client::read_frame(stub(), session, 250, TIME_OUT_TIMEOUT_NONE, FRAME_TYPE_CAN)));
   }
   */
   EXPECT_SUCCESS(client::clear(stub(), session));
 
   /*
-  EXPECT_EQ(0, read_frame_response_vtr[0].number_of_bytes_returned());
   EXPECT_EQ(999, read_frame_response_vtr[0].buffer_size());
   EXPECT_EQ(999, read_frame_response_vtr[0].buffer().size());
+  //EXPECT_EQ(FrameBuffer(), read_frame_response_vtr[0].buffer(0));
   */
-  //EXPECT_EQ(0 /* void[] */, read_frame_response_vtr[0].buffer(0));
 }
 
 TEST_F(NiXnetCANDriverApiTests, FrameStreamOutputFromExample_FetchData_DataLooksReasonable)
@@ -252,7 +252,9 @@ TEST_F(NiXnetCANDriverApiTests, FrameStreamOutputFromExample_FetchData_DataLooks
   for (int i = 0; i < 20; ++i) {
     frames[0].mutable_can()->set_payload("\0\1\2\3\4\5\6\7");
     frames[1].mutable_can()->set_payload("\0\1");
-    //EXPECT_SUCCESS(client::write_frame(stub(), session, frames, 10.0));
+    /* TODO
+    EXPECT_SUCCESS(client::write_frame(stub(), session, frames, 10.0));
+    */
   }
   EXPECT_SUCCESS(client::clear(stub(), session));
 }
@@ -361,22 +363,24 @@ TEST_F(NiXnetCANDriverApiTests, SignalWaveformInputFromExample_FetchData_DataLoo
   constexpr auto NUM_SAMP = 100;
   constexpr auto NUM_SIGNALS = 2;
   auto session = EXPECT_SUCCESS(client::create_session(stub(), "NIXNET_example", "CAN_Cluster", "CANCyclicSignal3,CANCyclicSignal4", "CAN2", CREATE_SESSION_MODE_MODE_SIGNAL_IN_WAVEFORM)).session_ref();
-  /*
+  ///*
   std::vector<ReadSignalWaveformResponse> read_signal_waveform_response_vtr;
   for (int i = 0; i < 20; ++i) {
     read_signal_waveform_response_vtr.push_back(EXPECT_SUCCESS(client::read_signal_waveform(stub(), session, 1.0, NUM_SIGNALS * NUM_SAMP)));
   }
-  */
+  //*/
   EXPECT_SUCCESS(client::clear(stub(), session));
 
-  /*
+  ///*
   EXPECT_EQ(0, read_signal_waveform_response_vtr[0].number_of_values_returned());
   EXPECT_EQ(999, read_signal_waveform_response_vtr[0].value_buffer_size());
   EXPECT_EQ(999, read_signal_waveform_response_vtr[0].value_buffer().size());
   EXPECT_EQ(0.0, read_signal_waveform_response_vtr[0].value_buffer(0));
   EXPECT_EQ(0.0, read_signal_waveform_response_vtr[0].delta_time());
-  */
-  //EXPECT_EQ(0 /* timestamp100ns */, read_signal_waveform_response_vtr[0].start_time());
+  //*/
+  ///*
+  EXPECT_EQ(0 /* timestamp100ns */, read_signal_waveform_response_vtr[0].start_time());
+  //*/
 }
 
 TEST_F(NiXnetCANDriverApiTests, SignalWaveformOutputFromExample_FetchData_DataLooksReasonable)
@@ -499,20 +503,19 @@ TEST_F(NiXnetCANDriverApiTests, J1939FrameInputQueuedFromExample_FetchData_DataL
   u32 out_address = 0;
   auto session = EXPECT_SUCCESS(client::create_session(stub(), "NIXNET_example", "J1939_Over_CAN", "J1939_Transport_BAM", "CAN2", CREATE_SESSION_MODE_MODE_FRAME_IN_QUEUED)).session_ref();
   claim_by_address(session, node_name, in_address, &out_address);
-  /*
+  /* TODO
   std::vector<ReadFrameResponse> read_frame_response_vtr;
   for (int i = 0; i < 20; ++i) {
-    read_frame_response_vtr.push_back(EXPECT_SUCCESS(client::read_frame(stub(), session, 10000, TIME_OUT_TIMEOUT_NONE)));
+    read_frame_response_vtr.push_back(EXPECT_SUCCESS(client::read_frame(stub(), session, 10000, TIME_OUT_TIMEOUT_NONE, FRAME_TYPE_J1939)));
   }
   */
   EXPECT_SUCCESS(client::clear(stub(), session));
 
   /*
-  EXPECT_EQ(0, read_frame_response_vtr[0].number_of_bytes_returned());
   EXPECT_EQ(999, read_frame_response_vtr[0].buffer_size());
   EXPECT_EQ(999, read_frame_response_vtr[0].buffer().size());
+  //EXPECT_EQ(FrameBuffer(), read_frame_response_vtr[0].buffer(0));
   */
-  //EXPECT_EQ(0 /* void[] */, read_frame_response_vtr[0].buffer(0));
 }
 
 TEST_F(NiXnetCANDriverApiTests, J1939FrameOutputQueuedFromExample_FetchData_DataLooksReasonable)
@@ -530,7 +533,9 @@ TEST_F(NiXnetCANDriverApiTests, J1939FrameOutputQueuedFromExample_FetchData_Data
   frames.push_back(nixnet_grpc::FrameBuffer());
   frames.back().set_allocated_j1939(frame);
   for (int i = 0; i < 20; ++i) {
-    //EXPECT_SUCCESS(client::write_frame(stub(), session, frames, 10.0));
+    /* TODO
+    EXPECT_SUCCESS(client::write_frame(stub(), session, frames, 10.0));
+    */
   }
   EXPECT_SUCCESS(client::clear(stub(), session));
 }
@@ -549,20 +554,19 @@ TEST_F(NiXnetCANDriverApiTests, J1939FrameStreamInputFromExample_FetchData_DataL
   auto session = EXPECT_SUCCESS(client::create_session(stub(), ":can_j1939:", "", "", "CAN2", CREATE_SESSION_MODE_MODE_FRAME_IN_STREAM)).session_ref();
   EXPECT_SUCCESS(set_property(stub(), session, PROPERTY_SESSION_INTF_BAUD_RATE_64, (u64)250000));
   claim_by_address(session, node_name, in_address, &out_address);
-  /*
+  /* TODO
   std::vector<ReadFrameResponse> read_frame_response_vtr;
   for (int i = 0; i < 20; ++i) {
-    read_frame_response_vtr.push_back(EXPECT_SUCCESS(client::read_frame(stub(), session, 10000, TIME_OUT_TIMEOUT_NONE)));
+    read_frame_response_vtr.push_back(EXPECT_SUCCESS(client::read_frame(stub(), session, 10000, TIME_OUT_TIMEOUT_NONE, FRAME_TYPE_J1939)));
   }
   */
   EXPECT_SUCCESS(client::clear(stub(), session));
 
   /*
-  EXPECT_EQ(0, read_frame_response_vtr[0].number_of_bytes_returned());
   EXPECT_EQ(999, read_frame_response_vtr[0].buffer_size());
   EXPECT_EQ(999, read_frame_response_vtr[0].buffer().size());
+  //EXPECT_EQ(FrameBuffer(), read_frame_response_vtr[0].buffer(0));
   */
-  //EXPECT_EQ(0 /* void[] */, read_frame_response_vtr[0].buffer(0));
 }
 
 TEST_F(NiXnetCANDriverApiTests, J1939FrameStreamOutputFromExample_FetchData_DataLooksReasonable)
@@ -590,7 +594,9 @@ TEST_F(NiXnetCANDriverApiTests, J1939FrameStreamOutputFromExample_FetchData_Data
   frames.push_back(nixnet_grpc::FrameBuffer());
   frames.back().set_allocated_j1939(frame);
   for (int i = 0; i < 20; ++i) {
-    //EXPECT_SUCCESS(client::write_frame(stub(), session, frames, 10.0));
+    /* TODO
+    EXPECT_SUCCESS(client::write_frame(stub(), session, frames, 10.0));
+    */
     Sleep(3000);
   }
   EXPECT_SUCCESS(client::clear(stub(), session));

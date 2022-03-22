@@ -101,7 +101,7 @@ TEST_F(NiXnetEthernetDriverApiTests, FrameStreamInputLoggerFromExample_FetchData
   constexpr u8 PCP = 3;
   std::string log_path = "C:\\Users\\Public\\Documents\\log.pcap";
   auto session = EXPECT_SUCCESS(client::create_session(stub(), NULL, NULL, NULL, "ENET4", CREATE_SESSION_MODE_MODE_FRAME_IN_STREAM)).session_ref();
-  /*
+  /* TODO
   std::vector<EptRxFilter> rx_filter(1);
   rx_filter[0].set_use_flags(ENABLE_VID_AND_PRIORITY);
   rx_filter[0].set_vid(VLAN_ID);
@@ -125,7 +125,7 @@ TEST_F(NiXnetEthernetDriverApiTests, FrameStreamInputReaderFromExample_FetchData
   constexpr u32 ENABLE_VID_AND_PRIORITY = 3;
   constexpr u8 PCP = 3;
   auto session = EXPECT_SUCCESS(client::create_session(stub(), NULL, NULL, NULL, "ENET4", CREATE_SESSION_MODE_MODE_FRAME_IN_STREAM)).session_ref();
-  /*
+  /* TODO
   std::vector<EptRxFilter> rx_filter(1);
   rx_filter[0].set_use_flags(ENABLE_VID_AND_PRIORITY);
   rx_filter[0].set_vid(VLAN_ID);
@@ -133,13 +133,16 @@ TEST_F(NiXnetEthernetDriverApiTests, FrameStreamInputReaderFromExample_FetchData
   rx_filter[0].set_destination_mac("AA:BB:CC:DD:EE:FF");
   EXPECT_SUCCESS(client::set_property(stub(), session, PROPERTY_SESSION_INTF_ENET_EPT_RECEIVE_FILTER, rx_filter));
   */
-  //auto read_frame_response = EXPECT_SUCCESS(client::read_frame(stub(), session, 250, TIME_OUT_TIMEOUT_NONE));
+  /* TODO
+  auto read_frame_response = EXPECT_SUCCESS(client::read_frame(stub(), session, 250, TIME_OUT_TIMEOUT_NONE, FRAME_TYPE_ENET));
+  */
   EXPECT_SUCCESS(client::clear(stub(), session));
 
-  //EXPECT_EQ(0, read_frame_response.number_of_bytes_returned());
-  //EXPECT_EQ(999, read_frame_response.buffer_size());
-  //EXPECT_EQ(999, read_frame_response.buffer().size());
+  /*
+  EXPECT_EQ(999, read_frame_response.buffer_size());
+  EXPECT_EQ(999, read_frame_response.buffer().size());
   //EXPECT_EQ(FrameBuffer(), read_frame_response.buffer(0));
+  */
 }
 
 TEST_F(NiXnetEthernetDriverApiTests, FrameStreamOutputFromExample_FetchData_DataLooksReasonable)
@@ -159,7 +162,7 @@ TEST_F(NiXnetEthernetDriverApiTests, FrameStreamOutputFromExample_FetchData_Data
   frame->set_device_timestamp(0);
   frame->set_network_timestamp(0);
   frame->set_flags(0);
-  frame->set_type(0);  // TODO: 0 is nxEnetFrameType_Data
+  frame->set_type(FRAME_TYPE_ENET);
   frame->set_frame_data(payload);
   frames.push_back(nixnet_grpc::FrameBuffer());
   frames.back().set_allocated_enet(frame);
@@ -168,11 +171,13 @@ TEST_F(NiXnetEthernetDriverApiTests, FrameStreamOutputFromExample_FetchData_Data
   frame->set_device_timestamp(0);
   frame->set_network_timestamp(0);
   frame->set_flags(0);
-  frame->set_type(0);  // TODO: 0 is nxEnetFrameType_Data
+  frame->set_type(FRAME_TYPE_ENET);
   frame->set_frame_data(payload);
   frames.push_back(nixnet_grpc::FrameBuffer());
   frames.back().set_allocated_enet(frame);
-  //EXPECT_SUCCESS(client::write_frame(stub(), session, frames, 10.0));
+  /* TODO
+  EXPECT_SUCCESS(client::write_frame(stub(), session, frames, 10.0));
+  */
   EXPECT_SUCCESS(client::clear(stub(), session));
 }
 

@@ -86,7 +86,7 @@ void _set_property_value(SetPropertyRequest& request, const std::vector<std::str
 
 void _set_property_value(SetPropertyRequest& request, const std::vector<pb::uint32>& value)
 {
-  request.mutable_u32_array()->mutable_u32_array()->Clear();
+  request.mutable_u32_array()->clear_u32_array();
   request.mutable_u32_array()->mutable_u32_array()->Add(value.begin(), value.end());
 }
 
@@ -97,7 +97,7 @@ void _set_property_value(SetPropertyRequest& request, const nidevice_grpc::Sessi
 
 void _set_property_value(SetPropertyRequest& request, const std::vector<nidevice_grpc::Session>& value)
 {
-  request.mutable_db_ref_array()->mutable_db_ref()->Clear();
+  request.mutable_db_ref_array()->clear_db_ref();
   request.mutable_db_ref_array()->mutable_db_ref()->Reserve(static_cast<int>(value.size()));
   for (int i = 0; i < value.size(); ++i) {
     request.mutable_db_ref_array()->mutable_db_ref()->at(i) = value[i];
@@ -107,7 +107,11 @@ void _set_property_value(SetPropertyRequest& request, const std::vector<nidevice
 /* TODO
 void _set_property_value(SetPropertyRequest& request, const std::vector<EptRxFilter>& value)
 {
-  request.mutable_ept_rx_filter_array()->CopyFrom(*ept_rx_filter_array_value_ptr);
+  request.mutable_ept_rx_filter_array()->clear_ept_rx_filter();
+  request.mutable_ept_rx_filter_array()->mutable_ept_rx_filter()->Reserve(static_cast<int>(value.size()));
+  for (int i = 0; i < value.size(); ++i) {
+    request.mutable_ept_rx_filter_array()->mutable_ept_rx_filter()->at(i) = value[i];
+  }
 }
 */
 

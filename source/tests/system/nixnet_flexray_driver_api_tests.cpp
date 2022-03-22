@@ -144,17 +144,19 @@ TEST_F(NiXnetFlexRayDriverApiTests, FrameSinglePointInputFromExample_FetchData_D
   u32 num_bytes = 0;
   auto session = EXPECT_SUCCESS(client::create_session(stub(), "NIXNET_example", "FlexRay_Cluster", "FlexRayEventFrame1,FlexRayEventFrame2", "FlexRay2", CREATE_SESSION_MODE_MODE_FRAME_IN_SINGLE_POINT)).session_ref();
   EXPECT_SUCCESS(set_property(stub(), session, PROPERTY_SESSION_INTF_FLEX_RAY_KEY_SLOT_ID, (u32)1));
-  /*
+  /* TODO
   std::vector<ReadFrameResponse> read_frame_response_vtr;
   for (int i = 0; i < 20; ++i) {
-    read_frame_response_vtr.push_back(EXPECT_SUCCESS(client::read_frame(stub(), session, 2, TIME_OUT_TIMEOUT_NONE)));
+    read_frame_response_vtr.push_back(EXPECT_SUCCESS(client::read_frame(stub(), session, 2, TIME_OUT_TIMEOUT_NONE, FRAME_TYPE_FLEX_RAY)));
   }
+  */
   EXPECT_SUCCESS(client::clear(stub(), session));
 
+  /*
   EXPECT_EQ(999, read_frame_response_vtr[0].buffer_size());
   EXPECT_EQ(999, read_frame_response_vtr[0].buffer().size());
+  //EXPECT_EQ(FrameBuffer(), read_frame_response_vtr[0].buffer(0));
   */
-  //EXPECT_EQ(0 /* void[] */, read_frame_response_vtr[0].buffer(0));
 }
 
 TEST_F(NiXnetFlexRayDriverApiTests, FrameSinglePointOutputFromExample_FetchData_DataLooksReasonable)
@@ -192,7 +194,9 @@ TEST_F(NiXnetFlexRayDriverApiTests, FrameSinglePointOutputFromExample_FetchData_
     }
     frames[0].mutable_lin()->set_payload(payload1);
     frames[1].mutable_lin()->set_payload(payload2);
-    //EXPECT_SUCCESS(client::write_frame(stub(), session, frames, 10.0));
+    /* TODO
+    EXPECT_SUCCESS(client::write_frame(stub(), session, frames, 10.0));
+    */
   }
   EXPECT_SUCCESS(client::clear(stub(), session));
 }
@@ -207,17 +211,19 @@ TEST_F(NiXnetFlexRayDriverApiTests, FrameStreamInputFromExample_FetchData_DataLo
   u32 num_bytes = 0;
   auto session = EXPECT_SUCCESS(client::create_session(stub(), "NIXNET_example", "FlexRay_Cluster", NULL, "FlexRay2", CREATE_SESSION_MODE_MODE_FRAME_IN_STREAM)).session_ref();
   EXPECT_SUCCESS(set_property(stub(), session, PROPERTY_SESSION_INTF_FLEX_RAY_KEY_SLOT_ID, (u32)1));
-  /*
+  /* TODO
   std::vector<ReadFrameResponse> read_frame_response_vtr;
   for (int i = 0; i < 20; ++i) {
-    read_frame_response_vtr.push_back(EXPECT_SUCCESS(client::read_frame(stub(), session, 10000, TIME_OUT_TIMEOUT_NONE)));
+    read_frame_response_vtr.push_back(EXPECT_SUCCESS(client::read_frame(stub(), session, 10000, TIME_OUT_TIMEOUT_NONE, FRAME_TYPE_FLEX_RAY)));
   }
+  */
   EXPECT_SUCCESS(client::clear(stub(), session));
 
+  /*
   EXPECT_EQ(999, read_frame_response_vtr[0].buffer_size());
   EXPECT_EQ(999, read_frame_response_vtr[0].buffer().size());
+  //EXPECT_EQ(FrameBuffer(), read_frame_response_vtr[0].buffer(0));
   */
-  //EXPECT_EQ(0 /* void[] */, read_frame_response_vtr[0].buffer(0));
 }
 
 /*
@@ -300,17 +306,19 @@ TEST_F(NiXnetFlexRayDriverApiTests, PDUSinglePointInputFromExample_FetchData_Dat
   u32 num_bytes = 0;
   auto session = EXPECT_SUCCESS(client::create_session(stub(), "NIXNET_example", "FlexRay_Cluster", "FlexRayCyclicFrame1_pdu,FlexRayCyclicFrame2_pdu", "FlexRay2", CREATE_SESSION_MODE_MODE_FRAME_IN_SINGLE_POINT)).session_ref();
   EXPECT_SUCCESS(set_property(stub(), session, PROPERTY_SESSION_INTF_FLEX_RAY_KEY_SLOT_ID, (u32)1));
-  /*
+  /* TODO
   std::vector<ReadFrameResponse> read_frame_response_vtr;
   for (int i = 0; i < 20; ++i) {
-    read_frame_response_vtr.push_back(EXPECT_SUCCESS(client::read_frame(stub(), session, 2, TIME_OUT_TIMEOUT_NONE)));
+    read_frame_response_vtr.push_back(EXPECT_SUCCESS(client::read_frame(stub(), session, 2, TIME_OUT_TIMEOUT_NONE, FRAME_TYPE_FLEX_RAY)));
   }
+  */
   EXPECT_SUCCESS(client::clear(stub(), session));
 
+  /*
   EXPECT_EQ(999, read_frame_response_vtr[0].buffer_size());
   EXPECT_EQ(999, read_frame_response_vtr[0].buffer().size());
+  //EXPECT_EQ(FrameBuffer(), read_frame_response_vtr[0].buffer(0));
   */
-  //EXPECT_EQ(0 /* void[] */, read_frame_response_vtr[0].buffer(0));
 }
 
 TEST_F(NiXnetFlexRayDriverApiTests, PDUSinglePointOutputFromExample_FetchData_DataLooksReasonable)
@@ -332,7 +340,9 @@ TEST_F(NiXnetFlexRayDriverApiTests, PDUSinglePointOutputFromExample_FetchData_Da
   frames.push_back(nixnet_grpc::FrameBuffer());
   frames.back().set_allocated_flex_ray(frame);
   for (int i = 0; i < 20; ++i) {
-    //EXPECT_SUCCESS(client::write_frame(stub(), session, frames, 10.0));
+    /* TODO
+    EXPECT_SUCCESS(client::write_frame(stub(), session, frames, 10.0));
+    */
   }
   EXPECT_SUCCESS(client::clear(stub(), session));
 

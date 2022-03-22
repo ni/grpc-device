@@ -140,18 +140,19 @@ TEST_F(NiXnetLINDriverApiTests, FrameSinglePointInputFromExample_FetchData_DataL
   unsigned int num_bytes = 0;
   std::vector<nixnet_grpc::FrameBuffer> frames;
   auto session = EXPECT_SUCCESS(client::create_session(stub(), "NIXNET_exampleLDF", "Cluster", "MasterFrame1,MasterFrame2", "LIN2", CREATE_SESSION_MODE_MODE_FRAME_IN_SINGLE_POINT)).session_ref();
-  /*
+  /* TODO
   std::vector<ReadFrameResponse> read_frame_response_vtr;
   for (int i = 0; i < 20; ++i) {
-    read_frame_response_vtr.push_back(EXPECT_SUCCESS(client::read_frame(stub(), session, NUM_FRAMES, TIME_OUT_TIMEOUT_NONE)));
+    read_frame_response_vtr.push_back(EXPECT_SUCCESS(client::read_frame(stub(), session, NUM_FRAMES, TIME_OUT_TIMEOUT_NONE, FRAME_TYPE_LIN)));
   }
+  */
   EXPECT_SUCCESS(client::clear(stub(), session));
 
-  EXPECT_EQ(0, read_frame_response_vtr[0].number_of_bytes_returned());
+  /*
   EXPECT_EQ(999, read_frame_response_vtr[0].buffer_size());
   EXPECT_EQ(999, read_frame_response_vtr[0].buffer().size());
+  //EXPECT_EQ(FrameBuffer(), read_frame_response_vtr[0].buffer(0));
   */
-  //EXPECT_EQ(0 /* void[] */, read_frame_response_vtr[0].buffer(0));
 }
 
 TEST_F(NiXnetLINDriverApiTests, FrameSinglePointOutputFromExample_FetchData_DataLooksReasonable)
@@ -164,7 +165,9 @@ TEST_F(NiXnetLINDriverApiTests, FrameSinglePointOutputFromExample_FetchData_Data
   char payload1[PAYLOAD_SIZE_1 + 1] = {0};
   char payload2[PAYLOAD_SIZE_2 + 1] = {0};
   auto session = EXPECT_SUCCESS(client::create_session(stub(), "NIXNET_exampleLDF", "Cluster", "MasterFrame1,MasterFrame2", "LIN1", CREATE_SESSION_MODE_MODE_FRAME_OUT_SINGLE_POINT)).session_ref();
-  //EXPECT_SUCCESS(client::write_state(stub(), session, WRITE_STATE_STATE_LIN_SCHEDULE_CHANGE, &0));
+  WriteStateValue state_value;
+  state_value.set_lin_schedule_change(0);
+  EXPECT_SUCCESS(client::write_state(stub(), session, WRITE_STATE_STATE_LIN_SCHEDULE_CHANGE, state_value));
   frame = new nixnet_grpc::Frame();
   frame->set_timestamp(0);
   frame->set_flags(0);
@@ -188,7 +191,9 @@ TEST_F(NiXnetLINDriverApiTests, FrameSinglePointOutputFromExample_FetchData_Data
     }
     frames[0].mutable_lin()->set_payload(payload1);
     frames[1].mutable_lin()->set_payload(payload2);
-    //EXPECT_SUCCESS(client::write_frame(stub(), session, frames, 10.0));
+    /* TODO
+    EXPECT_SUCCESS(client::write_frame(stub(), session, frames, 10.0));
+    */
   }
   EXPECT_SUCCESS(client::clear(stub(), session));
 }
@@ -200,18 +205,19 @@ TEST_F(NiXnetLINDriverApiTests, FrameStreamInputFromExample_FetchData_DataLooksR
   std::vector<nixnet_grpc::FrameBuffer> frames;
   auto session = EXPECT_SUCCESS(client::create_session(stub(), "NIXNET_exampleLDF", "Cluster", "", "LIN2", CREATE_SESSION_MODE_MODE_FRAME_IN_STREAM)).session_ref();
   EXPECT_SUCCESS(set_property(stub(), session, PROPERTY_SESSION_INTF_LIN_NO_RESPONSE_TO_IN_STRM, (u32)1));
-  /*
+  /* TODO
   std::vector<ReadFrameResponse> read_frame_response_vtr;
   for (int i = 0; i < 20; ++i) {
-    read_frame_response_vtr.push_back(EXPECT_SUCCESS(client::read_frame(stub(), session, 250, TIME_OUT_TIMEOUT_NONE)));
+    read_frame_response_vtr.push_back(EXPECT_SUCCESS(client::read_frame(stub(), session, 250, TIME_OUT_TIMEOUT_NONE, FRAME_TYPE_LIN)));
   }
+  */
   EXPECT_SUCCESS(client::clear(stub(), session));
 
-  EXPECT_EQ(0, read_frame_response_vtr[0].number_of_bytes_returned());
+  /*
   EXPECT_EQ(999, read_frame_response_vtr[0].buffer_size());
   EXPECT_EQ(999, read_frame_response_vtr[0].buffer().size());
+  //EXPECT_EQ(FrameBuffer(), read_frame_response_vtr[0].buffer(0));
   */
-  //EXPECT_EQ(0 /* void[] */, read_frame_response_vtr[0].buffer(0));
 }
 
 /*
@@ -224,7 +230,9 @@ TEST_F(NiXnetLINDriverApiTests, InputOutputSamePortFromExample_FetchData_DataLoo
   std::vector<f64> output_value_vtr(NUM_SIGNALS_OUT);
   auto session = EXPECT_SUCCESS(client::create_session(stub(), "NIXNET_exampleLDF", "Cluster", "MasterSignal1_U16,MasterSignal2_U16", "LIN1", CREATE_SESSION_MODE_MODE_SIGNAL_IN_SINGLE_POINT)).session_ref();
   auto session = EXPECT_SUCCESS(client::create_session(stub(), "NIXNET_exampleLDF", "Cluster", "MasterSignal3_U8,MasterSignal4_U8", "LIN1", CREATE_SESSION_MODE_MODE_SIGNAL_OUT_SINGLE_POINT)).session_ref();
-  EXPECT_SUCCESS(client::write_state(stub(), session, WRITE_STATE_STATE_LIN_SCHEDULE_CHANGE, &0));
+  WriteStateValue state_value;
+  state_value.set_lin_schedule_change(0);
+  EXPECT_SUCCESS(client::write_state(stub(), session, WRITE_STATE_STATE_LIN_SCHEDULE_CHANGE, state_value));
   std::vector<ReadSignalSinglePointResponse> read_signal_single_point_response_vtr;
   while ('q' != (typed_char = tolower(_getch()))) {
     switch (typed_char) {
@@ -264,7 +272,9 @@ TEST_F(NiXnetLINDriverApiTests, LoopbackTestFromExample_FetchData_DataLooksReaso
   std::vector<f64> output_value_vtr(NUM_SIGNALS_OUT);
   auto input_session = EXPECT_SUCCESS(client::create_session(stub(), "NIXNET_exampleLDF", "Cluster", "MasterSignal1_U16,MasterSignal2_U16", "LIN1", CREATE_SESSION_MODE_MODE_SIGNAL_IN_SINGLE_POINT)).session_ref();
   auto output_session = EXPECT_SUCCESS(client::create_session(stub(), "NIXNET_exampleLDF", "Cluster", "MasterSignal1_U16,MasterSignal2_U16", "LIN2", CREATE_SESSION_MODE_MODE_SIGNAL_OUT_SINGLE_POINT)).session_ref();
-  //EXPECT_SUCCESS(client::write_state(stub(), output_session, WRITE_STATE_STATE_LIN_SCHEDULE_CHANGE, &0));
+  WriteStateValue state_value;
+  state_value.set_lin_schedule_change(0);
+  EXPECT_SUCCESS(client::write_state(stub(), output_session, WRITE_STATE_STATE_LIN_SCHEDULE_CHANGE, state_value));
   EXPECT_SUCCESS(client::start(stub(), input_session, START_STOP_SCOPE_START_STOP_NORMAL));
   std::vector<ReadSignalSinglePointResponse> read_signal_single_point_response_vtr;
   for (int i = 0; i < 20; ++i) {
@@ -307,7 +317,9 @@ TEST_F(NiXnetLINDriverApiTests, SignalSinglePointOutputFromExample_FetchData_Dat
   constexpr auto NUM_SIGNALS = 2;
   std::vector<f64> value_vtr(NUM_SIGNALS);
   auto session = EXPECT_SUCCESS(client::create_session(stub(), "NIXNET_exampleLDF", "Cluster", "MasterSignal1_U16,MasterSignal2_U16", "LIN1", CREATE_SESSION_MODE_MODE_SIGNAL_OUT_SINGLE_POINT)).session_ref();
-  //EXPECT_SUCCESS(client::write_state(stub(), session, WRITE_STATE_STATE_LIN_SCHEDULE_CHANGE, &0));
+  WriteStateValue state_value;
+  state_value.set_lin_schedule_change(0);
+  EXPECT_SUCCESS(client::write_state(stub(), session, WRITE_STATE_STATE_LIN_SCHEDULE_CHANGE, state_value));
   for (int i = 0; i < 20; ++i) {
     value_vtr[0] = (f64)(i % 10);
     value_vtr[1] = (f64)((i % 10) * 10);
@@ -344,7 +356,9 @@ TEST_F(NiXnetLINDriverApiTests, SignalWaveformOutputFromExample_FetchData_DataLo
   f64 max_out = 40.0;
   std::vector<f64> value_vtr(NUM_SIGNALS * NUM_SAMP);
   auto session = EXPECT_SUCCESS(client::create_session(stub(), "NIXNET_exampleLDF", "Cluster", "MasterSignal1_U16,MasterSignal2_U16", "LIN1", CREATE_SESSION_MODE_MODE_SIGNAL_OUT_WAVEFORM)).session_ref();
-  //EXPECT_SUCCESS(client::write_state(stub(), session, WRITE_STATE_STATE_LIN_SCHEDULE_CHANGE, &0));
+  WriteStateValue state_value;
+  state_value.set_lin_schedule_change(0);
+  EXPECT_SUCCESS(client::write_state(stub(), session, WRITE_STATE_STATE_LIN_SCHEDULE_CHANGE, state_value));
   increment_out = (max_out - min_out) / NUM_SAMP;
   for (int i = 0; i < NUM_SAMP; ++i) {
     value_vtr[i] = min_out + (increment_out * i);
@@ -395,7 +409,9 @@ TEST_F(NiXnetLINDriverApiTests, SignalXYOutputFromExample_FetchData_DataLooksRea
   f64 MaxOut = 40.0;
   std::vector<f64> value_vtr(NUM_SAMP);
   auto session = EXPECT_SUCCESS(client::create_session(stub(), "NIXNET_exampleLDF", "Cluster", "MasterSignal1_U16", "LIN1", CREATE_SESSION_MODE_MODE_SIGNAL_OUT_XY)).session_ref();
-  //EXPECT_SUCCESS(client::write_state(stub(), session, WRITE_STATE_STATE_LIN_SCHEDULE_CHANGE, &0));
+  WriteStateValue state_value;
+  state_value.set_lin_schedule_change(0);
+  EXPECT_SUCCESS(client::write_state(stub(), session, WRITE_STATE_STATE_LIN_SCHEDULE_CHANGE, state_value));
   num_pairs_vtr[0] = NUM_SAMP;
   IncrementOut = (MaxOut - MinOut) / NUM_SAMP;
   for (int i = 0; i < NUM_SAMP; ++i) {
