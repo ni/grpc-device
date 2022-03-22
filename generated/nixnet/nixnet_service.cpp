@@ -169,7 +169,7 @@ namespace nixnet_grpc {
       auto session_ref_grpc_session = request->session_ref();
       nxSessionRef_t session_ref = session_repository_->access_session(session_ref_grpc_session.id(), session_ref_grpc_session.name());
       u8* value_buffer = (u8*)request->value_buffer().c_str();
-      u32 size_of_value_buffer = static_cast<u32>(request->value_buffer().size());
+      u32 size_of_value_buffer = static_cast<u32>(request->value_buffer().size() * sizeof(u8));
       u32 size_of_buffer = request->size_of_buffer();
       u32 frame_type;
       switch (request->frame_type_enum_case()) {
