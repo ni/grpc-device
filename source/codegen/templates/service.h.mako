@@ -7,7 +7,9 @@ config = data['config']
 functions = data['functions']
 
 function_enums = common_helpers.get_function_enums(functions)
-enums_to_map = service_helpers.get_enums_to_map(functions, enums)
+additional_enums = config.get("add_enums_to_proto",[])
+function_enums.extend(additional_enums)
+enums_to_map = service_helpers.get_enums_to_map(function_enums, enums)
 enums_mapped_to_type = service_helpers.generate_mapping_enums_to_type(enums)
 type_from_enum = service_helpers.get_distinct_types_from_enums(enums)
 service_class_prefix = config["service_class_prefix"]

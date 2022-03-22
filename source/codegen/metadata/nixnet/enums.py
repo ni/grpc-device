@@ -11,6 +11,58 @@ enums = {
             }
         ]
     },
+    'CanCommState': {
+        'values': [
+            {
+                'name': 'CAN_COMM_STATE_ERROR_ACTIVE',
+                'value': 0
+            },
+            {
+                'name': 'CAN_COMM_STATE_ERROR_PASSIVE',
+                'value': 1
+            },
+            {
+                'name': 'CAN_COMM_STATE_BUS_OFF',
+                'value': 2
+            },
+            {
+                'name': 'CAN_COMM_STATE_INIT',
+                'value': 3
+            }
+        ]
+    },
+    'CanLastErr': {
+        'values': [
+            {
+                'name': 'CAN_LAST_ERR_NONE',
+                'value': 0
+            },
+            {
+                'name': 'CAN_LAST_ERR_STUFF',
+                'value': 1
+            },
+            {
+                'name': 'CAN_LAST_ERR_FORM',
+                'value': 2
+            },
+            {
+                'name': 'CAN_LAST_ERR_ACK',
+                'value': 3
+            },
+            {
+                'name': 'CAN_LAST_ERR_BIT_1',
+                'value': 4
+            },
+            {
+                'name': 'CAN_LAST_ERR_BIT_0',
+                'value': 5
+            },
+            {
+                'name': 'CAN_LAST_ERR_CRC',
+                'value': 6
+            }
+        ]
+    },
     'CopyMode': {
         'values': [
             {
@@ -937,6 +989,187 @@ enums = {
             }
         ]
     },
+    'EnetFlags': {
+        'generate-mappings': True,
+        'values': [
+            {
+                'name': 'ENET_FLAGS_TRANSMIT',
+                'value': 2147483648
+            },
+            {
+                'name': 'ENET_FLAGS_RECEIVE',
+                'value': 1073741824
+            },
+            {
+                'name': 'ENET_FLAGS_NETWORK_SYNCED',
+                'value': 8388608
+            },
+            {
+                'name': 'ENET_FLAGS_ERROR',
+                'value': 65536
+            }
+        ]
+    },
+    'EnetFrameType': {
+        'values': [
+            {
+                'name': 'ENET_FRAME_TYPE_DATA',
+                'value': 0
+            },
+            {
+                'name': 'ENET_FRAME_TYPE_DELAY',
+                'value': 225
+            },
+            {
+                'name': 'ENET_FRAME_TYPE_FUTURE_TIME_WAIT',
+                'value': 226
+            }
+        ]
+    },
+    'FlexRayPocState': {
+        'values': [
+            {
+                'name': 'FLEX_RAY_POC_STATE_DEFAULT_CONFIG',
+                'value': 0
+            },
+            {
+                'name': 'FLEX_RAY_POC_STATE_READY',
+                'value': 1
+            },
+            {
+                'name': 'FLEX_RAY_POC_STATE_NORMAL_ACTIVE',
+                'value': 2
+            },
+            {
+                'name': 'FLEX_RAY_POC_STATE_NORMAL_PASSIVE',
+                'value': 3
+            },
+            {
+                'name': 'FLEX_RAY_POC_STATE_HALT',
+                'value': 4
+            },
+            {
+                'name': 'FLEX_RAY_POC_STATE_MONITOR',
+                'value': 5
+            },
+            {
+                'name': 'FLEX_RAY_POC_STATE_CONFIG',
+                'value': 15
+            }
+        ]
+    },
+    'FlexRaySymbol': {
+        'values': [
+            {
+                'name': 'FLEX_RAY_SYMBOL_MTS',
+                'value': 0
+            },
+            {
+                'name': 'FLEX_RAY_SYMBOL_WAKEUP',
+                'value': 1
+            }
+        ]
+    },
+    'FrameFlags': {
+        'values': [
+            {
+                'name': 'FRAME_FLAGS_FLEX_RAY_STARTUP',
+                'value': 1
+            },
+            {
+                'name': 'FRAME_FLAGS_FLEX_RAY_SYNC',
+                'value': 2
+            },
+            {
+                'name': 'FRAME_FLAGS_FLEX_RAY_PREAMBLE',
+                'value': 4
+            },
+            {
+                'name': 'FRAME_FLAGS_FLEX_RAY_CH_A',
+                'value': 16
+            },
+            {
+                'name': 'FRAME_FLAGS_FLEX_RAY_CH_B',
+                'value': 32
+            },
+            {
+                'name': 'FRAME_FLAGS_LIN_EVENT_SLOT',
+                'value': 1
+            },
+            {
+                'name': 'FRAME_FLAGS_TRANSMIT_ECHO',
+                'value': 128
+            }
+        ]
+    },
+    'FrameType': {
+        'values': [
+            {
+                'name': 'FRAME_TYPE_CAN_DATA',
+                'value': 0
+            },
+            {
+                'name': 'FRAME_TYPE_CAN_REMOTE',
+                'value': 1
+            },
+            {
+                'name': 'FRAME_TYPE_CAN_BUS_ERROR',
+                'value': 2
+            },
+            {
+                'name': 'FRAME_TYPE_CAN20_DATA',
+                'value': 8
+            },
+            {
+                'name': 'FRAME_TYPE_CANFD_DATA',
+                'value': 16
+            },
+            {
+                'name': 'FRAME_TYPE_CANFDBRS_DATA',
+                'value': 24
+            },
+            {
+                'name': 'FRAME_TYPE_FLEX_RAY_DATA',
+                'value': 32
+            },
+            {
+                'name': 'FRAME_TYPE_FLEX_RAY_NULL',
+                'value': 33
+            },
+            {
+                'name': 'FRAME_TYPE_FLEX_RAY_SYMBOL',
+                'value': 34
+            },
+            {
+                'name': 'FRAME_TYPE_LIN_DATA',
+                'value': 64
+            },
+            {
+                'name': 'FRAME_TYPE_LIN_BUS_ERROR',
+                'value': 65
+            },
+            {
+                'name': 'FRAME_TYPE_LIN_NO_RESPONSE',
+                'value': 66
+            },
+            {
+                'name': 'FRAME_TYPE_J1939_DATA',
+                'value': 192
+            },
+            {
+                'name': 'FRAME_TYPE_SPECIAL_DELAY',
+                'value': 224
+            },
+            {
+                'name': 'FRAME_TYPE_SPECIAL_LOG_TRIGGER',
+                'value': 225
+            },
+            {
+                'name': 'FRAME_TYPE_SPECIAL_START_TRIGGER',
+                'value': 226
+            }
+        ]
+    },
     'GetDBCAttributeMode': {
         'values': [
             {
@@ -954,6 +1187,70 @@ enums = {
             {
                 'name': 'GET_DBC_MODE_VALUE_TABLE_LIST',
                 'value': 3
+            }
+        ]
+    },
+    'LinCommState': {
+        'values': [
+            {
+                'name': 'LIN_COMM_STATE_IDLE',
+                'value': 0
+            },
+            {
+                'name': 'LIN_COMM_STATE_ACTIVE',
+                'value': 1
+            },
+            {
+                'name': 'LIN_COMM_STATE_INACTIVE',
+                'value': 2
+            }
+        ]
+    },
+    'LinDiagnosticSchedule': {
+        'values': [
+            {
+                'name': 'LIN_DIAGNOSTIC_SCHEDULE_NULL',
+                'value': 0
+            },
+            {
+                'name': 'LIN_DIAGNOSTIC_SCHEDULE_MASTER_REQ',
+                'value': 1
+            },
+            {
+                'name': 'LIN_DIAGNOSTIC_SCHEDULE_SLAVE_RESP',
+                'value': 2
+            }
+        ]
+    },
+    'LinLastErrCode': {
+        'values': [
+            {
+                'name': 'LIN_LAST_ERR_CODE_NONE',
+                'value': 0
+            },
+            {
+                'name': 'LIN_LAST_ERR_CODE_UNKNOWN_ID',
+                'value': 1
+            },
+            {
+                'name': 'LIN_LAST_ERR_CODE_FORM',
+                'value': 2
+            },
+            {
+                'name': 'LIN_LAST_ERR_CODE_FRAMING',
+                'value': 3
+            },
+            {
+                'name': 'LIN_LAST_ERR_CODE_READBACK',
+                'value': 4
+            },
+            {
+                'name': 'LIN_LAST_ERR_CODE_TIMEOUT',
+                'value': 5
+            },
+            {
+                'name': 'LIN_LAST_ERR_CODE_CRC',
+                'value': 6
             }
         ]
     },
@@ -2804,6 +3101,22 @@ enums = {
             }
         ]
     },
+    'SessionInfoState': {
+        'values': [
+            {
+                'name': 'SESSION_INFO_STATE_STOPPED',
+                'value': 0
+            },
+            {
+                'name': 'SESSION_INFO_STATE_STARTED',
+                'value': 1
+            },
+            {
+                'name': 'SESSION_INFO_STATE_MIX',
+                'value': 2
+            }
+        ]
+    },
     'StartStopScope': {
         'values': [
             {
@@ -2821,146 +3134,6 @@ enums = {
             {
                 'name': 'START_STOP_SESSION_ONLY_BLOCKING',
                 'value': 3
-            }
-        ]
-    },
-    'StateValue': {
-        'values': [
-            {
-                'name': 'SESSION_INFO_STATE_STOPPED',
-                'value': 0
-            },
-            {
-                'name': 'SESSION_INFO_STATE_STARTED',
-                'value': 1
-            },
-            {
-                'name': 'SESSION_INFO_STATE_MIX',
-                'value': 2
-            },
-            {
-                'name': 'CAN_COMM_STATE_ERROR_ACTIVE',
-                'value': 0
-            },
-            {
-                'name': 'CAN_COMM_STATE_ERROR_PASSIVE',
-                'value': 1
-            },
-            {
-                'name': 'CAN_COMM_STATE_BUS_OFF',
-                'value': 2
-            },
-            {
-                'name': 'CAN_COMM_STATE_INIT',
-                'value': 3
-            },
-            {
-                'name': 'CAN_LAST_ERR_NONE',
-                'value': 0
-            },
-            {
-                'name': 'CAN_LAST_ERR_STUFF',
-                'value': 1
-            },
-            {
-                'name': 'CAN_LAST_ERR_FORM',
-                'value': 2
-            },
-            {
-                'name': 'CAN_LAST_ERR_ACK',
-                'value': 3
-            },
-            {
-                'name': 'CAN_LAST_ERR_BIT_1',
-                'value': 4
-            },
-            {
-                'name': 'CAN_LAST_ERR_BIT_0',
-                'value': 5
-            },
-            {
-                'name': 'CAN_LAST_ERR_CRC',
-                'value': 6
-            },
-            {
-                'name': 'FLEX_RAY_POC_STATE_DEFAULT_CONFIG',
-                'value': 0
-            },
-            {
-                'name': 'FLEX_RAY_POC_STATE_READY',
-                'value': 1
-            },
-            {
-                'name': 'FLEX_RAY_POC_STATE_NORMAL_ACTIVE',
-                'value': 2
-            },
-            {
-                'name': 'FLEX_RAY_POC_STATE_NORMAL_PASSIVE',
-                'value': 3
-            },
-            {
-                'name': 'FLEX_RAY_POC_STATE_HALT',
-                'value': 4
-            },
-            {
-                'name': 'FLEX_RAY_POC_STATE_MONITOR',
-                'value': 5
-            },
-            {
-                'name': 'FLEX_RAY_POC_STATE_CONFIG',
-                'value': 15
-            },
-            {
-                'name': 'LIN_COMM_STATE_IDLE',
-                'value': 0
-            },
-            {
-                'name': 'LIN_COMM_STATE_ACTIVE',
-                'value': 1
-            },
-            {
-                'name': 'LIN_COMM_STATE_INACTIVE',
-                'value': 2
-            },
-            {
-                'name': 'LIN_DIAGNOSTIC_SCHEDULE_NULL',
-                'value': 0
-            },
-            {
-                'name': 'LIN_DIAGNOSTIC_SCHEDULE_MASTER_REQ',
-                'value': 1
-            },
-            {
-                'name': 'LIN_DIAGNOSTIC_SCHEDULE_SLAVE_RESP',
-                'value': 2
-            },
-            {
-                'name': 'LIN_LAST_ERR_CODE_NONE',
-                'value': 0
-            },
-            {
-                'name': 'LIN_LAST_ERR_CODE_UNKNOWN_ID',
-                'value': 1
-            },
-            {
-                'name': 'LIN_LAST_ERR_CODE_FORM',
-                'value': 2
-            },
-            {
-                'name': 'LIN_LAST_ERR_CODE_FRAMING',
-                'value': 3
-            },
-            {
-                'name': 'LIN_LAST_ERR_CODE_READBACK',
-                'value': 4
-            },
-            {
-                'name': 'LIN_LAST_ERR_CODE_TIMEOUT',
-                'value': 5
-            },
-            {
-                'name': 'LIN_LAST_ERR_CODE_CRC',
-                'value': 6
             }
         ]
     },

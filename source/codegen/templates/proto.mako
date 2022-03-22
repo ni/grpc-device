@@ -7,7 +7,9 @@ enums = data["enums"]
 functions = data["functions"]
 
 service_class_prefix = config["service_class_prefix"]
+additional_enums = config.get("add_enums_to_proto",[])
 function_enums = common_helpers.get_function_enums(functions)
+function_enums.extend(additional_enums)
 external_proto_deps = common_helpers.list_external_proto_dependencies(functions)
 %>\
 <%namespace name="mako_helper" file="/proto_helpers.mako"/>\

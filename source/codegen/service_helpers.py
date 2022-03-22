@@ -424,7 +424,7 @@ def to_cpp_readiness(user_readiness: str) -> str:
     return f"CodeReadiness::k{user_readiness}"
 
 
-def get_enums_to_map(functions: dict, enums: dict) -> List[str]:
+def get_enums_to_map(enum_names: list, enums: dict) -> List[str]:
     """Get a list of the enums used by functions, for which mappings should be generated."""
 
     def get_enum_or_default(enum_name: str) -> dict:
@@ -436,8 +436,7 @@ def get_enums_to_map(functions: dict, enums: dict) -> List[str]:
         enum = get_enum_or_default(enum_name)
         return enum.get("generate-mappings", False)
 
-    function_enums = common_helpers.get_function_enums(functions)
-    return [e for e in function_enums if should_generate_mappings(e)]
+    return [e for e in enum_names if should_generate_mappings(e)]
 
 
 def generate_mapping_enums_to_type(enums: dict) -> List[str]:
