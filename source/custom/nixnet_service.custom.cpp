@@ -1181,10 +1181,20 @@ void convert_to_grpc(const void* input, nixnet_grpc::FrameBuffer* output, u32 fr
   }
 }
 
-u32 determine_size_from_request(u32 number_of_signals, u32 number_of_values, u32 number_of_timestamps)
+u32 determine_size_from_request(u32 number_of_signals, u32 number_of_values)
 {
-  u32 buffer_size = number_of_signals * sizeof(f64);
-  return (number_of_values <= number_of_timestamps) ? buffer_size * number_of_values : buffer_size * number_of_timestamps;
+  return (number_of_signals * number_of_values * sizeof(f64));
+}
+
+u32 determine_size_of_output_buffer(u32 size_of_value_buffer, u32 size_of_timestamp_buffer)
+{
+  if(size_of_value_buffer == 0U) {
+    return size_of_timestamp_buffer;
+  }
+  if(size_of_timestamp_buffer == 0U) {
+    return size_of_value_buffer;
+  }
+  return std::min(size_of_timestamp_buffer, size_of_value_buffer);
 }
 }  // namespace nixnet_grpc
 

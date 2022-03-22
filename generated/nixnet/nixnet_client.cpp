@@ -90,15 +90,14 @@ connect_terminals(const StubPtr& stub, const nidevice_grpc::Session& session_ref
 }
 
 ConvertFramesToSignalsSinglePointResponse
-convert_frames_to_signals_single_point(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const std::vector<FrameBuffer>& frame_buffer, const pb::uint32& size_of_value_buffer, const pb::uint32& size_of_timestamp_buffer)
+convert_frames_to_signals_single_point(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const pb::uint32& number_of_signals, const std::vector<FrameBuffer>& frame_buffer)
 {
   ::grpc::ClientContext context;
 
   auto request = ConvertFramesToSignalsSinglePointRequest{};
   request.mutable_session_ref()->CopyFrom(session_ref);
+  request.set_number_of_signals(number_of_signals);
   copy_array(frame_buffer, request.mutable_frame_buffer());
-  request.set_size_of_value_buffer(size_of_value_buffer);
-  request.set_size_of_timestamp_buffer(size_of_timestamp_buffer);
 
   auto response = ConvertFramesToSignalsSinglePointResponse{};
 
@@ -664,7 +663,7 @@ read_signal_single_point(const StubPtr& stub, const nidevice_grpc::Session& sess
 }
 
 ReadSignalWaveformResponse
-read_signal_waveform(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const simple_variant<TimeOut, double>& timeout)
+read_signal_waveform(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const simple_variant<TimeOut, double>& timeout, const pb::uint32& number_of_values)
 {
   ::grpc::ClientContext context;
 
@@ -678,6 +677,7 @@ read_signal_waveform(const StubPtr& stub, const nidevice_grpc::Session& session_
   else if (timeout_raw_ptr) {
     request.set_timeout_raw(*timeout_raw_ptr);
   }
+  request.set_number_of_values(number_of_values);
 
   auto response = ReadSignalWaveformResponse{};
 

@@ -12181,7 +12181,7 @@ namespace nidaqmx_grpc {
       response->mutable_read_array()->Resize(array_size_in_samps, 0);
       float64* read_array = response->mutable_read_array()->mutable_data();
       int32 samps_per_chan_read {};
-      auto status = library_->ReadAnalogF64(task, num_samps_per_chan, timeout, fill_mode, read_array, array_size_in_samps, &samps_per_chan_read, &reserved);
+      auto status = library_->ReadAnalogF64(task, num_samps_per_chan, timeout, fill_mode, read_array, array_size_in_samps, &samps_per_chan_read, reserved);
       response->set_status(status);
       if (status_ok(status)) {
         response->set_samps_per_chan_read(samps_per_chan_read);
@@ -12206,7 +12206,7 @@ namespace nidaqmx_grpc {
       float64 timeout = request->timeout();
       auto reserved = nullptr;
       float64 value {};
-      auto status = library_->ReadAnalogScalarF64(task, timeout, &value, &reserved);
+      auto status = library_->ReadAnalogScalarF64(task, timeout, &value, reserved);
       response->set_status(status);
       if (status_ok(status)) {
         response->set_value(value);
@@ -12250,7 +12250,7 @@ namespace nidaqmx_grpc {
       auto reserved = nullptr;
       std::vector<int16> read_array(array_size_in_samps);
       int32 samps_per_chan_read {};
-      auto status = library_->ReadBinaryI16(task, num_samps_per_chan, timeout, fill_mode, read_array.data(), array_size_in_samps, &samps_per_chan_read, &reserved);
+      auto status = library_->ReadBinaryI16(task, num_samps_per_chan, timeout, fill_mode, read_array.data(), array_size_in_samps, &samps_per_chan_read, reserved);
       response->set_status(status);
       if (status_ok(status)) {
         response->mutable_read_array()->Clear();
@@ -12304,7 +12304,7 @@ namespace nidaqmx_grpc {
       response->mutable_read_array()->Resize(array_size_in_samps, 0);
       int32* read_array = reinterpret_cast<int32*>(response->mutable_read_array()->mutable_data());
       int32 samps_per_chan_read {};
-      auto status = library_->ReadBinaryI32(task, num_samps_per_chan, timeout, fill_mode, read_array, array_size_in_samps, &samps_per_chan_read, &reserved);
+      auto status = library_->ReadBinaryI32(task, num_samps_per_chan, timeout, fill_mode, read_array, array_size_in_samps, &samps_per_chan_read, reserved);
       response->set_status(status);
       if (status_ok(status)) {
         response->set_samps_per_chan_read(samps_per_chan_read);
@@ -12348,7 +12348,7 @@ namespace nidaqmx_grpc {
       auto reserved = nullptr;
       std::vector<uInt16> read_array(array_size_in_samps);
       int32 samps_per_chan_read {};
-      auto status = library_->ReadBinaryU16(task, num_samps_per_chan, timeout, fill_mode, read_array.data(), array_size_in_samps, &samps_per_chan_read, &reserved);
+      auto status = library_->ReadBinaryU16(task, num_samps_per_chan, timeout, fill_mode, read_array.data(), array_size_in_samps, &samps_per_chan_read, reserved);
       response->set_status(status);
       if (status_ok(status)) {
         response->mutable_read_array()->Clear();
@@ -12402,7 +12402,7 @@ namespace nidaqmx_grpc {
       response->mutable_read_array()->Resize(array_size_in_samps, 0);
       uInt32* read_array = reinterpret_cast<uInt32*>(response->mutable_read_array()->mutable_data());
       int32 samps_per_chan_read {};
-      auto status = library_->ReadBinaryU32(task, num_samps_per_chan, timeout, fill_mode, read_array, array_size_in_samps, &samps_per_chan_read, &reserved);
+      auto status = library_->ReadBinaryU32(task, num_samps_per_chan, timeout, fill_mode, read_array, array_size_in_samps, &samps_per_chan_read, reserved);
       response->set_status(status);
       if (status_ok(status)) {
         response->set_samps_per_chan_read(samps_per_chan_read);
@@ -12431,7 +12431,7 @@ namespace nidaqmx_grpc {
       response->mutable_read_array()->Resize(array_size_in_samps, 0);
       float64* read_array = response->mutable_read_array()->mutable_data();
       int32 samps_per_chan_read {};
-      auto status = library_->ReadCounterF64(task, num_samps_per_chan, timeout, read_array, array_size_in_samps, &samps_per_chan_read, &reserved);
+      auto status = library_->ReadCounterF64(task, num_samps_per_chan, timeout, read_array, array_size_in_samps, &samps_per_chan_read, reserved);
       response->set_status(status);
       if (status_ok(status)) {
         response->set_samps_per_chan_read(samps_per_chan_read);
@@ -12476,7 +12476,7 @@ namespace nidaqmx_grpc {
       response->mutable_read_array()->Resize(array_size_in_samps, 0);
       float64* read_array = response->mutable_read_array()->mutable_data();
       int32 samps_per_chan_read {};
-      auto status = library_->ReadCounterF64Ex(task, num_samps_per_chan, timeout, fill_mode, read_array, array_size_in_samps, &samps_per_chan_read, &reserved);
+      auto status = library_->ReadCounterF64Ex(task, num_samps_per_chan, timeout, fill_mode, read_array, array_size_in_samps, &samps_per_chan_read, reserved);
       response->set_status(status);
       if (status_ok(status)) {
         response->set_samps_per_chan_read(samps_per_chan_read);
@@ -12501,7 +12501,7 @@ namespace nidaqmx_grpc {
       float64 timeout = request->timeout();
       auto reserved = nullptr;
       float64 value {};
-      auto status = library_->ReadCounterScalarF64(task, timeout, &value, &reserved);
+      auto status = library_->ReadCounterScalarF64(task, timeout, &value, reserved);
       response->set_status(status);
       if (status_ok(status)) {
         response->set_value(value);
@@ -12526,7 +12526,7 @@ namespace nidaqmx_grpc {
       float64 timeout = request->timeout();
       auto reserved = nullptr;
       uInt32 value {};
-      auto status = library_->ReadCounterScalarU32(task, timeout, &value, &reserved);
+      auto status = library_->ReadCounterScalarU32(task, timeout, &value, reserved);
       response->set_status(status);
       if (status_ok(status)) {
         response->set_value(value);
@@ -12555,7 +12555,7 @@ namespace nidaqmx_grpc {
       response->mutable_read_array()->Resize(array_size_in_samps, 0);
       uInt32* read_array = reinterpret_cast<uInt32*>(response->mutable_read_array()->mutable_data());
       int32 samps_per_chan_read {};
-      auto status = library_->ReadCounterU32(task, num_samps_per_chan, timeout, read_array, array_size_in_samps, &samps_per_chan_read, &reserved);
+      auto status = library_->ReadCounterU32(task, num_samps_per_chan, timeout, read_array, array_size_in_samps, &samps_per_chan_read, reserved);
       response->set_status(status);
       if (status_ok(status)) {
         response->set_samps_per_chan_read(samps_per_chan_read);
@@ -12600,7 +12600,7 @@ namespace nidaqmx_grpc {
       response->mutable_read_array()->Resize(array_size_in_samps, 0);
       uInt32* read_array = reinterpret_cast<uInt32*>(response->mutable_read_array()->mutable_data());
       int32 samps_per_chan_read {};
-      auto status = library_->ReadCounterU32Ex(task, num_samps_per_chan, timeout, fill_mode, read_array, array_size_in_samps, &samps_per_chan_read, &reserved);
+      auto status = library_->ReadCounterU32Ex(task, num_samps_per_chan, timeout, fill_mode, read_array, array_size_in_samps, &samps_per_chan_read, reserved);
       response->set_status(status);
       if (status_ok(status)) {
         response->set_samps_per_chan_read(samps_per_chan_read);
@@ -12647,7 +12647,7 @@ namespace nidaqmx_grpc {
       response->mutable_read_array_duty_cycle()->Resize(array_size_in_samps, 0);
       float64* read_array_duty_cycle = response->mutable_read_array_duty_cycle()->mutable_data();
       int32 samps_per_chan_read {};
-      auto status = library_->ReadCtrFreq(task, num_samps_per_chan, timeout, interleaved, read_array_frequency, read_array_duty_cycle, array_size_in_samps, &samps_per_chan_read, &reserved);
+      auto status = library_->ReadCtrFreq(task, num_samps_per_chan, timeout, interleaved, read_array_frequency, read_array_duty_cycle, array_size_in_samps, &samps_per_chan_read, reserved);
       response->set_status(status);
       if (status_ok(status)) {
         response->set_samps_per_chan_read(samps_per_chan_read);
@@ -12673,7 +12673,7 @@ namespace nidaqmx_grpc {
       auto reserved = nullptr;
       float64 frequency {};
       float64 duty_cycle {};
-      auto status = library_->ReadCtrFreqScalar(task, timeout, &frequency, &duty_cycle, &reserved);
+      auto status = library_->ReadCtrFreqScalar(task, timeout, &frequency, &duty_cycle, reserved);
       response->set_status(status);
       if (status_ok(status)) {
         response->set_frequency(frequency);
@@ -12721,7 +12721,7 @@ namespace nidaqmx_grpc {
       response->mutable_read_array_low_ticks()->Resize(array_size_in_samps, 0);
       uInt32* read_array_low_ticks = reinterpret_cast<uInt32*>(response->mutable_read_array_low_ticks()->mutable_data());
       int32 samps_per_chan_read {};
-      auto status = library_->ReadCtrTicks(task, num_samps_per_chan, timeout, interleaved, read_array_high_ticks, read_array_low_ticks, array_size_in_samps, &samps_per_chan_read, &reserved);
+      auto status = library_->ReadCtrTicks(task, num_samps_per_chan, timeout, interleaved, read_array_high_ticks, read_array_low_ticks, array_size_in_samps, &samps_per_chan_read, reserved);
       response->set_status(status);
       if (status_ok(status)) {
         response->set_samps_per_chan_read(samps_per_chan_read);
@@ -12747,7 +12747,7 @@ namespace nidaqmx_grpc {
       auto reserved = nullptr;
       uInt32 high_ticks {};
       uInt32 low_ticks {};
-      auto status = library_->ReadCtrTicksScalar(task, timeout, &high_ticks, &low_ticks, &reserved);
+      auto status = library_->ReadCtrTicksScalar(task, timeout, &high_ticks, &low_ticks, reserved);
       response->set_status(status);
       if (status_ok(status)) {
         response->set_high_ticks(high_ticks);
@@ -12795,7 +12795,7 @@ namespace nidaqmx_grpc {
       response->mutable_read_array_low_time()->Resize(array_size_in_samps, 0);
       float64* read_array_low_time = response->mutable_read_array_low_time()->mutable_data();
       int32 samps_per_chan_read {};
-      auto status = library_->ReadCtrTime(task, num_samps_per_chan, timeout, interleaved, read_array_high_time, read_array_low_time, array_size_in_samps, &samps_per_chan_read, &reserved);
+      auto status = library_->ReadCtrTime(task, num_samps_per_chan, timeout, interleaved, read_array_high_time, read_array_low_time, array_size_in_samps, &samps_per_chan_read, reserved);
       response->set_status(status);
       if (status_ok(status)) {
         response->set_samps_per_chan_read(samps_per_chan_read);
@@ -12821,7 +12821,7 @@ namespace nidaqmx_grpc {
       auto reserved = nullptr;
       float64 high_time {};
       float64 low_time {};
-      auto status = library_->ReadCtrTimeScalar(task, timeout, &high_time, &low_time, &reserved);
+      auto status = library_->ReadCtrTimeScalar(task, timeout, &high_time, &low_time, reserved);
       response->set_status(status);
       if (status_ok(status)) {
         response->set_high_time(high_time);
@@ -12867,7 +12867,7 @@ namespace nidaqmx_grpc {
       std::string read_array(array_size_in_bytes, '\0');
       int32 samps_per_chan_read {};
       int32 num_bytes_per_samp {};
-      auto status = library_->ReadDigitalLines(task, num_samps_per_chan, timeout, fill_mode, (uInt8*)read_array.data(), array_size_in_bytes, &samps_per_chan_read, &num_bytes_per_samp, &reserved);
+      auto status = library_->ReadDigitalLines(task, num_samps_per_chan, timeout, fill_mode, (uInt8*)read_array.data(), array_size_in_bytes, &samps_per_chan_read, &num_bytes_per_samp, reserved);
       response->set_status(status);
       if (status_ok(status)) {
         response->set_read_array(read_array);
@@ -12894,7 +12894,7 @@ namespace nidaqmx_grpc {
       float64 timeout = request->timeout();
       auto reserved = nullptr;
       uInt32 value {};
-      auto status = library_->ReadDigitalScalarU32(task, timeout, &value, &reserved);
+      auto status = library_->ReadDigitalScalarU32(task, timeout, &value, reserved);
       response->set_status(status);
       if (status_ok(status)) {
         response->set_value(value);
@@ -12938,7 +12938,7 @@ namespace nidaqmx_grpc {
       auto reserved = nullptr;
       std::vector<uInt16> read_array(array_size_in_samps);
       int32 samps_per_chan_read {};
-      auto status = library_->ReadDigitalU16(task, num_samps_per_chan, timeout, fill_mode, read_array.data(), array_size_in_samps, &samps_per_chan_read, &reserved);
+      auto status = library_->ReadDigitalU16(task, num_samps_per_chan, timeout, fill_mode, read_array.data(), array_size_in_samps, &samps_per_chan_read, reserved);
       response->set_status(status);
       if (status_ok(status)) {
         response->mutable_read_array()->Clear();
@@ -12992,7 +12992,7 @@ namespace nidaqmx_grpc {
       response->mutable_read_array()->Resize(array_size_in_samps, 0);
       uInt32* read_array = reinterpret_cast<uInt32*>(response->mutable_read_array()->mutable_data());
       int32 samps_per_chan_read {};
-      auto status = library_->ReadDigitalU32(task, num_samps_per_chan, timeout, fill_mode, read_array, array_size_in_samps, &samps_per_chan_read, &reserved);
+      auto status = library_->ReadDigitalU32(task, num_samps_per_chan, timeout, fill_mode, read_array, array_size_in_samps, &samps_per_chan_read, reserved);
       response->set_status(status);
       if (status_ok(status)) {
         response->set_samps_per_chan_read(samps_per_chan_read);
@@ -13036,7 +13036,7 @@ namespace nidaqmx_grpc {
       auto reserved = nullptr;
       std::string read_array(array_size_in_samps, '\0');
       int32 samps_per_chan_read {};
-      auto status = library_->ReadDigitalU8(task, num_samps_per_chan, timeout, fill_mode, (uInt8*)read_array.data(), array_size_in_samps, &samps_per_chan_read, &reserved);
+      auto status = library_->ReadDigitalU8(task, num_samps_per_chan, timeout, fill_mode, (uInt8*)read_array.data(), array_size_in_samps, &samps_per_chan_read, reserved);
       response->set_status(status);
       if (status_ok(status)) {
         response->set_read_array(read_array);
@@ -13066,7 +13066,7 @@ namespace nidaqmx_grpc {
       std::string read_array(array_size_in_bytes, '\0');
       int32 samps_read {};
       int32 num_bytes_per_samp {};
-      auto status = library_->ReadRaw(task, num_samps_per_chan, timeout, (uInt8*)read_array.data(), array_size_in_bytes, &samps_read, &num_bytes_per_samp, &reserved);
+      auto status = library_->ReadRaw(task, num_samps_per_chan, timeout, (uInt8*)read_array.data(), array_size_in_bytes, &samps_read, &num_bytes_per_samp, reserved);
       response->set_status(status);
       if (status_ok(status)) {
         response->set_read_array(read_array);
@@ -17035,7 +17035,7 @@ namespace nidaqmx_grpc {
       auto write_array = const_cast<const float64*>(request->write_array().data());
       auto reserved = nullptr;
       int32 samps_per_chan_written {};
-      auto status = library_->WriteAnalogF64(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array, &samps_per_chan_written, &reserved);
+      auto status = library_->WriteAnalogF64(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array, &samps_per_chan_written, reserved);
       response->set_status(status);
       if (status_ok(status)) {
         response->set_samps_per_chan_written(samps_per_chan_written);
@@ -17061,7 +17061,7 @@ namespace nidaqmx_grpc {
       float64 timeout = request->timeout();
       float64 value = request->value();
       auto reserved = nullptr;
-      auto status = library_->WriteAnalogScalarF64(task, auto_start, timeout, value, &reserved);
+      auto status = library_->WriteAnalogScalarF64(task, auto_start, timeout, value, reserved);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -17119,7 +17119,7 @@ namespace nidaqmx_grpc {
 
       auto reserved = nullptr;
       int32 samps_per_chan_written {};
-      auto status = library_->WriteBinaryI16(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array.data(), &samps_per_chan_written, &reserved);
+      auto status = library_->WriteBinaryI16(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array.data(), &samps_per_chan_written, reserved);
       response->set_status(status);
       if (status_ok(status)) {
         response->set_samps_per_chan_written(samps_per_chan_written);
@@ -17166,7 +17166,7 @@ namespace nidaqmx_grpc {
       auto write_array = reinterpret_cast<const int32*>(request->write_array().data());
       auto reserved = nullptr;
       int32 samps_per_chan_written {};
-      auto status = library_->WriteBinaryI32(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array, &samps_per_chan_written, &reserved);
+      auto status = library_->WriteBinaryI32(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array, &samps_per_chan_written, reserved);
       response->set_status(status);
       if (status_ok(status)) {
         response->set_samps_per_chan_written(samps_per_chan_written);
@@ -17227,7 +17227,7 @@ namespace nidaqmx_grpc {
 
       auto reserved = nullptr;
       int32 samps_per_chan_written {};
-      auto status = library_->WriteBinaryU16(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array.data(), &samps_per_chan_written, &reserved);
+      auto status = library_->WriteBinaryU16(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array.data(), &samps_per_chan_written, reserved);
       response->set_status(status);
       if (status_ok(status)) {
         response->set_samps_per_chan_written(samps_per_chan_written);
@@ -17274,7 +17274,7 @@ namespace nidaqmx_grpc {
       auto write_array = reinterpret_cast<const uInt32*>(request->write_array().data());
       auto reserved = nullptr;
       int32 samps_per_chan_written {};
-      auto status = library_->WriteBinaryU32(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array, &samps_per_chan_written, &reserved);
+      auto status = library_->WriteBinaryU32(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array, &samps_per_chan_written, reserved);
       response->set_status(status);
       if (status_ok(status)) {
         response->set_samps_per_chan_written(samps_per_chan_written);
@@ -17319,7 +17319,7 @@ namespace nidaqmx_grpc {
       auto duty_cycle = const_cast<const float64*>(request->duty_cycle().data());
       auto reserved = nullptr;
       int32 num_samps_per_chan_written {};
-      auto status = library_->WriteCtrFreq(task, num_samps_per_chan, auto_start, timeout, data_layout, frequency, duty_cycle, &num_samps_per_chan_written, &reserved);
+      auto status = library_->WriteCtrFreq(task, num_samps_per_chan, auto_start, timeout, data_layout, frequency, duty_cycle, &num_samps_per_chan_written, reserved);
       response->set_status(status);
       if (status_ok(status)) {
         response->set_num_samps_per_chan_written(num_samps_per_chan_written);
@@ -17346,7 +17346,7 @@ namespace nidaqmx_grpc {
       float64 frequency = request->frequency();
       float64 duty_cycle = request->duty_cycle();
       auto reserved = nullptr;
-      auto status = library_->WriteCtrFreqScalar(task, auto_start, timeout, frequency, duty_cycle, &reserved);
+      auto status = library_->WriteCtrFreqScalar(task, auto_start, timeout, frequency, duty_cycle, reserved);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -17388,7 +17388,7 @@ namespace nidaqmx_grpc {
       auto low_ticks = reinterpret_cast<const uInt32*>(request->low_ticks().data());
       auto reserved = nullptr;
       int32 num_samps_per_chan_written {};
-      auto status = library_->WriteCtrTicks(task, num_samps_per_chan, auto_start, timeout, data_layout, high_ticks, low_ticks, &num_samps_per_chan_written, &reserved);
+      auto status = library_->WriteCtrTicks(task, num_samps_per_chan, auto_start, timeout, data_layout, high_ticks, low_ticks, &num_samps_per_chan_written, reserved);
       response->set_status(status);
       if (status_ok(status)) {
         response->set_num_samps_per_chan_written(num_samps_per_chan_written);
@@ -17415,7 +17415,7 @@ namespace nidaqmx_grpc {
       uInt32 high_ticks = request->high_ticks();
       uInt32 low_ticks = request->low_ticks();
       auto reserved = nullptr;
-      auto status = library_->WriteCtrTicksScalar(task, auto_start, timeout, high_ticks, low_ticks, &reserved);
+      auto status = library_->WriteCtrTicksScalar(task, auto_start, timeout, high_ticks, low_ticks, reserved);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -17457,7 +17457,7 @@ namespace nidaqmx_grpc {
       auto low_time = const_cast<const float64*>(request->low_time().data());
       auto reserved = nullptr;
       int32 num_samps_per_chan_written {};
-      auto status = library_->WriteCtrTime(task, num_samps_per_chan, auto_start, timeout, data_layout, high_time, low_time, &num_samps_per_chan_written, &reserved);
+      auto status = library_->WriteCtrTime(task, num_samps_per_chan, auto_start, timeout, data_layout, high_time, low_time, &num_samps_per_chan_written, reserved);
       response->set_status(status);
       if (status_ok(status)) {
         response->set_num_samps_per_chan_written(num_samps_per_chan_written);
@@ -17484,7 +17484,7 @@ namespace nidaqmx_grpc {
       float64 high_time = request->high_time();
       float64 low_time = request->low_time();
       auto reserved = nullptr;
-      auto status = library_->WriteCtrTimeScalar(task, auto_start, timeout, high_time, low_time, &reserved);
+      auto status = library_->WriteCtrTimeScalar(task, auto_start, timeout, high_time, low_time, reserved);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -17525,7 +17525,7 @@ namespace nidaqmx_grpc {
       const uInt8* write_array = (const uInt8*)request->write_array().c_str();
       auto reserved = nullptr;
       int32 samps_per_chan_written {};
-      auto status = library_->WriteDigitalLines(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array, &samps_per_chan_written, &reserved);
+      auto status = library_->WriteDigitalLines(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array, &samps_per_chan_written, reserved);
       response->set_status(status);
       if (status_ok(status)) {
         response->set_samps_per_chan_written(samps_per_chan_written);
@@ -17551,7 +17551,7 @@ namespace nidaqmx_grpc {
       float64 timeout = request->timeout();
       uInt32 value = request->value();
       auto reserved = nullptr;
-      auto status = library_->WriteDigitalScalarU32(task, auto_start, timeout, value, &reserved);
+      auto status = library_->WriteDigitalScalarU32(task, auto_start, timeout, value, reserved);
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -17609,7 +17609,7 @@ namespace nidaqmx_grpc {
 
       auto reserved = nullptr;
       int32 samps_per_chan_written {};
-      auto status = library_->WriteDigitalU16(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array.data(), &samps_per_chan_written, &reserved);
+      auto status = library_->WriteDigitalU16(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array.data(), &samps_per_chan_written, reserved);
       response->set_status(status);
       if (status_ok(status)) {
         response->set_samps_per_chan_written(samps_per_chan_written);
@@ -17656,7 +17656,7 @@ namespace nidaqmx_grpc {
       auto write_array = reinterpret_cast<const uInt32*>(request->write_array().data());
       auto reserved = nullptr;
       int32 samps_per_chan_written {};
-      auto status = library_->WriteDigitalU32(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array, &samps_per_chan_written, &reserved);
+      auto status = library_->WriteDigitalU32(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array, &samps_per_chan_written, reserved);
       response->set_status(status);
       if (status_ok(status)) {
         response->set_samps_per_chan_written(samps_per_chan_written);
@@ -17700,7 +17700,7 @@ namespace nidaqmx_grpc {
       const uInt8* write_array = (const uInt8*)request->write_array().c_str();
       auto reserved = nullptr;
       int32 samps_per_chan_written {};
-      auto status = library_->WriteDigitalU8(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array, &samps_per_chan_written, &reserved);
+      auto status = library_->WriteDigitalU8(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array, &samps_per_chan_written, reserved);
       response->set_status(status);
       if (status_ok(status)) {
         response->set_samps_per_chan_written(samps_per_chan_written);
@@ -17728,7 +17728,7 @@ namespace nidaqmx_grpc {
       const uInt8* write_array = (const uInt8*)request->write_array().c_str();
       auto reserved = nullptr;
       int32 samps_per_chan_written {};
-      auto status = library_->WriteRaw(task, num_samps, auto_start, timeout, write_array, &samps_per_chan_written, &reserved);
+      auto status = library_->WriteRaw(task, num_samps, auto_start, timeout, write_array, &samps_per_chan_written, reserved);
       response->set_status(status);
       if (status_ok(status)) {
         response->set_samps_per_chan_written(samps_per_chan_written);

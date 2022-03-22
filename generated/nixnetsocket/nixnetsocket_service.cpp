@@ -87,7 +87,7 @@ namespace nixnetsocket_grpc {
       nxSOCKET socket = session_repository_->access_session(socket_grpc_session.id(), socket_grpc_session.name());
       auto name = convert_from_grpc<nxsockaddr>(request->name());
       auto namelen = name.size();
-      auto status = library_->Bind(socket, &name, namelen);
+      auto status = library_->Bind(socket, name, namelen);
       response->set_status(status);
       if (status_ok(status)) {
       }
@@ -116,7 +116,7 @@ namespace nixnetsocket_grpc {
       nxSOCKET socket = session_repository_->access_session(socket_grpc_session.id(), socket_grpc_session.name());
       auto name = convert_from_grpc<nxsockaddr>(request->name());
       auto namelen = name.size();
-      auto status = library_->Connect(socket, &name, namelen);
+      auto status = library_->Connect(socket, name, namelen);
       response->set_status(status);
       if (status_ok(status)) {
       }
@@ -176,7 +176,7 @@ namespace nixnetsocket_grpc {
       int32_t flags = request->flags();
       auto to = convert_from_grpc<nxsockaddr>(request->to());
       auto tolen = to.size();
-      auto status = library_->SendTo(socket, dataptr, size, flags, &to, tolen);
+      auto status = library_->SendTo(socket, dataptr, size, flags, to, tolen);
       response->set_status(status);
       if (status_ok(status)) {
       }
@@ -614,7 +614,7 @@ namespace nixnetsocket_grpc {
       auto fd_grpc_session = request->fd();
       nxSOCKET fd = session_repository_->access_session(fd_grpc_session.id(), fd_grpc_session.name());
       auto set = convert_from_grpc<nxfd_set>(request->set(), session_repository_);
-      auto is_set = library_->IsSet(fd, &set);
+      auto is_set = library_->IsSet(fd, set);
       auto status = 0;
       response->set_status(status);
       if (status_ok(status)) {
@@ -646,7 +646,7 @@ namespace nixnetsocket_grpc {
       auto write_fds = convert_from_grpc<nxfd_set>(request->write_fds(), session_repository_);
       auto except_fds = convert_from_grpc<nxfd_set>(request->except_fds(), session_repository_);
       auto timeout = convert_from_grpc<nxtimeval>(request->timeout());
-      auto status = library_->Select(nfds, &read_fds, &write_fds, &except_fds, &timeout);
+      auto status = library_->Select(nfds, read_fds, write_fds, except_fds, timeout);
       response->set_status(status);
       if (status_ok(status)) {
       }
@@ -708,7 +708,7 @@ namespace nixnetsocket_grpc {
       auto opt_data = convert_from_grpc<SockOptDataInputConverter>(request->opt_data());
       auto optval = opt_data.data();
       auto optlen = opt_data.size();
-      auto status = library_->SetSockOpt(socket, level, optname, &optval, optlen);
+      auto status = library_->SetSockOpt(socket, level, optname, optval, optlen);
       response->set_status(status);
       if (status_ok(status)) {
       }
