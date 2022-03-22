@@ -87,6 +87,33 @@ struct SockAddrInputConverter {
   } addr;
 };
 
+void convert_to_grpc(const nxsockaddr_storage* storage_ptr, SockAddr& output)
+{
+  switch (storage_ptr->ss_family) {
+    case nxAF_INET: {
+      auto ipv4_input = reinterpret_cast<const nxsockaddr_in*>(storage_ptr);
+      auto ipv4_output = output.mutable_ipv4();
+      ipv4_output->set_port(ipv4_input->sin_port);
+      ipv4_output->set_addr(ipv4_input->sin_addr.addr);
+    } break;
+    case nxAF_INET6: {
+      const auto ipv6_input = reinterpret_cast<const nxsockaddr_in6*>(storage_ptr);
+      auto ipv6_output = output.mutable_ipv6();
+      ipv6_output->set_port(ipv6_input->sin6_port);
+      ipv6_output->set_flow_info(ipv6_input->sin6_flowinfo);
+      // Reinterpret unsigned char to char.
+      auto addr_out = reinterpret_cast<const char*>(ipv6_input->sin6_addr.addr);
+      auto addr_size = sizeof(ipv6_input->sin6_addr.addr);
+      ipv6_output->set_addr(
+          {&addr_out[0],
+           &addr_out[addr_size]});
+      ipv6_output->set_scope_id(ipv6_input->sin6_scope_id);
+    } break;
+    default:
+      break;
+  }
+}
+
 // This class allows us to have something allocated on the stack that provides backing
 // storage for an nxsockaddr output param and converts it to the SockAddr grpc-type.
 struct SockAddrOutputConverter {
@@ -109,7 +136,7 @@ struct SockAddrOutputConverter {
 
   // Overriding the address_of operator is like a implicit conversion for output
   // params. This works with our default output param passing codegen that passes
-  // this as nxaccepr(sock, &addr, &addrlen);
+  // this as nxaccept(sock, &addr, &addrlen);
   nxsockaddr* operator&()
   {
     return storage_cast<nxsockaddr>();
@@ -117,29 +144,7 @@ struct SockAddrOutputConverter {
 
   void to_grpc(SockAddr& output) const
   {
-    switch (storage.ss_family) {
-      case nxAF_INET: {
-        auto ipv4_input = storage_cast<const nxsockaddr_in>();
-        auto ipv4_output = output.mutable_ipv4();
-        ipv4_output->set_port(ipv4_input->sin_port);
-        ipv4_output->set_addr(ipv4_input->sin_addr.addr);
-      } break;
-      case nxAF_INET6: {
-        const auto ipv6_input = storage_cast<const nxsockaddr_in6>();
-        auto ipv6_output = output.mutable_ipv6();
-        ipv6_output->set_port(ipv6_input->sin6_port);
-        ipv6_output->set_flow_info(ipv6_input->sin6_flowinfo);
-        // Reinterpret unsigned char to char.
-        auto addr_out = reinterpret_cast<const char*>(ipv6_input->sin6_addr.addr);
-        auto addr_size = sizeof(ipv6_input->sin6_addr.addr);
-        ipv6_output->set_addr(
-            {&addr_out[0],
-             &addr_out[addr_size]});
-        ipv6_output->set_scope_id(ipv6_input->sin6_scope_id);
-      } break;
-      default:
-        break;
-    }
+    convert_to_grpc(&storage, output);
   }
 
   // nxsockaddr_storage is a type specifically designed to be large enough to hold
@@ -428,6 +433,75 @@ inline void convert_to_grpc(const SockOptDataOutputConverter& storage, SockOptDa
   storage.to_grpc(*output);
 }
 
+struct AddrInfoHintInputConverter {
+  AddrInfoHintInputConverter(const AddrInfoHint& input)
+  {
+    addr_info.ai_flags = input.flags();
+    addr_info.ai_family = input.family();
+    addr_info.ai_socktype = input.sock_type();
+    addr_info.ai_protocol = input.protocol();
+
+    // Other addr_info fields for the hint should be left unset (0 initialized).
+  }
+
+  operator nxaddrinfo*()
+  {
+    return &addr_info;
+  }
+
+  operator const nxaddrinfo*() const
+  {
+    return &addr_info;
+  }
+
+  nxaddrinfo addr_info{};
+};
+
+template <typename TAddrInfoHint>
+inline AddrInfoHintInputConverter convert_from_grpc(const AddrInfoHint& input)
+{
+  return AddrInfoHintInputConverter(input);
+}
+
+struct AddrInfoOutputConverter {
+  AddrInfoOutputConverter(NiXnetSocketLibraryInterface* library) : addr_info_ptr(nullptr), library(library)
+  {
+  }
+
+  nxaddrinfo** operator&()
+  {
+    return &addr_info_ptr;
+  }
+
+  void to_grpc(pb_::RepeatedPtrField<AddrInfo>& output)
+  {
+    for (
+        auto curr_addr_info_ptr = addr_info_ptr;
+        curr_addr_info_ptr != nullptr;
+        curr_addr_info_ptr = curr_addr_info_ptr->ai_next) {
+      auto curr_grpc_addr_info = output.Add();
+      curr_grpc_addr_info->set_flags((GetAddrInfoFlags)curr_addr_info_ptr->ai_flags);
+      curr_grpc_addr_info->set_family((AddressFamily)curr_addr_info_ptr->ai_family);
+      curr_grpc_addr_info->set_sock_type((SocketProtocolType)curr_addr_info_ptr->ai_socktype);
+      curr_grpc_addr_info->set_protocol((IPProtocol)curr_addr_info_ptr->ai_protocol);
+      curr_grpc_addr_info->set_canon_name(curr_addr_info_ptr->ai_canonname);
+
+      convert_to_grpc(reinterpret_cast<const nxsockaddr_storage*>(curr_addr_info_ptr->ai_addr), *(curr_grpc_addr_info->mutable_addr()));
+    }
+    // Free the address info after we've read it.
+    library->FreeAddrInfo(addr_info_ptr);
+    addr_info_ptr = nullptr;
+  }
+
+  nxaddrinfo* addr_info_ptr;
+  NiXnetSocketLibraryInterface* library;
+};
+
+inline void convert_to_grpc(AddrInfoOutputConverter& storage, pb_::RepeatedPtrField<AddrInfo>* output)
+{
+  storage.to_grpc(*output);
+}
+
 }  // namespace nixnetsocket_grpc
 
 // Template specializations go in nidevice_grpc::converters.
@@ -449,6 +523,11 @@ struct TypeToStorageType<nxVirtualInterface_t, google::protobuf::RepeatedPtrFiel
 template <>
 struct TypeToStorageType<void*, nixnetsocket_grpc::SockOptData> {
   using StorageType = nixnetsocket_grpc::SockOptDataOutputConverter;
+};
+
+template <>
+struct TypeToStorageType<nxaddrinfo, google::protobuf::RepeatedPtrField<nixnetsocket_grpc::AddrInfo>> {
+  using StorageType = nixnetsocket_grpc::AddrInfoOutputConverter;
 };
 }  // namespace converters
 }  // namespace nidevice_grpc

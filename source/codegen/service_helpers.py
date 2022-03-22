@@ -436,7 +436,7 @@ def get_enums_to_map(functions: dict, enums: dict) -> List[str]:
         enum = get_enum_or_default(enum_name)
         return enum.get("generate-mappings", False)
 
-    function_enums = common_helpers.get_function_enums(functions)
+    function_enums = common_helpers.get_function_enums(functions, enums)
     return [e for e in function_enums if should_generate_mappings(e)]
 
 
