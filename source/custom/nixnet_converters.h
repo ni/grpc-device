@@ -167,9 +167,7 @@ nixnet_grpc::FrameHolder convert_from_grpc(const pb_::RepeatedPtrField<nixnet_gr
   return nixnet_grpc::FrameHolder(input);
 }
 
-u32 determine_size_from_request(u32 number_of_signals, u32 number_of_values);
-
-u32 determine_size_of_output_buffer(u32 size_of_value_buffer, u32 size_of_timestamp_buffer);
+void convert_to_grpc(std::vector<f64>& input, google::protobuf::RepeatedField<double>* output, u32 number_of_values_returned, u32 number_of_signals);
 }  // namespace nixnet_grpc
 
 namespace nidevice_grpc {

@@ -1219,20 +1219,16 @@ void convert_to_grpc(const void* input, nixnet_grpc::FrameBuffer* output, u32 fr
   }
 }
 
-u32 determine_size_from_request(u32 number_of_signals, u32 number_of_values)
+void convert_to_grpc(std::vector<f64>& input, google::protobuf::RepeatedField<double>* output, u32 number_of_values_returned, u32 number_of_signals)
 {
-  return (number_of_signals * number_of_values * sizeof(f64));
-}
-
-u32 determine_size_of_output_buffer(u32 size_of_value_buffer, u32 size_of_timestamp_buffer)
-{
-  if(size_of_value_buffer == 0U) {
-    return size_of_timestamp_buffer;
-  }
-  if(size_of_timestamp_buffer == 0U) {
-    return size_of_value_buffer;
-  }
-  return std::min(size_of_timestamp_buffer, size_of_value_buffer);
+  output->Resize(number_of_signals * number_of_values_returned, 0U);
+  std::transform(
+    input.begin(),
+    input.begin() + (number_of_signals * number_of_values_returned),
+    google::protobuf::RepeatedFieldBackInserter(output),
+    [&](auto x) {
+      return x;
+    });
 }
 }  // namespace nixnet_grpc
 

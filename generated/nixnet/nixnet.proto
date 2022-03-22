@@ -1489,7 +1489,8 @@ message ReadSignalWaveformRequest {
     TimeOut timeout = 2;
     double timeout_raw = 3;
   }
-  uint32 number_of_values = 4;
+  uint32 number_of_samples = 4;
+  uint32 number_of_signals = 5;
 }
 
 message ReadSignalWaveformResponse {
@@ -1502,9 +1503,8 @@ message ReadSignalWaveformResponse {
 message ReadSignalXYRequest {
   nidevice_grpc.Session session_ref = 1;
   uint64 time_limit = 2;
-  uint32 number_of_values = 3;
-  uint32 number_of_timestamps = 4;
-  uint32 number_of_signals = 5;
+  uint32 number_of_samples = 3;
+  uint32 number_of_signals = 4;
 }
 
 message ReadSignalXYResponse {

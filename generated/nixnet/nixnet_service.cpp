@@ -242,9 +242,9 @@ namespace nixnet_grpc {
       auto number_of_bytes_for_frames = frame_buffer.size();
       auto size_of_value_buffer = number_of_signals * sizeof(f64);
       auto size_of_timestamp_buffer = number_of_signals * sizeof(f64);
-      response->mutable_value_buffer()->Resize(size_of_value_buffer / sizeof(f64), 0);
+      response->mutable_value_buffer()->Resize(number_of_signals, 0);
       f64* value_buffer = response->mutable_value_buffer()->mutable_data();
-      response->mutable_timestamp_buffer()->Resize(size_of_timestamp_buffer / sizeof(f64), 0);
+      response->mutable_timestamp_buffer()->Resize(number_of_signals, 0);
       nxTimestamp100ns_t* timestamp_buffer = reinterpret_cast<nxTimestamp100ns_t*>(response->mutable_timestamp_buffer()->mutable_data());
       auto status = library_->ConvertFramesToSignalsSinglePoint(session_ref, frame_buffer, number_of_bytes_for_frames, value_buffer, size_of_value_buffer, timestamp_buffer, size_of_timestamp_buffer);
       response->set_status(status);
@@ -1114,9 +1114,9 @@ namespace nixnet_grpc {
       u32 number_of_signals = request->number_of_signals();
       auto size_of_value_buffer = number_of_signals * sizeof(f64);
       auto size_of_timestamp_buffer = number_of_signals * sizeof(f64);
-      response->mutable_value_buffer()->Resize(size_of_value_buffer / sizeof(f64), 0);
+      response->mutable_value_buffer()->Resize(number_of_signals, 0);
       f64* value_buffer = response->mutable_value_buffer()->mutable_data();
-      response->mutable_timestamp_buffer()->Resize(size_of_timestamp_buffer / sizeof(f64), 0);
+      response->mutable_timestamp_buffer()->Resize(number_of_signals, 0);
       nxTimestamp100ns_t* timestamp_buffer = reinterpret_cast<nxTimestamp100ns_t*>(response->mutable_timestamp_buffer()->mutable_data());
       auto status = library_->ReadSignalSinglePoint(session_ref, value_buffer, size_of_value_buffer, timestamp_buffer, size_of_timestamp_buffer);
       response->set_status(status);
@@ -1155,18 +1155,19 @@ namespace nixnet_grpc {
         }
       }
 
-      u32 number_of_values = request->number_of_values();
-      auto size_of_value_buffer = number_of_values * sizeof(f64);
+      u32 number_of_samples = request->number_of_samples();
+      u32 number_of_signals = request->number_of_signals();
+      auto size_of_value_buffer = number_of_samples * number_of_signals * sizeof(f64);
       nxTimestamp100ns_t start_time {};
       f64 delta_time {};
-      response->mutable_value_buffer()->Resize(size_of_value_buffer / sizeof(f64), 0);
-      f64* value_buffer = response->mutable_value_buffer()->mutable_data();
+      std::vector<f64> value_buffer(size_of_value_buffer / sizeof(f64), f64());
       u32 number_of_values_returned {};
-      auto status = library_->ReadSignalWaveform(session_ref, timeout, &start_time, &delta_time, value_buffer, size_of_value_buffer, &number_of_values_returned);
+      auto status = library_->ReadSignalWaveform(session_ref, timeout, &start_time, &delta_time, value_buffer.data(), size_of_value_buffer, &number_of_values_returned);
       response->set_status(status);
       if (status_ok(status)) {
         response->set_start_time(start_time);
         response->set_delta_time(delta_time);
+        convert_to_grpc(value_buffer, response->mutable_value_buffer(), number_of_values_returned, number_of_signals);
       }
       return ::grpc::Status::OK;
     }
@@ -1186,17 +1187,16 @@ namespace nixnet_grpc {
       auto session_ref_grpc_session = request->session_ref();
       nxSessionRef_t session_ref = session_repository_->access_session(session_ref_grpc_session.id(), session_ref_grpc_session.name());
       nxTimestamp100ns_t time_limit = request->time_limit();
-      u32 number_of_values = request->number_of_values();
-      u32 number_of_timestamps = request->number_of_timestamps();
+      u32 number_of_samples = request->number_of_samples();
       u32 number_of_signals = request->number_of_signals();
-      auto size_of_value_buffer = determine_size_of_output_buffer(determine_size_from_request(number_of_signals, number_of_values), determine_size_from_request(number_of_signals, number_of_timestamps));
-      auto size_of_timestamp_buffer = determine_size_of_output_buffer(determine_size_from_request(number_of_signals, number_of_values), determine_size_from_request(number_of_signals, number_of_timestamps));
+      auto size_of_value_buffer = number_of_samples * number_of_signals * sizeof(f64);
+      auto size_of_timestamp_buffer = number_of_samples * number_of_signals * sizeof(f64);
       auto size_of_num_pairs_buffer = number_of_signals * sizeof(u32);
       response->mutable_value_buffer()->Resize(size_of_value_buffer / sizeof(f64), 0);
       f64* value_buffer = response->mutable_value_buffer()->mutable_data();
       response->mutable_timestamp_buffer()->Resize(size_of_timestamp_buffer / sizeof(f64), 0);
       nxTimestamp100ns_t* timestamp_buffer = reinterpret_cast<nxTimestamp100ns_t*>(response->mutable_timestamp_buffer()->mutable_data());
-      response->mutable_num_pairs_buffer()->Resize(size_of_num_pairs_buffer / sizeof(u32), 0);
+      response->mutable_num_pairs_buffer()->Resize(number_of_signals, 0);
       u32* num_pairs_buffer = response->mutable_num_pairs_buffer()->mutable_data();
       auto status = library_->ReadSignalXY(session_ref, &time_limit, value_buffer, size_of_value_buffer, timestamp_buffer, size_of_timestamp_buffer, num_pairs_buffer, size_of_num_pairs_buffer);
       response->set_status(status);
