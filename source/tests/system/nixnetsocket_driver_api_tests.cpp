@@ -208,9 +208,16 @@ class NiXnetSocketNoHardwareTests : public NiXnetSocketDriverApiTests {
 
 #define EXPECT_SUCCESS(response)               \
   if (1) {                                     \
-    EXPECT_LE(0, (response).status());         \
+    EXPECT_EQ(0, (response).status());         \
     EXPECT_EQ("", (response).error_message()); \
     EXPECT_EQ(0, (response).error_num());      \
+  }
+
+#define EXPECT_SUCCESS_WITH_STATUS(response, expected_status) \
+  if (1) {                                                    \
+    EXPECT_EQ(expected_status, (response).status());          \
+    EXPECT_EQ("", (response).error_message());                \
+    EXPECT_EQ(0, (response).error_num());                     \
   }
 
 #define EXPECT_XNET_STATUS(error, response) \
@@ -324,8 +331,8 @@ TEST_F(NiXnetSocketLoopbackTests, IPv4LocalhostAddress_AToNAndPToN_ReturnsCorrec
   const auto a_to_n = client::inet_a_to_n(stub(), stack.stack_ref(), IPV4_LOCALHOST_ADDRESS_STR);
   const auto p_to_n = client::inet_p_to_n(stub(), stack.stack_ref(), 2 /* nxAF_INET */, IPV4_LOCALHOST_ADDRESS_STR);
 
-  EXPECT_SUCCESS(a_to_n);
-  EXPECT_SUCCESS(p_to_n);
+  EXPECT_SUCCESS_WITH_STATUS(a_to_n, 1);
+  EXPECT_SUCCESS_WITH_STATUS(p_to_n, 1);
   EXPECT_EQ(IPV4_LOCALHOST_ADDR, a_to_n.name().addr());
   EXPECT_EQ(IPV4_LOCALHOST_ADDR, p_to_n.dst().ipv4().addr());
 }
@@ -335,7 +342,7 @@ TEST_F(NiXnetSocketLoopbackTests, IPv6LocalhostAddress_PToN_ReturnsCorrectAddr)
   const auto stack = client::ip_stack_create(stub(), "", create_simple_config("ENET1"));
   const auto p_to_n = client::inet_p_to_n(stub(), stack.stack_ref(), 10 /* nxAF_INET6 */, IPV6_LOCALHOST_ADDRESS_STR);
 
-  EXPECT_SUCCESS(p_to_n);
+  EXPECT_SUCCESS_WITH_STATUS(p_to_n, 1);
   EXPECT_EQ(IPV6_LOCALHOST_ADDR, p_to_n.dst().ipv6().addr());
 }
 
@@ -423,6 +430,7 @@ TEST_F(NiXnetSocketLoopbackTests, MultiAddressIpStack_GetInfo_ReturnsExpectedInf
 
 TEST_F(NiXnetSocketLoopbackTests, RecvAndTransmitSocketsOnLoopbackAddress_SendAndReceiveData_ReceivesExpectedData)
 {
+  const auto MESSAGE = "HelloWorld"s;
   const auto rx_stack = client::ip_stack_create(stub(), "", create_simple_config("ENET1"));
   const auto wait = client::ip_stack_wait_for_interface(stub(), rx_stack.stack_ref(), "", 5000);
   const auto rx_socket = socket(stub(), rx_stack.stack_ref());
@@ -435,7 +443,7 @@ TEST_F(NiXnetSocketLoopbackTests, RecvAndTransmitSocketsOnLoopbackAddress_SendAn
   const auto tx_socket = socket(stub(), rx_stack.stack_ref());
   EXPECT_SUCCESS(rx_stack);
   EXPECT_SUCCESS(wait);
-  EXPECT_SUCCESS(rx_p_to_n);
+  EXPECT_SUCCESS_WITH_STATUS(rx_p_to_n, 1);
   EXPECT_SUCCESS(rx_socket);
   EXPECT_SUCCESS(bind);
   EXPECT_SUCCESS(get_name);
@@ -444,13 +452,13 @@ TEST_F(NiXnetSocketLoopbackTests, RecvAndTransmitSocketsOnLoopbackAddress_SendAn
 
   const auto connect = client::connect(stub(), tx_socket.socket(), get_name.addr());
   const auto accept = client::accept(stub(), rx_socket.socket());
-  const auto send = client::send(stub(), tx_socket.socket(), "HelloWorld", 0);
+  const auto send = client::send(stub(), tx_socket.socket(), MESSAGE, 0);
   const auto recv = client::recv(stub(), accept.socket(), 10, 0);
 
   EXPECT_SUCCESS(connect);
-  EXPECT_SUCCESS(send);
-  EXPECT_SUCCESS(recv);
-  EXPECT_EQ("HelloWorld", recv.mem());
+  EXPECT_SUCCESS_WITH_STATUS(send, MESSAGE.size());
+  EXPECT_SUCCESS_WITH_STATUS(recv, MESSAGE.size());
+  EXPECT_EQ(MESSAGE, recv.mem());
 }
 
 }  // namespace

@@ -60,7 +60,7 @@ namespace nixnetsocket_grpc {
       nxsocklen_t addrlen {};
       auto init_lambda = [&] () {
         auto socket_out = library_->Accept(socket, &addr, &addrlen);
-        auto status = socket_out == -1 ? -1 : 0;
+        auto status = socket_out < 0 ? socket_out : 0;
         return std::make_tuple(status, socket_out);
       };
       uint32_t session_id = 0;
@@ -859,7 +859,7 @@ namespace nixnetsocket_grpc {
 
       auto init_lambda = [&] () {
         auto socket = library_->Socket(stack_ref, domain, type, prototcol);
-        auto status = socket == -1 ? -1 : 0;
+        auto status = socket < 0 ? socket : 0;
         return std::make_tuple(status, socket);
       };
       uint32_t session_id = 0;

@@ -2,7 +2,7 @@ functions = {
     'Accept': {
         'cname': 'nxaccept',
         'init_method': True,
-        'status_expression': 'socket_out == -1 ? -1 : 0',
+        'status_expression': 'socket_out < 0 ? socket_out : 0',
         'parameters': [
             {
                 'direction': 'in',
@@ -676,7 +676,7 @@ functions = {
     'Socket': {
         'cname': 'nxsocket',
         'init_method': True,
-        'status_expression': 'socket == -1 ? -1 : 0',
+        'status_expression': 'socket < 0 ? socket : 0',
         'parameters': [
             {
                 'direction': 'in',
