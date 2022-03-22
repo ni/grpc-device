@@ -160,6 +160,75 @@ namespace nixnet_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiXnetService::ConvertByteArrayToFramesSinglePoint(::grpc::ServerContext* context, const ConvertByteArrayToFramesSinglePointRequest* request, ConvertByteArrayToFramesSinglePointResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_ref_grpc_session = request->session_ref();
+      nxSessionRef_t session_ref = session_repository_->access_session(session_ref_grpc_session.id(), session_ref_grpc_session.name());
+      u8* value_buffer = (u8*)request->value_buffer().c_str();
+      u32 size_of_value_buffer = static_cast<u32>(request->value_buffer().size());
+      u32 size_of_buffer = request->size_of_buffer();
+      u32 frame_type;
+      switch (request->frame_type_enum_case()) {
+        case nixnet_grpc::ConvertByteArrayToFramesSinglePointRequest::FrameTypeEnumCase::kFrameType: {
+          frame_type = static_cast<u32>(request->frame_type());
+          break;
+        }
+        case nixnet_grpc::ConvertByteArrayToFramesSinglePointRequest::FrameTypeEnumCase::kFrameTypeRaw: {
+          frame_type = static_cast<u32>(request->frame_type_raw());
+          break;
+        }
+        case nixnet_grpc::ConvertByteArrayToFramesSinglePointRequest::FrameTypeEnumCase::FRAME_TYPE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for frame_type was not specified or out of range");
+          break;
+        }
+      }
+
+      std::vector<u8> buffer(size_of_buffer, u8());
+      u32 number_of_bytes_returned {};
+      auto status = library_->ConvertByteArrayToFramesSinglePoint(session_ref, value_buffer, size_of_value_buffer, buffer.data(), size_of_buffer, &number_of_bytes_returned);
+      response->set_status(status);
+      if (status_ok(status)) {
+        convert_to_grpc(buffer, response->mutable_buffer(), number_of_bytes_returned, frame_type);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiXnetService::ConvertFramesToByteArraySinglePoint(::grpc::ServerContext* context, const ConvertFramesToByteArraySinglePointRequest* request, ConvertFramesToByteArraySinglePointResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_ref_grpc_session = request->session_ref();
+      nxSessionRef_t session_ref = session_repository_->access_session(session_ref_grpc_session.id(), session_ref_grpc_session.name());
+      auto frame_buffer = convert_from_grpc<u8>(request->frame_buffer());
+      auto number_of_bytes_for_frames = frame_buffer.size();
+      u32 size_of_value_buffer = request->size_of_value_buffer();
+      std::string value_buffer(size_of_value_buffer, '\0');
+      auto status = library_->ConvertFramesToByteArraySinglePoint(session_ref, frame_buffer, number_of_bytes_for_frames, (u8*)value_buffer.data(), size_of_value_buffer);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_value_buffer(value_buffer);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiXnetService::ConvertFramesToSignalsSinglePoint(::grpc::ServerContext* context, const ConvertFramesToSignalsSinglePointRequest* request, ConvertFramesToSignalsSinglePointResponse* response)
   {
     if (context->IsCancelled()) {
@@ -238,12 +307,12 @@ namespace nixnet_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      nxTimestamp100ns_t from = request->from();
-      nxTimestamp1ns_t to {};
-      auto status = library_->ConvertTimestamp100nsTo1ns(from, &to);
+      nxTimestamp100ns_t from_timestamp_100ns = request->from_timestamp_100ns();
+      nxTimestamp1ns_t to_timestamp_1ns {};
+      auto status = library_->ConvertTimestamp100nsTo1ns(from_timestamp_100ns, &to_timestamp_1ns);
       response->set_status(status);
       if (status_ok(status)) {
-        response->set_to(to);
+        response->set_to_timestamp_1ns(to_timestamp_1ns);
       }
       return ::grpc::Status::OK;
     }
@@ -260,12 +329,12 @@ namespace nixnet_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      nxTimestamp1ns_t from = request->from();
-      nxTimestamp100ns_t to {};
-      auto status = library_->ConvertTimestamp1nsTo100ns(from, &to);
+      nxTimestamp1ns_t from_timestamp_1ns = request->from_timestamp_1ns();
+      nxTimestamp100ns_t to_timestamp_100ns {};
+      auto status = library_->ConvertTimestamp1nsTo100ns(from_timestamp_1ns, &to_timestamp_100ns);
       response->set_status(status);
       if (status_ok(status)) {
-        response->set_to(to);
+        response->set_to_timestamp_100ns(to_timestamp_100ns);
       }
       return ::grpc::Status::OK;
     }
@@ -976,6 +1045,63 @@ namespace nixnet_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiXnetService::ReadFrame(::grpc::ServerContext* context, const ReadFrameRequest* request, ReadFrameResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_ref_grpc_session = request->session_ref();
+      nxSessionRef_t session_ref = session_repository_->access_session(session_ref_grpc_session.id(), session_ref_grpc_session.name());
+      u32 size_of_buffer = request->size_of_buffer();
+      f64 timeout;
+      switch (request->timeout_enum_case()) {
+        case nixnet_grpc::ReadFrameRequest::TimeoutEnumCase::kTimeout: {
+          timeout = static_cast<f64>(request->timeout());
+          break;
+        }
+        case nixnet_grpc::ReadFrameRequest::TimeoutEnumCase::kTimeoutRaw: {
+          timeout = static_cast<f64>(request->timeout_raw());
+          break;
+        }
+        case nixnet_grpc::ReadFrameRequest::TimeoutEnumCase::TIMEOUT_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for timeout was not specified or out of range");
+          break;
+        }
+      }
+
+      u32 frame_type;
+      switch (request->frame_type_enum_case()) {
+        case nixnet_grpc::ReadFrameRequest::FrameTypeEnumCase::kFrameType: {
+          frame_type = static_cast<u32>(request->frame_type());
+          break;
+        }
+        case nixnet_grpc::ReadFrameRequest::FrameTypeEnumCase::kFrameTypeRaw: {
+          frame_type = static_cast<u32>(request->frame_type_raw());
+          break;
+        }
+        case nixnet_grpc::ReadFrameRequest::FrameTypeEnumCase::FRAME_TYPE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for frame_type was not specified or out of range");
+          break;
+        }
+      }
+
+      std::vector<u8> buffer(size_of_buffer, u8());
+      u32 number_of_bytes_returned {};
+      auto status = library_->ReadFrame(session_ref, buffer.data(), size_of_buffer, timeout, &number_of_bytes_returned);
+      response->set_status(status);
+      if (status_ok(status)) {
+        convert_to_grpc(buffer, response->mutable_buffer(), number_of_bytes_returned, frame_type);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiXnetService::ReadSignalSinglePoint(::grpc::ServerContext* context, const ReadSignalSinglePointRequest* request, ReadSignalSinglePointResponse* response)
   {
     if (context->IsCancelled()) {
@@ -1265,6 +1391,43 @@ namespace nixnet_grpc {
       if (status_ok(status)) {
         response->set_param_out(param_out);
       }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiXnetService::WriteFrame(::grpc::ServerContext* context, const WriteFrameRequest* request, WriteFrameResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_ref_grpc_session = request->session_ref();
+      nxSessionRef_t session_ref = session_repository_->access_session(session_ref_grpc_session.id(), session_ref_grpc_session.name());
+      auto buffer = convert_from_grpc<u8>(request->buffer());
+      auto number_of_bytes_for_frames = buffer.size();
+      f64 timeout;
+      switch (request->timeout_enum_case()) {
+        case nixnet_grpc::WriteFrameRequest::TimeoutEnumCase::kTimeout: {
+          timeout = static_cast<f64>(request->timeout());
+          break;
+        }
+        case nixnet_grpc::WriteFrameRequest::TimeoutEnumCase::kTimeoutRaw: {
+          timeout = static_cast<f64>(request->timeout_raw());
+          break;
+        }
+        case nixnet_grpc::WriteFrameRequest::TimeoutEnumCase::TIMEOUT_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for timeout was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->WriteFrame(session_ref, buffer, number_of_bytes_for_frames, timeout);
+      response->set_status(status);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
