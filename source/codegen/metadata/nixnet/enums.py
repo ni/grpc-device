@@ -577,7 +577,7 @@ enums = {
             },
             {
                 'name': 'SIG_FRAME_REF',
-                'type': 'parent_ref',
+                'type': 'db_ref',
                 'value': 84082693
             },
             {
@@ -1127,7 +1127,7 @@ enums = {
             },
             {
                 'name': 'SESSION_INTF_ENET_EPT_RECEIVE_FILTER',
-                'type': 'structure',
+                'type': 'nxEptRxFilter_Element_t_array',
                 'value': 202375356
             },
             {
@@ -1917,37 +1917,37 @@ enums = {
             },
             {
                 'name': 'SYS_DEV_REFS',
-                'type': 'dev_ref_array',
+                'type': 'u32_array',
                 'value': 101777410
             },
             {
                 'name': 'SYS_INTF_REFS',
-                'type': 'intf_ref_array',
+                'type': 'u32_array',
                 'value': 101777411
             },
             {
                 'name': 'SYS_INTF_REFS_ALL',
-                'type': 'intf_ref_array',
+                'type': 'u32_array',
                 'value': 101777421
             },
             {
                 'name': 'SYS_INTF_REFS_CAN',
-                'type': 'intf_ref_array',
+                'type': 'u32_array',
                 'value': 101777412
             },
             {
                 'name': 'SYS_INTF_REFS_ETHERNET',
-                'type': 'intf_ref_array',
+                'type': 'u32_array',
                 'value': 101777409
             },
             {
                 'name': 'SYS_INTF_REFS_FLEX_RAY',
-                'type': 'intf_ref_array',
+                'type': 'u32_array',
                 'value': 101777413
             },
             {
                 'name': 'SYS_INTF_REFS_LIN',
-                'type': 'intf_ref_array',
+                'type': 'u32_array',
                 'value': 101777415
             },
             {
@@ -1982,12 +1982,12 @@ enums = {
             },
             {
                 'name': 'DEV_INTF_REFS',
-                'type': 'intf_ref_array',
+                'type': 'u32_array',
                 'value': 101842946
             },
             {
                 'name': 'DEV_INTF_REFS_ALL',
-                'type': 'intf_ref_array',
+                'type': 'u32_array',
                 'value': 101842952
             },
             {
@@ -2032,7 +2032,7 @@ enums = {
             },
             {
                 'name': 'INTF_DEV_REF',
-                'type': 'dev_ref',
+                'type': 'u32',
                 'value': 85131265
             },
             {

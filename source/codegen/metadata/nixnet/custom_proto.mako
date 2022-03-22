@@ -79,6 +79,17 @@ message DbRefArray {
   repeated nidevice_grpc.Session db_ref = 1;
 }
 
+message EptRxFilter {
+  uint32 use_flags = 1;
+  uint32 vid = 2;
+  uint32 priority = 3;
+  string destination_mac = 4;    
+}
+
+message EptRxFilterArray {
+  repeated EptRxFilter ept_rx_filter = 1;
+}
+
 message GetPropertyRequest {
   nidevice_grpc.Session session_ref = 1;
   oneof property_id_enum {
@@ -100,6 +111,7 @@ message GetPropertyResponse {
     U32Array u32_array = 9;
     nidevice_grpc.Session db_ref = 10;
     DbRefArray db_ref_array = 11;
+    EptRxFilterArray ept_rx_filter_array = 12;
   }
 }
 
@@ -120,6 +132,7 @@ message SetPropertyRequest {
     U32Array u32_array = 11;
     nidevice_grpc.Session db_ref = 12;
     DbRefArray db_ref_array = 13;
+    EptRxFilterArray ept_rx_filter_array = 14;
   }
 }
 
