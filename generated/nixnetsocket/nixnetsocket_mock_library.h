@@ -17,9 +17,11 @@ namespace unit {
 
 class NiXnetSocketMockLibrary : public nixnetsocket_grpc::NiXnetSocketLibraryInterface {
  public:
-  MOCK_METHOD(int32_t, Accept, (nxSOCKET socket, nxsockaddr* addr, nxsocklen_t* addrlen), (override));
+  MOCK_METHOD(nxSOCKET, Accept, (nxSOCKET socket, nxsockaddr* addr, nxsocklen_t* addrlen), (override));
   MOCK_METHOD(int32_t, Bind, (nxSOCKET socket, nxsockaddr* name, nxsocklen_t namelen), (override));
   MOCK_METHOD(int32_t, Connect, (nxSOCKET socket, nxsockaddr* name, nxsocklen_t namelen), (override));
+  MOCK_METHOD(int32_t, InetAToN, (nxIpStackRef_t stack_ref, const char cp[], nxin_addr* name), (override));
+  MOCK_METHOD(int32_t, InetPToN, (nxIpStackRef_t stack_ref, int32_t af, const char src[], void* dst), (override));
   MOCK_METHOD(int32_t, FreeAddrInfo, (nxaddrinfo* res), (override));
   MOCK_METHOD(int32_t, GetAddrInfo, (nxIpStackRef_t stack_ref, const char node[], const char service[], nxaddrinfo* hints, nxaddrinfo** res), (override));
   MOCK_METHOD(int32_t, GetNameInfo, (nxIpStackRef_t stack_ref, nxsockaddr* addr, nxsocklen_t addr_len, char host[], nxsocklen_t host_len, char serv[], nxsocklen_t serv_len, int32_t flags), (override));

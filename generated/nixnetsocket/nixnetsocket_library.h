@@ -18,9 +18,11 @@ class NiXnetSocketLibrary : public nixnetsocket_grpc::NiXnetSocketLibraryInterfa
   virtual ~NiXnetSocketLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);
-  int32_t Accept(nxSOCKET socket, nxsockaddr* addr, nxsocklen_t* addrlen);
+  nxSOCKET Accept(nxSOCKET socket, nxsockaddr* addr, nxsocklen_t* addrlen);
   int32_t Bind(nxSOCKET socket, nxsockaddr* name, nxsocklen_t namelen);
   int32_t Connect(nxSOCKET socket, nxsockaddr* name, nxsocklen_t namelen);
+  int32_t InetAToN(nxIpStackRef_t stack_ref, const char cp[], nxin_addr* name);
+  int32_t InetPToN(nxIpStackRef_t stack_ref, int32_t af, const char src[], void* dst);
   int32_t FreeAddrInfo(nxaddrinfo* res);
   int32_t GetAddrInfo(nxIpStackRef_t stack_ref, const char node[], const char service[], nxaddrinfo* hints, nxaddrinfo** res);
   int32_t GetNameInfo(nxIpStackRef_t stack_ref, nxsockaddr* addr, nxsocklen_t addr_len, char host[], nxsocklen_t host_len, char serv[], nxsocklen_t serv_len, int32_t flags);
@@ -50,6 +52,8 @@ class NiXnetSocketLibrary : public nixnetsocket_grpc::NiXnetSocketLibraryInterfa
   using AcceptPtr = decltype(&nxaccept);
   using BindPtr = decltype(&nxbind);
   using ConnectPtr = decltype(&nxconnect);
+  using InetAToNPtr = decltype(&nxinet_aton);
+  using InetPToNPtr = decltype(&nxinet_pton);
   using FreeAddrInfoPtr = int32_t (*)(nxaddrinfo* res);
   using GetAddrInfoPtr = decltype(&nxgetaddrinfo);
   using GetNameInfoPtr = decltype(&nxgetnameinfo);
@@ -79,6 +83,8 @@ class NiXnetSocketLibrary : public nixnetsocket_grpc::NiXnetSocketLibraryInterfa
     AcceptPtr Accept;
     BindPtr Bind;
     ConnectPtr Connect;
+    InetAToNPtr InetAToN;
+    InetPToNPtr InetPToN;
     FreeAddrInfoPtr FreeAddrInfo;
     GetAddrInfoPtr GetAddrInfo;
     GetNameInfoPtr GetNameInfo;

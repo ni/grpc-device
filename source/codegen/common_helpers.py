@@ -1090,7 +1090,7 @@ def get_cpp_local_name(param: dict) -> str:
     cases where "name" is not a reserved keyword.  If "grpc_name" is a reserved keyword, this may be
     an issue (but don't use reserved grpc_name!).
     """
-    return param.get("grpc_name", _camel_to_snake(param["cppName"]))
+    return param.get("cpp_local_name", param.get("grpc_name", _camel_to_snake(param["cppName"])))
 
 
 def get_grpc_field_names_for_param_names(params: List[dict], names: List[str]) -> List[str]:
