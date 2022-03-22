@@ -366,8 +366,8 @@ TEST(XnetConvertersTests, SockOptDataWithIPMReq_ConvertFromGrpc_DataLooksReasona
   constexpr auto IMR_MULTIADDR = 22;
   constexpr auto IMR_INTERFACE = 1;
   SockOptData sock_opt_data = SockOptData{};
-  sock_opt_data.mutable_data_ip_mreq()->set_imr_multiaddr(IMR_MULTIADDR);
-  sock_opt_data.mutable_data_ip_mreq()->set_imr_interface(IMR_INTERFACE);
+  sock_opt_data.mutable_data_ip_mreq()->mutable_imr_multiaddr()->set_addr(IMR_MULTIADDR);
+  sock_opt_data.mutable_data_ip_mreq()->mutable_imr_interface()->set_addr(IMR_INTERFACE);
 
   auto opt_data = convert_from_grpc<SockOptDataInputConverter>(sock_opt_data);
 
@@ -383,7 +383,7 @@ TEST(XnetConvertersTests, SockOptDataWithIPV6MReq_ConvertFromGrpc_DataLooksReaso
   const auto IPV6MR_MULTIADDR = std::vector<char>{0x0, 0x1, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7, 0x8, 0x9, 0xA, 0xB, 0xC, 0xD, 0xE, 0xF};
   constexpr auto IPV6MR_INTERFACE = 1;
   SockOptData sock_opt_data = SockOptData{};
-  sock_opt_data.mutable_data_ipv6_mreq()->set_ipv6mr_multiaddr({IPV6MR_MULTIADDR.cbegin(), IPV6MR_MULTIADDR.cend()});
+  sock_opt_data.mutable_data_ipv6_mreq()->mutable_ipv6mr_multiaddr()->set_addr({IPV6MR_MULTIADDR.cbegin(), IPV6MR_MULTIADDR.cend()});
   sock_opt_data.mutable_data_ipv6_mreq()->set_ipv6mr_interface(IPV6MR_INTERFACE);
 
   auto opt_data = convert_from_grpc<SockOptDataInputConverter>(sock_opt_data);
@@ -491,8 +491,8 @@ TEST(XnetConvertersTests, IPMReqSockOptData_ConvertToGrpc_ConvertsToSockOptDataW
   convert_to_grpc(storage, &grpc_data);
 
   EXPECT_EQ(SockOptData::DataCase::kDataIpMreq, grpc_data.data_case());
-  EXPECT_EQ(IMR_MULTIADDR, grpc_data.data_ip_mreq().imr_multiaddr());
-  EXPECT_EQ(IMR_INTERFACE, grpc_data.data_ip_mreq().imr_interface());
+  EXPECT_EQ(IMR_MULTIADDR, grpc_data.data_ip_mreq().imr_multiaddr().addr());
+  EXPECT_EQ(IMR_INTERFACE, grpc_data.data_ip_mreq().imr_interface().addr());
 }
 
 TEST(XnetConvertersTests, IPV6MReqSockOptData_ConvertToGrpc_ConvertsToSockOptDataWithIPMReqValue)
@@ -513,7 +513,7 @@ TEST(XnetConvertersTests, IPV6MReqSockOptData_ConvertToGrpc_ConvertsToSockOptDat
   convert_to_grpc(storage, &grpc_data);
 
   EXPECT_EQ(SockOptData::DataCase::kDataIpv6Mreq, grpc_data.data_case());
-  EXPECT_THAT(grpc_data.data_ipv6_mreq().ipv6mr_multiaddr(), ElementsAreArray(IPV6MR_MULTIADDR.data(), IPV6MR_MULTIADDR.size()));
+  EXPECT_THAT(grpc_data.data_ipv6_mreq().ipv6mr_multiaddr().addr(), ElementsAreArray(IPV6MR_MULTIADDR.data(), IPV6MR_MULTIADDR.size()));
   EXPECT_EQ(IPV6MR_INTERFACE, grpc_data.data_ipv6_mreq().ipv6mr_interface());
 }
 

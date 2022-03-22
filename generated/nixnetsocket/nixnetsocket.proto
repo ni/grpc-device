@@ -198,12 +198,12 @@ message Linger {
 }
 
 message IPMReq {
-  uint32 imr_multiaddr = 1;
-  uint32 imr_interface = 2;
+  IPv4Addr imr_multiaddr = 1;
+  IPv4Addr imr_interface = 2;
 }
 
 message IPv6MReq {
-  bytes ipv6mr_multiaddr = 1;
+  IPv6Addr ipv6mr_multiaddr = 1;
   int32 ipv6mr_interface = 2;
 }
 
