@@ -1,6 +1,6 @@
 r""" Write Signal Data.
 
- This example writes a signal value when a keyboard character is pressed.
+ This example writes a signal value for 10 times.
  This is used to demonstrate a signal single point output session. 
  This example uses hardcoded signal names that use the NIXNET_example database. 
 
