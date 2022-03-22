@@ -18,6 +18,8 @@ class NiXnetLibraryInterface {
   virtual nxStatus_t Blink(nxSessionRef_t interfaceRef, u32 modifier) = 0;
   virtual nxStatus_t Clear(nxSessionRef_t sessionRef) = 0;
   virtual nxStatus_t ConnectTerminals(nxSessionRef_t sessionRef, const char source[], const char destination[]) = 0;
+  virtual nxStatus_t ConvertByteArrayToFramesSinglePoint(nxSessionRef_t sessionRef, u8 valueBuffer[], u32 sizeOfValueBuffer, u8 buffer[], u32 sizeOfBuffer, u32* numberOfBytesReturned) = 0;
+  virtual nxStatus_t ConvertFramesToByteArraySinglePoint(nxSessionRef_t sessionRef, u8* frameBuffer, u32 numberOfBytesForFrames, u8 valueBuffer[], u32 sizeOfValueBuffer) = 0;
   virtual nxStatus_t ConvertFramesToSignalsSinglePoint(nxSessionRef_t sessionRef, u8* frameBuffer, u32 numberOfBytesForFrames, f64 valueBuffer[], u32 sizeOfValueBuffer, nxTimestamp100ns_t timestampBuffer[], u32 sizeOfTimestampBuffer) = 0;
   virtual nxStatus_t ConvertSignalsToFramesSinglePoint(nxSessionRef_t sessionRef, f64 valueBuffer[], u32 sizeOfValueBuffer, u8 buffer[], u32 sizeOfBuffer, u32* numberOfBytesReturned) = 0;
   virtual nxStatus_t ConvertTimestamp100nsTo1ns(nxTimestamp100ns_t from, nxTimestamp1ns_t* to) = 0;
@@ -50,6 +52,7 @@ class NiXnetLibraryInterface {
   virtual nxStatus_t GetPropertySize(nxSessionRef_t sessionRef, u32 propertyID, u32* propertySize) = 0;
   virtual nxStatus_t GetSubProperty(nxSessionRef_t sessionRef, u32 activeIndex, u32 propertyID, u32 propertySize, void* propertyValue) = 0;
   virtual nxStatus_t GetSubPropertySize(nxSessionRef_t sessionRef, u32 activeIndex, u32 propertyID, u32* propertySize) = 0;
+  virtual nxStatus_t ReadFrame(nxSessionRef_t sessionRef, u8 buffer[], u32 sizeOfBuffer, f64 timeout, u32* numberOfBytesReturned) = 0;
   virtual nxStatus_t ReadSignalSinglePoint(nxSessionRef_t sessionRef, f64 valueBuffer[], u32 sizeOfValueBuffer, nxTimestamp100ns_t timestampBuffer[], u32 sizeOfTimestampBuffer) = 0;
   virtual nxStatus_t ReadSignalWaveform(nxSessionRef_t sessionRef, f64 timeout, nxTimestamp100ns_t* startTime, f64* deltaTime, f64 valueBuffer[], u32 sizeOfValueBuffer, u32* numberOfValuesReturned) = 0;
   virtual nxStatus_t ReadState(nxSessionRef_t sessionRef, u32 stateID, u32 stateSize, void* stateValue, nxStatus_t* fault) = 0;
@@ -62,6 +65,7 @@ class NiXnetLibraryInterface {
   virtual nxStatus_t SystemClose(nxSessionRef_t systemRef) = 0;
   virtual nxStatus_t SystemOpen(nxSessionRef_t* systemRef) = 0;
   virtual nxStatus_t Wait(nxSessionRef_t sessionRef, u32 condition, u32 paramIn, f64 timeout, u32* paramOut) = 0;
+  virtual nxStatus_t WriteFrame(nxSessionRef_t sessionRef, u8* buffer, u32 numberOfBytesForFrames, f64 timeout) = 0;
   virtual nxStatus_t WriteSignalSinglePoint(nxSessionRef_t sessionRef, f64 valueBuffer[], u32 sizeOfValueBuffer) = 0;
   virtual nxStatus_t WriteSignalWaveform(nxSessionRef_t sessionRef, f64 timeout, f64 valueBuffer[], u32 sizeOfValueBuffer) = 0;
   virtual nxStatus_t WriteSignalXY(nxSessionRef_t sessionRef, f64 timeout, f64 valueBuffer[], u32 sizeOfValueBuffer, nxTimestamp100ns_t timestampBuffer[], u32 sizeOfTimestampBuffer, u32 numPairsBuffer[], u32 sizeOfNumPairsBuffer) = 0;
