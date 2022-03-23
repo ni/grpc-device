@@ -6,7 +6,7 @@ enums = data['enums']
 config = data['config']
 functions = data['functions']
 
-function_enums = common_helpers.get_function_enums(functions)
+function_enums = common_helpers.get_function_enums(functions, enums)
 additional_enums = config.get("add_enums_to_proto",[])
 function_enums.extend(additional_enums)
 enums_to_map = service_helpers.get_enums_to_map(function_enums, enums)
