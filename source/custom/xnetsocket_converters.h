@@ -442,7 +442,8 @@ struct SockOptDataOutputConverter {
       case OptName::OPT_NAME_SO_SND_BUF:
       case OptName::OPT_NAME_TCP_NODELAY:
       case OptName::OPT_NAME_IP_MULTICAST_IF:
-      case OptName::OPT_NAME_IPV6_MULTICAST_IF: {
+      case OptName::OPT_NAME_IPV6_MULTICAST_IF:
+      case OptName::OPT_NAME_SO_ERROR: {
         return &data_int;
       }
       case OptName::OPT_NAME_SO_NON_BLOCK:
@@ -450,8 +451,7 @@ struct SockOptDataOutputConverter {
       case OptName::OPT_NAME_IPV6_V6ONLY: {
         return &data_int;
       }
-      case OptName::OPT_NAME_SO_BIND_TO_DEVICE:
-      case OptName::OPT_NAME_SO_ERROR: {
+      case OptName::OPT_NAME_SO_BIND_TO_DEVICE: {
         data_string = std::string(256 - 1, '\0');  // TODO: What's the max string size to allocate for a sock opt?
         return &data_string[0];
       }
@@ -482,7 +482,8 @@ struct SockOptDataOutputConverter {
       case OptName::OPT_NAME_SO_SND_BUF:
       case OptName::OPT_NAME_TCP_NODELAY:
       case OptName::OPT_NAME_IP_MULTICAST_IF:
-      case OptName::OPT_NAME_IPV6_MULTICAST_IF: {
+      case OptName::OPT_NAME_IPV6_MULTICAST_IF:
+      case OptName::OPT_NAME_SO_ERROR: {
         output.set_data_int32(data_int);
         break;
       }
@@ -492,8 +493,7 @@ struct SockOptDataOutputConverter {
         output.set_data_bool(data_int == 0 ? false : true);
         break;
       }
-      case OptName::OPT_NAME_SO_BIND_TO_DEVICE:
-      case OptName::OPT_NAME_SO_ERROR: {
+      case OptName::OPT_NAME_SO_BIND_TO_DEVICE: {
         output.set_data_string(data_string);
         nidevice_grpc::converters::trim_trailing_nulls(*(output.mutable_data_string()));
         break;
