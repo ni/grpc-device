@@ -50,7 +50,6 @@ DATABASE = "NIXNET_example"
 CLUSTER = "FlexRay_Cluster"
 SIGNAL_LIST = "FlexRayEventSignal1,FlexRayEventSignal2"
 NUM_SIGNALS = 2
-SIZE_OF_F64_IN_C = 8
 
 
 def check_for_error(status):
@@ -64,6 +63,7 @@ def check_for_error(status):
 
 i = 0
 keyslot_id = 1
+session = None
 
 # Create the communication channel for the remote host and create connections to the NI-XNET and
 # session services.
@@ -105,8 +105,7 @@ try:
         read_signal_response = client.ReadSignalSinglePoint(
             nixnet_types.ReadSignalSinglePointRequest(
                 session_ref=session,
-                size_of_value_buffer=NUM_SIGNALS * SIZE_OF_F64_IN_C,
-                size_of_timestamp_buffer=NUM_SIGNALS * SIZE_OF_F64_IN_C,
+                number_of_signals=NUM_SIGNALS,
             )
         )
         check_for_error(read_signal_response.status)

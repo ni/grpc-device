@@ -62,6 +62,7 @@ def check_for_error(status):
 
 
 i = 0
+session = None
 value_buffer = [0.0] * NUM_SIGNALS
 
 # Create the communication channel for the remote host and create connections to the NI-XNET and
@@ -70,18 +71,18 @@ channel = grpc.insecure_channel(f"{SERVER_ADDRESS}:{SERVER_PORT}")
 client = grpc_nixnet.NiXnetStub(channel)
 
 # Change this to set the interface to slave mode
-IsMaster = 1
+IS_MASTER = 1
 
 # The schedule is identified by its index. The index is mapped to
 # the schedules in the database. Index 0 is the first schedule
 # displayed in the Database Editor.
-ScheduleIndex = 0
+SCHEDULE_INDEX = 0
 
 # Display parameters that will be used for the example.
 print("Interface: " + INTERFACE, "Database: " + DATABASE, "Signal List: " + SIGNAL_LIST, sep="\n")
 
 try:
-    if IsMaster != 0:
+    if IS_MASTER != 0:
         print("Master?: Yes\n")
     else:
         print("Master?: No\n")
@@ -101,9 +102,9 @@ try:
     session = create_session_response.session_ref
     print("Session Created Successfully. \n")
 
-    if IsMaster != 0:
+    if IS_MASTER != 0:
         # Set the schedule - this will also automatically enable master mode
-        write_state_value = nixnet_types.WriteStateValue(lin_schedule_change=ScheduleIndex)
+        write_state_value = nixnet_types.WriteStateValue(lin_schedule_change=SCHEDULE_INDEX)
         write_state_response = client.WriteState(
             nixnet_types.WriteStateRequest(
                 session_ref=session,
