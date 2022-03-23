@@ -21,15 +21,30 @@ message VirtualInterface {
   repeated GatewayAddress gateway_addresses = 8;
 }
 
+message IPv6Addr {
+  bytes addr = 1;
+}
+
+message IPv4Addr {
+  uint32 addr = 1;
+}
+
+message Addr {
+  oneof addr {
+    IPv4Addr ipv4 = 1;
+    IPv6Addr ipv6 = 2;
+  }
+}
+
 message SockAddrIPv4 {
   uint32 port = 1;
-  uint32 addr = 2;
+  IPv4Addr addr = 2;
 }
 
 message SockAddrIPv6 {
   uint32 port = 1;
   uint32 flow_info = 2;
-  bytes addr = 3;
+  IPv6Addr addr = 3;
   uint32 scope_id = 4;
 }
 
@@ -41,12 +56,19 @@ message SockAddr {
 }
 
 message AddrInfo {
-  int32 flags = 1;
-  int32 family = 2;
-  int32 sock_type = 3;
-  int32 protocol = 4;
+  GetAddrInfoFlags flags = 1;
+  AddressFamily family = 2;
+  SocketProtocolType sock_type = 3;
+  IPProtocol protocol = 4;
   SockAddr addr = 5;
   string canon_name = 6;
+}
+
+message AddrInfoHint {
+  GetAddrInfoFlags flags = 1;
+  AddressFamily family = 2;
+  SocketProtocolType sock_type = 3;
+  IPProtocol protocol = 4;
 }
 
 message Linger {

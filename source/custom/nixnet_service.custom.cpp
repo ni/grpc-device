@@ -420,16 +420,6 @@ u32 GetStateSize(u32 state_id)
         }
         break;
       }
-      case string_array_: {
-        std::string property_value(property_size, '\0');
-        status = library_->GetProperty(session_ref, property_id, property_size, const_cast<char*>(property_value.c_str()));
-        if (!status_ok(status)) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
-        response->set_string_array(property_value.c_str());
-        break;
-      }
       case db_ref_: {
         auto initiating_session_id = session_repository_->access_session_id(session_ref_grpc_session.id(), session_ref_grpc_session.name());
         auto init_lambda = [&]() {
@@ -824,15 +814,6 @@ u32 GetStateSize(u32 state_id)
         u32* property_value = const_cast<u32*>(request->u32_array().u32_array().data());
         u32 property_value_size = (u32)request->u32_array().u32_array().size();
         status = library_->SetProperty(session_ref, property_id, property_value_size * sizeof(u32), property_value);
-        if (!status_ok(status)) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
-        break;
-      }
-      case string_array_: {
-        std::string property_value = request->string_array();
-        status = library_->SetProperty(session_ref, property_id, (u32)property_value.size(), const_cast<char*>(property_value.c_str()));
         if (!status_ok(status)) {
           response->set_status(status);
           return ::grpc::Status::OK;

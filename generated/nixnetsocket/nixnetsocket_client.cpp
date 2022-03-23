@@ -67,6 +67,80 @@ connect(const StubPtr& stub, const nidevice_grpc::Session& socket, const SockAdd
   return response;
 }
 
+InetAToNResponse
+inet_a_to_n(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const pb::string& cp)
+{
+  ::grpc::ClientContext context;
+
+  auto request = InetAToNRequest{};
+  request.mutable_stack_ref()->CopyFrom(stack_ref);
+  request.set_cp(cp);
+
+  auto response = InetAToNResponse{};
+
+  raise_if_error(
+      stub->InetAToN(&context, request, &response));
+
+  return response;
+}
+
+InetPToNResponse
+inet_p_to_n(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const pb::int32& af, const pb::string& src)
+{
+  ::grpc::ClientContext context;
+
+  auto request = InetPToNRequest{};
+  request.mutable_stack_ref()->CopyFrom(stack_ref);
+  request.set_af(af);
+  request.set_src(src);
+
+  auto response = InetPToNResponse{};
+
+  raise_if_error(
+      stub->InetPToN(&context, request, &response));
+
+  return response;
+}
+
+GetAddrInfoResponse
+get_addr_info(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const pb::string& node, const pb::string& service, const AddrInfoHint& hints)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetAddrInfoRequest{};
+  request.mutable_stack_ref()->CopyFrom(stack_ref);
+  request.set_node(node);
+  request.set_service(service);
+  request.mutable_hints()->CopyFrom(hints);
+
+  auto response = GetAddrInfoResponse{};
+
+  raise_if_error(
+      stub->GetAddrInfo(&context, request, &response));
+
+  return response;
+}
+
+GetNameInfoResponse
+get_name_info(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const SockAddr& addr, const pb::int32& host_len, const pb::int32& serv_len, const pb::int32& flags)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetNameInfoRequest{};
+  request.mutable_stack_ref()->CopyFrom(stack_ref);
+  request.mutable_addr()->CopyFrom(addr);
+  request.set_host_len(host_len);
+  request.set_serv_len(serv_len);
+  request.set_flags(flags);
+
+  auto response = GetNameInfoResponse{};
+
+  raise_if_error(
+      stub->GetNameInfo(&context, request, &response));
+
+  return response;
+}
+
 ListenResponse
 listen(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::int32& backlog)
 {
@@ -122,13 +196,13 @@ send(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::string
 }
 
 RecvFromResponse
-recv_from(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::string& mem, const pb::int32& flags)
+recv_from(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::int32& size, const pb::int32& flags)
 {
   ::grpc::ClientContext context;
 
   auto request = RecvFromRequest{};
   request.mutable_socket()->CopyFrom(socket);
-  request.set_mem(mem);
+  request.set_size(size);
   request.set_flags(flags);
 
   auto response = RecvFromResponse{};
@@ -140,13 +214,13 @@ recv_from(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::s
 }
 
 RecvResponse
-recv(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::string& mem, const pb::int32& flags)
+recv(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::int32& size, const pb::int32& flags)
 {
   ::grpc::ClientContext context;
 
   auto request = RecvRequest{};
   request.mutable_socket()->CopyFrom(socket);
-  request.set_mem(mem);
+  request.set_size(size);
   request.set_flags(flags);
 
   auto response = RecvResponse{};
