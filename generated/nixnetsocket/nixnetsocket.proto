@@ -119,6 +119,15 @@ enum GetAddrInfoFlags {
   GET_ADDR_INFO_FLAGS_BYPASS_CACHE = 2048;
 }
 
+enum GetNameInfoFlags {
+  GET_NAME_INFO_FLAGS_UNSPECIFIED = 0;
+  GET_NAME_INFO_FLAGS_NOFQDN = 1;
+  GET_NAME_INFO_FLAGS_NUMERICHOST = 2;
+  GET_NAME_INFO_FLAGS_NAMEREQD = 4;
+  GET_NAME_INFO_FLAGS_NUMERICSERV = 8;
+  GET_NAME_INFO_FLAGS_DGRAM = 16;
+}
+
 message IPAddress {
   uint32 family = 1;
   string address = 2;
@@ -297,7 +306,10 @@ message GetNameInfoRequest {
   SockAddr addr = 2;
   int32 host_len = 3;
   int32 serv_len = 4;
-  int32 flags = 5;
+  oneof flags_enum {
+    GetNameInfoFlags flags = 5;
+    int32 flags_raw = 6;
+  }
 }
 
 message GetNameInfoResponse {

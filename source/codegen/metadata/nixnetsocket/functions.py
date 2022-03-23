@@ -244,7 +244,8 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'flags',
-                'type': 'int32_t'
+                'type': 'int32_t',
+                'enum': 'GetNameInfoFlags'
             },
         ],
         'returns': 'int32_t'

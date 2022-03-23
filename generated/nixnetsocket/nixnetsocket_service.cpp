@@ -250,7 +250,22 @@ namespace nixnetsocket_grpc {
       auto addr_len = addr.size();
       nxsocklen_t host_len = request->host_len();
       nxsocklen_t serv_len = request->serv_len();
-      int32_t flags = request->flags();
+      int32_t flags;
+      switch (request->flags_enum_case()) {
+        case nixnetsocket_grpc::GetNameInfoRequest::FlagsEnumCase::kFlags: {
+          flags = static_cast<int32_t>(request->flags());
+          break;
+        }
+        case nixnetsocket_grpc::GetNameInfoRequest::FlagsEnumCase::kFlagsRaw: {
+          flags = static_cast<int32_t>(request->flags_raw());
+          break;
+        }
+        case nixnetsocket_grpc::GetNameInfoRequest::FlagsEnumCase::FLAGS_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for flags was not specified or out of range");
+          break;
+        }
+      }
+
       std::string host;
       if (host_len > 0) {
           host.resize(host_len - 1);

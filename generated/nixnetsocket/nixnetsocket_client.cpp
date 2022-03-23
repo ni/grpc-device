@@ -122,7 +122,7 @@ get_addr_info(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, cons
 }
 
 GetNameInfoResponse
-get_name_info(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const SockAddr& addr, const pb::int32& host_len, const pb::int32& serv_len, const pb::int32& flags)
+get_name_info(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const SockAddr& addr, const pb::int32& host_len, const pb::int32& serv_len, const simple_variant<GetNameInfoFlags, pb::int32>& flags)
 {
   ::grpc::ClientContext context;
 
@@ -131,7 +131,14 @@ get_name_info(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, cons
   request.mutable_addr()->CopyFrom(addr);
   request.set_host_len(host_len);
   request.set_serv_len(serv_len);
-  request.set_flags(flags);
+  const auto flags_ptr = flags.get_if<GetNameInfoFlags>();
+  const auto flags_raw_ptr = flags.get_if<pb::int32>();
+  if (flags_ptr) {
+    request.set_flags(*flags_ptr);
+  }
+  else if (flags_raw_ptr) {
+    request.set_flags_raw(*flags_raw_ptr);
+  }
 
   auto response = GetNameInfoResponse{};
 
