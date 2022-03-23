@@ -72,7 +72,7 @@ functions = {
                 'direction': 'in',
                 'name': 'num_of_frames',
                 'proto_only': True,
-                'type': 'u32', #change to int32 to support future extension
+                'type': 'u32'
             },
             {
                 'direction': 'in',
@@ -242,7 +242,7 @@ functions = {
                 'direction': 'in',
                 'name': 'num_of_frames',
                 'proto_only': True,
-                'type': 'u32', #change to int32 to support future extension
+                'type': 'u32'
             },
             {
                 'direction': 'in',
@@ -1055,7 +1055,7 @@ functions = {
                 'direction': 'in',
                 'name': 'num_of_frames',
                 'proto_only': True,
-                'type': 'u32', #change to int32 to support future extension
+                'type': 'int32'
             },
             {
                 'direction': 'in',

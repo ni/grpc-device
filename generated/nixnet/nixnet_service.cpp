@@ -1058,7 +1058,7 @@ namespace nixnet_grpc {
     try {
       auto session_ref_grpc_session = request->session_ref();
       nxSessionRef_t session_ref = session_repository_->access_session(session_ref_grpc_session.id(), session_ref_grpc_session.name());
-      u32 num_of_frames = request->num_of_frames();
+      int32 num_of_frames = request->num_of_frames();
       u32 max_payload_per_frame = request->max_payload_per_frame();
       u32 frame_type;
       switch (request->frame_type_enum_case()) {

@@ -9,7 +9,6 @@ namespace pb_ = ::google::protobuf;
 namespace nixnet_grpc {
 
 #define EnetFrameHeaderLength sizeof(nxFrameEnet_t) - 1  // last byte in nxFrameEnet_t is u8 FrameData[1]
-#define FrameHeaderLength nxSizeofFrameHeader
 
 struct FrameHolder {
   FrameHolder(const pb_::RepeatedPtrField<FrameBuffer>& input)

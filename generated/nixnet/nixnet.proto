@@ -1458,7 +1458,7 @@ message GetSubPropertySizeResponse {
 
 message ReadFrameRequest {
   nidevice_grpc.Session session_ref = 1;
-  uint32 num_of_frames = 2;
+  int32 num_of_frames = 2;
   uint32 max_payload_per_frame = 3;
   oneof frame_type_enum {
     FrameType frame_type = 4;

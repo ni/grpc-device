@@ -692,7 +692,7 @@ get_sub_property_size(const StubPtr& stub, const nidevice_grpc::Session& session
 }
 
 ReadFrameResponse
-read_frame(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const pb::uint32& num_of_frames, const pb::uint32& max_payload_per_frame, const simple_variant<FrameType, pb::uint32>& frame_type, const simple_variant<TimeOut, double>& timeout)
+read_frame(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const pb::int32& num_of_frames, const pb::uint32& max_payload_per_frame, const simple_variant<FrameType, pb::uint32>& frame_type, const simple_variant<TimeOut, double>& timeout)
 {
   ::grpc::ClientContext context;
 
