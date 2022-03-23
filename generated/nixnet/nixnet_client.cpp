@@ -740,7 +740,7 @@ read_signal_single_point(const StubPtr& stub, const nidevice_grpc::Session& sess
 }
 
 ReadSignalWaveformResponse
-read_signal_waveform(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const simple_variant<TimeOut, double>& timeout, const pb::uint32& number_of_samples, const pb::uint32& number_of_signals)
+read_signal_waveform(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const simple_variant<TimeOut, double>& timeout, const pb::uint32& samples_per_signal, const pb::uint32& number_of_signals)
 {
   ::grpc::ClientContext context;
 
@@ -754,7 +754,7 @@ read_signal_waveform(const StubPtr& stub, const nidevice_grpc::Session& session_
   else if (timeout_raw_ptr) {
     request.set_timeout_raw(*timeout_raw_ptr);
   }
-  request.set_number_of_samples(number_of_samples);
+  request.set_samples_per_signal(samples_per_signal);
   request.set_number_of_signals(number_of_signals);
 
   auto response = ReadSignalWaveformResponse{};
@@ -766,14 +766,14 @@ read_signal_waveform(const StubPtr& stub, const nidevice_grpc::Session& session_
 }
 
 ReadSignalXYResponse
-read_signal_xy(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const pb::uint64& time_limit, const pb::uint32& number_of_samples, const pb::uint32& number_of_signals)
+read_signal_xy(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const pb::uint64& time_limit, const pb::uint32& samples_per_signal, const pb::uint32& number_of_signals)
 {
   ::grpc::ClientContext context;
 
   auto request = ReadSignalXYRequest{};
   request.mutable_session_ref()->CopyFrom(session_ref);
   request.set_time_limit(time_limit);
-  request.set_number_of_samples(number_of_samples);
+  request.set_samples_per_signal(samples_per_signal);
   request.set_number_of_signals(number_of_signals);
 
   auto response = ReadSignalXYResponse{};
