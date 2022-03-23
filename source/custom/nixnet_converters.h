@@ -166,6 +166,8 @@ nixnet_grpc::FrameHolder convert_from_grpc(const pb_::RepeatedPtrField<nixnet_gr
 {
   return nixnet_grpc::FrameHolder(input);
 }
+
+void convert_to_grpc(std::vector<f64>& input, google::protobuf::RepeatedField<double>* output, u32 number_of_values_returned, u32 number_of_signals);
 }  // namespace nixnet_grpc
 
 namespace nidevice_grpc {

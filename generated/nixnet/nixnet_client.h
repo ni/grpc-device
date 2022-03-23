@@ -27,7 +27,7 @@ ClearResponse clear(const StubPtr& stub, const nidevice_grpc::Session& session_r
 ConnectTerminalsResponse connect_terminals(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const simple_variant<TerminalName, std::string>& source, const simple_variant<TerminalName, std::string>& destination);
 ConvertByteArrayToFramesSinglePointResponse convert_byte_array_to_frames_single_point(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const pb::string& value_buffer, const pb::uint32& size_of_buffer, const simple_variant<FrameType, pb::uint32>& frame_type);
 ConvertFramesToByteArraySinglePointResponse convert_frames_to_byte_array_single_point(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const std::vector<FrameBuffer>& frame_buffer, const pb::uint32& size_of_value_buffer);
-ConvertFramesToSignalsSinglePointResponse convert_frames_to_signals_single_point(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const std::vector<FrameBuffer>& frame_buffer, const pb::uint32& size_of_value_buffer, const pb::uint32& size_of_timestamp_buffer);
+ConvertFramesToSignalsSinglePointResponse convert_frames_to_signals_single_point(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const pb::uint32& number_of_signals, const std::vector<FrameBuffer>& frame_buffer);
 ConvertSignalsToFramesSinglePointResponse convert_signals_to_frames_single_point(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const std::vector<double>& value_buffer, const pb::uint32& size_of_buffer, const simple_variant<FrameType, pb::uint32>& frame_type);
 ConvertTimestamp100nsTo1nsResponse convert_timestamp100ns_to1ns(const StubPtr& stub, const pb::uint64& from_timestamp_100ns);
 ConvertTimestamp1nsTo100nsResponse convert_timestamp1ns_to100ns(const StubPtr& stub, const pb::uint64& from_timestamp_1ns);
@@ -55,8 +55,9 @@ FutureTimeTriggerResponse future_time_trigger(const StubPtr& stub, const nidevic
 GetPropertySizeResponse get_property_size(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const simple_variant<Property, pb::uint32>& property_id);
 GetSubPropertySizeResponse get_sub_property_size(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const pb::uint32& active_index, const simple_variant<SubProperty, pb::uint32>& property_id);
 ReadFrameResponse read_frame(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const pb::uint32& size_of_buffer, const simple_variant<TimeOut, double>& timeout, const simple_variant<FrameType, pb::uint32>& frame_type);
-ReadSignalSinglePointResponse read_signal_single_point(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const pb::uint32& size_of_value_buffer, const pb::uint32& size_of_timestamp_buffer);
-ReadSignalWaveformResponse read_signal_waveform(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const simple_variant<TimeOut, double>& timeout, const pb::uint32& size_of_value_buffer);
+ReadSignalSinglePointResponse read_signal_single_point(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const pb::uint32& number_of_signals);
+ReadSignalWaveformResponse read_signal_waveform(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const simple_variant<TimeOut, double>& timeout, const pb::uint32& samples_per_signal, const pb::uint32& number_of_signals);
+ReadSignalXYResponse read_signal_xy(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const pb::uint64& time_limit, const pb::uint32& samples_per_signal, const pb::uint32& number_of_signals);
 ReadStateResponse read_state(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const simple_variant<ReadState, pb::uint32>& state_id);
 ReadStateTimeTriggerResponse read_state_time_trigger(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const simple_variant<TimeOut, double>& timeout);
 StartResponse start(const StubPtr& stub, const nidevice_grpc::Session& session_ref, const simple_variant<StartStopScope, pb::uint32>& scope);
