@@ -652,6 +652,8 @@ TEST(XnetConvertersTests, AddrInfoOutputConverter_ConvertToGrpc_ConvertsToAddrIn
   auto converter = allocate_output_storage<nxaddrinfo, google::protobuf::RepeatedPtrField<AddrInfo>>(&library);
   converter.addr_info_ptr = &addr_info;
 
+  EXPECT_CALL(library, FreeAddrInfo(converter.addr_info_ptr))
+      .Times(1);
   google::protobuf::RepeatedPtrField<nixnetsocket_grpc::AddrInfo> grpc_output;
   convert_to_grpc(converter, &grpc_output);
 
