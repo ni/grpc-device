@@ -144,7 +144,7 @@ except grpc.RpcError as rpc_error:
     print(f"{error_message}")
 
 finally:
-    if "session" in vars() and session.id != 0:
+    if session:
         # clear the XNET session.
         check_for_error(client.Clear(nixnet_types.ClearRequest(session_ref=session)).status)
         print("Session cleared successfully!\n")
