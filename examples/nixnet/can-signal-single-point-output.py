@@ -63,6 +63,7 @@ def check_for_error(status):
 
 i = 0
 value_buffer = [0.0] * NUM_SIGNALS
+session = None
 
 # Create the communication channel for the remote host and create connections to the NI-XNET and
 # session services.
@@ -85,7 +86,7 @@ try:
     )
     check_for_error(create_session_response.status)
 
-    session_reference = create_session_response.session_ref
+    session = create_session_response.session_ref
 
     print("Session Created Successfully.\n")
 
@@ -96,7 +97,7 @@ try:
         # Update the signal data
         write_signal_response = client.WriteSignalSinglePoint(
             nixnet_types.WriteSignalSinglePointRequest(
-                session_ref=session_reference, value_buffer=value_buffer
+                session_ref=session, value_buffer=value_buffer
             )
         )
         check_for_error(write_signal_response.status)
@@ -117,9 +118,7 @@ except grpc.RpcError as rpc_error:
     print(f"{error_message}")
 
 finally:
-    if "session_reference" in vars() and session_reference.id != 0:
+    if session:
         # clear the XNET session.
-        check_for_error(
-            client.Clear(nixnet_types.ClearRequest(session_ref=session_reference)).status
-        )
+        check_for_error(client.Clear(nixnet_types.ClearRequest(session_ref=session)).status)
         print("Session cleared successfully!\n")
