@@ -1103,7 +1103,7 @@ message ConnectTerminalsResponse {
 message ConvertByteArrayToFramesSinglePointRequest {
   nidevice_grpc.Session session_ref = 1;
   bytes value_buffer = 2;
-  uint32 num_of_frames = 3;
+  uint32 number_of_frames = 3;
   uint32 max_payload_per_frame = 4;
   oneof frame_type_enum {
     FrameType frame_type = 5;
@@ -1142,7 +1142,7 @@ message ConvertFramesToSignalsSinglePointResponse {
 message ConvertSignalsToFramesSinglePointRequest {
   nidevice_grpc.Session session_ref = 1;
   repeated double value_buffer = 2;
-  uint32 num_of_frames = 3;
+  uint32 number_of_frames = 3;
   uint32 max_payload_per_frame = 4;
   oneof frame_type_enum {
     FrameType frame_type = 5;
@@ -1458,7 +1458,7 @@ message GetSubPropertySizeResponse {
 
 message ReadFrameRequest {
   nidevice_grpc.Session session_ref = 1;
-  int32 num_of_frames = 2;
+  int32 number_of_frames = 2;
   uint32 max_payload_per_frame = 3;
   oneof frame_type_enum {
     FrameType frame_type = 4;

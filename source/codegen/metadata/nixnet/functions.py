@@ -70,7 +70,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'num_of_frames',
+                'name': 'number_of_frames',
                 'proto_only': True,
                 'type': 'u32'
             },
@@ -102,7 +102,7 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'sizeOfBuffer',
-                'hardcoded_value': 'get_frame_buffer_size(num_of_frames, max_payload_per_frame, frame_type)',
+                'hardcoded_value': 'get_frame_buffer_size(number_of_frames, max_payload_per_frame, frame_type)',
                 'type': 'u32',
                 'include_in_proto': False
             },
@@ -240,7 +240,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'num_of_frames',
+                'name': 'number_of_frames',
                 'proto_only': True,
                 'type': 'u32'
             },
@@ -272,7 +272,7 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'sizeOfBuffer',
-                'hardcoded_value': 'get_frame_buffer_size(num_of_frames, max_payload_per_frame, frame_type)',
+                'hardcoded_value': 'get_frame_buffer_size(number_of_frames, max_payload_per_frame, frame_type)',
                 'type': 'u32',
                 'include_in_proto': False
             },
@@ -1053,7 +1053,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'num_of_frames',
+                'name': 'number_of_frames',
                 'proto_only': True,
                 'type': 'int32'
             },
@@ -1085,7 +1085,7 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'sizeOfBuffer',
-                'hardcoded_value': 'get_frame_buffer_size(num_of_frames, max_payload_per_frame, frame_type)',
+                'hardcoded_value': 'get_frame_buffer_size(number_of_frames, max_payload_per_frame, frame_type)',
                 'type': 'u32',
                 'include_in_proto': False
             },

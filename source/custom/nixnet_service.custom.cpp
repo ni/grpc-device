@@ -1212,13 +1212,13 @@ void convert_to_grpc(std::vector<f64>& input, google::protobuf::RepeatedField<do
     });
 }
 
-u32 get_frame_buffer_size(int32 num_of_frames, u32 max_payload_per_frame, u32 frame_type)
+u32 get_frame_buffer_size(int32 number_of_frames, u32 max_payload_per_frame, u32 frame_type)
 {
   if(frame_type == FrameType::FRAME_TYPE_ENET) {
-    return num_of_frames * (EnetFrameHeaderLength + max_payload_per_frame);
+    return number_of_frames * (ENET_FRAME_HEADER_LENGTH + max_payload_per_frame);
   }
   else {
-    return num_of_frames * nxFrameSize(max_payload_per_frame);
+    return number_of_frames * nxFrameSize(max_payload_per_frame);
   }
 }
 }  // namespace nixnet_grpc
