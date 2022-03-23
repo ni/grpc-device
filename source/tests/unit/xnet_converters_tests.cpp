@@ -3,12 +3,14 @@
 #include <custom/xnetsocket_converters.h>
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
+#include <nixnetsocket/nixnetsocket_mock_library.h>
 
 #include <string>
 
 using namespace nixnetsocket_grpc;
 using namespace ::testing;
 namespace pb = ::google::protobuf;
+using ni::tests::unit::NiXnetSocketMockLibrary;
 using nidevice_grpc::converters::allocate_output_storage;
 using nidevice_grpc::converters::convert_from_grpc;
 using nidevice_grpc::converters::convert_to_grpc;
@@ -594,6 +596,82 @@ TEST(XnetConvertersTests, IPv4AddrOutputConverter_ConvertToGrpc_ConvertsToAddres
   converter.to_grpc(grpc_addr);
 
   EXPECT_EQ(ADDRESS, grpc_addr.addr());
+}
+
+TEST(XnetConvertersTests, AddrInfoHintInputConverter_ConvertFromGrpc_ConvertsToAddrInfoHint)
+{
+  AddrInfoHint hints{};
+  constexpr auto EXPECTED_FLAGS = GetAddrInfoFlags::GET_ADDR_INFO_FLAGS_PASSIVE | GetAddrInfoFlags::GET_ADDR_INFO_FLAGS_V4MAPPED;
+  hints.set_family(AddressFamily::ADDRESS_FAMILY_INET6);
+  hints.set_flags(EXPECTED_FLAGS);
+  hints.set_protocol(IPProtocol::IP_PROTOCOL_IPV6);
+  hints.set_sock_type(SocketProtocolType::SOCKET_PROTOCOL_TYPE_STREAM);
+
+  auto addr_info_hints_input_converter = convert_from_grpc<nxaddrinfo>(hints);
+  auto hints_ptr = static_cast<nxaddrinfo*>(addr_info_hints_input_converter);
+
+  EXPECT_EQ(AddressFamily::ADDRESS_FAMILY_INET6, hints_ptr->ai_family);
+  EXPECT_EQ(EXPECTED_FLAGS, hints_ptr->ai_flags);
+  EXPECT_EQ(IPProtocol::IP_PROTOCOL_IPV6, hints_ptr->ai_protocol);
+  EXPECT_EQ(SocketProtocolType::SOCKET_PROTOCOL_TYPE_STREAM, hints_ptr->ai_socktype);
+  // For the conversion from AddrInfoHint to nxaddrinfo, the following fields are expected to be 0 or nullptr.
+  EXPECT_EQ(0, hints_ptr->ai_addrlen);
+  EXPECT_EQ(nullptr, hints_ptr->ai_addr);
+  EXPECT_EQ(nullptr, hints_ptr->ai_canonname);
+  EXPECT_EQ(nullptr, hints_ptr->ai_next);
+}
+
+TEST(XnetConvertersTests, AddrInfoOutputConverter_ConvertToGrpc_ConvertsToAddrInfoMessage)
+{
+  constexpr auto PORT = 100;
+  constexpr auto ADDR = 1234567;
+  constexpr auto NEXT_PORT = 101;
+  constexpr auto NEXT_ADDR = 1234568;
+  nxsockaddr_in next_addr{nxAF_INET, NEXT_PORT, {NEXT_ADDR}};
+  nxsockaddr_in addr{nxAF_INET, PORT, {ADDR}};
+  nxaddrinfo addr_info_next{
+      nxAI_PASSIVE,
+      nxAF_INET,
+      nxSOCK_DGRAM,
+      nxIPPROTO_UDP,
+      (nxsocklen_t)sizeof(next_addr),
+      reinterpret_cast<nxsockaddr*>(&next_addr),
+      "NextAddrHostName",
+      nullptr};
+  nxaddrinfo addr_info{
+      nxAI_ALL,
+      nxAF_INET,
+      nxSOCK_STREAM,
+      nxIPPROTO_TCP,
+      (nxsocklen_t)sizeof(addr),
+      reinterpret_cast<nxsockaddr*>(&addr),
+      "AddrHostName",
+      &addr_info_next};
+
+  NiXnetSocketMockLibrary library;
+  auto converter = allocate_output_storage<nxaddrinfo, google::protobuf::RepeatedPtrField<AddrInfo>>(&library);
+  converter.addr_info_ptr = &addr_info;
+
+  google::protobuf::RepeatedPtrField<nixnetsocket_grpc::AddrInfo> grpc_output;
+  convert_to_grpc(converter, &grpc_output);
+
+  EXPECT_EQ(2, grpc_output.size());
+  auto first_addr_info = grpc_output[0];
+  EXPECT_EQ(nxAI_ALL, first_addr_info.flags());
+  EXPECT_EQ(AddressFamily::ADDRESS_FAMILY_INET, first_addr_info.family());
+  EXPECT_EQ(SocketProtocolType::SOCKET_PROTOCOL_TYPE_STREAM, first_addr_info.sock_type());
+  EXPECT_EQ(IPProtocol::IP_PROTOCOL_TCP, first_addr_info.protocol());
+  EXPECT_STREQ("AddrHostName", first_addr_info.canon_name().c_str());
+  EXPECT_EQ(ADDR, first_addr_info.addr().ipv4().addr().addr());
+  EXPECT_EQ(PORT, first_addr_info.addr().ipv4().port());
+  auto next_addr_info = grpc_output[1];
+  EXPECT_EQ(nxAI_PASSIVE, next_addr_info.flags());
+  EXPECT_EQ(AddressFamily::ADDRESS_FAMILY_INET, next_addr_info.family());
+  EXPECT_EQ(SocketProtocolType::SOCKET_PROTOCOL_TYPE_DGRAM, next_addr_info.sock_type());
+  EXPECT_EQ(IPProtocol::IP_PROTOCOL_UDP, next_addr_info.protocol());
+  EXPECT_STREQ("NextAddrHostName", next_addr_info.canon_name().c_str());
+  EXPECT_EQ(NEXT_ADDR, next_addr_info.addr().ipv4().addr().addr());
+  EXPECT_EQ(NEXT_PORT, next_addr_info.addr().ipv4().port());
 }
 
 }  // namespace

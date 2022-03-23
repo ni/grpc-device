@@ -56,7 +56,7 @@ message SockAddr {
 }
 
 message AddrInfo {
-  GetAddrInfoFlags flags = 1;
+  int32 flags = 1;
   AddressFamily family = 2;
   SocketProtocolType sock_type = 3;
   IPProtocol protocol = 4;
@@ -65,7 +65,7 @@ message AddrInfo {
 }
 
 message AddrInfoHint {
-  GetAddrInfoFlags flags = 1;
+  int32 flags = 1;
   AddressFamily family = 2;
   SocketProtocolType sock_type = 3;
   IPProtocol protocol = 4;

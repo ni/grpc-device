@@ -580,7 +580,7 @@ struct AddrInfoOutputConverter {
         curr_addr_info_ptr != nullptr;
         curr_addr_info_ptr = curr_addr_info_ptr->ai_next) {
       auto curr_grpc_addr_info = output.Add();
-      curr_grpc_addr_info->set_flags((GetAddrInfoFlags)curr_addr_info_ptr->ai_flags);
+      curr_grpc_addr_info->set_flags(curr_addr_info_ptr->ai_flags);
       curr_grpc_addr_info->set_family((AddressFamily)curr_addr_info_ptr->ai_family);
       curr_grpc_addr_info->set_sock_type((SocketProtocolType)curr_addr_info_ptr->ai_socktype);
       curr_grpc_addr_info->set_protocol((IPProtocol)curr_addr_info_ptr->ai_protocol);
