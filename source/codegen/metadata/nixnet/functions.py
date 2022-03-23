@@ -69,6 +69,25 @@ functions = {
                 'type': 'u32'
             },
             {
+                'direction': 'in',
+                'name': 'num_of_frames',
+                'proto_only': True,
+                'type': 'u32', #change to int32 to support future extension
+            },
+            {
+                'direction': 'in',
+                'name': 'max_payload_per_frame',
+                'proto_only': True,
+                'type': 'u32',
+            },
+            {
+                'direction': 'in',
+                'name': 'frameType',
+                'proto_only': True,
+                'enum': 'FrameType',
+                'type': 'u32'
+            },
+            {
                 'direction': 'out',
                 'name': 'buffer',
                 'size': {
@@ -83,20 +102,15 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'sizeOfBuffer',
-                'type': 'u32'
+                'hardcoded_value': 'get_frame_buffer_size(num_of_frames, max_payload_per_frame, frame_type)',
+                'type': 'u32',
+                'include_in_proto': False
             },
             {
                 'direction': 'out',
                 'name': 'numberOfBytesReturned',
                 'type': 'u32',
                 'include_in_proto': False
-            },
-            {
-                'direction': 'in',
-                'name': 'frameType',
-                'proto_only': True,
-                'enum': 'FrameType',
-                'type': 'u32'
             }
         ],
         'returns': 'nxStatus_t'
@@ -215,6 +229,25 @@ functions = {
                 'type': 'u32'
             },
             {
+                'direction': 'in',
+                'name': 'num_of_frames',
+                'proto_only': True,
+                'type': 'u32', #change to int32 to support future extension
+            },
+            {
+                'direction': 'in',
+                'name': 'max_payload_per_frame',
+                'proto_only': True,
+                'type': 'u32',
+            },
+            {
+                'direction': 'in',
+                'name': 'frameType',
+                'proto_only': True,
+                'enum': 'FrameType',
+                'type': 'u32'
+            },
+            {
                 'direction': 'out',
                 'name': 'buffer',
                 'size': {
@@ -229,20 +262,15 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'sizeOfBuffer',
-                'type': 'u32'
+                'hardcoded_value': 'get_frame_buffer_size(num_of_frames, max_payload_per_frame, frame_type)',
+                'type': 'u32',
+                'include_in_proto': False
             },
             {
                 'direction': 'out',
                 'name': 'numberOfBytesReturned',
                 'type': 'u32',
                 'include_in_proto': False
-            },
-            {
-                'direction': 'in',
-                'name': 'frameType',
-                'proto_only': True,
-                'enum': 'FrameType',
-                'type': 'u32'
             }
         ],
         'returns': 'nxStatus_t'
@@ -1014,6 +1042,25 @@ functions = {
                 'type': 'nxSessionRef_t'
             },
             {
+                'direction': 'in',
+                'name': 'num_of_frames',
+                'proto_only': True,
+                'type': 'u32', #change to int32 to support future extension
+            },
+            {
+                'direction': 'in',
+                'name': 'max_payload_per_frame',
+                'proto_only': True,
+                'type': 'u32',
+            },
+            {
+                'direction': 'in',
+                'name': 'frameType',
+                'proto_only': True,
+                'enum': 'FrameType',
+                'type': 'u32'
+            },
+            {
                 'direction': 'out',
                 'name': 'buffer',
                 'size': {
@@ -1028,7 +1075,9 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'sizeOfBuffer',
-                'type': 'u32'
+                'hardcoded_value': 'get_frame_buffer_size(num_of_frames, max_payload_per_frame, frame_type)',
+                'type': 'u32',
+                'include_in_proto': False
             },
             {
                 'direction': 'in',
@@ -1041,13 +1090,6 @@ functions = {
                 'name': 'numberOfBytesReturned',
                 'type': 'u32',
                 'include_in_proto': False
-            },
-            {
-                'direction': 'in',
-                'name': 'frameType',
-                'proto_only': True,
-                'enum': 'FrameType',
-                'type': 'u32'
             }
         ],
         'returns': 'nxStatus_t'
