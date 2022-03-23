@@ -462,7 +462,7 @@ def get_attribute_enums_by_type(attributes):
     return attribute_enums_by_type
 
 
-def get_function_enums(functions):
+def get_function_enums(functions, enums: List[dict]):
     """Get a list of the enums used by functions."""
     function_enums = set()
     for function in functions:
@@ -473,7 +473,16 @@ def get_function_enums(functions):
                 function_enums.add(parameter["mapped-enum"])
             if "bitfield_as_enum_array" in parameter:
                 function_enums.add(parameter["bitfield_as_enum_array"])
+    function_enums.update(_get_force_include_enums(enums))
     return sorted(function_enums)
+
+
+def _get_force_include_enums(enums: List[dict]):
+    force_include_enums = set()
+    for enum in enums:
+        if enums[enum].get("force-include", False):
+            force_include_enums.add(enum)
+    return force_include_enums
 
 
 def has_viboolean_array_param(functions):
@@ -1081,7 +1090,7 @@ def get_cpp_local_name(param: dict) -> str:
     cases where "name" is not a reserved keyword.  If "grpc_name" is a reserved keyword, this may be
     an issue (but don't use reserved grpc_name!).
     """
-    return param.get("grpc_name", _camel_to_snake(param["cppName"]))
+    return param.get("cpp_local_name", param.get("grpc_name", _camel_to_snake(param["cppName"])))
 
 
 def get_grpc_field_names_for_param_names(params: List[dict], names: List[str]) -> List[str]:

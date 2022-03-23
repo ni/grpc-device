@@ -50,6 +50,7 @@ ${populate_response(function_data=function_data, output_parameters=output_parame
   output_parameters_to_initialize = [p for p in output_parameters if p['grpc_type'] != 'nidevice_grpc.Session']
   cross_driver_dep = service_helpers.get_cross_driver_session_dependency(session_output_param)
   session_output_var_name = common_helpers.get_cpp_local_name(session_output_param)
+  session_output_field_name = common_helpers.get_grpc_field_name(session_output_param)
   initiating_driver_input_var_name = common_helpers.get_cpp_local_name(initiating_driver_input_param)
   initiating_driver_c_name = f'{initiating_driver_input_var_name}_grpc_session'
 %>\
@@ -66,7 +67,7 @@ ${initialize_output_params(output_parameters_to_initialize)}\
       int status = ${cross_driver_dep.field_name}->add_dependent_session(grpc_device_session_name, init_lambda, initiating_session_id, session_id);
       response->set_status(status);
       if (status == 0) {
-        response->mutable_${session_output_var_name}()->set_id(session_id);
+        response->mutable_${session_output_field_name}()->set_id(session_id);
       }
       return ::grpc::Status::OK;\
 </%def>
@@ -650,7 +651,9 @@ ${initialize_standard_input_param(function_name, parameter)}
   grpc_type = parameter["grpc_type"]
   grpc_cpp_lib_type = service_helpers.get_protobuf_cpplib_type(grpc_type)
 %>\
-%   if common_helpers.supports_standard_output_allocation_routines(parameter):
+%   if 'hardcoded_value' in parameter:
+${initialize_hardcoded_parameter(parameter)}
+%   elif common_helpers.supports_standard_output_allocation_routines(parameter):
       auto ${parameter_name} = allocate_output_storage<${underlying_param_type}, ${grpc_cpp_lib_type}>(${str.join(", ", parameter.get("additional_arguments_to_output_allocation", []))});
 %   elif common_helpers.is_repeating_parameter(parameter):
       auto get_${parameter_name}_if = [](std::vector<${underlying_param_type}>& vector, int n) -> ${underlying_param_type}* {
@@ -740,6 +743,7 @@ ${set_response_values(normal_outputs, init_method)}\
 % for parameter in output_parameters:
 <%
   parameter_name = common_helpers.get_cpp_local_name(parameter)
+  field_name = common_helpers.get_grpc_field_name(parameter)
 %>\
 %   if common_helpers.is_repeating_parameter(parameter):
 <%
@@ -772,7 +776,7 @@ ${set_response_values(normal_outputs, init_method)}\
 %     if has_mapped_enum:
         auto ${mapped_enum_iterator_name} = ${map_name}.find(${parameter_name});
         if(${mapped_enum_iterator_name} != ${map_name}.end()) {
-          response->set_${parameter_name}_mapped(static_cast<${namespace_prefix}${mapped_enum_name}>(${mapped_enum_iterator_name}->second));
+          response->set_${field_name}_mapped(static_cast<${namespace_prefix}${mapped_enum_name}>(${mapped_enum_iterator_name}->second));
         }
 %     endif
 %     if has_unmapped_enum:
@@ -784,10 +788,10 @@ ${set_response_values(normal_outputs, init_method)}\
         };
 %       endif
 %       if is_string:
-        CopyBytesToEnums(${parameter_name}, response->mutable_${parameter_name}());
+        CopyBytesToEnums(${parameter_name}, response->mutable_${field_name}());
 %       elif uses_raw_output_as_read_buffer:
 <%
-      raw_response_field = f"response->{parameter_name}_raw()"
+      raw_response_field = f"response->{field_name}_raw()"
       cast_x_to_enum = f"static_cast<{namespace_prefix}{parameter['enum']}>(x)"
       checked_convert_x_to_enum = f"checked_convert_{parameter_name}(x)"
       convert_x_to_enum = checked_convert_x_to_enum if use_checked_enum_conversion else cast_x_to_enum
@@ -796,46 +800,46 @@ ${initialize_response_buffer(parameter_name=parameter_name, parameter=parameter)
 ${copy_to_response_with_transform(source_buffer=raw_response_field, parameter_name=parameter_name, transform_x=convert_x_to_enum, size=common_helpers.get_size_expression(parameter))}\
 %       elif parameter['type'] == 'ViReal64':
         if(${parameter_name} == (int)${parameter_name}) {
-          response->set_${parameter_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(static_cast<int>(${parameter_name})));
+          response->set_${field_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(static_cast<int>(${parameter_name})));
         }
 %       elif parameter.get("use_checked_enum_conversion", False):
-        response->set_${parameter_name}(checked_convert_${parameter_name}(${parameter_name}));
+        response->set_${field_name}(checked_convert_${parameter_name}(${parameter_name}));
 %       else:
-        response->set_${parameter_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(${parameter_name}));
+        response->set_${field_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(${parameter_name}));
 %       endif
 %     endif
 %     if is_bitfield_as_enum_array:
 %       for flag_value, flag_enum_name in service_helpers.get_bitfield_value_to_name_mapping(parameter, enums).items():
         if (${parameter_name} & ${hex(flag_value)})
-          response->add_${parameter_name}_array(${flag_enum_name});
+          response->add_${field_name}_array(${flag_enum_name});
 %       endfor
 %     endif
 %     if not uses_raw_output_as_read_buffer: # Set data to raw, unless we *got* the data from raw.
-        response->set_${parameter_name}_raw(${parameter_name});
+        response->set_${field_name}_raw(${parameter_name});
 %     endif
 %   elif service_helpers.is_output_array_that_needs_coercion(parameter):
 ${initialize_response_buffer(parameter_name=parameter_name, parameter=parameter)}\
 ${copy_to_response_with_transform(source_buffer=parameter_name, parameter_name=parameter_name, transform_x="x", size=common_helpers.get_size_expression(parameter))}\
 %   elif common_helpers.supports_standard_copy_conversion_routines(parameter):
-        convert_to_grpc(${str.join(", ", [f'{parameter_name}', f'response->mutable_{parameter_name}()'] + parameter.get("additional_arguments_to_copy_convert", []))});
+        convert_to_grpc(${str.join(", ", [f'{parameter_name}', f'response->mutable_{field_name}()'] + parameter.get("additional_arguments_to_copy_convert", []))});
 %   elif common_helpers.is_string_arg(parameter):
-        response->set_${parameter_name}(${parameter_name});
+        response->set_${field_name}(${parameter_name});
 %   elif parameter['grpc_type'] == 'nidevice_grpc.Session':
 %      if not init_method: # Non-init methods need to resolve the session ID from the out param.
         auto session_id = ${service_helpers.session_repository_field_name(parameter, config)}->resolve_session_id(${parameter_name});
 %      endif
-        response->mutable_${parameter_name}()->set_id(session_id);
+        response->mutable_${field_name}()->set_id(session_id);
 %   elif common_helpers.is_array(parameter['type']):
 %     if common_helpers.get_size_mechanism(parameter) == 'passed-in-by-ptr':
 ### size may have changed
-        response->mutable_${parameter_name}()->Resize(${common_helpers.get_size_expression(parameter)}, 0);
+        response->mutable_${field_name}()->Resize(${common_helpers.get_size_expression(parameter)}, 0);
 %     endif
 ### pass: other array types don't need to copy.
 %   else:
-        response->set_${parameter_name}(${parameter_name});
+        response->set_${field_name}(${parameter_name});
 %   endif
 %   if common_helpers.is_regular_string_arg(parameter):
-        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_${parameter_name}()));
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_${field_name}()));
 %   endif
 ### Handle ivi-dance-with-a-twist resizing.
 %   if common_helpers.is_ivi_dance_array_with_a_twist_param(parameter):
@@ -843,7 +847,7 @@ ${copy_to_response_with_transform(source_buffer=parameter_name, parameter_name=p
   size = common_helpers.get_size_expression(parameter)
 %>\
 %     if common_helpers.is_regular_byte_array_arg(parameter):
-        response->mutable_${parameter_name}()->resize(${size});
+        response->mutable_${field_name}()->resize(${size});
 %     elif common_helpers.is_regular_string_arg(parameter):
 ### pass: handled above with trim_trailing_nulls for all string outputs.
 %     elif common_helpers.is_struct(parameter):
@@ -851,14 +855,14 @@ ${copy_to_response_with_transform(source_buffer=parameter_name, parameter_name=p
 ##        to delete any extra elements.
         {
           auto shrunk_size = ${size};
-          auto current_size = response->mutable_${parameter_name}()->size();
+          auto current_size = response->mutable_${field_name}()->size();
           if (shrunk_size != current_size) {
-            response->mutable_${parameter_name}()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
+            response->mutable_${field_name}()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
           }
         }
 %     else:
 ## This code doesn't handle all parameter types (i.e., enums), see what initialize_output_params() does for that.
-        response->mutable_${parameter_name}()->Resize(${size}, 0);
+        response->mutable_${field_name}()->Resize(${size}, 0);
 %     endif
 %   endif
 % endfor

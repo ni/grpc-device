@@ -190,6 +190,7 @@ enums = {
         ]
     },
     'GetAddrInfoFlags': {
+        'force-include': True,
         'values': [
             {
                 'name': 'PASSIVE',
