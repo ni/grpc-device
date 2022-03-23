@@ -1200,6 +1200,18 @@ void convert_to_grpc(const void* input, nixnet_grpc::FrameBuffer* output, u32 fr
   }
 }
 
+void convert_to_grpc(std::vector<f64>& input, google::protobuf::RepeatedField<double>* output, u32 number_of_values_returned, u32 number_of_signals)
+{
+  output->Resize(number_of_signals * number_of_values_returned, 0U);
+  std::transform(
+    input.begin(),
+    input.begin() + (number_of_signals * number_of_values_returned),
+    google::protobuf::RepeatedFieldBackInserter(output),
+    [&](auto x) {
+      return x;
+    });
+}
+
 u32 get_frame_buffer_size(int32 num_of_frames, u32 max_payload_per_frame, u32 frame_type)
 {
   if(frame_type == FrameType::FRAME_TYPE_ENET) {
