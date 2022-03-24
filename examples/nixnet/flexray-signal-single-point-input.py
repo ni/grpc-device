@@ -1,13 +1,14 @@
-r""" Write Signal Data.
-
- This example writes a signal value for 10 times.
- This is used to demonstrate a signal single point output session. 
+r""" Read Signal Data.
+ 
+ This example reads a signal value for 10 times.
+ This is used to demonstrate a signal single point input session. 
  This example uses hardcoded signal names that use the NIXNET_example database. 
+ Also ensure that the transceivers are externally powered when using C Series modules.
 
 The gRPC API is built from the C API. NI-XNET documentation is installed with the driver at:
   C:\Users\Public\Documents\National Instruments\NI-XNET\Documentation\NI-XNET Manual.chm
-Getting Started:
 
+Getting Started:
 To run this example, install "NI-XNET Driver" on the server machine:
   https://www.ni.com/en-in/support/downloads/drivers/download.ni-xnet.html
 
@@ -17,11 +18,11 @@ Client" wiki page:
 
 Refer to the NI XNET gRPC Wiki for the latest C Function Reference:
   https://github.com/ni/grpc-device/wiki/NI-XNET-C-Function-Reference
-
+ 
  Running from command line:
 Server machine's IP address, port number, and interface name can be passed as separate command line
 arguments.
-  > python can-signal-single-point-output.py <server_address> <port_number> <interface_name>
+  > python flexray-signal-single-point-input.py <server_address> <port_number> <interface_name>
 If they are not passed in as command line arguments, then by default the server address will be
 "localhost:31763"
 """
@@ -34,7 +35,7 @@ import nixnet_pb2_grpc as grpc_nixnet
 
 SERVER_ADDRESS = "localhost"
 SERVER_PORT = "31763"
-INTERFACE = "CAN1"
+INTERFACE = "FlexRay2"
 
 # Read in cmd args
 if len(sys.argv) >= 2:
@@ -46,10 +47,9 @@ if len(sys.argv) >= 4:
 
 # Parameters
 DATABASE = "NIXNET_example"
-CLUSTER = "CAN_Cluster"
-SIGNAL_LIST = "CANEventSignal1,CANEventSignal2"
+CLUSTER = "FlexRay_Cluster"
+SIGNAL_LIST = "FlexRayEventSignal1,FlexRayEventSignal2"
 NUM_SIGNALS = 2
-SUCCESS = 0
 
 
 def check_for_error(status):
@@ -62,7 +62,7 @@ def check_for_error(status):
 
 
 i = 0
-value_buffer = [0.0] * NUM_SIGNALS
+keyslot_id = 1
 session = None
 
 # Create the communication channel for the remote host and create connections to the NI-XNET and
@@ -72,6 +72,7 @@ client = grpc_nixnet.NiXnetStub(channel)
 
 # Display parameters that will be used for the example.
 print("Interface: " + INTERFACE, "Database: " + DATABASE, "Signal List: " + SIGNAL_LIST, sep="\n")
+print("KeySlotId:", keyslot_id)
 
 try:
     # Create an XNET session in SignalOutSinglePoint mode
@@ -81,28 +82,37 @@ try:
             cluster_name=CLUSTER,
             list=SIGNAL_LIST,
             interface=INTERFACE,
-            mode=nixnet_types.CREATE_SESSION_MODE_MODE_SIGNAL_OUT_SINGLE_POINT,
+            mode=nixnet_types.CREATE_SESSION_MODE_MODE_SIGNAL_IN_SINGLE_POINT,
         )
     )
     check_for_error(create_session_response.status)
 
     session = create_session_response.session_ref
-
     print("Session Created Successfully.\n")
 
-    while i < 10:
-        value_buffer[0] = float(i)
-        value_buffer[1] = float(i * 10)
+    # Set the Key Slot
+    set_property_response = client.SetProperty(
+        nixnet_types.SetPropertyRequest(
+            session_ref=session,
+            property_id=nixnet_types.PROPERTY_SESSION_INTF_FLEX_RAY_KEY_SLOT_ID,
+            u32_scalar=keyslot_id,
+        )
+    )
+    check_for_error(set_property_response.status)
 
+    while i < 10:
         # Update the signal data
-        write_signal_response = client.WriteSignalSinglePoint(
-            nixnet_types.WriteSignalSinglePointRequest(
-                session_ref=session, value_buffer=value_buffer
+        read_signal_response = client.ReadSignalSinglePoint(
+            nixnet_types.ReadSignalSinglePointRequest(
+                session_ref=session,
+                number_of_signals=NUM_SIGNALS,
             )
         )
-        check_for_error(write_signal_response.status)
+        check_for_error(read_signal_response.status)
 
-        print("Signals sent:")
+        value_buffer = read_signal_response.value_buffer
+
+        print("Signals received:")
         print(f"Signal 1: {value_buffer[0]}")
         print(f"Signal 2: {value_buffer[1]}", end="\n\n")
         i = i + 1
