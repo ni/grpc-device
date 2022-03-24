@@ -102,22 +102,6 @@ get_addr_info(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, cons
   return response;
 }
 
-GetPeerNameResponse
-get_peer_name(const StubPtr& stub, const nidevice_grpc::Session& socket)
-{
-  ::grpc::ClientContext context;
-
-  auto request = GetPeerNameRequest{};
-  request.mutable_socket()->CopyFrom(socket);
-
-  auto response = GetPeerNameResponse{};
-
-  raise_if_error(
-      stub->GetPeerName(&context, request, &response));
-
-  return response;
-}
-
 GetNameInfoResponse
 get_name_info(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const SockAddr& addr, const pb::int32& host_len, const pb::int32& serv_len, const pb::int32& flags)
 {
@@ -134,6 +118,22 @@ get_name_info(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, cons
 
   raise_if_error(
       stub->GetNameInfo(&context, request, &response));
+
+  return response;
+}
+
+GetPeerNameResponse
+get_peer_name(const StubPtr& stub, const nidevice_grpc::Session& socket)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetPeerNameRequest{};
+  request.mutable_socket()->CopyFrom(socket);
+
+  auto response = GetPeerNameResponse{};
+
+  raise_if_error(
+      stub->GetPeerName(&context, request, &response));
 
   return response;
 }

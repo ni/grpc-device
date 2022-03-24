@@ -182,32 +182,6 @@ functions = {
         ],
         'returns': 'char*'
     },
-    'GetPeerName': {
-        'cname': 'nxgetpeername',
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'socket',
-                'type': 'nxSOCKET'
-            },
-            {
-                'direction': 'out',
-                'grpc_type': 'SockAddr',
-                'name': 'addr',
-                'supports_standard_output_allocation': True,
-                'supports_standard_copy_convert': True,
-                'type': 'nxsockaddr'
-            },
-            {
-                'direction': 'out',
-                'name': 'addrlen',
-                'hardcoded_value': 'static_cast<nxsocklen_t>(sizeof(addr.storage))',
-                'include_in_proto': False,
-                'type': 'nxsocklen_t'
-            },
-        ],
-        'returns': 'int32_t'
-    },
     'GetNameInfo': {
         'cname': 'nxgetnameinfo',
         'parameters': [
@@ -263,6 +237,32 @@ functions = {
                 'direction': 'in',
                 'name': 'flags',
                 'type': 'int32_t'
+            },
+        ],
+        'returns': 'int32_t'
+    },
+    'GetPeerName': {
+        'cname': 'nxgetpeername',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'socket',
+                'type': 'nxSOCKET'
+            },
+            {
+                'direction': 'out',
+                'grpc_type': 'SockAddr',
+                'name': 'addr',
+                'supports_standard_output_allocation': True,
+                'supports_standard_copy_convert': True,
+                'type': 'nxsockaddr'
+            },
+            {
+                'direction': 'out',
+                'name': 'addrlen',
+                'hardcoded_value': 'static_cast<nxsocklen_t>(sizeof(addr.storage))',
+                'include_in_proto': False,
+                'type': 'nxsocklen_t'
             },
         ],
         'returns': 'int32_t'

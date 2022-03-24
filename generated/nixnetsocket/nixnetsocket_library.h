@@ -26,8 +26,8 @@ class NiXnetSocketLibrary : public nixnetsocket_grpc::NiXnetSocketLibraryInterfa
   int32_t GetAddrInfo(nxIpStackRef_t stack_ref, const char node[], const char service[], nxaddrinfo* hints, nxaddrinfo** res);
   int32_t GetLastErrorNum();
   char* GetLastErrorStr(char buf[], size_t bufLen);
-  int32_t GetPeerName(nxSOCKET socket, nxsockaddr* addr, nxsocklen_t* addrlen);
   int32_t GetNameInfo(nxIpStackRef_t stack_ref, nxsockaddr* addr, nxsocklen_t addr_len, char host[], nxsocklen_t host_len, char serv[], nxsocklen_t serv_len, int32_t flags);
+  int32_t GetPeerName(nxSOCKET socket, nxsockaddr* addr, nxsocklen_t* addrlen);
   int32_t GetSockName(nxSOCKET socket, nxsockaddr* addr, nxsocklen_t* addrlen);
   int32_t GetSockOpt(nxSOCKET socket, int32_t level, int32_t optname, void* optval, nxsocklen_t* optlen);
   uint32_t InetAddr(nxIpStackRef_t stack_ref, const char cp[]);
@@ -63,8 +63,8 @@ class NiXnetSocketLibrary : public nixnetsocket_grpc::NiXnetSocketLibraryInterfa
   using GetAddrInfoPtr = decltype(&nxgetaddrinfo);
   using GetLastErrorNumPtr = int32_t (*)();
   using GetLastErrorStrPtr = char* (*)(char buf[], size_t bufLen);
-  using GetPeerNamePtr = decltype(&nxgetpeername);
   using GetNameInfoPtr = decltype(&nxgetnameinfo);
+  using GetPeerNamePtr = decltype(&nxgetpeername);
   using GetSockNamePtr = decltype(&nxgetsockname);
   using GetSockOptPtr = decltype(&nxgetsockopt);
   using InetAddrPtr = decltype(&nxinet_addr);
@@ -100,8 +100,8 @@ class NiXnetSocketLibrary : public nixnetsocket_grpc::NiXnetSocketLibraryInterfa
     GetAddrInfoPtr GetAddrInfo;
     GetLastErrorNumPtr GetLastErrorNum;
     GetLastErrorStrPtr GetLastErrorStr;
-    GetPeerNamePtr GetPeerName;
     GetNameInfoPtr GetNameInfo;
+    GetPeerNamePtr GetPeerName;
     GetSockNamePtr GetSockName;
     GetSockOptPtr GetSockOpt;
     InetAddrPtr InetAddr;

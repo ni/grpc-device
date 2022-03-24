@@ -22,8 +22,8 @@ service NiXnetSocket {
   rpc Close(CloseRequest) returns (CloseResponse);
   rpc Connect(ConnectRequest) returns (ConnectResponse);
   rpc GetAddrInfo(GetAddrInfoRequest) returns (GetAddrInfoResponse);
-  rpc GetPeerName(GetPeerNameRequest) returns (GetPeerNameResponse);
   rpc GetNameInfo(GetNameInfoRequest) returns (GetNameInfoResponse);
+  rpc GetPeerName(GetPeerNameRequest) returns (GetPeerNameResponse);
   rpc GetSockName(GetSockNameRequest) returns (GetSockNameResponse);
   rpc GetSockOpt(GetSockOptRequest) returns (GetSockOptResponse);
   rpc InetAddr(InetAddrRequest) returns (InetAddrResponse);
@@ -282,17 +282,6 @@ message GetAddrInfoResponse {
   int32 error_num = 4;
 }
 
-message GetPeerNameRequest {
-  nidevice_grpc.Session socket = 1;
-}
-
-message GetPeerNameResponse {
-  int32 status = 1;
-  SockAddr addr = 2;
-  string error_message = 3;
-  int32 error_num = 4;
-}
-
 message GetNameInfoRequest {
   nidevice_grpc.Session stack_ref = 1;
   SockAddr addr = 2;
@@ -307,6 +296,17 @@ message GetNameInfoResponse {
   string serv = 3;
   string error_message = 4;
   int32 error_num = 5;
+}
+
+message GetPeerNameRequest {
+  nidevice_grpc.Session socket = 1;
+}
+
+message GetPeerNameResponse {
+  int32 status = 1;
+  SockAddr addr = 2;
+  string error_message = 3;
+  int32 error_num = 4;
 }
 
 message GetSockNameRequest {

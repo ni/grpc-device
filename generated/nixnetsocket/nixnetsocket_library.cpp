@@ -29,8 +29,8 @@ NiXnetSocketLibrary::NiXnetSocketLibrary() : shared_library_(kLibraryName)
   function_pointers_.GetAddrInfo = reinterpret_cast<GetAddrInfoPtr>(shared_library_.get_function_pointer("nxgetaddrinfo"));
   function_pointers_.GetLastErrorNum = reinterpret_cast<GetLastErrorNumPtr>(shared_library_.get_function_pointer("nxgetlasterrornum"));
   function_pointers_.GetLastErrorStr = reinterpret_cast<GetLastErrorStrPtr>(shared_library_.get_function_pointer("nxgetlasterrorstr"));
-  function_pointers_.GetPeerName = reinterpret_cast<GetPeerNamePtr>(shared_library_.get_function_pointer("nxgetpeername"));
   function_pointers_.GetNameInfo = reinterpret_cast<GetNameInfoPtr>(shared_library_.get_function_pointer("nxgetnameinfo"));
+  function_pointers_.GetPeerName = reinterpret_cast<GetPeerNamePtr>(shared_library_.get_function_pointer("nxgetpeername"));
   function_pointers_.GetSockName = reinterpret_cast<GetSockNamePtr>(shared_library_.get_function_pointer("nxgetsockname"));
   function_pointers_.GetSockOpt = reinterpret_cast<GetSockOptPtr>(shared_library_.get_function_pointer("nxgetsockopt"));
   function_pointers_.InetAddr = reinterpret_cast<InetAddrPtr>(shared_library_.get_function_pointer("nxinet_addr"));
@@ -153,18 +153,6 @@ char* NiXnetSocketLibrary::GetLastErrorStr(char buf[], size_t bufLen)
   return function_pointers_.GetLastErrorStr(buf, bufLen);
 }
 
-int32_t NiXnetSocketLibrary::GetPeerName(nxSOCKET socket, nxsockaddr* addr, nxsocklen_t* addrlen)
-{
-  if (!function_pointers_.GetPeerName) {
-    throw nidevice_grpc::LibraryLoadException("Could not find nxgetpeername.");
-  }
-#if defined(_MSC_VER)
-  return nxgetpeername(socket, addr, addrlen);
-#else
-  return function_pointers_.GetPeerName(socket, addr, addrlen);
-#endif
-}
-
 int32_t NiXnetSocketLibrary::GetNameInfo(nxIpStackRef_t stack_ref, nxsockaddr* addr, nxsocklen_t addr_len, char host[], nxsocklen_t host_len, char serv[], nxsocklen_t serv_len, int32_t flags)
 {
   if (!function_pointers_.GetNameInfo) {
@@ -174,6 +162,18 @@ int32_t NiXnetSocketLibrary::GetNameInfo(nxIpStackRef_t stack_ref, nxsockaddr* a
   return nxgetnameinfo(stack_ref, addr, addr_len, host, host_len, serv, serv_len, flags);
 #else
   return function_pointers_.GetNameInfo(stack_ref, addr, addr_len, host, host_len, serv, serv_len, flags);
+#endif
+}
+
+int32_t NiXnetSocketLibrary::GetPeerName(nxSOCKET socket, nxsockaddr* addr, nxsocklen_t* addrlen)
+{
+  if (!function_pointers_.GetPeerName) {
+    throw nidevice_grpc::LibraryLoadException("Could not find nxgetpeername.");
+  }
+#if defined(_MSC_VER)
+  return nxgetpeername(socket, addr, addrlen);
+#else
+  return function_pointers_.GetPeerName(socket, addr, addrlen);
 #endif
 }
 

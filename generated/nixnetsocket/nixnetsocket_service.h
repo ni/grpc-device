@@ -48,8 +48,8 @@ public:
   ::grpc::Status Close(::grpc::ServerContext* context, const CloseRequest* request, CloseResponse* response) override;
   ::grpc::Status Connect(::grpc::ServerContext* context, const ConnectRequest* request, ConnectResponse* response) override;
   ::grpc::Status GetAddrInfo(::grpc::ServerContext* context, const GetAddrInfoRequest* request, GetAddrInfoResponse* response) override;
-  ::grpc::Status GetPeerName(::grpc::ServerContext* context, const GetPeerNameRequest* request, GetPeerNameResponse* response) override;
   ::grpc::Status GetNameInfo(::grpc::ServerContext* context, const GetNameInfoRequest* request, GetNameInfoResponse* response) override;
+  ::grpc::Status GetPeerName(::grpc::ServerContext* context, const GetPeerNameRequest* request, GetPeerNameResponse* response) override;
   ::grpc::Status GetSockName(::grpc::ServerContext* context, const GetSockNameRequest* request, GetSockNameResponse* response) override;
   ::grpc::Status GetSockOpt(::grpc::ServerContext* context, const GetSockOptRequest* request, GetSockOptResponse* response) override;
   ::grpc::Status InetAddr(::grpc::ServerContext* context, const InetAddrRequest* request, InetAddrResponse* response) override;

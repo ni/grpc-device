@@ -27,8 +27,8 @@ BindResponse bind(const StubPtr& stub, const nidevice_grpc::Session& socket, con
 CloseResponse close(const StubPtr& stub, const nidevice_grpc::Session& socket);
 ConnectResponse connect(const StubPtr& stub, const nidevice_grpc::Session& socket, const SockAddr& name);
 GetAddrInfoResponse get_addr_info(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const pb::string& node, const pb::string& service, const AddrInfoHint& hints);
-GetPeerNameResponse get_peer_name(const StubPtr& stub, const nidevice_grpc::Session& socket);
 GetNameInfoResponse get_name_info(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const SockAddr& addr, const pb::int32& host_len, const pb::int32& serv_len, const pb::int32& flags);
+GetPeerNameResponse get_peer_name(const StubPtr& stub, const nidevice_grpc::Session& socket);
 GetSockNameResponse get_sock_name(const StubPtr& stub, const nidevice_grpc::Session& socket);
 GetSockOptResponse get_sock_opt(const StubPtr& stub, const nidevice_grpc::Session& socket, const simple_variant<SocketOptionLevel, pb::int32>& level, const simple_variant<OptName, pb::int32>& optname);
 InetAddrResponse inet_addr(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const pb::string& cp);
