@@ -108,7 +108,7 @@ try:
         write_state_response = client.WriteState(
             nixnet_types.WriteStateRequest(
                 session=session,
-                state_id=nixnet_types.WRITE_STATE_STATE_LIN_SCHEDULE_CHANGE,
+                state_id=nixnet_types.WRITE_STATE_LIN_SCHEDULE_CHANGE,
                 state_value=write_state_value,
             )
         )
