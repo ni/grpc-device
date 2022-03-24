@@ -170,7 +170,8 @@ namespace nixnet_grpc {
       nxSessionRef_t session_ref = session_repository_->access_session(session_ref_grpc_session.id(), session_ref_grpc_session.name());
       u8* value_buffer = (u8*)request->value_buffer().c_str();
       u32 size_of_value_buffer = static_cast<u32>(request->value_buffer().size() * sizeof(u8));
-      u32 size_of_buffer = request->size_of_buffer();
+      u32 number_of_frames = request->number_of_frames();
+      u32 max_payload_per_frame = request->max_payload_per_frame();
       u32 frame_type;
       switch (request->frame_type_enum_case()) {
         case nixnet_grpc::ConvertByteArrayToFramesSinglePointRequest::FrameTypeEnumCase::kFrameType: {
@@ -187,6 +188,7 @@ namespace nixnet_grpc {
         }
       }
 
+      auto size_of_buffer = get_frame_buffer_size(number_of_frames, max_payload_per_frame, frame_type);
       std::vector<u8> buffer(size_of_buffer, u8());
       u32 number_of_bytes_returned {};
       auto status = library_->ConvertByteArrayToFramesSinglePoint(session_ref, value_buffer, size_of_value_buffer, buffer.data(), size_of_buffer, &number_of_bytes_returned);
@@ -269,7 +271,8 @@ namespace nixnet_grpc {
       nxSessionRef_t session_ref = session_repository_->access_session(session_ref_grpc_session.id(), session_ref_grpc_session.name());
       auto value_buffer = const_cast<f64*>(request->value_buffer().data());
       u32 size_of_value_buffer = static_cast<u32>(request->value_buffer().size() * sizeof(f64));
-      u32 size_of_buffer = request->size_of_buffer();
+      u32 number_of_frames = request->number_of_frames();
+      u32 max_payload_per_frame = request->max_payload_per_frame();
       u32 frame_type;
       switch (request->frame_type_enum_case()) {
         case nixnet_grpc::ConvertSignalsToFramesSinglePointRequest::FrameTypeEnumCase::kFrameType: {
@@ -286,6 +289,7 @@ namespace nixnet_grpc {
         }
       }
 
+      auto size_of_buffer = get_frame_buffer_size(number_of_frames, max_payload_per_frame, frame_type);
       std::vector<u8> buffer(size_of_buffer, u8());
       u32 number_of_bytes_returned {};
       auto status = library_->ConvertSignalsToFramesSinglePoint(session_ref, value_buffer, size_of_value_buffer, buffer.data(), size_of_buffer, &number_of_bytes_returned);
@@ -1054,23 +1058,8 @@ namespace nixnet_grpc {
     try {
       auto session_ref_grpc_session = request->session_ref();
       nxSessionRef_t session_ref = session_repository_->access_session(session_ref_grpc_session.id(), session_ref_grpc_session.name());
-      u32 size_of_buffer = request->size_of_buffer();
-      f64 timeout;
-      switch (request->timeout_enum_case()) {
-        case nixnet_grpc::ReadFrameRequest::TimeoutEnumCase::kTimeout: {
-          timeout = static_cast<f64>(request->timeout());
-          break;
-        }
-        case nixnet_grpc::ReadFrameRequest::TimeoutEnumCase::kTimeoutRaw: {
-          timeout = static_cast<f64>(request->timeout_raw());
-          break;
-        }
-        case nixnet_grpc::ReadFrameRequest::TimeoutEnumCase::TIMEOUT_ENUM_NOT_SET: {
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for timeout was not specified or out of range");
-          break;
-        }
-      }
-
+      int32 number_of_frames = request->number_of_frames();
+      u32 max_payload_per_frame = request->max_payload_per_frame();
       u32 frame_type;
       switch (request->frame_type_enum_case()) {
         case nixnet_grpc::ReadFrameRequest::FrameTypeEnumCase::kFrameType: {
@@ -1083,6 +1072,23 @@ namespace nixnet_grpc {
         }
         case nixnet_grpc::ReadFrameRequest::FrameTypeEnumCase::FRAME_TYPE_ENUM_NOT_SET: {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for frame_type was not specified or out of range");
+          break;
+        }
+      }
+
+      auto size_of_buffer = get_frame_buffer_size(number_of_frames, max_payload_per_frame, frame_type);
+      f64 timeout;
+      switch (request->timeout_enum_case()) {
+        case nixnet_grpc::ReadFrameRequest::TimeoutEnumCase::kTimeout: {
+          timeout = static_cast<f64>(request->timeout());
+          break;
+        }
+        case nixnet_grpc::ReadFrameRequest::TimeoutEnumCase::kTimeoutRaw: {
+          timeout = static_cast<f64>(request->timeout_raw());
+          break;
+        }
+        case nixnet_grpc::ReadFrameRequest::TimeoutEnumCase::TIMEOUT_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for timeout was not specified or out of range");
           break;
         }
       }

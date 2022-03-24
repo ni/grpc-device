@@ -66,7 +66,7 @@ const auto SIMPLE_INTERFACE_CONFIG = R"(
             }
           ]
         }
-)"_json;
+)"s;
 
 const auto MULTI_ADDRESS_INTERFACE_CONFIG = R"(      
         {
@@ -107,7 +107,7 @@ const auto MULTI_ADDRESS_INTERFACE_CONFIG = R"(
             }
           ]
         }
-)"_json;
+)"s;
 
 std::string unique_static_ipv4_address()
 {
@@ -119,11 +119,11 @@ std::string unique_static_ipv4_address()
   return ipv4_addr.str();
 }
 
-json create_interface_config(const std::string& interface_name, const json& interface_macs_config, const std::string& static_ip_address = {})
+json create_interface_config(const std::string& interface_name, const std::string& interface_macs_config, const std::string& static_ip_address = {})
 {
   auto interface_config = json{};
   interface_config["name"] = interface_name;
-  interface_config["MACs"] = std::vector<json>{interface_macs_config};
+  interface_config["MACs"] = std::vector<json>{json::parse(interface_macs_config)};
   if (!static_ip_address.empty()) {
     interface_config["MACs"][0]["VLANs"][0]["IPv4"]["staticAddresses"][0]["address"] = static_ip_address;
   }
@@ -348,31 +348,49 @@ TEST_F(NiXnetSocketNoHardwareTests, ValidConfigJsonForMissingDevice_IpStackCreat
   EXPECT_XNET_STATUS(INVALID_INTERFACE_NAME, stack_response);
 }
 
-TEST_F(NiXnetSocketLoopbackTests, IPv4LocalhostAddress_AToNAndPToN_ReturnsCorrectAddr)
+TEST_F(NiXnetSocketLoopbackTests, IPv4LocalhostAddress_AToNAndPToNRoundtrip_ReturnsCorrectAddr)
 {
   const auto stack = client::ip_stack_create(stub(), "", create_simple_config("ENET1"));
   const auto a_to_n = client::inet_a_to_n(stub(), stack.stack_ref(), IPV4_LOCALHOST_ADDRESS_STR);
   const auto p_to_n = client::inet_p_to_n(stub(), stack.stack_ref(), 2 /* nxAF_INET */, IPV4_LOCALHOST_ADDRESS_STR);
+  const auto n_to_a = client::inet_n_to_a(stub(), stack.stack_ref(), a_to_n.name());
+  const auto n_to_p = client::inet_n_to_p(stub(), stack.stack_ref(), p_to_n.dst());
 
   EXPECT_SUCCESS_WITH_STATUS(a_to_n, 1);
   EXPECT_SUCCESS_WITH_STATUS(p_to_n, 1);
+  EXPECT_SUCCESS(n_to_a);
+  EXPECT_SUCCESS(n_to_p);
   EXPECT_EQ(IPV4_LOCALHOST_ADDR, a_to_n.name().addr());
   EXPECT_EQ(IPV4_LOCALHOST_ADDR, p_to_n.dst().ipv4().addr());
+  EXPECT_EQ(IPV4_LOCALHOST_ADDRESS_STR, n_to_a.address());
+  EXPECT_EQ(IPV4_LOCALHOST_ADDRESS_STR, n_to_p.address());
 }
 
-TEST_F(NiXnetSocketLoopbackTests, IPv6LocalhostAddress_PToN_ReturnsCorrectAddr)
+TEST_F(NiXnetSocketLoopbackTests, IPv6LocalhostAddress_PToNRoundtrip_ReturnsCorrectAddr)
 {
   const auto stack = client::ip_stack_create(stub(), "", create_simple_config("ENET1"));
   const auto p_to_n = client::inet_p_to_n(stub(), stack.stack_ref(), 10 /* nxAF_INET6 */, IPV6_LOCALHOST_ADDRESS_STR);
+  const auto n_to_p = client::inet_n_to_p(stub(), stack.stack_ref(), p_to_n.dst());
 
   EXPECT_SUCCESS_WITH_STATUS(p_to_n, 1);
+  EXPECT_SUCCESS(n_to_p);
   EXPECT_EQ(IPV6_LOCALHOST_ADDR, p_to_n.dst().ipv6().addr());
+  EXPECT_EQ(IPV6_LOCALHOST_ADDRESS_STR, n_to_p.address());
+}
+
+TEST_F(NiXnetSocketLoopbackTests, IPv4LocalhostAddress_InetAddr_ReturnsCorrectAddr)
+{
+  const auto stack = client::ip_stack_create(stub(), "", create_simple_config("ENET1"));
+  const auto addr = client::inet_addr(stub(), stack.stack_ref(), IPV4_LOCALHOST_ADDRESS_STR);
+
+  EXPECT_SUCCESS(addr);
+  EXPECT_EQ(IPV4_LOCALHOST_ADDR, addr.addr());
 }
 
 TEST_F(NiXnetSocketLoopbackTests, PToNWithInvalidFamily_ReturnsError)
 {
   const auto stack = client::ip_stack_create(stub(), "", create_simple_config("ENET1"));
-  const auto p_to_n_in6_with_in_addr = client::inet_p_to_n(stub(), stack.stack_ref(), 10 /* nxAF_INET6 */, "127.0.0.`");
+  const auto p_to_n_in6_with_in_addr = client::inet_p_to_n(stub(), stack.stack_ref(), 10 /* nxAF_INET6 */, "127.0.0.1");
   const auto p_to_n_UNSPEC = client::inet_p_to_n(stub(), stack.stack_ref(), 0 /* nxAF_UNSPEC */, IPV4_LOCALHOST_ADDRESS_STR);
   const auto p_to_n_42 = client::inet_p_to_n(stub(), stack.stack_ref(), 42 /* bogus */, "10.0.0.1");
 
@@ -382,6 +400,22 @@ TEST_F(NiXnetSocketLoopbackTests, PToNWithInvalidFamily_ReturnsError)
   EXPECT_EQ(IPV6_ZERO_ADDR, p_to_n_in6_with_in_addr.dst().ipv6().addr());
   EXPECT_INVALID_ARGUMENT_ERROR(p_to_n_UNSPEC);
   EXPECT_INVALID_ARGUMENT_ERROR(p_to_n_42);
+}
+
+TEST_F(NiXnetSocketLoopbackTests, NToPWithAddrCaseNotSet_ReturnsError)
+{
+  const auto stack = client::ip_stack_create(stub(), "", create_simple_config("ENET1"));
+  const auto n_to_p_unset = client::inet_n_to_p(stub(), stack.stack_ref(), Addr{});
+
+  EXPECT_INVALID_ARGUMENT_ERROR(n_to_p_unset);
+}
+
+TEST_F(NiXnetSocketLoopbackTests, InetAddrWithInvalidAddress_ReturnsZero)
+{
+  const auto stack = client::ip_stack_create(stub(), "", create_simple_config("ENET1"));
+  const auto addr = client::inet_addr(stub(), stack.stack_ref(), "NOT AN ADDRESS");
+
+  EXPECT_EQ(0, addr.addr());
 }
 
 TEST_F(NiXnetSocketLoopbackTests, IpStackCreate_CreateSocketWithIpStack_Succeeds)
@@ -449,6 +483,39 @@ TEST_F(NiXnetSocketLoopbackTests, MultiAddressIpStack_GetInfo_ReturnsExpectedInf
   const auto ipv6_gateway_address = virtual_interface.gateway_addresses()[1];
   EXPECT_EQ(10 /* nxAF_INET6 */, ipv6_gateway_address.family());
   EXPECT_EQ("ff01::1", ipv6_gateway_address.address());
+}
+
+TEST_F(NiXnetSocketLoopbackTests, MultiAddressIpStack_GetInfoString_ReturnsReasonablyExpectedInfo)
+{
+  const auto create_stack_response = client::ip_stack_create(
+      stub(),
+      "",
+      create_config(
+          {create_interface_config("ENET1", MULTI_ADDRESS_INTERFACE_CONFIG)}));
+  const auto wait_response = client::ip_stack_wait_for_interface(stub(), create_stack_response.stack_ref(), "", 5000);
+
+  const auto stack_info_response = client::ip_stack_get_all_stacks_info_str(stub());
+
+  EXPECT_SUCCESS(create_stack_response);
+  EXPECT_SUCCESS(stack_info_response);
+  EXPECT_SUCCESS(wait_response);
+  for (const auto expected_sub_str : {"ENET1"s, "10.23.45.67"s, "IPv4 addresses"s, "ff01::1"s}) {
+    EXPECT_THAT(stack_info_response.info(), HasSubstr(expected_sub_str));
+  }
+}
+
+TEST_F(NiXnetSocketLoopbackTests, OpenedStackThenCloseOriginal_GetStackInfoFromOpenedStack_ReturnsInfoFromOriginalConfig)
+{
+  const auto CONFIGURED_STATIC_ADDRESS = "10.56.45.67"s;
+  const auto STACK_NAME = "STACK_NAME"s;
+  const auto original_stack = client::ip_stack_create(stub(), STACK_NAME, create_simple_config("ENET1", CONFIGURED_STATIC_ADDRESS));
+  const auto wait = client::ip_stack_wait_for_interface(stub(), original_stack.stack_ref(), "", 5000);
+  const auto reopened_stack = client::ip_stack_open(stub(), STACK_NAME);
+  const auto closed_original_stack = client::ip_stack_clear(stub(), original_stack.stack_ref());
+
+  const auto stack_info = client::ip_stack_get_all_stacks_info_str(stub());
+
+  EXPECT_THAT(stack_info.info(), HasSubstr(CONFIGURED_STATIC_ADDRESS));
 }
 
 TEST_F(NiXnetSocketLoopbackTests, RecvAndTransmitSocketsOnLoopbackAddress_SendAndReceiveData_ReceivesExpectedData)
@@ -532,6 +599,40 @@ TEST_F(NiXnetSocketLoopbackTests, NumericPortTranslation_GetAddrInfo_ReturnsExpe
   auto addr_info = addr_info_response.res()[0];
   EXPECT_ADDR_EQ(addr_info, AddressFamily::ADDRESS_FAMILY_INET, (0, 0, 0, 0));
   EXPECT_EQ(htons(21), addr_info.addr().ipv4().port());
+}
+
+TEST_F(NiXnetSocketLoopbackTests, IPv4SockAddr_GetNameInfo_ReturnsExpectedNameInfo)
+{
+  const auto ADDRESS = "192.168.0.1"s;
+  constexpr auto PORT_BYTE_SWAPPED = 0xD204;  // Network endian 1234;
+  const auto EXPECTED_PORT = "1234"s;
+  const auto stack = client::ip_stack_create(stub(), "", create_simple_config("ENET1"));
+  const auto p_to_n = client::inet_p_to_n(stub(), stack.stack_ref(), 2 /* AF INET*/, ADDRESS);
+  auto sock_addr = SockAddr{};
+  sock_addr.mutable_ipv4()->mutable_addr()->CopyFrom(p_to_n.dst().ipv4());
+  sock_addr.mutable_ipv4()->set_port(PORT_BYTE_SWAPPED);
+
+  const auto name_info = client::get_name_info(stub(), stack.stack_ref(), sock_addr, 256, 256, 0);
+
+  EXPECT_SUCCESS(name_info);
+  EXPECT_EQ(ADDRESS, name_info.host());
+  EXPECT_EQ("1234", name_info.serv());
+}
+
+TEST_F(NiXnetSocketLoopbackTests, IPv4SockAddr_GetNameInfoWithZeroServLen_ReturnsHostNameAndEmptyServ)
+{
+  const auto ADDRESS = "192.168.0.1"s;
+  const auto stack = client::ip_stack_create(stub(), "", create_simple_config("ENET1"));
+  const auto p_to_n = client::inet_p_to_n(stub(), stack.stack_ref(), 2 /* AF INET*/, ADDRESS);
+  auto sock_addr = SockAddr{};
+  sock_addr.mutable_ipv4()->mutable_addr()->CopyFrom(p_to_n.dst().ipv4());
+  sock_addr.mutable_ipv4()->set_port(0x1234);
+
+  const auto name_info = client::get_name_info(stub(), stack.stack_ref(), sock_addr, 256, 0, 0);
+
+  EXPECT_SUCCESS(name_info);
+  EXPECT_EQ(ADDRESS, name_info.host());
+  EXPECT_THAT(name_info.serv(), IsEmpty());
 }
 
 }  // namespace
