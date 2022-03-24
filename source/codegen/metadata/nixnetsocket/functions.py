@@ -85,6 +85,29 @@ functions = {
         ],
         'returns': 'int32_t'
     },
+    'InetAddr': {
+        'cname': 'nxinet_addr',
+        'status_expression': 'addr == -1 ? -1 : 0',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'stack_ref',
+                'type': 'nxIpStackRef_t'
+            },
+            {
+                'direction': 'in',
+                'name': 'cp',
+                'type': 'const char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'addr',
+                'return_value': True,
+                'type': 'uint32_t'
+            },
+        ],
+        'returns': 'uint32_t'
+    },
     'InetAToN': {
         'cname': 'nxinet_aton',
         'parameters': [
@@ -108,6 +131,81 @@ functions = {
             },
         ],
         'returns': 'int32_t'
+    },
+    'InetNToA': {
+        'cname': 'nxinet_ntoa',
+        'status_expression': 'address ? 0 : -1',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'stack_ref',
+                'type': 'nxIpStackRef_t'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'IPv4Addr',
+                'name': 'in',
+                'supports_standard_copy_convert': True,
+                'type': 'nxin_addr'
+            },
+            {
+                'direction': 'out',
+                'name': 'address',
+                'return_value': True,
+                'type': 'char[]'
+            },
+        ],
+        'returns': 'char*'
+    },
+    'InetNToP': {
+        'cname': 'nxinet_ntop',
+        'status_expression': 'address ? 0 : -1',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'stack_ref',
+                'type': 'nxIpStackRef_t'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': 'get_address_family(request->src().addr_case())',
+                'include_in_proto': False,
+                'name': 'af',
+                'type': 'int32_t'
+            },
+            {
+                'direction': 'in',
+                'name': 'src',
+                'grpc_type': 'Addr',
+                'pointer': True,
+                'supports_standard_copy_convert': True,
+                'type': 'void'
+            },
+            {
+                'direction': 'out',
+                'name': 'dst',
+                'include_in_proto': False,
+                'size': {
+                    'mechanism': 'fixed',
+                    'value': 'nxINET6_ADDRSTRLEN'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'size',
+                'hardcoded_value': 'nxINET6_ADDRSTRLEN',
+                'include_in_proto': False,
+                'type': 'nxsocklen_t'
+            },
+            {
+                'direction': 'out',
+                'name': 'address',
+                'return_value': True,
+                'type': 'char[]'
+            },
+        ],
+        'returns': 'const char*'
     },
     'InetPToN': {
         'cname': 'nxinet_pton',
@@ -609,6 +707,17 @@ functions = {
         ],
         'returns': 'int32_t'
     },
+    'IpStackFreeAllStacksInfoStr': {
+        'codegen_method': 'private',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'info',
+                'type': 'nixnetsocket_grpc::IpStackInfoString',
+            },
+        ],
+        'returns': 'void',
+    },
     'IpStackFreeInfo': {
         'codegen_method': 'private',
         'parameters': [
@@ -620,6 +729,26 @@ functions = {
             },
         ],
         'returns': 'int32_t'
+    },
+    'IpStackGetAllStacksInfoStr': {
+        'parameters': [
+            {
+                'direction': 'in', 
+                'hardcoded_value': 'nxIPSTACK_INFO_ID',
+                'include_in_proto': False,
+                'name': 'format', 
+                'type': 'uint32_t'
+            },
+            {
+                'direction': 'out',
+                'name': 'info',
+                'supports_standard_output_allocation': True,
+                'additional_arguments_to_output_allocation': ['library_'],
+                'supports_standard_copy_convert': True,
+                'type': 'nixnetsocket_grpc::IpStackInfoString',
+            },
+        ],
+        'returns': 'int32_t',
     },
     'IpStackGetInfo': {
         'parameters': [
@@ -646,6 +775,23 @@ functions = {
             },
         ],
         'returns': 'int32_t',
+    },
+    'IpStackOpen': {
+        'custom_close': 'IpStackClear(id)',
+        'init_method': True,
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'stack_name',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'stack_ref',
+                'type': 'nxIpStackRef_t'
+            },
+        ],
+        'returns': 'int32_t'
     },
     'IpStackWaitForInterface': {
         'parameters': [
