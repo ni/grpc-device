@@ -80,34 +80,34 @@ u32 GetStateSize(u32 state_id)
 {
   u32 state_size;
   switch (state_id) {
-    case nixnet_grpc::ReadState::READ_STATE_STATE_TIME_CURRENT:
-    case nixnet_grpc::ReadState::READ_STATE_STATE_TIME_COMMUNICATING:
-    case nixnet_grpc::ReadState::READ_STATE_STATE_TIME_START: {
+    case nixnet_grpc::ReadState::READ_STATE_TIME_CURRENT:
+    case nixnet_grpc::ReadState::READ_STATE_TIME_COMMUNICATING:
+    case nixnet_grpc::ReadState::READ_STATE_TIME_START: {
       state_size = sizeof(nxTimestamp100ns_t);
       break;
     }
-    case nixnet_grpc::ReadState::READ_STATE_STATE_CAN_COMM:
-    case nixnet_grpc::ReadState::READ_STATE_STATE_FLEX_RAY_COMM:
-    case nixnet_grpc::ReadState::READ_STATE_STATE_SESSION_INFO: {
+    case nixnet_grpc::ReadState::READ_STATE_CAN_COMM:
+    case nixnet_grpc::ReadState::READ_STATE_FLEX_RAY_COMM:
+    case nixnet_grpc::ReadState::READ_STATE_SESSION_INFO: {
       state_size = sizeof(u32);
       break;
     }
-    case nixnet_grpc::ReadState::READ_STATE_STATE_FLEX_RAY_STATS: {
+    case nixnet_grpc::ReadState::READ_STATE_FLEX_RAY_STATS: {
       state_size = sizeof(nxFlexRayStats_t);
       break;
     }
-    case nixnet_grpc::ReadState::READ_STATE_STATE_LIN_COMM: {
+    case nixnet_grpc::ReadState::READ_STATE_LIN_COMM: {
       // The StateValue for nxState_LinComm should point to a u32 array with 2 elements.
       state_size = sizeof(u32) * 2;
       break;
     }
-    case nixnet_grpc::ReadState::READ_STATE_STATE_J1939_COMM: {
+    case nixnet_grpc::ReadState::READ_STATE_J1939_COMM: {
       state_size = sizeof(nxJ1939CommState_t);
       break;
     }
-    case nixnet_grpc::ReadState::READ_STATE_STATE_TIME_CURRENT_2:
-    case nixnet_grpc::ReadState::READ_STATE_STATE_TIME_COMMUNICATING_2:
-    case nixnet_grpc::ReadState::READ_STATE_STATE_TIME_START_2: {
+    case nixnet_grpc::ReadState::READ_STATE_TIME_CURRENT_2:
+    case nixnet_grpc::ReadState::READ_STATE_TIME_COMMUNICATING_2:
+    case nixnet_grpc::ReadState::READ_STATE_TIME_START_2: {
       state_size = sizeof(nxTimeLocalNetwork_t);
       break;
     }
@@ -178,51 +178,51 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
     if (status == 0) {
       void* state_value_raw = (void*)response->state_value().state_value_raw().data();
       switch (state_id) {
-        case nixnet_grpc::ReadState::READ_STATE_STATE_TIME_CURRENT: {
+        case nixnet_grpc::ReadState::READ_STATE_TIME_CURRENT: {
           response->mutable_state_value()->set_time_current(*(nxTimestamp100ns_t*)state_value_raw);
           break;
         }
-        case nixnet_grpc::ReadState::READ_STATE_STATE_TIME_COMMUNICATING: {
+        case nixnet_grpc::ReadState::READ_STATE_TIME_COMMUNICATING: {
           response->mutable_state_value()->set_time_communicating(*(nxTimestamp100ns_t*)state_value_raw);
           break;
         }
-        case nixnet_grpc::ReadState::READ_STATE_STATE_TIME_START: {
+        case nixnet_grpc::ReadState::READ_STATE_TIME_START: {
           response->mutable_state_value()->set_time_start(*(nxTimestamp100ns_t*)state_value_raw);
           break;
         }
-        case nixnet_grpc::ReadState::READ_STATE_STATE_CAN_COMM: {
+        case nixnet_grpc::ReadState::READ_STATE_CAN_COMM: {
           SetCanCommResponse(*(u32*)state_value_raw, response->mutable_state_value()->mutable_can_comm());
           break;
         }
-        case nixnet_grpc::ReadState::READ_STATE_STATE_FLEX_RAY_COMM: {
+        case nixnet_grpc::ReadState::READ_STATE_FLEX_RAY_COMM: {
           SetFlexRayCommResponse(*(u32*)state_value_raw, response->mutable_state_value()->mutable_flex_ray_comm());
           break;
         }
-        case nixnet_grpc::ReadState::READ_STATE_STATE_LIN_COMM: {
+        case nixnet_grpc::ReadState::READ_STATE_LIN_COMM: {
           SetLinCommResponse((u32*)state_value_raw, response->mutable_state_value()->mutable_lin_comm());
           break;
         }
-        case nixnet_grpc::ReadState::READ_STATE_STATE_SESSION_INFO: {
+        case nixnet_grpc::ReadState::READ_STATE_SESSION_INFO: {
           SetSessionInfoResponse(*(u32*)state_value_raw, response->mutable_state_value()->mutable_session_info());
           break;
         }
-        case nixnet_grpc::ReadState::READ_STATE_STATE_FLEX_RAY_STATS: {
+        case nixnet_grpc::ReadState::READ_STATE_FLEX_RAY_STATS: {
           convert_to_grpc(*(_nxFlexRayStats_t*)state_value_raw, response->mutable_state_value()->mutable_flex_ray_stats());
           break;
         }
-        case nixnet_grpc::ReadState::READ_STATE_STATE_J1939_COMM: {
+        case nixnet_grpc::ReadState::READ_STATE_J1939_COMM: {
           convert_to_grpc(*(_nxJ1939CommState_t*)state_value_raw, response->mutable_state_value()->mutable_j1939_comm_state());
           break;
         }
-        case nixnet_grpc::ReadState::READ_STATE_STATE_TIME_CURRENT_2: {
+        case nixnet_grpc::ReadState::READ_STATE_TIME_CURRENT_2: {
           convert_to_grpc(*(_nxTimeLocalNetwork_t*)state_value_raw, response->mutable_state_value()->mutable_time_current2());
           break;
         }
-        case nixnet_grpc::ReadState::READ_STATE_STATE_TIME_COMMUNICATING_2: {
+        case nixnet_grpc::ReadState::READ_STATE_TIME_COMMUNICATING_2: {
           convert_to_grpc(*(_nxTimeLocalNetwork_t*)state_value_raw, response->mutable_state_value()->mutable_time_communicating2());
           break;
         }
-        case nixnet_grpc::ReadState::READ_STATE_STATE_TIME_START_2: {
+        case nixnet_grpc::ReadState::READ_STATE_TIME_START_2: {
           convert_to_grpc(*(_nxTimeLocalNetwork_t*)state_value_raw, response->mutable_state_value()->mutable_time_start2());
           break;
         }
@@ -273,35 +273,35 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
     u32 state_value;
     switch (request->state_value().value_case()) {
       case nixnet_grpc::WriteStateValue::ValueCase::kLinScheduleChange: {
-        if (state_id != nixnet_grpc::WriteState::WRITE_STATE_STATE_LIN_SCHEDULE_CHANGE) {
+        if (state_id != nixnet_grpc::WriteState::WRITE_STATE_LIN_SCHEDULE_CHANGE) {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "StateValue for specified StateID is not set");
         }
         state_value = request->state_value().lin_schedule_change();
         break;
       }
       case nixnet_grpc::WriteStateValue::ValueCase::kFlexRaySymbol: {
-        if (state_id != nixnet_grpc::WriteState::WRITE_STATE_STATE_FLEX_RAY_SYMBOL) {
+        if (state_id != nixnet_grpc::WriteState::WRITE_STATE_FLEX_RAY_SYMBOL) {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "StateValue for specified StateID is not set");
         }
         state_value = request->state_value().flex_ray_symbol();
         break;
       }
       case nixnet_grpc::WriteStateValue::ValueCase::kLinDiagnosticScheduleChange: {
-        if (state_id != nixnet_grpc::WriteState::WRITE_STATE_STATE_LIN_DIAGNOSTIC_SCHEDULE_CHANGE) {
+        if (state_id != nixnet_grpc::WriteState::WRITE_STATE_LIN_DIAGNOSTIC_SCHEDULE_CHANGE) {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "StateValue for specified StateID is not set");
         }
         state_value = GetLinDiagnosticScheduleChangeValue(request);
         break;
       }
       case nixnet_grpc::WriteStateValue::ValueCase::kEthernetSleep: {
-        if (state_id != nixnet_grpc::WriteState::WRITE_STATE_STATE_ETHERNET_SLEEP) {
+        if (state_id != nixnet_grpc::WriteState::WRITE_STATE_ETHERNET_SLEEP) {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "StateValue for specified StateID is not set");
         }
         state_value = request->state_value().ethernet_sleep();
         break;
       }
       case nixnet_grpc::WriteStateValue::ValueCase::kEthernetWake: {
-        if (state_id != nixnet_grpc::WriteState::WRITE_STATE_STATE_ETHERNET_WAKE) {
+        if (state_id != nixnet_grpc::WriteState::WRITE_STATE_ETHERNET_WAKE) {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "StateValue for specified StateID is not set");
         }
         state_value = request->state_value().ethernet_wake();
@@ -1177,7 +1177,7 @@ void convert_to_grpc(std::vector<u8>& input, google::protobuf::RepeatedPtrField<
     auto frame_buffer = new FrameBuffer();
     convert_to_grpc(buffer_ptr, frame_buffer, frame_type);
     output->AddAllocated(frame_buffer);
-    if (frame_type == nixnet_grpc::FrameType::FRAME_TYPE_ENET) {
+    if (frame_type == nixnet_grpc::Protocol::PROTOCOL_ENET) {
       auto enet_frame_ptr = (nxFrameEnet_t*)buffer_ptr;
       buffer_ptr = nxFrameIterateEthernetRead(enet_frame_ptr);
     }
@@ -1189,7 +1189,7 @@ void convert_to_grpc(std::vector<u8>& input, google::protobuf::RepeatedPtrField<
 
 void convert_to_grpc(const void* input, nixnet_grpc::FrameBuffer* output, u32 frame_type)
 {
-  if (frame_type == nixnet_grpc::FrameType::FRAME_TYPE_ENET) {
+  if (frame_type == nixnet_grpc::Protocol::PROTOCOL_ENET) {
     nixnet_grpc::EnetFrame* enet_frame = new nixnet_grpc::EnetFrame();
     nxFrameEnet_t* nxEnetFrame = (nxFrameEnet_t*)input;
     enet_frame->set_type(nxEnetFrame->Type);
@@ -1214,16 +1214,16 @@ void convert_to_grpc(const void* input, nixnet_grpc::FrameBuffer* output, u32 fr
     frame->mutable_payload()->assign((const char*)nxFrame->Payload, payload_length);
 
     switch (frame_type) {
-      case nixnet_grpc::FrameType::FRAME_TYPE_CAN:
+      case nixnet_grpc::Protocol::PROTOCOL_CAN:
         output->set_allocated_can(frame);
         break;
-      case nixnet_grpc::FrameType::FRAME_TYPE_LIN:
+      case nixnet_grpc::Protocol::PROTOCOL_LIN:
         output->set_allocated_lin(frame);
         break;
-      case nixnet_grpc::FrameType::FRAME_TYPE_FLEX_RAY:
+      case nixnet_grpc::Protocol::PROTOCOL_FLEX_RAY:
         output->set_allocated_flex_ray(frame);
         break;
-      case nixnet_grpc::FrameType::FRAME_TYPE_J1939:
+      case nixnet_grpc::Protocol::PROTOCOL_J1939:
         output->set_allocated_j1939(frame);
         break;
       default:
@@ -1247,7 +1247,7 @@ void convert_to_grpc(std::vector<f64>& input, google::protobuf::RepeatedField<do
 
 u32 get_frame_buffer_size(int32 number_of_frames, u32 max_payload_per_frame, u32 frame_type)
 {
-  if(frame_type == FrameType::FRAME_TYPE_ENET) {
+  if(frame_type == Protocol::PROTOCOL_ENET) {
     return number_of_frames * (ENET_FRAME_HEADER_LENGTH + max_payload_per_frame);
   }
   else {

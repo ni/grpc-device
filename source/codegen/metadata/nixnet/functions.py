@@ -84,7 +84,7 @@ functions = {
                 'direction': 'in',
                 'name': 'frameType',
                 'proto_only': True,
-                'enum': 'FrameType',
+                'enum': 'Protocol',
                 'type': 'u32'
             },
             {
@@ -254,7 +254,7 @@ functions = {
                 'direction': 'in',
                 'name': 'frameType',
                 'proto_only': True,
-                'enum': 'FrameType',
+                'enum': 'Protocol',
                 'type': 'u32'
             },
             {
@@ -1067,7 +1067,7 @@ functions = {
                 'direction': 'in',
                 'name': 'frameType',
                 'proto_only': True,
-                'enum': 'FrameType',
+                'enum': 'Protocol',
                 'type': 'u32'
             },
             {

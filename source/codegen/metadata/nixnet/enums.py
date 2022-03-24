@@ -2,11 +2,11 @@ enums = {
     'BlinkMode': {
         'values': [
             {
-                'name': 'BLINK_DISABLE',
+                'name': 'DISABLE',
                 'value': 0
             },
             {
-                'name': 'BLINK_ENABLE',
+                'name': 'ENABLE',
                 'value': 1
             }
         ]
@@ -14,19 +14,19 @@ enums = {
     'CanCommState': {
         'values': [
             {
-                'name': 'CAN_COMM_STATE_ERROR_ACTIVE',
+                'name': 'ERROR_ACTIVE',
                 'value': 0
             },
             {
-                'name': 'CAN_COMM_STATE_ERROR_PASSIVE',
+                'name': 'ERROR_PASSIVE',
                 'value': 1
             },
             {
-                'name': 'CAN_COMM_STATE_BUS_OFF',
+                'name': 'BUS_OFF',
                 'value': 2
             },
             {
-                'name': 'CAN_COMM_STATE_INIT',
+                'name': 'INIT',
                 'value': 3
             }
         ]
@@ -34,31 +34,31 @@ enums = {
     'CanLastErr': {
         'values': [
             {
-                'name': 'CAN_LAST_ERR_NONE',
+                'name': 'NONE',
                 'value': 0
             },
             {
-                'name': 'CAN_LAST_ERR_STUFF',
+                'name': 'STUFF',
                 'value': 1
             },
             {
-                'name': 'CAN_LAST_ERR_FORM',
+                'name': 'FORM',
                 'value': 2
             },
             {
-                'name': 'CAN_LAST_ERR_ACK',
+                'name': 'ACK',
                 'value': 3
             },
             {
-                'name': 'CAN_LAST_ERR_BIT_1',
+                'name': 'BIT_1',
                 'value': 4
             },
             {
-                'name': 'CAN_LAST_ERR_BIT_0',
+                'name': 'BIT_0',
                 'value': 5
             },
             {
-                'name': 'CAN_LAST_ERR_CRC',
+                'name': 'CRC',
                 'value': 6
             }
         ]
@@ -86,55 +86,55 @@ enums = {
     'CreateSessionMode': {
         'values': [
             {
-                'name': 'MODE_SIGNAL_IN_SINGLE_POINT',
+                'name': 'SIGNAL_IN_SINGLE_POINT',
                 'value': 0
             },
             {
-                'name': 'MODE_SIGNAL_IN_WAVEFORM',
+                'name': 'SIGNAL_IN_WAVEFORM',
                 'value': 1
             },
             {
-                'name': 'MODE_SIGNAL_IN_XY',
+                'name': 'SIGNAL_IN_XY',
                 'value': 2
             },
             {
-                'name': 'MODE_SIGNAL_OUT_SINGLE_POINT',
+                'name': 'SIGNAL_OUT_SINGLE_POINT',
                 'value': 3
             },
             {
-                'name': 'MODE_SIGNAL_OUT_WAVEFORM',
+                'name': 'SIGNAL_OUT_WAVEFORM',
                 'value': 4
             },
             {
-                'name': 'MODE_SIGNAL_OUT_XY',
+                'name': 'SIGNAL_OUT_XY',
                 'value': 5
             },
             {
-                'name': 'MODE_FRAME_IN_STREAM',
+                'name': 'FRAME_IN_STREAM',
                 'value': 6
             },
             {
-                'name': 'MODE_FRAME_IN_QUEUED',
+                'name': 'FRAME_IN_QUEUED',
                 'value': 7
             },
             {
-                'name': 'MODE_FRAME_IN_SINGLE_POINT',
+                'name': 'FRAME_IN_SINGLE_POINT',
                 'value': 8
             },
             {
-                'name': 'MODE_FRAME_OUT_STREAM',
+                'name': 'FRAME_OUT_STREAM',
                 'value': 9
             },
             {
-                'name': 'MODE_FRAME_OUT_QUEUED',
+                'name': 'FRAME_OUT_QUEUED',
                 'value': 10
             },
             {
-                'name': 'MODE_FRAME_OUT_SINGLE_POINT',
+                'name': 'FRAME_OUT_SINGLE_POINT',
                 'value': 11
             },
             {
-                'name': 'MODE_SIGNAL_CONVERSION_SINGLE_POINT',
+                'name': 'SIGNAL_CONVERSION_SINGLE_POINT',
                 'value': 12
             }
         ]
@@ -453,7 +453,7 @@ enums = {
                 'value': 33685520
             },
             {
-                'name': 'FRM_CA_NIO_MODE',
+                'name': 'FRM_CAN_IO_MODE',
                 'type': 'u32',
                 'value': 131174
             },
@@ -513,7 +513,7 @@ enums = {
                 'value': 33685552
             },
             {
-                'name': 'FRM_FLEX_RAY_IN_CYC_REP_I_DS',
+                'name': 'FRM_FLEX_RAY_IN_CYC_REP_IDS',
                 'type': 'u32_array',
                 'value': 134348849
             },
@@ -848,15 +848,15 @@ enums = {
         'generate-mappings': True,
         'values': [
             {
-                'name': 'CA_NIO_MODE_CAN',
+                'name': 'CAN_IO_MODE_CAN',
                 'value': 0
             },
             {
-                'name': 'CA_NIO_MODE_CAN_FD',
+                'name': 'CAN_IO_MODE_CAN_FD',
                 'value': 1
             },
             {
-                'name': 'CA_NIO_MODE_CAN_FD_BRS',
+                'name': 'CAN_IO_MODE_CAN_FD_BRS',
                 'value': 2
             },
             {
@@ -896,7 +896,7 @@ enums = {
                 'value': 2
             },
             {
-                'name': 'FRM_FLEX_RAY_CH_ASSIGN_AAND_B',
+                'name': 'FRM_FLEX_RAY_CH_ASSIGN_A_AND_B',
                 'value': 3
             },
             {
@@ -904,15 +904,15 @@ enums = {
                 'value': 4
             },
             {
-                'name': 'CLST_FLEX_RAY_SAMP_CLK_PER_P_0125US',
+                'name': 'CLST_FLEX_RAY_SAMP_CLK_PER_P0125US',
                 'value': 0
             },
             {
-                'name': 'CLST_FLEX_RAY_SAMP_CLK_PER_P_025US',
+                'name': 'CLST_FLEX_RAY_SAMP_CLK_PER_P025US',
                 'value': 1
             },
             {
-                'name': 'CLST_FLEX_RAY_SAMP_CLK_PER_P_05US',
+                'name': 'CLST_FLEX_RAY_SAMP_CLK_PER_P05US',
                 'value': 2
             },
             {
@@ -993,19 +993,19 @@ enums = {
         'generate-mappings': True,
         'values': [
             {
-                'name': 'ENET_FLAGS_TRANSMIT',
+                'name': 'TRANSMIT',
                 'value': 2147483648
             },
             {
-                'name': 'ENET_FLAGS_RECEIVE',
+                'name': 'RECEIVE',
                 'value': 1073741824
             },
             {
-                'name': 'ENET_FLAGS_NETWORK_SYNCED',
+                'name': 'NETWORK_SYNCED',
                 'value': 8388608
             },
             {
-                'name': 'ENET_FLAGS_ERROR',
+                'name': 'ERROR',
                 'value': 65536
             }
         ]
@@ -1013,15 +1013,15 @@ enums = {
     'EnetFrameType': {
         'values': [
             {
-                'name': 'ENET_FRAME_TYPE_DATA',
+                'name': 'DATA',
                 'value': 0
             },
             {
-                'name': 'ENET_FRAME_TYPE_DELAY',
+                'name': 'DELAY',
                 'value': 225
             },
             {
-                'name': 'ENET_FRAME_TYPE_FUTURE_TIME_WAIT',
+                'name': 'FUTURE_TIME_WAIT',
                 'value': 226
             }
         ]
@@ -1029,31 +1029,31 @@ enums = {
     'FlexRayPocState': {
         'values': [
             {
-                'name': 'FLEX_RAY_POC_STATE_DEFAULT_CONFIG',
+                'name': 'DEFAULT_CONFIG',
                 'value': 0
             },
             {
-                'name': 'FLEX_RAY_POC_STATE_READY',
+                'name': 'READY',
                 'value': 1
             },
             {
-                'name': 'FLEX_RAY_POC_STATE_NORMAL_ACTIVE',
+                'name': 'NORMAL_ACTIVE',
                 'value': 2
             },
             {
-                'name': 'FLEX_RAY_POC_STATE_NORMAL_PASSIVE',
+                'name': 'NORMAL_PASSIVE',
                 'value': 3
             },
             {
-                'name': 'FLEX_RAY_POC_STATE_HALT',
+                'name': 'HALT',
                 'value': 4
             },
             {
-                'name': 'FLEX_RAY_POC_STATE_MONITOR',
+                'name': 'MONITOR',
                 'value': 5
             },
             {
-                'name': 'FLEX_RAY_POC_STATE_CONFIG',
+                'name': 'CONFIG',
                 'value': 15
             }
         ]
@@ -1061,11 +1061,11 @@ enums = {
     'FlexRaySymbol': {
         'values': [
             {
-                'name': 'FLEX_RAY_SYMBOL_MTS',
+                'name': 'MTS',
                 'value': 0
             },
             {
-                'name': 'FLEX_RAY_SYMBOL_WAKEUP',
+                'name': 'WAKEUP',
                 'value': 1
             }
         ]
@@ -1073,31 +1073,31 @@ enums = {
     'FrameFlags': {
         'values': [
             {
-                'name': 'FRAME_FLAGS_FLEX_RAY_STARTUP',
+                'name': 'FLEX_RAY_STARTUP',
                 'value': 1
             },
             {
-                'name': 'FRAME_FLAGS_FLEX_RAY_SYNC',
+                'name': 'FLEX_RAY_SYNC',
                 'value': 2
             },
             {
-                'name': 'FRAME_FLAGS_FLEX_RAY_PREAMBLE',
+                'name': 'FLEX_RAY_PREAMBLE',
                 'value': 4
             },
             {
-                'name': 'FRAME_FLAGS_FLEX_RAY_CH_A',
+                'name': 'FLEX_RAY_CH_A',
                 'value': 16
             },
             {
-                'name': 'FRAME_FLAGS_FLEX_RAY_CH_B',
+                'name': 'FLEX_RAY_CH_B',
                 'value': 32
             },
             {
-                'name': 'FRAME_FLAGS_LIN_EVENT_SLOT',
+                'name': 'LIN_EVENT_SLOT',
                 'value': 1
             },
             {
-                'name': 'FRAME_FLAGS_TRANSMIT_ECHO',
+                'name': 'TRANSMIT_ECHO',
                 'value': 128
             }
         ]
@@ -1105,67 +1105,67 @@ enums = {
     'FrameTypes': {
         'values': [
             {
-                'name': 'FRAME_TYPE_CAN_DATA',
+                'name': 'CAN_DATA',
                 'value': 0
             },
             {
-                'name': 'FRAME_TYPE_CAN_REMOTE',
+                'name': 'CAN_REMOTE',
                 'value': 1
             },
             {
-                'name': 'FRAME_TYPE_CAN_BUS_ERROR',
+                'name': 'CAN_BUS_ERROR',
                 'value': 2
             },
             {
-                'name': 'FRAME_TYPE_CAN20_DATA',
+                'name': 'CAN20_DATA',
                 'value': 8
             },
             {
-                'name': 'FRAME_TYPE_CANFD_DATA',
+                'name': 'CANFD_DATA',
                 'value': 16
             },
             {
-                'name': 'FRAME_TYPE_CANFDBRS_DATA',
+                'name': 'CANFDBRS_DATA',
                 'value': 24
             },
             {
-                'name': 'FRAME_TYPE_FLEX_RAY_DATA',
+                'name': 'FLEX_RAY_DATA',
                 'value': 32
             },
             {
-                'name': 'FRAME_TYPE_FLEX_RAY_NULL',
+                'name': 'FLEX_RAY_NULL',
                 'value': 33
             },
             {
-                'name': 'FRAME_TYPE_FLEX_RAY_SYMBOL',
+                'name': 'FLEX_RAY_SYMBOL',
                 'value': 34
             },
             {
-                'name': 'FRAME_TYPE_LIN_DATA',
+                'name': 'LIN_DATA',
                 'value': 64
             },
             {
-                'name': 'FRAME_TYPE_LIN_BUS_ERROR',
+                'name': 'LIN_BUS_ERROR',
                 'value': 65
             },
             {
-                'name': 'FRAME_TYPE_LIN_NO_RESPONSE',
+                'name': 'LIN_NO_RESPONSE',
                 'value': 66
             },
             {
-                'name': 'FRAME_TYPE_J1939_DATA',
+                'name': 'J1939_DATA',
                 'value': 192
             },
             {
-                'name': 'FRAME_TYPE_SPECIAL_DELAY',
+                'name': 'SPECIAL_DELAY',
                 'value': 224
             },
             {
-                'name': 'FRAME_TYPE_SPECIAL_LOG_TRIGGER',
+                'name': 'SPECIAL_LOG_TRIGGER',
                 'value': 225
             },
             {
-                'name': 'FRAME_TYPE_SPECIAL_START_TRIGGER',
+                'name': 'SPECIAL_START_TRIGGER',
                 'value': 226
             }
         ]
@@ -1173,19 +1173,19 @@ enums = {
     'GetDBCAttributeMode': {
         'values': [
             {
-                'name': 'GET_DBC_MODE_ATTRIBUTE',
+                'name': 'ATTRIBUTE',
                 'value': 0
             },
             {
-                'name': 'GET_DBC_MODE_ENUMERATION_LIST',
+                'name': 'ENUMERATION_LIST',
                 'value': 1
             },
             {
-                'name': 'GET_DBC_MODE_ATTRIBUTE_LIST',
+                'name': 'ATTRIBUTE_LIST',
                 'value': 2
             },
             {
-                'name': 'GET_DBC_MODE_VALUE_TABLE_LIST',
+                'name': 'VALUE_TABLE_LIST',
                 'value': 3
             }
         ]
@@ -1193,15 +1193,15 @@ enums = {
     'LinCommState': {
         'values': [
             {
-                'name': 'LIN_COMM_STATE_IDLE',
+                'name': 'IDLE',
                 'value': 0
             },
             {
-                'name': 'LIN_COMM_STATE_ACTIVE',
+                'name': 'ACTIVE',
                 'value': 1
             },
             {
-                'name': 'LIN_COMM_STATE_INACTIVE',
+                'name': 'INACTIVE',
                 'value': 2
             }
         ]
@@ -1209,15 +1209,15 @@ enums = {
     'LinDiagnosticSchedule': {
         'values': [
             {
-                'name': 'LIN_DIAGNOSTIC_SCHEDULE_NULL',
+                'name': 'NULL',
                 'value': 0
             },
             {
-                'name': 'LIN_DIAGNOSTIC_SCHEDULE_MASTER_REQ',
+                'name': 'MASTER_REQ',
                 'value': 1
             },
             {
-                'name': 'LIN_DIAGNOSTIC_SCHEDULE_SLAVE_RESP',
+                'name': 'SLAVE_RESP',
                 'value': 2
             }
         ]
@@ -1225,31 +1225,31 @@ enums = {
     'LinLastErrCode': {
         'values': [
             {
-                'name': 'LIN_LAST_ERR_CODE_NONE',
+                'name': 'NONE',
                 'value': 0
             },
             {
-                'name': 'LIN_LAST_ERR_CODE_UNKNOWN_ID',
+                'name': 'UNKNOWN_ID',
                 'value': 1
             },
             {
-                'name': 'LIN_LAST_ERR_CODE_FORM',
+                'name': 'FORM',
                 'value': 2
             },
             {
-                'name': 'LIN_LAST_ERR_CODE_FRAMING',
+                'name': 'FRAMING',
                 'value': 3
             },
             {
-                'name': 'LIN_LAST_ERR_CODE_READBACK',
+                'name': 'READBACK',
                 'value': 4
             },
             {
-                'name': 'LIN_LAST_ERR_CODE_TIMEOUT',
+                'name': 'TIMEOUT',
                 'value': 5
             },
             {
-                'name': 'LIN_LAST_ERR_CODE_CRC',
+                'name': 'CRC',
                 'value': 6
             }
         ]
@@ -1433,7 +1433,7 @@ enums = {
                 'value': 152043711
             },
             {
-                'name': 'SESSION_INTF_ENET_IP_V4_ADDRESS',
+                'name': 'SESSION_INTF_ENET_IPV4_ADDRESS',
                 'type': 'string',
                 'value': 51380459
             },
@@ -2003,12 +2003,12 @@ enums = {
                 'value': 34603137
             },
             {
-                'name': 'SESSION_INTF_LIN_DIAG_P2MIN',
+                'name': 'SESSION_INTF_LIN_DIAG_P2_MIN',
                 'type': 'f64',
                 'value': 17825911
             },
             {
-                'name': 'SESSION_INTF_LIN_DIAG_S_TMIN',
+                'name': 'SESSION_INTF_LIN_DIAG_ST_MIN',
                 'type': 'f64',
                 'value': 17825910
             },
@@ -2400,15 +2400,15 @@ enums = {
                 'value': 2
             },
             {
-                'name': 'CA_NIO_MODE_CAN',
+                'name': 'CAN_IO_MODE_CAN',
                 'value': 0
             },
             {
-                'name': 'CA_NIO_MODE_CAN_FD',
+                'name': 'CAN_IO_MODE_CAN_FD',
                 'value': 1
             },
             {
-                'name': 'CA_NIO_MODE_CAN_FD_BRS',
+                'name': 'CAN_IO_MODE_CAN_FD_BRS',
                 'value': 2
             },
             {
@@ -2452,7 +2452,7 @@ enums = {
                 'value': 2
             },
             {
-                'name': 'DEV_FORM_PX_IE',
+                'name': 'DEV_FORM_PXIE',
                 'value': 3
             },
             {
@@ -2460,7 +2460,7 @@ enums = {
                 'value': 4
             },
             {
-                'name': 'DEV_FORM_PC_IE',
+                'name': 'DEV_FORM_PCIE',
                 'value': 5
             },
             {
@@ -2824,7 +2824,7 @@ enums = {
                 'value': 1
             },
             {
-                'name': 'ENET_TIME_PROTOCOL_IEEE8021AS',
+                'name': 'ENET_TIME_PROTOCOL_IEEE_8021AS',
                 'value': 0
             },
             {
@@ -3052,51 +3052,51 @@ enums = {
     'ReadState': {
         'values': [
             {
-                'name': 'STATE_TIME_CURRENT',
+                'name': 'TIME_CURRENT',
                 'value': 118685697
             },
             {
-                'name': 'STATE_TIME_COMMUNICATING',
+                'name': 'TIME_COMMUNICATING',
                 'value': 118685698
             },
             {
-                'name': 'STATE_TIME_START',
+                'name': 'TIME_START',
                 'value': 118685699
             },
             {
-                'name': 'STATE_SESSION_INFO',
+                'name': 'SESSION_INFO',
                 'value': 1245188
             },
             {
-                'name': 'STATE_TIME_CURRENT_2',
+                'name': 'TIME_CURRENT_2',
                 'value': 202571781
             },
             {
-                'name': 'STATE_TIME_COMMUNICATING_2',
+                'name': 'TIME_COMMUNICATING_2',
                 'value': 202571782
             },
             {
-                'name': 'STATE_TIME_START_2',
+                'name': 'TIME_START_2',
                 'value': 202571783
             },
             {
-                'name': 'STATE_CAN_COMM',
+                'name': 'CAN_COMM',
                 'value': 1245200
             },
             {
-                'name': 'STATE_FLEX_RAY_COMM',
+                'name': 'FLEX_RAY_COMM',
                 'value': 1245216
             },
             {
-                'name': 'STATE_FLEX_RAY_STATS',
+                'name': 'FLEX_RAY_STATS',
                 'value': 135462945
             },
             {
-                'name': 'STATE_LIN_COMM',
+                'name': 'LIN_COMM',
                 'value': 1245232
             },
             {
-                'name': 'STATE_J1939_COMM',
+                'name': 'J1939_COMM',
                 'value': 1245248
             }
         ]
@@ -3104,15 +3104,15 @@ enums = {
     'SessionInfoState': {
         'values': [
             {
-                'name': 'SESSION_INFO_STATE_STOPPED',
+                'name': 'STOPPED',
                 'value': 0
             },
             {
-                'name': 'SESSION_INFO_STATE_STARTED',
+                'name': 'STARTED',
                 'value': 1
             },
             {
-                'name': 'SESSION_INFO_STATE_MIX',
+                'name': 'MIX',
                 'value': 2
             }
         ]
@@ -3120,19 +3120,19 @@ enums = {
     'StartStopScope': {
         'values': [
             {
-                'name': 'START_STOP_NORMAL',
+                'name': 'NORMAL',
                 'value': 0
             },
             {
-                'name': 'START_STOP_SESSION_ONLY',
+                'name': 'SESSION_ONLY',
                 'value': 1
             },
             {
-                'name': 'START_STOP_INTERFACE_ONLY',
+                'name': 'INTERFACE_ONLY',
                 'value': 2
             },
             {
-                'name': 'START_STOP_SESSION_ONLY_BLOCKING',
+                'name': 'SESSION_ONLY_BLOCKING',
                 'value': 3
             }
         ]
@@ -3183,7 +3183,7 @@ enums = {
                 'value': 2
             },
             {
-                'name': 'FRM_FLEX_RAY_CH_ASSIGN_AAND_B',
+                'name': 'FRM_FLEX_RAY_CH_ASSIGN_A_AND_B',
                 'value': 3
             },
             {
@@ -3232,95 +3232,95 @@ enums = {
         'generate-mappings': True,
         'values': [
             {
-                'name': 'TERM_PXI_TRIG_0',
+                'name': 'PXI_TRIG_0',
                 'value': 'PXI_Trig0'
             },
             {
-                'name': 'TERM_PXI_TRIG_1',
+                'name': 'PXI_TRIG_1',
                 'value': 'PXI_Trig1'
             },
             {
-                'name': 'TERM_PXI_TRIG_2',
+                'name': 'PXI_TRIG_2',
                 'value': 'PXI_Trig2'
             },
             {
-                'name': 'TERM_PXI_TRIG_3',
+                'name': 'PXI_TRIG_3',
                 'value': 'PXI_Trig3'
             },
             {
-                'name': 'TERM_PXI_TRIG_4',
+                'name': 'PXI_TRIG_4',
                 'value': 'PXI_Trig4'
             },
             {
-                'name': 'TERM_PXI_TRIG_5',
+                'name': 'PXI_TRIG_5',
                 'value': 'PXI_Trig5'
             },
             {
-                'name': 'TERM_PXI_TRIG_6',
+                'name': 'PXI_TRIG_6',
                 'value': 'PXI_Trig6'
             },
             {
-                'name': 'TERM_PXI_TRIG_7',
+                'name': 'PXI_TRIG_7',
                 'value': 'PXI_Trig7'
             },
             {
-                'name': 'TERM_FRONT_PANEL_0',
+                'name': 'FRONT_PANEL_0',
                 'value': 'FrontPanel0'
             },
             {
-                'name': 'TERM_FRONT_PANEL_1',
+                'name': 'FRONT_PANEL_1',
                 'value': 'FrontPanel1'
             },
             {
-                'name': 'TERM_PXI_STAR',
+                'name': 'PXI_STAR',
                 'value': 'PXI_Star'
             },
             {
-                'name': 'TERM_PXI_CLK_10',
+                'name': 'PXI_CLK_10',
                 'value': 'PXI_Clk10'
             },
             {
-                'name': 'TERM_10_MHZ_TIMEBASE',
+                'name': '10_MHZ_TIMEBASE',
                 'value': '10MHzTimebase'
             },
             {
-                'name': 'TERM_1_MHZ_TIMEBASE',
+                'name': '1_MHZ_TIMEBASE',
                 'value': '1MHzTimebase'
             },
             {
-                'name': 'TERM_MASTER_TIMEBASE',
+                'name': 'MASTER_TIMEBASE',
                 'value': 'MasterTimebase'
             },
             {
-                'name': 'TERM_COMM_TRIGGER',
+                'name': 'COMM_TRIGGER',
                 'value': 'CommTrigger'
             },
             {
-                'name': 'TERM_START_TRIGGER',
+                'name': 'START_TRIGGER',
                 'value': 'StartTrigger'
             },
             {
-                'name': 'TERM_FLEX_RAY_START_CYCLE',
+                'name': 'FLEX_RAY_START_CYCLE',
                 'value': 'FlexRayStartCycle'
             },
             {
-                'name': 'TERM_FLEX_RAY_MACROTICK',
+                'name': 'FLEX_RAY_MACROTICK',
                 'value': 'FlexRayMacrotick'
             },
             {
-                'name': 'TERM_LOG_TRIGGER',
+                'name': 'LOG_TRIGGER',
                 'value': 'LogTrigger'
             },
             {
-                'name': 'TERM_TIME_TRIGGER',
+                'name': 'TIME_TRIGGER',
                 'value': 'TimeTrigger'
             },
             {
-                'name': 'TERM_NETWORK_TIME_PPS',
+                'name': 'NETWORK_TIME_PPS',
                 'value': 'NetworkTimePPS'
             },
             {
-                'name': 'TERM_NETWORK_TIME_1_MHZ',
+                'name': 'NETWORK_TIME_1_MHZ',
                 'value': 'NetworkTime1MHz'
             }
         ]
@@ -3328,11 +3328,11 @@ enums = {
     'TimeOut': {
         'values': [
             {
-                'name': 'TIMEOUT_NONE',
+                'name': 'NONE',
                 'value': 0
             },
             {
-                'name': 'TIMEOUT_INFINITE',
+                'name': 'INFINITE',
                 'value': -1
             }
         ]
@@ -3340,11 +3340,11 @@ enums = {
     'TimeScale': {
         'values': [
             {
-                'name': 'TIMESCALE_LOCAL_TIME',
+                'name': 'LOCAL_TIME',
                 'value': 0
             },
             {
-                'name': 'TIMESCALE_NETWORK_TIME',
+                'name': 'NETWORK_TIME',
                 'value': 1
             }
         ]
@@ -3352,19 +3352,19 @@ enums = {
     'WaitCondition': {
         'values': [
             {
-                'name': 'CONDITION_TRANSMIT_COMPLETE',
+                'name': 'TRANSMIT_COMPLETE',
                 'value': 32769
             },
             {
-                'name': 'CONDITION_INTF_COMMUNICATING',
+                'name': 'INTF_COMMUNICATING',
                 'value': 32770
             },
             {
-                'name': 'CONDITION_INTF_REMOTE_WAKEUP',
+                'name': 'INTF_REMOTE_WAKEUP',
                 'value': 32771
             },
             {
-                'name': 'CONDITION_ETHERNET_SYNCED',
+                'name': 'ETHERNET_SYNCED',
                 'value': 32772
             }
         ]
@@ -3372,28 +3372,28 @@ enums = {
     'WriteState': {
         'values': [
             {
-                'name': 'STATE_LIN_SCHEDULE_CHANGE',
+                'name': 'LIN_SCHEDULE_CHANGE',
                 'value': 1245313
             },
             {
-                'name': 'STATE_LIN_DIAGNOSTIC_SCHEDULE_CHANGE',
+                'name': 'LIN_DIAGNOSTIC_SCHEDULE_CHANGE',
                 'value': 1245315
             },
             {
-                'name': 'STATE_FLEX_RAY_SYMBOL',
+                'name': 'FLEX_RAY_SYMBOL',
                 'value': 1245314
             },
             {
-                'name': 'STATE_ETHERNET_SLEEP',
+                'name': 'ETHERNET_SLEEP',
                 'value': 1245316
             },
             {
-                'name': 'STATE_ETHERNET_WAKE',
+                'name': 'ETHERNET_WAKE',
                 'value': 1245317
             }
         ]
     },
-    'FrameType': {
+    'Protocol': {
         'values': [
             {
                 'name': 'CAN',
