@@ -215,10 +215,12 @@ namespace nixnetsocket_grpc {
       auto stack_ref_grpc_session = request->stack_ref();
       nxIpStackRef_t stack_ref = nx_ip_stack_ref_t_resource_repository_->access_session(stack_ref_grpc_session.id(), stack_ref_grpc_session.name());
       auto node = request->node().c_str();
+      auto node_api = request->node() == "" ? nullptr : node;
       auto service = request->service().c_str();
+      auto service_api = request->service() == "" ? nullptr : service;
       auto hints = convert_from_grpc<nxaddrinfo>(request->hints());
       auto res = allocate_output_storage<nxaddrinfo, google::protobuf::RepeatedPtrField<AddrInfo>>(library_);
-      auto status = library_->GetAddrInfo(stack_ref, node, service, hints, &res);
+      auto status = library_->GetAddrInfo(stack_ref, node_api, service_api, hints, &res);
       response->set_status(status);
       if (status_ok(status)) {
         convert_to_grpc(res, response->mutable_res());

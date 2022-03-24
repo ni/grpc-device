@@ -131,15 +131,15 @@ int32_t NiXnetSocketLibrary::FreeAddrInfo(nxaddrinfo* res)
   return function_pointers_.FreeAddrInfo(res);
 }
 
-int32_t NiXnetSocketLibrary::GetAddrInfo(nxIpStackRef_t stack_ref, const char node[], const char service[], nxaddrinfo* hints, nxaddrinfo** res)
+int32_t NiXnetSocketLibrary::GetAddrInfo(nxIpStackRef_t stack_ref, const char node_api[], const char service_api[], nxaddrinfo* hints, nxaddrinfo** res)
 {
   if (!function_pointers_.GetAddrInfo) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxgetaddrinfo.");
   }
 #if defined(_MSC_VER)
-  return nxgetaddrinfo(stack_ref, node, service, hints, res);
+  return nxgetaddrinfo(stack_ref, node_api, service_api, hints, res);
 #else
-  return function_pointers_.GetAddrInfo(stack_ref, node, service, hints, res);
+  return function_pointers_.GetAddrInfo(stack_ref, node_api, service_api, hints, res);
 #endif
 }
 

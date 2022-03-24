@@ -21,7 +21,7 @@ class NiXnetSocketLibraryInterface {
   virtual int32_t InetAToN(nxIpStackRef_t stack_ref, const char cp[], nxin_addr* name) = 0;
   virtual int32_t InetPToN(nxIpStackRef_t stack_ref, int32_t af, const char src[], void* dst) = 0;
   virtual int32_t FreeAddrInfo(nxaddrinfo* res) = 0;
-  virtual int32_t GetAddrInfo(nxIpStackRef_t stack_ref, const char node[], const char service[], nxaddrinfo* hints, nxaddrinfo** res) = 0;
+  virtual int32_t GetAddrInfo(nxIpStackRef_t stack_ref, const char node_api[], const char service_api[], nxaddrinfo* hints, nxaddrinfo** res) = 0;
   virtual int32_t GetNameInfo(nxIpStackRef_t stack_ref, nxsockaddr* addr, nxsocklen_t addr_len, char host[], nxsocklen_t host_len, char serv[], nxsocklen_t serv_len, int32_t flags) = 0;
   virtual int32_t Listen(nxSOCKET socket, int32_t backlog) = 0;
   virtual int32_t SendTo(nxSOCKET socket, char dataptr[], int32_t size, int32_t flags, nxsockaddr* to, nxsocklen_t tolen) = 0;
