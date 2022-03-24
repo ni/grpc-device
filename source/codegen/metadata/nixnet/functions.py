@@ -97,7 +97,7 @@ functions = {
                 'type': 'u8[]',
                 'grpc_type': 'repeated FrameBufferResponse',
                 'supports_standard_copy_convert': True,
-                'additional_arguments_to_copy_convert': ['number_of_bytes_returned', 'protocol']
+                'additional_arguments_to_copy_convert': ['number_of_bytes_returned', 'protocol', 'enetflags_output_map_']
             },
             {
                 'direction': 'in',
@@ -128,7 +128,8 @@ functions = {
                 'type': 'u8',
                 'pointer': True,
                 'grpc_type': 'repeated FrameBufferRequest',
-                'supports_standard_copy_convert': True
+                'supports_standard_copy_convert': True,
+                'additional_arguments_to_copy_convert': ['enetflags_input_map_']
             },
             {
                 'direction': 'in',
@@ -173,7 +174,8 @@ functions = {
                 'type': 'u8',
                 'pointer': True,
                 'grpc_type': 'repeated FrameBufferRequest',
-                'supports_standard_copy_convert': True
+                'supports_standard_copy_convert': True,
+                'additional_arguments_to_copy_convert': ['enetflags_input_map_']
             },
             {
                 'direction': 'in',
@@ -267,7 +269,7 @@ functions = {
                 'type': 'u8[]',
                 'grpc_type': 'repeated FrameBufferResponse',
                 'supports_standard_copy_convert': True,
-                'additional_arguments_to_copy_convert': ['number_of_bytes_returned', 'protocol']
+                'additional_arguments_to_copy_convert': ['number_of_bytes_returned', 'protocol', 'enetflags_output_map_']
             },
             {
                 'direction': 'in',
@@ -1080,7 +1082,7 @@ functions = {
                 'type': 'u8[]',
                 'grpc_type': 'repeated FrameBufferResponse',
                 'supports_standard_copy_convert': True,
-                'additional_arguments_to_copy_convert': ['number_of_bytes_returned', 'protocol']
+                'additional_arguments_to_copy_convert': ['number_of_bytes_returned', 'protocol', 'enetflags_output_map_']
             },
             {
                 'direction': 'in',
@@ -1561,7 +1563,8 @@ functions = {
                 'type': 'u8',
                 'pointer': True,
                 'grpc_type': 'repeated FrameBufferRequest',
-                'supports_standard_copy_convert': True
+                'supports_standard_copy_convert': True,
+                'additional_arguments_to_copy_convert': ['enetflags_input_map_']
             },
             {
                 'direction': 'in',

@@ -194,7 +194,7 @@ namespace nixnet_grpc {
       auto status = library_->ConvertByteArrayToFramesSinglePoint(session_ref, value_buffer, size_of_value_buffer, buffer.data(), size_of_buffer, &number_of_bytes_returned);
       response->set_status(status);
       if (status_ok(status)) {
-        convert_to_grpc(buffer, response->mutable_buffer(), number_of_bytes_returned, protocol);
+        convert_to_grpc(buffer, response->mutable_buffer(), number_of_bytes_returned, protocol, enetflags_output_map_);
       }
       return ::grpc::Status::OK;
     }
@@ -213,7 +213,7 @@ namespace nixnet_grpc {
     try {
       auto session_ref_grpc_session = request->session_ref();
       nxSessionRef_t session_ref = session_repository_->access_session(session_ref_grpc_session.id(), session_ref_grpc_session.name());
-      auto frame_buffer = convert_from_grpc<u8>(request->frame_buffer());
+      auto frame_buffer = convert_from_grpc<u8>(request->frame_buffer(), enetflags_input_map_);
       auto number_of_bytes_for_frames = frame_buffer.size();
       u32 size_of_value_buffer = request->size_of_value_buffer();
       std::string value_buffer(size_of_value_buffer, '\0');
@@ -240,7 +240,7 @@ namespace nixnet_grpc {
       auto session_ref_grpc_session = request->session_ref();
       nxSessionRef_t session_ref = session_repository_->access_session(session_ref_grpc_session.id(), session_ref_grpc_session.name());
       u32 number_of_signals = request->number_of_signals();
-      auto frame_buffer = convert_from_grpc<u8>(request->frame_buffer());
+      auto frame_buffer = convert_from_grpc<u8>(request->frame_buffer(), enetflags_input_map_);
       auto number_of_bytes_for_frames = frame_buffer.size();
       auto size_of_value_buffer = number_of_signals * sizeof(f64);
       auto size_of_timestamp_buffer = number_of_signals * sizeof(f64);
@@ -295,7 +295,7 @@ namespace nixnet_grpc {
       auto status = library_->ConvertSignalsToFramesSinglePoint(session_ref, value_buffer, size_of_value_buffer, buffer.data(), size_of_buffer, &number_of_bytes_returned);
       response->set_status(status);
       if (status_ok(status)) {
-        convert_to_grpc(buffer, response->mutable_buffer(), number_of_bytes_returned, protocol);
+        convert_to_grpc(buffer, response->mutable_buffer(), number_of_bytes_returned, protocol, enetflags_output_map_);
       }
       return ::grpc::Status::OK;
     }
@@ -1098,7 +1098,7 @@ namespace nixnet_grpc {
       auto status = library_->ReadFrame(session_ref, buffer.data(), size_of_buffer, timeout, &number_of_bytes_returned);
       response->set_status(status);
       if (status_ok(status)) {
-        convert_to_grpc(buffer, response->mutable_buffer(), number_of_bytes_returned, protocol);
+        convert_to_grpc(buffer, response->mutable_buffer(), number_of_bytes_returned, protocol, enetflags_output_map_);
       }
       return ::grpc::Status::OK;
     }
@@ -1450,7 +1450,7 @@ namespace nixnet_grpc {
     try {
       auto session_ref_grpc_session = request->session_ref();
       nxSessionRef_t session_ref = session_repository_->access_session(session_ref_grpc_session.id(), session_ref_grpc_session.name());
-      auto buffer = convert_from_grpc<u8>(request->buffer());
+      auto buffer = convert_from_grpc<u8>(request->buffer(), enetflags_input_map_);
       auto number_of_bytes_for_frames = buffer.size();
       f64 timeout;
       switch (request->timeout_enum_case()) {

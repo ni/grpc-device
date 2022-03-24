@@ -245,7 +245,7 @@ message FrameRequest {
      FrameType type = 3;
      uint32 type_raw = 4;
   }
-  uint32 flags = 5;
+  repeated FrameFlags flags = 5;
   uint32 info = 6;
   bytes payload = 7;
 }
@@ -255,9 +255,10 @@ message FrameResponse {
   uint32 identifier = 2;
   FrameType type = 3;
   uint32 type_raw = 4;
-  uint32 flags = 5;
-  uint32 info = 6;
-  bytes payload = 7;
+  repeated FrameFlags flags = 5;
+  uint32 flags_raw = 6;
+  uint32 info = 7;
+  bytes payload = 8;
 }
 
 message EnetFrameRequest {
@@ -267,7 +268,7 @@ message EnetFrameRequest {
   }
   uint64 device_timestamp = 3;
   uint64 network_timestamp = 4;
-  uint32 flags = 5;
+  repeated EnetFlags flags = 5;
   bytes frame_data = 6;
 }
 
@@ -276,8 +277,9 @@ message EnetFrameResponse {
   uint32 type_raw = 2;
   uint64 device_timestamp = 3;
   uint64 network_timestamp = 4;
-  uint32 flags = 5;
-  bytes frame_data = 6;
+  repeated EnetFlags flags= 5;
+  uint32 flags_raw = 6;
+  bytes frame_data = 7;
 }
 
 message FrameBufferRequest {

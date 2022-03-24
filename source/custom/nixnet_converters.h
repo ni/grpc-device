@@ -11,7 +11,7 @@ namespace nixnet_grpc {
 constexpr auto ENET_FRAME_HEADER_LENGTH = static_cast<u16>(sizeof(nxFrameEnet_t) -1); // last byte in nxFrameEnet_t is u8 FrameData[1]
 
 struct FrameHolder {
-  FrameHolder(const pb_::RepeatedPtrField<FrameBufferRequest>& input)
+  FrameHolder(const pb_::RepeatedPtrField<FrameBufferRequest>& input, std::map<std::int32_t, std::int32_t> enetflags_input_map)
   {
     // all frames in repeated field must be of same type
     switch (input[0].frame_case()) {
@@ -28,7 +28,7 @@ struct FrameHolder {
         InitializeJ1939Frames(input);
         break;
       case FrameBufferRequest::kEnet:
-        InitializeEnetFrames(input);
+        InitializeEnetFrames(input, enetflags_input_map);
         break;
       default:
         throw std::invalid_argument("The value for FrameBufferRequest not specified or not supported");
@@ -88,7 +88,7 @@ struct FrameHolder {
     }
   }
 
-  void InitializeEnetFrames(const pb_::RepeatedPtrField<FrameBufferRequest>& input)
+  void InitializeEnetFrames(const pb_::RepeatedPtrField<FrameBufferRequest>& input, std::map<std::int32_t, std::int32_t> enetflags_input_map)
   {
     std::vector<uint8_t> frame_data;
     for (auto grpc_frame : input) {
@@ -105,7 +105,15 @@ struct FrameHolder {
       current_frame->Type = grpc_frame.enet().type();
       current_frame->DeviceTimestamp = grpc_frame.enet().device_timestamp();
       current_frame->NetworkTimestamp = grpc_frame.enet().network_timestamp();
-      current_frame->Flags = grpc_frame.enet().flags();
+      current_frame->Flags = 0;
+      for(int i=0; i<grpc_frame.enet().flags_size(); i++)
+      {
+        auto enet_flags_enum_imap_it = enetflags_input_map.find(grpc_frame.enet().flags()[i]);
+        if(enet_flags_enum_imap_it == enetflags_input_map.end()) {
+          return throw std::invalid_argument("The value for destination_mapped was not specified or out of range.");
+        }
+        current_frame->Flags = current_frame->Flags | enet_flags_enum_imap_it->second;
+      }
       std::memcpy(
           current_frame->FrameData,
           grpc_frame.enet().frame_data().data(),
@@ -136,7 +144,11 @@ struct FrameHolder {
           throw std::invalid_argument("The value for type was not specified or out of range");
         }
       }
-    current_frame->Flags = input.flags();
+    current_frame->Flags = 0;
+    for(int i=0; i<input.flags_size(); i++)
+    {
+      current_frame->Flags = current_frame->Flags | input.flags()[i];
+    }
     current_frame->Info = input.info();
     nxFrameSetPayloadLength(current_frame, payload_length);
     std::memcpy(
@@ -168,16 +180,16 @@ struct FrameHolder {
   std::vector<uint8_t> frame_buffer;
 };
 
-void convert_to_grpc(std::vector<u8>& input, google::protobuf::RepeatedPtrField<nixnet_grpc::FrameBufferResponse>* output, u32 number_of_bytes, u32 frame_type);
+void convert_to_grpc(std::vector<u8>& input, google::protobuf::RepeatedPtrField<nixnet_grpc::FrameBufferResponse>* output, u32 number_of_bytes, u32 protocol, std::map<std::int32_t, std::int32_t> enetflags_output_map);
 
-void convert_to_grpc(const void* input, nixnet_grpc::FrameBufferResponse* output, u32 frame_type);
+void convert_to_grpc(const void* input, nixnet_grpc::FrameBufferResponse* output, u32 protocol, std::map<std::int32_t, std::int32_t> enetflags_output_map);
 
 u32 get_frame_buffer_size(int32 number_of_frames, u32 max_payload_size, u32 protocol);
 
 template <typename TFrame>
-nixnet_grpc::FrameHolder convert_from_grpc(const pb_::RepeatedPtrField<nixnet_grpc::FrameBufferRequest>& input)
+nixnet_grpc::FrameHolder convert_from_grpc(const pb_::RepeatedPtrField<nixnet_grpc::FrameBufferRequest>& input,  std::map<std::int32_t, std::int32_t> enetflags_input_map)
 {
-  return nixnet_grpc::FrameHolder(input);
+  return nixnet_grpc::FrameHolder(input, enetflags_input_map);
 }
 
 void convert_to_grpc(std::vector<f64>& input, google::protobuf::RepeatedField<double>* output, u32 number_of_values_returned, u32 number_of_signals);
