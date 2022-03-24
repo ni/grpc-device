@@ -524,7 +524,7 @@ TEST_F(NiXnetSocketLoopbackTests, NumericPortTranslation_GetAddrInfo_ReturnsExpe
       GetAddrInfoFlags::GET_ADDR_INFO_FLAGS_NUMERICHOST |
       GetAddrInfoFlags::GET_ADDR_INFO_FLAGS_NUMERICSERV |
       GetAddrInfoFlags::GET_ADDR_INFO_FLAGS_PASSIVE;
-  hints.set_flags(flags);
+  hints.set_flags_raw(flags);
   const auto addr_info_response = client::get_addr_info(stub(), stack.stack_ref(), "", PORT, hints);
 
   EXPECT_SUCCESS(addr_info_response);
