@@ -9,6 +9,9 @@
 
 #include "device_server.h"
 #include "enumerate_devices.h"
+#if defined(__linux__)
+  #include <netinet/in.h>
+#endif
 
 using namespace nixnetsocket_grpc;
 namespace client = nixnetsocket_grpc::experimental::client;
