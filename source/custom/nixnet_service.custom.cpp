@@ -26,12 +26,15 @@ inline bool status_ok(int32 status)
 // Helper to read fields of u32 returned by nxReadState of nxState_CANComm and set them on gRPC message
 void SetCanCommResponse(const u32& input, nixnet_grpc::CanCommResponse* output)
 {
-  output->set_comm_state(static_cast<nixnet_grpc::CanCommState>(input));
-  output->set_comm_state_raw(nxCANComm_Get_CommState(input));
+  u32 comm_state = nxCANComm_Get_CommState(input);
+  u32 last_error = nxCANComm_Get_LastErr(input);
+
+  output->set_comm_state(static_cast<nixnet_grpc::CanCommState>(comm_state));
+  output->set_comm_state_raw(comm_state);
   output->set_transceiver_error(nxCANComm_Get_TcvrErr(input));
   output->set_sleep(nxCANComm_Get_Sleep(input));
-  output->set_last_error(static_cast<nixnet_grpc::CanLastErr>(input));
-  output->set_last_error_raw(nxCANComm_Get_LastErr(input));
+  output->set_last_error(static_cast<nixnet_grpc::CanLastErr>(last_error));
+  output->set_last_error_raw(last_error);
   output->set_transmit_error_counter(nxCANComm_Get_TxErrCount(input));
   output->set_receive_error_counter(nxCANComm_Get_RxErrCount(input));
 }
@@ -39,8 +42,10 @@ void SetCanCommResponse(const u32& input, nixnet_grpc::CanCommResponse* output)
 // Helper to read fields of u32 returned by nxReadState of nxState_FlexRayComm and set them on gRPC message
 void SetFlexRayCommResponse(const u32& input, nixnet_grpc::FlexRayCommResponse* output)
 {
-  output->set_poc_state(static_cast<nixnet_grpc::FlexRayPocState>(input));
-  output->set_poc_state_raw(nxFlexRayComm_Get_POCState(input));
+  u32 poc_state = nxFlexRayComm_Get_POCState(input);
+
+  output->set_poc_state(static_cast<nixnet_grpc::FlexRayPocState>(poc_state));
+  output->set_poc_state_raw(poc_state);
   output->set_clock_correction_failed(nxFlexRayComm_Get_ClockCorrFailed(input));
   output->set_passive_to_active_count(nxFlexRayComm_Get_PassiveToActiveCount(input));
   output->set_channel_a_sleep(nxFlexRayComm_Get_ChannelASleep(input));
@@ -50,9 +55,11 @@ void SetFlexRayCommResponse(const u32& input, nixnet_grpc::FlexRayCommResponse* 
 // Helper to read two fields of u32 returned by nxReadState of nxState_LINComm and set them on gRPC message
 void SetLinCommResponse(const u32* input, nixnet_grpc::LinCommResponse* output)
 {
+  u32 comm_state = nxLINComm_Get_CommState(input[0]);
+  
   output->set_sleep(nxLINComm_Get_Sleep(input[0]));
-  output->set_comm_state(static_cast<nixnet_grpc::LinCommState>(input[0]));
-  output->set_comm_state_raw(nxLINComm_Get_CommState(input[0]));
+  output->set_comm_state(static_cast<nixnet_grpc::LinCommState>(comm_state));
+  output->set_comm_state_raw(comm_state);
   output->set_last_error(nxLINComm_Get_LastErrCode(input[0]));
   output->set_last_error_received(nxLINComm_Get_LastErrReceived(input[0]));
   output->set_last_error_expected(nxLINComm_Get_LastErrExpected(input[0]));
@@ -105,12 +112,31 @@ u32 GetStateSize(u32 state_id)
       break;
     }
     default: {
-      return ::grpc::INVALID_ARGUMENT;
+      throw std::invalid_argument("The value for state_id was not specified or out of range");
     }
   }
   return state_size;
 }
 
+// Helper to get the LinDiagnosticScheduleChange value
+u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
+{
+  u32 state_value;
+  switch (request->state_value().lin_diagnostic_schedule_change().schedule_enum_case()) {
+        case nixnet_grpc::LinDiagnosticScheduleChangeRequest::ScheduleEnumCase::kSchedule :{
+          state_value = static_cast<u32>(request->state_value().lin_diagnostic_schedule_change().schedule());
+          break;
+        }
+        case nixnet_grpc::LinDiagnosticScheduleChangeRequest::ScheduleEnumCase::kScheduleRaw :{
+          state_value = static_cast<u32>(request->state_value().lin_diagnostic_schedule_change().schedule_raw());
+          break;
+        }
+        case nixnet_grpc::LinDiagnosticScheduleChangeRequest::ScheduleEnumCase::SCHEDULE_ENUM_NOT_SET: {
+          throw std::invalid_argument("The value for Lin Diagnostic Schedule Change was not specified or out of range");
+        }
+        }
+  return state_value;
+}
 
 //---------------------------------------------------------------------
 //---------------------------------------------------------------------
@@ -143,10 +169,6 @@ u32 GetStateSize(u32 state_id)
     }
 
     u32 state_size = GetStateSize(state_id);
-    // Since GetStateSize returns only u32, in case of error, we are returning a meaningful message
-    if (state_size == ::grpc::INVALID_ARGUMENT) {
-      return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for state_id was not specified or out of range");
-    }
     response->mutable_state_value()->mutable_state_value_raw()->resize(state_size, 0);
     nxStatus_t fault{};
 
@@ -268,20 +290,8 @@ u32 GetStateSize(u32 state_id)
         if (state_id != nixnet_grpc::WriteState::WRITE_STATE_STATE_LIN_DIAGNOSTIC_SCHEDULE_CHANGE) {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "StateValue for specified StateID is not set");
         }
-        switch (request->state_value().lin_diagnostic_schedule_change().schedule_enum_case()) {
-        case nixnet_grpc::LinDiagnosticScheduleChangeRequest::ScheduleEnumCase::kSchedule :{
-          state_value = static_cast<u32>(request->state_value().lin_diagnostic_schedule_change().schedule());
-          break;
-        }
-        case nixnet_grpc::LinDiagnosticScheduleChangeRequest::ScheduleEnumCase::kScheduleRaw :{
-          state_value = static_cast<u32>(request->state_value().lin_diagnostic_schedule_change().schedule_raw());
-          break;
-        }
-        case nixnet_grpc::LinDiagnosticScheduleChangeRequest::ScheduleEnumCase::SCHEDULE_ENUM_NOT_SET: {
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for Lin Diagnostic Schedule Change was not specified or out of range");
-          break;
-        }
-        }
+        state_value = GetLinDiagnosticScheduleChangeValue(request);
+        break;
       }
       case nixnet_grpc::WriteStateValue::ValueCase::kEthernetSleep: {
         if (state_id != nixnet_grpc::WriteState::WRITE_STATE_STATE_ETHERNET_SLEEP) {

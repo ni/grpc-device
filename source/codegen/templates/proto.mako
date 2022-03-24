@@ -8,8 +8,8 @@ functions = data["functions"]
 
 service_class_prefix = config["service_class_prefix"]
 additional_enums = config.get("add_enums_to_proto",[])
-function_enums = common_helpers.get_function_enums(functions, enums)
-function_enums.extend(additional_enums)
+enum_names = common_helpers.get_function_enums(functions, enums)
+enum_names.extend(additional_enums)
 external_proto_deps = common_helpers.list_external_proto_dependencies(functions)
 %>\
 <%namespace name="mako_helper" file="/proto_helpers.mako"/>\
@@ -51,7 +51,7 @@ service ${service_class_prefix} {
 ${mako_helper.define_attribute_enum(group.name, define_attribute_enum, attributes, config)}\
 %   endfor
 % endfor
-${mako_helper.define_function_enums(function_enums)}\
+${mako_helper.define_function_enums(enum_names)}\
 ${mako_helper.insert_custom_template_if_found()}\
 % for custom_type in common_helpers.get_custom_types(config):
 ${mako_helper.define_custom_type(custom_type)}\

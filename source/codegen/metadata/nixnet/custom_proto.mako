@@ -67,7 +67,7 @@ message ReadStateValue {
     TimeLocalNetwork time_communicating2 = 11;
     TimeLocalNetwork time_start2 = 12;
   }
-  bytes state_value_raw = 14;
+  bytes state_value_raw = 13;
 }
 
 message LinDiagnosticScheduleChangeRequest {

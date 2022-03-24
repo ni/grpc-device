@@ -1102,7 +1102,7 @@ enums = {
             }
         ]
     },
-    'FrameType': {
+    'FrameTypes': {
         'values': [
             {
                 'name': 'FRAME_TYPE_CAN_DATA',
