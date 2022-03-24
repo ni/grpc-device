@@ -25,9 +25,9 @@ If they are not passed in as command line arguments, then by default the server 
 "localhost:31763"
 """
 
-from datetime import datetime
 import sys
 import time
+from datetime import datetime
 
 import grpc
 import nixnet_pb2 as nixnet_types
