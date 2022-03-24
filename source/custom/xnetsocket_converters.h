@@ -625,10 +625,12 @@ inline AddrInfoHintInputConverter convert_from_grpc(const AddrInfoHint& input)
 
 inline void convert_to_addr_info_flags(int32_t flags, pb_::RepeatedField<int32_t>& get_addr_info_flags)
 {
-  int flag_to_check = GetAddrInfoFlags::GET_ADDR_INFO_FLAGS_BYPASS_CACHE;
+  int flag_to_check = GetAddrInfoFlags_MAX;
   while (flag_to_check != 0) {
     if (flags & flag_to_check) {
-      get_addr_info_flags.Add(flag_to_check);
+      if (GetAddrInfoFlags_IsValid(flag_to_check)) {
+        get_addr_info_flags.Add(flag_to_check);
+      }
     }
     flag_to_check >>= 1;
   }
