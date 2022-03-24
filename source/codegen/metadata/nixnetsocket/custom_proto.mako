@@ -76,11 +76,23 @@ message Linger {
   int32 l_linger = 2;
 }
 
+message IPMReq {
+  IPv4Addr imr_multiaddr = 1;
+  IPv4Addr imr_interface = 2;
+}
+
+message IPv6MReq {
+  IPv6Addr ipv6mr_multiaddr = 1;
+  int32 ipv6mr_interface = 2;
+}
+
 message SockOptData {
   oneof data {
     int32 data_int32 = 1;
     bool data_bool = 2;
     string data_string = 3;
     Linger data_linger = 4;
+    IPMReq data_ip_mreq = 5;
+    IPv6MReq data_ipv6_mreq = 6;
   }
 }

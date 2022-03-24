@@ -111,6 +111,13 @@ def _create_standard_arg(parameter):
         return f"&{parameter_name}_copy, "
     elif not is_array and is_output:
         return f"&{parameter_name}, "
+    elif (
+        not is_array
+        and not is_output
+        and "pointer" in parameter
+        and "input_passed_by_ptr" in parameter
+    ):
+        return f"&{parameter_name}, "
     return f"{parameter_name}, "
 
 

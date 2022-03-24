@@ -61,6 +61,7 @@ NiXnetLibrary::NiXnetLibrary() : shared_library_(kLibraryName)
   function_pointers_.ReadFrame = reinterpret_cast<ReadFramePtr>(shared_library_.get_function_pointer("nxReadFrame"));
   function_pointers_.ReadSignalSinglePoint = reinterpret_cast<ReadSignalSinglePointPtr>(shared_library_.get_function_pointer("nxReadSignalSinglePoint"));
   function_pointers_.ReadSignalWaveform = reinterpret_cast<ReadSignalWaveformPtr>(shared_library_.get_function_pointer("nxReadSignalWaveform"));
+  function_pointers_.ReadSignalXY = reinterpret_cast<ReadSignalXYPtr>(shared_library_.get_function_pointer("nxReadSignalXY"));
   function_pointers_.ReadState = reinterpret_cast<ReadStatePtr>(shared_library_.get_function_pointer("nxReadState"));
   function_pointers_.ReadStateTimeTrigger = reinterpret_cast<ReadStateTimeTriggerPtr>(shared_library_.get_function_pointer("nxReadStateTimeTrigger"));
   function_pointers_.SetProperty = reinterpret_cast<SetPropertyPtr>(shared_library_.get_function_pointer("nxSetProperty"));
@@ -566,6 +567,18 @@ nxStatus_t NiXnetLibrary::ReadSignalWaveform(nxSessionRef_t sessionRef, f64 time
   return nxReadSignalWaveform(sessionRef, timeout, startTime, deltaTime, valueBuffer, sizeOfValueBuffer, numberOfValuesReturned);
 #else
   return function_pointers_.ReadSignalWaveform(sessionRef, timeout, startTime, deltaTime, valueBuffer, sizeOfValueBuffer, numberOfValuesReturned);
+#endif
+}
+
+nxStatus_t NiXnetLibrary::ReadSignalXY(nxSessionRef_t sessionRef, nxTimestamp100ns_t* timeLimit, f64 valueBuffer[], u32 sizeOfValueBuffer, nxTimestamp100ns_t timestampBuffer[], u32 sizeOfTimestampBuffer, u32 numPairsBuffer[], u32 sizeOfNumPairsBuffer)
+{
+  if (!function_pointers_.ReadSignalXY) {
+    throw nidevice_grpc::LibraryLoadException("Could not find nxReadSignalXY.");
+  }
+#if defined(_MSC_VER)
+  return nxReadSignalXY(sessionRef, timeLimit, valueBuffer, sizeOfValueBuffer, timestampBuffer, sizeOfTimestampBuffer, numPairsBuffer, sizeOfNumPairsBuffer);
+#else
+  return function_pointers_.ReadSignalXY(sessionRef, timeLimit, valueBuffer, sizeOfValueBuffer, timestampBuffer, sizeOfTimestampBuffer, numPairsBuffer, sizeOfNumPairsBuffer);
 #endif
 }
 

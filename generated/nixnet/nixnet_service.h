@@ -85,6 +85,7 @@ public:
   ::grpc::Status ReadFrame(::grpc::ServerContext* context, const ReadFrameRequest* request, ReadFrameResponse* response) override;
   ::grpc::Status ReadSignalSinglePoint(::grpc::ServerContext* context, const ReadSignalSinglePointRequest* request, ReadSignalSinglePointResponse* response) override;
   ::grpc::Status ReadSignalWaveform(::grpc::ServerContext* context, const ReadSignalWaveformRequest* request, ReadSignalWaveformResponse* response) override;
+  ::grpc::Status ReadSignalXY(::grpc::ServerContext* context, const ReadSignalXYRequest* request, ReadSignalXYResponse* response) override;
   ::grpc::Status ReadState(::grpc::ServerContext* context, const ReadStateRequest* request, ReadStateResponse* response) override;
   ::grpc::Status ReadStateTimeTrigger(::grpc::ServerContext* context, const ReadStateTimeTriggerRequest* request, ReadStateTimeTriggerResponse* response) override;
   ::grpc::Status SetProperty(::grpc::ServerContext* context, const SetPropertyRequest* request, SetPropertyResponse* response) override;

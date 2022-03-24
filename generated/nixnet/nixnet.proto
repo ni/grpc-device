@@ -56,6 +56,7 @@ service NiXnet {
   rpc ReadFrame(ReadFrameRequest) returns (ReadFrameResponse);
   rpc ReadSignalSinglePoint(ReadSignalSinglePointRequest) returns (ReadSignalSinglePointResponse);
   rpc ReadSignalWaveform(ReadSignalWaveformRequest) returns (ReadSignalWaveformResponse);
+  rpc ReadSignalXY(ReadSignalXYRequest) returns (ReadSignalXYResponse);
   rpc ReadState(ReadStateRequest) returns (ReadStateResponse);
   rpc ReadStateTimeTrigger(ReadStateTimeTriggerRequest) returns (ReadStateTimeTriggerResponse);
   rpc SetProperty(SetPropertyRequest) returns (SetPropertyResponse);
@@ -1223,10 +1224,11 @@ message ConnectTerminalsResponse {
 message ConvertByteArrayToFramesSinglePointRequest {
   nidevice_grpc.Session session_ref = 1;
   bytes value_buffer = 2;
-  uint32 size_of_buffer = 3;
+  uint32 number_of_frames = 3;
+  uint32 max_payload_per_frame = 4;
   oneof frame_type_enum {
-    FrameType frame_type = 4;
-    uint32 frame_type_raw = 5;
+    FrameType frame_type = 5;
+    uint32 frame_type_raw = 6;
   }
 }
 
@@ -1248,9 +1250,8 @@ message ConvertFramesToByteArraySinglePointResponse {
 
 message ConvertFramesToSignalsSinglePointRequest {
   nidevice_grpc.Session session_ref = 1;
-  repeated FrameBuffer frame_buffer = 2;
-  uint32 size_of_value_buffer = 3;
-  uint32 size_of_timestamp_buffer = 4;
+  uint32 number_of_signals = 2;
+  repeated FrameBuffer frame_buffer = 3;
 }
 
 message ConvertFramesToSignalsSinglePointResponse {
@@ -1262,10 +1263,11 @@ message ConvertFramesToSignalsSinglePointResponse {
 message ConvertSignalsToFramesSinglePointRequest {
   nidevice_grpc.Session session_ref = 1;
   repeated double value_buffer = 2;
-  uint32 size_of_buffer = 3;
+  uint32 number_of_frames = 3;
+  uint32 max_payload_per_frame = 4;
   oneof frame_type_enum {
-    FrameType frame_type = 4;
-    uint32 frame_type_raw = 5;
+    FrameType frame_type = 5;
+    uint32 frame_type_raw = 6;
   }
 }
 
@@ -1577,14 +1579,15 @@ message GetSubPropertySizeResponse {
 
 message ReadFrameRequest {
   nidevice_grpc.Session session_ref = 1;
-  uint32 size_of_buffer = 2;
-  oneof timeout_enum {
-    TimeOut timeout = 3;
-    double timeout_raw = 4;
-  }
+  int32 number_of_frames = 2;
+  uint32 max_payload_per_frame = 3;
   oneof frame_type_enum {
-    FrameType frame_type = 5;
-    uint32 frame_type_raw = 6;
+    FrameType frame_type = 4;
+    uint32 frame_type_raw = 5;
+  }
+  oneof timeout_enum {
+    TimeOut timeout = 6;
+    double timeout_raw = 7;
   }
 }
 
@@ -1595,8 +1598,7 @@ message ReadFrameResponse {
 
 message ReadSignalSinglePointRequest {
   nidevice_grpc.Session session_ref = 1;
-  uint32 size_of_value_buffer = 2;
-  uint32 size_of_timestamp_buffer = 3;
+  uint32 number_of_signals = 2;
 }
 
 message ReadSignalSinglePointResponse {
@@ -1611,7 +1613,8 @@ message ReadSignalWaveformRequest {
     TimeOut timeout = 2;
     double timeout_raw = 3;
   }
-  uint32 size_of_value_buffer = 4;
+  uint32 samples_per_signal = 4;
+  uint32 number_of_signals = 5;
 }
 
 message ReadSignalWaveformResponse {
@@ -1619,7 +1622,20 @@ message ReadSignalWaveformResponse {
   uint64 start_time = 2;
   double delta_time = 3;
   repeated double value_buffer = 4;
-  uint32 number_of_values_returned = 5;
+}
+
+message ReadSignalXYRequest {
+  nidevice_grpc.Session session_ref = 1;
+  uint64 time_limit = 2;
+  uint32 samples_per_signal = 3;
+  uint32 number_of_signals = 4;
+}
+
+message ReadSignalXYResponse {
+  int32 status = 1;
+  repeated double value_buffer = 2;
+  repeated uint64 timestamp_buffer = 3;
+  repeated uint32 num_pairs_buffer = 4;
 }
 
 message ReadStateRequest {
