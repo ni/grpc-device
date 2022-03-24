@@ -8,6 +8,7 @@
 
 #include <grpcpp/grpcpp.h>
 #include <nxsocket.h>
+#include "custom/xnetsocket_aliases.h"
 
 namespace nixnetsocket_grpc {
 
@@ -27,12 +28,18 @@ class NiXnetSocketLibraryInterface {
   virtual int32_t GetNameInfo(nxIpStackRef_t stack_ref, nxsockaddr* addr, nxsocklen_t addr_len, char host[], nxsocklen_t host_len, char serv[], nxsocklen_t serv_len, int32_t flags) = 0;
   virtual int32_t GetSockName(nxSOCKET socket, nxsockaddr* addr, nxsocklen_t* addrlen) = 0;
   virtual int32_t GetSockOpt(nxSOCKET socket, int32_t level, int32_t optname, void* optval, nxsocklen_t* optlen) = 0;
+  virtual uint32_t InetAddr(nxIpStackRef_t stack_ref, const char cp[]) = 0;
   virtual int32_t InetAToN(nxIpStackRef_t stack_ref, const char cp[], nxin_addr* name) = 0;
+  virtual char* InetNToA(nxIpStackRef_t stack_ref, nxin_addr inParameter) = 0;
+  virtual const char* InetNToP(nxIpStackRef_t stack_ref, int32_t af, void* src, char dst[nxINET6_ADDRSTRLEN], nxsocklen_t size) = 0;
   virtual int32_t InetPToN(nxIpStackRef_t stack_ref, int32_t af, const char src[], void* dst) = 0;
   virtual int32_t IpStackClear(nxIpStackRef_t stack_ref) = 0;
   virtual int32_t IpStackCreate(char stack_name[], char config[], nxIpStackRef_t* stack_ref) = 0;
+  virtual void IpStackFreeAllStacksInfoStr(nixnetsocket_grpc::IpStackInfoString info) = 0;
   virtual int32_t IpStackFreeInfo(nxVirtualInterface_t* firstVirtualInterface) = 0;
+  virtual int32_t IpStackGetAllStacksInfoStr(uint32_t format, nixnetsocket_grpc::IpStackInfoString* info) = 0;
   virtual int32_t IpStackGetInfo(nxIpStackRef_t stack_ref, uint32_t info_id, nxVirtualInterface_t** virtual_interfaces) = 0;
+  virtual int32_t IpStackOpen(char stack_name[], nxIpStackRef_t* stack_ref) = 0;
   virtual int32_t IpStackWaitForInterface(nxIpStackRef_t stack_ref, const char localInterface[], int32_t timeoutMs) = 0;
   virtual int32_t IsSet(nxSOCKET fd, nxfd_set* set) = 0;
   virtual int32_t Listen(nxSOCKET socket, int32_t backlog) = 0;

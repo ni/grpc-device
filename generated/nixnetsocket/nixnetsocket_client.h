@@ -31,11 +31,16 @@ GetPeerNameResponse get_peer_name(const StubPtr& stub, const nidevice_grpc::Sess
 GetNameInfoResponse get_name_info(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const SockAddr& addr, const pb::int32& host_len, const pb::int32& serv_len, const pb::int32& flags);
 GetSockNameResponse get_sock_name(const StubPtr& stub, const nidevice_grpc::Session& socket);
 GetSockOptResponse get_sock_opt(const StubPtr& stub, const nidevice_grpc::Session& socket, const simple_variant<SocketOptionLevel, pb::int32>& level, const simple_variant<OptName, pb::int32>& optname);
+InetAddrResponse inet_addr(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const pb::string& cp);
 InetAToNResponse inet_a_to_n(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const pb::string& cp);
+InetNToAResponse inet_n_to_a(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const IPv4Addr& in_parameter);
+InetNToPResponse inet_n_to_p(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const Addr& src);
 InetPToNResponse inet_p_to_n(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const pb::int32& af, const pb::string& src);
 IpStackClearResponse ip_stack_clear(const StubPtr& stub, const nidevice_grpc::Session& stack_ref);
 IpStackCreateResponse ip_stack_create(const StubPtr& stub, const pb::string& stack_name, const pb::string& config);
+IpStackGetAllStacksInfoStrResponse ip_stack_get_all_stacks_info_str(const StubPtr& stub);
 IpStackGetInfoResponse ip_stack_get_info(const StubPtr& stub, const nidevice_grpc::Session& stack_ref);
+IpStackOpenResponse ip_stack_open(const StubPtr& stub, const pb::string& stack_name);
 IpStackWaitForInterfaceResponse ip_stack_wait_for_interface(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const pb::string& local_interface, const pb::int32& timeout_ms);
 IsSetResponse is_set(const StubPtr& stub, const nidevice_grpc::Session& fd, const std::vector<nidevice_grpc::Session>& set);
 ListenResponse listen(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::int32& backlog);

@@ -52,11 +52,16 @@ public:
   ::grpc::Status GetNameInfo(::grpc::ServerContext* context, const GetNameInfoRequest* request, GetNameInfoResponse* response) override;
   ::grpc::Status GetSockName(::grpc::ServerContext* context, const GetSockNameRequest* request, GetSockNameResponse* response) override;
   ::grpc::Status GetSockOpt(::grpc::ServerContext* context, const GetSockOptRequest* request, GetSockOptResponse* response) override;
+  ::grpc::Status InetAddr(::grpc::ServerContext* context, const InetAddrRequest* request, InetAddrResponse* response) override;
   ::grpc::Status InetAToN(::grpc::ServerContext* context, const InetAToNRequest* request, InetAToNResponse* response) override;
+  ::grpc::Status InetNToA(::grpc::ServerContext* context, const InetNToARequest* request, InetNToAResponse* response) override;
+  ::grpc::Status InetNToP(::grpc::ServerContext* context, const InetNToPRequest* request, InetNToPResponse* response) override;
   ::grpc::Status InetPToN(::grpc::ServerContext* context, const InetPToNRequest* request, InetPToNResponse* response) override;
   ::grpc::Status IpStackClear(::grpc::ServerContext* context, const IpStackClearRequest* request, IpStackClearResponse* response) override;
   ::grpc::Status IpStackCreate(::grpc::ServerContext* context, const IpStackCreateRequest* request, IpStackCreateResponse* response) override;
+  ::grpc::Status IpStackGetAllStacksInfoStr(::grpc::ServerContext* context, const IpStackGetAllStacksInfoStrRequest* request, IpStackGetAllStacksInfoStrResponse* response) override;
   ::grpc::Status IpStackGetInfo(::grpc::ServerContext* context, const IpStackGetInfoRequest* request, IpStackGetInfoResponse* response) override;
+  ::grpc::Status IpStackOpen(::grpc::ServerContext* context, const IpStackOpenRequest* request, IpStackOpenResponse* response) override;
   ::grpc::Status IpStackWaitForInterface(::grpc::ServerContext* context, const IpStackWaitForInterfaceRequest* request, IpStackWaitForInterfaceResponse* response) override;
   ::grpc::Status IsSet(::grpc::ServerContext* context, const IsSetRequest* request, IsSetResponse* response) override;
   ::grpc::Status Listen(::grpc::ServerContext* context, const ListenRequest* request, ListenResponse* response) override;

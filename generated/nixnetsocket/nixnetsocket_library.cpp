@@ -33,12 +33,18 @@ NiXnetSocketLibrary::NiXnetSocketLibrary() : shared_library_(kLibraryName)
   function_pointers_.GetNameInfo = reinterpret_cast<GetNameInfoPtr>(shared_library_.get_function_pointer("nxgetnameinfo"));
   function_pointers_.GetSockName = reinterpret_cast<GetSockNamePtr>(shared_library_.get_function_pointer("nxgetsockname"));
   function_pointers_.GetSockOpt = reinterpret_cast<GetSockOptPtr>(shared_library_.get_function_pointer("nxgetsockopt"));
+  function_pointers_.InetAddr = reinterpret_cast<InetAddrPtr>(shared_library_.get_function_pointer("nxinet_addr"));
   function_pointers_.InetAToN = reinterpret_cast<InetAToNPtr>(shared_library_.get_function_pointer("nxinet_aton"));
+  function_pointers_.InetNToA = reinterpret_cast<InetNToAPtr>(shared_library_.get_function_pointer("nxinet_ntoa"));
+  function_pointers_.InetNToP = reinterpret_cast<InetNToPPtr>(shared_library_.get_function_pointer("nxinet_ntop"));
   function_pointers_.InetPToN = reinterpret_cast<InetPToNPtr>(shared_library_.get_function_pointer("nxinet_pton"));
   function_pointers_.IpStackClear = reinterpret_cast<IpStackClearPtr>(shared_library_.get_function_pointer("nxIpStackClear"));
   function_pointers_.IpStackCreate = reinterpret_cast<IpStackCreatePtr>(shared_library_.get_function_pointer("nxIpStackCreate"));
+  function_pointers_.IpStackFreeAllStacksInfoStr = reinterpret_cast<IpStackFreeAllStacksInfoStrPtr>(shared_library_.get_function_pointer("nxIpStackFreeAllStacksInfoStr"));
   function_pointers_.IpStackFreeInfo = reinterpret_cast<IpStackFreeInfoPtr>(shared_library_.get_function_pointer("nxIpStackFreeInfo"));
+  function_pointers_.IpStackGetAllStacksInfoStr = reinterpret_cast<IpStackGetAllStacksInfoStrPtr>(shared_library_.get_function_pointer("nxIpStackGetAllStacksInfoStr"));
   function_pointers_.IpStackGetInfo = reinterpret_cast<IpStackGetInfoPtr>(shared_library_.get_function_pointer("nxIpStackGetInfo"));
+  function_pointers_.IpStackOpen = reinterpret_cast<IpStackOpenPtr>(shared_library_.get_function_pointer("nxIpStackOpen"));
   function_pointers_.IpStackWaitForInterface = reinterpret_cast<IpStackWaitForInterfacePtr>(shared_library_.get_function_pointer("nxIpStackWaitForInterface"));
   function_pointers_.IsSet = reinterpret_cast<IsSetPtr>(shared_library_.get_function_pointer("nxfd_isset"));
   function_pointers_.Listen = reinterpret_cast<ListenPtr>(shared_library_.get_function_pointer("nxlisten"));
@@ -195,6 +201,18 @@ int32_t NiXnetSocketLibrary::GetSockOpt(nxSOCKET socket, int32_t level, int32_t 
 #endif
 }
 
+uint32_t NiXnetSocketLibrary::InetAddr(nxIpStackRef_t stack_ref, const char cp[])
+{
+  if (!function_pointers_.InetAddr) {
+    throw nidevice_grpc::LibraryLoadException("Could not find nxinet_addr.");
+  }
+#if defined(_MSC_VER)
+  return nxinet_addr(stack_ref, cp);
+#else
+  return function_pointers_.InetAddr(stack_ref, cp);
+#endif
+}
+
 int32_t NiXnetSocketLibrary::InetAToN(nxIpStackRef_t stack_ref, const char cp[], nxin_addr* name)
 {
   if (!function_pointers_.InetAToN) {
@@ -204,6 +222,30 @@ int32_t NiXnetSocketLibrary::InetAToN(nxIpStackRef_t stack_ref, const char cp[],
   return nxinet_aton(stack_ref, cp, name);
 #else
   return function_pointers_.InetAToN(stack_ref, cp, name);
+#endif
+}
+
+char* NiXnetSocketLibrary::InetNToA(nxIpStackRef_t stack_ref, nxin_addr inParameter)
+{
+  if (!function_pointers_.InetNToA) {
+    throw nidevice_grpc::LibraryLoadException("Could not find nxinet_ntoa.");
+  }
+#if defined(_MSC_VER)
+  return nxinet_ntoa(stack_ref, inParameter);
+#else
+  return function_pointers_.InetNToA(stack_ref, inParameter);
+#endif
+}
+
+const char* NiXnetSocketLibrary::InetNToP(nxIpStackRef_t stack_ref, int32_t af, void* src, char dst[nxINET6_ADDRSTRLEN], nxsocklen_t size)
+{
+  if (!function_pointers_.InetNToP) {
+    throw nidevice_grpc::LibraryLoadException("Could not find nxinet_ntop.");
+  }
+#if defined(_MSC_VER)
+  return nxinet_ntop(stack_ref, af, src, dst, size);
+#else
+  return function_pointers_.InetNToP(stack_ref, af, src, dst, size);
 #endif
 }
 
@@ -243,12 +285,32 @@ int32_t NiXnetSocketLibrary::IpStackCreate(char stack_name[], char config[], nxI
 #endif
 }
 
+void NiXnetSocketLibrary::IpStackFreeAllStacksInfoStr(nixnetsocket_grpc::IpStackInfoString info)
+{
+  if (!function_pointers_.IpStackFreeAllStacksInfoStr) {
+    throw nidevice_grpc::LibraryLoadException("Could not find nxIpStackFreeAllStacksInfoStr.");
+  }
+  return function_pointers_.IpStackFreeAllStacksInfoStr(info);
+}
+
 int32_t NiXnetSocketLibrary::IpStackFreeInfo(nxVirtualInterface_t* firstVirtualInterface)
 {
   if (!function_pointers_.IpStackFreeInfo) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxIpStackFreeInfo.");
   }
   return function_pointers_.IpStackFreeInfo(firstVirtualInterface);
+}
+
+int32_t NiXnetSocketLibrary::IpStackGetAllStacksInfoStr(uint32_t format, nixnetsocket_grpc::IpStackInfoString* info)
+{
+  if (!function_pointers_.IpStackGetAllStacksInfoStr) {
+    throw nidevice_grpc::LibraryLoadException("Could not find nxIpStackGetAllStacksInfoStr.");
+  }
+#if defined(_MSC_VER)
+  return nxIpStackGetAllStacksInfoStr(format, info);
+#else
+  return function_pointers_.IpStackGetAllStacksInfoStr(format, info);
+#endif
 }
 
 int32_t NiXnetSocketLibrary::IpStackGetInfo(nxIpStackRef_t stack_ref, uint32_t info_id, nxVirtualInterface_t** virtual_interfaces)
@@ -260,6 +322,18 @@ int32_t NiXnetSocketLibrary::IpStackGetInfo(nxIpStackRef_t stack_ref, uint32_t i
   return nxIpStackGetInfo(stack_ref, info_id, virtual_interfaces);
 #else
   return function_pointers_.IpStackGetInfo(stack_ref, info_id, virtual_interfaces);
+#endif
+}
+
+int32_t NiXnetSocketLibrary::IpStackOpen(char stack_name[], nxIpStackRef_t* stack_ref)
+{
+  if (!function_pointers_.IpStackOpen) {
+    throw nidevice_grpc::LibraryLoadException("Could not find nxIpStackOpen.");
+  }
+#if defined(_MSC_VER)
+  return nxIpStackOpen(stack_name, stack_ref);
+#else
+  return function_pointers_.IpStackOpen(stack_name, stack_ref);
 #endif
 }
 
