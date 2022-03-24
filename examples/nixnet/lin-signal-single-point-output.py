@@ -122,9 +122,7 @@ try:
 
         # Update the signal data
         write_signal_response = client.WriteSignalSinglePoint(
-            nixnet_types.WriteSignalSinglePointRequest(
-                session=session, value_buffer=value_buffer
-            )
+            nixnet_types.WriteSignalSinglePointRequest(session=session, value_buffer=value_buffer)
         )
         check_for_error(write_signal_response.status)
 
