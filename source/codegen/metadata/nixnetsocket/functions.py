@@ -966,4 +966,38 @@ functions = {
         ],
         'returns': 'nxSOCKET'
     },
+    'StrErrR': {
+        'cname': 'nxstrerr_r',
+        'exclude_from_get_last_error': True,
+        'status_expression': 'error ? 0 : -1',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'errnum',
+                'type': 'int'
+            },
+            {
+                'direction': 'out',
+                'include_in_proto': False,
+                'name': 'buf',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'bufLen'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufLen',
+                'type': 'size_t'
+            },
+            {
+                'direction': 'out',
+                'name': 'error',
+                'return_value': True,
+                'type': 'char[]'
+            },
+        ],
+        'returns': 'char*'
+    },
 }

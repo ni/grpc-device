@@ -206,6 +206,12 @@ class NiXnetSocketNoHardwareTests : public NiXnetSocketDriverApiTests {
   }
 };
 
+// Like EXPECT_SUCCESS for responses that exclude_from_get_last_error.
+#define EXPECT_SUCCESS_STATUS_ONLY(response) \
+  if (1) {                                   \
+    EXPECT_EQ(0, (response).status());       \
+  }
+
 #define EXPECT_SUCCESS(response)               \
   if (1) {                                     \
     EXPECT_EQ(0, (response).status());         \
@@ -323,6 +329,26 @@ TEST_F(NiXnetSocketNoHardwareTests, ValidConfigJsonForMissingDevice_IpStackCreat
   const auto stack_response = client::ip_stack_create(stub(), "", TEST_CONFIG);
 
   EXPECT_XNET_STATUS(INVALID_INTERFACE_NAME, stack_response);
+}
+
+TEST_F(NiXnetSocketNoHardwareTests, StackAlreadyExistsError_StrErrR_ReturnsExpectedMessage)
+{
+  constexpr auto STACK_ALREADY_EXISTS = static_cast<int32_t>(0xFFFFCD24);
+
+  const auto str_err = client::str_err_r(stub(), STACK_ALREADY_EXISTS, 512);
+
+  EXPECT_SUCCESS_STATUS_ONLY(str_err);
+  EXPECT_EQ("An IP Stack with the specified name already exists. The name provided to IP Stack create must be a system-wide unique name.", str_err.error());
+}
+
+TEST_F(NiXnetSocketNoHardwareTests, StackAlreadyExistsError_StrErrRWithZeroBuffer_ReturnsEmptyString)
+{
+  constexpr auto STACK_ALREADY_EXISTS = static_cast<int32_t>(0xFFFFCD24);
+
+  const auto str_err = client::str_err_r(stub(), STACK_ALREADY_EXISTS, 0);
+
+  EXPECT_XNET_STATUS(GENERIC_NXSOCKET_ERROR, str_err);
+  EXPECT_EQ("", str_err.error());
 }
 
 TEST_F(NiXnetSocketLoopbackTests, IPv4LocalhostAddress_AToNAndPToNRoundtrip_ReturnsCorrectAddr)

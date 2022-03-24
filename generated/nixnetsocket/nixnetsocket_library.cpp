@@ -56,6 +56,7 @@ NiXnetSocketLibrary::NiXnetSocketLibrary() : shared_library_(kLibraryName)
   function_pointers_.Select = reinterpret_cast<SelectPtr>(shared_library_.get_function_pointer("nxselect"));
   function_pointers_.SetSockOpt = reinterpret_cast<SetSockOptPtr>(shared_library_.get_function_pointer("nxsetsockopt"));
   function_pointers_.Socket = reinterpret_cast<SocketPtr>(shared_library_.get_function_pointer("nxsocket"));
+  function_pointers_.StrErrR = reinterpret_cast<StrErrRPtr>(shared_library_.get_function_pointer("nxstrerr_r"));
 }
 
 NiXnetSocketLibrary::~NiXnetSocketLibrary()
@@ -466,6 +467,18 @@ nxSOCKET NiXnetSocketLibrary::Socket(nxIpStackRef_t stack_ref, int32_t domain, i
   return nxsocket(stack_ref, domain, type, prototcol);
 #else
   return function_pointers_.Socket(stack_ref, domain, type, prototcol);
+#endif
+}
+
+char* NiXnetSocketLibrary::StrErrR(int errnum, char buf[], size_t bufLen)
+{
+  if (!function_pointers_.StrErrR) {
+    throw nidevice_grpc::LibraryLoadException("Could not find nxstrerr_r.");
+  }
+#if defined(_MSC_VER)
+  return nxstrerr_r(errnum, buf, bufLen);
+#else
+  return function_pointers_.StrErrR(errnum, buf, bufLen);
 #endif
 }
 

@@ -51,6 +51,7 @@ class NiXnetSocketLibraryInterface {
   virtual int32_t Select(int32_t nfds, nxfd_set* read_fds, nxfd_set* write_fds, nxfd_set* except_fds, nxtimeval* timeout) = 0;
   virtual int32_t SetSockOpt(nxSOCKET socket, int32_t level, int32_t optname, void* optval, nxsocklen_t optlen) = 0;
   virtual nxSOCKET Socket(nxIpStackRef_t stack_ref, int32_t domain, int32_t type, int32_t prototcol) = 0;
+  virtual char* StrErrR(int errnum, char buf[], size_t bufLen) = 0;
 };
 
 }  // namespace nixnetsocket_grpc

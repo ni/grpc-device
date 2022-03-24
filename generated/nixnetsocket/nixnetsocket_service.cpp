@@ -1119,6 +1119,34 @@ namespace nixnetsocket_grpc {
     }
   }
 
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiXnetSocketService::StrErrR(::grpc::ServerContext* context, const StrErrRRequest* request, StrErrRResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      int errnum = request->errnum();
+      size_t buf_len = request->buf_len();
+      std::string buf;
+      if (buf_len > 0) {
+          buf.resize(buf_len - 1);
+      }
+      auto error = library_->StrErrR(errnum, (char*)buf.data(), buf_len);
+      auto status = error ? 0 : -1;
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_error(error);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error()));
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
 
   NiXnetSocketFeatureToggles::NiXnetSocketFeatureToggles(
     const nidevice_grpc::FeatureToggles& feature_toggles)

@@ -53,6 +53,7 @@ class NiXnetSocketLibrary : public nixnetsocket_grpc::NiXnetSocketLibraryInterfa
   int32_t Select(int32_t nfds, nxfd_set* read_fds, nxfd_set* write_fds, nxfd_set* except_fds, nxtimeval* timeout);
   int32_t SetSockOpt(nxSOCKET socket, int32_t level, int32_t optname, void* optval, nxsocklen_t optlen);
   nxSOCKET Socket(nxIpStackRef_t stack_ref, int32_t domain, int32_t type, int32_t prototcol);
+  char* StrErrR(int errnum, char buf[], size_t bufLen);
 
  private:
   using AcceptPtr = decltype(&nxaccept);
@@ -90,6 +91,7 @@ class NiXnetSocketLibrary : public nixnetsocket_grpc::NiXnetSocketLibraryInterfa
   using SelectPtr = decltype(&nxselect);
   using SetSockOptPtr = decltype(&nxsetsockopt);
   using SocketPtr = decltype(&nxsocket);
+  using StrErrRPtr = decltype(&nxstrerr_r);
 
   typedef struct FunctionPointers {
     AcceptPtr Accept;
@@ -127,6 +129,7 @@ class NiXnetSocketLibrary : public nixnetsocket_grpc::NiXnetSocketLibraryInterfa
     SelectPtr Select;
     SetSockOptPtr SetSockOpt;
     SocketPtr Socket;
+    StrErrRPtr StrErrR;
   } FunctionLoadStatus;
 
   nidevice_grpc::SharedLibrary shared_library_;

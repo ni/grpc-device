@@ -47,6 +47,7 @@ service NiXnetSocket {
   rpc Select(SelectRequest) returns (SelectResponse);
   rpc SetSockOpt(SetSockOptRequest) returns (SetSockOptResponse);
   rpc Socket(SocketRequest) returns (SocketResponse);
+  rpc StrErrR(StrErrRRequest) returns (StrErrRResponse);
 }
 
 enum NiXnetSocketAttribute {
@@ -611,5 +612,15 @@ message SocketResponse {
   nidevice_grpc.Session socket = 2;
   string error_message = 3;
   int32 error_num = 4;
+}
+
+message StrErrRRequest {
+  int32 errnum = 1;
+  uint64 buf_len = 2;
+}
+
+message StrErrRResponse {
+  int32 status = 1;
+  string error = 2;
 }
 

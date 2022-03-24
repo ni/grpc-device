@@ -593,5 +593,22 @@ socket(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const simpl
   return response;
 }
 
+StrErrRResponse
+str_err_r(const StubPtr& stub, const pb::int32& errnum, const pb::uint64& buf_len)
+{
+  ::grpc::ClientContext context;
+
+  auto request = StrErrRRequest{};
+  request.set_errnum(errnum);
+  request.set_buf_len(buf_len);
+
+  auto response = StrErrRResponse{};
+
+  raise_if_error(
+      stub->StrErrR(&context, request, &response));
+
+  return response;
+}
+
 
 } // namespace nixnetsocket_grpc::experimental::client

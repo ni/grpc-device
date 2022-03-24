@@ -52,6 +52,7 @@ IsSetResponse is_set(const StubPtr& stub, const nidevice_grpc::Session& fd, cons
 SelectResponse select(const StubPtr& stub, const std::vector<nidevice_grpc::Session>& read_fds, const std::vector<nidevice_grpc::Session>& write_fds, const std::vector<nidevice_grpc::Session>& except_fds, const google::protobuf::Duration& timeout);
 SetSockOptResponse set_sock_opt(const StubPtr& stub, const nidevice_grpc::Session& socket, const simple_variant<SocketOptionLevel, pb::int32>& level, const simple_variant<OptName, pb::int32>& optname, const SockOptData& opt_data);
 SocketResponse socket(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const simple_variant<AddressFamily, pb::int32>& domain, const simple_variant<SocketProtocolType, pb::int32>& type, const simple_variant<IPProtocol, pb::int32>& prototcol);
+StrErrRResponse str_err_r(const StubPtr& stub, const pb::int32& errnum, const pb::uint64& buf_len);
 
 } // namespace nixnetsocket_grpc::experimental::client
 

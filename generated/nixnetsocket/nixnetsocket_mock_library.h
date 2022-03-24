@@ -52,6 +52,7 @@ class NiXnetSocketMockLibrary : public nixnetsocket_grpc::NiXnetSocketLibraryInt
   MOCK_METHOD(int32_t, Select, (int32_t nfds, nxfd_set* read_fds, nxfd_set* write_fds, nxfd_set* except_fds, nxtimeval* timeout), (override));
   MOCK_METHOD(int32_t, SetSockOpt, (nxSOCKET socket, int32_t level, int32_t optname, void* optval, nxsocklen_t optlen), (override));
   MOCK_METHOD(nxSOCKET, Socket, (nxIpStackRef_t stack_ref, int32_t domain, int32_t type, int32_t prototcol), (override));
+  MOCK_METHOD(char*, StrErrR, (int errnum, char buf[], size_t bufLen), (override));
 };
 
 }  // namespace unit
