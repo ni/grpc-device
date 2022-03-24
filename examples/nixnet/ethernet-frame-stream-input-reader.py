@@ -39,12 +39,10 @@ CHOOSE_MONITOR_OR_ENDPOINT_TEXT = (
     " to monitor all network traffic else just the enter key to use the endpoint path which filters"
     " traffic based on VLAN ID and priority. :"
 )
-TIMEOUT_NONE = -1
 FCS_SIZE = 4
 MAX_ENET_FRAME_SIZE = 1518
-
-# Declare size of buffer to accommodate 250 frames of maximum size
-SIZE_OF_BUFFER = 250 * (41 + MAX_ENET_FRAME_SIZE + FCS_SIZE)
+NUM_OF_FRAMES = 1
+MAX_PAYLOAD_PER_FRAME = MAX_ENET_FRAME_SIZE + FCS_SIZE
 
 # Parameters
 SERVER_ADDRESS = "localhost"
@@ -142,9 +140,10 @@ try:
         read_frame_response = client.ReadFrame(
             nixnet_types.ReadFrameRequest(
                 session_ref=session,
-                size_of_buffer=SIZE_OF_BUFFER,
-                timeout=TIMEOUT_NONE,
+                number_of_frames=NUM_OF_FRAMES,
+                max_payload_per_frame=MAX_PAYLOAD_PER_FRAME,
                 frame_type=nixnet_types.FRAME_TYPE_ENET,
+                timeout=nixnet_types.TIME_OUT_TIMEOUT_INFINITE,
             )
         )
         check_for_error(read_frame_response.status)
@@ -165,7 +164,7 @@ try:
         time.sleep(1)
         count = count + 1
 
-    print("\nFrame capture stopped.\n")
+    print("Frame capture stopped.\n")
 
 except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
