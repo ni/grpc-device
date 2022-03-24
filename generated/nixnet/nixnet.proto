@@ -1021,7 +1021,7 @@ message EptRxFilterArray {
 }
 
 message GetPropertyRequest {
-  nidevice_grpc.Session session_ref = 1;
+  nidevice_grpc.Session session = 1;
   oneof property_id_enum {
     Property property_id = 2;
     uint32 property_id_raw = 3;
@@ -1046,7 +1046,7 @@ message GetPropertyResponse {
 }
 
 message SetPropertyRequest {
-  nidevice_grpc.Session session_ref = 1;
+  nidevice_grpc.Session session = 1;
   oneof property_id_enum {
     Property property_id = 2;
     uint32 property_id_raw = 3;
@@ -1071,7 +1071,7 @@ message SetPropertyResponse {
 }
 
 message GetSubPropertyRequest {
-  nidevice_grpc.Session session_ref = 1;
+  nidevice_grpc.Session session = 1;
   uint32 active_index = 2;
   oneof subproperty_id_enum {
     SubProperty property_id = 3;
@@ -1089,7 +1089,7 @@ message GetSubPropertyResponse {
 }
 
 message DbGetPropertyRequest {
-  nidevice_grpc.Session dbobject_ref = 1;
+  nidevice_grpc.Session dbobject = 1;
   oneof dbproperty_id_enum {
     DBProperty property_id = 2;
     uint32 property_id_raw = 3;
@@ -1112,7 +1112,7 @@ message DbGetPropertyResponse {
 }
 
 message SetSubPropertyRequest {
-  nidevice_grpc.Session session_ref = 1;
+  nidevice_grpc.Session session = 1;
   uint32 active_index = 2;
   oneof subproperty_id_enum {
     SubProperty property_id = 3;
@@ -1130,7 +1130,7 @@ message SetSubPropertyResponse {
 }
 
 message DbSetPropertyRequest {
-  nidevice_grpc.Session dbobject_ref = 1;
+  nidevice_grpc.Session dbobject = 1;
   oneof dbproperty_id_enum {
     DBProperty property_id = 2;
     uint32 property_id_raw = 3;
@@ -1198,7 +1198,7 @@ message BlinkResponse {
 }
 
 message ClearRequest {
-  nidevice_grpc.Session session_ref = 1;
+  nidevice_grpc.Session session = 1;
 }
 
 message ClearResponse {
@@ -1206,7 +1206,7 @@ message ClearResponse {
 }
 
 message ConnectTerminalsRequest {
-  nidevice_grpc.Session session_ref = 1;
+  nidevice_grpc.Session session = 1;
   oneof source_enum {
     TerminalName source_mapped = 2;
     string source_raw = 3;
@@ -1222,7 +1222,7 @@ message ConnectTerminalsResponse {
 }
 
 message ConvertByteArrayToFramesSinglePointRequest {
-  nidevice_grpc.Session session_ref = 1;
+  nidevice_grpc.Session session = 1;
   bytes value_buffer = 2;
   uint32 number_of_frames = 3;
   uint32 max_payload_per_frame = 4;
@@ -1238,7 +1238,7 @@ message ConvertByteArrayToFramesSinglePointResponse {
 }
 
 message ConvertFramesToByteArraySinglePointRequest {
-  nidevice_grpc.Session session_ref = 1;
+  nidevice_grpc.Session session = 1;
   repeated FrameBuffer frame_buffer = 2;
   uint32 size_of_value_buffer = 3;
 }
@@ -1249,7 +1249,7 @@ message ConvertFramesToByteArraySinglePointResponse {
 }
 
 message ConvertFramesToSignalsSinglePointRequest {
-  nidevice_grpc.Session session_ref = 1;
+  nidevice_grpc.Session session = 1;
   uint32 number_of_signals = 2;
   repeated FrameBuffer frame_buffer = 3;
 }
@@ -1261,7 +1261,7 @@ message ConvertFramesToSignalsSinglePointResponse {
 }
 
 message ConvertSignalsToFramesSinglePointRequest {
-  nidevice_grpc.Session session_ref = 1;
+  nidevice_grpc.Session session = 1;
   repeated double value_buffer = 2;
   uint32 number_of_frames = 3;
   uint32 max_payload_per_frame = 4;
@@ -1308,7 +1308,7 @@ message CreateSessionRequest {
 
 message CreateSessionResponse {
   int32 status = 1;
-  nidevice_grpc.Session session_ref = 2;
+  nidevice_grpc.Session session = 2;
 }
 
 message CreateSessionByRefRequest {
@@ -1323,7 +1323,7 @@ message CreateSessionByRefRequest {
 
 message CreateSessionByRefResponse {
   int32 status = 1;
-  nidevice_grpc.Session session_ref = 2;
+  nidevice_grpc.Session session = 2;
 }
 
 message DbAddAliasRequest {
@@ -1347,7 +1347,7 @@ message DbAddAlias64Response {
 }
 
 message DbCloseDatabaseRequest {
-  nidevice_grpc.Session database_ref = 1;
+  nidevice_grpc.Session database = 1;
   uint32 close_all_refs = 2;
 }
 
@@ -1357,18 +1357,18 @@ message DbCloseDatabaseResponse {
 
 message DbCreateObjectRequest {
   string session_name = 1;
-  nidevice_grpc.Session parent_object_ref = 2;
+  nidevice_grpc.Session parent_object = 2;
   uint32 object_class = 3;
   string object_name = 4;
 }
 
 message DbCreateObjectResponse {
   int32 status = 1;
-  nidevice_grpc.Session db_object_ref = 2;
+  nidevice_grpc.Session db_object = 2;
 }
 
 message DbDeleteObjectRequest {
-  nidevice_grpc.Session db_object_ref = 1;
+  nidevice_grpc.Session db_object = 1;
 }
 
 message DbDeleteObjectResponse {
@@ -1388,18 +1388,18 @@ message DbDeployResponse {
 
 message DbFindObjectRequest {
   string session_name = 1;
-  nidevice_grpc.Session parent_object_ref = 2;
+  nidevice_grpc.Session parent_object = 2;
   uint32 object_class = 3;
   string object_name = 4;
 }
 
 message DbFindObjectResponse {
   int32 status = 1;
-  nidevice_grpc.Session db_object_ref = 2;
+  nidevice_grpc.Session db_object = 2;
 }
 
 message DbGetDBCAttributeRequest {
-  nidevice_grpc.Session db_object_ref = 1;
+  nidevice_grpc.Session db_object = 1;
   oneof mode_enum {
     GetDBCAttributeMode mode = 2;
     uint32 mode_raw = 3;
@@ -1414,7 +1414,7 @@ message DbGetDBCAttributeResponse {
 }
 
 message DbGetDBCAttributeSizeRequest {
-  nidevice_grpc.Session db_object_ref = 1;
+  nidevice_grpc.Session db_object = 1;
   oneof mode_enum {
     GetDBCAttributeMode mode = 2;
     uint32 mode_raw = 3;
@@ -1449,7 +1449,7 @@ message DbGetDatabaseListSizesResponse {
 }
 
 message DbGetPropertySizeRequest {
-  nidevice_grpc.Session db_object_ref = 1;
+  nidevice_grpc.Session db_object = 1;
   oneof property_id_enum {
     DBProperty property_id = 2;
     uint32 property_id_raw = 3;
@@ -1462,8 +1462,8 @@ message DbGetPropertySizeResponse {
 }
 
 message DbMergeRequest {
-  nidevice_grpc.Session target_cluster_ref = 1;
-  nidevice_grpc.Session source_obj_ref = 2;
+  nidevice_grpc.Session target_cluster = 1;
+  nidevice_grpc.Session source_obj = 2;
   oneof copy_mode_enum {
     CopyMode copy_mode = 3;
     uint32 copy_mode_raw = 4;
@@ -1484,7 +1484,7 @@ message DbOpenDatabaseRequest {
 
 message DbOpenDatabaseResponse {
   int32 status = 1;
-  nidevice_grpc.Session database_ref = 2;
+  nidevice_grpc.Session database = 2;
 }
 
 message DbRemoveAliasRequest {
@@ -1496,7 +1496,7 @@ message DbRemoveAliasResponse {
 }
 
 message DbSaveDatabaseRequest {
-  nidevice_grpc.Session database_ref = 1;
+  nidevice_grpc.Session database = 1;
   string db_filepath = 2;
 }
 
@@ -1514,7 +1514,7 @@ message DbUndeployResponse {
 }
 
 message DisconnectTerminalsRequest {
-  nidevice_grpc.Session session_ref = 1;
+  nidevice_grpc.Session session = 1;
   oneof source_enum {
     TerminalName source_mapped = 2;
     string source_raw = 3;
@@ -1530,7 +1530,7 @@ message DisconnectTerminalsResponse {
 }
 
 message FlushRequest {
-  nidevice_grpc.Session session_ref = 1;
+  nidevice_grpc.Session session = 1;
 }
 
 message FlushResponse {
@@ -1538,7 +1538,7 @@ message FlushResponse {
 }
 
 message FutureTimeTriggerRequest {
-  nidevice_grpc.Session session_ref = 1;
+  nidevice_grpc.Session session = 1;
   uint64 when = 2;
   oneof timescale_enum {
     TimeScale timescale = 3;
@@ -1551,7 +1551,7 @@ message FutureTimeTriggerResponse {
 }
 
 message GetPropertySizeRequest {
-  nidevice_grpc.Session session_ref = 1;
+  nidevice_grpc.Session session = 1;
   oneof property_id_enum {
     Property property_id = 2;
     uint32 property_id_raw = 3;
@@ -1564,7 +1564,7 @@ message GetPropertySizeResponse {
 }
 
 message GetSubPropertySizeRequest {
-  nidevice_grpc.Session session_ref = 1;
+  nidevice_grpc.Session session = 1;
   uint32 active_index = 2;
   oneof property_id_enum {
     SubProperty property_id = 3;
@@ -1578,7 +1578,7 @@ message GetSubPropertySizeResponse {
 }
 
 message ReadFrameRequest {
-  nidevice_grpc.Session session_ref = 1;
+  nidevice_grpc.Session session = 1;
   int32 number_of_frames = 2;
   uint32 max_payload_per_frame = 3;
   oneof frame_type_enum {
@@ -1597,7 +1597,7 @@ message ReadFrameResponse {
 }
 
 message ReadSignalSinglePointRequest {
-  nidevice_grpc.Session session_ref = 1;
+  nidevice_grpc.Session session = 1;
   uint32 number_of_signals = 2;
 }
 
@@ -1608,7 +1608,7 @@ message ReadSignalSinglePointResponse {
 }
 
 message ReadSignalWaveformRequest {
-  nidevice_grpc.Session session_ref = 1;
+  nidevice_grpc.Session session = 1;
   oneof timeout_enum {
     TimeOut timeout = 2;
     double timeout_raw = 3;
@@ -1625,7 +1625,7 @@ message ReadSignalWaveformResponse {
 }
 
 message ReadSignalXYRequest {
-  nidevice_grpc.Session session_ref = 1;
+  nidevice_grpc.Session session = 1;
   uint64 time_limit = 2;
   uint32 samples_per_signal = 3;
   uint32 number_of_signals = 4;
@@ -1639,7 +1639,7 @@ message ReadSignalXYResponse {
 }
 
 message ReadStateRequest {
-  nidevice_grpc.Session session_ref = 1;
+  nidevice_grpc.Session session = 1;
   oneof state_id_enum {
     ReadState state_id = 2;
     uint32 state_id_raw = 3;
@@ -1653,7 +1653,7 @@ message ReadStateResponse {
 }
 
 message ReadStateTimeTriggerRequest {
-  nidevice_grpc.Session session_ref = 1;
+  nidevice_grpc.Session session = 1;
   oneof timeout_enum {
     TimeOut timeout = 2;
     double timeout_raw = 3;
@@ -1666,7 +1666,7 @@ message ReadStateTimeTriggerResponse {
 }
 
 message StartRequest {
-  nidevice_grpc.Session session_ref = 1;
+  nidevice_grpc.Session session = 1;
   oneof scope_enum {
     StartStopScope scope = 2;
     uint32 scope_raw = 3;
@@ -1687,7 +1687,7 @@ message StatusToStringResponse {
 }
 
 message StopRequest {
-  nidevice_grpc.Session session_ref = 1;
+  nidevice_grpc.Session session = 1;
   oneof scope_enum {
     StartStopScope scope = 2;
     uint32 scope_raw = 3;
@@ -1699,7 +1699,7 @@ message StopResponse {
 }
 
 message SystemCloseRequest {
-  nidevice_grpc.Session system_ref = 1;
+  nidevice_grpc.Session system = 1;
 }
 
 message SystemCloseResponse {
@@ -1712,11 +1712,11 @@ message SystemOpenRequest {
 
 message SystemOpenResponse {
   int32 status = 1;
-  nidevice_grpc.Session system_ref = 2;
+  nidevice_grpc.Session system = 2;
 }
 
 message WaitRequest {
-  nidevice_grpc.Session session_ref = 1;
+  nidevice_grpc.Session session = 1;
   oneof condition_enum {
     WaitCondition condition = 2;
     uint32 condition_raw = 3;
@@ -1731,7 +1731,7 @@ message WaitResponse {
 }
 
 message WriteFrameRequest {
-  nidevice_grpc.Session session_ref = 1;
+  nidevice_grpc.Session session = 1;
   repeated FrameBuffer buffer = 2;
   oneof timeout_enum {
     TimeOut timeout = 3;
@@ -1744,7 +1744,7 @@ message WriteFrameResponse {
 }
 
 message WriteSignalSinglePointRequest {
-  nidevice_grpc.Session session_ref = 1;
+  nidevice_grpc.Session session = 1;
   repeated double value_buffer = 2;
 }
 
@@ -1753,7 +1753,7 @@ message WriteSignalSinglePointResponse {
 }
 
 message WriteSignalWaveformRequest {
-  nidevice_grpc.Session session_ref = 1;
+  nidevice_grpc.Session session = 1;
   oneof timeout_enum {
     TimeOut timeout = 2;
     double timeout_raw = 3;
@@ -1766,7 +1766,7 @@ message WriteSignalWaveformResponse {
 }
 
 message WriteSignalXYRequest {
-  nidevice_grpc.Session session_ref = 1;
+  nidevice_grpc.Session session = 1;
   oneof timeout_enum {
     TimeOut timeout = 2;
     double timeout_raw = 3;
@@ -1781,7 +1781,7 @@ message WriteSignalXYResponse {
 }
 
 message WriteStateRequest {
-  nidevice_grpc.Session session_ref = 1;
+  nidevice_grpc.Session session = 1;
   oneof state_id_enum {
     WriteState state_id = 2;
     uint32 state_id_raw = 3;
