@@ -76,9 +76,9 @@ functions = {
                     'value': 'sizeOfBuffer'
                 },
                 'type': 'u8[]',
-                'grpc_type': 'repeated FrameBuffer',
+                'grpc_type': 'repeated FrameBufferResponse',
                 'supports_standard_copy_convert': True,
-                'additional_arguments_to_copy_convert': ['number_of_bytes_returned', 'frame_type']
+                'additional_arguments_to_copy_convert': ['number_of_bytes_returned', 'protocol']
             },
             {
                 'direction': 'in',
@@ -93,9 +93,9 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'frameType',
+                'name': 'protocol',
                 'proto_only': True,
-                'enum': 'FrameType',
+                'enum': 'Protocol',
                 'type': 'u32'
             }
         ],
@@ -113,7 +113,7 @@ functions = {
                 'name': 'frameBuffer',
                 'type': 'u8',
                 'pointer': True,
-                'grpc_type': 'repeated FrameBuffer',
+                'grpc_type': 'repeated FrameBufferRequest',
                 'supports_standard_copy_convert': True
             },
             {
@@ -152,7 +152,7 @@ functions = {
                 'name': 'frameBuffer',
                 'type': 'u8',
                 'pointer': True,
-                'grpc_type': 'repeated FrameBuffer',
+                'grpc_type': 'repeated FrameBufferRequest',
                 'supports_standard_copy_convert': True
             },
             {
@@ -222,9 +222,9 @@ functions = {
                     'value': 'sizeOfBuffer'
                 },
                 'type': 'u8[]',
-                'grpc_type': 'repeated FrameBuffer',
+                'grpc_type': 'repeated FrameBufferResponse',
                 'supports_standard_copy_convert': True,
-                'additional_arguments_to_copy_convert': ['number_of_bytes_returned', 'frame_type']
+                'additional_arguments_to_copy_convert': ['number_of_bytes_returned', 'protocol']
             },
             {
                 'direction': 'in',
@@ -239,9 +239,9 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'frameType',
+                'name': 'protocol',
                 'proto_only': True,
-                'enum': 'FrameType',
+                'enum': 'Protocol',
                 'type': 'u32'
             }
         ],
@@ -1021,9 +1021,9 @@ functions = {
                     'value': 'sizeOfBuffer'
                 },
                 'type': 'u8[]',
-                'grpc_type': 'repeated FrameBuffer',
+                'grpc_type': 'repeated FrameBufferResponse',
                 'supports_standard_copy_convert': True,
-                'additional_arguments_to_copy_convert': ['number_of_bytes_returned', 'frame_type']
+                'additional_arguments_to_copy_convert': ['number_of_bytes_returned', 'protocol']
             },
             {
                 'direction': 'in',
@@ -1044,9 +1044,9 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'frameType',
+                'name': 'protocol',
                 'proto_only': True,
-                'enum': 'FrameType',
+                'enum': 'Protocol',
                 'type': 'u32'
             }
         ],
@@ -1462,7 +1462,7 @@ functions = {
                 'name': 'buffer',
                 'type': 'u8',
                 'pointer': True,
-                'grpc_type': 'repeated FrameBuffer',
+                'grpc_type': 'repeated FrameBufferRequest',
                 'supports_standard_copy_convert': True
             },
             {

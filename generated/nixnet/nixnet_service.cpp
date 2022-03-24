@@ -171,18 +171,18 @@ namespace nixnet_grpc {
       u8* value_buffer = (u8*)request->value_buffer().c_str();
       u32 size_of_value_buffer = static_cast<u32>(request->value_buffer().size() * sizeof(u8));
       u32 size_of_buffer = request->size_of_buffer();
-      u32 frame_type;
-      switch (request->frame_type_enum_case()) {
-        case nixnet_grpc::ConvertByteArrayToFramesSinglePointRequest::FrameTypeEnumCase::kFrameType: {
-          frame_type = static_cast<u32>(request->frame_type());
+      u32 protocol;
+      switch (request->protocol_enum_case()) {
+        case nixnet_grpc::ConvertByteArrayToFramesSinglePointRequest::ProtocolEnumCase::kProtocol: {
+          protocol = static_cast<u32>(request->protocol());
           break;
         }
-        case nixnet_grpc::ConvertByteArrayToFramesSinglePointRequest::FrameTypeEnumCase::kFrameTypeRaw: {
-          frame_type = static_cast<u32>(request->frame_type_raw());
+        case nixnet_grpc::ConvertByteArrayToFramesSinglePointRequest::ProtocolEnumCase::kProtocolRaw: {
+          protocol = static_cast<u32>(request->protocol_raw());
           break;
         }
-        case nixnet_grpc::ConvertByteArrayToFramesSinglePointRequest::FrameTypeEnumCase::FRAME_TYPE_ENUM_NOT_SET: {
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for frame_type was not specified or out of range");
+        case nixnet_grpc::ConvertByteArrayToFramesSinglePointRequest::ProtocolEnumCase::PROTOCOL_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for protocol was not specified or out of range");
           break;
         }
       }
@@ -192,7 +192,7 @@ namespace nixnet_grpc {
       auto status = library_->ConvertByteArrayToFramesSinglePoint(session_ref, value_buffer, size_of_value_buffer, buffer.data(), size_of_buffer, &number_of_bytes_returned);
       response->set_status(status);
       if (status_ok(status)) {
-        convert_to_grpc(buffer, response->mutable_buffer(), number_of_bytes_returned, frame_type);
+        convert_to_grpc(buffer, response->mutable_buffer(), number_of_bytes_returned, protocol);
       }
       return ::grpc::Status::OK;
     }
@@ -269,18 +269,18 @@ namespace nixnet_grpc {
       auto value_buffer = const_cast<f64*>(request->value_buffer().data());
       u32 size_of_value_buffer = static_cast<u32>(request->value_buffer().size() * sizeof(f64));
       u32 size_of_buffer = request->size_of_buffer();
-      u32 frame_type;
-      switch (request->frame_type_enum_case()) {
-        case nixnet_grpc::ConvertSignalsToFramesSinglePointRequest::FrameTypeEnumCase::kFrameType: {
-          frame_type = static_cast<u32>(request->frame_type());
+      u32 protocol;
+      switch (request->protocol_enum_case()) {
+        case nixnet_grpc::ConvertSignalsToFramesSinglePointRequest::ProtocolEnumCase::kProtocol: {
+          protocol = static_cast<u32>(request->protocol());
           break;
         }
-        case nixnet_grpc::ConvertSignalsToFramesSinglePointRequest::FrameTypeEnumCase::kFrameTypeRaw: {
-          frame_type = static_cast<u32>(request->frame_type_raw());
+        case nixnet_grpc::ConvertSignalsToFramesSinglePointRequest::ProtocolEnumCase::kProtocolRaw: {
+          protocol = static_cast<u32>(request->protocol_raw());
           break;
         }
-        case nixnet_grpc::ConvertSignalsToFramesSinglePointRequest::FrameTypeEnumCase::FRAME_TYPE_ENUM_NOT_SET: {
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for frame_type was not specified or out of range");
+        case nixnet_grpc::ConvertSignalsToFramesSinglePointRequest::ProtocolEnumCase::PROTOCOL_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for protocol was not specified or out of range");
           break;
         }
       }
@@ -290,7 +290,7 @@ namespace nixnet_grpc {
       auto status = library_->ConvertSignalsToFramesSinglePoint(session_ref, value_buffer, size_of_value_buffer, buffer.data(), size_of_buffer, &number_of_bytes_returned);
       response->set_status(status);
       if (status_ok(status)) {
-        convert_to_grpc(buffer, response->mutable_buffer(), number_of_bytes_returned, frame_type);
+        convert_to_grpc(buffer, response->mutable_buffer(), number_of_bytes_returned, protocol);
       }
       return ::grpc::Status::OK;
     }
@@ -1070,18 +1070,18 @@ namespace nixnet_grpc {
         }
       }
 
-      u32 frame_type;
-      switch (request->frame_type_enum_case()) {
-        case nixnet_grpc::ReadFrameRequest::FrameTypeEnumCase::kFrameType: {
-          frame_type = static_cast<u32>(request->frame_type());
+      u32 protocol;
+      switch (request->protocol_enum_case()) {
+        case nixnet_grpc::ReadFrameRequest::ProtocolEnumCase::kProtocol: {
+          protocol = static_cast<u32>(request->protocol());
           break;
         }
-        case nixnet_grpc::ReadFrameRequest::FrameTypeEnumCase::kFrameTypeRaw: {
-          frame_type = static_cast<u32>(request->frame_type_raw());
+        case nixnet_grpc::ReadFrameRequest::ProtocolEnumCase::kProtocolRaw: {
+          protocol = static_cast<u32>(request->protocol_raw());
           break;
         }
-        case nixnet_grpc::ReadFrameRequest::FrameTypeEnumCase::FRAME_TYPE_ENUM_NOT_SET: {
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for frame_type was not specified or out of range");
+        case nixnet_grpc::ReadFrameRequest::ProtocolEnumCase::PROTOCOL_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for protocol was not specified or out of range");
           break;
         }
       }
@@ -1091,7 +1091,7 @@ namespace nixnet_grpc {
       auto status = library_->ReadFrame(session_ref, buffer.data(), size_of_buffer, timeout, &number_of_bytes_returned);
       response->set_status(status);
       if (status_ok(status)) {
-        convert_to_grpc(buffer, response->mutable_buffer(), number_of_bytes_returned, frame_type);
+        convert_to_grpc(buffer, response->mutable_buffer(), number_of_bytes_returned, protocol);
       }
       return ::grpc::Status::OK;
     }

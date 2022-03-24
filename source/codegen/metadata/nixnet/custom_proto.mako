@@ -238,29 +238,64 @@ message DbSetPropertyResponse {
   int32 status = 1;
 }
 
-message Frame {
+message FrameRequest {
   uint64 timestamp = 1;
   uint32 identifier = 2;
-  uint32 type = 3;
-  uint32 flags = 4;
-  uint32 info = 5;
-  bytes payload = 6;
+  oneof type_enum{
+     FrameType type = 3;
+     uint32 type_raw = 4;
+  }
+  uint32 flags = 5;
+  uint32 info = 6;
+  bytes payload = 7;
 }
 
-message EnetFrame {
-  uint32 type = 1;
-  uint64 device_timestamp = 2;
-  uint64 network_timestamp = 3;
-  uint32 flags = 4;
-  bytes frame_data = 5;
+message FrameResponse {
+  uint64 timestamp = 1;
+  uint32 identifier = 2;
+  FrameType type = 3;
+  uint32 type_raw = 4;
+  uint32 flags = 5;
+  uint32 info = 6;
+  bytes payload = 7;
 }
 
-message FrameBuffer {
+message EnetFrameRequest {
+  oneof type_enum{
+    EnetFrameType type = 1;
+    uint32 type_raw = 2;
+  }
+  uint64 device_timestamp = 3;
+  uint64 network_timestamp = 4;
+  uint32 flags = 5;
+  bytes frame_data = 6;
+}
+
+message EnetFrameResponse {
+  EnetFrameType type = 1;
+  uint32 type_raw = 2;
+  uint64 device_timestamp = 3;
+  uint64 network_timestamp = 4;
+  uint32 flags = 5;
+  bytes frame_data = 6;
+}
+
+message FrameBufferRequest {
   oneof frame {
-    Frame can = 1;
-    Frame lin = 2;
-    Frame flex_ray = 3;
-    Frame j1939 = 4;
-    EnetFrame enet = 5;
+    FrameRequest can = 1;
+    FrameRequest lin = 2;
+    FrameRequest flex_ray = 3;
+    FrameRequest j1939 = 4;
+    EnetFrameRequest enet = 5;
+  }
+}
+
+message FrameBufferResponse {
+  oneof frame {
+    FrameResponse can = 1;
+    FrameResponse lin = 2;
+    FrameResponse flex_ray = 3;
+    FrameResponse j1939 = 4;
+    EnetFrameResponse enet = 5;
   }
 }

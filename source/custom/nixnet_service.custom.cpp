@@ -1170,14 +1170,14 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
   }
 }
 
-void convert_to_grpc(std::vector<u8>& input, google::protobuf::RepeatedPtrField<nixnet_grpc::FrameBuffer>* output, u32 number_of_bytes, u32 frame_type)
+void convert_to_grpc(std::vector<u8>& input, google::protobuf::RepeatedPtrField<nixnet_grpc::FrameBufferResponse>* output, u32 number_of_bytes, u32 frame_type)
 {
   auto buffer_ptr = (void*)input.data();
   while (buffer_ptr < input.data() + number_of_bytes) {
-    auto frame_buffer = new FrameBuffer();
+    auto frame_buffer = new FrameBufferResponse();
     convert_to_grpc(buffer_ptr, frame_buffer, frame_type);
     output->AddAllocated(frame_buffer);
-    if (frame_type == nixnet_grpc::FrameType::FRAME_TYPE_ENET) {
+    if (frame_type == nixnet_grpc::Protocol::PROTOCOL_ENET) {
       auto enet_frame_ptr = (nxFrameEnet_t*)buffer_ptr;
       buffer_ptr = nxFrameIterateEthernetRead(enet_frame_ptr);
     }
@@ -1187,12 +1187,13 @@ void convert_to_grpc(std::vector<u8>& input, google::protobuf::RepeatedPtrField<
   }
 }
 
-void convert_to_grpc(const void* input, nixnet_grpc::FrameBuffer* output, u32 frame_type)
+void convert_to_grpc(const void* input, nixnet_grpc::FrameBufferResponse* output, u32 frame_type)
 {
-  if (frame_type == nixnet_grpc::FrameType::FRAME_TYPE_ENET) {
-    nixnet_grpc::EnetFrame* enet_frame = new nixnet_grpc::EnetFrame();
+  if (frame_type == nixnet_grpc::Protocol::PROTOCOL_ENET) {
+    nixnet_grpc::EnetFrameResponse* enet_frame = new nixnet_grpc::EnetFrameResponse();
     nxFrameEnet_t* nxEnetFrame = (nxFrameEnet_t*)input;
-    enet_frame->set_type(nxEnetFrame->Type);
+    enet_frame->set_type(static_cast<nixnet_grpc::EnetFrameType>(nxEnetFrame->Type));
+    enet_frame->set_type_raw(nxEnetFrame->Type);
     enet_frame->set_device_timestamp(nxEnetFrame->DeviceTimestamp);
     enet_frame->set_network_timestamp(nxEnetFrame->NetworkTimestamp);
     enet_frame->set_flags(nxEnetFrame->Flags);
@@ -1204,26 +1205,27 @@ void convert_to_grpc(const void* input, nixnet_grpc::FrameBuffer* output, u32 fr
   }
   else {
     nxFrameVar_t* nxFrame = (nxFrameVar_t*)input;
-    nixnet_grpc::Frame* frame = new nixnet_grpc::Frame();
+    nixnet_grpc::FrameResponse* frame = new nixnet_grpc::FrameResponse();
     frame->set_timestamp(nxFrame->Timestamp);
     frame->set_identifier(nxFrame->Identifier);
-    frame->set_type(nxFrame->Type);
+    frame->set_type(static_cast<nixnet_grpc::FrameType>(nxFrame->Type));
+    frame->set_type_raw(nxFrame->Type);
     frame->set_flags(nxFrame->Flags);
     frame->set_info(nxFrame->Info);
     auto payload_length = nxFrameGetPayloadLength(nxFrame);
     frame->mutable_payload()->assign((const char*)nxFrame->Payload, payload_length);
 
     switch (frame_type) {
-      case nixnet_grpc::FrameType::FRAME_TYPE_CAN:
+      case nixnet_grpc::Protocol::PROTOCOL_CAN:
         output->set_allocated_can(frame);
         break;
-      case nixnet_grpc::FrameType::FRAME_TYPE_LIN:
+      case nixnet_grpc::Protocol::PROTOCOL_LIN:
         output->set_allocated_lin(frame);
         break;
-      case nixnet_grpc::FrameType::FRAME_TYPE_FLEX_RAY:
+      case nixnet_grpc::Protocol::PROTOCOL_FLEX_RAY:
         output->set_allocated_flex_ray(frame);
         break;
-      case nixnet_grpc::FrameType::FRAME_TYPE_J1939:
+      case nixnet_grpc::Protocol::PROTOCOL_J1939:
         output->set_allocated_j1939(frame);
         break;
       default:

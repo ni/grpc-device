@@ -9,37 +9,37 @@ namespace pb_ = ::google::protobuf;
 namespace nixnet_grpc {
 
 struct FrameHolder {
-  FrameHolder(const pb_::RepeatedPtrField<FrameBuffer>& input)
+  FrameHolder(const pb_::RepeatedPtrField<FrameBufferRequest>& input)
   {
     // all frames in repeated field must be of same type
     switch (input[0].frame_case()) {
-      case FrameBuffer::kCan:
+      case FrameBufferRequest::kCan:
         InitializeCanFrames(input);
         break;
-      case FrameBuffer::kLin:
+      case FrameBufferRequest::kLin:
         InitializeLinFrames(input);
         break;
-      case FrameBuffer::kFlexRay:
+      case FrameBufferRequest::kFlexRay:
         InitializeFlexRayFrames(input);
         break;
-      case FrameBuffer::kJ1939:
+      case FrameBufferRequest::kJ1939:
         InitializeJ1939Frames(input);
         break;
-      case FrameBuffer::kEnet:
+      case FrameBufferRequest::kEnet:
         InitializeEnetFrames(input);
         break;
       default:
-        throw std::invalid_argument("The value for FrameBuffer not specified or not supported");
+        throw std::invalid_argument("The value for FrameBufferRequest not specified or not supported");
         break;
     }
   }
 
-  void InitializeCanFrames(const pb_::RepeatedPtrField<FrameBuffer>& input)
+  void InitializeCanFrames(const pb_::RepeatedPtrField<FrameBufferRequest>& input)
   {
     std::vector<uint8_t> frame_data;
     for (auto grpc_frame : input) {
       if (!grpc_frame.has_can()) {
-        throw std::invalid_argument("All FrameBuffer instances in repeated field should have same oneof set for the frame");
+        throw std::invalid_argument("All FrameBufferRequest instances in repeated field should have same oneof set for the frame");
       }
       ConvertFrame(grpc_frame.can(), frame_data);
 
@@ -47,12 +47,12 @@ struct FrameHolder {
     }
   }
 
-  void InitializeLinFrames(const pb_::RepeatedPtrField<FrameBuffer>& input)
+  void InitializeLinFrames(const pb_::RepeatedPtrField<FrameBufferRequest>& input)
   {
     std::vector<uint8_t> frame_data;
     for (auto grpc_frame : input) {
       if (!grpc_frame.has_lin()) {
-        throw std::invalid_argument("All FrameBuffer instances in repeated field should have same oneof set for the frame");
+        throw std::invalid_argument("All FrameBufferRequest instances in repeated field should have same oneof set for the frame");
       }
       ConvertFrame(grpc_frame.lin(), frame_data);
 
@@ -60,12 +60,12 @@ struct FrameHolder {
     }
   }
 
-  void InitializeFlexRayFrames(const pb_::RepeatedPtrField<FrameBuffer>& input)
+  void InitializeFlexRayFrames(const pb_::RepeatedPtrField<FrameBufferRequest>& input)
   {
     std::vector<uint8_t> frame_data;
     for (auto grpc_frame : input) {
       if (!grpc_frame.has_flex_ray()) {
-        throw std::invalid_argument("All FrameBuffer instances in repeated field should have same oneof set for the frame");
+        throw std::invalid_argument("All FrameBufferRequest instances in repeated field should have same oneof set for the frame");
       }
       ConvertFrame(grpc_frame.flex_ray(), frame_data);
 
@@ -73,12 +73,12 @@ struct FrameHolder {
     }
   }
 
-  void InitializeJ1939Frames(const pb_::RepeatedPtrField<FrameBuffer>& input)
+  void InitializeJ1939Frames(const pb_::RepeatedPtrField<FrameBufferRequest>& input)
   {
     std::vector<uint8_t> frame_data;
     for (auto grpc_frame : input) {
       if (!grpc_frame.has_j1939()) {
-        throw std::invalid_argument("All FrameBuffer instances in repeated field should have same oneof set for the frame");
+        throw std::invalid_argument("All FrameBufferRequest instances in repeated field should have same oneof set for the frame");
       }
       ConvertFrame(grpc_frame.j1939(), frame_data);
 
@@ -86,13 +86,13 @@ struct FrameHolder {
     }
   }
 
-  void InitializeEnetFrames(const pb_::RepeatedPtrField<FrameBuffer>& input)
+  void InitializeEnetFrames(const pb_::RepeatedPtrField<FrameBufferRequest>& input)
   {
     std::vector<uint8_t> frame_data;
     const u16 EnetHeaderLength = sizeof(nxFrameEnet_t) - 1;  // last byte in nxFrameEnet_t is u8 FrameData[1]
     for (auto grpc_frame : input) {
       if (!grpc_frame.has_enet()) {
-        throw std::invalid_argument("All FrameBuffer instances in repeated field should have same oneof set for the frame");
+        throw std::invalid_argument("All FrameBufferRequest instances in repeated field should have same oneof set for the frame");
       }
 
       u16 frame_size = EnetHeaderLength + grpc_frame.enet().frame_data().length();
@@ -114,7 +114,7 @@ struct FrameHolder {
     }
   }
 
-  void ConvertFrame(const Frame& input, std::vector<uint8_t>& output)
+  void ConvertFrame(const FrameRequest& input, std::vector<uint8_t>& output)
   {
     auto payload_length = input.payload().length();
     auto frame_size = nxFrameSize(payload_length);
@@ -122,7 +122,19 @@ struct FrameHolder {
     nxFrameVar_t* current_frame = (nxFrameVar_t*)output.data();
     current_frame->Timestamp = input.timestamp();
     current_frame->Identifier = input.identifier();
-    current_frame->Type = input.type();
+    switch (input.type_enum_case()) {
+        case nixnet_grpc::FrameRequest::TypeEnumCase::kType :{
+          current_frame->Type = static_cast<u8>(input.type());
+          break;
+        }
+        case nixnet_grpc::FrameRequest::TypeEnumCase::kTypeRaw :{
+          current_frame->Type = static_cast<u8>(input.type_raw());
+          break;
+        }
+        case nixnet_grpc::FrameRequest::TypeEnumCase::TYPE_ENUM_NOT_SET: {
+          throw std::invalid_argument("The value for type was not specified or out of range");
+        }
+      }
     current_frame->Flags = input.flags();
     current_frame->Info = input.info();
     nxFrameSetPayloadLength(current_frame, payload_length);
@@ -156,13 +168,13 @@ struct FrameHolder {
 };
 
 // template <>
-void convert_to_grpc(std::vector<u8>& input, google::protobuf::RepeatedPtrField<nixnet_grpc::FrameBuffer>* output, u32 number_of_bytes, u32 frame_type);
+void convert_to_grpc(std::vector<u8>& input, google::protobuf::RepeatedPtrField<nixnet_grpc::FrameBufferResponse>* output, u32 number_of_bytes, u32 frame_type);
 
 // template <>
-void convert_to_grpc(const void* input, nixnet_grpc::FrameBuffer* output, u32 frame_type);
+void convert_to_grpc(const void* input, nixnet_grpc::FrameBufferResponse* output, u32 frame_type);
 
 template <typename TFrame>
-nixnet_grpc::FrameHolder convert_from_grpc(const pb_::RepeatedPtrField<nixnet_grpc::FrameBuffer>& input)
+nixnet_grpc::FrameHolder convert_from_grpc(const pb_::RepeatedPtrField<nixnet_grpc::FrameBufferRequest>& input)
 {
   return nixnet_grpc::FrameHolder(input);
 }

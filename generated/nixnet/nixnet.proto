@@ -346,23 +346,23 @@ enum FrameFlags {
   FRAME_FLAGS_FRAME_FLAGS_TRANSMIT_ECHO = 128;
 }
 
-enum FrameTypes {
-  FRAME_TYPES_FRAME_TYPE_CAN_DATA = 0;
-  FRAME_TYPES_FRAME_TYPE_CAN_REMOTE = 1;
-  FRAME_TYPES_FRAME_TYPE_CAN_BUS_ERROR = 2;
-  FRAME_TYPES_FRAME_TYPE_CAN20_DATA = 8;
-  FRAME_TYPES_FRAME_TYPE_CANFD_DATA = 16;
-  FRAME_TYPES_FRAME_TYPE_CANFDBRS_DATA = 24;
-  FRAME_TYPES_FRAME_TYPE_FLEX_RAY_DATA = 32;
-  FRAME_TYPES_FRAME_TYPE_FLEX_RAY_NULL = 33;
-  FRAME_TYPES_FRAME_TYPE_FLEX_RAY_SYMBOL = 34;
-  FRAME_TYPES_FRAME_TYPE_LIN_DATA = 64;
-  FRAME_TYPES_FRAME_TYPE_LIN_BUS_ERROR = 65;
-  FRAME_TYPES_FRAME_TYPE_LIN_NO_RESPONSE = 66;
-  FRAME_TYPES_FRAME_TYPE_J1939_DATA = 192;
-  FRAME_TYPES_FRAME_TYPE_SPECIAL_DELAY = 224;
-  FRAME_TYPES_FRAME_TYPE_SPECIAL_LOG_TRIGGER = 225;
-  FRAME_TYPES_FRAME_TYPE_SPECIAL_START_TRIGGER = 226;
+enum FrameType {
+  FRAME_TYPE_FRAME_TYPE_CAN_DATA = 0;
+  FRAME_TYPE_FRAME_TYPE_CAN_REMOTE = 1;
+  FRAME_TYPE_FRAME_TYPE_CAN_BUS_ERROR = 2;
+  FRAME_TYPE_FRAME_TYPE_CAN20_DATA = 8;
+  FRAME_TYPE_FRAME_TYPE_CANFD_DATA = 16;
+  FRAME_TYPE_FRAME_TYPE_CANFDBRS_DATA = 24;
+  FRAME_TYPE_FRAME_TYPE_FLEX_RAY_DATA = 32;
+  FRAME_TYPE_FRAME_TYPE_FLEX_RAY_NULL = 33;
+  FRAME_TYPE_FRAME_TYPE_FLEX_RAY_SYMBOL = 34;
+  FRAME_TYPE_FRAME_TYPE_LIN_DATA = 64;
+  FRAME_TYPE_FRAME_TYPE_LIN_BUS_ERROR = 65;
+  FRAME_TYPE_FRAME_TYPE_LIN_NO_RESPONSE = 66;
+  FRAME_TYPE_FRAME_TYPE_J1939_DATA = 192;
+  FRAME_TYPE_FRAME_TYPE_SPECIAL_DELAY = 224;
+  FRAME_TYPE_FRAME_TYPE_SPECIAL_LOG_TRIGGER = 225;
+  FRAME_TYPE_FRAME_TYPE_SPECIAL_START_TRIGGER = 226;
 }
 
 enum GetDBCAttributeMode {
@@ -902,13 +902,13 @@ enum WriteState {
   WRITE_STATE_STATE_ETHERNET_WAKE = 1245317;
 }
 
-enum FrameType {
-  FRAME_TYPE_UNSPECIFIED = 0;
-  FRAME_TYPE_CAN = 1;
-  FRAME_TYPE_LIN = 2;
-  FRAME_TYPE_FLEX_RAY = 3;
-  FRAME_TYPE_J1939 = 4;
-  FRAME_TYPE_ENET = 5;
+enum Protocol {
+  PROTOCOL_UNSPECIFIED = 0;
+  PROTOCOL_CAN = 1;
+  PROTOCOL_LIN = 2;
+  PROTOCOL_FLEX_RAY = 3;
+  PROTOCOL_J1939 = 4;
+  PROTOCOL_ENET = 5;
 }
 
 message FlexRayStats {
@@ -1151,33 +1151,67 @@ message DbSetPropertyResponse {
   int32 status = 1;
 }
 
-message Frame {
+message FrameRequest {
   uint64 timestamp = 1;
   uint32 identifier = 2;
-  uint32 type = 3;
-  uint32 flags = 4;
-  uint32 info = 5;
-  bytes payload = 6;
+  oneof type_enum{
+     FrameType type = 3;
+     uint32 type_raw = 4;
+  }
+  uint32 flags = 5;
+  uint32 info = 6;
+  bytes payload = 7;
 }
 
-message EnetFrame {
-  uint32 type = 1;
-  uint64 device_timestamp = 2;
-  uint64 network_timestamp = 3;
-  uint32 flags = 4;
-  bytes frame_data = 5;
+message FrameResponse {
+  uint64 timestamp = 1;
+  uint32 identifier = 2;
+  FrameType type = 3;
+  uint32 type_raw = 4;
+  uint32 flags = 5;
+  uint32 info = 6;
+  bytes payload = 7;
 }
 
-message FrameBuffer {
+message EnetFrameRequest {
+  oneof type_enum{
+    EnetFrameType type = 1;
+    uint32 type_raw = 2;
+  }
+  uint64 device_timestamp = 3;
+  uint64 network_timestamp = 4;
+  uint32 flags = 5;
+  bytes frame_data = 6;
+}
+
+message EnetFrameResponse {
+  EnetFrameType type = 1;
+  uint32 type_raw = 2;
+  uint64 device_timestamp = 3;
+  uint64 network_timestamp = 4;
+  uint32 flags = 5;
+  bytes frame_data = 6;
+}
+
+message FrameBufferRequest {
   oneof frame {
-    Frame can = 1;
-    Frame lin = 2;
-    Frame flex_ray = 3;
-    Frame j1939 = 4;
-    EnetFrame enet = 5;
+    FrameRequest can = 1;
+    FrameRequest lin = 2;
+    FrameRequest flex_ray = 3;
+    FrameRequest j1939 = 4;
+    EnetFrameRequest enet = 5;
   }
 }
 
+message FrameBufferResponse {
+  oneof frame {
+    FrameResponse can = 1;
+    FrameResponse lin = 2;
+    FrameResponse flex_ray = 3;
+    FrameResponse j1939 = 4;
+    EnetFrameResponse enet = 5;
+  }
+}
 message TimeLocalNetwork {
   uint64 local_time = 1;
   uint64 network_time = 2;
@@ -1224,20 +1258,20 @@ message ConvertByteArrayToFramesSinglePointRequest {
   nidevice_grpc.Session session_ref = 1;
   bytes value_buffer = 2;
   uint32 size_of_buffer = 3;
-  oneof frame_type_enum {
-    FrameType frame_type = 4;
-    uint32 frame_type_raw = 5;
+  oneof protocol_enum {
+    Protocol protocol = 4;
+    uint32 protocol_raw = 5;
   }
 }
 
 message ConvertByteArrayToFramesSinglePointResponse {
   int32 status = 1;
-  repeated FrameBuffer buffer = 2;
+  repeated FrameBufferResponse buffer = 2;
 }
 
 message ConvertFramesToByteArraySinglePointRequest {
   nidevice_grpc.Session session_ref = 1;
-  repeated FrameBuffer frame_buffer = 2;
+  repeated FrameBufferRequest frame_buffer = 2;
   uint32 size_of_value_buffer = 3;
 }
 
@@ -1248,7 +1282,7 @@ message ConvertFramesToByteArraySinglePointResponse {
 
 message ConvertFramesToSignalsSinglePointRequest {
   nidevice_grpc.Session session_ref = 1;
-  repeated FrameBuffer frame_buffer = 2;
+  repeated FrameBufferRequest frame_buffer = 2;
   uint32 size_of_value_buffer = 3;
   uint32 size_of_timestamp_buffer = 4;
 }
@@ -1263,15 +1297,15 @@ message ConvertSignalsToFramesSinglePointRequest {
   nidevice_grpc.Session session_ref = 1;
   repeated double value_buffer = 2;
   uint32 size_of_buffer = 3;
-  oneof frame_type_enum {
-    FrameType frame_type = 4;
-    uint32 frame_type_raw = 5;
+  oneof protocol_enum {
+    Protocol protocol = 4;
+    uint32 protocol_raw = 5;
   }
 }
 
 message ConvertSignalsToFramesSinglePointResponse {
   int32 status = 1;
-  repeated FrameBuffer buffer = 2;
+  repeated FrameBufferResponse buffer = 2;
 }
 
 message ConvertTimestamp100nsTo1nsRequest {
@@ -1582,15 +1616,15 @@ message ReadFrameRequest {
     TimeOut timeout = 3;
     double timeout_raw = 4;
   }
-  oneof frame_type_enum {
-    FrameType frame_type = 5;
-    uint32 frame_type_raw = 6;
+  oneof protocol_enum {
+    Protocol protocol = 5;
+    uint32 protocol_raw = 6;
   }
 }
 
 message ReadFrameResponse {
   int32 status = 1;
-  repeated FrameBuffer buffer = 2;
+  repeated FrameBufferResponse buffer = 2;
 }
 
 message ReadSignalSinglePointRequest {
@@ -1716,7 +1750,7 @@ message WaitResponse {
 
 message WriteFrameRequest {
   nidevice_grpc.Session session_ref = 1;
-  repeated FrameBuffer buffer = 2;
+  repeated FrameBufferRequest buffer = 2;
   oneof timeout_enum {
     TimeOut timeout = 3;
     double timeout_raw = 4;

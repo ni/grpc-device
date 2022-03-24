@@ -1102,7 +1102,7 @@ enums = {
             }
         ]
     },
-    'FrameTypes': {
+    'FrameType': {
         'values': [
             {
                 'name': 'FRAME_TYPE_CAN_DATA',
@@ -3393,7 +3393,7 @@ enums = {
             }
         ]
     },
-    'FrameType': {
+    'Protocol': {
         'values': [
             {
                 'name': 'CAN',
