@@ -205,7 +205,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
         case nixnet_grpc::ReadState::READ_STATE_STATE_SESSION_INFO: {
           SetSessionInfoResponse(*(u32*)state_value_raw, response->mutable_state_value()->mutable_session_info());
           break;
-        }
+        } 
         case nixnet_grpc::ReadState::READ_STATE_STATE_FLEX_RAY_STATS: {
           convert_to_grpc(*(_nxFlexRayStats_t*)state_value_raw, response->mutable_state_value()->mutable_flex_ray_stats());
           break;
