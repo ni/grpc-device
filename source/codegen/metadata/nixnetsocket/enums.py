@@ -1,30 +1,4 @@
 enums = {
-  'OperationalStatus': {
-      'enum-value-prefix': 'OPERATIONAL_STATUS',
-        'values': [
-            {
-                'name': 'DOWN',
-                'value': 0
-            },
-            {
-                'name': 'UP',
-                'value': 1
-            }
-        ]
-    },
-     'IPStackInfoStringFormat': {
-        'enum-value-prefix': 'IPSTACK_INFO_STR_FORMAT',
-        'values': [
-            {
-                'name': 'JSON',
-                'value': 0
-            },
-            {
-                'name': 'TEXT',
-                'value': 1
-            }
-        ]
-    },
     'AddressFamily': {
         'values': [
             {
@@ -37,15 +11,80 @@ enums = {
             }
         ]
     },
-    'ProtocolFamily': {
+    'GetAddrInfoFlags': {
+        'force-include': True,
         'values': [
             {
-                'name': 'INET',
+                'name': 'PASSIVE',
+                'value': 1
+            },
+            {
+                'name': 'CANONNAME',
                 'value': 2
             },
             {
-                'name': 'INET6',
-                'value': 10
+                'name': 'NUMERICHOST',
+                'value': 4
+            },
+            {
+                'name': 'NUMERICSERV',
+                'value': 8
+            },
+            {
+                'name': 'V4MAPPED',
+                'value': 16
+            },
+            {
+                'name': 'ALL',
+                'value': 32
+            },
+            {
+                'name': 'ADDRCONFIG',
+                'value': 64
+            },
+            {
+                'name': 'LOCALQUERY',
+                'value': 128
+            },
+            {
+                'name': 'PREFER_V4',
+                'value': 256
+            },
+            {
+                'name': 'UNICAST_REPLY',
+                'value': 512
+            },
+            {
+                'name': 'SHARED_RESET',
+                'value': 1024
+            },
+            {
+                'name': 'BYPASS_CACHE',
+                'value': 2048
+            }
+        ]
+    },
+    'GetNameInfoFlags': {
+        'values': [
+            {
+                'name': 'NOFQDN',
+                'value': 1
+            },
+            {
+                'name': 'NUMERICHOST',
+                'value': 2
+            },
+            {
+                'name': 'NAMEREQD',
+                'value': 4
+            },
+            {
+                'name': 'NUMERICSERV',
+                'value': 8
+            },
+            {
+                'name': 'DGRAM',
+                'value': 16
             }
         ]
     },
@@ -69,23 +108,29 @@ enums = {
             }
         ]
     },
-    'SocketProtocolType': {
+    'IPStackInfoStringFormat': {
+        'enum-value-prefix': 'IPSTACK_INFO_STR_FORMAT',
         'values': [
             {
-                'name': 'STREAM',
-                'value': 1
+                'name': 'JSON',
+                'value': 0
             },
             {
-                'name': 'DGRAM',
-                'value': 2
+                'name': 'TEXT',
+                'value': 1
             }
         ]
     },
-    'SocketOptionLevel': {
+   'OperationalStatus': {
+      'enum-value-prefix': 'OPERATIONAL_STATUS',
         'values': [
             {
-                'name': 'SOCKET',
-                'value': 13
+                'name': 'DOWN',
+                'value': 0
+            },
+            {
+                'name': 'UP',
+                'value': 1
             }
         ]
     },
@@ -173,6 +218,18 @@ enums = {
             },
         ]
     },
+    'ProtocolFamily': {
+        'values': [
+            {
+                'name': 'INET',
+                'value': 2
+            },
+            {
+                'name': 'INET6',
+                'value': 10
+            }
+        ]
+    },
     'Shutdown': {
         'values': [
             {
@@ -189,80 +246,23 @@ enums = {
             }
         ]
     },
-    'GetAddrInfoFlags': {
-        'force-include': True,
+    'SocketOptionLevel': {
         'values': [
             {
-                'name': 'PASSIVE',
-                'value': 1
-            },
-            {
-                'name': 'CANONNAME',
-                'value': 2
-            },
-            {
-                'name': 'NUMERICHOST',
-                'value': 4
-            },
-            {
-                'name': 'NUMERICSERV',
-                'value': 8
-            },
-            {
-                'name': 'V4MAPPED',
-                'value': 16
-            },
-            {
-                'name': 'ALL',
-                'value': 32
-            },
-            {
-                'name': 'ADDRCONFIG',
-                'value': 64
-            },
-            {
-                'name': 'LOCALQUERY',
-                'value': 128
-            },
-            {
-                'name': 'PREFER_V4',
-                'value': 256
-            },
-            {
-                'name': 'UNICAST_REPLY',
-                'value': 512
-            },
-            {
-                'name': 'SHARED_RESET',
-                'value': 1024
-            },
-            {
-                'name': 'BYPASS_CACHE',
-                'value': 2048
+                'name': 'SOCKET',
+                'value': 13
             }
         ]
     },
-    'GetNameInfoFlags': {
+    'SocketProtocolType': {
         'values': [
             {
-                'name': 'NOFQDN',
+                'name': 'STREAM',
                 'value': 1
             },
             {
-                'name': 'NUMERICHOST',
-                'value': 2
-            },
-            {
-                'name': 'NAMEREQD',
-                'value': 4
-            },
-            {
-                'name': 'NUMERICSERV',
-                'value': 8
-            },
-            {
                 'name': 'DGRAM',
-                'value': 16
+                'value': 2
             }
         ]
     },
