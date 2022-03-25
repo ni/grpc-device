@@ -82,7 +82,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'frameType',
+                'name': 'protocol',
                 'proto_only': True,
                 'enum': 'Protocol',
                 'type': 'u32'
@@ -95,14 +95,14 @@ functions = {
                     'value': 'sizeOfBuffer'
                 },
                 'type': 'u8[]',
-                'grpc_type': 'repeated FrameBuffer',
+                'grpc_type': 'repeated FrameBufferResponse',
                 'supports_standard_copy_convert': True,
-                'additional_arguments_to_copy_convert': ['number_of_bytes_returned', 'frame_type']
+                'additional_arguments_to_copy_convert': ['number_of_bytes_returned', 'protocol', 'enetflags_output_map_']
             },
             {
                 'direction': 'in',
                 'name': 'sizeOfBuffer',
-                'hardcoded_value': 'get_frame_buffer_size(number_of_frames, max_payload_per_frame, frame_type)',
+                'hardcoded_value': 'get_frame_buffer_size(number_of_frames, max_payload_per_frame, protocol)',
                 'type': 'u32',
                 'include_in_proto': False
             },
@@ -127,8 +127,9 @@ functions = {
                 'name': 'frameBuffer',
                 'type': 'u8',
                 'pointer': True,
-                'grpc_type': 'repeated FrameBuffer',
-                'supports_standard_copy_convert': True
+                'grpc_type': 'repeated FrameBufferRequest',
+                'supports_standard_copy_convert': True,
+                'additional_arguments_to_copy_convert': ['enetflags_input_map_']
             },
             {
                 'direction': 'in',
@@ -172,8 +173,9 @@ functions = {
                 'name': 'frameBuffer',
                 'type': 'u8',
                 'pointer': True,
-                'grpc_type': 'repeated FrameBuffer',
-                'supports_standard_copy_convert': True
+                'grpc_type': 'repeated FrameBufferRequest',
+                'supports_standard_copy_convert': True,
+                'additional_arguments_to_copy_convert': ['enetflags_input_map_']
             },
             {
                 'direction': 'in',
@@ -252,7 +254,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'frameType',
+                'name': 'protocol',
                 'proto_only': True,
                 'enum': 'Protocol',
                 'type': 'u32'
@@ -265,14 +267,14 @@ functions = {
                     'value': 'sizeOfBuffer'
                 },
                 'type': 'u8[]',
-                'grpc_type': 'repeated FrameBuffer',
+                'grpc_type': 'repeated FrameBufferResponse',
                 'supports_standard_copy_convert': True,
-                'additional_arguments_to_copy_convert': ['number_of_bytes_returned', 'frame_type']
+                'additional_arguments_to_copy_convert': ['number_of_bytes_returned', 'protocol', 'enetflags_output_map_']
             },
             {
                 'direction': 'in',
                 'name': 'sizeOfBuffer',
-                'hardcoded_value': 'get_frame_buffer_size(number_of_frames, max_payload_per_frame, frame_type)',
+                'hardcoded_value': 'get_frame_buffer_size(number_of_frames, max_payload_per_frame, protocol)',
                 'type': 'u32',
                 'include_in_proto': False
             },
@@ -1065,7 +1067,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'frameType',
+                'name': 'protocol',
                 'proto_only': True,
                 'enum': 'Protocol',
                 'type': 'u32'
@@ -1078,14 +1080,14 @@ functions = {
                     'value': 'sizeOfBuffer'
                 },
                 'type': 'u8[]',
-                'grpc_type': 'repeated FrameBuffer',
+                'grpc_type': 'repeated FrameBufferResponse',
                 'supports_standard_copy_convert': True,
-                'additional_arguments_to_copy_convert': ['number_of_bytes_returned', 'frame_type']
+                'additional_arguments_to_copy_convert': ['number_of_bytes_returned', 'protocol', 'enetflags_output_map_']
             },
             {
                 'direction': 'in',
                 'name': 'sizeOfBuffer',
-                'hardcoded_value': 'get_frame_buffer_size(number_of_frames, max_payload_per_frame, frame_type)',
+                'hardcoded_value': 'get_frame_buffer_size(number_of_frames, max_payload_per_frame, protocol)',
                 'type': 'u32',
                 'include_in_proto': False
             },
@@ -1560,8 +1562,9 @@ functions = {
                 'name': 'buffer',
                 'type': 'u8',
                 'pointer': True,
-                'grpc_type': 'repeated FrameBuffer',
-                'supports_standard_copy_convert': True
+                'grpc_type': 'repeated FrameBufferRequest',
+                'supports_standard_copy_convert': True,
+                'additional_arguments_to_copy_convert': ['enetflags_input_map_']
             },
             {
                 'direction': 'in',
