@@ -484,8 +484,9 @@ inline SockOptDataInputConverter convert_from_grpc(const SockOptData& input)
 // This class allows us to have something allocated on the stack that provides backing
 // storage for a void* opt_val output param and converts it to the SockOptData grpc-type.
 struct SockOptDataOutputConverter {
-  SockOptDataOutputConverter(int32_t opt_name) : opt_name(opt_name)
+  SockOptDataOutputConverter(NiXnetSocketLibraryInterface* library, int32_t opt_name) : opt_name(opt_name), library(library)
   {
+    // library passed in and if string optname call GetSockOpt Null and set size as member variable
   }
 
   void* data()
@@ -508,7 +509,7 @@ struct SockOptDataOutputConverter {
         return &data_int;
       }
       case OptName::OPT_NAME_SO_BIND_TO_DEVICE: {
-        data_string = std::string(256 - 1, '\0');  // TODO: What's the max string size to allocate for a sock opt?
+        data_string = std::string(256 - 1, '\0');  // TODO: What's the max string size to allocate for a sock opt? this would now be optlen data member
         return &data_string[0];
       }
       case OptName::OPT_NAME_SO_LINGER: {
@@ -576,12 +577,16 @@ struct SockOptDataOutputConverter {
     }
   }
 
+  // add new access method for get size pointer
+
   int32_t opt_name;
+  int32_t length;  // length holder for strings
   int32_t data_int;
   std::string data_string;
   nxlinger data_linger;
   nxip_mreq data_ipmreq;
   nxipv6_mreq data_ipv6mreq;
+  NiXnetSocketLibraryInterface* library;
 };
 
 inline void convert_to_grpc(const SockOptDataOutputConverter& storage, SockOptData* output)
