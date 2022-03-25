@@ -82,18 +82,18 @@ try:
             cluster_name=CLUSTER,
             list=SIGNAL_LIST,
             interface=INTERFACE,
-            mode=nixnet_types.CREATE_SESSION_MODE_MODE_SIGNAL_IN_SINGLE_POINT,
+            mode=nixnet_types.CREATE_SESSION_MODE_SIGNAL_IN_SINGLE_POINT,
         )
     )
     check_for_error(create_session_response.status)
 
-    session = create_session_response.session_ref
+    session = create_session_response.session
     print("Session Created Successfully.\n")
 
     # Set the Key Slot
     set_property_response = client.SetProperty(
         nixnet_types.SetPropertyRequest(
-            session_ref=session,
+            session=session,
             property_id=nixnet_types.PROPERTY_SESSION_INTF_FLEX_RAY_KEY_SLOT_ID,
             u32_scalar=keyslot_id,
         )
@@ -104,7 +104,7 @@ try:
         # Update the signal data
         read_signal_response = client.ReadSignalSinglePoint(
             nixnet_types.ReadSignalSinglePointRequest(
-                session_ref=session,
+                session=session,
                 number_of_signals=NUM_SIGNALS,
             )
         )
@@ -130,5 +130,5 @@ except grpc.RpcError as rpc_error:
 finally:
     if session:
         # clear the XNET session.
-        check_for_error(client.Clear(nixnet_types.ClearRequest(session_ref=session)).status)
+        check_for_error(client.Clear(nixnet_types.ClearRequest(session=session)).status)
         print("Session cleared successfully!\n")
