@@ -154,7 +154,7 @@ try:
             print_timestamp(frame_buffer[i].enet.network_timestamp)
 
             for j in range(0, len(frame_buffer[i].enet.frame_data)):
-                # Prints frame data in hexadecimal form formatted by adding 0's at the beginning of string
+                # Prints frame data in hexadecimal form formatted by adding 0's at the beginning
                 print(
                     hex(frame_buffer[i].enet.frame_data[j]).upper()[2:].zfill(2),
                     end=" ",
