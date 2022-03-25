@@ -12,6 +12,7 @@ enums = {
         ]
     },
     'CanCommState': {
+        'force-include': True,
         'values': [
             {
                 'name': 'CAN_COMM_STATE_ERROR_ACTIVE',
@@ -32,6 +33,7 @@ enums = {
         ]
     },
     'CanLastErr': {
+        'force-include': True,
         'values': [
             {
                 'name': 'CAN_LAST_ERR_NONE',
@@ -991,6 +993,7 @@ enums = {
     },
     'EnetFlags': {
         'generate-mappings': True,
+        'force-include': True,
         'values': [
             {
                 'name': 'ENET_FLAGS_TRANSMIT',
@@ -1011,6 +1014,7 @@ enums = {
         ]
     },
     'EnetFrameType': {
+        'force-include': True,
         'values': [
             {
                 'name': 'ENET_FRAME_TYPE_DATA',
@@ -1027,6 +1031,7 @@ enums = {
         ]
     },
     'FlexRayPocState': {
+        'force-include': True,
         'values': [
             {
                 'name': 'FLEX_RAY_POC_STATE_DEFAULT_CONFIG',
@@ -1059,6 +1064,7 @@ enums = {
         ]
     },
     'FlexRaySymbol': {
+        'force-include': True,
         'values': [
             {
                 'name': 'FLEX_RAY_SYMBOL_MTS',
@@ -1071,6 +1077,7 @@ enums = {
         ]
     },
     'FrameFlags': {
+        'force-include': True,
         'values': [
             {
                 'name': 'FRAME_FLAGS_FLEX_RAY_STARTUP',
@@ -1103,6 +1110,7 @@ enums = {
         ]
     },
     'FrameType': {
+        'force-include': True,
         'values': [
             {
                 'name': 'FRAME_TYPE_CAN_DATA',
@@ -1191,6 +1199,7 @@ enums = {
         ]
     },
     'LinCommState': {
+        'force-include': True,
         'values': [
             {
                 'name': 'LIN_COMM_STATE_IDLE',
@@ -1207,6 +1216,7 @@ enums = {
         ]
     },
     'LinDiagnosticSchedule': {
+        'force-include': True,
         'values': [
             {
                 'name': 'LIN_DIAGNOSTIC_SCHEDULE_NULL',
@@ -1223,6 +1233,7 @@ enums = {
         ]
     },
     'LinLastErrCode': {
+        'force-include': True,
         'values': [
             {
                 'name': 'LIN_LAST_ERR_CODE_NONE',
@@ -3102,6 +3113,7 @@ enums = {
         ]
     },
     'SessionInfoState': {
+        'force-include': True,
         'values': [
             {
                 'name': 'SESSION_INFO_STATE_STOPPED',

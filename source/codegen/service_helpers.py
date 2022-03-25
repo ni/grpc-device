@@ -693,5 +693,9 @@ def get_protobuf_cpplib_type(grpc_type: str) -> str:
     """
     stripped_repeated = common_helpers.strip_prefix(grpc_type, "repeated ")
     if stripped_repeated != grpc_type:
-        return f"google::protobuf::RepeatedPtrField<{stripped_repeated}>"
+        return f"google::protobuf::RepeatedPtrField<{get_protobuf_cpplib_type(stripped_repeated)}>"
+
+    if grpc_type == "string":
+        return "std::string"
+
     return grpc_type

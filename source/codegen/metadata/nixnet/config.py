@@ -29,7 +29,6 @@ config = {
         'nxTimestamp1ns_t': 'uint64',
         'nxTimestamp100ns_t': 'uint64'
     },
-    'add_enums_to_proto': ['CanCommState', 'CanLastErr', 'EnetFlags', 'EnetFrameType', 'FlexRayPocState', 'FlexRaySymbol', 'FrameFlags', 'FrameType', 'LinCommState', 'LinDiagnosticSchedule', 'LinLastErrCode', 'SessionInfoState'],
     'custom_types': [
         {
             'name': '_nxTimeLocalNetwork_t',

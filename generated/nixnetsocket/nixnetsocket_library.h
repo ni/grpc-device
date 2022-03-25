@@ -21,7 +21,10 @@ class NiXnetSocketLibrary : public nixnetsocket_grpc::NiXnetSocketLibraryInterfa
   nxSOCKET Accept(nxSOCKET socket, nxsockaddr* addr, nxsocklen_t* addrlen);
   int32_t Bind(nxSOCKET socket, nxsockaddr* name, nxsocklen_t namelen);
   int32_t Connect(nxSOCKET socket, nxsockaddr* name, nxsocklen_t namelen);
+  uint32_t InetAddr(nxIpStackRef_t stack_ref, const char cp[]);
   int32_t InetAToN(nxIpStackRef_t stack_ref, const char cp[], nxin_addr* name);
+  char* InetNToA(nxIpStackRef_t stack_ref, nxin_addr inParameter);
+  const char* InetNToP(nxIpStackRef_t stack_ref, int32_t af, void* src, char dst[nxINET6_ADDRSTRLEN], nxsocklen_t size);
   int32_t InetPToN(nxIpStackRef_t stack_ref, int32_t af, const char src[], void* dst);
   int32_t FreeAddrInfo(nxaddrinfo* res);
   int32_t GetAddrInfo(nxIpStackRef_t stack_ref, const char node[], const char service[], nxaddrinfo* hints, nxaddrinfo** res);
@@ -40,8 +43,11 @@ class NiXnetSocketLibrary : public nixnetsocket_grpc::NiXnetSocketLibraryInterfa
   int32_t GetSockOpt(nxSOCKET socket, int32_t level, int32_t optname, void* optval, nxsocklen_t* optlen);
   int32_t IpStackClear(nxIpStackRef_t stack_ref);
   int32_t IpStackCreate(char stack_name[], char config[], nxIpStackRef_t* stack_ref);
+  void IpStackFreeAllStacksInfoStr(nixnetsocket_grpc::IpStackInfoString info);
   int32_t IpStackFreeInfo(nxVirtualInterface_t* firstVirtualInterface);
+  int32_t IpStackGetAllStacksInfoStr(uint32_t format, nixnetsocket_grpc::IpStackInfoString* info);
   int32_t IpStackGetInfo(nxIpStackRef_t stack_ref, uint32_t info_id, nxVirtualInterface_t** virtual_interfaces);
+  int32_t IpStackOpen(char stack_name[], nxIpStackRef_t* stack_ref);
   int32_t IpStackWaitForInterface(nxIpStackRef_t stack_ref, const char localInterface[], int32_t timeoutMs);
   int32_t IsSet(nxSOCKET fd, nxfd_set* set);
   int32_t Select(int32_t nfds, nxfd_set* read_fds, nxfd_set* write_fds, nxfd_set* except_fds, nxtimeval* timeout);
@@ -52,7 +58,10 @@ class NiXnetSocketLibrary : public nixnetsocket_grpc::NiXnetSocketLibraryInterfa
   using AcceptPtr = decltype(&nxaccept);
   using BindPtr = decltype(&nxbind);
   using ConnectPtr = decltype(&nxconnect);
+  using InetAddrPtr = decltype(&nxinet_addr);
   using InetAToNPtr = decltype(&nxinet_aton);
+  using InetNToAPtr = decltype(&nxinet_ntoa);
+  using InetNToPPtr = decltype(&nxinet_ntop);
   using InetPToNPtr = decltype(&nxinet_pton);
   using FreeAddrInfoPtr = int32_t (*)(nxaddrinfo* res);
   using GetAddrInfoPtr = decltype(&nxgetaddrinfo);
@@ -71,8 +80,11 @@ class NiXnetSocketLibrary : public nixnetsocket_grpc::NiXnetSocketLibraryInterfa
   using GetSockOptPtr = decltype(&nxgetsockopt);
   using IpStackClearPtr = decltype(&nxIpStackClear);
   using IpStackCreatePtr = decltype(&nxIpStackCreate);
+  using IpStackFreeAllStacksInfoStrPtr = void (*)(nixnetsocket_grpc::IpStackInfoString info);
   using IpStackFreeInfoPtr = int32_t (*)(nxVirtualInterface_t* firstVirtualInterface);
+  using IpStackGetAllStacksInfoStrPtr = decltype(&nxIpStackGetAllStacksInfoStr);
   using IpStackGetInfoPtr = decltype(&nxIpStackGetInfo);
+  using IpStackOpenPtr = decltype(&nxIpStackOpen);
   using IpStackWaitForInterfacePtr = decltype(&nxIpStackWaitForInterface);
   using IsSetPtr = decltype(&nxfd_isset);
   using SelectPtr = decltype(&nxselect);
@@ -83,7 +95,10 @@ class NiXnetSocketLibrary : public nixnetsocket_grpc::NiXnetSocketLibraryInterfa
     AcceptPtr Accept;
     BindPtr Bind;
     ConnectPtr Connect;
+    InetAddrPtr InetAddr;
     InetAToNPtr InetAToN;
+    InetNToAPtr InetNToA;
+    InetNToPPtr InetNToP;
     InetPToNPtr InetPToN;
     FreeAddrInfoPtr FreeAddrInfo;
     GetAddrInfoPtr GetAddrInfo;
@@ -102,8 +117,11 @@ class NiXnetSocketLibrary : public nixnetsocket_grpc::NiXnetSocketLibraryInterfa
     GetSockOptPtr GetSockOpt;
     IpStackClearPtr IpStackClear;
     IpStackCreatePtr IpStackCreate;
+    IpStackFreeAllStacksInfoStrPtr IpStackFreeAllStacksInfoStr;
     IpStackFreeInfoPtr IpStackFreeInfo;
+    IpStackGetAllStacksInfoStrPtr IpStackGetAllStacksInfoStr;
     IpStackGetInfoPtr IpStackGetInfo;
+    IpStackOpenPtr IpStackOpen;
     IpStackWaitForInterfacePtr IpStackWaitForInterface;
     IsSetPtr IsSet;
     SelectPtr Select;
