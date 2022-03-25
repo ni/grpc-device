@@ -12,6 +12,7 @@ enums = {
         ]
     },
     'CanCommState': {
+        'force-include': True,
         'values': [
             {
                 'name': 'ERROR_ACTIVE',
@@ -32,6 +33,7 @@ enums = {
         ]
     },
     'CanLastErr': {
+        'force-include': True,
         'values': [
             {
                 'name': 'NONE',
@@ -991,6 +993,7 @@ enums = {
     },
     'EnetFlags': {
         'generate-mappings': True,
+        'force-include': True,
         'values': [
             {
                 'name': 'TRANSMIT',
@@ -1011,6 +1014,7 @@ enums = {
         ]
     },
     'EnetFrameType': {
+        'force-include': True,
         'values': [
             {
                 'name': 'DATA',
@@ -1027,6 +1031,7 @@ enums = {
         ]
     },
     'FlexRayPocState': {
+        'force-include': True,
         'values': [
             {
                 'name': 'DEFAULT_CONFIG',
@@ -1059,6 +1064,7 @@ enums = {
         ]
     },
     'FlexRaySymbol': {
+        'force-include': True,
         'values': [
             {
                 'name': 'MTS',
@@ -1071,6 +1077,7 @@ enums = {
         ]
     },
     'FrameFlags': {
+        'force-include': True,
         'values': [
             {
                 'name': 'FLEX_RAY_STARTUP',
@@ -1103,6 +1110,7 @@ enums = {
         ]
     },
     'FrameTypes': {
+        'force-include': True,
         'values': [
             {
                 'name': 'CAN_DATA',
@@ -1191,6 +1199,7 @@ enums = {
         ]
     },
     'LinCommState': {
+        'force-include': True,
         'values': [
             {
                 'name': 'IDLE',
@@ -1207,6 +1216,7 @@ enums = {
         ]
     },
     'LinDiagnosticSchedule': {
+        'force-include': True,
         'values': [
             {
                 'name': 'NULL',
@@ -1223,6 +1233,7 @@ enums = {
         ]
     },
     'LinLastErrCode': {
+        'force-include': True,
         'values': [
             {
                 'name': 'NONE',
@@ -3102,6 +3113,7 @@ enums = {
         ]
     },
     'SessionInfoState': {
+        'force-include': True,
         'values': [
             {
                 'name': 'STOPPED',

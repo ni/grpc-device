@@ -24,7 +24,7 @@ inline bool status_ok(int32 status)
 }
 
 // Helper to read fields of u32 returned by nxReadState of nxState_CANComm and set them on gRPC message
-void SetCanCommResponse(const u32& input, nixnet_grpc::CanCommResponse* output)
+void SetCanCommResponse(const u32 input, nixnet_grpc::CanCommResponse* output)
 {
   u32 comm_state = nxCANComm_Get_CommState(input);
   u32 last_error = nxCANComm_Get_LastErr(input);
@@ -40,7 +40,7 @@ void SetCanCommResponse(const u32& input, nixnet_grpc::CanCommResponse* output)
 }
 
 // Helper to read fields of u32 returned by nxReadState of nxState_FlexRayComm and set them on gRPC message
-void SetFlexRayCommResponse(const u32& input, nixnet_grpc::FlexRayCommResponse* output)
+void SetFlexRayCommResponse(const u32 input, nixnet_grpc::FlexRayCommResponse* output)
 {
   u32 poc_state = nxFlexRayComm_Get_POCState(input);
 
