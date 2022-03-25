@@ -601,21 +601,24 @@ TEST(XnetConvertersTests, IPv4AddrOutputConverter_ConvertToGrpc_ConvertsToAddres
 
 TEST(XnetConvertersTests, AddrInfoHintInputConverter_ConvertFromGrpc_ConvertsToAddrInfoHint)
 {
+  constexpr auto FAMILY = AddressFamily::ADDRESS_FAMILY_INET6;
+  constexpr auto PROTOCOL = IPProtocol::IP_PROTOCOL_IPV6;
+  constexpr auto SOCKET_TYPE = SocketProtocolType::SOCKET_PROTOCOL_TYPE_STREAM;
   AddrInfoHint hints{};
   constexpr auto EXPECTED_FLAGS = nxAI_PASSIVE | nxAI_V4MAPPED;
-  hints.set_family(AddressFamily::ADDRESS_FAMILY_INET6);
+  hints.set_family(FAMILY);
   hints.add_flags(GetAddrInfoFlags::GET_ADDR_INFO_FLAGS_PASSIVE);
   hints.add_flags(GetAddrInfoFlags::GET_ADDR_INFO_FLAGS_V4MAPPED);
-  hints.set_protocol(IPProtocol::IP_PROTOCOL_IPV6);
-  hints.set_sock_type(SocketProtocolType::SOCKET_PROTOCOL_TYPE_STREAM);
+  hints.set_protocol(PROTOCOL);
+  hints.set_sock_type(SOCKET_TYPE);
 
   auto addr_info_hints_input_converter = convert_from_grpc<nxaddrinfo>(hints);
   auto hints_ptr = static_cast<nxaddrinfo*>(addr_info_hints_input_converter);
 
-  EXPECT_EQ(AddressFamily::ADDRESS_FAMILY_INET6, hints_ptr->ai_family);
+  EXPECT_EQ(FAMILY, hints_ptr->ai_family);
   EXPECT_EQ(EXPECTED_FLAGS, hints_ptr->ai_flags);
-  EXPECT_EQ(IPProtocol::IP_PROTOCOL_IPV6, hints_ptr->ai_protocol);
-  EXPECT_EQ(SocketProtocolType::SOCKET_PROTOCOL_TYPE_STREAM, hints_ptr->ai_socktype);
+  EXPECT_EQ(PROTOCOL, hints_ptr->ai_protocol);
+  EXPECT_EQ(SOCKET_TYPE, hints_ptr->ai_socktype);
   // For the conversion from AddrInfoHint to nxaddrinfo, the following fields are expected to be 0 or nullptr.
   EXPECT_EQ(0, hints_ptr->ai_addrlen);
   EXPECT_EQ(nullptr, hints_ptr->ai_addr);
