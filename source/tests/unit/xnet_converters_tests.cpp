@@ -5,6 +5,8 @@
 #include <gtest/gtest.h>
 #include <nixnetsocket/nixnetsocket_mock_library.h>
 
+#include <algorithm>
+#include <numeric>
 #include <string>
 
 using namespace nixnetsocket_grpc;
@@ -626,6 +628,30 @@ TEST(XnetConvertersTests, AddrInfoHintInputConverter_ConvertFromGrpc_ConvertsToA
   EXPECT_EQ(nullptr, hints_ptr->ai_next);
 }
 
+void EXPECT_ADDR_INFO(
+    const std::vector<GetAddrInfoFlags>& flags,
+    AddressFamily family,
+    SocketProtocolType sock_type,
+    IPProtocol protocol,
+    const char* canon_name,
+    pb::uint32 address,
+    pb::uint32 port,
+    AddrInfo& addr_info)
+{
+  int expected_flags_raw = std::accumulate(flags.begin(), flags.end(), 0, std::bit_or());
+  EXPECT_EQ(expected_flags_raw, addr_info.flags_raw());
+  EXPECT_EQ(flags.size(), addr_info.flags().size());
+  for (int i = 0; i < std::min<size_t>(flags.size(), addr_info.flags().size()); i++) {
+    EXPECT_EQ(flags.at(i), addr_info.flags(i));
+  }
+  EXPECT_EQ(family, addr_info.family());
+  EXPECT_EQ(sock_type, addr_info.sock_type());
+  EXPECT_EQ(protocol, addr_info.protocol());
+  EXPECT_STREQ(canon_name, addr_info.canon_name().c_str());
+  EXPECT_EQ(address, addr_info.addr().ipv4().addr().addr());
+  EXPECT_EQ(port, addr_info.addr().ipv4().port());
+}
+
 TEST(XnetConvertersTests, AddrInfoOutputConverter_ConvertToGrpc_ConvertsToAddrInfoMessage)
 {
   constexpr auto PORT = 100;
@@ -652,7 +678,6 @@ TEST(XnetConvertersTests, AddrInfoOutputConverter_ConvertToGrpc_ConvertsToAddrIn
       reinterpret_cast<nxsockaddr*>(&addr),
       "AddrHostName",
       &addr_info_next};
-
   NiXnetSocketMockLibrary library;
   auto converter = allocate_output_storage<nxaddrinfo, google::protobuf::RepeatedPtrField<AddrInfo>>(&library);
   converter.addr_info_ptr = &addr_info;
@@ -663,27 +688,24 @@ TEST(XnetConvertersTests, AddrInfoOutputConverter_ConvertToGrpc_ConvertsToAddrIn
   convert_to_grpc(converter, &grpc_output);
 
   EXPECT_EQ(2, grpc_output.size());
-  auto first_addr_info = grpc_output[0];
-  EXPECT_EQ(nxAI_ALL, first_addr_info.flags_raw());
-  EXPECT_EQ(1, first_addr_info.flags().size());
-  EXPECT_EQ(GetAddrInfoFlags::GET_ADDR_INFO_FLAGS_ALL, first_addr_info.flags(0));
-  EXPECT_EQ(AddressFamily::ADDRESS_FAMILY_INET, first_addr_info.family());
-  EXPECT_EQ(SocketProtocolType::SOCKET_PROTOCOL_TYPE_STREAM, first_addr_info.sock_type());
-  EXPECT_EQ(IPProtocol::IP_PROTOCOL_TCP, first_addr_info.protocol());
-  EXPECT_STREQ("AddrHostName", first_addr_info.canon_name().c_str());
-  EXPECT_EQ(ADDR, first_addr_info.addr().ipv4().addr().addr());
-  EXPECT_EQ(PORT, first_addr_info.addr().ipv4().port());
-  auto next_addr_info = grpc_output[1];
-  EXPECT_EQ(nxAI_PASSIVE | nxAI_ADDRCONFIG, next_addr_info.flags_raw());
-  EXPECT_EQ(2, next_addr_info.flags().size());
-  EXPECT_EQ(GetAddrInfoFlags::GET_ADDR_INFO_FLAGS_ADDRCONFIG, next_addr_info.flags(0));
-  EXPECT_EQ(GetAddrInfoFlags::GET_ADDR_INFO_FLAGS_PASSIVE, next_addr_info.flags(1));
-  EXPECT_EQ(AddressFamily::ADDRESS_FAMILY_INET, next_addr_info.family());
-  EXPECT_EQ(SocketProtocolType::SOCKET_PROTOCOL_TYPE_DGRAM, next_addr_info.sock_type());
-  EXPECT_EQ(IPProtocol::IP_PROTOCOL_UDP, next_addr_info.protocol());
-  EXPECT_STREQ("NextAddrHostName", next_addr_info.canon_name().c_str());
-  EXPECT_EQ(NEXT_ADDR, next_addr_info.addr().ipv4().addr().addr());
-  EXPECT_EQ(NEXT_PORT, next_addr_info.addr().ipv4().port());
+  EXPECT_ADDR_INFO(
+      {GetAddrInfoFlags::GET_ADDR_INFO_FLAGS_ALL},
+      AddressFamily::ADDRESS_FAMILY_INET,
+      SocketProtocolType::SOCKET_PROTOCOL_TYPE_STREAM,
+      IPProtocol::IP_PROTOCOL_TCP,
+      "AddrHostName",
+      ADDR,
+      PORT,
+      grpc_output[0]);
+  EXPECT_ADDR_INFO(
+      {GetAddrInfoFlags::GET_ADDR_INFO_FLAGS_ADDRCONFIG, GetAddrInfoFlags::GET_ADDR_INFO_FLAGS_PASSIVE},
+      AddressFamily::ADDRESS_FAMILY_INET,
+      SocketProtocolType::SOCKET_PROTOCOL_TYPE_DGRAM,
+      IPProtocol::IP_PROTOCOL_UDP,
+      "NextAddrHostName",
+      NEXT_ADDR,
+      NEXT_PORT,
+      grpc_output[1]);
 }
 
 TEST(XnetConvertersTests, AddrInfoFlagsAsInt_ConvertToRepeatedFlagsEnum_AllFlagsPresent)
