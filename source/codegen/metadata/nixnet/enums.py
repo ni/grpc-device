@@ -3406,6 +3406,7 @@ enums = {
         ]
     },
     'Protocol': {
+        'force-include': True,
         'values': [
             {
                 'name': 'CAN',
