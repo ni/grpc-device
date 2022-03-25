@@ -94,12 +94,12 @@ try:
             cluster_name=CLUSTER,
             list=SIGNAL_LIST,
             interface=INTERFACE,
-            mode=nixnet_types.CREATE_SESSION_MODE_MODE_SIGNAL_OUT_SINGLE_POINT,
+            mode=nixnet_types.CREATE_SESSION_MODE_SIGNAL_OUT_SINGLE_POINT,
         )
     )
     check_for_error(create_session_response.status)
 
-    session = create_session_response.session_ref
+    session = create_session_response.session
     print("Session Created Successfully. \n")
 
     if IS_MASTER != 0:
@@ -107,8 +107,8 @@ try:
         write_state_value = nixnet_types.WriteStateValue(lin_schedule_change=SCHEDULE_INDEX)
         write_state_response = client.WriteState(
             nixnet_types.WriteStateRequest(
-                session_ref=session,
-                state_id=nixnet_types.WRITE_STATE_STATE_LIN_SCHEDULE_CHANGE,
+                session=session,
+                state_id=nixnet_types.WRITE_STATE_LIN_SCHEDULE_CHANGE,
                 state_value=write_state_value,
             )
         )
@@ -122,9 +122,7 @@ try:
 
         # Update the signal data
         write_signal_response = client.WriteSignalSinglePoint(
-            nixnet_types.WriteSignalSinglePointRequest(
-                session_ref=session, value_buffer=value_buffer
-            )
+            nixnet_types.WriteSignalSinglePointRequest(session=session, value_buffer=value_buffer)
         )
         check_for_error(write_signal_response.status)
 
@@ -146,5 +144,5 @@ except grpc.RpcError as rpc_error:
 finally:
     if session:
         # clear the XNET session.
-        check_for_error(client.Clear(nixnet_types.ClearRequest(session_ref=session)).status)
+        check_for_error(client.Clear(nixnet_types.ClearRequest(session=session)).status)
         print("Session cleared successfully!\n")

@@ -107,7 +107,7 @@ message EptRxFilterArray {
 }
 
 message GetPropertyRequest {
-  nidevice_grpc.Session session_ref = 1;
+  nidevice_grpc.Session session = 1;
   oneof property_id_enum {
     Property property_id = 2;
     uint32 property_id_raw = 3;
@@ -132,7 +132,7 @@ message GetPropertyResponse {
 }
 
 message SetPropertyRequest {
-  nidevice_grpc.Session session_ref = 1;
+  nidevice_grpc.Session session = 1;
   oneof property_id_enum {
     Property property_id = 2;
     uint32 property_id_raw = 3;
@@ -157,7 +157,7 @@ message SetPropertyResponse {
 }
 
 message GetSubPropertyRequest {
-  nidevice_grpc.Session session_ref = 1;
+  nidevice_grpc.Session session = 1;
   uint32 active_index = 2;
   oneof subproperty_id_enum {
     SubProperty property_id = 3;
@@ -175,7 +175,7 @@ message GetSubPropertyResponse {
 }
 
 message DbGetPropertyRequest {
-  nidevice_grpc.Session dbobject_ref = 1;
+  nidevice_grpc.Session dbobject = 1;
   oneof dbproperty_id_enum {
     DBProperty property_id = 2;
     uint32 property_id_raw = 3;
@@ -198,7 +198,7 @@ message DbGetPropertyResponse {
 }
 
 message SetSubPropertyRequest {
-  nidevice_grpc.Session session_ref = 1;
+  nidevice_grpc.Session session = 1;
   uint32 active_index = 2;
   oneof subproperty_id_enum {
     SubProperty property_id = 3;
@@ -216,7 +216,7 @@ message SetSubPropertyResponse {
 }
 
 message DbSetPropertyRequest {
-  nidevice_grpc.Session dbobject_ref = 1;
+  nidevice_grpc.Session dbobject = 1;
   oneof dbproperty_id_enum {
     DBProperty property_id = 2;
     uint32 property_id_raw = 3;

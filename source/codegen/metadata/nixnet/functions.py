@@ -19,7 +19,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'sessionRef',
+                'name': 'session',
                 'type': 'nxSessionRef_t'
             }
         ],
@@ -29,7 +29,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'sessionRef',
+                'name': 'session',
                 'type': 'nxSessionRef_t'
             },
             {
@@ -51,7 +51,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'sessionRef',
+                'name': 'session',
                 'type': 'nxSessionRef_t'
             },
             {
@@ -119,7 +119,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'sessionRef',
+                'name': 'session',
                 'type': 'nxSessionRef_t'
             },
             {
@@ -159,7 +159,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'sessionRef',
+                'name': 'session',
                 'type': 'nxSessionRef_t'
             },
             {
@@ -223,7 +223,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'sessionRef',
+                'name': 'session',
                 'type': 'nxSessionRef_t'
             },
             {
@@ -348,7 +348,7 @@ functions = {
             },
             {
                 'direction': 'out',
-                'name': 'sessionRef',
+                'name': 'session',
                 'type': 'nxSessionRef_t'
             }
         ],
@@ -384,7 +384,7 @@ functions = {
             },
             {
                 'direction': 'out',
-                'name': 'sessionRef',
+                'name': 'session',
                 'type': 'nxSessionRef_t'
             }
         ],
@@ -438,7 +438,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'databaseRef',
+                'name': 'database',
                 'type': 'nxDatabaseRef_t'
             },
             {
@@ -455,7 +455,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'parentObjectRef',
+                'name': 'parentObject',
                 'type': 'nxDatabaseRef_t'
             },
             {
@@ -472,7 +472,7 @@ functions = {
                 'cross_driver_session': 'nxDatabaseRef_t',
                 'direction': 'out',
                 'grpc_type': 'nidevice_grpc.Session',
-                'name': 'dbObjectRef',
+                'name': 'dbObject',
                 'type': 'nxDatabaseRef_t'
             }
         ],
@@ -484,7 +484,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'dbObjectRef',
+                'name': 'dbObject',
                 'type': 'nxDatabaseRef_t'
             }
         ],
@@ -522,7 +522,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'parentObjectRef',
+                'name': 'parentObject',
                 'type': 'nxDatabaseRef_t'
             },
             {
@@ -539,7 +539,7 @@ functions = {
                 'cross_driver_session': 'nxDatabaseRef_t',
                 'direction': 'out',
                 'grpc_type': 'nidevice_grpc.Session',
-                'name': 'dbObjectRef',
+                'name': 'dbObject',
                 'type': 'nxDatabaseRef_t'
             }
         ],
@@ -551,7 +551,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'dbObjectRef',
+                'name': 'dbObject',
                 'type': 'nxDatabaseRef_t'
             },
             {
@@ -593,7 +593,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'dbObjectRef',
+                'name': 'dbObject',
                 'type': 'nxDatabaseRef_t'
             },
             {
@@ -691,7 +691,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'dbObjectRef',
+                'name': 'dbObject',
                 'type': 'nxDatabaseRef_t'
             },
             {
@@ -724,7 +724,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'dbObjectRef',
+                'name': 'dbObject',
                 'type': 'nxDatabaseRef_t'
             },
             {
@@ -746,12 +746,12 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'targetClusterRef',
+                'name': 'targetCluster',
                 'type': 'nxDatabaseRef_t'
             },
             {
                 'direction': 'in',
-                'name': 'sourceObjRef',
+                'name': 'sourceObj',
                 'type': 'nxDatabaseRef_t'
             },
             {
@@ -790,7 +790,7 @@ functions = {
             },
             {
                 'direction': 'out',
-                'name': 'databaseRef',
+                'name': 'database',
                 'type': 'nxDatabaseRef_t'
             }
         ],
@@ -812,7 +812,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'databaseRef',
+                'name': 'database',
                 'type': 'nxDatabaseRef_t'
             },
             {
@@ -830,7 +830,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'dbObjectRef',
+                'name': 'dbObject',
                 'type': 'nxDatabaseRef_t'
             },
             {
@@ -877,7 +877,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'sessionRef',
+                'name': 'session',
                 'type': 'nxSessionRef_t'
             },
             {
@@ -899,7 +899,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'sessionRef',
+                'name': 'session',
                 'type': 'nxSessionRef_t'
             }
         ],
@@ -909,7 +909,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'sessionRef',
+                'name': 'session',
                 'type': 'nxSessionRef_t'
             },
             {
@@ -932,7 +932,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'sessionRef',
+                'name': 'session',
                 'type': 'nxSessionRef_t'
             },
             {
@@ -964,7 +964,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'sessionRef',
+                'name': 'session',
                 'type': 'nxSessionRef_t'
             },
             {
@@ -987,7 +987,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'sessionRef',
+                'name': 'session',
                 'type': 'nxSessionRef_t'
             },
             {
@@ -1024,7 +1024,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'sessionRef',
+                'name': 'session',
                 'type': 'nxSessionRef_t'
             },
             {
@@ -1050,7 +1050,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'sessionRef',
+                'name': 'session',
                 'type': 'nxSessionRef_t'
             },
             {
@@ -1110,7 +1110,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'sessionRef',
+                'name': 'session',
                 'type': 'nxSessionRef_t'
             },
             {
@@ -1158,7 +1158,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'sessionRef',
+                'name': 'session',
                 'type': 'nxSessionRef_t'
             },
             {
@@ -1220,7 +1220,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'sessionRef',
+                'name': 'session',
                 'type': 'nxSessionRef_t'
             },
             {
@@ -1298,7 +1298,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'sessionRef',
+                'name': 'session',
                 'type': 'nxSessionRef_t'
             },
             {
@@ -1335,7 +1335,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'sessionRef',
+                'name': 'session',
                 'type': 'nxSessionRef_t'
             },
             {
@@ -1370,7 +1370,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'sessionRef',
+                'name': 'session',
                 'type': 'nxSessionRef_t'
             },
             {
@@ -1404,7 +1404,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'sessionRef',
+                'name': 'session',
                 'type': 'nxSessionRef_t'
             },
             {
@@ -1441,7 +1441,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'sessionRef',
+                'name': 'session',
                 'type': 'nxSessionRef_t'
             },
             {
@@ -1484,7 +1484,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'sessionRef',
+                'name': 'session',
                 'type': 'nxSessionRef_t'
             },
             {
@@ -1501,7 +1501,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'systemRef',
+                'name': 'system',
                 'type': 'nxSessionRef_t'
             }
         ],
@@ -1513,7 +1513,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'out',
-                'name': 'systemRef',
+                'name': 'system',
                 'type': 'nxSessionRef_t'
             }
         ],
@@ -1523,7 +1523,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'sessionRef',
+                'name': 'session',
                 'type': 'nxSessionRef_t'
             },
             {
@@ -1554,7 +1554,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'sessionRef',
+                'name': 'session',
                 'type': 'nxSessionRef_t'
             },
             {
@@ -1586,7 +1586,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'sessionRef',
+                'name': 'session',
                 'type': 'nxSessionRef_t'
             },
             {
@@ -1610,7 +1610,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'sessionRef',
+                'name': 'session',
                 'type': 'nxSessionRef_t'
             },
             {
@@ -1640,7 +1640,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'sessionRef',
+                'name': 'session',
                 'type': 'nxSessionRef_t'
             },
             {
@@ -1699,7 +1699,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'sessionRef',
+                'name': 'session',
                 'type': 'nxSessionRef_t'
             },
             {
