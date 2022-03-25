@@ -67,6 +67,23 @@ connect(const StubPtr& stub, const nidevice_grpc::Session& socket, const SockAdd
   return response;
 }
 
+InetAddrResponse
+inet_addr(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const pb::string& cp)
+{
+  ::grpc::ClientContext context;
+
+  auto request = InetAddrRequest{};
+  request.mutable_stack_ref()->CopyFrom(stack_ref);
+  request.set_cp(cp);
+
+  auto response = InetAddrResponse{};
+
+  raise_if_error(
+      stub->InetAddr(&context, request, &response));
+
+  return response;
+}
+
 InetAToNResponse
 inet_a_to_n(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const pb::string& cp)
 {
@@ -80,6 +97,40 @@ inet_a_to_n(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const 
 
   raise_if_error(
       stub->InetAToN(&context, request, &response));
+
+  return response;
+}
+
+InetNToAResponse
+inet_n_to_a(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const IPv4Addr& in_parameter)
+{
+  ::grpc::ClientContext context;
+
+  auto request = InetNToARequest{};
+  request.mutable_stack_ref()->CopyFrom(stack_ref);
+  request.mutable_in()->CopyFrom(in_parameter);
+
+  auto response = InetNToAResponse{};
+
+  raise_if_error(
+      stub->InetNToA(&context, request, &response));
+
+  return response;
+}
+
+InetNToPResponse
+inet_n_to_p(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const Addr& src)
+{
+  ::grpc::ClientContext context;
+
+  auto request = InetNToPRequest{};
+  request.mutable_stack_ref()->CopyFrom(stack_ref);
+  request.mutable_src()->CopyFrom(src);
+
+  auto response = InetNToPResponse{};
+
+  raise_if_error(
+      stub->InetNToP(&context, request, &response));
 
   return response;
 }
@@ -368,6 +419,21 @@ ip_stack_create(const StubPtr& stub, const pb::string& stack_name, const pb::str
   return response;
 }
 
+IpStackGetAllStacksInfoStrResponse
+ip_stack_get_all_stacks_info_str(const StubPtr& stub)
+{
+  ::grpc::ClientContext context;
+
+  auto request = IpStackGetAllStacksInfoStrRequest{};
+
+  auto response = IpStackGetAllStacksInfoStrResponse{};
+
+  raise_if_error(
+      stub->IpStackGetAllStacksInfoStr(&context, request, &response));
+
+  return response;
+}
+
 IpStackGetInfoResponse
 ip_stack_get_info(const StubPtr& stub, const nidevice_grpc::Session& stack_ref)
 {
@@ -380,6 +446,22 @@ ip_stack_get_info(const StubPtr& stub, const nidevice_grpc::Session& stack_ref)
 
   raise_if_error(
       stub->IpStackGetInfo(&context, request, &response));
+
+  return response;
+}
+
+IpStackOpenResponse
+ip_stack_open(const StubPtr& stub, const pb::string& stack_name)
+{
+  ::grpc::ClientContext context;
+
+  auto request = IpStackOpenRequest{};
+  request.set_stack_name(stack_name);
+
+  auto response = IpStackOpenResponse{};
+
+  raise_if_error(
+      stub->IpStackOpen(&context, request, &response));
 
   return response;
 }
