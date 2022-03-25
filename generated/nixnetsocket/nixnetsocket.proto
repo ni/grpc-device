@@ -19,28 +19,33 @@ import "google/protobuf/duration.proto";
 service NiXnetSocket {
   rpc Accept(AcceptRequest) returns (AcceptResponse);
   rpc Bind(BindRequest) returns (BindResponse);
+  rpc Close(CloseRequest) returns (CloseResponse);
   rpc Connect(ConnectRequest) returns (ConnectResponse);
-  rpc InetAToN(InetAToNRequest) returns (InetAToNResponse);
-  rpc InetPToN(InetPToNRequest) returns (InetPToNResponse);
   rpc GetAddrInfo(GetAddrInfoRequest) returns (GetAddrInfoResponse);
   rpc GetNameInfo(GetNameInfoRequest) returns (GetNameInfoResponse);
-  rpc Listen(ListenRequest) returns (ListenResponse);
-  rpc SendTo(SendToRequest) returns (SendToResponse);
-  rpc Send(SendRequest) returns (SendResponse);
-  rpc RecvFrom(RecvFromRequest) returns (RecvFromResponse);
-  rpc Recv(RecvRequest) returns (RecvResponse);
-  rpc GetSockName(GetSockNameRequest) returns (GetSockNameResponse);
   rpc GetPeerName(GetPeerNameRequest) returns (GetPeerNameResponse);
-  rpc Shutdown(ShutdownRequest) returns (ShutdownResponse);
-  rpc Close(CloseRequest) returns (CloseResponse);
+  rpc GetSockName(GetSockNameRequest) returns (GetSockNameResponse);
   rpc GetSockOpt(GetSockOptRequest) returns (GetSockOptResponse);
+  rpc InetAddr(InetAddrRequest) returns (InetAddrResponse);
+  rpc InetAToN(InetAToNRequest) returns (InetAToNResponse);
+  rpc InetNToA(InetNToARequest) returns (InetNToAResponse);
+  rpc InetNToP(InetNToPRequest) returns (InetNToPResponse);
+  rpc InetPToN(InetPToNRequest) returns (InetPToNResponse);
   rpc IpStackClear(IpStackClearRequest) returns (IpStackClearResponse);
   rpc IpStackCreate(IpStackCreateRequest) returns (IpStackCreateResponse);
+  rpc IpStackGetAllStacksInfoStr(IpStackGetAllStacksInfoStrRequest) returns (IpStackGetAllStacksInfoStrResponse);
   rpc IpStackGetInfo(IpStackGetInfoRequest) returns (IpStackGetInfoResponse);
+  rpc IpStackOpen(IpStackOpenRequest) returns (IpStackOpenResponse);
   rpc IpStackWaitForInterface(IpStackWaitForInterfaceRequest) returns (IpStackWaitForInterfaceResponse);
   rpc IsSet(IsSetRequest) returns (IsSetResponse);
+  rpc Listen(ListenRequest) returns (ListenResponse);
+  rpc Recv(RecvRequest) returns (RecvResponse);
+  rpc RecvFrom(RecvFromRequest) returns (RecvFromResponse);
   rpc Select(SelectRequest) returns (SelectResponse);
+  rpc Send(SendRequest) returns (SendResponse);
+  rpc SendTo(SendToRequest) returns (SendToResponse);
   rpc SetSockOpt(SetSockOptRequest) returns (SetSockOptResponse);
+  rpc Shutdown(ShutdownRequest) returns (ShutdownResponse);
   rpc Socket(SocketRequest) returns (SocketResponse);
 }
 
@@ -54,22 +59,27 @@ enum AddressFamily {
   ADDRESS_FAMILY_INET6 = 10;
 }
 
+enum GetAddrInfoFlags {
+  GET_ADDR_INFO_FLAGS_UNSPECIFIED = 0;
+  GET_ADDR_INFO_FLAGS_PASSIVE = 1;
+  GET_ADDR_INFO_FLAGS_CANONNAME = 2;
+  GET_ADDR_INFO_FLAGS_NUMERICHOST = 4;
+  GET_ADDR_INFO_FLAGS_NUMERICSERV = 8;
+  GET_ADDR_INFO_FLAGS_V4MAPPED = 16;
+  GET_ADDR_INFO_FLAGS_ALL = 32;
+  GET_ADDR_INFO_FLAGS_ADDRCONFIG = 64;
+  GET_ADDR_INFO_FLAGS_LOCALQUERY = 128;
+  GET_ADDR_INFO_FLAGS_PREFER_V4 = 256;
+  GET_ADDR_INFO_FLAGS_UNICAST_REPLY = 512;
+  GET_ADDR_INFO_FLAGS_SHARED_RESET = 1024;
+  GET_ADDR_INFO_FLAGS_BYPASS_CACHE = 2048;
+}
+
 enum IPProtocol {
   IP_PROTOCOL_IP = 0;
   IP_PROTOCOL_TCP = 6;
   IP_PROTOCOL_UDP = 8;
   IP_PROTOCOL_IPV6 = 12;
-}
-
-enum SocketProtocolType {
-  SOCKET_PROTOCOL_TYPE_UNSPECIFIED = 0;
-  SOCKET_PROTOCOL_TYPE_STREAM = 1;
-  SOCKET_PROTOCOL_TYPE_DGRAM = 2;
-}
-
-enum SocketOptionLevel {
-  SOCKET_OPTION_LEVEL_UNSPECIFIED = 0;
-  SOCKET_OPTION_LEVEL_SOCKET = 13;
 }
 
 enum OptName {
@@ -103,20 +113,15 @@ enum Shutdown {
   SHUTDOWN_RDWR = 2;
 }
 
-enum GetAddrInfoFlags {
-  GET_ADDR_INFO_FLAGS_UNSPECIFIED = 0;
-  GET_ADDR_INFO_FLAGS_PASSIVE = 1;
-  GET_ADDR_INFO_FLAGS_CANONNAME = 2;
-  GET_ADDR_INFO_FLAGS_NUMERICHOST = 4;
-  GET_ADDR_INFO_FLAGS_NUMERICSERV = 8;
-  GET_ADDR_INFO_FLAGS_V4MAPPED = 16;
-  GET_ADDR_INFO_FLAGS_ALL = 32;
-  GET_ADDR_INFO_FLAGS_ADDRCONFIG = 64;
-  GET_ADDR_INFO_FLAGS_LOCALQUERY = 128;
-  GET_ADDR_INFO_FLAGS_PREFER_V4 = 256;
-  GET_ADDR_INFO_FLAGS_UNICAST_REPLY = 512;
-  GET_ADDR_INFO_FLAGS_SHARED_RESET = 1024;
-  GET_ADDR_INFO_FLAGS_BYPASS_CACHE = 2048;
+enum SocketOptionLevel {
+  SOCKET_OPTION_LEVEL_UNSPECIFIED = 0;
+  SOCKET_OPTION_LEVEL_SOCKET = 13;
+}
+
+enum SocketProtocolType {
+  SOCKET_PROTOCOL_TYPE_UNSPECIFIED = 0;
+  SOCKET_PROTOCOL_TYPE_STREAM = 1;
+  SOCKET_PROTOCOL_TYPE_DGRAM = 2;
 }
 
 message IPAddress {
@@ -242,6 +247,16 @@ message BindResponse {
   int32 error_num = 3;
 }
 
+message CloseRequest {
+  nidevice_grpc.Session socket = 1;
+}
+
+message CloseResponse {
+  int32 status = 1;
+  string error_message = 2;
+  int32 error_num = 3;
+}
+
 message ConnectRequest {
   nidevice_grpc.Session socket = 1;
   SockAddr name = 2;
@@ -251,31 +266,6 @@ message ConnectResponse {
   int32 status = 1;
   string error_message = 2;
   int32 error_num = 3;
-}
-
-message InetAToNRequest {
-  nidevice_grpc.Session stack_ref = 1;
-  string cp = 2;
-}
-
-message InetAToNResponse {
-  int32 status = 1;
-  IPv4Addr name = 2;
-  string error_message = 3;
-  int32 error_num = 4;
-}
-
-message InetPToNRequest {
-  nidevice_grpc.Session stack_ref = 1;
-  int32 af = 2;
-  string src = 3;
-}
-
-message InetPToNResponse {
-  int32 status = 1;
-  Addr dst = 2;
-  string error_message = 3;
-  int32 error_num = 4;
 }
 
 message GetAddrInfoRequest {
@@ -308,65 +298,13 @@ message GetNameInfoResponse {
   int32 error_num = 5;
 }
 
-message ListenRequest {
+message GetPeerNameRequest {
   nidevice_grpc.Session socket = 1;
-  int32 backlog = 2;
 }
 
-message ListenResponse {
+message GetPeerNameResponse {
   int32 status = 1;
-  string error_message = 2;
-  int32 error_num = 3;
-}
-
-message SendToRequest {
-  nidevice_grpc.Session socket = 1;
-  bytes dataptr = 2;
-  int32 flags = 3;
-  SockAddr to = 4;
-}
-
-message SendToResponse {
-  int32 status = 1;
-  string error_message = 2;
-  int32 error_num = 3;
-}
-
-message SendRequest {
-  nidevice_grpc.Session socket = 1;
-  bytes dataptr = 2;
-  int32 flags = 3;
-}
-
-message SendResponse {
-  int32 status = 1;
-  string error_message = 2;
-  int32 error_num = 3;
-}
-
-message RecvFromRequest {
-  nidevice_grpc.Session socket = 1;
-  int32 size = 2;
-  int32 flags = 3;
-}
-
-message RecvFromResponse {
-  int32 status = 1;
-  bytes mem = 2;
-  SockAddr from = 3;
-  string error_message = 4;
-  int32 error_num = 5;
-}
-
-message RecvRequest {
-  nidevice_grpc.Session socket = 1;
-  int32 size = 2;
-  int32 flags = 3;
-}
-
-message RecvResponse {
-  int32 status = 1;
-  bytes mem = 2;
+  SockAddr addr = 2;
   string error_message = 3;
   int32 error_num = 4;
 }
@@ -380,41 +318,6 @@ message GetSockNameResponse {
   SockAddr addr = 2;
   string error_message = 3;
   int32 error_num = 4;
-}
-
-message GetPeerNameRequest {
-  nidevice_grpc.Session socket = 1;
-}
-
-message GetPeerNameResponse {
-  int32 status = 1;
-  SockAddr addr = 2;
-  string error_message = 3;
-  int32 error_num = 4;
-}
-
-message ShutdownRequest {
-  nidevice_grpc.Session socket = 1;
-  oneof how_enum {
-    Shutdown how = 2;
-    int32 how_raw = 3;
-  }
-}
-
-message ShutdownResponse {
-  int32 status = 1;
-  string error_message = 2;
-  int32 error_num = 3;
-}
-
-message CloseRequest {
-  nidevice_grpc.Session socket = 1;
-}
-
-message CloseResponse {
-  int32 status = 1;
-  string error_message = 2;
-  int32 error_num = 3;
 }
 
 message GetSockOptRequest {
@@ -432,6 +335,67 @@ message GetSockOptRequest {
 message GetSockOptResponse {
   int32 status = 1;
   SockOptData optval = 2;
+  string error_message = 3;
+  int32 error_num = 4;
+}
+
+message InetAddrRequest {
+  nidevice_grpc.Session stack_ref = 1;
+  string cp = 2;
+}
+
+message InetAddrResponse {
+  int32 status = 1;
+  uint32 addr = 2;
+  string error_message = 3;
+  int32 error_num = 4;
+}
+
+message InetAToNRequest {
+  nidevice_grpc.Session stack_ref = 1;
+  string cp = 2;
+}
+
+message InetAToNResponse {
+  int32 status = 1;
+  IPv4Addr name = 2;
+  string error_message = 3;
+  int32 error_num = 4;
+}
+
+message InetNToARequest {
+  nidevice_grpc.Session stack_ref = 1;
+  IPv4Addr in = 2;
+}
+
+message InetNToAResponse {
+  int32 status = 1;
+  string address = 2;
+  string error_message = 3;
+  int32 error_num = 4;
+}
+
+message InetNToPRequest {
+  nidevice_grpc.Session stack_ref = 1;
+  Addr src = 2;
+}
+
+message InetNToPResponse {
+  int32 status = 1;
+  string address = 2;
+  string error_message = 3;
+  int32 error_num = 4;
+}
+
+message InetPToNRequest {
+  nidevice_grpc.Session stack_ref = 1;
+  int32 af = 2;
+  string src = 3;
+}
+
+message InetPToNResponse {
+  int32 status = 1;
+  Addr dst = 2;
   string error_message = 3;
   int32 error_num = 4;
 }
@@ -459,6 +423,16 @@ message IpStackCreateResponse {
   int32 error_num = 4;
 }
 
+message IpStackGetAllStacksInfoStrRequest {
+}
+
+message IpStackGetAllStacksInfoStrResponse {
+  int32 status = 1;
+  string info = 2;
+  string error_message = 3;
+  int32 error_num = 4;
+}
+
 message IpStackGetInfoRequest {
   nidevice_grpc.Session stack_ref = 1;
 }
@@ -466,6 +440,18 @@ message IpStackGetInfoRequest {
 message IpStackGetInfoResponse {
   int32 status = 1;
   repeated VirtualInterface virtual_interfaces = 2;
+  string error_message = 3;
+  int32 error_num = 4;
+}
+
+message IpStackOpenRequest {
+  string session_name = 1;
+  string stack_name = 2;
+}
+
+message IpStackOpenResponse {
+  int32 status = 1;
+  nidevice_grpc.Session stack_ref = 2;
   string error_message = 3;
   int32 error_num = 4;
 }
@@ -494,6 +480,44 @@ message IsSetResponse {
   int32 error_num = 4;
 }
 
+message ListenRequest {
+  nidevice_grpc.Session socket = 1;
+  int32 backlog = 2;
+}
+
+message ListenResponse {
+  int32 status = 1;
+  string error_message = 2;
+  int32 error_num = 3;
+}
+
+message RecvRequest {
+  nidevice_grpc.Session socket = 1;
+  int32 size = 2;
+  int32 flags = 3;
+}
+
+message RecvResponse {
+  int32 status = 1;
+  bytes mem = 2;
+  string error_message = 3;
+  int32 error_num = 4;
+}
+
+message RecvFromRequest {
+  nidevice_grpc.Session socket = 1;
+  int32 size = 2;
+  int32 flags = 3;
+}
+
+message RecvFromResponse {
+  int32 status = 1;
+  bytes mem = 2;
+  SockAddr from = 3;
+  string error_message = 4;
+  int32 error_num = 5;
+}
+
 message SelectRequest {
   repeated nidevice_grpc.Session read_fds = 1;
   repeated nidevice_grpc.Session write_fds = 2;
@@ -502,6 +526,31 @@ message SelectRequest {
 }
 
 message SelectResponse {
+  int32 status = 1;
+  string error_message = 2;
+  int32 error_num = 3;
+}
+
+message SendRequest {
+  nidevice_grpc.Session socket = 1;
+  bytes dataptr = 2;
+  int32 flags = 3;
+}
+
+message SendResponse {
+  int32 status = 1;
+  string error_message = 2;
+  int32 error_num = 3;
+}
+
+message SendToRequest {
+  nidevice_grpc.Session socket = 1;
+  bytes dataptr = 2;
+  int32 flags = 3;
+  SockAddr to = 4;
+}
+
+message SendToResponse {
   int32 status = 1;
   string error_message = 2;
   int32 error_num = 3;
@@ -521,6 +570,20 @@ message SetSockOptRequest {
 }
 
 message SetSockOptResponse {
+  int32 status = 1;
+  string error_message = 2;
+  int32 error_num = 3;
+}
+
+message ShutdownRequest {
+  nidevice_grpc.Session socket = 1;
+  oneof how_enum {
+    Shutdown how = 2;
+    int32 how_raw = 3;
+  }
+}
+
+message ShutdownResponse {
   int32 status = 1;
   string error_message = 2;
   int32 error_num = 3;

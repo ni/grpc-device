@@ -11,7 +11,8 @@ config = {
     'custom_types': [],
     'additional_headers': { 
         "custom/xnetsocket_converters.h": ["service.cpp"],
-        "custom/xnetsocket_errors.h": ["service.cpp"] 
+        "custom/xnetsocket_errors.h": ["service.cpp"],
+        "custom/xnetsocket_aliases.h": ["library_interface.h"] 
     },
     'get_last_error': [
         {
@@ -40,7 +41,8 @@ config = {
         'nxlinger': 'Linger',
         'nxsockaddr': 'SockAddr',
         'nxtimeval': 'google.protobuf.Duration',
-        'nxVirtualInterface_t': 'repeated VirtualInterface'
+        'nxVirtualInterface_t': 'repeated VirtualInterface',
+        'nixnetsocket_grpc::IpStackInfoString': 'string'
     },
     'code_readiness': 'NextRelease',
     'driver_name': 'NI-XNETSOCKET',

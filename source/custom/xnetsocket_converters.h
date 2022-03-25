@@ -169,6 +169,44 @@ struct IPv4AddrOutputConverter {
   nxin_addr addr{};
 };
 
+struct AddrInputConverter {
+  AddrInputConverter(const Addr& input)
+  {
+    switch (input.addr_case()) {
+      case Addr::AddrCase::kIpv4:
+        addr.ipv4.addr = input.ipv4().addr();
+        break;
+      case Addr::AddrCase::kIpv6:
+        std::memcpy(
+            addr.ipv6.addr,
+            input.ipv6().addr().data(),
+            std::min(
+                sizeof(addr.ipv6.addr),
+                static_cast<size_t>(input.ipv6().addr().size())));
+        break;
+      default:
+        // pass. Use zero'd out AddrInputConverter.
+        break;
+    }
+  }
+
+  operator void*()
+  {
+    return &addr;
+  }
+
+  operator const void*() const
+  {
+    return &addr;
+  }
+
+  // Represent as a union: can be ipv4 or ipv6.
+  union {
+    nxin_addr ipv4;
+    nxin6_addr ipv6;
+  } addr{};
+};
+
 struct AddrOutputConverter {
   AddrOutputConverter(int32_t address_family) : family(address_family)
   {
@@ -313,6 +351,24 @@ inline void convert_to_grpc(const IPv4AddrOutputConverter& storage, IPv4Addr* ou
 inline void convert_to_grpc(const AddrOutputConverter& storage, Addr* output)
 {
   storage.to_grpc(*output);
+}
+
+template <typename TAddr>
+inline AddrInputConverter convert_from_grpc(const Addr& input)
+{
+  return AddrInputConverter(input);
+}
+
+inline int32_t get_address_family(Addr::AddrCase selected_case)
+{
+  switch (selected_case) {
+    case Addr::AddrCase::kIpv4:
+      return nxAF_INET;
+    case Addr::AddrCase::kIpv6:
+      return nxAF_INET6;
+    default:
+      return nxAF_UNSPEC;
+  }
 }
 
 template <typename TTimeVal>
@@ -602,11 +658,52 @@ inline void convert_to_grpc(AddrInfoOutputConverter& storage, pb_::RepeatedPtrFi
   storage.to_grpc(*output);
 }
 
+// Trivial converter implementation for strings that calls IpStackFreeAllStacksInfoStr after to_grpc.
+struct IpStackInfoStringOutputConverter {
+  IpStackInfoStringOutputConverter(NiXnetSocketLibraryInterface* library) : library(library)
+  {
+  }
+
+  IpStackInfoString* operator&()
+  {
+    return &stack_info_string;
+  }
+
+  // Implementing data() allows this converter to work with standard codegen for strings
+  // that assume that they have a data() member that can be passed to the driver.
+  // This is required because the grpc_type is string.
+  IpStackInfoString* data()
+  {
+    return &stack_info_string;
+  }
+
+  void to_grpc(std::string& output) const
+  {
+    output.assign(stack_info_string);
+    library->IpStackFreeAllStacksInfoStr(stack_info_string);
+  }
+
+  IpStackInfoString stack_info_string{};
+  NiXnetSocketLibraryInterface* library;
+};
+
+inline void convert_to_grpc(const IpStackInfoStringOutputConverter& storage, std::string* output)
+{
+  storage.to_grpc(*output);
+}
+
 }  // namespace nixnetsocket_grpc
 
 // Template specializations go in nidevice_grpc::converters.
 namespace nidevice_grpc {
 namespace converters {
+
+template <>
+inline nxin_addr convert_from_grpc(const nixnetsocket_grpc::IPv4Addr& input)
+{
+  return {input.addr()};
+}
+
 // Specialization of TypeToStorageType so that allocate_storage_type will
 // allocate SockAddrOutputConverters for nxsockaddr output params.
 template <>
@@ -638,6 +735,11 @@ struct TypeToStorageType<nxin_addr, nixnetsocket_grpc::IPv4Addr> {
 template <>
 struct TypeToStorageType<void, nixnetsocket_grpc::Addr> {
   using StorageType = nixnetsocket_grpc::AddrOutputConverter;
+};
+
+template <>
+struct TypeToStorageType<nixnetsocket_grpc::IpStackInfoString, std::string> {
+  using StorageType = nixnetsocket_grpc::IpStackInfoStringOutputConverter;
 };
 }  // namespace converters
 }  // namespace nidevice_grpc
