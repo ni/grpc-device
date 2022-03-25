@@ -69,12 +69,8 @@ def check_for_error(status):
 
 def print_timestamp(timestamp):
     """Print a timestamp to console."""
-    timestamp = timestamp // 1000000000
-    print(
-        f"UTC Time:",
-        datetime.utcfromtimestamp(timestamp).strftime("%m/%d/%Y %H:%M:%S.%f")[:-3],
-        end=" ",
-    )
+    local_dt = datetime.fromtimestamp(timestamp / 1e9)
+    print(local_dt.strftime("%m/%d/%Y %H:%M:%S.%f")[:-3], end=" ")
 
 
 # Declare all variables for the function
