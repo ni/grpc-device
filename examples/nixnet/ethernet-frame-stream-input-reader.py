@@ -1,6 +1,6 @@
 r""" Reads all the frame on network.
 
-  This example reads all the frames on the network and displays them in table format. 
+  This example reads all the frames on the network and displays them. 
   This is used to demonstrate a frame input stream session.
 
 The gRPC API is built from the C API. NI-XNET documentation is installed with the driver at:
@@ -20,7 +20,7 @@ Refer to the NI XNET gRPC Wiki for the latest C Function Reference:
  Running from command line:
 Server machine's IP address, port number, and interface name can be passed as separate command line
 arguments.
-  > python can-signal-single-point-output.py <server_address> <port_number> <interface_name>
+  > python ethernet-frame-stream-input-reader.py <server_address> <port_number> <interface_name>
 If they are not passed in as command line arguments, then by default the server address will be
 "localhost:31763"
 """
@@ -39,10 +39,10 @@ CHOOSE_MONITOR_OR_ENDPOINT_TEXT = (
     " to monitor all network traffic else just the enter key to use the endpoint path which filters"
     " traffic based on VLAN ID and priority. :"
 )
-FCS_SIZE = 4
+FRAME_CHECK_SEQUENCE_SIZE = 4
 MAX_ENET_FRAME_SIZE = 1518
 NUM_OF_FRAMES = 1
-MAX_PAYLOAD_PER_FRAME = MAX_ENET_FRAME_SIZE + FCS_SIZE
+MAX_PAYLOAD_PER_FRAME = MAX_ENET_FRAME_SIZE + FRAME_CHECK_SEQUENCE_SIZE
 
 # Parameters
 SERVER_ADDRESS = "localhost"
@@ -78,7 +78,6 @@ def print_timestamp(timestamp):
 
 
 # Declare all variables for the function
-i = 0
 count = 0
 session = None
 
@@ -155,6 +154,7 @@ try:
             print_timestamp(frame_buffer[i].enet.network_timestamp)
 
             for j in range(0, len(frame_buffer[i].enet.frame_data)):
+                # Prints frame data in hexadecimal form formatted by adding 0's at the beginning of string
                 print(
                     hex(frame_buffer[i].enet.frame_data[j]).upper()[2:].zfill(2),
                     end=" ",
