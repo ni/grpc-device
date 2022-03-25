@@ -326,6 +326,7 @@ functions = {
             {
                 'direction': 'out',
                 'name': 'optlen',
+                'hardcoded_value': 'optval.size_pointer(socket, level)',
                 'include_in_proto': False,
                 'type': 'nxsocklen_t'
             }

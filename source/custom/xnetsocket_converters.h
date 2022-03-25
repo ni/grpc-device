@@ -486,7 +486,6 @@ inline SockOptDataInputConverter convert_from_grpc(const SockOptData& input)
 struct SockOptDataOutputConverter {
   SockOptDataOutputConverter(NiXnetSocketLibraryInterface* library, int32_t opt_name) : opt_name(opt_name), library(library)
   {
-    // library passed in and if string optname call GetSockOpt Null and set size as member variable
   }
 
   void* data()
@@ -509,7 +508,7 @@ struct SockOptDataOutputConverter {
         return &data_int;
       }
       case OptName::OPT_NAME_SO_BIND_TO_DEVICE: {
-        data_string = std::string(256 - 1, '\0');  // TODO: What's the max string size to allocate for a sock opt? this would now be optlen data member
+        data_string = std::string(string_length, '\0');
         return &data_string[0];
       }
       case OptName::OPT_NAME_SO_LINGER: {
@@ -577,10 +576,16 @@ struct SockOptDataOutputConverter {
     }
   }
 
-  // add new access method for get size pointer
+  nxsocklen_t size_pointer(nxSOCKET& socket, int32_t level)
+  {
+    if (opt_name == OptName::OPT_NAME_SO_BIND_TO_DEVICE) {
+      library->GetSockOpt(socket, level, opt_name, nullptr, &string_length);
+    }
+    return string_length;
+  }
 
   int32_t opt_name;
-  int32_t length;  // length holder for strings
+  nxsocklen_t string_length;
   int32_t data_int;
   std::string data_string;
   nxlinger data_linger;
