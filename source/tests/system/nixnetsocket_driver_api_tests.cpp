@@ -245,7 +245,7 @@ class NiXnetSocketNoHardwareTests : public NiXnetSocketDriverApiTests {
     __VA_ARGS__        \
   }
 
-#define EXPECT_ADDR_EQ(addr_info, expected_family, expected_addr)                                                      \
+#define EXPECT_ADDR_EQ(expected_family, expected_addr, addr_info)                                                      \
   {                                                                                                                    \
     EXPECT_EQ(expected_family, addr_info.family());                                                                    \
     uint8_t expected_as_array[16] = ARRAY_ARG expected_addr;                                                           \
@@ -562,7 +562,7 @@ TEST_F(NiXnetSocketLoopbackTests, IPv4Address_GetAddrInfo_ReturnsExpectedAddrInf
   EXPECT_EQ(1, addr_info_response.res().size());
   auto addr_info = addr_info_response.res()[0];
   EXPECT_EQ(0, addr_info.addr().ipv4().port());
-  EXPECT_ADDR_EQ(addr_info, AddressFamily::ADDRESS_FAMILY_INET, (127, 0, 0, 1));
+  EXPECT_ADDR_EQ(AddressFamily::ADDRESS_FAMILY_INET, (127, 0, 0, 1), addr_info);
 }
 
 TEST_F(NiXnetSocketLoopbackTests, IPv6Address_GetAddrInfo_ReturnsExpectedAddrInfo)
@@ -576,7 +576,7 @@ TEST_F(NiXnetSocketLoopbackTests, IPv6Address_GetAddrInfo_ReturnsExpectedAddrInf
   EXPECT_EQ(1, addr_info_response.res().size());
   auto addr_info = addr_info_response.res()[0];
   EXPECT_EQ(0, addr_info.addr().ipv6().port());
-  EXPECT_ADDR_EQ(addr_info, AddressFamily::ADDRESS_FAMILY_INET6, (0xfd, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01));
+  EXPECT_ADDR_EQ(AddressFamily::ADDRESS_FAMILY_INET6, (0xfd, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01), addr_info);
 }
 
 TEST_F(NiXnetSocketLoopbackTests, NumericPortTranslation_GetAddrInfo_ReturnsExpectedAddrInfo)
@@ -597,7 +597,7 @@ TEST_F(NiXnetSocketLoopbackTests, NumericPortTranslation_GetAddrInfo_ReturnsExpe
   EXPECT_SUCCESS(addr_info_response);
   EXPECT_EQ(1, addr_info_response.res().size());
   auto addr_info = addr_info_response.res()[0];
-  EXPECT_ADDR_EQ(addr_info, AddressFamily::ADDRESS_FAMILY_INET, (0, 0, 0, 0));
+  EXPECT_ADDR_EQ(AddressFamily::ADDRESS_FAMILY_INET, (0, 0, 0, 0), addr_info);
   EXPECT_EQ(htons(21), addr_info.addr().ipv4().port());
 }
 
