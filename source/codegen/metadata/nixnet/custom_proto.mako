@@ -268,7 +268,7 @@ message EnetFrameRequest {
   }
   uint64 device_timestamp = 3;
   uint64 network_timestamp = 4;
-  repeated EnetFlags flags = 5;
+  repeated EnetFlags flags_mapped = 5;
   bytes frame_data = 6;
 }
 
@@ -277,7 +277,7 @@ message EnetFrameResponse {
   uint32 type_raw = 2;
   uint64 device_timestamp = 3;
   uint64 network_timestamp = 4;
-  repeated EnetFlags flags= 5;
+  repeated EnetFlags flags_mapped= 5;
   uint32 flags_raw = 6;
   bytes frame_data = 7;
 }

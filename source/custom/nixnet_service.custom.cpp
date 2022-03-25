@@ -1187,88 +1187,100 @@ void convert_to_grpc(std::vector<u8>& input, google::protobuf::RepeatedPtrField<
   }
 }
 
+void convert_enet_frame_to_grpc(const void* input, nixnet_grpc::FrameBufferResponse* output, u32 protocol, std::map<std::int32_t, std::int32_t> enetflags_output_map)
+{
+  nixnet_grpc::EnetFrameResponse* enet_frame = new nixnet_grpc::EnetFrameResponse();
+  nxFrameEnet_t* nxEnetFrame = (nxFrameEnet_t*)input;
+  enet_frame->set_type(static_cast<nixnet_grpc::EnetFrameType>(nxEnetFrame->Type));
+  enet_frame->set_type_raw(nxEnetFrame->Type);
+  enet_frame->set_device_timestamp(nxEnetFrame->DeviceTimestamp);
+  enet_frame->set_network_timestamp(nxEnetFrame->NetworkTimestamp);
+  if(nxEnetFrame->Flags & 0x80000000) {
+    auto enet_flags_enum_omap_it = enetflags_output_map.find(0x80000000);
+    if(enet_flags_enum_omap_it != enetflags_output_map.end()) {
+      enet_frame->add_flags_mapped(EnetFlags::ENET_FLAGS_ENET_FLAGS_TRANSMIT);
+    }
+  }
+  if(nxEnetFrame->Flags & 0x40000000) {
+    auto enet_flags_enum_omap_it = enetflags_output_map.find(0x40000000);
+    if(enet_flags_enum_omap_it != enetflags_output_map.end()) {
+      enet_frame->add_flags_mapped(EnetFlags::ENET_FLAGS_ENET_FLAGS_RECEIVE);
+    }
+  }
+  if(nxEnetFrame->Flags & 0x00800000) {
+    auto enet_flags_enum_omap_it = enetflags_output_map.find(0x00800000);
+    if(enet_flags_enum_omap_it != enetflags_output_map.end()) {
+      enet_frame->add_flags_mapped(EnetFlags::ENET_FLAGS_ENET_FLAGS_NETWORK_SYNCED);
+    }
+  }
+  if(nxEnetFrame->Flags & 0x00010000) {
+    auto enet_flags_enum_omap_it = enetflags_output_map.find(0x00010000);
+    if(enet_flags_enum_omap_it != enetflags_output_map.end()) {
+      enet_frame->add_flags_mapped(EnetFlags::ENET_FLAGS_ENET_FLAGS_ERROR);
+    }
+  }
+  enet_frame->set_flags_raw(nxEnetFrame->Flags);
+  auto enet_header_length = sizeof(nxFrameEnet_t) - 1;  // last byte in nxFrameEnet_t is u8 FrameData[1]
+  auto frame_data_length = nxEnetFrame->Length - enet_header_length;
+  enet_frame->mutable_frame_data()->assign((const char*)nxEnetFrame->FrameData, frame_data_length);
+
+  output->set_allocated_enet(enet_frame);
+}
+
+void convert_frame_to_grpc(const void* input, nixnet_grpc::FrameBufferResponse* output, u32 protocol, std::map<std::int32_t, std::int32_t> enetflags_output_map)
+{
+  nxFrameVar_t* nxFrame = (nxFrameVar_t*)input;
+  nixnet_grpc::FrameResponse* frame = new nixnet_grpc::FrameResponse();
+  frame->set_timestamp(nxFrame->Timestamp);
+  frame->set_identifier(nxFrame->Identifier);
+  frame->set_type(static_cast<nixnet_grpc::FrameType>(nxFrame->Type));
+  frame->set_type_raw(nxFrame->Type);
+  if(nxFrame->Flags & 0x01) {
+    frame->add_flags(FrameFlags::FRAME_FLAGS_FRAME_FLAGS_FLEX_RAY_STARTUP);
+  }
+  if(nxFrame->Flags & 0x02) {
+    frame->add_flags(FrameFlags::FRAME_FLAGS_FRAME_FLAGS_FLEX_RAY_SYNC);
+  }
+  if(nxFrame->Flags & 0x04) {
+    frame->add_flags(FrameFlags::FRAME_FLAGS_FRAME_FLAGS_FLEX_RAY_PREAMBLE);
+  }
+  if(nxFrame->Flags & 0x10) {
+    frame->add_flags(FrameFlags::FRAME_FLAGS_FRAME_FLAGS_FLEX_RAY_CH_A);
+  }
+  if(nxFrame->Flags & 0x20) {
+    frame->add_flags(FrameFlags::FRAME_FLAGS_FRAME_FLAGS_FLEX_RAY_CH_B);
+  }
+  frame->set_flags_raw(nxFrame->Flags);
+  frame->set_info(nxFrame->Info);
+  auto payload_length = nxFrameGetPayloadLength(nxFrame);
+  frame->mutable_payload()->assign((const char*)nxFrame->Payload, payload_length);
+
+  switch (protocol) {
+    case nixnet_grpc::Protocol::PROTOCOL_CAN:
+      output->set_allocated_can(frame);
+      break;
+    case nixnet_grpc::Protocol::PROTOCOL_LIN:
+      output->set_allocated_lin(frame);
+      break;
+    case nixnet_grpc::Protocol::PROTOCOL_FLEX_RAY:
+      output->set_allocated_flex_ray(frame);
+      break;
+    case nixnet_grpc::Protocol::PROTOCOL_J1939:
+      output->set_allocated_j1939(frame);
+      break;
+    default:
+      throw std::invalid_argument("The value for protocol was not specified or out of range");
+      break;
+  }
+}
+
 void convert_to_grpc(const void* input, nixnet_grpc::FrameBufferResponse* output, u32 protocol, std::map<std::int32_t, std::int32_t> enetflags_output_map)
 {
   if (protocol == nixnet_grpc::Protocol::PROTOCOL_ENET) {
-    nixnet_grpc::EnetFrameResponse* enet_frame = new nixnet_grpc::EnetFrameResponse();
-    nxFrameEnet_t* nxEnetFrame = (nxFrameEnet_t*)input;
-    enet_frame->set_type(static_cast<nixnet_grpc::EnetFrameType>(nxEnetFrame->Type));
-    enet_frame->set_type_raw(nxEnetFrame->Type);
-    enet_frame->set_device_timestamp(nxEnetFrame->DeviceTimestamp);
-    enet_frame->set_network_timestamp(nxEnetFrame->NetworkTimestamp);
-    if(nxEnetFrame->Flags & 0x80000000) {
-      auto enet_flags_enum_omap_it = enetflags_output_map.find(0x80000000);
-      if(enet_flags_enum_omap_it != enetflags_output_map.end()) {
-        enet_frame->add_flags(EnetFlags::ENET_FLAGS_ENET_FLAGS_TRANSMIT);
-      }
-    }
-    if(nxEnetFrame->Flags & 0x40000000) {
-      auto enet_flags_enum_omap_it = enetflags_output_map.find(0x40000000);
-      if(enet_flags_enum_omap_it != enetflags_output_map.end()) {
-        enet_frame->add_flags(EnetFlags::ENET_FLAGS_ENET_FLAGS_RECEIVE);
-      }
-    }
-    if(nxEnetFrame->Flags & 0x00800000) {
-      auto enet_flags_enum_omap_it = enetflags_output_map.find(0x00800000);
-      if(enet_flags_enum_omap_it != enetflags_output_map.end()) {
-        enet_frame->add_flags(EnetFlags::ENET_FLAGS_ENET_FLAGS_NETWORK_SYNCED);
-      }
-    }
-    if(nxEnetFrame->Flags & 0x00010000) {
-      auto enet_flags_enum_omap_it = enetflags_output_map.find(0x00010000);
-      if(enet_flags_enum_omap_it != enetflags_output_map.end()) {
-        enet_frame->add_flags(EnetFlags::ENET_FLAGS_ENET_FLAGS_ERROR);
-      }
-    }
-    auto enet_header_length = sizeof(nxFrameEnet_t) - 1;  // last byte in nxFrameEnet_t is u8 FrameData[1]
-    auto frame_data_length = nxEnetFrame->Length - enet_header_length;
-    enet_frame->mutable_frame_data()->assign((const char*)nxEnetFrame->FrameData, frame_data_length);
-
-    output->set_allocated_enet(enet_frame);
+    convert_enet_frame_to_grpc(input, output, protocol, enetflags_output_map);
   }
   else {
-    nxFrameVar_t* nxFrame = (nxFrameVar_t*)input;
-    nixnet_grpc::FrameResponse* frame = new nixnet_grpc::FrameResponse();
-    frame->set_timestamp(nxFrame->Timestamp);
-    frame->set_identifier(nxFrame->Identifier);
-    frame->set_type(static_cast<nixnet_grpc::FrameType>(nxFrame->Type));
-    frame->set_type_raw(nxFrame->Type);
-    if(nxFrame->Flags & 0x01) {
-      frame->add_flags(FrameFlags::FRAME_FLAGS_FRAME_FLAGS_FLEX_RAY_STARTUP);
-    }
-    if(nxFrame->Flags & 0x02) {
-      frame->add_flags(FrameFlags::FRAME_FLAGS_FRAME_FLAGS_FLEX_RAY_SYNC);
-    }
-    if(nxFrame->Flags & 0x04) {
-     frame->add_flags(FrameFlags::FRAME_FLAGS_FRAME_FLAGS_FLEX_RAY_PREAMBLE);
-    }
-    if(nxFrame->Flags & 0x10) {
-      frame->add_flags(FrameFlags::FRAME_FLAGS_FRAME_FLAGS_FLEX_RAY_CH_A);
-    }
-    if(nxFrame->Flags & 0x20) {
-      frame->add_flags(FrameFlags::FRAME_FLAGS_FRAME_FLAGS_FLEX_RAY_CH_B);
-    }
-    frame->set_info(nxFrame->Info);
-    auto payload_length = nxFrameGetPayloadLength(nxFrame);
-    frame->mutable_payload()->assign((const char*)nxFrame->Payload, payload_length);
-
-    switch (protocol) {
-      case nixnet_grpc::Protocol::PROTOCOL_CAN:
-        output->set_allocated_can(frame);
-        break;
-      case nixnet_grpc::Protocol::PROTOCOL_LIN:
-        output->set_allocated_lin(frame);
-        break;
-      case nixnet_grpc::Protocol::PROTOCOL_FLEX_RAY:
-        output->set_allocated_flex_ray(frame);
-        break;
-      case nixnet_grpc::Protocol::PROTOCOL_J1939:
-        output->set_allocated_j1939(frame);
-        break;
-      default:
-        throw std::invalid_argument("The value for protocol was not specified or out of range");
-        break;
-    }
+    convert_frame_to_grpc(input, output, protocol, enetflags_output_map);
   }
 }
 

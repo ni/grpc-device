@@ -102,15 +102,27 @@ struct FrameHolder {
       // The Length field in ENET write frame is big-endian. Typecast to u16 before doing the conversion
       // as lengh field is 16 bits and BigToHostOrder16 works only for 16 bits.
       current_frame->Length = BigToHostOrder16(frame_size);
-      current_frame->Type = grpc_frame.enet().type();
+      switch (grpc_frame.enet().type_enum_case()) {
+        case nixnet_grpc::EnetFrameRequest::TypeEnumCase::kType :{
+          current_frame->Type = static_cast<u8>(grpc_frame.enet().type());
+          break;
+        }
+        case nixnet_grpc::EnetFrameRequest::TypeEnumCase::kTypeRaw :{
+          current_frame->Type = static_cast<u8>(grpc_frame.enet().type_raw());
+          break;
+        }
+        case nixnet_grpc::EnetFrameRequest::TypeEnumCase::TYPE_ENUM_NOT_SET: {
+          throw std::invalid_argument("The value for type was not specified or out of range");
+        }
+      }
       current_frame->DeviceTimestamp = grpc_frame.enet().device_timestamp();
       current_frame->NetworkTimestamp = grpc_frame.enet().network_timestamp();
       current_frame->Flags = 0;
-      for(int i=0; i<grpc_frame.enet().flags_size(); i++)
+      for(int i=0; i<grpc_frame.enet().flags_mapped_size(); i++)
       {
-        auto enet_flags_enum_imap_it = enetflags_input_map.find(grpc_frame.enet().flags()[i]);
+        auto enet_flags_enum_imap_it = enetflags_input_map.find(grpc_frame.enet().flags_mapped()[i]);
         if(enet_flags_enum_imap_it == enetflags_input_map.end()) {
-          return throw std::invalid_argument("The value for destination_mapped was not specified or out of range.");
+          return throw std::invalid_argument("The value for enet flags was not specified or out of range.");
         }
         current_frame->Flags = current_frame->Flags | enet_flags_enum_imap_it->second;
       }
