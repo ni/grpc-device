@@ -20,7 +20,10 @@ class NiXnetSocketMockLibrary : public nixnetsocket_grpc::NiXnetSocketLibraryInt
   MOCK_METHOD(nxSOCKET, Accept, (nxSOCKET socket, nxsockaddr* addr, nxsocklen_t* addrlen), (override));
   MOCK_METHOD(int32_t, Bind, (nxSOCKET socket, nxsockaddr* name, nxsocklen_t namelen), (override));
   MOCK_METHOD(int32_t, Connect, (nxSOCKET socket, nxsockaddr* name, nxsocklen_t namelen), (override));
+  MOCK_METHOD(uint32_t, InetAddr, (nxIpStackRef_t stack_ref, const char cp[]), (override));
   MOCK_METHOD(int32_t, InetAToN, (nxIpStackRef_t stack_ref, const char cp[], nxin_addr* name), (override));
+  MOCK_METHOD(char*, InetNToA, (nxIpStackRef_t stack_ref, nxin_addr inParameter), (override));
+  MOCK_METHOD(const char*, InetNToP, (nxIpStackRef_t stack_ref, int32_t af, void* src, char dst[nxINET6_ADDRSTRLEN], nxsocklen_t size), (override));
   MOCK_METHOD(int32_t, InetPToN, (nxIpStackRef_t stack_ref, int32_t af, const char src[], void* dst), (override));
   MOCK_METHOD(int32_t, FreeAddrInfo, (nxaddrinfo* res), (override));
   MOCK_METHOD(int32_t, GetAddrInfo, (nxIpStackRef_t stack_ref, const char node[], const char service[], nxaddrinfo* hints, nxaddrinfo** res), (override));
@@ -39,8 +42,11 @@ class NiXnetSocketMockLibrary : public nixnetsocket_grpc::NiXnetSocketLibraryInt
   MOCK_METHOD(int32_t, GetSockOpt, (nxSOCKET socket, int32_t level, int32_t optname, void* optval, nxsocklen_t* optlen), (override));
   MOCK_METHOD(int32_t, IpStackClear, (nxIpStackRef_t stack_ref), (override));
   MOCK_METHOD(int32_t, IpStackCreate, (char stack_name[], char config[], nxIpStackRef_t* stack_ref), (override));
+  MOCK_METHOD(void, IpStackFreeAllStacksInfoStr, (nixnetsocket_grpc::IpStackInfoString info), (override));
   MOCK_METHOD(int32_t, IpStackFreeInfo, (nxVirtualInterface_t* firstVirtualInterface), (override));
+  MOCK_METHOD(int32_t, IpStackGetAllStacksInfoStr, (uint32_t format, nixnetsocket_grpc::IpStackInfoString* info), (override));
   MOCK_METHOD(int32_t, IpStackGetInfo, (nxIpStackRef_t stack_ref, uint32_t info_id, nxVirtualInterface_t** virtual_interfaces), (override));
+  MOCK_METHOD(int32_t, IpStackOpen, (char stack_name[], nxIpStackRef_t* stack_ref), (override));
   MOCK_METHOD(int32_t, IpStackWaitForInterface, (nxIpStackRef_t stack_ref, const char localInterface[], int32_t timeoutMs), (override));
   MOCK_METHOD(int32_t, IsSet, (nxSOCKET fd, nxfd_set* set), (override));
   MOCK_METHOD(int32_t, Select, (int32_t nfds, nxfd_set* read_fds, nxfd_set* write_fds, nxfd_set* except_fds, nxtimeval* timeout), (override));

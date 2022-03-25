@@ -3,12 +3,15 @@
 #include <custom/xnetsocket_converters.h>
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
+#include <nixnetsocket/nixnetsocket_mock_library.h>
 
 #include <string>
 
 using namespace nixnetsocket_grpc;
 using namespace ::testing;
 namespace pb = ::google::protobuf;
+using namespace std::string_literals;
+using ni::tests::unit::NiXnetSocketMockLibrary;
 using nidevice_grpc::converters::allocate_output_storage;
 using nidevice_grpc::converters::convert_from_grpc;
 using nidevice_grpc::converters::convert_to_grpc;
@@ -596,6 +599,83 @@ TEST(XnetConvertersTests, IPv4AddrOutputConverter_ConvertToGrpc_ConvertsToAddres
   EXPECT_EQ(ADDRESS, grpc_addr.addr());
 }
 
+TEST(XnetConvertersTests, IpStackInfoStringOutputConverter_ConvertToGrpc_ConvertsToAndFreesInfoString)
+{
+  const auto IP_INFO_STRING = "This is the info about the driver!"s;
+  // Copy to buffer including null terminator.
+  auto IP_INFO_BUFFER = std::vector<char>{
+      IP_INFO_STRING.c_str(),
+      IP_INFO_STRING.c_str() + IP_INFO_STRING.length() + 1};
+  NiXnetSocketMockLibrary library;
+  auto converter = allocate_output_storage<nixnetsocket_grpc::IpStackInfoString, std::string>(&library);
+  auto data_ptr = converter.data();
+  *data_ptr = IP_INFO_BUFFER.data();
+
+  EXPECT_CALL(library, IpStackFreeAllStacksInfoStr(IP_INFO_BUFFER.data()));
+  auto converted_data = std::string{};
+  converter.to_grpc(converted_data);
+
+  EXPECT_EQ(IP_INFO_STRING, converted_data);
+}
+
+TEST(XnetConvertersTests, AddrWithIPv4Address_ConvertFromGrpc_ConvertsToNxInAddr)
+{
+  constexpr auto ADDRESS = 0x66778899;
+  auto addr = nixnetsocket_grpc::Addr{};
+  addr.mutable_ipv4()->set_addr(ADDRESS);
+
+  const auto converted_data = convert_from_grpc<void>(addr);
+  const auto data_ptr = reinterpret_cast<const nxin_addr*>(static_cast<const void*>(converted_data));
+
+  EXPECT_EQ(ADDRESS, data_ptr->addr);
+}
+
+TEST(XnetConvertersTests, AddrWithIPv6Address_ConvertFromGrpc_ConvertsToNxIn6Addr)
+{
+  const auto ADDRESS = std::vector<char>{0x0, 0x1, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7, 0x8, 0x9, 0xA, 0xB, 0xC, 0xD, 0xE, 0xF};
+  auto addr = nixnetsocket_grpc::Addr{};
+  addr.mutable_ipv6()->set_addr({ADDRESS.data(), ADDRESS.size()});
+
+  const auto converted_data = convert_from_grpc<void>(addr);
+  const auto data_ptr = reinterpret_cast<const nxin6_addr*>(static_cast<const void*>(converted_data));
+
+  EXPECT_THAT(
+      data_ptr->addr,
+      ElementsAreArray(ADDRESS.data(), ADDRESS.size()));
+}
+
+TEST(XnetConvertersTests, AddrWithNoAddress_ConvertFromGrpc_ConvertsToNxIn6Addr)
+{
+  const auto ADDRESS = std::vector<char>{0x0, 0x1, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7, 0x8, 0x9, 0xA, 0xB, 0xC, 0xD, 0xE, 0xF};
+  const auto ZERO_ADDRESS = std::vector<char>(ADDRESS.size(), 0x0);
+  auto addr = nixnetsocket_grpc::Addr{};
+
+  const auto converted_data = convert_from_grpc<void>(addr);
+  const auto data_ptr = reinterpret_cast<const nxin6_addr*>(static_cast<const void*>(converted_data));
+
+  EXPECT_THAT(
+      data_ptr->addr,
+      ElementsAreArray(ZERO_ADDRESS.data(), ZERO_ADDRESS.size()));
+}
+
+TEST(XnetConvertersTests, GrpcAddrCase_GetAddressFamily_ReturnsCorrectDriverFamily)
+{
+  using AddrCase = nixnetsocket_grpc::Addr::AddrCase;
+  EXPECT_EQ(nxAF_UNSPEC, get_address_family(AddrCase::ADDR_NOT_SET));
+  EXPECT_EQ(nxAF_INET, get_address_family(AddrCase::kIpv4));
+  EXPECT_EQ(nxAF_INET6, get_address_family(AddrCase::kIpv6));
+}
+
+TEST(XnetConvertersTests, GrpcIpv4Addr_ConvertFromGrpc_ConvertsToCorrectNxInAddr)
+{
+  constexpr auto ADDRESS = 0x55443322;
+  auto addr = nixnetsocket_grpc::IPv4Addr{};
+  addr.set_addr(ADDRESS);
+
+  const auto converted_data = convert_from_grpc<nxin_addr>(addr);
+
+  EXPECT_EQ(ADDRESS, converted_data.addr);
+}
 }  // namespace
 }  // namespace unit
 }  // namespace tests
