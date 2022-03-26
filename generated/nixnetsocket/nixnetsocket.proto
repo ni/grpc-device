@@ -75,6 +75,15 @@ enum GetAddrInfoFlags {
   GET_ADDR_INFO_FLAGS_BYPASS_CACHE = 2048;
 }
 
+enum GetNameInfoFlags {
+  GET_NAME_INFO_FLAGS_UNSPECIFIED = 0;
+  GET_NAME_INFO_FLAGS_NOFQDN = 1;
+  GET_NAME_INFO_FLAGS_NUMERICHOST = 2;
+  GET_NAME_INFO_FLAGS_NAMEREQD = 4;
+  GET_NAME_INFO_FLAGS_NUMERICSERV = 8;
+  GET_NAME_INFO_FLAGS_DGRAM = 16;
+}
+
 enum IPProtocol {
   IP_PROTOCOL_IP = 0;
   IP_PROTOCOL_TCP = 6;
@@ -182,19 +191,21 @@ message SockAddr {
 }
 
 message AddrInfo {
-  GetAddrInfoFlags flags = 1;
-  AddressFamily family = 2;
-  SocketProtocolType sock_type = 3;
-  IPProtocol protocol = 4;
-  SockAddr addr = 5;
-  string canon_name = 6;
+  repeated GetAddrInfoFlags flags = 1;
+  int32 flags_raw = 2;
+  AddressFamily family = 3;
+  SocketProtocolType sock_type = 4;
+  IPProtocol protocol = 5;
+  SockAddr addr = 6;
+  string canon_name = 7;
 }
 
 message AddrInfoHint {
-  GetAddrInfoFlags flags = 1;
-  AddressFamily family = 2;
-  SocketProtocolType sock_type = 3;
-  IPProtocol protocol = 4;
+  repeated GetAddrInfoFlags flags = 1;
+  int32 flags_raw = 2;
+  AddressFamily family = 3;
+  SocketProtocolType sock_type = 4;
+  IPProtocol protocol = 5;
 }
 
 message Linger {
@@ -287,7 +298,10 @@ message GetNameInfoRequest {
   SockAddr addr = 2;
   int32 host_len = 3;
   int32 serv_len = 4;
-  int32 flags = 5;
+  oneof flags_enum {
+    GetNameInfoFlags flags = 5;
+    int32 flags_raw = 6;
+  }
 }
 
 message GetNameInfoResponse {

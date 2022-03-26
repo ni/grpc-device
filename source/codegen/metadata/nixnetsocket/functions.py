@@ -120,12 +120,28 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'node',
-                'type': 'const char[]'
+                'type': 'const char[]',
+                'proto_only': True
+            },
+            {
+                'direction': 'in',
+                'name': 'node_api',
+                'type': 'const char[]',
+                'hardcoded_value': 'request->node() == "" ? nullptr : node',
+                'include_in_proto': False
             },
             {
                 'direction': 'in',
                 'name': 'service',
-                'type': 'const char[]'
+                'type': 'const char[]',
+                'proto_only': True
+            },
+            {
+                'direction': 'in',
+                'name': 'service_api',
+                'type': 'const char[]',
+                'hardcoded_value': 'request->service() == "" ? nullptr : service',
+                'include_in_proto': False
             },
             {
                 'direction': 'in',
@@ -236,7 +252,8 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'flags',
-                'type': 'int32_t'
+                'type': 'int32_t',
+                'enum': 'GetNameInfoFlags'
             },
         ],
         'returns': 'int32_t'
