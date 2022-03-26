@@ -638,7 +638,7 @@ void EXPECT_ADDR_INFO(
     pb::uint32 port,
     AddrInfo& addr_info)
 {
-  int expected_flags_raw = std::accumulate(flags.begin(), flags.end(), 0, std::bit_or());
+  int expected_flags_raw = std::accumulate(flags.begin(), flags.end(), 0, std::bit_or<int>());
   EXPECT_EQ(expected_flags_raw, addr_info.flags_raw());
   EXPECT_EQ(flags.size(), addr_info.flags().size());
   for (int i = 0; i < std::min<size_t>(flags.size(), addr_info.flags().size()); i++) {
