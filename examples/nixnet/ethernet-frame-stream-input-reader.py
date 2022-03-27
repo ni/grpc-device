@@ -1,4 +1,5 @@
 r""" Reads all the frame on network.
+
   This example reads all the frames on the network and displays them. 
   This is used to demonstrate a frame input stream session.
 The gRPC API is built from the C API. NI-XNET documentation is installed with the driver at:
