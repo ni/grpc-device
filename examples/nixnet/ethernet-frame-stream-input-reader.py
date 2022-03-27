@@ -1,22 +1,16 @@
 r""" Reads all the frame on network.
-
   This example reads all the frames on the network and displays them. 
   This is used to demonstrate a frame input stream session.
-
 The gRPC API is built from the C API. NI-XNET documentation is installed with the driver at:
   C:\Users\Public\Documents\National Instruments\NI-XNET\Documentation\NI-XNET Manual.chm
-
 Getting Started:
 To run this example, install "NI-XNET Driver" on the server machine:
   https://www.ni.com/en-in/support/downloads/drivers/download.ni-xnet.html
-
 For instructions on how to use protoc to generate gRPC client interfaces, see our "Creating a gRPC
 Client" wiki page:
   https://github.com/ni/grpc-device/wiki/Creating-a-gRPC-Client
-
 Refer to the NI XNET gRPC Wiki for the latest C Function Reference:
   https://github.com/ni/grpc-device/wiki/NI-XNET-C-Function-Reference
-
  Running from command line:
 Server machine's IP address, port number, and interface name can be passed as separate command line
 arguments.
@@ -90,7 +84,7 @@ client = grpc_nixnet.NiXnetStub(channel)
 
 print(CHOOSE_MONITOR_OR_ENDPOINT_TEXT)
 if sys.stdin.read(1) == "m":
-    INTERFACE = "ENET1/monitor"
+    INTERFACE += "/monitor"
 
 # Display parameters that will be used for the example.
 print(f"Interface: {INTERFACE}", end="\n")
@@ -103,12 +97,12 @@ try:
             cluster_name="",
             list="",
             interface=INTERFACE,
-            mode=nixnet_types.CREATE_SESSION_MODE_MODE_FRAME_IN_STREAM,
+            mode=nixnet_types.CREATE_SESSION_MODE_FRAME_IN_STREAM,
         )
     )
     check_for_error(create_session_response.status)
 
-    session = create_session_response.session_ref
+    session = create_session_response.session
     print("Session created successfully.\n")
 
     rxfilter = nixnet_types.EptRxFilter(
@@ -120,7 +114,7 @@ try:
     # Set Receive Filter (Only applies for endpoint mode)
     set_property_response = client.SetProperty(
         nixnet_types.SetPropertyRequest(
-            session_ref=session,
+            session=session,
             property_id=nixnet_types.PROPERTY_SESSION_INTF_ENET_EPT_RECEIVE_FILTER,
             ept_rx_filter_array=ept_rxfilter_array,
         )
@@ -134,11 +128,11 @@ try:
         # Read the received frames into the buffer
         read_frame_response = client.ReadFrame(
             nixnet_types.ReadFrameRequest(
-                session_ref=session,
+                session=session,
                 number_of_frames=NUM_OF_FRAMES,
                 max_payload_per_frame=MAX_PAYLOAD_PER_FRAME,
-                frame_type=nixnet_types.FRAME_TYPE_ENET,
-                timeout=nixnet_types.TIME_OUT_TIMEOUT_INFINITE,
+                protocol=nixnet_types.PROTOCOL_ENET,
+                timeout=nixnet_types.TIME_OUT_INFINITE,
             )
         )
         check_for_error(read_frame_response.status)
@@ -150,9 +144,9 @@ try:
             print_timestamp(frame_buffer[i].enet.network_timestamp)
 
             for j in range(0, len(frame_buffer[i].enet.frame_data)):
-                # Prints frame data in hexadecimal form formatted by adding 0's at the beginning
+                # Prints frame data in 2-digit hexadecimal format without '0x'
                 print(
-                    hex(frame_buffer[i].enet.frame_data[j]).upper()[2:].zfill(2),
+                    "{:02x}".format(int(frame_buffer[i].enet.frame_data[j])).upper(),
                     end=" ",
                 )
             print("\n\n")
@@ -175,5 +169,5 @@ except grpc.RpcError as rpc_error:
 finally:
     if session:
         # clear the XNET session.
-        check_for_error(client.Clear(nixnet_types.ClearRequest(session_ref=session)).status)
+        check_for_error(client.Clear(nixnet_types.ClearRequest(session=session)).status)
         print("Session cleared successfully!\n")
