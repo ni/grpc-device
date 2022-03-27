@@ -172,29 +172,29 @@ namespace nixnet_grpc {
       u32 size_of_value_buffer = static_cast<u32>(request->value_buffer().size() * sizeof(u8));
       u32 number_of_frames = request->number_of_frames();
       u32 max_payload_per_frame = request->max_payload_per_frame();
-      u32 frame_type;
-      switch (request->frame_type_enum_case()) {
-        case nixnet_grpc::ConvertByteArrayToFramesSinglePointRequest::FrameTypeEnumCase::kFrameType: {
-          frame_type = static_cast<u32>(request->frame_type());
+      u32 protocol;
+      switch (request->protocol_enum_case()) {
+        case nixnet_grpc::ConvertByteArrayToFramesSinglePointRequest::ProtocolEnumCase::kProtocol: {
+          protocol = static_cast<u32>(request->protocol());
           break;
         }
-        case nixnet_grpc::ConvertByteArrayToFramesSinglePointRequest::FrameTypeEnumCase::kFrameTypeRaw: {
-          frame_type = static_cast<u32>(request->frame_type_raw());
+        case nixnet_grpc::ConvertByteArrayToFramesSinglePointRequest::ProtocolEnumCase::kProtocolRaw: {
+          protocol = static_cast<u32>(request->protocol_raw());
           break;
         }
-        case nixnet_grpc::ConvertByteArrayToFramesSinglePointRequest::FrameTypeEnumCase::FRAME_TYPE_ENUM_NOT_SET: {
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for frame_type was not specified or out of range");
+        case nixnet_grpc::ConvertByteArrayToFramesSinglePointRequest::ProtocolEnumCase::PROTOCOL_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for protocol was not specified or out of range");
           break;
         }
       }
 
-      auto size_of_buffer = get_frame_buffer_size(number_of_frames, max_payload_per_frame, frame_type);
+      auto size_of_buffer = get_frame_buffer_size(number_of_frames, max_payload_per_frame, protocol);
       std::vector<u8> buffer(size_of_buffer, u8());
       u32 number_of_bytes_returned {};
       auto status = library_->ConvertByteArrayToFramesSinglePoint(session, value_buffer, size_of_value_buffer, buffer.data(), size_of_buffer, &number_of_bytes_returned);
       response->set_status(status);
       if (status_ok(status)) {
-        convert_to_grpc(buffer, response->mutable_buffer(), number_of_bytes_returned, frame_type);
+        convert_to_grpc(buffer, response->mutable_buffer(), number_of_bytes_returned, protocol, enetflags_output_map_);
       }
       return ::grpc::Status::OK;
     }
@@ -213,7 +213,7 @@ namespace nixnet_grpc {
     try {
       auto session_grpc_session = request->session();
       nxSessionRef_t session = session_repository_->access_session(session_grpc_session.id(), session_grpc_session.name());
-      auto frame_buffer = convert_from_grpc<u8>(request->frame_buffer());
+      auto frame_buffer = convert_from_grpc<u8>(request->frame_buffer(), enetflags_input_map_);
       auto number_of_bytes_for_frames = frame_buffer.size();
       u32 size_of_value_buffer = request->size_of_value_buffer();
       std::string value_buffer(size_of_value_buffer, '\0');
@@ -240,7 +240,7 @@ namespace nixnet_grpc {
       auto session_grpc_session = request->session();
       nxSessionRef_t session = session_repository_->access_session(session_grpc_session.id(), session_grpc_session.name());
       u32 number_of_signals = request->number_of_signals();
-      auto frame_buffer = convert_from_grpc<u8>(request->frame_buffer());
+      auto frame_buffer = convert_from_grpc<u8>(request->frame_buffer(), enetflags_input_map_);
       auto number_of_bytes_for_frames = frame_buffer.size();
       auto size_of_value_buffer = number_of_signals * sizeof(f64);
       auto size_of_timestamp_buffer = number_of_signals * sizeof(f64);
@@ -273,29 +273,29 @@ namespace nixnet_grpc {
       u32 size_of_value_buffer = static_cast<u32>(request->value_buffer().size() * sizeof(f64));
       u32 number_of_frames = request->number_of_frames();
       u32 max_payload_per_frame = request->max_payload_per_frame();
-      u32 frame_type;
-      switch (request->frame_type_enum_case()) {
-        case nixnet_grpc::ConvertSignalsToFramesSinglePointRequest::FrameTypeEnumCase::kFrameType: {
-          frame_type = static_cast<u32>(request->frame_type());
+      u32 protocol;
+      switch (request->protocol_enum_case()) {
+        case nixnet_grpc::ConvertSignalsToFramesSinglePointRequest::ProtocolEnumCase::kProtocol: {
+          protocol = static_cast<u32>(request->protocol());
           break;
         }
-        case nixnet_grpc::ConvertSignalsToFramesSinglePointRequest::FrameTypeEnumCase::kFrameTypeRaw: {
-          frame_type = static_cast<u32>(request->frame_type_raw());
+        case nixnet_grpc::ConvertSignalsToFramesSinglePointRequest::ProtocolEnumCase::kProtocolRaw: {
+          protocol = static_cast<u32>(request->protocol_raw());
           break;
         }
-        case nixnet_grpc::ConvertSignalsToFramesSinglePointRequest::FrameTypeEnumCase::FRAME_TYPE_ENUM_NOT_SET: {
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for frame_type was not specified or out of range");
+        case nixnet_grpc::ConvertSignalsToFramesSinglePointRequest::ProtocolEnumCase::PROTOCOL_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for protocol was not specified or out of range");
           break;
         }
       }
 
-      auto size_of_buffer = get_frame_buffer_size(number_of_frames, max_payload_per_frame, frame_type);
+      auto size_of_buffer = get_frame_buffer_size(number_of_frames, max_payload_per_frame, protocol);
       std::vector<u8> buffer(size_of_buffer, u8());
       u32 number_of_bytes_returned {};
       auto status = library_->ConvertSignalsToFramesSinglePoint(session, value_buffer, size_of_value_buffer, buffer.data(), size_of_buffer, &number_of_bytes_returned);
       response->set_status(status);
       if (status_ok(status)) {
-        convert_to_grpc(buffer, response->mutable_buffer(), number_of_bytes_returned, frame_type);
+        convert_to_grpc(buffer, response->mutable_buffer(), number_of_bytes_returned, protocol, enetflags_output_map_);
       }
       return ::grpc::Status::OK;
     }
@@ -1060,23 +1060,23 @@ namespace nixnet_grpc {
       nxSessionRef_t session = session_repository_->access_session(session_grpc_session.id(), session_grpc_session.name());
       int32 number_of_frames = request->number_of_frames();
       u32 max_payload_per_frame = request->max_payload_per_frame();
-      u32 frame_type;
-      switch (request->frame_type_enum_case()) {
-        case nixnet_grpc::ReadFrameRequest::FrameTypeEnumCase::kFrameType: {
-          frame_type = static_cast<u32>(request->frame_type());
+      u32 protocol;
+      switch (request->protocol_enum_case()) {
+        case nixnet_grpc::ReadFrameRequest::ProtocolEnumCase::kProtocol: {
+          protocol = static_cast<u32>(request->protocol());
           break;
         }
-        case nixnet_grpc::ReadFrameRequest::FrameTypeEnumCase::kFrameTypeRaw: {
-          frame_type = static_cast<u32>(request->frame_type_raw());
+        case nixnet_grpc::ReadFrameRequest::ProtocolEnumCase::kProtocolRaw: {
+          protocol = static_cast<u32>(request->protocol_raw());
           break;
         }
-        case nixnet_grpc::ReadFrameRequest::FrameTypeEnumCase::FRAME_TYPE_ENUM_NOT_SET: {
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for frame_type was not specified or out of range");
+        case nixnet_grpc::ReadFrameRequest::ProtocolEnumCase::PROTOCOL_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for protocol was not specified or out of range");
           break;
         }
       }
 
-      auto size_of_buffer = get_frame_buffer_size(number_of_frames, max_payload_per_frame, frame_type);
+      auto size_of_buffer = get_frame_buffer_size(number_of_frames, max_payload_per_frame, protocol);
       f64 timeout;
       switch (request->timeout_enum_case()) {
         case nixnet_grpc::ReadFrameRequest::TimeoutEnumCase::kTimeout: {
@@ -1098,7 +1098,7 @@ namespace nixnet_grpc {
       auto status = library_->ReadFrame(session, buffer.data(), size_of_buffer, timeout, &number_of_bytes_returned);
       response->set_status(status);
       if (status_ok(status)) {
-        convert_to_grpc(buffer, response->mutable_buffer(), number_of_bytes_returned, frame_type);
+        convert_to_grpc(buffer, response->mutable_buffer(), number_of_bytes_returned, protocol, enetflags_output_map_);
       }
       return ::grpc::Status::OK;
     }
@@ -1450,7 +1450,7 @@ namespace nixnet_grpc {
     try {
       auto session_grpc_session = request->session();
       nxSessionRef_t session = session_repository_->access_session(session_grpc_session.id(), session_grpc_session.name());
-      auto buffer = convert_from_grpc<u8>(request->buffer());
+      auto buffer = convert_from_grpc<u8>(request->buffer(), enetflags_input_map_);
       auto number_of_bytes_for_frames = buffer.size();
       f64 timeout;
       switch (request->timeout_enum_case()) {
