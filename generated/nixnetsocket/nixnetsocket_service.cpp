@@ -848,13 +848,13 @@ namespace nixnetsocket_grpc {
       int32_t size = request->size();
       int32_t flags = request->flags();
       std::string mem(size, '\0');
-      auto from = allocate_output_storage<nxsockaddr, SockAddr>();
+      auto from_addr = allocate_output_storage<nxsockaddr, SockAddr>();
       nxsocklen_t fromlen {};
-      auto status = library_->RecvFrom(socket, (char*)mem.data(), size, flags, &from, &fromlen);
+      auto status = library_->RecvFrom(socket, (char*)mem.data(), size, flags, &from_addr, &fromlen);
       response->set_status(status);
       if (status_ok(status)) {
         response->set_mem(mem);
-        convert_to_grpc(from, response->mutable_from());
+        convert_to_grpc(from_addr, response->mutable_from_addr());
       }
       else {
         const auto error_message = get_last_error_message(library_);

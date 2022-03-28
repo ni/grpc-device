@@ -407,6 +407,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_name': 'in_addr',
                 'grpc_type': 'InAddr',
                 'name': 'in',
                 'supports_standard_copy_convert': True,
@@ -744,6 +745,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_name': 'from_addr',
                 'grpc_type': 'SockAddr',
                 'name': 'from',
                 'supports_standard_output_allocation': True,
