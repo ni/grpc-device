@@ -585,7 +585,7 @@ struct SockOptDataOutputConverter {
   }
 
   int32_t opt_name;
-  nxsocklen_t string_length;
+  nxsocklen_t string_length = 255;
   int32_t data_int;
   std::string data_string;
   nxlinger data_linger;
