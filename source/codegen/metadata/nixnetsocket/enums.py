@@ -122,7 +122,8 @@ enums = {
         ]
     },
    'OperationalStatus': {
-      'enum-value-prefix': 'OPERATIONAL_STATUS',
+        'enum-value-prefix': 'OPERATIONAL_STATUS',
+        'force-include': True,
         'values': [
             {
                 'name': 'DOWN',

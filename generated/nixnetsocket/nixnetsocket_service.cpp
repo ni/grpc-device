@@ -630,7 +630,22 @@ namespace nixnetsocket_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto format = nxIPSTACK_INFO_ID;
+      uint32_t format;
+      switch (request->format_enum_case()) {
+        case nixnetsocket_grpc::IpStackGetAllStacksInfoStrRequest::FormatEnumCase::kFormat: {
+          format = static_cast<uint32_t>(request->format());
+          break;
+        }
+        case nixnetsocket_grpc::IpStackGetAllStacksInfoStrRequest::FormatEnumCase::kFormatRaw: {
+          format = static_cast<uint32_t>(request->format_raw());
+          break;
+        }
+        case nixnetsocket_grpc::IpStackGetAllStacksInfoStrRequest::FormatEnumCase::FORMAT_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for format was not specified or out of range");
+          break;
+        }
+      }
+
       auto info = allocate_output_storage<nixnetsocket_grpc::IpStackInfoString, std::string>(library_);
       auto status = library_->IpStackGetAllStacksInfoStr(format, (nixnetsocket_grpc::IpStackInfoString*)info.data());
       response->set_status(status);

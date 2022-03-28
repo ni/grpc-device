@@ -15,7 +15,7 @@ message VirtualInterface {
   string vlan_name = 2;
   string mac_address = 3;
   uint32 mac_mtu = 4;
-  uint32 operational_status = 5;
+  OperationalStatus operational_status = 5;
   uint32 if_index = 6;
   repeated IPAddress ip_addresses = 7;
   repeated GatewayAddress gateway_addresses = 8;

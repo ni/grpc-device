@@ -320,11 +320,19 @@ ip_stack_create(const StubPtr& stub, const pb::string& stack_name, const pb::str
 }
 
 IpStackGetAllStacksInfoStrResponse
-ip_stack_get_all_stacks_info_str(const StubPtr& stub)
+ip_stack_get_all_stacks_info_str(const StubPtr& stub, const simple_variant<IPStackInfoStringFormat, pb::uint32>& format)
 {
   ::grpc::ClientContext context;
 
   auto request = IpStackGetAllStacksInfoStrRequest{};
+  const auto format_ptr = format.get_if<IPStackInfoStringFormat>();
+  const auto format_raw_ptr = format.get_if<pb::uint32>();
+  if (format_ptr) {
+    request.set_format(*format_ptr);
+  }
+  else if (format_raw_ptr) {
+    request.set_format_raw(*format_raw_ptr);
+  }
 
   auto response = IpStackGetAllStacksInfoStrResponse{};
 

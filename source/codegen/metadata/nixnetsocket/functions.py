@@ -563,8 +563,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in', 
-                'hardcoded_value': 'nxIPSTACK_INFO_ID',
-                'include_in_proto': False,
+                'enum': 'IPStackInfoStringFormat',
                 'name': 'format', 
                 'type': 'uint32_t'
             },

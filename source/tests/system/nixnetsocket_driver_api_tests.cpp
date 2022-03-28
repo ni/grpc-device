@@ -522,14 +522,19 @@ TEST_F(NiXnetSocketLoopbackTests, MultiAddressIpStack_GetInfoString_ReturnsReaso
           {create_interface_config("ENET1", MULTI_ADDRESS_INTERFACE_CONFIG)}));
   const auto wait_response = client::ip_stack_wait_for_interface(stub(), create_stack_response.stack_ref(), "", 5000);
 
-  const auto stack_info_response = client::ip_stack_get_all_stacks_info_str(stub());
+  const auto json_stack_info = client::ip_stack_get_all_stacks_info_str(stub(), IPStackInfoStringFormat::IPSTACK_INFO_STR_FORMAT_JSON);
+  const auto text_stack_info = client::ip_stack_get_all_stacks_info_str(stub(), IPStackInfoStringFormat::IPSTACK_INFO_STR_FORMAT_TEXT);
 
   EXPECT_SUCCESS(create_stack_response);
-  EXPECT_SUCCESS(stack_info_response);
   EXPECT_SUCCESS(wait_response);
-  for (const auto expected_sub_str : {"ENET1"s, "10.23.45.67"s, "IPv4 addresses"s, "ff01::1"s}) {
-    EXPECT_THAT(stack_info_response.info(), HasSubstr(expected_sub_str));
+  for (const auto response : {json_stack_info, text_stack_info}) {
+    EXPECT_SUCCESS(response);
+    for (const auto expected_sub_str : {"ENET1"s, "10.23.45.67"s, "ff01::1"s}) {
+      EXPECT_THAT(response.info(), HasSubstr(expected_sub_str));
+    }
   }
+  EXPECT_THAT(text_stack_info.info(), HasSubstr("IPv4 addresses"));
+  EXPECT_THAT(json_stack_info.info(), HasSubstr("ipv4Addresses"));
 }
 
 TEST_F(NiXnetSocketLoopbackTests, OpenedStackThenCloseOriginal_GetStackInfoFromOpenedStack_ReturnsInfoFromOriginalConfig)
@@ -541,7 +546,7 @@ TEST_F(NiXnetSocketLoopbackTests, OpenedStackThenCloseOriginal_GetStackInfoFromO
   const auto reopened_stack = client::ip_stack_open(stub(), STACK_NAME);
   const auto closed_original_stack = client::ip_stack_clear(stub(), original_stack.stack_ref());
 
-  const auto stack_info = client::ip_stack_get_all_stacks_info_str(stub());
+  const auto stack_info = client::ip_stack_get_all_stacks_info_str(stub(), IPStackInfoStringFormat::IPSTACK_INFO_STR_FORMAT_JSON);
 
   EXPECT_THAT(stack_info.info(), HasSubstr(CONFIGURED_STATIC_ADDRESS));
 }

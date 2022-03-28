@@ -303,7 +303,7 @@ struct VirtualInterfaceOutputConverter {
       curr_grpc_vi->set_vlan_name(curr_vi_ptr->vlanName);
       curr_grpc_vi->set_mac_address(curr_vi_ptr->macAddress);
       curr_grpc_vi->set_mac_mtu(curr_vi_ptr->macMTU);
-      curr_grpc_vi->set_operational_status(curr_vi_ptr->operationalStatus);
+      curr_grpc_vi->set_operational_status(static_cast<OperationalStatus>(curr_vi_ptr->operationalStatus));
       curr_grpc_vi->set_if_index(curr_vi_ptr->ifIndex);
       for (
           auto curr_ip_addr_ptr = curr_vi_ptr->firstIPAddress;
