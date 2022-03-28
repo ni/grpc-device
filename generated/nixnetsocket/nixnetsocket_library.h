@@ -23,7 +23,7 @@ class NiXnetSocketLibrary : public nixnetsocket_grpc::NiXnetSocketLibraryInterfa
   int32_t Close(nxSOCKET socket);
   int32_t Connect(nxSOCKET socket, nxsockaddr* name, nxsocklen_t namelen);
   int32_t FreeAddrInfo(nxaddrinfo* res);
-  int32_t GetAddrInfo(nxIpStackRef_t stack_ref, const char node[], const char service[], nxaddrinfo* hints, nxaddrinfo** res);
+  int32_t GetAddrInfo(nxIpStackRef_t stack_ref, const char node_api[], const char service_api[], nxaddrinfo* hints, nxaddrinfo** res);
   int32_t GetLastErrorNum();
   char* GetLastErrorStr(char buf[], size_t bufLen);
   int32_t GetNameInfo(nxIpStackRef_t stack_ref, nxsockaddr* addr, nxsocklen_t addr_len, char host[], nxsocklen_t host_len, char serv[], nxsocklen_t serv_len, int32_t flags);
@@ -53,6 +53,7 @@ class NiXnetSocketLibrary : public nixnetsocket_grpc::NiXnetSocketLibraryInterfa
   int32_t SetSockOpt(nxSOCKET socket, int32_t level, int32_t optname, void* optval, nxsocklen_t optlen);
   int32_t Shutdown(nxSOCKET socket, int32_t how);
   nxSOCKET Socket(nxIpStackRef_t stack_ref, int32_t domain, int32_t type, int32_t prototcol);
+  char* StrErrR(int errnum, char buf[], size_t bufLen);
 
  private:
   using AcceptPtr = decltype(&nxaccept);
@@ -90,6 +91,7 @@ class NiXnetSocketLibrary : public nixnetsocket_grpc::NiXnetSocketLibraryInterfa
   using SetSockOptPtr = decltype(&nxsetsockopt);
   using ShutdownPtr = decltype(&nxshutdown);
   using SocketPtr = decltype(&nxsocket);
+  using StrErrRPtr = decltype(&nxstrerr_r);
 
   typedef struct FunctionPointers {
     AcceptPtr Accept;
@@ -127,6 +129,7 @@ class NiXnetSocketLibrary : public nixnetsocket_grpc::NiXnetSocketLibraryInterfa
     SetSockOptPtr SetSockOpt;
     ShutdownPtr Shutdown;
     SocketPtr Socket;
+    StrErrRPtr StrErrR;
   } FunctionLoadStatus;
 
   nidevice_grpc::SharedLibrary shared_library_;

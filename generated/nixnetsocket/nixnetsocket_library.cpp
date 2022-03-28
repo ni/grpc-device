@@ -56,6 +56,7 @@ NiXnetSocketLibrary::NiXnetSocketLibrary() : shared_library_(kLibraryName)
   function_pointers_.SetSockOpt = reinterpret_cast<SetSockOptPtr>(shared_library_.get_function_pointer("nxsetsockopt"));
   function_pointers_.Shutdown = reinterpret_cast<ShutdownPtr>(shared_library_.get_function_pointer("nxshutdown"));
   function_pointers_.Socket = reinterpret_cast<SocketPtr>(shared_library_.get_function_pointer("nxsocket"));
+  function_pointers_.StrErrR = reinterpret_cast<StrErrRPtr>(shared_library_.get_function_pointer("nxstrerr_r"));
 }
 
 NiXnetSocketLibrary::~NiXnetSocketLibrary()
@@ -125,15 +126,15 @@ int32_t NiXnetSocketLibrary::FreeAddrInfo(nxaddrinfo* res)
   return function_pointers_.FreeAddrInfo(res);
 }
 
-int32_t NiXnetSocketLibrary::GetAddrInfo(nxIpStackRef_t stack_ref, const char node[], const char service[], nxaddrinfo* hints, nxaddrinfo** res)
+int32_t NiXnetSocketLibrary::GetAddrInfo(nxIpStackRef_t stack_ref, const char node_api[], const char service_api[], nxaddrinfo* hints, nxaddrinfo** res)
 {
   if (!function_pointers_.GetAddrInfo) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxgetaddrinfo.");
   }
 #if defined(_MSC_VER)
-  return nxgetaddrinfo(stack_ref, node, service, hints, res);
+  return nxgetaddrinfo(stack_ref, node_api, service_api, hints, res);
 #else
-  return function_pointers_.GetAddrInfo(stack_ref, node, service, hints, res);
+  return function_pointers_.GetAddrInfo(stack_ref, node_api, service_api, hints, res);
 #endif
 }
 
@@ -466,6 +467,18 @@ nxSOCKET NiXnetSocketLibrary::Socket(nxIpStackRef_t stack_ref, int32_t domain, i
   return nxsocket(stack_ref, domain, type, prototcol);
 #else
   return function_pointers_.Socket(stack_ref, domain, type, prototcol);
+#endif
+}
+
+char* NiXnetSocketLibrary::StrErrR(int errnum, char buf[], size_t bufLen)
+{
+  if (!function_pointers_.StrErrR) {
+    throw nidevice_grpc::LibraryLoadException("Could not find nxstrerr_r.");
+  }
+#if defined(_MSC_VER)
+  return nxstrerr_r(errnum, buf, bufLen);
+#else
+  return function_pointers_.StrErrR(errnum, buf, bufLen);
 #endif
 }
 

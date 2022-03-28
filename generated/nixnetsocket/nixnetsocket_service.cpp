@@ -182,10 +182,12 @@ namespace nixnetsocket_grpc {
       auto stack_ref_grpc_session = request->stack_ref();
       nxIpStackRef_t stack_ref = nx_ip_stack_ref_t_resource_repository_->access_session(stack_ref_grpc_session.id(), stack_ref_grpc_session.name());
       auto node = request->node().c_str();
+      auto node_api = request->node() == "" ? nullptr : node;
       auto service = request->service().c_str();
+      auto service_api = request->service() == "" ? nullptr : service;
       auto hints = convert_from_grpc<nxaddrinfo>(request->hints());
       auto res = allocate_output_storage<nxaddrinfo, google::protobuf::RepeatedPtrField<AddrInfo>>(library_);
-      auto status = library_->GetAddrInfo(stack_ref, node, service, hints, &res);
+      auto status = library_->GetAddrInfo(stack_ref, node_api, service_api, hints, &res);
       response->set_status(status);
       if (status_ok(status)) {
         convert_to_grpc(res, response->mutable_res());
@@ -217,7 +219,22 @@ namespace nixnetsocket_grpc {
       auto addr_len = addr.size();
       nxsocklen_t host_len = request->host_len();
       nxsocklen_t serv_len = request->serv_len();
-      int32_t flags = request->flags();
+      int32_t flags;
+      switch (request->flags_enum_case()) {
+        case nixnetsocket_grpc::GetNameInfoRequest::FlagsEnumCase::kFlags: {
+          flags = static_cast<int32_t>(request->flags());
+          break;
+        }
+        case nixnetsocket_grpc::GetNameInfoRequest::FlagsEnumCase::kFlagsRaw: {
+          flags = static_cast<int32_t>(request->flags_raw());
+          break;
+        }
+        case nixnetsocket_grpc::GetNameInfoRequest::FlagsEnumCase::FLAGS_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for flags was not specified or out of range");
+          break;
+        }
+      }
+
       std::string host;
       if (host_len > 0) {
           host.resize(host_len - 1);
@@ -1111,6 +1128,34 @@ namespace nixnetsocket_grpc {
         response->set_error_message(error_message);
         const auto error_num = get_last_error_num(library_);
         response->set_error_num(error_num);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiXnetSocketService::StrErrR(::grpc::ServerContext* context, const StrErrRRequest* request, StrErrRResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      int errnum = request->errnum();
+      size_t buf_len = request->buf_len();
+      std::string buf;
+      if (buf_len > 0) {
+          buf.resize(buf_len - 1);
+      }
+      auto error = library_->StrErrR(errnum, (char*)buf.data(), buf_len);
+      auto status = error ? 0 : -1;
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_error(error);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error()));
       }
       return ::grpc::Status::OK;
     }

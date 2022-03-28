@@ -22,7 +22,7 @@ class NiXnetSocketMockLibrary : public nixnetsocket_grpc::NiXnetSocketLibraryInt
   MOCK_METHOD(int32_t, Close, (nxSOCKET socket), (override));
   MOCK_METHOD(int32_t, Connect, (nxSOCKET socket, nxsockaddr* name, nxsocklen_t namelen), (override));
   MOCK_METHOD(int32_t, FreeAddrInfo, (nxaddrinfo* res), (override));
-  MOCK_METHOD(int32_t, GetAddrInfo, (nxIpStackRef_t stack_ref, const char node[], const char service[], nxaddrinfo* hints, nxaddrinfo** res), (override));
+  MOCK_METHOD(int32_t, GetAddrInfo, (nxIpStackRef_t stack_ref, const char node_api[], const char service_api[], nxaddrinfo* hints, nxaddrinfo** res), (override));
   MOCK_METHOD(int32_t, GetLastErrorNum, (), (override));
   MOCK_METHOD(char*, GetLastErrorStr, (char buf[], size_t bufLen), (override));
   MOCK_METHOD(int32_t, GetNameInfo, (nxIpStackRef_t stack_ref, nxsockaddr* addr, nxsocklen_t addr_len, char host[], nxsocklen_t host_len, char serv[], nxsocklen_t serv_len, int32_t flags), (override));
@@ -52,6 +52,7 @@ class NiXnetSocketMockLibrary : public nixnetsocket_grpc::NiXnetSocketLibraryInt
   MOCK_METHOD(int32_t, SetSockOpt, (nxSOCKET socket, int32_t level, int32_t optname, void* optval, nxsocklen_t optlen), (override));
   MOCK_METHOD(int32_t, Shutdown, (nxSOCKET socket, int32_t how), (override));
   MOCK_METHOD(nxSOCKET, Socket, (nxIpStackRef_t stack_ref, int32_t domain, int32_t type, int32_t prototcol), (override));
+  MOCK_METHOD(char*, StrErrR, (int errnum, char buf[], size_t bufLen), (override));
 };
 
 }  // namespace unit
