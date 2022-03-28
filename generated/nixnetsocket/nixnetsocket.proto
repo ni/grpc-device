@@ -37,7 +37,7 @@ service NiXnetSocket {
   rpc IpStackGetInfo(IpStackGetInfoRequest) returns (IpStackGetInfoResponse);
   rpc IpStackOpen(IpStackOpenRequest) returns (IpStackOpenResponse);
   rpc IpStackWaitForInterface(IpStackWaitForInterfaceRequest) returns (IpStackWaitForInterfaceResponse);
-  rpc IsSet(IsSetRequest) returns (IsSetResponse);
+  rpc FdIsSet(FdIsSetRequest) returns (FdIsSetResponse);
   rpc Listen(ListenRequest) returns (ListenResponse);
   rpc Recv(RecvRequest) returns (RecvResponse);
   rpc RecvFrom(RecvFromRequest) returns (RecvFromResponse);
@@ -483,12 +483,12 @@ message IpStackWaitForInterfaceResponse {
   int32 error_num = 3;
 }
 
-message IsSetRequest {
+message FdIsSetRequest {
   nidevice_grpc.Session fd = 1;
   repeated nidevice_grpc.Session set = 2;
 }
 
-message IsSetResponse {
+message FdIsSetResponse {
   int32 status = 1;
   int32 is_set = 2;
   string error_message = 3;

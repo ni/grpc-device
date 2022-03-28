@@ -377,19 +377,19 @@ ip_stack_wait_for_interface(const StubPtr& stub, const nidevice_grpc::Session& s
   return response;
 }
 
-IsSetResponse
-is_set(const StubPtr& stub, const nidevice_grpc::Session& fd, const std::vector<nidevice_grpc::Session>& set)
+FdIsSetResponse
+fd_is_set(const StubPtr& stub, const nidevice_grpc::Session& fd, const std::vector<nidevice_grpc::Session>& set)
 {
   ::grpc::ClientContext context;
 
-  auto request = IsSetRequest{};
+  auto request = FdIsSetRequest{};
   request.mutable_fd()->CopyFrom(fd);
   copy_array(set, request.mutable_set());
 
-  auto response = IsSetResponse{};
+  auto response = FdIsSetResponse{};
 
   raise_if_error(
-      stub->IsSet(&context, request, &response));
+      stub->FdIsSet(&context, request, &response));
 
   return response;
 }

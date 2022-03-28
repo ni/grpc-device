@@ -308,7 +308,7 @@ TEST_F(NiXnetSocketNoHardwareTests, InitWithInvalidIpStack_Bind_ReturnsAndSetsEx
 TEST_F(NiXnetSocketNoHardwareTests, SocketAndEmptySet_IsSet_ReturnsFalse)
 {
   auto socket_response = socket(stub());
-  auto is_set_response = client::is_set(stub(), socket_response.socket(), {});
+  auto is_set_response = client::fd_is_set(stub(), socket_response.socket(), {});
 
   EXPECT_SUCCESS(is_set_response);
   EXPECT_EQ(NXSOCKET_FALSE, is_set_response.is_set());
@@ -317,7 +317,7 @@ TEST_F(NiXnetSocketNoHardwareTests, SocketAndEmptySet_IsSet_ReturnsFalse)
 TEST_F(NiXnetSocketNoHardwareTests, SocketAndSetContainingSocket_IsSet_ReturnsTrue)
 {
   auto socket_response = socket(stub());
-  auto is_set_response = client::is_set(stub(), socket_response.socket(), {socket_response.socket()});
+  auto is_set_response = client::fd_is_set(stub(), socket_response.socket(), {socket_response.socket()});
 
   EXPECT_SUCCESS(is_set_response);
   EXPECT_EQ(NXSOCKET_TRUE, is_set_response.is_set());

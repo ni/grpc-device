@@ -42,7 +42,7 @@ IpStackGetAllStacksInfoStrResponse ip_stack_get_all_stacks_info_str(const StubPt
 IpStackGetInfoResponse ip_stack_get_info(const StubPtr& stub, const nidevice_grpc::Session& stack_ref);
 IpStackOpenResponse ip_stack_open(const StubPtr& stub, const pb::string& stack_name);
 IpStackWaitForInterfaceResponse ip_stack_wait_for_interface(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const pb::string& local_interface, const pb::int32& timeout_ms);
-IsSetResponse is_set(const StubPtr& stub, const nidevice_grpc::Session& fd, const std::vector<nidevice_grpc::Session>& set);
+FdIsSetResponse fd_is_set(const StubPtr& stub, const nidevice_grpc::Session& fd, const std::vector<nidevice_grpc::Session>& set);
 ListenResponse listen(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::int32& backlog);
 RecvResponse recv(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::int32& size, const pb::int32& flags);
 RecvFromResponse recv_from(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::int32& size, const pb::int32& flags);

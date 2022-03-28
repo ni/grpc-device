@@ -46,7 +46,7 @@ NiXnetSocketLibrary::NiXnetSocketLibrary() : shared_library_(kLibraryName)
   function_pointers_.IpStackGetInfo = reinterpret_cast<IpStackGetInfoPtr>(shared_library_.get_function_pointer("nxIpStackGetInfo"));
   function_pointers_.IpStackOpen = reinterpret_cast<IpStackOpenPtr>(shared_library_.get_function_pointer("nxIpStackOpen"));
   function_pointers_.IpStackWaitForInterface = reinterpret_cast<IpStackWaitForInterfacePtr>(shared_library_.get_function_pointer("nxIpStackWaitForInterface"));
-  function_pointers_.IsSet = reinterpret_cast<IsSetPtr>(shared_library_.get_function_pointer("nxfd_isset"));
+  function_pointers_.FdIsSet = reinterpret_cast<FdIsSetPtr>(shared_library_.get_function_pointer("nxfd_isset"));
   function_pointers_.Listen = reinterpret_cast<ListenPtr>(shared_library_.get_function_pointer("nxlisten"));
   function_pointers_.Recv = reinterpret_cast<RecvPtr>(shared_library_.get_function_pointer("nxrecv"));
   function_pointers_.RecvFrom = reinterpret_cast<RecvFromPtr>(shared_library_.get_function_pointer("nxrecvfrom"));
@@ -350,15 +350,15 @@ int32_t NiXnetSocketLibrary::IpStackWaitForInterface(nxIpStackRef_t stack_ref, c
 #endif
 }
 
-int32_t NiXnetSocketLibrary::IsSet(nxSOCKET fd, nxfd_set* set)
+int32_t NiXnetSocketLibrary::FdIsSet(nxSOCKET fd, nxfd_set* set)
 {
-  if (!function_pointers_.IsSet) {
+  if (!function_pointers_.FdIsSet) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxfd_isset.");
   }
 #if defined(_MSC_VER)
   return nxfd_isset(fd, set);
 #else
-  return function_pointers_.IsSet(fd, set);
+  return function_pointers_.FdIsSet(fd, set);
 #endif
 }
 

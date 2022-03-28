@@ -43,7 +43,7 @@ class NiXnetSocketLibrary : public nixnetsocket_grpc::NiXnetSocketLibraryInterfa
   int32_t IpStackGetInfo(nxIpStackRef_t stack_ref, uint32_t info_id, nxVirtualInterface_t** virtual_interfaces);
   int32_t IpStackOpen(char stack_name[], nxIpStackRef_t* stack_ref);
   int32_t IpStackWaitForInterface(nxIpStackRef_t stack_ref, const char localInterface[], int32_t timeoutMs);
-  int32_t IsSet(nxSOCKET fd, nxfd_set* set);
+  int32_t FdIsSet(nxSOCKET fd, nxfd_set* set);
   int32_t Listen(nxSOCKET socket, int32_t backlog);
   int32_t Recv(nxSOCKET socket, char mem[], int32_t size, int32_t flags);
   int32_t RecvFrom(nxSOCKET socket, char mem[], int32_t size, int32_t flags, nxsockaddr* from, nxsocklen_t* fromlen);
@@ -81,7 +81,7 @@ class NiXnetSocketLibrary : public nixnetsocket_grpc::NiXnetSocketLibraryInterfa
   using IpStackGetInfoPtr = decltype(&nxIpStackGetInfo);
   using IpStackOpenPtr = decltype(&nxIpStackOpen);
   using IpStackWaitForInterfacePtr = decltype(&nxIpStackWaitForInterface);
-  using IsSetPtr = decltype(&nxfd_isset);
+  using FdIsSetPtr = decltype(&nxfd_isset);
   using ListenPtr = decltype(&nxlisten);
   using RecvPtr = decltype(&nxrecv);
   using RecvFromPtr = decltype(&nxrecvfrom);
@@ -119,7 +119,7 @@ class NiXnetSocketLibrary : public nixnetsocket_grpc::NiXnetSocketLibraryInterfa
     IpStackGetInfoPtr IpStackGetInfo;
     IpStackOpenPtr IpStackOpen;
     IpStackWaitForInterfacePtr IpStackWaitForInterface;
-    IsSetPtr IsSet;
+    FdIsSetPtr FdIsSet;
     ListenPtr Listen;
     RecvPtr Recv;
     RecvFromPtr RecvFrom;

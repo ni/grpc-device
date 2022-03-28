@@ -733,7 +733,7 @@ namespace nixnetsocket_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiXnetSocketService::IsSet(::grpc::ServerContext* context, const IsSetRequest* request, IsSetResponse* response)
+  ::grpc::Status NiXnetSocketService::FdIsSet(::grpc::ServerContext* context, const FdIsSetRequest* request, FdIsSetResponse* response)
   {
     if (context->IsCancelled()) {
       return ::grpc::Status::CANCELLED;
@@ -742,7 +742,7 @@ namespace nixnetsocket_grpc {
       auto fd_grpc_session = request->fd();
       nxSOCKET fd = session_repository_->access_session(fd_grpc_session.id(), fd_grpc_session.name());
       auto set = convert_from_grpc<nxfd_set>(request->set(), session_repository_);
-      auto is_set = library_->IsSet(fd, set);
+      auto is_set = library_->FdIsSet(fd, set);
       auto status = 0;
       response->set_status(status);
       if (status_ok(status)) {

@@ -42,7 +42,7 @@ class NiXnetSocketMockLibrary : public nixnetsocket_grpc::NiXnetSocketLibraryInt
   MOCK_METHOD(int32_t, IpStackGetInfo, (nxIpStackRef_t stack_ref, uint32_t info_id, nxVirtualInterface_t** virtual_interfaces), (override));
   MOCK_METHOD(int32_t, IpStackOpen, (char stack_name[], nxIpStackRef_t* stack_ref), (override));
   MOCK_METHOD(int32_t, IpStackWaitForInterface, (nxIpStackRef_t stack_ref, const char localInterface[], int32_t timeoutMs), (override));
-  MOCK_METHOD(int32_t, IsSet, (nxSOCKET fd, nxfd_set* set), (override));
+  MOCK_METHOD(int32_t, FdIsSet, (nxSOCKET fd, nxfd_set* set), (override));
   MOCK_METHOD(int32_t, Listen, (nxSOCKET socket, int32_t backlog), (override));
   MOCK_METHOD(int32_t, Recv, (nxSOCKET socket, char mem[], int32_t size, int32_t flags), (override));
   MOCK_METHOD(int32_t, RecvFrom, (nxSOCKET socket, char mem[], int32_t size, int32_t flags, nxsockaddr* from, nxsocklen_t* fromlen), (override));

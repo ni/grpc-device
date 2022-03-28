@@ -640,7 +640,7 @@ functions = {
         ],
         'returns': 'int32_t',
     },
-    'IsSet': {
+    'FdIsSet': {
         'cname': 'nxfd_isset',
         'status_expression': '0',
         'parameters': [
