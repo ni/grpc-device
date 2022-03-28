@@ -19,7 +19,7 @@ Client" wiki page:
 Refer to the NI XNET gRPC Wiki for the latest C Function Reference:
   https://github.com/ni/grpc-device/wiki/NI-XNET-C-Function-Reference
  
- Running from command line:
+Running from command line:
 Server machine's IP address, port number, and interface name can be passed as separate command line
 arguments.
   > python flexray-signal-single-point-input.py <server_address> <port_number> <interface_name>
