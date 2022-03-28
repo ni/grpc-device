@@ -27,7 +27,7 @@ BindResponse bind(const StubPtr& stub, const nidevice_grpc::Session& socket, con
 CloseResponse close(const StubPtr& stub, const nidevice_grpc::Session& socket);
 ConnectResponse connect(const StubPtr& stub, const nidevice_grpc::Session& socket, const SockAddr& name);
 GetAddrInfoResponse get_addr_info(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const pb::string& node, const pb::string& service, const AddrInfoHint& hints);
-GetNameInfoResponse get_name_info(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const SockAddr& addr, const pb::int32& host_len, const pb::int32& serv_len, const pb::int32& flags);
+GetNameInfoResponse get_name_info(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const SockAddr& addr, const pb::int32& host_len, const pb::int32& serv_len, const simple_variant<GetNameInfoFlags, pb::int32>& flags);
 GetPeerNameResponse get_peer_name(const StubPtr& stub, const nidevice_grpc::Session& socket);
 GetSockNameResponse get_sock_name(const StubPtr& stub, const nidevice_grpc::Session& socket);
 GetSockOptResponse get_sock_opt(const StubPtr& stub, const nidevice_grpc::Session& socket, const simple_variant<SocketOptionLevel, pb::int32>& level, const simple_variant<OptName, pb::int32>& optname);
@@ -52,6 +52,7 @@ SendToResponse send_to(const StubPtr& stub, const nidevice_grpc::Session& socket
 SetSockOptResponse set_sock_opt(const StubPtr& stub, const nidevice_grpc::Session& socket, const simple_variant<SocketOptionLevel, pb::int32>& level, const simple_variant<OptName, pb::int32>& optname, const SockOptData& opt_data);
 ShutdownResponse shutdown(const StubPtr& stub, const nidevice_grpc::Session& socket, const simple_variant<Shutdown, pb::int32>& how);
 SocketResponse socket(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const simple_variant<AddressFamily, pb::int32>& domain, const simple_variant<SocketProtocolType, pb::int32>& type, const simple_variant<IPProtocol, pb::int32>& prototcol);
+StrErrRResponse str_err_r(const StubPtr& stub, const pb::int32& errnum, const pb::uint64& buf_len);
 
 } // namespace nixnetsocket_grpc::experimental::client
 

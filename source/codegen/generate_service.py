@@ -29,7 +29,7 @@ def _mutate_metadata(metadata: dict):
     for function_name in metadata["functions"]:
         function = metadata["functions"][function_name]
         parameters = function["parameters"]
-        metadata_mutation.add_get_last_error_params_if_needed(parameters, config)
+        metadata_mutation.add_get_last_error_params_if_needed(function, config)
         metadata_mutation.sanitize_names(parameters)
         metadata_mutation.set_var_args_types(parameters, config)
         metadata_mutation.mark_size_params(parameters)

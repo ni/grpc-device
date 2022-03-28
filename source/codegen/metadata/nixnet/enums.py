@@ -1109,7 +1109,7 @@ enums = {
             }
         ]
     },
-    'FrameTypes': {
+    'FrameType': {
         'force-include': True,
         'values': [
             {

@@ -120,12 +120,28 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'node',
-                'type': 'const char[]'
+                'type': 'const char[]',
+                'proto_only': True
+            },
+            {
+                'direction': 'in',
+                'name': 'node_api',
+                'type': 'const char[]',
+                'hardcoded_value': 'request->node() == "" ? nullptr : node',
+                'include_in_proto': False
             },
             {
                 'direction': 'in',
                 'name': 'service',
-                'type': 'const char[]'
+                'type': 'const char[]',
+                'proto_only': True
+            },
+            {
+                'direction': 'in',
+                'name': 'service_api',
+                'type': 'const char[]',
+                'hardcoded_value': 'request->service() == "" ? nullptr : service',
+                'include_in_proto': False
             },
             {
                 'direction': 'in',
@@ -236,7 +252,8 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'flags',
-                'type': 'int32_t'
+                'type': 'int32_t',
+                'enum': 'GetNameInfoFlags'
             },
         ],
         'returns': 'int32_t'
@@ -966,5 +983,39 @@ functions = {
             },
         ],
         'returns': 'nxSOCKET'
+    },
+    'StrErrR': {
+        'cname': 'nxstrerr_r',
+        'exclude_from_get_last_error': True,
+        'status_expression': 'error ? 0 : -1',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'errnum',
+                'type': 'int'
+            },
+            {
+                'direction': 'out',
+                'include_in_proto': False,
+                'name': 'buf',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'bufLen'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufLen',
+                'type': 'size_t'
+            },
+            {
+                'direction': 'out',
+                'name': 'error',
+                'return_value': True,
+                'type': 'char[]'
+            },
+        ],
+        'returns': 'char*'
     },
 }

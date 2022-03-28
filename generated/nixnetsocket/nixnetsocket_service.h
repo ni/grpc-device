@@ -73,6 +73,7 @@ public:
   ::grpc::Status SetSockOpt(::grpc::ServerContext* context, const SetSockOptRequest* request, SetSockOptResponse* response) override;
   ::grpc::Status Shutdown(::grpc::ServerContext* context, const ShutdownRequest* request, ShutdownResponse* response) override;
   ::grpc::Status Socket(::grpc::ServerContext* context, const SocketRequest* request, SocketResponse* response) override;
+  ::grpc::Status StrErrR(::grpc::ServerContext* context, const StrErrRRequest* request, StrErrRResponse* response) override;
 private:
   NiXnetSocketLibraryInterface* library_;
   ResourceRepositorySharedPtr session_repository_;

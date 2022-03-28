@@ -9,6 +9,9 @@
 
 #include "device_server.h"
 #include "enumerate_devices.h"
+#if defined(__linux__)
+  #include <netinet/in.h>
+#endif
 
 using namespace nixnetsocket_grpc;
 namespace client = nixnetsocket_grpc::experimental::client;
@@ -206,6 +209,12 @@ class NiXnetSocketNoHardwareTests : public NiXnetSocketDriverApiTests {
   }
 };
 
+// Like EXPECT_SUCCESS for responses that exclude_from_get_last_error.
+#define EXPECT_SUCCESS_STATUS_ONLY(response) \
+  if (1) {                                   \
+    EXPECT_EQ(0, (response).status());       \
+  }
+
 #define EXPECT_SUCCESS(response)               \
   if (1) {                                     \
     EXPECT_EQ(0, (response).status());         \
@@ -213,7 +222,7 @@ class NiXnetSocketNoHardwareTests : public NiXnetSocketDriverApiTests {
     EXPECT_EQ(0, (response).error_num());      \
   }
 
-#define EXPECT_SUCCESS_WITH_STATUS(response, expected_status) \
+#define EXPECT_SUCCESS_WITH_STATUS(expected_status, response) \
   if (1) {                                                    \
     EXPECT_EQ(expected_status, (response).status());          \
     EXPECT_EQ("", (response).error_message());                \
@@ -235,6 +244,26 @@ class NiXnetSocketNoHardwareTests : public NiXnetSocketDriverApiTests {
 #define EXPECT_INVALID_ARGUMENT_ERROR(response)                                                              \
   if (1) {                                                                                                   \
     EXPECT_XNET_ERROR(GENERIC_NXSOCKET_ERROR, INVALID_ARGUMENT_ERROR, INVALID_ARGUMENT_MESSAGE, (response)); \
+  }
+
+#define ARRAY_ARG(...) \
+  {                    \
+    __VA_ARGS__        \
+  }
+
+#define EXPECT_ADDR_EQ(expected_family, expected_addr, addr_info)                                                      \
+  {                                                                                                                    \
+    EXPECT_EQ(expected_family, addr_info.family());                                                                    \
+    uint8_t expected_as_array[16] = ARRAY_ARG expected_addr;                                                           \
+    if (addr_info.family() == AddressFamily::ADDRESS_FAMILY_INET) {                                                    \
+      uint32_t addr = addr_info.addr().ipv4().addr().addr();                                                           \
+      uint8_t* addr_byte_array = reinterpret_cast<uint8_t*>(&addr);                                                    \
+      std::vector<uint8_t> addr_bytes{addr_byte_array[0], addr_byte_array[1], addr_byte_array[2], addr_byte_array[3]}; \
+      EXPECT_THAT(addr_bytes, ElementsAreArray(expected_as_array, 4));                                                 \
+    }                                                                                                                  \
+    else {                                                                                                             \
+      EXPECT_THAT(addr_info.addr().ipv6().addr().addr(), ElementsAreArray(expected_as_array, 16));                     \
+    }                                                                                                                  \
   }
 
 SocketResponse
@@ -325,6 +354,26 @@ TEST_F(NiXnetSocketNoHardwareTests, ValidConfigJsonForMissingDevice_IpStackCreat
   EXPECT_XNET_STATUS(INVALID_INTERFACE_NAME, stack_response);
 }
 
+TEST_F(NiXnetSocketNoHardwareTests, StackAlreadyExistsError_StrErrR_ReturnsExpectedMessage)
+{
+  constexpr auto STACK_ALREADY_EXISTS = static_cast<int32_t>(0xFFFFCD24);
+
+  const auto str_err = client::str_err_r(stub(), STACK_ALREADY_EXISTS, 512);
+
+  EXPECT_SUCCESS_STATUS_ONLY(str_err);
+  EXPECT_EQ("An IP Stack with the specified name already exists. The name provided to IP Stack create must be a system-wide unique name.", str_err.error());
+}
+
+TEST_F(NiXnetSocketNoHardwareTests, StackAlreadyExistsError_StrErrRWithZeroBuffer_ReturnsEmptyString)
+{
+  constexpr auto STACK_ALREADY_EXISTS = static_cast<int32_t>(0xFFFFCD24);
+
+  const auto str_err = client::str_err_r(stub(), STACK_ALREADY_EXISTS, 0);
+
+  EXPECT_XNET_STATUS(GENERIC_NXSOCKET_ERROR, str_err);
+  EXPECT_EQ("", str_err.error());
+}
+
 TEST_F(NiXnetSocketLoopbackTests, IPv4LocalhostAddress_AToNAndPToNRoundtrip_ReturnsCorrectAddr)
 {
   const auto stack = client::ip_stack_create(stub(), "", create_simple_config("ENET1"));
@@ -333,8 +382,8 @@ TEST_F(NiXnetSocketLoopbackTests, IPv4LocalhostAddress_AToNAndPToNRoundtrip_Retu
   const auto n_to_a = client::inet_n_to_a(stub(), stack.stack_ref(), a_to_n.name());
   const auto n_to_p = client::inet_n_to_p(stub(), stack.stack_ref(), p_to_n.dst());
 
-  EXPECT_SUCCESS_WITH_STATUS(a_to_n, 1);
-  EXPECT_SUCCESS_WITH_STATUS(p_to_n, 1);
+  EXPECT_SUCCESS_WITH_STATUS(1, a_to_n);
+  EXPECT_SUCCESS_WITH_STATUS(1, p_to_n);
   EXPECT_SUCCESS(n_to_a);
   EXPECT_SUCCESS(n_to_p);
   EXPECT_EQ(IPV4_LOCALHOST_ADDR, a_to_n.name().addr());
@@ -349,7 +398,7 @@ TEST_F(NiXnetSocketLoopbackTests, IPv6LocalhostAddress_PToNRoundtrip_ReturnsCorr
   const auto p_to_n = client::inet_p_to_n(stub(), stack.stack_ref(), 10 /* nxAF_INET6 */, IPV6_LOCALHOST_ADDRESS_STR);
   const auto n_to_p = client::inet_n_to_p(stub(), stack.stack_ref(), p_to_n.dst());
 
-  EXPECT_SUCCESS_WITH_STATUS(p_to_n, 1);
+  EXPECT_SUCCESS_WITH_STATUS(1, p_to_n);
   EXPECT_SUCCESS(n_to_p);
   EXPECT_EQ(IPV6_LOCALHOST_ADDR, p_to_n.dst().ipv6().addr());
   EXPECT_EQ(IPV6_LOCALHOST_ADDRESS_STR, n_to_p.address());
@@ -486,7 +535,7 @@ TEST_F(NiXnetSocketLoopbackTests, OpenedStackThenCloseOriginal_GetStackInfoFromO
   const auto CONFIGURED_STATIC_ADDRESS = "10.56.45.67"s;
   const auto STACK_NAME = "STACK_NAME"s;
   const auto original_stack = client::ip_stack_create(stub(), STACK_NAME, create_simple_config("ENET1", CONFIGURED_STATIC_ADDRESS));
-  const auto wait = client::ip_stack_wait_for_interface(stub(), original_stack.stack_ref(), "", 5000);
+  const auto wait_response = client::ip_stack_wait_for_interface(stub(), original_stack.stack_ref(), "", 5000);
   const auto reopened_stack = client::ip_stack_open(stub(), STACK_NAME);
   const auto closed_original_stack = client::ip_stack_clear(stub(), original_stack.stack_ref());
 
@@ -495,22 +544,56 @@ TEST_F(NiXnetSocketLoopbackTests, OpenedStackThenCloseOriginal_GetStackInfoFromO
   EXPECT_THAT(stack_info.info(), HasSubstr(CONFIGURED_STATIC_ADDRESS));
 }
 
-TEST_F(NiXnetSocketLoopbackTests, RecvAndTransmitSocketsOnLoopbackAddress_SendAndReceiveData_ReceivesExpectedData)
+TEST_F(NiXnetSocketLoopbackTests, OpenedStack_CloseOpenedAndOriginal_BothStacksAreClosed)
+{
+  const auto CONFIGURED_STATIC_ADDRESS = "10.56.45.67"s;
+  const auto STACK_NAME = "STACK_NAME"s;
+  const auto original_stack = client::ip_stack_create(stub(), STACK_NAME, create_simple_config("ENET1", CONFIGURED_STATIC_ADDRESS));
+  const auto wait_response = client::ip_stack_wait_for_interface(stub(), original_stack.stack_ref(), "", 5000);
+  const auto reopened_stack = client::ip_stack_open(stub(), STACK_NAME);
+  const auto closed_reopened_stack = client::ip_stack_clear(stub(), reopened_stack.stack_ref());
+  const auto closed_original_stack = client::ip_stack_clear(stub(), original_stack.stack_ref());
+
+  const auto stack_info = client::ip_stack_get_info(stub(), original_stack.stack_ref());
+  const auto reopened_stack_info = client::ip_stack_get_info(stub(), reopened_stack.stack_ref());
+  EXPECT_XNET_ERROR(INVALID_IP_STACK_ERROR, INVALID_IP_STACK_ERROR, INVALID_IP_STACK_MESSAGE, stack_info);
+  EXPECT_XNET_ERROR(INVALID_IP_STACK_ERROR, INVALID_IP_STACK_ERROR, INVALID_IP_STACK_MESSAGE, reopened_stack_info);
+}
+
+SockAddr lookup_ipv4_sock_addr(client::StubPtr& stub, const nidevice_grpc::Session& stack, const std::string& addr, int32_t port)
+{
+  const auto p_to_n = client::inet_p_to_n(stub, stack, 2 /* AF INET*/, addr);
+  auto sock_addr = SockAddr{};
+  sock_addr.mutable_ipv4()->mutable_addr()->CopyFrom(p_to_n.dst().ipv4());
+  sock_addr.mutable_ipv4()->set_port(port);
+  return sock_addr;
+}
+
+SockOptData create_membership_request(const SockAddr& multicast_addr, const SockAddr& interface_addr)
+{
+  auto opt_data = SockOptData{};
+  auto mreq = opt_data.mutable_data_ip_mreq();
+  mreq->mutable_imr_multiaddr()->CopyFrom(multicast_addr.ipv4().addr());
+  mreq->mutable_imr_interface()->CopyFrom(interface_addr.ipv4().addr());
+  return opt_data;
+}
+
+TEST_F(NiXnetSocketLoopbackTests, IPv4SocketsOnWiredPhysicalLoopback_SendAndReceiveData_ReceivesExpectedData)
 {
   const auto MESSAGE = "HelloWorld"s;
-  const auto rx_stack = client::ip_stack_create(stub(), "", create_simple_config("ENET1"));
-  const auto wait = client::ip_stack_wait_for_interface(stub(), rx_stack.stack_ref(), "", 5000);
+  const auto RX_ADDR = "10.0.0.1"s;
+  const auto rx_stack = client::ip_stack_create(stub(), "", create_simple_config("ENET1", RX_ADDR));
+  const auto tx_stack = client::ip_stack_create(stub(), "", create_simple_config("ENET4", "10.0.0.2"));
+  const auto wait_response = client::ip_stack_wait_for_interface(stub(), rx_stack.stack_ref(), "", 5000);
   const auto rx_socket = socket(stub(), rx_stack.stack_ref());
-  const auto rx_p_to_n = client::inet_p_to_n(stub(), rx_stack.stack_ref(), 2 /* AF INET*/, "127.0.0.1");
-  auto sock_addr = SockAddr{};
-  sock_addr.mutable_ipv4()->mutable_addr()->CopyFrom(rx_p_to_n.dst().ipv4());
+  auto sock_addr = lookup_ipv4_sock_addr(stub(), rx_stack.stack_ref(), RX_ADDR, 0);
   const auto bind = client::bind(stub(), rx_socket.socket(), sock_addr);
   const auto get_name = client::get_sock_name(stub(), rx_socket.socket());
   const auto listen = client::listen(stub(), rx_socket.socket(), 10);
-  const auto tx_socket = socket(stub(), rx_stack.stack_ref());
+  const auto tx_socket = socket(stub(), tx_stack.stack_ref());
+  EXPECT_SUCCESS(tx_stack);
   EXPECT_SUCCESS(rx_stack);
-  EXPECT_SUCCESS(wait);
-  EXPECT_SUCCESS_WITH_STATUS(rx_p_to_n, 1);
+  EXPECT_SUCCESS(wait_response);
   EXPECT_SUCCESS(rx_socket);
   EXPECT_SUCCESS(bind);
   EXPECT_SUCCESS(get_name);
@@ -520,12 +603,160 @@ TEST_F(NiXnetSocketLoopbackTests, RecvAndTransmitSocketsOnLoopbackAddress_SendAn
   const auto connect = client::connect(stub(), tx_socket.socket(), get_name.addr());
   const auto accept = client::accept(stub(), rx_socket.socket());
   const auto send = client::send(stub(), tx_socket.socket(), MESSAGE, 0);
-  const auto recv = client::recv(stub(), accept.socket(), 10, 0);
+  const auto recv = client::recv(stub(), accept.socket(), MESSAGE.size(), 0);
 
   EXPECT_SUCCESS(connect);
-  EXPECT_SUCCESS_WITH_STATUS(send, MESSAGE.size());
-  EXPECT_SUCCESS_WITH_STATUS(recv, MESSAGE.size());
+  EXPECT_SUCCESS_WITH_STATUS(MESSAGE.size(), send);
+  EXPECT_SUCCESS_WITH_STATUS(MESSAGE.size(), recv);
   EXPECT_EQ(MESSAGE, recv.mem());
+}
+
+TEST_F(NiXnetSocketLoopbackTests, IPv4TwoWaySession_CloseAllSockets_SocketsAreClosed)
+{
+  const auto MESSAGE = "HelloWorld"s;
+  const auto RX_ADDR = "10.0.0.1"s;
+  const auto rx_stack = client::ip_stack_create(stub(), "", create_simple_config("ENET1", RX_ADDR));
+  const auto tx_stack = client::ip_stack_create(stub(), "", create_simple_config("ENET4", "10.0.0.2"));
+  const auto wait_response = client::ip_stack_wait_for_interface(stub(), rx_stack.stack_ref(), "", 5000);
+  const auto rx_socket = socket(stub(), rx_stack.stack_ref());
+  const auto sock_addr = lookup_ipv4_sock_addr(stub(), rx_stack.stack_ref(), RX_ADDR, 0);
+  const auto bind = client::bind(stub(), rx_socket.socket(), sock_addr);
+  const auto get_name = client::get_sock_name(stub(), rx_socket.socket());
+  const auto listen = client::listen(stub(), rx_socket.socket(), 10);
+  const auto tx_socket = socket(stub(), tx_stack.stack_ref());
+  const auto connect = client::connect(stub(), tx_socket.socket(), get_name.addr());
+  const auto accept = client::accept(stub(), rx_socket.socket());
+  const auto send = client::send(stub(), tx_socket.socket(), MESSAGE, 0);
+  const auto recv = client::recv(stub(), accept.socket(), MESSAGE.size(), 0);
+
+  const auto close_tx = client::close(stub(), tx_socket.socket());
+  const auto close_rx = client::close(stub(), rx_socket.socket());
+  const auto close_accepted = client::close(stub(), accept.socket());
+
+  EXPECT_SUCCESS(close_tx);
+  EXPECT_SUCCESS(close_rx);
+  EXPECT_SUCCESS(close_accepted);
+  EXPECT_XNET_ERROR(GENERIC_NXSOCKET_ERROR, INVALID_SOCKET_ERROR, INVALID_SOCKET_MESSAGE, client::get_sock_name(stub(), tx_socket.socket()));
+  EXPECT_XNET_ERROR(GENERIC_NXSOCKET_ERROR, INVALID_SOCKET_ERROR, INVALID_SOCKET_MESSAGE, client::get_sock_name(stub(), rx_socket.socket()));
+  EXPECT_XNET_ERROR(GENERIC_NXSOCKET_ERROR, INVALID_SOCKET_ERROR, INVALID_SOCKET_MESSAGE, client::get_sock_name(stub(), accept.socket()));
+}
+
+TEST_F(NiXnetSocketLoopbackTests, UdpSocketsOnWiredPhysicalLoopback_SendAndReceiveData_ReceivesExpectedData)
+{
+  constexpr auto RX_ADDR = "10.0.0.1";
+  constexpr auto TX_ADDR = "10.0.0.2";
+  const auto MESSAGE = "HelloWorld"s;
+  const auto rx_stack = client::ip_stack_create(stub(), "", create_simple_config("ENET1", RX_ADDR));
+  const auto tx_stack = client::ip_stack_create(stub(), "", create_simple_config("ENET4", TX_ADDR));
+  const auto wait_response = client::ip_stack_wait_for_interface(stub(), rx_stack.stack_ref(), "", 5000);
+  auto multicast_sock_addr = lookup_ipv4_sock_addr(stub(), rx_stack.stack_ref(), "233.252.0.1", 5544);
+  auto rx_sock_addr = lookup_ipv4_sock_addr(stub(), rx_stack.stack_ref(), RX_ADDR, 5544);
+  auto tx_sock_addr = lookup_ipv4_sock_addr(stub(), tx_stack.stack_ref(), TX_ADDR, 5544);
+  const auto rx_socket = client::socket(stub(), rx_stack.stack_ref(), ADDRESS_FAMILY_INET, SOCKET_PROTOCOL_TYPE_DGRAM, IP_PROTOCOL_UDP);
+  const auto rx_bind = client::bind(stub(), rx_socket.socket(), rx_sock_addr);
+  const auto rx_add_member = client::set_sock_opt(stub(), rx_socket.socket(), 0, OPT_NAME_IP_ADD_MEMBERSHIP, create_membership_request(multicast_sock_addr, rx_sock_addr));
+  const auto tx_socket = client::socket(stub(), tx_stack.stack_ref(), ADDRESS_FAMILY_INET, SOCKET_PROTOCOL_TYPE_DGRAM, IP_PROTOCOL_UDP);
+  const auto tx_bind = client::bind(stub(), tx_socket.socket(), tx_sock_addr);
+  const auto tx_add_member = client::set_sock_opt(stub(), tx_socket.socket(), 0, OPT_NAME_IP_ADD_MEMBERSHIP, create_membership_request(multicast_sock_addr, tx_sock_addr));
+  EXPECT_SUCCESS(tx_stack);
+  EXPECT_SUCCESS(rx_stack);
+  EXPECT_SUCCESS(wait_response);
+  EXPECT_SUCCESS(rx_socket);
+  EXPECT_SUCCESS(rx_bind);
+  EXPECT_SUCCESS(rx_add_member);
+  EXPECT_SUCCESS(tx_socket);
+  EXPECT_SUCCESS(tx_bind);
+  EXPECT_SUCCESS(tx_add_member);
+
+  const auto send = client::send_to(stub(), tx_socket.socket(), MESSAGE, 0, multicast_sock_addr);
+  const auto recv = client::recv(stub(), rx_socket.socket(), MESSAGE.size(), 0);
+
+  EXPECT_SUCCESS_WITH_STATUS(MESSAGE.size(), send);
+  EXPECT_SUCCESS_WITH_STATUS(MESSAGE.size(), recv);
+  EXPECT_EQ(MESSAGE, recv.mem());
+}
+
+TEST_F(NiXnetSocketLoopbackTests, IPv6OnLoopbackAddress_SendAndReceiveData_ReceivesExpectedData)
+{
+  const auto MESSAGE = "HelloWorld"s;
+  const auto rx_stack = client::ip_stack_create(stub(), "", create_simple_config("ENET1"));
+  const auto wait_response = client::ip_stack_wait_for_interface(stub(), rx_stack.stack_ref(), "", 5000);
+  const auto rx_socket = client::socket(stub(), rx_stack.stack_ref(), ADDRESS_FAMILY_INET6, SOCKET_PROTOCOL_TYPE_STREAM, IP_PROTOCOL_TCP);
+  const auto rx_p_to_n = client::inet_p_to_n(stub(), rx_stack.stack_ref(), 10 /* AF INET*/, "::1");
+  auto sock_addr = SockAddr{};
+  sock_addr.mutable_ipv6()->mutable_addr()->CopyFrom(rx_p_to_n.dst().ipv6());
+  const auto bind = client::bind(stub(), rx_socket.socket(), sock_addr);
+  const auto get_name = client::get_sock_name(stub(), rx_socket.socket());
+  const auto listen = client::listen(stub(), rx_socket.socket(), 10);
+  const auto tx_socket = client::socket(stub(), rx_stack.stack_ref(), ADDRESS_FAMILY_INET6, SOCKET_PROTOCOL_TYPE_STREAM, IP_PROTOCOL_TCP);
+  EXPECT_SUCCESS(rx_stack);
+  EXPECT_SUCCESS(wait_response);
+  EXPECT_SUCCESS_WITH_STATUS(1, rx_p_to_n);
+  EXPECT_SUCCESS(rx_socket);
+  EXPECT_SUCCESS(bind);
+  EXPECT_SUCCESS(get_name);
+  EXPECT_SUCCESS(listen);
+  EXPECT_SUCCESS(tx_socket);
+
+  const auto connect = client::connect(stub(), tx_socket.socket(), get_name.addr());
+  const auto accept = client::accept(stub(), rx_socket.socket());
+  const auto send = client::send(stub(), tx_socket.socket(), MESSAGE, 0);
+  const auto recv = client::recv(stub(), accept.socket(), MESSAGE.size(), 0);
+
+  EXPECT_SUCCESS(connect);
+  EXPECT_SUCCESS_WITH_STATUS(MESSAGE.size(), send);
+  EXPECT_SUCCESS_WITH_STATUS(MESSAGE.size(), recv);
+  EXPECT_EQ(MESSAGE, recv.mem());
+}
+
+TEST_F(NiXnetSocketLoopbackTests, IPv4Address_GetAddrInfo_ReturnsExpectedAddrInfo)
+{
+  const auto ADDRESS = "127.0.0.1"s;
+  const auto stack = client::ip_stack_create(stub(), "", create_simple_config("ENET1"));
+
+  const auto addr_info_response = client::get_addr_info(stub(), stack.stack_ref(), ADDRESS, "", {});
+
+  EXPECT_SUCCESS(addr_info_response);
+  EXPECT_EQ(1, addr_info_response.res().size());
+  auto addr_info = addr_info_response.res()[0];
+  EXPECT_EQ(0, addr_info.addr().ipv4().port());
+  EXPECT_ADDR_EQ(AddressFamily::ADDRESS_FAMILY_INET, (127, 0, 0, 1), addr_info);
+}
+
+TEST_F(NiXnetSocketLoopbackTests, IPv6Address_GetAddrInfo_ReturnsExpectedAddrInfo)
+{
+  const auto ADDRESS = "fd00::1"s;
+  const auto stack = client::ip_stack_create(stub(), "", create_simple_config("ENET1"));
+
+  const auto addr_info_response = client::get_addr_info(stub(), stack.stack_ref(), ADDRESS, "", {});
+
+  EXPECT_SUCCESS(addr_info_response);
+  EXPECT_EQ(1, addr_info_response.res().size());
+  auto addr_info = addr_info_response.res()[0];
+  EXPECT_EQ(0, addr_info.addr().ipv6().port());
+  EXPECT_ADDR_EQ(AddressFamily::ADDRESS_FAMILY_INET6, (0xfd, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01), addr_info);
+}
+
+TEST_F(NiXnetSocketLoopbackTests, NumericPortTranslation_GetAddrInfo_ReturnsExpectedAddrInfo)
+{
+  const auto PORT = "21"s;
+  const auto stack = client::ip_stack_create(stub(), "", create_simple_config("ENET1"));
+
+  AddrInfoHint hints{};
+  hints.set_family(AddressFamily::ADDRESS_FAMILY_INET);
+  int32_t flags = GetAddrInfoFlags::GET_ADDR_INFO_FLAGS_V4MAPPED |
+      GetAddrInfoFlags::GET_ADDR_INFO_FLAGS_ADDRCONFIG |
+      GetAddrInfoFlags::GET_ADDR_INFO_FLAGS_NUMERICHOST |
+      GetAddrInfoFlags::GET_ADDR_INFO_FLAGS_NUMERICSERV |
+      GetAddrInfoFlags::GET_ADDR_INFO_FLAGS_PASSIVE;
+  hints.set_flags_raw(flags);
+  const auto addr_info_response = client::get_addr_info(stub(), stack.stack_ref(), "", PORT, hints);
+
+  EXPECT_SUCCESS(addr_info_response);
+  EXPECT_EQ(1, addr_info_response.res().size());
+  auto addr_info = addr_info_response.res()[0];
+  EXPECT_ADDR_EQ(AddressFamily::ADDRESS_FAMILY_INET, (0, 0, 0, 0), addr_info);
+  EXPECT_EQ(htons(21), addr_info.addr().ipv4().port());
 }
 
 TEST_F(NiXnetSocketLoopbackTests, IPv4SockAddr_GetNameInfo_ReturnsExpectedNameInfo)

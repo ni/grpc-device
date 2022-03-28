@@ -56,19 +56,21 @@ message SockAddr {
 }
 
 message AddrInfo {
-  GetAddrInfoFlags flags = 1;
-  AddressFamily family = 2;
-  SocketProtocolType sock_type = 3;
-  IPProtocol protocol = 4;
-  SockAddr addr = 5;
-  string canon_name = 6;
+  repeated GetAddrInfoFlags flags = 1;
+  int32 flags_raw = 2;
+  AddressFamily family = 3;
+  SocketProtocolType sock_type = 4;
+  IPProtocol protocol = 5;
+  SockAddr addr = 6;
+  string canon_name = 7;
 }
 
 message AddrInfoHint {
-  GetAddrInfoFlags flags = 1;
-  AddressFamily family = 2;
-  SocketProtocolType sock_type = 3;
-  IPProtocol protocol = 4;
+  repeated GetAddrInfoFlags flags = 1;
+  int32 flags_raw = 2;
+  AddressFamily family = 3;
+  SocketProtocolType sock_type = 4;
+  IPProtocol protocol = 5;
 }
 
 message Linger {

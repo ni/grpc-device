@@ -602,7 +602,11 @@ inline void convert_to_grpc(const SockOptDataOutputConverter& storage, SockOptDa
 struct AddrInfoHintInputConverter {
   AddrInfoHintInputConverter(const AddrInfoHint& input)
   {
-    addr_info.ai_flags = input.flags();
+    int32_t flags = input.flags_raw();
+    for (int i = 0; i < input.flags().size(); i++) {
+      flags |= input.flags()[i];
+    }
+    addr_info.ai_flags = flags;
     addr_info.ai_family = input.family();
     addr_info.ai_socktype = input.sock_type();
     addr_info.ai_protocol = input.protocol();
@@ -629,6 +633,19 @@ inline AddrInfoHintInputConverter convert_from_grpc(const AddrInfoHint& input)
   return AddrInfoHintInputConverter(input);
 }
 
+inline void convert_to_addr_info_flags(int32_t flags, pb_::RepeatedField<int32_t>& get_addr_info_flags)
+{
+  int flag_to_check = GetAddrInfoFlags_MAX;
+  while (flag_to_check != 0) {
+    if (flags & flag_to_check) {
+      if (GetAddrInfoFlags_IsValid(flag_to_check)) {
+        get_addr_info_flags.Add(flag_to_check);
+      }
+    }
+    flag_to_check >>= 1;
+  }
+}
+
 struct AddrInfoOutputConverter {
   AddrInfoOutputConverter(NiXnetSocketLibraryInterface* library) : addr_info_ptr(nullptr), library(library)
   {
@@ -646,7 +663,8 @@ struct AddrInfoOutputConverter {
         curr_addr_info_ptr != nullptr;
         curr_addr_info_ptr = curr_addr_info_ptr->ai_next) {
       auto curr_grpc_addr_info = output.Add();
-      curr_grpc_addr_info->set_flags((GetAddrInfoFlags)curr_addr_info_ptr->ai_flags);
+      curr_grpc_addr_info->set_flags_raw(curr_addr_info_ptr->ai_flags);
+      convert_to_addr_info_flags(curr_addr_info_ptr->ai_flags, *(curr_grpc_addr_info->mutable_flags()));
       curr_grpc_addr_info->set_family((AddressFamily)curr_addr_info_ptr->ai_family);
       curr_grpc_addr_info->set_sock_type((SocketProtocolType)curr_addr_info_ptr->ai_socktype);
       curr_grpc_addr_info->set_protocol((IPProtocol)curr_addr_info_ptr->ai_protocol);

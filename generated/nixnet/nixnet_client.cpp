@@ -90,7 +90,7 @@ connect_terminals(const StubPtr& stub, const nidevice_grpc::Session& session, co
 }
 
 ConvertByteArrayToFramesSinglePointResponse
-convert_byte_array_to_frames_single_point(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::string& value_buffer, const pb::uint32& number_of_frames, const pb::uint32& max_payload_per_frame, const simple_variant<Protocol, pb::uint32>& frame_type)
+convert_byte_array_to_frames_single_point(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::string& value_buffer, const pb::uint32& number_of_frames, const pb::uint32& max_payload_per_frame, const simple_variant<Protocol, pb::uint32>& protocol)
 {
   ::grpc::ClientContext context;
 
@@ -99,13 +99,13 @@ convert_byte_array_to_frames_single_point(const StubPtr& stub, const nidevice_gr
   request.set_value_buffer(value_buffer);
   request.set_number_of_frames(number_of_frames);
   request.set_max_payload_per_frame(max_payload_per_frame);
-  const auto frame_type_ptr = frame_type.get_if<Protocol>();
-  const auto frame_type_raw_ptr = frame_type.get_if<pb::uint32>();
-  if (frame_type_ptr) {
-    request.set_frame_type(*frame_type_ptr);
+  const auto protocol_ptr = protocol.get_if<Protocol>();
+  const auto protocol_raw_ptr = protocol.get_if<pb::uint32>();
+  if (protocol_ptr) {
+    request.set_protocol(*protocol_ptr);
   }
-  else if (frame_type_raw_ptr) {
-    request.set_frame_type_raw(*frame_type_raw_ptr);
+  else if (protocol_raw_ptr) {
+    request.set_protocol_raw(*protocol_raw_ptr);
   }
 
   auto response = ConvertByteArrayToFramesSinglePointResponse{};
@@ -117,7 +117,7 @@ convert_byte_array_to_frames_single_point(const StubPtr& stub, const nidevice_gr
 }
 
 ConvertFramesToByteArraySinglePointResponse
-convert_frames_to_byte_array_single_point(const StubPtr& stub, const nidevice_grpc::Session& session, const std::vector<FrameBuffer>& frame_buffer, const pb::uint32& size_of_value_buffer)
+convert_frames_to_byte_array_single_point(const StubPtr& stub, const nidevice_grpc::Session& session, const std::vector<FrameBufferRequest>& frame_buffer, const pb::uint32& size_of_value_buffer)
 {
   ::grpc::ClientContext context;
 
@@ -135,7 +135,7 @@ convert_frames_to_byte_array_single_point(const StubPtr& stub, const nidevice_gr
 }
 
 ConvertFramesToSignalsSinglePointResponse
-convert_frames_to_signals_single_point(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& number_of_signals, const std::vector<FrameBuffer>& frame_buffer)
+convert_frames_to_signals_single_point(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& number_of_signals, const std::vector<FrameBufferRequest>& frame_buffer)
 {
   ::grpc::ClientContext context;
 
@@ -153,7 +153,7 @@ convert_frames_to_signals_single_point(const StubPtr& stub, const nidevice_grpc:
 }
 
 ConvertSignalsToFramesSinglePointResponse
-convert_signals_to_frames_single_point(const StubPtr& stub, const nidevice_grpc::Session& session, const std::vector<double>& value_buffer, const pb::uint32& number_of_frames, const pb::uint32& max_payload_per_frame, const simple_variant<Protocol, pb::uint32>& frame_type)
+convert_signals_to_frames_single_point(const StubPtr& stub, const nidevice_grpc::Session& session, const std::vector<double>& value_buffer, const pb::uint32& number_of_frames, const pb::uint32& max_payload_per_frame, const simple_variant<Protocol, pb::uint32>& protocol)
 {
   ::grpc::ClientContext context;
 
@@ -162,13 +162,13 @@ convert_signals_to_frames_single_point(const StubPtr& stub, const nidevice_grpc:
   copy_array(value_buffer, request.mutable_value_buffer());
   request.set_number_of_frames(number_of_frames);
   request.set_max_payload_per_frame(max_payload_per_frame);
-  const auto frame_type_ptr = frame_type.get_if<Protocol>();
-  const auto frame_type_raw_ptr = frame_type.get_if<pb::uint32>();
-  if (frame_type_ptr) {
-    request.set_frame_type(*frame_type_ptr);
+  const auto protocol_ptr = protocol.get_if<Protocol>();
+  const auto protocol_raw_ptr = protocol.get_if<pb::uint32>();
+  if (protocol_ptr) {
+    request.set_protocol(*protocol_ptr);
   }
-  else if (frame_type_raw_ptr) {
-    request.set_frame_type_raw(*frame_type_raw_ptr);
+  else if (protocol_raw_ptr) {
+    request.set_protocol_raw(*protocol_raw_ptr);
   }
 
   auto response = ConvertSignalsToFramesSinglePointResponse{};
@@ -692,7 +692,7 @@ get_sub_property_size(const StubPtr& stub, const nidevice_grpc::Session& session
 }
 
 ReadFrameResponse
-read_frame(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::int32& number_of_frames, const pb::uint32& max_payload_per_frame, const simple_variant<Protocol, pb::uint32>& frame_type, const simple_variant<TimeOut, double>& timeout)
+read_frame(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::int32& number_of_frames, const pb::uint32& max_payload_per_frame, const simple_variant<Protocol, pb::uint32>& protocol, const simple_variant<TimeOut, double>& timeout)
 {
   ::grpc::ClientContext context;
 
@@ -700,13 +700,13 @@ read_frame(const StubPtr& stub, const nidevice_grpc::Session& session, const pb:
   request.mutable_session()->CopyFrom(session);
   request.set_number_of_frames(number_of_frames);
   request.set_max_payload_per_frame(max_payload_per_frame);
-  const auto frame_type_ptr = frame_type.get_if<Protocol>();
-  const auto frame_type_raw_ptr = frame_type.get_if<pb::uint32>();
-  if (frame_type_ptr) {
-    request.set_frame_type(*frame_type_ptr);
+  const auto protocol_ptr = protocol.get_if<Protocol>();
+  const auto protocol_raw_ptr = protocol.get_if<pb::uint32>();
+  if (protocol_ptr) {
+    request.set_protocol(*protocol_ptr);
   }
-  else if (frame_type_raw_ptr) {
-    request.set_frame_type_raw(*frame_type_raw_ptr);
+  else if (protocol_raw_ptr) {
+    request.set_protocol_raw(*protocol_raw_ptr);
   }
   const auto timeout_ptr = timeout.get_if<TimeOut>();
   const auto timeout_raw_ptr = timeout.get_if<double>();
@@ -957,7 +957,7 @@ wait(const StubPtr& stub, const nidevice_grpc::Session& session, const simple_va
 }
 
 WriteFrameResponse
-write_frame(const StubPtr& stub, const nidevice_grpc::Session& session, const std::vector<FrameBuffer>& buffer, const simple_variant<TimeOut, double>& timeout)
+write_frame(const StubPtr& stub, const nidevice_grpc::Session& session, const std::vector<FrameBufferRequest>& buffer, const simple_variant<TimeOut, double>& timeout)
 {
   ::grpc::ClientContext context;
 
