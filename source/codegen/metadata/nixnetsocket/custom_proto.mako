@@ -1,12 +1,12 @@
 message IPAddress {
-  uint32 family = 1;
+  AddressFamily family = 1;
   string address = 2;
   string net_mask = 3;
   uint32 prefix_length = 4;
 }
 
 message GatewayAddress {
-  uint32 family = 1;
+  AddressFamily family = 1;
   string address = 2;
 }
 

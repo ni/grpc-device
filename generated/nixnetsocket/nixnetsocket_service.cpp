@@ -521,7 +521,22 @@ namespace nixnetsocket_grpc {
     try {
       auto stack_ref_grpc_session = request->stack_ref();
       nxIpStackRef_t stack_ref = nx_ip_stack_ref_t_resource_repository_->access_session(stack_ref_grpc_session.id(), stack_ref_grpc_session.name());
-      int32_t af = request->af();
+      int32_t af;
+      switch (request->af_enum_case()) {
+        case nixnetsocket_grpc::InetPToNRequest::AfEnumCase::kAf: {
+          af = static_cast<int32_t>(request->af());
+          break;
+        }
+        case nixnetsocket_grpc::InetPToNRequest::AfEnumCase::kAfRaw: {
+          af = static_cast<int32_t>(request->af_raw());
+          break;
+        }
+        case nixnetsocket_grpc::InetPToNRequest::AfEnumCase::AF_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for af was not specified or out of range");
+          break;
+        }
+      }
+
       auto src = request->src().c_str();
       auto dst = allocate_output_storage<void, Addr>(af);
       auto status = library_->InetPToN(stack_ref, af, src, &dst);

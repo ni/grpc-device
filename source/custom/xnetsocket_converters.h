@@ -310,7 +310,7 @@ struct VirtualInterfaceOutputConverter {
           curr_ip_addr_ptr != nullptr;
           curr_ip_addr_ptr = curr_ip_addr_ptr->nextIPAddress) {
         auto curr_grpc_ip_addr = curr_grpc_vi->add_ip_addresses();
-        curr_grpc_ip_addr->set_family(curr_ip_addr_ptr->family);
+        curr_grpc_ip_addr->set_family(static_cast<AddressFamily>(curr_ip_addr_ptr->family));
         curr_grpc_ip_addr->set_address(curr_ip_addr_ptr->address);
         curr_grpc_ip_addr->set_net_mask(curr_ip_addr_ptr->netmask);
         curr_grpc_ip_addr->set_prefix_length(curr_ip_addr_ptr->prefixLength);
@@ -320,7 +320,7 @@ struct VirtualInterfaceOutputConverter {
           curr_gateway_addr != nullptr;
           curr_gateway_addr = curr_gateway_addr->nextGatewayAddress) {
         auto curr_grpc_gateway_addr = curr_grpc_vi->add_gateway_addresses();
-        curr_grpc_gateway_addr->set_family(curr_gateway_addr->family);
+        curr_grpc_gateway_addr->set_family(static_cast<AddressFamily>(curr_gateway_addr->family));
         curr_grpc_gateway_addr->set_address(curr_gateway_addr->address);
       }
     }

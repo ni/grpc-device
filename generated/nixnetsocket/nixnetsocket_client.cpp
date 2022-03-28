@@ -262,13 +262,20 @@ inet_n_to_p(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const 
 }
 
 InetPToNResponse
-inet_p_to_n(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const pb::int32& af, const pb::string& src)
+inet_p_to_n(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const simple_variant<AddressFamily, pb::int32>& af, const pb::string& src)
 {
   ::grpc::ClientContext context;
 
   auto request = InetPToNRequest{};
   request.mutable_stack_ref()->CopyFrom(stack_ref);
-  request.set_af(af);
+  const auto af_ptr = af.get_if<AddressFamily>();
+  const auto af_raw_ptr = af.get_if<pb::int32>();
+  if (af_ptr) {
+    request.set_af(*af_ptr);
+  }
+  else if (af_raw_ptr) {
+    request.set_af_raw(*af_raw_ptr);
+  }
   request.set_src(src);
 
   auto response = InetPToNResponse{};

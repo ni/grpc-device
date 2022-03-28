@@ -35,7 +35,7 @@ InetAddrResponse inet_addr(const StubPtr& stub, const nidevice_grpc::Session& st
 InetAToNResponse inet_a_to_n(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const pb::string& cp);
 InetNToAResponse inet_n_to_a(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const InAddr& in_parameter);
 InetNToPResponse inet_n_to_p(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const Addr& src);
-InetPToNResponse inet_p_to_n(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const pb::int32& af, const pb::string& src);
+InetPToNResponse inet_p_to_n(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const simple_variant<AddressFamily, pb::int32>& af, const pb::string& src);
 IpStackClearResponse ip_stack_clear(const StubPtr& stub, const nidevice_grpc::Session& stack_ref);
 IpStackCreateResponse ip_stack_create(const StubPtr& stub, const pb::string& stack_name, const pb::string& config);
 IpStackGetAllStacksInfoStrResponse ip_stack_get_all_stacks_info_str(const StubPtr& stub);

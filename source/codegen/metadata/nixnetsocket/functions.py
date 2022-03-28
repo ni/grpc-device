@@ -481,6 +481,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'enum': 'AddressFamily',
                 'name': 'af',
                 'type': 'int32_t'
             },
