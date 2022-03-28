@@ -1093,25 +1093,25 @@ namespace nixnetsocket_grpc {
         }
       }
 
-      int32_t prototcol;
-      switch (request->prototcol_enum_case()) {
-        case nixnetsocket_grpc::SocketRequest::PrototcolEnumCase::kPrototcol: {
-          prototcol = static_cast<int32_t>(request->prototcol());
+      int32_t protocol;
+      switch (request->protocol_enum_case()) {
+        case nixnetsocket_grpc::SocketRequest::ProtocolEnumCase::kProtocol: {
+          protocol = static_cast<int32_t>(request->protocol());
           break;
         }
-        case nixnetsocket_grpc::SocketRequest::PrototcolEnumCase::kPrototcolRaw: {
-          prototcol = static_cast<int32_t>(request->prototcol_raw());
+        case nixnetsocket_grpc::SocketRequest::ProtocolEnumCase::kProtocolRaw: {
+          protocol = static_cast<int32_t>(request->protocol_raw());
           break;
         }
-        case nixnetsocket_grpc::SocketRequest::PrototcolEnumCase::PROTOTCOL_ENUM_NOT_SET: {
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for prototcol was not specified or out of range");
+        case nixnetsocket_grpc::SocketRequest::ProtocolEnumCase::PROTOCOL_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for protocol was not specified or out of range");
           break;
         }
       }
 
 
       auto init_lambda = [&] () {
-        auto socket = library_->Socket(stack_ref, domain, type, prototcol);
+        auto socket = library_->Socket(stack_ref, domain, type, protocol);
         auto status = socket == -1 ? -1 : 0;
         return std::make_tuple(status, socket);
       };

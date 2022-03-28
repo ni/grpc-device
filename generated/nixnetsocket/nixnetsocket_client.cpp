@@ -561,7 +561,7 @@ shutdown(const StubPtr& stub, const nidevice_grpc::Session& socket, const simple
 }
 
 SocketResponse
-socket(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const simple_variant<AddressFamily, pb::int32>& domain, const simple_variant<SocketProtocolType, pb::int32>& type, const simple_variant<IPProtocol, pb::int32>& prototcol)
+socket(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const simple_variant<AddressFamily, pb::int32>& domain, const simple_variant<SocketProtocolType, pb::int32>& type, const simple_variant<IPProtocol, pb::int32>& protocol)
 {
   ::grpc::ClientContext context;
 
@@ -583,13 +583,13 @@ socket(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const simpl
   else if (type_raw_ptr) {
     request.set_type_raw(*type_raw_ptr);
   }
-  const auto prototcol_ptr = prototcol.get_if<IPProtocol>();
-  const auto prototcol_raw_ptr = prototcol.get_if<pb::int32>();
-  if (prototcol_ptr) {
-    request.set_prototcol(*prototcol_ptr);
+  const auto protocol_ptr = protocol.get_if<IPProtocol>();
+  const auto protocol_raw_ptr = protocol.get_if<pb::int32>();
+  if (protocol_ptr) {
+    request.set_protocol(*protocol_ptr);
   }
-  else if (prototcol_raw_ptr) {
-    request.set_prototcol_raw(*prototcol_raw_ptr);
+  else if (protocol_raw_ptr) {
+    request.set_protocol_raw(*protocol_raw_ptr);
   }
 
   auto response = SocketResponse{};

@@ -52,7 +52,7 @@ class NiXnetSocketLibrary : public nixnetsocket_grpc::NiXnetSocketLibraryInterfa
   int32_t SendTo(nxSOCKET socket, char dataptr[], int32_t size, int32_t flags, nxsockaddr* to, nxsocklen_t tolen);
   int32_t SetSockOpt(nxSOCKET socket, int32_t level, int32_t optname, void* optval, nxsocklen_t optlen);
   int32_t Shutdown(nxSOCKET socket, int32_t how);
-  nxSOCKET Socket(nxIpStackRef_t stack_ref, int32_t domain, int32_t type, int32_t prototcol);
+  nxSOCKET Socket(nxIpStackRef_t stack_ref, int32_t domain, int32_t type, int32_t protocol);
   char* StrErrR(int errnum, char buf[], size_t bufLen);
 
  private:

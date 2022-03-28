@@ -970,7 +970,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'prototcol',
+                'name': 'protocol',
                 'type': 'int32_t',
                 'enum': 'IPProtocol'
             },

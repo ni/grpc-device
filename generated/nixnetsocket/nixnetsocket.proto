@@ -615,9 +615,9 @@ message SocketRequest {
     SocketProtocolType type = 5;
     int32 type_raw = 6;
   }
-  oneof prototcol_enum {
-    IPProtocol prototcol = 7;
-    int32 prototcol_raw = 8;
+  oneof protocol_enum {
+    IPProtocol protocol = 7;
+    int32 protocol_raw = 8;
   }
 }
 

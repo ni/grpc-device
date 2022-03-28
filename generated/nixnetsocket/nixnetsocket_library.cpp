@@ -458,15 +458,15 @@ int32_t NiXnetSocketLibrary::Shutdown(nxSOCKET socket, int32_t how)
 #endif
 }
 
-nxSOCKET NiXnetSocketLibrary::Socket(nxIpStackRef_t stack_ref, int32_t domain, int32_t type, int32_t prototcol)
+nxSOCKET NiXnetSocketLibrary::Socket(nxIpStackRef_t stack_ref, int32_t domain, int32_t type, int32_t protocol)
 {
   if (!function_pointers_.Socket) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxsocket.");
   }
 #if defined(_MSC_VER)
-  return nxsocket(stack_ref, domain, type, prototcol);
+  return nxsocket(stack_ref, domain, type, protocol);
 #else
-  return function_pointers_.Socket(stack_ref, domain, type, prototcol);
+  return function_pointers_.Socket(stack_ref, domain, type, protocol);
 #endif
 }
 

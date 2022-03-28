@@ -55,7 +55,7 @@ enums = {
                 'value': 512
             },
             {
-                'name': 'SHARED_RESET',
+                'name': 'SHARED_RRSET',
                 'value': 1024
             },
             {
