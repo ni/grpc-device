@@ -18,7 +18,7 @@ Client" wiki page:
 Refer to the NI XNET gRPC Wiki for the latest C Function Reference:
   https://github.com/ni/grpc-device/wiki/NI-XNET-C-Function-Reference
 
- Running from command line:
+Running from command line:
 Server machine's IP address, port number, and interface name can be passed as separate command line
 arguments.
   > python can-signal-single-point-output.py <server_address> <port_number> <interface_name>
@@ -81,12 +81,12 @@ try:
             cluster_name=CLUSTER,
             list=SIGNAL_LIST,
             interface=INTERFACE,
-            mode=nixnet_types.CREATE_SESSION_MODE_MODE_SIGNAL_OUT_SINGLE_POINT,
+            mode=nixnet_types.CREATE_SESSION_MODE_SIGNAL_OUT_SINGLE_POINT,
         )
     )
     check_for_error(create_session_response.status)
 
-    session = create_session_response.session_ref
+    session = create_session_response.session
 
     print("Session Created Successfully.\n")
 
@@ -96,9 +96,7 @@ try:
 
         # Update the signal data
         write_signal_response = client.WriteSignalSinglePoint(
-            nixnet_types.WriteSignalSinglePointRequest(
-                session_ref=session, value_buffer=value_buffer
-            )
+            nixnet_types.WriteSignalSinglePointRequest(session=session, value_buffer=value_buffer)
         )
         check_for_error(write_signal_response.status)
 
@@ -120,5 +118,5 @@ except grpc.RpcError as rpc_error:
 finally:
     if session:
         # clear the XNET session.
-        check_for_error(client.Clear(nixnet_types.ClearRequest(session_ref=session)).status)
+        check_for_error(client.Clear(nixnet_types.ClearRequest(session=session)).status)
         print("Session cleared successfully!\n")

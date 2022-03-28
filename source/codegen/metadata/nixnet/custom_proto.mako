@@ -7,7 +7,7 @@ message FlexRayStats {
   uint32 num_slot_boundary_violation_ch_b = 6;
 }
 
-message J1939CommState{
+message J1939CommState {
   uint32 pgn = 1;
   uint32 source_address = 2;
   uint32 destination_address = 3;
@@ -15,44 +15,53 @@ message J1939CommState{
   uint32 receive_error = 5;
 }
 
-message CanComm{
-  uint32 comm_state = 1;
-  uint32 transceiver_error = 2;
-  uint32 sleep = 3;
-  uint32 last_error = 4;
-  uint32 transmit_error_counter = 5;
-  uint32 receive_error_counter = 6;
+message CanCommResponse {
+  CanCommState comm_state = 1;
+  uint32 comm_state_raw = 2;
+  uint32 transceiver_error = 3;
+  uint32 sleep = 4;
+  CanLastErr last_error = 5;
+  uint32 last_error_raw = 6;
+  uint32 transmit_error_counter = 7;
+  uint32 receive_error_counter = 8;
 }
 
-message FlexRayComm{
-  uint32 poc_state = 1;
-  uint32 clock_correction_failed = 2;
-  uint32 passive_to_active_count = 3;
-  uint32 channel_a_sleep = 4;
-  uint32 channel_b_sleep = 5;
+message FlexRayCommResponse {
+  FlexRayPocState poc_state = 1;
+  uint32 poc_state_raw = 2;
+  uint32 clock_correction_failed = 3;
+  uint32 passive_to_active_count = 4;
+  uint32 channel_a_sleep = 5;
+  uint32 channel_b_sleep = 6;
 }
 
-message LinComm{
+message LinCommResponse {
   uint32 sleep = 1;
-  uint32 comm_state = 2;
-  uint32 last_error = 3;
-  uint32 last_error_received = 4;
-  uint32 last_error_expected = 5;
-  uint32 last_error_id = 6;
-  uint32 transceiver_ready = 7;
-  uint32 schedule_index = 8;
+  LinCommState comm_state = 2;
+  uint32 comm_state_raw = 3;
+  uint32 last_error = 4;
+  uint32 last_error_received = 5;
+  uint32 last_error_expected = 6;
+  uint32 last_error_id = 7;
+  uint32 transceiver_ready = 8;
+  uint32 schedule_index = 9;
+}
+
+message SessionInfoResponse {
+  SessionInfoState info = 1;
+  uint32 info_raw = 2;
 }
 
 message ReadStateValue {
-  oneof value{
+  oneof value {
     uint64 time_current = 1;
     uint64 time_communicating = 2;
     uint64 time_start = 3;
-    CanComm can_comm = 4;
-    FlexRayComm flex_ray_comm = 5;
+    CanCommResponse can_comm = 4;
+    FlexRayCommResponse flex_ray_comm = 5;
     FlexRayStats flex_ray_stats = 6;
-    LinComm lin_comm = 7;
-    uint32 session_info = 8;
+    LinCommResponse lin_comm = 7;
+    SessionInfoResponse session_info = 8;
     J1939CommState j1939_comm_state = 9;
     TimeLocalNetwork time_current2 = 10;
     TimeLocalNetwork time_communicating2 = 11;
@@ -61,11 +70,18 @@ message ReadStateValue {
   bytes state_value_raw = 13;
 }
 
+message LinDiagnosticScheduleChangeRequest {
+  oneof schedule_enum {
+    LinDiagnosticSchedule schedule = 1;
+    uint32 schedule_raw = 2;
+  }
+}
+
 message WriteStateValue {
-  oneof value{
+  oneof value {
     uint32 lin_schedule_change = 1;
     uint32 flex_ray_symbol = 2;
-    uint32 lin_diagnostic_schedule_change = 3;
+    LinDiagnosticScheduleChangeRequest lin_diagnostic_schedule_change = 3;
     uint32 ethernet_sleep = 4;
     uint32 ethernet_wake = 5;
   }
@@ -91,7 +107,7 @@ message EptRxFilterArray {
 }
 
 message GetPropertyRequest {
-  nidevice_grpc.Session session_ref = 1;
+  nidevice_grpc.Session session = 1;
   oneof property_id_enum {
     Property property_id = 2;
     uint32 property_id_raw = 3;
@@ -116,7 +132,7 @@ message GetPropertyResponse {
 }
 
 message SetPropertyRequest {
-  nidevice_grpc.Session session_ref = 1;
+  nidevice_grpc.Session session = 1;
   oneof property_id_enum {
     Property property_id = 2;
     uint32 property_id_raw = 3;
@@ -141,7 +157,7 @@ message SetPropertyResponse {
 }
 
 message GetSubPropertyRequest {
-  nidevice_grpc.Session session_ref = 1;
+  nidevice_grpc.Session session = 1;
   uint32 active_index = 2;
   oneof subproperty_id_enum {
     SubProperty property_id = 3;
@@ -159,7 +175,7 @@ message GetSubPropertyResponse {
 }
 
 message DbGetPropertyRequest {
-  nidevice_grpc.Session dbobject_ref = 1;
+  nidevice_grpc.Session dbobject = 1;
   oneof dbproperty_id_enum {
     DBProperty property_id = 2;
     uint32 property_id_raw = 3;
@@ -182,7 +198,7 @@ message DbGetPropertyResponse {
 }
 
 message SetSubPropertyRequest {
-  nidevice_grpc.Session session_ref = 1;
+  nidevice_grpc.Session session = 1;
   uint32 active_index = 2;
   oneof subproperty_id_enum {
     SubProperty property_id = 3;
@@ -200,7 +216,7 @@ message SetSubPropertyResponse {
 }
 
 message DbSetPropertyRequest {
-  nidevice_grpc.Session dbobject_ref = 1;
+  nidevice_grpc.Session dbobject = 1;
   oneof dbproperty_id_enum {
     DBProperty property_id = 2;
     uint32 property_id_raw = 3;
@@ -222,29 +238,66 @@ message DbSetPropertyResponse {
   int32 status = 1;
 }
 
-message Frame {
+message FrameRequest {
   uint64 timestamp = 1;
   uint32 identifier = 2;
-  uint32 type = 3;
-  uint32 flags = 4;
-  uint32 info = 5;
-  bytes payload = 6;
+  oneof type_enum{
+     FrameType type = 3;
+     uint32 type_raw = 4;
+  }
+  repeated FrameFlags flags = 5;
+  uint32 info = 6;
+  bytes payload = 7;
 }
 
-message EnetFrame {
-  uint32 type = 1;
-  uint64 device_timestamp = 2;
-  uint64 network_timestamp = 3;
-  uint32 flags = 4;
-  bytes frame_data = 5;
+message FrameResponse {
+  uint64 timestamp = 1;
+  uint32 identifier = 2;
+  FrameType type = 3;
+  uint32 type_raw = 4;
+  repeated FrameFlags flags = 5;
+  uint32 flags_raw = 6;
+  uint32 info = 7;
+  bytes payload = 8;
 }
 
-message FrameBuffer {
+message EnetFrameRequest {
+  oneof type_enum{
+    EnetFrameType type = 1;
+    uint32 type_raw = 2;
+  }
+  uint64 device_timestamp = 3;
+  uint64 network_timestamp = 4;
+  repeated EnetFlags flags_mapped = 5;
+  bytes frame_data = 6;
+}
+
+message EnetFrameResponse {
+  EnetFrameType type = 1;
+  uint32 type_raw = 2;
+  uint64 device_timestamp = 3;
+  uint64 network_timestamp = 4;
+  repeated EnetFlags flags_mapped= 5;
+  uint32 flags_raw = 6;
+  bytes frame_data = 7;
+}
+
+message FrameBufferRequest {
   oneof frame {
-    Frame can = 1;
-    Frame lin = 2;
-    Frame flex_ray = 3;
-    Frame j1939 = 4;
-    EnetFrame enet = 5;
+    FrameRequest can = 1;
+    FrameRequest lin = 2;
+    FrameRequest flex_ray = 3;
+    FrameRequest j1939 = 4;
+    EnetFrameRequest enet = 5;
+  }
+}
+
+message FrameBufferResponse {
+  oneof frame {
+    FrameResponse can = 1;
+    FrameResponse lin = 2;
+    FrameResponse flex_ray = 3;
+    FrameResponse j1939 = 4;
+    EnetFrameResponse enet = 5;
   }
 }

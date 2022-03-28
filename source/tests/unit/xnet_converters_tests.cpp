@@ -5,6 +5,8 @@
 #include <gtest/gtest.h>
 #include <nixnetsocket/nixnetsocket_mock_library.h>
 
+#include <algorithm>
+#include <numeric>
 #include <string>
 
 using namespace nixnetsocket_grpc;
@@ -597,6 +599,126 @@ TEST(XnetConvertersTests, IPv4AddrOutputConverter_ConvertToGrpc_ConvertsToAddres
   converter.to_grpc(grpc_addr);
 
   EXPECT_EQ(ADDRESS, grpc_addr.addr());
+}
+
+TEST(XnetConvertersTests, AddrInfoHintInputConverter_ConvertFromGrpc_ConvertsToAddrInfoHint)
+{
+  constexpr auto FAMILY = AddressFamily::ADDRESS_FAMILY_INET6;
+  constexpr auto PROTOCOL = IPProtocol::IP_PROTOCOL_IPV6;
+  constexpr auto SOCKET_TYPE = SocketProtocolType::SOCKET_PROTOCOL_TYPE_STREAM;
+  AddrInfoHint hints{};
+  constexpr auto EXPECTED_FLAGS = nxAI_PASSIVE | nxAI_V4MAPPED;
+  hints.set_family(FAMILY);
+  hints.add_flags(GetAddrInfoFlags::GET_ADDR_INFO_FLAGS_PASSIVE);
+  hints.add_flags(GetAddrInfoFlags::GET_ADDR_INFO_FLAGS_V4MAPPED);
+  hints.set_protocol(PROTOCOL);
+  hints.set_sock_type(SOCKET_TYPE);
+
+  auto addr_info_hints_input_converter = convert_from_grpc<nxaddrinfo>(hints);
+  auto hints_ptr = static_cast<nxaddrinfo*>(addr_info_hints_input_converter);
+
+  EXPECT_EQ(FAMILY, hints_ptr->ai_family);
+  EXPECT_EQ(EXPECTED_FLAGS, hints_ptr->ai_flags);
+  EXPECT_EQ(PROTOCOL, hints_ptr->ai_protocol);
+  EXPECT_EQ(SOCKET_TYPE, hints_ptr->ai_socktype);
+  // For the conversion from AddrInfoHint to nxaddrinfo, the following fields are expected to be 0 or nullptr.
+  EXPECT_EQ(0, hints_ptr->ai_addrlen);
+  EXPECT_EQ(nullptr, hints_ptr->ai_addr);
+  EXPECT_EQ(nullptr, hints_ptr->ai_canonname);
+  EXPECT_EQ(nullptr, hints_ptr->ai_next);
+}
+
+void EXPECT_ADDR_INFO(
+    const std::vector<GetAddrInfoFlags>& flags,
+    AddressFamily family,
+    SocketProtocolType sock_type,
+    IPProtocol protocol,
+    const char* canon_name,
+    pb::uint32 address,
+    pb::uint32 port,
+    AddrInfo& addr_info)
+{
+  int expected_flags_raw = std::accumulate(flags.begin(), flags.end(), 0, std::bit_or<int>());
+  EXPECT_EQ(expected_flags_raw, addr_info.flags_raw());
+  EXPECT_EQ(flags.size(), addr_info.flags().size());
+  for (int i = 0; i < std::min<size_t>(flags.size(), addr_info.flags().size()); i++) {
+    EXPECT_EQ(flags.at(i), addr_info.flags(i));
+  }
+  EXPECT_EQ(family, addr_info.family());
+  EXPECT_EQ(sock_type, addr_info.sock_type());
+  EXPECT_EQ(protocol, addr_info.protocol());
+  EXPECT_STREQ(canon_name, addr_info.canon_name().c_str());
+  EXPECT_EQ(address, addr_info.addr().ipv4().addr().addr());
+  EXPECT_EQ(port, addr_info.addr().ipv4().port());
+}
+
+TEST(XnetConvertersTests, AddrInfoOutputConverter_ConvertToGrpc_ConvertsToAddrInfoMessage)
+{
+  constexpr auto PORT = 100;
+  constexpr auto ADDR = 1234567;
+  constexpr auto NEXT_PORT = 101;
+  constexpr auto NEXT_ADDR = 1234568;
+  nxsockaddr_in next_addr{nxAF_INET, NEXT_PORT, {NEXT_ADDR}};
+  nxsockaddr_in addr{nxAF_INET, PORT, {ADDR}};
+  nxaddrinfo addr_info_next{
+      nxAI_PASSIVE | nxAI_ADDRCONFIG,
+      nxAF_INET,
+      nxSOCK_DGRAM,
+      nxIPPROTO_UDP,
+      (nxsocklen_t)sizeof(next_addr),
+      reinterpret_cast<nxsockaddr*>(&next_addr),
+      "NextAddrHostName",
+      nullptr};
+  nxaddrinfo addr_info{
+      nxAI_ALL,
+      nxAF_INET,
+      nxSOCK_STREAM,
+      nxIPPROTO_TCP,
+      (nxsocklen_t)sizeof(addr),
+      reinterpret_cast<nxsockaddr*>(&addr),
+      "AddrHostName",
+      &addr_info_next};
+  NiXnetSocketMockLibrary library;
+  auto converter = allocate_output_storage<nxaddrinfo, google::protobuf::RepeatedPtrField<AddrInfo>>(&library);
+  converter.addr_info_ptr = &addr_info;
+
+  EXPECT_CALL(library, FreeAddrInfo(converter.addr_info_ptr))
+      .Times(1);
+  google::protobuf::RepeatedPtrField<nixnetsocket_grpc::AddrInfo> grpc_output;
+  convert_to_grpc(converter, &grpc_output);
+
+  EXPECT_EQ(2, grpc_output.size());
+  EXPECT_ADDR_INFO(
+      {GetAddrInfoFlags::GET_ADDR_INFO_FLAGS_ALL},
+      AddressFamily::ADDRESS_FAMILY_INET,
+      SocketProtocolType::SOCKET_PROTOCOL_TYPE_STREAM,
+      IPProtocol::IP_PROTOCOL_TCP,
+      "AddrHostName",
+      ADDR,
+      PORT,
+      grpc_output[0]);
+  EXPECT_ADDR_INFO(
+      {GetAddrInfoFlags::GET_ADDR_INFO_FLAGS_ADDRCONFIG, GetAddrInfoFlags::GET_ADDR_INFO_FLAGS_PASSIVE},
+      AddressFamily::ADDRESS_FAMILY_INET,
+      SocketProtocolType::SOCKET_PROTOCOL_TYPE_DGRAM,
+      IPProtocol::IP_PROTOCOL_UDP,
+      "NextAddrHostName",
+      NEXT_ADDR,
+      NEXT_PORT,
+      grpc_output[1]);
+}
+
+TEST(XnetConvertersTests, AddrInfoFlagsAsInt_ConvertToRepeatedFlagsEnum_AllFlagsPresent)
+{
+  int32_t flags = nxAI_BYPASS_CACHE | nxAI_V4MAPPED | nxAI_PASSIVE;
+
+  AddrInfo grpc_addr_info{};
+  convert_to_addr_info_flags(flags, *(grpc_addr_info.mutable_flags()));
+
+  EXPECT_EQ(3, grpc_addr_info.flags().size());
+  EXPECT_EQ(GetAddrInfoFlags::GET_ADDR_INFO_FLAGS_BYPASS_CACHE, grpc_addr_info.flags(0));
+  EXPECT_EQ(GetAddrInfoFlags::GET_ADDR_INFO_FLAGS_V4MAPPED, grpc_addr_info.flags(1));
+  EXPECT_EQ(GetAddrInfoFlags::GET_ADDR_INFO_FLAGS_PASSIVE, grpc_addr_info.flags(2));
 }
 
 TEST(XnetConvertersTests, IpStackInfoStringOutputConverter_ConvertToGrpc_ConvertsToAndFreesInfoString)

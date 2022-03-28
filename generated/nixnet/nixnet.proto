@@ -79,8 +79,25 @@ enum NiXnetAttribute {
 }
 
 enum BlinkMode {
-  BLINK_MODE_BLINK_DISABLE = 0;
-  BLINK_MODE_BLINK_ENABLE = 1;
+  BLINK_MODE_DISABLE = 0;
+  BLINK_MODE_ENABLE = 1;
+}
+
+enum CanCommState {
+  CAN_COMM_STATE_ERROR_ACTIVE = 0;
+  CAN_COMM_STATE_ERROR_PASSIVE = 1;
+  CAN_COMM_STATE_BUS_OFF = 2;
+  CAN_COMM_STATE_INIT = 3;
+}
+
+enum CanLastErr {
+  CAN_LAST_ERR_NONE = 0;
+  CAN_LAST_ERR_STUFF = 1;
+  CAN_LAST_ERR_FORM = 2;
+  CAN_LAST_ERR_ACK = 3;
+  CAN_LAST_ERR_BIT_1 = 4;
+  CAN_LAST_ERR_BIT_0 = 5;
+  CAN_LAST_ERR_CRC = 6;
 }
 
 enum CopyMode {
@@ -91,19 +108,19 @@ enum CopyMode {
 }
 
 enum CreateSessionMode {
-  CREATE_SESSION_MODE_MODE_SIGNAL_IN_SINGLE_POINT = 0;
-  CREATE_SESSION_MODE_MODE_SIGNAL_IN_WAVEFORM = 1;
-  CREATE_SESSION_MODE_MODE_SIGNAL_IN_XY = 2;
-  CREATE_SESSION_MODE_MODE_SIGNAL_OUT_SINGLE_POINT = 3;
-  CREATE_SESSION_MODE_MODE_SIGNAL_OUT_WAVEFORM = 4;
-  CREATE_SESSION_MODE_MODE_SIGNAL_OUT_XY = 5;
-  CREATE_SESSION_MODE_MODE_FRAME_IN_STREAM = 6;
-  CREATE_SESSION_MODE_MODE_FRAME_IN_QUEUED = 7;
-  CREATE_SESSION_MODE_MODE_FRAME_IN_SINGLE_POINT = 8;
-  CREATE_SESSION_MODE_MODE_FRAME_OUT_STREAM = 9;
-  CREATE_SESSION_MODE_MODE_FRAME_OUT_QUEUED = 10;
-  CREATE_SESSION_MODE_MODE_FRAME_OUT_SINGLE_POINT = 11;
-  CREATE_SESSION_MODE_MODE_SIGNAL_CONVERSION_SINGLE_POINT = 12;
+  CREATE_SESSION_MODE_SIGNAL_IN_SINGLE_POINT = 0;
+  CREATE_SESSION_MODE_SIGNAL_IN_WAVEFORM = 1;
+  CREATE_SESSION_MODE_SIGNAL_IN_XY = 2;
+  CREATE_SESSION_MODE_SIGNAL_OUT_SINGLE_POINT = 3;
+  CREATE_SESSION_MODE_SIGNAL_OUT_WAVEFORM = 4;
+  CREATE_SESSION_MODE_SIGNAL_OUT_XY = 5;
+  CREATE_SESSION_MODE_FRAME_IN_STREAM = 6;
+  CREATE_SESSION_MODE_FRAME_IN_QUEUED = 7;
+  CREATE_SESSION_MODE_FRAME_IN_SINGLE_POINT = 8;
+  CREATE_SESSION_MODE_FRAME_OUT_STREAM = 9;
+  CREATE_SESSION_MODE_FRAME_OUT_QUEUED = 10;
+  CREATE_SESSION_MODE_FRAME_OUT_SINGLE_POINT = 11;
+  CREATE_SESSION_MODE_SIGNAL_CONVERSION_SINGLE_POINT = 12;
 }
 
 enum DBProperty {
@@ -170,7 +187,7 @@ enum DBProperty {
   DB_PROPERTY_CLST_SIG_REFS = 100728839;
   DB_PROPERTY_FRM_APPLICATION_PROTOCOL = 131172;
   DB_PROPERTY_FRM_CAN_EXT_ID = 33685520;
-  DB_PROPERTY_FRM_CA_NIO_MODE = 131174;
+  DB_PROPERTY_FRM_CAN_IO_MODE = 131174;
   DB_PROPERTY_FRM_CAN_TIMING_TYPE = 131089;
   DB_PROPERTY_FRM_CAN_TX_TIME = 16908306;
   DB_PROPERTY_FRM_CLUSTER_REF = 84017153;
@@ -182,7 +199,7 @@ enum DBProperty {
   DB_PROPERTY_FRM_FLEX_RAY_CYCLE_REP = 131106;
   DB_PROPERTY_FRM_FLEX_RAY_IN_CYC_REP_CH_ASSIGNS = 134348850;
   DB_PROPERTY_FRM_FLEX_RAY_IN_CYC_REP_ENABLED = 33685552;
-  DB_PROPERTY_FRM_FLEX_RAY_IN_CYC_REP_I_DS = 134348849;
+  DB_PROPERTY_FRM_FLEX_RAY_IN_CYC_REP_IDS = 134348849;
   DB_PROPERTY_FRM_FLEX_RAY_PREAMBLE = 33685539;
   DB_PROPERTY_FRM_FLEX_RAY_STARTUP = 33685540;
   DB_PROPERTY_FRM_FLEX_RAY_SYNC = 33685541;
@@ -252,9 +269,9 @@ enum DBProperty {
 
 enum DBPropertyValue {
   DB_PROPERTY_VALUE_UNSPECIFIED = 0;
-  DB_PROPERTY_VALUE_CA_NIO_MODE_CAN = 1;
-  DB_PROPERTY_VALUE_CA_NIO_MODE_CAN_FD = 2;
-  DB_PROPERTY_VALUE_CA_NIO_MODE_CAN_FD_BRS = 3;
+  DB_PROPERTY_VALUE_CAN_IO_MODE_CAN = 1;
+  DB_PROPERTY_VALUE_CAN_IO_MODE_CAN_FD = 2;
+  DB_PROPERTY_VALUE_CAN_IO_MODE_CAN_FD_BRS = 3;
   DB_PROPERTY_VALUE_PROTOCOL_UNKNOWN = 4;
   DB_PROPERTY_VALUE_PROTOCOL_CAN = 5;
   DB_PROPERTY_VALUE_PROTOCOL_FLEX_RAY = 6;
@@ -264,11 +281,11 @@ enum DBPropertyValue {
   DB_PROPERTY_VALUE_APP_PROTOCOL_J1939 = 10;
   DB_PROPERTY_VALUE_FRM_FLEX_RAY_CH_ASSIGN_A = 11;
   DB_PROPERTY_VALUE_FRM_FLEX_RAY_CH_ASSIGN_B = 12;
-  DB_PROPERTY_VALUE_FRM_FLEX_RAY_CH_ASSIGN_AAND_B = 13;
+  DB_PROPERTY_VALUE_FRM_FLEX_RAY_CH_ASSIGN_A_AND_B = 13;
   DB_PROPERTY_VALUE_FRM_FLEX_RAY_CH_ASSIGN_NONE = 14;
-  DB_PROPERTY_VALUE_CLST_FLEX_RAY_SAMP_CLK_PER_P_0125US = 15;
-  DB_PROPERTY_VALUE_CLST_FLEX_RAY_SAMP_CLK_PER_P_025US = 16;
-  DB_PROPERTY_VALUE_CLST_FLEX_RAY_SAMP_CLK_PER_P_05US = 17;
+  DB_PROPERTY_VALUE_CLST_FLEX_RAY_SAMP_CLK_PER_P0125US = 15;
+  DB_PROPERTY_VALUE_CLST_FLEX_RAY_SAMP_CLK_PER_P025US = 16;
+  DB_PROPERTY_VALUE_CLST_FLEX_RAY_SAMP_CLK_PER_P05US = 17;
   DB_PROPERTY_VALUE_SIG_BYTE_ORDR_LITTLE_ENDIAN = 18;
   DB_PROPERTY_VALUE_SIG_BYTE_ORDR_BIG_ENDIAN = 19;
   DB_PROPERTY_VALUE_SIG_DATA_TYPE_SIGNED = 20;
@@ -289,11 +306,93 @@ enum DBPropertyValue {
   DB_PROPERTY_VALUE_LIN_SCHED_ENTRY_TYPE_NODE_CONFIG_SERVICE = 35;
 }
 
+enum EnetFlags {
+  ENET_FLAGS_UNSPECIFIED = 0;
+  ENET_FLAGS_TRANSMIT = 1;
+  ENET_FLAGS_RECEIVE = 2;
+  ENET_FLAGS_NETWORK_SYNCED = 3;
+  ENET_FLAGS_ERROR = 4;
+}
+
+enum EnetFrameType {
+  ENET_FRAME_TYPE_DATA = 0;
+  ENET_FRAME_TYPE_DELAY = 225;
+  ENET_FRAME_TYPE_FUTURE_TIME_WAIT = 226;
+}
+
+enum FlexRayPocState {
+  FLEX_RAY_POC_STATE_DEFAULT_CONFIG = 0;
+  FLEX_RAY_POC_STATE_READY = 1;
+  FLEX_RAY_POC_STATE_NORMAL_ACTIVE = 2;
+  FLEX_RAY_POC_STATE_NORMAL_PASSIVE = 3;
+  FLEX_RAY_POC_STATE_HALT = 4;
+  FLEX_RAY_POC_STATE_MONITOR = 5;
+  FLEX_RAY_POC_STATE_CONFIG = 15;
+}
+
+enum FlexRaySymbol {
+  FLEX_RAY_SYMBOL_MTS = 0;
+  FLEX_RAY_SYMBOL_WAKEUP = 1;
+}
+
+enum FrameFlags {
+  option allow_alias = true;
+  FRAME_FLAGS_UNSPECIFIED = 0;
+  FRAME_FLAGS_FLEX_RAY_STARTUP = 1;
+  FRAME_FLAGS_FLEX_RAY_SYNC = 2;
+  FRAME_FLAGS_FLEX_RAY_PREAMBLE = 4;
+  FRAME_FLAGS_FLEX_RAY_CH_A = 16;
+  FRAME_FLAGS_FLEX_RAY_CH_B = 32;
+  FRAME_FLAGS_LIN_EVENT_SLOT = 1;
+  FRAME_FLAGS_TRANSMIT_ECHO = 128;
+}
+
+enum FrameType {
+  FRAME_TYPE_CAN_DATA = 0;
+  FRAME_TYPE_CAN_REMOTE = 1;
+  FRAME_TYPE_CAN_BUS_ERROR = 2;
+  FRAME_TYPE_CAN20_DATA = 8;
+  FRAME_TYPE_CANFD_DATA = 16;
+  FRAME_TYPE_CANFDBRS_DATA = 24;
+  FRAME_TYPE_FLEX_RAY_DATA = 32;
+  FRAME_TYPE_FLEX_RAY_NULL = 33;
+  FRAME_TYPE_FLEX_RAY_SYMBOL = 34;
+  FRAME_TYPE_LIN_DATA = 64;
+  FRAME_TYPE_LIN_BUS_ERROR = 65;
+  FRAME_TYPE_LIN_NO_RESPONSE = 66;
+  FRAME_TYPE_J1939_DATA = 192;
+  FRAME_TYPE_SPECIAL_DELAY = 224;
+  FRAME_TYPE_SPECIAL_LOG_TRIGGER = 225;
+  FRAME_TYPE_SPECIAL_START_TRIGGER = 226;
+}
+
 enum GetDBCAttributeMode {
-  GET_DBC_ATTRIBUTE_MODE_GET_DBC_MODE_ATTRIBUTE = 0;
-  GET_DBC_ATTRIBUTE_MODE_GET_DBC_MODE_ENUMERATION_LIST = 1;
-  GET_DBC_ATTRIBUTE_MODE_GET_DBC_MODE_ATTRIBUTE_LIST = 2;
-  GET_DBC_ATTRIBUTE_MODE_GET_DBC_MODE_VALUE_TABLE_LIST = 3;
+  GET_DBC_ATTRIBUTE_MODE_ATTRIBUTE = 0;
+  GET_DBC_ATTRIBUTE_MODE_ENUMERATION_LIST = 1;
+  GET_DBC_ATTRIBUTE_MODE_ATTRIBUTE_LIST = 2;
+  GET_DBC_ATTRIBUTE_MODE_VALUE_TABLE_LIST = 3;
+}
+
+enum LinCommState {
+  LIN_COMM_STATE_IDLE = 0;
+  LIN_COMM_STATE_ACTIVE = 1;
+  LIN_COMM_STATE_INACTIVE = 2;
+}
+
+enum LinDiagnosticSchedule {
+  LIN_DIAGNOSTIC_SCHEDULE_NULL = 0;
+  LIN_DIAGNOSTIC_SCHEDULE_MASTER_REQ = 1;
+  LIN_DIAGNOSTIC_SCHEDULE_SLAVE_RESP = 2;
+}
+
+enum LinLastErrCode {
+  LIN_LAST_ERR_CODE_NONE = 0;
+  LIN_LAST_ERR_CODE_UNKNOWN_ID = 1;
+  LIN_LAST_ERR_CODE_FORM = 2;
+  LIN_LAST_ERR_CODE_FRAMING = 3;
+  LIN_LAST_ERR_CODE_READBACK = 4;
+  LIN_LAST_ERR_CODE_TIMEOUT = 5;
+  LIN_LAST_ERR_CODE_CRC = 6;
 }
 
 enum Property {
@@ -333,7 +432,7 @@ enum Property {
   PROPERTY_SESSION_INTF_ECHO_TX = 34603024;
   PROPERTY_SESSION_INTF_ENET_EPT_RECEIVE_FILTER = 202375356;
   PROPERTY_SESSION_INTF_ENET_EPT_TRANSMIT_BANDWIDTH = 152043711;
-  PROPERTY_SESSION_INTF_ENET_IP_V4_ADDRESS = 51380459;
+  PROPERTY_SESSION_INTF_ENET_IPV4_ADDRESS = 51380459;
   PROPERTY_SESSION_INTF_ENET_JUMBO_FRAMES = 1048819;
   PROPERTY_SESSION_INTF_ENET_LINK_SPEED = 1048818;
   PROPERTY_SESSION_INTF_ENET_LINK_SPEED_CONFIGURED = 1048817;
@@ -447,8 +546,8 @@ enum Property {
   PROPERTY_SESSION_INTF_LIN_BREAK_DELIMITER_LENGTH = 1048821;
   PROPERTY_SESSION_INTF_LIN_BREAK_LENGTH = 1048688;
   PROPERTY_SESSION_INTF_LIN_CHECKSUM_TO_IN_STRM = 34603137;
-  PROPERTY_SESSION_INTF_LIN_DIAG_P2MIN = 17825911;
-  PROPERTY_SESSION_INTF_LIN_DIAG_S_TMIN = 17825910;
+  PROPERTY_SESSION_INTF_LIN_DIAG_P2_MIN = 17825911;
+  PROPERTY_SESSION_INTF_LIN_DIAG_ST_MIN = 17825910;
   PROPERTY_SESSION_INTF_LIN_MASTER = 34603122;
   PROPERTY_SESSION_INTF_LIN_NO_RESPONSE_TO_IN_STRM = 34603136;
   PROPERTY_SESSION_INTF_LINO_STR_SLV_RSP_LST_BY_NAD = 135266425;
@@ -530,9 +629,9 @@ enum PropertyValue {
   PROPERTY_VALUE_CAN_FD_MODE_ISO = 1;
   PROPERTY_VALUE_CAN_FD_MODE_NON_ISO = 2;
   PROPERTY_VALUE_CAN_FD_MODE_ISO_LEGACY = 3;
-  PROPERTY_VALUE_CA_NIO_MODE_CAN = 4;
-  PROPERTY_VALUE_CA_NIO_MODE_CAN_FD = 5;
-  PROPERTY_VALUE_CA_NIO_MODE_CAN_FD_BRS = 6;
+  PROPERTY_VALUE_CAN_IO_MODE_CAN = 4;
+  PROPERTY_VALUE_CAN_IO_MODE_CAN_FD = 5;
+  PROPERTY_VALUE_CAN_IO_MODE_CAN_FD_BRS = 6;
   PROPERTY_VALUE_EPT_RX_FILTER_USE_FLAGS_VID = 7;
   PROPERTY_VALUE_EPT_RX_FILTER_USE_FLAGS_PRIORITY = 8;
   PROPERTY_VALUE_EPT_RX_FILTER_USE_FLAGS_DESTINATION_MAC = 9;
@@ -543,9 +642,9 @@ enum PropertyValue {
   PROPERTY_VALUE_DEV_FORM_PXI = 14;
   PROPERTY_VALUE_DEV_FORM_PCI = 15;
   PROPERTY_VALUE_DEV_FORM_C_SERIES = 16;
-  PROPERTY_VALUE_DEV_FORM_PX_IE = 17;
+  PROPERTY_VALUE_DEV_FORM_PXIE = 17;
   PROPERTY_VALUE_DEV_FORM_USB = 18;
-  PROPERTY_VALUE_DEV_FORM_PC_IE = 19;
+  PROPERTY_VALUE_DEV_FORM_PCIE = 19;
   PROPERTY_VALUE_CAN_TERM_CAP_NO = 20;
   PROPERTY_VALUE_CAN_TERM_CAP_YES = 21;
   PROPERTY_VALUE_CAN_TCVR_CAP_HS = 22;
@@ -636,7 +735,7 @@ enum PropertyValue {
   PROPERTY_VALUE_ENET_LOG_MODE_LOG = 107;
   PROPERTY_VALUE_ENET_LOG_OPERATION_CREATE_OR_REPLACE = 108;
   PROPERTY_VALUE_ENET_LOG_OPERATION_CREATE = 109;
-  PROPERTY_VALUE_ENET_TIME_PROTOCOL_IEEE8021AS = 110;
+  PROPERTY_VALUE_ENET_TIME_PROTOCOL_IEEE_8021AS = 110;
   PROPERTY_VALUE_ENET_TIME_CLK_ACCURACY_WITHIN_25NSEC = 111;
   PROPERTY_VALUE_ENET_TIME_CLK_ACCURACY_WITHIN_100NSEC = 112;
   PROPERTY_VALUE_ENET_TIME_CLK_ACCURACY_WITHIN_250NSEC = 113;
@@ -696,25 +795,31 @@ enum PropertyValue {
 
 enum ReadState {
   READ_STATE_UNSPECIFIED = 0;
-  READ_STATE_STATE_TIME_CURRENT = 118685697;
-  READ_STATE_STATE_TIME_COMMUNICATING = 118685698;
-  READ_STATE_STATE_TIME_START = 118685699;
-  READ_STATE_STATE_SESSION_INFO = 1245188;
-  READ_STATE_STATE_TIME_CURRENT_2 = 202571781;
-  READ_STATE_STATE_TIME_COMMUNICATING_2 = 202571782;
-  READ_STATE_STATE_TIME_START_2 = 202571783;
-  READ_STATE_STATE_CAN_COMM = 1245200;
-  READ_STATE_STATE_FLEX_RAY_COMM = 1245216;
-  READ_STATE_STATE_FLEX_RAY_STATS = 135462945;
-  READ_STATE_STATE_LIN_COMM = 1245232;
-  READ_STATE_STATE_J1939_COMM = 1245248;
+  READ_STATE_TIME_CURRENT = 118685697;
+  READ_STATE_TIME_COMMUNICATING = 118685698;
+  READ_STATE_TIME_START = 118685699;
+  READ_STATE_SESSION_INFO = 1245188;
+  READ_STATE_TIME_CURRENT_2 = 202571781;
+  READ_STATE_TIME_COMMUNICATING_2 = 202571782;
+  READ_STATE_TIME_START_2 = 202571783;
+  READ_STATE_CAN_COMM = 1245200;
+  READ_STATE_FLEX_RAY_COMM = 1245216;
+  READ_STATE_FLEX_RAY_STATS = 135462945;
+  READ_STATE_LIN_COMM = 1245232;
+  READ_STATE_J1939_COMM = 1245248;
+}
+
+enum SessionInfoState {
+  SESSION_INFO_STATE_STOPPED = 0;
+  SESSION_INFO_STATE_STARTED = 1;
+  SESSION_INFO_STATE_MIX = 2;
 }
 
 enum StartStopScope {
-  START_STOP_SCOPE_START_STOP_NORMAL = 0;
-  START_STOP_SCOPE_START_STOP_SESSION_ONLY = 1;
-  START_STOP_SCOPE_START_STOP_INTERFACE_ONLY = 2;
-  START_STOP_SCOPE_START_STOP_SESSION_ONLY_BLOCKING = 3;
+  START_STOP_SCOPE_NORMAL = 0;
+  START_STOP_SCOPE_SESSION_ONLY = 1;
+  START_STOP_SCOPE_INTERFACE_ONLY = 2;
+  START_STOP_SCOPE_SESSION_ONLY_BLOCKING = 3;
 }
 
 enum SubProperty {
@@ -732,7 +837,7 @@ enum SubPropertyValue {
   SUB_PROPERTY_VALUE_FRM_FLEX_RAY_TIMING_CYCLIC = 0;
   SUB_PROPERTY_VALUE_FRM_FLEX_RAY_CH_ASSIGN_A = 1;
   SUB_PROPERTY_VALUE_FRM_FLEX_RAY_CH_ASSIGN_B = 2;
-  SUB_PROPERTY_VALUE_FRM_FLEX_RAY_CH_ASSIGN_AAND_B = 3;
+  SUB_PROPERTY_VALUE_FRM_FLEX_RAY_CH_ASSIGN_A_AND_B = 3;
   SUB_PROPERTY_VALUE_FRM_FLEX_RAY_CH_ASSIGN_NONE = 4;
   SUB_PROPERTY_VALUE_FRM_FLEX_RAY_TIMING_EVENT = 1;
   SUB_PROPERTY_VALUE_FRM_CAN_TIMING_CYCLIC_DATA = 0;
@@ -746,65 +851,65 @@ enum SubPropertyValue {
 
 enum TerminalName {
   TERMINAL_NAME_UNSPECIFIED = 0;
-  TERMINAL_NAME_TERM_PXI_TRIG_0 = 1;
-  TERMINAL_NAME_TERM_PXI_TRIG_1 = 2;
-  TERMINAL_NAME_TERM_PXI_TRIG_2 = 3;
-  TERMINAL_NAME_TERM_PXI_TRIG_3 = 4;
-  TERMINAL_NAME_TERM_PXI_TRIG_4 = 5;
-  TERMINAL_NAME_TERM_PXI_TRIG_5 = 6;
-  TERMINAL_NAME_TERM_PXI_TRIG_6 = 7;
-  TERMINAL_NAME_TERM_PXI_TRIG_7 = 8;
-  TERMINAL_NAME_TERM_FRONT_PANEL_0 = 9;
-  TERMINAL_NAME_TERM_FRONT_PANEL_1 = 10;
-  TERMINAL_NAME_TERM_PXI_STAR = 11;
-  TERMINAL_NAME_TERM_PXI_CLK_10 = 12;
-  TERMINAL_NAME_TERM_10_MHZ_TIMEBASE = 13;
-  TERMINAL_NAME_TERM_1_MHZ_TIMEBASE = 14;
-  TERMINAL_NAME_TERM_MASTER_TIMEBASE = 15;
-  TERMINAL_NAME_TERM_COMM_TRIGGER = 16;
-  TERMINAL_NAME_TERM_START_TRIGGER = 17;
-  TERMINAL_NAME_TERM_FLEX_RAY_START_CYCLE = 18;
-  TERMINAL_NAME_TERM_FLEX_RAY_MACROTICK = 19;
-  TERMINAL_NAME_TERM_LOG_TRIGGER = 20;
-  TERMINAL_NAME_TERM_TIME_TRIGGER = 21;
-  TERMINAL_NAME_TERM_NETWORK_TIME_PPS = 22;
-  TERMINAL_NAME_TERM_NETWORK_TIME_1_MHZ = 23;
+  TERMINAL_NAME_PXI_TRIG_0 = 1;
+  TERMINAL_NAME_PXI_TRIG_1 = 2;
+  TERMINAL_NAME_PXI_TRIG_2 = 3;
+  TERMINAL_NAME_PXI_TRIG_3 = 4;
+  TERMINAL_NAME_PXI_TRIG_4 = 5;
+  TERMINAL_NAME_PXI_TRIG_5 = 6;
+  TERMINAL_NAME_PXI_TRIG_6 = 7;
+  TERMINAL_NAME_PXI_TRIG_7 = 8;
+  TERMINAL_NAME_FRONT_PANEL_0 = 9;
+  TERMINAL_NAME_FRONT_PANEL_1 = 10;
+  TERMINAL_NAME_PXI_STAR = 11;
+  TERMINAL_NAME_PXI_CLK_10 = 12;
+  TERMINAL_NAME_10_MHZ_TIMEBASE = 13;
+  TERMINAL_NAME_1_MHZ_TIMEBASE = 14;
+  TERMINAL_NAME_MASTER_TIMEBASE = 15;
+  TERMINAL_NAME_COMM_TRIGGER = 16;
+  TERMINAL_NAME_START_TRIGGER = 17;
+  TERMINAL_NAME_FLEX_RAY_START_CYCLE = 18;
+  TERMINAL_NAME_FLEX_RAY_MACROTICK = 19;
+  TERMINAL_NAME_LOG_TRIGGER = 20;
+  TERMINAL_NAME_TIME_TRIGGER = 21;
+  TERMINAL_NAME_NETWORK_TIME_PPS = 22;
+  TERMINAL_NAME_NETWORK_TIME_1_MHZ = 23;
 }
 
 enum TimeOut {
-  TIME_OUT_TIMEOUT_NONE = 0;
-  TIME_OUT_TIMEOUT_INFINITE = -1;
+  TIME_OUT_NONE = 0;
+  TIME_OUT_INFINITE = -1;
 }
 
 enum TimeScale {
-  TIME_SCALE_TIMESCALE_LOCAL_TIME = 0;
-  TIME_SCALE_TIMESCALE_NETWORK_TIME = 1;
+  TIME_SCALE_LOCAL_TIME = 0;
+  TIME_SCALE_NETWORK_TIME = 1;
 }
 
 enum WaitCondition {
   WAIT_CONDITION_UNSPECIFIED = 0;
-  WAIT_CONDITION_CONDITION_TRANSMIT_COMPLETE = 32769;
-  WAIT_CONDITION_CONDITION_INTF_COMMUNICATING = 32770;
-  WAIT_CONDITION_CONDITION_INTF_REMOTE_WAKEUP = 32771;
-  WAIT_CONDITION_CONDITION_ETHERNET_SYNCED = 32772;
+  WAIT_CONDITION_TRANSMIT_COMPLETE = 32769;
+  WAIT_CONDITION_INTF_COMMUNICATING = 32770;
+  WAIT_CONDITION_INTF_REMOTE_WAKEUP = 32771;
+  WAIT_CONDITION_ETHERNET_SYNCED = 32772;
 }
 
 enum WriteState {
   WRITE_STATE_UNSPECIFIED = 0;
-  WRITE_STATE_STATE_LIN_SCHEDULE_CHANGE = 1245313;
-  WRITE_STATE_STATE_LIN_DIAGNOSTIC_SCHEDULE_CHANGE = 1245315;
-  WRITE_STATE_STATE_FLEX_RAY_SYMBOL = 1245314;
-  WRITE_STATE_STATE_ETHERNET_SLEEP = 1245316;
-  WRITE_STATE_STATE_ETHERNET_WAKE = 1245317;
+  WRITE_STATE_LIN_SCHEDULE_CHANGE = 1245313;
+  WRITE_STATE_LIN_DIAGNOSTIC_SCHEDULE_CHANGE = 1245315;
+  WRITE_STATE_FLEX_RAY_SYMBOL = 1245314;
+  WRITE_STATE_ETHERNET_SLEEP = 1245316;
+  WRITE_STATE_ETHERNET_WAKE = 1245317;
 }
 
-enum FrameType {
-  FRAME_TYPE_UNSPECIFIED = 0;
-  FRAME_TYPE_CAN = 1;
-  FRAME_TYPE_LIN = 2;
-  FRAME_TYPE_FLEX_RAY = 3;
-  FRAME_TYPE_J1939 = 4;
-  FRAME_TYPE_ENET = 5;
+enum Protocol {
+  PROTOCOL_UNSPECIFIED = 0;
+  PROTOCOL_CAN = 1;
+  PROTOCOL_LIN = 2;
+  PROTOCOL_FLEX_RAY = 3;
+  PROTOCOL_J1939 = 4;
+  PROTOCOL_ENET = 5;
 }
 
 message FlexRayStats {
@@ -816,7 +921,7 @@ message FlexRayStats {
   uint32 num_slot_boundary_violation_ch_b = 6;
 }
 
-message J1939CommState{
+message J1939CommState {
   uint32 pgn = 1;
   uint32 source_address = 2;
   uint32 destination_address = 3;
@@ -824,44 +929,53 @@ message J1939CommState{
   uint32 receive_error = 5;
 }
 
-message CanComm{
-  uint32 comm_state = 1;
-  uint32 transceiver_error = 2;
-  uint32 sleep = 3;
-  uint32 last_error = 4;
-  uint32 transmit_error_counter = 5;
-  uint32 receive_error_counter = 6;
+message CanCommResponse {
+  CanCommState comm_state = 1;
+  uint32 comm_state_raw = 2;
+  uint32 transceiver_error = 3;
+  uint32 sleep = 4;
+  CanLastErr last_error = 5;
+  uint32 last_error_raw = 6;
+  uint32 transmit_error_counter = 7;
+  uint32 receive_error_counter = 8;
 }
 
-message FlexRayComm{
-  uint32 poc_state = 1;
-  uint32 clock_correction_failed = 2;
-  uint32 passive_to_active_count = 3;
-  uint32 channel_a_sleep = 4;
-  uint32 channel_b_sleep = 5;
+message FlexRayCommResponse {
+  FlexRayPocState poc_state = 1;
+  uint32 poc_state_raw = 2;
+  uint32 clock_correction_failed = 3;
+  uint32 passive_to_active_count = 4;
+  uint32 channel_a_sleep = 5;
+  uint32 channel_b_sleep = 6;
 }
 
-message LinComm{
+message LinCommResponse {
   uint32 sleep = 1;
-  uint32 comm_state = 2;
-  uint32 last_error = 3;
-  uint32 last_error_received = 4;
-  uint32 last_error_expected = 5;
-  uint32 last_error_id = 6;
-  uint32 transceiver_ready = 7;
-  uint32 schedule_index = 8;
+  LinCommState comm_state = 2;
+  uint32 comm_state_raw = 3;
+  uint32 last_error = 4;
+  uint32 last_error_received = 5;
+  uint32 last_error_expected = 6;
+  uint32 last_error_id = 7;
+  uint32 transceiver_ready = 8;
+  uint32 schedule_index = 9;
+}
+
+message SessionInfoResponse {
+  SessionInfoState info = 1;
+  uint32 info_raw = 2;
 }
 
 message ReadStateValue {
-  oneof value{
+  oneof value {
     uint64 time_current = 1;
     uint64 time_communicating = 2;
     uint64 time_start = 3;
-    CanComm can_comm = 4;
-    FlexRayComm flex_ray_comm = 5;
+    CanCommResponse can_comm = 4;
+    FlexRayCommResponse flex_ray_comm = 5;
     FlexRayStats flex_ray_stats = 6;
-    LinComm lin_comm = 7;
-    uint32 session_info = 8;
+    LinCommResponse lin_comm = 7;
+    SessionInfoResponse session_info = 8;
     J1939CommState j1939_comm_state = 9;
     TimeLocalNetwork time_current2 = 10;
     TimeLocalNetwork time_communicating2 = 11;
@@ -870,11 +984,18 @@ message ReadStateValue {
   bytes state_value_raw = 13;
 }
 
+message LinDiagnosticScheduleChangeRequest {
+  oneof schedule_enum {
+    LinDiagnosticSchedule schedule = 1;
+    uint32 schedule_raw = 2;
+  }
+}
+
 message WriteStateValue {
-  oneof value{
+  oneof value {
     uint32 lin_schedule_change = 1;
     uint32 flex_ray_symbol = 2;
-    uint32 lin_diagnostic_schedule_change = 3;
+    LinDiagnosticScheduleChangeRequest lin_diagnostic_schedule_change = 3;
     uint32 ethernet_sleep = 4;
     uint32 ethernet_wake = 5;
   }
@@ -900,7 +1021,7 @@ message EptRxFilterArray {
 }
 
 message GetPropertyRequest {
-  nidevice_grpc.Session session_ref = 1;
+  nidevice_grpc.Session session = 1;
   oneof property_id_enum {
     Property property_id = 2;
     uint32 property_id_raw = 3;
@@ -925,7 +1046,7 @@ message GetPropertyResponse {
 }
 
 message SetPropertyRequest {
-  nidevice_grpc.Session session_ref = 1;
+  nidevice_grpc.Session session = 1;
   oneof property_id_enum {
     Property property_id = 2;
     uint32 property_id_raw = 3;
@@ -950,7 +1071,7 @@ message SetPropertyResponse {
 }
 
 message GetSubPropertyRequest {
-  nidevice_grpc.Session session_ref = 1;
+  nidevice_grpc.Session session = 1;
   uint32 active_index = 2;
   oneof subproperty_id_enum {
     SubProperty property_id = 3;
@@ -968,7 +1089,7 @@ message GetSubPropertyResponse {
 }
 
 message DbGetPropertyRequest {
-  nidevice_grpc.Session dbobject_ref = 1;
+  nidevice_grpc.Session dbobject = 1;
   oneof dbproperty_id_enum {
     DBProperty property_id = 2;
     uint32 property_id_raw = 3;
@@ -991,7 +1112,7 @@ message DbGetPropertyResponse {
 }
 
 message SetSubPropertyRequest {
-  nidevice_grpc.Session session_ref = 1;
+  nidevice_grpc.Session session = 1;
   uint32 active_index = 2;
   oneof subproperty_id_enum {
     SubProperty property_id = 3;
@@ -1009,7 +1130,7 @@ message SetSubPropertyResponse {
 }
 
 message DbSetPropertyRequest {
-  nidevice_grpc.Session dbobject_ref = 1;
+  nidevice_grpc.Session dbobject = 1;
   oneof dbproperty_id_enum {
     DBProperty property_id = 2;
     uint32 property_id_raw = 3;
@@ -1031,33 +1152,69 @@ message DbSetPropertyResponse {
   int32 status = 1;
 }
 
-message Frame {
+message FrameRequest {
   uint64 timestamp = 1;
   uint32 identifier = 2;
-  uint32 type = 3;
-  uint32 flags = 4;
-  uint32 info = 5;
-  bytes payload = 6;
+  oneof type_enum{
+     FrameType type = 3;
+     uint32 type_raw = 4;
+  }
+  repeated FrameFlags flags = 5;
+  uint32 info = 6;
+  bytes payload = 7;
 }
 
-message EnetFrame {
-  uint32 type = 1;
-  uint64 device_timestamp = 2;
-  uint64 network_timestamp = 3;
-  uint32 flags = 4;
-  bytes frame_data = 5;
+message FrameResponse {
+  uint64 timestamp = 1;
+  uint32 identifier = 2;
+  FrameType type = 3;
+  uint32 type_raw = 4;
+  repeated FrameFlags flags = 5;
+  uint32 flags_raw = 6;
+  uint32 info = 7;
+  bytes payload = 8;
 }
 
-message FrameBuffer {
+message EnetFrameRequest {
+  oneof type_enum{
+    EnetFrameType type = 1;
+    uint32 type_raw = 2;
+  }
+  uint64 device_timestamp = 3;
+  uint64 network_timestamp = 4;
+  repeated EnetFlags flags_mapped = 5;
+  bytes frame_data = 6;
+}
+
+message EnetFrameResponse {
+  EnetFrameType type = 1;
+  uint32 type_raw = 2;
+  uint64 device_timestamp = 3;
+  uint64 network_timestamp = 4;
+  repeated EnetFlags flags_mapped= 5;
+  uint32 flags_raw = 6;
+  bytes frame_data = 7;
+}
+
+message FrameBufferRequest {
   oneof frame {
-    Frame can = 1;
-    Frame lin = 2;
-    Frame flex_ray = 3;
-    Frame j1939 = 4;
-    EnetFrame enet = 5;
+    FrameRequest can = 1;
+    FrameRequest lin = 2;
+    FrameRequest flex_ray = 3;
+    FrameRequest j1939 = 4;
+    EnetFrameRequest enet = 5;
   }
 }
 
+message FrameBufferResponse {
+  oneof frame {
+    FrameResponse can = 1;
+    FrameResponse lin = 2;
+    FrameResponse flex_ray = 3;
+    FrameResponse j1939 = 4;
+    EnetFrameResponse enet = 5;
+  }
+}
 message TimeLocalNetwork {
   uint64 local_time = 1;
   uint64 network_time = 2;
@@ -1077,7 +1234,7 @@ message BlinkResponse {
 }
 
 message ClearRequest {
-  nidevice_grpc.Session session_ref = 1;
+  nidevice_grpc.Session session = 1;
 }
 
 message ClearResponse {
@@ -1085,7 +1242,7 @@ message ClearResponse {
 }
 
 message ConnectTerminalsRequest {
-  nidevice_grpc.Session session_ref = 1;
+  nidevice_grpc.Session session = 1;
   oneof source_enum {
     TerminalName source_mapped = 2;
     string source_raw = 3;
@@ -1101,24 +1258,24 @@ message ConnectTerminalsResponse {
 }
 
 message ConvertByteArrayToFramesSinglePointRequest {
-  nidevice_grpc.Session session_ref = 1;
+  nidevice_grpc.Session session = 1;
   bytes value_buffer = 2;
   uint32 number_of_frames = 3;
   uint32 max_payload_per_frame = 4;
-  oneof frame_type_enum {
-    FrameType frame_type = 5;
-    uint32 frame_type_raw = 6;
+  oneof protocol_enum {
+    Protocol protocol = 5;
+    uint32 protocol_raw = 6;
   }
 }
 
 message ConvertByteArrayToFramesSinglePointResponse {
   int32 status = 1;
-  repeated FrameBuffer buffer = 2;
+  repeated FrameBufferResponse buffer = 2;
 }
 
 message ConvertFramesToByteArraySinglePointRequest {
-  nidevice_grpc.Session session_ref = 1;
-  repeated FrameBuffer frame_buffer = 2;
+  nidevice_grpc.Session session = 1;
+  repeated FrameBufferRequest frame_buffer = 2;
   uint32 size_of_value_buffer = 3;
 }
 
@@ -1128,9 +1285,9 @@ message ConvertFramesToByteArraySinglePointResponse {
 }
 
 message ConvertFramesToSignalsSinglePointRequest {
-  nidevice_grpc.Session session_ref = 1;
+  nidevice_grpc.Session session = 1;
   uint32 number_of_signals = 2;
-  repeated FrameBuffer frame_buffer = 3;
+  repeated FrameBufferRequest frame_buffer = 3;
 }
 
 message ConvertFramesToSignalsSinglePointResponse {
@@ -1140,19 +1297,19 @@ message ConvertFramesToSignalsSinglePointResponse {
 }
 
 message ConvertSignalsToFramesSinglePointRequest {
-  nidevice_grpc.Session session_ref = 1;
+  nidevice_grpc.Session session = 1;
   repeated double value_buffer = 2;
   uint32 number_of_frames = 3;
   uint32 max_payload_per_frame = 4;
-  oneof frame_type_enum {
-    FrameType frame_type = 5;
-    uint32 frame_type_raw = 6;
+  oneof protocol_enum {
+    Protocol protocol = 5;
+    uint32 protocol_raw = 6;
   }
 }
 
 message ConvertSignalsToFramesSinglePointResponse {
   int32 status = 1;
-  repeated FrameBuffer buffer = 2;
+  repeated FrameBufferResponse buffer = 2;
 }
 
 message ConvertTimestamp100nsTo1nsRequest {
@@ -1187,7 +1344,7 @@ message CreateSessionRequest {
 
 message CreateSessionResponse {
   int32 status = 1;
-  nidevice_grpc.Session session_ref = 2;
+  nidevice_grpc.Session session = 2;
 }
 
 message CreateSessionByRefRequest {
@@ -1202,7 +1359,7 @@ message CreateSessionByRefRequest {
 
 message CreateSessionByRefResponse {
   int32 status = 1;
-  nidevice_grpc.Session session_ref = 2;
+  nidevice_grpc.Session session = 2;
 }
 
 message DbAddAliasRequest {
@@ -1226,7 +1383,7 @@ message DbAddAlias64Response {
 }
 
 message DbCloseDatabaseRequest {
-  nidevice_grpc.Session database_ref = 1;
+  nidevice_grpc.Session database = 1;
   uint32 close_all_refs = 2;
 }
 
@@ -1236,18 +1393,18 @@ message DbCloseDatabaseResponse {
 
 message DbCreateObjectRequest {
   string session_name = 1;
-  nidevice_grpc.Session parent_object_ref = 2;
+  nidevice_grpc.Session parent_object = 2;
   uint32 object_class = 3;
   string object_name = 4;
 }
 
 message DbCreateObjectResponse {
   int32 status = 1;
-  nidevice_grpc.Session db_object_ref = 2;
+  nidevice_grpc.Session db_object = 2;
 }
 
 message DbDeleteObjectRequest {
-  nidevice_grpc.Session db_object_ref = 1;
+  nidevice_grpc.Session db_object = 1;
 }
 
 message DbDeleteObjectResponse {
@@ -1267,18 +1424,18 @@ message DbDeployResponse {
 
 message DbFindObjectRequest {
   string session_name = 1;
-  nidevice_grpc.Session parent_object_ref = 2;
+  nidevice_grpc.Session parent_object = 2;
   uint32 object_class = 3;
   string object_name = 4;
 }
 
 message DbFindObjectResponse {
   int32 status = 1;
-  nidevice_grpc.Session db_object_ref = 2;
+  nidevice_grpc.Session db_object = 2;
 }
 
 message DbGetDBCAttributeRequest {
-  nidevice_grpc.Session db_object_ref = 1;
+  nidevice_grpc.Session db_object = 1;
   oneof mode_enum {
     GetDBCAttributeMode mode = 2;
     uint32 mode_raw = 3;
@@ -1293,7 +1450,7 @@ message DbGetDBCAttributeResponse {
 }
 
 message DbGetDBCAttributeSizeRequest {
-  nidevice_grpc.Session db_object_ref = 1;
+  nidevice_grpc.Session db_object = 1;
   oneof mode_enum {
     GetDBCAttributeMode mode = 2;
     uint32 mode_raw = 3;
@@ -1328,7 +1485,7 @@ message DbGetDatabaseListSizesResponse {
 }
 
 message DbGetPropertySizeRequest {
-  nidevice_grpc.Session db_object_ref = 1;
+  nidevice_grpc.Session db_object = 1;
   oneof property_id_enum {
     DBProperty property_id = 2;
     uint32 property_id_raw = 3;
@@ -1341,8 +1498,8 @@ message DbGetPropertySizeResponse {
 }
 
 message DbMergeRequest {
-  nidevice_grpc.Session target_cluster_ref = 1;
-  nidevice_grpc.Session source_obj_ref = 2;
+  nidevice_grpc.Session target_cluster = 1;
+  nidevice_grpc.Session source_obj = 2;
   oneof copy_mode_enum {
     CopyMode copy_mode = 3;
     uint32 copy_mode_raw = 4;
@@ -1363,7 +1520,7 @@ message DbOpenDatabaseRequest {
 
 message DbOpenDatabaseResponse {
   int32 status = 1;
-  nidevice_grpc.Session database_ref = 2;
+  nidevice_grpc.Session database = 2;
 }
 
 message DbRemoveAliasRequest {
@@ -1375,7 +1532,7 @@ message DbRemoveAliasResponse {
 }
 
 message DbSaveDatabaseRequest {
-  nidevice_grpc.Session database_ref = 1;
+  nidevice_grpc.Session database = 1;
   string db_filepath = 2;
 }
 
@@ -1393,7 +1550,7 @@ message DbUndeployResponse {
 }
 
 message DisconnectTerminalsRequest {
-  nidevice_grpc.Session session_ref = 1;
+  nidevice_grpc.Session session = 1;
   oneof source_enum {
     TerminalName source_mapped = 2;
     string source_raw = 3;
@@ -1409,7 +1566,7 @@ message DisconnectTerminalsResponse {
 }
 
 message FlushRequest {
-  nidevice_grpc.Session session_ref = 1;
+  nidevice_grpc.Session session = 1;
 }
 
 message FlushResponse {
@@ -1417,7 +1574,7 @@ message FlushResponse {
 }
 
 message FutureTimeTriggerRequest {
-  nidevice_grpc.Session session_ref = 1;
+  nidevice_grpc.Session session = 1;
   uint64 when = 2;
   oneof timescale_enum {
     TimeScale timescale = 3;
@@ -1430,7 +1587,7 @@ message FutureTimeTriggerResponse {
 }
 
 message GetPropertySizeRequest {
-  nidevice_grpc.Session session_ref = 1;
+  nidevice_grpc.Session session = 1;
   oneof property_id_enum {
     Property property_id = 2;
     uint32 property_id_raw = 3;
@@ -1443,7 +1600,7 @@ message GetPropertySizeResponse {
 }
 
 message GetSubPropertySizeRequest {
-  nidevice_grpc.Session session_ref = 1;
+  nidevice_grpc.Session session = 1;
   uint32 active_index = 2;
   oneof property_id_enum {
     SubProperty property_id = 3;
@@ -1457,12 +1614,12 @@ message GetSubPropertySizeResponse {
 }
 
 message ReadFrameRequest {
-  nidevice_grpc.Session session_ref = 1;
+  nidevice_grpc.Session session = 1;
   int32 number_of_frames = 2;
   uint32 max_payload_per_frame = 3;
-  oneof frame_type_enum {
-    FrameType frame_type = 4;
-    uint32 frame_type_raw = 5;
+  oneof protocol_enum {
+    Protocol protocol = 4;
+    uint32 protocol_raw = 5;
   }
   oneof timeout_enum {
     TimeOut timeout = 6;
@@ -1472,11 +1629,11 @@ message ReadFrameRequest {
 
 message ReadFrameResponse {
   int32 status = 1;
-  repeated FrameBuffer buffer = 2;
+  repeated FrameBufferResponse buffer = 2;
 }
 
 message ReadSignalSinglePointRequest {
-  nidevice_grpc.Session session_ref = 1;
+  nidevice_grpc.Session session = 1;
   uint32 number_of_signals = 2;
 }
 
@@ -1487,7 +1644,7 @@ message ReadSignalSinglePointResponse {
 }
 
 message ReadSignalWaveformRequest {
-  nidevice_grpc.Session session_ref = 1;
+  nidevice_grpc.Session session = 1;
   oneof timeout_enum {
     TimeOut timeout = 2;
     double timeout_raw = 3;
@@ -1504,7 +1661,7 @@ message ReadSignalWaveformResponse {
 }
 
 message ReadSignalXYRequest {
-  nidevice_grpc.Session session_ref = 1;
+  nidevice_grpc.Session session = 1;
   uint64 time_limit = 2;
   uint32 samples_per_signal = 3;
   uint32 number_of_signals = 4;
@@ -1518,7 +1675,7 @@ message ReadSignalXYResponse {
 }
 
 message ReadStateRequest {
-  nidevice_grpc.Session session_ref = 1;
+  nidevice_grpc.Session session = 1;
   oneof state_id_enum {
     ReadState state_id = 2;
     uint32 state_id_raw = 3;
@@ -1532,7 +1689,7 @@ message ReadStateResponse {
 }
 
 message ReadStateTimeTriggerRequest {
-  nidevice_grpc.Session session_ref = 1;
+  nidevice_grpc.Session session = 1;
   oneof timeout_enum {
     TimeOut timeout = 2;
     double timeout_raw = 3;
@@ -1545,7 +1702,7 @@ message ReadStateTimeTriggerResponse {
 }
 
 message StartRequest {
-  nidevice_grpc.Session session_ref = 1;
+  nidevice_grpc.Session session = 1;
   oneof scope_enum {
     StartStopScope scope = 2;
     uint32 scope_raw = 3;
@@ -1566,7 +1723,7 @@ message StatusToStringResponse {
 }
 
 message StopRequest {
-  nidevice_grpc.Session session_ref = 1;
+  nidevice_grpc.Session session = 1;
   oneof scope_enum {
     StartStopScope scope = 2;
     uint32 scope_raw = 3;
@@ -1578,7 +1735,7 @@ message StopResponse {
 }
 
 message SystemCloseRequest {
-  nidevice_grpc.Session system_ref = 1;
+  nidevice_grpc.Session system = 1;
 }
 
 message SystemCloseResponse {
@@ -1591,11 +1748,11 @@ message SystemOpenRequest {
 
 message SystemOpenResponse {
   int32 status = 1;
-  nidevice_grpc.Session system_ref = 2;
+  nidevice_grpc.Session system = 2;
 }
 
 message WaitRequest {
-  nidevice_grpc.Session session_ref = 1;
+  nidevice_grpc.Session session = 1;
   oneof condition_enum {
     WaitCondition condition = 2;
     uint32 condition_raw = 3;
@@ -1610,8 +1767,8 @@ message WaitResponse {
 }
 
 message WriteFrameRequest {
-  nidevice_grpc.Session session_ref = 1;
-  repeated FrameBuffer buffer = 2;
+  nidevice_grpc.Session session = 1;
+  repeated FrameBufferRequest buffer = 2;
   oneof timeout_enum {
     TimeOut timeout = 3;
     double timeout_raw = 4;
@@ -1623,7 +1780,7 @@ message WriteFrameResponse {
 }
 
 message WriteSignalSinglePointRequest {
-  nidevice_grpc.Session session_ref = 1;
+  nidevice_grpc.Session session = 1;
   repeated double value_buffer = 2;
 }
 
@@ -1632,7 +1789,7 @@ message WriteSignalSinglePointResponse {
 }
 
 message WriteSignalWaveformRequest {
-  nidevice_grpc.Session session_ref = 1;
+  nidevice_grpc.Session session = 1;
   oneof timeout_enum {
     TimeOut timeout = 2;
     double timeout_raw = 3;
@@ -1645,7 +1802,7 @@ message WriteSignalWaveformResponse {
 }
 
 message WriteSignalXYRequest {
-  nidevice_grpc.Session session_ref = 1;
+  nidevice_grpc.Session session = 1;
   oneof timeout_enum {
     TimeOut timeout = 2;
     double timeout_raw = 3;
@@ -1660,7 +1817,7 @@ message WriteSignalXYResponse {
 }
 
 message WriteStateRequest {
-  nidevice_grpc.Session session_ref = 1;
+  nidevice_grpc.Session session = 1;
   oneof state_id_enum {
     WriteState state_id = 2;
     uint32 state_id_raw = 3;

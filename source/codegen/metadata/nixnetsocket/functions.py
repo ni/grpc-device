@@ -59,6 +59,17 @@ functions = {
         ],
         'returns': 'int32_t'
     },
+    'Close': {
+        'cname': 'nxclose',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'socket',
+                'type': 'nxSOCKET'
+            }
+        ],
+        'returns': 'int32_t'
+    },
     'Connect': {
         'cname': 'nxconnect',
         'parameters': [
@@ -82,6 +93,259 @@ functions = {
                 'include_in_proto': False,
                 'type': 'nxsocklen_t'
             },
+        ],
+        'returns': 'int32_t'
+    },
+    'FreeAddrInfo': {
+        'codegen_method': 'private',
+        'cname': 'nxfreeaddrinfo',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'res',
+                'type': 'nxaddrinfo',
+                'pointer': True
+            }
+        ],
+        'returns': 'int32_t'
+    },
+    'GetAddrInfo': {
+        'cname': 'nxgetaddrinfo',
+        'parameters': [
+            {
+                'direction': 'in', 
+                'name': 'stack_ref', 
+                'type': 'nxIpStackRef_t'
+            },
+            {
+                'direction': 'in',
+                'name': 'node',
+                'type': 'const char[]',
+                'proto_only': True
+            },
+            {
+                'direction': 'in',
+                'name': 'node_api',
+                'type': 'const char[]',
+                'hardcoded_value': 'request->node() == "" ? nullptr : node',
+                'include_in_proto': False
+            },
+            {
+                'direction': 'in',
+                'name': 'service',
+                'type': 'const char[]',
+                'proto_only': True
+            },
+            {
+                'direction': 'in',
+                'name': 'service_api',
+                'type': 'const char[]',
+                'hardcoded_value': 'request->service() == "" ? nullptr : service',
+                'include_in_proto': False
+            },
+            {
+                'direction': 'in',
+                'name': 'hints',
+                'supports_standard_copy_convert': True,
+                'grpc_type': 'AddrInfoHint',
+                'pointer': True,
+                'type': 'nxaddrinfo'
+            },
+            {
+                'direction': 'out',
+                'name': 'res',
+                'supports_standard_copy_convert': True,
+                'supports_standard_output_allocation': True,
+                'additional_arguments_to_output_allocation': ['library_'],
+                'pointer': True,
+                'type': 'nxaddrinfo'
+            }
+        ],
+        'returns': 'int32_t'
+    },
+    'GetLastErrorNum': {
+        'codegen_method': 'private',
+        'cname': 'nxgetlasterrornum',
+        'parameters': [],
+        'returns': 'int32_t'
+    },
+    'GetLastErrorStr': {
+        'codegen_method': 'private',
+        'cname': 'nxgetlasterrorstr',
+        'status_expression': 'error ? 0 : -1',
+        'parameters': [
+            {
+                'direction': 'out',
+                'include_in_proto': False,
+                'name': 'buf',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'bufLen'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufLen',
+                'type': 'size_t'
+            },
+            {
+                'direction': 'out',
+                'name': 'error',
+                'return_value': True,
+                'type': 'char[]'
+            },
+        ],
+        'returns': 'char*'
+    },
+    'GetNameInfo': {
+        'cname': 'nxgetnameinfo',
+        'parameters': [
+            {
+                'direction': 'in', 
+                'name': 'stack_ref', 
+                'type': 'nxIpStackRef_t'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'SockAddr',
+                'name': 'addr',
+                'pointer': True,
+                'supports_standard_copy_convert': True,
+                'type': 'nxsockaddr'
+            },
+            {
+                'direction': 'in',
+                'name': 'addr_len',
+                'hardcoded_value': 'addr.size()',
+                'include_in_proto': False,
+                'type': 'nxsocklen_t'
+            },
+            {
+                'direction': 'out',
+                'name': 'host',
+                'type': 'char[]',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'host_len'
+                }
+            },
+            {
+                'direction': 'in',
+                'name': 'host_len',
+                'type': 'nxsocklen_t'
+            },
+            {
+                'direction': 'out',
+                'name': 'serv',
+                'type': 'char[]',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'serv_len'
+                }
+            },
+            {
+                'direction': 'in',
+                'name': 'serv_len',
+                'type': 'nxsocklen_t'
+            },
+            {
+                'direction': 'in',
+                'name': 'flags',
+                'type': 'int32_t',
+                'enum': 'GetNameInfoFlags'
+            },
+        ],
+        'returns': 'int32_t'
+    },
+    'GetPeerName': {
+        'cname': 'nxgetpeername',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'socket',
+                'type': 'nxSOCKET'
+            },
+            {
+                'direction': 'out',
+                'grpc_type': 'SockAddr',
+                'name': 'addr',
+                'supports_standard_output_allocation': True,
+                'supports_standard_copy_convert': True,
+                'type': 'nxsockaddr'
+            },
+            {
+                'direction': 'out',
+                'name': 'addrlen',
+                'hardcoded_value': 'static_cast<nxsocklen_t>(sizeof(addr.storage))',
+                'include_in_proto': False,
+                'type': 'nxsocklen_t'
+            },
+        ],
+        'returns': 'int32_t'
+    },
+    'GetSockName': {
+        'cname': 'nxgetsockname',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'socket',
+                'type': 'nxSOCKET'
+            },
+            {
+                'direction': 'out',
+                'grpc_type': 'SockAddr',
+                'name': 'addr',
+                'supports_standard_output_allocation': True,
+                'supports_standard_copy_convert': True,
+                'type': 'nxsockaddr'
+            },
+            {
+                'direction': 'out',
+                'name': 'addrlen',
+                'hardcoded_value': 'static_cast<nxsocklen_t>(sizeof(addr.storage))',
+                'include_in_proto': False,
+                'type': 'nxsocklen_t'
+            },
+        ],
+        'returns': 'int32_t'
+    },
+    'GetSockOpt': {
+        'cname': 'nxgetsockopt',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'socket',
+                'type': 'nxSOCKET'
+            },
+            {
+                'direction': 'in',
+                'name': 'level',
+                'type': 'int32_t',
+                'enum': 'SocketOptionLevel'
+            },
+            {
+                'direction': 'in',
+                'name': 'optname',
+                'type': 'int32_t',
+                'enum': 'OptName'
+            },
+            {
+                'direction': 'out',
+                'name': 'optval',
+                'grpc_type': 'SockOptData',
+                'supports_standard_output_allocation': True,
+                "additional_arguments_to_output_allocation": ["optname"],
+                'supports_standard_copy_convert': True,
+                'pointer': True,
+                'type': 'void *'
+            },
+            {
+                'direction': 'out',
+                'name': 'optlen',
+                'include_in_proto': False,
+                'type': 'nxsocklen_t'
+            }
         ],
         'returns': 'int32_t'
     },
@@ -234,443 +498,6 @@ functions = {
                 'supports_standard_copy_convert': True,
                 'type': 'void'
             },
-        ],
-        'returns': 'int32_t'
-    },
-    'FreeAddrInfo': {
-        'codegen_method': 'private',
-        'cname': 'nxfreeaddrinfo',
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'res',
-                'type': 'nxaddrinfo',
-                'pointer': True
-            }
-        ],
-        'returns': 'int32_t'
-    },
-    'GetAddrInfo': {
-        'cname': 'nxgetaddrinfo',
-        'parameters': [
-            {
-                'direction': 'in', 
-                'name': 'stack_ref', 
-                'type': 'nxIpStackRef_t'
-            },
-            {
-                'direction': 'in',
-                'name': 'node',
-                'type': 'const char[]'
-            },
-            {
-                'direction': 'in',
-                'name': 'service',
-                'type': 'const char[]'
-            },
-            {
-                'direction': 'in',
-                'name': 'hints',
-                'supports_standard_copy_convert': True,
-                'grpc_type': 'AddrInfoHint',
-                'pointer': True,
-                'type': 'nxaddrinfo'
-            },
-            {
-                'direction': 'out',
-                'name': 'res',
-                'supports_standard_copy_convert': True,
-                'supports_standard_output_allocation': True,
-                'additional_arguments_to_output_allocation': ['library_'],
-                'pointer': True,
-                'type': 'nxaddrinfo'
-            }
-        ],
-        'returns': 'int32_t'
-    },
-    'GetNameInfo': {
-        'cname': 'nxgetnameinfo',
-        'parameters': [
-            {
-                'direction': 'in', 
-                'name': 'stack_ref', 
-                'type': 'nxIpStackRef_t'
-            },
-            {
-                'direction': 'in',
-                'grpc_type': 'SockAddr',
-                'name': 'addr',
-                'pointer': True,
-                'supports_standard_copy_convert': True,
-                'type': 'nxsockaddr'
-            },
-            {
-                'direction': 'in',
-                'name': 'addr_len',
-                'hardcoded_value': 'addr.size()',
-                'include_in_proto': False,
-                'type': 'nxsocklen_t'
-            },
-            {
-                'direction': 'out',
-                'name': 'host',
-                'type': 'char[]',
-                'size': {
-                    'mechanism': 'passed-in',
-                    'value': 'host_len'
-                }
-            },
-            {
-                'direction': 'in',
-                'name': 'host_len',
-                'type': 'nxsocklen_t'
-            },
-            {
-                'direction': 'out',
-                'name': 'serv',
-                'type': 'char[]',
-                'size': {
-                    'mechanism': 'passed-in',
-                    'value': 'serv_len'
-                }
-            },
-            {
-                'direction': 'in',
-                'name': 'serv_len',
-                'type': 'nxsocklen_t'
-            },
-            {
-                'direction': 'in',
-                'name': 'flags',
-                'type': 'int32_t'
-            },
-        ],
-        'returns': 'int32_t'
-    },
-    'Listen': {
-        'cname': 'nxlisten',
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'socket',
-                'type': 'nxSOCKET'
-            },
-            {
-                'direction': 'in',
-                'name': 'backlog',
-                'type': 'int32_t'
-            },
-        ],
-        'returns': 'int32_t'
-    },
-    'SendTo': {
-        'cname': 'nxsendto',
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'socket',
-                'type': 'nxSOCKET'
-            },
-            {
-                'direction': 'in',
-                'name': 'dataptr',
-                'pointer': True,
-                'size': {
-                    'mechanism': 'len',
-                    'value': 'size'
-                },
-                'pointer': True,
-                'grpc_type': 'bytes',
-                'type': 'char[]'
-            },
-            {
-                'direction': 'in',
-                'name': 'size',
-                'type': 'int32_t'
-            },
-            {
-                'direction': 'in',
-                'name': 'flags',
-                'type': 'int32_t'
-            },
-            {
-                'direction': 'in',
-                'grpc_type': 'SockAddr',
-                'name': 'to',
-                'pointer': True,
-                'supports_standard_copy_convert': True,
-                'type': 'nxsockaddr'
-            },
-            {
-                'direction': 'in',
-                'name': 'tolen',
-                'hardcoded_value': 'to.size()',
-                'include_in_proto': False,
-                'type': 'nxsocklen_t'
-            },
-        ],
-        'returns': 'int32_t'
-    },
-    'Send': {
-        'cname': 'nxsend',
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'socket',
-                'type': 'nxSOCKET'
-            },
-            {
-                'direction': 'in',
-                'name': 'dataptr',
-                'pointer': True,
-                'size': {
-                    'mechanism': 'len',
-                    'value': 'size'
-                },
-                'pointer': True,
-                'grpc_type': 'bytes',
-                'type': 'char[]'
-            },
-            {
-                'direction': 'in',
-                'name': 'size',
-                'type': 'int32_t'
-            },
-            {
-                'direction': 'in',
-                'name': 'flags',
-                'type': 'int32_t'
-            },
-        ],
-        'returns': 'int32_t'
-    },
-    'RecvFrom': {
-        'cname': 'nxrecvfrom',
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'socket',
-                'type': 'nxSOCKET'
-            },
-            {
-                'direction': 'out',
-                'name': 'mem',
-                'size': {
-                    'mechanism': 'passed-in',
-                    'value': 'size'
-                },
-                'grpc_type': 'bytes',
-                'type': 'char[]'
-            },
-            {
-                'direction': 'in',
-                'name': 'size',
-                'type': 'int32_t'
-            },
-            {
-                'direction': 'in',
-                'name': 'flags',
-                'type': 'int32_t'
-            },
-            {
-                'direction': 'out',
-                'grpc_type': 'SockAddr',
-                'name': 'from',
-                'supports_standard_output_allocation': True,
-                'supports_standard_copy_convert': True,
-                'type': 'nxsockaddr'
-            },
-            {
-                'direction': 'out',
-                'name': 'fromlen',
-                'include_in_proto': False,
-                'type': 'nxsocklen_t'
-            },
-        ],
-        'returns': 'int32_t'
-    },
-    'Recv': {
-        'cname': 'nxrecv',
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'socket',
-                'type': 'nxSOCKET'
-            },
-            {
-                'direction': 'out',
-                'name': 'mem',
-                'size': {
-                    'mechanism': 'passed-in',
-                    'value': 'size'
-                },
-                'grpc_type': 'bytes',
-                'type': 'char[]'
-            },
-            {
-                'direction': 'in',
-                'name': 'size',
-                'type': 'int32_t'
-            },
-            {
-                'direction': 'in',
-                'name': 'flags',
-                'type': 'int32_t'
-            },
-        ],
-        'returns': 'int32_t'
-    },
-    'GetSockName': {
-        'cname': 'nxgetsockname',
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'socket',
-                'type': 'nxSOCKET'
-            },
-            {
-                'direction': 'out',
-                'grpc_type': 'SockAddr',
-                'name': 'addr',
-                'supports_standard_output_allocation': True,
-                'supports_standard_copy_convert': True,
-                'type': 'nxsockaddr'
-            },
-            {
-                'direction': 'out',
-                'name': 'addrlen',
-                'hardcoded_value': 'static_cast<nxsocklen_t>(sizeof(addr.storage))',
-                'include_in_proto': False,
-                'type': 'nxsocklen_t'
-            },
-        ],
-        'returns': 'int32_t'
-    },
-    'GetPeerName': {
-        'cname': 'nxgetpeername',
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'socket',
-                'type': 'nxSOCKET'
-            },
-            {
-                'direction': 'out',
-                'grpc_type': 'SockAddr',
-                'name': 'addr',
-                'supports_standard_output_allocation': True,
-                'supports_standard_copy_convert': True,
-                'type': 'nxsockaddr'
-            },
-            {
-                'direction': 'out',
-                'name': 'addrlen',
-                'hardcoded_value': 'static_cast<nxsocklen_t>(sizeof(addr.storage))',
-                'include_in_proto': False,
-                'type': 'nxsocklen_t'
-            },
-        ],
-        'returns': 'int32_t'
-    },
-    'Shutdown': {
-        'cname': 'nxshutdown',
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'socket',
-                'type': 'nxSOCKET'
-            },
-             {
-                'direction': 'in',
-                'name': 'how',
-                'type': 'int32_t',
-                'enum': 'Shutdown'
-            },
-        ],
-        'returns': 'int32_t'
-    },
-    'Close': {
-        'cname': 'nxclose',
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'socket',
-                'type': 'nxSOCKET'
-            }
-        ],
-        'returns': 'int32_t'
-    },
-    'GetLastErrorNum': {
-        'codegen_method': 'private',
-        'cname': 'nxgetlasterrornum',
-        'parameters': [],
-        'returns': 'int32_t'
-    },
-    'GetLastErrorStr': {
-        'codegen_method': 'private',
-        'cname': 'nxgetlasterrorstr',
-        'status_expression': 'error ? 0 : -1',
-        'parameters': [
-            {
-                'direction': 'out',
-                'include_in_proto': False,
-                'name': 'buf',
-                'size': {
-                    'mechanism': 'passed-in',
-                    'value': 'bufLen'
-                },
-                'type': 'char[]'
-            },
-            {
-                'direction': 'in',
-                'name': 'bufLen',
-                'type': 'size_t'
-            },
-            {
-                'direction': 'out',
-                'name': 'error',
-                'return_value': True,
-                'type': 'char[]'
-            },
-        ],
-        'returns': 'char*'
-    },
-    'GetSockOpt': {
-        'cname': 'nxgetsockopt',
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'socket',
-                'type': 'nxSOCKET'
-            },
-            {
-                'direction': 'in',
-                'name': 'level',
-                'type': 'int32_t',
-                'enum': 'SocketOptionLevel'
-            },
-            {
-                'direction': 'in',
-                'name': 'optname',
-                'type': 'int32_t',
-                'enum': 'OptName'
-            },
-            {
-                'direction': 'out',
-                'name': 'optval',
-                'grpc_type': 'SockOptData',
-                'supports_standard_output_allocation': True,
-                "additional_arguments_to_output_allocation": ["optname"],
-                'supports_standard_copy_convert': True,
-                'pointer': True,
-                'type': 'void *'
-            },
-            {
-                'direction': 'out',
-                'name': 'optlen',
-                'include_in_proto': False,
-                'type': 'nxsocklen_t'
-            }
         ],
         'returns': 'int32_t'
     },
@@ -839,6 +666,98 @@ functions = {
         ],
         'returns': 'int32_t'
     },
+    'Listen': {
+        'cname': 'nxlisten',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'socket',
+                'type': 'nxSOCKET'
+            },
+            {
+                'direction': 'in',
+                'name': 'backlog',
+                'type': 'int32_t'
+            },
+        ],
+        'returns': 'int32_t'
+    },
+     'Recv': {
+        'cname': 'nxrecv',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'socket',
+                'type': 'nxSOCKET'
+            },
+            {
+                'direction': 'out',
+                'name': 'mem',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'size'
+                },
+                'grpc_type': 'bytes',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'size',
+                'type': 'int32_t'
+            },
+            {
+                'direction': 'in',
+                'name': 'flags',
+                'type': 'int32_t'
+            },
+        ],
+        'returns': 'int32_t'
+    },
+    'RecvFrom': {
+        'cname': 'nxrecvfrom',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'socket',
+                'type': 'nxSOCKET'
+            },
+            {
+                'direction': 'out',
+                'name': 'mem',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'size'
+                },
+                'grpc_type': 'bytes',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'size',
+                'type': 'int32_t'
+            },
+            {
+                'direction': 'in',
+                'name': 'flags',
+                'type': 'int32_t'
+            },
+            {
+                'direction': 'out',
+                'grpc_type': 'SockAddr',
+                'name': 'from',
+                'supports_standard_output_allocation': True,
+                'supports_standard_copy_convert': True,
+                'type': 'nxsockaddr'
+            },
+            {
+                'direction': 'out',
+                'name': 'fromlen',
+                'include_in_proto': False,
+                'type': 'nxsocklen_t'
+            },
+        ],
+        'returns': 'int32_t'
+    },
     'Select': {
         'cname': 'nxselect',
         'parameters': [
@@ -879,6 +798,87 @@ functions = {
                 'pointer': True,
                 'supports_standard_copy_convert': True,
                 'type': 'nxtimeval'
+            },
+        ],
+        'returns': 'int32_t'
+    },
+    'Send': {
+        'cname': 'nxsend',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'socket',
+                'type': 'nxSOCKET'
+            },
+            {
+                'direction': 'in',
+                'name': 'dataptr',
+                'pointer': True,
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'size'
+                },
+                'pointer': True,
+                'grpc_type': 'bytes',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'size',
+                'type': 'int32_t'
+            },
+            {
+                'direction': 'in',
+                'name': 'flags',
+                'type': 'int32_t'
+            },
+        ],
+        'returns': 'int32_t'
+    },
+    'SendTo': {
+        'cname': 'nxsendto',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'socket',
+                'type': 'nxSOCKET'
+            },
+            {
+                'direction': 'in',
+                'name': 'dataptr',
+                'pointer': True,
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'size'
+                },
+                'pointer': True,
+                'grpc_type': 'bytes',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'size',
+                'type': 'int32_t'
+            },
+            {
+                'direction': 'in',
+                'name': 'flags',
+                'type': 'int32_t'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'SockAddr',
+                'name': 'to',
+                'pointer': True,
+                'supports_standard_copy_convert': True,
+                'type': 'nxsockaddr'
+            },
+            {
+                'direction': 'in',
+                'name': 'tolen',
+                'hardcoded_value': 'to.size()',
+                'include_in_proto': False,
+                'type': 'nxsocklen_t'
             },
         ],
         'returns': 'int32_t'
@@ -926,6 +926,23 @@ functions = {
                 'include_in_proto': False,
                 'type': 'nxsocklen_t'
             }
+        ],
+        'returns': 'int32_t'
+    },
+    'Shutdown': {
+        'cname': 'nxshutdown',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'socket',
+                'type': 'nxSOCKET'
+            },
+             {
+                'direction': 'in',
+                'name': 'how',
+                'type': 'int32_t',
+                'enum': 'Shutdown'
+            },
         ],
         'returns': 'int32_t'
     },

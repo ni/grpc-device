@@ -9,6 +9,9 @@
 
 #include "device_server.h"
 #include "enumerate_devices.h"
+#if defined(__linux__)
+  #include <netinet/in.h>
+#endif
 
 using namespace nixnetsocket_grpc;
 namespace client = nixnetsocket_grpc::experimental::client;
@@ -241,6 +244,26 @@ class NiXnetSocketNoHardwareTests : public NiXnetSocketDriverApiTests {
 #define EXPECT_INVALID_ARGUMENT_ERROR(response)                                                              \
   if (1) {                                                                                                   \
     EXPECT_XNET_ERROR(GENERIC_NXSOCKET_ERROR, INVALID_ARGUMENT_ERROR, INVALID_ARGUMENT_MESSAGE, (response)); \
+  }
+
+#define ARRAY_ARG(...) \
+  {                    \
+    __VA_ARGS__        \
+  }
+
+#define EXPECT_ADDR_EQ(expected_family, expected_addr, addr_info)                                                      \
+  {                                                                                                                    \
+    EXPECT_EQ(expected_family, addr_info.family());                                                                    \
+    uint8_t expected_as_array[16] = ARRAY_ARG expected_addr;                                                           \
+    if (addr_info.family() == AddressFamily::ADDRESS_FAMILY_INET) {                                                    \
+      uint32_t addr = addr_info.addr().ipv4().addr().addr();                                                           \
+      uint8_t* addr_byte_array = reinterpret_cast<uint8_t*>(&addr);                                                    \
+      std::vector<uint8_t> addr_bytes{addr_byte_array[0], addr_byte_array[1], addr_byte_array[2], addr_byte_array[3]}; \
+      EXPECT_THAT(addr_bytes, ElementsAreArray(expected_as_array, 4));                                                 \
+    }                                                                                                                  \
+    else {                                                                                                             \
+      EXPECT_THAT(addr_info.addr().ipv6().addr().addr(), ElementsAreArray(expected_as_array, 16));                     \
+    }                                                                                                                  \
   }
 
 SocketResponse
@@ -552,6 +575,56 @@ TEST_F(NiXnetSocketLoopbackTests, RecvAndTransmitSocketsOnLoopbackAddress_SendAn
   EXPECT_SUCCESS_WITH_STATUS(send, MESSAGE.size());
   EXPECT_SUCCESS_WITH_STATUS(recv, MESSAGE.size());
   EXPECT_EQ(MESSAGE, recv.mem());
+}
+
+TEST_F(NiXnetSocketLoopbackTests, IPv4Address_GetAddrInfo_ReturnsExpectedAddrInfo)
+{
+  const auto ADDRESS = "127.0.0.1"s;
+  const auto stack = client::ip_stack_create(stub(), "", create_simple_config("ENET1"));
+
+  const auto addr_info_response = client::get_addr_info(stub(), stack.stack_ref(), ADDRESS, "", {});
+
+  EXPECT_SUCCESS(addr_info_response);
+  EXPECT_EQ(1, addr_info_response.res().size());
+  auto addr_info = addr_info_response.res()[0];
+  EXPECT_EQ(0, addr_info.addr().ipv4().port());
+  EXPECT_ADDR_EQ(AddressFamily::ADDRESS_FAMILY_INET, (127, 0, 0, 1), addr_info);
+}
+
+TEST_F(NiXnetSocketLoopbackTests, IPv6Address_GetAddrInfo_ReturnsExpectedAddrInfo)
+{
+  const auto ADDRESS = "fd00::1"s;
+  const auto stack = client::ip_stack_create(stub(), "", create_simple_config("ENET1"));
+
+  const auto addr_info_response = client::get_addr_info(stub(), stack.stack_ref(), ADDRESS, "", {});
+
+  EXPECT_SUCCESS(addr_info_response);
+  EXPECT_EQ(1, addr_info_response.res().size());
+  auto addr_info = addr_info_response.res()[0];
+  EXPECT_EQ(0, addr_info.addr().ipv6().port());
+  EXPECT_ADDR_EQ(AddressFamily::ADDRESS_FAMILY_INET6, (0xfd, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01), addr_info);
+}
+
+TEST_F(NiXnetSocketLoopbackTests, NumericPortTranslation_GetAddrInfo_ReturnsExpectedAddrInfo)
+{
+  const auto PORT = "21"s;
+  const auto stack = client::ip_stack_create(stub(), "", create_simple_config("ENET1"));
+
+  AddrInfoHint hints{};
+  hints.set_family(AddressFamily::ADDRESS_FAMILY_INET);
+  int32_t flags = GetAddrInfoFlags::GET_ADDR_INFO_FLAGS_V4MAPPED |
+      GetAddrInfoFlags::GET_ADDR_INFO_FLAGS_ADDRCONFIG |
+      GetAddrInfoFlags::GET_ADDR_INFO_FLAGS_NUMERICHOST |
+      GetAddrInfoFlags::GET_ADDR_INFO_FLAGS_NUMERICSERV |
+      GetAddrInfoFlags::GET_ADDR_INFO_FLAGS_PASSIVE;
+  hints.set_flags_raw(flags);
+  const auto addr_info_response = client::get_addr_info(stub(), stack.stack_ref(), "", PORT, hints);
+
+  EXPECT_SUCCESS(addr_info_response);
+  EXPECT_EQ(1, addr_info_response.res().size());
+  auto addr_info = addr_info_response.res()[0];
+  EXPECT_ADDR_EQ(AddressFamily::ADDRESS_FAMILY_INET, (0, 0, 0, 0), addr_info);
+  EXPECT_EQ(htons(21), addr_info.addr().ipv4().port());
 }
 
 TEST_F(NiXnetSocketLoopbackTests, IPv4SockAddr_GetNameInfo_ReturnsExpectedNameInfo)

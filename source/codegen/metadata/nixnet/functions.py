@@ -19,7 +19,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'sessionRef',
+                'name': 'session',
                 'type': 'nxSessionRef_t'
             }
         ],
@@ -29,7 +29,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'sessionRef',
+                'name': 'session',
                 'type': 'nxSessionRef_t'
             },
             {
@@ -51,7 +51,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'sessionRef',
+                'name': 'session',
                 'type': 'nxSessionRef_t'
             },
             {
@@ -82,9 +82,9 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'frameType',
+                'name': 'protocol',
                 'proto_only': True,
-                'enum': 'FrameType',
+                'enum': 'Protocol',
                 'type': 'u32'
             },
             {
@@ -95,14 +95,14 @@ functions = {
                     'value': 'sizeOfBuffer'
                 },
                 'type': 'u8[]',
-                'grpc_type': 'repeated FrameBuffer',
+                'grpc_type': 'repeated FrameBufferResponse',
                 'supports_standard_copy_convert': True,
-                'additional_arguments_to_copy_convert': ['number_of_bytes_returned', 'frame_type']
+                'additional_arguments_to_copy_convert': ['number_of_bytes_returned', 'protocol', 'enetflags_output_map_']
             },
             {
                 'direction': 'in',
                 'name': 'sizeOfBuffer',
-                'hardcoded_value': 'get_frame_buffer_size(number_of_frames, max_payload_per_frame, frame_type)',
+                'hardcoded_value': 'get_frame_buffer_size(number_of_frames, max_payload_per_frame, protocol)',
                 'type': 'u32',
                 'include_in_proto': False
             },
@@ -119,7 +119,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'sessionRef',
+                'name': 'session',
                 'type': 'nxSessionRef_t'
             },
             {
@@ -127,8 +127,9 @@ functions = {
                 'name': 'frameBuffer',
                 'type': 'u8',
                 'pointer': True,
-                'grpc_type': 'repeated FrameBuffer',
-                'supports_standard_copy_convert': True
+                'grpc_type': 'repeated FrameBufferRequest',
+                'supports_standard_copy_convert': True,
+                'additional_arguments_to_copy_convert': ['enetflags_input_map_']
             },
             {
                 'direction': 'in',
@@ -158,7 +159,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'sessionRef',
+                'name': 'session',
                 'type': 'nxSessionRef_t'
             },
             {
@@ -172,8 +173,9 @@ functions = {
                 'name': 'frameBuffer',
                 'type': 'u8',
                 'pointer': True,
-                'grpc_type': 'repeated FrameBuffer',
-                'supports_standard_copy_convert': True
+                'grpc_type': 'repeated FrameBufferRequest',
+                'supports_standard_copy_convert': True,
+                'additional_arguments_to_copy_convert': ['enetflags_input_map_']
             },
             {
                 'direction': 'in',
@@ -221,7 +223,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'sessionRef',
+                'name': 'session',
                 'type': 'nxSessionRef_t'
             },
             {
@@ -252,9 +254,9 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'frameType',
+                'name': 'protocol',
                 'proto_only': True,
-                'enum': 'FrameType',
+                'enum': 'Protocol',
                 'type': 'u32'
             },
             {
@@ -265,14 +267,14 @@ functions = {
                     'value': 'sizeOfBuffer'
                 },
                 'type': 'u8[]',
-                'grpc_type': 'repeated FrameBuffer',
+                'grpc_type': 'repeated FrameBufferResponse',
                 'supports_standard_copy_convert': True,
-                'additional_arguments_to_copy_convert': ['number_of_bytes_returned', 'frame_type']
+                'additional_arguments_to_copy_convert': ['number_of_bytes_returned', 'protocol', 'enetflags_output_map_']
             },
             {
                 'direction': 'in',
                 'name': 'sizeOfBuffer',
-                'hardcoded_value': 'get_frame_buffer_size(number_of_frames, max_payload_per_frame, frame_type)',
+                'hardcoded_value': 'get_frame_buffer_size(number_of_frames, max_payload_per_frame, protocol)',
                 'type': 'u32',
                 'include_in_proto': False
             },
@@ -346,7 +348,7 @@ functions = {
             },
             {
                 'direction': 'out',
-                'name': 'sessionRef',
+                'name': 'session',
                 'type': 'nxSessionRef_t'
             }
         ],
@@ -382,7 +384,7 @@ functions = {
             },
             {
                 'direction': 'out',
-                'name': 'sessionRef',
+                'name': 'session',
                 'type': 'nxSessionRef_t'
             }
         ],
@@ -436,7 +438,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'databaseRef',
+                'name': 'database',
                 'type': 'nxDatabaseRef_t'
             },
             {
@@ -453,7 +455,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'parentObjectRef',
+                'name': 'parentObject',
                 'type': 'nxDatabaseRef_t'
             },
             {
@@ -470,7 +472,7 @@ functions = {
                 'cross_driver_session': 'nxDatabaseRef_t',
                 'direction': 'out',
                 'grpc_type': 'nidevice_grpc.Session',
-                'name': 'dbObjectRef',
+                'name': 'dbObject',
                 'type': 'nxDatabaseRef_t'
             }
         ],
@@ -482,7 +484,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'dbObjectRef',
+                'name': 'dbObject',
                 'type': 'nxDatabaseRef_t'
             }
         ],
@@ -520,7 +522,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'parentObjectRef',
+                'name': 'parentObject',
                 'type': 'nxDatabaseRef_t'
             },
             {
@@ -537,7 +539,7 @@ functions = {
                 'cross_driver_session': 'nxDatabaseRef_t',
                 'direction': 'out',
                 'grpc_type': 'nidevice_grpc.Session',
-                'name': 'dbObjectRef',
+                'name': 'dbObject',
                 'type': 'nxDatabaseRef_t'
             }
         ],
@@ -549,7 +551,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'dbObjectRef',
+                'name': 'dbObject',
                 'type': 'nxDatabaseRef_t'
             },
             {
@@ -591,7 +593,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'dbObjectRef',
+                'name': 'dbObject',
                 'type': 'nxDatabaseRef_t'
             },
             {
@@ -689,7 +691,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'dbObjectRef',
+                'name': 'dbObject',
                 'type': 'nxDatabaseRef_t'
             },
             {
@@ -722,7 +724,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'dbObjectRef',
+                'name': 'dbObject',
                 'type': 'nxDatabaseRef_t'
             },
             {
@@ -744,12 +746,12 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'targetClusterRef',
+                'name': 'targetCluster',
                 'type': 'nxDatabaseRef_t'
             },
             {
                 'direction': 'in',
-                'name': 'sourceObjRef',
+                'name': 'sourceObj',
                 'type': 'nxDatabaseRef_t'
             },
             {
@@ -788,7 +790,7 @@ functions = {
             },
             {
                 'direction': 'out',
-                'name': 'databaseRef',
+                'name': 'database',
                 'type': 'nxDatabaseRef_t'
             }
         ],
@@ -810,7 +812,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'databaseRef',
+                'name': 'database',
                 'type': 'nxDatabaseRef_t'
             },
             {
@@ -828,7 +830,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'dbObjectRef',
+                'name': 'dbObject',
                 'type': 'nxDatabaseRef_t'
             },
             {
@@ -875,7 +877,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'sessionRef',
+                'name': 'session',
                 'type': 'nxSessionRef_t'
             },
             {
@@ -897,7 +899,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'sessionRef',
+                'name': 'session',
                 'type': 'nxSessionRef_t'
             }
         ],
@@ -907,7 +909,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'sessionRef',
+                'name': 'session',
                 'type': 'nxSessionRef_t'
             },
             {
@@ -930,7 +932,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'sessionRef',
+                'name': 'session',
                 'type': 'nxSessionRef_t'
             },
             {
@@ -962,7 +964,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'sessionRef',
+                'name': 'session',
                 'type': 'nxSessionRef_t'
             },
             {
@@ -985,7 +987,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'sessionRef',
+                'name': 'session',
                 'type': 'nxSessionRef_t'
             },
             {
@@ -1022,7 +1024,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'sessionRef',
+                'name': 'session',
                 'type': 'nxSessionRef_t'
             },
             {
@@ -1048,7 +1050,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'sessionRef',
+                'name': 'session',
                 'type': 'nxSessionRef_t'
             },
             {
@@ -1065,9 +1067,9 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'frameType',
+                'name': 'protocol',
                 'proto_only': True,
-                'enum': 'FrameType',
+                'enum': 'Protocol',
                 'type': 'u32'
             },
             {
@@ -1078,14 +1080,14 @@ functions = {
                     'value': 'sizeOfBuffer'
                 },
                 'type': 'u8[]',
-                'grpc_type': 'repeated FrameBuffer',
+                'grpc_type': 'repeated FrameBufferResponse',
                 'supports_standard_copy_convert': True,
-                'additional_arguments_to_copy_convert': ['number_of_bytes_returned', 'frame_type']
+                'additional_arguments_to_copy_convert': ['number_of_bytes_returned', 'protocol', 'enetflags_output_map_']
             },
             {
                 'direction': 'in',
                 'name': 'sizeOfBuffer',
-                'hardcoded_value': 'get_frame_buffer_size(number_of_frames, max_payload_per_frame, frame_type)',
+                'hardcoded_value': 'get_frame_buffer_size(number_of_frames, max_payload_per_frame, protocol)',
                 'type': 'u32',
                 'include_in_proto': False
             },
@@ -1108,7 +1110,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'sessionRef',
+                'name': 'session',
                 'type': 'nxSessionRef_t'
             },
             {
@@ -1156,7 +1158,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'sessionRef',
+                'name': 'session',
                 'type': 'nxSessionRef_t'
             },
             {
@@ -1218,7 +1220,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'sessionRef',
+                'name': 'session',
                 'type': 'nxSessionRef_t'
             },
             {
@@ -1296,7 +1298,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'sessionRef',
+                'name': 'session',
                 'type': 'nxSessionRef_t'
             },
             {
@@ -1333,7 +1335,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'sessionRef',
+                'name': 'session',
                 'type': 'nxSessionRef_t'
             },
             {
@@ -1368,7 +1370,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'sessionRef',
+                'name': 'session',
                 'type': 'nxSessionRef_t'
             },
             {
@@ -1402,7 +1404,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'sessionRef',
+                'name': 'session',
                 'type': 'nxSessionRef_t'
             },
             {
@@ -1439,7 +1441,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'sessionRef',
+                'name': 'session',
                 'type': 'nxSessionRef_t'
             },
             {
@@ -1482,7 +1484,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'sessionRef',
+                'name': 'session',
                 'type': 'nxSessionRef_t'
             },
             {
@@ -1499,7 +1501,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'systemRef',
+                'name': 'system',
                 'type': 'nxSessionRef_t'
             }
         ],
@@ -1511,7 +1513,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'out',
-                'name': 'systemRef',
+                'name': 'system',
                 'type': 'nxSessionRef_t'
             }
         ],
@@ -1521,7 +1523,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'sessionRef',
+                'name': 'session',
                 'type': 'nxSessionRef_t'
             },
             {
@@ -1552,7 +1554,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'sessionRef',
+                'name': 'session',
                 'type': 'nxSessionRef_t'
             },
             {
@@ -1560,8 +1562,9 @@ functions = {
                 'name': 'buffer',
                 'type': 'u8',
                 'pointer': True,
-                'grpc_type': 'repeated FrameBuffer',
-                'supports_standard_copy_convert': True
+                'grpc_type': 'repeated FrameBufferRequest',
+                'supports_standard_copy_convert': True,
+                'additional_arguments_to_copy_convert': ['enetflags_input_map_']
             },
             {
                 'direction': 'in',
@@ -1583,7 +1586,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'sessionRef',
+                'name': 'session',
                 'type': 'nxSessionRef_t'
             },
             {
@@ -1607,7 +1610,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'sessionRef',
+                'name': 'session',
                 'type': 'nxSessionRef_t'
             },
             {
@@ -1637,7 +1640,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'sessionRef',
+                'name': 'session',
                 'type': 'nxSessionRef_t'
             },
             {
@@ -1696,7 +1699,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'sessionRef',
+                'name': 'session',
                 'type': 'nxSessionRef_t'
             },
             {
