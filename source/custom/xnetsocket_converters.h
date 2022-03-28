@@ -494,20 +494,20 @@ struct SockOptDataOutputConverter {
     switch (opt_name) {
       case OptName::OPT_NAME_IP_MULTICAST_TTL:
       case OptName::OPT_NAME_IPV6_MULTICAST_HOPS:
-      case OptName::OPT_NAME_SO_RX_DATA:
-      case OptName::OPT_NAME_SO_RCV_BUF:
-      case OptName::OPT_NAME_SO_SND_BUF:
+      case OptName::OPT_NAME_SO_RXDATA:
+      case OptName::OPT_NAME_SO_RCVBUF:
+      case OptName::OPT_NAME_SO_SNDBUF:
       case OptName::OPT_NAME_TCP_NODELAY:
       case OptName::OPT_NAME_IP_MULTICAST_IF:
       case OptName::OPT_NAME_IPV6_MULTICAST_IF: {
         return &data_int;
       }
-      case OptName::OPT_NAME_SO_NON_BLOCK:
-      case OptName::OPT_NAME_SO_REUSE_ADDR:
+      case OptName::OPT_NAME_SO_NONBLOCK:
+      case OptName::OPT_NAME_SO_REUSEADDR:
       case OptName::OPT_NAME_IPV6_V6ONLY: {
         return &data_int;
       }
-      case OptName::OPT_NAME_SO_BIND_TO_DEVICE:
+      case OptName::OPT_NAME_SO_BINDTODEVICE:
       case OptName::OPT_NAME_SO_ERROR: {
         data_string = std::string(256 - 1, '\0');  // TODO: What's the max string size to allocate for a sock opt?
         return &data_string[0];
@@ -534,22 +534,22 @@ struct SockOptDataOutputConverter {
     switch (opt_name) {
       case OptName::OPT_NAME_IP_MULTICAST_TTL:
       case OptName::OPT_NAME_IPV6_MULTICAST_HOPS:
-      case OptName::OPT_NAME_SO_RX_DATA:
-      case OptName::OPT_NAME_SO_RCV_BUF:
-      case OptName::OPT_NAME_SO_SND_BUF:
+      case OptName::OPT_NAME_SO_RXDATA:
+      case OptName::OPT_NAME_SO_RCVBUF:
+      case OptName::OPT_NAME_SO_SNDBUF:
       case OptName::OPT_NAME_TCP_NODELAY:
       case OptName::OPT_NAME_IP_MULTICAST_IF:
       case OptName::OPT_NAME_IPV6_MULTICAST_IF: {
         output.set_data_int32(data_int);
         break;
       }
-      case OptName::OPT_NAME_SO_NON_BLOCK:
-      case OptName::OPT_NAME_SO_REUSE_ADDR:
+      case OptName::OPT_NAME_SO_NONBLOCK:
+      case OptName::OPT_NAME_SO_REUSEADDR:
       case OptName::OPT_NAME_IPV6_V6ONLY: {
         output.set_data_bool(data_int == 0 ? false : true);
         break;
       }
-      case OptName::OPT_NAME_SO_BIND_TO_DEVICE:
+      case OptName::OPT_NAME_SO_BINDTODEVICE:
       case OptName::OPT_NAME_SO_ERROR: {
         output.set_data_string(data_string);
         nidevice_grpc::converters::trim_trailing_nulls(*(output.mutable_data_string()));

@@ -185,23 +185,23 @@ enums = {
                 'value': 16
             },
             {
-                'name': 'SO_RX_DATA',
+                'name': 'SO_RXDATA',
                 'value': 257
             },
             {
-                'name': 'SO_RCV_BUF',
+                'name': 'SO_RCVBUF',
                 'value': 258
             },
             {
-                'name': 'SO_SND_BUF',
+                'name': 'SO_SNDBUF',
                 'value': 259
             },
             {
-                'name': 'SO_NON_BLOCK',
+                'name': 'SO_NONBLOCK',
                 'value': 260
             },
             {
-                'name': 'SO_BIND_TO_DEVICE',
+                'name': 'SO_BINDTODEVICE',
                 'value': 261
             },
             {
@@ -213,7 +213,7 @@ enums = {
                 'value': 263
             },
             {
-                'name': 'SO_REUSE_ADDR',
+                'name': 'SO_REUSEADDR',
                 'value': 264
             },
         ]

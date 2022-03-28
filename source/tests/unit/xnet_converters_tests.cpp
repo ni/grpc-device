@@ -414,7 +414,7 @@ TEST(XnetConvertersTests, SockOptDataWithDataUnset_ConvertFromGrpc_NullPtrDataAn
 TEST(XnetConvertersTests, Int32SockOptData_ConvertToGrpc_ConvertsToSockOptDataWithIntValue)
 {
   constexpr auto RX_DATA = 100;
-  auto storage = allocate_output_storage<void*, SockOptData>(OptName::OPT_NAME_SO_RX_DATA);
+  auto storage = allocate_output_storage<void*, SockOptData>(OptName::OPT_NAME_SO_RXDATA);
   void* data_pointer = storage.data();
   EXPECT_EQ(data_pointer, &(storage.data_int));
   auto int_pointer = reinterpret_cast<int32_t*>(data_pointer);
@@ -430,7 +430,7 @@ TEST(XnetConvertersTests, Int32SockOptData_ConvertToGrpc_ConvertsToSockOptDataWi
 TEST(XnetConvertersTests, BoolSockOptData_ConvertToGrpc_ConvertsToSockOptDataWithBoolValue)
 {
   constexpr auto REUSE_ADDR = 1;
-  auto storage = allocate_output_storage<void*, SockOptData>(OptName::OPT_NAME_SO_REUSE_ADDR);
+  auto storage = allocate_output_storage<void*, SockOptData>(OptName::OPT_NAME_SO_REUSEADDR);
   void* data_pointer = storage.data();
   EXPECT_EQ(data_pointer, &(storage.data_int));
   auto int_pointer = reinterpret_cast<int32_t*>(data_pointer);
@@ -448,7 +448,7 @@ TEST(XnetConvertersTests, StringSockOptData_ConvertToGrpc_ConvertsToSockOptDataW
 {
   const std::string DEVICE_NAME = "I'm a Device";
   constexpr auto MAX_SOCK_OPT_STRING_SIZE = 255;
-  auto storage = allocate_output_storage<void*, SockOptData>(OptName::OPT_NAME_SO_BIND_TO_DEVICE);
+  auto storage = allocate_output_storage<void*, SockOptData>(OptName::OPT_NAME_SO_BINDTODEVICE);
   void* data_pointer = storage.data();
   EXPECT_EQ(MAX_SOCK_OPT_STRING_SIZE, storage.data_string.size());
   EXPECT_EQ(data_pointer, &(storage.data_string[0]));
