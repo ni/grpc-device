@@ -1,7 +1,7 @@
 """Metadata mutation."""
 
 from collections import namedtuple
-from typing import List, Optional
+from typing import Any, Dict, Optional
 
 import common_helpers
 
@@ -405,8 +405,12 @@ def move_zero_enums_to_front(enums: dict) -> None:
             pass
 
 
-def add_get_last_error_params_if_needed(parameters: List[dict], config: dict) -> None:
+def add_get_last_error_params_if_needed(function_data: Dict[str, Any], config: dict) -> None:
     """Add get_last_error parameters to the list if any are specified in config."""
+    if function_data.get("exclude_from_get_last_error"):
+        return
+
+    parameters = function_data["parameters"]
     for get_last_error_field in config.get("get_last_error", []):
         parameters.append(
             {

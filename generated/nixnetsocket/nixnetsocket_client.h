@@ -52,6 +52,7 @@ SendToResponse send_to(const StubPtr& stub, const nidevice_grpc::Session& socket
 SetSockOptResponse set_sock_opt(const StubPtr& stub, const nidevice_grpc::Session& socket, const simple_variant<SocketOptionLevel, pb::int32>& level, const simple_variant<OptName, pb::int32>& optname, const SockOptData& opt_data);
 ShutdownResponse shutdown(const StubPtr& stub, const nidevice_grpc::Session& socket, const simple_variant<Shutdown, pb::int32>& how);
 SocketResponse socket(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const simple_variant<AddressFamily, pb::int32>& domain, const simple_variant<SocketProtocolType, pb::int32>& type, const simple_variant<IPProtocol, pb::int32>& prototcol);
+StrErrRResponse str_err_r(const StubPtr& stub, const pb::int32& errnum, const pb::uint64& buf_len);
 
 } // namespace nixnetsocket_grpc::experimental::client
 

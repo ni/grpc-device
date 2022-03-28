@@ -118,6 +118,7 @@ FUNCTION_SCHEMA = Schema(
         Optional("python_name"): str,
         Optional("status_expression"): str,
         Optional("include_in_client"): bool,
+        Optional("exclude_from_get_last_error"): bool,
     }
 )
 
