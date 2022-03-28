@@ -300,6 +300,7 @@ struct VirtualInterfaceOutputConverter {
         curr_vi_ptr = curr_vi_ptr->nextVirtualInterface) {
       auto curr_grpc_vi = output.Add();
       curr_grpc_vi->set_xnet_interface_name(curr_vi_ptr->xnetInterfaceName);
+      curr_grpc_vi->set_vlan_name(curr_vi_ptr->vlanName);
       curr_grpc_vi->set_mac_address(curr_vi_ptr->macAddress);
       curr_grpc_vi->set_mac_mtu(curr_vi_ptr->macMTU);
       curr_grpc_vi->set_operational_status(curr_vi_ptr->operationalStatus);

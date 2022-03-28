@@ -12,7 +12,7 @@ message GatewayAddress {
 
 message VirtualInterface {
   string xnet_interface_name = 1;
-  string vlane_name = 2;
+  string vlan_name = 2;
   string mac_address = 3;
   uint32 mac_mtu = 4;
   uint32 operational_status = 5;

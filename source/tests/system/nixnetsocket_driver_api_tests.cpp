@@ -73,6 +73,7 @@ const auto MULTI_ADDRESS_INTERFACE_CONFIG = R"(
           "address": "inherit",
           "VLANs": [
             {
+              "name": "testVlan",
               "IPv4": {
                 "mode": "static",
                 "staticAddresses": [
@@ -483,6 +484,7 @@ TEST_F(NiXnetSocketLoopbackTests, MultiAddressIpStack_GetInfo_ReturnsExpectedInf
   EXPECT_EQ(1, stack_info_response.virtual_interfaces_size());
   const auto virtual_interface = stack_info_response.virtual_interfaces()[0];
   EXPECT_EQ("ENET1", virtual_interface.xnet_interface_name());
+  EXPECT_EQ("testVlan", virtual_interface.vlan_name());
   EXPECT_EQ("00:80:2f:30:f4:58", virtual_interface.mac_address());
   EXPECT_EQ(1500, virtual_interface.mac_mtu());
   EXPECT_EQ(1, virtual_interface.if_index());
