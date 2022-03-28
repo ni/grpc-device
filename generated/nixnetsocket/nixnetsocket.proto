@@ -380,7 +380,7 @@ message InetAToNResponse {
 
 message InetNToARequest {
   nidevice_grpc.Session stack_ref = 1;
-  InAddr in = 2;
+  InAddr in_addr = 2;
 }
 
 message InetNToAResponse {

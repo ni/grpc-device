@@ -228,13 +228,13 @@ inet_a_to_n(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const 
 }
 
 InetNToAResponse
-inet_n_to_a(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const InAddr& in_parameter)
+inet_n_to_a(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const InAddr& in_addr)
 {
   ::grpc::ClientContext context;
 
   auto request = InetNToARequest{};
   request.mutable_stack_ref()->CopyFrom(stack_ref);
-  request.mutable_in()->CopyFrom(in_parameter);
+  request.mutable_in_addr()->CopyFrom(in_addr);
 
   auto response = InetNToAResponse{};
 

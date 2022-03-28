@@ -456,8 +456,8 @@ namespace nixnetsocket_grpc {
     try {
       auto stack_ref_grpc_session = request->stack_ref();
       nxIpStackRef_t stack_ref = nx_ip_stack_ref_t_resource_repository_->access_session(stack_ref_grpc_session.id(), stack_ref_grpc_session.name());
-      auto in_parameter = convert_from_grpc<nxin_addr>(request->in());
-      auto address = library_->InetNToA(stack_ref, in_parameter);
+      auto in_addr = convert_from_grpc<nxin_addr>(request->in_addr());
+      auto address = library_->InetNToA(stack_ref, in_addr);
       auto status = address ? 0 : -1;
       response->set_status(status);
       if (status_ok(status)) {
