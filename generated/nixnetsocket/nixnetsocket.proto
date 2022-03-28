@@ -297,8 +297,8 @@ message GetAddrInfoResponse {
 message GetNameInfoRequest {
   nidevice_grpc.Session stack_ref = 1;
   SockAddr addr = 2;
-  int32 host_len = 3;
-  int32 serv_len = 4;
+  int32 hostlen = 3;
+  int32 servlen = 4;
   oneof flags_enum {
     GetNameInfoFlags flags = 5;
     int32 flags_raw = 6;
@@ -534,9 +534,9 @@ message RecvFromResponse {
 }
 
 message SelectRequest {
-  repeated nidevice_grpc.Session read_fds = 1;
-  repeated nidevice_grpc.Session write_fds = 2;
-  repeated nidevice_grpc.Session except_fds = 3;
+  repeated nidevice_grpc.Session readfds = 1;
+  repeated nidevice_grpc.Session writefds = 2;
+  repeated nidevice_grpc.Session exceptfds = 3;
   google.protobuf.Duration timeout = 4;
 }
 

@@ -216,7 +216,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'addr_len',
+                'name': 'addrlen',
                 'hardcoded_value': 'addr.size()',
                 'include_in_proto': False,
                 'type': 'nxsocklen_t'
@@ -227,12 +227,12 @@ functions = {
                 'type': 'char[]',
                 'size': {
                     'mechanism': 'passed-in',
-                    'value': 'host_len'
+                    'value': 'hostlen'
                 }
             },
             {
                 'direction': 'in',
-                'name': 'host_len',
+                'name': 'hostlen',
                 'type': 'nxsocklen_t'
             },
             {
@@ -241,12 +241,12 @@ functions = {
                 'type': 'char[]',
                 'size': {
                     'mechanism': 'passed-in',
-                    'value': 'serv_len'
+                    'value': 'servlen'
                 }
             },
             {
                 'direction': 'in',
-                'name': 'serv_len',
+                'name': 'servlen',
                 'type': 'nxsocklen_t'
             },
             {
@@ -770,7 +770,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'read_fds',
+                'name': 'readfds',
                 'pointer': True,
                 'supports_standard_copy_convert': True,
                 'additional_arguments_to_copy_convert': ['session_repository_'],
@@ -778,7 +778,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'write_fds',
+                'name': 'writefds',
                 'pointer': True,
                 'supports_standard_copy_convert': True,
                 'additional_arguments_to_copy_convert': ['session_repository_'],
@@ -786,7 +786,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'except_fds',
+                'name': 'exceptfds',
                 'pointer': True,
                 'supports_standard_copy_convert': True,
                 'additional_arguments_to_copy_convert': ['session_repository_'],

@@ -216,9 +216,9 @@ namespace nixnetsocket_grpc {
       auto stack_ref_grpc_session = request->stack_ref();
       nxIpStackRef_t stack_ref = nx_ip_stack_ref_t_resource_repository_->access_session(stack_ref_grpc_session.id(), stack_ref_grpc_session.name());
       auto addr = convert_from_grpc<nxsockaddr>(request->addr());
-      auto addr_len = addr.size();
-      nxsocklen_t host_len = request->host_len();
-      nxsocklen_t serv_len = request->serv_len();
+      auto addrlen = addr.size();
+      nxsocklen_t hostlen = request->hostlen();
+      nxsocklen_t servlen = request->servlen();
       int32_t flags;
       switch (request->flags_enum_case()) {
         case nixnetsocket_grpc::GetNameInfoRequest::FlagsEnumCase::kFlags: {
@@ -236,14 +236,14 @@ namespace nixnetsocket_grpc {
       }
 
       std::string host;
-      if (host_len > 0) {
-          host.resize(host_len - 1);
+      if (hostlen > 0) {
+          host.resize(hostlen - 1);
       }
       std::string serv;
-      if (serv_len > 0) {
-          serv.resize(serv_len - 1);
+      if (servlen > 0) {
+          serv.resize(servlen - 1);
       }
-      auto status = library_->GetNameInfo(stack_ref, addr, addr_len, (char*)host.data(), host_len, (char*)serv.data(), serv_len, flags);
+      auto status = library_->GetNameInfo(stack_ref, addr, addrlen, (char*)host.data(), hostlen, (char*)serv.data(), servlen, flags);
       response->set_status(status);
       if (status_ok(status)) {
         response->set_host(host);
@@ -863,11 +863,11 @@ namespace nixnetsocket_grpc {
     }
     try {
       auto nfds = 0;
-      auto read_fds = convert_from_grpc<nxfd_set>(request->read_fds(), session_repository_);
-      auto write_fds = convert_from_grpc<nxfd_set>(request->write_fds(), session_repository_);
-      auto except_fds = convert_from_grpc<nxfd_set>(request->except_fds(), session_repository_);
+      auto readfds = convert_from_grpc<nxfd_set>(request->readfds(), session_repository_);
+      auto writefds = convert_from_grpc<nxfd_set>(request->writefds(), session_repository_);
+      auto exceptfds = convert_from_grpc<nxfd_set>(request->exceptfds(), session_repository_);
       auto timeout = convert_from_grpc<nxtimeval>(request->timeout());
-      auto status = library_->Select(nfds, read_fds, write_fds, except_fds, timeout);
+      auto status = library_->Select(nfds, readfds, writefds, exceptfds, timeout);
       response->set_status(status);
       if (status_ok(status)) {
       }

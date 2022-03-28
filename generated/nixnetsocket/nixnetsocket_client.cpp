@@ -103,15 +103,15 @@ get_addr_info(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, cons
 }
 
 GetNameInfoResponse
-get_name_info(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const SockAddr& addr, const pb::int32& host_len, const pb::int32& serv_len, const simple_variant<GetNameInfoFlags, pb::int32>& flags)
+get_name_info(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const SockAddr& addr, const pb::int32& hostlen, const pb::int32& servlen, const simple_variant<GetNameInfoFlags, pb::int32>& flags)
 {
   ::grpc::ClientContext context;
 
   auto request = GetNameInfoRequest{};
   request.mutable_stack_ref()->CopyFrom(stack_ref);
   request.mutable_addr()->CopyFrom(addr);
-  request.set_host_len(host_len);
-  request.set_serv_len(serv_len);
+  request.set_hostlen(hostlen);
+  request.set_servlen(servlen);
   const auto flags_ptr = flags.get_if<GetNameInfoFlags>();
   const auto flags_raw_ptr = flags.get_if<pb::int32>();
   if (flags_ptr) {
@@ -448,14 +448,14 @@ recv_from(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::i
 }
 
 SelectResponse
-select(const StubPtr& stub, const std::vector<nidevice_grpc::Session>& read_fds, const std::vector<nidevice_grpc::Session>& write_fds, const std::vector<nidevice_grpc::Session>& except_fds, const google::protobuf::Duration& timeout)
+select(const StubPtr& stub, const std::vector<nidevice_grpc::Session>& readfds, const std::vector<nidevice_grpc::Session>& writefds, const std::vector<nidevice_grpc::Session>& exceptfds, const google::protobuf::Duration& timeout)
 {
   ::grpc::ClientContext context;
 
   auto request = SelectRequest{};
-  copy_array(read_fds, request.mutable_read_fds());
-  copy_array(write_fds, request.mutable_write_fds());
-  copy_array(except_fds, request.mutable_except_fds());
+  copy_array(readfds, request.mutable_readfds());
+  copy_array(writefds, request.mutable_writefds());
+  copy_array(exceptfds, request.mutable_exceptfds());
   request.mutable_timeout()->CopyFrom(timeout);
 
   auto response = SelectResponse{};

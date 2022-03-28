@@ -27,7 +27,7 @@ BindResponse bind(const StubPtr& stub, const nidevice_grpc::Session& socket, con
 CloseResponse close(const StubPtr& stub, const nidevice_grpc::Session& socket);
 ConnectResponse connect(const StubPtr& stub, const nidevice_grpc::Session& socket, const SockAddr& name);
 GetAddrInfoResponse get_addr_info(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const pb::string& node, const pb::string& service, const AddrInfoHint& hints);
-GetNameInfoResponse get_name_info(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const SockAddr& addr, const pb::int32& host_len, const pb::int32& serv_len, const simple_variant<GetNameInfoFlags, pb::int32>& flags);
+GetNameInfoResponse get_name_info(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const SockAddr& addr, const pb::int32& hostlen, const pb::int32& servlen, const simple_variant<GetNameInfoFlags, pb::int32>& flags);
 GetPeerNameResponse get_peer_name(const StubPtr& stub, const nidevice_grpc::Session& socket);
 GetSockNameResponse get_sock_name(const StubPtr& stub, const nidevice_grpc::Session& socket);
 GetSockOptResponse get_sock_opt(const StubPtr& stub, const nidevice_grpc::Session& socket, const simple_variant<SocketOptionLevel, pb::int32>& level, const simple_variant<OptName, pb::int32>& optname);
@@ -46,7 +46,7 @@ IsSetResponse is_set(const StubPtr& stub, const nidevice_grpc::Session& fd, cons
 ListenResponse listen(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::int32& backlog);
 RecvResponse recv(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::int32& size, const pb::int32& flags);
 RecvFromResponse recv_from(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::int32& size, const pb::int32& flags);
-SelectResponse select(const StubPtr& stub, const std::vector<nidevice_grpc::Session>& read_fds, const std::vector<nidevice_grpc::Session>& write_fds, const std::vector<nidevice_grpc::Session>& except_fds, const google::protobuf::Duration& timeout);
+SelectResponse select(const StubPtr& stub, const std::vector<nidevice_grpc::Session>& readfds, const std::vector<nidevice_grpc::Session>& writefds, const std::vector<nidevice_grpc::Session>& exceptfds, const google::protobuf::Duration& timeout);
 SendResponse send(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::string& dataptr, const pb::int32& flags);
 SendToResponse send_to(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::string& dataptr, const pb::int32& flags, const SockAddr& to);
 SetSockOptResponse set_sock_opt(const StubPtr& stub, const nidevice_grpc::Session& socket, const simple_variant<SocketOptionLevel, pb::int32>& level, const simple_variant<OptName, pb::int32>& optname, const SockOptData& opt_data);
