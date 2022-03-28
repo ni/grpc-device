@@ -21,6 +21,7 @@ service NiXnetSocket {
   rpc Bind(BindRequest) returns (BindResponse);
   rpc Close(CloseRequest) returns (CloseResponse);
   rpc Connect(ConnectRequest) returns (ConnectResponse);
+  rpc FdIsSet(FdIsSetRequest) returns (FdIsSetResponse);
   rpc GetAddrInfo(GetAddrInfoRequest) returns (GetAddrInfoResponse);
   rpc GetNameInfo(GetNameInfoRequest) returns (GetNameInfoResponse);
   rpc GetPeerName(GetPeerNameRequest) returns (GetPeerNameResponse);
@@ -37,7 +38,6 @@ service NiXnetSocket {
   rpc IpStackGetInfo(IpStackGetInfoRequest) returns (IpStackGetInfoResponse);
   rpc IpStackOpen(IpStackOpenRequest) returns (IpStackOpenResponse);
   rpc IpStackWaitForInterface(IpStackWaitForInterfaceRequest) returns (IpStackWaitForInterfaceResponse);
-  rpc FdIsSet(FdIsSetRequest) returns (FdIsSetResponse);
   rpc Listen(ListenRequest) returns (ListenResponse);
   rpc Recv(RecvRequest) returns (RecvResponse);
   rpc RecvFrom(RecvFromRequest) returns (RecvFromResponse);
@@ -290,6 +290,18 @@ message ConnectResponse {
   int32 error_num = 3;
 }
 
+message FdIsSetRequest {
+  nidevice_grpc.Session fd = 1;
+  repeated nidevice_grpc.Session set = 2;
+}
+
+message FdIsSetResponse {
+  int32 status = 1;
+  int32 is_set = 2;
+  string error_message = 3;
+  int32 error_num = 4;
+}
+
 message GetAddrInfoRequest {
   nidevice_grpc.Session stack_ref = 1;
   string node = 2;
@@ -498,18 +510,6 @@ message IpStackWaitForInterfaceResponse {
   int32 status = 1;
   string error_message = 2;
   int32 error_num = 3;
-}
-
-message FdIsSetRequest {
-  nidevice_grpc.Session fd = 1;
-  repeated nidevice_grpc.Session set = 2;
-}
-
-message FdIsSetResponse {
-  int32 status = 1;
-  int32 is_set = 2;
-  string error_message = 3;
-  int32 error_num = 4;
 }
 
 message ListenRequest {

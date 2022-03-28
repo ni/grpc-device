@@ -47,6 +47,7 @@ public:
   ::grpc::Status Bind(::grpc::ServerContext* context, const BindRequest* request, BindResponse* response) override;
   ::grpc::Status Close(::grpc::ServerContext* context, const CloseRequest* request, CloseResponse* response) override;
   ::grpc::Status Connect(::grpc::ServerContext* context, const ConnectRequest* request, ConnectResponse* response) override;
+  ::grpc::Status FdIsSet(::grpc::ServerContext* context, const FdIsSetRequest* request, FdIsSetResponse* response) override;
   ::grpc::Status GetAddrInfo(::grpc::ServerContext* context, const GetAddrInfoRequest* request, GetAddrInfoResponse* response) override;
   ::grpc::Status GetNameInfo(::grpc::ServerContext* context, const GetNameInfoRequest* request, GetNameInfoResponse* response) override;
   ::grpc::Status GetPeerName(::grpc::ServerContext* context, const GetPeerNameRequest* request, GetPeerNameResponse* response) override;
@@ -63,7 +64,6 @@ public:
   ::grpc::Status IpStackGetInfo(::grpc::ServerContext* context, const IpStackGetInfoRequest* request, IpStackGetInfoResponse* response) override;
   ::grpc::Status IpStackOpen(::grpc::ServerContext* context, const IpStackOpenRequest* request, IpStackOpenResponse* response) override;
   ::grpc::Status IpStackWaitForInterface(::grpc::ServerContext* context, const IpStackWaitForInterfaceRequest* request, IpStackWaitForInterfaceResponse* response) override;
-  ::grpc::Status FdIsSet(::grpc::ServerContext* context, const FdIsSetRequest* request, FdIsSetResponse* response) override;
   ::grpc::Status Listen(::grpc::ServerContext* context, const ListenRequest* request, ListenResponse* response) override;
   ::grpc::Status Recv(::grpc::ServerContext* context, const RecvRequest* request, RecvResponse* response) override;
   ::grpc::Status RecvFrom(::grpc::ServerContext* context, const RecvFromRequest* request, RecvFromResponse* response) override;

@@ -173,6 +173,36 @@ namespace nixnetsocket_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiXnetSocketService::FdIsSet(::grpc::ServerContext* context, const FdIsSetRequest* request, FdIsSetResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto fd_grpc_session = request->fd();
+      nxSOCKET fd = session_repository_->access_session(fd_grpc_session.id(), fd_grpc_session.name());
+      auto set = convert_from_grpc<nxfd_set>(request->set(), session_repository_);
+      auto is_set = library_->FdIsSet(fd, set);
+      auto status = 0;
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_is_set(is_set);
+      }
+      else {
+        const auto error_message = get_last_error_message(library_);
+        response->set_error_message(error_message);
+        const auto error_num = get_last_error_num(library_);
+        response->set_error_num(error_num);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiXnetSocketService::GetAddrInfo(::grpc::ServerContext* context, const GetAddrInfoRequest* request, GetAddrInfoResponse* response)
   {
     if (context->IsCancelled()) {
@@ -747,36 +777,6 @@ namespace nixnetsocket_grpc {
       auto status = library_->IpStackWaitForInterface(stack_ref, local_interface, timeout_ms);
       response->set_status(status);
       if (status_ok(status)) {
-      }
-      else {
-        const auto error_message = get_last_error_message(library_);
-        response->set_error_message(error_message);
-        const auto error_num = get_last_error_num(library_);
-        response->set_error_num(error_num);
-      }
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiXnetSocketService::FdIsSet(::grpc::ServerContext* context, const FdIsSetRequest* request, FdIsSetResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto fd_grpc_session = request->fd();
-      nxSOCKET fd = session_repository_->access_session(fd_grpc_session.id(), fd_grpc_session.name());
-      auto set = convert_from_grpc<nxfd_set>(request->set(), session_repository_);
-      auto is_set = library_->FdIsSet(fd, set);
-      auto status = 0;
-      response->set_status(status);
-      if (status_ok(status)) {
-        response->set_is_set(is_set);
       }
       else {
         const auto error_message = get_last_error_message(library_);

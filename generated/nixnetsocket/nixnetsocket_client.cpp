@@ -83,6 +83,23 @@ connect(const StubPtr& stub, const nidevice_grpc::Session& socket, const SockAdd
   return response;
 }
 
+FdIsSetResponse
+fd_is_set(const StubPtr& stub, const nidevice_grpc::Session& fd, const std::vector<nidevice_grpc::Session>& set)
+{
+  ::grpc::ClientContext context;
+
+  auto request = FdIsSetRequest{};
+  request.mutable_fd()->CopyFrom(fd);
+  copy_array(set, request.mutable_set());
+
+  auto response = FdIsSetResponse{};
+
+  raise_if_error(
+      stub->FdIsSet(&context, request, &response));
+
+  return response;
+}
+
 GetAddrInfoResponse
 get_addr_info(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const pb::string& node, const pb::string& service, const AddrInfoHint& hints)
 {
@@ -388,23 +405,6 @@ ip_stack_wait_for_interface(const StubPtr& stub, const nidevice_grpc::Session& s
 
   raise_if_error(
       stub->IpStackWaitForInterface(&context, request, &response));
-
-  return response;
-}
-
-FdIsSetResponse
-fd_is_set(const StubPtr& stub, const nidevice_grpc::Session& fd, const std::vector<nidevice_grpc::Session>& set)
-{
-  ::grpc::ClientContext context;
-
-  auto request = FdIsSetRequest{};
-  request.mutable_fd()->CopyFrom(fd);
-  copy_array(set, request.mutable_set());
-
-  auto response = FdIsSetResponse{};
-
-  raise_if_error(
-      stub->FdIsSet(&context, request, &response));
 
   return response;
 }

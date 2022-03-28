@@ -96,6 +96,32 @@ functions = {
         ],
         'returns': 'int32_t'
     },
+    'FdIsSet': {
+        'cname': 'nxfd_isset',
+        'status_expression': '0',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'fd',
+                'type': 'nxSOCKET'
+            },
+            {
+                'direction': 'in',
+                'name': 'set',
+                'pointer': True,
+                'supports_standard_copy_convert': True,
+                'additional_arguments_to_copy_convert': ['session_repository_'],
+                'type': 'nxfd_set'
+            },
+            {
+                'direction': 'out',
+                'name': 'is_set',
+                'return_value': True,
+                'type': 'int32_t'
+            }
+        ],
+        'returns': 'int32_t'
+    },
     'FreeAddrInfo': {
         'codegen_method': 'private',
         'cname': 'nxfreeaddrinfo',
@@ -640,32 +666,6 @@ functions = {
             },
         ],
         'returns': 'int32_t',
-    },
-    'FdIsSet': {
-        'cname': 'nxfd_isset',
-        'status_expression': '0',
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'fd',
-                'type': 'nxSOCKET'
-            },
-            {
-                'direction': 'in',
-                'name': 'set',
-                'pointer': True,
-                'supports_standard_copy_convert': True,
-                'additional_arguments_to_copy_convert': ['session_repository_'],
-                'type': 'nxfd_set'
-            },
-            {
-                'direction': 'out',
-                'name': 'is_set',
-                'return_value': True,
-                'type': 'int32_t'
-            }
-        ],
-        'returns': 'int32_t'
     },
     'Listen': {
         'cname': 'nxlisten',
