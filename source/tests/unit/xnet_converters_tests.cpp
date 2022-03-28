@@ -43,7 +43,7 @@ TEST(XnetConvertersTests, IPv4GrpcSockAddr_ConvertFromGrpc_CreatesIPv4NXSockAddr
 SockAddr create_addr_ipv6(pb::uint32 port, pb::uint32 flow_info, const std::vector<char>& address, pb::uint32 scope_id)
 {
   auto grpc_sock_addr = SockAddr{};
-  auto ipv6_addr = SockAddrIPv6{};
+  auto ipv6_addr = SockAddrIn6{};
   ipv6_addr.set_port(port);
   ipv6_addr.set_flow_info(flow_info);
   ipv6_addr.mutable_addr()->set_addr({address.cbegin(), address.cend()});
@@ -591,11 +591,11 @@ TEST(XnetConvertersTests, AddrOutputConverterWithBogusFamily_ConvertToGrpc_DoesN
 TEST(XnetConvertersTests, IPv4AddrOutputConverter_ConvertToGrpc_ConvertsToAddress)
 {
   constexpr auto ADDRESS = 0x11001122;
-  auto converter = allocate_output_storage<nxin_addr, IPv4Addr>();
+  auto converter = allocate_output_storage<nxin_addr, InAddr>();
   auto data_ptr = &converter;
   data_ptr->addr = ADDRESS;
 
-  auto grpc_addr = nixnetsocket_grpc::IPv4Addr{};
+  auto grpc_addr = nixnetsocket_grpc::InAddr{};
   converter.to_grpc(grpc_addr);
 
   EXPECT_EQ(ADDRESS, grpc_addr.addr());
@@ -791,7 +791,7 @@ TEST(XnetConvertersTests, GrpcAddrCase_GetAddressFamily_ReturnsCorrectDriverFami
 TEST(XnetConvertersTests, GrpcIpv4Addr_ConvertFromGrpc_ConvertsToCorrectNxInAddr)
 {
   constexpr auto ADDRESS = 0x55443322;
-  auto addr = nixnetsocket_grpc::IPv4Addr{};
+  auto addr = nixnetsocket_grpc::InAddr{};
   addr.set_addr(ADDRESS);
 
   const auto converted_data = convert_from_grpc<nxin_addr>(addr);

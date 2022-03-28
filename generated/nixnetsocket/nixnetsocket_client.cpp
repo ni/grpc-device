@@ -228,7 +228,7 @@ inet_a_to_n(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const 
 }
 
 InetNToAResponse
-inet_n_to_a(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const IPv4Addr& in_parameter)
+inet_n_to_a(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const InAddr& in_parameter)
 {
   ::grpc::ClientContext context;
 

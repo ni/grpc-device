@@ -427,7 +427,7 @@ namespace nixnetsocket_grpc {
       auto stack_ref_grpc_session = request->stack_ref();
       nxIpStackRef_t stack_ref = nx_ip_stack_ref_t_resource_repository_->access_session(stack_ref_grpc_session.id(), stack_ref_grpc_session.name());
       auto cp = request->cp().c_str();
-      auto name = allocate_output_storage<nxin_addr, IPv4Addr>();
+      auto name = allocate_output_storage<nxin_addr, InAddr>();
       auto status = library_->InetAToN(stack_ref, cp, &name);
       response->set_status(status);
       if (status_ok(status)) {

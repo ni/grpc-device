@@ -387,7 +387,7 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_type': 'IPv4Addr',
+                'grpc_type': 'InAddr',
                 'name': 'name',
                 'supports_standard_copy_convert': True,
                 'supports_standard_output_allocation': True,
@@ -407,7 +407,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'IPv4Addr',
+                'grpc_type': 'InAddr',
                 'name': 'in',
                 'supports_standard_copy_convert': True,
                 'type': 'nxin_addr'

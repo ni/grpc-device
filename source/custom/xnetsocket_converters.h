@@ -82,7 +82,7 @@ struct SockAddrInputConverter {
   } addr{};
 };
 
-void copy_ipv6_addr_to_output(const nxin6_addr& ipv6_input, IPv6Addr* ipv6_output)
+void copy_ipv6_addr_to_output(const nxin6_addr& ipv6_input, In6Addr* ipv6_output)
 {
   // Reinterpret unsigned char to char.
   auto addr_out = reinterpret_cast<const char*>(ipv6_input.addr);
@@ -161,7 +161,7 @@ struct IPv4AddrOutputConverter {
     return &addr;
   }
 
-  void to_grpc(IPv4Addr& output) const
+  void to_grpc(InAddr& output) const
   {
     output.set_addr(addr.addr);
   }
@@ -343,7 +343,7 @@ inline void convert_to_grpc(const SockAddrOutputConverter& storage, SockAddr* ou
   storage.to_grpc(*output);
 }
 
-inline void convert_to_grpc(const IPv4AddrOutputConverter& storage, IPv4Addr* output)
+inline void convert_to_grpc(const IPv4AddrOutputConverter& storage, InAddr* output)
 {
   storage.to_grpc(*output);
 }
@@ -717,7 +717,7 @@ namespace nidevice_grpc {
 namespace converters {
 
 template <>
-inline nxin_addr convert_from_grpc(const nixnetsocket_grpc::IPv4Addr& input)
+inline nxin_addr convert_from_grpc(const nixnetsocket_grpc::InAddr& input)
 {
   return {input.addr()};
 }
@@ -746,7 +746,7 @@ struct TypeToStorageType<nxaddrinfo, google::protobuf::RepeatedPtrField<nixnetso
 };
 
 template <>
-struct TypeToStorageType<nxin_addr, nixnetsocket_grpc::IPv4Addr> {
+struct TypeToStorageType<nxin_addr, nixnetsocket_grpc::InAddr> {
   using StorageType = nixnetsocket_grpc::IPv4AddrOutputConverter;
 };
 
