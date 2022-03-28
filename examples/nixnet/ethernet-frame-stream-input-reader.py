@@ -2,17 +2,22 @@ r""" Reads all the frame on network.
 
   This example reads all the frames on the network and displays them. 
   This is used to demonstrate a frame input stream session.
+
 The gRPC API is built from the C API. NI-XNET documentation is installed with the driver at:
   C:\Users\Public\Documents\National Instruments\NI-XNET\Documentation\NI-XNET Manual.chm
+
 Getting Started:
 To run this example, install "NI-XNET Driver" on the server machine:
   https://www.ni.com/en-in/support/downloads/drivers/download.ni-xnet.html
+
 For instructions on how to use protoc to generate gRPC client interfaces, see our "Creating a gRPC
 Client" wiki page:
   https://github.com/ni/grpc-device/wiki/Creating-a-gRPC-Client
+
 Refer to the NI XNET gRPC Wiki for the latest C Function Reference:
   https://github.com/ni/grpc-device/wiki/NI-XNET-C-Function-Reference
- Running from command line:
+
+Running from command line:
 Server machine's IP address, port number, and interface name can be passed as separate command line
 arguments.
   > python ethernet-frame-stream-input-reader.py <server_address> <port_number> <interface_name>
