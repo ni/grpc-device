@@ -87,8 +87,9 @@ try:
     check_for_error(create_session_response.status)
 
     session = create_session_response.session
-
     print("Session Created Successfully.\n")
+
+    print("Writing 10 values to CAN Port.\n")
 
     while i < 10:
         value_buffer[0] = float(i)

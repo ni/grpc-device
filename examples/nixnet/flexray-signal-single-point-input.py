@@ -100,8 +100,9 @@ try:
     )
     check_for_error(set_property_response.status)
 
+    # To get more meaningful data use this with output example
     while i < 10:
-        # Update the signal data
+        # Update the signal data, the first read normally return the default payload values.
         read_signal_response = client.ReadSignalSinglePoint(
             nixnet_types.ReadSignalSinglePointRequest(
                 session=session,

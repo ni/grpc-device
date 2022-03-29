@@ -36,8 +36,7 @@ import nixnet_pb2_grpc as grpc_nixnet
 
 CHOOSE_MONITOR_OR_ENDPOINT_TEXT = (
     "\nPress 'm' followed by enter to configure the input stream session to use the monitor path"
-    " to monitor all network traffic else just the enter key to use the endpoint path which filters"
-    " traffic based on VLAN ID and priority. :"
+    " to monitor all network traffic. :"
 )
 FRAME_CHECK_SEQUENCE_SIZE = 4
 MAX_ENET_FRAME_SIZE = 1518
