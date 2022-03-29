@@ -96,6 +96,32 @@ functions = {
         ],
         'returns': 'int32_t'
     },
+    'FdIsSet': {
+        'cname': 'nxfd_isset',
+        'status_expression': '0',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'fd',
+                'type': 'nxSOCKET'
+            },
+            {
+                'direction': 'in',
+                'name': 'set',
+                'pointer': True,
+                'supports_standard_copy_convert': True,
+                'additional_arguments_to_copy_convert': ['session_repository_'],
+                'type': 'nxfd_set'
+            },
+            {
+                'direction': 'out',
+                'name': 'is_set',
+                'return_value': True,
+                'type': 'int32_t'
+            }
+        ],
+        'returns': 'int32_t'
+    },
     'FreeAddrInfo': {
         'codegen_method': 'private',
         'cname': 'nxfreeaddrinfo',
@@ -216,7 +242,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'addr_len',
+                'name': 'addrlen',
                 'hardcoded_value': 'addr.size()',
                 'include_in_proto': False,
                 'type': 'nxsocklen_t'
@@ -227,12 +253,12 @@ functions = {
                 'type': 'char[]',
                 'size': {
                     'mechanism': 'passed-in',
-                    'value': 'host_len'
+                    'value': 'hostlen'
                 }
             },
             {
                 'direction': 'in',
-                'name': 'host_len',
+                'name': 'hostlen',
                 'type': 'nxsocklen_t'
             },
             {
@@ -241,12 +267,12 @@ functions = {
                 'type': 'char[]',
                 'size': {
                     'mechanism': 'passed-in',
-                    'value': 'serv_len'
+                    'value': 'servlen'
                 }
             },
             {
                 'direction': 'in',
-                'name': 'serv_len',
+                'name': 'servlen',
                 'type': 'nxsocklen_t'
             },
             {
@@ -387,7 +413,7 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_type': 'IPv4Addr',
+                'grpc_type': 'InAddr',
                 'name': 'name',
                 'supports_standard_copy_convert': True,
                 'supports_standard_output_allocation': True,
@@ -407,7 +433,8 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_type': 'IPv4Addr',
+                'grpc_name': 'in_addr',
+                'grpc_type': 'InAddr',
                 'name': 'in',
                 'supports_standard_copy_convert': True,
                 'type': 'nxin_addr'
@@ -481,6 +508,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'enum': 'AddressFamily',
                 'name': 'af',
                 'type': 'int32_t'
             },
@@ -561,8 +589,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in', 
-                'hardcoded_value': 'nxIPSTACK_INFO_ID',
-                'include_in_proto': False,
+                'enum': 'IPStackInfoStringFormat',
                 'name': 'format', 
                 'type': 'uint32_t'
             },
@@ -639,32 +666,6 @@ functions = {
             },
         ],
         'returns': 'int32_t',
-    },
-    'IsSet': {
-        'cname': 'nxfd_isset',
-        'status_expression': '0',
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'fd',
-                'type': 'nxSOCKET'
-            },
-            {
-                'direction': 'in',
-                'name': 'set',
-                'pointer': True,
-                'supports_standard_copy_convert': True,
-                'additional_arguments_to_copy_convert': ['session_repository_'],
-                'type': 'nxfd_set'
-            },
-            {
-                'direction': 'out',
-                'name': 'is_set',
-                'return_value': True,
-                'type': 'int32_t'
-            }
-        ],
-        'returns': 'int32_t'
     },
     'Listen': {
         'cname': 'nxlisten',
@@ -743,6 +744,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_name': 'from_addr',
                 'grpc_type': 'SockAddr',
                 'name': 'from',
                 'supports_standard_output_allocation': True,
@@ -770,7 +772,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'read_fds',
+                'name': 'readfds',
                 'pointer': True,
                 'supports_standard_copy_convert': True,
                 'additional_arguments_to_copy_convert': ['session_repository_'],
@@ -778,7 +780,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'write_fds',
+                'name': 'writefds',
                 'pointer': True,
                 'supports_standard_copy_convert': True,
                 'additional_arguments_to_copy_convert': ['session_repository_'],
@@ -786,7 +788,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'except_fds',
+                'name': 'exceptfds',
                 'pointer': True,
                 'supports_standard_copy_convert': True,
                 'additional_arguments_to_copy_convert': ['session_repository_'],
@@ -970,7 +972,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'prototcol',
+                'name': 'protocol',
                 'type': 'int32_t',
                 'enum': 'IPProtocol'
             },
