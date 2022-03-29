@@ -163,7 +163,7 @@ TEST(ConvertersTests, RawValue_ConvertBitfieldAsEnumArrayInput_ReturnsRawValue)
 TEST(ConvertersTests, ArrayAndRawValue_ConvertBitfieldAsEnumArrayInput_ReturnsOrOfValues)
 {
   constexpr auto INPUT_RAW = 0x8;
-  const auto input_array = std::vector{TestEnum::TWO, TestEnum::FOUR};
+  const auto input_array = std::vector<TestEnum>{TestEnum::TWO, TestEnum::FOUR};
 
   const auto converted = convert_bitfield_as_enum_array_input(input_array, INPUT_RAW);
 
