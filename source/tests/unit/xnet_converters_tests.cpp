@@ -449,11 +449,11 @@ TEST(XnetConvertersTests, BoolSockOptData_ConvertToGrpc_ConvertsToSockOptDataWit
 TEST(XnetConvertersTests, StringSockOptData_ConvertToGrpc_ConvertsToSockOptDataWithStringValue)
 {
   const std::string DEVICE_NAME = "I'm a Device";
-  constexpr auto MAX_SOCK_OPT_STRING_SIZE = 255;
+  constexpr auto DEFAULT_SOCK_OPT_STRING_SIZE = 255;
   NiXnetSocketMockLibrary library;
   auto storage = allocate_output_storage<void*, SockOptData>(&library, OptName::OPT_NAME_SO_BIND_TO_DEVICE);
   void* data_pointer = storage.data();
-  EXPECT_EQ(MAX_SOCK_OPT_STRING_SIZE, storage.data_string.size());
+  EXPECT_EQ(DEFAULT_SOCK_OPT_STRING_SIZE, storage.data_string.size());
   EXPECT_EQ(data_pointer, &(storage.data_string[0]));
   auto string_pointer = reinterpret_cast<char*>(data_pointer);
   strncpy(string_pointer, DEVICE_NAME.c_str(), DEVICE_NAME.size() + 1);
@@ -606,6 +606,25 @@ TEST(XnetConvertersTests, IPv4AddrOutputConverter_ConvertToGrpc_ConvertsToAddres
   converter.to_grpc(grpc_addr);
 
   EXPECT_EQ(ADDRESS, grpc_addr.addr());
+}
+
+TEST(XnetConvertersTests, StringSockOptData_GetSize_FetchesSizeFromLibrary)
+{
+  constexpr auto DEFAULT_SOCK_OPT_STRING_SIZE = 255;
+  auto ACTUAL_SOCK_OPT_STRING_SIZE = 12;
+  NiXnetSocketMockLibrary library;
+  auto storage = allocate_output_storage<void*, SockOptData>(&library, OptName::OPT_NAME_SO_BIND_TO_DEVICE);
+  EXPECT_EQ(DEFAULT_SOCK_OPT_STRING_SIZE, storage.string_length);
+  // Expect call GetSockOpt(socket, level, opt_name, nullptr, &string_length)
+  nxSOCKET SOCKET = NULL;
+  const int LEVEL = 3;
+  nxsocklen_t actual_length;
+
+  EXPECT_CALL(library, GetSockOpt(SOCKET, LEVEL, OptName::OPT_NAME_SO_BIND_TO_DEVICE, nullptr, _))
+      .WillOnce(DoAll(SetArgPointee<4>(ACTUAL_SOCK_OPT_STRING_SIZE), Return(0)));
+
+  actual_length = storage.size(SOCKET, LEVEL);
+  EXPECT_EQ(ACTUAL_SOCK_OPT_STRING_SIZE, actual_length);
 }
 
 TEST(XnetConvertersTests, AddrInfoHintInputConverter_ConvertFromGrpc_ConvertsToAddrInfoHint)
