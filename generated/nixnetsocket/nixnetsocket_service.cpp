@@ -173,6 +173,36 @@ namespace nixnetsocket_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiXnetSocketService::FdIsSet(::grpc::ServerContext* context, const FdIsSetRequest* request, FdIsSetResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto fd_grpc_session = request->fd();
+      nxSOCKET fd = session_repository_->access_session(fd_grpc_session.id(), fd_grpc_session.name());
+      auto set = convert_from_grpc<nxfd_set>(request->set(), session_repository_);
+      auto is_set = library_->FdIsSet(fd, set);
+      auto status = 0;
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_is_set(is_set);
+      }
+      else {
+        const auto error_message = get_last_error_message(library_);
+        response->set_error_message(error_message);
+        const auto error_num = get_last_error_num(library_);
+        response->set_error_num(error_num);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiXnetSocketService::GetAddrInfo(::grpc::ServerContext* context, const GetAddrInfoRequest* request, GetAddrInfoResponse* response)
   {
     if (context->IsCancelled()) {
@@ -216,9 +246,9 @@ namespace nixnetsocket_grpc {
       auto stack_ref_grpc_session = request->stack_ref();
       nxIpStackRef_t stack_ref = nx_ip_stack_ref_t_resource_repository_->access_session(stack_ref_grpc_session.id(), stack_ref_grpc_session.name());
       auto addr = convert_from_grpc<nxsockaddr>(request->addr());
-      auto addr_len = addr.size();
-      nxsocklen_t host_len = request->host_len();
-      nxsocklen_t serv_len = request->serv_len();
+      auto addrlen = addr.size();
+      nxsocklen_t hostlen = request->hostlen();
+      nxsocklen_t servlen = request->servlen();
       int32_t flags;
       switch (request->flags_enum_case()) {
         case nixnetsocket_grpc::GetNameInfoRequest::FlagsEnumCase::kFlags: {
@@ -236,14 +266,14 @@ namespace nixnetsocket_grpc {
       }
 
       std::string host;
-      if (host_len > 0) {
-          host.resize(host_len - 1);
+      if (hostlen > 0) {
+          host.resize(hostlen - 1);
       }
       std::string serv;
-      if (serv_len > 0) {
-          serv.resize(serv_len - 1);
+      if (servlen > 0) {
+          serv.resize(servlen - 1);
       }
-      auto status = library_->GetNameInfo(stack_ref, addr, addr_len, (char*)host.data(), host_len, (char*)serv.data(), serv_len, flags);
+      auto status = library_->GetNameInfo(stack_ref, addr, addrlen, (char*)host.data(), hostlen, (char*)serv.data(), servlen, flags);
       response->set_status(status);
       if (status_ok(status)) {
         response->set_host(host);
@@ -427,7 +457,7 @@ namespace nixnetsocket_grpc {
       auto stack_ref_grpc_session = request->stack_ref();
       nxIpStackRef_t stack_ref = nx_ip_stack_ref_t_resource_repository_->access_session(stack_ref_grpc_session.id(), stack_ref_grpc_session.name());
       auto cp = request->cp().c_str();
-      auto name = allocate_output_storage<nxin_addr, IPv4Addr>();
+      auto name = allocate_output_storage<nxin_addr, InAddr>();
       auto status = library_->InetAToN(stack_ref, cp, &name);
       response->set_status(status);
       if (status_ok(status)) {
@@ -456,8 +486,8 @@ namespace nixnetsocket_grpc {
     try {
       auto stack_ref_grpc_session = request->stack_ref();
       nxIpStackRef_t stack_ref = nx_ip_stack_ref_t_resource_repository_->access_session(stack_ref_grpc_session.id(), stack_ref_grpc_session.name());
-      auto in_parameter = convert_from_grpc<nxin_addr>(request->in());
-      auto address = library_->InetNToA(stack_ref, in_parameter);
+      auto in_addr = convert_from_grpc<nxin_addr>(request->in_addr());
+      auto address = library_->InetNToA(stack_ref, in_addr);
       auto status = address ? 0 : -1;
       response->set_status(status);
       if (status_ok(status)) {
@@ -521,7 +551,22 @@ namespace nixnetsocket_grpc {
     try {
       auto stack_ref_grpc_session = request->stack_ref();
       nxIpStackRef_t stack_ref = nx_ip_stack_ref_t_resource_repository_->access_session(stack_ref_grpc_session.id(), stack_ref_grpc_session.name());
-      int32_t af = request->af();
+      int32_t af;
+      switch (request->af_enum_case()) {
+        case nixnetsocket_grpc::InetPToNRequest::AfEnumCase::kAf: {
+          af = static_cast<int32_t>(request->af());
+          break;
+        }
+        case nixnetsocket_grpc::InetPToNRequest::AfEnumCase::kAfRaw: {
+          af = static_cast<int32_t>(request->af_raw());
+          break;
+        }
+        case nixnetsocket_grpc::InetPToNRequest::AfEnumCase::AF_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for af was not specified or out of range");
+          break;
+        }
+      }
+
       auto src = request->src().c_str();
       auto dst = allocate_output_storage<void, Addr>(af);
       auto status = library_->InetPToN(stack_ref, af, src, &dst);
@@ -615,7 +660,22 @@ namespace nixnetsocket_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto format = nxIPSTACK_INFO_ID;
+      uint32_t format;
+      switch (request->format_enum_case()) {
+        case nixnetsocket_grpc::IpStackGetAllStacksInfoStrRequest::FormatEnumCase::kFormat: {
+          format = static_cast<uint32_t>(request->format());
+          break;
+        }
+        case nixnetsocket_grpc::IpStackGetAllStacksInfoStrRequest::FormatEnumCase::kFormatRaw: {
+          format = static_cast<uint32_t>(request->format_raw());
+          break;
+        }
+        case nixnetsocket_grpc::IpStackGetAllStacksInfoStrRequest::FormatEnumCase::FORMAT_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for format was not specified or out of range");
+          break;
+        }
+      }
+
       auto info = allocate_output_storage<nixnetsocket_grpc::IpStackInfoString, std::string>(library_);
       auto status = library_->IpStackGetAllStacksInfoStr(format, (nixnetsocket_grpc::IpStackInfoString*)info.data());
       response->set_status(status);
@@ -733,36 +793,6 @@ namespace nixnetsocket_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiXnetSocketService::IsSet(::grpc::ServerContext* context, const IsSetRequest* request, IsSetResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto fd_grpc_session = request->fd();
-      nxSOCKET fd = session_repository_->access_session(fd_grpc_session.id(), fd_grpc_session.name());
-      auto set = convert_from_grpc<nxfd_set>(request->set(), session_repository_);
-      auto is_set = library_->IsSet(fd, set);
-      auto status = 0;
-      response->set_status(status);
-      if (status_ok(status)) {
-        response->set_is_set(is_set);
-      }
-      else {
-        const auto error_message = get_last_error_message(library_);
-        response->set_error_message(error_message);
-        const auto error_num = get_last_error_num(library_);
-        response->set_error_num(error_num);
-      }
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
   ::grpc::Status NiXnetSocketService::Listen(::grpc::ServerContext* context, const ListenRequest* request, ListenResponse* response)
   {
     if (context->IsCancelled()) {
@@ -833,13 +863,13 @@ namespace nixnetsocket_grpc {
       int32_t size = request->size();
       int32_t flags = request->flags();
       std::string mem(size, '\0');
-      auto from = allocate_output_storage<nxsockaddr, SockAddr>();
+      auto from_addr = allocate_output_storage<nxsockaddr, SockAddr>();
       nxsocklen_t fromlen {};
-      auto status = library_->RecvFrom(socket, (char*)mem.data(), size, flags, &from, &fromlen);
+      auto status = library_->RecvFrom(socket, (char*)mem.data(), size, flags, &from_addr, &fromlen);
       response->set_status(status);
       if (status_ok(status)) {
         response->set_mem(mem);
-        convert_to_grpc(from, response->mutable_from());
+        convert_to_grpc(from_addr, response->mutable_from_addr());
       }
       else {
         const auto error_message = get_last_error_message(library_);
@@ -863,11 +893,11 @@ namespace nixnetsocket_grpc {
     }
     try {
       auto nfds = 0;
-      auto read_fds = convert_from_grpc<nxfd_set>(request->read_fds(), session_repository_);
-      auto write_fds = convert_from_grpc<nxfd_set>(request->write_fds(), session_repository_);
-      auto except_fds = convert_from_grpc<nxfd_set>(request->except_fds(), session_repository_);
+      auto readfds = convert_from_grpc<nxfd_set>(request->readfds(), session_repository_);
+      auto writefds = convert_from_grpc<nxfd_set>(request->writefds(), session_repository_);
+      auto exceptfds = convert_from_grpc<nxfd_set>(request->exceptfds(), session_repository_);
       auto timeout = convert_from_grpc<nxtimeval>(request->timeout());
-      auto status = library_->Select(nfds, read_fds, write_fds, except_fds, timeout);
+      auto status = library_->Select(nfds, readfds, writefds, exceptfds, timeout);
       response->set_status(status);
       if (status_ok(status)) {
       }
@@ -1093,25 +1123,25 @@ namespace nixnetsocket_grpc {
         }
       }
 
-      int32_t prototcol;
-      switch (request->prototcol_enum_case()) {
-        case nixnetsocket_grpc::SocketRequest::PrototcolEnumCase::kPrototcol: {
-          prototcol = static_cast<int32_t>(request->prototcol());
+      int32_t protocol;
+      switch (request->protocol_enum_case()) {
+        case nixnetsocket_grpc::SocketRequest::ProtocolEnumCase::kProtocol: {
+          protocol = static_cast<int32_t>(request->protocol());
           break;
         }
-        case nixnetsocket_grpc::SocketRequest::PrototcolEnumCase::kPrototcolRaw: {
-          prototcol = static_cast<int32_t>(request->prototcol_raw());
+        case nixnetsocket_grpc::SocketRequest::ProtocolEnumCase::kProtocolRaw: {
+          protocol = static_cast<int32_t>(request->protocol_raw());
           break;
         }
-        case nixnetsocket_grpc::SocketRequest::PrototcolEnumCase::PROTOTCOL_ENUM_NOT_SET: {
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for prototcol was not specified or out of range");
+        case nixnetsocket_grpc::SocketRequest::ProtocolEnumCase::PROTOCOL_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for protocol was not specified or out of range");
           break;
         }
       }
 
 
       auto init_lambda = [&] () {
-        auto socket = library_->Socket(stack_ref, domain, type, prototcol);
+        auto socket = library_->Socket(stack_ref, domain, type, protocol);
         auto status = socket == -1 ? -1 : 0;
         return std::make_tuple(status, socket);
       };

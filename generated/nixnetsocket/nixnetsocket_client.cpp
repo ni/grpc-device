@@ -83,6 +83,23 @@ connect(const StubPtr& stub, const nidevice_grpc::Session& socket, const SockAdd
   return response;
 }
 
+FdIsSetResponse
+fd_is_set(const StubPtr& stub, const nidevice_grpc::Session& fd, const std::vector<nidevice_grpc::Session>& set)
+{
+  ::grpc::ClientContext context;
+
+  auto request = FdIsSetRequest{};
+  request.mutable_fd()->CopyFrom(fd);
+  copy_array(set, request.mutable_set());
+
+  auto response = FdIsSetResponse{};
+
+  raise_if_error(
+      stub->FdIsSet(&context, request, &response));
+
+  return response;
+}
+
 GetAddrInfoResponse
 get_addr_info(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const pb::string& node, const pb::string& service, const AddrInfoHint& hints)
 {
@@ -103,15 +120,15 @@ get_addr_info(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, cons
 }
 
 GetNameInfoResponse
-get_name_info(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const SockAddr& addr, const pb::int32& host_len, const pb::int32& serv_len, const simple_variant<GetNameInfoFlags, pb::int32>& flags)
+get_name_info(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const SockAddr& addr, const pb::int32& hostlen, const pb::int32& servlen, const simple_variant<GetNameInfoFlags, pb::int32>& flags)
 {
   ::grpc::ClientContext context;
 
   auto request = GetNameInfoRequest{};
   request.mutable_stack_ref()->CopyFrom(stack_ref);
   request.mutable_addr()->CopyFrom(addr);
-  request.set_host_len(host_len);
-  request.set_serv_len(serv_len);
+  request.set_hostlen(hostlen);
+  request.set_servlen(servlen);
   const auto flags_ptr = flags.get_if<GetNameInfoFlags>();
   const auto flags_raw_ptr = flags.get_if<pb::int32>();
   if (flags_ptr) {
@@ -228,13 +245,13 @@ inet_a_to_n(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const 
 }
 
 InetNToAResponse
-inet_n_to_a(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const IPv4Addr& in_parameter)
+inet_n_to_a(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const InAddr& in_addr)
 {
   ::grpc::ClientContext context;
 
   auto request = InetNToARequest{};
   request.mutable_stack_ref()->CopyFrom(stack_ref);
-  request.mutable_in()->CopyFrom(in_parameter);
+  request.mutable_in_addr()->CopyFrom(in_addr);
 
   auto response = InetNToAResponse{};
 
@@ -262,13 +279,20 @@ inet_n_to_p(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const 
 }
 
 InetPToNResponse
-inet_p_to_n(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const pb::int32& af, const pb::string& src)
+inet_p_to_n(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const simple_variant<AddressFamily, pb::int32>& af, const pb::string& src)
 {
   ::grpc::ClientContext context;
 
   auto request = InetPToNRequest{};
   request.mutable_stack_ref()->CopyFrom(stack_ref);
-  request.set_af(af);
+  const auto af_ptr = af.get_if<AddressFamily>();
+  const auto af_raw_ptr = af.get_if<pb::int32>();
+  if (af_ptr) {
+    request.set_af(*af_ptr);
+  }
+  else if (af_raw_ptr) {
+    request.set_af_raw(*af_raw_ptr);
+  }
   request.set_src(src);
 
   auto response = InetPToNResponse{};
@@ -313,11 +337,19 @@ ip_stack_create(const StubPtr& stub, const pb::string& stack_name, const pb::str
 }
 
 IpStackGetAllStacksInfoStrResponse
-ip_stack_get_all_stacks_info_str(const StubPtr& stub)
+ip_stack_get_all_stacks_info_str(const StubPtr& stub, const simple_variant<IPStackInfoStringFormat, pb::uint32>& format)
 {
   ::grpc::ClientContext context;
 
   auto request = IpStackGetAllStacksInfoStrRequest{};
+  const auto format_ptr = format.get_if<IPStackInfoStringFormat>();
+  const auto format_raw_ptr = format.get_if<pb::uint32>();
+  if (format_ptr) {
+    request.set_format(*format_ptr);
+  }
+  else if (format_raw_ptr) {
+    request.set_format_raw(*format_raw_ptr);
+  }
 
   auto response = IpStackGetAllStacksInfoStrResponse{};
 
@@ -377,23 +409,6 @@ ip_stack_wait_for_interface(const StubPtr& stub, const nidevice_grpc::Session& s
   return response;
 }
 
-IsSetResponse
-is_set(const StubPtr& stub, const nidevice_grpc::Session& fd, const std::vector<nidevice_grpc::Session>& set)
-{
-  ::grpc::ClientContext context;
-
-  auto request = IsSetRequest{};
-  request.mutable_fd()->CopyFrom(fd);
-  copy_array(set, request.mutable_set());
-
-  auto response = IsSetResponse{};
-
-  raise_if_error(
-      stub->IsSet(&context, request, &response));
-
-  return response;
-}
-
 ListenResponse
 listen(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::int32& backlog)
 {
@@ -448,14 +463,14 @@ recv_from(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::i
 }
 
 SelectResponse
-select(const StubPtr& stub, const std::vector<nidevice_grpc::Session>& read_fds, const std::vector<nidevice_grpc::Session>& write_fds, const std::vector<nidevice_grpc::Session>& except_fds, const google::protobuf::Duration& timeout)
+select(const StubPtr& stub, const std::vector<nidevice_grpc::Session>& readfds, const std::vector<nidevice_grpc::Session>& writefds, const std::vector<nidevice_grpc::Session>& exceptfds, const google::protobuf::Duration& timeout)
 {
   ::grpc::ClientContext context;
 
   auto request = SelectRequest{};
-  copy_array(read_fds, request.mutable_read_fds());
-  copy_array(write_fds, request.mutable_write_fds());
-  copy_array(except_fds, request.mutable_except_fds());
+  copy_array(readfds, request.mutable_readfds());
+  copy_array(writefds, request.mutable_writefds());
+  copy_array(exceptfds, request.mutable_exceptfds());
   request.mutable_timeout()->CopyFrom(timeout);
 
   auto response = SelectResponse{};
@@ -561,7 +576,7 @@ shutdown(const StubPtr& stub, const nidevice_grpc::Session& socket, const simple
 }
 
 SocketResponse
-socket(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const simple_variant<AddressFamily, pb::int32>& domain, const simple_variant<SocketProtocolType, pb::int32>& type, const simple_variant<IPProtocol, pb::int32>& prototcol)
+socket(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const simple_variant<AddressFamily, pb::int32>& domain, const simple_variant<SocketProtocolType, pb::int32>& type, const simple_variant<IPProtocol, pb::int32>& protocol)
 {
   ::grpc::ClientContext context;
 
@@ -583,13 +598,13 @@ socket(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const simpl
   else if (type_raw_ptr) {
     request.set_type_raw(*type_raw_ptr);
   }
-  const auto prototcol_ptr = prototcol.get_if<IPProtocol>();
-  const auto prototcol_raw_ptr = prototcol.get_if<pb::int32>();
-  if (prototcol_ptr) {
-    request.set_prototcol(*prototcol_ptr);
+  const auto protocol_ptr = protocol.get_if<IPProtocol>();
+  const auto protocol_raw_ptr = protocol.get_if<pb::int32>();
+  if (protocol_ptr) {
+    request.set_protocol(*protocol_ptr);
   }
-  else if (prototcol_raw_ptr) {
-    request.set_prototcol_raw(*prototcol_raw_ptr);
+  else if (protocol_raw_ptr) {
+    request.set_protocol_raw(*protocol_raw_ptr);
   }
 
   auto response = SocketResponse{};

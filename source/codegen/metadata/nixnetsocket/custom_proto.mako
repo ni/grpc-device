@@ -1,12 +1,12 @@
 message IPAddress {
-  uint32 family = 1;
+  AddressFamily family = 1;
   string address = 2;
   string net_mask = 3;
   uint32 prefix_length = 4;
 }
 
 message GatewayAddress {
-  uint32 family = 1;
+  AddressFamily family = 1;
   string address = 2;
 }
 
@@ -15,43 +15,43 @@ message VirtualInterface {
   string vlan_name = 2;
   string mac_address = 3;
   uint32 mac_mtu = 4;
-  uint32 operational_status = 5;
+  OperationalStatus operational_status = 5;
   uint32 if_index = 6;
   repeated IPAddress ip_addresses = 7;
   repeated GatewayAddress gateway_addresses = 8;
 }
 
-message IPv6Addr {
+message In6Addr {
   bytes addr = 1;
 }
 
-message IPv4Addr {
+message InAddr {
   uint32 addr = 1;
 }
 
 message Addr {
   oneof addr {
-    IPv4Addr ipv4 = 1;
-    IPv6Addr ipv6 = 2;
+    InAddr ipv4 = 1;
+    In6Addr ipv6 = 2;
   }
 }
 
-message SockAddrIPv4 {
+message SockAddrIn {
   uint32 port = 1;
-  IPv4Addr addr = 2;
+  InAddr addr = 2;
 }
 
-message SockAddrIPv6 {
+message SockAddrIn6 {
   uint32 port = 1;
   uint32 flow_info = 2;
-  IPv6Addr addr = 3;
+  In6Addr addr = 3;
   uint32 scope_id = 4;
 }
 
 message SockAddr {
   oneof addr {
-    SockAddrIPv4 ipv4 = 1;
-    SockAddrIPv6 ipv6 = 2;
+    SockAddrIn ipv4 = 1;
+    SockAddrIn6 ipv6 = 2;
   }
 }
 
@@ -79,12 +79,12 @@ message Linger {
 }
 
 message IPMReq {
-  IPv4Addr imr_multiaddr = 1;
-  IPv4Addr imr_interface = 2;
+  InAddr imr_multiaddr = 1;
+  InAddr imr_interface = 2;
 }
 
 message IPv6MReq {
-  IPv6Addr ipv6mr_multiaddr = 1;
+  In6Addr ipv6mr_multiaddr = 1;
   int32 ipv6mr_interface = 2;
 }
 
