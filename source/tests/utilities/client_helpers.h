@@ -27,6 +27,14 @@ class simple_variant {
     return get_if(type_selection<T>{});
   }
 
+  // If T is the active slot: return a copy of the data. Else return default initialized T.
+  template <typename T>
+  T unpack() const
+  {
+    auto ptr_to_data = get_if<T>();
+    return ptr_to_data ? *ptr_to_data : T{};
+  }
+
  private:
   template <typename T>
   struct type_selection {
@@ -63,8 +71,10 @@ inline void copy_array(const TSource& source, TDestination* destination)
 template <typename TArray, typename TBitfield>
 inline google::protobuf::int32 copy_bitfield_as_enum_array(const simple_variant<TArray, TBitfield>& input)
 {
-  const auto unpacked_array = input.get_if<TArray>() ? *input.get_if<TArray>() : TArray{};
-  const auto unpacked_bitfield = input.get_if<TBitfield>() ? *input.get_if<TBitfield>() : TBitfield{};
+  // Note: "template" qualifiers required for dependent name:
+  // https://stackoverflow.com/questions/610245/where-and-why-do-i-have-to-put-the-template-and-typename-keywords
+  const auto unpacked_array = input.template unpack<TArray>();
+  const auto unpacked_bitfield = input.template unpack<TBitfield>();
   return nidevice_grpc::converters::convert_bitfield_as_enum_array_input(unpacked_array, unpacked_bitfield);
 }
 
