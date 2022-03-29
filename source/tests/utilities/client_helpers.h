@@ -2,6 +2,7 @@
 #define CLIENT_HELPERS
 
 #include <grpcpp/grpcpp.h>
+#include <server/converters.h>
 
 #include <cstdint>
 
@@ -57,6 +58,14 @@ template <typename TSource, typename TDestination>
 inline void copy_array(const TSource& source, TDestination* destination)
 {
   destination->CopyFrom({source.cbegin(), source.cend()});
+}
+
+template <typename TArray, typename TBitfield>
+inline google::protobuf::int32 copy_bitfield_as_enum_array(const simple_variant<TArray, TBitfield>& input)
+{
+  const auto unpacked_array = input.get_if<TArray>() ? *input.get_if<TArray>() : TArray{};
+  const auto unpacked_bitfield = input.get_if<TBitfield>() ? *input.get_if<TBitfield>() : TBitfield{};
+  return nidevice_grpc::converters::convert_bitfield_as_enum_array_input(unpacked_array, unpacked_bitfield);
 }
 
 }  // namespace nidevice_grpc::experimental::client

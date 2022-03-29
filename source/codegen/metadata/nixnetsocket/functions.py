@@ -707,6 +707,7 @@ functions = {
                 'type': 'int32_t'
             },
             {
+                'bitfield_as_enum_array': 'RecvFlags',
                 'direction': 'in',
                 'name': 'flags',
                 'type': 'int32_t'
@@ -738,6 +739,7 @@ functions = {
                 'type': 'int32_t'
             },
             {
+                'bitfield_as_enum_array': 'RecvFlags',
                 'direction': 'in',
                 'name': 'flags',
                 'type': 'int32_t'
@@ -831,6 +833,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_name': 'flags_raw',
                 'name': 'flags',
                 'type': 'int32_t'
             },
@@ -864,6 +867,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_name': 'flags_raw',
                 'name': 'flags',
                 'type': 'int32_t'
             },

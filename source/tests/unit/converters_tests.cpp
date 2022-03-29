@@ -135,6 +135,41 @@ TEST(ConvertersTests, NullableVectorInitializedWithData_ConditionallyAssignMoved
   const auto data = vec.data();
   EXPECT_THAT(std::vector<int32_t>(data, data + DATA.size()), ElementsAreArray(DATA));
 }
+
+enum TestEnum {
+  ONE = 1,
+  TWO = 2,
+  FOUR = 4
+};
+
+TEST(ConvertersTests, EnumArray_ConvertBitfieldAsEnumArrayInput_ReturnsOrOfValues)
+{
+  const auto input = std::vector<TestEnum>{TestEnum::ONE, TestEnum::FOUR};
+
+  const auto converted = convert_bitfield_as_enum_array_input(input, 0);
+
+  EXPECT_EQ(0x1 | 0x4, converted);
+}
+
+TEST(ConvertersTests, RawValue_ConvertBitfieldAsEnumArrayInput_ReturnsRawValue)
+{
+  constexpr auto INPUT_RAW = 0x7;
+
+  const auto converted = convert_bitfield_as_enum_array_input(std::vector<TestEnum>{}, INPUT_RAW);
+
+  EXPECT_EQ(INPUT_RAW, converted);
+}
+
+TEST(ConvertersTests, ArrayAndRawValue_ConvertBitfieldAsEnumArrayInput_ReturnsOrOfValues)
+{
+  constexpr auto INPUT_RAW = 0x8;
+  const auto input_array = std::vector{TestEnum::TWO, TestEnum::FOUR};
+
+  const auto converted = convert_bitfield_as_enum_array_input(input_array, INPUT_RAW);
+
+  EXPECT_EQ(0x2 | 0x4 | 0x8, converted);
+}
+
 }  // namespace
 }  // namespace unit
 }  // namespace tests

@@ -830,7 +830,10 @@ namespace nixnetsocket_grpc {
       auto socket_grpc_session = request->socket();
       nxSOCKET socket = session_repository_->access_session(socket_grpc_session.id(), socket_grpc_session.name());
       int32_t size = request->size();
-      int32_t flags = request->flags();
+      const auto flags = nidevice_grpc::converters::convert_bitfield_as_enum_array_input(
+        request->flags_array(),
+        request->flags_raw());
+
       std::string mem(size, '\0');
       auto status = library_->Recv(socket, (char*)mem.data(), size, flags);
       response->set_status(status);
@@ -861,7 +864,10 @@ namespace nixnetsocket_grpc {
       auto socket_grpc_session = request->socket();
       nxSOCKET socket = session_repository_->access_session(socket_grpc_session.id(), socket_grpc_session.name());
       int32_t size = request->size();
-      int32_t flags = request->flags();
+      const auto flags = nidevice_grpc::converters::convert_bitfield_as_enum_array_input(
+        request->flags_array(),
+        request->flags_raw());
+
       std::string mem(size, '\0');
       auto from_addr = allocate_output_storage<nxsockaddr, SockAddr>();
       nxsocklen_t fromlen {};
@@ -926,8 +932,8 @@ namespace nixnetsocket_grpc {
       nxSOCKET socket = session_repository_->access_session(socket_grpc_session.id(), socket_grpc_session.name());
       char* dataptr = (char*)request->dataptr().c_str();
       int32_t size = static_cast<int32_t>(request->dataptr().size());
-      int32_t flags = request->flags();
-      auto status = library_->Send(socket, dataptr, size, flags);
+      int32_t flags_raw = request->flags_raw();
+      auto status = library_->Send(socket, dataptr, size, flags_raw);
       response->set_status(status);
       if (status_ok(status)) {
       }
@@ -956,10 +962,10 @@ namespace nixnetsocket_grpc {
       nxSOCKET socket = session_repository_->access_session(socket_grpc_session.id(), socket_grpc_session.name());
       char* dataptr = (char*)request->dataptr().c_str();
       int32_t size = static_cast<int32_t>(request->dataptr().size());
-      int32_t flags = request->flags();
+      int32_t flags_raw = request->flags_raw();
       auto to = convert_from_grpc<nxsockaddr>(request->to());
       auto tolen = to.size();
-      auto status = library_->SendTo(socket, dataptr, size, flags, to, tolen);
+      auto status = library_->SendTo(socket, dataptr, size, flags_raw, to, tolen);
       response->set_status(status);
       if (status_ok(status)) {
       }

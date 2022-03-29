@@ -427,14 +427,14 @@ listen(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::int3
 }
 
 RecvResponse
-recv(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::int32& size, const pb::int32& flags)
+recv(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::int32& size, const simple_variant<std::vector<RecvFlags>, std::int32_t>& flags)
 {
   ::grpc::ClientContext context;
 
   auto request = RecvRequest{};
   request.mutable_socket()->CopyFrom(socket);
   request.set_size(size);
-  request.set_flags(flags);
+  request.set_flags_raw(copy_bitfield_as_enum_array(flags));
 
   auto response = RecvResponse{};
 
@@ -445,14 +445,14 @@ recv(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::int32&
 }
 
 RecvFromResponse
-recv_from(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::int32& size, const pb::int32& flags)
+recv_from(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::int32& size, const simple_variant<std::vector<RecvFlags>, std::int32_t>& flags)
 {
   ::grpc::ClientContext context;
 
   auto request = RecvFromRequest{};
   request.mutable_socket()->CopyFrom(socket);
   request.set_size(size);
-  request.set_flags(flags);
+  request.set_flags_raw(copy_bitfield_as_enum_array(flags));
 
   auto response = RecvFromResponse{};
 
@@ -482,14 +482,14 @@ select(const StubPtr& stub, const std::vector<nidevice_grpc::Session>& readfds, 
 }
 
 SendResponse
-send(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::string& dataptr, const pb::int32& flags)
+send(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::string& dataptr, const pb::int32& flags_raw)
 {
   ::grpc::ClientContext context;
 
   auto request = SendRequest{};
   request.mutable_socket()->CopyFrom(socket);
   request.set_dataptr(dataptr);
-  request.set_flags(flags);
+  request.set_flags_raw(flags_raw);
 
   auto response = SendResponse{};
 
@@ -500,14 +500,14 @@ send(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::string
 }
 
 SendToResponse
-send_to(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::string& dataptr, const pb::int32& flags, const SockAddr& to)
+send_to(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::string& dataptr, const pb::int32& flags_raw, const SockAddr& to)
 {
   ::grpc::ClientContext context;
 
   auto request = SendToRequest{};
   request.mutable_socket()->CopyFrom(socket);
   request.set_dataptr(dataptr);
-  request.set_flags(flags);
+  request.set_flags_raw(flags_raw);
   request.mutable_to()->CopyFrom(to);
 
   auto response = SendToResponse{};

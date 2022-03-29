@@ -31,6 +31,8 @@ from client_helpers import ParamMechanism
   }
 %     elif param.mechanism == ParamMechanism.COPY:
   request.mutable_${grpc_field_name}()->CopyFrom(${field_name});
+%     elif param.mechanism == ParamMechanism.BITFIELD_AS_ENUM_ARRAY:
+  request.set_${grpc_field_name}_raw(copy_bitfield_as_enum_array(${field_name}));
 %     else:
   request.set_${grpc_field_name}(${field_name});
 %     endif
