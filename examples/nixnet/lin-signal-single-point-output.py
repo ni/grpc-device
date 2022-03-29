@@ -114,7 +114,7 @@ try:
         )
         check_for_error(write_state_response.status)
 
-    print("Writing 10 values to LIN Port.\n")
+    print("Writing 10 values to LIN Interface.\n")
 
     while i <= 10:
         value_buffer[0] = float(i)

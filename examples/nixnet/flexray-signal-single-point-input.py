@@ -100,9 +100,10 @@ try:
     )
     check_for_error(set_property_response.status)
 
-    # To get more meaningful data use this with output example
+    # If no values are being written on the FlexRay port, the signals read would contain the
+    # default value of 0.0
     while i < 10:
-        # Update the signal data, the first read normally return the default payload values.
+        # Update the signal data
         read_signal_response = client.ReadSignalSinglePoint(
             nixnet_types.ReadSignalSinglePointRequest(
                 session=session,
