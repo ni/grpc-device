@@ -610,12 +610,12 @@ TEST(XnetConvertersTests, IPv4AddrOutputConverter_ConvertToGrpc_ConvertsToAddres
 
 TEST(XnetConvertersTests, StringSockOptData_GetSize_FetchesSizeFromLibrary)
 {
-  constexpr auto DEFAULT_SOCK_OPT_STRING_SIZE = 255;
+  const auto DEFAULT_SOCK_OPT_STRING_SIZE = 255;
   auto ACTUAL_SOCK_OPT_STRING_SIZE = 12;
   NiXnetSocketMockLibrary library;
   auto storage = allocate_output_storage<void*, SockOptData>(&library, OptName::OPT_NAME_SO_BIND_TO_DEVICE);
   EXPECT_EQ(DEFAULT_SOCK_OPT_STRING_SIZE, storage.string_length);
-  // Expect call GetSockOpt(socket, level, opt_name, nullptr, &string_length)
+
   nxSOCKET SOCKET = NULL;
   const int LEVEL = 3;
   nxsocklen_t actual_length;
