@@ -361,7 +361,7 @@ functions = {
                 'name': 'optval',
                 'grpc_type': 'SockOptData',
                 'supports_standard_output_allocation': True,
-                "additional_arguments_to_output_allocation": ["optname"],
+                "additional_arguments_to_output_allocation": ['library_','optname'],
                 'supports_standard_copy_convert': True,
                 'pointer': True,
                 'type': 'void *'
@@ -369,6 +369,7 @@ functions = {
             {
                 'direction': 'out',
                 'name': 'optlen',
+                'hardcoded_value': 'optval.size(socket, level)',
                 'include_in_proto': False,
                 'type': 'nxsocklen_t'
             }

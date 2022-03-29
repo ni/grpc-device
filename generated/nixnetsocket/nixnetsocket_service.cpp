@@ -396,8 +396,8 @@ namespace nixnetsocket_grpc {
         }
       }
 
-      auto optval = allocate_output_storage<void *, SockOptData>(optname);
-      nxsocklen_t optlen {};
+      auto optval = allocate_output_storage<void *, SockOptData>(library_, optname);
+      auto optlen = optval.size(socket, level);
       auto status = library_->GetSockOpt(socket, level, optname, optval.data(), &optlen);
       response->set_status(status);
       if (status_ok(status)) {

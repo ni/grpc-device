@@ -485,7 +485,7 @@ inline SockOptDataInputConverter convert_from_grpc(const SockOptData& input)
 // This class allows us to have something allocated on the stack that provides backing
 // storage for a void* opt_val output param and converts it to the SockOptData grpc-type.
 struct SockOptDataOutputConverter {
-  SockOptDataOutputConverter(int32_t opt_name) : opt_name(opt_name)
+  SockOptDataOutputConverter(NiXnetSocketLibraryInterface* library, int32_t opt_name) : opt_name(opt_name), library(library)
   {
   }
 
@@ -499,7 +499,8 @@ struct SockOptDataOutputConverter {
       case OptName::OPT_NAME_SO_SNDBUF:
       case OptName::OPT_NAME_TCP_NODELAY:
       case OptName::OPT_NAME_IP_MULTICAST_IF:
-      case OptName::OPT_NAME_IPV6_MULTICAST_IF: {
+      case OptName::OPT_NAME_IPV6_MULTICAST_IF:
+      case OptName::OPT_NAME_SO_ERROR: {
         return &data_int;
       }
       case OptName::OPT_NAME_SO_NONBLOCK:
@@ -507,9 +508,8 @@ struct SockOptDataOutputConverter {
       case OptName::OPT_NAME_IPV6_V6ONLY: {
         return &data_int;
       }
-      case OptName::OPT_NAME_SO_BINDTODEVICE:
-      case OptName::OPT_NAME_SO_ERROR: {
-        data_string = std::string(256 - 1, '\0');  // TODO: What's the max string size to allocate for a sock opt?
+      case OptName::OPT_NAME_SO_BINDTODEVICE: {
+        data_string = std::string(string_length, '\0');
         return &data_string[0];
       }
       case OptName::OPT_NAME_SO_LINGER: {
@@ -539,7 +539,8 @@ struct SockOptDataOutputConverter {
       case OptName::OPT_NAME_SO_SNDBUF:
       case OptName::OPT_NAME_TCP_NODELAY:
       case OptName::OPT_NAME_IP_MULTICAST_IF:
-      case OptName::OPT_NAME_IPV6_MULTICAST_IF: {
+      case OptName::OPT_NAME_IPV6_MULTICAST_IF:
+      case OptName::OPT_NAME_SO_ERROR: {
         output.set_data_int32(data_int);
         break;
       }
@@ -549,8 +550,7 @@ struct SockOptDataOutputConverter {
         output.set_data_bool(data_int == 0 ? false : true);
         break;
       }
-      case OptName::OPT_NAME_SO_BINDTODEVICE:
-      case OptName::OPT_NAME_SO_ERROR: {
+      case OptName::OPT_NAME_SO_BINDTODEVICE: {
         output.set_data_string(data_string);
         nidevice_grpc::converters::trim_trailing_nulls(*(output.mutable_data_string()));
         break;
@@ -577,12 +577,25 @@ struct SockOptDataOutputConverter {
     }
   }
 
+  nxsocklen_t size(nxSOCKET& socket, int32_t level)
+  {
+    if (opt_name == OptName::OPT_NAME_SO_BINDTODEVICE) {
+      int status = library->GetSockOpt(socket, level, opt_name, nullptr, &string_length);
+      if (status < 0) {
+        string_length = 255;
+      }
+    }
+    return string_length;
+  }
+
   int32_t opt_name;
+  nxsocklen_t string_length = 255;
   int32_t data_int;
   std::string data_string;
   nxlinger data_linger;
   nxip_mreq data_ipmreq;
   nxipv6_mreq data_ipv6mreq;
+  NiXnetSocketLibraryInterface* library;
 };
 
 inline void convert_to_grpc(const SockOptDataOutputConverter& storage, SockOptData* output)

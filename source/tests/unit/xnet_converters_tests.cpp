@@ -414,7 +414,8 @@ TEST(XnetConvertersTests, SockOptDataWithDataUnset_ConvertFromGrpc_NullPtrDataAn
 TEST(XnetConvertersTests, Int32SockOptData_ConvertToGrpc_ConvertsToSockOptDataWithIntValue)
 {
   constexpr auto RX_DATA = 100;
-  auto storage = allocate_output_storage<void*, SockOptData>(OptName::OPT_NAME_SO_RXDATA);
+  NiXnetSocketMockLibrary library;
+  auto storage = allocate_output_storage<void*, SockOptData>(&library, OptName::OPT_NAME_SO_RXDATA);
   void* data_pointer = storage.data();
   EXPECT_EQ(data_pointer, &(storage.data_int));
   auto int_pointer = reinterpret_cast<int32_t*>(data_pointer);
@@ -430,7 +431,8 @@ TEST(XnetConvertersTests, Int32SockOptData_ConvertToGrpc_ConvertsToSockOptDataWi
 TEST(XnetConvertersTests, BoolSockOptData_ConvertToGrpc_ConvertsToSockOptDataWithBoolValue)
 {
   constexpr auto REUSE_ADDR = 1;
-  auto storage = allocate_output_storage<void*, SockOptData>(OptName::OPT_NAME_SO_REUSEADDR);
+  NiXnetSocketMockLibrary library;
+  auto storage = allocate_output_storage<void*, SockOptData>(&library, OptName::OPT_NAME_SO_REUSEADDR);
   void* data_pointer = storage.data();
   EXPECT_EQ(data_pointer, &(storage.data_int));
   auto int_pointer = reinterpret_cast<int32_t*>(data_pointer);
@@ -447,10 +449,11 @@ TEST(XnetConvertersTests, BoolSockOptData_ConvertToGrpc_ConvertsToSockOptDataWit
 TEST(XnetConvertersTests, StringSockOptData_ConvertToGrpc_ConvertsToSockOptDataWithStringValue)
 {
   const std::string DEVICE_NAME = "I'm a Device";
-  constexpr auto MAX_SOCK_OPT_STRING_SIZE = 255;
-  auto storage = allocate_output_storage<void*, SockOptData>(OptName::OPT_NAME_SO_BINDTODEVICE);
+  constexpr auto DEFAULT_SOCK_OPT_STRING_SIZE = 255;
+  NiXnetSocketMockLibrary library;
+  auto storage = allocate_output_storage<void*, SockOptData>(&library, OptName::OPT_NAME_SO_BINDTODEVICE);
   void* data_pointer = storage.data();
-  EXPECT_EQ(MAX_SOCK_OPT_STRING_SIZE, storage.data_string.size());
+  EXPECT_EQ(DEFAULT_SOCK_OPT_STRING_SIZE, storage.data_string.size());
   EXPECT_EQ(data_pointer, &(storage.data_string[0]));
   auto string_pointer = reinterpret_cast<char*>(data_pointer);
   strncpy(string_pointer, DEVICE_NAME.c_str(), DEVICE_NAME.size() + 1);
@@ -466,7 +469,8 @@ TEST(XnetConvertersTests, LingerSockOptData_ConvertToGrpc_ConvertsToSockOptDataW
 {
   constexpr auto L_LINGER = 42;
   constexpr auto L_ONOFF = 1;
-  auto storage = allocate_output_storage<void*, SockOptData>(OptName::OPT_NAME_SO_LINGER);
+  NiXnetSocketMockLibrary library;
+  auto storage = allocate_output_storage<void*, SockOptData>(&library, OptName::OPT_NAME_SO_LINGER);
   void* data_pointer = storage.data();
   EXPECT_EQ(data_pointer, &(storage.data_linger));
   auto linger_pointer = reinterpret_cast<nxlinger*>(data_pointer);
@@ -485,7 +489,8 @@ TEST(XnetConvertersTests, IPMReqSockOptData_ConvertToGrpc_ConvertsToSockOptDataW
 {
   constexpr auto IMR_MULTIADDR = 22;
   constexpr auto IMR_INTERFACE = 1;
-  auto storage = allocate_output_storage<void*, SockOptData>(OptName::OPT_NAME_IP_ADD_MEMBERSHIP);
+  NiXnetSocketMockLibrary library;
+  auto storage = allocate_output_storage<void*, SockOptData>(&library, OptName::OPT_NAME_IP_ADD_MEMBERSHIP);
   void* data_pointer = storage.data();
   EXPECT_EQ(data_pointer, &(storage.data_ipmreq));
   auto ipmreq_pointer = reinterpret_cast<nxip_mreq*>(data_pointer);
@@ -504,7 +509,8 @@ TEST(XnetConvertersTests, IPV6MReqSockOptData_ConvertToGrpc_ConvertsToSockOptDat
 {
   const auto IPV6MR_MULTIADDR = std::vector<char>{0x0, 0x1, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7, 0x8, 0x9, 0xA, 0xB, 0xC, 0xD, 0xE, 0xF};
   constexpr auto IPV6MR_INTERFACE = 1;
-  auto storage = allocate_output_storage<void*, SockOptData>(OptName::OPT_NAME_IPV6_ADD_MEMBERSHIP);
+  NiXnetSocketMockLibrary library;
+  auto storage = allocate_output_storage<void*, SockOptData>(&library, OptName::OPT_NAME_IPV6_ADD_MEMBERSHIP);
   void* data_pointer = storage.data();
   EXPECT_EQ(data_pointer, &(storage.data_ipv6mreq));
   auto ipv6mreq_pointer = reinterpret_cast<nxipv6_mreq*>(data_pointer);
@@ -526,7 +532,8 @@ TEST(XnetConvertersTests, IPV6MReqSockOptData_ConvertToGrpc_ConvertsToSockOptDat
 TEST(XnetConvertersTests, SockOptDataWithUnknownOptName_ConvertToGrpc_ConvertsToUnsetSockOptData)
 {
   constexpr auto UNKNOWN_OPT_NAME = -1;
-  auto storage = allocate_output_storage<void*, SockOptData>(UNKNOWN_OPT_NAME);
+  NiXnetSocketMockLibrary library;
+  auto storage = allocate_output_storage<void*, SockOptData>(&library, UNKNOWN_OPT_NAME);
   void* data_pointer = storage.data();
   EXPECT_EQ(nullptr, data_pointer);
 
@@ -599,6 +606,25 @@ TEST(XnetConvertersTests, IPv4AddrOutputConverter_ConvertToGrpc_ConvertsToAddres
   converter.to_grpc(grpc_addr);
 
   EXPECT_EQ(ADDRESS, grpc_addr.addr());
+}
+
+TEST(XnetConvertersTests, StringSockOptData_GetSize_FetchesSizeFromLibrary)
+{
+  const auto DEFAULT_SOCK_OPT_STRING_SIZE = 255;
+  const auto ACTUAL_SOCK_OPT_STRING_SIZE = 12;
+  NiXnetSocketMockLibrary library;
+  auto storage = allocate_output_storage<void*, SockOptData>(&library, OptName::OPT_NAME_SO_BINDTODEVICE);
+  EXPECT_EQ(DEFAULT_SOCK_OPT_STRING_SIZE, storage.string_length);
+
+  nxSOCKET SOCKET = NULL;
+  const int LEVEL = 3;
+  nxsocklen_t actual_length;
+
+  EXPECT_CALL(library, GetSockOpt(SOCKET, LEVEL, OptName::OPT_NAME_SO_BINDTODEVICE, nullptr, _))
+      .WillOnce(DoAll(SetArgPointee<4>(ACTUAL_SOCK_OPT_STRING_SIZE), Return(0)));
+
+  actual_length = storage.size(SOCKET, LEVEL);
+  EXPECT_EQ(ACTUAL_SOCK_OPT_STRING_SIZE, actual_length);
 }
 
 TEST(XnetConvertersTests, AddrInfoHintInputConverter_ConvertFromGrpc_ConvertsToAddrInfoHint)
