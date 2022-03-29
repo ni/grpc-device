@@ -579,7 +579,7 @@ struct SockOptDataOutputConverter {
 
   nxsocklen_t size(nxSOCKET& socket, int32_t level)
   {
-    if (opt_name == OptName::OPT_NAME_SO_BIND_TO_DEVICE) {
+    if (opt_name == OptName::OPT_NAME_SO_BINDTODEVICE) {
       int status = library->GetSockOpt(socket, level, opt_name, nullptr, &string_length);
       if (status < 0) {
         string_length = 255;

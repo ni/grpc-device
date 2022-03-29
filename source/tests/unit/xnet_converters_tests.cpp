@@ -613,14 +613,14 @@ TEST(XnetConvertersTests, StringSockOptData_GetSize_FetchesSizeFromLibrary)
   const auto DEFAULT_SOCK_OPT_STRING_SIZE = 255;
   const auto ACTUAL_SOCK_OPT_STRING_SIZE = 12;
   NiXnetSocketMockLibrary library;
-  auto storage = allocate_output_storage<void*, SockOptData>(&library, OptName::OPT_NAME_SO_BIND_TO_DEVICE);
+  auto storage = allocate_output_storage<void*, SockOptData>(&library, OptName::OPT_NAME_SO_BINDTODEVICE);
   EXPECT_EQ(DEFAULT_SOCK_OPT_STRING_SIZE, storage.string_length);
 
   nxSOCKET SOCKET = NULL;
   const int LEVEL = 3;
   nxsocklen_t actual_length;
 
-  EXPECT_CALL(library, GetSockOpt(SOCKET, LEVEL, OptName::OPT_NAME_SO_BIND_TO_DEVICE, nullptr, _))
+  EXPECT_CALL(library, GetSockOpt(SOCKET, LEVEL, OptName::OPT_NAME_SO_BINDTODEVICE, nullptr, _))
       .WillOnce(DoAll(SetArgPointee<4>(ACTUAL_SOCK_OPT_STRING_SIZE), Return(0)));
 
   actual_length = storage.size(SOCKET, LEVEL);
