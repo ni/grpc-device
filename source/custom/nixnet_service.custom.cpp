@@ -331,8 +331,26 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
   if (context->IsCancelled()) {
     return ::grpc::Status::CANCELLED;
   }
+  nidevice_grpc::Session session_grpc_session;
   try {
-    auto session_grpc_session = request->session();
+    switch(request->session_repository_case()) {
+      case nixnet_grpc::GetPropertyRequest::SessionRepositoryCase::kSession: {
+        session_grpc_session= request->session();
+        break;
+      }
+      case nixnet_grpc::GetPropertyRequest::SessionRepositoryCase::kInterface: {
+        session_grpc_session= request->interface();
+        break;
+      }
+      case nixnet_grpc::GetPropertyRequest::SessionRepositoryCase::kDevice: {
+        session_grpc_session= request->device();
+        break;
+      }
+      case nixnet_grpc::GetPropertyRequest::SessionRepositoryCase::SESSION_REPOSITORY_NOT_SET: {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for session/interface/device was not specified or out of range");
+        break;
+      }
+    }
     nxSessionRef_t session = session_repository_->access_session(session_grpc_session.id(), session_grpc_session.name());
     u32 property_id;
     switch (request->property_id_enum_case()) {
@@ -464,6 +482,34 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
               };
               uint32_t session_id{};
               status = nx_database_ref_t_resource_repository_->add_dependent_session("", init_lambda, initiating_session_id, session_id);
+              nidevice_grpc::Session dependent_session{};
+              dependent_session.set_id(session_id);
+              return dependent_session;
+            });
+        if (!status_ok(status)) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        break;
+      }
+      case ref_array_: {
+        int32_t number_of_elements = property_size / sizeof(nxSessionRef_t);
+        auto initiating_session_id = session_repository_->access_session_id(session_grpc_session.id(), session_grpc_session.name());
+        std::vector<nxSessionRef_t> property_value_vector(number_of_elements, 0U);
+        nxSessionRef_t* property_value = static_cast<nxSessionRef_t*>(property_value_vector.data());
+        status = library_->GetProperty(session, property_id, property_size, property_value);
+        response->mutable_ref_array()->mutable_ref()->Clear();
+        response->mutable_ref_array()->mutable_ref()->Reserve(number_of_elements);
+        std::transform(
+            property_value_vector.begin(),
+            property_value_vector.end(),
+            google::protobuf::RepeatedFieldBackInserter(response->mutable_ref_array()->mutable_ref()),
+            [&](auto x) {
+              auto init_lambda = [&]() {
+                return std::make_tuple(status, x);
+              };
+              uint32_t session_id{};
+              status = session_repository_->add_dependent_session("", init_lambda, initiating_session_id, session_id);
               nidevice_grpc::Session dependent_session{};
               dependent_session.set_id(session_id);
               return dependent_session;

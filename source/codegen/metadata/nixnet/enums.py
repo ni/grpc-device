@@ -2230,7 +2230,7 @@ enums = {
             },
             {
                 'name': 'SYS_INTF_REFS',
-                'type': 'u32_array',
+                'type': 'ref_array',
                 'value': 101777411
             },
             {
