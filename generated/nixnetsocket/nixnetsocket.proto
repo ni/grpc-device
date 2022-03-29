@@ -326,10 +326,8 @@ message GetNameInfoRequest {
   SockAddr addr = 2;
   int32 hostlen = 3;
   int32 servlen = 4;
-  oneof flags_enum {
-    GetNameInfoFlags flags = 5;
-    int32 flags_raw = 6;
-  }
+  repeated GetNameInfoFlags flags_array = 5;
+  int32 flags_raw = 6;
 }
 
 message GetNameInfoResponse {

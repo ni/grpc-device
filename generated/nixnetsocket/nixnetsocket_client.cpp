@@ -120,7 +120,7 @@ get_addr_info(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, cons
 }
 
 GetNameInfoResponse
-get_name_info(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const SockAddr& addr, const pb::int32& hostlen, const pb::int32& servlen, const simple_variant<GetNameInfoFlags, pb::int32>& flags)
+get_name_info(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const SockAddr& addr, const pb::int32& hostlen, const pb::int32& servlen, const simple_variant<std::vector<GetNameInfoFlags>, std::int32_t>& flags)
 {
   ::grpc::ClientContext context;
 
@@ -129,14 +129,7 @@ get_name_info(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, cons
   request.mutable_addr()->CopyFrom(addr);
   request.set_hostlen(hostlen);
   request.set_servlen(servlen);
-  const auto flags_ptr = flags.get_if<GetNameInfoFlags>();
-  const auto flags_raw_ptr = flags.get_if<pb::int32>();
-  if (flags_ptr) {
-    request.set_flags(*flags_ptr);
-  }
-  else if (flags_raw_ptr) {
-    request.set_flags_raw(*flags_raw_ptr);
-  }
+  request.set_flags_raw(copy_bitfield_as_enum_array(flags));
 
   auto response = GetNameInfoResponse{};
 

@@ -276,10 +276,10 @@ functions = {
                 'type': 'nxsocklen_t'
             },
             {
+                'bitfield_as_enum_array': 'GetNameInfoFlags',
                 'direction': 'in',
                 'name': 'flags',
                 'type': 'int32_t',
-                'enum': 'GetNameInfoFlags'
             },
         ],
         'returns': 'int32_t'
