@@ -100,6 +100,8 @@ try:
     )
     check_for_error(set_property_response.status)
 
+    # If no values are being written on the FlexRay port, the signals read would contain the
+    # default value of 0.0
     while i < 10:
         # Update the signal data
         read_signal_response = client.ReadSignalSinglePoint(

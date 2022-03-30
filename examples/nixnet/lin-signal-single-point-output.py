@@ -114,7 +114,7 @@ try:
         )
         check_for_error(write_state_response.status)
 
-    print("Values are incremented from 0 to 10 in this example.\n")
+    print("Writing 10 values to LIN Interface.\n")
 
     while i <= 10:
         value_buffer[0] = float(i)

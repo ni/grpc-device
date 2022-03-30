@@ -49,7 +49,6 @@ DATABASE = "NIXNET_example"
 CLUSTER = "CAN_Cluster"
 SIGNAL_LIST = "CANEventSignal1,CANEventSignal2"
 NUM_SIGNALS = 2
-SUCCESS = 0
 
 
 def check_for_error(status):
@@ -87,8 +86,9 @@ try:
     check_for_error(create_session_response.status)
 
     session = create_session_response.session
-
     print("Session Created Successfully.\n")
+
+    print("Writing 10 values to CAN Interface.\n")
 
     while i < 10:
         value_buffer[0] = float(i)
