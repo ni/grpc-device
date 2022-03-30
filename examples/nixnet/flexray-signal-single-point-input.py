@@ -81,7 +81,7 @@ try:
             database_name=DATABASE,
             cluster_name=CLUSTER,
             list=SIGNAL_LIST,
-            interface=INTERFACE,
+            interface_name=INTERFACE,
             mode=nixnet_types.CREATE_SESSION_MODE_SIGNAL_IN_SINGLE_POINT,
         )
     )

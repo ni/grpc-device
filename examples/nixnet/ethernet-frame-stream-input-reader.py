@@ -102,7 +102,7 @@ try:
             database_name="",
             cluster_name="",
             list="",
-            interface=INTERFACE,
+            interface_name=INTERFACE,
             mode=nixnet_types.CREATE_SESSION_MODE_FRAME_IN_STREAM,
         )
     )
