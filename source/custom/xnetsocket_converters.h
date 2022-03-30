@@ -406,20 +406,20 @@ struct SockOptDataInputConverter {
         data_string = std::string(input.data_string());
         break;
       case SockOptData::DataCase::kDataLinger:
-        data_linger.l_linger = input.data_linger().l_linger();
-        data_linger.l_onoff = input.data_linger().l_onoff();
+        data_linger.l_linger = input.data_linger().linger();
+        data_linger.l_onoff = input.data_linger().onoff();
         break;
       case SockOptData::DataCase::kDataIpMreq:
-        data_ipmreq.imr_multiaddr.addr = input.data_ip_mreq().imr_multiaddr().addr();
+        data_ipmreq.imr_multiaddr.addr = input.data_ip_mreq().multiaddr().addr();
         data_ipmreq.imr_interface.addr = input.data_ip_mreq().imr_interface().addr();
         break;
       case SockOptData::DataCase::kDataIpv6Mreq:
         std::memcpy(
             data_ipv6mreq.ipv6mr_multiaddr.addr,
-            input.data_ipv6_mreq().ipv6mr_multiaddr().addr().data(),
+            input.data_ipv6_mreq().multiaddr().addr().data(),
             std::min(
                 sizeof(data_ipv6mreq.ipv6mr_multiaddr.addr),
-                static_cast<size_t>(input.data_ipv6_mreq().ipv6mr_multiaddr().addr().size())));
+                static_cast<size_t>(input.data_ipv6_mreq().multiaddr().addr().size())));
         data_ipv6mreq.ipv6mr_interface = input.data_ipv6_mreq().ipv6mr_interface();
         break;
     }
@@ -556,19 +556,19 @@ struct SockOptDataOutputConverter {
         break;
       }
       case OptName::OPT_NAME_SO_LINGER: {
-        output.mutable_data_linger()->set_l_linger(data_linger.l_linger);
-        output.mutable_data_linger()->set_l_onoff(data_linger.l_onoff);
+        output.mutable_data_linger()->set_linger(data_linger.l_linger);
+        output.mutable_data_linger()->set_onoff(data_linger.l_onoff);
         break;
       }
       case OptName::OPT_NAME_IP_ADD_MEMBERSHIP:
       case OptName::OPT_NAME_IP_DROP_MEMBERSHIP: {
-        output.mutable_data_ip_mreq()->mutable_imr_multiaddr()->set_addr(data_ipmreq.imr_multiaddr.addr);
+        output.mutable_data_ip_mreq()->mutable_multiaddr()->set_addr(data_ipmreq.imr_multiaddr.addr);
         output.mutable_data_ip_mreq()->mutable_imr_interface()->set_addr(data_ipmreq.imr_interface.addr);
         break;
       }
       case OptName::OPT_NAME_IPV6_ADD_MEMBERSHIP:
       case OptName::OPT_NAME_IPV6_DROP_MEMBERSHIP: {
-        copy_ipv6_addr_to_output(data_ipv6mreq.ipv6mr_multiaddr, output.mutable_data_ipv6_mreq()->mutable_ipv6mr_multiaddr());
+        copy_ipv6_addr_to_output(data_ipv6mreq.ipv6mr_multiaddr, output.mutable_data_ipv6_mreq()->mutable_multiaddr());
         output.mutable_data_ipv6_mreq()->set_ipv6mr_interface(data_ipv6mreq.ipv6mr_interface);
         break;
       }
@@ -637,14 +637,12 @@ inline AddrInfoHintInputConverter convert_from_grpc(const AddrInfoHint& input)
 
 inline void convert_to_addr_info_flags(int32_t flags, pb_::RepeatedField<int32_t>& get_addr_info_flags)
 {
-  int flag_to_check = GetAddrInfoFlags_MAX;
-  while (flag_to_check != 0) {
+  for (auto flag_to_check = 1; flag_to_check <= GetAddrInfoFlags_MAX; flag_to_check <<= 1) {
     if (flags & flag_to_check) {
       if (GetAddrInfoFlags_IsValid(flag_to_check)) {
         get_addr_info_flags.Add(flag_to_check);
       }
     }
-    flag_to_check >>= 1;
   }
 }
 

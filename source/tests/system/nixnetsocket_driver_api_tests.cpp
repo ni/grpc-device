@@ -580,7 +580,7 @@ SockOptData create_membership_request(const SockAddr& multicast_addr, const Sock
 {
   auto opt_data = SockOptData{};
   auto mreq = opt_data.mutable_data_ip_mreq();
-  mreq->mutable_imr_multiaddr()->CopyFrom(multicast_addr.ipv4().addr());
+  mreq->mutable_multiaddr()->CopyFrom(multicast_addr.ipv4().addr());
   mreq->mutable_imr_interface()->CopyFrom(interface_addr.ipv4().addr());
   return opt_data;
 }
@@ -825,6 +825,51 @@ TEST_F(NiXnetSocketLoopbackTests, IPv4SockAddr_GetNameInfoWithFlags_ReturnsExpec
   EXPECT_SUCCESS(name_info);
   EXPECT_EQ(ADDRESS, name_info.host());
   EXPECT_EQ("1234", name_info.serv());
+}
+
+TEST_F(NiXnetSocketLoopbackTests, SetRcvBufSockOpt_Succeeds)
+{
+  const auto stack = client::ip_stack_create(stub(), "", create_simple_config("ENET1"));
+  const auto sock = socket(stub(), stack.stack_ref());
+  auto data = SockOptData{};
+  data.set_data_int32(4096);
+  const auto set_sock_opt = client::set_sock_opt(
+      stub(),
+      sock.socket(),
+      SocketOptionLevel::SOCKET_OPTION_LEVEL_SOCKET,
+      OptName::OPT_NAME_SO_RCVBUF, data);
+
+  EXPECT_SUCCESS(set_sock_opt);
+}
+
+TEST_F(NiXnetSocketLoopbackTests, SetTcpNoDelaySockOpt_Succeeds)
+{
+  const auto stack = client::ip_stack_create(stub(), "", create_simple_config("ENET1"));
+  const auto sock = socket(stub(), stack.stack_ref());
+  auto data = SockOptData{};
+  data.set_data_bool(true);
+  const auto set_sock_opt = client::set_sock_opt(
+      stub(),
+      sock.socket(),
+      SocketOptionLevel::SOCKET_OPTION_LEVEL_PROTO_TCP,
+      OptName::OPT_NAME_TCP_NODELAY, data);
+
+  EXPECT_SUCCESS(set_sock_opt);
+}
+
+TEST_F(NiXnetSocketLoopbackTests, SetTcpNoDelaySockOptWithInvalidLevel_ReportsError)
+{
+  const auto stack = client::ip_stack_create(stub(), "", create_simple_config("ENET1"));
+  const auto sock = socket(stub(), stack.stack_ref());
+  for (const auto invalid_level : {
+           SocketOptionLevel::SOCKET_OPTION_LEVEL_PROTO_IP,
+           SocketOptionLevel::SOCKET_OPTION_LEVEL_SOCKET}) {
+    auto data = SockOptData{};
+    data.set_data_bool(true);
+    const auto set_sock_opt = client::set_sock_opt(stub(), sock.socket(), invalid_level, OptName::OPT_NAME_TCP_NODELAY, data);
+
+    EXPECT_XNET_ERROR(-1, 13844, "Protocol not available", set_sock_opt);
+  }
 }
 
 }  // namespace
