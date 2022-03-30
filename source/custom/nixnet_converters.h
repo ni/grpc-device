@@ -6,6 +6,14 @@
 // Add underscore to usings so they don't conflict with including files in the same namespace.
 namespace pb_ = ::google::protobuf;
 
+// NI-XNET doesn't have separate typedef for device and interface references.
+// Declare them for gRPC so that we can use them in gRPC APIs.
+
+// Device Reference (handle).
+typedef u32 nxDeviceRef_t;
+// Interface Reference (handle).
+typedef u32 nxInterfaceRef_t;
+
 namespace nixnet_grpc {
 
 constexpr auto ENET_FRAME_HEADER_LENGTH = static_cast<u16>(sizeof(nxFrameEnet_t) -1); // last byte in nxFrameEnet_t is u8 FrameData[1]

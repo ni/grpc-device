@@ -332,18 +332,19 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
     return ::grpc::Status::CANCELLED;
   }
   nidevice_grpc::Session session_grpc_session;
+  std::shared_ptr<nidevice_grpc::SessionResourceRepository<u32>> initiating_repository;
   try {
     switch(request->session_repository_case()) {
-      case nixnet_grpc::GetPropertyRequest::SessionRepositoryCase::kSession: {
-        session_grpc_session= request->session();
-        break;
-      }
-      case nixnet_grpc::GetPropertyRequest::SessionRepositoryCase::kInterface: {
-        session_grpc_session= request->interface();
-        break;
-      }
       case nixnet_grpc::GetPropertyRequest::SessionRepositoryCase::kDevice: {
         session_grpc_session= request->device();
+        break;
+      }
+      case nixnet_grpc::GetPropertyRequest::SessionRepositoryCase::kInterfaceRef: {
+        session_grpc_session= request->interface_ref();
+        break;
+      }
+      case nixnet_grpc::GetPropertyRequest::SessionRepositoryCase::kSession: {
+        session_grpc_session= request->session();
         break;
       }
       case nixnet_grpc::GetPropertyRequest::SessionRepositoryCase::SESSION_REPOSITORY_NOT_SET: {
@@ -492,18 +493,46 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
         }
         break;
       }
-      case ref_array_: {
+      case dev_ref_array_: {
         int32_t number_of_elements = property_size / sizeof(nxSessionRef_t);
         auto initiating_session_id = session_repository_->access_session_id(session_grpc_session.id(), session_grpc_session.name());
         std::vector<nxSessionRef_t> property_value_vector(number_of_elements, 0U);
         nxSessionRef_t* property_value = static_cast<nxSessionRef_t*>(property_value_vector.data());
         status = library_->GetProperty(session, property_id, property_size, property_value);
-        response->mutable_ref_array()->mutable_ref()->Clear();
-        response->mutable_ref_array()->mutable_ref()->Reserve(number_of_elements);
+        response->mutable_dev_ref_array()->mutable_dev_ref()->Clear();
+        response->mutable_dev_ref_array()->mutable_dev_ref()->Reserve(number_of_elements);
         std::transform(
             property_value_vector.begin(),
             property_value_vector.end(),
-            google::protobuf::RepeatedFieldBackInserter(response->mutable_ref_array()->mutable_ref()),
+            google::protobuf::RepeatedFieldBackInserter(response->mutable_dev_ref_array()->mutable_dev_ref()),
+            [&](auto x) {
+              auto init_lambda = [&]() {
+                return std::make_tuple(status, x);
+              };
+              uint32_t session_id{};
+              status = session_repository_->add_dependent_session("", init_lambda, initiating_session_id, session_id);
+              nidevice_grpc::Session dependent_session{};
+              dependent_session.set_id(session_id);
+              return dependent_session;
+            });
+        if (!status_ok(status)) {
+          response->set_status(status);
+          return ::grpc::Status::OK;
+        }
+        break;
+      }
+      case intf_ref_array_: {
+        int32_t number_of_elements = property_size / sizeof(nxSessionRef_t);
+        auto initiating_session_id = session_repository_->access_session_id(session_grpc_session.id(), session_grpc_session.name());
+        std::vector<nxSessionRef_t> property_value_vector(number_of_elements, 0U);
+        nxSessionRef_t* property_value = static_cast<nxSessionRef_t*>(property_value_vector.data());
+        status = library_->GetProperty(session, property_id, property_size, property_value);
+        response->mutable_intf_ref_array()->mutable_intf_ref()->Clear();
+        response->mutable_intf_ref_array()->mutable_intf_ref()->Reserve(number_of_elements);
+        std::transform(
+            property_value_vector.begin(),
+            property_value_vector.end(),
+            google::protobuf::RepeatedFieldBackInserter(response->mutable_intf_ref_array()->mutable_intf_ref()),
             [&](auto x) {
               auto init_lambda = [&]() {
                 return std::make_tuple(status, x);

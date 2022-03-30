@@ -220,7 +220,7 @@ create_session(const StubPtr& stub, const pb::string& database_name, const pb::s
   request.set_database_name(database_name);
   request.set_cluster_name(cluster_name);
   request.set_list(list);
-  request.set_interface(interface_parameter);
+  request.set_interface_parameter(interface_parameter);
   const auto mode_ptr = mode.get_if<CreateSessionMode>();
   const auto mode_raw_ptr = mode.get_if<pb::uint32>();
   if (mode_ptr) {

@@ -26,10 +26,14 @@ namespace nixnet_grpc {
       NiXnetLibraryInterface* library,
       ResourceRepositorySharedPtr resource_repository,
       nxDatabaseRef_tResourceRepositorySharedPtr nx_database_ref_t_resource_repository,
+      nxDeviceRef_tResourceRepositorySharedPtr nx_device_ref_t_resource_repository,
+      nxInterfaceRef_tResourceRepositorySharedPtr nx_interface_ref_t_resource_repository,
       const NiXnetFeatureToggles& feature_toggles)
       : library_(library),
       session_repository_(resource_repository),
       nx_database_ref_t_resource_repository_(nx_database_ref_t_resource_repository),
+      nx_device_ref_t_resource_repository_(nx_device_ref_t_resource_repository),
+      nx_interface_ref_t_resource_repository_(nx_interface_ref_t_resource_repository),
       feature_toggles_(feature_toggles)
   {
   }
@@ -359,7 +363,7 @@ namespace nixnet_grpc {
       auto database_name = request->database_name().c_str();
       auto cluster_name = request->cluster_name().c_str();
       auto list = request->list().c_str();
-      auto interface_parameter = request->interface().c_str();
+      auto interface_parameter = request->interface_parameter().c_str();
       u32 mode;
       switch (request->mode_enum_case()) {
         case nixnet_grpc::CreateSessionRequest::ModeEnumCase::kMode: {

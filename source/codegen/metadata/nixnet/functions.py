@@ -337,7 +337,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'interface',
+                'name': 'interface_parameter',
                 'type': 'const char[]'
             },
             {

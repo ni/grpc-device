@@ -11,7 +11,9 @@
 
 #include <memory>
 
-#include <nixnet.h> // for nxSessionRef_t, nxDatabaseRef_t
+#include <nixnet.h> // for nxSessionRef_t, nxDatabaseRef_t, nxDeviceRef_t, nxInterfaceRef_t
+#include "server/converters.h"
+#include "custom/nixnet_converters.h"
 
 namespace grpc {
 class ServerBuilder;
@@ -24,6 +26,8 @@ std::shared_ptr<void> register_service(
   grpc::ServerBuilder& server_builder, 
   const std::shared_ptr<nidevice_grpc::SessionResourceRepository<nxSessionRef_t>>& resource_repository,
   const std::shared_ptr<nidevice_grpc::SessionResourceRepository<nxDatabaseRef_t>>& nx_database_ref_t_resource_repository,
+  const std::shared_ptr<nidevice_grpc::SessionResourceRepository<nxDeviceRef_t>>& nx_device_ref_t_resource_repository,
+  const std::shared_ptr<nidevice_grpc::SessionResourceRepository<nxInterfaceRef_t>>& nx_interface_ref_t_resource_repository,
   const nidevice_grpc::FeatureToggles& feature_toggles);
 
 } // nixnet_grpc

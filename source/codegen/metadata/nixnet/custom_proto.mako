@@ -95,8 +95,12 @@ message DbRefArray {
   repeated nidevice_grpc.Session db_ref = 1;
 }
 
-message RefArray {
-  repeated nidevice_grpc.Session ref = 1;
+message DeviceRefArray {
+  repeated nidevice_grpc.Session dev_ref = 1;
+}
+
+message InterfaceRefArray {
+  repeated nidevice_grpc.Session intf_ref = 1;
 }
 
 message EptRxFilter {
@@ -112,9 +116,9 @@ message EptRxFilterArray {
 
 message GetPropertyRequest {
   oneof session_repository {
-    nidevice_grpc.Session session = 1;
-    nidevice_grpc.Session device = 2;
-    nidevice_grpc.Session interface = 3;
+    nidevice_grpc.Session device = 1;
+    nidevice_grpc.Session interface_ref = 2;
+    nidevice_grpc.Session session = 3;
   }
   oneof property_id_enum {
     Property property_id = 4;
@@ -135,8 +139,10 @@ message GetPropertyResponse {
     U32Array u32_array = 9;
     nidevice_grpc.Session db_ref = 10;
     DbRefArray db_ref_array = 11;
-    RefArray ref_array = 12;
-    EptRxFilterArray ept_rx_filter_array = 13;
+    nidevice_grpc.Session dev_ref = 12;
+    DeviceRefArray dev_ref_array = 13;
+    InterfaceRefArray intf_ref_array = 14;
+    EptRxFilterArray ept_rx_filter_array = 15;
   }
 }
 

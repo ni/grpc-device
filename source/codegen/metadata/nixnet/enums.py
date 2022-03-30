@@ -2225,37 +2225,37 @@ enums = {
             },
             {
                 'name': 'SYS_DEV_REFS',
-                'type': 'u32_array',
+                'type': 'dev_ref_array',
                 'value': 101777410
             },
             {
                 'name': 'SYS_INTF_REFS',
-                'type': 'ref_array',
+                'type': 'intf_ref_array',
                 'value': 101777411
             },
             {
                 'name': 'SYS_INTF_REFS_ALL',
-                'type': 'u32_array',
+                'type': 'intf_ref_array',
                 'value': 101777421
             },
             {
                 'name': 'SYS_INTF_REFS_CAN',
-                'type': 'u32_array',
+                'type': 'intf_ref_array',
                 'value': 101777412
             },
             {
                 'name': 'SYS_INTF_REFS_ETHERNET',
-                'type': 'u32_array',
+                'type': 'intf_ref_array',
                 'value': 101777409
             },
             {
                 'name': 'SYS_INTF_REFS_FLEX_RAY',
-                'type': 'u32_array',
+                'type': 'intf_ref_array',
                 'value': 101777413
             },
             {
                 'name': 'SYS_INTF_REFS_LIN',
-                'type': 'u32_array',
+                'type': 'intf_ref_array',
                 'value': 101777415
             },
             {
@@ -2290,12 +2290,12 @@ enums = {
             },
             {
                 'name': 'DEV_INTF_REFS',
-                'type': 'u32_array',
+                'type': 'intf_ref_array',
                 'value': 101842946
             },
             {
                 'name': 'DEV_INTF_REFS_ALL',
-                'type': 'u32_array',
+                'type': 'intf_ref_array',
                 'value': 101842952
             },
             {
@@ -2340,7 +2340,7 @@ enums = {
             },
             {
                 'name': 'INTF_DEV_REF',
-                'type': 'u32',
+                'type': 'dev_ref',
                 'value': 85131265
             },
             {
