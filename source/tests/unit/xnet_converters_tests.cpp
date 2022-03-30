@@ -635,8 +635,8 @@ TEST(XnetConvertersTests, AddrInfoHintInputConverter_ConvertFromGrpc_ConvertsToA
   AddrInfoHint hints{};
   constexpr auto EXPECTED_FLAGS = nxAI_PASSIVE | nxAI_V4MAPPED;
   hints.set_family(FAMILY);
-  hints.add_flags(GetAddrInfoFlags::GET_ADDR_INFO_FLAGS_PASSIVE);
-  hints.add_flags(GetAddrInfoFlags::GET_ADDR_INFO_FLAGS_V4MAPPED);
+  hints.add_flags_array(GetAddrInfoFlags::GET_ADDR_INFO_FLAGS_PASSIVE);
+  hints.add_flags_array(GetAddrInfoFlags::GET_ADDR_INFO_FLAGS_V4MAPPED);
   hints.set_protocol(PROTOCOL);
   hints.set_sock_type(SOCKET_TYPE);
 
@@ -666,9 +666,9 @@ void EXPECT_ADDR_INFO(
 {
   int expected_flags_raw = std::accumulate(flags.begin(), flags.end(), 0, std::bit_or<int>());
   EXPECT_EQ(expected_flags_raw, addr_info.flags_raw());
-  EXPECT_EQ(flags.size(), addr_info.flags().size());
-  for (int i = 0; i < std::min<size_t>(flags.size(), addr_info.flags().size()); i++) {
-    EXPECT_EQ(flags.at(i), addr_info.flags(i));
+  EXPECT_EQ(flags.size(), addr_info.flags_array().size());
+  for (int i = 0; i < std::min<size_t>(flags.size(), addr_info.flags_array().size()); i++) {
+    EXPECT_EQ(flags.at(i), addr_info.flags_array(i));
   }
   EXPECT_EQ(family, addr_info.family());
   EXPECT_EQ(sock_type, addr_info.sock_type());
@@ -739,12 +739,12 @@ TEST(XnetConvertersTests, AddrInfoFlagsAsInt_ConvertToRepeatedFlagsEnum_AllFlags
   int32_t flags = nxAI_BYPASS_CACHE | nxAI_V4MAPPED | nxAI_PASSIVE;
 
   AddrInfo grpc_addr_info{};
-  convert_to_addr_info_flags(flags, *(grpc_addr_info.mutable_flags()));
+  convert_to_addr_info_flags(flags, *(grpc_addr_info.mutable_flags_array()));
 
-  EXPECT_EQ(3, grpc_addr_info.flags().size());
-  EXPECT_EQ(GetAddrInfoFlags::GET_ADDR_INFO_FLAGS_BYPASS_CACHE, grpc_addr_info.flags(0));
-  EXPECT_EQ(GetAddrInfoFlags::GET_ADDR_INFO_FLAGS_V4MAPPED, grpc_addr_info.flags(1));
-  EXPECT_EQ(GetAddrInfoFlags::GET_ADDR_INFO_FLAGS_PASSIVE, grpc_addr_info.flags(2));
+  EXPECT_EQ(3, grpc_addr_info.flags_array().size());
+  EXPECT_EQ(GetAddrInfoFlags::GET_ADDR_INFO_FLAGS_BYPASS_CACHE, grpc_addr_info.flags_array(0));
+  EXPECT_EQ(GetAddrInfoFlags::GET_ADDR_INFO_FLAGS_V4MAPPED, grpc_addr_info.flags_array(1));
+  EXPECT_EQ(GetAddrInfoFlags::GET_ADDR_INFO_FLAGS_PASSIVE, grpc_addr_info.flags_array(2));
 }
 
 TEST(XnetConvertersTests, IpStackInfoStringOutputConverter_ConvertToGrpc_ConvertsToAndFreesInfoString)

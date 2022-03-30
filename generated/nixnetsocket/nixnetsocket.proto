@@ -127,6 +127,11 @@ enum OptName {
   OPT_NAME_SO_REUSEADDR = 264;
 }
 
+enum RecvFlags {
+  RECV_FLAGS_UNSPECIFIED = 0;
+  RECV_FLAGS_MSG_PEEK = 1;
+}
+
 enum Shutdown {
   SHUTDOWN_RD = 0;
   SHUTDOWN_WR = 1;
@@ -202,7 +207,7 @@ message SockAddr {
 }
 
 message AddrInfo {
-  repeated GetAddrInfoFlags flags = 1;
+  repeated GetAddrInfoFlags flags_array = 1;
   int32 flags_raw = 2;
   AddressFamily family = 3;
   SocketProtocolType sock_type = 4;
@@ -212,7 +217,7 @@ message AddrInfo {
 }
 
 message AddrInfoHint {
-  repeated GetAddrInfoFlags flags = 1;
+  repeated GetAddrInfoFlags flags_array = 1;
   int32 flags_raw = 2;
   AddressFamily family = 3;
   SocketProtocolType sock_type = 4;
@@ -321,10 +326,8 @@ message GetNameInfoRequest {
   SockAddr addr = 2;
   int32 hostlen = 3;
   int32 servlen = 4;
-  oneof flags_enum {
-    GetNameInfoFlags flags = 5;
-    int32 flags_raw = 6;
-  }
+  repeated GetNameInfoFlags flags_array = 5;
+  int32 flags_raw = 6;
 }
 
 message GetNameInfoResponse {
@@ -526,7 +529,8 @@ message ListenResponse {
 message RecvRequest {
   nidevice_grpc.Session socket = 1;
   int32 size = 2;
-  int32 flags = 3;
+  repeated RecvFlags flags_array = 3;
+  int32 flags_raw = 4;
 }
 
 message RecvResponse {
@@ -539,7 +543,8 @@ message RecvResponse {
 message RecvFromRequest {
   nidevice_grpc.Session socket = 1;
   int32 size = 2;
-  int32 flags = 3;
+  repeated RecvFlags flags_array = 3;
+  int32 flags_raw = 4;
 }
 
 message RecvFromResponse {
@@ -566,7 +571,7 @@ message SelectResponse {
 message SendRequest {
   nidevice_grpc.Session socket = 1;
   bytes dataptr = 2;
-  int32 flags = 3;
+  int32 flags_raw = 3;
 }
 
 message SendResponse {
@@ -578,7 +583,7 @@ message SendResponse {
 message SendToRequest {
   nidevice_grpc.Session socket = 1;
   bytes dataptr = 2;
-  int32 flags = 3;
+  int32 flags_raw = 3;
   SockAddr to = 4;
 }
 

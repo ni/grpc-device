@@ -231,6 +231,14 @@ enums = {
             }
         ]
     },
+    'RecvFlags': {
+        'values': [
+            {
+                'name': 'MSG_PEEK',
+                'value': 1
+            }
+        ]
+    },
     'Shutdown': {
         'values': [
             {

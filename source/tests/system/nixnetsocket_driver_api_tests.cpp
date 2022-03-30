@@ -800,6 +800,33 @@ TEST_F(NiXnetSocketLoopbackTests, IPv4SockAddr_GetNameInfoWithZeroServLen_Return
   EXPECT_THAT(name_info.serv(), IsEmpty());
 }
 
+TEST_F(NiXnetSocketLoopbackTests, IPv4SockAddr_GetNameInfoWithFlags_ReturnsExpectedNameInfo)
+{
+  const auto ADDRESS = "192.168.0.1"s;
+  constexpr auto PORT_BYTE_SWAPPED = 0xD204;  // Network endian 1234;
+  const auto EXPECTED_PORT = "1234"s;
+  const auto stack = client::ip_stack_create(stub(), "", create_simple_config("ENET1"));
+  const auto p_to_n = client::inet_p_to_n(stub(), stack.stack_ref(), 2 /* AF INET*/, ADDRESS);
+  auto sock_addr = SockAddr{};
+  sock_addr.mutable_ipv4()->mutable_addr()->CopyFrom(p_to_n.dst().ipv4());
+  sock_addr.mutable_ipv4()->set_port(PORT_BYTE_SWAPPED);
+
+  // Note: These flags don't change the behavior of this test.
+  const auto name_info = client::get_name_info(
+      stub(),
+      stack.stack_ref(),
+      sock_addr,
+      256,
+      256,
+      std::vector<GetNameInfoFlags>{
+          GetNameInfoFlags::GET_NAME_INFO_FLAGS_NUMERICHOST,
+          GetNameInfoFlags::GET_NAME_INFO_FLAGS_NUMERICSERV});
+
+  EXPECT_SUCCESS(name_info);
+  EXPECT_EQ(ADDRESS, name_info.host());
+  EXPECT_EQ("1234", name_info.serv());
+}
+
 }  // namespace
 }  // namespace system
 }  // namespace tests

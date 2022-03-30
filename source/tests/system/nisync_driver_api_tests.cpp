@@ -43,7 +43,6 @@ constexpr auto NISYNC_VAL_LEVEL_LOW = 0;
 constexpr auto NISYNC_VAL_LEVEL_HIGH = 1;
 constexpr auto NISYNC_ERROR_FEATURE_NOT_SUPPORTED = 0xBFFA4003;
 constexpr auto NISYNC_ERROR_DEST_TERMINAL_INVALID = 0xBFFA4033;
-constexpr auto VI_SUCCESS = 0;
 
 class NiSyncDriverApiTest : public ::testing::Test {
  protected:

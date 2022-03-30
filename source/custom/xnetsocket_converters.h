@@ -606,11 +606,9 @@ inline void convert_to_grpc(const SockOptDataOutputConverter& storage, SockOptDa
 struct AddrInfoHintInputConverter {
   AddrInfoHintInputConverter(const AddrInfoHint& input)
   {
-    int32_t flags = input.flags_raw();
-    for (int i = 0; i < input.flags().size(); i++) {
-      flags |= input.flags()[i];
-    }
-    addr_info.ai_flags = flags;
+    addr_info.ai_flags = nidevice_grpc::converters::convert_bitfield_as_enum_array_input(
+        input.flags_array(),
+        input.flags_raw());
     addr_info.ai_family = input.family();
     addr_info.ai_socktype = input.sock_type();
     addr_info.ai_protocol = input.protocol();
@@ -668,7 +666,7 @@ struct AddrInfoOutputConverter {
         curr_addr_info_ptr = curr_addr_info_ptr->ai_next) {
       auto curr_grpc_addr_info = output.Add();
       curr_grpc_addr_info->set_flags_raw(curr_addr_info_ptr->ai_flags);
-      convert_to_addr_info_flags(curr_addr_info_ptr->ai_flags, *(curr_grpc_addr_info->mutable_flags()));
+      convert_to_addr_info_flags(curr_addr_info_ptr->ai_flags, *(curr_grpc_addr_info->mutable_flags_array()));
       curr_grpc_addr_info->set_family((AddressFamily)curr_addr_info_ptr->ai_family);
       curr_grpc_addr_info->set_sock_type((SocketProtocolType)curr_addr_info_ptr->ai_socktype);
       curr_grpc_addr_info->set_protocol((IPProtocol)curr_addr_info_ptr->ai_protocol);

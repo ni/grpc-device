@@ -66,11 +66,19 @@ def is_array(data_type: str):
     return data_type.endswith("[]") or data_type.endswith("*")
 
 
+def get_bitfield_enum_type(parameter: dict) -> str:
+    """Get the enum type for a bitfield represented as an enum array."""
+    return parameter["bitfield_as_enum_array"]
+
+
+def is_bitfield_as_enum_array(parameter: dict) -> bool:
+    """Whether the parameter is a bitfield represented as an enum array."""
+    return "bitfield_as_enum_array" in parameter
+
+
 def is_enum(parameter: dict):
     """Whether the parameter's type is an enum."""
-    return (
-        "enum" in parameter or "mapped-enum" in parameter or "bitfield_as_enum_array" in parameter
-    )
+    return "enum" in parameter or "mapped-enum" in parameter or is_bitfield_as_enum_array(parameter)
 
 
 def _is_custom_struct(parameter: dict) -> bool:

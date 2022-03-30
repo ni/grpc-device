@@ -120,7 +120,7 @@ get_addr_info(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, cons
 }
 
 GetNameInfoResponse
-get_name_info(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const SockAddr& addr, const pb::int32& hostlen, const pb::int32& servlen, const simple_variant<GetNameInfoFlags, pb::int32>& flags)
+get_name_info(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const SockAddr& addr, const pb::int32& hostlen, const pb::int32& servlen, const simple_variant<std::vector<GetNameInfoFlags>, std::int32_t>& flags)
 {
   ::grpc::ClientContext context;
 
@@ -129,14 +129,7 @@ get_name_info(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, cons
   request.mutable_addr()->CopyFrom(addr);
   request.set_hostlen(hostlen);
   request.set_servlen(servlen);
-  const auto flags_ptr = flags.get_if<GetNameInfoFlags>();
-  const auto flags_raw_ptr = flags.get_if<pb::int32>();
-  if (flags_ptr) {
-    request.set_flags(*flags_ptr);
-  }
-  else if (flags_raw_ptr) {
-    request.set_flags_raw(*flags_raw_ptr);
-  }
+  request.set_flags_raw(copy_bitfield_as_enum_array(flags));
 
   auto response = GetNameInfoResponse{};
 
@@ -427,14 +420,14 @@ listen(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::int3
 }
 
 RecvResponse
-recv(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::int32& size, const pb::int32& flags)
+recv(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::int32& size, const simple_variant<std::vector<RecvFlags>, std::int32_t>& flags)
 {
   ::grpc::ClientContext context;
 
   auto request = RecvRequest{};
   request.mutable_socket()->CopyFrom(socket);
   request.set_size(size);
-  request.set_flags(flags);
+  request.set_flags_raw(copy_bitfield_as_enum_array(flags));
 
   auto response = RecvResponse{};
 
@@ -445,14 +438,14 @@ recv(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::int32&
 }
 
 RecvFromResponse
-recv_from(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::int32& size, const pb::int32& flags)
+recv_from(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::int32& size, const simple_variant<std::vector<RecvFlags>, std::int32_t>& flags)
 {
   ::grpc::ClientContext context;
 
   auto request = RecvFromRequest{};
   request.mutable_socket()->CopyFrom(socket);
   request.set_size(size);
-  request.set_flags(flags);
+  request.set_flags_raw(copy_bitfield_as_enum_array(flags));
 
   auto response = RecvFromResponse{};
 
@@ -482,14 +475,14 @@ select(const StubPtr& stub, const std::vector<nidevice_grpc::Session>& readfds, 
 }
 
 SendResponse
-send(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::string& dataptr, const pb::int32& flags)
+send(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::string& dataptr, const pb::int32& flags_raw)
 {
   ::grpc::ClientContext context;
 
   auto request = SendRequest{};
   request.mutable_socket()->CopyFrom(socket);
   request.set_dataptr(dataptr);
-  request.set_flags(flags);
+  request.set_flags_raw(flags_raw);
 
   auto response = SendResponse{};
 
@@ -500,14 +493,14 @@ send(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::string
 }
 
 SendToResponse
-send_to(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::string& dataptr, const pb::int32& flags, const SockAddr& to)
+send_to(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::string& dataptr, const pb::int32& flags_raw, const SockAddr& to)
 {
   ::grpc::ClientContext context;
 
   auto request = SendToRequest{};
   request.mutable_socket()->CopyFrom(socket);
   request.set_dataptr(dataptr);
-  request.set_flags(flags);
+  request.set_flags_raw(flags_raw);
   request.mutable_to()->CopyFrom(to);
 
   auto response = SendToResponse{};
