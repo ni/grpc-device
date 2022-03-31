@@ -2,7 +2,9 @@ r""" Write Signal Data.
 
  This example writes a signal value for 10 times.
  This is used to demonstrate a signal single point output session. 
- This example uses hardcoded signal names that use the NIXNET_example database. 
+ This example uses hardcoded signal names that use the NIXNET_example database.
+ To use your own database, you need to add an alias to your database file using the NI-XNET 
+ Database Editor and then modify the database name and signals used here. 
 
 The gRPC API is built from the C API. NI-XNET documentation is installed with the driver at:
   C:\Users\Public\Documents\National Instruments\NI-XNET\Documentation\NI-XNET Manual.chm
@@ -69,9 +71,6 @@ session = None
 channel = grpc.insecure_channel(f"{SERVER_ADDRESS}:{SERVER_PORT}")
 client = grpc_nixnet.NiXnetStub(channel)
 
-# Display parameters that will be used for the example.
-print("Interface: " + INTERFACE, "Database: " + DATABASE, "Signal List: " + SIGNAL_LIST, sep="\n")
-
 try:
     # Create an XNET session in SignalOutSinglePoint mode
     create_session_response = client.CreateSession(
@@ -84,6 +83,11 @@ try:
         )
     )
     check_for_error(create_session_response.status)
+
+    # Display parameters that will be used for the example.
+    print(
+        "Interface: " + INTERFACE, "Database: " + DATABASE, "Signal List: " + SIGNAL_LIST, sep="\n"
+    )
 
     session = create_session_response.session
     print("Session Created Successfully.\n")
