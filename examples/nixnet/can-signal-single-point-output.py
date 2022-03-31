@@ -88,7 +88,7 @@ try:
     print(
         "Interface: " + INTERFACE, "Database: " + DATABASE, "Signal List: " + SIGNAL_LIST, sep="\n"
     )
-
+    
     session = create_session_response.session
     print("Session Created Successfully.\n")
 

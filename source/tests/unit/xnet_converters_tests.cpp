@@ -43,7 +43,7 @@ TEST(XnetConvertersTests, IPv4GrpcSockAddr_ConvertFromGrpc_CreatesIPv4NXSockAddr
 SockAddr create_addr_ipv6(pb::uint32 port, pb::uint32 flow_info, const std::vector<char>& address, pb::uint32 scope_id)
 {
   auto grpc_sock_addr = SockAddr{};
-  auto ipv6_addr = SockAddrIPv6{};
+  auto ipv6_addr = SockAddrIn6{};
   ipv6_addr.set_port(port);
   ipv6_addr.set_flow_info(flow_info);
   ipv6_addr.mutable_addr()->set_addr({address.cbegin(), address.cend()});
@@ -414,7 +414,8 @@ TEST(XnetConvertersTests, SockOptDataWithDataUnset_ConvertFromGrpc_NullPtrDataAn
 TEST(XnetConvertersTests, Int32SockOptData_ConvertToGrpc_ConvertsToSockOptDataWithIntValue)
 {
   constexpr auto RX_DATA = 100;
-  auto storage = allocate_output_storage<void*, SockOptData>(OptName::OPT_NAME_SO_RX_DATA);
+  NiXnetSocketMockLibrary library;
+  auto storage = allocate_output_storage<void*, SockOptData>(&library, OptName::OPT_NAME_SO_RXDATA);
   void* data_pointer = storage.data();
   EXPECT_EQ(data_pointer, &(storage.data_int));
   auto int_pointer = reinterpret_cast<int32_t*>(data_pointer);
@@ -430,7 +431,8 @@ TEST(XnetConvertersTests, Int32SockOptData_ConvertToGrpc_ConvertsToSockOptDataWi
 TEST(XnetConvertersTests, BoolSockOptData_ConvertToGrpc_ConvertsToSockOptDataWithBoolValue)
 {
   constexpr auto REUSE_ADDR = 1;
-  auto storage = allocate_output_storage<void*, SockOptData>(OptName::OPT_NAME_SO_REUSE_ADDR);
+  NiXnetSocketMockLibrary library;
+  auto storage = allocate_output_storage<void*, SockOptData>(&library, OptName::OPT_NAME_SO_REUSEADDR);
   void* data_pointer = storage.data();
   EXPECT_EQ(data_pointer, &(storage.data_int));
   auto int_pointer = reinterpret_cast<int32_t*>(data_pointer);
@@ -447,10 +449,11 @@ TEST(XnetConvertersTests, BoolSockOptData_ConvertToGrpc_ConvertsToSockOptDataWit
 TEST(XnetConvertersTests, StringSockOptData_ConvertToGrpc_ConvertsToSockOptDataWithStringValue)
 {
   const std::string DEVICE_NAME = "I'm a Device";
-  constexpr auto MAX_SOCK_OPT_STRING_SIZE = 255;
-  auto storage = allocate_output_storage<void*, SockOptData>(OptName::OPT_NAME_SO_BIND_TO_DEVICE);
+  constexpr auto DEFAULT_SOCK_OPT_STRING_SIZE = 255;
+  NiXnetSocketMockLibrary library;
+  auto storage = allocate_output_storage<void*, SockOptData>(&library, OptName::OPT_NAME_SO_BINDTODEVICE);
   void* data_pointer = storage.data();
-  EXPECT_EQ(MAX_SOCK_OPT_STRING_SIZE, storage.data_string.size());
+  EXPECT_EQ(DEFAULT_SOCK_OPT_STRING_SIZE, storage.data_string.size());
   EXPECT_EQ(data_pointer, &(storage.data_string[0]));
   auto string_pointer = reinterpret_cast<char*>(data_pointer);
   strncpy(string_pointer, DEVICE_NAME.c_str(), DEVICE_NAME.size() + 1);
@@ -466,7 +469,8 @@ TEST(XnetConvertersTests, LingerSockOptData_ConvertToGrpc_ConvertsToSockOptDataW
 {
   constexpr auto L_LINGER = 42;
   constexpr auto L_ONOFF = 1;
-  auto storage = allocate_output_storage<void*, SockOptData>(OptName::OPT_NAME_SO_LINGER);
+  NiXnetSocketMockLibrary library;
+  auto storage = allocate_output_storage<void*, SockOptData>(&library, OptName::OPT_NAME_SO_LINGER);
   void* data_pointer = storage.data();
   EXPECT_EQ(data_pointer, &(storage.data_linger));
   auto linger_pointer = reinterpret_cast<nxlinger*>(data_pointer);
@@ -485,7 +489,8 @@ TEST(XnetConvertersTests, IPMReqSockOptData_ConvertToGrpc_ConvertsToSockOptDataW
 {
   constexpr auto IMR_MULTIADDR = 22;
   constexpr auto IMR_INTERFACE = 1;
-  auto storage = allocate_output_storage<void*, SockOptData>(OptName::OPT_NAME_IP_ADD_MEMBERSHIP);
+  NiXnetSocketMockLibrary library;
+  auto storage = allocate_output_storage<void*, SockOptData>(&library, OptName::OPT_NAME_IP_ADD_MEMBERSHIP);
   void* data_pointer = storage.data();
   EXPECT_EQ(data_pointer, &(storage.data_ipmreq));
   auto ipmreq_pointer = reinterpret_cast<nxip_mreq*>(data_pointer);
@@ -504,7 +509,8 @@ TEST(XnetConvertersTests, IPV6MReqSockOptData_ConvertToGrpc_ConvertsToSockOptDat
 {
   const auto IPV6MR_MULTIADDR = std::vector<char>{0x0, 0x1, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7, 0x8, 0x9, 0xA, 0xB, 0xC, 0xD, 0xE, 0xF};
   constexpr auto IPV6MR_INTERFACE = 1;
-  auto storage = allocate_output_storage<void*, SockOptData>(OptName::OPT_NAME_IPV6_ADD_MEMBERSHIP);
+  NiXnetSocketMockLibrary library;
+  auto storage = allocate_output_storage<void*, SockOptData>(&library, OptName::OPT_NAME_IPV6_ADD_MEMBERSHIP);
   void* data_pointer = storage.data();
   EXPECT_EQ(data_pointer, &(storage.data_ipv6mreq));
   auto ipv6mreq_pointer = reinterpret_cast<nxipv6_mreq*>(data_pointer);
@@ -526,7 +532,8 @@ TEST(XnetConvertersTests, IPV6MReqSockOptData_ConvertToGrpc_ConvertsToSockOptDat
 TEST(XnetConvertersTests, SockOptDataWithUnknownOptName_ConvertToGrpc_ConvertsToUnsetSockOptData)
 {
   constexpr auto UNKNOWN_OPT_NAME = -1;
-  auto storage = allocate_output_storage<void*, SockOptData>(UNKNOWN_OPT_NAME);
+  NiXnetSocketMockLibrary library;
+  auto storage = allocate_output_storage<void*, SockOptData>(&library, UNKNOWN_OPT_NAME);
   void* data_pointer = storage.data();
   EXPECT_EQ(nullptr, data_pointer);
 
@@ -591,14 +598,33 @@ TEST(XnetConvertersTests, AddrOutputConverterWithBogusFamily_ConvertToGrpc_DoesN
 TEST(XnetConvertersTests, IPv4AddrOutputConverter_ConvertToGrpc_ConvertsToAddress)
 {
   constexpr auto ADDRESS = 0x11001122;
-  auto converter = allocate_output_storage<nxin_addr, IPv4Addr>();
+  auto converter = allocate_output_storage<nxin_addr, InAddr>();
   auto data_ptr = &converter;
   data_ptr->addr = ADDRESS;
 
-  auto grpc_addr = nixnetsocket_grpc::IPv4Addr{};
+  auto grpc_addr = nixnetsocket_grpc::InAddr{};
   converter.to_grpc(grpc_addr);
 
   EXPECT_EQ(ADDRESS, grpc_addr.addr());
+}
+
+TEST(XnetConvertersTests, StringSockOptData_GetSize_FetchesSizeFromLibrary)
+{
+  const auto DEFAULT_SOCK_OPT_STRING_SIZE = 255;
+  const auto ACTUAL_SOCK_OPT_STRING_SIZE = 12;
+  NiXnetSocketMockLibrary library;
+  auto storage = allocate_output_storage<void*, SockOptData>(&library, OptName::OPT_NAME_SO_BINDTODEVICE);
+  EXPECT_EQ(DEFAULT_SOCK_OPT_STRING_SIZE, storage.string_length);
+
+  nxSOCKET SOCKET = NULL;
+  const int LEVEL = 3;
+  nxsocklen_t actual_length;
+
+  EXPECT_CALL(library, GetSockOpt(SOCKET, LEVEL, OptName::OPT_NAME_SO_BINDTODEVICE, nullptr, _))
+      .WillOnce(DoAll(SetArgPointee<4>(ACTUAL_SOCK_OPT_STRING_SIZE), Return(0)));
+
+  actual_length = storage.size(SOCKET, LEVEL);
+  EXPECT_EQ(ACTUAL_SOCK_OPT_STRING_SIZE, actual_length);
 }
 
 TEST(XnetConvertersTests, AddrInfoHintInputConverter_ConvertFromGrpc_ConvertsToAddrInfoHint)
@@ -609,8 +635,8 @@ TEST(XnetConvertersTests, AddrInfoHintInputConverter_ConvertFromGrpc_ConvertsToA
   AddrInfoHint hints{};
   constexpr auto EXPECTED_FLAGS = nxAI_PASSIVE | nxAI_V4MAPPED;
   hints.set_family(FAMILY);
-  hints.add_flags(GetAddrInfoFlags::GET_ADDR_INFO_FLAGS_PASSIVE);
-  hints.add_flags(GetAddrInfoFlags::GET_ADDR_INFO_FLAGS_V4MAPPED);
+  hints.add_flags_array(GetAddrInfoFlags::GET_ADDR_INFO_FLAGS_PASSIVE);
+  hints.add_flags_array(GetAddrInfoFlags::GET_ADDR_INFO_FLAGS_V4MAPPED);
   hints.set_protocol(PROTOCOL);
   hints.set_sock_type(SOCKET_TYPE);
 
@@ -640,9 +666,9 @@ void EXPECT_ADDR_INFO(
 {
   int expected_flags_raw = std::accumulate(flags.begin(), flags.end(), 0, std::bit_or<int>());
   EXPECT_EQ(expected_flags_raw, addr_info.flags_raw());
-  EXPECT_EQ(flags.size(), addr_info.flags().size());
-  for (int i = 0; i < std::min<size_t>(flags.size(), addr_info.flags().size()); i++) {
-    EXPECT_EQ(flags.at(i), addr_info.flags(i));
+  EXPECT_EQ(flags.size(), addr_info.flags_array().size());
+  for (int i = 0; i < std::min<size_t>(flags.size(), addr_info.flags_array().size()); i++) {
+    EXPECT_EQ(flags.at(i), addr_info.flags_array(i));
   }
   EXPECT_EQ(family, addr_info.family());
   EXPECT_EQ(sock_type, addr_info.sock_type());
@@ -713,12 +739,12 @@ TEST(XnetConvertersTests, AddrInfoFlagsAsInt_ConvertToRepeatedFlagsEnum_AllFlags
   int32_t flags = nxAI_BYPASS_CACHE | nxAI_V4MAPPED | nxAI_PASSIVE;
 
   AddrInfo grpc_addr_info{};
-  convert_to_addr_info_flags(flags, *(grpc_addr_info.mutable_flags()));
+  convert_to_addr_info_flags(flags, *(grpc_addr_info.mutable_flags_array()));
 
-  EXPECT_EQ(3, grpc_addr_info.flags().size());
-  EXPECT_EQ(GetAddrInfoFlags::GET_ADDR_INFO_FLAGS_BYPASS_CACHE, grpc_addr_info.flags(0));
-  EXPECT_EQ(GetAddrInfoFlags::GET_ADDR_INFO_FLAGS_V4MAPPED, grpc_addr_info.flags(1));
-  EXPECT_EQ(GetAddrInfoFlags::GET_ADDR_INFO_FLAGS_PASSIVE, grpc_addr_info.flags(2));
+  EXPECT_EQ(3, grpc_addr_info.flags_array().size());
+  EXPECT_EQ(GetAddrInfoFlags::GET_ADDR_INFO_FLAGS_BYPASS_CACHE, grpc_addr_info.flags_array(0));
+  EXPECT_EQ(GetAddrInfoFlags::GET_ADDR_INFO_FLAGS_V4MAPPED, grpc_addr_info.flags_array(1));
+  EXPECT_EQ(GetAddrInfoFlags::GET_ADDR_INFO_FLAGS_PASSIVE, grpc_addr_info.flags_array(2));
 }
 
 TEST(XnetConvertersTests, IpStackInfoStringOutputConverter_ConvertToGrpc_ConvertsToAndFreesInfoString)
@@ -791,7 +817,7 @@ TEST(XnetConvertersTests, GrpcAddrCase_GetAddressFamily_ReturnsCorrectDriverFami
 TEST(XnetConvertersTests, GrpcIpv4Addr_ConvertFromGrpc_ConvertsToCorrectNxInAddr)
 {
   constexpr auto ADDRESS = 0x55443322;
-  auto addr = nixnetsocket_grpc::IPv4Addr{};
+  auto addr = nixnetsocket_grpc::InAddr{};
   addr.set_addr(ADDRESS);
 
   const auto converted_data = convert_from_grpc<nxin_addr>(addr);

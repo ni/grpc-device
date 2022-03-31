@@ -290,6 +290,8 @@ ${initialize_input_param(function_name, parameter, parameters, input_vararg_para
 ${initialize_repeating_param(parameter, input_vararg_parameter)}
 % elif common_helpers.is_repeated_varargs_parameter(parameter):
 ${initialize_repeated_varargs_param(parameter)}
+% elif common_helpers.is_bitfield_as_enum_array(parameter):
+${initialize_bitfield_as_enum_array_param(function_name, parameter)}
 % elif common_helpers.is_enum(parameter) and common_helpers.is_array(parameter['type']) and not common_helpers.is_string_arg(parameter):
 ${initialize_enum_array_input_param(function_name, parameter)}
 % elif common_helpers.is_enum(parameter):
@@ -376,6 +378,19 @@ ${initialize_standard_input_param(function_name, parameter)}
         std::back_inserter(${parameter_name}_vector),
         [](auto x) { return x; });
       auto ${parameter_name} = ${parameter_name}_vector.data();
+</%def>
+
+## Initialize a bitfield as enum array input parameter for an API call.
+<%def name="initialize_bitfield_as_enum_array_param(function_name, parameter)">\
+<%
+  parameter_name = common_helpers.get_cpp_local_name(parameter)
+  field_name = common_helpers.get_grpc_field_name(parameter)
+  enum_type = common_helpers.get_bitfield_enum_type(parameter)
+  bitfield_type = parameter["type"]
+%>\
+      const auto ${parameter_name} = nidevice_grpc::converters::convert_bitfield_as_enum_array_input(
+        request->${field_name}_array(),
+        request->${field_name}_raw());
 </%def>
 
 ## Initialize an enum input parameter for an API call.
