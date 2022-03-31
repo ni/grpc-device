@@ -35,8 +35,8 @@ GetSockOptResponse get_sock_opt(const StubPtr& stub, const nidevice_grpc::Sessio
 InetAddrResponse inet_addr(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const pb::string& cp);
 InetAToNResponse inet_a_to_n(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const pb::string& cp);
 InetNToAResponse inet_n_to_a(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const InAddr& in_addr);
-InetNToPResponse inet_n_to_p(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const Addr& src);
-InetPToNResponse inet_p_to_n(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const simple_variant<AddressFamily, pb::int32>& af, const pb::string& src);
+InetNToPResponse inet_n_to_p(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const Addr& addr);
+InetPToNResponse inet_p_to_n(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const simple_variant<AddressFamily, pb::int32>& af, const pb::string& address);
 IpStackClearResponse ip_stack_clear(const StubPtr& stub, const nidevice_grpc::Session& stack_ref);
 IpStackCreateResponse ip_stack_create(const StubPtr& stub, const pb::string& stack_name, const pb::string& config);
 IpStackGetAllStacksInfoStrResponse ip_stack_get_all_stacks_info_str(const StubPtr& stub, const simple_variant<IPStackInfoStringFormat, pb::uint32>& format);
@@ -47,8 +47,8 @@ ListenResponse listen(const StubPtr& stub, const nidevice_grpc::Session& socket,
 RecvResponse recv(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::int32& size, const simple_variant<std::vector<RecvFlags>, std::int32_t>& flags);
 RecvFromResponse recv_from(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::int32& size, const simple_variant<std::vector<RecvFlags>, std::int32_t>& flags);
 SelectResponse select(const StubPtr& stub, const std::vector<nidevice_grpc::Session>& readfds, const std::vector<nidevice_grpc::Session>& writefds, const std::vector<nidevice_grpc::Session>& exceptfds, const google::protobuf::Duration& timeout);
-SendResponse send(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::string& dataptr, const pb::int32& flags_raw);
-SendToResponse send_to(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::string& dataptr, const pb::int32& flags_raw, const SockAddr& to);
+SendResponse send(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::string& data, const pb::int32& flags_raw);
+SendToResponse send_to(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::string& data, const pb::int32& flags_raw, const SockAddr& to);
 SetSockOptResponse set_sock_opt(const StubPtr& stub, const nidevice_grpc::Session& socket, const simple_variant<SocketOptionLevel, pb::int32>& level, const simple_variant<OptName, pb::int32>& optname, const SockOptData& opt_data);
 ShutdownResponse shutdown(const StubPtr& stub, const nidevice_grpc::Session& socket, const simple_variant<Shutdown, pb::int32>& how);
 SocketResponse socket(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const simple_variant<AddressFamily, pb::int32>& domain, const simple_variant<SocketProtocolType, pb::int32>& type, const simple_variant<IPProtocol, pb::int32>& protocol);
