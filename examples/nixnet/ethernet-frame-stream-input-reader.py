@@ -94,6 +94,9 @@ print(CHOOSE_MONITOR_OR_ENDPOINT_TEXT)
 if sys.stdin.read(1) == "m":
     INTERFACE += "/monitor"
 
+# Display parameters that will be used for the example.
+print(f"Interface: {INTERFACE}", end="\n")
+
 try:
     # Create an XNET session in SignalOutSinglePoint mode
     create_session_response = client.CreateSession(
@@ -106,9 +109,6 @@ try:
         )
     )
     check_for_error(create_session_response.status)
-
-    # Display parameters that will be used for the example.
-    print(f"\n\nInterface: {INTERFACE}", end="\n")
 
     session = create_session_response.session
     print("Session created successfully.\n")

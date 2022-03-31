@@ -80,6 +80,9 @@ IS_MASTER = 1
 # displayed in the Database Editor.
 SCHEDULE_INDEX = 0
 
+# Display parameters that will be used for the example.
+print("Interface: " + INTERFACE, "Database: " + DATABASE, "Signal List: " + SIGNAL_LIST, sep="\n")
+
 try:
     if IS_MASTER != 0:
         print("Master?: Yes\n")
@@ -97,11 +100,6 @@ try:
         )
     )
     check_for_error(create_session_response.status)
-
-    # Display parameters that will be used for the example.
-    print(
-        "Interface: " + INTERFACE, "Database: " + DATABASE, "Signal List: " + SIGNAL_LIST, sep="\n"
-    )
 
     session = create_session_response.session
     print("Session Created Successfully. \n")

@@ -72,6 +72,10 @@ session = None
 channel = grpc.insecure_channel(f"{SERVER_ADDRESS}:{SERVER_PORT}")
 client = grpc_nixnet.NiXnetStub(channel)
 
+# Display parameters that will be used for the example.
+print("Interface: " + INTERFACE, "Database: " + DATABASE, "Signal List: " + SIGNAL_LIST, sep="\n")
+print("KeySlotId:", keyslot_id)
+
 try:
     # Create an XNET session in SignalOutSinglePoint mode
     create_session_response = client.CreateSession(
@@ -84,12 +88,6 @@ try:
         )
     )
     check_for_error(create_session_response.status)
-
-    # Display parameters that will be used for the example.
-    print(
-        "Interface: " + INTERFACE, "Database: " + DATABASE, "Signal List: " + SIGNAL_LIST, sep="\n"
-    )
-    print("KeySlotId:", keyslot_id)
 
     session = create_session_response.session
     print("Session Created Successfully.\n")
