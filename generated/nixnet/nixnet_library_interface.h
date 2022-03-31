@@ -8,8 +8,6 @@
 
 #include <grpcpp/grpcpp.h>
 #include <nixnet.h>
-#include "server/converters.h"
-#include "custom/nixnet_converters.h"
 
 namespace nixnet_grpc {
 
@@ -26,8 +24,8 @@ class NiXnetLibraryInterface {
   virtual nxStatus_t ConvertSignalsToFramesSinglePoint(nxSessionRef_t session, f64 valueBuffer[], u32 sizeOfValueBuffer, u8 buffer[], u32 sizeOfBuffer, u32* numberOfBytesReturned) = 0;
   virtual nxStatus_t ConvertTimestamp100nsTo1ns(nxTimestamp100ns_t from_timestamp_100ns, nxTimestamp1ns_t* to_timestamp_1ns) = 0;
   virtual nxStatus_t ConvertTimestamp1nsTo100ns(nxTimestamp1ns_t from_timestamp_1ns, nxTimestamp100ns_t* to_timestamp_100ns) = 0;
-  virtual nxStatus_t CreateSession(const char databaseName[], const char clusterName[], const char list[], const char interface_parameter[], u32 mode, nxSessionRef_t* session) = 0;
-  virtual nxStatus_t CreateSessionByRef(u32 numberOfDatabaseRef, nxDatabaseRef_t arrayOfDatabaseRef[], const char interfaceParameter[], u32 mode, nxSessionRef_t* session) = 0;
+  virtual nxStatus_t CreateSession(const char databaseName[], const char clusterName[], const char list[], const char interface_name[], u32 mode, nxSessionRef_t* session) = 0;
+  virtual nxStatus_t CreateSessionByRef(u32 numberOfDatabaseRef, nxDatabaseRef_t arrayOfDatabaseRef[], const char interface_name[], u32 mode, nxSessionRef_t* session) = 0;
   virtual nxStatus_t DbAddAlias(const char databaseAlias[], const char databaseFilepath[], u32 defaultBaudRate) = 0;
   virtual nxStatus_t DbAddAlias64(const char databaseAlias[], const char databaseFilepath[], u64 defaultBaudRate) = 0;
   virtual nxStatus_t DbCloseDatabase(nxDatabaseRef_t database, u32 closeAllRefs) = 0;

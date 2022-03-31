@@ -12,7 +12,6 @@
 #include <memory>
 
 #include <nixnet.h> // for nxSessionRef_t, nxDatabaseRef_t, nxDeviceRef_t, nxInterfaceRef_t
-#include "server/converters.h"
 #include "custom/nixnet_converters.h"
 
 namespace grpc {

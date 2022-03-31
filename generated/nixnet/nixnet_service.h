@@ -20,6 +20,7 @@
 #include <server/exceptions.h>
 
 #include "nixnet_library_interface.h"
+#include "custom/nixnet_converters.h"
 
 namespace nixnet_grpc {
 
