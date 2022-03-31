@@ -31,8 +31,8 @@ ConvertFramesToSignalsSinglePointResponse convert_frames_to_signals_single_point
 ConvertSignalsToFramesSinglePointResponse convert_signals_to_frames_single_point(const StubPtr& stub, const nidevice_grpc::Session& session, const std::vector<double>& value_buffer, const pb::uint32& number_of_frames, const pb::uint32& max_payload_per_frame, const simple_variant<Protocol, pb::uint32>& protocol);
 ConvertTimestamp100nsTo1nsResponse convert_timestamp100ns_to1ns(const StubPtr& stub, const pb::uint64& from_timestamp_100ns);
 ConvertTimestamp1nsTo100nsResponse convert_timestamp1ns_to100ns(const StubPtr& stub, const pb::uint64& from_timestamp_1ns);
-CreateSessionResponse create_session(const StubPtr& stub, const pb::string& database_name, const pb::string& cluster_name, const pb::string& list, const pb::string& interface_name, const simple_variant<CreateSessionMode, pb::uint32>& mode);
-CreateSessionByRefResponse create_session_by_ref(const StubPtr& stub, const std::vector<nidevice_grpc::Session>& array_of_database_ref, const pb::string& interface_name, const simple_variant<CreateSessionMode, pb::uint32>& mode);
+CreateSessionResponse create_session(const StubPtr& stub, const pb::string& database_name, const pb::string& cluster_name, const pb::string& list, const pb::string& interface_parameter, const simple_variant<CreateSessionMode, pb::uint32>& mode);
+CreateSessionByRefResponse create_session_by_ref(const StubPtr& stub, const std::vector<nidevice_grpc::Session>& array_of_database_ref, const pb::string& interface_parameter, const simple_variant<CreateSessionMode, pb::uint32>& mode);
 DbAddAliasResponse db_add_alias(const StubPtr& stub, const pb::string& database_alias, const pb::string& database_filepath, const pb::uint32& default_baud_rate);
 DbAddAlias64Response db_add_alias64(const StubPtr& stub, const pb::string& database_alias, const pb::string& database_filepath, const pb::uint64& default_baud_rate);
 DbCloseDatabaseResponse db_close_database(const StubPtr& stub, const nidevice_grpc::Session& database, const pb::uint32& close_all_refs);

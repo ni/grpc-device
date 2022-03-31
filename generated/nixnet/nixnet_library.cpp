@@ -198,27 +198,27 @@ nxStatus_t NiXnetLibrary::ConvertTimestamp1nsTo100ns(nxTimestamp1ns_t from_times
 #endif
 }
 
-nxStatus_t NiXnetLibrary::CreateSession(const char databaseName[], const char clusterName[], const char list[], const char interface_name[], u32 mode, nxSessionRef_t* session)
+nxStatus_t NiXnetLibrary::CreateSession(const char databaseName[], const char clusterName[], const char list[], const char interfaceParameter[], u32 mode, nxSessionRef_t* session)
 {
   if (!function_pointers_.CreateSession) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxCreateSession.");
   }
 #if defined(_MSC_VER)
-  return nxCreateSession(databaseName, clusterName, list, interface_name, mode, session);
+  return nxCreateSession(databaseName, clusterName, list, interfaceParameter, mode, session);
 #else
-  return function_pointers_.CreateSession(databaseName, clusterName, list, interface_name, mode, session);
+  return function_pointers_.CreateSession(databaseName, clusterName, list, interfaceParameter, mode, session);
 #endif
 }
 
-nxStatus_t NiXnetLibrary::CreateSessionByRef(u32 numberOfDatabaseRef, nxDatabaseRef_t arrayOfDatabaseRef[], const char interface_name[], u32 mode, nxSessionRef_t* session)
+nxStatus_t NiXnetLibrary::CreateSessionByRef(u32 numberOfDatabaseRef, nxDatabaseRef_t arrayOfDatabaseRef[], const char interfaceParameter[], u32 mode, nxSessionRef_t* session)
 {
   if (!function_pointers_.CreateSessionByRef) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxCreateSessionByRef.");
   }
 #if defined(_MSC_VER)
-  return nxCreateSessionByRef(numberOfDatabaseRef, arrayOfDatabaseRef, interface_name, mode, session);
+  return nxCreateSessionByRef(numberOfDatabaseRef, arrayOfDatabaseRef, interfaceParameter, mode, session);
 #else
-  return function_pointers_.CreateSessionByRef(numberOfDatabaseRef, arrayOfDatabaseRef, interface_name, mode, session);
+  return function_pointers_.CreateSessionByRef(numberOfDatabaseRef, arrayOfDatabaseRef, interfaceParameter, mode, session);
 #endif
 }
 

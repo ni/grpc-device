@@ -212,7 +212,7 @@ convert_timestamp1ns_to100ns(const StubPtr& stub, const pb::uint64& from_timesta
 }
 
 CreateSessionResponse
-create_session(const StubPtr& stub, const pb::string& database_name, const pb::string& cluster_name, const pb::string& list, const pb::string& interface_name, const simple_variant<CreateSessionMode, pb::uint32>& mode)
+create_session(const StubPtr& stub, const pb::string& database_name, const pb::string& cluster_name, const pb::string& list, const pb::string& interface_parameter, const simple_variant<CreateSessionMode, pb::uint32>& mode)
 {
   ::grpc::ClientContext context;
 
@@ -220,7 +220,7 @@ create_session(const StubPtr& stub, const pb::string& database_name, const pb::s
   request.set_database_name(database_name);
   request.set_cluster_name(cluster_name);
   request.set_list(list);
-  request.set_interface_name(interface_name);
+  request.set_interface(interface_parameter);
   const auto mode_ptr = mode.get_if<CreateSessionMode>();
   const auto mode_raw_ptr = mode.get_if<pb::uint32>();
   if (mode_ptr) {
@@ -239,13 +239,13 @@ create_session(const StubPtr& stub, const pb::string& database_name, const pb::s
 }
 
 CreateSessionByRefResponse
-create_session_by_ref(const StubPtr& stub, const std::vector<nidevice_grpc::Session>& array_of_database_ref, const pb::string& interface_name, const simple_variant<CreateSessionMode, pb::uint32>& mode)
+create_session_by_ref(const StubPtr& stub, const std::vector<nidevice_grpc::Session>& array_of_database_ref, const pb::string& interface_parameter, const simple_variant<CreateSessionMode, pb::uint32>& mode)
 {
   ::grpc::ClientContext context;
 
   auto request = CreateSessionByRefRequest{};
   copy_array(array_of_database_ref, request.mutable_array_of_database_ref());
-  request.set_interface_name(interface_name);
+  request.set_interface(interface_parameter);
   const auto mode_ptr = mode.get_if<CreateSessionMode>();
   const auto mode_raw_ptr = mode.get_if<pb::uint32>();
   if (mode_ptr) {

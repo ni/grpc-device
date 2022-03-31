@@ -1,14 +1,13 @@
 #include <nixnet.pb.h>
 #include <nixnet/nixnet_service.h>
 #include <server/converters.h>
+#include <custom/nixnet_converters.h>
 
 #include <stdexcept>
 
-#include "custom/nixnet_converters.h"
-
 namespace nixnet_grpc {
-using nidevice_grpc::converters::convert_from_grpc;
 using nidevice_grpc::converters::convert_to_grpc;
+using nidevice_grpc::converters::convert_from_grpc;
 
 // Returns true if it's safe to use outputs of a method with the given status.
 inline bool status_ok(int32 status)
@@ -49,7 +48,6 @@ void SetFlexRayCommResponse(const u32 input, nixnet_grpc::FlexRayCommResponse* o
 void SetLinCommResponse(const u32* input, nixnet_grpc::LinCommResponse* output)
 {
   u32 comm_state = nxLINComm_Get_CommState(input[0]);
-
   output->set_sleep(nxLINComm_Get_Sleep(input[0]));
   output->set_comm_state(static_cast<nixnet_grpc::LinCommState>(comm_state));
   output->set_comm_state_raw(comm_state);
@@ -1369,12 +1367,12 @@ void convert_to_grpc(std::vector<f64>& input, google::protobuf::RepeatedField<do
 {
   output->Resize(number_of_signals * number_of_values_returned, 0U);
   std::transform(
-      input.begin(),
-      input.begin() + (number_of_signals * number_of_values_returned),
-      google::protobuf::RepeatedFieldBackInserter(output),
-      [&](auto x) {
-        return x;
-      });
+    input.begin(),
+    input.begin() + (number_of_signals * number_of_values_returned),
+    google::protobuf::RepeatedFieldBackInserter(output),
+    [&](auto x) {
+      return x;
+    });
 }
 
 u32 get_frame_buffer_size(int32 number_of_frames, u32 max_payload_per_frame, u32 protocol)
