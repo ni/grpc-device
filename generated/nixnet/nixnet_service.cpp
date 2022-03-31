@@ -11,6 +11,7 @@
 #include <iostream>
 #include <atomic>
 #include <vector>
+#include "custom/nixnet_converters.h"
 #include <server/converters.h>
 
 namespace nixnet_grpc {
@@ -25,14 +26,10 @@ namespace nixnet_grpc {
       NiXnetLibraryInterface* library,
       ResourceRepositorySharedPtr resource_repository,
       nxDatabaseRef_tResourceRepositorySharedPtr nx_database_ref_t_resource_repository,
-      nxDeviceRef_tResourceRepositorySharedPtr nx_device_ref_t_resource_repository,
-      nxInterfaceRef_tResourceRepositorySharedPtr nx_interface_ref_t_resource_repository,
       const NiXnetFeatureToggles& feature_toggles)
       : library_(library),
       session_repository_(resource_repository),
       nx_database_ref_t_resource_repository_(nx_database_ref_t_resource_repository),
-      nx_device_ref_t_resource_repository_(nx_device_ref_t_resource_repository),
-      nx_interface_ref_t_resource_repository_(nx_interface_ref_t_resource_repository),
       feature_toggles_(feature_toggles)
   {
   }

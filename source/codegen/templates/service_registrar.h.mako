@@ -23,9 +23,6 @@ resource_repository_deps = service_helpers.get_driver_shared_resource_repository
 #include <memory>
 
 #include <${config["c_header"]}> // for ${", ".join(resource_handle_types)}
-% for additional_header in common_helpers.get_additional_headers(config, "service_registrar.h"):
-#include "${additional_header}"
-% endfor
 
 namespace grpc {
 class ServerBuilder;

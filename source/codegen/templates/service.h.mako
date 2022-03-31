@@ -45,9 +45,6 @@ for async_function in async_functions.keys():
 #include <server/exceptions.h>
 
 #include "${config["module_name"]}_library_interface.h"
-% for additional_header in common_helpers.get_additional_headers(config, "service.h"):
-#include "${additional_header}"
-% endfor
 
 namespace ${config["namespace_component"]}_grpc {
 

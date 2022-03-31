@@ -11,8 +11,8 @@ config = {
     'code_readiness': 'NextRelease',
     'driver_name': 'NI-XNET',
     'status_ok': 'status >= 0',
-    'additional_headers': {'custom/nixnet_converters.h': ['service_registrar.h', 'service.h'] }, 
-    'resource_handle_type': ['nxSessionRef_t', 'nxDatabaseRef_t', 'nxDeviceRef_t', 'nxInterfaceRef_t'],
+    'additional_headers': {'custom/nixnet_converters.h': ['service.cpp'] }, 
+    'resource_handle_type': ['nxSessionRef_t', 'nxDatabaseRef_t'],
     'type_to_grpc_type': {
         'nxSessionRef_t': 'nidevice_grpc.Session',
         'nxDatabaseRef_t': 'nidevice_grpc.Session',
