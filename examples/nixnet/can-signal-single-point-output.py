@@ -4,7 +4,8 @@ r""" Write Signal Data.
  This is used to demonstrate a signal single point output session. 
  This example uses hardcoded signal names that use the NIXNET_example database.
  To use your own database, you need to add an alias to your database file using the NI-XNET 
- Database Editor and then modify the database name and signals used here. 
+ Database Editor and then modify the database name and signals used here.
+ Also ensure that the transceivers are externally powered when using C Series modules.
 
 The gRPC API is built from the C API. NI-XNET documentation is installed with the driver at:
   C:\Users\Public\Documents\National Instruments\NI-XNET\Documentation\NI-XNET Manual.chm

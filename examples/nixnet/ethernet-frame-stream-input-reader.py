@@ -2,8 +2,8 @@ r""" Reads all the frame on network.
 
   This example reads all the frames on the network and displays them. 
   This is used to demonstrate a frame input stream session.
-  To use your own database, you need to add an alias to your database file using the NI-XNET
-  Database Editor and then modify the database name and signals used here.
+  Ensure that you have connected the selected interface to another Ethernet interface that is 
+  transmitting data.
 
 The gRPC API is built from the C API. NI-XNET documentation is installed with the driver at:
   C:\Users\Public\Documents\National Instruments\NI-XNET\Documentation\NI-XNET Manual.chm
