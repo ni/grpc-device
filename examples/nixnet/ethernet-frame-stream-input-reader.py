@@ -2,6 +2,8 @@ r""" Reads all the frame on network.
 
   This example reads all the frames on the network and displays them. 
   This is used to demonstrate a frame input stream session.
+  To use your own database, you need to add an alias to your database file using the NI-XNET
+  Database Editor and then modify the database name and signals used here.
 
 The gRPC API is built from the C API. NI-XNET documentation is installed with the driver at:
   C:\Users\Public\Documents\National Instruments\NI-XNET\Documentation\NI-XNET Manual.chm
@@ -92,9 +94,6 @@ print(CHOOSE_MONITOR_OR_ENDPOINT_TEXT)
 if sys.stdin.read(1) == "m":
     INTERFACE += "/monitor"
 
-# Display parameters that will be used for the example.
-print(f"Interface: {INTERFACE}", end="\n")
-
 try:
     # Create an XNET session in SignalOutSinglePoint mode
     create_session_response = client.CreateSession(
@@ -107,6 +106,9 @@ try:
         )
     )
     check_for_error(create_session_response.status)
+
+    # Display parameters that will be used for the example.
+    print(f"\n\nInterface: {INTERFACE}", end="\n")
 
     session = create_session_response.session
     print("Session created successfully.\n")
