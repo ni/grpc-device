@@ -1,15 +1,7 @@
 #include <nixnet.pb.h>
 #include <nixnet/nixnet_service.h>
 #include <server/converters.h>
-#include <custom/nixnet_converters.h>
-
-#include <atomic>
-#include <fstream>
-#include <iostream>
 #include <stdexcept>
-#include <sstream>
-#include <string>
-#include <vector>
 
 #include "custom/nixnet_converters.h"
 
