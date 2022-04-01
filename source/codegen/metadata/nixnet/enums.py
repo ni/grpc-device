@@ -843,6 +843,146 @@ enums = {
                 'name': 'ECU_J1939_PREFERRED_ADDRESS',
                 'type': 'u32',
                 'value': 327720
+            },
+            {
+                'name': 'LIN_SCHED_CLST_REF',
+                'type': 'db_ref',
+                'value': 84279301
+            },
+            {
+                'name': 'LIN_SCHED_COMMENT',
+                'type': 'string',
+                'value': 50724870
+            },
+            {
+                'name': 'LIN_SCHED_CONFIG_STATUS',
+                'type': 'u32',
+                'value': 393223
+            },
+            {
+                'name': 'LIN_SCHED_ENTRIES',
+                'type': 'db_ref_array',
+                'value': 101056513
+            },
+            {
+                'name': 'LIN_SCHED_NAME',
+                'type': 'string',
+                'value': 50724866
+            },
+            {
+                'name': 'LIN_SCHED_PRIORITY',
+                'type': 'u32',
+                'value': 393219
+            },
+            {
+                'name': 'LIN_SCHED_RUN_MODE',
+                'type': 'u32',
+                'value': 393220
+            },
+            {
+                'name': 'LIN_SCHED_ENTRY_COLLISION_RES_SCHED',
+                'type': 'db_ref',
+                'value': 84344833
+            },
+            {
+                'name': 'LIN_SCHED_ENTRY_DELAY',
+                'type': 'f64',
+                'value': 17235970
+            },
+            {
+                'name': 'LIN_SCHED_ENTRY_EVENT_ID',
+                'type': 'u32',
+                'value': 458755
+            },
+            {
+                'name': 'LIN_SCHED_ENTRY_FRAMES',
+                'type': 'db_ref_array',
+                'value': 101122052
+            },
+            {
+                'name': 'LIN_SCHED_ENTRY_NAME',
+                'type': 'string',
+                'value': 50790406
+            },
+            {
+                'name': 'LIN_SCHED_ENTRY_NAME_UNIQUE_TO_CLUSTER',
+                'type': 'string',
+                'value': 50790408
+            },
+            {
+                'name': 'LIN_SCHED_ENTRY_NC_FF_DATA_BYTES',
+                'type': 'u8_array',
+                'value': 168230921
+            },
+            {
+                'name': 'LIN_SCHED_ENTRY_SCHED',
+                'type': 'db_ref',
+                'value': 84344839
+            },
+            {
+                'name': 'LIN_SCHED_ENTRY_TYPE',
+                'type': 'u32',
+                'value': 458757
+            },
+            {
+                'name': 'PDU_CLUSTER_REF',
+                'type': 'db_ref',
+                'value': 84410372
+            },
+            {
+                'name': 'PDU_COMMENT',
+                'type': 'string',
+                'value': 50855938
+            },
+            {
+                'name': 'PDU_CONFIG_STATUS',
+                'type': 'u32',
+                'value': 524295
+            },
+            {
+                'name': 'PDU_DEFAULT_PAYLOAD',
+                'type': 'u8_array',
+                'value': 168296453
+            },
+            {
+                'name': 'PDU_FRM_REFS',
+                'type': 'db_ref_array',
+                'value': 101187590
+            },
+            {
+                'name': 'PDU_MUX_DATA_MUX_SIG_REF',
+                'type': 'db_ref',
+                'value': 84410377
+            },
+            {
+                'name': 'PDU_MUX_IS_MUXED',
+                'type': 'boolean',
+                'value': 34078728
+            },
+            {
+                'name': 'PDU_MUX_STATIC_SIG_REFS',
+                'type': 'db_ref_array',
+                'value': 101187594
+            },
+            {
+                'name': 'PDU_MUX_SUBFRAME_REFS',
+                'type': 'db_ref_array',
+                'value': 101187595
+            },
+            {
+                'name': 'PDU_NAME',
+                'type': 'string',
+                'value': 50855937
+            },
+            {
+                'name': 'PDU_PAYLOAD_LEN',
+                'type': 'u32',
+                'value': 524291
+            },
+            {
+                'name': 'PDU_SIG_REFS',
+                'type': 'db_ref_array',
+                'value': 101187589
             }
         ]
     },
