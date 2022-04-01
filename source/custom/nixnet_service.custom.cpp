@@ -1,13 +1,13 @@
+#include <custom/nixnet_converters.h>
 #include <nixnet.pb.h>
 #include <nixnet/nixnet_service.h>
 #include <server/converters.h>
-#include <custom/nixnet_converters.h>
 
 #include <stdexcept>
 
 namespace nixnet_grpc {
-using nidevice_grpc::converters::convert_to_grpc;
 using nidevice_grpc::converters::convert_from_grpc;
+using nidevice_grpc::converters::convert_to_grpc;
 
 // Returns true if it's safe to use outputs of a method with the given status.
 inline bool status_ok(int32 status)
@@ -490,7 +490,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
         };
         uint32_t session_id = 0;
         // We are adding it to session_repository_ and not to "device repository", because devices don't have a close API,
-        // so it makes sense to tie their lifetime with sessions lifetime.
+        // so it makes sense to tie their lifetime with session's lifetime.
         status = session_repository_->add_dependent_session("", init_lambda, initiating_session_id, session_id);
         if (status_ok(status)) {
           response->mutable_dev_ref()->set_id(session_id);
@@ -516,7 +516,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
                 };
                 uint32_t session_id{};
                 // We are adding it to session_repository_ and not to "device repository", because devices don't have a close API,
-                // so it makes sense to tie their lifetime with sessions lifetime.
+                // so it makes sense to tie their lifetime with session's lifetime.
                 status = session_repository_->add_dependent_session("", init_lambda, initiating_session_id, session_id);
                 nidevice_grpc::Session dependent_session{};
                 dependent_session.set_id(session_id);
@@ -543,8 +543,8 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
                   return std::make_tuple(status, x);
                 };
                 uint32_t session_id{};
-                // We are adding it to session_repository_ and not to "interface repository", because devices don't have a close API,
-                // so it makes sense to tie their lifetime with sessions lifetime.
+                // We are adding it to session_repository_ and not to "interface repository", because interfaces don't have a close API,
+                // so it makes sense to tie their lifetime with session's lifetime.
                 status = session_repository_->add_dependent_session("", init_lambda, initiating_session_id, session_id);
                 nidevice_grpc::Session dependent_session{};
                 dependent_session.set_id(session_id);
@@ -758,7 +758,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
         auto initiating_session_id = nx_database_ref_t_resource_repository_->access_session_id(dbobject_grpc_session.id(), dbobject_grpc_session.name());
         auto init_lambda = [&]() {
           nxDatabaseRef_t property_value;
-          status = library_->GetProperty(dbobject, property_id, property_size, &property_value);
+          status = library_->DbGetProperty(dbobject, property_id, property_size, &property_value);
           return std::make_tuple(status, property_value);
         };
         uint32_t session_id = 0;
@@ -775,7 +775,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
         auto initiating_session_id = nx_database_ref_t_resource_repository_->access_session_id(dbobject_grpc_session.id(), dbobject_grpc_session.name());
         std::vector<nxDatabaseRef_t> property_value_vector(number_of_elements, 0U);
         nxDatabaseRef_t* property_value = static_cast<nxDatabaseRef_t*>(property_value_vector.data());
-        status = library_->GetProperty(dbobject, property_id, property_size, property_value);
+        status = library_->DbGetProperty(dbobject, property_id, property_size, property_value);
         response->mutable_db_ref_array()->mutable_db_ref()->Clear();
         response->mutable_db_ref_array()->mutable_db_ref()->Reserve(number_of_elements);
         std::transform(
@@ -837,15 +837,10 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
       }
     }
 
-    u32 property_size{};
-    auto status = library_->GetPropertySize(session, property_id, &property_size);
-    if (!status_ok(status)) {
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-
+    nxStatus_t status;
     switch (property_type_map_[property_id]) {
       case u32_: {
+        u32 property_size = sizeof(u32);
         u32 property_value = request->u32_scalar();
         status = library_->SetProperty(session, property_id, property_size, &property_value);
         if (!status_ok(status)) {
@@ -855,6 +850,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
         break;
       }
       case boolean_: {
+        u32 property_size = sizeof(bool);
         bool property_value = request->bool_scalar();
         status = library_->SetProperty(session, property_id, property_size, &property_value);
         if (!status_ok(status)) {
@@ -864,6 +860,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
         break;
       }
       case u64_: {
+        u32 property_size = sizeof(u64);
         u64 property_value = request->u64_scalar();
         status = library_->SetProperty(session, property_id, property_size, &property_value);
         if (!status_ok(status)) {
@@ -873,6 +870,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
         break;
       }
       case i32_: {
+        u32 property_size = sizeof(i32);
         i32 property_value = request->i32_scalar();
         status = library_->SetProperty(session, property_id, property_size, &property_value);
         if (!status_ok(status)) {
@@ -882,6 +880,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
         break;
       }
       case f64_: {
+        u32 property_size = sizeof(f64);
         f64 property_value = request->f64_scalar();
         status = library_->SetProperty(session, property_id, property_size, &property_value);
         if (!status_ok(status)) {
@@ -892,7 +891,8 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
       }
       case string_: {
         std::string property_value = request->str();
-        status = library_->SetProperty(session, property_id, (u32)property_value.size(), const_cast<char*>(property_value.c_str()));
+        u32 property_size = property_value.size();
+        status = library_->SetProperty(session, property_id, property_size, const_cast<char*>(property_value.c_str()));
         if (!status_ok(status)) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -900,9 +900,9 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
         break;
       }
       case u32_array_: {
+        u32 property_size = request->u32_array().u32_array().size() * sizeof(u32);
         u32* property_value = const_cast<u32*>(request->u32_array().u32_array().data());
-        u32 property_value_size = (u32)request->u32_array().u32_array().size();
-        status = library_->SetProperty(session, property_id, property_value_size * sizeof(u32), property_value);
+        status = library_->SetProperty(session, property_id, property_size, property_value);
         if (!status_ok(status)) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -910,6 +910,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
         break;
       }
       case db_ref_: {
+        u32 property_size = sizeof(nxDatabaseRef_t);
         auto property_value = request->db_ref();
         nxDatabaseRef_t property_value_ref = nx_database_ref_t_resource_repository_->access_session(property_value.id(), property_value.name());
         status = library_->SetProperty(session, property_id, property_size, &property_value_ref);
@@ -930,7 +931,8 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
               nxDatabaseRef_t db_ref = nx_database_ref_t_resource_repository_->access_session(x.id(), x.name());
               return db_ref;
             });
-        status = library_->SetProperty(session, property_id, number_of_elements * sizeof(nxDatabaseRef_t), static_cast<nxDatabaseRef_t*>(property_value.data()));
+        u32 property_size = number_of_elements * sizeof(nxDatabaseRef_t);
+        status = library_->SetProperty(session, property_id, property_size, static_cast<nxDatabaseRef_t*>(property_value.data()));
         if (!status_ok(status)) {
           response->set_status(status);
           return ::grpc::Status::OK;
@@ -938,7 +940,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
         break;
       }
       case nxEptRxFilter_Element_t_array_: {
-        int32_t property_size = request->ept_rx_filter_array().ept_rx_filter().size() * sizeof(nxEptRxFilter_Element_t);
+        u32 property_size = request->ept_rx_filter_array().ept_rx_filter().size() * sizeof(nxEptRxFilter_Element_t);
         auto property_value = convert_from_grpc<nxEptRxFilter_Element_t>(request->ept_rx_filter_array().ept_rx_filter());
         status = library_->SetProperty(session, property_id, property_size, property_value.data());
         break;
@@ -1034,7 +1036,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
   }
   try {
     auto dbobject_grpc_session = request->dbobject();
-    nxDatabaseRef_t dbobject = session_repository_->access_session(dbobject_grpc_session.id(), dbobject_grpc_session.name());
+    nxDatabaseRef_t dbobject = nx_database_ref_t_resource_repository_->access_session(dbobject_grpc_session.id(), dbobject_grpc_session.name());
     u32 property_id;
     switch (request->dbproperty_id_enum_case()) {
       case nixnet_grpc::DbGetPropertyRequest::DbpropertyIdEnumCase::kPropertyId: {
