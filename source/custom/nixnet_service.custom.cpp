@@ -372,61 +372,49 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
       case u32_: {
         u32 property_value{};
         status = library_->GetProperty(session, property_id, property_size, &property_value);
-        if (!status_ok(status)) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
+        if (status_ok(status)) {
+          response->set_u32_scalar(property_value);
         }
-        response->set_u32_scalar(property_value);
         break;
       }
       case boolean_: {
         bool property_value{};
         status = library_->GetProperty(session, property_id, property_size, &property_value);
-        if (!status_ok(status)) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
+        if (status_ok(status)) {
+          response->set_bool_scalar(property_value);
         }
-        response->set_bool_scalar(property_value);
         break;
       }
       case u64_: {
         u64 property_value{};
         status = library_->GetProperty(session, property_id, property_size, &property_value);
-        if (!status_ok(status)) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
+        if (status_ok(status)) {
+          response->set_u64_scalar(property_value);
         }
-        response->set_u64_scalar(property_value);
         break;
       }
       case i32_: {
         i32 property_value{};
         status = library_->GetProperty(session, property_id, property_size, &property_value);
-        if (!status_ok(status)) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
+        if (status_ok(status)) {
+          response->set_i32_scalar(property_value);
         }
-        response->set_i32_scalar(property_value);
         break;
       }
       case f64_: {
         f64 property_value{};
         status = library_->GetProperty(session, property_id, property_size, &property_value);
-        if (!status_ok(status)) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
+        if (status_ok(status)) {
+          response->set_f64_scalar(property_value);
         }
-        response->set_f64_scalar(property_value);
         break;
       }
       case string_: {
         std::string property_value(property_size, '\0');
         status = library_->GetProperty(session, property_id, property_size, const_cast<char*>(property_value.c_str()));
-        if (!status_ok(status)) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
+        if (status_ok(status)) {
+          response->set_str(property_value.c_str());
         }
-        response->set_str(property_value.c_str());
         break;
       }
       case u32_array_: {
@@ -435,10 +423,6 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
         response->mutable_u32_array()->mutable_u32_array()->Resize(number_of_elements, 0);
         u32* property_value = reinterpret_cast<u32*>(response->mutable_u32_array()->mutable_u32_array()->mutable_data());
         status = library_->GetProperty(session, property_id, property_size, property_value);
-        if (!status_ok(status)) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
         break;
       }
       case db_ref_: {
@@ -474,9 +458,9 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
                 };
                 uint32_t session_id{};
                 status = nx_database_ref_t_resource_repository_->add_dependent_session("", init_lambda, initiating_session_id, session_id);
-                nidevice_grpc::Session session{};
-                session.set_id(session_id);
-                return session;
+                nidevice_grpc::Session dependent_session{};
+                dependent_session.set_id(session_id);
+                return dependent_session;
               });
         }
         break;
@@ -563,6 +547,10 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
         }
         break;
       }
+      default: {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "Specified property_id is not supported.");
+        break;
+      }
     }
     response->set_status(status);
     return ::grpc::Status::OK;
@@ -611,31 +599,29 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
       case u32_: {
         u32 property_value{};
         status = library_->GetSubProperty(session, active_index, property_id, property_size, &property_value);
-        if (!status_ok(status)) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
+        if (status_ok(status)) {
+          response->set_u32_scalar(property_value);
         }
-        response->set_u32_scalar(property_value);
         break;
       }
       case f64_: {
         f64 property_value{};
         status = library_->GetSubProperty(session, active_index, property_id, property_size, &property_value);
-        if (!status_ok(status)) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
+        if (status_ok(status)) {
+          response->set_f64_scalar(property_value);
         }
-        response->set_f64_scalar(property_value);
         break;
       }
       case string_: {
         std::string property_value(property_size, '\0');
         status = library_->GetSubProperty(session, active_index, property_id, property_size, const_cast<char*>(property_value.c_str()));
         if (!status_ok(status)) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
+          response->set_str(property_value.c_str());
         }
-        response->set_str(property_value.c_str());
+        break;
+      }
+      default: {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "Specified property_id is not supported.");
         break;
       }
     }
@@ -685,51 +671,41 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
       case u32_: {
         u32 property_value{};
         status = library_->DbGetProperty(dbobject, property_id, property_size, &property_value);
-        if (!status_ok(status)) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
+        if (status_ok(status)) {
+          response->set_u32_scalar(property_value);
         }
-        response->set_u32_scalar(property_value);
         break;
       }
       case boolean_: {
         bool property_value{};
         status = library_->DbGetProperty(dbobject, property_id, property_size, &property_value);
-        if (!status_ok(status)) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
+        if (status_ok(status)) {
+          response->set_bool_scalar(property_value);
         }
-        response->set_bool_scalar(property_value);
         break;
       }
       case u64_: {
         u64 property_value{};
         status = library_->DbGetProperty(dbobject, property_id, property_size, &property_value);
         if (!status_ok(status)) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
+          response->set_u64_scalar(property_value);
         }
-        response->set_u64_scalar(property_value);
         break;
       }
       case f64_: {
         f64 property_value{};
         status = library_->DbGetProperty(dbobject, property_id, property_size, &property_value);
         if (!status_ok(status)) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
+          response->set_f64_scalar(property_value);
         }
-        response->set_f64_scalar(property_value);
         break;
       }
       case string_: {
         std::string property_value(property_size, '\0');
         status = library_->DbGetProperty(dbobject, property_id, property_size, const_cast<char*>(property_value.c_str()));
         if (!status_ok(status)) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
+          response->set_str(property_value.c_str());
         }
-        response->set_str(property_value.c_str());
         break;
       }
       case u32_array_: {
@@ -738,21 +714,15 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
         response->mutable_u32_array()->mutable_u32_array()->Resize(number_of_elements, 0);
         u32* property_value = reinterpret_cast<u32*>(response->mutable_u32_array()->mutable_u32_array()->mutable_data());
         status = library_->DbGetProperty(dbobject, property_id, property_size, property_value);
-        if (!status_ok(status)) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
         break;
       }
       case u8_array_: {
         int32_t number_of_elements = property_size / sizeof(u8);
         std::string property_value(number_of_elements, '\0');
         status = library_->DbGetProperty(dbobject, property_id, property_size, (u8*)property_value.data());
-        if (!status_ok(status)) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
+        if (status_ok(status)) {
+          response->set_u8_array(property_value);
         }
-        response->set_u8_array(property_value);
       }
       case db_ref_: {
         auto initiating_session_id = nx_database_ref_t_resource_repository_->access_session_id(dbobject_grpc_session.id(), dbobject_grpc_session.name());
@@ -763,11 +733,9 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
         };
         uint32_t session_id = 0;
         status = nx_database_ref_t_resource_repository_->add_dependent_session("", init_lambda, initiating_session_id, session_id);
-        if (!status_ok(status)) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
+        if (status_ok(status)) {
+          response->mutable_db_ref()->set_id(session_id);
         }
-        response->mutable_db_ref()->set_id(session_id);
         break;
       }
       case db_ref_array_: {
@@ -776,26 +744,28 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
         std::vector<nxDatabaseRef_t> property_value_vector(number_of_elements, 0U);
         nxDatabaseRef_t* property_value = static_cast<nxDatabaseRef_t*>(property_value_vector.data());
         status = library_->DbGetProperty(dbobject, property_id, property_size, property_value);
-        response->mutable_db_ref_array()->mutable_db_ref()->Clear();
-        response->mutable_db_ref_array()->mutable_db_ref()->Reserve(number_of_elements);
-        std::transform(
-            property_value_vector.begin(),
-            property_value_vector.end(),
-            google::protobuf::RepeatedFieldBackInserter(response->mutable_db_ref_array()->mutable_db_ref()),
-            [&](auto x) {
-              auto init_lambda = [&]() {
-                return std::make_tuple(status, x);
-              };
-              uint32_t session_id{};
-              status = nx_database_ref_t_resource_repository_->add_dependent_session("", init_lambda, initiating_session_id, session_id);
-              nidevice_grpc::Session dependent_session{};
-              dependent_session.set_id(session_id);
-              return dependent_session;
-            });
-        if (!status_ok(status)) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
+        if (status_ok(status)) {
+          response->mutable_db_ref_array()->mutable_db_ref()->Clear();
+          response->mutable_db_ref_array()->mutable_db_ref()->Reserve(number_of_elements);
+          std::transform(
+              property_value_vector.begin(),
+              property_value_vector.end(),
+              google::protobuf::RepeatedFieldBackInserter(response->mutable_db_ref_array()->mutable_db_ref()),
+              [&](auto x) {
+                auto init_lambda = [&]() {
+                  return std::make_tuple(status, x);
+                };
+                uint32_t session_id{};
+                status = nx_database_ref_t_resource_repository_->add_dependent_session("", init_lambda, initiating_session_id, session_id);
+                nidevice_grpc::Session dependent_session{};
+                dependent_session.set_id(session_id);
+                return dependent_session;
+              });
         }
+        break;
+      }
+      default: {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "Specified property_id is not supported.");
         break;
       }
     }
@@ -843,81 +813,49 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
         u32 property_size = sizeof(u32);
         u32 property_value = request->u32_scalar();
         status = library_->SetProperty(session, property_id, property_size, &property_value);
-        if (!status_ok(status)) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
         break;
       }
       case boolean_: {
         u32 property_size = sizeof(bool);
         bool property_value = request->bool_scalar();
         status = library_->SetProperty(session, property_id, property_size, &property_value);
-        if (!status_ok(status)) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
         break;
       }
       case u64_: {
         u32 property_size = sizeof(u64);
         u64 property_value = request->u64_scalar();
         status = library_->SetProperty(session, property_id, property_size, &property_value);
-        if (!status_ok(status)) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
         break;
       }
       case i32_: {
         u32 property_size = sizeof(i32);
         i32 property_value = request->i32_scalar();
         status = library_->SetProperty(session, property_id, property_size, &property_value);
-        if (!status_ok(status)) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
         break;
       }
       case f64_: {
         u32 property_size = sizeof(f64);
         f64 property_value = request->f64_scalar();
         status = library_->SetProperty(session, property_id, property_size, &property_value);
-        if (!status_ok(status)) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
         break;
       }
       case string_: {
         std::string property_value = request->str();
         u32 property_size = property_value.size();
         status = library_->SetProperty(session, property_id, property_size, const_cast<char*>(property_value.c_str()));
-        if (!status_ok(status)) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
         break;
       }
       case u32_array_: {
         u32 property_size = request->u32_array().u32_array().size() * sizeof(u32);
         u32* property_value = const_cast<u32*>(request->u32_array().u32_array().data());
         status = library_->SetProperty(session, property_id, property_size, property_value);
-        if (!status_ok(status)) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
         break;
       }
       case db_ref_: {
         u32 property_size = sizeof(nxDatabaseRef_t);
-        auto property_value = request->db_ref();
-        nxDatabaseRef_t property_value_ref = nx_database_ref_t_resource_repository_->access_session(property_value.id(), property_value.name());
-        status = library_->SetProperty(session, property_id, property_size, &property_value_ref);
-        if (!status_ok(status)) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+        auto db_ref = request->db_ref();
+        nxDatabaseRef_t property_value = nx_database_ref_t_resource_repository_->access_session(db_ref.id(), db_ref.name());
+        status = library_->SetProperty(session, property_id, property_size, &property_value);
         break;
       }
       case db_ref_array_: {
@@ -926,23 +864,23 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
         std::transform(
             request->db_ref_array().db_ref().begin(),
             request->db_ref_array().db_ref().begin() + number_of_elements,
-            property_value.rbegin(),
+            property_value.end(),
             [&](auto x) {
               nxDatabaseRef_t db_ref = nx_database_ref_t_resource_repository_->access_session(x.id(), x.name());
               return db_ref;
             });
         u32 property_size = number_of_elements * sizeof(nxDatabaseRef_t);
         status = library_->SetProperty(session, property_id, property_size, static_cast<nxDatabaseRef_t*>(property_value.data()));
-        if (!status_ok(status)) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
         break;
       }
       case nxEptRxFilter_Element_t_array_: {
         u32 property_size = request->ept_rx_filter_array().ept_rx_filter().size() * sizeof(nxEptRxFilter_Element_t);
         auto property_value = convert_from_grpc<nxEptRxFilter_Element_t>(request->ept_rx_filter_array().ept_rx_filter());
         status = library_->SetProperty(session, property_id, property_size, property_value.data());
+        break;
+      }
+      default: {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "Specified property_id is not supported.");
         break;
       }
     }
@@ -982,39 +920,28 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
       }
     }
 
-    u32 property_size{};
-    auto status = library_->GetSubPropertySize(session, active_index, property_id, &property_size);
-    if (!status_ok(status)) {
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-
+    nxStatus_t status;
     switch (subproperty_type_map_[property_id]) {
       case u32_: {
+        u32 property_size = sizeof(u32);
         u32 property_value = request->u32_scalar();
         status = library_->SetSubProperty(session, active_index, property_id, property_size, &property_value);
-        if (!status_ok(status)) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
         break;
       }
       case f64_: {
+        u32 property_size = sizeof(f64);
         f64 property_value = request->f64_scalar();
         status = library_->SetSubProperty(session, active_index, property_id, property_size, &property_value);
-        if (!status_ok(status)) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
         break;
       }
       case string_: {
         std::string property_value = request->str();
-        status = library_->SetSubProperty(session, active_index, property_id, (u32)property_value.size(), const_cast<char*>(property_value.c_str()));
-        if (!status_ok(status)) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+        u32 property_size = property_value.size();
+        status = library_->SetSubProperty(session, active_index, property_id, property_size, const_cast<char*>(property_value.c_str()));
+        break;
+      }
+      default: {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "Specified property_id is not supported.");
         break;
       }
     }
@@ -1039,100 +966,68 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
     nxDatabaseRef_t dbobject = nx_database_ref_t_resource_repository_->access_session(dbobject_grpc_session.id(), dbobject_grpc_session.name());
     u32 property_id;
     switch (request->dbproperty_id_enum_case()) {
-      case nixnet_grpc::DbGetPropertyRequest::DbpropertyIdEnumCase::kPropertyId: {
+      case nixnet_grpc::DbSetPropertyRequest::DbpropertyIdEnumCase::kPropertyId: {
         property_id = static_cast<u32>(request->property_id());
         break;
       }
-      case nixnet_grpc::DbGetPropertyRequest::DbpropertyIdEnumCase::kPropertyIdRaw: {
+      case nixnet_grpc::DbSetPropertyRequest::DbpropertyIdEnumCase::kPropertyIdRaw: {
         property_id = static_cast<u32>(request->property_id_raw());
         break;
       }
-      case nixnet_grpc::DbGetPropertyRequest::DbpropertyIdEnumCase::DBPROPERTY_ID_ENUM_NOT_SET: {
+      case nixnet_grpc::DbSetPropertyRequest::DbpropertyIdEnumCase::DBPROPERTY_ID_ENUM_NOT_SET: {
         return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for property_id was not specified or out of range");
         break;
       }
     }
 
-    u32 property_size{};
-    auto status = library_->DbGetPropertySize(dbobject, property_id, &property_size);
-    if (!status_ok(status)) {
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-
+    nxStatus_t status;
     switch (dbproperty_type_map_[property_id]) {
       case u32_: {
+        u32 property_size = sizeof(u32);
         u32 property_value = request->u32_scalar();
         status = library_->DbSetProperty(dbobject, property_id, property_size, &property_value);
-        if (!status_ok(status)) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
         break;
       }
       case boolean_: {
+        u32 property_size = sizeof(boolean_);
         bool property_value = request->bool_scalar();
         status = library_->DbSetProperty(dbobject, property_id, property_size, &property_value);
-        if (!status_ok(status)) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
         break;
       }
       case u64_: {
+        u32 property_size = sizeof(u64);
         u64 property_value = request->u64_scalar();
         status = library_->DbSetProperty(dbobject, property_id, property_size, &property_value);
-        if (!status_ok(status)) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
         break;
       }
       case f64_: {
+        u32 property_size = sizeof(f64);
         f64 property_value = request->f64_scalar();
         status = library_->DbSetProperty(dbobject, property_id, property_size, &property_value);
-        if (!status_ok(status)) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
         break;
       }
       case string_: {
         std::string property_value = request->str();
-        status = library_->DbSetProperty(dbobject, property_id, (u32)property_value.size(), const_cast<char*>(property_value.c_str()));
-        if (!status_ok(status)) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+        u32 property_size = property_value.size();
+        status = library_->DbSetProperty(dbobject, property_id, property_size, const_cast<char*>(property_value.c_str()));
         break;
       }
       case u32_array_: {
         u32* property_value = const_cast<u32*>(request->u32_array().u32_array().data());
-        u32 property_value_buffer_size = (u32)(request->u32_array().u32_array().size()) * sizeof(u32);
-        status = library_->DbSetProperty(dbobject, property_id, property_value_buffer_size, property_value);
-        if (!status_ok(status)) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+        u32 property_size = (u32)(request->u32_array().u32_array().size()) * sizeof(u32);
+        status = library_->DbSetProperty(dbobject, property_id, property_size, property_value);
         break;
       }
       case u8_array_: {
         u8* property_value = (u8*)request->u8_array().c_str();
-        u32 property_value_buffer_size = (u32)(request->u8_array().size());
-        status = library_->DbSetProperty(dbobject, property_id, property_value_buffer_size, property_value);
-        if (!status_ok(status)) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+        u32 property_size = (u32)(request->u8_array().size());
+        status = library_->DbSetProperty(dbobject, property_id, property_size, property_value);
       }
       case db_ref_: {
-        auto property_value = request->db_ref();
-        nxDatabaseRef_t property_value_ref = nx_database_ref_t_resource_repository_->access_session(property_value.id(), property_value.name());
-        status = library_->SetProperty(dbobject, property_id, property_size, &property_value_ref);
-        if (!status_ok(status)) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+        u32 property_size = sizeof(nxDatabaseRef_t);
+        auto db_ref = request->db_ref();
+        nxDatabaseRef_t property_value = nx_database_ref_t_resource_repository_->access_session(db_ref.id(), db_ref.name());
+        status = library_->DbSetProperty(dbobject, property_id, property_size, &property_value);
         break;
       }
       case db_ref_array_: {
@@ -1141,16 +1036,13 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
         std::transform(
             request->db_ref_array().db_ref().begin(),
             request->db_ref_array().db_ref().begin() + number_of_elements,
-            property_value.rbegin(),
+            property_value.end(),
             [&](auto x) {
               nxDatabaseRef_t db_ref = nx_database_ref_t_resource_repository_->access_session(x.id(), x.name());
               return db_ref;
             });
-        status = library_->SetProperty(dbobject, property_id, number_of_elements * sizeof(nxDatabaseRef_t), static_cast<nxDatabaseRef_t*>(property_value.data()));
-        if (!status_ok(status)) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+        u32 property_size = number_of_elements * sizeof(nxDatabaseRef_t);
+        status = library_->DbSetProperty(dbobject, property_id, property_size, static_cast<nxDatabaseRef_t*>(property_value.data()));
         break;
       }
     }
@@ -1369,12 +1261,12 @@ void convert_to_grpc(std::vector<f64>& input, google::protobuf::RepeatedField<do
 {
   output->Resize(number_of_signals * number_of_values_returned, 0U);
   std::transform(
-    input.begin(),
-    input.begin() + (number_of_signals * number_of_values_returned),
-    google::protobuf::RepeatedFieldBackInserter(output),
-    [&](auto x) {
-      return x;
-    });
+      input.begin(),
+      input.begin() + (number_of_signals * number_of_values_returned),
+      google::protobuf::RepeatedFieldBackInserter(output),
+      [&](auto x) {
+        return x;
+      });
 }
 
 u32 get_frame_buffer_size(int32 number_of_frames, u32 max_payload_per_frame, u32 protocol)
