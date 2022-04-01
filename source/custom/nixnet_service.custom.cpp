@@ -679,7 +679,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
         auto initiating_session_id = nx_database_ref_t_resource_repository_->access_session_id(dbobject_grpc_session.id(), dbobject_grpc_session.name());
         auto init_lambda = [&]() {
           nxDatabaseRef_t property_value;
-          status = library_->GetProperty(dbobject, property_id, property_size, &property_value);
+          status = library_->DbGetProperty(dbobject, property_id, property_size, &property_value);
           return std::make_tuple(status, property_value);
         };
         uint32_t session_id = 0;
@@ -696,7 +696,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
         auto initiating_session_id = nx_database_ref_t_resource_repository_->access_session_id(dbobject_grpc_session.id(), dbobject_grpc_session.name());
         std::vector<nxDatabaseRef_t> property_value_vector(number_of_elements, 0U);
         nxDatabaseRef_t* property_value = static_cast<nxDatabaseRef_t*>(property_value_vector.data());
-        status = library_->GetProperty(dbobject, property_id, property_size, property_value);
+        status = library_->DbGetProperty(dbobject, property_id, property_size, property_value);
         response->mutable_db_ref_array()->mutable_db_ref()->Clear();
         response->mutable_db_ref_array()->mutable_db_ref()->Reserve(number_of_elements);
         std::transform(
