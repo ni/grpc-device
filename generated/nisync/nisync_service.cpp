@@ -11,7 +11,6 @@
 #include <iostream>
 #include <atomic>
 #include <vector>
-#include "custom/ivi_errors.h"
 #include <server/converters.h>
 
 namespace nisync_grpc {

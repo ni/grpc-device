@@ -14,10 +14,9 @@ config = {
         "task": "acquisition",
     },
     "custom_types": [],
-    'additional_headers': {'custom/ivi_errors.h': ['service.cpp']},
     "driver_name": "NI-SYNC",
     "init_function": "init",
-    'status_ok': 'status >= 0',
+    "status_ok": "status >= 0",
     "library_info": {
         "Linux": {"64bit": {"name": "nisync", "type": "cdll"}},
         "Windows": {
