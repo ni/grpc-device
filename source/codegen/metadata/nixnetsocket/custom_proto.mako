@@ -43,7 +43,7 @@ message SockAddrIn {
 
 message SockAddrIn6 {
   uint32 port = 1;
-  uint32 flow_info = 2;
+  uint32 flowinfo = 2;
   In6Addr addr = 3;
   uint32 scope_id = 4;
 }
