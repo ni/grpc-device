@@ -6,7 +6,7 @@
 #include <vector>
 
 #define EXPECT_SUCCESS(response_)    \
-  ([](auto& response) {              \
+  ([](const auto& response) {              \
     EXPECT_EQ(0, response.status()); \
     return response;                 \
   })(response_)
@@ -17,7 +17,6 @@
   }
 
 namespace nixnet_utilities {
-namespace {
 
 namespace client = nixnet_grpc::experimental::client;
 namespace pb = google::protobuf;
@@ -191,5 +190,4 @@ std::vector<nidevice_grpc::Session> db_get_property_db_ref_vtr(const client::Stu
   return std::vector<nidevice_grpc::Session>(array.begin(), array.end());
 }
 
-}  // namespace
 }  // namespace nixnet_utilities
