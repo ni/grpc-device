@@ -60,7 +60,7 @@ class NiXnetLINDriverApiTests : public ::testing::Test {
     return stub_;
   }
 
-  void NiXnetLINDriverApiTests::assert_lin_frames_are_equal(nixnet_grpc::FrameRequest* frame1, nixnet_grpc::FrameResponse* frame2)
+  void assert_lin_frames_are_equal(nixnet_grpc::FrameRequest* frame1, nixnet_grpc::FrameResponse* frame2)
   {
     int frame1_flags = calculate_bitwise_or_of_flags(frame1->flags());
     int frame2_flags = calculate_bitwise_or_of_flags(frame2->flags());
