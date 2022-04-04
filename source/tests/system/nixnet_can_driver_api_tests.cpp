@@ -56,7 +56,7 @@ class NiXnetCANDriverApiTests : public ::testing::Test {
   }
 
   void claim_by_address(::nidevice_grpc::Session session, u64 node_name, u32 in_node_addr, u32* out_node_addr);
-  void NiXnetCANDriverApiTests::assert_can_frames_are_equal(nixnet_grpc::FrameRequest* frame1, nixnet_grpc::FrameResponse* frame2)
+  void assert_can_frames_are_equal(nixnet_grpc::FrameRequest* frame1, nixnet_grpc::FrameResponse* frame2)
   {
     int frame1_flags = calculate_bitwise_or_of_flags(frame1->flags());
     int frame2_flags = calculate_bitwise_or_of_flags(frame2->flags());
