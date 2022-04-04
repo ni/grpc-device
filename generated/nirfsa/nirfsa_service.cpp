@@ -12,6 +12,7 @@
 #include <atomic>
 #include <vector>
 #include "custom/nirfsa_aliases.h"
+#include "custom/ivi_errors.h"
 #include <server/converters.h>
 
 namespace nirfsa_grpc {
