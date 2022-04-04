@@ -1996,6 +1996,10 @@ namespace nidmm_grpc {
       if (status_ok(status)) {
         response->mutable_vi()->set_id(session_id);
       }
+      else {
+        const auto error_message = get_last_error_message(library_);
+        response->set_error_message(error_message);
+      }
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -2028,6 +2032,10 @@ namespace nidmm_grpc {
       response->set_status(status);
       if (status_ok(status)) {
         response->mutable_vi()->set_id(session_id);
+      }
+      else {
+        const auto error_message = get_last_error_message(library_);
+        response->set_error_message(error_message);
       }
       return ::grpc::Status::OK;
     }
