@@ -6,7 +6,7 @@
 #include <vector>
 
 #define EXPECT_SUCCESS(response_)    \
-  ([](auto& response) {              \
+  ([](auto response) {              \
     EXPECT_EQ(0, response.status()); \
     return response;                 \
   })(response_)
