@@ -8,12 +8,15 @@ from typing import List, Tuple
 import common_helpers
 
 
-class ParamMechanism(Enum):  # noqa: D101
+class ParamMechanism(Enum):
+    """Enumeration of parameter mechanisms supported by client codegen."""
+
     BASIC = 0
     ARRAY = 1
     ENUM = 2
     MAPPED_ENUM = 3
     COPY = 4
+    BITFIELD_AS_ENUM_ARRAY = 5
 
 
 ClientParam = namedtuple("ClientParam", ["name", "cppName", "type", "mechanism"])
@@ -98,6 +101,11 @@ def _get_cpp_client_param_type(param: dict, enums: dict) -> str:
         base_type = common_helpers.get_enum_value_cpp_type(enums[enum])
         return f"simple_variant<{enum}, {base_type}>"
 
+    if common_helpers.is_bitfield_as_enum_array(param):
+        enum = common_helpers.get_bitfield_enum_type(param)
+        base_type = common_helpers.get_enum_value_cpp_type(enums[enum])
+        return f"simple_variant<std::vector<{enum}>, {base_type}>"
+
     return _get_cpp_type_for_protobuf_type(grpc_type)
 
 
@@ -119,6 +127,8 @@ def _const_ref_t(t: str) -> str:
 def _get_param_mechanism(param: dict) -> ParamMechanism:
     if _is_grpc_array(param):
         return ParamMechanism.ARRAY
+    if common_helpers.is_bitfield_as_enum_array(param):
+        return ParamMechanism.BITFIELD_AS_ENUM_ARRAY
     if "enum" in param:
         return ParamMechanism.ENUM
     if "mapped-enum" in param:

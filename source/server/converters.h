@@ -9,6 +9,7 @@
 
 #include <algorithm>
 #include <limits>
+#include <numeric>
 #include <string>
 #include <vector>
 
@@ -286,6 +287,17 @@ inline CVIAbsoluteTime convert_from_grpc(const google::protobuf::Timestamp& valu
   cviTime.cviTime.msb = static_cast<int64>(unixTime + SecondsFromCVI1904EpochTo1970Epoch);
   cviTime.cviTime.lsb = static_cast<uInt64>((static_cast<double>(value.nanos()) / NanosecondsPerSecond) * TwoToSixtyFour);
   return cviTime;
+}
+
+// Or together input_array and input_raw to implement the "bitfield_as_enum_array" feature for inputs.
+// Note: TEnum is unused because protobuf C++ represents repeated enums as a int32 arrays.
+template <typename TArray, typename TBitfield>
+inline TBitfield convert_bitfield_as_enum_array_input(
+    const TArray& input,
+    TBitfield input_raw)
+{
+  const auto or_delegate = [](google::protobuf::int32 first, google::protobuf::int32 second) { return static_cast<TBitfield>(first | second); };
+  return input_raw | std::accumulate(input.cbegin(), input.cend(), TBitfield{0}, or_delegate);
 }
 
 // TypeToStorageType should be specialized to define a (TDriverType, TGrpcType)->StorageType mapping, which

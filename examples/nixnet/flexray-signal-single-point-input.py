@@ -3,7 +3,10 @@ r""" Read Signal Data.
  This example reads a signal value for 10 times.
  This is used to demonstrate a signal single point input session. 
  This example uses hardcoded signal names that use the NIXNET_example database. 
- Also ensure that the transceivers are externally powered when using C Series modules.
+ To use your own database, you need to add an alias to your database file using the NI-XNET
+ Database Editor and then modify the database name and signals used here.
+ Also ensure that the bus is properly terminated as this example does not enable the on-board
+ termination.
 
 The gRPC API is built from the C API. NI-XNET documentation is installed with the driver at:
   C:\Users\Public\Documents\National Instruments\NI-XNET\Documentation\NI-XNET Manual.chm
@@ -100,6 +103,8 @@ try:
     )
     check_for_error(set_property_response.status)
 
+    # If no values are being written on the FlexRay port, the signals read would contain the
+    # default value of 0.0
     while i < 10:
         # Update the signal data
         read_signal_response = client.ReadSignalSinglePoint(

@@ -25,6 +25,7 @@ NiXnetSocketLibrary::NiXnetSocketLibrary() : shared_library_(kLibraryName)
   function_pointers_.Bind = reinterpret_cast<BindPtr>(shared_library_.get_function_pointer("nxbind"));
   function_pointers_.Close = reinterpret_cast<ClosePtr>(shared_library_.get_function_pointer("nxclose"));
   function_pointers_.Connect = reinterpret_cast<ConnectPtr>(shared_library_.get_function_pointer("nxconnect"));
+  function_pointers_.FdIsSet = reinterpret_cast<FdIsSetPtr>(shared_library_.get_function_pointer("nxfd_isset"));
   function_pointers_.FreeAddrInfo = reinterpret_cast<FreeAddrInfoPtr>(shared_library_.get_function_pointer("nxfreeaddrinfo"));
   function_pointers_.GetAddrInfo = reinterpret_cast<GetAddrInfoPtr>(shared_library_.get_function_pointer("nxgetaddrinfo"));
   function_pointers_.GetLastErrorNum = reinterpret_cast<GetLastErrorNumPtr>(shared_library_.get_function_pointer("nxgetlasterrornum"));
@@ -46,7 +47,6 @@ NiXnetSocketLibrary::NiXnetSocketLibrary() : shared_library_(kLibraryName)
   function_pointers_.IpStackGetInfo = reinterpret_cast<IpStackGetInfoPtr>(shared_library_.get_function_pointer("nxIpStackGetInfo"));
   function_pointers_.IpStackOpen = reinterpret_cast<IpStackOpenPtr>(shared_library_.get_function_pointer("nxIpStackOpen"));
   function_pointers_.IpStackWaitForInterface = reinterpret_cast<IpStackWaitForInterfacePtr>(shared_library_.get_function_pointer("nxIpStackWaitForInterface"));
-  function_pointers_.IsSet = reinterpret_cast<IsSetPtr>(shared_library_.get_function_pointer("nxfd_isset"));
   function_pointers_.Listen = reinterpret_cast<ListenPtr>(shared_library_.get_function_pointer("nxlisten"));
   function_pointers_.Recv = reinterpret_cast<RecvPtr>(shared_library_.get_function_pointer("nxrecv"));
   function_pointers_.RecvFrom = reinterpret_cast<RecvFromPtr>(shared_library_.get_function_pointer("nxrecvfrom"));
@@ -118,6 +118,18 @@ int32_t NiXnetSocketLibrary::Connect(nxSOCKET socket, nxsockaddr* name, nxsockle
 #endif
 }
 
+int32_t NiXnetSocketLibrary::FdIsSet(nxSOCKET fd, nxfd_set* set)
+{
+  if (!function_pointers_.FdIsSet) {
+    throw nidevice_grpc::LibraryLoadException("Could not find nxfd_isset.");
+  }
+#if defined(_MSC_VER)
+  return nxfd_isset(fd, set);
+#else
+  return function_pointers_.FdIsSet(fd, set);
+#endif
+}
+
 int32_t NiXnetSocketLibrary::FreeAddrInfo(nxaddrinfo* res)
 {
   if (!function_pointers_.FreeAddrInfo) {
@@ -154,15 +166,15 @@ char* NiXnetSocketLibrary::GetLastErrorStr(char buf[], size_t bufLen)
   return function_pointers_.GetLastErrorStr(buf, bufLen);
 }
 
-int32_t NiXnetSocketLibrary::GetNameInfo(nxIpStackRef_t stack_ref, nxsockaddr* addr, nxsocklen_t addr_len, char host[], nxsocklen_t host_len, char serv[], nxsocklen_t serv_len, int32_t flags)
+int32_t NiXnetSocketLibrary::GetNameInfo(nxIpStackRef_t stack_ref, nxsockaddr* addr, nxsocklen_t addrlen, char host[], nxsocklen_t hostlen, char serv[], nxsocklen_t servlen, int32_t flags)
 {
   if (!function_pointers_.GetNameInfo) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxgetnameinfo.");
   }
 #if defined(_MSC_VER)
-  return nxgetnameinfo(stack_ref, addr, addr_len, host, host_len, serv, serv_len, flags);
+  return nxgetnameinfo(stack_ref, addr, addrlen, host, hostlen, serv, servlen, flags);
 #else
-  return function_pointers_.GetNameInfo(stack_ref, addr, addr_len, host, host_len, serv, serv_len, flags);
+  return function_pointers_.GetNameInfo(stack_ref, addr, addrlen, host, hostlen, serv, servlen, flags);
 #endif
 }
 
@@ -350,18 +362,6 @@ int32_t NiXnetSocketLibrary::IpStackWaitForInterface(nxIpStackRef_t stack_ref, c
 #endif
 }
 
-int32_t NiXnetSocketLibrary::IsSet(nxSOCKET fd, nxfd_set* set)
-{
-  if (!function_pointers_.IsSet) {
-    throw nidevice_grpc::LibraryLoadException("Could not find nxfd_isset.");
-  }
-#if defined(_MSC_VER)
-  return nxfd_isset(fd, set);
-#else
-  return function_pointers_.IsSet(fd, set);
-#endif
-}
-
 int32_t NiXnetSocketLibrary::Listen(nxSOCKET socket, int32_t backlog)
 {
   if (!function_pointers_.Listen) {
@@ -398,15 +398,15 @@ int32_t NiXnetSocketLibrary::RecvFrom(nxSOCKET socket, char mem[], int32_t size,
 #endif
 }
 
-int32_t NiXnetSocketLibrary::Select(int32_t nfds, nxfd_set* read_fds, nxfd_set* write_fds, nxfd_set* except_fds, nxtimeval* timeout)
+int32_t NiXnetSocketLibrary::Select(int32_t nfds, nxfd_set* readfds, nxfd_set* writefds, nxfd_set* exceptfds, nxtimeval* timeout)
 {
   if (!function_pointers_.Select) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxselect.");
   }
 #if defined(_MSC_VER)
-  return nxselect(nfds, read_fds, write_fds, except_fds, timeout);
+  return nxselect(nfds, readfds, writefds, exceptfds, timeout);
 #else
-  return function_pointers_.Select(nfds, read_fds, write_fds, except_fds, timeout);
+  return function_pointers_.Select(nfds, readfds, writefds, exceptfds, timeout);
 #endif
 }
 
@@ -458,15 +458,15 @@ int32_t NiXnetSocketLibrary::Shutdown(nxSOCKET socket, int32_t how)
 #endif
 }
 
-nxSOCKET NiXnetSocketLibrary::Socket(nxIpStackRef_t stack_ref, int32_t domain, int32_t type, int32_t prototcol)
+nxSOCKET NiXnetSocketLibrary::Socket(nxIpStackRef_t stack_ref, int32_t domain, int32_t type, int32_t protocol)
 {
   if (!function_pointers_.Socket) {
     throw nidevice_grpc::LibraryLoadException("Could not find nxsocket.");
   }
 #if defined(_MSC_VER)
-  return nxsocket(stack_ref, domain, type, prototcol);
+  return nxsocket(stack_ref, domain, type, protocol);
 #else
-  return function_pointers_.Socket(stack_ref, domain, type, prototcol);
+  return function_pointers_.Socket(stack_ref, domain, type, protocol);
 #endif
 }
 
