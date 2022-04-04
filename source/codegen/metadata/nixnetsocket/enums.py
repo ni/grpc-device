@@ -258,6 +258,22 @@ enums = {
     'SocketOptionLevel': {
         'values': [
             {
+                'name': 'PROTO_IP',
+                'value': 0
+            },
+            {
+                'name': 'PROTO_TCP',
+                'value': 6
+            },
+            {
+                'name': 'PROTO_UDP',
+                'value': 8
+            },
+            {
+                'name': 'PROTO_IPV6',
+                'value': 12
+            },
+            {
                 'name': 'SOCKET',
                 'value': 13
             }
