@@ -381,14 +381,14 @@ TEST_F(NiXnetSocketLoopbackTests, IPv4LocalhostAddress_AToNAndPToNRoundtrip_Retu
   const auto a_to_n = client::inet_a_to_n(stub(), stack.stack_ref(), IPV4_LOCALHOST_ADDRESS_STR);
   const auto p_to_n = client::inet_p_to_n(stub(), stack.stack_ref(), 2 /* nxAF_INET */, IPV4_LOCALHOST_ADDRESS_STR);
   const auto n_to_a = client::inet_n_to_a(stub(), stack.stack_ref(), a_to_n.name());
-  const auto n_to_p = client::inet_n_to_p(stub(), stack.stack_ref(), p_to_n.dst());
+  const auto n_to_p = client::inet_n_to_p(stub(), stack.stack_ref(), p_to_n.addr());
 
   EXPECT_SUCCESS_WITH_STATUS(1, a_to_n);
   EXPECT_SUCCESS_WITH_STATUS(1, p_to_n);
   EXPECT_SUCCESS(n_to_a);
   EXPECT_SUCCESS(n_to_p);
   EXPECT_EQ(IPV4_LOCALHOST_ADDR, a_to_n.name().addr());
-  EXPECT_EQ(IPV4_LOCALHOST_ADDR, p_to_n.dst().ipv4().addr());
+  EXPECT_EQ(IPV4_LOCALHOST_ADDR, p_to_n.addr().ipv4().addr());
   EXPECT_EQ(IPV4_LOCALHOST_ADDRESS_STR, n_to_a.address());
   EXPECT_EQ(IPV4_LOCALHOST_ADDRESS_STR, n_to_p.address());
 }
@@ -397,11 +397,11 @@ TEST_F(NiXnetSocketLoopbackTests, IPv6LocalhostAddress_PToNRoundtrip_ReturnsCorr
 {
   const auto stack = client::ip_stack_create(stub(), "", create_simple_config("ENET1"));
   const auto p_to_n = client::inet_p_to_n(stub(), stack.stack_ref(), 10 /* nxAF_INET6 */, IPV6_LOCALHOST_ADDRESS_STR);
-  const auto n_to_p = client::inet_n_to_p(stub(), stack.stack_ref(), p_to_n.dst());
+  const auto n_to_p = client::inet_n_to_p(stub(), stack.stack_ref(), p_to_n.addr());
 
   EXPECT_SUCCESS_WITH_STATUS(1, p_to_n);
   EXPECT_SUCCESS(n_to_p);
-  EXPECT_EQ(IPV6_LOCALHOST_ADDR, p_to_n.dst().ipv6().addr());
+  EXPECT_EQ(IPV6_LOCALHOST_ADDR, p_to_n.addr().ipv6().addr());
   EXPECT_EQ(IPV6_LOCALHOST_ADDRESS_STR, n_to_p.address());
 }
 
@@ -424,7 +424,7 @@ TEST_F(NiXnetSocketLoopbackTests, PToNWithInvalidFamily_ReturnsError)
   // Invalid address is a zero status (1 is success; -1 is invalid family)
   // https://man7.org/linux/man-pages/man3/inet_pton.3.html
   EXPECT_XNET_STATUS(0, p_to_n_in6_with_in_addr);
-  EXPECT_EQ(IPV6_ZERO_ADDR, p_to_n_in6_with_in_addr.dst().ipv6().addr());
+  EXPECT_EQ(IPV6_ZERO_ADDR, p_to_n_in6_with_in_addr.addr().ipv6().addr());
   EXPECT_INVALID_ARGUMENT_ERROR(p_to_n_UNSPEC);
   EXPECT_INVALID_ARGUMENT_ERROR(p_to_n_42);
 }
@@ -571,7 +571,7 @@ SockAddr lookup_ipv4_sock_addr(client::StubPtr& stub, const nidevice_grpc::Sessi
 {
   const auto p_to_n = client::inet_p_to_n(stub, stack, 2 /* AF INET*/, addr);
   auto sock_addr = SockAddr{};
-  sock_addr.mutable_ipv4()->mutable_addr()->CopyFrom(p_to_n.dst().ipv4());
+  sock_addr.mutable_ipv4()->mutable_addr()->CopyFrom(p_to_n.addr().ipv4());
   sock_addr.mutable_ipv4()->set_port(port);
   return sock_addr;
 }
@@ -610,12 +610,12 @@ TEST_F(NiXnetSocketLoopbackTests, IPv4SocketsOnWiredPhysicalLoopback_SendAndRece
   const auto connect = client::connect(stub(), tx_socket.socket(), get_name.addr());
   const auto accept = client::accept(stub(), rx_socket.socket());
   const auto send = client::send(stub(), tx_socket.socket(), MESSAGE, 0);
-  const auto recv = client::recv(stub(), accept.socket(), MESSAGE.size(), 0);
+  const auto recv = client::recv(stub(), accept.socket(), static_cast<pb::int32>(MESSAGE.size()), 0);
 
   EXPECT_SUCCESS(connect);
   EXPECT_SUCCESS_WITH_STATUS(MESSAGE.size(), send);
   EXPECT_SUCCESS_WITH_STATUS(MESSAGE.size(), recv);
-  EXPECT_EQ(MESSAGE, recv.mem());
+  EXPECT_EQ(MESSAGE, recv.data());
 }
 
 TEST_F(NiXnetSocketLoopbackTests, IPv4TwoWaySession_CloseAllSockets_SocketsAreClosed)
@@ -634,7 +634,7 @@ TEST_F(NiXnetSocketLoopbackTests, IPv4TwoWaySession_CloseAllSockets_SocketsAreCl
   const auto connect = client::connect(stub(), tx_socket.socket(), get_name.addr());
   const auto accept = client::accept(stub(), rx_socket.socket());
   const auto send = client::send(stub(), tx_socket.socket(), MESSAGE, 0);
-  const auto recv = client::recv(stub(), accept.socket(), MESSAGE.size(), 0);
+  const auto recv = client::recv(stub(), accept.socket(), static_cast<pb::int32>(MESSAGE.size()), 0);
 
   const auto close_tx = client::close(stub(), tx_socket.socket());
   const auto close_rx = client::close(stub(), rx_socket.socket());
@@ -676,11 +676,11 @@ TEST_F(NiXnetSocketLoopbackTests, UdpSocketsOnWiredPhysicalLoopback_SendAndRecei
   EXPECT_SUCCESS(tx_add_member);
 
   const auto send = client::send_to(stub(), tx_socket.socket(), MESSAGE, 0, multicast_sock_addr);
-  const auto recv = client::recv(stub(), rx_socket.socket(), MESSAGE.size(), 0);
+  const auto recv = client::recv(stub(), rx_socket.socket(), static_cast<pb::int32>(MESSAGE.size()), 0);
 
   EXPECT_SUCCESS_WITH_STATUS(MESSAGE.size(), send);
   EXPECT_SUCCESS_WITH_STATUS(MESSAGE.size(), recv);
-  EXPECT_EQ(MESSAGE, recv.mem());
+  EXPECT_EQ(MESSAGE, recv.data());
 }
 
 TEST_F(NiXnetSocketLoopbackTests, IPv6OnLoopbackAddress_SendAndReceiveData_ReceivesExpectedData)
@@ -691,7 +691,7 @@ TEST_F(NiXnetSocketLoopbackTests, IPv6OnLoopbackAddress_SendAndReceiveData_Recei
   const auto rx_socket = client::socket(stub(), rx_stack.stack_ref(), ADDRESS_FAMILY_INET6, SOCKET_PROTOCOL_TYPE_STREAM, IP_PROTOCOL_TCP);
   const auto rx_p_to_n = client::inet_p_to_n(stub(), rx_stack.stack_ref(), 10 /* AF INET*/, "::1");
   auto sock_addr = SockAddr{};
-  sock_addr.mutable_ipv6()->mutable_addr()->CopyFrom(rx_p_to_n.dst().ipv6());
+  sock_addr.mutable_ipv6()->mutable_addr()->CopyFrom(rx_p_to_n.addr().ipv6());
   const auto bind = client::bind(stub(), rx_socket.socket(), sock_addr);
   const auto get_name = client::get_sock_name(stub(), rx_socket.socket());
   const auto listen = client::listen(stub(), rx_socket.socket(), 10);
@@ -708,12 +708,12 @@ TEST_F(NiXnetSocketLoopbackTests, IPv6OnLoopbackAddress_SendAndReceiveData_Recei
   const auto connect = client::connect(stub(), tx_socket.socket(), get_name.addr());
   const auto accept = client::accept(stub(), rx_socket.socket());
   const auto send = client::send(stub(), tx_socket.socket(), MESSAGE, 0);
-  const auto recv = client::recv(stub(), accept.socket(), MESSAGE.size(), 0);
+  const auto recv = client::recv(stub(), accept.socket(), static_cast<pb::int32>(MESSAGE.size()), 0);
 
   EXPECT_SUCCESS(connect);
   EXPECT_SUCCESS_WITH_STATUS(MESSAGE.size(), send);
   EXPECT_SUCCESS_WITH_STATUS(MESSAGE.size(), recv);
-  EXPECT_EQ(MESSAGE, recv.mem());
+  EXPECT_EQ(MESSAGE, recv.data());
 }
 
 TEST_F(NiXnetSocketLoopbackTests, IPv4Address_GetAddrInfo_ReturnsExpectedAddrInfo)
@@ -774,7 +774,7 @@ TEST_F(NiXnetSocketLoopbackTests, IPv4SockAddr_GetNameInfo_ReturnsExpectedNameIn
   const auto stack = client::ip_stack_create(stub(), "", create_simple_config("ENET1"));
   const auto p_to_n = client::inet_p_to_n(stub(), stack.stack_ref(), 2 /* AF INET*/, ADDRESS);
   auto sock_addr = SockAddr{};
-  sock_addr.mutable_ipv4()->mutable_addr()->CopyFrom(p_to_n.dst().ipv4());
+  sock_addr.mutable_ipv4()->mutable_addr()->CopyFrom(p_to_n.addr().ipv4());
   sock_addr.mutable_ipv4()->set_port(PORT_BYTE_SWAPPED);
 
   const auto name_info = client::get_name_info(stub(), stack.stack_ref(), sock_addr, 256, 256, 0);
@@ -790,7 +790,7 @@ TEST_F(NiXnetSocketLoopbackTests, IPv4SockAddr_GetNameInfoWithZeroServLen_Return
   const auto stack = client::ip_stack_create(stub(), "", create_simple_config("ENET1"));
   const auto p_to_n = client::inet_p_to_n(stub(), stack.stack_ref(), 2 /* AF INET*/, ADDRESS);
   auto sock_addr = SockAddr{};
-  sock_addr.mutable_ipv4()->mutable_addr()->CopyFrom(p_to_n.dst().ipv4());
+  sock_addr.mutable_ipv4()->mutable_addr()->CopyFrom(p_to_n.addr().ipv4());
   sock_addr.mutable_ipv4()->set_port(0x1234);
 
   const auto name_info = client::get_name_info(stub(), stack.stack_ref(), sock_addr, 256, 0, 0);
@@ -808,7 +808,7 @@ TEST_F(NiXnetSocketLoopbackTests, IPv4SockAddr_GetNameInfoWithFlags_ReturnsExpec
   const auto stack = client::ip_stack_create(stub(), "", create_simple_config("ENET1"));
   const auto p_to_n = client::inet_p_to_n(stub(), stack.stack_ref(), 2 /* AF INET*/, ADDRESS);
   auto sock_addr = SockAddr{};
-  sock_addr.mutable_ipv4()->mutable_addr()->CopyFrom(p_to_n.dst().ipv4());
+  sock_addr.mutable_ipv4()->mutable_addr()->CopyFrom(p_to_n.addr().ipv4());
   sock_addr.mutable_ipv4()->set_port(PORT_BYTE_SWAPPED);
 
   // Note: These flags don't change the behavior of this test.

@@ -255,13 +255,13 @@ inet_n_to_a(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const 
 }
 
 InetNToPResponse
-inet_n_to_p(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const Addr& src)
+inet_n_to_p(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const Addr& addr)
 {
   ::grpc::ClientContext context;
 
   auto request = InetNToPRequest{};
   request.mutable_stack_ref()->CopyFrom(stack_ref);
-  request.mutable_src()->CopyFrom(src);
+  request.mutable_addr()->CopyFrom(addr);
 
   auto response = InetNToPResponse{};
 
@@ -272,7 +272,7 @@ inet_n_to_p(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const 
 }
 
 InetPToNResponse
-inet_p_to_n(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const simple_variant<AddressFamily, pb::int32>& af, const pb::string& src)
+inet_p_to_n(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const simple_variant<AddressFamily, pb::int32>& af, const pb::string& address)
 {
   ::grpc::ClientContext context;
 
@@ -286,7 +286,7 @@ inet_p_to_n(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const 
   else if (af_raw_ptr) {
     request.set_af_raw(*af_raw_ptr);
   }
-  request.set_src(src);
+  request.set_address(address);
 
   auto response = InetPToNResponse{};
 
@@ -475,13 +475,13 @@ select(const StubPtr& stub, const std::vector<nidevice_grpc::Session>& readfds, 
 }
 
 SendResponse
-send(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::string& dataptr, const pb::int32& flags_raw)
+send(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::string& data, const pb::int32& flags_raw)
 {
   ::grpc::ClientContext context;
 
   auto request = SendRequest{};
   request.mutable_socket()->CopyFrom(socket);
-  request.set_dataptr(dataptr);
+  request.set_data(data);
   request.set_flags_raw(flags_raw);
 
   auto response = SendResponse{};
@@ -493,13 +493,13 @@ send(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::string
 }
 
 SendToResponse
-send_to(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::string& dataptr, const pb::int32& flags_raw, const SockAddr& to)
+send_to(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::string& data, const pb::int32& flags_raw, const SockAddr& to)
 {
   ::grpc::ClientContext context;
 
   auto request = SendToRequest{};
   request.mutable_socket()->CopyFrom(socket);
-  request.set_dataptr(dataptr);
+  request.set_data(data);
   request.set_flags_raw(flags_raw);
   request.mutable_to()->CopyFrom(to);
 

@@ -420,7 +420,7 @@ message InetNToAResponse {
 
 message InetNToPRequest {
   nidevice_grpc.Session stack_ref = 1;
-  Addr src = 2;
+  Addr addr = 2;
 }
 
 message InetNToPResponse {
@@ -436,12 +436,12 @@ message InetPToNRequest {
     AddressFamily af = 2;
     int32 af_raw = 3;
   }
-  string src = 4;
+  string address = 4;
 }
 
 message InetPToNResponse {
   int32 status = 1;
-  Addr dst = 2;
+  Addr addr = 2;
   string error_message = 3;
   int32 error_num = 4;
 }
@@ -538,7 +538,7 @@ message RecvRequest {
 
 message RecvResponse {
   int32 status = 1;
-  bytes mem = 2;
+  bytes data = 2;
   string error_message = 3;
   int32 error_num = 4;
 }
@@ -552,7 +552,7 @@ message RecvFromRequest {
 
 message RecvFromResponse {
   int32 status = 1;
-  bytes mem = 2;
+  bytes data = 2;
   SockAddr from_addr = 3;
   string error_message = 4;
   int32 error_num = 5;
@@ -573,7 +573,7 @@ message SelectResponse {
 
 message SendRequest {
   nidevice_grpc.Session socket = 1;
-  bytes dataptr = 2;
+  bytes data = 2;
   int32 flags_raw = 3;
 }
 
@@ -585,7 +585,7 @@ message SendResponse {
 
 message SendToRequest {
   nidevice_grpc.Session socket = 1;
-  bytes dataptr = 2;
+  bytes data = 2;
   int32 flags_raw = 3;
   SockAddr to = 4;
 }

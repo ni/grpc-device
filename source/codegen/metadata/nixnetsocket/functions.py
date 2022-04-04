@@ -460,13 +460,14 @@ functions = {
             },
             {
                 'direction': 'in',
-                'hardcoded_value': 'get_address_family(request->src().addr_case())',
+                'hardcoded_value': 'get_address_family(request->addr().addr_case())',
                 'include_in_proto': False,
                 'name': 'af',
                 'type': 'int32_t'
             },
             {
                 'direction': 'in',
+                'grpc_name': 'addr',
                 'name': 'src',
                 'grpc_type': 'Addr',
                 'pointer': True,
@@ -515,11 +516,13 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_name': 'address',
                 'name': 'src',
                 'type': 'const char[]'
             },
             {
                 'direction': 'out',
+                'grpc_name': 'addr',
                 'grpc_type': 'Addr',
                 'name': 'dst',
                 'supports_standard_output_allocation': True,
@@ -694,6 +697,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_name': 'data',
                 'name': 'mem',
                 'size': {
                     'mechanism': 'passed-in',
@@ -726,6 +730,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_name': 'data',
                 'name': 'mem',
                 'size': {
                     'mechanism': 'passed-in',
@@ -817,6 +822,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_name': 'data',
                 'name': 'dataptr',
                 'pointer': True,
                 'size': {
@@ -851,6 +857,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_name': 'data',
                 'name': 'dataptr',
                 'pointer': True,
                 'size': {
