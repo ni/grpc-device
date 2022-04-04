@@ -17,8 +17,7 @@
   }
 
 namespace nixnet_utilities {
-namespace {
-
+  
 namespace client = nixnet_grpc::experimental::client;
 namespace pb = google::protobuf;
 using namespace nixnet_grpc;
@@ -48,54 +47,54 @@ GetPropertyResponse get_property(const client::StubPtr& stub, const nidevice_grp
   return response;
 }
 
-void _set_property_value(SetPropertyRequest& request, const pb::uint32& value)
+inline void _set_property_value(SetPropertyRequest& request, const pb::uint32& value)
 {
   request.set_u32_scalar(value);
 }
 
-void _set_property_value(SetPropertyRequest& request, const bool& value)
+inline void _set_property_value(SetPropertyRequest& request, const bool& value)
 {
   request.set_bool_scalar(value);
 }
 
-void _set_property_value(SetPropertyRequest& request, const std::string& value)
+inline void _set_property_value(SetPropertyRequest& request, const std::string& value)
 {
   request.set_str(value);
 }
 
-void _set_property_value(SetPropertyRequest& request, const pb::uint64& value)
+inline void _set_property_value(SetPropertyRequest& request, const pb::uint64& value)
 {
   request.set_u64_scalar(value);
 }
 
-void _set_property_value(SetPropertyRequest& request, const pb::int32& value)
+inline void _set_property_value(SetPropertyRequest& request, const pb::int32& value)
 {
   request.set_i32_scalar(value);
 }
 
-void _set_property_value(SetPropertyRequest& request, const double& value)
+inline void _set_property_value(SetPropertyRequest& request, const double& value)
 {
   request.set_f64_scalar(value);
 }
 
-void _set_property_value(SetPropertyRequest& request, const std::vector<std::string>& value)
+inline void _set_property_value(SetPropertyRequest& request, const std::vector<std::string>& value)
 {
   // TODO: set_string_array expects a single string?!?
   request.set_string_array(value[0]);
 }
 
-void _set_property_value(SetPropertyRequest& request, const std::vector<pb::uint32>& value)
+inline void _set_property_value(SetPropertyRequest& request, const std::vector<pb::uint32>& value)
 {
   request.mutable_u32_array()->clear_u32_array();
   request.mutable_u32_array()->mutable_u32_array()->Add(value.begin(), value.end());
 }
 
-void _set_property_value(SetPropertyRequest& request, const nidevice_grpc::Session& value)
+inline void _set_property_value(SetPropertyRequest& request, const nidevice_grpc::Session& value)
 {
   request.mutable_db_ref()->CopyFrom(value);
 }
 
-void _set_property_value(SetPropertyRequest& request, const std::vector<nidevice_grpc::Session>& value)
+inline void _set_property_value(SetPropertyRequest& request, const std::vector<nidevice_grpc::Session>& value)
 {
   request.mutable_db_ref_array()->clear_db_ref();
   request.mutable_db_ref_array()->mutable_db_ref()->Reserve(static_cast<int>(value.size()));
@@ -104,8 +103,7 @@ void _set_property_value(SetPropertyRequest& request, const std::vector<nidevice
   }
 }
 
-/* TODO
-void _set_property_value(SetPropertyRequest& request, const std::vector<EptRxFilter>& value)
+inline void _set_property_value(SetPropertyRequest& request, const std::vector<EptRxFilter>& value)
 {
   request.mutable_ept_rx_filter_array()->clear_ept_rx_filter();
   request.mutable_ept_rx_filter_array()->mutable_ept_rx_filter()->Reserve(static_cast<int>(value.size()));
@@ -113,7 +111,7 @@ void _set_property_value(SetPropertyRequest& request, const std::vector<EptRxFil
     request.mutable_ept_rx_filter_array()->mutable_ept_rx_filter()->at(i) = value[i];
   }
 }
-*/
+
 
 template <typename T>
 SetPropertyResponse set_property(
@@ -191,5 +189,14 @@ std::vector<nidevice_grpc::Session> db_get_property_db_ref_vtr(const client::Stu
   return std::vector<nidevice_grpc::Session>(array.begin(), array.end());
 }
 
-}  // namespace
+int calculate_bitwise_or_of_flags(google::protobuf::RepeatedField<google::protobuf::int32> flags)
+{
+  int bitwise_or_of_flags = 0;
+  for(int i = 0; i < flags.size(); i++)
+  {
+    bitwise_or_of_flags = bitwise_or_of_flags | flags[i];
+  }
+  return bitwise_or_of_flags;
+}
+
 }  // namespace nixnet_utilities
