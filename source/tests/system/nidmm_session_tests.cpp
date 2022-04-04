@@ -12,7 +12,7 @@ namespace dmm = nidmm_grpc;
 
 const int kViErrorDmmRsrcNFound = -1074118656;
 const int kInvalidDmmSession = -1074130544;
-const char* kViErrorDmmRsrcNFoundMessage = "Device was not recognized. The device is not supported with this driver or version.";
+const char* kViErrorDmmRsrcNFoundMessage = "Device was not recognized. The device is not supported with this driver or version.\n\nInvalid Identifier: ";
 const char* kInvalidDmmSessionMessage = "IVI: (Hex 0xBFFA1190) The session handle is not valid.";
 const char* kResourceName = "FakeDevice";
 const char* kDmmOptionsString = "Simulate=1, DriverSetup=Model:4080; BoardType:PXIe";
@@ -85,6 +85,7 @@ TEST_F(NiDmmSessionTest, InitializeSessionWithDeviceAndSessionName_CreatesDriver
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(0, response.status());
   EXPECT_NE(0, response.vi().id());
+  EXPECT_EQ("", response.error_message());
 }
 
 TEST_F(NiDmmSessionTest, InitializeSessionWithDeviceAndNoSessionName_CreatesDriverSession)
@@ -95,6 +96,7 @@ TEST_F(NiDmmSessionTest, InitializeSessionWithDeviceAndNoSessionName_CreatesDriv
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(0, response.status());
   EXPECT_NE(0, response.vi().id());
+  EXPECT_EQ("", response.error_message());
 }
 
 TEST_F(NiDmmSessionTest, InitializeSessionWithoutDevice_ReturnsDriverError)
@@ -105,6 +107,7 @@ TEST_F(NiDmmSessionTest, InitializeSessionWithoutDevice_ReturnsDriverError)
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(kViErrorDmmRsrcNFound, response.status());
   EXPECT_EQ(0, response.vi().id());
+  EXPECT_NE("", response.error_message());
 }
 
 TEST_F(NiDmmSessionTest, InitializedSession_CloseSession_ClosesDriverSession)
@@ -140,22 +143,13 @@ TEST_F(NiDmmSessionTest, InvalidSession_CloseSession_ReturnsInvalidSesssionError
   EXPECT_STREQ(kInvalidDmmSessionMessage, error_message.c_str());
 }
 
-TEST_F(NiDmmSessionTest, ErrorFromDriver_GetErrorMessage_ReturnsUserErrorMessage)
+TEST_F(NiDmmSessionTest, InitWithErrorFromDriver_ReturnsUserErrorMessage)
 {
   dmm::InitWithOptionsResponse init_response;
   call_init_with_options(kInvalidRsrc, "", "", &init_response);
+
   EXPECT_EQ(kViErrorDmmRsrcNFound, init_response.status());
-
-  nidevice_grpc::Session session = init_response.vi();
-  ::grpc::ClientContext context;
-  dmm::GetErrorMessageRequest error_request;
-  error_request.mutable_vi()->set_id(session.id());
-  error_request.set_error_code(kViErrorDmmRsrcNFound);
-  dmm::GetErrorMessageResponse error_response;
-  ::grpc::Status status = GetStub()->GetErrorMessage(&context, error_request, &error_response);
-
-  EXPECT_TRUE(status.ok());
-  EXPECT_STREQ(kViErrorDmmRsrcNFoundMessage, error_response.error_message().c_str());
+  EXPECT_STREQ(kViErrorDmmRsrcNFoundMessage, init_response.error_message().c_str());
 }
 
 }  // namespace system
