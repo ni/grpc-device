@@ -14,6 +14,7 @@ config = {
         "task": "acquisition",
     },
     "custom_types": [],
+    'additional_headers': {'custom/ivi_errors.h': ['service.cpp']},
     "driver_name": "NI-SYNC",
     "init_function": "init",
     'status_ok': 'status >= 0',

@@ -11,6 +11,7 @@ config = {
     'close_function': None,
     'custom_types': [
     ],
+    'additional_headers': {'custom/ivi_errors.h': ['service.cpp']},
     'driver_name': 'NI-TClk',
     'extra_errors_used': [],
     'status_ok': 'status >= 0',
