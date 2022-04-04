@@ -107,6 +107,14 @@ def check_for_error(vi, status):
         raise Exception(error_message_response.error_message)
 
 
+def check_for_initialization_error(response):
+    """Raise an exception if an error was returned from Initialize."""
+    if response.status < 0:
+        raise RuntimeError(f"Error: {response.error_message or response.status}")
+    if response.status > 0:
+        sys.stderr.write(f"Warning: {response.error_message or response.status}\n")
+
+
 try:
     # Open session to NI-Digital Pattern Driver with options
     init_with_options_response = nidigital_client.InitWithOptions(
@@ -119,7 +127,7 @@ try:
         )
     )
     vi = init_with_options_response.vi
-    check_for_error(vi, init_with_options_response.status)
+    check_for_initialization_error(init_with_options_response)
 
     load_pin_map_response = nidigital_client.LoadPinMap(
         nidigital_types.LoadPinMapRequest(

@@ -68,6 +68,14 @@ def check_for_error(vi, status):
         raise Exception(error_message_response.error_message)
 
 
+def check_for_initialization_error(response):
+    """Raise an exception if an error was returned from Initialize."""
+    if response.status < 0:
+        raise RuntimeError(f"Error: {response.error_message or response.status}")
+    if response.status > 0:
+        sys.stderr.write(f"Warning: {response.error_message or response.status}\n")
+
+
 # Create the communication channel for the remote host and create connections to the NI-DCPower and
 # session services.
 channel = grpc.insecure_channel(f"{SERVER_ADDRESS}:{SERVER_PORT}")
@@ -85,7 +93,7 @@ try:
         )
     )
     vi = initialize_with_channels_response.vi
-    check_for_error(vi, initialize_with_channels_response.status)
+    check_for_initialization_error(initialize_with_channels_response)
 
     # Specify when the measure unit should acquire measurements.
     configure_measure_when = client.SetAttributeViInt32(
