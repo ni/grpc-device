@@ -337,6 +337,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_name': 'interface_name',
                 'name': 'interface',
                 'type': 'const char[]'
             },
@@ -373,6 +374,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_name': 'interface_name',
                 'name': 'interface',
                 'type': 'const char[]'
             },
