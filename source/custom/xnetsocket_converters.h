@@ -33,7 +33,7 @@ struct SockAddrInputConverter {
       case SockAddr::AddrCase::kIpv6:
         addr.ipv6.sin6_family = nxAF_INET6;
         addr.ipv6.sin6_port = input.ipv6().port();
-        addr.ipv6.sin6_flowinfo = input.ipv6().flow_info();
+        addr.ipv6.sin6_flowinfo = input.ipv6().flowinfo();
         std::memcpy(
             addr.ipv6.sin6_addr.addr,
             input.ipv6().addr().addr().data(),
@@ -105,7 +105,7 @@ void convert_to_grpc(const nxsockaddr_storage* storage_ptr, SockAddr& output)
       const auto ipv6_input = reinterpret_cast<const nxsockaddr_in6*>(storage_ptr);
       auto ipv6_output = output.mutable_ipv6();
       ipv6_output->set_port(ipv6_input->sin6_port);
-      ipv6_output->set_flow_info(ipv6_input->sin6_flowinfo);
+      ipv6_output->set_flowinfo(ipv6_input->sin6_flowinfo);
       copy_ipv6_addr_to_output(ipv6_input->sin6_addr, ipv6_output->mutable_addr());
       ipv6_output->set_scope_id(ipv6_input->sin6_scope_id);
     } break;

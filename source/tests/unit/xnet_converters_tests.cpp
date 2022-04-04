@@ -40,12 +40,12 @@ TEST(XnetConvertersTests, IPv4GrpcSockAddr_ConvertFromGrpc_CreatesIPv4NXSockAddr
   EXPECT_EQ(ADDRESS, reinterpreted_ipv4_addr->sin_addr.addr);
 }
 
-SockAddr create_addr_ipv6(pb::uint32 port, pb::uint32 flow_info, const std::vector<char>& address, pb::uint32 scope_id)
+SockAddr create_addr_ipv6(pb::uint32 port, pb::uint32 flowinfo, const std::vector<char>& address, pb::uint32 scope_id)
 {
   auto grpc_sock_addr = SockAddr{};
   auto ipv6_addr = SockAddrIn6{};
   ipv6_addr.set_port(port);
-  ipv6_addr.set_flow_info(flow_info);
+  ipv6_addr.set_flowinfo(flowinfo);
   ipv6_addr.mutable_addr()->set_addr({address.cbegin(), address.cend()});
   ipv6_addr.set_scope_id(scope_id);
   grpc_sock_addr.mutable_ipv6()->CopyFrom(ipv6_addr);
@@ -55,7 +55,7 @@ SockAddr create_addr_ipv6(pb::uint32 port, pb::uint32 flow_info, const std::vect
 void EXPECT_IPV6_ADDR(
     const SockAddrInputConverter& converted_addr,
     pb::uint32 port,
-    pb::uint32 flow_info,
+    pb::uint32 flowinfo,
     const std::vector<char>& address,
     pb::uint32 scope_id)
 {
@@ -65,7 +65,7 @@ void EXPECT_IPV6_ADDR(
   EXPECT_EQ(sizeof(nxsockaddr_in6), converted_addr.size());
   EXPECT_EQ(nxAF_INET6, addr_ptr->sa_family);
   EXPECT_EQ(port, reinterpreted_ipv6_addr->sin6_port);
-  EXPECT_EQ(flow_info, reinterpreted_ipv6_addr->sin6_flowinfo);
+  EXPECT_EQ(flowinfo, reinterpreted_ipv6_addr->sin6_flowinfo);
   EXPECT_THAT(reinterpreted_ipv6_addr->sin6_addr.addr, ElementsAreArray(address.data(), address.size()));
   EXPECT_EQ(scope_id, reinterpreted_ipv6_addr->sin6_scope_id);
 }
@@ -73,42 +73,42 @@ void EXPECT_IPV6_ADDR(
 TEST(XnetConvertersTests, IPv6GrpcSockAddr_ConvertFromGrpc_CreatesIPv6NXSockAddr)
 {
   constexpr auto PORT = 1234;
-  constexpr auto FLOW_INFO = 9999;
+  constexpr auto FLOWINFO = 9999;
   const auto ADDRESS = std::vector<char>{0x0, 0x1, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7, 0x8, 0x9, 0xA, 0xB, 0xC, 0xD, 0xE, 0xF};
   constexpr auto SCOPE_ID = 8888;
-  auto grpc_sock_addr = create_addr_ipv6(PORT, FLOW_INFO, ADDRESS, SCOPE_ID);
+  auto grpc_sock_addr = create_addr_ipv6(PORT, FLOWINFO, ADDRESS, SCOPE_ID);
 
   auto converted_addr = convert_from_grpc<nxsockaddr>(grpc_sock_addr);
 
-  EXPECT_IPV6_ADDR(converted_addr, PORT, FLOW_INFO, ADDRESS, SCOPE_ID);
+  EXPECT_IPV6_ADDR(converted_addr, PORT, FLOWINFO, ADDRESS, SCOPE_ID);
 }
 
 TEST(XnetConvertersTests, IPv6GrpcSockAddrWithTooShortAddress_ConvertFromGrpc_CreatesAddrWithZeroesInMissingBytes)
 {
   constexpr auto PORT = 1234;
-  constexpr auto FLOW_INFO = 9999;
+  constexpr auto FLOWINFO = 9999;
   const auto ADDRESS = std::vector<char>{0x0, 0x1, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7, 0x8, 0x9};
   const auto ADDRESS_WITH_ZEROES = std::vector<char>{0x0, 0x1, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7, 0x8, 0x9, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0};
   constexpr auto SCOPE_ID = 8888;
-  auto grpc_sock_addr = create_addr_ipv6(PORT, FLOW_INFO, ADDRESS, SCOPE_ID);
+  auto grpc_sock_addr = create_addr_ipv6(PORT, FLOWINFO, ADDRESS, SCOPE_ID);
 
   auto converted_addr = convert_from_grpc<nxsockaddr>(grpc_sock_addr);
 
-  EXPECT_IPV6_ADDR(converted_addr, PORT, FLOW_INFO, ADDRESS_WITH_ZEROES, SCOPE_ID);
+  EXPECT_IPV6_ADDR(converted_addr, PORT, FLOWINFO, ADDRESS_WITH_ZEROES, SCOPE_ID);
 }
 
 TEST(XnetConvertersTests, IPv6GrpcSockAddrTooLongAddress_ConvertFromGrpc_CreatesIPv6NXSockAddrWithExtraBytesTruncated)
 {
   constexpr auto PORT = 1234;
-  constexpr auto FLOW_INFO = 9999;
+  constexpr auto FLOWINFO = 9999;
   const auto ADDRESS = std::vector<char>{0x0, 0x1, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7, 0x8, 0x9, 0xA, 0xB, 0xC, 0xD, 0xE, 0xF, 0x10, 0x11};
   const auto TRUNCATED_ADDRESS = std::vector<char>{0x0, 0x1, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7, 0x8, 0x9, 0xA, 0xB, 0xC, 0xD, 0xE, 0xF};
   constexpr auto SCOPE_ID = 8888;
-  auto grpc_sock_addr = create_addr_ipv6(PORT, FLOW_INFO, ADDRESS, SCOPE_ID);
+  auto grpc_sock_addr = create_addr_ipv6(PORT, FLOWINFO, ADDRESS, SCOPE_ID);
 
   auto converted_addr = convert_from_grpc<nxsockaddr>(grpc_sock_addr);
 
-  EXPECT_IPV6_ADDR(converted_addr, PORT, FLOW_INFO, TRUNCATED_ADDRESS, SCOPE_ID);
+  EXPECT_IPV6_ADDR(converted_addr, PORT, FLOWINFO, TRUNCATED_ADDRESS, SCOPE_ID);
 }
 
 TEST(XnetConvertersTests, UnsetGrpcSockAddr_ConvertFromGrpc_CreatesEmptySockAddrWithUnspecifiedAddressFamily)
@@ -272,7 +272,7 @@ void copy_ipv6_addr(unsigned char* dst, const char* src)
 TEST(XnetConvertersTests, IPv6Address_ConvertToGrpc_ConvertsToIPv6Address)
 {
   constexpr auto PORT = 100;
-  constexpr auto FLOW_INFO = 999;
+  constexpr auto FLOWINFO = 999;
   const auto ADDRESS = std::vector<char>{0x0, 0x1, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7, 0x8, 0x9, 0xA, 0xB, 0xC, 0xD, 0xE, 0xF};
   constexpr auto SCOPE_ID = 777;
   auto storage = allocate_output_storage<nxsockaddr, SockAddr>();
@@ -280,7 +280,7 @@ TEST(XnetConvertersTests, IPv6Address_ConvertToGrpc_ConvertsToIPv6Address)
   ptr_to_storage->sin6_family = nxAF_INET6;
   ptr_to_storage->sin6_port = PORT;
   copy_ipv6_addr(ptr_to_storage->sin6_addr.addr, ADDRESS.data());
-  ptr_to_storage->sin6_flowinfo = FLOW_INFO;
+  ptr_to_storage->sin6_flowinfo = FLOWINFO;
   ptr_to_storage->sin6_scope_id = SCOPE_ID;
 
   auto grpc_data = SockAddr{};
@@ -288,7 +288,7 @@ TEST(XnetConvertersTests, IPv6Address_ConvertToGrpc_ConvertsToIPv6Address)
 
   EXPECT_EQ(SockAddr::AddrCase::kIpv6, grpc_data.addr_case());
   EXPECT_EQ(PORT, grpc_data.ipv6().port());
-  EXPECT_EQ(FLOW_INFO, grpc_data.ipv6().flow_info());
+  EXPECT_EQ(FLOWINFO, grpc_data.ipv6().flowinfo());
   EXPECT_THAT(
       grpc_data.ipv6().addr().addr(),
       ElementsAreArray(ADDRESS.data(), ADDRESS.size()));
