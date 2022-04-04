@@ -175,12 +175,12 @@ message VirtualInterface {
   repeated GatewayAddress gateway_addresses = 8;
 }
 
-message In6Addr {
-  bytes addr = 1;
-}
-
 message InAddr {
   uint32 addr = 1;
+}
+
+message In6Addr {
+  bytes addr = 1;
 }
 
 message Addr {
