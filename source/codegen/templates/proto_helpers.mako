@@ -20,16 +20,18 @@
   unspecified_attribute_value_prefix = disambiguated_attribute_value_prefix
   attribute_value_prefix = disambiguated_attribute_value_prefix if sub_group == "Reset" else attribute_value_prefix
 %>\
+% if attributes:
 enum ${common_helpers.get_attribute_enum_name(group_name, sub_group, config)} {
   ${unspecified_attribute_value_prefix}_UNSPECIFIED = 0;
-% for attribute in attributes:
+%   for attribute in attributes:
 <%
    attribute_name = attributes[attribute]["name"]
 %>\
   ${attribute_value_prefix}_${attribute_name} = ${attribute};
-% endfor
+%   endfor
 }
 
+% endif
 </%def>
 
 ## Define enums in the proto for each metadata enum referenced in a proto message.

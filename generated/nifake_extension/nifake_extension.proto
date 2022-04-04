@@ -19,10 +19,6 @@ service NiFakeExtension {
   rpc AddCoolFunctionality(AddCoolFunctionalityRequest) returns (AddCoolFunctionalityResponse);
 }
 
-enum NiFakeExtensionAttribute {
-  NIFAKEEXTENSION_ATTRIBUTE_UNSPECIFIED = 0;
-}
-
 message AddCoolFunctionalityRequest {
   nidevice_grpc.Session vi = 1;
   sint32 param = 2;

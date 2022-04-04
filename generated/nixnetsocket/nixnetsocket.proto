@@ -50,10 +50,6 @@ service NiXnetSocket {
   rpc StrErrR(StrErrRRequest) returns (StrErrRResponse);
 }
 
-enum NiXnetSocketAttribute {
-  NIXNETSOCKET_ATTRIBUTE_UNSPECIFIED = 0;
-}
-
 enum AddressFamily {
   ADDRESS_FAMILY_UNSPECIFIED = 0;
   ADDRESS_FAMILY_INET = 2;
