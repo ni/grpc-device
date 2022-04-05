@@ -3,6 +3,7 @@
 #include <nixnet.h>
 #include <nixnet.pb.h>
 
+#include "server/converters.h"
 // Add underscore to usings so they don't conflict with including files in the same namespace.
 namespace pb_ = ::google::protobuf;
 
