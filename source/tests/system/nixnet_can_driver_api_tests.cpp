@@ -23,11 +23,10 @@ namespace tests {
 namespace system {
 namespace {
 
-typedef pb::uint8 u8;
-typedef pb::uint16 u16;
-typedef pb::uint32 u32;
-typedef pb::uint64 u64;
-typedef double f64;
+using u8 = pb::uint8;
+using u32 = pb::uint32;
+using u64 = pb::uint64;
+using f64 = double;
 
 class NiXnetCANDriverApiTests : public ::testing::Test {
  protected:
@@ -66,32 +65,32 @@ class NiXnetCANDriverApiTests : public ::testing::Test {
     EXPECT_EQ(frame1->payload(), frame2->payload());
   }
 
+  void set_frame_data(nixnet_grpc::FrameRequest* frame, u64 timestamp, nixnet_grpc::FrameFlags frame_flag, u32 identifier, nixnet_grpc::FrameType frame_type, const char* payload)
+  {
+    frame->set_timestamp(timestamp);
+    frame->add_flags(frame_flag);
+    frame->set_identifier(identifier);
+    frame->set_type(frame_type);
+    frame->set_payload(payload);
+  }
+
  private:
   DeviceServerInterface* device_server_;
   std::unique_ptr<NiXnet::Stub> stub_;
 };
 
-TEST_F(NiXnetCANDriverApiTests, ConvertFramesToFromSignalsFromExample_TwoFrames_InputAndOutFramesAreEquivalent)
+TEST_F(NiXnetCANDriverApiTests, TwoFrameExample_ConvertFramesToSignalAndBackToFramesSignlePoint_InputAndOutputFramesAreEquivalent)
 {
   constexpr auto NUM_FRAMES = 2;
   constexpr auto NUM_SIGNALS = 2;
   std::vector<nixnet_grpc::FrameBufferRequest> frames;
   auto session = EXPECT_SUCCESS(client::create_session(stub(), "NIXNET_example", "CAN_Cluster", "CANEventSignal1,CANEventSignal3", "", CREATE_SESSION_MODE_SIGNAL_CONVERSION_SINGLE_POINT)).session();
   nixnet_grpc::FrameRequest* frame_in_1 = new nixnet_grpc::FrameRequest();
-  frame_in_1->set_timestamp(0);
-  frame_in_1->add_flags(FrameFlags::FRAME_FLAGS_UNSPECIFIED);
-  frame_in_1->set_identifier(66);
-  frame_in_1->set_type(FRAME_TYPE_CAN_DATA);
-  frame_in_1->set_payload("\2\1\2\3\4\5\6\7");
+  nixnet_grpc::FrameRequest* frame_in_2 = new nixnet_grpc::FrameRequest();
+  set_frame_data(frame_in_1, 0, FrameFlags::FRAME_FLAGS_UNSPECIFIED, 66, FrameType::FRAME_TYPE_CAN_DATA, "\2\1\2\3\4\5\6\7");
+  set_frame_data(frame_in_2, 0, FrameFlags::FRAME_FLAGS_UNSPECIFIED, 67, FrameType::FRAME_TYPE_CAN_DATA, "\4\1");
   frames.push_back(nixnet_grpc::FrameBufferRequest());
   frames.back().set_allocated_can(frame_in_1);
-
-  nixnet_grpc::FrameRequest* frame_in_2 = new nixnet_grpc::FrameRequest();
-  frame_in_2->set_timestamp(0);
-  frame_in_2->add_flags(FrameFlags::FRAME_FLAGS_UNSPECIFIED);
-  frame_in_2->set_identifier(67);
-  frame_in_2->set_type(FRAME_TYPE_CAN_DATA);
-  frame_in_2->set_payload("\4\1");
   frames.push_back(nixnet_grpc::FrameBufferRequest());
   frames.back().set_allocated_can(frame_in_2);
 
@@ -101,57 +100,35 @@ TEST_F(NiXnetCANDriverApiTests, ConvertFramesToFromSignalsFromExample_TwoFrames_
 
   EXPECT_EQ(2, convert_frames_to_signals_single_point_response.value_buffer_size());
   EXPECT_EQ(2, convert_frames_to_signals_single_point_response.value_buffer().size());
-
   EXPECT_EQ(2, convert_signals_to_frames_single_point_response.buffer_size());
   EXPECT_EQ(2, convert_signals_to_frames_single_point_response.buffer().size());
-
   auto frame_out_1 = convert_signals_to_frames_single_point_response.buffer()[0];
   auto frame_out_2 = convert_signals_to_frames_single_point_response.buffer()[1];
   auto can_1 = frame_out_1.can();
   auto can_2 = frame_out_2.can();
-
   assert_can_frames_are_equal(frame_in_1, &can_1);
   assert_can_frames_are_equal(frame_in_2, &can_2);
   EXPECT_SUCCESS(client::clear(stub(), session));
 }
 
-TEST_F(NiXnetCANDriverApiTests, ConvertFramesToFromSignalsFromExample_TwoFrames_SecondFramePayloadDoesNotContainDataFromFirstFramePayload)
+TEST_F(NiXnetCANDriverApiTests, TwoFrameExample_ConvertFramesToSignalAndBackToFramesSignlePoint_SecondFramePayloadDoesNotContainDataFromFirstFramePayload)
 {
   constexpr auto NUM_FRAMES = 2;
   constexpr auto NUM_SIGNALS = 2;
   std::vector<nixnet_grpc::FrameBufferRequest> frames;
   auto session = EXPECT_SUCCESS(client::create_session(stub(), "NIXNET_example", "CAN_Cluster", "CANEventSignal1,CANEventSignal3", "", CREATE_SESSION_MODE_SIGNAL_CONVERSION_SINGLE_POINT)).session();
   nixnet_grpc::FrameRequest* frame_in_1 = new nixnet_grpc::FrameRequest();
-  frame_in_1->set_timestamp(0);
-  frame_in_1->add_flags(FrameFlags::FRAME_FLAGS_UNSPECIFIED);
-  frame_in_1->set_identifier(66);
-  frame_in_1->set_type(FRAME_TYPE_CAN_DATA);
-  frame_in_1->set_payload("\2\1\2\3\4\5\6\7");
+  nixnet_grpc::FrameRequest* frame_in_2 = new nixnet_grpc::FrameRequest();
+  set_frame_data(frame_in_1, 0, FrameFlags::FRAME_FLAGS_UNSPECIFIED, 66, FrameType::FRAME_TYPE_CAN_DATA, "\2\1\2\3\4\5\6\7");
+  set_frame_data(frame_in_2, 0, FrameFlags::FRAME_FLAGS_UNSPECIFIED, 67, FrameType::FRAME_TYPE_CAN_DATA, "\4");
   frames.push_back(nixnet_grpc::FrameBufferRequest());
   frames.back().set_allocated_can(frame_in_1);
-
-  nixnet_grpc::FrameRequest* frame_in_2 = new nixnet_grpc::FrameRequest();
-  frame_in_2->set_timestamp(0);
-  frame_in_2->add_flags(FrameFlags::FRAME_FLAGS_UNSPECIFIED);
-  frame_in_2->set_identifier(67);
-  frame_in_2->set_type(FRAME_TYPE_CAN_DATA);
-  frame_in_2->set_payload("\4");
   frames.push_back(nixnet_grpc::FrameBufferRequest());
   frames.back().set_allocated_can(frame_in_2);
 
   auto convert_frames_to_signals_single_point_response = EXPECT_SUCCESS(client::convert_frames_to_signals_single_point(stub(), session, NUM_SIGNALS, frames));
   std::vector<f64> value_buffer_copy(convert_frames_to_signals_single_point_response.value_buffer().begin(), convert_frames_to_signals_single_point_response.value_buffer().end());
   auto convert_signals_to_frames_single_point_response = EXPECT_SUCCESS(client::convert_signals_to_frames_single_point(stub(), session, value_buffer_copy, NUM_FRAMES, 8, Protocol::PROTOCOL_CAN));
-
-  EXPECT_EQ(2, convert_frames_to_signals_single_point_response.value_buffer_size());
-  EXPECT_EQ(2, convert_frames_to_signals_single_point_response.value_buffer().size());
-
-  EXPECT_EQ(2, convert_signals_to_frames_single_point_response.buffer_size());
-  EXPECT_EQ(2, convert_signals_to_frames_single_point_response.buffer().size());
-
-  auto frame_out_1 = convert_signals_to_frames_single_point_response.buffer()[0];
-  auto can_1 = frame_out_1.can();
-  assert_can_frames_are_equal(frame_in_1, &can_1);
 
   // This assertion is specifically for a bug where payload data from previous frame was being copied over to the next frame.
   auto frame_out_2 = convert_signals_to_frames_single_point_response.buffer()[1];
