@@ -55,7 +55,6 @@ class NiXnetCANDriverApiTests : public ::testing::Test {
     return stub_;
   }
 
-  void claim_by_address(::nidevice_grpc::Session session, u64 node_name, u32 in_node_addr, u32* out_node_addr);
   void assert_can_frames_are_equal(nixnet_grpc::FrameRequest* frame1, nixnet_grpc::FrameResponse* frame2)
   {
     int frame1_flags = calculate_bitwise_or_of_flags(frame1->flags());
@@ -65,16 +64,6 @@ class NiXnetCANDriverApiTests : public ::testing::Test {
     EXPECT_EQ(frame1->type(), frame2->type());
     EXPECT_EQ(frame1->identifier(), frame2->identifier());
     EXPECT_EQ(frame1->payload(), frame2->payload());
-  }
-
-  int calculate_bitwise_or_of_flags(google::protobuf::RepeatedField<google::protobuf::int32> flags)
-  {
-    int bitwise_or_of_flags = 0;
-    for(int i = 0; i < flags.size(); i++)
-    {
-      bitwise_or_of_flags = bitwise_or_of_flags | flags[i];
-    }
-    return bitwise_or_of_flags;
   }
 
  private:

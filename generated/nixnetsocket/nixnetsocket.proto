@@ -50,10 +50,6 @@ service NiXnetSocket {
   rpc StrErrR(StrErrRRequest) returns (StrErrRResponse);
 }
 
-enum NiXnetSocketAttribute {
-  NIXNETSOCKET_ATTRIBUTE_UNSPECIFIED = 0;
-}
-
 enum AddressFamily {
   ADDRESS_FAMILY_UNSPECIFIED = 0;
   ADDRESS_FAMILY_INET = 2;
@@ -139,7 +135,10 @@ enum Shutdown {
 }
 
 enum SocketOptionLevel {
-  SOCKET_OPTION_LEVEL_UNSPECIFIED = 0;
+  SOCKET_OPTION_LEVEL_PROTO_IP = 0;
+  SOCKET_OPTION_LEVEL_PROTO_TCP = 6;
+  SOCKET_OPTION_LEVEL_PROTO_UDP = 8;
+  SOCKET_OPTION_LEVEL_PROTO_IPV6 = 12;
   SOCKET_OPTION_LEVEL_SOCKET = 13;
 }
 
@@ -172,12 +171,12 @@ message VirtualInterface {
   repeated GatewayAddress gateway_addresses = 8;
 }
 
-message In6Addr {
-  bytes addr = 1;
-}
-
 message InAddr {
   uint32 addr = 1;
+}
+
+message In6Addr {
+  bytes addr = 1;
 }
 
 message Addr {
@@ -194,7 +193,7 @@ message SockAddrIn {
 
 message SockAddrIn6 {
   uint32 port = 1;
-  uint32 flow_info = 2;
+  uint32 flowinfo = 2;
   In6Addr addr = 3;
   uint32 scope_id = 4;
 }
@@ -225,17 +224,17 @@ message AddrInfoHint {
 }
 
 message Linger {
-  int32 l_onoff = 1;
-  int32 l_linger = 2;
+  int32 onoff = 1;
+  int32 linger = 2;
 }
 
 message IPMReq {
-  InAddr imr_multiaddr = 1;
+  InAddr multiaddr = 1;
   InAddr imr_interface = 2;
 }
 
 message IPv6MReq {
-  In6Addr ipv6mr_multiaddr = 1;
+  In6Addr multiaddr = 1;
   int32 ipv6mr_interface = 2;
 }
 
@@ -417,7 +416,7 @@ message InetNToAResponse {
 
 message InetNToPRequest {
   nidevice_grpc.Session stack_ref = 1;
-  Addr src = 2;
+  Addr addr = 2;
 }
 
 message InetNToPResponse {
@@ -433,12 +432,12 @@ message InetPToNRequest {
     AddressFamily af = 2;
     int32 af_raw = 3;
   }
-  string src = 4;
+  string address = 4;
 }
 
 message InetPToNResponse {
   int32 status = 1;
-  Addr dst = 2;
+  Addr addr = 2;
   string error_message = 3;
   int32 error_num = 4;
 }
@@ -535,7 +534,7 @@ message RecvRequest {
 
 message RecvResponse {
   int32 status = 1;
-  bytes mem = 2;
+  bytes data = 2;
   string error_message = 3;
   int32 error_num = 4;
 }
@@ -549,7 +548,7 @@ message RecvFromRequest {
 
 message RecvFromResponse {
   int32 status = 1;
-  bytes mem = 2;
+  bytes data = 2;
   SockAddr from_addr = 3;
   string error_message = 4;
   int32 error_num = 5;
@@ -570,7 +569,7 @@ message SelectResponse {
 
 message SendRequest {
   nidevice_grpc.Session socket = 1;
-  bytes dataptr = 2;
+  bytes data = 2;
   int32 flags_raw = 3;
 }
 
@@ -582,7 +581,7 @@ message SendResponse {
 
 message SendToRequest {
   nidevice_grpc.Session socket = 1;
-  bytes dataptr = 2;
+  bytes data = 2;
   int32 flags_raw = 3;
   SockAddr to = 4;
 }

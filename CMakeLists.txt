@@ -470,6 +470,7 @@ set(system_test_runner_sources
   "source/tests/system/nisync_driver_api_tests.cpp"
   "source/tests/system/nisync_session_tests.cpp"
   "source/tests/system/nitclk_driver_api_tests.cpp"
+  "source/tests/system/nixnet_lin_driver_api_tests.cpp"
   "source/tests/system/nixnet_can_driver_api_tests.cpp"
   "source/tests/system/nixnetsocket_driver_api_tests.cpp"
   "source/server/device_enumerator.cpp"

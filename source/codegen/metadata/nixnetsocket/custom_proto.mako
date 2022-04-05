@@ -21,12 +21,12 @@ message VirtualInterface {
   repeated GatewayAddress gateway_addresses = 8;
 }
 
-message In6Addr {
-  bytes addr = 1;
-}
-
 message InAddr {
   uint32 addr = 1;
+}
+
+message In6Addr {
+  bytes addr = 1;
 }
 
 message Addr {
@@ -43,7 +43,7 @@ message SockAddrIn {
 
 message SockAddrIn6 {
   uint32 port = 1;
-  uint32 flow_info = 2;
+  uint32 flowinfo = 2;
   In6Addr addr = 3;
   uint32 scope_id = 4;
 }
@@ -74,17 +74,17 @@ message AddrInfoHint {
 }
 
 message Linger {
-  int32 l_onoff = 1;
-  int32 l_linger = 2;
+  int32 onoff = 1;
+  int32 linger = 2;
 }
 
 message IPMReq {
-  InAddr imr_multiaddr = 1;
+  InAddr multiaddr = 1;
   InAddr imr_interface = 2;
 }
 
 message IPv6MReq {
-  In6Addr ipv6mr_multiaddr = 1;
+  In6Addr multiaddr = 1;
   int32 ipv6mr_interface = 2;
 }
 
