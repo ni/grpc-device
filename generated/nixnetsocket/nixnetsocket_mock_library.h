@@ -21,11 +21,12 @@ class NiXnetSocketMockLibrary : public nixnetsocket_grpc::NiXnetSocketLibraryInt
   MOCK_METHOD(int32_t, Bind, (nxSOCKET socket, nxsockaddr* name, nxsocklen_t namelen), (override));
   MOCK_METHOD(int32_t, Close, (nxSOCKET socket), (override));
   MOCK_METHOD(int32_t, Connect, (nxSOCKET socket, nxsockaddr* name, nxsocklen_t namelen), (override));
+  MOCK_METHOD(int32_t, FdIsSet, (nxSOCKET fd, nxfd_set* set), (override));
   MOCK_METHOD(int32_t, FreeAddrInfo, (nxaddrinfo* res), (override));
   MOCK_METHOD(int32_t, GetAddrInfo, (nxIpStackRef_t stack_ref, const char node_api[], const char service_api[], nxaddrinfo* hints, nxaddrinfo** res), (override));
   MOCK_METHOD(int32_t, GetLastErrorNum, (), (override));
   MOCK_METHOD(char*, GetLastErrorStr, (char buf[], size_t bufLen), (override));
-  MOCK_METHOD(int32_t, GetNameInfo, (nxIpStackRef_t stack_ref, nxsockaddr* addr, nxsocklen_t addr_len, char host[], nxsocklen_t host_len, char serv[], nxsocklen_t serv_len, int32_t flags), (override));
+  MOCK_METHOD(int32_t, GetNameInfo, (nxIpStackRef_t stack_ref, nxsockaddr* addr, nxsocklen_t addrlen, char host[], nxsocklen_t hostlen, char serv[], nxsocklen_t servlen, int32_t flags), (override));
   MOCK_METHOD(int32_t, GetPeerName, (nxSOCKET socket, nxsockaddr* addr, nxsocklen_t* addrlen), (override));
   MOCK_METHOD(int32_t, GetSockName, (nxSOCKET socket, nxsockaddr* addr, nxsocklen_t* addrlen), (override));
   MOCK_METHOD(int32_t, GetSockOpt, (nxSOCKET socket, int32_t level, int32_t optname, void* optval, nxsocklen_t* optlen), (override));
@@ -42,16 +43,15 @@ class NiXnetSocketMockLibrary : public nixnetsocket_grpc::NiXnetSocketLibraryInt
   MOCK_METHOD(int32_t, IpStackGetInfo, (nxIpStackRef_t stack_ref, uint32_t info_id, nxVirtualInterface_t** virtual_interfaces), (override));
   MOCK_METHOD(int32_t, IpStackOpen, (char stack_name[], nxIpStackRef_t* stack_ref), (override));
   MOCK_METHOD(int32_t, IpStackWaitForInterface, (nxIpStackRef_t stack_ref, const char localInterface[], int32_t timeoutMs), (override));
-  MOCK_METHOD(int32_t, IsSet, (nxSOCKET fd, nxfd_set* set), (override));
   MOCK_METHOD(int32_t, Listen, (nxSOCKET socket, int32_t backlog), (override));
   MOCK_METHOD(int32_t, Recv, (nxSOCKET socket, char mem[], int32_t size, int32_t flags), (override));
   MOCK_METHOD(int32_t, RecvFrom, (nxSOCKET socket, char mem[], int32_t size, int32_t flags, nxsockaddr* from, nxsocklen_t* fromlen), (override));
-  MOCK_METHOD(int32_t, Select, (int32_t nfds, nxfd_set* read_fds, nxfd_set* write_fds, nxfd_set* except_fds, nxtimeval* timeout), (override));
+  MOCK_METHOD(int32_t, Select, (int32_t nfds, nxfd_set* readfds, nxfd_set* writefds, nxfd_set* exceptfds, nxtimeval* timeout), (override));
   MOCK_METHOD(int32_t, Send, (nxSOCKET socket, char dataptr[], int32_t size, int32_t flags), (override));
   MOCK_METHOD(int32_t, SendTo, (nxSOCKET socket, char dataptr[], int32_t size, int32_t flags, nxsockaddr* to, nxsocklen_t tolen), (override));
   MOCK_METHOD(int32_t, SetSockOpt, (nxSOCKET socket, int32_t level, int32_t optname, void* optval, nxsocklen_t optlen), (override));
   MOCK_METHOD(int32_t, Shutdown, (nxSOCKET socket, int32_t how), (override));
-  MOCK_METHOD(nxSOCKET, Socket, (nxIpStackRef_t stack_ref, int32_t domain, int32_t type, int32_t prototcol), (override));
+  MOCK_METHOD(nxSOCKET, Socket, (nxIpStackRef_t stack_ref, int32_t domain, int32_t type, int32_t protocol), (override));
   MOCK_METHOD(char*, StrErrR, (int errnum, char buf[], size_t bufLen), (override));
 };
 

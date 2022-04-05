@@ -2,6 +2,8 @@ r""" Reads all the frame on network.
 
   This example reads all the frames on the network and displays them. 
   This is used to demonstrate a frame input stream session.
+  Ensure that you have connected the selected interface to another Ethernet interface that is 
+  transmitting data.
 
 The gRPC API is built from the C API. NI-XNET documentation is installed with the driver at:
   C:\Users\Public\Documents\National Instruments\NI-XNET\Documentation\NI-XNET Manual.chm
@@ -36,8 +38,8 @@ import nixnet_pb2_grpc as grpc_nixnet
 
 CHOOSE_MONITOR_OR_ENDPOINT_TEXT = (
     "\nPress 'm' followed by enter to configure the input stream session to use the monitor path"
-    " to monitor all network traffic else just the enter key to use the endpoint path which filters"
-    " traffic based on VLAN ID and priority. :"
+    " to monitor all network traffic else press any other key followed by enter to use the"
+    " endpoint path which filters traffic based on VLAN ID and priority. :"
 )
 FRAME_CHECK_SEQUENCE_SIZE = 4
 MAX_ENET_FRAME_SIZE = 1518

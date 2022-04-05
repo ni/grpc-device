@@ -22,11 +22,12 @@ class NiXnetSocketLibrary : public nixnetsocket_grpc::NiXnetSocketLibraryInterfa
   int32_t Bind(nxSOCKET socket, nxsockaddr* name, nxsocklen_t namelen);
   int32_t Close(nxSOCKET socket);
   int32_t Connect(nxSOCKET socket, nxsockaddr* name, nxsocklen_t namelen);
+  int32_t FdIsSet(nxSOCKET fd, nxfd_set* set);
   int32_t FreeAddrInfo(nxaddrinfo* res);
   int32_t GetAddrInfo(nxIpStackRef_t stack_ref, const char node_api[], const char service_api[], nxaddrinfo* hints, nxaddrinfo** res);
   int32_t GetLastErrorNum();
   char* GetLastErrorStr(char buf[], size_t bufLen);
-  int32_t GetNameInfo(nxIpStackRef_t stack_ref, nxsockaddr* addr, nxsocklen_t addr_len, char host[], nxsocklen_t host_len, char serv[], nxsocklen_t serv_len, int32_t flags);
+  int32_t GetNameInfo(nxIpStackRef_t stack_ref, nxsockaddr* addr, nxsocklen_t addrlen, char host[], nxsocklen_t hostlen, char serv[], nxsocklen_t servlen, int32_t flags);
   int32_t GetPeerName(nxSOCKET socket, nxsockaddr* addr, nxsocklen_t* addrlen);
   int32_t GetSockName(nxSOCKET socket, nxsockaddr* addr, nxsocklen_t* addrlen);
   int32_t GetSockOpt(nxSOCKET socket, int32_t level, int32_t optname, void* optval, nxsocklen_t* optlen);
@@ -43,16 +44,15 @@ class NiXnetSocketLibrary : public nixnetsocket_grpc::NiXnetSocketLibraryInterfa
   int32_t IpStackGetInfo(nxIpStackRef_t stack_ref, uint32_t info_id, nxVirtualInterface_t** virtual_interfaces);
   int32_t IpStackOpen(char stack_name[], nxIpStackRef_t* stack_ref);
   int32_t IpStackWaitForInterface(nxIpStackRef_t stack_ref, const char localInterface[], int32_t timeoutMs);
-  int32_t IsSet(nxSOCKET fd, nxfd_set* set);
   int32_t Listen(nxSOCKET socket, int32_t backlog);
   int32_t Recv(nxSOCKET socket, char mem[], int32_t size, int32_t flags);
   int32_t RecvFrom(nxSOCKET socket, char mem[], int32_t size, int32_t flags, nxsockaddr* from, nxsocklen_t* fromlen);
-  int32_t Select(int32_t nfds, nxfd_set* read_fds, nxfd_set* write_fds, nxfd_set* except_fds, nxtimeval* timeout);
+  int32_t Select(int32_t nfds, nxfd_set* readfds, nxfd_set* writefds, nxfd_set* exceptfds, nxtimeval* timeout);
   int32_t Send(nxSOCKET socket, char dataptr[], int32_t size, int32_t flags);
   int32_t SendTo(nxSOCKET socket, char dataptr[], int32_t size, int32_t flags, nxsockaddr* to, nxsocklen_t tolen);
   int32_t SetSockOpt(nxSOCKET socket, int32_t level, int32_t optname, void* optval, nxsocklen_t optlen);
   int32_t Shutdown(nxSOCKET socket, int32_t how);
-  nxSOCKET Socket(nxIpStackRef_t stack_ref, int32_t domain, int32_t type, int32_t prototcol);
+  nxSOCKET Socket(nxIpStackRef_t stack_ref, int32_t domain, int32_t type, int32_t protocol);
   char* StrErrR(int errnum, char buf[], size_t bufLen);
 
  private:
@@ -60,6 +60,7 @@ class NiXnetSocketLibrary : public nixnetsocket_grpc::NiXnetSocketLibraryInterfa
   using BindPtr = decltype(&nxbind);
   using ClosePtr = decltype(&nxclose);
   using ConnectPtr = decltype(&nxconnect);
+  using FdIsSetPtr = decltype(&nxfd_isset);
   using FreeAddrInfoPtr = int32_t (*)(nxaddrinfo* res);
   using GetAddrInfoPtr = decltype(&nxgetaddrinfo);
   using GetLastErrorNumPtr = int32_t (*)();
@@ -81,7 +82,6 @@ class NiXnetSocketLibrary : public nixnetsocket_grpc::NiXnetSocketLibraryInterfa
   using IpStackGetInfoPtr = decltype(&nxIpStackGetInfo);
   using IpStackOpenPtr = decltype(&nxIpStackOpen);
   using IpStackWaitForInterfacePtr = decltype(&nxIpStackWaitForInterface);
-  using IsSetPtr = decltype(&nxfd_isset);
   using ListenPtr = decltype(&nxlisten);
   using RecvPtr = decltype(&nxrecv);
   using RecvFromPtr = decltype(&nxrecvfrom);
@@ -98,6 +98,7 @@ class NiXnetSocketLibrary : public nixnetsocket_grpc::NiXnetSocketLibraryInterfa
     BindPtr Bind;
     ClosePtr Close;
     ConnectPtr Connect;
+    FdIsSetPtr FdIsSet;
     FreeAddrInfoPtr FreeAddrInfo;
     GetAddrInfoPtr GetAddrInfo;
     GetLastErrorNumPtr GetLastErrorNum;
@@ -119,7 +120,6 @@ class NiXnetSocketLibrary : public nixnetsocket_grpc::NiXnetSocketLibraryInterfa
     IpStackGetInfoPtr IpStackGetInfo;
     IpStackOpenPtr IpStackOpen;
     IpStackWaitForInterfacePtr IpStackWaitForInterface;
-    IsSetPtr IsSet;
     ListenPtr Listen;
     RecvPtr Recv;
     RecvFromPtr RecvFrom;

@@ -82,7 +82,7 @@ struct SockAddrInputConverter {
   } addr{};
 };
 
-void copy_ipv6_addr_to_output(const nxin6_addr& ipv6_input, IPv6Addr* ipv6_output)
+void copy_ipv6_addr_to_output(const nxin6_addr& ipv6_input, In6Addr* ipv6_output)
 {
   // Reinterpret unsigned char to char.
   auto addr_out = reinterpret_cast<const char*>(ipv6_input.addr);
@@ -161,7 +161,7 @@ struct IPv4AddrOutputConverter {
     return &addr;
   }
 
-  void to_grpc(IPv4Addr& output) const
+  void to_grpc(InAddr& output) const
   {
     output.set_addr(addr.addr);
   }
@@ -300,16 +300,17 @@ struct VirtualInterfaceOutputConverter {
         curr_vi_ptr = curr_vi_ptr->nextVirtualInterface) {
       auto curr_grpc_vi = output.Add();
       curr_grpc_vi->set_xnet_interface_name(curr_vi_ptr->xnetInterfaceName);
+      curr_grpc_vi->set_vlan_name(curr_vi_ptr->vlanName);
       curr_grpc_vi->set_mac_address(curr_vi_ptr->macAddress);
       curr_grpc_vi->set_mac_mtu(curr_vi_ptr->macMTU);
-      curr_grpc_vi->set_operational_status(curr_vi_ptr->operationalStatus);
+      curr_grpc_vi->set_operational_status(static_cast<OperationalStatus>(curr_vi_ptr->operationalStatus));
       curr_grpc_vi->set_if_index(curr_vi_ptr->ifIndex);
       for (
           auto curr_ip_addr_ptr = curr_vi_ptr->firstIPAddress;
           curr_ip_addr_ptr != nullptr;
           curr_ip_addr_ptr = curr_ip_addr_ptr->nextIPAddress) {
         auto curr_grpc_ip_addr = curr_grpc_vi->add_ip_addresses();
-        curr_grpc_ip_addr->set_family(curr_ip_addr_ptr->family);
+        curr_grpc_ip_addr->set_family(static_cast<AddressFamily>(curr_ip_addr_ptr->family));
         curr_grpc_ip_addr->set_address(curr_ip_addr_ptr->address);
         curr_grpc_ip_addr->set_net_mask(curr_ip_addr_ptr->netmask);
         curr_grpc_ip_addr->set_prefix_length(curr_ip_addr_ptr->prefixLength);
@@ -319,7 +320,7 @@ struct VirtualInterfaceOutputConverter {
           curr_gateway_addr != nullptr;
           curr_gateway_addr = curr_gateway_addr->nextGatewayAddress) {
         auto curr_grpc_gateway_addr = curr_grpc_vi->add_gateway_addresses();
-        curr_grpc_gateway_addr->set_family(curr_gateway_addr->family);
+        curr_grpc_gateway_addr->set_family(static_cast<AddressFamily>(curr_gateway_addr->family));
         curr_grpc_gateway_addr->set_address(curr_gateway_addr->address);
       }
     }
@@ -343,7 +344,7 @@ inline void convert_to_grpc(const SockAddrOutputConverter& storage, SockAddr* ou
   storage.to_grpc(*output);
 }
 
-inline void convert_to_grpc(const IPv4AddrOutputConverter& storage, IPv4Addr* output)
+inline void convert_to_grpc(const IPv4AddrOutputConverter& storage, InAddr* output)
 {
   storage.to_grpc(*output);
 }
@@ -484,7 +485,7 @@ inline SockOptDataInputConverter convert_from_grpc(const SockOptData& input)
 // This class allows us to have something allocated on the stack that provides backing
 // storage for a void* opt_val output param and converts it to the SockOptData grpc-type.
 struct SockOptDataOutputConverter {
-  SockOptDataOutputConverter(int32_t opt_name) : opt_name(opt_name)
+  SockOptDataOutputConverter(NiXnetSocketLibraryInterface* library, int32_t opt_name) : opt_name(opt_name), library(library)
   {
   }
 
@@ -493,22 +494,22 @@ struct SockOptDataOutputConverter {
     switch (opt_name) {
       case OptName::OPT_NAME_IP_MULTICAST_TTL:
       case OptName::OPT_NAME_IPV6_MULTICAST_HOPS:
-      case OptName::OPT_NAME_SO_RX_DATA:
-      case OptName::OPT_NAME_SO_RCV_BUF:
-      case OptName::OPT_NAME_SO_SND_BUF:
+      case OptName::OPT_NAME_SO_RXDATA:
+      case OptName::OPT_NAME_SO_RCVBUF:
+      case OptName::OPT_NAME_SO_SNDBUF:
       case OptName::OPT_NAME_TCP_NODELAY:
       case OptName::OPT_NAME_IP_MULTICAST_IF:
-      case OptName::OPT_NAME_IPV6_MULTICAST_IF: {
+      case OptName::OPT_NAME_IPV6_MULTICAST_IF:
+      case OptName::OPT_NAME_SO_ERROR: {
         return &data_int;
       }
-      case OptName::OPT_NAME_SO_NON_BLOCK:
-      case OptName::OPT_NAME_SO_REUSE_ADDR:
+      case OptName::OPT_NAME_SO_NONBLOCK:
+      case OptName::OPT_NAME_SO_REUSEADDR:
       case OptName::OPT_NAME_IPV6_V6ONLY: {
         return &data_int;
       }
-      case OptName::OPT_NAME_SO_BIND_TO_DEVICE:
-      case OptName::OPT_NAME_SO_ERROR: {
-        data_string = std::string(256 - 1, '\0');  // TODO: What's the max string size to allocate for a sock opt?
+      case OptName::OPT_NAME_SO_BINDTODEVICE: {
+        data_string = std::string(string_length, '\0');
         return &data_string[0];
       }
       case OptName::OPT_NAME_SO_LINGER: {
@@ -533,23 +534,23 @@ struct SockOptDataOutputConverter {
     switch (opt_name) {
       case OptName::OPT_NAME_IP_MULTICAST_TTL:
       case OptName::OPT_NAME_IPV6_MULTICAST_HOPS:
-      case OptName::OPT_NAME_SO_RX_DATA:
-      case OptName::OPT_NAME_SO_RCV_BUF:
-      case OptName::OPT_NAME_SO_SND_BUF:
+      case OptName::OPT_NAME_SO_RXDATA:
+      case OptName::OPT_NAME_SO_RCVBUF:
+      case OptName::OPT_NAME_SO_SNDBUF:
       case OptName::OPT_NAME_TCP_NODELAY:
       case OptName::OPT_NAME_IP_MULTICAST_IF:
-      case OptName::OPT_NAME_IPV6_MULTICAST_IF: {
+      case OptName::OPT_NAME_IPV6_MULTICAST_IF:
+      case OptName::OPT_NAME_SO_ERROR: {
         output.set_data_int32(data_int);
         break;
       }
-      case OptName::OPT_NAME_SO_NON_BLOCK:
-      case OptName::OPT_NAME_SO_REUSE_ADDR:
+      case OptName::OPT_NAME_SO_NONBLOCK:
+      case OptName::OPT_NAME_SO_REUSEADDR:
       case OptName::OPT_NAME_IPV6_V6ONLY: {
         output.set_data_bool(data_int == 0 ? false : true);
         break;
       }
-      case OptName::OPT_NAME_SO_BIND_TO_DEVICE:
-      case OptName::OPT_NAME_SO_ERROR: {
+      case OptName::OPT_NAME_SO_BINDTODEVICE: {
         output.set_data_string(data_string);
         nidevice_grpc::converters::trim_trailing_nulls(*(output.mutable_data_string()));
         break;
@@ -576,12 +577,25 @@ struct SockOptDataOutputConverter {
     }
   }
 
+  nxsocklen_t size(nxSOCKET& socket, int32_t level)
+  {
+    if (opt_name == OptName::OPT_NAME_SO_BINDTODEVICE) {
+      int status = library->GetSockOpt(socket, level, opt_name, nullptr, &string_length);
+      if (status < 0) {
+        string_length = 255;
+      }
+    }
+    return string_length;
+  }
+
   int32_t opt_name;
+  nxsocklen_t string_length = 255;
   int32_t data_int;
   std::string data_string;
   nxlinger data_linger;
   nxip_mreq data_ipmreq;
   nxipv6_mreq data_ipv6mreq;
+  NiXnetSocketLibraryInterface* library;
 };
 
 inline void convert_to_grpc(const SockOptDataOutputConverter& storage, SockOptData* output)
@@ -592,11 +606,9 @@ inline void convert_to_grpc(const SockOptDataOutputConverter& storage, SockOptDa
 struct AddrInfoHintInputConverter {
   AddrInfoHintInputConverter(const AddrInfoHint& input)
   {
-    int32_t flags = input.flags_raw();
-    for (int i = 0; i < input.flags().size(); i++) {
-      flags |= input.flags()[i];
-    }
-    addr_info.ai_flags = flags;
+    addr_info.ai_flags = nidevice_grpc::converters::convert_bitfield_as_enum_array_input(
+        input.flags_array(),
+        input.flags_raw());
     addr_info.ai_family = input.family();
     addr_info.ai_socktype = input.sock_type();
     addr_info.ai_protocol = input.protocol();
@@ -654,7 +666,7 @@ struct AddrInfoOutputConverter {
         curr_addr_info_ptr = curr_addr_info_ptr->ai_next) {
       auto curr_grpc_addr_info = output.Add();
       curr_grpc_addr_info->set_flags_raw(curr_addr_info_ptr->ai_flags);
-      convert_to_addr_info_flags(curr_addr_info_ptr->ai_flags, *(curr_grpc_addr_info->mutable_flags()));
+      convert_to_addr_info_flags(curr_addr_info_ptr->ai_flags, *(curr_grpc_addr_info->mutable_flags_array()));
       curr_grpc_addr_info->set_family((AddressFamily)curr_addr_info_ptr->ai_family);
       curr_grpc_addr_info->set_sock_type((SocketProtocolType)curr_addr_info_ptr->ai_socktype);
       curr_grpc_addr_info->set_protocol((IPProtocol)curr_addr_info_ptr->ai_protocol);
@@ -717,7 +729,7 @@ namespace nidevice_grpc {
 namespace converters {
 
 template <>
-inline nxin_addr convert_from_grpc(const nixnetsocket_grpc::IPv4Addr& input)
+inline nxin_addr convert_from_grpc(const nixnetsocket_grpc::InAddr& input)
 {
   return {input.addr()};
 }
@@ -746,7 +758,7 @@ struct TypeToStorageType<nxaddrinfo, google::protobuf::RepeatedPtrField<nixnetso
 };
 
 template <>
-struct TypeToStorageType<nxin_addr, nixnetsocket_grpc::IPv4Addr> {
+struct TypeToStorageType<nxin_addr, nixnetsocket_grpc::InAddr> {
   using StorageType = nixnetsocket_grpc::IPv4AddrOutputConverter;
 };
 

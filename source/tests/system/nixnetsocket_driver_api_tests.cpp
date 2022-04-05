@@ -73,6 +73,7 @@ const auto MULTI_ADDRESS_INTERFACE_CONFIG = R"(
           "address": "inherit",
           "VLANs": [
             {
+              "name": "testVlan",
               "IPv4": {
                 "mode": "static",
                 "staticAddresses": [
@@ -308,7 +309,7 @@ TEST_F(NiXnetSocketNoHardwareTests, InitWithInvalidIpStack_Bind_ReturnsAndSetsEx
 TEST_F(NiXnetSocketNoHardwareTests, SocketAndEmptySet_IsSet_ReturnsFalse)
 {
   auto socket_response = socket(stub());
-  auto is_set_response = client::is_set(stub(), socket_response.socket(), {});
+  auto is_set_response = client::fd_is_set(stub(), socket_response.socket(), {});
 
   EXPECT_SUCCESS(is_set_response);
   EXPECT_EQ(NXSOCKET_FALSE, is_set_response.is_set());
@@ -317,7 +318,7 @@ TEST_F(NiXnetSocketNoHardwareTests, SocketAndEmptySet_IsSet_ReturnsFalse)
 TEST_F(NiXnetSocketNoHardwareTests, SocketAndSetContainingSocket_IsSet_ReturnsTrue)
 {
   auto socket_response = socket(stub());
-  auto is_set_response = client::is_set(stub(), socket_response.socket(), {socket_response.socket()});
+  auto is_set_response = client::fd_is_set(stub(), socket_response.socket(), {socket_response.socket()});
 
   EXPECT_SUCCESS(is_set_response);
   EXPECT_EQ(NXSOCKET_TRUE, is_set_response.is_set());
@@ -483,6 +484,7 @@ TEST_F(NiXnetSocketLoopbackTests, MultiAddressIpStack_GetInfo_ReturnsExpectedInf
   EXPECT_EQ(1, stack_info_response.virtual_interfaces_size());
   const auto virtual_interface = stack_info_response.virtual_interfaces()[0];
   EXPECT_EQ("ENET1", virtual_interface.xnet_interface_name());
+  EXPECT_EQ("testVlan", virtual_interface.vlan_name());
   EXPECT_EQ("00:80:2f:30:f4:58", virtual_interface.mac_address());
   EXPECT_EQ(1500, virtual_interface.mac_mtu());
   EXPECT_EQ(1, virtual_interface.if_index());
@@ -520,14 +522,19 @@ TEST_F(NiXnetSocketLoopbackTests, MultiAddressIpStack_GetInfoString_ReturnsReaso
           {create_interface_config("ENET1", MULTI_ADDRESS_INTERFACE_CONFIG)}));
   const auto wait_response = client::ip_stack_wait_for_interface(stub(), create_stack_response.stack_ref(), "", 5000);
 
-  const auto stack_info_response = client::ip_stack_get_all_stacks_info_str(stub());
+  const auto json_stack_info = client::ip_stack_get_all_stacks_info_str(stub(), IPStackInfoStringFormat::IPSTACK_INFO_STR_FORMAT_JSON);
+  const auto text_stack_info = client::ip_stack_get_all_stacks_info_str(stub(), IPStackInfoStringFormat::IPSTACK_INFO_STR_FORMAT_TEXT);
 
   EXPECT_SUCCESS(create_stack_response);
-  EXPECT_SUCCESS(stack_info_response);
   EXPECT_SUCCESS(wait_response);
-  for (const auto expected_sub_str : {"ENET1"s, "10.23.45.67"s, "IPv4 addresses"s, "ff01::1"s}) {
-    EXPECT_THAT(stack_info_response.info(), HasSubstr(expected_sub_str));
+  for (const auto response : {json_stack_info, text_stack_info}) {
+    EXPECT_SUCCESS(response);
+    for (const auto expected_sub_str : {"ENET1"s, "10.23.45.67"s, "ff01::1"s}) {
+      EXPECT_THAT(response.info(), HasSubstr(expected_sub_str));
+    }
   }
+  EXPECT_THAT(text_stack_info.info(), HasSubstr("IPv4 addresses"));
+  EXPECT_THAT(json_stack_info.info(), HasSubstr("ipv4Addresses"));
 }
 
 TEST_F(NiXnetSocketLoopbackTests, OpenedStackThenCloseOriginal_GetStackInfoFromOpenedStack_ReturnsInfoFromOriginalConfig)
@@ -539,7 +546,7 @@ TEST_F(NiXnetSocketLoopbackTests, OpenedStackThenCloseOriginal_GetStackInfoFromO
   const auto reopened_stack = client::ip_stack_open(stub(), STACK_NAME);
   const auto closed_original_stack = client::ip_stack_clear(stub(), original_stack.stack_ref());
 
-  const auto stack_info = client::ip_stack_get_all_stacks_info_str(stub());
+  const auto stack_info = client::ip_stack_get_all_stacks_info_str(stub(), IPStackInfoStringFormat::IPSTACK_INFO_STR_FORMAT_JSON);
 
   EXPECT_THAT(stack_info.info(), HasSubstr(CONFIGURED_STATIC_ADDRESS));
 }
@@ -791,6 +798,33 @@ TEST_F(NiXnetSocketLoopbackTests, IPv4SockAddr_GetNameInfoWithZeroServLen_Return
   EXPECT_SUCCESS(name_info);
   EXPECT_EQ(ADDRESS, name_info.host());
   EXPECT_THAT(name_info.serv(), IsEmpty());
+}
+
+TEST_F(NiXnetSocketLoopbackTests, IPv4SockAddr_GetNameInfoWithFlags_ReturnsExpectedNameInfo)
+{
+  const auto ADDRESS = "192.168.0.1"s;
+  constexpr auto PORT_BYTE_SWAPPED = 0xD204;  // Network endian 1234;
+  const auto EXPECTED_PORT = "1234"s;
+  const auto stack = client::ip_stack_create(stub(), "", create_simple_config("ENET1"));
+  const auto p_to_n = client::inet_p_to_n(stub(), stack.stack_ref(), 2 /* AF INET*/, ADDRESS);
+  auto sock_addr = SockAddr{};
+  sock_addr.mutable_ipv4()->mutable_addr()->CopyFrom(p_to_n.dst().ipv4());
+  sock_addr.mutable_ipv4()->set_port(PORT_BYTE_SWAPPED);
+
+  // Note: These flags don't change the behavior of this test.
+  const auto name_info = client::get_name_info(
+      stub(),
+      stack.stack_ref(),
+      sock_addr,
+      256,
+      256,
+      std::vector<GetNameInfoFlags>{
+          GetNameInfoFlags::GET_NAME_INFO_FLAGS_NUMERICHOST,
+          GetNameInfoFlags::GET_NAME_INFO_FLAGS_NUMERICSERV});
+
+  EXPECT_SUCCESS(name_info);
+  EXPECT_EQ(ADDRESS, name_info.host());
+  EXPECT_EQ("1234", name_info.serv());
 }
 
 }  // namespace

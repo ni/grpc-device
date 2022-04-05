@@ -117,7 +117,7 @@ def get_message_parameter_definitions(parameters):
             enum_parameters = _get_enum_parameters(
                 parameter, parameter_name, parameter_type, is_array, used_indexes
             )
-            if is_request_message:
+            if is_request_message and not common_helpers.is_bitfield_as_enum_array(parameter):
                 # use oneof for enums in request messages
                 parameter_definitions.append(
                     {

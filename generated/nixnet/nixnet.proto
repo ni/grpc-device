@@ -265,6 +265,34 @@ enum DBProperty {
   DB_PROPERTY_ECU_NAME = 50659330;
   DB_PROPERTY_ECU_J1939_NODE_NAME = 151322665;
   DB_PROPERTY_ECU_J1939_PREFERRED_ADDRESS = 327720;
+  DB_PROPERTY_LIN_SCHED_CLST_REF = 84279301;
+  DB_PROPERTY_LIN_SCHED_COMMENT = 50724870;
+  DB_PROPERTY_LIN_SCHED_CONFIG_STATUS = 393223;
+  DB_PROPERTY_LIN_SCHED_ENTRIES = 101056513;
+  DB_PROPERTY_LIN_SCHED_NAME = 50724866;
+  DB_PROPERTY_LIN_SCHED_PRIORITY = 393219;
+  DB_PROPERTY_LIN_SCHED_RUN_MODE = 393220;
+  DB_PROPERTY_LIN_SCHED_ENTRY_COLLISION_RES_SCHED = 84344833;
+  DB_PROPERTY_LIN_SCHED_ENTRY_DELAY = 17235970;
+  DB_PROPERTY_LIN_SCHED_ENTRY_EVENT_ID = 458755;
+  DB_PROPERTY_LIN_SCHED_ENTRY_FRAMES = 101122052;
+  DB_PROPERTY_LIN_SCHED_ENTRY_NAME = 50790406;
+  DB_PROPERTY_LIN_SCHED_ENTRY_NAME_UNIQUE_TO_CLUSTER = 50790408;
+  DB_PROPERTY_LIN_SCHED_ENTRY_NC_FF_DATA_BYTES = 168230921;
+  DB_PROPERTY_LIN_SCHED_ENTRY_SCHED = 84344839;
+  DB_PROPERTY_LIN_SCHED_ENTRY_TYPE = 458757;
+  DB_PROPERTY_PDU_CLUSTER_REF = 84410372;
+  DB_PROPERTY_PDU_COMMENT = 50855938;
+  DB_PROPERTY_PDU_CONFIG_STATUS = 524295;
+  DB_PROPERTY_PDU_DEFAULT_PAYLOAD = 168296453;
+  DB_PROPERTY_PDU_FRM_REFS = 101187590;
+  DB_PROPERTY_PDU_MUX_DATA_MUX_SIG_REF = 84410377;
+  DB_PROPERTY_PDU_MUX_IS_MUXED = 34078728;
+  DB_PROPERTY_PDU_MUX_STATIC_SIG_REFS = 101187594;
+  DB_PROPERTY_PDU_MUX_SUBFRAME_REFS = 101187595;
+  DB_PROPERTY_PDU_NAME = 50855937;
+  DB_PROPERTY_PDU_PAYLOAD_LEN = 524291;
+  DB_PROPERTY_PDU_SIG_REFS = 101187589;
 }
 
 enum DBPropertyValue {
@@ -1009,6 +1037,14 @@ message DbRefArray {
   repeated nidevice_grpc.Session db_ref = 1;
 }
 
+message DeviceRefArray {
+  repeated nidevice_grpc.Session dev_ref = 1;
+}
+
+message InterfaceRefArray {
+  repeated nidevice_grpc.Session intf_ref = 1;
+}
+
 message EptRxFilter {
   uint32 use_flags = 1;
   uint32 vid = 2;
@@ -1021,10 +1057,14 @@ message EptRxFilterArray {
 }
 
 message GetPropertyRequest {
-  nidevice_grpc.Session session = 1;
+  oneof session_repository {
+    nidevice_grpc.Session device = 1;
+    nidevice_grpc.Session interface_ref = 2;
+    nidevice_grpc.Session session = 3;
+  }
   oneof property_id_enum {
-    Property property_id = 2;
-    uint32 property_id_raw = 3;
+    Property property_id = 4;
+    uint32 property_id_raw = 5;
   }
 } 
 
@@ -1041,7 +1081,10 @@ message GetPropertyResponse {
     U32Array u32_array = 9;
     nidevice_grpc.Session db_ref = 10;
     DbRefArray db_ref_array = 11;
-    EptRxFilterArray ept_rx_filter_array = 12;
+    nidevice_grpc.Session dev_ref = 12;
+    DeviceRefArray dev_ref_array = 13;
+    InterfaceRefArray intf_ref_array = 14;
+    EptRxFilterArray ept_rx_filter_array = 15;
   }
 }
 
