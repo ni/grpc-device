@@ -11,7 +11,7 @@ namespace dcpower = nidcpower_grpc;
 
 const int kInvalidRsrc = -1074118656;
 const int kInvalidDCPowerSession = -1074130544;
-const char* kViErrorResourceNotFoundMessage = "Device was not recognized. The device is not supported with this driver or version.";
+const char* kViErrorResourceNotFoundMessage = "Device was not recognized. The device is not supported with this driver or version.\n\nInvalid Identifier: ";
 const char* kInvalidDCPowerSessionMessage = "IVI: (Hex 0xBFFA1190) The session handle is not valid.";
 const char* kTestRsrc = "FakeDevice";
 const char* kOptionsString = "Simulate=1, DriverSetup=Model:4147; BoardType:PXIe";
@@ -98,6 +98,7 @@ TEST_F(NiDCPowerSessionTest, InitializeSessionWithDeviceAndSessionName_CreatesDr
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(0, response.status());
   EXPECT_NE(0, response.vi().id());
+  EXPECT_EQ("", response.error_message());
 }
 
 TEST_F(NiDCPowerSessionTest, InitializeSessionWithDeviceAndNoSessionName_CreatesDriverSession)
@@ -109,6 +110,7 @@ TEST_F(NiDCPowerSessionTest, InitializeSessionWithDeviceAndNoSessionName_Creates
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(0, response.status());
   EXPECT_NE(0, response.vi().id());
+  EXPECT_EQ("", response.error_message());
 }
 
 TEST_F(NiDCPowerSessionTest, InitializeSessionWithoutDevice_ReturnsDriverError)
@@ -119,6 +121,7 @@ TEST_F(NiDCPowerSessionTest, InitializeSessionWithoutDevice_ReturnsDriverError)
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(kInvalidRsrc, response.status());
   EXPECT_EQ(0, response.vi().id());
+  EXPECT_NE("", response.error_message());
 }
 
 TEST_F(NiDCPowerSessionTest, InitializedSession_CloseSession_ClosesDriverSession)
@@ -156,22 +159,13 @@ TEST_F(NiDCPowerSessionTest, InvalidSession_CloseSession_ReturnsInvalidSessionEr
   EXPECT_STREQ(kInvalidDCPowerSessionMessage, error_message.c_str());
 }
 
-TEST_F(NiDCPowerSessionTest, ErrorFromDriver_ErrorMessage_ReturnsUserErrorMessage)
+TEST_F(NiDCPowerSessionTest, InitWithErrorFromDriver_ReturnsUserErrorMessage)
 {
   dcpower::InitializeWithChannelsResponse initialize_response;
   call_initialize_with_channels(kTestInvalidRsrc, "", "", &initialize_response);
+
   EXPECT_EQ(kInvalidRsrc, initialize_response.status());
-
-  nidevice_grpc::Session session = initialize_response.vi();
-  ::grpc::ClientContext context;
-  dcpower::ErrorMessageRequest error_request;
-  error_request.mutable_vi()->set_id(session.id());
-  error_request.set_error_code(kInvalidRsrc);
-  dcpower::ErrorMessageResponse error_response;
-  ::grpc::Status status = GetStub()->ErrorMessage(&context, error_request, &error_response);
-
-  EXPECT_TRUE(status.ok());
-  EXPECT_STREQ(kViErrorResourceNotFoundMessage, error_response.error_message().c_str());
+  EXPECT_STREQ(kViErrorResourceNotFoundMessage, initialize_response.error_message().c_str());
 }
 
 }  // namespace system

@@ -11,7 +11,7 @@ namespace scope = niscope_grpc;
 
 const int kViErrorRsrcNFound = -1073807343;
 const int kInvalidScopeSession = -1074130544;
-const char* kViErrorRsrcNFoundMessage = "VISA:  (Hex 0xBFFF0011) Insufficient location information or the device or resource is not present in the system.";
+const char* kViErrorRsrcNFoundMessage = "VISA:  (Hex 0xBFFF0011) Insufficient location information or the device or resource is not present in the system.\n\nInvalid Identifier: ";
 const char* kInvalidScopeSessionMessage = "The session handle is not valid.";
 const char* kTestResourceName = "FakeDevice";
 const char* kSimulatedOptionsString = "Simulate=1, DriverSetup=Model:5164; BoardType:PXIe";
@@ -78,6 +78,7 @@ TEST_F(NiScopeSessionTest, InitializeSessionWithDeviceAndSessionName_CreatesDriv
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(0, response.status());
   EXPECT_NE(0, response.vi().id());
+  EXPECT_EQ("", response.error_message());
 }
 
 TEST_F(NiScopeSessionTest, InitializeSessionWithDeviceAndNoSessionName_CreatesDriverSession)
@@ -88,6 +89,7 @@ TEST_F(NiScopeSessionTest, InitializeSessionWithDeviceAndNoSessionName_CreatesDr
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(0, response.status());
   EXPECT_NE(0, response.vi().id());
+  EXPECT_EQ("", response.error_message());
 }
 
 TEST_F(NiScopeSessionTest, InitializeSessionWithoutDevice_ReturnsDriverError)
@@ -98,6 +100,7 @@ TEST_F(NiScopeSessionTest, InitializeSessionWithoutDevice_ReturnsDriverError)
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(kViErrorRsrcNFound, response.status());
   EXPECT_EQ(0, response.vi().id());
+  EXPECT_NE("", response.error_message());
 }
 
 TEST_F(NiScopeSessionTest, InitializedSession_CloseSession_ClosesDriverSession)
@@ -133,22 +136,13 @@ TEST_F(NiScopeSessionTest, InvalidSession_CloseSession_ReturnsInvalidSesssionErr
   EXPECT_STREQ(kInvalidScopeSessionMessage, error_message.c_str());
 }
 
-TEST_F(NiScopeSessionTest, ErrorFromDriver_GetErrorMessage_ReturnsUserErrorMessage)
+TEST_F(NiScopeSessionTest, InitWithErrorFromDriver_ReturnsUserErrorMessage)
 {
   scope::InitWithOptionsResponse init_response;
   call_init_with_options(kInvalidResourceName, "", "", &init_response);
+
   EXPECT_EQ(kViErrorRsrcNFound, init_response.status());
-
-  nidevice_grpc::Session session = init_response.vi();
-  ::grpc::ClientContext context;
-  scope::GetErrorMessageRequest error_request;
-  error_request.mutable_vi()->set_id(session.id());
-  error_request.set_error_code(kViErrorRsrcNFound);
-  scope::GetErrorMessageResponse error_response;
-  ::grpc::Status status = GetStub()->GetErrorMessage(&context, error_request, &error_response);
-
-  EXPECT_TRUE(status.ok());
-  EXPECT_STREQ(kViErrorRsrcNFoundMessage, error_response.error_message().c_str());
+  EXPECT_STREQ(kViErrorRsrcNFoundMessage, init_response.error_message().c_str());
 }
 
 }  // namespace system

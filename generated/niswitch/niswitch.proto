@@ -705,6 +705,7 @@ message InitRequest {
 message InitResponse {
   int32 status = 1;
   nidevice_grpc.Session vi = 2;
+  string error_message = 3;
 }
 
 message InitWithOptionsRequest {
@@ -718,6 +719,7 @@ message InitWithOptionsRequest {
 message InitWithOptionsResponse {
   int32 status = 1;
   nidevice_grpc.Session vi = 2;
+  string error_message = 3;
 }
 
 message InitWithTopologyRequest {
@@ -731,6 +733,7 @@ message InitWithTopologyRequest {
 message InitWithTopologyResponse {
   int32 status = 1;
   nidevice_grpc.Session vi = 2;
+  string error_message = 3;
 }
 
 message InitiateScanRequest {

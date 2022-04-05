@@ -71,6 +71,14 @@ def check_for_error(vi, status):
         raise Exception(error_message_response.error_message)
 
 
+def check_for_initialization_error(response):
+    """Raise an exception if an error was returned from Initialize."""
+    if response.status < 0:
+        raise RuntimeError(f"Error: {response.error_message or response.status}")
+    if response.status > 0:
+        sys.stderr.write(f"Warning: {response.error_message or response.status}\n")
+
+
 try:
     # Open session to NI-SWITCH and set topology.
     init_with_topology_response = niswitch_client.InitWithTopology(
@@ -83,7 +91,7 @@ try:
         )
     )
     vi = init_with_topology_response.vi
-    check_for_error(vi, init_with_topology_response.status)
+    check_for_initialization_error(init_with_topology_response)
     print("Topology set to : ", TOPOLOGY_STRING)
 
     # Configure the scan list.

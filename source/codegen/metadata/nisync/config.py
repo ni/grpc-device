@@ -16,7 +16,7 @@ config = {
     "custom_types": [],
     "driver_name": "NI-SYNC",
     "init_function": "init",
-    'status_ok': 'status >= 0',
+    "status_ok": "status >= 0",
     "library_info": {
         "Linux": {"64bit": {"name": "nisync", "type": "cdll"}},
         "Windows": {

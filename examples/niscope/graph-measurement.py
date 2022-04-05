@@ -67,6 +67,14 @@ def check_for_error(vi, status):
         raise Exception(error_message_response.error_message)
 
 
+def check_for_initialization_error(response):
+    """Raise an exception if an error was returned from Initialize."""
+    if response.status < 0:
+        raise RuntimeError(f"Error: {response.error_message or response.status}")
+    if response.status > 0:
+        sys.stderr.write(f"Warning: {response.error_message or response.status}\n")
+
+
 # Create the communication channel for the remote host (in this case we are connecting to a local
 # server) and create a connection to the NI-SCOPE service
 channel = grpc.insecure_channel(f"{SERVER_ADDRESS}:{SERVER_PORT}")
@@ -80,7 +88,7 @@ try:
         )
     )
     vi = init_result.vi
-    check_for_error(vi, init_result.status)
+    check_for_initialization_error(init_result)
 
     # Configure Vertical
     vertical_result = niscope_client.ConfigureVertical(

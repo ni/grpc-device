@@ -11,6 +11,7 @@
 #include <iostream>
 #include <atomic>
 #include <vector>
+#include "custom/ivi_errors.h"
 #include <server/converters.h>
 
 namespace nidcpower_grpc {
@@ -780,6 +781,10 @@ namespace nidcpower_grpc {
       response->set_status(status);
       if (status_ok(status)) {
         response->mutable_vi()->set_id(session_id);
+      }
+      else {
+        const auto error_message = get_last_error_message(library_);
+        response->set_error_message(error_message);
       }
       return ::grpc::Status::OK;
     }
@@ -2865,6 +2870,10 @@ namespace nidcpower_grpc {
       response->set_status(status);
       if (status_ok(status)) {
         response->mutable_vi()->set_id(session_id);
+      }
+      else {
+        const auto error_message = get_last_error_message(library_);
+        response->set_error_message(error_message);
       }
       return ::grpc::Status::OK;
     }

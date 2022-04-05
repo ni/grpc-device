@@ -11,6 +11,7 @@
 #include <iostream>
 #include <atomic>
 #include <vector>
+#include "custom/ivi_errors.h"
 #include <server/converters.h>
 
 namespace nidigitalpattern_grpc {
@@ -2468,6 +2469,10 @@ namespace nidigitalpattern_grpc {
       if (status_ok(status)) {
         response->mutable_vi()->set_id(session_id);
       }
+      else {
+        const auto error_message = get_last_error_message(library_);
+        response->set_error_message(error_message);
+      }
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -2500,6 +2505,10 @@ namespace nidigitalpattern_grpc {
       response->set_status(status);
       if (status_ok(status)) {
         response->mutable_vi()->set_id(session_id);
+      }
+      else {
+        const auto error_message = get_last_error_message(library_);
+        response->set_error_message(error_message);
       }
       return ::grpc::Status::OK;
     }

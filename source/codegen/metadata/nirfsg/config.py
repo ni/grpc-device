@@ -14,6 +14,7 @@ config = {
         'task': 'generation'
     },
     'custom_types': [],
+    'additional_headers': {'custom/ivi_errors.h': ['service.cpp']},
     'code_readiness': 'Release',
     'driver_name': 'NI-RFSG',
     'extra_errors_used': [

@@ -71,6 +71,14 @@ def check_for_error(vi, status):
         raise Exception(error_message_response.error_message)
 
 
+def check_for_initialization_error(response):
+    """Raise an exception if an error was returned from Initialize."""
+    if response.status < 0:
+        raise RuntimeError(f"Error: {response.error_message or response.status}")
+    if response.status > 0:
+        sys.stderr.write(f"Warning: {response.error_message or response.status}\n")
+
+
 try:
     # Initalize NI-FGEN session
     init_with_options_resp = nifgen_client.InitWithOptions(
@@ -79,7 +87,7 @@ try:
         )
     )
     vi = init_with_options_resp.vi
-    check_for_error(vi, init_with_options_resp.status)
+    check_for_initialization_error(init_with_options_resp)
 
     # Configure channels
     config_channels_resp = nifgen_client.ConfigureChannels(

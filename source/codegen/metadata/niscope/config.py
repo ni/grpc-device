@@ -88,6 +88,7 @@ config = {
             ]
         },
     ],
+    'additional_headers': {'custom/ivi_errors.h': ['service.cpp']},
     'driver_name': 'NI-SCOPE',
     'extra_errors_used': [
         'InvalidRepeatedCapabilityError',

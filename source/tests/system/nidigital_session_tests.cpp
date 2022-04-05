@@ -66,6 +66,7 @@ TEST_F(NiDigitalSessionTest, InitializeSessionWithDeviceAndSessionName_CreatesDr
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(0, response.status());
   EXPECT_NE(0, response.vi().id());
+  EXPECT_EQ("", response.error_message());
 }
 
 TEST_F(NiDigitalSessionTest, InitializeSessionWithDeviceAndNoSessionName_CreatesDriverSession)
@@ -76,6 +77,7 @@ TEST_F(NiDigitalSessionTest, InitializeSessionWithDeviceAndNoSessionName_Creates
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(0, response.status());
   EXPECT_NE(0, response.vi().id());
+  EXPECT_EQ("", response.error_message());
 }
 
 TEST_F(NiDigitalSessionTest, InitializeSessionWithoutDevice_ReturnsDriverError)
@@ -86,6 +88,7 @@ TEST_F(NiDigitalSessionTest, InitializeSessionWithoutDevice_ReturnsDriverError)
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(kDigitalRsrcNotFound, response.status());
   EXPECT_EQ(0, response.vi().id());
+  EXPECT_NE("", response.error_message());
 }
 
 TEST_F(NiDigitalSessionTest, InitializedSession_CloseSession_ClosesDriverSession)
@@ -104,22 +107,13 @@ TEST_F(NiDigitalSessionTest, InitializedSession_CloseSession_ClosesDriverSession
   EXPECT_EQ(0, close_response.status());
 }
 
-TEST_F(NiDigitalSessionTest, ErrorFromDriver_GetErrorMessage_ReturnsUserErrorMessage)
+TEST_F(NiDigitalSessionTest, InitWithErrorFromDriver_ReturnsUserErrorMessage)
 {
   digital::InitWithOptionsResponse init_response;
   call_init_with_options(kDigitalInvalidResourceName, "", "", &init_response);
+
   EXPECT_EQ(kDigitalRsrcNotFound, init_response.status());
-
-  nidevice_grpc::Session session = init_response.vi();
-  ::grpc::ClientContext context;
-  digital::ErrorMessageRequest error_request;
-  error_request.mutable_vi()->set_id(session.id());
-  error_request.set_error_code(kDigitalRsrcNotFound);
-  digital::ErrorMessageResponse error_response;
-  ::grpc::Status status = GetStub()->ErrorMessage(&context, error_request, &error_response);
-
-  EXPECT_TRUE(status.ok());
-  EXPECT_STREQ(kDigitalRsrcNotFoundMessage, error_response.error_message().c_str());
+  EXPECT_STREQ(kDigitalRsrcNotFoundMessage, init_response.error_message().c_str());
 }
 
 }  // namespace system

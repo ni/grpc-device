@@ -63,13 +63,22 @@ def raise_if_error(response):
         raise Exception(f"Error: {response.error_string}")
 
 
+def raise_if_initialization_error(response):
+    """Raise an exception if an error was returned from Initialize."""
+    if response.status < 0:
+        raise RuntimeError(f"Error: {response.error_message or response.status}")
+    if response.status > 0:
+        sys.stderr.write(f"Warning: {response.error_message or response.status}\n")
+    return response
+
+
 try:
     response = client.InitWithOptions(
         nirfsg_types.InitWithOptionsRequest(
             session_name=SESSION_NAME, resource_name=RESOURCE, option_string=OPTIONS
         )
     )
-    raise_if_error(response)
+    raise_if_initialization_error(response)
     vi = response.vi
     raise_if_error(
         client.ConfigureRF(nirfsg_types.ConfigureRFRequest(vi=vi, frequency=1e9, power_level=-5))
