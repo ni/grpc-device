@@ -67,6 +67,15 @@ class NiXnetLINDriverApiTests : public ::testing::Test {
     EXPECT_EQ(frame1->payload(), frame2->payload());
   }
 
+  void set_frame_data(nixnet_grpc::FrameRequest* frame, u64 timestamp, nixnet_grpc::FrameFlags frame_flag, u32 identifier, nixnet_grpc::FrameType frame_type, const char* payload)
+  {
+    frame->set_timestamp(timestamp);
+    frame->add_flags(frame_flag);
+    frame->set_identifier(identifier);
+    frame->set_type(frame_type);
+    frame->set_payload(payload);
+  }
+
  private:
   DeviceServerInterface* device_server_;
   std::unique_ptr<NiXnet::Stub> stub_;
@@ -79,19 +88,11 @@ TEST_F(NiXnetLINDriverApiTests, ConvertFramesToFromSignalsFromExample_FetchData_
   std::vector<nixnet_grpc::FrameBufferRequest> frames;
   auto session = EXPECT_SUCCESS(client::create_session(stub(), "NIXNET_exampleLDF", "Cluster", "SlaveSignal1_U16,MasterSignal1_U16", "", CREATE_SESSION_MODE_SIGNAL_CONVERSION_SINGLE_POINT)).session();
   nixnet_grpc::FrameRequest* frame1 = new nixnet_grpc::FrameRequest();
-  frame1->set_timestamp(0);
-  frame1->add_flags(FrameFlags::FRAME_FLAGS_UNSPECIFIED);
-  frame1->set_identifier(4);
-  frame1->set_type(FrameType::FRAME_TYPE_LIN_DATA);
-  frame1->set_payload("\2\1\2\3\4\5\6\7");
+  nixnet_grpc::FrameRequest* frame2 = new nixnet_grpc::FrameRequest();
+  set_frame_data(frame1, 0, FrameFlags::FRAME_FLAGS_UNSPECIFIED, 4, FrameType::FRAME_TYPE_LIN_DATA, "\2\1\2\3\4\5\6\7");
+  set_frame_data(frame2, 0, FrameFlags::FRAME_FLAGS_UNSPECIFIED, 2, FrameType::FRAME_TYPE_LIN_DATA, "\4\1");
   frames.push_back(nixnet_grpc::FrameBufferRequest());
   frames.back().set_allocated_lin(frame1);
-  nixnet_grpc::FrameRequest* frame2 = new nixnet_grpc::FrameRequest();
-  frame2->set_timestamp(0);
-  frame2->add_flags(FrameFlags::FRAME_FLAGS_UNSPECIFIED);
-  frame2->set_identifier(2);
-  frame2->set_type(FrameType::FRAME_TYPE_LIN_DATA);
-  frame2->set_payload("\4\1");
   frames.push_back(nixnet_grpc::FrameBufferRequest());
   frames.back().set_allocated_lin(frame2);
 
@@ -147,33 +148,33 @@ TEST_F(NiXnetLINDriverApiTests, LoopbackTestFromExample_FetchData_DataLooksReaso
 
 TEST_F(NiXnetLINDriverApiTests, WriteSignalXYFromExample_ReadSignalXYFromExample_SignalMatches)
 {
-  constexpr auto NUM_SAMP = 3;
+  constexpr auto NUM_SAMPLES = 3;
   constexpr auto NUM_SIGNALS = 2;
   f64 increment_out = 0.0;
   f64 min_out = 0.0;
   f64 max_out = 40.0;
   std::vector<u32> num_pairs_buffer(NUM_SIGNALS);
-  std::vector<f64> value_buffer(NUM_SAMP * NUM_SIGNALS);
+  std::vector<f64> value_buffer(NUM_SAMPLES * NUM_SIGNALS);
   auto session_for_writing = EXPECT_SUCCESS(client::create_session(stub(), "NIXNET_exampleLDF", "Cluster", "MasterSignal1_U16", "LIN1", CREATE_SESSION_MODE_SIGNAL_OUT_XY)).session();
   WriteStateValue state_value;
   state_value.set_lin_schedule_change(0);
   EXPECT_SUCCESS(client::write_state(stub(), session_for_writing, WRITE_STATE_LIN_SCHEDULE_CHANGE, state_value));
   EXPECT_SUCCESS(client::start(stub(), session_for_writing, START_STOP_SCOPE_NORMAL));
-  increment_out = (max_out - min_out) / NUM_SAMP;
-  for (int i = 0; i < NUM_SAMP; ++i) {
+  increment_out = (max_out - min_out) / NUM_SAMPLES;
+  for (int i = 0; i < NUM_SAMPLES; ++i) {
     value_buffer[i] = min_out + (increment_out * i);
-    value_buffer[i + NUM_SAMP] = min_out + (increment_out * ((i + (NUM_SAMP / 2)) % NUM_SAMP));
+    value_buffer[i + NUM_SAMPLES] = min_out + (increment_out * ((i + (NUM_SAMPLES / 2)) % NUM_SAMPLES));
   }
   auto write_signal_xy_response = EXPECT_SUCCESS(client::write_signal_xy(stub(), session_for_writing, 1.0, value_buffer, std::vector<u64>(), num_pairs_buffer));
 
   auto session_for_reading = EXPECT_SUCCESS(client::create_session(stub(), "NIXNET_exampleLDF", "Cluster", "MasterSignal1_U16", "LIN2", CREATE_SESSION_MODE_SIGNAL_IN_XY)).session();
-  auto read_signal_xy_response = EXPECT_SUCCESS(client::read_signal_xy(stub(), session_for_reading, 1.0, NUM_SAMP, NUM_SIGNALS));
+  auto read_signal_xy_response = EXPECT_SUCCESS(client::read_signal_xy(stub(), session_for_reading, 1.0, NUM_SAMPLES, NUM_SIGNALS));
   EXPECT_SUCCESS(client::clear(stub(), session_for_reading));
   EXPECT_SUCCESS(client::clear(stub(), session_for_writing));
 
-  for (int i = 0; i < NUM_SAMP; ++i) {
+  for (int i = 0; i < NUM_SAMPLES; ++i) {
     EXPECT_EQ(value_buffer[i], read_signal_xy_response.value_buffer()[i]) << "LIN1 and LIN2 must be connected together.";
-    EXPECT_EQ(value_buffer[i + NUM_SAMP], read_signal_xy_response.value_buffer()[i + NUM_SAMP]) << "LIN1 and LIN2 must be connected together.";
+    EXPECT_EQ(value_buffer[i + NUM_SAMPLES], read_signal_xy_response.value_buffer()[i + NUM_SAMPLES]) << "LIN1 and LIN2 must be connected together.";
   }
 }
 
