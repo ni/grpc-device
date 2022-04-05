@@ -140,6 +140,10 @@ struct FrameHolder {
   {
     auto payload_length = input.payload().length();
     auto frame_size = nxFrameSize(payload_length);
+    
+    // We need to clear the output buffer since it is being reused for multiple frames.
+    // Not clearing it might result in stale data from the previous frame into this one.
+    output.clear();
     output.resize(frame_size, 0);
     nxFrameVar_t* current_frame = (nxFrameVar_t*)output.data();
     current_frame->Timestamp = input.timestamp();
