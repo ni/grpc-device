@@ -25,10 +25,6 @@ namespace tests {
 namespace system {
 namespace {
 
-// typedef pb::uint8 u8;
-// typedef pb::uint32 u32;
-// typedef pb::uint64 u64;
-// typedef double f64;
 using u8 = pb::uint8;
 using u32 = pb::uint32;
 using u64 = pb::uint64;

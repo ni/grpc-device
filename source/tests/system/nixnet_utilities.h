@@ -16,13 +16,13 @@
     EXPECT_EQ(error, (response).status()); \
   }
 
-namespace nixnet_utilities {
-  
+using namespace nixnet_grpc;
 namespace client = nixnet_grpc::experimental::client;
 namespace pb = google::protobuf;
-using namespace nixnet_grpc;
 
-typedef pb::uint32 u32;
+namespace nixnet_utilities {
+  
+using u32 = pb::uint32;
 
 GetPropertyResponse get_property(const client::StubPtr& stub, const nidevice_grpc::Session& session_ref, const client::simple_variant<nixnet_grpc::Property, pb::uint32>& property_id)
 {
@@ -75,12 +75,6 @@ inline void _set_property_value(SetPropertyRequest& request, const pb::int32& va
 inline void _set_property_value(SetPropertyRequest& request, const double& value)
 {
   request.set_f64_scalar(value);
-}
-
-inline void _set_property_value(SetPropertyRequest& request, const std::vector<std::string>& value)
-{
-  // TODO: set_string_array expects a single string?!?
-  request.set_string_array(value[0]);
 }
 
 inline void _set_property_value(SetPropertyRequest& request, const std::vector<pb::uint32>& value)
