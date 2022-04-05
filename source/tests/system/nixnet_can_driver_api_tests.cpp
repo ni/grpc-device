@@ -79,7 +79,7 @@ class NiXnetCANDriverApiTests : public ::testing::Test {
   std::unique_ptr<NiXnet::Stub> stub_;
 };
 
-TEST_F(NiXnetCANDriverApiTests, TwoFrameExample_ConvertFramesToSignalAndBackToFramesSignlePoint_InputAndOutputFramesAreEquivalent)
+TEST_F(NiXnetCANDriverApiTests, TwoFrameExample_ConvertFramesToSignalAndBackToFramesSinglePoint_InputAndOutputFramesAreEquivalent)
 {
   constexpr auto NUM_FRAMES = 2;
   constexpr auto NUM_SIGNALS = 2;
@@ -111,7 +111,7 @@ TEST_F(NiXnetCANDriverApiTests, TwoFrameExample_ConvertFramesToSignalAndBackToFr
   EXPECT_SUCCESS(client::clear(stub(), session));
 }
 
-TEST_F(NiXnetCANDriverApiTests, TwoFrameExample_ConvertFramesToSignalAndBackToFramesSignlePoint_SecondFramePayloadDoesNotContainDataFromFirstFramePayload)
+TEST_F(NiXnetCANDriverApiTests, TwoFrameExample_ConvertFramesToSignalAndBackToFramesSinglePoint_SecondFramePayloadDoesNotContainDataFromFirstFramePayload)
 {
   constexpr auto NUM_FRAMES = 2;
   constexpr auto NUM_SIGNALS = 2;
