@@ -1,7 +1,5 @@
 #include <gmock/gmock.h>
-#include <google/protobuf/util/time_util.h>
 #include <gtest/gtest.h>
-#undef interface
 #include <nixnet/nixnet_client.h>
 
 #include <iostream>
@@ -9,7 +7,6 @@
 #include <vector>
 
 #include "device_server.h"
-#include "enumerate_devices.h"
 #include "nixnet_utilities.h"
 
 using namespace nixnet_grpc;
