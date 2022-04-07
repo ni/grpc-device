@@ -147,6 +147,7 @@ TEST_F(NiXnetLINDriverApiTestsWithHardware, LoopbackSignalSinglePointTestFromExa
 {
   constexpr auto NUM_SIGNALS_OUT = 2;
   constexpr auto NUM_SIGNALS_IN = 2;
+  constexpr auto MAX_READ_ATTEMPTS = 100;
   std::vector<f64> output_value_vtr(NUM_SIGNALS_OUT);
   auto input_session = EXPECT_SUCCESS(client::create_session(stub(), "NIXNET_exampleLDF", "Cluster", "MasterSignal1_U16,MasterSignal2_U16", "LIN1", CREATE_SESSION_MODE_SIGNAL_IN_SINGLE_POINT)).session();
   auto output_session = EXPECT_SUCCESS(client::create_session(stub(), "NIXNET_exampleLDF", "Cluster", "MasterSignal1_U16,MasterSignal2_U16", "LIN2", CREATE_SESSION_MODE_SIGNAL_OUT_SINGLE_POINT)).session();
@@ -158,13 +159,21 @@ TEST_F(NiXnetLINDriverApiTestsWithHardware, LoopbackSignalSinglePointTestFromExa
   output_value_vtr[1] = 50;
 
   auto write_signal_single_point_response = EXPECT_SUCCESS(client::write_signal_single_point(stub(), output_session, output_value_vtr));
-  std::this_thread::sleep_for(std::chrono::seconds(1));
-  auto read_signal_single_point_response = EXPECT_SUCCESS(client::read_signal_single_point(stub(), input_session, NUM_SIGNALS_IN));
+  int i = 0;
+  ReadSignalSinglePointResponse read_signal_single_point_response;
+  while (true) {
+    read_signal_single_point_response = EXPECT_SUCCESS(client::read_signal_single_point(stub(), input_session, NUM_SIGNALS_IN));
+    if (output_value_vtr[0] == read_signal_single_point_response.value_buffer()[0] || i >= MAX_READ_ATTEMPTS) {
+      break;
+    }
+    i++;
+    std::this_thread::sleep_for(std::chrono::milliseconds(10));
+  }
 
   EXPECT_SUCCESS(client::clear(stub(), output_session));
   EXPECT_SUCCESS(client::clear(stub(), input_session));
-  EXPECT_EQ(output_value_vtr[0], read_signal_single_point_response.value_buffer()[0]) << "LIN1 and LIN2 must be connected together.";
-  EXPECT_EQ(output_value_vtr[1], read_signal_single_point_response.value_buffer()[1]) << "LIN1 and LIN2 must be connected together.";
+  EXPECT_EQ(output_value_vtr[0], read_signal_single_point_response.value_buffer()[0]) << "LIN1 and LIN2 must be connected together. Couldn't read valid signals after " << MAX_READ_ATTEMPTS << " attempts.";
+  EXPECT_EQ(output_value_vtr[1], read_signal_single_point_response.value_buffer()[1]) << "LIN1 and LIN2 must be connected together. Couldn't read valid signals after " << MAX_READ_ATTEMPTS << " attempts.";
 }
 
 TEST_F(NiXnetLINDriverApiTestsWithHardware, LoopbackSignalXYTestFromExample_WriteAndReadSignalXY_SignalMatches)
