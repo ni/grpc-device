@@ -44,7 +44,7 @@ config = {
         'nxVirtualInterface_t': 'repeated VirtualInterface',
         'nixnetsocket_grpc::IpStackInfoString': 'string'
     },
-    'code_readiness': 'NextRelease',
+    'code_readiness': 'Release',
     'driver_name': 'NI-XNETSOCKET',
     'extra_errors_used': [
     ],
