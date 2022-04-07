@@ -81,16 +81,38 @@ class NiXnetLINDriverApiTests : public ::testing::Test {
   std::unique_ptr<NiXnet::Stub> stub_;
 };
 
+class NiXnetLINDriverApiTestsWithHardware : public NiXnetLINDriverApiTests {
+ protected:
+  void SetUp() override
+  {
+    const auto discovered_devices = EnumerateDevices();
+    const auto required_interfaces = {"LIN1", "LIN2"};
+
+    for (const auto& required_name : required_interfaces) {
+      auto found = std::find_if(
+          discovered_devices.cbegin(),
+          discovered_devices.cend(),
+          [&required_name](const nidevice_grpc::DeviceProperties& properties) {
+            return properties.name() == required_name;
+          });
+
+      if (found == discovered_devices.cend()) {
+        GTEST_SKIP() << "Interface not found: " << required_name;
+      }
+    }
+  }
+};
+
 TEST_F(NiXnetLINDriverApiTests, ConvertFramesToFromSignalsFromExample_FetchData_DataLooksReasonable)
 {
   constexpr auto NUM_FRAMES = 2;
   constexpr auto NUM_SIGNALS = 2;
   std::vector<nixnet_grpc::FrameBufferRequest> frames;
-  auto session = EXPECT_SUCCESS(client::create_session(stub(), "NIXNET_exampleLDF", "Cluster", "SlaveSignal1_U16,MasterSignal1_U16", "", CREATE_SESSION_MODE_SIGNAL_CONVERSION_SINGLE_POINT)).session();
+  auto session = EXPECT_SUCCESS(client::create_session(stub(), "NIXNET_exampleLDF", "Cluster", "SlaveSignal1_U16,MasterSignal3_U8", "", CREATE_SESSION_MODE_SIGNAL_CONVERSION_SINGLE_POINT)).session();
   nixnet_grpc::FrameRequest* frame1 = new nixnet_grpc::FrameRequest();
   nixnet_grpc::FrameRequest* frame2 = new nixnet_grpc::FrameRequest();
   set_frame_data(frame1, 0, FrameFlags::FRAME_FLAGS_UNSPECIFIED, 4, FrameType::FRAME_TYPE_LIN_DATA, "\2\1\2\3\4\5\6\7");
-  set_frame_data(frame2, 0, FrameFlags::FRAME_FLAGS_UNSPECIFIED, 2, FrameType::FRAME_TYPE_LIN_DATA, "\4\1");
+  set_frame_data(frame2, 0, FrameFlags::FRAME_FLAGS_UNSPECIFIED, 3, FrameType::FRAME_TYPE_LIN_DATA, "\4\1");
   frames.push_back(nixnet_grpc::FrameBufferRequest());
   frames.back().set_allocated_lin(frame1);
   frames.push_back(nixnet_grpc::FrameBufferRequest());
@@ -113,7 +135,7 @@ TEST_F(NiXnetLINDriverApiTests, ConvertFramesToFromSignalsFromExample_FetchData_
   frames.clear();
 }
 
-TEST_F(NiXnetLINDriverApiTests, FrameStreamInputFromExample_FetchData_DataLooksReasonable)
+TEST_F(NiXnetLINDriverApiTestsWithHardware, FrameStreamInputFromExample_FetchData_DataLooksReasonable)
 {
   constexpr auto NUM_FRAMES = 2;
   auto session = EXPECT_SUCCESS(client::create_session(stub(), "NIXNET_exampleLDF", "Cluster", "", "LIN2", CREATE_SESSION_MODE_FRAME_IN_STREAM)).session();
@@ -123,7 +145,7 @@ TEST_F(NiXnetLINDriverApiTests, FrameStreamInputFromExample_FetchData_DataLooksR
   EXPECT_SUCCESS(client::clear(stub(), session));
 }
 
-TEST_F(NiXnetLINDriverApiTests, LoopbackTestFromExample_FetchData_DataLooksReasonable)
+TEST_F(NiXnetLINDriverApiTestsWithHardware, LoopbackTestFromExample_FetchData_DataLooksReasonable)
 {
   constexpr auto NUM_SIGNALS_OUT = 2;
   constexpr auto NUM_SIGNALS_IN = 2;
@@ -146,7 +168,7 @@ TEST_F(NiXnetLINDriverApiTests, LoopbackTestFromExample_FetchData_DataLooksReaso
   EXPECT_EQ(output_value_vtr[1], read_signal_single_point_response.value_buffer()[1]) << "LIN1 and LIN2 must be connected together.";
 }
 
-TEST_F(NiXnetLINDriverApiTests, WriteSignalXYFromExample_ReadSignalXYFromExample_SignalMatches)
+TEST_F(NiXnetLINDriverApiTestsWithHardware, WriteSignalXYFromExample_ReadSignalXYFromExample_SignalMatches)
 {
   constexpr auto NUM_SAMPLES = 3;
   constexpr auto NUM_SIGNALS = 2;
