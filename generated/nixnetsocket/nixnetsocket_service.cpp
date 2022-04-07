@@ -1192,7 +1192,7 @@ namespace nixnetsocket_grpc {
   NiXnetSocketFeatureToggles::NiXnetSocketFeatureToggles(
     const nidevice_grpc::FeatureToggles& feature_toggles)
     : is_enabled(
-        feature_toggles.is_feature_enabled("nixnetsocket", CodeReadiness::kNextRelease))
+        feature_toggles.is_feature_enabled("nixnetsocket", CodeReadiness::kRelease))
   {
   }
 } // namespace nixnetsocket_grpc

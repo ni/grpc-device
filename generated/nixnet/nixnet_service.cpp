@@ -1580,7 +1580,7 @@ namespace nixnet_grpc {
   NiXnetFeatureToggles::NiXnetFeatureToggles(
     const nidevice_grpc::FeatureToggles& feature_toggles)
     : is_enabled(
-        feature_toggles.is_feature_enabled("nixnet", CodeReadiness::kNextRelease))
+        feature_toggles.is_feature_enabled("nixnet", CodeReadiness::kRelease))
   {
   }
 } // namespace nixnet_grpc
