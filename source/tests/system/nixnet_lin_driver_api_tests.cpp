@@ -86,7 +86,7 @@ class NiXnetLINDriverApiTestsWithHardware : public NiXnetLINDriverApiTests {
   void SetUp() override
   {
     const auto discovered_devices = EnumerateDevices();
-    const auto required_interfaces = {"LIN1", "LIN2"};
+    const auto required_interfaces = {"LIN1,LIN2"};
 
     for (const auto& required_name : required_interfaces) {
       auto found = std::find_if(
