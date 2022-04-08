@@ -477,6 +477,7 @@ set(system_test_runner_sources
   "source/tests/system/nitclk_driver_api_tests.cpp"
   "source/tests/system/nixnet_lin_driver_api_tests.cpp"
   "source/tests/system/nixnet_can_driver_api_tests.cpp"
+  "source/tests/system/nixnet_ethernet_driver_api_tests.cpp"
   "source/tests/system/nixnetsocket_driver_api_tests.cpp"
   "source/server/device_enumerator.cpp"
   "source/server/feature_toggles.cpp"
