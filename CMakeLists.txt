@@ -390,6 +390,7 @@ add_executable(UnitTestsRunner
     "source/tests/unit/shared_library_tests.cpp"
     "source/tests/unit/syscfg_library_tests.cpp"
     "source/tests/unit/xnet_converters_tests.cpp"
+    "source/tests/unit/xnet_socket_converters_tests.cpp"
     "source/server/device_enumerator.cpp"
     "source/server/feature_toggles.cpp"
     "source/server/semaphore.cpp"
@@ -407,13 +408,17 @@ add_executable(UnitTestsRunner
     "${proto_srcs_dir}/nifake_extension.grpc.pb.cc"
     "${proto_srcs_dir}/nifake_non_ivi.pb.cc"
     "${proto_srcs_dir}/nifake_non_ivi.grpc.pb.cc"
+    "${proto_srcs_dir}/nixnet.grpc.pb.cc"
+    "${proto_srcs_dir}/nixnet.pb.cc"
     "${proto_srcs_dir}/nixnetsocket.pb.cc"
     "${service_output_dir}/nifake/nifake_service.cpp"
     "${service_output_dir}/nifake_extension/nifake_extension_service.cpp"
     "${service_output_dir}/nifake_non_ivi/nifake_non_ivi_service.cpp"
+    "${service_output_dir}/nixnet/nixnet_service.cpp"
     "${custom_dir}/nifake_service.custom.cpp"
     "${custom_dir}/nifake_extension_service.custom.cpp"
     "${custom_dir}/nifake_non_ivi_service.custom.cpp"
+    "${custom_dir}/nixnet_service.custom.cpp"
 )
 
 # ni_fake_service_tests.cpp and several DAQ cpp files exceed the MSVC limit for the number of sections 
