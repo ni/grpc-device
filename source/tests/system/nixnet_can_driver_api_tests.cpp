@@ -1,7 +1,5 @@
 #include <gmock/gmock.h>
-#include <google/protobuf/util/time_util.h>
 #include <gtest/gtest.h>
-#undef interface
 #include <nixnet/nixnet_client.h>
 
 #include <iostream>
@@ -9,7 +7,6 @@
 #include <vector>
 
 #include "device_server.h"
-#include "enumerate_devices.h"
 #include "nixnet_utilities.h"
 
 using namespace nixnet_grpc;
@@ -79,7 +76,7 @@ class NiXnetCANDriverApiTests : public ::testing::Test {
   std::unique_ptr<NiXnet::Stub> stub_;
 };
 
-TEST_F(NiXnetCANDriverApiTests, TwoFrameExample_ConvertFramesToSignalAndBackToFramesSignlePoint_InputAndOutputFramesAreEquivalent)
+TEST_F(NiXnetCANDriverApiTests, TwoFrameExample_ConvertFramesToSignalAndBackToFramesSinglePoint_InputAndOutputFramesAreEquivalent)
 {
   constexpr auto NUM_FRAMES = 2;
   constexpr auto NUM_SIGNALS = 2;
@@ -111,7 +108,7 @@ TEST_F(NiXnetCANDriverApiTests, TwoFrameExample_ConvertFramesToSignalAndBackToFr
   EXPECT_SUCCESS(client::clear(stub(), session));
 }
 
-TEST_F(NiXnetCANDriverApiTests, TwoFrameExample_ConvertFramesToSignalAndBackToFramesSignlePoint_SecondFramePayloadDoesNotContainDataFromFirstFramePayload)
+TEST_F(NiXnetCANDriverApiTests, TwoFrameExample_ConvertFramesToSignalAndBackToFramesSinglePoint_SecondFramePayloadDoesNotContainDataFromFirstFramePayload)
 {
   constexpr auto NUM_FRAMES = 2;
   constexpr auto NUM_SIGNALS = 2;

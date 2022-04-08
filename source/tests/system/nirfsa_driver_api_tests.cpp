@@ -126,6 +126,14 @@ TEST_F(NiRFSADriverApiTests, Init_Close_Succeeds)
   EXPECT_SUCCESS(session, close_response);
 }
 
+TEST_F(NiRFSADriverApiTests, InitWithErrorFromDriver_ReturnsUserErrorMessage)
+{
+  auto initialize_response = client::init_with_options(stub(), "", false, false, "");
+
+  EXPECT_EQ(-200220, initialize_response.status());
+  EXPECT_STREQ("Device identifier is invalid.", initialize_response.error_message().c_str());
+}
+
 MATCHER(IsNonDefaultComplexArray, "")
 {
   return std::all_of(

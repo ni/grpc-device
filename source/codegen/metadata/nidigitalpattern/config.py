@@ -16,6 +16,7 @@ config = {
     },
     'custom_types': [
     ],
+    'additional_headers': {'custom/ivi_errors.h': ['service.cpp']},
     'driver_name': 'NI-Digital Pattern Driver',
     'enum_whitelist_suffix': [
     ],

@@ -2219,6 +2219,12 @@ functions = {
                 "name": "vi",
                 "direction": "out",
                 "type": "ViSession"
+            },
+            {
+                'direction': 'out',
+                'get_last_error': 'get_last_error_message',
+                'name': 'errorMessage',
+                'type': 'ViChar[]'
             }
         ],
         "returns": "ViStatus"
@@ -2251,6 +2257,12 @@ functions = {
                 "direction": "out",
                 "name": "vi",
                 "type": "ViSession"
+            },
+            {
+                'direction': 'out',
+                'get_last_error': 'get_last_error_message',
+                'name': 'errorMessage',
+                'type': 'ViChar[]'
             }
         ],
         "returns": "ViStatus",

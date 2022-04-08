@@ -11,7 +11,7 @@ namespace niswitch = niswitch_grpc;
 
 const int kViErrorRsrcNotFound = -1074118654;
 const int kInvalidSwitchSession = -1074130544;
-const char* kViErrorRsrcNotFoundMessage = "Invalid resource name.";
+const char* kViErrorRsrcNotFoundMessage = "Invalid resource name.\n\nInvalid Identifier: InvalidName";
 const char* kInvalidSwitchSessionMessage = "The session handle is not valid.";
 const char* kTestRsrcName = "";
 const char* kTestSessName = "SessionName";
@@ -78,6 +78,7 @@ TEST_F(NiSwitchSessionTest, InitializeSessionWithDeviceAndSessionName_CreatesDri
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(0, response.status());
   EXPECT_NE(0, response.vi().id());
+  EXPECT_EQ("", response.error_message());
 }
 
 TEST_F(NiSwitchSessionTest, InitializeSessionWithDeviceAndNoSessionName_CreatesDriverSession)
@@ -88,6 +89,7 @@ TEST_F(NiSwitchSessionTest, InitializeSessionWithDeviceAndNoSessionName_CreatesD
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(0, response.status());
   EXPECT_NE(0, response.vi().id());
+  EXPECT_EQ("", response.error_message());
 }
 
 TEST_F(NiSwitchSessionTest, InitializeSessionWithoutDevice_ReturnsDriverError)
@@ -98,6 +100,7 @@ TEST_F(NiSwitchSessionTest, InitializeSessionWithoutDevice_ReturnsDriverError)
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(kViErrorRsrcNotFound, response.status());
   EXPECT_EQ(0, response.vi().id());
+  EXPECT_NE("", response.error_message());
 }
 
 TEST_F(NiSwitchSessionTest, InitializedSession_CloseSession_ClosesDriverSession)
@@ -133,22 +136,13 @@ TEST_F(NiSwitchSessionTest, InvalidSession_CloseSession_ReturnsInvalidSesssionEr
   EXPECT_STREQ(kInvalidSwitchSessionMessage, error_message.c_str());
 }
 
-TEST_F(NiSwitchSessionTest, ErrorFromDriver_GetErrorMessage_ReturnsUserErrorMessage)
+TEST_F(NiSwitchSessionTest, InitWithErrorFromDriver_ReturnsUserErrorMessage)
 {
   niswitch::InitWithTopologyResponse init_response;
   call_init_with_topology(kInvalidRsrcName, "", "", &init_response);
+
   EXPECT_EQ(kViErrorRsrcNotFound, init_response.status());
-
-  nidevice_grpc::Session session = init_response.vi();
-  ::grpc::ClientContext context;
-  niswitch::ErrorMessageRequest error_request;
-  error_request.mutable_vi()->set_id(session.id());
-  error_request.set_error_code(kViErrorRsrcNotFound);
-  niswitch::ErrorMessageResponse error_response;
-  ::grpc::Status status = GetStub()->ErrorMessage(&context, error_request, &error_response);
-
-  EXPECT_TRUE(status.ok());
-  EXPECT_STREQ(kViErrorRsrcNotFoundMessage, error_response.error_message().c_str());
+  EXPECT_STREQ(kViErrorRsrcNotFoundMessage, init_response.error_message().c_str());
 }
 
 }  // namespace system

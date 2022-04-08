@@ -11,7 +11,7 @@ namespace fgen = nifgen_grpc;
 
 const int kInvalidFgenRsrc = -1074134944;
 const int kInvalidFgenSession = -1074130544;
-const char* kViErrorFgenResourceNotFoundMessage = "IVI: (Hex 0xBFFA0060) Insufficient location information or resource not present in the system.";
+const char* kViErrorFgenResourceNotFoundMessage = "IVI: (Hex 0xBFFA0060) Insufficient location information or resource not present in the system.\n\nInvalid Identifier: ";
 const char* kInvalidFgenSessionMessage = "The session handle is not valid.";
 const char* kTestFgenRsrc = "FakeDevice";
 const char* kFgenOptionsString = "Simulate=1, DriverSetup=Model:5421; BoardType:PXI";
@@ -85,6 +85,7 @@ TEST_F(NiFgenSessionTest, InitializeSessionWithDeviceAndSessionName_CreatesDrive
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(0, response.status());
   EXPECT_NE(0, response.vi().id());
+  EXPECT_EQ("", response.error_message());
 }
 
 TEST_F(NiFgenSessionTest, InitializeSessionWithDeviceAndNoSessionName_CreatesDriverSession)
@@ -95,6 +96,7 @@ TEST_F(NiFgenSessionTest, InitializeSessionWithDeviceAndNoSessionName_CreatesDri
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(0, response.status());
   EXPECT_NE(0, response.vi().id());
+  EXPECT_EQ("", response.error_message());
 }
 
 TEST_F(NiFgenSessionTest, InitializeSessionWithoutDevice_ReturnsDriverError)
@@ -105,6 +107,7 @@ TEST_F(NiFgenSessionTest, InitializeSessionWithoutDevice_ReturnsDriverError)
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(kInvalidFgenRsrc, response.status());
   EXPECT_EQ(0, response.vi().id());
+  EXPECT_NE("", response.error_message());
 }
 
 TEST_F(NiFgenSessionTest, InitializedSession_CloseSession_ClosesDriverSession)
@@ -140,22 +143,13 @@ TEST_F(NiFgenSessionTest, InvalidSession_CloseSession_ReturnsInvalidSessionError
   EXPECT_STREQ(kInvalidFgenSessionMessage, error_message.c_str());
 }
 
-TEST_F(NiFgenSessionTest, ErrorFromDriver_ErrorMessage_ReturnsUserErrorMessage)
+TEST_F(NiFgenSessionTest, InitWithErrorFromDriver_ReturnsUserErrorMessage)
 {
   fgen::InitWithOptionsResponse initialize_response;
   call_init_with_options(kTestInvalidFgenRsrc, "", "", &initialize_response);
+
   EXPECT_EQ(kInvalidFgenRsrc, initialize_response.status());
-
-  nidevice_grpc::Session session = initialize_response.vi();
-  ::grpc::ClientContext context;
-  fgen::ErrorMessageRequest error_request;
-  error_request.mutable_vi()->set_id(session.id());
-  error_request.set_error_code(kInvalidFgenRsrc);
-  fgen::ErrorMessageResponse error_response;
-  ::grpc::Status status = GetStub()->ErrorMessage(&context, error_request, &error_response);
-
-  EXPECT_TRUE(status.ok());
-  EXPECT_STREQ(kViErrorFgenResourceNotFoundMessage, error_response.error_message().c_str());
+  EXPECT_STREQ(kViErrorFgenResourceNotFoundMessage, initialize_response.error_message().c_str());
 }
 
 }  // namespace system

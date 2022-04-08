@@ -72,6 +72,7 @@ TEST_F(NiRFSGSessionTest, InitializeSessionWithDeviceAndSessionName_CreatesDrive
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(0, response.status());
   EXPECT_NE(0, response.vi().id());
+  EXPECT_EQ("", response.error_message());
 }
 
 TEST_F(NiRFSGSessionTest, InitializeSessionWithDeviceAndNoSessionName_CreatesDriverSession)
@@ -82,6 +83,7 @@ TEST_F(NiRFSGSessionTest, InitializeSessionWithDeviceAndNoSessionName_CreatesDri
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(0, response.status());
   EXPECT_NE(0, response.vi().id());
+  EXPECT_EQ("", response.error_message());
 }
 
 TEST_F(NiRFSGSessionTest, InitializeSessionWithoutDevice_ReturnsDriverError)
@@ -92,6 +94,7 @@ TEST_F(NiRFSGSessionTest, InitializeSessionWithoutDevice_ReturnsDriverError)
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(kInvalidRsrc, response.status());
   EXPECT_EQ(0, response.vi().id());
+  EXPECT_NE("", response.error_message());
 }
 
 TEST_F(NiRFSGSessionTest, InitializedSession_CloseSession_ClosesDriverSession)
@@ -110,14 +113,13 @@ TEST_F(NiRFSGSessionTest, InitializedSession_CloseSession_ClosesDriverSession)
   EXPECT_EQ(0, close_response.status());
 }
 
-TEST_F(NiRFSGSessionTest, ErrorFromDriver_GetErrorMessage_ReturnsUserErrorMessage)
+TEST_F(NiRFSGSessionTest, InitWithErrorFromDriver_ReturnsUserErrorMessage)
 {
   rfsg::InitWithOptionsResponse init_response;
   call_init_with_options(kRFSGTestInvalidRsrc, "", "", &init_response);
-  EXPECT_EQ(kInvalidRsrc, init_response.status());
 
-  nidevice_grpc::Session session = init_response.vi();
-  expect_error_string(session, init_response.status(), kRFSGErrorResourceNotFoundMessage);
+  EXPECT_EQ(kInvalidRsrc, init_response.status());
+  EXPECT_STREQ(kRFSGErrorResourceNotFoundMessage, init_response.error_message().c_str());
 }
 
 TEST_F(NiRFSGSessionTest, InvalidSession_CloseSession_ReturnsInvalidSessionError)

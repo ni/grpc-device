@@ -23,7 +23,7 @@ functions = {
                 "direction": "out",
                 "name": "vi",
                 "type": "ViSession",
-            },
+            }
         ],
         "returns": "ViStatus",
     },
@@ -1470,7 +1470,7 @@ functions = {
                 "direction": "out",
                 "name": "vi",
                 "type": "ViSession",
-            },
+            }
         ],
         "returns": "ViStatus",
     },

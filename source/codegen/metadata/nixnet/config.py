@@ -8,7 +8,7 @@ config = {
     'csharp_namespace': 'NationalInstruments.Grpc.NiXnet',
     'namespace_component': 'nixnet',
     'close_function': 'Clear',
-    'code_readiness': 'NextRelease',
+    'code_readiness': 'Release',
     'driver_name': 'NI-XNET',
     'status_ok': 'status >= 0',
     'additional_headers': { 'custom/nixnet_converters.h': ['service.cpp'] },
