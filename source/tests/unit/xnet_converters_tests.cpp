@@ -10,17 +10,11 @@
 #include <string>
 
 using namespace nixnet_grpc;
+using namespace nixnet_grpc::converters;
 using namespace ::testing;
 namespace pb = ::google::protobuf;
 using namespace std::string_literals;
 using ni::tests::unit::NiXnetMockLibrary;
-
-namespace nixnet_grpc {
-void SetCanCommResponse(const u32 input, nixnet_grpc::CanCommResponse* output);
-void SetFlexRayCommResponse(const u32 input, nixnet_grpc::FlexRayCommResponse* output);
-void SetLinCommResponse(const u32* input, nixnet_grpc::LinCommResponse* output);
-void SetSessionInfoResponse(const u32& input, nixnet_grpc::SessionInfoResponse* output);
-}  // namespace nixnet_grpc
 
 namespace ni {
 namespace tests {
@@ -35,7 +29,7 @@ TEST(XnetConvertersTests, CANCommStateValue_SetCANCommResponse_ExtractBitfields)
   u32 transmitErrorCounter = 3;
   u32 receiveErrorCounter = 3;
   // This value is obtained by combining above bit fields.
-  u32 canCommStateValue = 50529024;
+  u32 canCommStateValue = 0x03030300;
 
   nixnet_grpc::CanCommResponse output;
   SetCanCommResponse(canCommStateValue, &output);
@@ -58,7 +52,7 @@ TEST(XnetConvertersTests, FlexRayCommStateValue_SetFlexRayCommResponse_ExtractBi
   u32 channelASleep = 0;
   u32 channelBSleep = 0;
   // This value is obtained by combining above bit fields.
-  u32 flexRayCommStateValue = 3922;
+  u32 flexRayCommStateValue = 0x00000F52;
 
   nixnet_grpc::FlexRayCommResponse output;
   SetFlexRayCommResponse(flexRayCommStateValue, &output);
@@ -82,12 +76,12 @@ TEST(XnetConvertersTests, LINCommStateValue_SetLINCommResponse_ExtractBitFields)
   u32 lastErrorID = 1;
   u32 transcieverReady = 1;
   // This value is obtained by combining above bit fields.
-  u32 communicationState = 2164457526;
+  u32 communicationState = 0x81030036;
   u32 scheduleIndex = 3;
   u32 linCommState[] = {communicationState, scheduleIndex};
 
   nixnet_grpc::LinCommResponse output;
-  SetLinCommResponse(linCommStateValue, &output);
+  SetLinCommResponse(linCommState, &output);
 
   EXPECT_EQ(sleep, output.sleep());
   EXPECT_EQ(nixnet_grpc::LinCommState::LIN_COMM_STATE_ACTIVE, output.comm_state());

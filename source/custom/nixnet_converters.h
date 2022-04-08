@@ -8,8 +8,14 @@
 namespace pb_ = ::google::protobuf;
 
 namespace nixnet_grpc {
+namespace converters {
+void SetCanCommResponse(const u32 input, nixnet_grpc::CanCommResponse* output);
+void SetFlexRayCommResponse(const u32 input, nixnet_grpc::FlexRayCommResponse* output);
+void SetLinCommResponse(const u32* input, nixnet_grpc::LinCommResponse* output);
+void SetSessionInfoResponse(const u32& input, nixnet_grpc::SessionInfoResponse* output);
+}  // namespace converters
 
-constexpr auto ENET_FRAME_HEADER_LENGTH = static_cast<u16>(sizeof(nxFrameEnet_t) -1); // last byte in nxFrameEnet_t is u8 FrameData[1]
+constexpr auto ENET_FRAME_HEADER_LENGTH = static_cast<u16>(sizeof(nxFrameEnet_t) - 1);  // last byte in nxFrameEnet_t is u8 FrameData[1]
 
 struct FrameHolder {
   FrameHolder(const pb_::RepeatedPtrField<FrameBufferRequest>& input, std::map<std::int32_t, std::int32_t> enetflags_input_map)
@@ -104,11 +110,11 @@ struct FrameHolder {
       // as lengh field is 16 bits and BigToHostOrder16 works only for 16 bits.
       current_frame->Length = BigToHostOrder16(frame_size);
       switch (grpc_frame.enet().type_enum_case()) {
-        case nixnet_grpc::EnetFrameRequest::TypeEnumCase::kType :{
+        case nixnet_grpc::EnetFrameRequest::TypeEnumCase::kType: {
           current_frame->Type = static_cast<u8>(grpc_frame.enet().type());
           break;
         }
-        case nixnet_grpc::EnetFrameRequest::TypeEnumCase::kTypeRaw :{
+        case nixnet_grpc::EnetFrameRequest::TypeEnumCase::kTypeRaw: {
           current_frame->Type = static_cast<u8>(grpc_frame.enet().type_raw());
           break;
         }
@@ -119,10 +125,9 @@ struct FrameHolder {
       current_frame->DeviceTimestamp = grpc_frame.enet().device_timestamp();
       current_frame->NetworkTimestamp = grpc_frame.enet().network_timestamp();
       current_frame->Flags = 0;
-      for(int i=0; i<grpc_frame.enet().flags_mapped_size(); i++)
-      {
+      for (int i = 0; i < grpc_frame.enet().flags_mapped_size(); i++) {
         auto enet_flags_enum_imap_it = enetflags_input_map.find(grpc_frame.enet().flags_mapped()[i]);
-        if(enet_flags_enum_imap_it == enetflags_input_map.end()) {
+        if (enet_flags_enum_imap_it == enetflags_input_map.end()) {
           return throw std::invalid_argument("The value for enet flags was not specified or out of range.");
         }
         current_frame->Flags = current_frame->Flags | enet_flags_enum_imap_it->second;
@@ -140,7 +145,7 @@ struct FrameHolder {
   {
     auto payload_length = input.payload().length();
     auto frame_size = nxFrameSize(payload_length);
-    
+
     // We need to clear the output buffer since it is being reused for multiple frames.
     // Not clearing it might result in stale data from the previous frame into this one.
     output.clear();
@@ -149,21 +154,20 @@ struct FrameHolder {
     current_frame->Timestamp = input.timestamp();
     current_frame->Identifier = input.identifier();
     switch (input.type_enum_case()) {
-        case nixnet_grpc::FrameRequest::TypeEnumCase::kType :{
-          current_frame->Type = static_cast<u8>(input.type());
-          break;
-        }
-        case nixnet_grpc::FrameRequest::TypeEnumCase::kTypeRaw :{
-          current_frame->Type = static_cast<u8>(input.type_raw());
-          break;
-        }
-        case nixnet_grpc::FrameRequest::TypeEnumCase::TYPE_ENUM_NOT_SET: {
-          throw std::invalid_argument("The value for type was not specified or out of range");
-        }
+      case nixnet_grpc::FrameRequest::TypeEnumCase::kType: {
+        current_frame->Type = static_cast<u8>(input.type());
+        break;
       }
+      case nixnet_grpc::FrameRequest::TypeEnumCase::kTypeRaw: {
+        current_frame->Type = static_cast<u8>(input.type_raw());
+        break;
+      }
+      case nixnet_grpc::FrameRequest::TypeEnumCase::TYPE_ENUM_NOT_SET: {
+        throw std::invalid_argument("The value for type was not specified or out of range");
+      }
+    }
     current_frame->Flags = 0;
-    for(int i=0; i<input.flags_size(); i++)
-    {
+    for (int i = 0; i < input.flags_size(); i++) {
       current_frame->Flags = current_frame->Flags | input.flags()[i];
     }
     current_frame->Info = input.info();
@@ -204,7 +208,7 @@ void convert_to_grpc(const void* input, nixnet_grpc::FrameBufferResponse* output
 u32 get_frame_buffer_size(int32 number_of_frames, u32 max_payload_size, u32 protocol);
 
 template <typename TFrame>
-nixnet_grpc::FrameHolder convert_from_grpc(const pb_::RepeatedPtrField<nixnet_grpc::FrameBufferRequest>& input,  std::map<std::int32_t, std::int32_t> enetflags_input_map)
+nixnet_grpc::FrameHolder convert_from_grpc(const pb_::RepeatedPtrField<nixnet_grpc::FrameBufferRequest>& input, std::map<std::int32_t, std::int32_t> enetflags_input_map)
 {
   return nixnet_grpc::FrameHolder(input, enetflags_input_map);
 }
@@ -215,14 +219,14 @@ void convert_to_grpc(std::vector<f64>& input, google::protobuf::RepeatedField<do
 namespace nidevice_grpc {
 namespace converters {
 template <>
-void convert_to_grpc(const _nxFlexRayStats_t& input, nixnet_grpc::FlexRayStats *output);
+void convert_to_grpc(const _nxFlexRayStats_t& input, nixnet_grpc::FlexRayStats* output);
 template <>
-void convert_to_grpc(const _nxJ1939CommState_t& input, nixnet_grpc::J1939CommState *output);
+void convert_to_grpc(const _nxJ1939CommState_t& input, nixnet_grpc::J1939CommState* output);
 template <>
 void convert_to_grpc(const nxEptRxFilter_Element_t& input, nixnet_grpc::EptRxFilter* output);
 template <>
 nxEptRxFilter_Element_t convert_from_grpc(const nixnet_grpc::EptRxFilter& input);
-} // namespace converters
-} // namespace nidevice_grpc
+}  // namespace converters
+}  // namespace nidevice_grpc
 
 #endif /* NIDEVICE_GRPC_DEVICE_NIXNET_CONVERTERS_H */

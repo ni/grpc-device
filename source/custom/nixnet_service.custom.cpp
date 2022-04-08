@@ -5,16 +5,13 @@
 
 #include <stdexcept>
 
+using namespace nixnet_grpc::converters;
+
 namespace nixnet_grpc {
 using nidevice_grpc::converters::convert_from_grpc;
 using nidevice_grpc::converters::convert_to_grpc;
 
-// Returns true if it's safe to use outputs of a method with the given status.
-inline bool status_ok(int32 status)
-{
-  return status >= 0;
-}
-
+namespace converters {
 // Helper to read fields of u32 returned by nxReadState of nxState_CANComm and set them on gRPC message
 void SetCanCommResponse(const u32 input, nixnet_grpc::CanCommResponse* output)
 {
@@ -64,6 +61,13 @@ void SetSessionInfoResponse(const u32& input, nixnet_grpc::SessionInfoResponse* 
 {
   output->set_info(static_cast<nixnet_grpc::SessionInfoState>(input));
   output->set_info_raw(input);
+}
+}  // namespace converters
+
+// Returns true if it's safe to use outputs of a method with the given status.
+inline bool status_ok(int32 status)
+{
+  return status >= 0;
 }
 
 // Helper to compute the StateSize based on the StateID
