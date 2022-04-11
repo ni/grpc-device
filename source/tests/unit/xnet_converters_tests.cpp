@@ -274,10 +274,10 @@ TEST(XnetConvertersTests, EnetFrameBuffer_ConvertToGrpc_EnetFrameResponse)
   std::vector<u8> buffer(3092);
   nxFrameEnet_t* pFrame = NULL;
   pFrame = (nxFrameEnet_t*)buffer.data();
-  EncodeEnetFrame(pFrame, 150, FALSE, 0);
+  EncodeEnetFrame(pFrame, 150, false, 0);
   u16 buffer_length = pFrame->Length;
   pFrame = nxFrameIterateEthernetRead(pFrame);
-  EncodeEnetFrame(pFrame, 150, TRUE, 2);
+  EncodeEnetFrame(pFrame, 150, true, 2);
   buffer_length += pFrame->Length;
   std::map<int32_t, int32_t> enet_flags_map = {{nxEnetFlags_Transmit, nixnet_grpc::EnetFlags::ENET_FLAGS_TRANSMIT}};
 
