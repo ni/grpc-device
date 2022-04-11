@@ -10,8 +10,8 @@
 
 #include "device_server.h"
 #include "enumerate_devices.h"
-#include "nixnet_utilities.h"
 #include "nixnet.h"
+#include "nixnet_utilities.h"
 
 using namespace nixnet_grpc;
 namespace client = nixnet_grpc::experimental::client;
@@ -25,8 +25,8 @@ namespace tests {
 namespace system {
 namespace {
 
-using u8 =  pb::uint8;
-using u16 =  pb::uint16;
+using u8 = pb::uint8;
+using u16 = pb::uint16;
 using u32 = pb::uint32;
 using u64 = pb::uint64;
 
@@ -90,67 +90,66 @@ static const u32 kEnetFrameVlanTaggedHeaderSize = 18;
 static const u32 kEnetMacAddrSize = 6;
 static const u32 kMaxEnetFrameSize = 1518;
 
-struct EthernetHeader
-{
-   u8 DestinationMacAddress[6];
-   u8 SourceMacAddress[6];
-   u16 EtherType;
+struct EthernetHeader {
+  u8 DestinationMacAddress[6];
+  u8 SourceMacAddress[6];
+  u16 EtherType;
 } EthernetHeader;
 
 // Performs endianness swapping on u16
 u16 ChangeByteOrderU16(u16 value)
 {
-   return BigToHostOrder16(value);
+  return BigToHostOrder16(value);
 }
 
 // Performs endianness swapping on u32
 u32 ChangeByteOrderU32(u32 value)
 {
-   return (value & 0x000000FF) << 24 |
-          (value & 0x0000FF00) << 8  |
-          (value & 0x00FF0000) >> 8  |
-          (value & 0xFF000000) >> 24;
+  return (value & 0x000000FF) << 24 |
+      (value & 0x0000FF00) << 8 |
+      (value & 0x00FF0000) >> 8 |
+      (value & 0xFF000000) >> 24;
 }
 
-void AssignVlanId(u32 *pVlan , u16 vlanId)
+void AssignVlanId(u32* pVlan, u16 vlanId)
 {
-   u16 vidMask = 0x0FFF;
-   *pVlan = ((*pVlan) & ~(vidMask));
-   *pVlan = ((*pVlan) | (vlanId & vidMask));
+  u16 vidMask = 0x0FFF;
+  *pVlan = ((*pVlan) & ~(vidMask));
+  *pVlan = ((*pVlan) | (vlanId & vidMask));
 }
 
-void AssignPriorityCodePoint(u32 *pVlan , u8 pcp)
+void AssignPriorityCodePoint(u32* pVlan, u8 pcp)
 {
-   u16 pcpMask = 0xE000;
-   u8 pcpLsb = 13;
-   *pVlan = ((*pVlan) & ~(pcpMask));
-   *pVlan = ((*pVlan) | (((u16)pcp << pcpLsb) & pcpMask));
+  u16 pcpMask = 0xE000;
+  u8 pcpLsb = 13;
+  *pVlan = ((*pVlan) & ~(pcpMask));
+  *pVlan = ((*pVlan) | (((u16)pcp << pcpLsb) & pcpMask));
 }
 
 u32 GenerateVlanTag(u16 vlanId)
 {
-   // Initialize vlan tag with the TPID
-   u32 vlanTag = 0x81000000;
-   AssignVlanId(&vlanTag, vlanId);
-   AssignPriorityCodePoint(&vlanTag, kPcp);
-   return vlanTag;
+  // Initialize vlan tag with the TPID
+  u32 vlanTag = 0x81000000;
+  AssignVlanId(&vlanTag, vlanId);
+  AssignPriorityCodePoint(&vlanTag, kPcp);
+  return vlanTag;
 }
 void EncodeEnetFrameHeader(char* frame_data, u16 vlanId)
 {
   struct EthernetHeader EnetHead =
-   {
-      {0xFF,0xFF,0xFF,0xFF,0xFF,0xFF},
-      {0xFF,0xFF,0xFF,0xFF,0xFF,0xFF},
-      0x88B5 /* Local Experimental Ethertype */
-   };
-   // The FrameData field is big-endian, so fields that are wider than
-   // a byte (i.e. EtherType and VLAN tag) must be converted.
+      {
+          {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF},
+          {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF},
+          0x88B5 /* Local Experimental Ethertype */
+      };
+  // The FrameData field is big-endian, so fields that are wider than
+  // a byte (i.e. EtherType and VLAN tag) must be converted.
   u16 ethertypeBigEndian = ChangeByteOrderU16(EnetHead.EtherType);
   u32 vlanTagBigEndian = ChangeByteOrderU32(GenerateVlanTag(vlanId));
 
   memcpy(frame_data + kEnetFrameOffsetDstMacAddr, &EnetHead.DestinationMacAddress, kEnetMacAddrSize);
   memcpy(frame_data + kEnetFrameOffsetSrcMacAddr, &EnetHead.SourceMacAddress, kEnetMacAddrSize);
-  memcpy(frame_data + kEnetFrameOffsetVlanTag, &vlanTagBigEndian, sizeof(vlanTagBigEndian) );
+  memcpy(frame_data + kEnetFrameOffsetVlanTag, &vlanTagBigEndian, sizeof(vlanTagBigEndian));
   memcpy(frame_data + kEnetFrameOffsetVlanEtherType, &ethertypeBigEndian, sizeof(EthernetHeader.EtherType));
 }
 
@@ -158,19 +157,18 @@ void set_enet_frame_data(nixnet_grpc::EnetFrameRequest* frame, nixnet_grpc::Enet
 {
   u16 payloadSize = 150;
   u32 payloadOffset = kEnetFrameVlanTaggedHeaderSize;
-  frame->mutable_frame_data()->resize(payloadSize,0);
-  char* frame_data = frame->mutable_frame_data()->data();
+  frame->mutable_frame_data()->resize(payloadSize, 0);
+  char* frame_data = const_cast<char*>(frame->mutable_frame_data()->data());
   EncodeEnetFrameHeader(frame_data, kVlanId);
   // The payload is constructed with incrementing values
-  for (int i = payloadOffset; i < payloadSize; i++)
-  {
-    frame_data[i] = (u8)i; 
+  for (int i = payloadOffset; i < payloadSize; i++) {
+    frame_data[i] = (u8)i;
   }
 
-    frame->set_type(frame_type);
-    frame->set_device_timestamp(device_timestamp);
-    frame->set_network_timestamp(network_timestamp);
-    frame->add_flags_mapped(frame_flags);
+  frame->set_type(frame_type);
+  frame->set_device_timestamp(device_timestamp);
+  frame->set_network_timestamp(network_timestamp);
+  frame->add_flags_mapped(frame_flags);
 }
 
 TEST_F(NiXnetEthernetDriverApiTestsWithHardware, WriteFrameData_ReadFrameData_ValidateFrameData)
@@ -192,7 +190,7 @@ TEST_F(NiXnetEthernetDriverApiTestsWithHardware, WriteFrameData_ReadFrameData_Va
   auto read_frame_response = EXPECT_SUCCESS(client::read_frame(stub(), read_session, NUM_OF_FRAMES, MAX_PAYLOAD_PER_FRAME, PROTOCOL_ENET, TIME_OUT_INFINITE));
   auto frame_out = read_frame_response.buffer()[0];
   // The frame that is read will contain mac address of the source on which the test is being run. For comparison purposes, we will be masking it.
-  frame_out.mutable_enet()->mutable_frame_data()->data()[5] = 0xFFFFFF;
+  const_cast<char*>(frame_out.mutable_enet()->mutable_frame_data()->data())[5] = 0xFFFFFF;
 
   EXPECT_EQ(frame->type(), frame_out.enet().type());
   EXPECT_EQ(frame->frame_data(), frame_out.enet().frame_data());
