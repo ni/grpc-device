@@ -104,6 +104,191 @@ TEST(XnetConvertersTests, SessionInfoStateValue_SetSessionInfoResponse_ExtractSe
   EXPECT_EQ(nixnet_grpc::SessionInfoState::SESSION_INFO_STATE_STARTED, output.info());
   EXPECT_EQ(sessionInfoState, output.info_raw());
 }
+
+void assert_frames_are_equal(nxFrameVar_t* frame1, nixnet_grpc::FrameResponse frame2)
+{
+  EXPECT_EQ(frame1->Timestamp, frame2.timestamp());
+  EXPECT_EQ(frame1->Identifier, frame2.identifier());
+  EXPECT_EQ(nixnet_grpc::FrameType::FRAME_TYPE_LIN_DATA, frame2.type());
+  EXPECT_EQ(frame1->Type, frame2.type_raw());
+  EXPECT_EQ(1, frame2.flags().size());
+  EXPECT_EQ(nixnet_grpc::FrameFlags::FRAME_FLAGS_LIN_EVENT_SLOT, frame2.flags()[0]);
+  EXPECT_EQ(frame1->Flags, frame2.flags_raw());
+  EXPECT_EQ(frame1->Info, frame2.info());
+  ASSERT_THAT(std::vector<u8>(frame1->Payload, frame1->Payload + frame1->PayloadLength), ::testing::ElementsAreArray(frame2.payload()));
+}
+
+TEST(XnetConvertersTests, FrameBufferArray_ConvertToGrpc_FrameBufferResponse)
+{
+  std::vector<u8> buffer(48);
+  nxFrameVar_t* pFrame = NULL;
+  pFrame = (nxFrameVar_t*)buffer.data();
+  pFrame->Timestamp = 0;
+  pFrame->Flags = nxFrameFlags_LIN_EventSlot;
+  pFrame->Info = 0;
+  pFrame->Identifier = 66;
+  pFrame->Type = nxFrameType_LIN_Data;
+  pFrame->PayloadLength = 8;
+  for (u16 j = 0; j < pFrame->PayloadLength; ++j) {
+    pFrame->Payload[j] = (u8)(j + 1);
+  }
+
+  pFrame = nxFrameIterate(pFrame);
+  pFrame->Timestamp = 0;
+  pFrame->Flags = nxFrameFlags_LIN_EventSlot;
+  pFrame->Info = 0;
+  pFrame->Identifier = 67;
+  pFrame->Type = nxFrameType_LIN_Data;
+  pFrame->PayloadLength = 2;
+  for (u16 j = 0; j < pFrame->PayloadLength; ++j) {
+    pFrame->Payload[j] = (u8)(j + 1);
+  }
+
+  pb::RepeatedPtrField<nixnet_grpc::FrameBufferResponse> output;
+  nixnet_grpc::convert_to_grpc(buffer, &output, buffer.size(), nixnet_grpc::Protocol::PROTOCOL_LIN, std::map<int32_t, int32_t>());
+
+  pFrame = (nxFrameVar_t*)buffer.data();
+  assert_frames_are_equal(pFrame, output[0].lin());
+  pFrame = nxFrameIterate(pFrame);
+  assert_frames_are_equal(pFrame, output[1].lin());
+}
+
+struct EthernetHeader {
+  u8 DestinationMacAddress[6];
+  u8 SourceMacAddress[6];
+  u16 EtherType;
+} EthernetHeader;
+
+u16 ChangeByteOrderU16(u16 value)
+{
+  return BigToHostOrder16(value);
+}
+
+u32 ChangeByteOrderU32(u32 value)
+{
+  return (value & 0x000000FF) << 24 |
+      (value & 0x0000FF00) << 8 |
+      (value & 0x00FF0000) >> 8 |
+      (value & 0xFF000000) >> 24;
+}
+
+void AssignVlanId(u32* pVlan, u16 vlanId)
+{
+  u16 vidMask = 0x0FFF;
+  *pVlan = ((*pVlan) & ~(vidMask));
+  *pVlan = ((*pVlan) | (vlanId & vidMask));
+}
+
+void AssignPriorityCodePoint(u32* pVlan, u8 pcp)
+{
+  u16 pcpMask = 0xE000;
+  u8 pcpLsb = 13;
+  *pVlan = ((*pVlan) & ~(pcpMask));
+  *pVlan = ((*pVlan) | (((u16)pcp << pcpLsb) & pcpMask));
+}
+
+u32 GenerateVlanTag(u16 vlanId)
+{
+  u32 vlanTag = 0x81000000;
+  u8 kPcp = 3;
+  AssignVlanId(&vlanTag, vlanId);
+  AssignPriorityCodePoint(&vlanTag, kPcp);
+  return vlanTag;
+}
+
+void EncodeEnetFrameHeader(nxFrameEnet_t* pFrame, bool hasVlan, u16 vlanId)
+{
+  struct EthernetHeader EnetHead =
+      {
+          {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF},
+          {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF},
+          0x88B5 /* Local Experimental Ethertype */
+      };
+
+  u8 kEnetFrameOffsetEtherType = 12;
+  u8 kEnetFrameOffsetVlanEtherType = 16;
+  u8 kEnetFrameOffsetVlanTag = 12;
+  u8 kEnetFrameOffsetDstMacAddr = 0;
+  u8 kEnetFrameOffsetSrcMacAddr = 6;
+  u32 kEnetMacAddrSize = 6;
+
+  u16 ethertypeBigEndian = ChangeByteOrderU16(EnetHead.EtherType);
+  u32 vlanTagBigEndian = ChangeByteOrderU32(GenerateVlanTag(vlanId));
+
+  memcpy(pFrame->FrameData + kEnetFrameOffsetDstMacAddr, &EnetHead.DestinationMacAddress, kEnetMacAddrSize);
+  memcpy(pFrame->FrameData + kEnetFrameOffsetSrcMacAddr, &EnetHead.SourceMacAddress, kEnetMacAddrSize);
+
+  if (hasVlan) {
+    memcpy(pFrame->FrameData + kEnetFrameOffsetVlanTag, &vlanTagBigEndian, sizeof(vlanTagBigEndian));
+    memcpy(pFrame->FrameData + kEnetFrameOffsetVlanEtherType, &ethertypeBigEndian, sizeof(EthernetHeader.EtherType));
+  }
+  else {
+    memcpy(pFrame->FrameData + kEnetFrameOffsetEtherType, &ethertypeBigEndian, sizeof(EthernetHeader.EtherType));
+  }
+}
+
+void EncodeEnetFrame(nxFrameEnet_t* pFrame, u16 payloadSize, bool hasVlan, u16 vlanId)
+{
+  u16 frameSize = 0;
+  u16 frameSizeWithoutPayload = sizeof(nxFrameEnet_t) - 1;
+
+  u32 kFcsSize = 4;
+  u32 payloadOffset = 0;
+  u32 kEnetFrameHeaderSize = 14;
+  u32 kEnetFrameVlanTaggedHeaderSize = 18;
+
+  EncodeEnetFrameHeader(pFrame, hasVlan, vlanId);
+  pFrame->DeviceTimestamp = 0;
+  pFrame->NetworkTimestamp = 0;
+  pFrame->Flags = nxEnetFlags_Transmit;
+  pFrame->Type = nxEnetFrameType_Data;
+
+  if (hasVlan) {
+    payloadOffset = kEnetFrameVlanTaggedHeaderSize;
+  }
+  else {
+    payloadOffset = kEnetFrameHeaderSize;
+  }
+
+  frameSize = (u16)(frameSizeWithoutPayload + payloadOffset + payloadSize + kFcsSize);
+  pFrame->Length = frameSize;
+
+  for (u16 i = 0; i < payloadSize; i++) {
+    pFrame->FrameData[payloadOffset + i] = (u8)i;
+  }
+}
+
+void assert_enet_frames_are_equal(nxFrameEnet_t* frame1, nixnet_grpc::EnetFrameResponse frame2)
+{
+  EXPECT_EQ(nixnet_grpc::EnetFrameType::ENET_FRAME_TYPE_DATA, frame2.type());
+  EXPECT_EQ(frame1->Type, frame2.type_raw());
+  EXPECT_EQ(frame1->DeviceTimestamp, frame2.device_timestamp());
+  EXPECT_EQ(frame1->NetworkTimestamp, frame2.network_timestamp());
+  EXPECT_EQ(nixnet_grpc::EnetFlags::ENET_FLAGS_TRANSMIT, frame2.flags_mapped()[0]);
+  EXPECT_EQ(frame1->Flags, frame2.flags_raw());
+  ASSERT_THAT(std::vector<u8>(frame1->FrameData, frame1->FrameData + frame1->Length - sizeof(nxFrameEnet_t) + 1), ::testing::ElementsAreArray(frame2.frame_data()));
+}
+
+TEST(XnetConvertersTests, EnetFrameBuffer_ConvertToGrpc_EnetFrameResponse)
+{
+  std::vector<u8> buffer(3092);
+  nxFrameEnet_t* pFrame = NULL;
+  pFrame = (nxFrameEnet_t*)buffer.data();
+  EncodeEnetFrame(pFrame, 150, FALSE, 0);
+  u16 buffer_length = pFrame->Length;
+  pFrame = nxFrameIterateEthernetRead(pFrame);
+  EncodeEnetFrame(pFrame, 150, TRUE, 2);
+  buffer_length += pFrame->Length;
+  std::map<int32_t, int32_t> enet_flags_map = {{nxEnetFlags_Transmit, nixnet_grpc::EnetFlags::ENET_FLAGS_TRANSMIT}};
+
+  pb::RepeatedPtrField<nixnet_grpc::FrameBufferResponse> output;
+  nixnet_grpc::convert_to_grpc(buffer, &output, buffer_length, nixnet_grpc::Protocol::PROTOCOL_ENET, enet_flags_map);
+
+  pFrame = (nxFrameEnet_t*)buffer.data();
+  assert_enet_frames_are_equal(pFrame, output[0].enet());
+  pFrame = nxFrameIterateEthernetRead(pFrame);
+  assert_enet_frames_are_equal(pFrame, output[1].enet());
+}
 }  // namespace
 }  // namespace unit
 }  // namespace tests
