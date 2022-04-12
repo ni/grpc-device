@@ -1197,8 +1197,7 @@ void convert_enet_frame_to_grpc(const void* input, nixnet_grpc::FrameBufferRespo
     }
   }
   enet_frame->set_flags_raw(nxEnetFrame->Flags);
-  auto enet_header_length = sizeof(nxFrameEnet_t) - 1;  // last byte in nxFrameEnet_t is u8 FrameData[1]
-  auto frame_data_length = nxEnetFrame->Length - enet_header_length;
+  auto frame_data_length = nxEnetFrame->Length - ENET_FRAME_HEADER_LENGTH - ENET_FRAME_FCS_SIZE;
   enet_frame->mutable_frame_data()->assign((const char*)nxEnetFrame->FrameData, frame_data_length);
 
   output->set_allocated_enet(enet_frame);
@@ -1276,7 +1275,7 @@ void convert_to_grpc(std::vector<f64>& input, google::protobuf::RepeatedField<do
 u32 get_frame_buffer_size(int32 number_of_frames, u32 max_payload_per_frame, u32 protocol)
 {
   if (protocol == Protocol::PROTOCOL_ENET) {
-    return number_of_frames * (ENET_FRAME_HEADER_LENGTH + max_payload_per_frame);
+    return number_of_frames * (ENET_FRAME_HEADER_LENGTH + ENET_FRAME_FCS_SIZE + max_payload_per_frame);
   }
   else {
     return number_of_frames * nxFrameSize(max_payload_per_frame);
