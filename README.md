@@ -24,6 +24,7 @@ For more detailed information on the server and API design refer to the [wiki](h
 | NI-RFSG                   | 21.0.0 | 21.0.0        | Not Supported |
 | NI-SCOPE                  | 20.7.0 | 20.1.0        | 20.7.0        |
 | NI-SWITCH                 | 20.0.0 | 20.1.0        | 20.5.0        |
+| NI-XNET                   | 21.5.0 | 21.5.0        | 21.5.0        |
 | NI-TClk                   | 20.7.0 | 20.0.0        | 20.7.0        |
 
 ## Build Status
