@@ -30,8 +30,8 @@ void assert_enet_frames_are_equal(nxFrameEnet_t* frame1, nixnet_grpc::EnetFrameR
   EXPECT_EQ(frame1->NetworkTimestamp, frame2.network_timestamp());
   EXPECT_EQ(nixnet_grpc::EnetFlags::ENET_FLAGS_TRANSMIT, frame2.flags_mapped()[0]);
   EXPECT_EQ(frame1->Flags, frame2.flags_raw());
-  EXPECT_EQ(frame1->Length - nixnet_grpc::ENET_FRAME_HEADER_LENGTH, frame2.frame_data().size());
-  ASSERT_THAT(std::vector<u8>(frame1->FrameData, frame1->FrameData + frame1->Length - nixnet_grpc::ENET_FRAME_HEADER_LENGTH), ::testing::ElementsAreArray(frame2.frame_data()));
+  EXPECT_EQ(frame1->Length - nixnet_grpc::ENET_FRAME_HEADER_LENGTH - nixnet_grpc::ENET_FRAME_FCS_SIZE, frame2.frame_data().size());
+  ASSERT_THAT(std::vector<u8>(frame1->FrameData, frame1->FrameData + frame1->Length - nixnet_grpc::ENET_FRAME_HEADER_LENGTH - nixnet_grpc::ENET_FRAME_FCS_SIZE), ::testing::ElementsAreArray(frame2.frame_data()));
 }
 
 void assert_frames_are_equal(nxFrameVar_t* frame1, nixnet_grpc::FrameResponse frame2)
