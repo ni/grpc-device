@@ -1,12 +1,17 @@
+#ifndef NIXNET_UTILITIES_H
+#define NIXNET_UTILITIES_H
+
 #include <gtest/gtest.h>
 #undef interface
+#include <custom/nixnet_converters.h>
+#include <nixnet.h>
 #include <nixnet/nixnet_client.h>
 
 #include <string>
 #include <vector>
 
 #define EXPECT_SUCCESS(response_)    \
-  ([](const auto& response) {              \
+  ([](const auto& response) {        \
     EXPECT_EQ(0, response.status()); \
     return response;                 \
   })(response_)
@@ -16,12 +21,29 @@
     EXPECT_EQ(error, (response).status()); \
   }
 
+#define FCS_SIZE 4
+
 using namespace nixnet_grpc;
 namespace client = nixnet_grpc::experimental::client;
 namespace pb = google::protobuf;
 
+static const u8 kEnetFrameOffsetEtherType = 12;
+static const u8 kEnetFrameOffsetVlanEtherType = 16;
+static const u8 kEnetFrameOffsetVlanTag = 12;
+static const u8 kEnetFrameOffsetDstMacAddr = 0;
+static const u8 kEnetFrameOffsetSrcMacAddr = 6;
+static const u8 kPcp = 3;
+static const u32 kEnetFrameHeaderSize = 14;
+static const u32 kEnetFrameVlanTaggedHeaderSize = 18;
+static const u32 kEnetMacAddrSize = 6;
+static const u32 kFcsSize = FCS_SIZE;
+
+using u8 = pb::uint8;
+using u16 = pb::uint16;
+using u32 = pb::uint32;
+
 namespace nixnet_utilities {
-  
+
 using u32 = pb::uint32;
 
 inline GetPropertyResponse get_property(const client::StubPtr& stub, const nidevice_grpc::Session& session_ref, const client::simple_variant<nixnet_grpc::Property, pb::uint32>& property_id)
@@ -106,7 +128,6 @@ inline void _set_property_value(SetPropertyRequest& request, const std::vector<E
   }
 }
 
-
 template <typename T>
 inline SetPropertyResponse set_property(
     const client::StubPtr& stub,
@@ -186,11 +207,104 @@ inline std::vector<nidevice_grpc::Session> db_get_property_db_ref_vtr(const clie
 inline int calculate_bitwise_or_of_flags(google::protobuf::RepeatedField<google::protobuf::int32> flags)
 {
   int bitwise_or_of_flags = 0;
-  for(int i = 0; i < flags.size(); i++)
-  {
+  for (int i = 0; i < flags.size(); i++) {
     bitwise_or_of_flags = bitwise_or_of_flags | flags[i];
   }
   return bitwise_or_of_flags;
 }
 
 }  // namespace nixnet_utilities
+
+struct EthernetHeader {
+  u8 DestinationMacAddress[6];
+  u8 SourceMacAddress[6];
+  u16 EtherType;
+};
+
+inline u16 ChangeByteOrderU16(u16 value)
+{
+  return BigToHostOrder16(value);
+}
+
+inline u32 ChangeByteOrderU32(u32 value)
+{
+  return (value & 0x000000FF) << 24 |
+      (value & 0x0000FF00) << 8 |
+      (value & 0x00FF0000) >> 8 |
+      (value & 0xFF000000) >> 24;
+}
+
+inline void AssignVlanId(u32* pVlan, u16 vlanId)
+{
+  u16 vidMask = 0x0FFF;
+  *pVlan = ((*pVlan) & ~(vidMask));
+  *pVlan = ((*pVlan) | (vlanId & vidMask));
+}
+
+inline void AssignPriorityCodePoint(u32* pVlan, u8 pcp)
+{
+  u16 pcpMask = 0xE000;
+  u8 pcpLsb = 13;
+  *pVlan = ((*pVlan) & ~(pcpMask));
+  *pVlan = ((*pVlan) | (((u16)pcp << pcpLsb) & pcpMask));
+}
+
+inline u32 GenerateVlanTag(u16 vlanId)
+{
+  u32 vlanTag = 0x81000000;
+  AssignVlanId(&vlanTag, vlanId);
+  AssignPriorityCodePoint(&vlanTag, kPcp);
+  return vlanTag;
+}
+
+inline void EncodeEnetFrameHeader(nxFrameEnet_t* pFrame, bool hasVlan, u16 vlanId)
+{
+  struct EthernetHeader EnetHead =
+      {
+          {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF},
+          {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF},
+          0x88B5 /* Local Experimental Ethertype */
+      };
+
+  u16 ethertypeBigEndian = ChangeByteOrderU16(EnetHead.EtherType);
+  u32 vlanTagBigEndian = ChangeByteOrderU32(GenerateVlanTag(vlanId));
+
+  memcpy(pFrame->FrameData + kEnetFrameOffsetDstMacAddr, &EnetHead.DestinationMacAddress, kEnetMacAddrSize);
+  memcpy(pFrame->FrameData + kEnetFrameOffsetSrcMacAddr, &EnetHead.SourceMacAddress, kEnetMacAddrSize);
+
+  if (hasVlan) {
+    memcpy(pFrame->FrameData + kEnetFrameOffsetVlanTag, &vlanTagBigEndian, sizeof(vlanTagBigEndian));
+    memcpy(pFrame->FrameData + kEnetFrameOffsetVlanEtherType, &ethertypeBigEndian, sizeof(EnetHead.EtherType));
+  }
+  else {
+    memcpy(pFrame->FrameData + kEnetFrameOffsetEtherType, &ethertypeBigEndian, sizeof(EnetHead.EtherType));
+  }
+}
+
+inline void EncodeEnetFrame(nxFrameEnet_t* pFrame, u16 payloadSize, bool hasVlan, u16 vlanId)
+{
+  u16 frameSize = 0;
+  u32 payloadOffset = 0;
+
+  EncodeEnetFrameHeader(pFrame, hasVlan, vlanId);
+  pFrame->DeviceTimestamp = 0;
+  pFrame->NetworkTimestamp = 0;
+  pFrame->Flags = nxEnetFlags_Transmit;
+  pFrame->Type = nxEnetFrameType_Data;
+
+  if (hasVlan) {
+    payloadOffset = kEnetFrameVlanTaggedHeaderSize;
+  }
+  else {
+    payloadOffset = kEnetFrameHeaderSize;
+  }
+
+  frameSize = (u16)(nixnet_grpc::ENET_FRAME_HEADER_LENGTH + payloadOffset + payloadSize + kFcsSize);
+  pFrame->Length = frameSize;
+
+  for (u16 i = 0; i < payloadSize; i++) {
+    pFrame->FrameData[payloadOffset + i] = (u8)i;
+  }
+}
+
+#endif  // NIXNET_UTILITIES_H
