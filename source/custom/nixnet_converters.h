@@ -13,7 +13,6 @@ void SetCanCommResponse(const u32 input, nixnet_grpc::CanCommResponse* output);
 void SetFlexRayCommResponse(const u32 input, nixnet_grpc::FlexRayCommResponse* output);
 void SetLinCommResponse(const u32* input, nixnet_grpc::LinCommResponse* output);
 void SetSessionInfoResponse(const u32& input, nixnet_grpc::SessionInfoResponse* output);
-void convert_enet_frame_to_grpc(const void* input, nixnet_grpc::FrameBufferResponse* output, u32 protocol, std::map<std::int32_t, std::int32_t> enetflags_output_map);
 }  // namespace converters
 
 constexpr auto ENET_FRAME_HEADER_LENGTH = static_cast<u16>(sizeof(nxFrameEnet_t) - 1);  // last byte in nxFrameEnet_t is u8 FrameData[1]
