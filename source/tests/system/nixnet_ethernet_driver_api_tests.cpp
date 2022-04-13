@@ -104,21 +104,21 @@ TEST_F(NiXnetEthernetDriverApiTestsWithHardware, WriteFrameData_ReadFrameData_Va
   std::vector<nixnet_grpc::FrameBufferRequest> frames_in;
   nixnet_grpc::EnetFlags flags[] = {EnetFlags::ENET_FLAGS_TRANSMIT};
   nixnet_grpc::EnetFrameRequest* frame = new nixnet_grpc::EnetFrameRequest();
-
   auto write_session = EXPECT_SUCCESS(client::create_session(stub(), "", "", "", "ENET1", CREATE_SESSION_MODE_FRAME_OUT_STREAM)).session();
   auto read_session = EXPECT_SUCCESS(client::create_session(stub(), "", "", "", "ENET2", CREATE_SESSION_MODE_FRAME_IN_STREAM)).session();
   EXPECT_SUCCESS(client::start(stub(), read_session, START_STOP_SCOPE_NORMAL));
   set_enet_frame_data(frame, EnetFrameType::ENET_FRAME_TYPE_DATA, 0, 0, flags[0]);
   frames_in.push_back(nixnet_grpc::FrameBufferRequest());
   frames_in.back().set_allocated_enet(frame);
-
   auto write_frame_response = EXPECT_SUCCESS(client::write_frame(stub(), write_session, frames_in, TIME_OUT_NONE));
+
   auto read_frame_response = EXPECT_SUCCESS(client::read_frame(stub(), read_session, NUM_OF_FRAMES, MAX_PAYLOAD_PER_FRAME, PROTOCOL_ENET, TIME_OUT_INFINITE));
   auto frame_out = read_frame_response.buffer()[0];
   // The frame that is read will contain mac address of the source on which the test is being run. For comparison purposes, we will be masking it.
   for (int i = 6; i < 12; i++) {
     const_cast<char*>(frame_out.mutable_enet()->mutable_frame_data()->data())[i] = 0xFF;
   }
+
   EXPECT_EQ(frame->type(), frame_out.enet().type());
   EXPECT_EQ(frame->frame_data(), frame_out.enet().frame_data());
   EXPECT_SUCCESS(client::clear(stub(), write_session));
