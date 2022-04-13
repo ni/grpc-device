@@ -37,14 +37,13 @@ static const u32 kEnetFrameHeaderSize = 14;
 static const u32 kEnetFrameVlanTaggedHeaderSize = 18;
 static const u32 kEnetMacAddrSize = 6;
 static const u32 kFcsSize = FCS_SIZE;
+static const u16 kVlanId = 2;
 
 using u8 = pb::uint8;
 using u16 = pb::uint16;
 using u32 = pb::uint32;
 
 namespace nixnet_utilities {
-
-using u32 = pb::uint32;
 
 inline GetPropertyResponse get_property(const client::StubPtr& stub, const nidevice_grpc::Session& session_ref, const client::simple_variant<nixnet_grpc::Property, pb::uint32>& property_id)
 {
@@ -213,8 +212,6 @@ inline int calculate_bitwise_or_of_flags(google::protobuf::RepeatedField<google:
   return bitwise_or_of_flags;
 }
 
-}  // namespace nixnet_utilities
-
 struct EthernetHeader {
   u8 DestinationMacAddress[6];
   u8 SourceMacAddress[6];
@@ -257,7 +254,7 @@ inline u32 GenerateVlanTag(u16 vlanId)
   return vlanTag;
 }
 
-inline void EncodeEnetFrameHeader(nxFrameEnet_t* pFrame, bool hasVlan, u16 vlanId)
+inline void EncodeEnetFrameHeader(u8* FrameData, bool hasVlan, u16 vlanId)
 {
   struct EthernetHeader EnetHead =
       {
@@ -269,15 +266,15 @@ inline void EncodeEnetFrameHeader(nxFrameEnet_t* pFrame, bool hasVlan, u16 vlanI
   u16 ethertypeBigEndian = ChangeByteOrderU16(EnetHead.EtherType);
   u32 vlanTagBigEndian = ChangeByteOrderU32(GenerateVlanTag(vlanId));
 
-  memcpy(pFrame->FrameData + kEnetFrameOffsetDstMacAddr, &EnetHead.DestinationMacAddress, kEnetMacAddrSize);
-  memcpy(pFrame->FrameData + kEnetFrameOffsetSrcMacAddr, &EnetHead.SourceMacAddress, kEnetMacAddrSize);
+  memcpy(FrameData + kEnetFrameOffsetDstMacAddr, &EnetHead.DestinationMacAddress, kEnetMacAddrSize);
+  memcpy(FrameData + kEnetFrameOffsetSrcMacAddr, &EnetHead.SourceMacAddress, kEnetMacAddrSize);
 
   if (hasVlan) {
-    memcpy(pFrame->FrameData + kEnetFrameOffsetVlanTag, &vlanTagBigEndian, sizeof(vlanTagBigEndian));
-    memcpy(pFrame->FrameData + kEnetFrameOffsetVlanEtherType, &ethertypeBigEndian, sizeof(EnetHead.EtherType));
+    memcpy(FrameData + kEnetFrameOffsetVlanTag, &vlanTagBigEndian, sizeof(vlanTagBigEndian));
+    memcpy(FrameData + kEnetFrameOffsetVlanEtherType, &ethertypeBigEndian, sizeof(EnetHead.EtherType));
   }
   else {
-    memcpy(pFrame->FrameData + kEnetFrameOffsetEtherType, &ethertypeBigEndian, sizeof(EnetHead.EtherType));
+    memcpy(FrameData + kEnetFrameOffsetEtherType, &ethertypeBigEndian, sizeof(EnetHead.EtherType));
   }
 }
 
@@ -286,7 +283,7 @@ inline void EncodeEnetFrame(nxFrameEnet_t* pFrame, u16 payloadSize, bool hasVlan
   u16 frameSize = 0;
   u32 payloadOffset = 0;
 
-  EncodeEnetFrameHeader(pFrame, hasVlan, vlanId);
+  EncodeEnetFrameHeader(pFrame->FrameData, hasVlan, vlanId);
   pFrame->DeviceTimestamp = 0;
   pFrame->NetworkTimestamp = 0;
   pFrame->Flags = nxEnetFlags_Transmit;
@@ -306,5 +303,7 @@ inline void EncodeEnetFrame(nxFrameEnet_t* pFrame, u16 payloadSize, bool hasVlan
     pFrame->FrameData[payloadOffset + i] = (u8)i;
   }
 }
+
+}  // namespace nixnet_utilities
 
 #endif  // NIXNET_UTILITIES_H

@@ -12,6 +12,7 @@
 
 using namespace nixnet_grpc;
 using namespace nixnet_grpc::converters;
+using namespace nixnet_utilities;
 using namespace ::testing;
 namespace pb = ::google::protobuf;
 using namespace std::string_literals;
