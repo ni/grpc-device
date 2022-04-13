@@ -16,6 +16,9 @@ void SetSessionInfoResponse(const u32& input, nixnet_grpc::SessionInfoResponse* 
 }  // namespace converters
 
 constexpr auto ENET_FRAME_HEADER_LENGTH = static_cast<u16>(sizeof(nxFrameEnet_t) - 1);  // last byte in nxFrameEnet_t is u8 FrameData[1]
+constexpr auto ENET_FRAME_FCS_SIZE = 4;
+
+u32 get_frame_buffer_size(int32 number_of_frames, u32 max_payload_size, u32 protocol);
 
 struct FrameHolder {
   FrameHolder(const pb_::RepeatedPtrField<FrameBufferRequest>& input, std::map<std::int32_t, std::int32_t> enetflags_input_map)
@@ -103,7 +106,7 @@ struct FrameHolder {
         throw std::invalid_argument("All FrameBufferRequest instances in repeated field should have same oneof set for the frame");
       }
 
-      size_t frame_size = ENET_FRAME_HEADER_LENGTH + grpc_frame.enet().frame_data().length();
+      u32 frame_size = get_frame_buffer_size(1, grpc_frame.enet().frame_data().length(),Protocol::PROTOCOL_ENET);
       frame_data.resize(frame_size, 0);
       nxFrameEnet_t* current_frame = (nxFrameEnet_t*)frame_data.data();
       // The Length field in ENET write frame is big-endian. Typecast to u16 before doing the conversion
@@ -204,8 +207,6 @@ struct FrameHolder {
 void convert_to_grpc(std::vector<u8>& input, google::protobuf::RepeatedPtrField<nixnet_grpc::FrameBufferResponse>* output, u32 number_of_bytes, u32 protocol, std::map<std::int32_t, std::int32_t> enetflags_output_map);
 
 void convert_to_grpc(const void* input, nixnet_grpc::FrameBufferResponse* output, u32 protocol, std::map<std::int32_t, std::int32_t> enetflags_output_map);
-
-u32 get_frame_buffer_size(int32 number_of_frames, u32 max_payload_size, u32 protocol);
 
 template <typename TFrame>
 nixnet_grpc::FrameHolder convert_from_grpc(const pb_::RepeatedPtrField<nixnet_grpc::FrameBufferRequest>& input, std::map<std::int32_t, std::int32_t> enetflags_input_map)
