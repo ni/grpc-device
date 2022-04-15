@@ -326,7 +326,7 @@ add_custom_command(
 #----------------------------------------------------------------------
 if(CMAKE_CROSSCOMPILING AND NOT _GRPC_DEVICE_NILRT_LEGACY_TOOLCHAIN)
   find_package(nlohmann_json REQUIRED)
-  find_library(gtest REQUIRED)
+  find_package(GTest REQUIRED)
 else()
   add_subdirectory(third_party/json ${CMAKE_CURRENT_BINARY_DIR}/json EXCLUDE_FROM_ALL)
   enable_testing()
