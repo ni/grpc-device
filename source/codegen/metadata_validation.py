@@ -321,6 +321,8 @@ def _validate_enum(enum_name: str, used_enums: Set[str], metadata: dict):
                     metadata, RULES.ENUMS_SHOULD_NOT_HAVE_DUPLICATE_VALUES, ["enums", enum_name]
                 ):
                     raise Exception(f"Duplicate values in enum!")
+        elif not enum.get("force-include", False):
+            raise Exception(f"Enum is in metadata but not referenced by function.")
     except Exception as e:
         raise Exception(f"Failed to validate enum with name {enum_name}") from e
 
@@ -404,6 +406,8 @@ def _get_function_enums(functions_metadata: dict) -> Set[str]:
         for param in function["parameters"]:
             if "enum" in param:
                 function_enums.add(param["enum"])
+            elif "bitfield_as_enum_array" in param:
+                function_enums.add(param["bitfield_as_enum_array"])
     return function_enums
 
 

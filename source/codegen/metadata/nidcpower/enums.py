@@ -204,34 +204,6 @@ enums = {
             }
         ]
     },
-    'Event': {
-        'values': [
-            {
-                'name': 'NIDCPOWER_VAL_SOURCE_COMPLETE',
-                'value': 1030
-            },
-            {
-                'name': 'NIDCPOWER_VAL_MEASURE_COMPLETE',
-                'value': 1031
-            },
-            {
-                'name': 'NIDCPOWER_VAL_SEQUENCE_ITERATION_COMPLETE',
-                'value': 1032
-            },
-            {
-                'name': 'NIDCPOWER_VAL_SEQUENCE_ENGINE_DONE',
-                'value': 1033
-            },
-            {
-                'name': 'NIDCPOWER_VAL_PULSE_COMPLETE',
-                'value': 1051
-            },
-            {
-                'name': 'NIDCPOWER_VAL_READY_FOR_PULSE_TRIGGER',
-                'value': 1052
-            }
-        ]
-    },
     'ExportSignal': {
         'values': [
             {
@@ -547,34 +519,6 @@ enums = {
             }
         ]
     },
-    'SendSoftwareEdgeTriggerType': {
-        'values': [
-            {
-                'name': 'NIDCPOWER_VAL_START',
-                'value': 1034
-            },
-            {
-                'name': 'NIDCPOWER_VAL_SOURCE',
-                'value': 1035
-            },
-            {
-                'name': 'NIDCPOWER_VAL_MEASURE',
-                'value': 1036
-            },
-            {
-                'name': 'NIDCPOWER_VAL_SEQUENCE_ADVANCE',
-                'value': 1037
-            },
-            {
-                'name': 'NIDCPOWER_VAL_PULSE',
-                'value': 1053
-            },
-            {
-                'name': 'NIDCPOWER_VAL_SHUTDOWN',
-                'value': 1118
-            }
-        ]
-    },
     'Sense': {
         'values': [
             {
@@ -590,26 +534,6 @@ enums = {
                 },
                 'name': 'NIDCPOWER_VAL_REMOTE',
                 'value': 1009
-            }
-        ]
-    },
-    'SessionState': {
-        'values': [
-            {
-                'name': 'NIDCPOWER_VAL_IDLE',
-                'value': 1
-            },
-            {
-                'name': 'NIDCPOWER_VAL_VERIFIED',
-                'value': 2
-            },
-            {
-                'name': 'NIDCPOWER_VAL_COMMITTED',
-                'value': 4
-            },
-            {
-                'name': 'NIDCPOWER_VAL_RUNNING',
-                'value': 8
             }
         ]
     },

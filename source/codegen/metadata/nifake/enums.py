@@ -1,27 +1,8 @@
 # -*- coding: utf-8 -*-
 # This file is generated from NI-FAKE API metadata version 1.2.0d9
 enums = {
-    'BeautifulColor': {
-        'values': [
-            {
-                'name': 'PINK',
-                'value': 44
-            },
-            {
-                'name': 'AQUA',
-                'value': 43
-            },
-            {
-                'name': 'GREEN',
-                'value': 45
-            },
-            {
-                'name': 'BLACK',
-                'value': 42
-            }
-        ]
-    },
     'Bitfield': {
+        'force-include': True,
         'values': [
             {
                 'name': 'FLAG_A',
@@ -42,6 +23,7 @@ enums = {
         ]
     },
     'Color': {
+        'force-include': True,
         'values': [
             {
                 'documentation': {
@@ -74,6 +56,7 @@ enums = {
         ]
     },
     'ColorObsolete': {
+        'force-include': True,
         'values': [
             {
                 'name': 'RED',
@@ -94,6 +77,7 @@ enums = {
         ]
     },
     'ColorPrivate': {
+        'force-include': True,
         'values': [
             {
                 'name': 'RED',
@@ -114,6 +98,7 @@ enums = {
         ]
     },
     'FloatEnum': {
+        'force-include': True,
         'generate-mappings': True,
         'values': [
             {
@@ -154,6 +139,7 @@ enums = {
         ]
     },
     'MobileOSNames': {
+        'force-include': True,
         'generate-mappings': True,
         'values': [
             {
@@ -180,6 +166,7 @@ enums = {
         ]
     },
     'Turtle': {
+        'force-include': True,
         'values': [
             {
                 'documentation': {
