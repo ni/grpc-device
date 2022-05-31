@@ -1,5 +1,5 @@
 """Metadata validation."""
-
+import warnings
 from typing import Any, Dict, List, Set
 
 import common_helpers
@@ -176,7 +176,9 @@ def validate_metadata(metadata: dict):
         for attribute_group in common_helpers.get_attribute_groups(metadata):
             for attribute_id in attribute_group.attributes:
                 _validate_attribute(attribute_group.attributes[attribute_id], metadata)
-        function_enums = _get_function_enums(metadata["functions"])
+        function_enums = set(
+            common_helpers.get_function_enums(metadata["functions"], metadata["enums"])
+        )
         attribute_enums = _get_attribute_enums(metadata)
         used_enums = function_enums.union(attribute_enums)
         for enum_name in metadata["enums"]:
@@ -321,6 +323,11 @@ def _validate_enum(enum_name: str, used_enums: Set[str], metadata: dict):
                     metadata, RULES.ENUMS_SHOULD_NOT_HAVE_DUPLICATE_VALUES, ["enums", enum_name]
                 ):
                     raise Exception(f"Duplicate values in enum!")
+        else:
+            # TODO AB#1991199: Raise exception instead of warning.
+            warnings.warn(
+                f"{metadata['config']['namespace_component']}::{enum_name} -> Enum is in metadata but is not referenced by a function/attribute or force-included."
+            )
     except Exception as e:
         raise Exception(f"Failed to validate enum with name {enum_name}") from e
 
@@ -395,16 +402,6 @@ def _validate_parameter_size(parameter: dict, function_name: str, metadata: dict
                 raise Exception(
                     f"parameter {parameter['name']} is an output but has mechanism {mechanism}!"
                 )
-
-
-def _get_function_enums(functions_metadata: dict) -> Set[str]:
-    function_enums = set()
-    for function_name in functions_metadata:
-        function = functions_metadata[function_name]
-        for param in function["parameters"]:
-            if "enum" in param:
-                function_enums.add(param["enum"])
-    return function_enums
 
 
 def _get_attribute_enums(metadata: dict) -> Set[str]:
