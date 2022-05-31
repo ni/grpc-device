@@ -323,12 +323,8 @@ def _validate_enum(enum_name: str, used_enums: Set[str], metadata: dict):
                     metadata, RULES.ENUMS_SHOULD_NOT_HAVE_DUPLICATE_VALUES, ["enums", enum_name]
                 ):
                     raise Exception(f"Duplicate values in enum!")
-        elif common_helpers.get_driver_readiness(metadata["config"]) == "Release":
-            # TODO AB#1991199: Raise exception instead of warning.
-            warnings.warn(
-                f"{metadata['config']['namespace_component']}::{enum_name} -> Enum is in metadata but is not referenced by a function/attribute or force-included."
-            )
         else:
+            # TODO AB#1991199: Raise exception instead of warning.
             warnings.warn(
                 f"{metadata['config']['namespace_component']}::{enum_name} -> Enum is in metadata but is not referenced by a function/attribute or force-included."
             )
