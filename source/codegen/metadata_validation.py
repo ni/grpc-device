@@ -4,6 +4,7 @@ from typing import Any, Dict, List, Set
 
 import common_helpers
 import service_helpers
+import warnings
 from schema import And, Optional, Or, Schema, Use  # type: ignore
 
 
@@ -305,7 +306,7 @@ def _validate_enum(enum_name: str, used_enums: Set[str], metadata: dict):
     try:
         enum: Dict[str, Any] = metadata["enums"][enum_name]
         ENUM_SCHEMA.validate(enum)
-        if enum_name in used_enums:
+        if enum_name in used_enums or enum.get("force-include", False):
             generate_mappings = enum.get("generate-mappings", False)
             value_types = set([type(value["value"]) for value in enum["values"]])
             if not generate_mappings:
@@ -321,6 +322,15 @@ def _validate_enum(enum_name: str, used_enums: Set[str], metadata: dict):
                     metadata, RULES.ENUMS_SHOULD_NOT_HAVE_DUPLICATE_VALUES, ["enums", enum_name]
                 ):
                     raise Exception(f"Duplicate values in enum!")
+        elif common_helpers.get_driver_readiness(metadata["config"]) == "Release":
+            # TODO AB#1991199: Raise exception instead of warning.
+            warnings.warn(
+                f"Enum {enum_name} is in metadata but not referenced by function/attribute in {metadata['config']['namespace_component']}."
+            )
+        else:
+            warnings.warn(
+                f"Enum {enum_name} is in metadata but not referenced by function/attribute in {metadata['config']['namespace_component']}."
+            )
     except Exception as e:
         raise Exception(f"Failed to validate enum with name {enum_name}") from e
 
@@ -404,6 +414,8 @@ def _get_function_enums(functions_metadata: dict) -> Set[str]:
         for param in function["parameters"]:
             if "enum" in param:
                 function_enums.add(param["enum"])
+            elif "bitfield_as_enum_array" in param:
+                function_enums.add(param["bitfield_as_enum_array"])
     return function_enums
 
 
