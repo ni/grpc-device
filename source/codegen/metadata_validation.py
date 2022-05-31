@@ -176,7 +176,9 @@ def validate_metadata(metadata: dict):
         for attribute_group in common_helpers.get_attribute_groups(metadata):
             for attribute_id in attribute_group.attributes:
                 _validate_attribute(attribute_group.attributes[attribute_id], metadata)
-        function_enums = _get_function_enums(metadata["functions"])
+        function_enums = set(
+            common_helpers.get_function_enums(metadata["functions"], metadata["enums"])
+        )
         attribute_enums = _get_attribute_enums(metadata)
         used_enums = function_enums.union(attribute_enums)
         for enum_name in metadata["enums"]:
@@ -305,7 +307,7 @@ def _validate_enum(enum_name: str, used_enums: Set[str], metadata: dict):
     try:
         enum: Dict[str, Any] = metadata["enums"][enum_name]
         ENUM_SCHEMA.validate(enum)
-        if enum_name in used_enums or enum.get("force-include", False):
+        if enum_name in used_enums:
             generate_mappings = enum.get("generate-mappings", False)
             value_types = set([type(value["value"]) for value in enum["values"]])
             if not generate_mappings:
@@ -404,18 +406,6 @@ def _validate_parameter_size(parameter: dict, function_name: str, metadata: dict
                 raise Exception(
                     f"parameter {parameter['name']} is an output but has mechanism {mechanism}!"
                 )
-
-
-def _get_function_enums(functions_metadata: dict) -> Set[str]:
-    function_enums = set()
-    for function_name in functions_metadata:
-        function = functions_metadata[function_name]
-        for param in function["parameters"]:
-            if "enum" in param:
-                function_enums.add(param["enum"])
-            elif "bitfield_as_enum_array" in param:
-                function_enums.add(param["bitfield_as_enum_array"])
-    return function_enums
 
 
 def _get_attribute_enums(metadata: dict) -> Set[str]:
