@@ -325,11 +325,11 @@ def _validate_enum(enum_name: str, used_enums: Set[str], metadata: dict):
         elif common_helpers.get_driver_readiness(metadata["config"]) == "Release":
             # TODO AB#1991199: Raise exception instead of warning.
             warnings.warn(
-                f"Enum {enum_name} is in metadata but not referenced by function/attribute in {metadata['config']['namespace_component']}."
+                f"{metadata['config']['namespace_component']}::{enum_name} -> Enum is in metadata but is not referenced by a function/attribute or force-included."
             )
         else:
             warnings.warn(
-                f"Enum {enum_name} is in metadata but not referenced by function/attribute in {metadata['config']['namespace_component']}."
+                f"{metadata['config']['namespace_component']}::{enum_name} -> Enum is in metadata but is not referenced by a function/attribute or force-included."
             )
     except Exception as e:
         raise Exception(f"Failed to validate enum with name {enum_name}") from e
