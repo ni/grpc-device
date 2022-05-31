@@ -1,7 +1,6 @@
 """Metadata validation."""
-import warnings
-
 from typing import Any, Dict, List, Set
+import warnings
 
 import common_helpers
 import service_helpers
