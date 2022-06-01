@@ -593,26 +593,6 @@ enums = {
             }
         ]
     },
-    'SessionState': {
-        'values': [
-            {
-                'name': 'NIDCPOWER_VAL_IDLE',
-                'value': 1
-            },
-            {
-                'name': 'NIDCPOWER_VAL_VERIFIED',
-                'value': 2
-            },
-            {
-                'name': 'NIDCPOWER_VAL_COMMITTED',
-                'value': 4
-            },
-            {
-                'name': 'NIDCPOWER_VAL_RUNNING',
-                'value': 8
-            }
-        ]
-    },
     'SourceMode': {
         'values': [
             {

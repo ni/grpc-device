@@ -644,14 +644,14 @@ reset_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const
 }
 
 SendSoftwareEdgeTriggerWithChannelsResponse
-send_software_edge_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const simple_variant<ExportSignal, pb::int32>& trigger)
+send_software_edge_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const simple_variant<SendSoftwareEdgeTriggerType, pb::int32>& trigger)
 {
   ::grpc::ClientContext context;
 
   auto request = SendSoftwareEdgeTriggerWithChannelsRequest{};
   request.mutable_vi()->CopyFrom(vi);
   request.set_channel_name(channel_name);
-  const auto trigger_ptr = trigger.get_if<ExportSignal>();
+  const auto trigger_ptr = trigger.get_if<SendSoftwareEdgeTriggerType>();
   const auto trigger_raw_ptr = trigger.get_if<pb::int32>();
   if (trigger_ptr) {
     request.set_trigger(*trigger_ptr);
@@ -669,14 +669,14 @@ send_software_edge_trigger_with_channels(const StubPtr& stub, const nidevice_grp
 }
 
 WaitForEventWithChannelsResponse
-wait_for_event_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const simple_variant<ExportSignal, pb::int32>& event_id, const double& timeout)
+wait_for_event_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const simple_variant<Event, pb::int32>& event_id, const double& timeout)
 {
   ::grpc::ClientContext context;
 
   auto request = WaitForEventWithChannelsRequest{};
   request.mutable_vi()->CopyFrom(vi);
   request.set_channel_name(channel_name);
-  const auto event_id_ptr = event_id.get_if<ExportSignal>();
+  const auto event_id_ptr = event_id.get_if<Event>();
   const auto event_id_raw_ptr = event_id.get_if<pb::int32>();
   if (event_id_ptr) {
     request.set_event_id(*event_id_ptr);
@@ -2348,13 +2348,13 @@ self_test(const StubPtr& stub, const nidevice_grpc::Session& vi)
 }
 
 SendSoftwareEdgeTriggerResponse
-send_software_edge_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<ExportSignal, pb::int32>& trigger)
+send_software_edge_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<SendSoftwareEdgeTriggerType, pb::int32>& trigger)
 {
   ::grpc::ClientContext context;
 
   auto request = SendSoftwareEdgeTriggerRequest{};
   request.mutable_vi()->CopyFrom(vi);
-  const auto trigger_ptr = trigger.get_if<ExportSignal>();
+  const auto trigger_ptr = trigger.get_if<SendSoftwareEdgeTriggerType>();
   const auto trigger_raw_ptr = trigger.get_if<pb::int32>();
   if (trigger_ptr) {
     request.set_trigger(*trigger_ptr);

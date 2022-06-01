@@ -343,6 +343,16 @@ enum DigitalEdge {
   DIGITAL_EDGE_NIDCPOWER_VAL_FALLING = 1017;
 }
 
+enum Event {
+  EVENT_UNSPECIFIED = 0;
+  EVENT_NIDCPOWER_VAL_SOURCE_COMPLETE = 1030;
+  EVENT_NIDCPOWER_VAL_MEASURE_COMPLETE = 1031;
+  EVENT_NIDCPOWER_VAL_SEQUENCE_ITERATION_COMPLETE = 1032;
+  EVENT_NIDCPOWER_VAL_SEQUENCE_ENGINE_DONE = 1033;
+  EVENT_NIDCPOWER_VAL_PULSE_COMPLETE = 1051;
+  EVENT_NIDCPOWER_VAL_READY_FOR_PULSE_TRIGGER = 1052;
+}
+
 enum ExportSignal {
   EXPORT_SIGNAL_UNSPECIFIED = 0;
   EXPORT_SIGNAL_NIDCPOWER_VAL_SOURCE_COMPLETE_EVENT = 1030;
@@ -378,6 +388,16 @@ enum OutputStates {
   OUTPUT_STATES_NIDCPOWER_VAL_OUTPUT_OVER_VOLTAGE = 2;
   OUTPUT_STATES_NIDCPOWER_VAL_OUTPUT_OVER_CURRENT = 3;
   OUTPUT_STATES_NIDCPOWER_VAL_OUTPUT_UNREGULATED = 4;
+}
+
+enum SendSoftwareEdgeTriggerType {
+  SEND_SOFTWARE_EDGE_TRIGGER_TYPE_UNSPECIFIED = 0;
+  SEND_SOFTWARE_EDGE_TRIGGER_TYPE_NIDCPOWER_VAL_START = 1034;
+  SEND_SOFTWARE_EDGE_TRIGGER_TYPE_NIDCPOWER_VAL_SOURCE = 1035;
+  SEND_SOFTWARE_EDGE_TRIGGER_TYPE_NIDCPOWER_VAL_MEASURE = 1036;
+  SEND_SOFTWARE_EDGE_TRIGGER_TYPE_NIDCPOWER_VAL_SEQUENCE_ADVANCE = 1037;
+  SEND_SOFTWARE_EDGE_TRIGGER_TYPE_NIDCPOWER_VAL_PULSE = 1053;
+  SEND_SOFTWARE_EDGE_TRIGGER_TYPE_NIDCPOWER_VAL_SHUTDOWN = 1118;
 }
 
 enum Sense {
@@ -804,7 +824,7 @@ message SendSoftwareEdgeTriggerWithChannelsRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
   oneof trigger_enum {
-    ExportSignal trigger = 3;
+    SendSoftwareEdgeTriggerType trigger = 3;
     sint32 trigger_raw = 4;
   }
 }
@@ -817,7 +837,7 @@ message WaitForEventWithChannelsRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
   oneof event_id_enum {
-    ExportSignal event_id = 3;
+    Event event_id = 3;
     sint32 event_id_raw = 4;
   }
   double timeout = 5;
@@ -1750,7 +1770,7 @@ message SelfTestResponse {
 message SendSoftwareEdgeTriggerRequest {
   nidevice_grpc.Session vi = 1;
   oneof trigger_enum {
-    ExportSignal trigger = 2;
+    SendSoftwareEdgeTriggerType trigger = 2;
     sint32 trigger_raw = 3;
   }
 }
