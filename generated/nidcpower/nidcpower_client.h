@@ -154,7 +154,7 @@ SetAttributeViReal64Response set_attribute_vi_real64(const StubPtr& stub, const 
 SetAttributeViSessionResponse set_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttribute& attribute_id, const nidevice_grpc::Session& attribute_value);
 SetAttributeViStringResponse set_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttribute& attribute_id, const pb::string& attribute_value);
 SetSequenceResponse set_sequence(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const std::vector<double>& values, const std::vector<double>& source_delays);
-WaitForEventResponse wait_for_event(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<ExportSignal, pb::int32>& event_id, const double& timeout);
+WaitForEventResponse wait_for_event(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<Event, pb::int32>& event_id, const double& timeout);
 
 } // namespace nidcpower_grpc::experimental::client
 

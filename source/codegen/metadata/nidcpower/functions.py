@@ -2774,7 +2774,7 @@ functions = {
         'name': 'eventId',
         'direction': 'in',
         'type': 'ViInt32',
-        'enum': 'ExportSignal'
+        'enum': 'Event'
       },
       {
         'name': 'timeout',

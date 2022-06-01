@@ -2519,13 +2519,13 @@ set_sequence(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::st
 }
 
 WaitForEventResponse
-wait_for_event(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<ExportSignal, pb::int32>& event_id, const double& timeout)
+wait_for_event(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<Event, pb::int32>& event_id, const double& timeout)
 {
   ::grpc::ClientContext context;
 
   auto request = WaitForEventRequest{};
   request.mutable_vi()->CopyFrom(vi);
-  const auto event_id_ptr = event_id.get_if<ExportSignal>();
+  const auto event_id_ptr = event_id.get_if<Event>();
   const auto event_id_raw_ptr = event_id.get_if<pb::int32>();
   if (event_id_ptr) {
     request.set_event_id(*event_id_ptr);

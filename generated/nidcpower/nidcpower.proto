@@ -1865,7 +1865,7 @@ message SetSequenceResponse {
 message WaitForEventRequest {
   nidevice_grpc.Session vi = 1;
   oneof event_id_enum {
-    ExportSignal event_id = 2;
+    Event event_id = 2;
     sint32 event_id_raw = 3;
   }
   double timeout = 4;
