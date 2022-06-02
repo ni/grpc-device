@@ -860,7 +860,7 @@ enums = {
         ]
     },
     'InputImpedance': {
-        # generate-mappings: True,
+        'generate-mappings': True,
         'values': [
             {
                 'name': 'NISCOPE_VAL_50_OHMS',

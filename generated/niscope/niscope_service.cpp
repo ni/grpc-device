@@ -437,6 +437,14 @@ namespace niscope_grpc {
           value = static_cast<ViReal64>(request->value());
           break;
         }
+        case niscope_grpc::CheckAttributeViReal64Request::ValueEnumCase::kValueMapped: {
+          auto value_imap_it = niscopereal64attributevaluesmapped_input_map_.find(request->value_mapped());
+          if (value_imap_it == niscopereal64attributevaluesmapped_input_map_.end()) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for value_mapped was not specified or out of range.");
+          }
+          value = static_cast<ViReal64>(value_imap_it->second);
+          break;
+        }
         case niscope_grpc::CheckAttributeViReal64Request::ValueEnumCase::kValueRaw: {
           value = static_cast<ViReal64>(request->value_raw());
           break;
@@ -2388,6 +2396,14 @@ namespace niscope_grpc {
       switch (request->value_enum_case()) {
         case niscope_grpc::SetAttributeViReal64Request::ValueEnumCase::kValue: {
           value = static_cast<ViReal64>(request->value());
+          break;
+        }
+        case niscope_grpc::SetAttributeViReal64Request::ValueEnumCase::kValueMapped: {
+          auto value_imap_it = niscopereal64attributevaluesmapped_input_map_.find(request->value_mapped());
+          if (value_imap_it == niscopereal64attributevaluesmapped_input_map_.end()) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for value_mapped was not specified or out of range.");
+          }
+          value = static_cast<ViReal64>(value_imap_it->second);
           break;
         }
         case niscope_grpc::SetAttributeViReal64Request::ValueEnumCase::kValueRaw: {

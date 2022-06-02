@@ -330,7 +330,8 @@ functions = {
                 'direction':'in',
                 'type':'ViReal64',
                 'grpc_raw_field_number':'4',
-                'grpc_field_number':'5'
+                'grpc_field_number':'5',
+                'grpc_mapped_field_number':'6'
             }
         ],
         'returns':'ViStatus'
@@ -2566,7 +2567,8 @@ functions = {
                 'name': 'value',
                 'type': 'ViReal64',
                 'grpc_raw_field_number':'4',
-                'grpc_field_number':'5'
+                'grpc_field_number':'5',
+                'grpc_mapped_field_number':'6'
             }
         ],
         'returns': 'ViStatus'

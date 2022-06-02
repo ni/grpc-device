@@ -2134,7 +2134,7 @@ attributes = {
         "documentation": {
             "description": "\nSpecifies the bandwidth of the channel. Express this value as the frequency at which the input circuitry attenuates the input signal by 3 dB. The units are hertz.\nDefined Values:\nNISCOPE_VAL_BANDWIDTH_FULL (-1.0)\nNISCOPE_VAL_BANDWIDTH_DEVICE_DEFAULT (0.0)\nNISCOPE_VAL_20MHZ_BANDWIDTH (20000000.0)\nNISCOPE_VAL_100MHZ_BANDWIDTH (100000000.0)\nNISCOPE_VAL_20MHZ_MAX_INPUT_FREQUENCY (20000000.0)\nNISCOPE_VAL_100MHZ_MAX_INPUT_FREQUENCY (100000000.0)\n"
         },
-        # "enum": "MaxInputFrequency",
+        "enum": "MaxInputFrequency",
         "lv_property": "Vertical:Maximum Input Frequency",
         "name": "MAX_INPUT_FREQUENCY",
         "resettable": True,
@@ -2310,7 +2310,7 @@ attributes = {
         "documentation": {
             "description": "\nSpecifies the input impedance for the channel in Ohms.\n"
         },
-        # 'enum': 'InputImpedance',
+        'enum': 'InputImpedance',
         "lv_property": "Vertical:Input Impedance",
         "name": "INPUT_IMPEDANCE",
         "resettable": True,
