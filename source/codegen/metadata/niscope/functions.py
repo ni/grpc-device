@@ -495,16 +495,19 @@ functions = {
                 'name':'inputClockSource',
                 'direction':'in',
                 'type':'ViConstString',
+                'enum':'ClockingTerminalValues'
             },
             {
                 'name':'outputClockSource',
                 'direction':'in',
-                'type':'ViConstString'
+                'type':'ViConstString',
+                'enum':'ClockingTerminalValues'
             },
             {
                 'name':'clockSyncPulseSource',
                 'direction':'in',
-                'type':'ViConstString'
+                'type':'ViConstString',
+                'enum':'ClockingTerminalValues'
             },
             {
                 'name':'masterEnabled',
@@ -1165,6 +1168,7 @@ functions = {
                 'name':'outputTerminal',
                 'direction':'in',
                 'type':'ViConstString',
+                'enum':'ClockingTerminalValues'
             }
         ],
         'returns':'ViStatus'

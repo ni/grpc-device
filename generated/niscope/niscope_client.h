@@ -38,14 +38,14 @@ CheckAttributeViInt32Response check_attribute_vi_int32(const StubPtr& stub, cons
 CheckAttributeViInt64Response check_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttribute& attribute_id, const simple_variant<NiScopeInt64AttributeValues, pb::int64>& value);
 CheckAttributeViReal64Response check_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttribute& attribute_id, const simple_variant<NiScopeReal64AttributeValues, double>& value);
 CheckAttributeViSessionResponse check_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttribute& attribute_id, const nidevice_grpc::Session& value);
-CheckAttributeViStringResponse check_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttribute& attribute_id, const pb::string& value);
+CheckAttributeViStringResponse check_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttribute& attribute_id, const simple_variant<NiScopeStringAttributeValuesMapped, std::string>& value);
 ClearWaveformMeasurementStatsResponse clear_waveform_measurement_stats(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const simple_variant<ClearableMeasurement, pb::int32>& clearable_measurement_function);
 ClearWaveformProcessingResponse clear_waveform_processing(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list);
 CloseResponse close(const StubPtr& stub, const nidevice_grpc::Session& vi);
 CommitResponse commit(const StubPtr& stub, const nidevice_grpc::Session& vi);
 ConfigureAcquisitionResponse configure_acquisition(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& acquisition_type);
 ConfigureChanCharacteristicsResponse configure_chan_characteristics(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const double& input_impedance, const double& max_input_frequency);
-ConfigureClockResponse configure_clock(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& input_clock_source, const pb::string& output_clock_source, const pb::string& clock_sync_pulse_source, const bool& master_enabled);
+ConfigureClockResponse configure_clock(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<ClockingTerminalValues, std::string>& input_clock_source, const simple_variant<ClockingTerminalValues, std::string>& output_clock_source, const simple_variant<ClockingTerminalValues, std::string>& clock_sync_pulse_source, const bool& master_enabled);
 ConfigureEqualizationFilterCoefficientsResponse configure_equalization_filter_coefficients(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const std::vector<double>& coefficients);
 ConfigureHorizontalTimingResponse configure_horizontal_timing(const StubPtr& stub, const nidevice_grpc::Session& vi, const double& min_sample_rate, const pb::int32& min_num_pts, const double& ref_position, const pb::int32& num_records, const bool& enforce_realtime);
 ConfigureTriggerDigitalResponse configure_trigger_digital(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& trigger_source, const simple_variant<TriggerSlope, pb::int32>& slope, const double& holdoff, const double& delay);
@@ -63,7 +63,7 @@ DisableResponse disable(const StubPtr& stub, const nidevice_grpc::Session& vi);
 ErrorHandlerResponse error_handler(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& error_code, const pb::string& error_source);
 ExportAttributeConfigurationBufferResponse export_attribute_configuration_buffer(const StubPtr& stub, const nidevice_grpc::Session& vi);
 ExportAttributeConfigurationFileResponse export_attribute_configuration_file(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& file_path);
-ExportSignalResponse export_signal(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<ExportableSignals, pb::int32>& signal, const pb::string& signal_identifier, const pb::string& output_terminal);
+ExportSignalResponse export_signal(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<ExportableSignals, pb::int32>& signal, const pb::string& signal_identifier, const simple_variant<ClockingTerminalValues, std::string>& output_terminal);
 FetchResponse fetch(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const double& timeout, const pb::int32& num_samples);
 FetchArrayMeasurementResponse fetch_array_measurement(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const double& timeout, const simple_variant<ArrayMeasurement, pb::int32>& array_meas_function);
 FetchBinary16Response fetch_binary16(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const double& timeout, const pb::int32& num_samples);
@@ -109,7 +109,7 @@ SetAttributeViInt32Response set_attribute_vi_int32(const StubPtr& stub, const ni
 SetAttributeViInt64Response set_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttribute& attribute_id, const simple_variant<NiScopeInt64AttributeValues, pb::int64>& value);
 SetAttributeViReal64Response set_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttribute& attribute_id, const simple_variant<NiScopeReal64AttributeValues, double>& value);
 SetAttributeViSessionResponse set_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttribute& attribute_id, const nidevice_grpc::Session& value);
-SetAttributeViStringResponse set_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttribute& attribute_id, const pb::string& value);
+SetAttributeViStringResponse set_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttribute& attribute_id, const simple_variant<NiScopeStringAttributeValuesMapped, std::string>& value);
 
 } // namespace niscope_grpc::experimental::client
 
