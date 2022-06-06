@@ -62,8 +62,8 @@ client = grpc_niscope.NiScopeStub(channel)
 def check_for_error(vi, status):
     """Raise an exception if the status indicates an error."""
     if status != 0:
-        error_message_response = client.ErrorMessage(
-            niscope_types.ErrorMessageRequest(vi=vi, error_code=status)
+        error_message_response = client.GetErrorMessage(
+            niscope_types.GetErrorMessageRequest(vi=vi, error_code=status)
         )
         raise Exception(error_message_response.error_message)
 
