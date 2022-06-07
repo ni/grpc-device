@@ -54,8 +54,8 @@ InitializeWithIndependentChannelsResponse initialize_with_independent_channels(c
 InitiateWithChannelsResponse initiate_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name);
 InvalidateAllAttributesResponse invalidate_all_attributes(const StubPtr& stub, const nidevice_grpc::Session& vi);
 ResetWithChannelsResponse reset_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name);
-SendSoftwareEdgeTriggerWithChannelsResponse send_software_edge_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const simple_variant<ExportSignal, pb::int32>& trigger);
-WaitForEventWithChannelsResponse wait_for_event_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const simple_variant<ExportSignal, pb::int32>& event_id, const double& timeout);
+SendSoftwareEdgeTriggerWithChannelsResponse send_software_edge_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const simple_variant<SendSoftwareEdgeTriggerType, pb::int32>& trigger);
+WaitForEventWithChannelsResponse wait_for_event_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const simple_variant<Event, pb::int32>& event_id, const double& timeout);
 AbortResponse abort(const StubPtr& stub, const nidevice_grpc::Session& vi);
 CalSelfCalibrateResponse cal_self_calibrate(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name);
 ClearErrorResponse clear_error(const StubPtr& stub, const nidevice_grpc::Session& vi);
@@ -146,7 +146,7 @@ ResetInterchangeCheckResponse reset_interchange_check(const StubPtr& stub, const
 ResetWithDefaultsResponse reset_with_defaults(const StubPtr& stub, const nidevice_grpc::Session& vi);
 RevisionQueryResponse revision_query(const StubPtr& stub, const nidevice_grpc::Session& vi);
 SelfTestResponse self_test(const StubPtr& stub, const nidevice_grpc::Session& vi);
-SendSoftwareEdgeTriggerResponse send_software_edge_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<ExportSignal, pb::int32>& trigger);
+SendSoftwareEdgeTriggerResponse send_software_edge_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<SendSoftwareEdgeTriggerType, pb::int32>& trigger);
 SetAttributeViBooleanResponse set_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttribute& attribute_id, const bool& attribute_value);
 SetAttributeViInt32Response set_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttribute& attribute_id, const simple_variant<NiDCPowerInt32AttributeValues, pb::int32>& attribute_value);
 SetAttributeViInt64Response set_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttribute& attribute_id, const pb::int64& attribute_value);
@@ -154,7 +154,7 @@ SetAttributeViReal64Response set_attribute_vi_real64(const StubPtr& stub, const 
 SetAttributeViSessionResponse set_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttribute& attribute_id, const nidevice_grpc::Session& attribute_value);
 SetAttributeViStringResponse set_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttribute& attribute_id, const pb::string& attribute_value);
 SetSequenceResponse set_sequence(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const std::vector<double>& values, const std::vector<double>& source_delays);
-WaitForEventResponse wait_for_event(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<ExportSignal, pb::int32>& event_id, const double& timeout);
+WaitForEventResponse wait_for_event(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<Event, pb::int32>& event_id, const double& timeout);
 
 } // namespace nidcpower_grpc::experimental::client
 

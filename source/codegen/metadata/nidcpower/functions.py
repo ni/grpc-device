@@ -674,7 +674,7 @@ functions = {
         'name': 'trigger',
         'direction': 'in',
         'type': 'ViInt32',
-        'enum': 'ExportSignal'
+        'enum': 'SendSoftwareEdgeTriggerType'
       }
     ],
     'returns': 'ViStatus'
@@ -695,7 +695,7 @@ functions = {
         'name': 'eventId',
         'direction': 'in',
         'type': 'ViInt32',
-        'enum': 'ExportSignal'
+        'enum': 'Event'
       },
       {
         'name': 'timeout',
@@ -2554,7 +2554,7 @@ functions = {
         'name': 'trigger',
         'direction': 'in',
         'type': 'ViInt32',
-        'enum': 'ExportSignal'
+        'enum': 'SendSoftwareEdgeTriggerType'
       }
     ],
     'returns': 'ViStatus'
@@ -2774,7 +2774,7 @@ functions = {
         'name': 'eventId',
         'direction': 'in',
         'type': 'ViInt32',
-        'enum': 'ExportSignal'
+        'enum': 'Event'
       },
       {
         'name': 'timeout',

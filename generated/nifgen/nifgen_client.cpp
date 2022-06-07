@@ -539,7 +539,7 @@ configure_digital_edge_start_trigger(const StubPtr& stub, const nidevice_grpc::S
 }
 
 ConfigureDigitalLevelScriptTriggerResponse
-configure_digital_level_script_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& trigger_id, const pb::string& source, const pb::int32& trigger_when)
+configure_digital_level_script_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& trigger_id, const pb::string& source, const simple_variant<TriggerWhen, pb::int32>& trigger_when)
 {
   ::grpc::ClientContext context;
 
@@ -547,7 +547,14 @@ configure_digital_level_script_trigger(const StubPtr& stub, const nidevice_grpc:
   request.mutable_vi()->CopyFrom(vi);
   request.set_trigger_id(trigger_id);
   request.set_source(source);
-  request.set_trigger_when(trigger_when);
+  const auto trigger_when_ptr = trigger_when.get_if<TriggerWhen>();
+  const auto trigger_when_raw_ptr = trigger_when.get_if<pb::int32>();
+  if (trigger_when_ptr) {
+    request.set_trigger_when(*trigger_when_ptr);
+  }
+  else if (trigger_when_raw_ptr) {
+    request.set_trigger_when_raw(*trigger_when_raw_ptr);
+  }
 
   auto response = ConfigureDigitalLevelScriptTriggerResponse{};
 

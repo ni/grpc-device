@@ -483,6 +483,12 @@ enum TriggerMode {
   TRIGGER_MODE_NIFGEN_VAL_BURST = 4;
 }
 
+enum TriggerWhen {
+  TRIGGER_WHEN_UNSPECIFIED = 0;
+  TRIGGER_WHEN_NIFGEN_VAL_ACTIVE_HIGH = 101;
+  TRIGGER_WHEN_NIFGEN_VAL_ACTIVE_LOW = 102;
+}
+
 enum Waveform {
   WAVEFORM_UNSPECIFIED = 0;
   WAVEFORM_NIFGEN_VAL_WFM_SINE = 1;
@@ -966,7 +972,10 @@ message ConfigureDigitalLevelScriptTriggerRequest {
   nidevice_grpc.Session vi = 1;
   string trigger_id = 2;
   string source = 3;
-  sint32 trigger_when = 4;
+  oneof trigger_when_enum {
+    TriggerWhen trigger_when = 4;
+    sint32 trigger_when_raw = 5;
+  }
 }
 
 message ConfigureDigitalLevelScriptTriggerResponse {

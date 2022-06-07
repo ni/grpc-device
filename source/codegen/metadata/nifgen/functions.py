@@ -543,7 +543,8 @@ functions = {
             {
                 'name':'triggerWhen',
                 'direction':'in',
-                'type':'ViInt32'
+                'type':'ViInt32',
+                'enum':'TriggerWhen'
             }
         ],
         'returns':'ViStatus'

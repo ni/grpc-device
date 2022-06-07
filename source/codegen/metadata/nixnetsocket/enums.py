@@ -219,18 +219,6 @@ enums = {
             },
         ]
     },
-    'ProtocolFamily': {
-        'values': [
-            {
-                'name': 'INET',
-                'value': 2
-            },
-            {
-                'name': 'INET6',
-                'value': 10
-            }
-        ]
-    },
     'RecvFlags': {
         'values': [
             {
