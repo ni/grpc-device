@@ -324,9 +324,8 @@ def _validate_enum(enum_name: str, used_enums: Set[str], metadata: dict):
                 ):
                     raise Exception(f"Duplicate values in enum!")
         else:
-            # TODO AB#1991199: Raise exception instead of warning.
-            warnings.warn(
-                f"{metadata['config']['namespace_component']}::{enum_name} -> Enum is in metadata but is not referenced by a function/attribute or force-included."
+            raise Exception(
+                f"Enum is in metadata but is not referenced by a function/attribute or force-included."
             )
     except Exception as e:
         raise Exception(f"Failed to validate enum with name {enum_name}") from e
