@@ -49,7 +49,7 @@ ConfigureClockModeResponse configure_clock_mode(const StubPtr& stub, const nidev
 ConfigureCustomFIRFilterCoefficientsResponse configure_custom_fir_filter_coefficients(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const std::vector<double>& coefficients_array);
 ConfigureDigitalEdgeScriptTriggerResponse configure_digital_edge_script_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& trigger_id, const pb::string& source, const pb::int32& edge);
 ConfigureDigitalEdgeStartTriggerResponse configure_digital_edge_start_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& source, const pb::int32& edge);
-ConfigureDigitalLevelScriptTriggerResponse configure_digital_level_script_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& trigger_id, const pb::string& source, const pb::int32& trigger_when);
+ConfigureDigitalLevelScriptTriggerResponse configure_digital_level_script_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& trigger_id, const pb::string& source, const simple_variant<TriggerWhen, pb::int32>& trigger_when);
 ConfigureFreqListResponse configure_freq_list(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::int32& frequency_list_handle, const double& amplitude, const double& dc_offset, const double& start_phase);
 ConfigureFrequencyResponse configure_frequency(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& frequency);
 ConfigureOperationModeResponse configure_operation_mode(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::int32& operation_mode);

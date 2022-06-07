@@ -714,7 +714,22 @@ namespace nifgen_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto trigger_id = request->trigger_id().c_str();
       auto source = request->source().c_str();
-      ViInt32 trigger_when = request->trigger_when();
+      ViInt32 trigger_when;
+      switch (request->trigger_when_enum_case()) {
+        case nifgen_grpc::ConfigureDigitalLevelScriptTriggerRequest::TriggerWhenEnumCase::kTriggerWhen: {
+          trigger_when = static_cast<ViInt32>(request->trigger_when());
+          break;
+        }
+        case nifgen_grpc::ConfigureDigitalLevelScriptTriggerRequest::TriggerWhenEnumCase::kTriggerWhenRaw: {
+          trigger_when = static_cast<ViInt32>(request->trigger_when_raw());
+          break;
+        }
+        case nifgen_grpc::ConfigureDigitalLevelScriptTriggerRequest::TriggerWhenEnumCase::TRIGGER_WHEN_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for trigger_when was not specified or out of range");
+          break;
+        }
+      }
+
       auto status = library_->ConfigureDigitalLevelScriptTrigger(vi, trigger_id, source, trigger_when);
       response->set_status(status);
       return ::grpc::Status::OK;
