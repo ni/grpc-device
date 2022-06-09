@@ -496,19 +496,25 @@ functions = {
                 'name':'inputClockSource',
                 'direction':'in',
                 'type':'ViConstString',
-                'enum':'ClockingTerminalValues'
+                'enum':'ClockingTerminalValues',
+                'grpc_raw_field_number':'2',
+                'grpc_mapped_field_number':'6'
             },
             {
                 'name':'outputClockSource',
                 'direction':'in',
                 'type':'ViConstString',
-                'enum':'ClockingTerminalValues'
+                'enum':'ClockingTerminalValues',
+                'grpc_raw_field_number':'3',
+                'grpc_mapped_field_number':'7'
             },
             {
                 'name':'clockSyncPulseSource',
                 'direction':'in',
                 'type':'ViConstString',
-                'enum':'ClockingTerminalValues'
+                'enum':'ClockingTerminalValues',
+                'grpc_raw_field_number':'4',
+                'grpc_mapped_field_number':'8'
             },
             {
                 'name':'masterEnabled',

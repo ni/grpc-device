@@ -1090,18 +1090,18 @@ message ConfigureChanCharacteristicsResponse {
 message ConfigureClockRequest {
   nidevice_grpc.Session vi = 1;
   oneof input_clock_source_enum {
-    ClockingTerminalValues input_clock_source_mapped = 2;
-    string input_clock_source_raw = 3;
+    ClockingTerminalValues input_clock_source_mapped = 6;
+    string input_clock_source_raw = 2;
   }
   oneof output_clock_source_enum {
-    ClockingTerminalValues output_clock_source_mapped = 4;
-    string output_clock_source_raw = 5;
+    ClockingTerminalValues output_clock_source_mapped = 7;
+    string output_clock_source_raw = 3;
   }
   oneof clock_sync_pulse_source_enum {
-    ClockingTerminalValues clock_sync_pulse_source_mapped = 6;
-    string clock_sync_pulse_source_raw = 7;
+    ClockingTerminalValues clock_sync_pulse_source_mapped = 8;
+    string clock_sync_pulse_source_raw = 4;
   }
-  bool master_enabled = 8;
+  bool master_enabled = 5;
 }
 
 message ConfigureClockResponse {
