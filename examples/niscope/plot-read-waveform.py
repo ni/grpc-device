@@ -57,8 +57,8 @@ if len(sys.argv) >= 4:
 def check_for_error(vi, status):
     """Raise an exception if the status indicates an error."""
     if status != 0:
-        error_message_response = niscope_client.ErrorMessage(
-            niscope_types.ErrorMessageRequest(vi=vi, error_code=status)
+        error_message_response = niscope_client.GetErrorMessage(
+            niscope_types.GetErrorMessageRequest(vi=vi, error_code=status)
         )
         raise Exception(error_message_response.error_message)
 
@@ -129,7 +129,7 @@ try:
             vi=vi,
             channel_list=CHANNELS,
             attribute_id=niscope_types.NiScopeAttribute.NISCOPE_ATTRIBUTE_MEAS_REF_LEVEL_UNITS,
-            value=niscope_types.NiScopeInt32AttributeValues.NISCOPE_INT32_REF_LEVEL_UNITS_VAL_VOLTS,
+            value=niscope_types.NiScopeInt32AttributeValues.NISCOPE_INT32_MEAS_REF_LEVEL_UNITS_VAL_MEAS_VOLTAGE,
         )
     )
     check_for_error(vi, result.status)

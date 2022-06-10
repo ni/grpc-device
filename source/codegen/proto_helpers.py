@@ -40,7 +40,7 @@ def generate_parameter_field_number(parameter, used_indexes, field_name_suffix="
         field_number = parameter[field_name_key]
     else:
         field_number = next(i for i in range(1, 100) if i not in used_indexes)
-    used_indexes.append(field_number)
+    used_indexes.append(int(field_number))
     return field_number
 
 
@@ -102,7 +102,7 @@ def _is_decomposable_enum(parameter: dict):
 def get_message_parameter_definitions(parameters):
     """Get a simplified list of all parameters.
 
-    This is intended to be used for defining requests/respones messages in proto file.
+    This is intended to be used for defining requests/response messages in proto file.
     """
     parameter_definitions = []
     used_indexes = []

@@ -437,6 +437,14 @@ namespace niscope_grpc {
           value = static_cast<ViReal64>(request->value());
           break;
         }
+        case niscope_grpc::CheckAttributeViReal64Request::ValueEnumCase::kValueMapped: {
+          auto value_imap_it = niscopereal64attributevaluesmapped_input_map_.find(request->value_mapped());
+          if (value_imap_it == niscopereal64attributevaluesmapped_input_map_.end()) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for value_mapped was not specified or out of range.");
+          }
+          value = static_cast<ViReal64>(value_imap_it->second);
+          break;
+        }
         case niscope_grpc::CheckAttributeViReal64Request::ValueEnumCase::kValueRaw: {
           value = static_cast<ViReal64>(request->value_raw());
           break;
@@ -491,7 +499,26 @@ namespace niscope_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto channel_list = request->channel_list().c_str();
       ViAttr attribute_id = request->attribute_id();
-      auto value = request->value_raw().c_str();
+      ViConstString value;
+      switch (request->value_enum_case()) {
+        case niscope_grpc::CheckAttributeViStringRequest::ValueEnumCase::kValueMapped: {
+          auto value_imap_it = niscopestringattributevaluesmapped_input_map_.find(request->value_mapped());
+          if (value_imap_it == niscopestringattributevaluesmapped_input_map_.end()) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for value_mapped was not specified or out of range.");
+          }
+          value = const_cast<ViConstString>((value_imap_it->second).c_str());
+          break;
+        }
+        case niscope_grpc::CheckAttributeViStringRequest::ValueEnumCase::kValueRaw: {
+          value = const_cast<ViConstString>(request->value_raw().c_str());
+          break;
+        }
+        case niscope_grpc::CheckAttributeViStringRequest::ValueEnumCase::VALUE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for value was not specified or out of range");
+          break;
+        }
+      }
+
       auto status = library_->CheckAttributeViString(vi, channel_list, attribute_id, value);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -648,9 +675,66 @@ namespace niscope_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      auto input_clock_source = request->input_clock_source().c_str();
-      auto output_clock_source = request->output_clock_source().c_str();
-      auto clock_sync_pulse_source = request->clock_sync_pulse_source().c_str();
+      ViConstString input_clock_source;
+      switch (request->input_clock_source_enum_case()) {
+        case niscope_grpc::ConfigureClockRequest::InputClockSourceEnumCase::kInputClockSourceMapped: {
+          auto input_clock_source_imap_it = clockingterminalvalues_input_map_.find(request->input_clock_source_mapped());
+          if (input_clock_source_imap_it == clockingterminalvalues_input_map_.end()) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for input_clock_source_mapped was not specified or out of range.");
+          }
+          input_clock_source = const_cast<ViConstString>((input_clock_source_imap_it->second).c_str());
+          break;
+        }
+        case niscope_grpc::ConfigureClockRequest::InputClockSourceEnumCase::kInputClockSourceRaw: {
+          input_clock_source = const_cast<ViConstString>(request->input_clock_source_raw().c_str());
+          break;
+        }
+        case niscope_grpc::ConfigureClockRequest::InputClockSourceEnumCase::INPUT_CLOCK_SOURCE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for input_clock_source was not specified or out of range");
+          break;
+        }
+      }
+
+      ViConstString output_clock_source;
+      switch (request->output_clock_source_enum_case()) {
+        case niscope_grpc::ConfigureClockRequest::OutputClockSourceEnumCase::kOutputClockSourceMapped: {
+          auto output_clock_source_imap_it = clockingterminalvalues_input_map_.find(request->output_clock_source_mapped());
+          if (output_clock_source_imap_it == clockingterminalvalues_input_map_.end()) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for output_clock_source_mapped was not specified or out of range.");
+          }
+          output_clock_source = const_cast<ViConstString>((output_clock_source_imap_it->second).c_str());
+          break;
+        }
+        case niscope_grpc::ConfigureClockRequest::OutputClockSourceEnumCase::kOutputClockSourceRaw: {
+          output_clock_source = const_cast<ViConstString>(request->output_clock_source_raw().c_str());
+          break;
+        }
+        case niscope_grpc::ConfigureClockRequest::OutputClockSourceEnumCase::OUTPUT_CLOCK_SOURCE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for output_clock_source was not specified or out of range");
+          break;
+        }
+      }
+
+      ViConstString clock_sync_pulse_source;
+      switch (request->clock_sync_pulse_source_enum_case()) {
+        case niscope_grpc::ConfigureClockRequest::ClockSyncPulseSourceEnumCase::kClockSyncPulseSourceMapped: {
+          auto clock_sync_pulse_source_imap_it = clockingterminalvalues_input_map_.find(request->clock_sync_pulse_source_mapped());
+          if (clock_sync_pulse_source_imap_it == clockingterminalvalues_input_map_.end()) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for clock_sync_pulse_source_mapped was not specified or out of range.");
+          }
+          clock_sync_pulse_source = const_cast<ViConstString>((clock_sync_pulse_source_imap_it->second).c_str());
+          break;
+        }
+        case niscope_grpc::ConfigureClockRequest::ClockSyncPulseSourceEnumCase::kClockSyncPulseSourceRaw: {
+          clock_sync_pulse_source = const_cast<ViConstString>(request->clock_sync_pulse_source_raw().c_str());
+          break;
+        }
+        case niscope_grpc::ConfigureClockRequest::ClockSyncPulseSourceEnumCase::CLOCK_SYNC_PULSE_SOURCE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for clock_sync_pulse_source was not specified or out of range");
+          break;
+        }
+      }
+
       ViBoolean master_enabled = request->master_enabled();
       auto status = library_->ConfigureClock(vi, input_clock_source, output_clock_source, clock_sync_pulse_source, master_enabled);
       response->set_status(status);
@@ -1410,7 +1494,26 @@ namespace niscope_grpc {
       }
 
       auto signal_identifier = request->signal_identifier().c_str();
-      auto output_terminal = request->output_terminal().c_str();
+      ViConstString output_terminal;
+      switch (request->output_terminal_enum_case()) {
+        case niscope_grpc::ExportSignalRequest::OutputTerminalEnumCase::kOutputTerminalMapped: {
+          auto output_terminal_imap_it = clockingterminalvalues_input_map_.find(request->output_terminal_mapped());
+          if (output_terminal_imap_it == clockingterminalvalues_input_map_.end()) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for output_terminal_mapped was not specified or out of range.");
+          }
+          output_terminal = const_cast<ViConstString>((output_terminal_imap_it->second).c_str());
+          break;
+        }
+        case niscope_grpc::ExportSignalRequest::OutputTerminalEnumCase::kOutputTerminalRaw: {
+          output_terminal = const_cast<ViConstString>(request->output_terminal_raw().c_str());
+          break;
+        }
+        case niscope_grpc::ExportSignalRequest::OutputTerminalEnumCase::OUTPUT_TERMINAL_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for output_terminal was not specified or out of range");
+          break;
+        }
+      }
+
       auto status = library_->ExportSignal(vi, signal, signal_identifier, output_terminal);
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -2295,6 +2398,14 @@ namespace niscope_grpc {
           value = static_cast<ViReal64>(request->value());
           break;
         }
+        case niscope_grpc::SetAttributeViReal64Request::ValueEnumCase::kValueMapped: {
+          auto value_imap_it = niscopereal64attributevaluesmapped_input_map_.find(request->value_mapped());
+          if (value_imap_it == niscopereal64attributevaluesmapped_input_map_.end()) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for value_mapped was not specified or out of range.");
+          }
+          value = static_cast<ViReal64>(value_imap_it->second);
+          break;
+        }
         case niscope_grpc::SetAttributeViReal64Request::ValueEnumCase::kValueRaw: {
           value = static_cast<ViReal64>(request->value_raw());
           break;
@@ -2349,7 +2460,26 @@ namespace niscope_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto channel_list = request->channel_list().c_str();
       ViAttr attribute_id = request->attribute_id();
-      auto value = request->value_raw().c_str();
+      ViConstString value;
+      switch (request->value_enum_case()) {
+        case niscope_grpc::SetAttributeViStringRequest::ValueEnumCase::kValueMapped: {
+          auto value_imap_it = niscopestringattributevaluesmapped_input_map_.find(request->value_mapped());
+          if (value_imap_it == niscopestringattributevaluesmapped_input_map_.end()) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for value_mapped was not specified or out of range.");
+          }
+          value = const_cast<ViConstString>((value_imap_it->second).c_str());
+          break;
+        }
+        case niscope_grpc::SetAttributeViStringRequest::ValueEnumCase::kValueRaw: {
+          value = const_cast<ViConstString>(request->value_raw().c_str());
+          break;
+        }
+        case niscope_grpc::SetAttributeViStringRequest::ValueEnumCase::VALUE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for value was not specified or out of range");
+          break;
+        }
+      }
+
       auto status = library_->SetAttributeViString(vi, channel_list, attribute_id, value);
       response->set_status(status);
       return ::grpc::Status::OK;

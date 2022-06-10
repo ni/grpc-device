@@ -338,7 +338,7 @@ check_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi
 }
 
 CheckAttributeViStringResponse
-check_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttribute& attribute_id, const pb::string& value)
+check_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttribute& attribute_id, const simple_variant<NiScopeStringAttributeValuesMapped, std::string>& value)
 {
   ::grpc::ClientContext context;
 
@@ -346,7 +346,14 @@ check_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi,
   request.mutable_vi()->CopyFrom(vi);
   request.set_channel_list(channel_list);
   request.set_attribute_id(attribute_id);
-  request.set_value_raw(value);
+  const auto value_ptr = value.get_if<NiScopeStringAttributeValuesMapped>();
+  const auto value_raw_ptr = value.get_if<std::string>();
+  if (value_ptr) {
+    request.set_value_mapped(*value_ptr);
+  }
+  else if (value_raw_ptr) {
+    request.set_value_raw(*value_raw_ptr);
+  }
 
   auto response = CheckAttributeViStringResponse{};
 
@@ -467,15 +474,36 @@ configure_chan_characteristics(const StubPtr& stub, const nidevice_grpc::Session
 }
 
 ConfigureClockResponse
-configure_clock(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& input_clock_source, const pb::string& output_clock_source, const pb::string& clock_sync_pulse_source, const bool& master_enabled)
+configure_clock(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<ClockingTerminalValues, std::string>& input_clock_source, const simple_variant<ClockingTerminalValues, std::string>& output_clock_source, const simple_variant<ClockingTerminalValues, std::string>& clock_sync_pulse_source, const bool& master_enabled)
 {
   ::grpc::ClientContext context;
 
   auto request = ConfigureClockRequest{};
   request.mutable_vi()->CopyFrom(vi);
-  request.set_input_clock_source(input_clock_source);
-  request.set_output_clock_source(output_clock_source);
-  request.set_clock_sync_pulse_source(clock_sync_pulse_source);
+  const auto input_clock_source_ptr = input_clock_source.get_if<ClockingTerminalValues>();
+  const auto input_clock_source_raw_ptr = input_clock_source.get_if<std::string>();
+  if (input_clock_source_ptr) {
+    request.set_input_clock_source_mapped(*input_clock_source_ptr);
+  }
+  else if (input_clock_source_raw_ptr) {
+    request.set_input_clock_source_raw(*input_clock_source_raw_ptr);
+  }
+  const auto output_clock_source_ptr = output_clock_source.get_if<ClockingTerminalValues>();
+  const auto output_clock_source_raw_ptr = output_clock_source.get_if<std::string>();
+  if (output_clock_source_ptr) {
+    request.set_output_clock_source_mapped(*output_clock_source_ptr);
+  }
+  else if (output_clock_source_raw_ptr) {
+    request.set_output_clock_source_raw(*output_clock_source_raw_ptr);
+  }
+  const auto clock_sync_pulse_source_ptr = clock_sync_pulse_source.get_if<ClockingTerminalValues>();
+  const auto clock_sync_pulse_source_raw_ptr = clock_sync_pulse_source.get_if<std::string>();
+  if (clock_sync_pulse_source_ptr) {
+    request.set_clock_sync_pulse_source_mapped(*clock_sync_pulse_source_ptr);
+  }
+  else if (clock_sync_pulse_source_raw_ptr) {
+    request.set_clock_sync_pulse_source_raw(*clock_sync_pulse_source_raw_ptr);
+  }
   request.set_master_enabled(master_enabled);
 
   auto response = ConfigureClockResponse{};
@@ -974,7 +1002,7 @@ export_attribute_configuration_file(const StubPtr& stub, const nidevice_grpc::Se
 }
 
 ExportSignalResponse
-export_signal(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<ExportableSignals, pb::int32>& signal, const pb::string& signal_identifier, const pb::string& output_terminal)
+export_signal(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<ExportableSignals, pb::int32>& signal, const pb::string& signal_identifier, const simple_variant<ClockingTerminalValues, std::string>& output_terminal)
 {
   ::grpc::ClientContext context;
 
@@ -989,7 +1017,14 @@ export_signal(const StubPtr& stub, const nidevice_grpc::Session& vi, const simpl
     request.set_signal_raw(*signal_raw_ptr);
   }
   request.set_signal_identifier(signal_identifier);
-  request.set_output_terminal(output_terminal);
+  const auto output_terminal_ptr = output_terminal.get_if<ClockingTerminalValues>();
+  const auto output_terminal_raw_ptr = output_terminal.get_if<std::string>();
+  if (output_terminal_ptr) {
+    request.set_output_terminal_mapped(*output_terminal_ptr);
+  }
+  else if (output_terminal_raw_ptr) {
+    request.set_output_terminal_raw(*output_terminal_raw_ptr);
+  }
 
   auto response = ExportSignalResponse{};
 
@@ -1854,7 +1889,7 @@ set_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, 
 }
 
 SetAttributeViStringResponse
-set_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttribute& attribute_id, const pb::string& value)
+set_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttribute& attribute_id, const simple_variant<NiScopeStringAttributeValuesMapped, std::string>& value)
 {
   ::grpc::ClientContext context;
 
@@ -1862,7 +1897,14 @@ set_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, c
   request.mutable_vi()->CopyFrom(vi);
   request.set_channel_list(channel_list);
   request.set_attribute_id(attribute_id);
-  request.set_value_raw(value);
+  const auto value_ptr = value.get_if<NiScopeStringAttributeValuesMapped>();
+  const auto value_raw_ptr = value.get_if<std::string>();
+  if (value_ptr) {
+    request.set_value_mapped(*value_ptr);
+  }
+  else if (value_raw_ptr) {
+    request.set_value_raw(*value_raw_ptr);
+  }
 
   auto response = SetAttributeViStringResponse{};
 
