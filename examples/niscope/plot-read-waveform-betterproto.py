@@ -127,7 +127,7 @@ async def perform_acquire():
             vi=vi,
             channel_list=CHANNELS,
             attribute_id=niscope_grpc.NiScopeAttribute.NISCOPE_ATTRIBUTE_MEAS_REF_LEVEL_UNITS,
-            value_raw=niscope_grpc.NiScopeInt32AttributeValues.NISCOPE_INT32_REF_LEVEL_UNITS_VAL_PERCENTAGE,
+            value_raw=niscope_grpc.NiScopeInt32AttributeValues.NISCOPE_INT32_MEAS_REF_LEVEL_UNITS_VAL_MEAS_PERCENTAGE,
         )
         await check_for_error(scope_service, vi, set_result)
 

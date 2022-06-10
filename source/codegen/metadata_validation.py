@@ -57,6 +57,8 @@ PARAM_SCHEMA = Schema(
         Optional("grpc_field_number"): And(str, Use(int)),
         # integer in string form, make sure int(x) doesn't raise
         Optional("grpc_raw_field_number"): And(str, Use(int)),
+        # integer in string form, make sure int(x) doesn't raise
+        Optional("grpc_mapped_field_number"): And(str, Use(int)),
         Optional("type_in_documentation"): str,
         Optional("include_in_proto"): bool,
         Optional("proto_only"): bool,
