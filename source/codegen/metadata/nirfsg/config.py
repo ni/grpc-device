@@ -39,6 +39,7 @@ config = {
             }
         }
     },
+    'linux_rt_support': False,
     'metadata_version': '0.1',
     'module_name': 'nirfsg',
     'session_class_description': 'An NI-RFSG session to a National Instruments RF Vector Signal Generator.',

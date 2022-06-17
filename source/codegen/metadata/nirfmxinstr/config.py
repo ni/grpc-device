@@ -56,6 +56,7 @@ config = {
             }
         }
     },
+    'linux_rt_support': False,
     'metadata_version': '0.1',
     'module_name': 'nirfmxinstr',
     'session_class_description': 'An NI-RFmxInstr instrument handle',

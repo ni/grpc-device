@@ -141,6 +141,7 @@ config = {
             }
         }
     },
+    'linux_rt_support': False,
     'metadata_version': '1.0',
     'module_name': 'nirfsa',
     'session_class_description': 'An NI-RFSA session.',

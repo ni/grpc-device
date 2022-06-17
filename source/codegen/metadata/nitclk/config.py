@@ -32,6 +32,7 @@ config = {
             }
         }
     },
+    'linux_rt_support': True,
     'metadata_version': '2.0',
     'module_name': 'nitclk',
     'repeated_capabilities': [

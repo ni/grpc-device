@@ -24,6 +24,7 @@ config = {
             "64bit": {"name": "nisync.dll", "type": "cdll"},
         },
     },
+    'linux_rt_support': True,
     "metadata_version": "2.0",
     "module_name": "nisync",
     "repeated_capabilities": [{"prefix": "", "python_name": "channels"}],
