@@ -8,6 +8,7 @@ The following metadata was added:
 - 'java_package': 'com.ni.grpc.tclk'
 - 'csharp_namespace': 'NationalInstruments.Grpc.TClk'
 - 'c_header': 'niTClk.h'
+- 'linux_rt_support': True
 
 ## attributes.py
 

@@ -8,6 +8,7 @@ The following metadata was added :
 - 'csharp_namespace': 'NationalInstruments.Grpc.Digital'
 - 'namespace_component': 'nidigitalpattern'
 - 'module_name' is changed to 'nidigitalpattern'
+- 'linux_rt_support': False
 
 ## attributes.py
 

@@ -7,6 +7,7 @@ The following metadata was added:
 - 'service_class_prefix': 'NiDCPower'
 - 'java_package': 'com.ni.grpc.dcpower'
 - 'csharp_namespace': 'NationalInstruments.Grpc.DCPower'
+- 'linux_rt_support': True
 
 The following function name was capitalised:
 - 'close_function': 'Close'

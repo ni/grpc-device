@@ -1,5 +1,10 @@
 # Changes in metadata from the nimi-python metadata
 
+## config.py
+
+The following metadata was added :
+- 'linux_rt_support': True
+
 ## attributes.py
 
 Removed the following deprecated attributes.
