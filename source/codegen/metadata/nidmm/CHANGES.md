@@ -7,6 +7,7 @@ The following metadata was added :
 - 'java_package': 'com.ni.grpc.dmm'
 - 'csharp_namespace': 'NationalInstruments.Grpc.Dmm'
 - 'namespace_component': 'nidmm'
+- 'linux_rt_support': True
 
 
 ## attributes.py

@@ -70,6 +70,7 @@ config = {
             }
         }
     },
+    'linux_rt_support': True,
     'metadata_version': '0.1',
     'module_name': 'nixnetsocket',
     'session_class_description': 'An NI-XNET ethernet socket',

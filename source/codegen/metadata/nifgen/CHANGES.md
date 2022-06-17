@@ -7,6 +7,7 @@ The following metadata was added:
 - 'service_class_prefix': 'NiFgen'
 - 'java_package': 'com.ni.grpc.fgen'
 - 'csharp_namespace': 'NationalInstruments.Grpc.Fgen'
+- 'linux_rt_support': False
 
 # Changes in metadata from the base metadata
 

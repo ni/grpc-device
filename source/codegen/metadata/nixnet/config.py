@@ -70,6 +70,7 @@ config = {
             }
         }
     },
+    'linux_rt_support': True,
     'metadata_version': '0.1',
     'module_name': 'nixnet',
     'session_class_description': 'An NI-XNET session.',

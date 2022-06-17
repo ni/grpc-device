@@ -88,6 +88,7 @@ config = {
             }
         }
     },
+    'linux_rt_support': False,
     'metadata_version': '2.0',
     'module_name': 'nifake_non_ivi',
     'session_class_description': 'An NI-FAKE driver that does not use IVI types',

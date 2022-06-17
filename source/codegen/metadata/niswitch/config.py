@@ -42,6 +42,7 @@ config = {
             }
         }
     },
+    'linux_rt_support': True,
     'metadata_version': '2.0',
     'module_name': 'niswitch',
     'session_class_description': 'An NI-SWITCH session to a National Instruments Switch Module',

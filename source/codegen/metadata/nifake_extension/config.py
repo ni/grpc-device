@@ -30,6 +30,7 @@ config = {
             }
         }
     },
+    'linux_rt_support': False,
     'metadata_version': '2.0',
     'module_name': 'nifake_extension',
     'session_class_description': 'An NI-FAKE Extension that adds fake features to ni-fake sessions',

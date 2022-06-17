@@ -7,6 +7,7 @@ The following metadata was added :
 - 'java_package': 'com.ni.niswitch.grpc',
 - 'csharp_namespace': 'NationalInstruments.NISwitch.Grpc',
 - 'namespace_component': 'niswitch',
+- 'linux_rt_support': True
 
 Removed the 'repeated-capabilities' as it is python specific.
 
