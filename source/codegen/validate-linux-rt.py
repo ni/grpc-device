@@ -1,12 +1,16 @@
-"""Script for validating if a set of changed files warrants updating the Linux RT Feed.
-Expects output of git diff --name-only <last-release-commit> <current-commit> to be piped in so it can be read from sys.stdin"""
+"""
+Script for validating if a set of changed files warrants updating the Linux RT Feed.
+Expects output of git diff --name-only <last-release-commit> <current-commit> 
+to be piped in so it can be read from sys.stdin
+"""
 
 import argparse
 import fnmatch
 import os
 import sys
-from template_helpers import load_metadata
 from typing import List
+
+from template_helpers import load_metadata
 
 
 def _check_core_files_affecting_rt(changed_files: List[str]) -> bool:
