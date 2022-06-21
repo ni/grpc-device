@@ -1,4 +1,5 @@
 """Script for validating if a set of changed files warrants updating the Linux RT Feed.
+
 Expects output of git diff --name-only <last-release-commit> <current-commit> 
 to be piped in so it can be read from sys.stdin
 """
