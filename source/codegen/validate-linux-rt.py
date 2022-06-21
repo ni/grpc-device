@@ -41,7 +41,6 @@ def _check_driver_files_affecting_rt(driver_name: str, changed_files: List[str])
 
 
 def _check_all(metadata_dir: str, changed_files: List[str]) -> bool:
-
     if _check_core_files_affecting_rt(changed_files):
         return True
     rt_supported_drivers = [
