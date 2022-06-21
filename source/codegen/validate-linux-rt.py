@@ -8,50 +8,45 @@ import argparse
 import fnmatch
 import os
 import sys
-from typing import List
+from typing import Set
+from pprint import pprint
 
 from template_helpers import load_metadata
 
 
-def _check_core_files_affecting_rt(changed_files: List[str]) -> bool:
-    files_affecting_linux_rt = [
-        "source/config/*",
-        "source/custom/ivi_errors.h",
-        "source/protobuf/*",
-        "source/server/*",
-    ]
-
-    for pattern in files_affecting_linux_rt:
-        if fnmatch.filter(changed_files, pattern):
-            return True
-    return False
+def _get_codegen_changes(changed_files: Set[str]) -> Set[str]:
+    return set(fnmatch.filter(changed_files, "source/codegen/*"))
 
 
-def _check_driver_files_affecting_rt(driver_name: str, changed_files: List[str]) -> bool:
+def _get_non_rt_driver_changes(driver_name: str, changed_files: Set[str]) -> Set[str]:
     files_affecting_linux_rt = [
         f"generated/{driver_name}/*",
         f"examples/{driver_name}/*",
         f"source/custom/{driver_name}*",
     ]
+    non_rt_driver_changes = set()
 
     for pattern in files_affecting_linux_rt:
-        if fnmatch.filter(changed_files, pattern):
-            return True
-    return False
+        non_rt_driver_changes |= set(fnmatch.filter(changed_files, pattern))
+    return non_rt_driver_changes
 
 
-def _check_all(metadata_dir: str, changed_files: List[str]) -> bool:
-    if _check_core_files_affecting_rt(changed_files):
-        return True
-    rt_supported_drivers = [
+def _need_linux_rt_feed_update(metadata_dir: str, changed_files: Set[str]) -> bool:
+    codegen_changes = _get_codegen_changes(changed_files)
+    remaining_changes = changed_files - codegen_changes
+    non_rt_drivers = [
         driver
         for driver in os.listdir(metadata_dir)
-        if load_metadata(f"{metadata_dir}/{driver}/")["config"]["linux_rt_support"]
+        if not load_metadata(f"{metadata_dir}/{driver}/")["config"]["linux_rt_support"]
     ]
-    for driver in rt_supported_drivers:
-        if _check_driver_files_affecting_rt(driver, changed_files):
-            return True
-    return False
+    non_rt_driver_changes = set()
+    for non_rt_driver in non_rt_drivers:
+        non_rt_driver_changes |= _get_non_rt_driver_changes(non_rt_driver, remaining_changes)
+    remaining_changes = remaining_changes - non_rt_driver_changes
+    if non_rt_driver_changes:
+        if len(remaining_changes) == 1 and next(iter(remaining_changes)) == "source/CMakeLists.txt":
+            return False
+    return len(remaining_changes) > 0
 
 
 if __name__ == "__main__":
@@ -63,10 +58,10 @@ if __name__ == "__main__":
         help="The path to the directory containing all of the metadata.",
     )
     args = parser.parse_args()
-    changed_files = list()
+    changed_files = set()
     for line in sys.stdin:
-        changed_files.append(line.strip())
-    if _check_all(args.metadata, changed_files):
-        print("Linux RT Feed needs updating.")
+        changed_files.add(line.strip())
+    if _need_linux_rt_feed_update(args.metadata, changed_files):
+        print("\nLinux RT Feed likely needs updating.")
     else:
-        print("Linux RT Feed does not need updating.")
+        print("\nLinux RT Feed should not need updating.")
