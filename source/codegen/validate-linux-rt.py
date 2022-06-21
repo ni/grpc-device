@@ -9,7 +9,6 @@ import fnmatch
 import os
 import sys
 from typing import Set
-from pprint import pprint
 
 from template_helpers import load_metadata
 
