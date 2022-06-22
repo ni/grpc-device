@@ -29,6 +29,6 @@ jobs:
           git describe --abbrev=0 --tags ${{github.ref_name}}^
         )"
 
-    - name: Run validate_linux_rt.py
+    - name: Update Linux RT Feed to ${{ github.ref_name }}?
       run: |
         git diff --name-only ${{ steps.previoustag.outputs.tag}}..${{ github.ref_name }} | python source/codegen/validate-linux-rt.py source/codegen/metadata
