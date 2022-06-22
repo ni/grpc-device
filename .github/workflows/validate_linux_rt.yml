@@ -26,7 +26,7 @@ jobs:
       id: previoustag
       run: >-
         echo "::set-output name=tag::$(
-          git describe --abbrev=0 ${{github.ref_name}}^
+          git describe --abbrev=0 --tags ${{github.ref_name}}^
         )"
 
     - name: Run validate_linux_rt.py
