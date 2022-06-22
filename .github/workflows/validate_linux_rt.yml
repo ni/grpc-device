@@ -1,0 +1,29 @@
+name: Validate Linux RT Feed
+on:
+  push:
+    tags:
+      - 'vtest*.*.*'
+
+jobs:
+  validate_linux_rt:
+    name: Validate Linux RT Feed
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Repo
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    - name: Setup python3
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: "Get previous tag"
+      id: previoustag
+      uses: "WyriHaximus/github-action-get-previous-tag@v1"
+
+    - name: Run validate_linux_rt.py
+      run: |
+        git diff --name-only ${{ steps.previoustag.outputs.tag}}..${{github.ref_name}} | python source/codegen/validate-linux-rt.py
+      
