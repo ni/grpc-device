@@ -19,6 +19,9 @@ jobs:
       with:
         python-version: '3.x'
 
+    - name: Install build dependencies
+      run: python -m pip install -r python_build_requirements.txt
+
     - name: "Get previous tag"
       id: previoustag
       uses: "WyriHaximus/github-action-get-previous-tag@v1"
