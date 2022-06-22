@@ -43,7 +43,10 @@ jobs:
 
     - name: "Get previous tag"
       id: previoustag
-      uses: "WyriHaximus/github-action-get-previous-tag@v1"
+      run: >-
+        echo "::set-output name=tag::$(
+          git describe --abbrev=0 --tags ${{github.ref_name}}^
+        )"
 
     - name: "Get next minor version"
       id: semvers
