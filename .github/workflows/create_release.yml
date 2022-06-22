@@ -16,7 +16,27 @@ jobs:
 
     - uses: actions/download-artifact@v3
       with:
+        name: ni-grpc-device-client
+        path: downloads/artifacts
+
+    - uses: actions/download-artifact@v3
+      with:
         name: ni-grpc-device-client-Linux
+        path: downloads/artifacts
+
+    - uses: actions/download-artifact@v3
+      with:
+        name: ni-grpc-device-server-linux-glibc2_27-x64
+        path: downloads/artifacts
+
+    - uses: actions/download-artifact@v3
+      with:
+        name: ni-grpc-device-server-ni-linux-rt-x64
+        path: downloads/artifacts
+
+    - uses: actions/download-artifact@v3
+      with:
+        name: ni-grpc-device-server-windows-x64
         path: downloads/artifacts
 
     - name: "Create Release"
