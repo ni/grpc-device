@@ -79,6 +79,6 @@ if __name__ == "__main__":
     for line in sys.stdin:
         changed_files.add(line.strip())
     if _need_linux_rt_feed_update(args.metadata, changed_files):
-        print("\nLinux RT Feed likely needs updating.")
+        print("\nLinux RT's grpc-device dependency needs updating.")
     else:
-        print("\nLinux RT Feed should not need updating.")
+        print("\nLinux RT's grpc-device dependency doesn't need updating.")

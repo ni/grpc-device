@@ -22,13 +22,13 @@ jobs:
     - name: Install build dependencies
       run: python -m pip install -r python_build_requirements.txt
 
-    - name: "Get previous tag"
+    - name: Get previous tag
       id: previoustag
       run: >-
         echo "::set-output name=tag::$(
           git describe --abbrev=0 --tags ${{github.ref_name}}^
         )"
 
-    - name: Update Linux RT Feed to ${{ github.ref_name }}?
+    - name: Update Linux RT's grpc-device dependency to ${{ github.ref_name }}?
       run: |
         git diff --name-only ${{ steps.previoustag.outputs.tag}}..${{ github.ref_name }} | python source/codegen/validate-linux-rt.py source/codegen/metadata
