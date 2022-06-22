@@ -17,6 +17,10 @@ def _get_codegen_changes(changed_files: Set[str]) -> Set[str]:
     return set(fnmatch.filter(changed_files, "source/codegen/*"))
 
 
+def _get_test_changes(changed_files: Set[str]) -> Set[str]:
+    return set(fnmatch.filter(changed_files, "source/tests/*"))
+
+
 def _get_non_rt_driver_changes(driver_name: str, changed_files: Set[str]) -> Set[str]:
     files_affecting_linux_rt = [
         f"generated/{driver_name}/*",
@@ -33,6 +37,8 @@ def _get_non_rt_driver_changes(driver_name: str, changed_files: Set[str]) -> Set
 def _need_linux_rt_feed_update(metadata_dir: str, changed_files: Set[str]) -> bool:
     codegen_changes = _get_codegen_changes(changed_files)
     remaining_changes = changed_files - codegen_changes
+    test_changes = _get_test_changes(changed_files)
+    remaining_changes -= test_changes
     non_rt_drivers = [
         driver
         for driver in os.listdir(metadata_dir)
