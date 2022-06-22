@@ -25,4 +25,4 @@ jobs:
 
     - name: Run validate_linux_rt.py
       run: |
-        git diff --name-only ${{ steps.previoustag.outputs.tag}}..${{github.ref_name}} | python source/codegen/validate-linux-rt.py
+        git diff --name-only v1.5.1..${{github.ref_name}} | python source/codegen/validate-linux-rt.py
