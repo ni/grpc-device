@@ -39,6 +39,16 @@ jobs:
         name: ni-grpc-device-server-windows-x64
         path: downloads/artifacts
 
+    - name: "Get previous tag"
+      id: previoustag
+      uses: "WyriHaximus/github-action-get-previous-tag@v1"
+
+    - name: "Get next minor version"
+      id: semvers
+      uses: "WyriHaximus/github-action-next-semvers@v1"
+      with:
+        version: ${{ steps.previoustag.outputs.tag}}
+
     - name: "Create Release"
       uses: ncipollo/release-action@v1
       with:
@@ -47,6 +57,6 @@ jobs:
         draft: true
         generateReleaseNotes: true
         bodyFile: ".github/release_template.md"
-        name: "NI gRPC Device Server #.#.#"
-        tag: "vx.x.x"
+        name: "NI gRPC Device Server ${{ steps.semvers.outputs.v_patch }}"
+        tag: ${{ steps.semvers.outputs.v_patch }}
         token: ${{ secrets.GITHUB_TOKEN }}
