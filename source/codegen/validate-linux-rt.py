@@ -48,9 +48,8 @@ def _need_linux_rt_feed_update(metadata_dir: str, changed_files: Set[str]) -> bo
     for non_rt_driver in non_rt_drivers:
         non_rt_driver_changes |= _get_non_rt_driver_changes(non_rt_driver, remaining_changes)
     remaining_changes = remaining_changes - non_rt_driver_changes
-    if non_rt_driver_changes:
-        if len(remaining_changes) == 1 and next(iter(remaining_changes)) == "source/CMakeLists.txt":
-            return False
+    if non_rt_driver_changes and remaining_changes == {"source/CMakeLists.txt"}:
+        return False
     return len(remaining_changes) > 0
 
 
