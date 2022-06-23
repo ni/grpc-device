@@ -2,7 +2,7 @@ name: Validate Linux RT Feed
 on:
   push:
     tags:
-      - 'vtest*.*.*'
+      - 'v*.*.*'
 
 jobs:
   validate_linux_rt:
