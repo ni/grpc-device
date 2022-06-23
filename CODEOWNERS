@@ -1,14 +1,14 @@
 # Default code owner for the repository
-* @astarche @mgumble
+* @astarche
 
 # Owners for the build files
-/CMakeLists.txt      @SparkingSpork @astarche @mgumble
-/.github/**/*.yml    @SparkingSpork @astarche @mgumble
-/scripts/            @SparkingSpork @astarche @mgumble
+/CMakeLists.txt      @SparkingSpork @astarche
+/.github/**/*.yml    @SparkingSpork @astarche
+/scripts/            @SparkingSpork @astarche
 
 # Codegen
-/generated           @reckenro @astarche @mgumble
-/source/codegen/     @reckenro @astarche @mgumble
+/generated           @reckenro @astarche
+/source/codegen/     @reckenro @astarche
 
 # Test
-/source/tests/       @reckenro @astarche @mgumble
+/source/tests/       @reckenro @astarche
