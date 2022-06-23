@@ -8,8 +8,8 @@ import argparse
 import fnmatch
 import os
 import sys
-from typing import Set
 from pprint import pprint
+from typing import Set
 
 from template_helpers import load_metadata
 
