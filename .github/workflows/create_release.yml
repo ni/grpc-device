@@ -19,7 +19,12 @@ jobs:
     - uses: actions/download-artifact@v3
       with:
         name: ni-grpc-device-client
-        path: downloads/artifacts
+        path: downloads/ni-grpc-device-client
+
+    - uses: vimtor/action-zip@v1
+      with:
+        files: downloads/ni-grpc-device-client
+        dest: downloads/artifacts/ni-grpc-device-client.zip
 
     - uses: actions/download-artifact@v3
       with:
@@ -39,7 +44,12 @@ jobs:
     - uses: actions/download-artifact@v3
       with:
         name: ni-grpc-device-server-windows-x64
-        path: downloads/artifacts
+        path: downloads/ni-grpc-device-server-windows-x64
+
+    - uses: vimtor/action-zip@v1
+      with:
+        files: downloads/ni-grpc-device-server-windows-x64
+        dest: downloads/artifacts/ni-grpc-device-server-windows-x64.zip
 
     - name: "Get previous tag"
       id: previoustag
@@ -60,8 +70,18 @@ jobs:
         artifacts: "downloads/artifacts/*"
         commit: ${{ github.sha }}
         draft: true
-        generateReleaseNotes: true
-        bodyFile: ".github/release_template.md"
+        body: |
+          Updates since release ${{ steps.previoustag.outputs.tag }}:
+          * List any bug fixes or general updates for this release vs. the previous one.
+
+          Breaking Changes:
+          * List out any breaking changes introduced since the last release.
+
+          This release contains the ni-grpc-device-server application for Windows, Linux Desktop, and Linux RT.
+
+          It also contains client bundles that contain the proto files needed to build a gRPC client as well as several example clients.
+
+          Documentation on using this release can be found in our [README](https://github.com/ni/grpc-device#downloading-a-release) and [wiki](https://github.com/ni/grpc-device/wiki).
         name: "NI gRPC Device Server ${{ steps.semvers.outputs.v_patch }}"
         tag: ${{ steps.semvers.outputs.v_patch }}
         token: ${{ secrets.GITHUB_TOKEN }}
