@@ -53,15 +53,18 @@ jobs:
 
     - name: "Get previous tag"
       id: previoustag
-      uses: "WyriHaximus/github-action-get-previous-tag@v1"
+      run: >-
+        echo "::set-output name=tag::$(
+          git tag --list --sort=-version:refname | grep '^\(v[0-9]\+.[0-9]\+.[0-9]\+\)$' | head -1
+        )"
 
-    - name: "Get next minor version"
+    - name: "Get next version"
       id: semvers
       uses: "WyriHaximus/github-action-next-semvers@v1"
       with:
         version: ${{ steps.previoustag.outputs.tag}}
 
-    - name: "Create Release"
+    - name: "Create Draft Release"
       uses: ncipollo/release-action@v1
       with:
         artifacts: "downloads/artifacts/*"
@@ -79,6 +82,6 @@ jobs:
           It also contains client bundles that contain the proto files needed to build a gRPC client as well as several example clients.
 
           Documentation on using this release can be found in our [README](https://github.com/ni/grpc-device#downloading-a-release) and [wiki](https://github.com/ni/grpc-device/wiki).
-        name: "NI gRPC Device Server ${{ steps.semvers.outputs.v_patch }}"
+        name: "NI gRPC Device Server ${{ steps.semvers.outputs.patch }}"
         tag: ${{ steps.semvers.outputs.v_patch }}
         token: ${{ secrets.GITHUB_TOKEN }}
