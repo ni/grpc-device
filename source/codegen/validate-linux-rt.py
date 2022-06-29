@@ -87,4 +87,4 @@ if __name__ == "__main__":
         print("\nLinux RT's grpc-device dependency doesn't need updating.")
     if env_file:
         with open(env_file, "a") as myfile:
-            myfile.write(f"UPDATE_LINUX_RT_VAR={update_linux_rt}")
+            myfile.write(f"SHOULD_UPDATE_LINUX_RT={update_linux_rt}")

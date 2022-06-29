@@ -48,4 +48,4 @@ jobs:
         git diff --name-only ${{ steps.secondlatesttag.outputs.tag}}..${{ steps.latesttag.outputs.tag }} | python source/codegen/validate-linux-rt.py source/codegen/metadata
 
     - name: Echo if Linux RT needs updating
-      run: echo ${{ env.SHOULD_UPDATE_RT}}
+      run: echo ${{ env.SHOULD_UPDATE_LINUX_RT}}
