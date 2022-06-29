@@ -19,30 +19,30 @@ jobs:
       with:
         python-version: '3.x'
 
-    - name: Install build dependencies
-      run: python -m pip install -r python_build_requirements.txt
-
-    - name: Get latest tag
+    - name: Get the latest tag
       id: latesttag
       run: >-
         echo "::set-output name=tag::$(
           git tag --list --sort=-version:refname | grep '^\(v[0-9]\+.[0-9]\+.[0-9]\+\)$' | head -1
         )"
 
-    - name: Get second latest tag
+    - name: Get the second latest tag
       id: secondlatesttag
       run: >-
         echo "::set-output name=tag::$(
-          git tag --list --sort=-version:refname | grep '^\(v[0-9]\+.[0-9]\+.[0-9]\+\)$' | head -2
+          git tag --list --sort=-version:refname | grep '^\(v[0-9]\+.[0-9]\+.[0-9]\+\)$' | sed '1d' | head -1
         )"
 
     - name: Fail if new tag is not latest tag
       if: ${{ github.ref_name != steps.latesttag.outputs.tag}}
-      uses: actions/github-script@v3
+      uses: actions/github-script@v6
       with:
         script: |
-            core.setFailed('The new tag is not the latest tag. Checking if the linux rt feed needs updating doesn't make sense on a patch to a previous release.')
+            core.setFailed(`The new tag is not an update to the latest released tag. Checking if the Linux RT Feed needs updating doesn't make sense on a patch to a previous release.`)
 
-    - name: Update Linux RT's grpc-device dependency to ${{ github.ref_name }}?
+    - name: Install build dependencies
+      run: python -m pip install -r python_build_requirements.txt
+
+    - name: Update Linux RT's grpc-device dependency to ${{ steps.latesttag.outputs.tag }}?
       run: |
-        git diff --name-only ${{ steps.secondlatesttag.outputs.tag}}..${{ github.ref_name }} | python source/codegen/validate-linux-rt.py source/codegen/metadata
+        git diff --name-only ${{ steps.secondlatesttag.outputs.tag}}..${{ steps.latesttag.outputs.tag }} | python source/codegen/validate-linux-rt.py source/codegen/metadata
