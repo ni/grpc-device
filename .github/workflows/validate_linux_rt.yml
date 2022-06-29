@@ -58,6 +58,7 @@ jobs:
       if: ${{ env.SHOULD_UPDATE_LINUX_RT == 'True'}}
       uses: JasonEtco/create-an-issue@v2
       env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         NEW_RELEASE: ${{ steps.latesttagwithoutv.outputs.tag }}
         GITHUB_SHA: ${{ github.sha}}
       with:
