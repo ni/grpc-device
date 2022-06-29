@@ -462,7 +462,7 @@ TEST_F(NiRFmxLTEDriverApiTests, NBIoTModAccAcpChpObwSemCompositeSingleCarrierFro
   EXPECT_LT(0.0, mod_acc_fetch_composite_evm_response.maximum_peak_composite_evm());
   EXPECT_NE(0.0, mod_acc_fetch_composite_evm_response.mean_frequency_error());
   EXPECT_LE(0, mod_acc_fetch_composite_evm_response.peak_composite_evm_symbol_index());
-  EXPECT_LT(0, mod_acc_fetch_composite_evm_response.peak_composite_evm_subcarrier_index());
+  EXPECT_LE(0, mod_acc_fetch_composite_evm_response.peak_composite_evm_subcarrier_index());
   EXPECT_EQ(0, mod_acc_fetch_composite_evm_response.peak_composite_evm_slot_index());
   EXPECT_GT(0.0, mod_acc_fetch_iq_impairments_response.mean_iq_origin_offset());
   EXPECT_NE(0.0, mod_acc_fetch_iq_impairments_response.mean_iq_gain_imbalance());
@@ -827,7 +827,7 @@ TEST_F(NiRFmxLTEDriverApiTests, ULLAAModAccMultiCarrierFromExample_FetchData_Dat
   EXPECT_LT(0.0, mod_acc_fetch_composite_evm_array_response.maximum_peak_composite_evm(0));
   EXPECT_EQ(2, mod_acc_fetch_composite_evm_array_response.mean_frequency_error_size());
   EXPECT_EQ(2, mod_acc_fetch_composite_evm_array_response.mean_frequency_error().size());
-  EXPECT_GT(0.0, mod_acc_fetch_composite_evm_array_response.mean_frequency_error(0));
+  EXPECT_NE(0.0, mod_acc_fetch_composite_evm_array_response.mean_frequency_error(0));
   EXPECT_EQ(2, mod_acc_fetch_composite_evm_array_response.peak_composite_evm_symbol_index_size());
   EXPECT_EQ(2, mod_acc_fetch_composite_evm_array_response.peak_composite_evm_symbol_index().size());
   EXPECT_EQ(3, mod_acc_fetch_composite_evm_array_response.peak_composite_evm_symbol_index(0));

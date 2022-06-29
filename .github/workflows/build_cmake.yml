@@ -42,11 +42,11 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: '3.x'
-    
+
     - name: Install nasm
       if: ${{ runner.os == 'Windows' }}
       run: choco install nasm
-    
+
     - name: Update Submodules
       run: git submodule update --init --recursive --depth=1
 
@@ -131,7 +131,7 @@ jobs:
         retention-days: 5
 
     - name: Tar Linux Test Binaries
-      if: ${{ (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/releases')) && (runner.os == 'Linux') }}
+      if: ${{ runner.os == 'Linux' }}
       run: >-
         tar -cvzf ni-grpc-device-tests-linux-glibc${{ matrix.config.glibc_version }}-x64.tar.gz
         -C ${GITHUB_WORKSPACE}/build
@@ -147,7 +147,7 @@ jobs:
 
     - name: Upload Linux Test Binaries Artifact
       uses: actions/upload-artifact@v2
-      if: ${{ (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/releases')) && (runner.os == 'Linux') }}
+      if: ${{ runner.os == 'Linux' }}
       with:
         name: ni-grpc-device-tests-linux-glibc${{ matrix.config.glibc_version }}-x64
         path: ni-grpc-device-tests-linux-glibc${{ matrix.config.glibc_version }}-x64.tar.gz
@@ -175,7 +175,7 @@ jobs:
 
     - name: Upload Windows Test Binaries Artifact
       uses: actions/upload-artifact@v2
-      if: ${{ (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/releases')) && (runner.os == 'Windows') }}
+      if: ${{ runner.os == 'Windows' }}
       with:
         name: ni-grpc-device-tests-windows-x64
         path: |
@@ -183,6 +183,9 @@ jobs:
           build/Release/IntegrationTestsRunner.exe
           build/Release/TestApi.dll
           build/Release/SystemTestsRunner.exe
+          build/Release/LTE20MHz Waveform (Two Subframes).json
+          build/Release/NR_FR2_UL_SISO_CC-1_BW-50MHz_SCS-120kHz.json
+          build/Release/WLAN_80211n_20MHz_1Seg_2Chain_MIMO.json
           build/Release/test_mutual_tls_config.json
           build/Release/UnitTestsRunner.exe
           LICENSE

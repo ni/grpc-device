@@ -1,3 +1,4 @@
+#include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
 #include "device_server.h"
@@ -9,11 +10,12 @@ namespace tests {
 namespace system {
 
 namespace dmm = nidmm_grpc;
+using namespace ::testing;
 
 const int kViErrorDmmRsrcNFound = -1074118656;
 const int kInvalidDmmSession = -1074130544;
 const char* kViErrorDmmRsrcNFoundMessage = "Device was not recognized. The device is not supported with this driver or version.\n\nInvalid Identifier: ";
-const char* kInvalidDmmSessionMessage = "IVI: (Hex 0xBFFA1190) The session handle is not valid.";
+const char* kInvalidDmmSessionMessage = "The session handle is not valid.";
 const char* kResourceName = "FakeDevice";
 const char* kDmmOptionsString = "Simulate=1, DriverSetup=Model:4080; BoardType:PXIe";
 const char* kSessionName = "SessionName";
@@ -140,7 +142,7 @@ TEST_F(NiDmmSessionTest, InvalidSession_CloseSession_ReturnsInvalidSesssionError
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(kInvalidDmmSession, response.status());
   std::string error_message = get_error_message(response.status());
-  EXPECT_STREQ(kInvalidDmmSessionMessage, error_message.c_str());
+  EXPECT_THAT(error_message.c_str(), HasSubstr(kInvalidDmmSessionMessage));
 }
 
 TEST_F(NiDmmSessionTest, InitWithErrorFromDriver_ReturnsUserErrorMessage)

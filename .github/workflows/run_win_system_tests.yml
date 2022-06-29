@@ -1,0 +1,28 @@
+name: Run Windows System Tests
+
+on:
+  workflow_call:
+  workflow_dispatch:
+
+jobs:
+  run-tests:
+    name: Run Tests
+    runs-on:
+    - self-hosted
+    - windows
+    - x64
+    - grpcbot-win-10
+
+    steps:
+    - name: Download Tests Artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: ni-grpc-device-tests-windows-x64
+
+    - run: ls -R
+      working-directory: ./build/Release
+
+    - name: Run System Tests
+      run: .\SystemTestsRunner.exe
+      working-directory: ./build/Release
+      timeout-minutes: 27
