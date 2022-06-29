@@ -39,6 +39,7 @@ jobs:
     - name: Fail if new tag is not latest tag
       if: ${{ github.ref_name != steps.latesttag.outputs.tag}}
       uses: actions/github-script@v3
+      with:
         script: |
             core.setFailed('The new tag is not the latest tag. Checking if the linux rt feed needs updating doesn't make sense on a patch to a previous release.')
 
