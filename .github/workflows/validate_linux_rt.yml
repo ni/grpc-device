@@ -48,7 +48,7 @@ jobs:
         git diff --name-only ${{ steps.secondlatesttag.outputs.tag}}..${{ steps.latesttag.outputs.tag }} | python source/codegen/validate-linux-rt.py source/codegen/metadata
 
     - name: Create GitHub Issue
-      if: ${{ env.SHOULD_UPDATE_LINUX_RT == True}}
+      if: ${{ env.SHOULD_UPDATE_LINUX_RT == 'True'}}
       uses: JasonEtco/create-an-issue@v2
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
