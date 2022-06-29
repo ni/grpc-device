@@ -26,6 +26,13 @@ jobs:
           git tag --list --sort=-version:refname | grep '^\(v[0-9]\+.[0-9]\+.[0-9]\+\)$' | head -1
         )"
 
+    - name: Get latest tag without leading v
+      id: latesttagwithoutv
+      run: >-
+        echo "::set-output name=tag::$(
+          git tag --list --sort=-version:refname | grep '^\(v[0-9]\+.[0-9]\+.[0-9]\+\)$' | head -1 | cut -c2-
+        )"
+
     - name: Get the second latest tag
       id: secondlatesttag
       run: >-
@@ -51,9 +58,7 @@ jobs:
       if: ${{ env.SHOULD_UPDATE_LINUX_RT == 'True'}}
       uses: JasonEtco/create-an-issue@v2
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        NEW_RELEASE: ${{ steps.latesttag.outputs.tag }}
-        PREV_RELEASE: ${{ steps.secondlatesttag.outputs.tag }}
+        NEW_RELEASE: ${{ steps.latesttagwithoutv.outputs.tag }}
         GITHUB_SHA: ${{ github.sha}}
       with:
         filename: .github/update-linux-rt-template.md
