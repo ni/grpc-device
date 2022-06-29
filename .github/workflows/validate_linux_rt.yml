@@ -38,7 +38,7 @@ jobs:
       uses: actions/github-script@v6
       with:
         script: |
-            core.setFailed(`The new tag is not an update to the latest released tag. Checking if the Linux RT Feed needs updating doesn't make sense on a patch to a previous release.`)
+            core.setFailed(`The new release (${{ github.ref_name }}) is not a patch or update to the latest release (${{ steps.latesttag.outputs.tag }}). Checking if the Linux RT Feed needs updating doesn't make sense on a patch to a previous release.`)
 
     - name: Install build dependencies
       run: python -m pip install -r python_build_requirements.txt
@@ -47,5 +47,6 @@ jobs:
       run: |
         git diff --name-only ${{ steps.secondlatesttag.outputs.tag}}..${{ steps.latesttag.outputs.tag }} | python source/codegen/validate-linux-rt.py source/codegen/metadata
 
-    - name: Echo if Linux RT needs updating
+    - name: Create GitHub Issue
+      if: ${{ env.SHOULD_UPDATE_LINUX_RT == True}}
       run: echo ${{ env.SHOULD_UPDATE_LINUX_RT}}
