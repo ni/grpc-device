@@ -1,0 +1,90 @@
+name: Create Release
+
+on:
+  workflow_call:
+  workflow_dispatch:
+
+jobs:
+  create_release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+    - name: Checkout Repo
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    - uses: actions/download-artifact@v3
+      with:
+        name: ni-grpc-device-client
+        path: downloads/ni-grpc-device-client
+
+    - uses: vimtor/action-zip@v1
+      with:
+        files: downloads/ni-grpc-device-client
+        dest: downloads/artifacts/ni-grpc-device-client.zip
+
+    - uses: actions/download-artifact@v3
+      with:
+        name: ni-grpc-device-client-Linux
+        path: downloads/artifacts
+
+    - uses: actions/download-artifact@v3
+      with:
+        name: ni-grpc-device-server-linux-glibc2_27-x64
+        path: downloads/artifacts
+
+    - uses: actions/download-artifact@v3
+      with:
+        name: ni-grpc-device-server-ni-linux-rt-x64
+        path: downloads/artifacts
+
+    - uses: actions/download-artifact@v3
+      with:
+        name: ni-grpc-device-server-windows-x64
+        path: downloads/ni-grpc-device-server-windows-x64
+
+    - uses: vimtor/action-zip@v1
+      with:
+        files: downloads/ni-grpc-device-server-windows-x64
+        dest: downloads/artifacts/ni-grpc-device-server-windows-x64.zip
+
+    - name: "Get previous tag"
+      id: previoustag
+      run: >-
+        echo "::set-output name=tag::$(
+          git tag --list --sort=-version:refname | grep '^\(v[0-9]\+.[0-9]\+.[0-9]\+\)$' | head -1
+        )"
+
+    - name: "Get next version"
+      id: semvers
+      uses: "WyriHaximus/github-action-next-semvers@v1"
+      with:
+        version: ${{ steps.previoustag.outputs.tag}}
+
+    - name: "Create Draft Release"
+      uses: ncipollo/release-action@v1
+      with:
+        artifacts: "downloads/artifacts/*"
+        commit: ${{ github.sha }}
+        draft: true
+        body: |
+          Note: To populate the "Updates" and "Breaking Changes" sections below, look at the [full changelog](https://github.com/grpc-device/compare/${{ steps.previoustag.outputs.tag}}...${{ github.sha }})
+          Breaking change PRs will have the 'breaking-change' label on them.
+
+          Updates since release ${{ steps.previoustag.outputs.tag }}:
+          * List any bug fixes or general updates for this release vs. the previous one.
+
+          Breaking Changes:
+          * List out any breaking changes introduced since the last release.
+
+          This release contains the ni-grpc-device-server application for Windows, Linux Desktop, and Linux RT.
+
+          It also contains client bundles that contain the proto files needed to build a gRPC client as well as several example clients.
+
+          Documentation on using this release can be found in our [README](https://github.com/ni/grpc-device#downloading-a-release) and [wiki](https://github.com/ni/grpc-device/wiki).
+        name: "NI gRPC Device Server ${{ steps.semvers.outputs.patch }}"
+        tag: ${{ steps.semvers.outputs.v_patch }}
+        token: ${{ secrets.GITHUB_TOKEN }}
