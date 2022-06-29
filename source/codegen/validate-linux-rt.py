@@ -78,7 +78,13 @@ if __name__ == "__main__":
     changed_files = set()
     for line in sys.stdin:
         changed_files.add(line.strip())
+    env_file = os.getenv("GITHUB_ENV")
+    update_linux_rt = False
     if _need_linux_rt_feed_update(args.metadata, changed_files):
         print("\nLinux RT's grpc-device dependency needs updating.")
+        update_linux_rt = True
     else:
         print("\nLinux RT's grpc-device dependency doesn't need updating.")
+    if env_file:
+        with open(env_file, "a") as myfile:
+            myfile.write(f"UPDATE_LINUX_RT_VAR={update_linux_rt}")

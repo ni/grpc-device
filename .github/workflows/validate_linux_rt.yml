@@ -46,3 +46,6 @@ jobs:
     - name: Update Linux RT's grpc-device dependency to ${{ steps.latesttag.outputs.tag }}?
       run: |
         git diff --name-only ${{ steps.secondlatesttag.outputs.tag}}..${{ steps.latesttag.outputs.tag }} | python source/codegen/validate-linux-rt.py source/codegen/metadata
+
+    - name: Echo if Linux RT needs updating
+      run: echo ${{ env.SHOULD_UPDATE_RT}}
