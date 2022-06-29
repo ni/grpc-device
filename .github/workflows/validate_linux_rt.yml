@@ -49,4 +49,11 @@ jobs:
 
     - name: Create GitHub Issue
       if: ${{ env.SHOULD_UPDATE_LINUX_RT == True}}
-      run: echo ${{ env.SHOULD_UPDATE_LINUX_RT}}
+      uses: JasonEtco/create-an-issue@v2
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        NEW_RELEASE: ${{ steps.latesttag.outputs.tag }}
+        PREV_RELEASE: ${{ steps.secondlatesttag.outputs.tag }}
+        GITHUB_SHA: ${{ github.sha}}
+      with:
+        filename: .github/update-linux-rt-template.md
