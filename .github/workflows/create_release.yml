@@ -71,6 +71,9 @@ jobs:
         commit: ${{ github.sha }}
         draft: true
         body: |
+          Note: To populate the "Updates" and "Breaking Changes" below, look at the [full changelog](https://github.com/grpc-device/compare/${{ steps.previoustag.outputs.tag}}...${{ github.ref_name }})
+          Breaking change PRs will have the 'breaking-change' label on them.
+
           Updates since release ${{ steps.previoustag.outputs.tag }}:
           * List any bug fixes or general updates for this release vs. the previous one.
 
