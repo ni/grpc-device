@@ -1,0 +1,65 @@
+name: Validate Linux RT Feed Package Version
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+
+jobs:
+  validate_linux_rt:
+    name: Validate Linux RT Feed Package Version
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Repo
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    - name: Setup python3
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: Get the latest tag
+      id: latesttag
+      run: >-
+        echo "::set-output name=tag::$(
+          git tag --list --sort=-version:refname | grep '^\(v[0-9]\+.[0-9]\+.[0-9]\+\)$' | head -1
+        )"
+
+    - name: Get latest tag without leading v
+      id: latesttagwithoutv
+      run: >-
+        echo "::set-output name=tag::$(
+          git tag --list --sort=-version:refname | grep '^\(v[0-9]\+.[0-9]\+.[0-9]\+\)$' | head -1 | cut -c2-
+        )"
+
+    - name: Get the second latest tag
+      id: secondlatesttag
+      run: >-
+        echo "::set-output name=tag::$(
+          git tag --list --sort=-version:refname | grep '^\(v[0-9]\+.[0-9]\+.[0-9]\+\)$' | sed '1d' | head -1
+        )"
+
+    - name: Fail if new tag is not latest tag
+      if: ${{ github.ref_name != steps.latesttag.outputs.tag}}
+      uses: actions/github-script@v6
+      with:
+        script: |
+            core.setFailed(`The new release (${{ github.ref_name }}) is not a patch or update to the latest release (${{ steps.latesttag.outputs.tag }}). Checking if the Linux RT Feed needs updating doesn't make sense on a patch to a previous release.`)
+
+    - name: Install build dependencies
+      run: python -m pip install -r python_build_requirements.txt
+
+    - name: Check if Linux RT needs updating
+      run: |
+        git diff --name-only ${{ steps.secondlatesttag.outputs.tag}}..${{ steps.latesttag.outputs.tag }} | python source/codegen/validate-linux-rt.py source/codegen/metadata
+
+    - name: Create GitHub Issue
+      if: ${{ env.SHOULD_UPDATE_LINUX_RT == 'True'}}
+      uses: JasonEtco/create-an-issue@v2
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        NEW_RELEASE: ${{ steps.latesttagwithoutv.outputs.tag }}
+        GITHUB_SHA: ${{ github.sha}}
+      with:
+        filename: .github/update-linux-rt-template.md
