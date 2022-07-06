@@ -70,10 +70,8 @@ jobs:
         artifacts: "downloads/artifacts/*"
         commit: ${{ github.sha }}
         draft: true
+        generateReleaseNotes: true
         body: |
-          Note: To populate the "Updates" and "Breaking Changes" sections below, look at the [full changelog](https://github.com/grpc-device/compare/${{ steps.previoustag.outputs.tag}}...${{ github.sha }})
-          Breaking change PRs will have the 'breaking-change' label on them.
-
           Updates since release ${{ steps.previoustag.outputs.tag }}:
           * List any bug fixes or general updates for this release vs. the previous one.
 
@@ -85,6 +83,8 @@ jobs:
           It also contains client bundles that contain the proto files needed to build a gRPC client as well as several example clients.
 
           Documentation on using this release can be found in our [README](https://github.com/ni/grpc-device#downloading-a-release) and [wiki](https://github.com/ni/grpc-device/wiki).
+
+          ⚠ Use the below generated release notes to populate the "Updates" and "Breaking Changes" sections above. Any PRs with a breaking change should be tagged with the 'breaking-change' label. ⚠
         name: "NI gRPC Device Server ${{ steps.semvers.outputs.patch }}"
         tag: ${{ steps.semvers.outputs.v_patch }}
         token: ${{ secrets.GITHUB_TOKEN }}
