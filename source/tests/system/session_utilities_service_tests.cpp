@@ -44,7 +44,7 @@ TEST_F(SessionUtilitiesServiceTests, SysCfgLibraryPresent_EnumerateDevices_Respo
   EXPECT_GE(response.devices_size(), 1);
 }
 
-TEST_F(SessionUtilitiesServiceTests, SysCfgLibraryPresent_EnumerateDevices_DevicePropertiesIncludesNameModelVendorSerialNumber)
+TEST_F(SessionUtilitiesServiceTests, SysCfgLibraryPresent_EnumerateDevices_DevicePropertiesIncludesNameModelVendorSerialNumberProductId)
 {
   nidevice_grpc::EnumerateDevicesRequest request;
   nidevice_grpc::EnumerateDevicesResponse response;
@@ -57,6 +57,7 @@ TEST_F(SessionUtilitiesServiceTests, SysCfgLibraryPresent_EnumerateDevices_Devic
     EXPECT_NE(device.model().c_str(), nullptr);
     EXPECT_THAT(device.vendor(), Not(IsEmpty()));
     EXPECT_NE(device.serial_number().c_str(), nullptr);
+    EXPECT_THAT(device.product_id(), Not(IsEmpty()));
   }
 }
 

@@ -39,6 +39,7 @@ message DeviceProperties {
   string model = 2;
   string vendor = 3;
   string serial_number = 4;
+  bytes product_id = 5;
 }
 
 message EnumerateDevicesRequest {}
