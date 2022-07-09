@@ -18,7 +18,7 @@ static const char* kScopeName = "MyScope";
 static const char* kModel = "NI PXIe-5122";
 static const char* kVendor = "NI";
 static const char* kSerialNumber = "37ED39FC0D17";
-static const char* kProductId = "42";
+static const uint32_t kProductId = 0x42;
 
 TEST(DeviceEnumeratorTests, SysCfgApiNotInstalled_EnumerateDevices_ReturnsNotFoundGrpcStatusCode)
 {
@@ -511,8 +511,8 @@ TEST(DeviceEnumeratorTests, GetResourcePropertySetsSerialNumber_EnumerateDevices
 
 NISysCfgStatus SetProductId(void* value)
 {
-  char* product_id = (char*)value;
-  strcpy(product_id, kProductId);
+  uint32_t* product_id = (uint32_t*)value;
+  product_id = &kProductId;
   return NISysCfg_OK;
 }
 

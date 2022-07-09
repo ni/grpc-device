@@ -57,7 +57,7 @@ TEST_F(SessionUtilitiesServiceTests, SysCfgLibraryPresent_EnumerateDevices_Devic
     EXPECT_NE(device.model().c_str(), nullptr);
     EXPECT_THAT(device.vendor(), Not(IsEmpty()));
     EXPECT_NE(device.serial_number().c_str(), nullptr);
-    EXPECT_THAT(device.product_id(), Not(IsEmpty()));
+    EXPECT_NE(device.product_id(), 0);
   }
 }
 

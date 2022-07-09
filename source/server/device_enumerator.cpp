@@ -27,7 +27,7 @@ DeviceEnumerator::~DeviceEnumerator()
   char model[NISYSCFG_SIMPLE_STRING_LENGTH] = "";
   char vendor[NISYSCFG_SIMPLE_STRING_LENGTH] = "";
   char serial_number[NISYSCFG_SIMPLE_STRING_LENGTH] = "";
-  char product_id[NISYSCFG_SIMPLE_STRING_LENGTH] = "";
+  uint32_t product_id = 0;
   NISysCfgBool is_ni_product = NISysCfgBoolFalse;
 
   try {
@@ -47,7 +47,7 @@ DeviceEnumerator::~DeviceEnumerator()
               library_->GetResourceProperty(resource, NISysCfgResourcePropertyProductName, model);
               library_->GetResourceProperty(resource, NISysCfgResourcePropertyVendorName, vendor);
               library_->GetResourceProperty(resource, NISysCfgResourcePropertySerialNumber, serial_number);
-              library_->GetResourceProperty(resource, NISysCfgResourcePropertyProductId, product_id);
+              library_->GetResourceProperty(resource, NISysCfgResourcePropertyProductId, &product_id);
               properties->set_name(name);
               properties->set_model(model);
               properties->set_vendor(vendor);
