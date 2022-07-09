@@ -512,7 +512,7 @@ TEST(DeviceEnumeratorTests, GetResourcePropertySetsSerialNumber_EnumerateDevices
 NISysCfgStatus SetProductId(void* value)
 {
   uint32_t* product_id = (uint32_t*)value;
-  product_id = &kProductId;
+  *product_id = kProductId;
   return NISysCfg_OK;
 }
 
