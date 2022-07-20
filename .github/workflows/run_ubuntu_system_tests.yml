@@ -1,0 +1,30 @@
+name: Run Ubuntu System Tests
+
+on:
+  workflow_call:
+  workflow_dispatch:
+
+jobs:
+  run-tests:
+    name: Run Tests
+    runs-on:
+    - self-hosted
+    - linux
+    - x64
+    - grpcbot-ubuntu
+
+    steps:
+    - name: Download Tests Artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: ni-grpc-device-tests-linux-glibc2_27-x64
+
+    - run: ls -R
+
+    - name: Untar Test Build Files
+      run: >-
+        tar -xvzf ni-grpc-device-tests-linux-glibc2_27-x64.tar.gz
+
+    - name: Run System Tests
+      run: ./SystemTestsRunner --gtest_filter=-NiRFSA*:NiRFSG*:NiDCPower*CalSelfCalibrate*
+      timeout-minutes: 27
