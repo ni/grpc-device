@@ -6,6 +6,7 @@
 #include <unordered_map>
 
 #include "session_repository.h"
+#include "shared_library.h"
 
 namespace nidevice_grpc {
 
@@ -112,11 +113,8 @@ int SessionResourceRepository<TResourceHandle>::add_session(
   }
 
   // session_name resolves to a session in a different resource repository.
-  // Report error.
   if (!resource_map_->contains(session_from_repository)) {
-    session_id = 0;
-    const int kError_InvalidArg = 42;
-    return kError_InvalidArg;
+    throw nidevice_grpc::SessionException("The session name \"" + session_name + "\" is already being used in a different driver's service. Please use a different name.");
   }
 
   session_id = session_from_repository;
