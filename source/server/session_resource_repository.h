@@ -115,7 +115,7 @@ int SessionResourceRepository<TResourceHandle>::add_session(
   // Report error.
   if (!resource_map_->contains(session_from_repository)) {
     session_id = 0;
-    const int kError_InvalidArg = 1;
+    const int kError_InvalidArg = 42;
     return kError_InvalidArg;
   }
 

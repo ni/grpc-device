@@ -273,7 +273,7 @@ TEST(SessionResourceRepositoryTests, AddSessionResource_AddSessionWithSameNameFr
       second_session_id);
 
   EXPECT_EQ(kNoSession, second_session_id);
-  EXPECT_NE(kNoError, result);
+  EXPECT_EQ(1, result);
 }
 
 template <typename TResource>
