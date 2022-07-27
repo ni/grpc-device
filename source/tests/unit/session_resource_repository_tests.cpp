@@ -275,8 +275,9 @@ TEST(SessionResourceRepositoryTests, AddSessionResource_AddSessionWithSameNameFr
               [](int32_t handle) { FAIL() << "Unexpected Cleanup"; },
               second_session_id);
         }
-        catch (const nidevice_grpc::SessionException& e) {
-          EXPECT_STREQ("Hello", e.what());  // TODO: Figure out what string we want displayed for the error.
+        catch (const nidevice_grpc::SessionException& ex) {
+          const std::string expected_message("The session name \"" + kTestResource + "\" is already being used in a different driver's service. Please use a different name.");
+          EXPECT_STREQ(expected_message.c_str(), ex.what());
           throw;
         }
       },
