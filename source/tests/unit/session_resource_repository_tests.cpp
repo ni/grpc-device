@@ -276,7 +276,7 @@ TEST(SessionResourceRepositoryTests, AddSessionResource_AddSessionWithSameNameFr
               second_session_id);
         }
         catch (const nidevice_grpc::SessionException& ex) {
-          const std::string expected_message("The session name \"" + kTestResource + "\" is already being used in a different driver's service. Please use a different name.");
+          const std::string expected_message("The session name \"" + kTestResource + "\" is being used by a different driver.");
           EXPECT_STREQ(expected_message.c_str(), ex.what());
           throw;
         }

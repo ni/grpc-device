@@ -114,7 +114,7 @@ int SessionResourceRepository<TResourceHandle>::add_session(
 
   // session_name resolves to a session in a different resource repository.
   if (!resource_map_->contains(session_from_repository)) {
-    throw nidevice_grpc::SessionException("The session name \"" + session_name + "\" is already being used in a different driver's service. Please use a different name.");
+    throw nidevice_grpc::SessionException("The session name \"" + session_name + "\" is being used by a different driver.");
   }
 
   session_id = session_from_repository;
