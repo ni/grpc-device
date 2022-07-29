@@ -93,6 +93,7 @@ public:
   ::grpc::Status GetListNames(::grpc::ServerContext* context, const GetListNamesRequest* request, GetListNamesResponse* response) override;
   ::grpc::Status GetNIRFSASession(::grpc::ServerContext* context, const GetNIRFSASessionRequest* request, GetNIRFSASessionResponse* response) override;
   ::grpc::Status GetNIRFSASessionArray(::grpc::ServerContext* context, const GetNIRFSASessionArrayRequest* request, GetNIRFSASessionArrayResponse* response) override;
+  ::grpc::Status GetSParameterExternalAttenuationType(::grpc::ServerContext* context, const GetSParameterExternalAttenuationTypeRequest* request, GetSParameterExternalAttenuationTypeResponse* response) override;
   ::grpc::Status GetSelfCalibrateLastDateAndTime(::grpc::ServerContext* context, const GetSelfCalibrateLastDateAndTimeRequest* request, GetSelfCalibrateLastDateAndTimeResponse* response) override;
   ::grpc::Status GetSelfCalibrateLastTemperature(::grpc::ServerContext* context, const GetSelfCalibrateLastTemperatureRequest* request, GetSelfCalibrateLastTemperatureResponse* response) override;
   ::grpc::Status GetSignalConfigurationNames(::grpc::ServerContext* context, const GetSignalConfigurationNamesRequest* request, GetSignalConfigurationNamesResponse* response) override;
