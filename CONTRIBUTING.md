@@ -211,3 +211,7 @@ commit. This will allow reviewers to see the effects of the change.
 
 See [LICENSE](https://github.com/ni/grpc-device/blob/master/LICENSE)
 for details about how grpc-device is licensed.
+
+# Additional Info
+
+If you're looking for additional info while working in the grpc-device repo, you can check out the [Internal Development](https://github.com/ni/grpc-device/wiki/internal-development) page of our Wiki. It hosts a collection of overviews and tips and tricks that might prove useful.
