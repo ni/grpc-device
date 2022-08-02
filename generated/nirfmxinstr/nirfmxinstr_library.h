@@ -68,6 +68,7 @@ class NiRFmxInstrLibrary : public nirfmxinstr_grpc::NiRFmxInstrLibraryInterface 
   int32 GetListNames(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 personalityFilter, char listNames[], int32 listNamesSize, int32* actualListNamesSize, int32 personality[], int32 personalityArraySize, int32* actualPersonalityArraySize);
   int32 GetNIRFSASession(niRFmxInstrHandle instrumentHandle, uInt32* niRfsaSession);
   int32 GetNIRFSASessionArray(niRFmxInstrHandle instrumentHandle, uInt32 nirfsaSessions[], int32 arraySize, int32* actualArraySize);
+  int32 GetSParameterExternalAttenuationType(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* sParameterType);
   int32 GetSelfCalibrateLastDateAndTime(niRFmxInstrHandle instrumentHandle, char selectorString[], int64 selfCalibrateStep, CVIAbsoluteTime* timestamp);
   int32 GetSelfCalibrateLastTemperature(niRFmxInstrHandle instrumentHandle, char selectorString[], int64 selfCalibrateStep, float64* temperature);
   int32 GetSignalConfigurationNames(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 personalityFilter, char signalNames[], int32 signalNamesSize, int32* actualSignalNamesSize, int32 personality[], int32 personalityArraySize, int32* actualPersonalityArraySize);
@@ -162,6 +163,7 @@ class NiRFmxInstrLibrary : public nirfmxinstr_grpc::NiRFmxInstrLibraryInterface 
   using GetListNamesPtr = decltype(&RFmxInstr_GetListNames);
   using GetNIRFSASessionPtr = decltype(&RFmxInstr_GetNIRFSASession);
   using GetNIRFSASessionArrayPtr = decltype(&RFmxInstr_GetNIRFSASessionArray);
+  using GetSParameterExternalAttenuationTypePtr = decltype(&RFmxInstr_GetSParameterExternalAttenuationType);
   using GetSelfCalibrateLastDateAndTimePtr = decltype(&RFmxInstr_GetSelfCalibrateLastDateAndTime);
   using GetSelfCalibrateLastTemperaturePtr = decltype(&RFmxInstr_GetSelfCalibrateLastTemperature);
   using GetSignalConfigurationNamesPtr = decltype(&RFmxInstr_GetSignalConfigurationNames);
@@ -256,6 +258,7 @@ class NiRFmxInstrLibrary : public nirfmxinstr_grpc::NiRFmxInstrLibraryInterface 
     GetListNamesPtr GetListNames;
     GetNIRFSASessionPtr GetNIRFSASession;
     GetNIRFSASessionArrayPtr GetNIRFSASessionArray;
+    GetSParameterExternalAttenuationTypePtr GetSParameterExternalAttenuationType;
     GetSelfCalibrateLastDateAndTimePtr GetSelfCalibrateLastDateAndTime;
     GetSelfCalibrateLastTemperaturePtr GetSelfCalibrateLastTemperature;
     GetSignalConfigurationNamesPtr GetSignalConfigurationNames;

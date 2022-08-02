@@ -67,6 +67,7 @@ class NiRFmxInstrMockLibrary : public nirfmxinstr_grpc::NiRFmxInstrLibraryInterf
   MOCK_METHOD(int32, GetListNames, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32 personalityFilter, char listNames[], int32 listNamesSize, int32* actualListNamesSize, int32 personality[], int32 personalityArraySize, int32* actualPersonalityArraySize), (override));
   MOCK_METHOD(int32, GetNIRFSASession, (niRFmxInstrHandle instrumentHandle, uInt32* niRfsaSession), (override));
   MOCK_METHOD(int32, GetNIRFSASessionArray, (niRFmxInstrHandle instrumentHandle, uInt32 nirfsaSessions[], int32 arraySize, int32* actualArraySize), (override));
+  MOCK_METHOD(int32, GetSParameterExternalAttenuationType, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32* sParameterType), (override));
   MOCK_METHOD(int32, GetSelfCalibrateLastDateAndTime, (niRFmxInstrHandle instrumentHandle, char selectorString[], int64 selfCalibrateStep, CVIAbsoluteTime* timestamp), (override));
   MOCK_METHOD(int32, GetSelfCalibrateLastTemperature, (niRFmxInstrHandle instrumentHandle, char selectorString[], int64 selfCalibrateStep, float64* temperature), (override));
   MOCK_METHOD(int32, GetSignalConfigurationNames, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32 personalityFilter, char signalNames[], int32 signalNamesSize, int32* actualSignalNamesSize, int32 personality[], int32 personalityArraySize, int32* actualPersonalityArraySize), (override));

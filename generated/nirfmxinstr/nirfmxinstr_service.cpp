@@ -1724,6 +1724,31 @@ namespace nirfmxinstr_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxInstrService::GetSParameterExternalAttenuationType(::grpc::ServerContext* context, const GetSParameterExternalAttenuationTypeRequest* request, GetSParameterExternalAttenuationTypeResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      int32 s_parameter_type {};
+      auto status = library_->GetSParameterExternalAttenuationType(instrument, selector_string, &s_parameter_type);
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_s_parameter_type(static_cast<nirfmxinstr_grpc::SParameterType>(s_parameter_type));
+        response->set_s_parameter_type_raw(s_parameter_type);
+      }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxInstrService::GetSelfCalibrateLastDateAndTime(::grpc::ServerContext* context, const GetSelfCalibrateLastDateAndTimeRequest* request, GetSelfCalibrateLastDateAndTimeResponse* response)
   {
     if (context->IsCancelled()) {
