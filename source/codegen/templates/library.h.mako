@@ -47,7 +47,7 @@ class ${service_class_prefix}Library : public ${namespace_prefix}::${service_cla
   c_name = service_helpers.get_cname(functions, method_name, c_function_prefix)
 %>\
 ## "Private" methods aren't in the public header, so generate the params from the metadata.
-% if service_helpers.is_private_method(f):
+% if service_helpers.is_private_method(f) or service_helpers.is_restricted_driver_service(config):
   using ${method_name}Ptr = ${return_type} (*)(${service_helpers.create_params(parameters, expand_varargs=False)});
 % else:
   using ${method_name}Ptr = decltype(&${c_name});

@@ -1,0 +1,98 @@
+functions = {
+    'CacheResult': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle',
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorStringOutSize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'selectorStringOut',
+                'size': {
+                    'mechanism': 'ivi-dance',
+                    'value': 'selectorStringOutSize'
+                },
+                'type': 'char[]',
+            },
+        ],
+        'returns': 'int32',
+    },
+    'IQFetchDataOverrideBehavior': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'recordToFetch',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'samplesToRead',
+                'type': 'int64'
+            },
+            {
+                'direction': 'in',
+                'name': 'deleteOnFetch',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 't0',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'dt',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'NIComplexSingle[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    }
+}
