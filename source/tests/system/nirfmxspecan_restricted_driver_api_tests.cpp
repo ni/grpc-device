@@ -115,7 +115,7 @@ TEST_F(NiRFmxSpecAnRestrictedDriverApiTests, IQFetchDataOverrideBehavior_NoDelet
   EXPECT_THAT(fetch_response_2.data(), Not(IsEmpty()));
 }
 
-TEST_F(NiRFmxSpecAnRestrictedDriverApiTests, CacheResult_ReturnsExpectedSelectorString)
+TEST_F(NiRFmxSpecAnRestrictedDriverApiTests, CacheResult_ReturnsNonEmptyResult)
 {
   const auto session = init_session(stub(), PXI_5663);
   EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MeasurementTypes::MEASUREMENT_TYPES_ACP, true));
