@@ -1,6 +1,5 @@
 functions = {
     'RegisterSpecialClientSnapshotInterest': {
-        #'codegen_method': 'private',
         'parameters': [
             {
                 'direction': 'in',
@@ -11,7 +10,6 @@ functions = {
         'returns': 'int32'
     },
     'GetOpenSessionsInformation': {
-        'codegen_method': 'private',
         'parameters': [
             {
                 'direction': 'in',
@@ -36,7 +34,6 @@ functions = {
         'returns': 'int32'
     },
     'GetRFmxVersion': {
-        'codegen_method': 'private',
         'parameters': [
             {
                 'direction': 'in',
@@ -62,7 +59,6 @@ functions = {
         'returns': 'int32'
     },
     'GetTracesInfoForMonitorSnapshot': {
-        'codegen_method': 'private',
         'parameters': [
             {
                 'direction': 'in',
@@ -84,7 +80,6 @@ functions = {
         'returns': 'int32'
     },
     'GetForceAllTracesEnabled': {
-        'codegen_method': 'private',
         'parameters': [
             {
                 'direction': 'in',
@@ -106,7 +101,6 @@ functions = {
         'returns': 'int32'
     },
     'SetForceAllTracesEnabled': {
-        'codegen_method': 'private',
         'parameters': [
             {
                 'direction': 'in',
@@ -128,7 +122,6 @@ functions = {
         'returns': 'int32'
     },
     'SaveConfigurationsToJSON': {
-        'codegen_method': 'private',
         'parameters': [
             {
                 'direction': 'in',
@@ -165,7 +158,6 @@ functions = {
         'returns': 'int32'
     },
     'LoadConfigurationsFromJSON': {
-        'codegen_method': 'private',
         'parameters': [
             {
                 'direction': 'in',
@@ -187,7 +179,6 @@ functions = {
         'returns': 'int32'
     },
     'GetAttributeDesiredF64': {
-        'codegen_method': 'private',
         'parameters': [
             {
                 'direction': 'in',
@@ -214,7 +205,6 @@ functions = {
         'returns': 'int32'
     },
     'GetAttributeDesiredI32': {
-        'codegen_method': 'private',
         'parameters': [
             {
                 'direction': 'in',
@@ -241,7 +231,6 @@ functions = {
         'returns': 'int32'
     },
     'GetAttributeDesiredI64': {
-        'codegen_method': 'private',
         'parameters': [
             {
                 'direction': 'in',
@@ -268,7 +257,6 @@ functions = {
         'returns': 'int32'
     },
     'GetAttributeDesiredString': {
-        'codegen_method': 'private',
         'parameters': [
             {
                 'direction': 'in',
@@ -304,7 +292,6 @@ functions = {
         'returns': 'int32'
     },
     'GetAttributeDesiredF64Array': {
-        'codegen_method': 'private',
         'parameters': [
             {
                 'direction': 'in',
@@ -346,7 +333,6 @@ functions = {
         'returns': 'int32'
     },
     'GetAttributeDesiredF32Array': {
-        'codegen_method': 'private',
         'parameters': [
             {
                 'direction': 'in',
@@ -388,7 +374,6 @@ functions = {
         'returns': 'int32'
     },
     'GetAttributeDesiredF32': {
-        'codegen_method': 'private',
         'parameters': [
             {
                 'direction': 'in',
@@ -415,7 +400,6 @@ functions = {
         'returns': 'int32'
     },
     'GetAttributeAuthor': {
-        'codegen_method': 'private',
         'parameters': [
             {
                 'direction': 'in',
@@ -442,7 +426,6 @@ functions = {
         'returns': 'int32'
     },
     'GetPrivilegeLevel': {
-        'codegen_method': 'private',
         'parameters': [
             {
                 'direction': 'in',
@@ -464,7 +447,6 @@ functions = {
         'returns': 'int32'
     },
     'RequestPrivilege': {
-        'codegen_method': 'private',
         'parameters': [
             {
                 'direction': 'in',
@@ -481,7 +463,6 @@ functions = {
         'returns': 'int32'
     },
     'SaveAllForRevert': {
-        'codegen_method': 'private',
         'parameters': [
             {
                 'direction': 'in',
@@ -498,7 +479,6 @@ functions = {
         'returns': 'int32'
     },
     'LoadAllForRevert': {
-        'codegen_method': 'private',
         'parameters': [
             {
                 'direction': 'in',
@@ -515,7 +495,6 @@ functions = {
         'returns': 'int32'
     },
     'GetInitiaitedSnapshotStrings': {
-        'codegen_method': 'private',
         'parameters': [
             {
                 'direction': 'in',
@@ -593,8 +572,8 @@ functions = {
                 'name': 'snapshotIdentifiers',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',
-                    'value': 'snapshotIdentifierSize',
-                    'value_twist': 'snapshotIdentifierActualSize'
+                    'value': 'snapshotIdentifiersSize',
+                    'value_twist': 'snapshotIdentifiersActualSize'
                 },
                 'type': 'char[]'
             },
@@ -632,7 +611,6 @@ functions = {
         'returns': 'int32'
     },
     'GetSnapshotInfoFromCache': {
-        'codegen_method': 'private',
         'parameters': [
             {
                 'direction': 'in',
@@ -749,7 +727,6 @@ functions = {
         'returns': 'int32'
     },
     'GetLatestConfigurationSnapshot': {
-        'codegen_method': 'private',
         'parameters': [
             {
                 'direction': 'in',
@@ -821,7 +798,6 @@ functions = {
         'returns': 'int32'
     },
     'GetSnapshotState': {
-        'codegen_method': 'private',
         'parameters': [
             {
                 'direction': 'in',
@@ -848,7 +824,6 @@ functions = {
         'returns': 'int32'
     },
     'DeleteSnapshot': {
-        'codegen_method': 'private',
         'parameters': [
             {
                 'direction': 'in',
@@ -870,7 +845,6 @@ functions = {
         'returns': 'int32'
     },
     'ConvertForPowerUnitsUtility': {
-        'codegen_method': 'private',
         'parameters': [
             {
                 'direction': 'in',
@@ -912,7 +886,6 @@ functions = {
         'returns': 'int32'
     },
     'UnregisterSpecialClientSnapshotInterest': {
-        'codegen_method': 'private',
         'parameters': [
             {
                 'direction': 'in',
@@ -923,7 +896,6 @@ functions = {
         'returns': 'int32'
     },
     'GetCalibrationPlaneNames': {
-        'codegen_method': 'private',
         'parameters': [
             {
                 'direction': 'in',
@@ -954,7 +926,6 @@ functions = {
         'returns': 'int32'
     },
     'GetCalibrationPlaneEnabled': {
-        'codegen_method': 'private',
         'parameters': [
             {
                 'direction': 'in',
@@ -976,7 +947,6 @@ functions = {
         'returns': 'int32'
     },
     'GetExternalAttenuationTableNames': {
-        'codegen_method': 'private',
         'parameters': [
             {
                 'direction': 'in',
@@ -1007,7 +977,6 @@ functions = {
         'returns': 'int32'
     },
     'GetActiveTableName': {
-        'codegen_method': 'private',
         'parameters': [
             {
                 'direction': 'in',
@@ -1038,7 +1007,6 @@ functions = {
         'returns': 'int32'
     },
     'GetSParameterExternalAttenuationType': {
-        'codegen_method': 'private',
         'parameters': [
             {
                 'direction': 'in',
@@ -1060,7 +1028,6 @@ functions = {
         'returns': 'int32'
     },
     'GetSignalConfigurationState64': {
-        'codegen_method': 'private',
         'parameters': [
             {
                 'direction': 'in',
@@ -1092,7 +1059,6 @@ functions = {
         'returns': 'int32'
     },
     'SetIOTraceStatus': {
-        'codegen_method': 'private',
         'parameters': [
             {
                 'direction': 'in',
@@ -1109,7 +1075,6 @@ functions = {
         'returns': 'int32'
     },
     'GetActiveResultName': {
-        'codegen_method': 'private',
         'parameters': [
             {
                 'direction': 'in',
