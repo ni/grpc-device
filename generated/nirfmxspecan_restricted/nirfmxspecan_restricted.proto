@@ -24,6 +24,7 @@ service NiRFmxSpecAnRestricted {
 message CacheResultRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
+  int32 selector_string_out_size = 3;
 }
 
 message CacheResultResponse {

@@ -55,31 +55,18 @@ namespace nirfmxspecan_restricted_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
-
-      while (true) {
-        auto status = library_->CacheResult(instrument, selector_string, 0, nullptr);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
-        int32 selector_string_out_size = status;
-
-        std::string selector_string_out;
-        if (selector_string_out_size > 0) {
-            selector_string_out.resize(selector_string_out_size - 1);
-        }
-        status = library_->CacheResult(instrument, selector_string, selector_string_out_size, (char*)selector_string_out.data());
-        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(selector_string_out_size)) {
-          // buffer is now too small, try again
-          continue;
-        }
-        response->set_status(status);
-        if (status_ok(status)) {
-          response->set_selector_string_out(selector_string_out);
-          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_selector_string_out()));
-        }
-        return ::grpc::Status::OK;
+      int32 selector_string_out_size = request->selector_string_out_size();
+      std::string selector_string_out;
+      if (selector_string_out_size > 0) {
+          selector_string_out.resize(selector_string_out_size - 1);
       }
+      auto status = library_->CacheResult(instrument, selector_string, selector_string_out_size, (char*)selector_string_out.data());
+      response->set_status(status);
+      if (status_ok(status)) {
+        response->set_selector_string_out(selector_string_out);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_selector_string_out()));
+      }
+      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());

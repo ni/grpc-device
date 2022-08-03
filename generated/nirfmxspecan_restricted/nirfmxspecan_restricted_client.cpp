@@ -18,13 +18,14 @@
 namespace nirfmxspecan_restricted_grpc::experimental::client {
 
 CacheResultResponse
-cache_result(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string)
+cache_result(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::int32& selector_string_out_size)
 {
   ::grpc::ClientContext context;
 
   auto request = CacheResultRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
+  request.set_selector_string_out_size(selector_string_out_size);
 
   auto response = CacheResultResponse{};
 

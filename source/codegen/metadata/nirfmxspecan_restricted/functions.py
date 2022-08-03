@@ -21,7 +21,7 @@ functions = {
                 'direction': 'out',
                 'name': 'selectorStringOut',
                 'size': {
-                    'mechanism': 'ivi-dance',
+                    'mechanism': 'passed-in',
                     'value': 'selectorStringOutSize'
                 },
                 'type': 'char[]',
