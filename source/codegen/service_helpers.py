@@ -428,7 +428,8 @@ def get_driver_service_readiness(config: dict) -> str:
 
 def is_restricted_driver_service(config):
     """Whether the driver service is restricted."""
-    return config.get("restricted_driver_service", False)
+    readiness = common_helpers.get_driver_readiness(config)
+    return readiness == "RestrictedNextRelease" or readiness == "RestrictedRelease"
 
 
 def to_cpp_readiness(user_readiness: str) -> str:

@@ -2,7 +2,6 @@
 config = {
     "code_readiness": "RestrictedNextRelease",
     "api_version": "21.0.0",
-    "restricted_driver_service": True,
     "c_header": "niRFmxSpecAn.h",
     "c_function_prefix": "RFmxSpecAn_",
     "service_class_prefix": "NiRFmxSpecAnRestricted",
