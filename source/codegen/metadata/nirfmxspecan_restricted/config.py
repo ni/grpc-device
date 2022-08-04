@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 config = {
+    "code_readiness": "RestrictedNextRelease",
     "api_version": "21.0.0",
     "restricted_driver_service": True,
     "c_header": "niRFmxSpecAn.h",

@@ -130,7 +130,7 @@ namespace nirfmxspecan_restricted_grpc {
   NiRFmxSpecAnRestrictedFeatureToggles::NiRFmxSpecAnRestrictedFeatureToggles(
     const nidevice_grpc::FeatureToggles& feature_toggles)
     : is_enabled(
-        feature_toggles.is_feature_enabled("nirfmxspecan_restricted", CodeReadiness::kRelease))
+        feature_toggles.is_feature_enabled("nirfmxspecan_restricted", CodeReadiness::kRestrictedNextRelease))
   {
   }
 } // namespace nirfmxspecan_restricted_grpc

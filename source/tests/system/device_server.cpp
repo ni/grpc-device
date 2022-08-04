@@ -35,8 +35,8 @@ DeviceServer::DeviceServer()
       services_(
           nidevice_grpc::register_all_services(
               builder_,
-              // Tests run with NextRelease CodeReadiness.
-              nidevice_grpc::FeatureToggles({}, CodeReadiness::kNextRelease))),
+              // Tests run with RestrictedNextRelease CodeReadiness.
+              nidevice_grpc::FeatureToggles({}, CodeReadiness::kRestrictedNextRelease))),
       server_(builder_.BuildAndStart()),
       channel_(server_->InProcessChannel(::grpc::ChannelArguments())),
       session_stub_(nidevice_grpc::SessionUtilities::NewStub(channel_))
