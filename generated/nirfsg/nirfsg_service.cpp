@@ -56,6 +56,10 @@ namespace nirfsg_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -77,6 +81,10 @@ namespace nirfsg_grpc {
       auto waveform_name = request->waveform_name().c_str();
       ViInt32 size_in_samples = request->size_in_samples();
       auto status = library_->AllocateArbWaveform(vi, waveform_name, size_in_samples);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -99,6 +107,10 @@ namespace nirfsg_grpc {
       ViAttr attribute_id = request->attribute_id();
       ViBoolean value = request->value();
       auto status = library_->CheckAttributeViBoolean(vi, channel_name, attribute_id, value);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -136,6 +148,10 @@ namespace nirfsg_grpc {
       }
 
       auto status = library_->CheckAttributeViInt32(vi, channel_name, attribute_id, value);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -158,6 +174,10 @@ namespace nirfsg_grpc {
       ViAttr attribute_id = request->attribute_id();
       ViInt64 value = request->value_raw();
       auto status = library_->CheckAttributeViInt64(vi, channel_name, attribute_id, value);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -195,6 +215,10 @@ namespace nirfsg_grpc {
       }
 
       auto status = library_->CheckAttributeViReal64(vi, channel_name, attribute_id, value);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -218,6 +242,10 @@ namespace nirfsg_grpc {
       auto value_grpc_session = request->value();
       ViSession value = session_repository_->access_session(value_grpc_session.id(), value_grpc_session.name());
       auto status = library_->CheckAttributeViSession(vi, channel_name, attribute_id, value);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -259,6 +287,10 @@ namespace nirfsg_grpc {
       }
 
       auto status = library_->CheckAttributeViString(vi, channel_name, attribute_id, value);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -279,10 +311,12 @@ namespace nirfsg_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViBoolean is_done {};
       auto status = library_->CheckGenerationStatus(vi, &is_done);
-      response->set_status(status);
-      if (status_ok(status)) {
-        response->set_is_done(is_done);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
       }
+
+      response->set_status(status);
+        response->set_is_done(is_done);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -303,10 +337,12 @@ namespace nirfsg_grpc {
       auto list_name = request->list_name().c_str();
       ViBoolean list_exists {};
       auto status = library_->CheckIfConfigurationListExists(vi, list_name, &list_exists);
-      response->set_status(status);
-      if (status_ok(status)) {
-        response->set_list_exists(list_exists);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
       }
+
+      response->set_status(status);
+        response->set_list_exists(list_exists);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -327,10 +363,12 @@ namespace nirfsg_grpc {
       auto script_name = request->script_name().c_str();
       ViBoolean script_exists {};
       auto status = library_->CheckIfScriptExists(vi, script_name, &script_exists);
-      response->set_status(status);
-      if (status_ok(status)) {
-        response->set_script_exists(script_exists);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
       }
+
+      response->set_status(status);
+        response->set_script_exists(script_exists);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -351,10 +389,12 @@ namespace nirfsg_grpc {
       auto waveform_name = request->waveform_name().c_str();
       ViBoolean waveform_exists {};
       auto status = library_->CheckIfWaveformExists(vi, waveform_name, &waveform_exists);
-      response->set_status(status);
-      if (status_ok(status)) {
-        response->set_waveform_exists(waveform_exists);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
       }
+
+      response->set_status(status);
+        response->set_waveform_exists(waveform_exists);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -373,6 +413,10 @@ namespace nirfsg_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->ClearAllArbWaveforms(vi);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -393,6 +437,10 @@ namespace nirfsg_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto name = request->name().c_str();
       auto status = library_->ClearArbWaveform(vi, name);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -412,6 +460,10 @@ namespace nirfsg_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->ClearError(vi);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -431,6 +483,10 @@ namespace nirfsg_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->ClearSelfCalibrateRange(vi);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -451,6 +507,10 @@ namespace nirfsg_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       session_repository_->remove_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Close(vi);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -470,6 +530,10 @@ namespace nirfsg_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Commit(vi);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -507,6 +571,10 @@ namespace nirfsg_grpc {
       }
 
       auto status = library_->ConfigureDeembeddingTableInterpolationLinear(vi, port, table_name, format);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -528,6 +596,10 @@ namespace nirfsg_grpc {
       auto port = request->port().c_str();
       auto table_name = request->table_name().c_str();
       auto status = library_->ConfigureDeembeddingTableInterpolationNearest(vi, port, table_name);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -549,6 +621,10 @@ namespace nirfsg_grpc {
       auto port = request->port().c_str();
       auto table_name = request->table_name().c_str();
       auto status = library_->ConfigureDeembeddingTableInterpolationSpline(vi, port, table_name);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -604,6 +680,10 @@ namespace nirfsg_grpc {
       }
 
       auto status = library_->ConfigureDigitalEdgeConfigurationListStepTrigger(vi, source, edge);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -679,6 +759,10 @@ namespace nirfsg_grpc {
       }
 
       auto status = library_->ConfigureDigitalEdgeScriptTrigger(vi, trigger_id, source, edge);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -734,6 +818,10 @@ namespace nirfsg_grpc {
       }
 
       auto status = library_->ConfigureDigitalEdgeStartTrigger(vi, source, edge);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -809,6 +897,10 @@ namespace nirfsg_grpc {
       }
 
       auto status = library_->ConfigureDigitalLevelScriptTrigger(vi, trigger_id, source, level);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -830,6 +922,10 @@ namespace nirfsg_grpc {
       ViInt32 number_of_samples = static_cast<ViInt32>(request->user_defined_waveform().size());
       ViInt8* user_defined_waveform = (ViInt8*)request->user_defined_waveform().c_str();
       auto status = library_->ConfigureDigitalModulationUserDefinedWaveform(vi, number_of_samples, user_defined_waveform);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -865,6 +961,10 @@ namespace nirfsg_grpc {
       }
 
       auto status = library_->ConfigureGenerationMode(vi, generation_mode);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -885,6 +985,10 @@ namespace nirfsg_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViBoolean output_enabled = request->output_enabled();
       auto status = library_->ConfigureOutputEnabled(vi, output_enabled);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -905,6 +1009,10 @@ namespace nirfsg_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViInt64 p2p_endpoint_fullness_level = request->p2p_endpoint_fullness_level();
       auto status = library_->ConfigureP2PEndpointFullnessStartTrigger(vi, p2p_endpoint_fullness_level);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -944,6 +1052,10 @@ namespace nirfsg_grpc {
       }
 
       auto status = library_->ConfigurePXIChassisClk10(vi, pxi_clk10_source);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -979,6 +1091,10 @@ namespace nirfsg_grpc {
       }
 
       auto status = library_->ConfigurePowerLevelType(vi, power_level_type);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1000,6 +1116,10 @@ namespace nirfsg_grpc {
       ViReal64 frequency = request->frequency();
       ViReal64 power_level = request->power_level();
       auto status = library_->ConfigureRF(vi, frequency, power_level);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1040,6 +1160,10 @@ namespace nirfsg_grpc {
 
       ViReal64 ref_clock_rate = request->ref_clock_rate();
       auto status = library_->ConfigureRefClock(vi, ref_clock_source, ref_clock_rate);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1060,6 +1184,10 @@ namespace nirfsg_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViReal64 signal_bandwidth = request->signal_bandwidth();
       auto status = library_->ConfigureSignalBandwidth(vi, signal_bandwidth);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1099,6 +1227,10 @@ namespace nirfsg_grpc {
       }
 
       auto status = library_->ConfigureSoftwareScriptTrigger(vi, trigger_id);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1118,6 +1250,10 @@ namespace nirfsg_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->ConfigureSoftwareStartTrigger(vi);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1140,6 +1276,10 @@ namespace nirfsg_grpc {
       ViBoolean ensure_pll_locked = request->ensure_pll_locked();
       auto reserved_for_future_use = 0;
       auto status = library_->ConfigureUpconverterPLLSettlingTime(vi, pll_settling_time, ensure_pll_locked, reserved_for_future_use);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1163,6 +1303,10 @@ namespace nirfsg_grpc {
       auto configuration_list_attributes = const_cast<ViAttr*>(reinterpret_cast<const ViAttr*>(request->configuration_list_attributes().data()));
       ViBoolean set_as_active_list = request->set_as_active_list();
       auto status = library_->CreateConfigurationList(vi, list_name, number_of_attributes, configuration_list_attributes, set_as_active_list);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1183,6 +1327,10 @@ namespace nirfsg_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViBoolean set_as_active_step = request->set_as_active_step();
       auto status = library_->CreateConfigurationListStep(vi, set_as_active_step);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1225,6 +1373,10 @@ namespace nirfsg_grpc {
       }
 
       auto status = library_->CreateDeembeddingSparameterTableArray(vi, port, table_name, frequencies, frequencies_size, sparameter_table.data(), sparameter_table_size, number_of_ports, sparameter_orientation);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1263,6 +1415,10 @@ namespace nirfsg_grpc {
       }
 
       auto status = library_->CreateDeembeddingSparameterTableS2PFile(vi, port, table_name, s2p_file_path, sparameter_orientation);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1282,6 +1438,10 @@ namespace nirfsg_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->DeleteAllDeembeddingTables(vi);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1302,6 +1462,10 @@ namespace nirfsg_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto list_name = request->list_name().c_str();
       auto status = library_->DeleteConfigurationList(vi, list_name);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1323,6 +1487,10 @@ namespace nirfsg_grpc {
       auto port = request->port().c_str();
       auto table_name = request->table_name().c_str();
       auto status = library_->DeleteDeembeddingTable(vi, port, table_name);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1343,6 +1511,10 @@ namespace nirfsg_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto script_name = request->script_name().c_str();
       auto status = library_->DeleteScript(vi, script_name);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1362,6 +1534,10 @@ namespace nirfsg_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Disable(vi);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1381,6 +1557,10 @@ namespace nirfsg_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->DisableAllModulation(vi);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1400,6 +1580,10 @@ namespace nirfsg_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->DisableConfigurationListStepTrigger(vi);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1439,6 +1623,10 @@ namespace nirfsg_grpc {
       }
 
       auto status = library_->DisableScriptTrigger(vi, trigger_id);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1458,6 +1646,10 @@ namespace nirfsg_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->DisableStartTrigger(vi);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1479,11 +1671,13 @@ namespace nirfsg_grpc {
       ViStatus error_code = request->error_code();
       std::string error_message(1024 - 1, '\0');
       auto status = library_->ErrorMessage(vi, error_code, (ViChar*)error_message.data());
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
-      if (status_ok(status)) {
         response->set_error_message(error_message);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_message()));
-      }
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1504,12 +1698,14 @@ namespace nirfsg_grpc {
       ViInt32 error_code {};
       std::string error_message(1024 - 1, '\0');
       auto status = library_->ErrorQuery(vi, &error_code, (ViChar*)error_message.data());
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
-      if (status_ok(status)) {
         response->set_error_code(error_code);
         response->set_error_message(error_message);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_message()));
-      }
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1584,6 +1780,10 @@ namespace nirfsg_grpc {
       }
 
       auto status = library_->ExportSignal(vi, signal, signal_identifier, output_terminal);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1606,10 +1806,12 @@ namespace nirfsg_grpc {
       ViAttr attribute_id = request->attribute_id();
       ViBoolean value {};
       auto status = library_->GetAttributeViBoolean(vi, channel_name, attribute_id, &value);
-      response->set_status(status);
-      if (status_ok(status)) {
-        response->set_value(value);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
       }
+
+      response->set_status(status);
+        response->set_value(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1631,10 +1833,12 @@ namespace nirfsg_grpc {
       ViAttr attribute_id = request->attribute_id();
       ViInt32 value {};
       auto status = library_->GetAttributeViInt32(vi, channel_name, attribute_id, &value);
-      response->set_status(status);
-      if (status_ok(status)) {
-        response->set_value(value);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
       }
+
+      response->set_status(status);
+        response->set_value(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1656,10 +1860,12 @@ namespace nirfsg_grpc {
       ViAttr attribute_id = request->attribute_id();
       ViInt64 value {};
       auto status = library_->GetAttributeViInt64(vi, channel_name, attribute_id, &value);
-      response->set_status(status);
-      if (status_ok(status)) {
-        response->set_value(value);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
       }
+
+      response->set_status(status);
+        response->set_value(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1681,10 +1887,12 @@ namespace nirfsg_grpc {
       ViAttr attribute_id = request->attribute_id();
       ViReal64 value {};
       auto status = library_->GetAttributeViReal64(vi, channel_name, attribute_id, &value);
-      response->set_status(status);
-      if (status_ok(status)) {
-        response->set_value(value);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
       }
+
+      response->set_status(status);
+        response->set_value(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1706,11 +1914,13 @@ namespace nirfsg_grpc {
       ViAttr attribute_id = request->attribute_id();
       ViSession value {};
       auto status = library_->GetAttributeViSession(vi, channel_name, attribute_id, &value);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
-      if (status_ok(status)) {
         auto session_id = session_repository_->resolve_session_id(value);
         response->mutable_value()->set_id(session_id);
-      }
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1733,10 +1943,10 @@ namespace nirfsg_grpc {
 
       while (true) {
         auto status = library_->GetAttributeViString(vi, channel_name, attribute_id, 0, nullptr);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
         ViInt32 buf_size = status;
 
         std::string value;
@@ -1748,11 +1958,13 @@ namespace nirfsg_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForViSession(status, vi);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->set_value(value);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -1775,10 +1987,10 @@ namespace nirfsg_grpc {
 
       while (true) {
         auto status = library_->GetChannelName(vi, index, 0, nullptr);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
         ViInt32 buffer_size = status;
 
         std::string name;
@@ -1790,11 +2002,13 @@ namespace nirfsg_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForViSession(status, vi);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->set_name(name);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_name()));
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -1817,10 +2031,10 @@ namespace nirfsg_grpc {
       ViInt32 number_of_ports {};
       while (true) {
         auto status = library_->GetDeembeddingSparameters(vi, nullptr, 0, &number_of_sparameters, &number_of_ports);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
         std::vector<NIComplexNumber_struct> sparameters(number_of_sparameters, NIComplexNumber_struct());
         auto sparameters_array_size = number_of_sparameters;
         status = library_->GetDeembeddingSparameters(vi, sparameters.data(), sparameters_array_size, &number_of_sparameters, &number_of_ports);
@@ -1828,8 +2042,11 @@ namespace nirfsg_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForViSession(status, vi);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           convert_to_grpc(sparameters, response->mutable_sparameters());
           {
             auto shrunk_size = number_of_sparameters;
@@ -1840,7 +2057,6 @@ namespace nirfsg_grpc {
           }
           response->set_number_of_sparameters(number_of_sparameters);
           response->set_number_of_ports(number_of_ports);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -1862,10 +2078,10 @@ namespace nirfsg_grpc {
 
       while (true) {
         auto status = library_->GetError(vi, nullptr, 0, nullptr);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
         ViInt32 error_description_buffer_size = status;
 
         ViStatus error_code {};
@@ -1878,12 +2094,14 @@ namespace nirfsg_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForViSession(status, vi);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->set_error_code(error_code);
           response->set_error_description(error_description);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_description()));
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -1909,15 +2127,17 @@ namespace nirfsg_grpc {
       ViInt32 minute {};
       ViInt32 second {};
       auto status = library_->GetExternalCalibrationLastDateAndTime(vi, &year, &month, &day, &hour, &minute, &second);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
-      if (status_ok(status)) {
         response->set_year(year);
         response->set_month(month);
         response->set_day(day);
         response->set_hour(hour);
         response->set_minute(minute);
         response->set_second(second);
-      }
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1958,15 +2178,17 @@ namespace nirfsg_grpc {
       ViInt32 minute {};
       ViInt32 second {};
       auto status = library_->GetSelfCalibrationDateAndTime(vi, module, &year, &month, &day, &hour, &minute, &second);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
-      if (status_ok(status)) {
         response->set_year(year);
         response->set_month(month);
         response->set_day(day);
         response->set_hour(hour);
         response->set_minute(minute);
         response->set_second(second);
-      }
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -2002,10 +2224,12 @@ namespace nirfsg_grpc {
 
       ViReal64 temperature {};
       auto status = library_->GetSelfCalibrationTemperature(vi, module, &temperature);
-      response->set_status(status);
-      if (status_ok(status)) {
-        response->set_temperature(temperature);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
       }
+
+      response->set_status(status);
+        response->set_temperature(temperature);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -2062,10 +2286,10 @@ namespace nirfsg_grpc {
 
       while (true) {
         auto status = library_->GetTerminalName(vi, signal, signal_identifier, 0, nullptr);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
         ViInt32 buffer_size = status;
 
         std::string terminal_name;
@@ -2077,11 +2301,13 @@ namespace nirfsg_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForViSession(status, vi);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->set_terminal_name(terminal_name);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_terminal_name()));
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -2104,10 +2330,10 @@ namespace nirfsg_grpc {
       ViInt32 actual_data_size {};
       while (true) {
         auto status = library_->GetUserData(vi, identifier, 0, nullptr, &actual_data_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
         std::string data(actual_data_size, '\0');
         auto buffer_size = actual_data_size;
         status = library_->GetUserData(vi, identifier, buffer_size, (ViInt8*)data.data(), &actual_data_size);
@@ -2115,12 +2341,14 @@ namespace nirfsg_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForViSession(status, vi);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->set_data(data);
           response->mutable_data()->resize(actual_data_size);
           response->set_actual_data_size(actual_data_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -2143,10 +2371,10 @@ namespace nirfsg_grpc {
       ViInt32 required_size {};
       while (true) {
         auto status = library_->GetWaveformBurstStartLocations(vi, channel_name, 0, nullptr, &required_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
         response->mutable_locations()->Resize(required_size, 0);
         ViReal64* locations = response->mutable_locations()->mutable_data();
         auto number_of_locations = required_size;
@@ -2155,11 +2383,13 @@ namespace nirfsg_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForViSession(status, vi);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->mutable_locations()->Resize(required_size, 0);
           response->set_required_size(required_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -2182,10 +2412,10 @@ namespace nirfsg_grpc {
       ViInt32 required_size {};
       while (true) {
         auto status = library_->GetWaveformBurstStopLocations(vi, channel_name, 0, nullptr, &required_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
         response->mutable_locations()->Resize(required_size, 0);
         ViReal64* locations = response->mutable_locations()->mutable_data();
         auto number_of_locations = required_size;
@@ -2194,11 +2424,13 @@ namespace nirfsg_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForViSession(status, vi);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->mutable_locations()->Resize(required_size, 0);
           response->set_required_size(required_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -2221,10 +2453,10 @@ namespace nirfsg_grpc {
       ViInt32 required_size {};
       while (true) {
         auto status = library_->GetWaveformMarkerEventLocations(vi, channel_name, 0, nullptr, &required_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
         response->mutable_locations()->Resize(required_size, 0);
         ViReal64* locations = response->mutable_locations()->mutable_data();
         auto number_of_locations = required_size;
@@ -2233,11 +2465,13 @@ namespace nirfsg_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForViSession(status, vi);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->mutable_locations()->Resize(required_size, 0);
           response->set_required_size(required_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -2267,14 +2501,12 @@ namespace nirfsg_grpc {
       const std::string& grpc_device_session_name = request->session_name();
       auto cleanup_lambda = [&] (ViSession id) { library_->Close(id); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, 0);
+      }
+
       response->set_status(status);
-      if (status_ok(status)) {
         response->mutable_new_vi()->set_id(session_id);
-      }
-      else {
-        const auto error_message = get_last_error_message(library_);
-        response->set_error_message(error_message);
-      }
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -2304,14 +2536,12 @@ namespace nirfsg_grpc {
       const std::string& grpc_device_session_name = request->session_name();
       auto cleanup_lambda = [&] (ViSession id) { library_->Close(id); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, 0);
+      }
+
       response->set_status(status);
-      if (status_ok(status)) {
         response->mutable_vi()->set_id(session_id);
-      }
-      else {
-        const auto error_message = get_last_error_message(library_);
-        response->set_error_message(error_message);
-      }
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -2330,6 +2560,10 @@ namespace nirfsg_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Initiate(vi);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2349,6 +2583,10 @@ namespace nirfsg_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->InvalidateAllAttributes(vi);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2370,6 +2608,10 @@ namespace nirfsg_grpc {
       auto channel_name = request->channel_name().c_str();
       auto file_path = request->file_path().c_str();
       auto status = library_->LoadConfigurationsFromFile(vi, channel_name, file_path);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2389,6 +2631,10 @@ namespace nirfsg_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->PerformPowerSearch(vi);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2408,6 +2654,10 @@ namespace nirfsg_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->PerformThermalCorrection(vi);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2431,13 +2681,15 @@ namespace nirfsg_grpc {
       ViInt32 min_waveform_size {};
       ViInt32 max_waveform_size {};
       auto status = library_->QueryArbWaveformCapabilities(vi, &max_number_waveforms, &waveform_quantum, &min_waveform_size, &max_waveform_size);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
-      if (status_ok(status)) {
         response->set_max_number_waveforms(max_number_waveforms);
         response->set_waveform_quantum(waveform_quantum);
         response->set_min_waveform_size(min_waveform_size);
         response->set_max_waveform_size(max_waveform_size);
-      }
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -2459,6 +2711,10 @@ namespace nirfsg_grpc {
       auto file_path = request->file_path().c_str();
       ViUInt32 waveform_index = request->waveform_index();
       auto status = library_->ReadAndDownloadWaveformFromFileTDMS(vi, waveform_name, file_path, waveform_index);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2478,6 +2734,10 @@ namespace nirfsg_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Reset(vi);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2499,6 +2759,10 @@ namespace nirfsg_grpc {
       auto channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
       auto status = library_->ResetAttribute(vi, channel_name, attribute_id);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2518,6 +2782,10 @@ namespace nirfsg_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->ResetDevice(vi);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2537,6 +2805,10 @@ namespace nirfsg_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->ResetWithDefaults(vi);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2572,6 +2844,10 @@ namespace nirfsg_grpc {
       }
 
       auto status = library_->ResetWithOptions(vi, steps_to_omit);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2593,13 +2869,15 @@ namespace nirfsg_grpc {
       std::string instrument_driver_revision(256 - 1, '\0');
       std::string firmware_revision(256 - 1, '\0');
       auto status = library_->RevisionQuery(vi, (ViChar*)instrument_driver_revision.data(), (ViChar*)firmware_revision.data());
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
-      if (status_ok(status)) {
         response->set_instrument_driver_revision(instrument_driver_revision);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_instrument_driver_revision()));
         response->set_firmware_revision(firmware_revision);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_firmware_revision()));
-      }
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -2620,6 +2898,10 @@ namespace nirfsg_grpc {
       auto channel_name = request->channel_name().c_str();
       auto file_path = request->file_path().c_str();
       auto status = library_->SaveConfigurationsToFile(vi, channel_name, file_path);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2640,6 +2922,10 @@ namespace nirfsg_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto name = request->name().c_str();
       auto status = library_->SelectArbWaveform(vi, name);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2659,6 +2945,10 @@ namespace nirfsg_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->SelfCal(vi);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2698,6 +2988,10 @@ namespace nirfsg_grpc {
       ViReal64 min_power_level = request->min_power_level();
       ViReal64 max_power_level = request->max_power_level();
       auto status = library_->SelfCalibrateRange(vi, steps_to_omit, min_frequency, max_frequency, min_power_level, max_power_level);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2719,12 +3013,14 @@ namespace nirfsg_grpc {
       ViInt16 self_test_result {};
       std::string self_test_message(2048 - 1, '\0');
       auto status = library_->SelfTest(vi, &self_test_result, (ViChar*)self_test_message.data());
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
-      if (status_ok(status)) {
         response->set_self_test_result(self_test_result);
         response->set_self_test_message(self_test_message);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_self_test_message()));
-      }
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -2779,6 +3075,10 @@ namespace nirfsg_grpc {
       }
 
       auto status = library_->SendSoftwareEdgeTrigger(vi, trigger, trigger_identifier);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2816,6 +3116,10 @@ namespace nirfsg_grpc {
 
       ViInt32 offset = request->offset();
       auto status = library_->SetArbWaveformNextWritePosition(vi, waveform_name, relative_to, offset);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2838,6 +3142,10 @@ namespace nirfsg_grpc {
       ViAttr attribute_id = request->attribute_id();
       ViBoolean value = request->value();
       auto status = library_->SetAttributeViBoolean(vi, channel_name, attribute_id, value);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2875,6 +3183,10 @@ namespace nirfsg_grpc {
       }
 
       auto status = library_->SetAttributeViInt32(vi, channel_name, attribute_id, value);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2897,6 +3209,10 @@ namespace nirfsg_grpc {
       ViAttr attribute_id = request->attribute_id();
       ViInt64 value = request->value_raw();
       auto status = library_->SetAttributeViInt64(vi, channel_name, attribute_id, value);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2934,6 +3250,10 @@ namespace nirfsg_grpc {
       }
 
       auto status = library_->SetAttributeViReal64(vi, channel_name, attribute_id, value);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2957,6 +3277,10 @@ namespace nirfsg_grpc {
       auto value_grpc_session = request->value();
       ViSession value = session_repository_->access_session(value_grpc_session.id(), value_grpc_session.name());
       auto status = library_->SetAttributeViSession(vi, channel_name, attribute_id, value);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2998,6 +3322,10 @@ namespace nirfsg_grpc {
       }
 
       auto status = library_->SetAttributeViString(vi, channel_name, attribute_id, value);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -3020,6 +3348,10 @@ namespace nirfsg_grpc {
       ViInt32 buffer_size = static_cast<ViInt32>(request->data().size());
       ViInt8* data = (ViInt8*)request->data().c_str();
       auto status = library_->SetUserData(vi, identifier, buffer_size, data);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -3042,6 +3374,10 @@ namespace nirfsg_grpc {
       ViInt32 number_of_locations = static_cast<ViInt32>(request->locations().size());
       auto locations = const_cast<ViReal64*>(request->locations().data());
       auto status = library_->SetWaveformBurstStartLocations(vi, channel_name, number_of_locations, locations);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -3064,6 +3400,10 @@ namespace nirfsg_grpc {
       ViInt32 number_of_locations = static_cast<ViInt32>(request->locations().size());
       auto locations = const_cast<ViReal64*>(request->locations().data());
       auto status = library_->SetWaveformBurstStopLocations(vi, channel_name, number_of_locations, locations);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -3086,6 +3426,10 @@ namespace nirfsg_grpc {
       ViInt32 number_of_locations = static_cast<ViInt32>(request->locations().size());
       auto locations = const_cast<ViReal64*>(request->locations().data());
       auto status = library_->SetWaveformMarkerEventLocations(vi, channel_name, number_of_locations, locations);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -3106,6 +3450,10 @@ namespace nirfsg_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViInt32 max_time_milliseconds = request->max_time_milliseconds();
       auto status = library_->WaitUntilSettled(vi, max_time_milliseconds);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -3141,6 +3489,10 @@ namespace nirfsg_grpc {
       auto q_data = const_cast<ViReal64*>(request->q_data().data());
       ViBoolean more_data_pending = request->more_data_pending();
       auto status = library_->WriteArbWaveform(vi, waveform_name, number_of_samples, i_data, q_data, more_data_pending);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -3164,6 +3516,10 @@ namespace nirfsg_grpc {
       auto wfm_data = convert_from_grpc<NIComplexNumberF32_struct>(request->wfm_data());
       ViBoolean more_data_pending = request->more_data_pending();
       auto status = library_->WriteArbWaveformComplexF32(vi, waveform_name, number_of_samples, wfm_data.data(), more_data_pending);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -3187,6 +3543,10 @@ namespace nirfsg_grpc {
       auto wfm_data = convert_from_grpc<NIComplexNumber_struct>(request->wfm_data());
       ViBoolean more_data_pending = request->more_data_pending();
       auto status = library_->WriteArbWaveformComplexF64(vi, waveform_name, number_of_samples, wfm_data.data(), more_data_pending);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -3209,6 +3569,10 @@ namespace nirfsg_grpc {
       ViInt32 number_of_samples = static_cast<ViInt32>(request->wfm_data().size());
       auto wfm_data = convert_from_grpc<NIComplexI16_struct>(request->wfm_data());
       auto status = library_->WriteArbWaveformComplexI16(vi, waveform_name, number_of_samples, wfm_data.data());
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -3244,6 +3608,10 @@ namespace nirfsg_grpc {
       auto q_data = const_cast<ViReal32*>(request->q_data().data());
       ViBoolean more_data_pending = request->more_data_pending();
       auto status = library_->WriteArbWaveformF32(vi, waveform_name, number_of_samples, i_data, q_data, more_data_pending);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -3264,6 +3632,10 @@ namespace nirfsg_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto script = request->script().c_str();
       auto status = library_->WriteScript(vi, script);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }

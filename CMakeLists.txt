@@ -358,6 +358,7 @@ add_executable(IntegrationTestsRunner
     "${service_output_dir}/nifake/nifake_service.cpp"
     "${service_output_dir}/nifake_non_ivi/nifake_non_ivi_client.cpp"
     "${service_output_dir}/nifake_non_ivi/nifake_non_ivi_service.cpp"
+    "${custom_dir}/nifake_service.custom.cpp"
     "${custom_dir}/nifake_non_ivi_service.custom.cpp"
 )
 

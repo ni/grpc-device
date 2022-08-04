@@ -50,4 +50,17 @@ namespace nifake_non_ivi_grpc {
       request->start(),
       request->stop());
 }
+
+::grpc::Status NiFakeNonIviService::ConvertApiErrorStatusForFakeHandle(google::protobuf::int32 status, FakeHandle handle)
+{
+    std::string description = "In a real service, you'd look up the error message here.";
+    return nidevice_grpc::ApiErrorAndDescriptionToStatus(status, description);
+}
+
+::grpc::Status NiFakeNonIviService::ConvertApiErrorStatusForSecondarySessionHandle(google::protobuf::int32 status, SecondarySessionHandle handle)
+{
+    std::string description = "In a real service, you'd look up the error message here.";
+    return nidevice_grpc::ApiErrorAndDescriptionToStatus(status, description);
+}
+
 }  // namespace nifake_non_ivi_grpc

@@ -132,6 +132,7 @@ public:
 private:
   NiDmmLibraryInterface* library_;
   ResourceRepositorySharedPtr session_repository_;
+  ::grpc::Status ConvertApiErrorStatusForViSession(google::protobuf::int32 status, ViSession vi);
 
   NiDmmFeatureToggles feature_toggles_;
 };

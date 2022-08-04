@@ -114,6 +114,7 @@ public:
 private:
   NiSyncLibraryInterface* library_;
   ResourceRepositorySharedPtr session_repository_;
+  ::grpc::Status ConvertApiErrorStatusForViSession(google::protobuf::int32 status, ViSession vi);
 
   NiSyncFeatureToggles feature_toggles_;
 };

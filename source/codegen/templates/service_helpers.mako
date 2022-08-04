@@ -37,7 +37,7 @@ ${call_library_method(
       const std::string& grpc_device_session_name = request->${session_field_name}();
       auto cleanup_lambda = [&] (${resource_handle_type} id) { library_->${close_function_call}; };
       int status = ${service_helpers.session_repository_field_name(session_output_param, config)}->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
-${populate_response(function_data=function_data, output_parameters=output_parameters, init_method=True)}\
+${populate_response(function_data=function_data, parameters=parameters, init_method=True)}\
       return ::grpc::Status::OK;\
 </%def>
 
@@ -87,10 +87,7 @@ ${call_library_method(
   arg_string=service_helpers.create_args_for_ivi_dance(parameters),
   indent_level=1)
 }\
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+${populate_error_check(function_data, parameters)}
         ${size_param['type']} ${common_helpers.get_cpp_local_name(size_param)} = status;
 
 <%block filter="common_helpers.indent(1)">\
@@ -109,7 +106,7 @@ ${call_library_method(
           // buffer is now too small, try again
           continue;
         }
-${populate_response(function_data=function_data, output_parameters=output_parameters, indent_level=1)}\
+${populate_response(function_data=function_data, parameters=parameters, indent_level=1)}\
         return ::grpc::Status::OK;
       }\
 </%def>
@@ -132,10 +129,7 @@ ${call_library_method(
   arg_string=service_helpers.create_args_for_ivi_dance_with_a_twist(parameters),
   indent_level=1)
 }\
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+${populate_error_check(function_data, parameters)}
 <%block filter="common_helpers.indent(1)">\
 ${initialize_output_params(array_output_parameters)}\
 </%block>\
@@ -155,7 +149,7 @@ ${call_library_method(
           // buffer is now too small, try again
           continue;
         }
-${populate_response(function_data=function_data, output_parameters=output_parameters, indent_level=1)}\
+${populate_response(function_data=function_data, parameters=parameters, indent_level=1)}\
         return ::grpc::Status::OK;
       }\
 </%def>
@@ -244,7 +238,7 @@ ${call_library_method(
   arg_string=service_helpers.create_args(parameters),
   library_lval=service_helpers.get_library_lval_for_potentially_umockable_function(config, parameters))
 }\
-${populate_response(function_data=function_data, output_parameters=output_parameters)}\
+${populate_response(function_data=function_data, parameters=parameters)}\
       return ::grpc::Status::OK;\
 </%def>
 
@@ -268,7 +262,7 @@ ${call_library_method(
   function_data=function_data, 
   arg_string=service_helpers.create_args(parameters))
 }\
-${populate_response(function_data=function_data, output_parameters=output_parameters)}\
+${populate_response(function_data=function_data, parameters=parameters)}\
       return ::grpc::Status::OK;\
 </%def>
 
@@ -719,30 +713,41 @@ ${initialize_hardcoded_parameter(parameter)}
 
 
 ## Handles populating the response message after calling the driver API.
-<%def name="populate_response(function_data, output_parameters, indent_level=0, init_method=False)">\
+<%def name="populate_response(function_data, parameters, indent_level=0, init_method=False)">\
 <%
+  output_parameters = [p for p in parameters if common_helpers.is_output_parameter(p)]
   get_last_error_outputs = service_helpers.get_last_error_output_params(output_parameters)
   normal_outputs = [p for p in output_parameters if not p in get_last_error_outputs]
 %>\
 <%block filter="common_helpers.indent(indent_level)">\
+${populate_error_check(function_data, parameters, indent_level)}
       response->set_status(status);
 %if output_parameters:
-      if (status_ok(status)) {
 ${set_response_values(normal_outputs, init_method)}\
-      }
-%   if any(get_last_error_outputs):
-      else {
-%     for get_last_error_output in get_last_error_outputs:
-<%
-  get_last_error_output_name = common_helpers.get_grpc_field_name(get_last_error_output)
-  get_last_error_method_name = get_last_error_output["get_last_error"]
-%>\
-        const auto ${get_last_error_output_name} = ${get_last_error_method_name}(library_);
-        response->set_${get_last_error_output_name}(${get_last_error_output_name});
-%     endfor
-      }
-%   endif
 %endif
+</%block>\
+</%def>
+
+## Handles populating the response message after calling the driver API.
+<%def name="populate_error_check(function_data, parameters, indent_level=0)">\
+<%
+  config = data['config']
+  input_parameters = [p for p in parameters if common_helpers.is_input_parameter(p)]
+  resource_handle_types = service_helpers.get_resource_handle_types(config)
+%>\
+<%block filter="common_helpers.indent(indent_level)">\
+<%
+  session = 0
+  handle_type = resource_handle_types[0]
+  for parameter in input_parameters:
+    if parameter['type'] in resource_handle_types:
+      session = common_helpers.get_cpp_local_name(parameter)
+      handle_type = parameter['type']
+      break
+%>\
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusFor${handle_type}(status, ${session});
+      }
 </%block>\
 </%def>
 

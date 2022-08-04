@@ -3,6 +3,7 @@
 
 #include <google/protobuf/repeated_field.h>
 #include <google/protobuf/util/time_util.h>
+#include <grpcpp/grpcpp.h>
 #include <nidevice.pb.h>          // For common grpc types.
 #include <server/common_types.h>  // For common C types.
 #include <server/exceptions.h>
@@ -317,6 +318,19 @@ typename TypeToStorageType<TDriverType, TGrpcType>::StorageType allocate_output_
 }
 
 }  // namespace converters
+
+const int kMaxGrpcErrorDescriptionSize = 4096;
+
+inline ::grpc::Status ApiErrorAndDescriptionToStatus(google::protobuf::int32 status, std::string& description)
+{
+    converters::trim_trailing_nulls(description);
+    // TODO: May need full-fledged json escape logic.
+    for (size_t index = 0; (index = description.find('"', index)) != std::string::npos; ++index) {
+        description.replace(index, 1, "\\\"");
+    }
+    std::string errorMessage = "{ \"code\":\"" + std::to_string(status) + "\", \"" + description + "\" }";
+    return ::grpc::Status(grpc::StatusCode::UNKNOWN, errorMessage);
+}
 }  // namespace nidevice_grpc
 
 #endif /* NIDEVICE_GRPC_DEVICE_CONVERTERS_H */

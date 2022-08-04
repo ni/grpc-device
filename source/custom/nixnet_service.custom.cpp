@@ -1147,6 +1147,20 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
   }
 }
 
+::grpc::Status NiXnetService::ConvertApiErrorStatusFornxSessionRef_t(google::protobuf::int32 status, nxSessionRef_t session)
+{
+    std::string description(nidevice_grpc::kMaxGrpcErrorDescriptionSize, '\0');
+    library_->StatusToString(status, nidevice_grpc::kMaxGrpcErrorDescriptionSize, description.data());
+    return nidevice_grpc::ApiErrorAndDescriptionToStatus(status, description);
+}
+
+::grpc::Status NiXnetService::ConvertApiErrorStatusFornxDatabaseRef_t(google::protobuf::int32 status, nxDatabaseRef_t session)
+{
+    std::string description(nidevice_grpc::kMaxGrpcErrorDescriptionSize, '\0');
+    library_->StatusToString(status, nidevice_grpc::kMaxGrpcErrorDescriptionSize, description.data());
+    return nidevice_grpc::ApiErrorAndDescriptionToStatus(status, description);
+}
+
 void convert_to_grpc(std::vector<u8>& input, google::protobuf::RepeatedPtrField<nixnet_grpc::FrameBufferResponse>* output, u32 number_of_bytes, u32 protocol, std::map<std::int32_t, std::int32_t> enetflags_output_map)
 {
   auto buffer_ptr = (void*)input.data();

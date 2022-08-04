@@ -45,6 +45,7 @@ public:
 private:
   NiFakeExtensionLibraryInterface* library_;
   ResourceRepositorySharedPtr session_repository_;
+  ::grpc::Status ConvertApiErrorStatusForViSession(google::protobuf::int32 status, ViSession vi);
 
   NiFakeExtensionFeatureToggles feature_toggles_;
 };

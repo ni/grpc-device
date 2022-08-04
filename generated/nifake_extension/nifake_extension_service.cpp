@@ -53,6 +53,10 @@ namespace nifake_extension_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViInt32 param = request->param();
       auto status = library_->AddCoolFunctionality(vi, param);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }

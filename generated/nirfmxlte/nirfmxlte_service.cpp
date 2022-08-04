@@ -92,6 +92,10 @@ namespace nirfmxlte_grpc {
       }
 
       auto status = library_->ACPCfgAveraging(instrument, selector_string, averaging_enabled, averaging_count, averaging_type);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -128,6 +132,10 @@ namespace nirfmxlte_grpc {
       }
 
       auto status = library_->ACPCfgConfigurableNumberOfOffsetsEnabled(instrument, selector_string, configurable_number_of_offsets_enabled);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -164,6 +172,10 @@ namespace nirfmxlte_grpc {
       }
 
       auto status = library_->ACPCfgMeasurementMethod(instrument, selector_string, measurement_method);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -200,6 +212,10 @@ namespace nirfmxlte_grpc {
       }
 
       auto status = library_->ACPCfgNoiseCompensationEnabled(instrument, selector_string, noise_compensation_enabled);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -221,6 +237,10 @@ namespace nirfmxlte_grpc {
       char* selector_string = (char*)request->selector_string().c_str();
       int32 number_of_eutra_offsets = request->number_of_eutra_offsets();
       auto status = library_->ACPCfgNumberOfEUTRAOffsets(instrument, selector_string, number_of_eutra_offsets);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -242,6 +262,10 @@ namespace nirfmxlte_grpc {
       char* selector_string = (char*)request->selector_string().c_str();
       int32 number_of_gsm_offsets = request->number_of_gsm_offsets();
       auto status = library_->ACPCfgNumberOfGSMOffsets(instrument, selector_string, number_of_gsm_offsets);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -263,6 +287,10 @@ namespace nirfmxlte_grpc {
       char* selector_string = (char*)request->selector_string().c_str();
       int32 number_of_utra_offsets = request->number_of_utra_offsets();
       auto status = library_->ACPCfgNumberOfUTRAOffsets(instrument, selector_string, number_of_utra_offsets);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -299,6 +327,10 @@ namespace nirfmxlte_grpc {
       }
 
       auto status = library_->ACPCfgPowerUnits(instrument, selector_string, power_units);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -352,6 +384,10 @@ namespace nirfmxlte_grpc {
       }
 
       auto status = library_->ACPCfgRBWFilter(instrument, selector_string, rbw_auto, rbw, rbw_filter_type);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -389,6 +425,10 @@ namespace nirfmxlte_grpc {
 
       float64 sweep_time_interval = request->sweep_time_interval();
       auto status = library_->ACPCfgSweepTime(instrument, selector_string, sweep_time_auto, sweep_time_interval);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -411,6 +451,10 @@ namespace nirfmxlte_grpc {
       int32 number_of_utra_offsets = request->number_of_utra_offsets();
       int32 number_of_eutra_offsets = request->number_of_eutra_offsets();
       auto status = library_->ACPCfgUTRAAndEUTRAOffsets(instrument, selector_string, number_of_utra_offsets, number_of_eutra_offsets);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -437,10 +481,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->ACPFetchAbsolutePowersTrace(instrument, selector_string, timeout, trace_index, &x0, &dx, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         response->mutable_absolute_powers_trace()->Resize(actual_array_size, 0);
         float32* absolute_powers_trace = response->mutable_absolute_powers_trace()->mutable_data();
         auto array_size = actual_array_size;
@@ -449,13 +493,15 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->set_x0(x0);
           response->set_dx(dx);
           response->mutable_absolute_powers_trace()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -479,11 +525,13 @@ namespace nirfmxlte_grpc {
       float64 absolute_power {};
       float64 relative_power {};
       auto status = library_->ACPFetchComponentCarrierMeasurement(instrument, selector_string, timeout, &absolute_power, &relative_power);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
-      if (status_ok(status)) {
         response->set_absolute_power(absolute_power);
         response->set_relative_power(relative_power);
-      }
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -506,10 +554,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->ACPFetchComponentCarrierMeasurementArray(instrument, selector_string, timeout, nullptr, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         response->mutable_absolute_power()->Resize(actual_array_size, 0);
         float64* absolute_power = response->mutable_absolute_power()->mutable_data();
         response->mutable_relative_power()->Resize(actual_array_size, 0);
@@ -520,12 +568,14 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->mutable_absolute_power()->Resize(actual_array_size, 0);
           response->mutable_relative_power()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -551,13 +601,15 @@ namespace nirfmxlte_grpc {
       float64 lower_absolute_power {};
       float64 upper_absolute_power {};
       auto status = library_->ACPFetchOffsetMeasurement(instrument, selector_string, timeout, &lower_relative_power, &upper_relative_power, &lower_absolute_power, &upper_absolute_power);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
-      if (status_ok(status)) {
         response->set_lower_relative_power(lower_relative_power);
         response->set_upper_relative_power(upper_relative_power);
         response->set_lower_absolute_power(lower_absolute_power);
         response->set_upper_absolute_power(upper_absolute_power);
-      }
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -580,10 +632,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->ACPFetchOffsetMeasurementArray(instrument, selector_string, timeout, nullptr, nullptr, nullptr, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         response->mutable_lower_relative_power()->Resize(actual_array_size, 0);
         float64* lower_relative_power = response->mutable_lower_relative_power()->mutable_data();
         response->mutable_upper_relative_power()->Resize(actual_array_size, 0);
@@ -598,14 +650,16 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->mutable_lower_relative_power()->Resize(actual_array_size, 0);
           response->mutable_upper_relative_power()->Resize(actual_array_size, 0);
           response->mutable_lower_absolute_power()->Resize(actual_array_size, 0);
           response->mutable_upper_absolute_power()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -632,10 +686,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->ACPFetchRelativePowersTrace(instrument, selector_string, timeout, trace_index, &x0, &dx, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         response->mutable_relative_powers_trace()->Resize(actual_array_size, 0);
         float32* relative_powers_trace = response->mutable_relative_powers_trace()->mutable_data();
         auto array_size = actual_array_size;
@@ -644,13 +698,15 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->set_x0(x0);
           response->set_dx(dx);
           response->mutable_relative_powers_trace()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -676,10 +732,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->ACPFetchSpectrum(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         response->mutable_spectrum()->Resize(actual_array_size, 0);
         float32* spectrum = response->mutable_spectrum()->mutable_data();
         auto array_size = actual_array_size;
@@ -688,13 +744,15 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->set_x0(x0);
           response->set_dx(dx);
           response->mutable_spectrum()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -719,12 +777,14 @@ namespace nirfmxlte_grpc {
       float64 integration_bandwidth {};
       float64 frequency {};
       auto status = library_->ACPFetchSubblockMeasurement(instrument, selector_string, timeout, &subblock_power, &integration_bandwidth, &frequency);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
-      if (status_ok(status)) {
         response->set_subblock_power(subblock_power);
         response->set_integration_bandwidth(integration_bandwidth);
         response->set_frequency(frequency);
-      }
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -746,10 +806,12 @@ namespace nirfmxlte_grpc {
       float64 timeout = request->timeout();
       float64 total_aggregated_power {};
       auto status = library_->ACPFetchTotalAggregatedPower(instrument, selector_string, timeout, &total_aggregated_power);
-      response->set_status(status);
-      if (status_ok(status)) {
-        response->set_total_aggregated_power(total_aggregated_power);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
       }
+
+      response->set_status(status);
+        response->set_total_aggregated_power(total_aggregated_power);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -770,11 +832,13 @@ namespace nirfmxlte_grpc {
       char* selector_string = (char*)request->selector_string().c_str();
       int32 noise_calibration_data_valid {};
       auto status = library_->ACPValidateNoiseCalibrationData(instrument, selector_string, &noise_calibration_data_valid);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
-      if (status_ok(status)) {
         response->set_noise_calibration_data_valid(static_cast<nirfmxlte_grpc::AcpNoiseCalibrationDataValid>(noise_calibration_data_valid));
         response->set_noise_calibration_data_valid_raw(noise_calibration_data_valid);
-      }
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -794,6 +858,10 @@ namespace nirfmxlte_grpc {
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto status = library_->AbortMeasurements(instrument, selector_string);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -821,6 +889,10 @@ namespace nirfmxlte_grpc {
       int32 reset = request->reset();
       auto reserved = 0;
       auto status = library_->AnalyzeIQ1Waveform(instrument, selector_string, result_name, x0, dx, iq.data(), array_size, reset, reserved);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -848,6 +920,10 @@ namespace nirfmxlte_grpc {
       int32 reset = request->reset();
       auto reserved = 0;
       auto status = library_->AnalyzeSpectrum1Waveform(instrument, selector_string, result_name, x0, dx, spectrum, array_size, reset, reserved);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -870,10 +946,12 @@ namespace nirfmxlte_grpc {
       float64 measurement_interval = request->measurement_interval();
       float64 reference_level {};
       auto status = library_->AutoLevel(instrument, selector_string, measurement_interval, &reference_level);
-      response->set_status(status);
-      if (status_ok(status)) {
-        response->set_reference_level(reference_level);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
       }
+
+      response->set_status(status);
+        response->set_reference_level(reference_level);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -894,10 +972,10 @@ namespace nirfmxlte_grpc {
 
       while (true) {
         auto status = library_->BuildCarrierString(selector_string, carrier_number, 0, nullptr);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, 0);
+      }
+
         int32 selector_string_out_length = status;
 
         std::string selector_string_out;
@@ -909,11 +987,13 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, 0);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->set_selector_string_out(selector_string_out);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_selector_string_out()));
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -935,10 +1015,10 @@ namespace nirfmxlte_grpc {
 
       while (true) {
         auto status = library_->BuildClusterString(selector_string, cluster_number, 0, nullptr);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, 0);
+      }
+
         int32 selector_string_out_length = status;
 
         std::string selector_string_out;
@@ -950,11 +1030,13 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, 0);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->set_selector_string_out(selector_string_out);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_selector_string_out()));
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -976,10 +1058,10 @@ namespace nirfmxlte_grpc {
 
       while (true) {
         auto status = library_->BuildOffsetString(selector_string, offset_number, 0, nullptr);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, 0);
+      }
+
         int32 selector_string_out_length = status;
 
         std::string selector_string_out;
@@ -991,11 +1073,13 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, 0);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->set_selector_string_out(selector_string_out);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_selector_string_out()));
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -1017,10 +1101,10 @@ namespace nirfmxlte_grpc {
 
       while (true) {
         auto status = library_->BuildPDSCHString(selector_string, pdsch_number, 0, nullptr);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, 0);
+      }
+
         int32 selector_string_out_length = status;
 
         std::string selector_string_out;
@@ -1032,11 +1116,13 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, 0);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->set_selector_string_out(selector_string_out);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_selector_string_out()));
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -1058,10 +1144,10 @@ namespace nirfmxlte_grpc {
 
       while (true) {
         auto status = library_->BuildSignalString(signal_name, result_name, 0, nullptr);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, 0);
+      }
+
         int32 selector_string_length = status;
 
         std::string selector_string;
@@ -1073,11 +1159,13 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, 0);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->set_selector_string(selector_string);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_selector_string()));
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -1099,10 +1187,10 @@ namespace nirfmxlte_grpc {
 
       while (true) {
         auto status = library_->BuildSubblockString(selector_string, subblock_number, 0, nullptr);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, 0);
+      }
+
         int32 selector_string_out_length = status;
 
         std::string selector_string_out;
@@ -1114,11 +1202,13 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, 0);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->set_selector_string_out(selector_string_out);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_selector_string_out()));
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -1140,10 +1230,10 @@ namespace nirfmxlte_grpc {
 
       while (true) {
         auto status = library_->BuildSubframeString(selector_string, subframe_number, 0, nullptr);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, 0);
+      }
+
         int32 selector_string_out_length = status;
 
         std::string selector_string_out;
@@ -1155,11 +1245,13 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, 0);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->set_selector_string_out(selector_string_out);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_selector_string_out()));
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -1213,6 +1305,10 @@ namespace nirfmxlte_grpc {
       }
 
       auto status = library_->CHPCfgAveraging(instrument, selector_string, averaging_enabled, averaging_count, averaging_type);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1249,6 +1345,10 @@ namespace nirfmxlte_grpc {
       }
 
       auto status = library_->CHPCfgIntegrationBandwidthType(instrument, selector_string, integration_bandwidth_type);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1302,6 +1402,10 @@ namespace nirfmxlte_grpc {
       }
 
       auto status = library_->CHPCfgRBWFilter(instrument, selector_string, rbw_auto, rbw, rbw_filter_type);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1339,6 +1443,10 @@ namespace nirfmxlte_grpc {
 
       float64 sweep_time_interval = request->sweep_time_interval();
       auto status = library_->CHPCfgSweepTime(instrument, selector_string, sweep_time_auto, sweep_time_interval);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1362,11 +1470,13 @@ namespace nirfmxlte_grpc {
       float64 absolute_power {};
       float64 relative_power {};
       auto status = library_->CHPFetchComponentCarrierMeasurement(instrument, selector_string, timeout, &absolute_power, &relative_power);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
-      if (status_ok(status)) {
         response->set_absolute_power(absolute_power);
         response->set_relative_power(relative_power);
-      }
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1389,10 +1499,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->CHPFetchComponentCarrierMeasurementArray(instrument, selector_string, timeout, nullptr, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         response->mutable_absolute_power()->Resize(actual_array_size, 0);
         float64* absolute_power = response->mutable_absolute_power()->mutable_data();
         response->mutable_relative_power()->Resize(actual_array_size, 0);
@@ -1403,12 +1513,14 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->mutable_absolute_power()->Resize(actual_array_size, 0);
           response->mutable_relative_power()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -1434,10 +1546,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->CHPFetchSpectrum(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         response->mutable_spectrum()->Resize(actual_array_size, 0);
         float32* spectrum = response->mutable_spectrum()->mutable_data();
         auto array_size = actual_array_size;
@@ -1446,13 +1558,15 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->set_x0(x0);
           response->set_dx(dx);
           response->mutable_spectrum()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -1477,12 +1591,14 @@ namespace nirfmxlte_grpc {
       float64 integration_bandwidth {};
       float64 frequency {};
       auto status = library_->CHPFetchSubblockMeasurement(instrument, selector_string, timeout, &subblock_power, &integration_bandwidth, &frequency);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
-      if (status_ok(status)) {
         response->set_subblock_power(subblock_power);
         response->set_integration_bandwidth(integration_bandwidth);
         response->set_frequency(frequency);
-      }
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1504,10 +1620,12 @@ namespace nirfmxlte_grpc {
       float64 timeout = request->timeout();
       float64 total_aggregated_power {};
       auto status = library_->CHPFetchTotalAggregatedPower(instrument, selector_string, timeout, &total_aggregated_power);
-      response->set_status(status);
-      if (status_ok(status)) {
-        response->set_total_aggregated_power(total_aggregated_power);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
       }
+
+      response->set_status(status);
+        response->set_total_aggregated_power(total_aggregated_power);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1528,11 +1646,13 @@ namespace nirfmxlte_grpc {
       char* selector_string = (char*)request->selector_string().c_str();
       int32 noise_calibration_data_valid {};
       auto status = library_->CHPValidateNoiseCalibrationData(instrument, selector_string, &noise_calibration_data_valid);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
-      if (status_ok(status)) {
         response->set_noise_calibration_data_valid(static_cast<nirfmxlte_grpc::ChpNoiseCalibrationDataValid>(noise_calibration_data_valid));
         response->set_noise_calibration_data_valid_raw(noise_calibration_data_valid);
-      }
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1568,6 +1688,10 @@ namespace nirfmxlte_grpc {
       }
 
       auto status = library_->CfgAutoDMRSDetectionEnabled(instrument, selector_string, auto_dmrs_detection_enabled);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1604,6 +1728,10 @@ namespace nirfmxlte_grpc {
       }
 
       auto status = library_->CfgAutoNPUSCHChannelDetectionEnabled(instrument, selector_string, auto_npusch_channel_detection_enabled);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1640,6 +1768,10 @@ namespace nirfmxlte_grpc {
       }
 
       auto status = library_->CfgAutoResourceBlockDetectionEnabled(instrument, selector_string, auto_resource_block_detection_enabled);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1661,6 +1793,10 @@ namespace nirfmxlte_grpc {
       char* selector_string = (char*)request->selector_string().c_str();
       int32 band = request->band();
       auto status = library_->CfgBand(instrument, selector_string, band);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1697,6 +1833,10 @@ namespace nirfmxlte_grpc {
       }
 
       auto status = library_->CfgCellSpecificRatio(instrument, selector_string, cell_specific_ratio);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1720,6 +1860,10 @@ namespace nirfmxlte_grpc {
       float64 component_carrier_frequency = request->component_carrier_frequency();
       int32 cell_id = request->cell_id();
       auto status = library_->CfgComponentCarrier(instrument, selector_string, component_carrier_bandwidth, component_carrier_frequency, cell_id);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1762,6 +1906,10 @@ namespace nirfmxlte_grpc {
       auto number_of_elements = number_of_elements_size_calculation.size;
 
       auto status = library_->CfgComponentCarrierArray(instrument, selector_string, component_carrier_bandwidth, component_carrier_frequency, cell_id, number_of_elements);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1799,6 +1947,10 @@ namespace nirfmxlte_grpc {
 
       int32 component_carrier_at_center_frequency = request->component_carrier_at_center_frequency();
       auto status = library_->CfgComponentCarrierSpacing(instrument, selector_string, component_carrier_spacing_type, component_carrier_at_center_frequency);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1857,6 +2009,10 @@ namespace nirfmxlte_grpc {
       float64 trigger_delay = request->trigger_delay();
       int32 enable_trigger = request->enable_trigger();
       auto status = library_->CfgDigitalEdgeTrigger(instrument, selector_string, digital_edge_source, digital_edge, trigger_delay, enable_trigger);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1893,6 +2049,10 @@ namespace nirfmxlte_grpc {
       }
 
       auto status = library_->CfgDownlinkAutoCellIDDetectionEnabled(instrument, selector_string, auto_cell_id_detection_enabled);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1962,6 +2122,10 @@ namespace nirfmxlte_grpc {
 
       auto reserved = 0;
       auto status = library_->CfgDownlinkAutoChannelDetection(instrument, selector_string, auto_pdsch_channel_detection_enabled, auto_control_channel_power_detection_enabled, auto_pcfich_cfi_detection_enabled, reserved);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1998,6 +2162,10 @@ namespace nirfmxlte_grpc {
       }
 
       auto status = library_->CfgDownlinkChannelConfigurationMode(instrument, selector_string, channel_configuration_mode);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2019,6 +2187,10 @@ namespace nirfmxlte_grpc {
       char* selector_string = (char*)request->selector_string().c_str();
       int32 number_of_subframes = request->number_of_subframes();
       auto status = library_->CfgDownlinkNumberOfSubframes(instrument, selector_string, number_of_subframes);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2041,6 +2213,10 @@ namespace nirfmxlte_grpc {
       float64 pss_power = request->pss_power();
       float64 sss_power = request->sss_power();
       auto status = library_->CfgDownlinkSynchronizationSignal(instrument, selector_string, pss_power, sss_power);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2077,6 +2253,10 @@ namespace nirfmxlte_grpc {
       }
 
       auto status = library_->CfgDownlinkTestModel(instrument, selector_string, downlink_test_model);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2107,6 +2287,10 @@ namespace nirfmxlte_grpc {
 
       int32 number_of_elements = static_cast<int32>(request->downlink_test_model().size());
       auto status = library_->CfgDownlinkTestModelArray(instrument, selector_string, downlink_test_model, number_of_elements);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2159,6 +2343,10 @@ namespace nirfmxlte_grpc {
       }
 
       auto status = library_->CfgDuplexScheme(instrument, selector_string, duplex_scheme, uplink_downlink_configuration);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2195,6 +2383,10 @@ namespace nirfmxlte_grpc {
       }
 
       auto status = library_->CfgEMTCAnalysisEnabled(instrument, selector_string, emtc_analysis_enabled);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2216,6 +2408,10 @@ namespace nirfmxlte_grpc {
       char* selector_string = (char*)request->selector_string().c_str();
       float64 external_attenuation = request->external_attenuation();
       auto status = library_->CfgExternalAttenuation(instrument, selector_string, external_attenuation);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2237,6 +2433,10 @@ namespace nirfmxlte_grpc {
       char* selector_string = (char*)request->selector_string().c_str();
       float64 center_frequency = request->center_frequency();
       auto status = library_->CfgFrequency(instrument, selector_string, center_frequency);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2275,6 +2475,10 @@ namespace nirfmxlte_grpc {
       int32 band = request->band();
       int32 earfcn = request->earfcn();
       auto status = library_->CfgFrequencyEARFCN(instrument, selector_string, link_direction, band, earfcn);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2316,6 +2520,10 @@ namespace nirfmxlte_grpc {
 
       float64 frequency_reference_frequency = request->frequency_reference_frequency();
       auto status = library_->CfgFrequencyReference(instrument, channel_name, frequency_reference_source, frequency_reference_frequency);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2389,6 +2597,10 @@ namespace nirfmxlte_grpc {
 
       int32 enable_trigger = request->enable_trigger();
       auto status = library_->CfgIQPowerEdgeTrigger(instrument, selector_string, iq_power_edge_source, iq_power_edge_slope, iq_power_edge_level, trigger_delay, trigger_min_quiet_time_mode, trigger_min_quiet_time_duration, iq_power_edge_level_type, enable_trigger);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2425,6 +2637,10 @@ namespace nirfmxlte_grpc {
       }
 
       auto status = library_->CfgLinkDirection(instrument, selector_string, link_direction);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2462,6 +2678,10 @@ namespace nirfmxlte_grpc {
 
       float64 mechanical_attenuation_value = request->mechanical_attenuation_value();
       auto status = library_->CfgMechanicalAttenuation(instrument, channel_name, mechanical_attenuation_auto, mechanical_attenuation_value);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2499,6 +2719,10 @@ namespace nirfmxlte_grpc {
       }
 
       auto status = library_->CfgNBIoTComponentCarrier(instrument, selector_string, n_cell_id, uplink_subcarrier_spacing);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2554,6 +2778,10 @@ namespace nirfmxlte_grpc {
 
       int32 npusch_dmrs_delta_ss = request->npusch_dmrs_delta_ss();
       auto status = library_->CfgNPUSCHDMRS(instrument, selector_string, npusch_dmrs_base_sequence_mode, npusch_dmrs_base_sequence_index, npusch_dmrs_cyclic_shift, npusch_dmrs_group_hopping_enabled, npusch_dmrs_delta_ss);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2575,6 +2803,10 @@ namespace nirfmxlte_grpc {
       char* selector_string = (char*)request->selector_string().c_str();
       int32 format = request->format();
       auto status = library_->CfgNPUSCHFormat(instrument, selector_string, format);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2596,6 +2828,10 @@ namespace nirfmxlte_grpc {
       char* selector_string = (char*)request->selector_string().c_str();
       int32 starting_slot = request->starting_slot();
       auto status = library_->CfgNPUSCHStartingSlot(instrument, selector_string, starting_slot);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2634,6 +2870,10 @@ namespace nirfmxlte_grpc {
       }
 
       auto status = library_->CfgNPUSCHTones(instrument, selector_string, tone_offset, number_of_tones, modulation_type);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2655,6 +2895,10 @@ namespace nirfmxlte_grpc {
       char* selector_string = (char*)request->selector_string().c_str();
       int32 number_of_component_carriers = request->number_of_component_carriers();
       auto status = library_->CfgNumberOfComponentCarriers(instrument, selector_string, number_of_component_carriers);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2676,6 +2920,10 @@ namespace nirfmxlte_grpc {
       char* selector_string = (char*)request->selector_string().c_str();
       int32 number_of_dut_antennas = request->number_of_dut_antennas();
       auto status = library_->CfgNumberOfDUTAntennas(instrument, selector_string, number_of_dut_antennas);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2697,6 +2945,10 @@ namespace nirfmxlte_grpc {
       char* selector_string = (char*)request->selector_string().c_str();
       int32 number_of_pdsch_channels = request->number_of_pdsch_channels();
       auto status = library_->CfgNumberOfPDSCHChannels(instrument, selector_string, number_of_pdsch_channels);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2718,6 +2970,10 @@ namespace nirfmxlte_grpc {
       char* selector_string = (char*)request->selector_string().c_str();
       int32 number_of_resource_block_clusters = request->number_of_resource_block_clusters();
       auto status = library_->CfgNumberOfPUSCHResourceBlockClusters(instrument, selector_string, number_of_resource_block_clusters);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2739,6 +2995,10 @@ namespace nirfmxlte_grpc {
       char* selector_string = (char*)request->selector_string().c_str();
       int32 number_of_subblocks = request->number_of_subblocks();
       auto status = library_->CfgNumberOfSubblocks(instrument, selector_string, number_of_subblocks);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2760,6 +3020,10 @@ namespace nirfmxlte_grpc {
       char* selector_string = (char*)request->selector_string().c_str();
       float64 pbch_power = request->pbch_power();
       auto status = library_->CfgPBCH(instrument, selector_string, pbch_power);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2782,6 +3046,10 @@ namespace nirfmxlte_grpc {
       int32 cfi = request->cfi();
       float64 power = request->power();
       auto status = library_->CfgPCFICH(instrument, selector_string, cfi, power);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2803,6 +3071,10 @@ namespace nirfmxlte_grpc {
       char* selector_string = (char*)request->selector_string().c_str();
       float64 pdcch_power = request->pdcch_power();
       auto status = library_->CfgPDCCH(instrument, selector_string, pdcch_power);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2841,6 +3113,10 @@ namespace nirfmxlte_grpc {
       char* resource_block_allocation = (char*)request->resource_block_allocation().c_str();
       float64 power = request->power();
       auto status = library_->CfgPDSCH(instrument, selector_string, cw0_modulation_type, resource_block_allocation, power);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2894,6 +3170,10 @@ namespace nirfmxlte_grpc {
 
       float64 power = request->power();
       auto status = library_->CfgPHICH(instrument, selector_string, resource, duration, power);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2915,6 +3195,10 @@ namespace nirfmxlte_grpc {
       char* selector_string = (char*)request->selector_string().c_str();
       int32 modulation_type = request->modulation_type();
       auto status = library_->CfgPSSCHModulationType(instrument, selector_string, modulation_type);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2937,6 +3221,10 @@ namespace nirfmxlte_grpc {
       int32 resource_block_offset = request->resource_block_offset();
       int32 number_of_resource_blocks = request->number_of_resource_blocks();
       auto status = library_->CfgPSSCHResourceBlocks(instrument, selector_string, resource_block_offset, number_of_resource_blocks);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2973,6 +3261,10 @@ namespace nirfmxlte_grpc {
       }
 
       auto status = library_->CfgPUSCHModulationType(instrument, selector_string, modulation_type);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2995,6 +3287,10 @@ namespace nirfmxlte_grpc {
       int32 resource_block_offset = request->resource_block_offset();
       int32 number_of_resource_blocks = request->number_of_resource_blocks();
       auto status = library_->CfgPUSCHResourceBlocks(instrument, selector_string, resource_block_offset, number_of_resource_blocks);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -3018,6 +3314,10 @@ namespace nirfmxlte_grpc {
       float64 reference_level = request->reference_level();
       float64 external_attenuation = request->external_attenuation();
       auto status = library_->CfgRF(instrument, selector_string, center_frequency, reference_level, external_attenuation);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -3055,6 +3355,10 @@ namespace nirfmxlte_grpc {
 
       float64 rf_attenuation_value = request->rf_attenuation_value();
       auto status = library_->CfgRFAttenuation(instrument, channel_name, rf_attenuation_auto, rf_attenuation_value);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -3076,6 +3380,10 @@ namespace nirfmxlte_grpc {
       char* selector_string = (char*)request->selector_string().c_str();
       float64 reference_level = request->reference_level();
       auto status = library_->CfgReferenceLevel(instrument, selector_string, reference_level);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -3098,6 +3406,10 @@ namespace nirfmxlte_grpc {
       float64 trigger_delay = request->trigger_delay();
       int32 enable_trigger = request->enable_trigger();
       auto status = library_->CfgSoftwareEdgeTrigger(instrument, selector_string, trigger_delay, enable_trigger);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -3119,6 +3431,10 @@ namespace nirfmxlte_grpc {
       char* selector_string = (char*)request->selector_string().c_str();
       int32 transmit_antenna_to_analyze = request->transmit_antenna_to_analyze();
       auto status = library_->CfgTransmitAntennaToAnalyze(instrument, selector_string, transmit_antenna_to_analyze);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -3155,6 +3471,10 @@ namespace nirfmxlte_grpc {
       }
 
       auto status = library_->CfgeNodeBCategory(instrument, selector_string, enodeb_category);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -3176,10 +3496,12 @@ namespace nirfmxlte_grpc {
       char* selector_string = (char*)request->selector_string().c_str();
       int32 is_done {};
       auto status = library_->CheckMeasurementStatus(instrument, selector_string, &is_done);
-      response->set_status(status);
-      if (status_ok(status)) {
-        response->set_is_done(is_done);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
       }
+
+      response->set_status(status);
+        response->set_is_done(is_done);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -3199,6 +3521,10 @@ namespace nirfmxlte_grpc {
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto status = library_->ClearAllNamedResults(instrument, selector_string);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -3219,6 +3545,10 @@ namespace nirfmxlte_grpc {
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto status = library_->ClearNamedResult(instrument, selector_string);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -3239,6 +3569,10 @@ namespace nirfmxlte_grpc {
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto status = library_->ClearNoiseCalibrationDatabase(instrument, selector_string);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -3260,6 +3594,10 @@ namespace nirfmxlte_grpc {
       char* old_signal_name = (char*)request->old_signal_name().c_str();
       char* new_signal_name = (char*)request->new_signal_name().c_str();
       auto status = library_->CloneSignalConfiguration(instrument, old_signal_name, new_signal_name);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -3281,6 +3619,10 @@ namespace nirfmxlte_grpc {
       int32 force_destroy = request->force_destroy();
       session_repository_->remove_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       auto status = library_->Close(instrument, force_destroy);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -3301,6 +3643,10 @@ namespace nirfmxlte_grpc {
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto status = library_->Commit(instrument, selector_string);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -3321,6 +3667,10 @@ namespace nirfmxlte_grpc {
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* signal_name = (char*)request->signal_name().c_str();
       auto status = library_->CreateSignalConfiguration(instrument, signal_name);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -3341,6 +3691,10 @@ namespace nirfmxlte_grpc {
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* signal_name = (char*)request->signal_name().c_str();
       auto status = library_->DeleteSignalConfiguration(instrument, signal_name);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -3361,6 +3715,10 @@ namespace nirfmxlte_grpc {
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto status = library_->DisableTrigger(instrument, selector_string);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -3384,10 +3742,10 @@ namespace nirfmxlte_grpc {
       int32 default_result_exists {};
       while (true) {
         auto status = library_->GetAllNamedResultNames(instrument, selector_string, nullptr, 0, &actual_result_names_size, &default_result_exists);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         std::string result_names;
         if (actual_result_names_size > 0) {
             result_names.resize(actual_result_names_size - 1);
@@ -3398,13 +3756,15 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->set_result_names(result_names);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_result_names()));
           response->set_actual_result_names_size(actual_result_names_size);
           response->set_default_result_exists(default_result_exists);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -3427,10 +3787,12 @@ namespace nirfmxlte_grpc {
       int32 attribute_id = request->attribute_id();
       float32 attr_val {};
       auto status = library_->GetAttributeF32(instrument, selector_string, attribute_id, &attr_val);
-      response->set_status(status);
-      if (status_ok(status)) {
-        response->set_attr_val(attr_val);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
       }
+
+      response->set_status(status);
+        response->set_attr_val(attr_val);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -3453,10 +3815,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->GetAttributeF32Array(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         response->mutable_attr_val()->Resize(actual_array_size, 0);
         float32* attr_val = response->mutable_attr_val()->mutable_data();
         auto array_size = actual_array_size;
@@ -3465,11 +3827,13 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->mutable_attr_val()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -3492,10 +3856,12 @@ namespace nirfmxlte_grpc {
       int32 attribute_id = request->attribute_id();
       float64 attr_val {};
       auto status = library_->GetAttributeF64(instrument, selector_string, attribute_id, &attr_val);
-      response->set_status(status);
-      if (status_ok(status)) {
-        response->set_attr_val(attr_val);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
       }
+
+      response->set_status(status);
+        response->set_attr_val(attr_val);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -3518,10 +3884,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->GetAttributeF64Array(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         response->mutable_attr_val()->Resize(actual_array_size, 0);
         float64* attr_val = response->mutable_attr_val()->mutable_data();
         auto array_size = actual_array_size;
@@ -3530,11 +3896,13 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->mutable_attr_val()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -3557,10 +3925,12 @@ namespace nirfmxlte_grpc {
       int32 attribute_id = request->attribute_id();
       int16 attr_val {};
       auto status = library_->GetAttributeI16(instrument, selector_string, attribute_id, &attr_val);
-      response->set_status(status);
-      if (status_ok(status)) {
-        response->set_attr_val(attr_val);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
       }
+
+      response->set_status(status);
+        response->set_attr_val(attr_val);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -3582,8 +3952,11 @@ namespace nirfmxlte_grpc {
       int32 attribute_id = request->attribute_id();
       int32 attr_val {};
       auto status = library_->GetAttributeI32(instrument, selector_string, attribute_id, &attr_val);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
-      if (status_ok(status)) {
         auto checked_convert_attr_val = [](auto raw_value) {
           bool raw_value_is_valid = nirfmxlte_grpc::NiRFmxLTEInt32AttributeValues_IsValid(raw_value);
           auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
@@ -3591,7 +3964,6 @@ namespace nirfmxlte_grpc {
         };
         response->set_attr_val(checked_convert_attr_val(attr_val));
         response->set_attr_val_raw(attr_val);
-      }
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -3614,10 +3986,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->GetAttributeI32Array(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         response->mutable_attr_val_raw()->Resize(actual_array_size, 0);
         int32* attr_val = reinterpret_cast<int32*>(response->mutable_attr_val_raw()->mutable_data());
         auto array_size = actual_array_size;
@@ -3626,8 +3998,11 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           auto checked_convert_attr_val = [](auto raw_value) {
             bool raw_value_is_valid = nirfmxlte_grpc::NiRFmxLTEInt32AttributeValues_IsValid(raw_value);
             auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
@@ -3644,7 +4019,6 @@ namespace nirfmxlte_grpc {
             });
           response->mutable_attr_val()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -3667,10 +4041,12 @@ namespace nirfmxlte_grpc {
       int32 attribute_id = request->attribute_id();
       int64 attr_val {};
       auto status = library_->GetAttributeI64(instrument, selector_string, attribute_id, &attr_val);
-      response->set_status(status);
-      if (status_ok(status)) {
-        response->set_attr_val(attr_val);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
       }
+
+      response->set_status(status);
+        response->set_attr_val(attr_val);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -3693,10 +4069,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->GetAttributeI64Array(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         response->mutable_attr_val()->Resize(actual_array_size, 0);
         int64* attr_val = reinterpret_cast<int64*>(response->mutable_attr_val()->mutable_data());
         auto array_size = actual_array_size;
@@ -3705,11 +4081,13 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->mutable_attr_val()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -3732,10 +4110,12 @@ namespace nirfmxlte_grpc {
       int32 attribute_id = request->attribute_id();
       int8 attr_val {};
       auto status = library_->GetAttributeI8(instrument, selector_string, attribute_id, &attr_val);
-      response->set_status(status);
-      if (status_ok(status)) {
-        response->set_attr_val(attr_val);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
       }
+
+      response->set_status(status);
+        response->set_attr_val(attr_val);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -3758,10 +4138,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->GetAttributeI8Array(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         std::vector<int8> attr_val(actual_array_size);
         auto array_size = actual_array_size;
         status = library_->GetAttributeI8Array(instrument, selector_string, attribute_id, attr_val.data(), array_size, &actual_array_size);
@@ -3769,8 +4149,11 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->mutable_attr_val()->Clear();
           response->mutable_attr_val()->Reserve(actual_array_size);
           std::transform(
@@ -3782,7 +4165,6 @@ namespace nirfmxlte_grpc {
             });
           response->mutable_attr_val()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -3806,10 +4188,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->GetAttributeNIComplexDoubleArray(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         std::vector<NIComplexDouble> attr_val(actual_array_size, NIComplexDouble());
         auto array_size = actual_array_size;
         status = library_->GetAttributeNIComplexDoubleArray(instrument, selector_string, attribute_id, attr_val.data(), array_size, &actual_array_size);
@@ -3817,8 +4199,11 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           convert_to_grpc(attr_val, response->mutable_attr_val());
           {
             auto shrunk_size = actual_array_size;
@@ -3828,7 +4213,6 @@ namespace nirfmxlte_grpc {
             }
           }
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -3852,10 +4236,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->GetAttributeNIComplexSingleArray(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         std::vector<NIComplexSingle> attr_val(actual_array_size, NIComplexSingle());
         auto array_size = actual_array_size;
         status = library_->GetAttributeNIComplexSingleArray(instrument, selector_string, attribute_id, attr_val.data(), array_size, &actual_array_size);
@@ -3863,8 +4247,11 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           convert_to_grpc(attr_val, response->mutable_attr_val());
           {
             auto shrunk_size = actual_array_size;
@@ -3874,7 +4261,6 @@ namespace nirfmxlte_grpc {
             }
           }
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -3898,10 +4284,10 @@ namespace nirfmxlte_grpc {
 
       while (true) {
         auto status = library_->GetAttributeString(instrument, selector_string, attribute_id, 0, nullptr);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         int32 array_size = status;
 
         std::string attr_val;
@@ -3913,11 +4299,13 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->set_attr_val(attr_val);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_attr_val()));
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -3940,10 +4328,12 @@ namespace nirfmxlte_grpc {
       int32 attribute_id = request->attribute_id();
       uInt16 attr_val {};
       auto status = library_->GetAttributeU16(instrument, selector_string, attribute_id, &attr_val);
-      response->set_status(status);
-      if (status_ok(status)) {
-        response->set_attr_val(attr_val);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
       }
+
+      response->set_status(status);
+        response->set_attr_val(attr_val);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -3965,10 +4355,12 @@ namespace nirfmxlte_grpc {
       int32 attribute_id = request->attribute_id();
       uInt32 attr_val {};
       auto status = library_->GetAttributeU32(instrument, selector_string, attribute_id, &attr_val);
-      response->set_status(status);
-      if (status_ok(status)) {
-        response->set_attr_val(attr_val);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
       }
+
+      response->set_status(status);
+        response->set_attr_val(attr_val);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -3991,10 +4383,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->GetAttributeU32Array(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         response->mutable_attr_val()->Resize(actual_array_size, 0);
         uInt32* attr_val = reinterpret_cast<uInt32*>(response->mutable_attr_val()->mutable_data());
         auto array_size = actual_array_size;
@@ -4003,11 +4395,13 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->mutable_attr_val()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -4031,10 +4425,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->GetAttributeU64Array(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         response->mutable_attr_val()->Resize(actual_array_size, 0);
         uInt64* attr_val = reinterpret_cast<uInt64*>(response->mutable_attr_val()->mutable_data());
         auto array_size = actual_array_size;
@@ -4043,11 +4437,13 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->mutable_attr_val()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -4070,10 +4466,12 @@ namespace nirfmxlte_grpc {
       int32 attribute_id = request->attribute_id();
       uInt8 attr_val {};
       auto status = library_->GetAttributeU8(instrument, selector_string, attribute_id, &attr_val);
-      response->set_status(status);
-      if (status_ok(status)) {
-        response->set_attr_val(attr_val);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
       }
+
+      response->set_status(status);
+        response->set_attr_val(attr_val);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -4096,10 +4494,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->GetAttributeU8Array(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         std::string attr_val(actual_array_size, '\0');
         auto array_size = actual_array_size;
         status = library_->GetAttributeU8Array(instrument, selector_string, attribute_id, (uInt8*)attr_val.data(), array_size, &actual_array_size);
@@ -4107,12 +4505,14 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->set_attr_val(attr_val);
           response->mutable_attr_val()->resize(actual_array_size);
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -4134,10 +4534,10 @@ namespace nirfmxlte_grpc {
 
       while (true) {
         auto status = library_->GetError(instrument, nullptr, 0, nullptr);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         int32 error_description_buffer_size = status;
 
         int32 error_code {};
@@ -4150,12 +4550,14 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->set_error_code(error_code);
           response->set_error_description(error_description);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_description()));
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -4178,10 +4580,10 @@ namespace nirfmxlte_grpc {
 
       while (true) {
         auto status = library_->GetErrorString(instrument, error_code, 0, nullptr);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         int32 error_description_buffer_size = status;
 
         std::string error_description;
@@ -4193,11 +4595,13 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->set_error_description(error_description);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_description()));
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -4227,15 +4631,13 @@ namespace nirfmxlte_grpc {
       const std::string& grpc_device_session_name = request->session_name();
       auto cleanup_lambda = [&] (niRFmxInstrHandle id) { library_->Close(id, RFMXLTE_VAL_FALSE); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, 0);
+      }
+
       response->set_status(status);
-      if (status_ok(status)) {
         response->mutable_instrument()->set_id(session_id);
         response->set_is_new_session(is_new_session);
-      }
-      else {
-        const auto error_message = get_last_error_message(library_);
-        response->set_error_message(error_message);
-      }
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -4263,14 +4665,12 @@ namespace nirfmxlte_grpc {
       const std::string& grpc_device_session_name = request->session_name();
       auto cleanup_lambda = [&] (niRFmxInstrHandle id) { library_->Close(id, RFMXLTE_VAL_FALSE); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, 0);
+      }
+
       response->set_status(status);
-      if (status_ok(status)) {
         response->mutable_instrument()->set_id(session_id);
-      }
-      else {
-        const auto error_message = get_last_error_message(library_);
-        response->set_error_message(error_message);
-      }
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -4291,6 +4691,10 @@ namespace nirfmxlte_grpc {
       char* selector_string = (char*)request->selector_string().c_str();
       char* result_name = (char*)request->result_name().c_str();
       auto status = library_->Initiate(instrument, selector_string, result_name);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -4328,6 +4732,10 @@ namespace nirfmxlte_grpc {
 
       int32 averaging_count = request->averaging_count();
       auto status = library_->ModAccCfgAveraging(instrument, selector_string, averaging_enabled, averaging_count);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -4364,6 +4772,10 @@ namespace nirfmxlte_grpc {
       }
 
       auto status = library_->ModAccCfgCommonClockSourceEnabled(instrument, selector_string, common_clock_source_enabled);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -4400,6 +4812,10 @@ namespace nirfmxlte_grpc {
       }
 
       auto status = library_->ModAccCfgEVMUnit(instrument, selector_string, evm_unit);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -4421,6 +4837,10 @@ namespace nirfmxlte_grpc {
       char* selector_string = (char*)request->selector_string().c_str();
       float64 fft_window_offset = request->fft_window_offset();
       auto status = library_->ModAccCfgFFTWindowOffset(instrument, selector_string, fft_window_offset);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -4459,6 +4879,10 @@ namespace nirfmxlte_grpc {
       float64 fft_window_offset = request->fft_window_offset();
       float64 fft_window_length = request->fft_window_length();
       auto status = library_->ModAccCfgFFTWindowPosition(instrument, selector_string, fft_window_type, fft_window_offset, fft_window_length);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -4495,6 +4919,10 @@ namespace nirfmxlte_grpc {
       }
 
       auto status = library_->ModAccCfgInBandEmissionMaskType(instrument, selector_string, in_band_emission_mask_type);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -4533,6 +4961,10 @@ namespace nirfmxlte_grpc {
       int32 measurement_offset = request->measurement_offset();
       int32 measurement_length = request->measurement_length();
       auto status = library_->ModAccCfgSynchronizationModeAndInterval(instrument, selector_string, synchronization_mode, measurement_offset, measurement_length);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -4556,10 +4988,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->ModAccFetchCSRSConstellation(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         std::vector<NIComplexSingle> csrs_constellation(actual_array_size, NIComplexSingle());
         auto array_size = actual_array_size;
         status = library_->ModAccFetchCSRSConstellation(instrument, selector_string, timeout, csrs_constellation.data(), array_size, &actual_array_size);
@@ -4567,8 +4999,11 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           convert_to_grpc(csrs_constellation, response->mutable_csrs_constellation());
           {
             auto shrunk_size = actual_array_size;
@@ -4578,7 +5013,6 @@ namespace nirfmxlte_grpc {
             }
           }
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -4601,10 +5035,12 @@ namespace nirfmxlte_grpc {
       float64 timeout = request->timeout();
       float64 mean_rms_csrs_evm {};
       auto status = library_->ModAccFetchCSRSEVM(instrument, selector_string, timeout, &mean_rms_csrs_evm);
-      response->set_status(status);
-      if (status_ok(status)) {
-        response->set_mean_rms_csrs_evm(mean_rms_csrs_evm);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
       }
+
+      response->set_status(status);
+        response->set_mean_rms_csrs_evm(mean_rms_csrs_evm);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -4627,10 +5063,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->ModAccFetchCSRSEVMArray(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         response->mutable_mean_rms_csrs_evm()->Resize(actual_array_size, 0);
         float64* mean_rms_csrs_evm = response->mutable_mean_rms_csrs_evm()->mutable_data();
         auto array_size = actual_array_size;
@@ -4639,11 +5075,13 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->mutable_mean_rms_csrs_evm()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -4671,15 +5109,17 @@ namespace nirfmxlte_grpc {
       int32 peak_composite_evm_subcarrier_index {};
       int32 peak_composite_evm_slot_index {};
       auto status = library_->ModAccFetchCompositeEVM(instrument, selector_string, timeout, &mean_rms_composite_evm, &maximum_peak_composite_evm, &mean_frequency_error, &peak_composite_evm_symbol_index, &peak_composite_evm_subcarrier_index, &peak_composite_evm_slot_index);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
-      if (status_ok(status)) {
         response->set_mean_rms_composite_evm(mean_rms_composite_evm);
         response->set_maximum_peak_composite_evm(maximum_peak_composite_evm);
         response->set_mean_frequency_error(mean_frequency_error);
         response->set_peak_composite_evm_symbol_index(peak_composite_evm_symbol_index);
         response->set_peak_composite_evm_subcarrier_index(peak_composite_evm_subcarrier_index);
         response->set_peak_composite_evm_slot_index(peak_composite_evm_slot_index);
-      }
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -4702,10 +5142,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->ModAccFetchCompositeEVMArray(instrument, selector_string, timeout, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         response->mutable_mean_rms_composite_evm()->Resize(actual_array_size, 0);
         float64* mean_rms_composite_evm = response->mutable_mean_rms_composite_evm()->mutable_data();
         response->mutable_maximum_peak_composite_evm()->Resize(actual_array_size, 0);
@@ -4724,8 +5164,11 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->mutable_mean_rms_composite_evm()->Resize(actual_array_size, 0);
           response->mutable_maximum_peak_composite_evm()->Resize(actual_array_size, 0);
           response->mutable_mean_frequency_error()->Resize(actual_array_size, 0);
@@ -4733,7 +5176,6 @@ namespace nirfmxlte_grpc {
           response->mutable_peak_composite_evm_subcarrier_index()->Resize(actual_array_size, 0);
           response->mutable_peak_composite_evm_slot_index()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -4759,13 +5201,15 @@ namespace nirfmxlte_grpc {
       float64 mean_rms_composite_phase_error {};
       float64 max_peak_composite_phase_error {};
       auto status = library_->ModAccFetchCompositeMagnitudeAndPhaseError(instrument, selector_string, timeout, &mean_rms_composite_magnitude_error, &max_peak_composite_magnitude_error, &mean_rms_composite_phase_error, &max_peak_composite_phase_error);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
-      if (status_ok(status)) {
         response->set_mean_rms_composite_magnitude_error(mean_rms_composite_magnitude_error);
         response->set_max_peak_composite_magnitude_error(max_peak_composite_magnitude_error);
         response->set_mean_rms_composite_phase_error(mean_rms_composite_phase_error);
         response->set_max_peak_composite_phase_error(max_peak_composite_phase_error);
-      }
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -4788,10 +5232,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->ModAccFetchCompositeMagnitudeAndPhaseErrorArray(instrument, selector_string, timeout, nullptr, nullptr, nullptr, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         response->mutable_mean_rms_composite_magnitude_error()->Resize(actual_array_size, 0);
         float64* mean_rms_composite_magnitude_error = response->mutable_mean_rms_composite_magnitude_error()->mutable_data();
         response->mutable_maximum_peak_composite_magnitude_error()->Resize(actual_array_size, 0);
@@ -4806,14 +5250,16 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->mutable_mean_rms_composite_magnitude_error()->Resize(actual_array_size, 0);
           response->mutable_maximum_peak_composite_magnitude_error()->Resize(actual_array_size, 0);
           response->mutable_mean_rms_composite_phase_error()->Resize(actual_array_size, 0);
           response->mutable_maximum_peak_composite_phase_error()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -4836,10 +5282,12 @@ namespace nirfmxlte_grpc {
       float64 timeout = request->timeout();
       int32 detected_cell_id {};
       auto status = library_->ModAccFetchDownlinkDetectedCellID(instrument, selector_string, timeout, &detected_cell_id);
-      response->set_status(status);
-      if (status_ok(status)) {
-        response->set_detected_cell_id(detected_cell_id);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
       }
+
+      response->set_status(status);
+        response->set_detected_cell_id(detected_cell_id);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -4862,10 +5310,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->ModAccFetchDownlinkDetectedCellIDArray(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         response->mutable_detected_cell_id()->Resize(actual_array_size, 0);
         int32* detected_cell_id = reinterpret_cast<int32*>(response->mutable_detected_cell_id()->mutable_data());
         auto array_size = actual_array_size;
@@ -4874,11 +5322,13 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->mutable_detected_cell_id()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -4902,10 +5352,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->ModAccFetchDownlinkPBCHConstellation(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         std::vector<NIComplexSingle> pbch_constellation(actual_array_size, NIComplexSingle());
         auto array_size = actual_array_size;
         status = library_->ModAccFetchDownlinkPBCHConstellation(instrument, selector_string, timeout, pbch_constellation.data(), array_size, &actual_array_size);
@@ -4913,8 +5363,11 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           convert_to_grpc(pbch_constellation, response->mutable_pbch_constellation());
           {
             auto shrunk_size = actual_array_size;
@@ -4924,7 +5377,6 @@ namespace nirfmxlte_grpc {
             }
           }
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -4948,10 +5400,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->ModAccFetchDownlinkPCFICHConstellation(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         std::vector<NIComplexSingle> pcfich_constellation(actual_array_size, NIComplexSingle());
         auto array_size = actual_array_size;
         status = library_->ModAccFetchDownlinkPCFICHConstellation(instrument, selector_string, timeout, pcfich_constellation.data(), array_size, &actual_array_size);
@@ -4959,8 +5411,11 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           convert_to_grpc(pcfich_constellation, response->mutable_pcfich_constellation());
           {
             auto shrunk_size = actual_array_size;
@@ -4970,7 +5425,6 @@ namespace nirfmxlte_grpc {
             }
           }
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -4994,10 +5448,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->ModAccFetchDownlinkPDCCHConstellation(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         std::vector<NIComplexSingle> pdcch_constellation(actual_array_size, NIComplexSingle());
         auto array_size = actual_array_size;
         status = library_->ModAccFetchDownlinkPDCCHConstellation(instrument, selector_string, timeout, pdcch_constellation.data(), array_size, &actual_array_size);
@@ -5005,8 +5459,11 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           convert_to_grpc(pdcch_constellation, response->mutable_pdcch_constellation());
           {
             auto shrunk_size = actual_array_size;
@@ -5016,7 +5473,6 @@ namespace nirfmxlte_grpc {
             }
           }
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -5040,10 +5496,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->ModAccFetchDownlinkPHICHConstellation(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         std::vector<NIComplexSingle> phich_constellation(actual_array_size, NIComplexSingle());
         auto array_size = actual_array_size;
         status = library_->ModAccFetchDownlinkPHICHConstellation(instrument, selector_string, timeout, phich_constellation.data(), array_size, &actual_array_size);
@@ -5051,8 +5507,11 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           convert_to_grpc(phich_constellation, response->mutable_phich_constellation());
           {
             auto shrunk_size = actual_array_size;
@@ -5062,7 +5521,6 @@ namespace nirfmxlte_grpc {
             }
           }
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -5088,11 +5546,13 @@ namespace nirfmxlte_grpc {
       float64 rs_transmit_power {};
       float64 ofdm_symbol_transmit_power {};
       auto status = library_->ModAccFetchDownlinkTransmitPower(instrument, selector_string, timeout, &rs_transmit_power, &ofdm_symbol_transmit_power, reserved1, reserved2);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
-      if (status_ok(status)) {
         response->set_rs_transmit_power(rs_transmit_power);
         response->set_ofdm_symbol_transmit_power(ofdm_symbol_transmit_power);
-      }
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -5117,10 +5577,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->ModAccFetchDownlinkTransmitPowerArray(instrument, selector_string, timeout, nullptr, nullptr, reserved1, reserved2, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         response->mutable_rs_transmit_power()->Resize(actual_array_size, 0);
         float64* rs_transmit_power = response->mutable_rs_transmit_power()->mutable_data();
         response->mutable_ofdm_symbol_transmit_power()->Resize(actual_array_size, 0);
@@ -5131,12 +5591,14 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->mutable_rs_transmit_power()->Resize(actual_array_size, 0);
           response->mutable_ofdm_symbol_transmit_power()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -5162,10 +5624,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->ModAccFetchEVMHighPerSymbolTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         response->mutable_evm_high_per_symbol()->Resize(actual_array_size, 0);
         float32* evm_high_per_symbol = response->mutable_evm_high_per_symbol()->mutable_data();
         auto array_size = actual_array_size;
@@ -5174,13 +5636,15 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->set_x0(x0);
           response->set_dx(dx);
           response->mutable_evm_high_per_symbol()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -5206,10 +5670,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->ModAccFetchEVMLowPerSymbolTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         response->mutable_evm_low_per_symbol()->Resize(actual_array_size, 0);
         float32* evm_low_per_symbol = response->mutable_evm_low_per_symbol()->mutable_data();
         auto array_size = actual_array_size;
@@ -5218,13 +5682,15 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->set_x0(x0);
           response->set_dx(dx);
           response->mutable_evm_low_per_symbol()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -5250,10 +5716,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->ModAccFetchEVMPerSlotTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         response->mutable_rms_evm_per_slot()->Resize(actual_array_size, 0);
         float32* rms_evm_per_slot = response->mutable_rms_evm_per_slot()->mutable_data();
         auto array_size = actual_array_size;
@@ -5262,13 +5728,15 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->set_x0(x0);
           response->set_dx(dx);
           response->mutable_rms_evm_per_slot()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -5294,10 +5762,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->ModAccFetchEVMPerSubcarrierTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         response->mutable_mean_rms_evm_per_subcarrier()->Resize(actual_array_size, 0);
         float32* mean_rms_evm_per_subcarrier = response->mutable_mean_rms_evm_per_subcarrier()->mutable_data();
         auto array_size = actual_array_size;
@@ -5306,13 +5774,15 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->set_x0(x0);
           response->set_dx(dx);
           response->mutable_mean_rms_evm_per_subcarrier()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -5338,10 +5808,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->ModAccFetchEVMPerSymbolTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         response->mutable_rms_evm_per_symbol()->Resize(actual_array_size, 0);
         float32* rms_evm_per_symbol = response->mutable_rms_evm_per_symbol()->mutable_data();
         auto array_size = actual_array_size;
@@ -5350,13 +5820,15 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->set_x0(x0);
           response->set_dx(dx);
           response->mutable_rms_evm_per_symbol()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -5381,12 +5853,14 @@ namespace nirfmxlte_grpc {
       float64 mean_iq_gain_imbalance {};
       float64 mean_iq_quadrature_error {};
       auto status = library_->ModAccFetchIQImpairments(instrument, selector_string, timeout, &mean_iq_origin_offset, &mean_iq_gain_imbalance, &mean_iq_quadrature_error);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
-      if (status_ok(status)) {
         response->set_mean_iq_origin_offset(mean_iq_origin_offset);
         response->set_mean_iq_gain_imbalance(mean_iq_gain_imbalance);
         response->set_mean_iq_quadrature_error(mean_iq_quadrature_error);
-      }
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -5409,10 +5883,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->ModAccFetchIQImpairmentsArray(instrument, selector_string, timeout, nullptr, nullptr, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         response->mutable_mean_iq_origin_offset()->Resize(actual_array_size, 0);
         float64* mean_iq_origin_offset = response->mutable_mean_iq_origin_offset()->mutable_data();
         response->mutable_mean_iq_gain_imbalance()->Resize(actual_array_size, 0);
@@ -5425,13 +5899,15 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->mutable_mean_iq_origin_offset()->Resize(actual_array_size, 0);
           response->mutable_mean_iq_gain_imbalance()->Resize(actual_array_size, 0);
           response->mutable_mean_iq_quadrature_error()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -5454,10 +5930,12 @@ namespace nirfmxlte_grpc {
       float64 timeout = request->timeout();
       float64 in_band_emission_margin {};
       auto status = library_->ModAccFetchInBandEmissionMargin(instrument, selector_string, timeout, &in_band_emission_margin);
-      response->set_status(status);
-      if (status_ok(status)) {
-        response->set_in_band_emission_margin(in_band_emission_margin);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
       }
+
+      response->set_status(status);
+        response->set_in_band_emission_margin(in_band_emission_margin);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -5480,10 +5958,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->ModAccFetchInBandEmissionMarginArray(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         response->mutable_in_band_emission_margin()->Resize(actual_array_size, 0);
         float64* in_band_emission_margin = response->mutable_in_band_emission_margin()->mutable_data();
         auto array_size = actual_array_size;
@@ -5492,11 +5970,13 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->mutable_in_band_emission_margin()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -5522,10 +6002,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->ModAccFetchInBandEmissionTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         response->mutable_in_band_emission()->Resize(actual_array_size, 0);
         float32* in_band_emission = response->mutable_in_band_emission()->mutable_data();
         response->mutable_in_band_emission_mask()->Resize(actual_array_size, 0);
@@ -5536,14 +6016,16 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->set_x0(x0);
           response->set_dx(dx);
           response->mutable_in_band_emission()->Resize(actual_array_size, 0);
           response->mutable_in_band_emission_mask()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -5569,10 +6051,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->ModAccFetchMaximumEVMPerSlotTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         response->mutable_maximum_evm_per_slot()->Resize(actual_array_size, 0);
         float32* maximum_evm_per_slot = response->mutable_maximum_evm_per_slot()->mutable_data();
         auto array_size = actual_array_size;
@@ -5581,13 +6063,15 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->set_x0(x0);
           response->set_dx(dx);
           response->mutable_maximum_evm_per_slot()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -5613,10 +6097,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->ModAccFetchMaximumEVMPerSubcarrierTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         response->mutable_maximum_evm_per_subcarrier()->Resize(actual_array_size, 0);
         float32* maximum_evm_per_subcarrier = response->mutable_maximum_evm_per_subcarrier()->mutable_data();
         auto array_size = actual_array_size;
@@ -5625,13 +6109,15 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->set_x0(x0);
           response->set_dx(dx);
           response->mutable_maximum_evm_per_subcarrier()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -5657,10 +6143,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->ModAccFetchMaximumEVMPerSymbolTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         response->mutable_maximum_evm_per_symbol()->Resize(actual_array_size, 0);
         float32* maximum_evm_per_symbol = response->mutable_maximum_evm_per_symbol()->mutable_data();
         auto array_size = actual_array_size;
@@ -5669,13 +6155,15 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->set_x0(x0);
           response->set_dx(dx);
           response->mutable_maximum_evm_per_symbol()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -5701,10 +6189,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->ModAccFetchMaximumMagnitudeErrorPerSymbolTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         response->mutable_maximum_magnitude_error_per_symbol()->Resize(actual_array_size, 0);
         float32* maximum_magnitude_error_per_symbol = response->mutable_maximum_magnitude_error_per_symbol()->mutable_data();
         auto array_size = actual_array_size;
@@ -5713,13 +6201,15 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->set_x0(x0);
           response->set_dx(dx);
           response->mutable_maximum_magnitude_error_per_symbol()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -5745,10 +6235,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->ModAccFetchMaximumPhaseErrorPerSymbolTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         response->mutable_maximum_phase_error_per_symbol()->Resize(actual_array_size, 0);
         float32* maximum_phase_error_per_symbol = response->mutable_maximum_phase_error_per_symbol()->mutable_data();
         auto array_size = actual_array_size;
@@ -5757,13 +6247,15 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->set_x0(x0);
           response->set_dx(dx);
           response->mutable_maximum_phase_error_per_symbol()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -5788,10 +6280,10 @@ namespace nirfmxlte_grpc {
       int32 dmrs_constellation_actual_array_size {};
       while (true) {
         auto status = library_->ModAccFetchNPUSCHConstellationTrace(instrument, selector_string, timeout, nullptr, 0, &data_constellation_actual_array_size, nullptr, 0, &dmrs_constellation_actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         std::vector<NIComplexSingle> data_constellation(data_constellation_actual_array_size, NIComplexSingle());
         std::vector<NIComplexSingle> dmrs_constellation(dmrs_constellation_actual_array_size, NIComplexSingle());
         auto data_constellation_array_size = data_constellation_actual_array_size;
@@ -5801,8 +6293,11 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           convert_to_grpc(data_constellation, response->mutable_data_constellation());
           {
             auto shrunk_size = data_constellation_actual_array_size;
@@ -5821,7 +6316,6 @@ namespace nirfmxlte_grpc {
             }
           }
           response->set_dmrs_constellation_actual_array_size(dmrs_constellation_actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -5845,11 +6339,13 @@ namespace nirfmxlte_grpc {
       float64 npusch_mean_rms_dmrs_evm {};
       float64 npusch_maximum_peak_dmrs_evm {};
       auto status = library_->ModAccFetchNPUSCHDMRSEVM(instrument, selector_string, timeout, &npusch_mean_rms_dmrs_evm, &npusch_maximum_peak_dmrs_evm);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
-      if (status_ok(status)) {
         response->set_npusch_mean_rms_dmrs_evm(npusch_mean_rms_dmrs_evm);
         response->set_npusch_maximum_peak_dmrs_evm(npusch_maximum_peak_dmrs_evm);
-      }
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -5872,11 +6368,13 @@ namespace nirfmxlte_grpc {
       float64 npusch_mean_rms_data_evm {};
       float64 npusch_maximum_peak_data_evm {};
       auto status = library_->ModAccFetchNPUSCHDataEVM(instrument, selector_string, timeout, &npusch_mean_rms_data_evm, &npusch_maximum_peak_data_evm);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
-      if (status_ok(status)) {
         response->set_npusch_mean_rms_data_evm(npusch_mean_rms_data_evm);
         response->set_npusch_maximum_peak_data_evm(npusch_maximum_peak_data_evm);
-      }
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -5899,11 +6397,13 @@ namespace nirfmxlte_grpc {
       float64 npusch_mean_data_power {};
       float64 npusch_mean_dmrs_power {};
       auto status = library_->ModAccFetchNPUSCHSymbolPower(instrument, selector_string, timeout, &npusch_mean_data_power, &npusch_mean_dmrs_power);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
-      if (status_ok(status)) {
         response->set_npusch_mean_data_power(npusch_mean_data_power);
         response->set_npusch_mean_dmrs_power(npusch_mean_dmrs_power);
-      }
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -5926,10 +6426,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->ModAccFetchPDSCH1024QAMConstellation(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         std::vector<NIComplexSingle> qam1024_constellation(actual_array_size, NIComplexSingle());
         auto array_size = actual_array_size;
         status = library_->ModAccFetchPDSCH1024QAMConstellation(instrument, selector_string, timeout, qam1024_constellation.data(), array_size, &actual_array_size);
@@ -5937,8 +6437,11 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           convert_to_grpc(qam1024_constellation, response->mutable_qam1024_constellation());
           {
             auto shrunk_size = actual_array_size;
@@ -5948,7 +6451,6 @@ namespace nirfmxlte_grpc {
             }
           }
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -5971,10 +6473,12 @@ namespace nirfmxlte_grpc {
       float64 timeout = request->timeout();
       float64 mean_rms_1024qam_evm {};
       auto status = library_->ModAccFetchPDSCH1024QAMEVM(instrument, selector_string, timeout, &mean_rms_1024qam_evm);
-      response->set_status(status);
-      if (status_ok(status)) {
-        response->set_mean_rms_1024qam_evm(mean_rms_1024qam_evm);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
       }
+
+      response->set_status(status);
+        response->set_mean_rms_1024qam_evm(mean_rms_1024qam_evm);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -5997,10 +6501,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->ModAccFetchPDSCH1024QAMEVMArray(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         response->mutable_mean_rms_1024qam_evm()->Resize(actual_array_size, 0);
         float64* mean_rms_1024qam_evm = response->mutable_mean_rms_1024qam_evm()->mutable_data();
         auto array_size = actual_array_size;
@@ -6009,11 +6513,13 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->mutable_mean_rms_1024qam_evm()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -6037,10 +6543,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->ModAccFetchPDSCH16QAMConstellation(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         std::vector<NIComplexSingle> qam16_constellation(actual_array_size, NIComplexSingle());
         auto array_size = actual_array_size;
         status = library_->ModAccFetchPDSCH16QAMConstellation(instrument, selector_string, timeout, qam16_constellation.data(), array_size, &actual_array_size);
@@ -6048,8 +6554,11 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           convert_to_grpc(qam16_constellation, response->mutable_qam16_constellation());
           {
             auto shrunk_size = actual_array_size;
@@ -6059,7 +6568,6 @@ namespace nirfmxlte_grpc {
             }
           }
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -6083,10 +6591,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->ModAccFetchPDSCH256QAMConstellation(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         std::vector<NIComplexSingle> qam256_constellation(actual_array_size, NIComplexSingle());
         auto array_size = actual_array_size;
         status = library_->ModAccFetchPDSCH256QAMConstellation(instrument, selector_string, timeout, qam256_constellation.data(), array_size, &actual_array_size);
@@ -6094,8 +6602,11 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           convert_to_grpc(qam256_constellation, response->mutable_qam256_constellation());
           {
             auto shrunk_size = actual_array_size;
@@ -6105,7 +6616,6 @@ namespace nirfmxlte_grpc {
             }
           }
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -6129,10 +6639,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->ModAccFetchPDSCH64QAMConstellation(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         std::vector<NIComplexSingle> qam64_constellation(actual_array_size, NIComplexSingle());
         auto array_size = actual_array_size;
         status = library_->ModAccFetchPDSCH64QAMConstellation(instrument, selector_string, timeout, qam64_constellation.data(), array_size, &actual_array_size);
@@ -6140,8 +6650,11 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           convert_to_grpc(qam64_constellation, response->mutable_qam64_constellation());
           {
             auto shrunk_size = actual_array_size;
@@ -6151,7 +6664,6 @@ namespace nirfmxlte_grpc {
             }
           }
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -6178,14 +6690,16 @@ namespace nirfmxlte_grpc {
       float64 mean_rms_64qam_evm {};
       float64 mean_rms_256qam_evm {};
       auto status = library_->ModAccFetchPDSCHEVM(instrument, selector_string, timeout, &mean_rms_evm, &mean_rms_qpsk_evm, &mean_rms_16qam_evm, &mean_rms_64qam_evm, &mean_rms_256qam_evm);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
-      if (status_ok(status)) {
         response->set_mean_rms_evm(mean_rms_evm);
         response->set_mean_rms_qpsk_evm(mean_rms_qpsk_evm);
         response->set_mean_rms_16qam_evm(mean_rms_16qam_evm);
         response->set_mean_rms_64qam_evm(mean_rms_64qam_evm);
         response->set_mean_rms_256qam_evm(mean_rms_256qam_evm);
-      }
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -6208,10 +6722,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->ModAccFetchPDSCHEVMArray(instrument, selector_string, timeout, nullptr, nullptr, nullptr, nullptr, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         response->mutable_mean_rms_evm()->Resize(actual_array_size, 0);
         float64* mean_rms_evm = response->mutable_mean_rms_evm()->mutable_data();
         response->mutable_mean_rms_qpsk_evm()->Resize(actual_array_size, 0);
@@ -6228,15 +6742,17 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->mutable_mean_rms_evm()->Resize(actual_array_size, 0);
           response->mutable_mean_rms_qpsk_evm()->Resize(actual_array_size, 0);
           response->mutable_mean_rms_16qam_evm()->Resize(actual_array_size, 0);
           response->mutable_mean_rms_64qam_evm()->Resize(actual_array_size, 0);
           response->mutable_mean_rms_256qam_evm()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -6260,10 +6776,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->ModAccFetchPDSCHQPSKConstellation(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         std::vector<NIComplexSingle> qpsk_constellation(actual_array_size, NIComplexSingle());
         auto array_size = actual_array_size;
         status = library_->ModAccFetchPDSCHQPSKConstellation(instrument, selector_string, timeout, qpsk_constellation.data(), array_size, &actual_array_size);
@@ -6271,8 +6787,11 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           convert_to_grpc(qpsk_constellation, response->mutable_qpsk_constellation());
           {
             auto shrunk_size = actual_array_size;
@@ -6282,7 +6801,6 @@ namespace nirfmxlte_grpc {
             }
           }
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -6307,10 +6825,10 @@ namespace nirfmxlte_grpc {
       int32 dmrs_constellation_actual_array_size {};
       while (true) {
         auto status = library_->ModAccFetchPSSCHConstellationTrace(instrument, selector_string, timeout, nullptr, 0, &data_constellation_actual_array_size, nullptr, 0, &dmrs_constellation_actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         std::vector<NIComplexSingle> data_constellation(data_constellation_actual_array_size, NIComplexSingle());
         std::vector<NIComplexSingle> dmrs_constellation(dmrs_constellation_actual_array_size, NIComplexSingle());
         auto data_constellation_array_size = data_constellation_actual_array_size;
@@ -6320,8 +6838,11 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           convert_to_grpc(data_constellation, response->mutable_data_constellation());
           {
             auto shrunk_size = data_constellation_actual_array_size;
@@ -6340,7 +6861,6 @@ namespace nirfmxlte_grpc {
             }
           }
           response->set_dmrs_constellation_actual_array_size(dmrs_constellation_actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -6364,11 +6884,13 @@ namespace nirfmxlte_grpc {
       float64 pssch_mean_rms_dmrs_evm {};
       float64 pssch_maximum_peak_dmrs_evm {};
       auto status = library_->ModAccFetchPSSCHDMRSEVM(instrument, selector_string, timeout, &pssch_mean_rms_dmrs_evm, &pssch_maximum_peak_dmrs_evm);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
-      if (status_ok(status)) {
         response->set_pssch_mean_rms_dmrs_evm(pssch_mean_rms_dmrs_evm);
         response->set_pssch_maximum_peak_dmrs_evm(pssch_maximum_peak_dmrs_evm);
-      }
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -6391,10 +6913,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->ModAccFetchPSSCHDMRSEVMArray(instrument, selector_string, timeout, nullptr, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         response->mutable_pssch_mean_rms_dmrs_evm()->Resize(actual_array_size, 0);
         float64* pssch_mean_rms_dmrs_evm = response->mutable_pssch_mean_rms_dmrs_evm()->mutable_data();
         response->mutable_pssch_maximum_peak_dmrs_evm()->Resize(actual_array_size, 0);
@@ -6405,12 +6927,14 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->mutable_pssch_mean_rms_dmrs_evm()->Resize(actual_array_size, 0);
           response->mutable_pssch_maximum_peak_dmrs_evm()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -6434,11 +6958,13 @@ namespace nirfmxlte_grpc {
       float64 pssch_mean_rms_data_evm {};
       float64 pssch_maximum_peak_data_evm {};
       auto status = library_->ModAccFetchPSSCHDataEVM(instrument, selector_string, timeout, &pssch_mean_rms_data_evm, &pssch_maximum_peak_data_evm);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
-      if (status_ok(status)) {
         response->set_pssch_mean_rms_data_evm(pssch_mean_rms_data_evm);
         response->set_pssch_maximum_peak_data_evm(pssch_maximum_peak_data_evm);
-      }
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -6461,10 +6987,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->ModAccFetchPSSCHDataEVMArray(instrument, selector_string, timeout, nullptr, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         response->mutable_pssch_mean_rms_data_evm()->Resize(actual_array_size, 0);
         float64* pssch_mean_rms_data_evm = response->mutable_pssch_mean_rms_data_evm()->mutable_data();
         response->mutable_pssch_maximum_peak_data_evm()->Resize(actual_array_size, 0);
@@ -6475,12 +7001,14 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->mutable_pssch_mean_rms_data_evm()->Resize(actual_array_size, 0);
           response->mutable_pssch_maximum_peak_data_evm()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -6504,11 +7032,13 @@ namespace nirfmxlte_grpc {
       float64 pssch_mean_data_power {};
       float64 pssch_mean_dmrs_power {};
       auto status = library_->ModAccFetchPSSCHSymbolPower(instrument, selector_string, timeout, &pssch_mean_data_power, &pssch_mean_dmrs_power);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
-      if (status_ok(status)) {
         response->set_pssch_mean_data_power(pssch_mean_data_power);
         response->set_pssch_mean_dmrs_power(pssch_mean_dmrs_power);
-      }
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -6531,10 +7061,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->ModAccFetchPSSCHSymbolPowerArray(instrument, selector_string, timeout, nullptr, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         response->mutable_pssch_mean_data_power()->Resize(actual_array_size, 0);
         float64* pssch_mean_data_power = response->mutable_pssch_mean_data_power()->mutable_data();
         response->mutable_pssch_mean_dmrs_power()->Resize(actual_array_size, 0);
@@ -6545,12 +7075,14 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->mutable_pssch_mean_data_power()->Resize(actual_array_size, 0);
           response->mutable_pssch_mean_dmrs_power()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -6575,10 +7107,10 @@ namespace nirfmxlte_grpc {
       int32 dmrs_constellation_actual_array_size {};
       while (true) {
         auto status = library_->ModAccFetchPUSCHConstellationTrace(instrument, selector_string, timeout, nullptr, 0, &data_constellation_actual_array_size, nullptr, 0, &dmrs_constellation_actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         std::vector<NIComplexSingle> data_constellation(data_constellation_actual_array_size, NIComplexSingle());
         std::vector<NIComplexSingle> dmrs_constellation(dmrs_constellation_actual_array_size, NIComplexSingle());
         auto data_constellation_array_size = data_constellation_actual_array_size;
@@ -6588,8 +7120,11 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           convert_to_grpc(data_constellation, response->mutable_data_constellation());
           {
             auto shrunk_size = data_constellation_actual_array_size;
@@ -6608,7 +7143,6 @@ namespace nirfmxlte_grpc {
             }
           }
           response->set_dmrs_constellation_actual_array_size(dmrs_constellation_actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -6632,11 +7166,13 @@ namespace nirfmxlte_grpc {
       float64 mean_rms_dmrs_evm {};
       float64 maximum_peak_dmrs_evm {};
       auto status = library_->ModAccFetchPUSCHDMRSEVM(instrument, selector_string, timeout, &mean_rms_dmrs_evm, &maximum_peak_dmrs_evm);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
-      if (status_ok(status)) {
         response->set_mean_rms_dmrs_evm(mean_rms_dmrs_evm);
         response->set_maximum_peak_dmrs_evm(maximum_peak_dmrs_evm);
-      }
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -6659,10 +7195,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->ModAccFetchPUSCHDMRSEVMArray(instrument, selector_string, timeout, nullptr, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         response->mutable_mean_rms_dmrs_evm()->Resize(actual_array_size, 0);
         float64* mean_rms_dmrs_evm = response->mutable_mean_rms_dmrs_evm()->mutable_data();
         response->mutable_maximum_peak_dmrs_evm()->Resize(actual_array_size, 0);
@@ -6673,12 +7209,14 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->mutable_mean_rms_dmrs_evm()->Resize(actual_array_size, 0);
           response->mutable_maximum_peak_dmrs_evm()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -6702,11 +7240,13 @@ namespace nirfmxlte_grpc {
       float64 mean_rms_data_evm {};
       float64 maximum_peak_data_evm {};
       auto status = library_->ModAccFetchPUSCHDataEVM(instrument, selector_string, timeout, &mean_rms_data_evm, &maximum_peak_data_evm);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
-      if (status_ok(status)) {
         response->set_mean_rms_data_evm(mean_rms_data_evm);
         response->set_maximum_peak_data_evm(maximum_peak_data_evm);
-      }
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -6729,10 +7269,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->ModAccFetchPUSCHDataEVMArray(instrument, selector_string, timeout, nullptr, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         response->mutable_mean_rms_data_evm()->Resize(actual_array_size, 0);
         float64* mean_rms_data_evm = response->mutable_mean_rms_data_evm()->mutable_data();
         response->mutable_maximum_peak_data_evm()->Resize(actual_array_size, 0);
@@ -6743,12 +7283,14 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->mutable_mean_rms_data_evm()->Resize(actual_array_size, 0);
           response->mutable_maximum_peak_data_evm()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -6772,10 +7314,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->ModAccFetchPUSCHDemodulatedBits(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         std::vector<int8> bits(actual_array_size);
         auto array_size = actual_array_size;
         status = library_->ModAccFetchPUSCHDemodulatedBits(instrument, selector_string, timeout, bits.data(), array_size, &actual_array_size);
@@ -6783,8 +7325,11 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->mutable_bits()->Clear();
           response->mutable_bits()->Reserve(actual_array_size);
           std::transform(
@@ -6796,7 +7341,6 @@ namespace nirfmxlte_grpc {
             });
           response->mutable_bits()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -6820,11 +7364,13 @@ namespace nirfmxlte_grpc {
       float64 pusch_mean_data_power {};
       float64 pusch_mean_dmrs_power {};
       auto status = library_->ModAccFetchPUSCHSymbolPower(instrument, selector_string, timeout, &pusch_mean_data_power, &pusch_mean_dmrs_power);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
-      if (status_ok(status)) {
         response->set_pusch_mean_data_power(pusch_mean_data_power);
         response->set_pusch_mean_dmrs_power(pusch_mean_dmrs_power);
-      }
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -6847,10 +7393,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->ModAccFetchPUSCHSymbolPowerArray(instrument, selector_string, timeout, nullptr, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         response->mutable_pusch_mean_data_power()->Resize(actual_array_size, 0);
         float64* pusch_mean_data_power = response->mutable_pusch_mean_data_power()->mutable_data();
         response->mutable_pusch_mean_dmrs_power()->Resize(actual_array_size, 0);
@@ -6861,12 +7407,14 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->mutable_pusch_mean_data_power()->Resize(actual_array_size, 0);
           response->mutable_pusch_mean_dmrs_power()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -6892,10 +7440,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->ModAccFetchRMSMagnitudeErrorPerSymbolTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         response->mutable_rms_magnitude_error_per_symbol()->Resize(actual_array_size, 0);
         float32* rms_magnitude_error_per_symbol = response->mutable_rms_magnitude_error_per_symbol()->mutable_data();
         auto array_size = actual_array_size;
@@ -6904,13 +7452,15 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->set_x0(x0);
           response->set_dx(dx);
           response->mutable_rms_magnitude_error_per_symbol()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -6936,10 +7486,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->ModAccFetchRMSPhaseErrorPerSymbolTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         response->mutable_rms_phase_error_per_symbol()->Resize(actual_array_size, 0);
         float32* rms_phase_error_per_symbol = response->mutable_rms_phase_error_per_symbol()->mutable_data();
         auto array_size = actual_array_size;
@@ -6948,13 +7498,15 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->set_x0(x0);
           response->set_dx(dx);
           response->mutable_rms_phase_error_per_symbol()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -6978,10 +7530,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->ModAccFetchSRSConstellation(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         std::vector<NIComplexSingle> srs_constellation(actual_array_size, NIComplexSingle());
         auto array_size = actual_array_size;
         status = library_->ModAccFetchSRSConstellation(instrument, selector_string, timeout, srs_constellation.data(), array_size, &actual_array_size);
@@ -6989,8 +7541,11 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           convert_to_grpc(srs_constellation, response->mutable_srs_constellation());
           {
             auto shrunk_size = actual_array_size;
@@ -7000,7 +7555,6 @@ namespace nirfmxlte_grpc {
             }
           }
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -7024,11 +7578,13 @@ namespace nirfmxlte_grpc {
       float64 mean_rms_srs_evm {};
       float64 mean_srs_power {};
       auto status = library_->ModAccFetchSRSEVM(instrument, selector_string, timeout, &mean_rms_srs_evm, &mean_srs_power);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
-      if (status_ok(status)) {
         response->set_mean_rms_srs_evm(mean_rms_srs_evm);
         response->set_mean_srs_power(mean_srs_power);
-      }
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -7051,10 +7607,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->ModAccFetchSRSEVMArray(instrument, selector_string, timeout, nullptr, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         response->mutable_mean_rms_srs_evm()->Resize(actual_array_size, 0);
         float64* mean_rms_srs_evm = response->mutable_mean_rms_srs_evm()->mutable_data();
         response->mutable_mean_srs_power()->Resize(actual_array_size, 0);
@@ -7065,12 +7621,14 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->mutable_mean_rms_srs_evm()->Resize(actual_array_size, 0);
           response->mutable_mean_srs_power()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -7096,13 +7654,15 @@ namespace nirfmxlte_grpc {
       float64 range1_maximum_to_range2_minimum {};
       float64 range2_maximum_to_range1_minimum {};
       auto status = library_->ModAccFetchSpectralFlatness(instrument, selector_string, timeout, &range1_maximum_to_range1_minimum, &range2_maximum_to_range2_minimum, &range1_maximum_to_range2_minimum, &range2_maximum_to_range1_minimum);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
-      if (status_ok(status)) {
         response->set_range1_maximum_to_range1_minimum(range1_maximum_to_range1_minimum);
         response->set_range2_maximum_to_range2_minimum(range2_maximum_to_range2_minimum);
         response->set_range1_maximum_to_range2_minimum(range1_maximum_to_range2_minimum);
         response->set_range2_maximum_to_range1_minimum(range2_maximum_to_range1_minimum);
-      }
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -7125,10 +7685,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->ModAccFetchSpectralFlatnessArray(instrument, selector_string, timeout, nullptr, nullptr, nullptr, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         response->mutable_range1_maximum_to_range1_minimum()->Resize(actual_array_size, 0);
         float64* range1_maximum_to_range1_minimum = response->mutable_range1_maximum_to_range1_minimum()->mutable_data();
         response->mutable_range2_maximum_to_range2_minimum()->Resize(actual_array_size, 0);
@@ -7143,14 +7703,16 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->mutable_range1_maximum_to_range1_minimum()->Resize(actual_array_size, 0);
           response->mutable_range2_maximum_to_range2_minimum()->Resize(actual_array_size, 0);
           response->mutable_range1_maximum_to_range2_minimum()->Resize(actual_array_size, 0);
           response->mutable_range2_maximum_to_range1_minimum()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -7176,10 +7738,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->ModAccFetchSpectralFlatnessTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, nullptr, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         response->mutable_spectral_flatness()->Resize(actual_array_size, 0);
         float32* spectral_flatness = response->mutable_spectral_flatness()->mutable_data();
         response->mutable_spectral_flatness_lower_mask()->Resize(actual_array_size, 0);
@@ -7192,15 +7754,17 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->set_x0(x0);
           response->set_dx(dx);
           response->mutable_spectral_flatness()->Resize(actual_array_size, 0);
           response->mutable_spectral_flatness_lower_mask()->Resize(actual_array_size, 0);
           response->mutable_spectral_flatness_upper_mask()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -7225,12 +7789,14 @@ namespace nirfmxlte_grpc {
       float64 subblock_mean_iq_gain_imbalance {};
       float64 subblock_mean_iq_quadrature_error {};
       auto status = library_->ModAccFetchSubblockIQImpairments(instrument, selector_string, timeout, &subblock_mean_iq_origin_offset, &subblock_mean_iq_gain_imbalance, &subblock_mean_iq_quadrature_error);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
-      if (status_ok(status)) {
         response->set_subblock_mean_iq_origin_offset(subblock_mean_iq_origin_offset);
         response->set_subblock_mean_iq_gain_imbalance(subblock_mean_iq_gain_imbalance);
         response->set_subblock_mean_iq_quadrature_error(subblock_mean_iq_quadrature_error);
-      }
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -7252,10 +7818,12 @@ namespace nirfmxlte_grpc {
       float64 timeout = request->timeout();
       float64 subblock_in_band_emission_margin {};
       auto status = library_->ModAccFetchSubblockInBandEmissionMargin(instrument, selector_string, timeout, &subblock_in_band_emission_margin);
-      response->set_status(status);
-      if (status_ok(status)) {
-        response->set_subblock_in_band_emission_margin(subblock_in_band_emission_margin);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
       }
+
+      response->set_status(status);
+        response->set_subblock_in_band_emission_margin(subblock_in_band_emission_margin);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -7278,10 +7846,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->ModAccFetchSubblockInBandEmissionTrace(instrument, selector_string, timeout, nullptr, nullptr, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         response->mutable_subblock_in_band_emission()->Resize(actual_array_size, 0);
         float64* subblock_in_band_emission = response->mutable_subblock_in_band_emission()->mutable_data();
         response->mutable_subblock_in_band_emission_mask()->Resize(actual_array_size, 0);
@@ -7294,13 +7862,15 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->mutable_subblock_in_band_emission()->Resize(actual_array_size, 0);
           response->mutable_subblock_in_band_emission_mask()->Resize(actual_array_size, 0);
           response->mutable_subblock_in_band_emission_rb_indices()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -7324,10 +7894,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->ModAccFetchSynchronizationSignalConstellation(instrument, selector_string, timeout, nullptr, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         std::vector<NIComplexSingle> sss_constellation(actual_array_size, NIComplexSingle());
         std::vector<NIComplexSingle> pss_constellation(actual_array_size, NIComplexSingle());
         auto array_size = actual_array_size;
@@ -7336,8 +7906,11 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           convert_to_grpc(sss_constellation, response->mutable_sss_constellation());
           {
             auto shrunk_size = actual_array_size;
@@ -7355,7 +7928,6 @@ namespace nirfmxlte_grpc {
             }
           }
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -7379,11 +7951,13 @@ namespace nirfmxlte_grpc {
       float64 mean_rms_pss_evm {};
       float64 mean_rms_sss_evm {};
       auto status = library_->ModAccFetchSynchronizationSignalEVM(instrument, selector_string, timeout, &mean_rms_pss_evm, &mean_rms_sss_evm);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
-      if (status_ok(status)) {
         response->set_mean_rms_pss_evm(mean_rms_pss_evm);
         response->set_mean_rms_sss_evm(mean_rms_sss_evm);
-      }
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -7406,10 +7980,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->ModAccFetchSynchronizationSignalEVMArray(instrument, selector_string, timeout, nullptr, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         response->mutable_mean_rms_pss_evm()->Resize(actual_array_size, 0);
         float64* mean_rms_pss_evm = response->mutable_mean_rms_pss_evm()->mutable_data();
         response->mutable_mean_rms_sss_evm()->Resize(actual_array_size, 0);
@@ -7420,12 +7994,14 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->mutable_mean_rms_pss_evm()->Resize(actual_array_size, 0);
           response->mutable_mean_rms_sss_evm()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -7479,6 +8055,10 @@ namespace nirfmxlte_grpc {
       }
 
       auto status = library_->OBWCfgAveraging(instrument, selector_string, averaging_enabled, averaging_count, averaging_type);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -7532,6 +8112,10 @@ namespace nirfmxlte_grpc {
       }
 
       auto status = library_->OBWCfgRBWFilter(instrument, selector_string, rbw_auto, rbw, rbw_filter_type);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -7569,6 +8153,10 @@ namespace nirfmxlte_grpc {
 
       float64 sweep_time_interval = request->sweep_time_interval();
       auto status = library_->OBWCfgSweepTime(instrument, selector_string, sweep_time_auto, sweep_time_interval);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -7594,13 +8182,15 @@ namespace nirfmxlte_grpc {
       float64 start_frequency {};
       float64 stop_frequency {};
       auto status = library_->OBWFetchMeasurement(instrument, selector_string, timeout, &occupied_bandwidth, &absolute_power, &start_frequency, &stop_frequency);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
-      if (status_ok(status)) {
         response->set_occupied_bandwidth(occupied_bandwidth);
         response->set_absolute_power(absolute_power);
         response->set_start_frequency(start_frequency);
         response->set_stop_frequency(stop_frequency);
-      }
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -7625,10 +8215,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->OBWFetchSpectrum(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         response->mutable_spectrum()->Resize(actual_array_size, 0);
         float32* spectrum = response->mutable_spectrum()->mutable_data();
         auto array_size = actual_array_size;
@@ -7637,13 +8227,15 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->set_x0(x0);
           response->set_dx(dx);
           response->mutable_spectrum()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -7697,6 +8289,10 @@ namespace nirfmxlte_grpc {
       }
 
       auto status = library_->PVTCfgAveraging(instrument, selector_string, averaging_enabled, averaging_count, averaging_type);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -7733,6 +8329,10 @@ namespace nirfmxlte_grpc {
       }
 
       auto status = library_->PVTCfgMeasurementMethod(instrument, selector_string, measurement_method);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -7755,6 +8355,10 @@ namespace nirfmxlte_grpc {
       float64 off_power_exclusion_before = request->off_power_exclusion_before();
       float64 off_power_exclusion_after = request->off_power_exclusion_after();
       auto status = library_->PVTCfgOFFPowerExclusionPeriods(instrument, selector_string, off_power_exclusion_before, off_power_exclusion_after);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -7781,15 +8385,17 @@ namespace nirfmxlte_grpc {
       float64 mean_absolute_on_power {};
       float64 burst_width {};
       auto status = library_->PVTFetchMeasurement(instrument, selector_string, timeout, &measurement_status, &mean_absolute_off_power_before, &mean_absolute_off_power_after, &mean_absolute_on_power, &burst_width);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
-      if (status_ok(status)) {
         response->set_measurement_status(static_cast<nirfmxlte_grpc::PvtMeasurementStatus>(measurement_status));
         response->set_measurement_status_raw(measurement_status);
         response->set_mean_absolute_off_power_before(mean_absolute_off_power_before);
         response->set_mean_absolute_off_power_after(mean_absolute_off_power_after);
         response->set_mean_absolute_on_power(mean_absolute_on_power);
         response->set_burst_width(burst_width);
-      }
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -7812,10 +8418,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->PVTFetchMeasurementArray(instrument, selector_string, timeout, nullptr, nullptr, nullptr, nullptr, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         response->mutable_measurement_status_raw()->Resize(actual_array_size, 0);
         int32* measurement_status = reinterpret_cast<int32*>(response->mutable_measurement_status_raw()->mutable_data());
         response->mutable_mean_absolute_off_power_before()->Resize(actual_array_size, 0);
@@ -7832,8 +8438,11 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->mutable_measurement_status()->Clear();
           response->mutable_measurement_status()->Reserve(actual_array_size);
           std::transform(
@@ -7849,7 +8458,6 @@ namespace nirfmxlte_grpc {
           response->mutable_mean_absolute_on_power()->Resize(actual_array_size, 0);
           response->mutable_burst_width()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -7875,10 +8483,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->PVTFetchSignalPowerTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         response->mutable_signal_power()->Resize(actual_array_size, 0);
         float32* signal_power = response->mutable_signal_power()->mutable_data();
         response->mutable_absolute_limit()->Resize(actual_array_size, 0);
@@ -7889,14 +8497,16 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->set_x0(x0);
           response->set_dx(dx);
           response->mutable_signal_power()->Resize(actual_array_size, 0);
           response->mutable_absolute_limit()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -7918,6 +8528,10 @@ namespace nirfmxlte_grpc {
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       auto status = library_->ResetAttribute(instrument, selector_string, attribute_id);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -7938,6 +8552,10 @@ namespace nirfmxlte_grpc {
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto status = library_->ResetToDefault(instrument, selector_string);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -7991,6 +8609,10 @@ namespace nirfmxlte_grpc {
       }
 
       auto status = library_->SEMCfgAveraging(instrument, selector_string, averaging_enabled, averaging_count, averaging_type);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -8012,6 +8634,10 @@ namespace nirfmxlte_grpc {
       char* selector_string = (char*)request->selector_string().c_str();
       float64 component_carrier_maximum_output_power = request->component_carrier_maximum_output_power();
       auto status = library_->SEMCfgComponentCarrierMaximumOutputPower(instrument, selector_string, component_carrier_maximum_output_power);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -8034,6 +8660,10 @@ namespace nirfmxlte_grpc {
       auto component_carrier_maximum_output_power = const_cast<float64*>(request->component_carrier_maximum_output_power().data());
       int32 number_of_elements = static_cast<int32>(request->component_carrier_maximum_output_power().size());
       auto status = library_->SEMCfgComponentCarrierMaximumOutputPowerArray(instrument, selector_string, component_carrier_maximum_output_power, number_of_elements);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -8072,6 +8702,10 @@ namespace nirfmxlte_grpc {
       float64 delta_f_maximum = request->delta_f_maximum();
       float64 aggregated_maximum_power = request->aggregated_maximum_power();
       auto status = library_->SEMCfgDownlinkMask(instrument, selector_string, downlink_mask_type, delta_f_maximum, aggregated_maximum_power);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -8093,6 +8727,10 @@ namespace nirfmxlte_grpc {
       char* selector_string = (char*)request->selector_string().c_str();
       int32 number_of_offsets = request->number_of_offsets();
       auto status = library_->SEMCfgNumberOfOffsets(instrument, selector_string, number_of_offsets);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -8115,6 +8753,10 @@ namespace nirfmxlte_grpc {
       float64 offset_absolute_limit_start = request->offset_absolute_limit_start();
       float64 offset_absolute_limit_stop = request->offset_absolute_limit_stop();
       auto status = library_->SEMCfgOffsetAbsoluteLimit(instrument, selector_string, offset_absolute_limit_start, offset_absolute_limit_stop);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -8154,6 +8796,10 @@ namespace nirfmxlte_grpc {
       auto number_of_elements = number_of_elements_size_calculation.size;
 
       auto status = library_->SEMCfgOffsetAbsoluteLimitArray(instrument, selector_string, offset_absolute_limit_start, offset_absolute_limit_stop, number_of_elements);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -8175,6 +8821,10 @@ namespace nirfmxlte_grpc {
       char* selector_string = (char*)request->selector_string().c_str();
       int32 offset_bandwidth_integral = request->offset_bandwidth_integral();
       auto status = library_->SEMCfgOffsetBandwidthIntegral(instrument, selector_string, offset_bandwidth_integral);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -8197,6 +8847,10 @@ namespace nirfmxlte_grpc {
       auto offset_bandwidth_integral = const_cast<int32*>(reinterpret_cast<const int32*>(request->offset_bandwidth_integral().data()));
       int32 number_of_elements = static_cast<int32>(request->offset_bandwidth_integral().size());
       auto status = library_->SEMCfgOffsetBandwidthIntegralArray(instrument, selector_string, offset_bandwidth_integral, number_of_elements);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -8235,6 +8889,10 @@ namespace nirfmxlte_grpc {
       }
 
       auto status = library_->SEMCfgOffsetFrequency(instrument, selector_string, offset_start_frequency, offset_stop_frequency, offset_sideband);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -8285,6 +8943,10 @@ namespace nirfmxlte_grpc {
       auto number_of_elements = number_of_elements_size_calculation.size;
 
       auto status = library_->SEMCfgOffsetFrequencyArray(instrument, selector_string, offset_start_frequency, offset_stop_frequency, offset_sideband, number_of_elements);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -8321,6 +8983,10 @@ namespace nirfmxlte_grpc {
       }
 
       auto status = library_->SEMCfgOffsetLimitFailMask(instrument, selector_string, limit_fail_mask);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -8351,6 +9017,10 @@ namespace nirfmxlte_grpc {
 
       int32 number_of_elements = static_cast<int32>(request->limit_fail_mask().size());
       auto status = library_->SEMCfgOffsetLimitFailMaskArray(instrument, selector_string, limit_fail_mask, number_of_elements);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -8388,6 +9058,10 @@ namespace nirfmxlte_grpc {
       }
 
       auto status = library_->SEMCfgOffsetRBWFilter(instrument, selector_string, offset_rbw, offset_rbw_filter_type);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -8435,6 +9109,10 @@ namespace nirfmxlte_grpc {
       auto number_of_elements = number_of_elements_size_calculation.size;
 
       auto status = library_->SEMCfgOffsetRBWFilterArray(instrument, selector_string, offset_rbw, offset_rbw_filter_type, number_of_elements);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -8457,6 +9135,10 @@ namespace nirfmxlte_grpc {
       float64 relative_limit_start = request->relative_limit_start();
       float64 relative_limit_stop = request->relative_limit_stop();
       auto status = library_->SEMCfgOffsetRelativeLimit(instrument, selector_string, relative_limit_start, relative_limit_stop);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -8496,6 +9178,10 @@ namespace nirfmxlte_grpc {
       auto number_of_elements = number_of_elements_size_calculation.size;
 
       auto status = library_->SEMCfgOffsetRelativeLimitArray(instrument, selector_string, relative_limit_start, relative_limit_stop, number_of_elements);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -8533,6 +9219,10 @@ namespace nirfmxlte_grpc {
 
       float64 sweep_time_interval = request->sweep_time_interval();
       auto status = library_->SEMCfgSweepTime(instrument, selector_string, sweep_time_auto, sweep_time_interval);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -8569,6 +9259,10 @@ namespace nirfmxlte_grpc {
       }
 
       auto status = library_->SEMCfgUplinkMaskType(instrument, selector_string, uplink_mask_type);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -8592,11 +9286,13 @@ namespace nirfmxlte_grpc {
       float64 absolute_integrated_power {};
       float64 relative_integrated_power {};
       auto status = library_->SEMFetchComponentCarrierMeasurement(instrument, selector_string, timeout, &absolute_integrated_power, &relative_integrated_power);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
-      if (status_ok(status)) {
         response->set_absolute_integrated_power(absolute_integrated_power);
         response->set_relative_integrated_power(relative_integrated_power);
-      }
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -8619,10 +9315,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->SEMFetchComponentCarrierMeasurementArray(instrument, selector_string, timeout, nullptr, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         response->mutable_absolute_integrated_power()->Resize(actual_array_size, 0);
         float64* absolute_integrated_power = response->mutable_absolute_integrated_power()->mutable_data();
         response->mutable_relative_integrated_power()->Resize(actual_array_size, 0);
@@ -8633,12 +9329,14 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->mutable_absolute_integrated_power()->Resize(actual_array_size, 0);
           response->mutable_relative_integrated_power()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -8665,15 +9363,17 @@ namespace nirfmxlte_grpc {
       float64 margin_absolute_power {};
       float64 margin_relative_power {};
       auto status = library_->SEMFetchLowerOffsetMargin(instrument, selector_string, timeout, &measurement_status, &margin, &margin_frequency, &margin_absolute_power, &margin_relative_power);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
-      if (status_ok(status)) {
         response->set_measurement_status(static_cast<nirfmxlte_grpc::SemLowerOffsetMeasurementStatus>(measurement_status));
         response->set_measurement_status_raw(measurement_status);
         response->set_margin(margin);
         response->set_margin_frequency(margin_frequency);
         response->set_margin_absolute_power(margin_absolute_power);
         response->set_margin_relative_power(margin_relative_power);
-      }
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -8696,10 +9396,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->SEMFetchLowerOffsetMarginArray(instrument, selector_string, timeout, nullptr, nullptr, nullptr, nullptr, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         response->mutable_measurement_status_raw()->Resize(actual_array_size, 0);
         int32* measurement_status = reinterpret_cast<int32*>(response->mutable_measurement_status_raw()->mutable_data());
         response->mutable_margin()->Resize(actual_array_size, 0);
@@ -8716,8 +9416,11 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->mutable_measurement_status()->Clear();
           response->mutable_measurement_status()->Reserve(actual_array_size);
           std::transform(
@@ -8733,7 +9436,6 @@ namespace nirfmxlte_grpc {
           response->mutable_margin_absolute_power()->Resize(actual_array_size, 0);
           response->mutable_margin_relative_power()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -8760,14 +9462,16 @@ namespace nirfmxlte_grpc {
       float64 peak_frequency {};
       float64 relative_peak_power {};
       auto status = library_->SEMFetchLowerOffsetPower(instrument, selector_string, timeout, &absolute_integrated_power, &relative_integrated_power, &absolute_peak_power, &peak_frequency, &relative_peak_power);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
-      if (status_ok(status)) {
         response->set_absolute_integrated_power(absolute_integrated_power);
         response->set_relative_integrated_power(relative_integrated_power);
         response->set_absolute_peak_power(absolute_peak_power);
         response->set_peak_frequency(peak_frequency);
         response->set_relative_peak_power(relative_peak_power);
-      }
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -8790,10 +9494,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->SEMFetchLowerOffsetPowerArray(instrument, selector_string, timeout, nullptr, nullptr, nullptr, nullptr, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         response->mutable_absolute_integrated_power()->Resize(actual_array_size, 0);
         float64* absolute_integrated_power = response->mutable_absolute_integrated_power()->mutable_data();
         response->mutable_relative_integrated_power()->Resize(actual_array_size, 0);
@@ -8810,15 +9514,17 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->mutable_absolute_integrated_power()->Resize(actual_array_size, 0);
           response->mutable_relative_integrated_power()->Resize(actual_array_size, 0);
           response->mutable_absolute_peak_power()->Resize(actual_array_size, 0);
           response->mutable_peak_frequency()->Resize(actual_array_size, 0);
           response->mutable_relative_peak_power()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -8841,11 +9547,13 @@ namespace nirfmxlte_grpc {
       float64 timeout = request->timeout();
       int32 measurement_status {};
       auto status = library_->SEMFetchMeasurementStatus(instrument, selector_string, timeout, &measurement_status);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
-      if (status_ok(status)) {
         response->set_measurement_status(static_cast<nirfmxlte_grpc::SemMeasurementStatus>(measurement_status));
         response->set_measurement_status_raw(measurement_status);
-      }
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -8870,10 +9578,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->SEMFetchSpectrum(instrument, selector_string, timeout, &x0, &dx, nullptr, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         response->mutable_spectrum()->Resize(actual_array_size, 0);
         float32* spectrum = response->mutable_spectrum()->mutable_data();
         response->mutable_composite_mask()->Resize(actual_array_size, 0);
@@ -8884,14 +9592,16 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->set_x0(x0);
           response->set_dx(dx);
           response->mutable_spectrum()->Resize(actual_array_size, 0);
           response->mutable_composite_mask()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -8916,12 +9626,14 @@ namespace nirfmxlte_grpc {
       float64 integration_bandwidth {};
       float64 frequency {};
       auto status = library_->SEMFetchSubblockMeasurement(instrument, selector_string, timeout, &subblock_power, &integration_bandwidth, &frequency);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
-      if (status_ok(status)) {
         response->set_subblock_power(subblock_power);
         response->set_integration_bandwidth(integration_bandwidth);
         response->set_frequency(frequency);
-      }
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -8943,10 +9655,12 @@ namespace nirfmxlte_grpc {
       float64 timeout = request->timeout();
       float64 total_aggregated_power {};
       auto status = library_->SEMFetchTotalAggregatedPower(instrument, selector_string, timeout, &total_aggregated_power);
-      response->set_status(status);
-      if (status_ok(status)) {
-        response->set_total_aggregated_power(total_aggregated_power);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
       }
+
+      response->set_status(status);
+        response->set_total_aggregated_power(total_aggregated_power);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -8972,15 +9686,17 @@ namespace nirfmxlte_grpc {
       float64 margin_absolute_power {};
       float64 margin_relative_power {};
       auto status = library_->SEMFetchUpperOffsetMargin(instrument, selector_string, timeout, &measurement_status, &margin, &margin_frequency, &margin_absolute_power, &margin_relative_power);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
-      if (status_ok(status)) {
         response->set_measurement_status(static_cast<nirfmxlte_grpc::SemUpperOffsetMeasurementStatus>(measurement_status));
         response->set_measurement_status_raw(measurement_status);
         response->set_margin(margin);
         response->set_margin_frequency(margin_frequency);
         response->set_margin_absolute_power(margin_absolute_power);
         response->set_margin_relative_power(margin_relative_power);
-      }
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -9003,10 +9719,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->SEMFetchUpperOffsetMarginArray(instrument, selector_string, timeout, nullptr, nullptr, nullptr, nullptr, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         response->mutable_measurement_status_raw()->Resize(actual_array_size, 0);
         int32* measurement_status = reinterpret_cast<int32*>(response->mutable_measurement_status_raw()->mutable_data());
         response->mutable_margin()->Resize(actual_array_size, 0);
@@ -9023,8 +9739,11 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->mutable_measurement_status()->Clear();
           response->mutable_measurement_status()->Reserve(actual_array_size);
           std::transform(
@@ -9040,7 +9759,6 @@ namespace nirfmxlte_grpc {
           response->mutable_margin_absolute_power()->Resize(actual_array_size, 0);
           response->mutable_margin_relative_power()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -9067,14 +9785,16 @@ namespace nirfmxlte_grpc {
       float64 peak_frequency {};
       float64 relative_peak_power {};
       auto status = library_->SEMFetchUpperOffsetPower(instrument, selector_string, timeout, &absolute_integrated_power, &relative_integrated_power, &absolute_peak_power, &peak_frequency, &relative_peak_power);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
-      if (status_ok(status)) {
         response->set_absolute_integrated_power(absolute_integrated_power);
         response->set_relative_integrated_power(relative_integrated_power);
         response->set_absolute_peak_power(absolute_peak_power);
         response->set_peak_frequency(peak_frequency);
         response->set_relative_peak_power(relative_peak_power);
-      }
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -9097,10 +9817,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->SEMFetchUpperOffsetPowerArray(instrument, selector_string, timeout, nullptr, nullptr, nullptr, nullptr, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         response->mutable_absolute_integrated_power()->Resize(actual_array_size, 0);
         float64* absolute_integrated_power = response->mutable_absolute_integrated_power()->mutable_data();
         response->mutable_relative_integrated_power()->Resize(actual_array_size, 0);
@@ -9117,15 +9837,17 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->mutable_absolute_integrated_power()->Resize(actual_array_size, 0);
           response->mutable_relative_integrated_power()->Resize(actual_array_size, 0);
           response->mutable_absolute_peak_power()->Resize(actual_array_size, 0);
           response->mutable_peak_frequency()->Resize(actual_array_size, 0);
           response->mutable_relative_peak_power()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -9163,6 +9885,10 @@ namespace nirfmxlte_grpc {
 
       int32 enable_all_traces = request->enable_all_traces();
       auto status = library_->SelectMeasurements(instrument, selector_string, measurements, enable_all_traces);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -9182,6 +9908,10 @@ namespace nirfmxlte_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       auto status = library_->SendSoftwareEdgeTrigger(instrument);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -9204,6 +9934,10 @@ namespace nirfmxlte_grpc {
       int32 attribute_id = request->attribute_id();
       float32 attr_val = request->attr_val();
       auto status = library_->SetAttributeF32(instrument, selector_string, attribute_id, attr_val);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -9227,6 +9961,10 @@ namespace nirfmxlte_grpc {
       auto attr_val = const_cast<float32*>(request->attr_val().data());
       int32 array_size = static_cast<int32>(request->attr_val().size());
       auto status = library_->SetAttributeF32Array(instrument, selector_string, attribute_id, attr_val, array_size);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -9249,6 +9987,10 @@ namespace nirfmxlte_grpc {
       int32 attribute_id = request->attribute_id();
       float64 attr_val = request->attr_val();
       auto status = library_->SetAttributeF64(instrument, selector_string, attribute_id, attr_val);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -9272,6 +10014,10 @@ namespace nirfmxlte_grpc {
       auto attr_val = const_cast<float64*>(request->attr_val().data());
       int32 array_size = static_cast<int32>(request->attr_val().size());
       auto status = library_->SetAttributeF64Array(instrument, selector_string, attribute_id, attr_val, array_size);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -9303,6 +10049,10 @@ namespace nirfmxlte_grpc {
       auto attr_val = static_cast<int16>(attr_val_raw);
 
       auto status = library_->SetAttributeI16(instrument, selector_string, attribute_id, attr_val);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -9343,6 +10093,10 @@ namespace nirfmxlte_grpc {
       }
 
       auto status = library_->SetAttributeI32(instrument, selector_string, attribute_id, attr_val);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -9374,6 +10128,10 @@ namespace nirfmxlte_grpc {
 
       int32 array_size = static_cast<int32>(request->attr_val().size());
       auto status = library_->SetAttributeI32Array(instrument, selector_string, attribute_id, attr_val, array_size);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -9396,6 +10154,10 @@ namespace nirfmxlte_grpc {
       int32 attribute_id = request->attribute_id();
       int64 attr_val = request->attr_val();
       auto status = library_->SetAttributeI64(instrument, selector_string, attribute_id, attr_val);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -9419,6 +10181,10 @@ namespace nirfmxlte_grpc {
       auto attr_val = const_cast<int64*>(reinterpret_cast<const int64*>(request->attr_val().data()));
       int32 array_size = static_cast<int32>(request->attr_val().size());
       auto status = library_->SetAttributeI64Array(instrument, selector_string, attribute_id, attr_val, array_size);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -9450,6 +10216,10 @@ namespace nirfmxlte_grpc {
       auto attr_val = static_cast<int8>(attr_val_raw);
 
       auto status = library_->SetAttributeI8(instrument, selector_string, attribute_id, attr_val);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -9493,6 +10263,10 @@ namespace nirfmxlte_grpc {
 
       int32 array_size = static_cast<int32>(request->attr_val().size());
       auto status = library_->SetAttributeI8Array(instrument, selector_string, attribute_id, attr_val.data(), array_size);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -9519,6 +10293,10 @@ namespace nirfmxlte_grpc {
       auto attr_val = convert_from_grpc<NIComplexDouble>(request->attr_val());
       int32 array_size = static_cast<int32>(request->attr_val().size());
       auto status = library_->SetAttributeNIComplexDoubleArray(instrument, selector_string, attribute_id, attr_val.data(), array_size);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -9542,6 +10320,10 @@ namespace nirfmxlte_grpc {
       auto attr_val = convert_from_grpc<NIComplexSingle>(request->attr_val());
       int32 array_size = static_cast<int32>(request->attr_val().size());
       auto status = library_->SetAttributeNIComplexSingleArray(instrument, selector_string, attribute_id, attr_val.data(), array_size);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -9583,6 +10365,10 @@ namespace nirfmxlte_grpc {
       }
 
       auto status = library_->SetAttributeString(instrument, selector_string, attribute_id, attr_val);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -9614,6 +10400,10 @@ namespace nirfmxlte_grpc {
       auto attr_val = static_cast<uInt16>(attr_val_raw);
 
       auto status = library_->SetAttributeU16(instrument, selector_string, attribute_id, attr_val);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -9639,6 +10429,10 @@ namespace nirfmxlte_grpc {
       int32 attribute_id = request->attribute_id();
       uInt32 attr_val = request->attr_val();
       auto status = library_->SetAttributeU32(instrument, selector_string, attribute_id, attr_val);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -9662,6 +10456,10 @@ namespace nirfmxlte_grpc {
       auto attr_val = const_cast<uInt32*>(reinterpret_cast<const uInt32*>(request->attr_val().data()));
       int32 array_size = static_cast<int32>(request->attr_val().size());
       auto status = library_->SetAttributeU32Array(instrument, selector_string, attribute_id, attr_val, array_size);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -9685,6 +10483,10 @@ namespace nirfmxlte_grpc {
       auto attr_val = const_cast<uInt64*>(reinterpret_cast<const uInt64*>(request->attr_val().data()));
       int32 array_size = static_cast<int32>(request->attr_val().size());
       auto status = library_->SetAttributeU64Array(instrument, selector_string, attribute_id, attr_val, array_size);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -9707,6 +10509,10 @@ namespace nirfmxlte_grpc {
       int32 attribute_id = request->attribute_id();
       uInt8 attr_val = request->attr_val();
       auto status = library_->SetAttributeU8(instrument, selector_string, attribute_id, attr_val);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -9730,6 +10536,10 @@ namespace nirfmxlte_grpc {
       uInt8* attr_val = (uInt8*)request->attr_val().c_str();
       int32 array_size = static_cast<int32>(request->attr_val().size());
       auto status = library_->SetAttributeU8Array(instrument, selector_string, attribute_id, attr_val, array_size);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -9768,6 +10578,10 @@ namespace nirfmxlte_grpc {
       int32 measurement_offset = request->measurement_offset();
       int32 measurement_length = request->measurement_length();
       auto status = library_->SlotPhaseCfgSynchronizationModeAndInterval(instrument, selector_string, synchronization_mode, measurement_offset, measurement_length);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -9790,10 +10604,12 @@ namespace nirfmxlte_grpc {
       float64 timeout = request->timeout();
       float64 maximum_phase_discontinuity {};
       auto status = library_->SlotPhaseFetchMaximumPhaseDiscontinuity(instrument, selector_string, timeout, &maximum_phase_discontinuity);
-      response->set_status(status);
-      if (status_ok(status)) {
-        response->set_maximum_phase_discontinuity(maximum_phase_discontinuity);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
       }
+
+      response->set_status(status);
+        response->set_maximum_phase_discontinuity(maximum_phase_discontinuity);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -9816,10 +10632,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->SlotPhaseFetchMaximumPhaseDiscontinuityArray(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         response->mutable_maximum_phase_discontinuity()->Resize(actual_array_size, 0);
         float64* maximum_phase_discontinuity = response->mutable_maximum_phase_discontinuity()->mutable_data();
         auto array_size = actual_array_size;
@@ -9828,11 +10644,13 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->mutable_maximum_phase_discontinuity()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -9856,10 +10674,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->SlotPhaseFetchPhaseDiscontinuities(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         response->mutable_slot_phase_discontinuity()->Resize(actual_array_size, 0);
         float64* slot_phase_discontinuity = response->mutable_slot_phase_discontinuity()->mutable_data();
         auto array_size = actual_array_size;
@@ -9868,11 +10686,13 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->mutable_slot_phase_discontinuity()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -9898,10 +10718,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->SlotPhaseFetchSamplePhaseError(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         response->mutable_sample_phase_error()->Resize(actual_array_size, 0);
         float32* sample_phase_error = response->mutable_sample_phase_error()->mutable_data();
         auto array_size = actual_array_size;
@@ -9910,13 +10730,15 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->set_x0(x0);
           response->set_dx(dx);
           response->mutable_sample_phase_error()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -9942,10 +10764,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->SlotPhaseFetchSamplePhaseErrorLinearFitTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         response->mutable_sample_phase_error_linear_fit()->Resize(actual_array_size, 0);
         float32* sample_phase_error_linear_fit = response->mutable_sample_phase_error_linear_fit()->mutable_data();
         auto array_size = actual_array_size;
@@ -9954,13 +10776,15 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->set_x0(x0);
           response->set_dx(dx);
           response->mutable_sample_phase_error_linear_fit()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -9983,6 +10807,10 @@ namespace nirfmxlte_grpc {
       int32 measurement_offset = request->measurement_offset();
       int32 measurement_length = request->measurement_length();
       auto status = library_->SlotPowerCfgMeasurementInterval(instrument, selector_string, measurement_offset, measurement_length);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -10006,10 +10834,10 @@ namespace nirfmxlte_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->SlotPowerFetchPowers(instrument, selector_string, timeout, nullptr, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
         response->mutable_subframe_power()->Resize(actual_array_size, 0);
         float64* subframe_power = response->mutable_subframe_power()->mutable_data();
         response->mutable_subframe_power_delta()->Resize(actual_array_size, 0);
@@ -10020,12 +10848,14 @@ namespace nirfmxlte_grpc {
           // buffer is now too small, try again
           continue;
         }
+          if (!status_ok(status)) {
+              return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+          }
+  
         response->set_status(status);
-        if (status_ok(status)) {
           response->mutable_subframe_power()->Resize(actual_array_size, 0);
           response->mutable_subframe_power_delta()->Resize(actual_array_size, 0);
           response->set_actual_array_size(actual_array_size);
-        }
         return ::grpc::Status::OK;
       }
     }
@@ -10046,6 +10876,10 @@ namespace nirfmxlte_grpc {
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       float64 timeout = request->timeout();
       auto status = library_->WaitForAcquisitionComplete(instrument, timeout);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -10067,6 +10901,10 @@ namespace nirfmxlte_grpc {
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       auto status = library_->WaitForMeasurementComplete(instrument, selector_string, timeout);
+      if (!status_ok(status)) {
+          return ConvertApiErrorStatusForniRFmxInstrHandle(status, instrument);
+      }
+
       response->set_status(status);
       return ::grpc::Status::OK;
     }

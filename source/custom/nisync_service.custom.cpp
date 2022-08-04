@@ -36,4 +36,12 @@ namespace nisync_grpc {
   }
 }
 
+::grpc::Status NiSyncService::ConvertApiErrorStatusForViSession(google::protobuf::int32 status, ViSession vi)
+{
+    const ViInt32 buffer_size = 4096;
+    std::string description(buffer_size, '\0');
+    library_->ErrorMessage(vi, status, description.data());
+    return nidevice_grpc::ApiErrorAndDescriptionToStatus(status, description);
+}
+
 }  // namespace nisync_grpc
