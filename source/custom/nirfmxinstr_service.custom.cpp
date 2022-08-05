@@ -117,6 +117,7 @@ const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
     library_->GetError(instrumentHandle, &error_code, nidevice_grpc::kMaxGrpcErrorDescriptionSize, description.data());
     if (error_code != status) {
         // Since another thread has changed the status, fall back to the static message lookup.
+        description.assign(nidevice_grpc::kMaxGrpcErrorDescriptionSize, '\0');
         library_->GetErrorString(instrumentHandle, status, nidevice_grpc::kMaxGrpcErrorDescriptionSize, description.data());
     }
     return nidevice_grpc::ApiErrorAndDescriptionToStatus(status, description);

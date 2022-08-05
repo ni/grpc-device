@@ -57,13 +57,14 @@ static void CheckStatus(int status)
 
 ::grpc::Status NiDCPowerService::ConvertApiErrorStatusForViSession(google::protobuf::int32 status, ViSession vi)
 {
-    const ViInt32 buffer_size = 4096;
+    static_assert(nidevice_grpc::kMaxGrpcErrorDescriptionSize >= 256, "ErrorMessage expects a minimum buffer size.");
     ViStatus error_code {};
-    std::string description(buffer_size, '\0');
+    std::string description(nidevice_grpc::kMaxGrpcErrorDescriptionSize, '\0');
     // Try first to get the most recent error with a dynamic message.
-    library_->GetError(vi, &error_code, buffer_size, description.data());
+    library_->GetError(vi, &error_code, nidevice_grpc::kMaxGrpcErrorDescriptionSize, description.data());
     if (error_code != status) {
         // Since another thread has changed the status, fall back to the static message lookup.
+        description.assign(nidevice_grpc::kMaxGrpcErrorDescriptionSize, '\0');
         library_->ErrorMessage(vi, status, description.data());
     }
     return nidevice_grpc::ApiErrorAndDescriptionToStatus(status, description);

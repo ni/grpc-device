@@ -38,8 +38,8 @@ namespace nisync_grpc {
 
 ::grpc::Status NiSyncService::ConvertApiErrorStatusForViSession(google::protobuf::int32 status, ViSession vi)
 {
-    const ViInt32 buffer_size = 4096;
-    std::string description(buffer_size, '\0');
+    static_assert(nidevice_grpc::kMaxGrpcErrorDescriptionSize >= 256, "ErrorMessage expects a minimum buffer size.");
+    std::string description(nidevice_grpc::kMaxGrpcErrorDescriptionSize, '\0');
     library_->ErrorMessage(vi, status, description.data());
     return nidevice_grpc::ApiErrorAndDescriptionToStatus(status, description);
 }

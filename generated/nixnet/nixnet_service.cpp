@@ -72,9 +72,8 @@ namespace nixnet_grpc {
 
       auto status = library_->Blink(interface_ref, modifier);
       if (!status_ok(status)) {
-          return ConvertApiErrorStatusFornxSessionRef_t(status, interface_ref);
+        return ConvertApiErrorStatusFornxSessionRef_t(status, interface_ref);
       }
-
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -96,9 +95,8 @@ namespace nixnet_grpc {
       session_repository_->remove_session(session_grpc_session.id(), session_grpc_session.name());
       auto status = library_->Clear(session);
       if (!status_ok(status)) {
-          return ConvertApiErrorStatusFornxSessionRef_t(status, session);
+        return ConvertApiErrorStatusFornxSessionRef_t(status, session);
       }
-
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -159,9 +157,8 @@ namespace nixnet_grpc {
 
       auto status = library_->ConnectTerminals(session, source, destination);
       if (!status_ok(status)) {
-          return ConvertApiErrorStatusFornxSessionRef_t(status, session);
+        return ConvertApiErrorStatusFornxSessionRef_t(status, session);
       }
-
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -205,9 +202,8 @@ namespace nixnet_grpc {
       u32 number_of_bytes_returned {};
       auto status = library_->ConvertByteArrayToFramesSinglePoint(session, value_buffer, size_of_value_buffer, buffer.data(), size_of_buffer, &number_of_bytes_returned);
       if (!status_ok(status)) {
-          return ConvertApiErrorStatusFornxSessionRef_t(status, session);
+        return ConvertApiErrorStatusFornxSessionRef_t(status, session);
       }
-
       response->set_status(status);
         convert_to_grpc(buffer, response->mutable_buffer(), number_of_bytes_returned, protocol, enetflags_output_map_);
       return ::grpc::Status::OK;
@@ -233,9 +229,8 @@ namespace nixnet_grpc {
       std::string value_buffer(size_of_value_buffer, '\0');
       auto status = library_->ConvertFramesToByteArraySinglePoint(session, frame_buffer, number_of_bytes_for_frames, (u8*)value_buffer.data(), size_of_value_buffer);
       if (!status_ok(status)) {
-          return ConvertApiErrorStatusFornxSessionRef_t(status, session);
+        return ConvertApiErrorStatusFornxSessionRef_t(status, session);
       }
-
       response->set_status(status);
         response->set_value_buffer(value_buffer);
       return ::grpc::Status::OK;
@@ -266,9 +261,8 @@ namespace nixnet_grpc {
       nxTimestamp100ns_t* timestamp_buffer = reinterpret_cast<nxTimestamp100ns_t*>(response->mutable_timestamp_buffer()->mutable_data());
       auto status = library_->ConvertFramesToSignalsSinglePoint(session, frame_buffer, number_of_bytes_for_frames, value_buffer, size_of_value_buffer, timestamp_buffer, size_of_timestamp_buffer);
       if (!status_ok(status)) {
-          return ConvertApiErrorStatusFornxSessionRef_t(status, session);
+        return ConvertApiErrorStatusFornxSessionRef_t(status, session);
       }
-
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -312,9 +306,8 @@ namespace nixnet_grpc {
       u32 number_of_bytes_returned {};
       auto status = library_->ConvertSignalsToFramesSinglePoint(session, value_buffer, size_of_value_buffer, buffer.data(), size_of_buffer, &number_of_bytes_returned);
       if (!status_ok(status)) {
-          return ConvertApiErrorStatusFornxSessionRef_t(status, session);
+        return ConvertApiErrorStatusFornxSessionRef_t(status, session);
       }
-
       response->set_status(status);
         convert_to_grpc(buffer, response->mutable_buffer(), number_of_bytes_returned, protocol, enetflags_output_map_);
       return ::grpc::Status::OK;
@@ -336,9 +329,8 @@ namespace nixnet_grpc {
       nxTimestamp1ns_t to_timestamp_1ns {};
       auto status = library_->ConvertTimestamp100nsTo1ns(from_timestamp_100ns, &to_timestamp_1ns);
       if (!status_ok(status)) {
-          return ConvertApiErrorStatusFornxSessionRef_t(status, 0);
+        return ConvertApiErrorStatusFornxSessionRef_t(status, 0);
       }
-
       response->set_status(status);
         response->set_to_timestamp_1ns(to_timestamp_1ns);
       return ::grpc::Status::OK;
@@ -360,9 +352,8 @@ namespace nixnet_grpc {
       nxTimestamp100ns_t to_timestamp_100ns {};
       auto status = library_->ConvertTimestamp1nsTo100ns(from_timestamp_1ns, &to_timestamp_100ns);
       if (!status_ok(status)) {
-          return ConvertApiErrorStatusFornxSessionRef_t(status, 0);
+        return ConvertApiErrorStatusFornxSessionRef_t(status, 0);
       }
-
       response->set_status(status);
         response->set_to_timestamp_100ns(to_timestamp_100ns);
       return ::grpc::Status::OK;
@@ -411,9 +402,8 @@ namespace nixnet_grpc {
       auto cleanup_lambda = [&] (nxSessionRef_t id) { library_->Clear(id); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
       if (!status_ok(status)) {
-          return ConvertApiErrorStatusFornxSessionRef_t(status, 0);
+        return ConvertApiErrorStatusFornxSessionRef_t(status, 0);
       }
-
       response->set_status(status);
         response->mutable_session()->set_id(session_id);
       return ::grpc::Status::OK;
@@ -470,9 +460,8 @@ namespace nixnet_grpc {
       auto cleanup_lambda = [&] (nxSessionRef_t id) { library_->Clear(id); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
       if (!status_ok(status)) {
-          return ConvertApiErrorStatusFornxSessionRef_t(status, 0);
+        return ConvertApiErrorStatusFornxSessionRef_t(status, 0);
       }
-
       response->set_status(status);
         response->mutable_session()->set_id(session_id);
       return ::grpc::Status::OK;
@@ -498,9 +487,8 @@ namespace nixnet_grpc {
       u32 default_baud_rate = request->default_baud_rate();
       auto status = library_->DbAddAlias(database_alias, database_filepath, default_baud_rate);
       if (!status_ok(status)) {
-          return ConvertApiErrorStatusFornxSessionRef_t(status, 0);
+        return ConvertApiErrorStatusFornxSessionRef_t(status, 0);
       }
-
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -522,9 +510,8 @@ namespace nixnet_grpc {
       u64 default_baud_rate = request->default_baud_rate();
       auto status = library_->DbAddAlias64(database_alias, database_filepath, default_baud_rate);
       if (!status_ok(status)) {
-          return ConvertApiErrorStatusFornxSessionRef_t(status, 0);
+        return ConvertApiErrorStatusFornxSessionRef_t(status, 0);
       }
-
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -547,9 +534,8 @@ namespace nixnet_grpc {
       nx_database_ref_t_resource_repository_->remove_session(database_grpc_session.id(), database_grpc_session.name());
       auto status = library_->DbCloseDatabase(database, close_all_refs);
       if (!status_ok(status)) {
-          return ConvertApiErrorStatusFornxDatabaseRef_t(status, database);
+        return ConvertApiErrorStatusFornxDatabaseRef_t(status, database);
       }
-
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -607,9 +593,8 @@ namespace nixnet_grpc {
       nx_database_ref_t_resource_repository_->remove_session(db_object_grpc_session.id(), db_object_grpc_session.name());
       auto status = library_->DbDeleteObject(db_object);
       if (!status_ok(status)) {
-          return ConvertApiErrorStatusFornxDatabaseRef_t(status, db_object);
+        return ConvertApiErrorStatusFornxDatabaseRef_t(status, db_object);
       }
-
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -632,9 +617,8 @@ namespace nixnet_grpc {
       u32 percent_complete {};
       auto status = library_->DbDeploy(ip_address, database_alias, wait_for_complete, &percent_complete);
       if (!status_ok(status)) {
-          return ConvertApiErrorStatusFornxSessionRef_t(status, 0);
+        return ConvertApiErrorStatusFornxSessionRef_t(status, 0);
       }
-
       response->set_status(status);
         response->set_percent_complete(percent_complete);
       return ::grpc::Status::OK;
@@ -710,9 +694,8 @@ namespace nixnet_grpc {
       u32 attribute_text_size {};
       auto status = library_->DbGetDBCAttributeSize(db_object, mode, attribute_name, &attribute_text_size);
       if (!status_ok(status)) {
-          return ConvertApiErrorStatusFornxDatabaseRef_t(status, db_object);
+        return ConvertApiErrorStatusFornxDatabaseRef_t(status, db_object);
       }
-
       response->set_status(status);
         response->set_attribute_text_size(attribute_text_size);
       return ::grpc::Status::OK;
@@ -735,9 +718,8 @@ namespace nixnet_grpc {
       u32 sizeof_filepath_buffer {};
       auto status = library_->DbGetDatabaseListSizes(ip_address, &sizeof_alias_buffer, &sizeof_filepath_buffer);
       if (!status_ok(status)) {
-          return ConvertApiErrorStatusFornxSessionRef_t(status, 0);
+        return ConvertApiErrorStatusFornxSessionRef_t(status, 0);
       }
-
       response->set_status(status);
         response->set_sizeof_alias_buffer(sizeof_alias_buffer);
         response->set_sizeof_filepath_buffer(sizeof_filepath_buffer);
@@ -777,9 +759,8 @@ namespace nixnet_grpc {
       u32 property_size {};
       auto status = library_->DbGetPropertySize(db_object, property_id, &property_size);
       if (!status_ok(status)) {
-          return ConvertApiErrorStatusFornxDatabaseRef_t(status, db_object);
+        return ConvertApiErrorStatusFornxDatabaseRef_t(status, db_object);
       }
-
       response->set_status(status);
         response->set_property_size(property_size);
       return ::grpc::Status::OK;
@@ -822,9 +803,8 @@ namespace nixnet_grpc {
       u32 percent_complete {};
       auto status = library_->DbMerge(target_cluster, source_obj, copy_mode, prefix, wait_for_complete, &percent_complete);
       if (!status_ok(status)) {
-          return ConvertApiErrorStatusFornxDatabaseRef_t(status, target_cluster);
+        return ConvertApiErrorStatusFornxDatabaseRef_t(status, target_cluster);
       }
-
       response->set_status(status);
         response->set_percent_complete(percent_complete);
       return ::grpc::Status::OK;
@@ -854,9 +834,8 @@ namespace nixnet_grpc {
       auto cleanup_lambda = [&] (nxDatabaseRef_t id) { library_->DbCloseDatabase(id, false); };
       int status = nx_database_ref_t_resource_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
       if (!status_ok(status)) {
-          return ConvertApiErrorStatusFornxSessionRef_t(status, 0);
+        return ConvertApiErrorStatusFornxSessionRef_t(status, 0);
       }
-
       response->set_status(status);
         response->mutable_database()->set_id(session_id);
       return ::grpc::Status::OK;
@@ -880,9 +859,8 @@ namespace nixnet_grpc {
       auto database_alias = request->database_alias().c_str();
       auto status = library_->DbRemoveAlias(database_alias);
       if (!status_ok(status)) {
-          return ConvertApiErrorStatusFornxSessionRef_t(status, 0);
+        return ConvertApiErrorStatusFornxSessionRef_t(status, 0);
       }
-
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -904,9 +882,8 @@ namespace nixnet_grpc {
       auto db_filepath = request->db_filepath().c_str();
       auto status = library_->DbSaveDatabase(database, db_filepath);
       if (!status_ok(status)) {
-          return ConvertApiErrorStatusFornxDatabaseRef_t(status, database);
+        return ConvertApiErrorStatusFornxDatabaseRef_t(status, database);
       }
-
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -927,9 +904,8 @@ namespace nixnet_grpc {
       auto database_alias = request->database_alias().c_str();
       auto status = library_->DbUndeploy(ip_address, database_alias);
       if (!status_ok(status)) {
-          return ConvertApiErrorStatusFornxSessionRef_t(status, 0);
+        return ConvertApiErrorStatusFornxSessionRef_t(status, 0);
       }
-
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -990,9 +966,8 @@ namespace nixnet_grpc {
 
       auto status = library_->DisconnectTerminals(session, source, destination);
       if (!status_ok(status)) {
-          return ConvertApiErrorStatusFornxSessionRef_t(status, session);
+        return ConvertApiErrorStatusFornxSessionRef_t(status, session);
       }
-
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1013,9 +988,8 @@ namespace nixnet_grpc {
       nxSessionRef_t session = session_repository_->access_session(session_grpc_session.id(), session_grpc_session.name());
       auto status = library_->Flush(session);
       if (!status_ok(status)) {
-          return ConvertApiErrorStatusFornxSessionRef_t(status, session);
+        return ConvertApiErrorStatusFornxSessionRef_t(status, session);
       }
-
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1053,9 +1027,8 @@ namespace nixnet_grpc {
 
       auto status = library_->FutureTimeTrigger(session, when, timescale);
       if (!status_ok(status)) {
-          return ConvertApiErrorStatusFornxSessionRef_t(status, session);
+        return ConvertApiErrorStatusFornxSessionRef_t(status, session);
       }
-
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1093,9 +1066,8 @@ namespace nixnet_grpc {
       u32 property_size {};
       auto status = library_->GetPropertySize(session, property_id, &property_size);
       if (!status_ok(status)) {
-          return ConvertApiErrorStatusFornxSessionRef_t(status, session);
+        return ConvertApiErrorStatusFornxSessionRef_t(status, session);
       }
-
       response->set_status(status);
         response->set_property_size(property_size);
       return ::grpc::Status::OK;
@@ -1135,9 +1107,8 @@ namespace nixnet_grpc {
       u32 property_size {};
       auto status = library_->GetSubPropertySize(session, active_index, property_id, &property_size);
       if (!status_ok(status)) {
-          return ConvertApiErrorStatusFornxSessionRef_t(status, session);
+        return ConvertApiErrorStatusFornxSessionRef_t(status, session);
       }
-
       response->set_status(status);
         response->set_property_size(property_size);
       return ::grpc::Status::OK;
@@ -1196,9 +1167,8 @@ namespace nixnet_grpc {
       u32 number_of_bytes_returned {};
       auto status = library_->ReadFrame(session, buffer.data(), size_of_buffer, timeout, &number_of_bytes_returned);
       if (!status_ok(status)) {
-          return ConvertApiErrorStatusFornxSessionRef_t(status, session);
+        return ConvertApiErrorStatusFornxSessionRef_t(status, session);
       }
-
       response->set_status(status);
         convert_to_grpc(buffer, response->mutable_buffer(), number_of_bytes_returned, protocol, enetflags_output_map_);
       return ::grpc::Status::OK;
@@ -1227,9 +1197,8 @@ namespace nixnet_grpc {
       nxTimestamp100ns_t* timestamp_buffer = reinterpret_cast<nxTimestamp100ns_t*>(response->mutable_timestamp_buffer()->mutable_data());
       auto status = library_->ReadSignalSinglePoint(session, value_buffer, size_of_value_buffer, timestamp_buffer, size_of_timestamp_buffer);
       if (!status_ok(status)) {
-          return ConvertApiErrorStatusFornxSessionRef_t(status, session);
+        return ConvertApiErrorStatusFornxSessionRef_t(status, session);
       }
-
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1273,9 +1242,8 @@ namespace nixnet_grpc {
       u32 number_of_values_returned {};
       auto status = library_->ReadSignalWaveform(session, timeout, &start_time, &delta_time, value_buffer.data(), size_of_value_buffer, &number_of_values_returned);
       if (!status_ok(status)) {
-          return ConvertApiErrorStatusFornxSessionRef_t(status, session);
+        return ConvertApiErrorStatusFornxSessionRef_t(status, session);
       }
-
       response->set_status(status);
         response->set_start_time(start_time);
         response->set_delta_time(delta_time);
@@ -1311,9 +1279,8 @@ namespace nixnet_grpc {
       u32* num_pairs_buffer = response->mutable_num_pairs_buffer()->mutable_data();
       auto status = library_->ReadSignalXY(session, &time_limit, value_buffer, size_of_value_buffer, timestamp_buffer, size_of_timestamp_buffer, num_pairs_buffer, size_of_num_pairs_buffer);
       if (!status_ok(status)) {
-          return ConvertApiErrorStatusFornxSessionRef_t(status, session);
+        return ConvertApiErrorStatusFornxSessionRef_t(status, session);
       }
-
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1352,9 +1319,8 @@ namespace nixnet_grpc {
       _nxTimeLocalNetwork_t state_value {};
       auto status = library_->ReadStateTimeTrigger(session, timeout, state_size, &state_value);
       if (!status_ok(status)) {
-          return ConvertApiErrorStatusFornxSessionRef_t(status, session);
+        return ConvertApiErrorStatusFornxSessionRef_t(status, session);
       }
-
       response->set_status(status);
         convert_to_grpc(state_value, response->mutable_state_value());
       return ::grpc::Status::OK;
@@ -1392,9 +1358,8 @@ namespace nixnet_grpc {
 
       auto status = library_->Start(session, scope);
       if (!status_ok(status)) {
-          return ConvertApiErrorStatusFornxSessionRef_t(status, session);
+        return ConvertApiErrorStatusFornxSessionRef_t(status, session);
       }
-
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1417,9 +1382,8 @@ namespace nixnet_grpc {
       library_->StatusToString(status_id, sizeof_string, (char*)status_description.data());
       auto status = 0;
       if (!status_ok(status)) {
-          return ConvertApiErrorStatusFornxSessionRef_t(status, 0);
+        return ConvertApiErrorStatusFornxSessionRef_t(status, 0);
       }
-
       response->set_status(status);
         response->set_status_description(status_description);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_status_description()));
@@ -1458,9 +1422,8 @@ namespace nixnet_grpc {
 
       auto status = library_->Stop(session, scope);
       if (!status_ok(status)) {
-          return ConvertApiErrorStatusFornxSessionRef_t(status, session);
+        return ConvertApiErrorStatusFornxSessionRef_t(status, session);
       }
-
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1482,9 +1445,8 @@ namespace nixnet_grpc {
       session_repository_->remove_session(system_grpc_session.id(), system_grpc_session.name());
       auto status = library_->SystemClose(system);
       if (!status_ok(status)) {
-          return ConvertApiErrorStatusFornxSessionRef_t(status, system);
+        return ConvertApiErrorStatusFornxSessionRef_t(status, system);
       }
-
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1512,9 +1474,8 @@ namespace nixnet_grpc {
       auto cleanup_lambda = [&] (nxSessionRef_t id) { library_->SystemClose(id); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
       if (!status_ok(status)) {
-          return ConvertApiErrorStatusFornxSessionRef_t(status, 0);
+        return ConvertApiErrorStatusFornxSessionRef_t(status, 0);
       }
-
       response->set_status(status);
         response->mutable_system()->set_id(session_id);
       return ::grpc::Status::OK;
@@ -1558,9 +1519,8 @@ namespace nixnet_grpc {
       u32 param_out {};
       auto status = library_->Wait(session, condition, param_in, timeout, &param_out);
       if (!status_ok(status)) {
-          return ConvertApiErrorStatusFornxSessionRef_t(status, session);
+        return ConvertApiErrorStatusFornxSessionRef_t(status, session);
       }
-
       response->set_status(status);
         response->set_param_out(param_out);
       return ::grpc::Status::OK;
@@ -1600,9 +1560,8 @@ namespace nixnet_grpc {
 
       auto status = library_->WriteFrame(session, buffer, number_of_bytes_for_frames, timeout);
       if (!status_ok(status)) {
-          return ConvertApiErrorStatusFornxSessionRef_t(status, session);
+        return ConvertApiErrorStatusFornxSessionRef_t(status, session);
       }
-
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1625,9 +1584,8 @@ namespace nixnet_grpc {
       u32 size_of_value_buffer = static_cast<u32>(request->value_buffer().size() * sizeof(f64));
       auto status = library_->WriteSignalSinglePoint(session, value_buffer, size_of_value_buffer);
       if (!status_ok(status)) {
-          return ConvertApiErrorStatusFornxSessionRef_t(status, session);
+        return ConvertApiErrorStatusFornxSessionRef_t(status, session);
       }
-
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1666,9 +1624,8 @@ namespace nixnet_grpc {
       u32 size_of_value_buffer = static_cast<u32>(request->value_buffer().size() * sizeof(f64));
       auto status = library_->WriteSignalWaveform(session, timeout, value_buffer, size_of_value_buffer);
       if (!status_ok(status)) {
-          return ConvertApiErrorStatusFornxSessionRef_t(status, session);
+        return ConvertApiErrorStatusFornxSessionRef_t(status, session);
       }
-
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1711,9 +1668,8 @@ namespace nixnet_grpc {
       u32 size_of_num_pairs_buffer = static_cast<u32>(request->num_pairs_buffer().size() * sizeof(u32));
       auto status = library_->WriteSignalXY(session, timeout, value_buffer, size_of_value_buffer, timestamp_buffer, size_of_timestamp_buffer, num_pairs_buffer, size_of_num_pairs_buffer);
       if (!status_ok(status)) {
-          return ConvertApiErrorStatusFornxSessionRef_t(status, session);
+        return ConvertApiErrorStatusFornxSessionRef_t(status, session);
       }
-
       response->set_status(status);
       return ::grpc::Status::OK;
     }

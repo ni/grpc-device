@@ -62,9 +62,8 @@ namespace nitclk_grpc {
         [&](auto session) { return session_repository_->access_session(session.id(), session.name()); }); 
       auto status = library_->ConfigureForHomogeneousTriggers(session_count, sessions.data());
       if (!status_ok(status)) {
-          return ConvertApiErrorStatusForViSession(status, 0);
+        return ConvertApiErrorStatusForViSession(status, 0);
       }
-
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -92,9 +91,8 @@ namespace nitclk_grpc {
       ViReal64 min_time = request->min_time();
       auto status = library_->FinishSyncPulseSenderSynchronize(session_count, sessions.data(), min_time);
       if (!status_ok(status)) {
-          return ConvertApiErrorStatusForViSession(status, 0);
+        return ConvertApiErrorStatusForViSession(status, 0);
       }
-
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -118,9 +116,8 @@ namespace nitclk_grpc {
       ViReal64 value {};
       auto status = library_->GetAttributeViReal64(session, channel_name, attribute_id, &value);
       if (!status_ok(status)) {
-          return ConvertApiErrorStatusForViSession(status, session);
+        return ConvertApiErrorStatusForViSession(status, session);
       }
-
       response->set_status(status);
         response->set_value(value);
       return ::grpc::Status::OK;
@@ -145,9 +142,8 @@ namespace nitclk_grpc {
       ViSession value {};
       auto status = library_->GetAttributeViSession(session, channel_name, attribute_id, &value);
       if (!status_ok(status)) {
-          return ConvertApiErrorStatusForViSession(status, session);
+        return ConvertApiErrorStatusForViSession(status, session);
       }
-
       response->set_status(status);
         auto session_id = session_repository_->resolve_session_id(value);
         response->mutable_value()->set_id(session_id);
@@ -169,10 +165,9 @@ namespace nitclk_grpc {
 
       while (true) {
         auto status = library_->GetExtendedErrorInfo(nullptr, 0);
-      if (!status_ok(status)) {
+        if (!status_ok(status)) {
           return ConvertApiErrorStatusForViSession(status, 0);
-      }
-
+        }
         ViUInt32 error_string_size = status;
 
         std::string error_string;
@@ -184,10 +179,9 @@ namespace nitclk_grpc {
           // buffer is now too small, try again
           continue;
         }
-          if (!status_ok(status)) {
-              return ConvertApiErrorStatusForViSession(status, 0);
-          }
-  
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, 0);
+        }
         response->set_status(status);
           response->set_error_string(error_string);
           nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_string()));
@@ -217,9 +211,8 @@ namespace nitclk_grpc {
         [&](auto session) { return session_repository_->access_session(session.id(), session.name()); }); 
       auto status = library_->Initiate(session_count, sessions.data());
       if (!status_ok(status)) {
-          return ConvertApiErrorStatusForViSession(status, 0);
+        return ConvertApiErrorStatusForViSession(status, 0);
       }
-
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -247,9 +240,8 @@ namespace nitclk_grpc {
       ViBoolean done {};
       auto status = library_->IsDone(session_count, sessions.data(), &done);
       if (!status_ok(status)) {
-          return ConvertApiErrorStatusForViSession(status, 0);
+        return ConvertApiErrorStatusForViSession(status, 0);
       }
-
       response->set_status(status);
         response->set_done(done);
       return ::grpc::Status::OK;
@@ -274,9 +266,8 @@ namespace nitclk_grpc {
       ViReal64 value = request->value_raw();
       auto status = library_->SetAttributeViReal64(session, channel_name, attribute_id, value);
       if (!status_ok(status)) {
-          return ConvertApiErrorStatusForViSession(status, session);
+        return ConvertApiErrorStatusForViSession(status, session);
       }
-
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -301,9 +292,8 @@ namespace nitclk_grpc {
       ViSession value = session_repository_->access_session(value_grpc_session.id(), value_grpc_session.name());
       auto status = library_->SetAttributeViSession(session, channel_name, attribute_id, value);
       if (!status_ok(status)) {
-          return ConvertApiErrorStatusForViSession(status, session);
+        return ConvertApiErrorStatusForViSession(status, session);
       }
-
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -327,9 +317,8 @@ namespace nitclk_grpc {
       auto value = request->value_raw().c_str();
       auto status = library_->SetAttributeViString(session, channel_name, attribute_id, value);
       if (!status_ok(status)) {
-          return ConvertApiErrorStatusForViSession(status, session);
+        return ConvertApiErrorStatusForViSession(status, session);
       }
-
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -357,9 +346,8 @@ namespace nitclk_grpc {
       ViReal64 min_time = request->min_time();
       auto status = library_->SetupForSyncPulseSenderSynchronize(session_count, sessions.data(), min_time);
       if (!status_ok(status)) {
-          return ConvertApiErrorStatusForViSession(status, 0);
+        return ConvertApiErrorStatusForViSession(status, 0);
       }
-
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -387,9 +375,8 @@ namespace nitclk_grpc {
       ViReal64 min_tclk_period = request->min_tclk_period();
       auto status = library_->Synchronize(session_count, sessions.data(), min_tclk_period);
       if (!status_ok(status)) {
-          return ConvertApiErrorStatusForViSession(status, 0);
+        return ConvertApiErrorStatusForViSession(status, 0);
       }
-
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -417,9 +404,8 @@ namespace nitclk_grpc {
       ViReal64 min_time = request->min_time();
       auto status = library_->SynchronizeToSyncPulseSender(session_count, sessions.data(), min_time);
       if (!status_ok(status)) {
-          return ConvertApiErrorStatusForViSession(status, 0);
+        return ConvertApiErrorStatusForViSession(status, 0);
       }
-
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -447,9 +433,8 @@ namespace nitclk_grpc {
       ViReal64 timeout = request->timeout();
       auto status = library_->WaitUntilDone(session_count, sessions.data(), timeout);
       if (!status_ok(status)) {
-          return ConvertApiErrorStatusForViSession(status, 0);
+        return ConvertApiErrorStatusForViSession(status, 0);
       }
-
       response->set_status(status);
       return ::grpc::Status::OK;
     }

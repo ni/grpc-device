@@ -1149,6 +1149,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
 
 ::grpc::Status NiXnetService::ConvertApiErrorStatusFornxSessionRef_t(google::protobuf::int32 status, nxSessionRef_t session)
 {
+    static_assert(nidevice_grpc::kMaxGrpcErrorDescriptionSize >= 2048, "StatusToString expects a minimum buffer size.");
     std::string description(nidevice_grpc::kMaxGrpcErrorDescriptionSize, '\0');
     library_->StatusToString(status, nidevice_grpc::kMaxGrpcErrorDescriptionSize, description.data());
     return nidevice_grpc::ApiErrorAndDescriptionToStatus(status, description);
@@ -1156,6 +1157,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
 
 ::grpc::Status NiXnetService::ConvertApiErrorStatusFornxDatabaseRef_t(google::protobuf::int32 status, nxDatabaseRef_t session)
 {
+    static_assert(nidevice_grpc::kMaxGrpcErrorDescriptionSize >= 2048, "StatusToString expects a minimum buffer size.");
     std::string description(nidevice_grpc::kMaxGrpcErrorDescriptionSize, '\0');
     library_->StatusToString(status, nidevice_grpc::kMaxGrpcErrorDescriptionSize, description.data());
     return nidevice_grpc::ApiErrorAndDescriptionToStatus(status, description);

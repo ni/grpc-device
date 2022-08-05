@@ -4,8 +4,9 @@ namespace nidaqmx_grpc {
 
 ::grpc::Status NiDAQmxService::ConvertApiErrorStatusForTaskHandle(google::protobuf::int32 status, TaskHandle task)
 {
+    // This implementation assumes this method is always called on the same thread where the error occurred.
     std::string description(nidevice_grpc::kMaxGrpcErrorDescriptionSize, '\0');
-    library_->GetErrorString(status, description.data(), nidevice_grpc::kMaxGrpcErrorDescriptionSize);
+    library_->GetExtendedErrorInfo(description.data(), nidevice_grpc::kMaxGrpcErrorDescriptionSize);
     return nidevice_grpc::ApiErrorAndDescriptionToStatus(status, description);
 }
 

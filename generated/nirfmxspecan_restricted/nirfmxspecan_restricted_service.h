@@ -46,6 +46,7 @@ public:
 private:
   NiRFmxSpecAnRestrictedLibraryInterface* library_;
   ResourceRepositorySharedPtr session_repository_;
+  ::grpc::Status ConvertApiErrorStatusForniRFmxInstrHandle(google::protobuf::int32 status, niRFmxInstrHandle instrumentHandle);
 
   NiRFmxSpecAnRestrictedFeatureToggles feature_toggles_;
 };

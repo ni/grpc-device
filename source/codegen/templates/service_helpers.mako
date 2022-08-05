@@ -87,7 +87,7 @@ ${call_library_method(
   arg_string=service_helpers.create_args_for_ivi_dance(parameters),
   indent_level=1)
 }\
-${populate_error_check(function_data, parameters)}
+${populate_error_check(function_data, parameters, indent_level=1)}\
         ${size_param['type']} ${common_helpers.get_cpp_local_name(size_param)} = status;
 
 <%block filter="common_helpers.indent(1)">\
@@ -129,7 +129,7 @@ ${call_library_method(
   arg_string=service_helpers.create_args_for_ivi_dance_with_a_twist(parameters),
   indent_level=1)
 }\
-${populate_error_check(function_data, parameters)}
+${populate_error_check(function_data, parameters, indent_level=1)}\
 <%block filter="common_helpers.indent(1)">\
 ${initialize_output_params(array_output_parameters)}\
 </%block>\
@@ -720,7 +720,7 @@ ${initialize_hardcoded_parameter(parameter)}
   normal_outputs = [p for p in output_parameters if not p in get_last_error_outputs]
 %>\
 <%block filter="common_helpers.indent(indent_level)">\
-${populate_error_check(function_data, parameters, indent_level)}
+${populate_error_check(function_data, parameters)}\
       response->set_status(status);
 %if output_parameters:
 ${set_response_values(normal_outputs, init_method)}\
@@ -746,7 +746,7 @@ ${set_response_values(normal_outputs, init_method)}\
       break
 %>\
       if (!status_ok(status)) {
-          return ConvertApiErrorStatusFor${handle_type}(status, ${session});
+        return ConvertApiErrorStatusFor${handle_type}(status, ${session});
       }
 </%block>\
 </%def>
