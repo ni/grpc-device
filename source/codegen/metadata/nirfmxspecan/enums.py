@@ -460,6 +460,14 @@ enums = {
             {
                 'name': 'REFERENCE_POWER',
                 'value': 1
+            },
+            {
+                'name': 'MAX_GAIN',
+                'value': 2
+            },
+            {
+                'name': 'USER_DEFINED',
+                'value': 3
             }
         ]
     },
@@ -1221,6 +1229,54 @@ enums = {
             {
                 'name': 'REFERENCE_WAVEFORM',
                 'value': 1
+            }
+        ]
+    },
+    'DpdMemoryPolynomialLagOrderType': {
+        'values': [
+            {
+                'name': 'ALL_ORDERS',
+                'value': 0
+            },
+            {
+                'name': 'ODD_ORDERS_ONLY',
+                'value': 1
+            },
+            {
+                'name': 'EVEN_ORDERS_ONLY',
+                'value': 2
+            }
+        ]
+    },
+    'DpdMemoryPolynomialLeadOrderType': {
+        'values': [
+            {
+                'name': 'ALL_ORDERS',
+                'value': 0
+            },
+            {
+                'name': 'ODD_ORDERS_ONLY',
+                'value': 1
+            },
+            {
+                'name': 'EVEN_ORDERS_ONLY',
+                'value': 2
+            }
+        ]
+    },
+    'DpdMemoryPolynomialOrderType': {
+        'values': [
+            {
+                'name': 'ALL_ORDERS',
+                'value': 0
+            },
+            {
+                'name': 'ODD_ORDERS_ONLY',
+                'value': 1
+            },
+            {
+                'name': 'EVEN_ORDERS_ONLY',
+                'value': 2
             }
         ]
     },
