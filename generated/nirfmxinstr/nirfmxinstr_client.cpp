@@ -969,6 +969,23 @@ get_nirfsa_session_array(const StubPtr& stub, const nidevice_grpc::Session& inst
   return response;
 }
 
+GetSParameterExternalAttenuationTypeResponse
+get_s_parameter_external_attenuation_type(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetSParameterExternalAttenuationTypeRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = GetSParameterExternalAttenuationTypeResponse{};
+
+  raise_if_error(
+      stub->GetSParameterExternalAttenuationType(&context, request, &response));
+
+  return response;
+}
+
 GetSelfCalibrateLastDateAndTimeResponse
 get_self_calibrate_last_date_and_time(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<SelfCalStep, pb::int64>& self_calibrate_step)
 {

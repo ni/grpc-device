@@ -42,7 +42,7 @@ const auto IPV6_LOCALHOST_ADDR = "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\x1"s;
 const auto IPV6_ZERO_ADDR = "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"s;
 
 constexpr auto SCHEMA = "file:///NIXNET_Documentation/xnetIpStackSchema-03.json";
-const auto SIMPLE_INTERFACE_CONFIG = R"(      
+const auto SIMPLE_INTERFACE_CONFIG = R"(
         {
           "address": "generated",
           "name": "",
@@ -68,7 +68,7 @@ const auto SIMPLE_INTERFACE_CONFIG = R"(
         }
 )"s;
 
-const auto MULTI_ADDRESS_INTERFACE_CONFIG = R"(      
+const auto MULTI_ADDRESS_INTERFACE_CONFIG = R"(
         {
           "address": "inherit",
           "VLANs": [
@@ -239,7 +239,7 @@ class NiXnetSocketNoHardwareTests : public NiXnetSocketDriverApiTests {
   if (1) {                                                           \
     EXPECT_EQ(expected_status, (response).status());                 \
     EXPECT_EQ(error, (response).error_num());                        \
-    EXPECT_EQ(message, (response).error_message());                  \
+    EXPECT_THAT((response).error_message(), HasSubstr(message));     \
   }
 
 #define EXPECT_INVALID_ARGUMENT_ERROR(response)                                                              \
@@ -286,10 +286,10 @@ TEST_F(NiXnetSocketNoHardwareTests, InitWithInvalidIpStack_Close_ReturnsAndSetsE
 
   EXPECT_XNET_STATUS(GENERIC_NXSOCKET_ERROR, socket_response);
   EXPECT_EQ(INVALID_IP_STACK_ERROR, socket_response.error_num());
-  EXPECT_EQ(INVALID_IP_STACK_MESSAGE, socket_response.error_message());
+  EXPECT_THAT(socket_response.error_message(), HasSubstr(INVALID_IP_STACK_MESSAGE));
   EXPECT_XNET_STATUS(GENERIC_NXSOCKET_ERROR, close_response);
   EXPECT_EQ(INVALID_SOCKET_ERROR, close_response.error_num());
-  EXPECT_EQ(INVALID_SOCKET_MESSAGE, close_response.error_message());
+  EXPECT_THAT(close_response.error_message(), HasSubstr(INVALID_SOCKET_MESSAGE));
 }
 
 TEST_F(NiXnetSocketNoHardwareTests, InitWithInvalidIpStack_Bind_ReturnsAndSetsExpectedErrors)
@@ -303,7 +303,7 @@ TEST_F(NiXnetSocketNoHardwareTests, InitWithInvalidIpStack_Bind_ReturnsAndSetsEx
   EXPECT_XNET_STATUS(GENERIC_NXSOCKET_ERROR, socket_response);
   EXPECT_XNET_STATUS(GENERIC_NXSOCKET_ERROR, bind_response);
   EXPECT_EQ(INVALID_SOCKET_ERROR, bind_response.error_num());
-  EXPECT_EQ(INVALID_SOCKET_MESSAGE, bind_response.error_message());
+  EXPECT_THAT(bind_response.error_message(), HasSubstr(INVALID_SOCKET_MESSAGE));
 }
 
 TEST_F(NiXnetSocketNoHardwareTests, SocketAndEmptySet_IsSet_ReturnsFalse)
@@ -334,7 +334,7 @@ TEST_F(NiXnetSocketNoHardwareTests, InvalidSocket_Select_ReturnsAndSetsExpectedE
 
   EXPECT_XNET_STATUS(GENERIC_NXSOCKET_ERROR, select_response);
   EXPECT_EQ(INVALID_SOCKET_ERROR, select_response.error_num());
-  EXPECT_EQ(INVALID_SOCKET_MESSAGE, select_response.error_message());
+  EXPECT_THAT(select_response.error_message(), HasSubstr(INVALID_SOCKET_MESSAGE));
 }
 
 TEST_F(NiXnetSocketNoHardwareTests, InvalidEmptyConfigJson_IpStackCreate_ReturnsInvalidInterfaceNameError)

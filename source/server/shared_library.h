@@ -22,6 +22,12 @@ struct LibraryLoadException : std::runtime_error {
   LibraryLoadException(const LibraryLoadException& other) : std::runtime_error(other) {}
 };
 
+struct SessionException : std::runtime_error {
+  SessionException(const std::string& message) : std::runtime_error(message) {}
+  SessionException(const char* message) : std::runtime_error(message) {}
+  SessionException(const SessionException& other) : std::runtime_error(other) {}
+};
+
 class SharedLibrary {
  public:
   SharedLibrary();

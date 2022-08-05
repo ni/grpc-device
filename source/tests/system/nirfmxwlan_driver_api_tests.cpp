@@ -185,8 +185,8 @@ TEST_F(NiRFmxWLANDriverApiTests, OFDMModAccTXPCompositeFromExample_FetchData_Dat
   const auto txp_fetch_measurement_response = client::txp_fetch_measurement(stub(), session, "", 10.0);
   EXPECT_WARNING(RISING_EDGE_DETECTION_FAILED_WARNING, RISING_EDGE_DETECTION_FAILED_WARNING_STR, session, txp_fetch_measurement_response);
 
-  EXPECT_LT(0.0, ofdm_mod_acc_fetch_composite_rmsevm_response.composite_rms_evm_mean());
-  EXPECT_LT(0.0, ofdm_mod_acc_fetch_composite_rmsevm_response.composite_data_rms_evm_mean());
+  EXPECT_NE(0.0, ofdm_mod_acc_fetch_composite_rmsevm_response.composite_rms_evm_mean());
+  EXPECT_NE(0.0, ofdm_mod_acc_fetch_composite_rmsevm_response.composite_data_rms_evm_mean());
   EXPECT_NE(0.0, ofdm_mod_acc_fetch_composite_rmsevm_response.composite_pilot_rms_evm_mean());
   EXPECT_LT(0.0, txp_fetch_measurement_response.average_power_mean());
   EXPECT_LT(0.0, txp_fetch_measurement_response.peak_power_maximum());

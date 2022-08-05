@@ -65,6 +65,7 @@ class NiRFmxInstrLibraryInterface {
   virtual int32 GetListNames(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 personalityFilter, char listNames[], int32 listNamesSize, int32* actualListNamesSize, int32 personality[], int32 personalityArraySize, int32* actualPersonalityArraySize) = 0;
   virtual int32 GetNIRFSASession(niRFmxInstrHandle instrumentHandle, uInt32* niRfsaSession) = 0;
   virtual int32 GetNIRFSASessionArray(niRFmxInstrHandle instrumentHandle, uInt32 nirfsaSessions[], int32 arraySize, int32* actualArraySize) = 0;
+  virtual int32 GetSParameterExternalAttenuationType(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* sParameterType) = 0;
   virtual int32 GetSelfCalibrateLastDateAndTime(niRFmxInstrHandle instrumentHandle, char selectorString[], int64 selfCalibrateStep, CVIAbsoluteTime* timestamp) = 0;
   virtual int32 GetSelfCalibrateLastTemperature(niRFmxInstrHandle instrumentHandle, char selectorString[], int64 selfCalibrateStep, float64* temperature) = 0;
   virtual int32 GetSignalConfigurationNames(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 personalityFilter, char signalNames[], int32 signalNamesSize, int32* actualSignalNamesSize, int32 personality[], int32 personalityArraySize, int32* actualPersonalityArraySize) = 0;

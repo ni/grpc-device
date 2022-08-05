@@ -1,3 +1,4 @@
+#include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
 #include "device_server.h"
@@ -8,11 +9,12 @@ namespace tests {
 namespace system {
 
 namespace dcpower = nidcpower_grpc;
+using namespace ::testing;
 
 const int kInvalidRsrc = -1074118656;
 const int kInvalidDCPowerSession = -1074130544;
 const char* kViErrorResourceNotFoundMessage = "Device was not recognized. The device is not supported with this driver or version.\n\nInvalid Identifier: ";
-const char* kInvalidDCPowerSessionMessage = "IVI: (Hex 0xBFFA1190) The session handle is not valid.";
+const char* kInvalidDCPowerSessionMessage = "The session handle is not valid.";
 const char* kTestRsrc = "FakeDevice";
 const char* kOptionsString = "Simulate=1, DriverSetup=Model:4147; BoardType:PXIe";
 const char* kTestSession = "SessionName";
@@ -156,7 +158,7 @@ TEST_F(NiDCPowerSessionTest, InvalidSession_CloseSession_ReturnsInvalidSessionEr
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(kInvalidDCPowerSession, response.status());
   std::string error_message = get_error_message(response.status());
-  EXPECT_STREQ(kInvalidDCPowerSessionMessage, error_message.c_str());
+  EXPECT_THAT(error_message.c_str(), HasSubstr(kInvalidDCPowerSessionMessage));
 }
 
 TEST_F(NiDCPowerSessionTest, InitWithErrorFromDriver_ReturnsUserErrorMessage)
