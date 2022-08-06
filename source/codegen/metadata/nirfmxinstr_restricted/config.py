@@ -3,7 +3,7 @@ config = {
     'api_version': '21.0.0',
     "restricted_driver_service": True,
     'c_header': 'niRFmxInstr.h',
-    'c_function_prefix': 'RfmxInstr_',
+    'c_function_prefix': 'RFmxInstr_',
     'service_class_prefix': 'NiRFmxInstrRestricted',
     'java_package': 'com.ni.grpc.nirfmxinstrrestricted',
     'csharp_namespace': 'NationalInstruments.Grpc.NiRFmxInstrRestricted',
