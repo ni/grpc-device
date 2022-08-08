@@ -71,6 +71,7 @@ NiRFmxInstrLibrary::NiRFmxInstrLibrary() : shared_library_(kLibraryName)
   function_pointers_.GetListNames = reinterpret_cast<GetListNamesPtr>(shared_library_.get_function_pointer("RFmxInstr_GetListNames"));
   function_pointers_.GetNIRFSASession = reinterpret_cast<GetNIRFSASessionPtr>(shared_library_.get_function_pointer("RFmxInstr_GetNIRFSASession"));
   function_pointers_.GetNIRFSASessionArray = reinterpret_cast<GetNIRFSASessionArrayPtr>(shared_library_.get_function_pointer("RFmxInstr_GetNIRFSASessionArray"));
+  function_pointers_.GetSParameterExternalAttenuationType = reinterpret_cast<GetSParameterExternalAttenuationTypePtr>(shared_library_.get_function_pointer("RFmxInstr_GetSParameterExternalAttenuationType"));
   function_pointers_.GetSelfCalibrateLastDateAndTime = reinterpret_cast<GetSelfCalibrateLastDateAndTimePtr>(shared_library_.get_function_pointer("RFmxInstr_GetSelfCalibrateLastDateAndTime"));
   function_pointers_.GetSelfCalibrateLastTemperature = reinterpret_cast<GetSelfCalibrateLastTemperaturePtr>(shared_library_.get_function_pointer("RFmxInstr_GetSelfCalibrateLastTemperature"));
   function_pointers_.GetSignalConfigurationNames = reinterpret_cast<GetSignalConfigurationNamesPtr>(shared_library_.get_function_pointer("RFmxInstr_GetSignalConfigurationNames"));
@@ -723,6 +724,18 @@ int32 NiRFmxInstrLibrary::GetNIRFSASessionArray(niRFmxInstrHandle instrumentHand
   return RFmxInstr_GetNIRFSASessionArray(instrumentHandle, nirfsaSessions, arraySize, actualArraySize);
 #else
   return function_pointers_.GetNIRFSASessionArray(instrumentHandle, nirfsaSessions, arraySize, actualArraySize);
+#endif
+}
+
+int32 NiRFmxInstrLibrary::GetSParameterExternalAttenuationType(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* sParameterType)
+{
+  if (!function_pointers_.GetSParameterExternalAttenuationType) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetSParameterExternalAttenuationType.");
+  }
+#if defined(_MSC_VER)
+  return RFmxInstr_GetSParameterExternalAttenuationType(instrumentHandle, selectorString, sParameterType);
+#else
+  return function_pointers_.GetSParameterExternalAttenuationType(instrumentHandle, selectorString, sParameterType);
 #endif
 }
 
