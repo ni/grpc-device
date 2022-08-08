@@ -150,7 +150,6 @@ TEST_F(NiRFmxInstrRestrictedDriverApiTests, GetAttributeAuthor)
   
   auto get_attribute_author_response = restricted_client::get_attribute_author(restricted_stub(), session, "", NIRFMXINSTR_ATTRIBUTE_TUNING_SPEED);
   EXPECT_RESPONSE_SUCCESS(get_attribute_author_response);
-  printf("\nattribute author %d\n", get_attribute_author_response.attr_val());
   EXPECT_EQ(get_attribute_author_response.attr_val(), 1); // RfsgAttributeAuthor.User
 }
 

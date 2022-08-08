@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 config = {
+    "code_readiness": "RestrictedNextRelease",
     'api_version': '21.0.0',
-    "restricted_driver_service": True,
     'c_header': 'niRFmxInstr.h',
     'c_function_prefix': 'RFmxInstr_',
     'service_class_prefix': 'NiRFmxInstrRestricted',
@@ -55,4 +55,5 @@ config = {
     'module_name': 'nirfmxinstr_restricted',
     'session_class_description': 'An NI-RFmxInstr instrument handle.',
     'session_handle_parameter_name': 'instrument',
+    "duplicate_resource_handles_allowed": True,
 }
