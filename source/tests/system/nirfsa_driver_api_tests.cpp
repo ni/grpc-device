@@ -599,9 +599,9 @@ TEST_F(NiRFSADriverApiTests, ErrorMessage_ReturnsErrorMessage)
   const auto response = client::error_message(stub(), session, IVI_ATTRIBUTE_NOT_SUPPORTED_ERROR);
 
   EXPECT_SUCCESS(session, response);
-  EXPECT_EQ(
-      "IVI: Attribute or property not supported.",
-      response.error_message());
+  EXPECT_THAT(
+      response.error_message(),
+      HasSubstr("IVI: Attribute or property not supported."));
 }
 
 TEST_F(NiRFSADriverApiTests, GetCalUserDefinedInfo_Succeeds)
