@@ -2,7 +2,7 @@
 
 namespace nirfmxbluetooth_grpc {
 
-::grpc::Status NiRFmxBluetoothService::ConvertApiErrorStatusForniRFmxInstrHandle(google::protobuf::int32 status, niRFmxInstrHandle instrumentHandle)
+::grpc::Status NiRFmxBluetoothService::ConvertApiErrorStatusForNiRFmxInstrHandle(google::protobuf::int32 status, niRFmxInstrHandle instrumentHandle)
 {
     ViStatus error_code {};
     std::string description(nidevice_grpc::kMaxGrpcErrorDescriptionSize, '\0');

@@ -69,7 +69,7 @@ namespace nisync_grpc {
         return ConvertApiErrorStatusForViSession(status, 0);
       }
       response->set_status(status);
-        response->mutable_vi()->set_id(session_id);
+      response->mutable_vi()->set_id(session_id);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -120,8 +120,8 @@ namespace nisync_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_error_message(error_message);
-        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_message()));
+      response->set_error_message(error_message);
+      nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_message()));
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -190,9 +190,9 @@ namespace nisync_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_self_test_result(self_test_result);
-        response->set_self_test_message(self_test_message);
-        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_self_test_message()));
+      response->set_self_test_result(self_test_result);
+      response->set_self_test_message(self_test_message);
+      nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_self_test_message()));
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -217,10 +217,10 @@ namespace nisync_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_driver_revision(driver_revision);
-        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_driver_revision()));
-        response->set_firmware_revision(firmware_revision);
-        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_firmware_revision()));
+      response->set_driver_revision(driver_revision);
+      nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_driver_revision()));
+      response->set_firmware_revision(firmware_revision);
+      nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_firmware_revision()));
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -422,9 +422,9 @@ namespace nisync_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_actual_duration(actual_duration);
-        response->set_frequency(frequency);
-        response->set_error(error);
+      response->set_actual_duration(actual_duration);
+      response->set_frequency(frequency);
+      response->set_error(error);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -453,9 +453,9 @@ namespace nisync_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_actual_duration(actual_duration);
-        response->set_frequency(frequency);
-        response->set_frequency_error(frequency_error);
+      response->set_actual_duration(actual_duration);
+      response->set_frequency(frequency);
+      response->set_frequency_error(frequency_error);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -595,9 +595,9 @@ namespace nisync_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_time_seconds(time_seconds);
-        response->set_time_nanoseconds(time_nanoseconds);
-        response->set_time_fractional_nanoseconds(time_fractional_nanoseconds);
+      response->set_time_seconds(time_seconds);
+      response->set_time_nanoseconds(time_nanoseconds);
+      response->set_time_fractional_nanoseconds(time_fractional_nanoseconds);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -747,10 +747,10 @@ namespace nisync_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_time_seconds(time_seconds);
-        response->set_time_nanoseconds(time_nanoseconds);
-        response->set_time_fractional_nanoseconds(time_fractional_nanoseconds);
-        response->set_detected_edge(detected_edge);
+      response->set_time_seconds(time_seconds);
+      response->set_time_nanoseconds(time_nanoseconds);
+      response->set_time_fractional_nanoseconds(time_fractional_nanoseconds);
+      response->set_detected_edge(detected_edge);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1041,12 +1041,12 @@ namespace nisync_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_timestamp_seconds(timestamp_seconds);
-        response->set_timestamp_nanoseconds(timestamp_nanoseconds);
-        response->set_timestamp_fractional_nanoseconds(timestamp_fractional_nanoseconds);
-        response->set_gps_seconds(gps_seconds);
-        response->set_gps_nanoseconds(gps_nanoseconds);
-        response->set_gps_fractional_nanoseconds(gps_fractional_nanoseconds);
+      response->set_timestamp_seconds(timestamp_seconds);
+      response->set_timestamp_nanoseconds(timestamp_nanoseconds);
+      response->set_timestamp_fractional_nanoseconds(timestamp_fractional_nanoseconds);
+      response->set_gps_seconds(gps_seconds);
+      response->set_gps_nanoseconds(gps_nanoseconds);
+      response->set_gps_fractional_nanoseconds(gps_fractional_nanoseconds);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1076,12 +1076,12 @@ namespace nisync_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_timestamp_seconds(timestamp_seconds);
-        response->set_timestamp_nanoseconds(timestamp_nanoseconds);
-        response->set_timestamp_fractional_nanoseconds(timestamp_fractional_nanoseconds);
-        response->set_irigb_seconds(irigb_seconds);
-        response->set_irigb_nanoseconds(irigb_nanoseconds);
-        response->set_irigb_fractional_nanoseconds(irigb_fractional_nanoseconds);
+      response->set_timestamp_seconds(timestamp_seconds);
+      response->set_timestamp_nanoseconds(timestamp_nanoseconds);
+      response->set_timestamp_fractional_nanoseconds(timestamp_fractional_nanoseconds);
+      response->set_irigb_seconds(irigb_seconds);
+      response->set_irigb_nanoseconds(irigb_nanoseconds);
+      response->set_irigb_fractional_nanoseconds(irigb_fractional_nanoseconds);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1152,9 +1152,9 @@ namespace nisync_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_east_velocity(east_velocity);
-        response->set_north_velocity(north_velocity);
-        response->set_up_velocity(up_velocity);
+      response->set_east_velocity(east_velocity);
+      response->set_north_velocity(north_velocity);
+      response->set_up_velocity(up_velocity);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1180,9 +1180,9 @@ namespace nisync_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_latitude(latitude);
-        response->set_longitude(longitude);
-        response->set_altitude(altitude);
+      response->set_latitude(latitude);
+      response->set_longitude(longitude);
+      response->set_altitude(altitude);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1221,8 +1221,8 @@ namespace nisync_grpc {
           return ConvertApiErrorStatusForViSession(status, vi);
         }
         response->set_status(status);
-          response->set_time_reference_names(time_reference_names);
-          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_time_reference_names()));
+        response->set_time_reference_names(time_reference_names);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_time_reference_names()));
         return ::grpc::Status::OK;
       }
     }
@@ -1249,7 +1249,7 @@ namespace nisync_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_value(value);
+      response->set_value(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1275,7 +1275,7 @@ namespace nisync_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_value(value);
+      response->set_value(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1301,7 +1301,7 @@ namespace nisync_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_value(value);
+      response->set_value(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1342,8 +1342,8 @@ namespace nisync_grpc {
           return ConvertApiErrorStatusForViSession(status, vi);
         }
         response->set_status(status);
-          response->set_value(value);
-          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
+        response->set_value(value);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
         return ::grpc::Status::OK;
       }
     }
@@ -1472,11 +1472,11 @@ namespace nisync_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_year(year);
-        response->set_month(month);
-        response->set_day(day);
-        response->set_hour(hour);
-        response->set_minute(minute);
+      response->set_year(year);
+      response->set_month(month);
+      response->set_day(day);
+      response->set_hour(hour);
+      response->set_minute(minute);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1500,7 +1500,7 @@ namespace nisync_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_temp(temp);
+      response->set_temp(temp);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1524,7 +1524,7 @@ namespace nisync_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_months(months);
+      response->set_months(months);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1572,7 +1572,7 @@ namespace nisync_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_temperature(temperature);
+      response->set_temperature(temperature);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1596,7 +1596,7 @@ namespace nisync_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_voltage(voltage);
+      response->set_voltage(voltage);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1620,7 +1620,7 @@ namespace nisync_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_voltage(voltage);
+      response->set_voltage(voltage);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1644,7 +1644,7 @@ namespace nisync_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_voltage(voltage);
+      response->set_voltage(voltage);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1668,7 +1668,7 @@ namespace nisync_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_phase(phase);
+      response->set_phase(phase);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1700,7 +1700,7 @@ namespace nisync_grpc {
         return ConvertApiErrorStatusForViSession(status, 0);
       }
       response->set_status(status);
-        response->mutable_vi()->set_id(session_id);
+      response->mutable_vi()->set_id(session_id);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1751,7 +1751,7 @@ namespace nisync_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_old_voltage(old_voltage);
+      response->set_old_voltage(old_voltage);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1776,7 +1776,7 @@ namespace nisync_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_old_voltage(old_voltage);
+      response->set_old_voltage(old_voltage);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1801,7 +1801,7 @@ namespace nisync_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_old_voltage(old_voltage);
+      response->set_old_voltage(old_voltage);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1826,7 +1826,7 @@ namespace nisync_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_old_phase(old_phase);
+      response->set_old_phase(old_phase);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {

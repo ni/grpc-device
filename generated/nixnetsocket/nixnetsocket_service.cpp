@@ -68,11 +68,11 @@ namespace nixnetsocket_grpc {
       auto cleanup_lambda = [&] (nxSOCKET id) { library_->Close(id); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusFornxSOCKET(status, socket);
+        return ConvertApiErrorStatusForNxSOCKET(status, socket);
       }
       response->set_status(status);
-        convert_to_grpc(addr, response->mutable_addr());
-        response->mutable_socket()->set_id(session_id);
+      convert_to_grpc(addr, response->mutable_addr());
+      response->mutable_socket()->set_id(session_id);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -97,7 +97,7 @@ namespace nixnetsocket_grpc {
       auto namelen = name.size();
       auto status = library_->Bind(socket, name, namelen);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusFornxSOCKET(status, socket);
+        return ConvertApiErrorStatusForNxSOCKET(status, socket);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -120,7 +120,7 @@ namespace nixnetsocket_grpc {
       session_repository_->remove_session(socket_grpc_session.id(), socket_grpc_session.name());
       auto status = library_->Close(socket);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusFornxSOCKET(status, socket);
+        return ConvertApiErrorStatusForNxSOCKET(status, socket);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -144,7 +144,7 @@ namespace nixnetsocket_grpc {
       auto namelen = name.size();
       auto status = library_->Connect(socket, name, namelen);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusFornxSOCKET(status, socket);
+        return ConvertApiErrorStatusForNxSOCKET(status, socket);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -168,10 +168,10 @@ namespace nixnetsocket_grpc {
       auto is_set = library_->FdIsSet(fd, set);
       auto status = 0;
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusFornxSOCKET(status, fd);
+        return ConvertApiErrorStatusForNxSOCKET(status, fd);
       }
       response->set_status(status);
-        response->set_is_set(is_set);
+      response->set_is_set(is_set);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -197,10 +197,10 @@ namespace nixnetsocket_grpc {
       auto res = allocate_output_storage<nxaddrinfo, google::protobuf::RepeatedPtrField<AddrInfo>>(library_);
       auto status = library_->GetAddrInfo(stack_ref, node_api, service_api, hints, &res);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusFornxIpStackRef_t(status, stack_ref);
+        return ConvertApiErrorStatusForNxIpStackRef_t(status, stack_ref);
       }
       response->set_status(status);
-        convert_to_grpc(res, response->mutable_res());
+      convert_to_grpc(res, response->mutable_res());
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -236,13 +236,13 @@ namespace nixnetsocket_grpc {
       }
       auto status = library_->GetNameInfo(stack_ref, addr, addrlen, (char*)host.data(), hostlen, (char*)serv.data(), servlen, flags);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusFornxIpStackRef_t(status, stack_ref);
+        return ConvertApiErrorStatusForNxIpStackRef_t(status, stack_ref);
       }
       response->set_status(status);
-        response->set_host(host);
-        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_host()));
-        response->set_serv(serv);
-        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_serv()));
+      response->set_host(host);
+      nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_host()));
+      response->set_serv(serv);
+      nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_serv()));
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -264,10 +264,10 @@ namespace nixnetsocket_grpc {
       auto addrlen = static_cast<nxsocklen_t>(sizeof(addr.storage));
       auto status = library_->GetPeerName(socket, &addr, &addrlen);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusFornxSOCKET(status, socket);
+        return ConvertApiErrorStatusForNxSOCKET(status, socket);
       }
       response->set_status(status);
-        convert_to_grpc(addr, response->mutable_addr());
+      convert_to_grpc(addr, response->mutable_addr());
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -289,10 +289,10 @@ namespace nixnetsocket_grpc {
       auto addrlen = static_cast<nxsocklen_t>(sizeof(addr.storage));
       auto status = library_->GetSockName(socket, &addr, &addrlen);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusFornxSOCKET(status, socket);
+        return ConvertApiErrorStatusForNxSOCKET(status, socket);
       }
       response->set_status(status);
-        convert_to_grpc(addr, response->mutable_addr());
+      convert_to_grpc(addr, response->mutable_addr());
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -346,10 +346,10 @@ namespace nixnetsocket_grpc {
       auto optlen = optval.size(socket, level);
       auto status = library_->GetSockOpt(socket, level, optname, optval.data(), &optlen);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusFornxSOCKET(status, socket);
+        return ConvertApiErrorStatusForNxSOCKET(status, socket);
       }
       response->set_status(status);
-        convert_to_grpc(optval, response->mutable_optval());
+      convert_to_grpc(optval, response->mutable_optval());
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -371,10 +371,10 @@ namespace nixnetsocket_grpc {
       auto addr = library_->InetAddr(stack_ref, cp);
       auto status = addr == -1 ? -1 : 0;
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusFornxIpStackRef_t(status, stack_ref);
+        return ConvertApiErrorStatusForNxIpStackRef_t(status, stack_ref);
       }
       response->set_status(status);
-        response->set_addr(addr);
+      response->set_addr(addr);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -396,10 +396,10 @@ namespace nixnetsocket_grpc {
       auto name = allocate_output_storage<nxin_addr, InAddr>();
       auto status = library_->InetAToN(stack_ref, cp, &name);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusFornxIpStackRef_t(status, stack_ref);
+        return ConvertApiErrorStatusForNxIpStackRef_t(status, stack_ref);
       }
       response->set_status(status);
-        convert_to_grpc(name, response->mutable_name());
+      convert_to_grpc(name, response->mutable_name());
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -421,11 +421,11 @@ namespace nixnetsocket_grpc {
       auto address = library_->InetNToA(stack_ref, in_addr);
       auto status = address ? 0 : -1;
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusFornxIpStackRef_t(status, stack_ref);
+        return ConvertApiErrorStatusForNxIpStackRef_t(status, stack_ref);
       }
       response->set_status(status);
-        response->set_address(address);
-        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_address()));
+      response->set_address(address);
+      nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_address()));
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -450,11 +450,11 @@ namespace nixnetsocket_grpc {
       auto address = library_->InetNToP(stack_ref, af, addr, (char*)dst.data(), size);
       auto status = address ? 0 : -1;
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusFornxIpStackRef_t(status, stack_ref);
+        return ConvertApiErrorStatusForNxIpStackRef_t(status, stack_ref);
       }
       response->set_status(status);
-        response->set_address(address);
-        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_address()));
+      response->set_address(address);
+      nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_address()));
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -492,10 +492,10 @@ namespace nixnetsocket_grpc {
       auto addr = allocate_output_storage<void, Addr>(af);
       auto status = library_->InetPToN(stack_ref, af, address, &addr);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusFornxIpStackRef_t(status, stack_ref);
+        return ConvertApiErrorStatusForNxIpStackRef_t(status, stack_ref);
       }
       response->set_status(status);
-        convert_to_grpc(addr, response->mutable_addr());
+      convert_to_grpc(addr, response->mutable_addr());
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -516,7 +516,7 @@ namespace nixnetsocket_grpc {
       nx_ip_stack_ref_t_resource_repository_->remove_session(stack_ref_grpc_session.id(), stack_ref_grpc_session.name());
       auto status = library_->IpStackClear(stack_ref);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusFornxIpStackRef_t(status, stack_ref);
+        return ConvertApiErrorStatusForNxIpStackRef_t(status, stack_ref);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -547,10 +547,10 @@ namespace nixnetsocket_grpc {
       auto cleanup_lambda = [&] (nxIpStackRef_t id) { library_->IpStackClear(id); };
       int status = nx_ip_stack_ref_t_resource_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusFornxSOCKET(status, 0);
+        return ConvertApiErrorStatusForNxSOCKET(status, 0);
       }
       response->set_status(status);
-        response->mutable_stack_ref()->set_id(session_id);
+      response->mutable_stack_ref()->set_id(session_id);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -588,11 +588,11 @@ namespace nixnetsocket_grpc {
       auto info = allocate_output_storage<nixnetsocket_grpc::IpStackInfoString, std::string>(library_);
       auto status = library_->IpStackGetAllStacksInfoStr(format, (nixnetsocket_grpc::IpStackInfoString*)info.data());
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusFornxSOCKET(status, 0);
+        return ConvertApiErrorStatusForNxSOCKET(status, 0);
       }
       response->set_status(status);
-        convert_to_grpc(info, response->mutable_info());
-        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_info()));
+      convert_to_grpc(info, response->mutable_info());
+      nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_info()));
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -614,10 +614,10 @@ namespace nixnetsocket_grpc {
       auto virtual_interfaces = allocate_output_storage<nxVirtualInterface_t, google::protobuf::RepeatedPtrField<VirtualInterface>>(library_);
       auto status = library_->IpStackGetInfo(stack_ref, info_id, &virtual_interfaces);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusFornxIpStackRef_t(status, stack_ref);
+        return ConvertApiErrorStatusForNxIpStackRef_t(status, stack_ref);
       }
       response->set_status(status);
-        convert_to_grpc(virtual_interfaces, response->mutable_virtual_interfaces());
+      convert_to_grpc(virtual_interfaces, response->mutable_virtual_interfaces());
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -645,10 +645,10 @@ namespace nixnetsocket_grpc {
       auto cleanup_lambda = [&] (nxIpStackRef_t id) { library_->IpStackClear(id); };
       int status = nx_ip_stack_ref_t_resource_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusFornxSOCKET(status, 0);
+        return ConvertApiErrorStatusForNxSOCKET(status, 0);
       }
       response->set_status(status);
-        response->mutable_stack_ref()->set_id(session_id);
+      response->mutable_stack_ref()->set_id(session_id);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -673,7 +673,7 @@ namespace nixnetsocket_grpc {
       int32_t timeout_ms = request->timeout_ms();
       auto status = library_->IpStackWaitForInterface(stack_ref, local_interface, timeout_ms);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusFornxIpStackRef_t(status, stack_ref);
+        return ConvertApiErrorStatusForNxIpStackRef_t(status, stack_ref);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -696,7 +696,7 @@ namespace nixnetsocket_grpc {
       int32_t backlog = request->backlog();
       auto status = library_->Listen(socket, backlog);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusFornxSOCKET(status, socket);
+        return ConvertApiErrorStatusForNxSOCKET(status, socket);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -724,10 +724,10 @@ namespace nixnetsocket_grpc {
       std::string data(size, '\0');
       auto status = library_->Recv(socket, (char*)data.data(), size, flags);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusFornxSOCKET(status, socket);
+        return ConvertApiErrorStatusForNxSOCKET(status, socket);
       }
       response->set_status(status);
-        response->set_data(data);
+      response->set_data(data);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -755,11 +755,11 @@ namespace nixnetsocket_grpc {
       nxsocklen_t fromlen {};
       auto status = library_->RecvFrom(socket, (char*)data.data(), size, flags, &from_addr, &fromlen);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusFornxSOCKET(status, socket);
+        return ConvertApiErrorStatusForNxSOCKET(status, socket);
       }
       response->set_status(status);
-        response->set_data(data);
-        convert_to_grpc(from_addr, response->mutable_from_addr());
+      response->set_data(data);
+      convert_to_grpc(from_addr, response->mutable_from_addr());
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -782,7 +782,7 @@ namespace nixnetsocket_grpc {
       auto timeout = convert_from_grpc<nxtimeval>(request->timeout());
       auto status = library_->Select(nfds, readfds, writefds, exceptfds, timeout);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusFornxSOCKET(status, 0);
+        return ConvertApiErrorStatusForNxSOCKET(status, 0);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -807,7 +807,7 @@ namespace nixnetsocket_grpc {
       int32_t flags_raw = request->flags_raw();
       auto status = library_->Send(socket, data, size, flags_raw);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusFornxSOCKET(status, socket);
+        return ConvertApiErrorStatusForNxSOCKET(status, socket);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -834,7 +834,7 @@ namespace nixnetsocket_grpc {
       auto tolen = to.size();
       auto status = library_->SendTo(socket, data, size, flags_raw, to, tolen);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusFornxSOCKET(status, socket);
+        return ConvertApiErrorStatusForNxSOCKET(status, socket);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -891,7 +891,7 @@ namespace nixnetsocket_grpc {
       auto optlen = opt_data.size();
       auto status = library_->SetSockOpt(socket, level, optname, optval, optlen);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusFornxSOCKET(status, socket);
+        return ConvertApiErrorStatusForNxSOCKET(status, socket);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -929,7 +929,7 @@ namespace nixnetsocket_grpc {
 
       auto status = library_->Shutdown(socket, how);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusFornxSOCKET(status, socket);
+        return ConvertApiErrorStatusForNxSOCKET(status, socket);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1008,10 +1008,10 @@ namespace nixnetsocket_grpc {
       auto cleanup_lambda = [&] (nxSOCKET id) { library_->Close(id); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusFornxIpStackRef_t(status, stack_ref);
+        return ConvertApiErrorStatusForNxIpStackRef_t(status, stack_ref);
       }
       response->set_status(status);
-        response->mutable_socket()->set_id(session_id);
+      response->mutable_socket()->set_id(session_id);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1039,11 +1039,11 @@ namespace nixnetsocket_grpc {
       auto error = library_->StrErrR(errnum, (char*)buf.data(), buf_len);
       auto status = error ? 0 : -1;
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusFornxSOCKET(status, 0);
+        return ConvertApiErrorStatusForNxSOCKET(status, 0);
       }
       response->set_status(status);
-        response->set_error(error);
-        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error()));
+      response->set_error(error);
+      nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error()));
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {

@@ -84,7 +84,7 @@ namespace nirfsa_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_is_done(is_done);
+      response->set_is_done(is_done);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1203,8 +1203,8 @@ namespace nirfsa_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_error_message(error_message);
-        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_message()));
+      response->set_error_message(error_message);
+      nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_message()));
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1229,9 +1229,9 @@ namespace nirfsa_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_error_code(error_code);
-        response->set_error_message(error_message);
-        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_message()));
+      response->set_error_code(error_code);
+      response->set_error_message(error_message);
+      nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_message()));
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1320,8 +1320,8 @@ namespace nirfsa_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        convert_to_grpc(data, response->mutable_data());
-        convert_to_grpc(wfm_info, response->mutable_wfm_info());
+      convert_to_grpc(data, response->mutable_data());
+      convert_to_grpc(wfm_info, response->mutable_wfm_info());
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1351,8 +1351,8 @@ namespace nirfsa_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        convert_to_grpc(data, response->mutable_data());
-        convert_to_grpc(wfm_info, response->mutable_wfm_info());
+      convert_to_grpc(data, response->mutable_data());
+      convert_to_grpc(wfm_info, response->mutable_wfm_info());
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1382,8 +1382,8 @@ namespace nirfsa_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        convert_to_grpc(data, response->mutable_data());
-        convert_to_grpc(wfm_info, response->mutable_wfm_info());
+      convert_to_grpc(data, response->mutable_data());
+      convert_to_grpc(wfm_info, response->mutable_wfm_info());
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1412,8 +1412,8 @@ namespace nirfsa_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        convert_to_grpc(data, response->mutable_data());
-        convert_to_grpc(wfm_info, response->mutable_wfm_info());
+      convert_to_grpc(data, response->mutable_data());
+      convert_to_grpc(wfm_info, response->mutable_wfm_info());
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1442,8 +1442,8 @@ namespace nirfsa_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        convert_to_grpc(data, response->mutable_data());
-        convert_to_grpc(wfm_info, response->mutable_wfm_info());
+      convert_to_grpc(data, response->mutable_data());
+      convert_to_grpc(wfm_info, response->mutable_wfm_info());
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1472,8 +1472,8 @@ namespace nirfsa_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        convert_to_grpc(data, response->mutable_data());
-        convert_to_grpc(wfm_info, response->mutable_wfm_info());
+      convert_to_grpc(data, response->mutable_data());
+      convert_to_grpc(wfm_info, response->mutable_wfm_info());
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1499,7 +1499,7 @@ namespace nirfsa_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_value(value);
+      response->set_value(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1525,7 +1525,7 @@ namespace nirfsa_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_value(value);
+      response->set_value(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1551,7 +1551,7 @@ namespace nirfsa_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_value(value);
+      response->set_value(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1577,7 +1577,7 @@ namespace nirfsa_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_value(value);
+      response->set_value(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1603,8 +1603,8 @@ namespace nirfsa_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        auto session_id = session_repository_->resolve_session_id(value);
-        response->mutable_value()->set_id(session_id);
+      auto session_id = session_repository_->resolve_session_id(value);
+      response->mutable_value()->set_id(session_id);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1645,8 +1645,8 @@ namespace nirfsa_grpc {
           return ConvertApiErrorStatusForViSession(status, vi);
         }
         response->set_status(status);
-          response->set_value(value);
-          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
+        response->set_value(value);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
         return ::grpc::Status::OK;
       }
     }
@@ -1671,8 +1671,8 @@ namespace nirfsa_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_info(info);
-        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_info()));
+      response->set_info(info);
+      nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_info()));
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1696,7 +1696,7 @@ namespace nirfsa_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_info_size(info_size);
+      response->set_info_size(info_size);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1732,16 +1732,16 @@ namespace nirfsa_grpc {
           return ConvertApiErrorStatusForViSession(status, vi);
         }
         response->set_status(status);
-          convert_to_grpc(sparameters, response->mutable_sparameters());
-          {
-            auto shrunk_size = number_of_sparameters;
-            auto current_size = response->mutable_sparameters()->size();
-            if (shrunk_size != current_size) {
-              response->mutable_sparameters()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
-            }
+        convert_to_grpc(sparameters, response->mutable_sparameters());
+        {
+          auto shrunk_size = number_of_sparameters;
+          auto current_size = response->mutable_sparameters()->size();
+          if (shrunk_size != current_size) {
+            response->mutable_sparameters()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
           }
-          response->set_number_of_sparameters(number_of_sparameters);
-          response->set_number_of_ports(number_of_ports);
+        }
+        response->set_number_of_sparameters(number_of_sparameters);
+        response->set_number_of_ports(number_of_ports);
         return ::grpc::Status::OK;
       }
     }
@@ -1799,10 +1799,10 @@ namespace nirfsa_grpc {
           return ConvertApiErrorStatusForViSession(status, vi);
         }
         response->set_status(status);
-          response->mutable_frequencies()->Resize(number_of_frequencies, 0);
-          response->mutable_magnitude_response()->Resize(number_of_frequencies, 0);
-          response->mutable_phase_response()->Resize(number_of_frequencies, 0);
-          response->set_number_of_frequencies(number_of_frequencies);
+        response->mutable_frequencies()->Resize(number_of_frequencies, 0);
+        response->mutable_magnitude_response()->Resize(number_of_frequencies, 0);
+        response->mutable_phase_response()->Resize(number_of_frequencies, 0);
+        response->set_number_of_frequencies(number_of_frequencies);
         return ::grpc::Status::OK;
       }
     }
@@ -1843,9 +1843,9 @@ namespace nirfsa_grpc {
           return ConvertApiErrorStatusForViSession(status, vi);
         }
         response->set_status(status);
-          response->set_error_code(error_code);
-          response->set_error_description(error_description);
-          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_description()));
+        response->set_error_code(error_code);
+        response->set_error_description(error_description);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_description()));
         return ::grpc::Status::OK;
       }
     }
@@ -1874,11 +1874,11 @@ namespace nirfsa_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_year(year);
-        response->set_month(month);
-        response->set_day(day);
-        response->set_hour(hour);
-        response->set_minute(minute);
+      response->set_year(year);
+      response->set_month(month);
+      response->set_day(day);
+      response->set_hour(hour);
+      response->set_minute(minute);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1902,7 +1902,7 @@ namespace nirfsa_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_temperature(temperature);
+      response->set_temperature(temperature);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1926,7 +1926,7 @@ namespace nirfsa_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_months(months);
+      response->set_months(months);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1952,7 +1952,7 @@ namespace nirfsa_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_backlog(backlog);
+      response->set_backlog(backlog);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1993,10 +1993,10 @@ namespace nirfsa_grpc {
           return ConvertApiErrorStatusForViSession(status, vi);
         }
         response->set_status(status);
-          response->mutable_frequencies()->Resize(number_of_frequencies, 0);
-          response->mutable_magnitude_response()->Resize(number_of_frequencies, 0);
-          response->mutable_phase_response()->Resize(number_of_frequencies, 0);
-          response->set_number_of_frequencies(number_of_frequencies);
+        response->mutable_frequencies()->Resize(number_of_frequencies, 0);
+        response->mutable_magnitude_response()->Resize(number_of_frequencies, 0);
+        response->mutable_phase_response()->Resize(number_of_frequencies, 0);
+        response->set_number_of_frequencies(number_of_frequencies);
         return ::grpc::Status::OK;
       }
     }
@@ -2033,15 +2033,15 @@ namespace nirfsa_grpc {
           return ConvertApiErrorStatusForViSession(status, vi);
         }
         response->set_status(status);
-          convert_to_grpc(coefficient_info, response->mutable_coefficient_info());
-          {
-            auto shrunk_size = number_of_coefficient_sets;
-            auto current_size = response->mutable_coefficient_info()->size();
-            if (shrunk_size != current_size) {
-              response->mutable_coefficient_info()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
-            }
+        convert_to_grpc(coefficient_info, response->mutable_coefficient_info());
+        {
+          auto shrunk_size = number_of_coefficient_sets;
+          auto current_size = response->mutable_coefficient_info()->size();
+          if (shrunk_size != current_size) {
+            response->mutable_coefficient_info()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
           }
-          response->set_number_of_coefficient_sets(number_of_coefficient_sets);
+        }
+        response->set_number_of_coefficient_sets(number_of_coefficient_sets);
         return ::grpc::Status::OK;
       }
     }
@@ -2067,7 +2067,7 @@ namespace nirfsa_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_number_of_spectral_lines(number_of_spectral_lines);
+      response->set_number_of_spectral_lines(number_of_spectral_lines);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -2106,9 +2106,9 @@ namespace nirfsa_grpc {
           return ConvertApiErrorStatusForViSession(status, vi);
         }
         response->set_status(status);
-          response->set_name(name);
-          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_name()));
-          response->set_buffer_size(buffer_size);
+        response->set_name(name);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_name()));
+        response->set_buffer_size(buffer_size);
         return ::grpc::Status::OK;
       }
     }
@@ -2145,8 +2145,8 @@ namespace nirfsa_grpc {
           return ConvertApiErrorStatusForViSession(status, vi);
         }
         response->set_status(status);
-          response->mutable_operations_count()->Resize(buffer_size, 0);
-          response->set_buffer_size(buffer_size);
+        response->mutable_operations_count()->Resize(buffer_size, 0);
+        response->set_buffer_size(buffer_size);
         return ::grpc::Status::OK;
       }
     }
@@ -2183,15 +2183,15 @@ namespace nirfsa_grpc {
           return ConvertApiErrorStatusForViSession(status, vi);
         }
         response->set_status(status);
-          convert_to_grpc(coefficient_info, response->mutable_coefficient_info());
-          {
-            auto shrunk_size = number_of_coefficient_sets;
-            auto current_size = response->mutable_coefficient_info()->size();
-            if (shrunk_size != current_size) {
-              response->mutable_coefficient_info()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
-            }
+        convert_to_grpc(coefficient_info, response->mutable_coefficient_info());
+        {
+          auto shrunk_size = number_of_coefficient_sets;
+          auto current_size = response->mutable_coefficient_info()->size();
+          if (shrunk_size != current_size) {
+            response->mutable_coefficient_info()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
           }
-          response->set_number_of_coefficient_sets(number_of_coefficient_sets);
+        }
+        response->set_number_of_coefficient_sets(number_of_coefficient_sets);
         return ::grpc::Status::OK;
       }
     }
@@ -2221,11 +2221,11 @@ namespace nirfsa_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_year(year);
-        response->set_month(month);
-        response->set_day(day);
-        response->set_hour(hour);
-        response->set_minute(minute);
+      response->set_year(year);
+      response->set_month(month);
+      response->set_day(day);
+      response->set_hour(hour);
+      response->set_minute(minute);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -2250,7 +2250,7 @@ namespace nirfsa_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_temp(temp);
+      response->set_temp(temp);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -2274,7 +2274,7 @@ namespace nirfsa_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        convert_to_grpc(spectrum_info, response->mutable_spectrum_info());
+      convert_to_grpc(spectrum_info, response->mutable_spectrum_info());
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -2299,7 +2299,7 @@ namespace nirfsa_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_writer_handle(writer_handle);
+      response->set_writer_handle(writer_handle);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -2344,8 +2344,8 @@ namespace nirfsa_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_terminal_name(terminal_name);
-        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_terminal_name()));
+      response->set_terminal_name(terminal_name);
+      nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_terminal_name()));
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -2381,9 +2381,9 @@ namespace nirfsa_grpc {
           return ConvertApiErrorStatusForViSession(status, vi);
         }
         response->set_status(status);
-          response->set_data(data);
-          response->mutable_data()->resize(actual_data_size);
-          response->set_actual_data_size(actual_data_size);
+        response->set_data(data);
+        response->mutable_data()->resize(actual_data_size);
+        response->set_actual_data_size(actual_data_size);
         return ::grpc::Status::OK;
       }
     }
@@ -2417,7 +2417,7 @@ namespace nirfsa_grpc {
         return ConvertApiErrorStatusForViSession(status, 0);
       }
       response->set_status(status);
-        response->mutable_vi()->set_id(session_id);
+      response->mutable_vi()->set_id(session_id);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -2454,7 +2454,7 @@ namespace nirfsa_grpc {
         return ConvertApiErrorStatusForViSession(status, 0);
       }
       response->set_status(status);
-        response->mutable_vi()->set_id(session_id);
+      response->mutable_vi()->set_id(session_id);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -2526,28 +2526,28 @@ namespace nirfsa_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_self_cal_valid(self_cal_valid);
-        if (valid_steps & 0x1)
-          response->add_valid_steps_array(SelfCalibrateSteps::SELF_CALIBRATE_STEPS_ALIGNMENT);
-        if (valid_steps & 0x2)
-          response->add_valid_steps_array(SelfCalibrateSteps::SELF_CALIBRATE_STEPS_GAIN_REFERENCE);
-        if (valid_steps & 0x4)
-          response->add_valid_steps_array(SelfCalibrateSteps::SELF_CALIBRATE_STEPS_IF_FLATNESS);
-        if (valid_steps & 0x8)
-          response->add_valid_steps_array(SelfCalibrateSteps::SELF_CALIBRATE_STEPS_DIGITIZER_SELF_CAL);
-        if (valid_steps & 0x10)
-          response->add_valid_steps_array(SelfCalibrateSteps::SELF_CALIBRATE_STEPS_LO_SELF_CAL);
-        if (valid_steps & 0x20)
-          response->add_valid_steps_array(SelfCalibrateSteps::SELF_CALIBRATE_STEPS_AMPLITUDE_ACCURACY);
-        if (valid_steps & 0x40)
-          response->add_valid_steps_array(SelfCalibrateSteps::SELF_CALIBRATE_STEPS_RESIDUAL_LO_POWER);
-        if (valid_steps & 0x80)
-          response->add_valid_steps_array(SelfCalibrateSteps::SELF_CALIBRATE_STEPS_IMAGE_SUPPRESSION);
-        if (valid_steps & 0x100)
-          response->add_valid_steps_array(SelfCalibrateSteps::SELF_CALIBRATE_STEPS_SYNTHESIZER_ALIGNMENT);
-        if (valid_steps & 0x200)
-          response->add_valid_steps_array(SelfCalibrateSteps::SELF_CALIBRATE_STEPS_DC_OFFSET);
-        response->set_valid_steps_raw(valid_steps);
+      response->set_self_cal_valid(self_cal_valid);
+      if (valid_steps & 0x1)
+        response->add_valid_steps_array(SelfCalibrateSteps::SELF_CALIBRATE_STEPS_ALIGNMENT);
+      if (valid_steps & 0x2)
+        response->add_valid_steps_array(SelfCalibrateSteps::SELF_CALIBRATE_STEPS_GAIN_REFERENCE);
+      if (valid_steps & 0x4)
+        response->add_valid_steps_array(SelfCalibrateSteps::SELF_CALIBRATE_STEPS_IF_FLATNESS);
+      if (valid_steps & 0x8)
+        response->add_valid_steps_array(SelfCalibrateSteps::SELF_CALIBRATE_STEPS_DIGITIZER_SELF_CAL);
+      if (valid_steps & 0x10)
+        response->add_valid_steps_array(SelfCalibrateSteps::SELF_CALIBRATE_STEPS_LO_SELF_CAL);
+      if (valid_steps & 0x20)
+        response->add_valid_steps_array(SelfCalibrateSteps::SELF_CALIBRATE_STEPS_AMPLITUDE_ACCURACY);
+      if (valid_steps & 0x40)
+        response->add_valid_steps_array(SelfCalibrateSteps::SELF_CALIBRATE_STEPS_RESIDUAL_LO_POWER);
+      if (valid_steps & 0x80)
+        response->add_valid_steps_array(SelfCalibrateSteps::SELF_CALIBRATE_STEPS_IMAGE_SUPPRESSION);
+      if (valid_steps & 0x100)
+        response->add_valid_steps_array(SelfCalibrateSteps::SELF_CALIBRATE_STEPS_SYNTHESIZER_ALIGNMENT);
+      if (valid_steps & 0x200)
+        response->add_valid_steps_array(SelfCalibrateSteps::SELF_CALIBRATE_STEPS_DC_OFFSET);
+      response->set_valid_steps_raw(valid_steps);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -2597,8 +2597,8 @@ namespace nirfsa_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        convert_to_grpc(data, response->mutable_data());
-        convert_to_grpc(wfm_info, response->mutable_wfm_info());
+      convert_to_grpc(data, response->mutable_data());
+      convert_to_grpc(wfm_info, response->mutable_wfm_info());
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -2627,7 +2627,7 @@ namespace nirfsa_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        convert_to_grpc(spectrum_info, response->mutable_spectrum_info());
+      convert_to_grpc(spectrum_info, response->mutable_spectrum_info());
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -2656,7 +2656,7 @@ namespace nirfsa_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        convert_to_grpc(spectrum_info, response->mutable_spectrum_info());
+      convert_to_grpc(spectrum_info, response->mutable_spectrum_info());
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -2809,10 +2809,10 @@ namespace nirfsa_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_driver_rev(driver_rev);
-        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_driver_rev()));
-        response->set_instr_rev(instr_rev);
-        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_instr_rev()));
+      response->set_driver_rev(driver_rev);
+      nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_driver_rev()));
+      response->set_instr_rev(instr_rev);
+      nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_instr_rev()));
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -2939,9 +2939,9 @@ namespace nirfsa_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_test_result(test_result);
-        response->set_test_message(test_message);
-        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_test_message()));
+      response->set_test_result(test_result);
+      response->set_test_message(test_message);
+      nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_test_message()));
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -3214,7 +3214,7 @@ namespace nirfsa_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_data(data);
+      response->set_data(data);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {

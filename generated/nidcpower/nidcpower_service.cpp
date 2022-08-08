@@ -790,7 +790,7 @@ namespace nidcpower_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_error_code(error_code);
+      response->set_error_code(error_code);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -864,7 +864,7 @@ namespace nidcpower_grpc {
         return ConvertApiErrorStatusForViSession(status, 0);
       }
       response->set_status(status);
-        response->mutable_vi()->set_id(session_id);
+      response->mutable_vi()->set_id(session_id);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -2411,8 +2411,8 @@ namespace nidcpower_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_error_message(error_message);
-        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_message()));
+      response->set_error_message(error_message);
+      nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_message()));
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -2544,8 +2544,8 @@ namespace nidcpower_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        convert_to_grpc(in_compliance, response->mutable_in_compliance());
-        response->set_actual_count(actual_count);
+      convert_to_grpc(in_compliance, response->mutable_in_compliance());
+      response->set_actual_count(actual_count);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -2571,7 +2571,7 @@ namespace nidcpower_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_attribute_value(attribute_value);
+      response->set_attribute_value(attribute_value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -2597,7 +2597,7 @@ namespace nidcpower_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_attribute_value(attribute_value);
+      response->set_attribute_value(attribute_value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -2623,7 +2623,7 @@ namespace nidcpower_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_attribute_value(attribute_value);
+      response->set_attribute_value(attribute_value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -2649,7 +2649,7 @@ namespace nidcpower_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_attribute_value(attribute_value);
+      response->set_attribute_value(attribute_value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -2675,8 +2675,8 @@ namespace nidcpower_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        auto session_id = session_repository_->resolve_session_id(attribute_value);
-        response->mutable_attribute_value()->set_id(session_id);
+      auto session_id = session_repository_->resolve_session_id(attribute_value);
+      response->mutable_attribute_value()->set_id(session_id);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -2717,8 +2717,8 @@ namespace nidcpower_grpc {
           return ConvertApiErrorStatusForViSession(status, vi);
         }
         response->set_status(status);
-          response->set_attribute_value(attribute_value);
-          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_attribute_value()));
+        response->set_attribute_value(attribute_value);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_attribute_value()));
         return ::grpc::Status::OK;
       }
     }
@@ -2759,8 +2759,8 @@ namespace nidcpower_grpc {
           return ConvertApiErrorStatusForViSession(status, vi);
         }
         response->set_status(status);
-          response->set_channel_name(channel_name);
-          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_channel_name()));
+        response->set_channel_name(channel_name);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_channel_name()));
         return ::grpc::Status::OK;
       }
     }
@@ -2801,8 +2801,8 @@ namespace nidcpower_grpc {
           return ConvertApiErrorStatusForViSession(status, vi);
         }
         response->set_status(status);
-          response->set_channel_name(channel_name);
-          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_channel_name()));
+        response->set_channel_name(channel_name);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_channel_name()));
         return ::grpc::Status::OK;
       }
     }
@@ -2843,9 +2843,9 @@ namespace nidcpower_grpc {
           return ConvertApiErrorStatusForViSession(status, vi);
         }
         response->set_status(status);
-          response->set_code(code);
-          response->set_description(description);
-          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_description()));
+        response->set_code(code);
+        response->set_description(description);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_description()));
         return ::grpc::Status::OK;
       }
     }
@@ -2874,11 +2874,11 @@ namespace nidcpower_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_year(year);
-        response->set_month(month);
-        response->set_day(day);
-        response->set_hour(hour);
-        response->set_minute(minute);
+      response->set_year(year);
+      response->set_month(month);
+      response->set_day(day);
+      response->set_hour(hour);
+      response->set_minute(minute);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -2902,7 +2902,7 @@ namespace nidcpower_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_temperature(temperature);
+      response->set_temperature(temperature);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -2926,7 +2926,7 @@ namespace nidcpower_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_months(months);
+      response->set_months(months);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -2965,8 +2965,8 @@ namespace nidcpower_grpc {
           return ConvertApiErrorStatusForViSession(status, vi);
         }
         response->set_status(status);
-          response->set_coercion_record(coercion_record);
-          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_coercion_record()));
+        response->set_coercion_record(coercion_record);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_coercion_record()));
         return ::grpc::Status::OK;
       }
     }
@@ -3006,8 +3006,8 @@ namespace nidcpower_grpc {
           return ConvertApiErrorStatusForViSession(status, vi);
         }
         response->set_status(status);
-          response->set_interchange_warning(interchange_warning);
-          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_interchange_warning()));
+        response->set_interchange_warning(interchange_warning);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_interchange_warning()));
         return ::grpc::Status::OK;
       }
     }
@@ -3036,11 +3036,11 @@ namespace nidcpower_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_year(year);
-        response->set_month(month);
-        response->set_day(day);
-        response->set_hour(hour);
-        response->set_minute(minute);
+      response->set_year(year);
+      response->set_month(month);
+      response->set_day(day);
+      response->set_hour(hour);
+      response->set_minute(minute);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -3064,7 +3064,7 @@ namespace nidcpower_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_temperature(temperature);
+      response->set_temperature(temperature);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -3145,7 +3145,7 @@ namespace nidcpower_grpc {
         return ConvertApiErrorStatusForViSession(status, 0);
       }
       response->set_status(status);
-        response->mutable_vi()->set_id(session_id);
+      response->mutable_vi()->set_id(session_id);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -3211,7 +3211,7 @@ namespace nidcpower_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_measurement(measurement);
+      response->set_measurement(measurement);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -3236,7 +3236,7 @@ namespace nidcpower_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_in_compliance(in_compliance);
+      response->set_in_compliance(in_compliance);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -3262,7 +3262,7 @@ namespace nidcpower_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_max_current_limit(max_current_limit);
+      response->set_max_current_limit(max_current_limit);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -3288,7 +3288,7 @@ namespace nidcpower_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_max_voltage_level(max_voltage_level);
+      response->set_max_voltage_level(max_voltage_level);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -3314,7 +3314,7 @@ namespace nidcpower_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_min_current_limit(min_current_limit);
+      response->set_min_current_limit(min_current_limit);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -3355,7 +3355,7 @@ namespace nidcpower_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_in_state(in_state);
+      response->set_in_state(in_state);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -3379,7 +3379,7 @@ namespace nidcpower_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_temperature(temperature);
+      response->set_temperature(temperature);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -3492,10 +3492,10 @@ namespace nidcpower_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_instrument_driver_revision(instrument_driver_revision);
-        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_instrument_driver_revision()));
-        response->set_firmware_revision(firmware_revision);
-        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_firmware_revision()));
+      response->set_instrument_driver_revision(instrument_driver_revision);
+      nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_instrument_driver_revision()));
+      response->set_firmware_revision(firmware_revision);
+      nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_firmware_revision()));
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -3520,9 +3520,9 @@ namespace nidcpower_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_self_test_result(self_test_result);
-        response->set_self_test_message(self_test_message);
-        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_self_test_message()));
+      response->set_self_test_result(self_test_result);
+      response->set_self_test_message(self_test_message);
+      nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_self_test_message()));
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {

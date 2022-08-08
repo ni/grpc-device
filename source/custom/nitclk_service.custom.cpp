@@ -20,9 +20,8 @@ const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
 
       while (true) {
         auto status = library_->GetAttributeViString(session, channel_name, attribute_id, 0, nullptr);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
+        if (status < VI_SUCCESS) {
+          return ConvertApiErrorStatusForViSession(status, session);
         }
         ViInt32 buffer_size = status;
 
@@ -32,10 +31,11 @@ const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
           // buffer is now too small, try again
           continue;
         }
-        response->set_status(status);
-        if (status == 0) {
-          response->set_value(value);
+        if (status < VI_SUCCESS) {
+          return ConvertApiErrorStatusForViSession(status, session);
         }
+        response->set_status(status);
+        response->set_value(value);
         return ::grpc::Status::OK;
       }
     }

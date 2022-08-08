@@ -30,9 +30,10 @@ static void CheckStatus(int status)
     if (context->IsCancelled()) {
       return ::grpc::Status::CANCELLED;
     }
+    ViSession vi = VI_NULL;
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViConstString channel_name = request->channel_name().c_str();
 
       ViUInt32 number_of_channels;
@@ -43,6 +44,9 @@ static void CheckStatus(int status)
       ViReal64* current_measurements = response->mutable_current_measurements()->mutable_data();
 
       auto status = library_->MeasureMultiple(vi, channel_name, voltage_measurements, current_measurements);
+      if (status < VI_SUCCESS) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -50,8 +54,7 @@ static void CheckStatus(int status)
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
     catch (const DriverErrorException& ex) {
-      response->set_status(ex.status());
-      return ::grpc::Status::OK;
+      return ConvertApiErrorStatusForViSession(ex.status(), vi);
     }
   }
 

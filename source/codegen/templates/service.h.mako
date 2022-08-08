@@ -97,7 +97,10 @@ private:
   ${resource_repository_deps[resource_handle_type].resource_repository_alias} ${resource_repository_deps[resource_handle_type].field_name};
 % endfor
 % for resource_handle_type in resource_handle_types:
-  ::grpc::Status ConvertApiErrorStatusFor${resource_handle_type}(google::protobuf::int32 status, ${resource_handle_type} ${config["session_handle_parameter_name"]});
+<%
+  cpp_handle_type = resource_handle_type[0].upper() + resource_handle_type[1:]
+%>\
+  ::grpc::Status ConvertApiErrorStatusFor${cpp_handle_type}(google::protobuf::int32 status, ${resource_handle_type} ${config["session_handle_parameter_name"]});
 % endfor
 % if common_helpers.has_viboolean_array_param(functions):
   void Copy(const std::vector<ViBoolean>& input, google::protobuf::RepeatedField<bool>* output);

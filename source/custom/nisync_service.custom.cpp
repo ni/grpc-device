@@ -26,9 +26,10 @@ namespace nisync_grpc {
     ViUInt32 timestamps_read {};
     auto status = library_->ReadMultipleTriggerTimeStamp(vi, terminal, timestamps_to_read, timeout, time_seconds_buffer, time_nanoseconds_buffer, time_fractional_nanoseconds_buffer, detected_edge_buffer, &timestamps_read);
     response->set_status(status);
-    if (status == VI_SUCCESS || status == NISYNC_ERROR_DRIVER_TIMEOUT) {
-      response->set_timestamps_read(timestamps_read);
+    if (status < VI_SUCCESS) {
+      return ConvertApiErrorStatusForViSession(status, vi);
     }
+    response->set_timestamps_read(timestamps_read);
     return ::grpc::Status::OK;
   }
   catch (nidevice_grpc::LibraryLoadException& ex) {

@@ -2,17 +2,10 @@
 
 namespace nirfmxspecan_restricted_grpc {
 
-::grpc::Status NiRFmxSpecAnRestrictedService::ConvertApiErrorStatusForniRFmxInstrHandle(google::protobuf::int32 status, niRFmxInstrHandle instrumentHandle)
+::grpc::Status NiRFmxSpecAnRestrictedService::ConvertApiErrorStatusForNiRFmxInstrHandle(google::protobuf::int32 status, niRFmxInstrHandle instrumentHandle)
 {
-    const ViInt32 buffer_size = 4096;
-    ViStatus error_code {};
-    std::string description(buffer_size, '\0');
-    // Try first to get the most recent error with a dynamic message.
-    library_->GetError(instrumentHandle, &error_code, buffer_size, description.data());
-    if (error_code != status) {
-        // Since another thread has changed the status, fall back to the static message lookup.
-        library_->GetErrorString(instrumentHandle, status, buffer_size, description.data());
-    }
+    std::string description(nidevice_grpc::kMaxGrpcErrorDescriptionSize, '\0');
+    // TODO: How do we get access to a library that can return a useful string?
     return nidevice_grpc::ApiErrorAndDescriptionToStatus(status, description);
 }
 

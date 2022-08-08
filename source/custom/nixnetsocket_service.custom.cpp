@@ -2,7 +2,7 @@
 
 namespace nixnetsocket_grpc {
 
-::grpc::Status NiXnetSocketService::ConvertApiErrorStatusFornxSOCKET(google::protobuf::int32 status, nxSOCKET socket)
+::grpc::Status NiXnetSocketService::ConvertApiErrorStatusForNxSOCKET(google::protobuf::int32 status, nxSOCKET socket)
 {
     // This implementation assumes this method is always called on the same thread where the error occurred.
     std::string description(nidevice_grpc::kMaxGrpcErrorDescriptionSize, '\0');
@@ -10,7 +10,7 @@ namespace nixnetsocket_grpc {
     return nidevice_grpc::ApiErrorAndDescriptionToStatus(status, description);
 }
 
-::grpc::Status NiXnetSocketService::ConvertApiErrorStatusFornxIpStackRef_t(google::protobuf::int32 status, nxIpStackRef_t socket)
+::grpc::Status NiXnetSocketService::ConvertApiErrorStatusForNxIpStackRef_t(google::protobuf::int32 status, nxIpStackRef_t socket)
 {
     // This implementation assumes this method is always called on the same thread where the error occurred.
     std::string description(nidevice_grpc::kMaxGrpcErrorDescriptionSize, '\0');

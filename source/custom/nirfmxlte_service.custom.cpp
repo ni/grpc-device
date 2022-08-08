@@ -2,7 +2,7 @@
 
 namespace nirfmxlte_grpc {
 
-::grpc::Status NiRFmxLTEService::ConvertApiErrorStatusForniRFmxInstrHandle(google::protobuf::int32 status, niRFmxInstrHandle instrumentHandle)
+::grpc::Status NiRFmxLTEService::ConvertApiErrorStatusForNiRFmxInstrHandle(google::protobuf::int32 status, niRFmxInstrHandle instrumentHandle)
 {
     ViStatus error_code {};
     std::string description(nidevice_grpc::kMaxGrpcErrorDescriptionSize, '\0');

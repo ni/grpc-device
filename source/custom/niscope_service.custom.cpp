@@ -28,9 +28,10 @@ void CheckStatus(int status)
   if (context->IsCancelled()) {
     return ::grpc::Status::CANCELLED;
   }
+  ViSession vi = VI_NULL;
   try {
     auto session = request->vi();
-    ViSession vi = session_repository_->access_session(session.id(), session.name());
+    vi = session_repository_->access_session(session.id(), session.name());
     ViConstString channel_list = request->channel_list().c_str();
     ViReal64 timeout = request->timeout();
     ViInt32 num_samples = request->num_samples();
@@ -45,18 +46,18 @@ void CheckStatus(int status)
     ViReal64* waveform = response->mutable_waveform()->mutable_data();
     std::vector<niScope_wfmInfo> waveform_info(num_waveforms, niScope_wfmInfo());
     auto status = library_->Fetch(vi, channel_list, timeout, num_samples, waveform, waveform_info.data());
-    response->set_status(status);
-    if (status == 0) {
-      convert_to_grpc(waveform_info, response->mutable_wfm_info());
+    if (status < VI_SUCCESS) {
+      return ConvertApiErrorStatusForViSession(status, vi);
     }
+    response->set_status(status);
+    convert_to_grpc(waveform_info, response->mutable_wfm_info());
     return ::grpc::Status::OK;
   }
   catch (nidevice_grpc::LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
   }
   catch (DriverErrorException& ex) {
-    response->set_status(ex.status_);
-    return ::grpc::Status::OK;
+    return ConvertApiErrorStatusForViSession(ex.status_, vi);
   }
 }
 
@@ -67,9 +68,10 @@ void CheckStatus(int status)
   if (context->IsCancelled()) {
     return ::grpc::Status::CANCELLED;
   }
+  ViSession vi = VI_NULL;
   try {
     auto session = request->vi();
-    ViSession vi = session_repository_->access_session(session.id(), session.name());
+    vi = session_repository_->access_session(session.id(), session.name());
     ViConstString channel_list = request->channel_list().c_str();
     ViReal64 timeout = request->timeout();
     ViInt32 num_samples = request->num_samples();
@@ -84,18 +86,18 @@ void CheckStatus(int status)
     ViInt8* waveform = (ViInt8*)response->mutable_waveform()->data();
     std::vector<niScope_wfmInfo> waveform_info(num_waveforms, niScope_wfmInfo());
     auto status = library_->FetchBinary8(vi, channel_list, timeout, num_samples, waveform, waveform_info.data());
-    response->set_status(status);
-    if (status == 0) {
-      convert_to_grpc(waveform_info, response->mutable_wfm_info());
+    if (status < VI_SUCCESS) {
+      return ConvertApiErrorStatusForViSession(status, vi);
     }
+    response->set_status(status);
+    convert_to_grpc(waveform_info, response->mutable_wfm_info());
     return ::grpc::Status::OK;
   }
   catch (nidevice_grpc::LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
   }
   catch (DriverErrorException& ex) {
-    response->set_status(ex.status_);
-    return ::grpc::Status::OK;
+    return ConvertApiErrorStatusForViSession(ex.status_, vi);
   }
 }
 
@@ -106,9 +108,10 @@ void CheckStatus(int status)
   if (context->IsCancelled()) {
     return ::grpc::Status::CANCELLED;
   }
+  ViSession vi = VI_NULL;
   try {
     auto session = request->vi();
-    ViSession vi = session_repository_->access_session(session.id(), session.name());
+    vi = session_repository_->access_session(session.id(), session.name());
     ViConstString channel_list = request->channel_list().c_str();
     ViReal64 timeout = request->timeout();
     ViInt32 num_samples = request->num_samples();
@@ -122,19 +125,19 @@ void CheckStatus(int status)
     std::vector<ViInt16> waveform(num_samples * num_waveforms, 0);
     std::vector<niScope_wfmInfo> waveform_info(num_waveforms, niScope_wfmInfo());
     auto status = library_->FetchBinary16(vi, channel_list, timeout, num_samples, waveform.data(), waveform_info.data());
-    response->set_status(status);
-    if (status == 0) {
-      convert_to_grpc(waveform_info, response->mutable_wfm_info());
-      response->mutable_waveform()->Add(waveform.begin(), waveform.end());
+    if (status < VI_SUCCESS) {
+      return ConvertApiErrorStatusForViSession(status, vi);
     }
+    response->set_status(status);
+    convert_to_grpc(waveform_info, response->mutable_wfm_info());
+    response->mutable_waveform()->Add(waveform.begin(), waveform.end());
     return ::grpc::Status::OK;
   }
   catch (nidevice_grpc::LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
   }
   catch (DriverErrorException& ex) {
-    response->set_status(ex.status_);
-    return ::grpc::Status::OK;
+    return ConvertApiErrorStatusForViSession(ex.status_, vi);
   }
 }
 
@@ -145,9 +148,10 @@ void CheckStatus(int status)
   if (context->IsCancelled()) {
     return ::grpc::Status::CANCELLED;
   }
+  ViSession vi = VI_NULL;
   try {
     auto session = request->vi();
-    ViSession vi = session_repository_->access_session(session.id(), session.name());
+    vi = session_repository_->access_session(session.id(), session.name());
     ViConstString channel_list = request->channel_list().c_str();
     ViReal64 timeout = request->timeout();
     ViInt32 num_samples = request->num_samples();
@@ -161,19 +165,19 @@ void CheckStatus(int status)
     std::vector<ViInt32> waveform(num_samples * num_waveforms, 0);
     std::vector<niScope_wfmInfo> waveform_info(num_waveforms, niScope_wfmInfo());
     auto status = library_->FetchBinary32(vi, channel_list, timeout, num_samples, waveform.data(), waveform_info.data());
-    response->set_status(status);
-    if (status == 0) {
-      response->mutable_waveform()->Add(waveform.begin(), waveform.end());
-      convert_to_grpc(waveform_info, response->mutable_wfm_info());
+    if (status < VI_SUCCESS) {
+      return ConvertApiErrorStatusForViSession(status, vi);
     }
+    response->set_status(status);
+    response->mutable_waveform()->Add(waveform.begin(), waveform.end());
+    convert_to_grpc(waveform_info, response->mutable_wfm_info());
     return ::grpc::Status::OK;
   }
   catch (nidevice_grpc::LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
   }
   catch (DriverErrorException& ex) {
-    response->set_status(ex.status_);
-    return ::grpc::Status::OK;
+    return ConvertApiErrorStatusForViSession(ex.status_, vi);
   }
 }
 
@@ -184,9 +188,10 @@ void CheckStatus(int status)
   if (context->IsCancelled()) {
     return ::grpc::Status::CANCELLED;
   }
+  ViSession vi = VI_NULL;
   try {
     auto session = request->vi();
-    ViSession vi = session_repository_->access_session(session.id(), session.name());
+    vi = session_repository_->access_session(session.id(), session.name());
     ViConstString channel_list = request->channel_list().c_str();
     ViReal64 timeout = request->timeout();
     ViInt32 array_meas_function;
@@ -212,18 +217,18 @@ void CheckStatus(int status)
     ViReal64* meas_wfm = response->mutable_meas_wfm()->mutable_data();
     std::vector<niScope_wfmInfo> waveform_info(measurement_waveform_size, niScope_wfmInfo());
     auto status = library_->FetchArrayMeasurement(vi, channel_list, timeout, array_meas_function, measurement_waveform_size, meas_wfm, waveform_info.data());
-    response->set_status(status);
-    if (status == 0) {
-      convert_to_grpc(waveform_info, response->mutable_wfm_info());
+    if (status < VI_SUCCESS) {
+      return ConvertApiErrorStatusForViSession(status, vi);
     }
+    response->set_status(status);
+    convert_to_grpc(waveform_info, response->mutable_wfm_info());
     return ::grpc::Status::OK;
   }
   catch (nidevice_grpc::LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
   }
   catch (DriverErrorException& ex) {
-    response->set_status(ex.status_);
-    return ::grpc::Status::OK;
+    return ConvertApiErrorStatusForViSession(ex.status_, vi);
   }
 }
 
@@ -234,9 +239,10 @@ void CheckStatus(int status)
   if (context->IsCancelled()) {
     return ::grpc::Status::CANCELLED;
   }
+  ViSession vi = VI_NULL;
   try {
     auto session = request->vi();
-    ViSession vi = session_repository_->access_session(session.id(), session.name());
+    vi = session_repository_->access_session(session.id(), session.name());
     ViConstString channel_list = request->channel_list().c_str();
     ViReal64 timeout = request->timeout();
     ViInt32 scalar_meas_function;
@@ -267,18 +273,18 @@ void CheckStatus(int status)
     ViReal64* max = response->mutable_max()->mutable_data();
     std::vector<ViInt32> num_in_stats(num_waveforms, 0);
     auto status = library_->FetchMeasurementStats(vi, channel_list, timeout, scalar_meas_function, result, mean, stdev, min, max, num_in_stats.data());
-    response->set_status(status);
-    if (status == 0) {
-      response->mutable_num_in_stats()->Add(num_in_stats.begin(), num_in_stats.end());
+    if (status < VI_SUCCESS) {
+      return ConvertApiErrorStatusForViSession(status, vi);
     }
+    response->set_status(status);
+    response->mutable_num_in_stats()->Add(num_in_stats.begin(), num_in_stats.end());
     return ::grpc::Status::OK;
   }
   catch (nidevice_grpc::LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
   }
   catch (DriverErrorException& ex) {
-    response->set_status(ex.status_);
-    return ::grpc::Status::OK;
+    return ConvertApiErrorStatusForViSession(ex.status_, vi);
   }
 }
 
@@ -289,9 +295,10 @@ void CheckStatus(int status)
   if (context->IsCancelled()) {
     return ::grpc::Status::CANCELLED;
   }
+  ViSession vi = VI_NULL;
   try {
     auto session = request->vi();
-    ViSession vi = session_repository_->access_session(session.id(), session.name());
+    vi = session_repository_->access_session(session.id(), session.name());
     ViConstString channel_list = request->channel_list().c_str();
     ViReal64 timeout = request->timeout();
     ViInt32 num_samples = request->num_samples();
@@ -306,18 +313,18 @@ void CheckStatus(int status)
     ViReal64* waveform = response->mutable_waveform()->mutable_data();
     std::vector<niScope_wfmInfo> waveform_info(num_waveforms, niScope_wfmInfo());
     auto status = library_->Read(vi, channel_list, timeout, num_samples, waveform, waveform_info.data());
-    response->set_status(status);
-    if (status == 0) {
-      convert_to_grpc(waveform_info, response->mutable_wfm_info());
+    if (status < VI_SUCCESS) {
+      return ConvertApiErrorStatusForViSession(status, vi);
     }
+    response->set_status(status);
+    convert_to_grpc(waveform_info, response->mutable_wfm_info());
     return ::grpc::Status::OK;
   }
   catch (nidevice_grpc::LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
   }
   catch (DriverErrorException& ex) {
-    response->set_status(ex.status_);
-    return ::grpc::Status::OK;
+    return ConvertApiErrorStatusForViSession(ex.status_, vi);
   }
 }
 
@@ -328,9 +335,10 @@ void CheckStatus(int status)
   if (context->IsCancelled()) {
     return ::grpc::Status::CANCELLED;
   }
+  ViSession vi = VI_NULL;
   try {
     auto session = request->vi();
-    ViSession vi = session_repository_->access_session(session.id(), session.name());
+    vi = session_repository_->access_session(session.id(), session.name());
     ViConstString channel_list = request->channel_list().c_str();
     ViReal64 timeout = request->timeout();
     ViInt32 num_samples = request->num_samples();
@@ -344,19 +352,19 @@ void CheckStatus(int status)
     std::vector<NIComplexNumber_struct> waveform(num_samples * num_waveforms, NIComplexNumber_struct());
     std::vector<niScope_wfmInfo> waveform_info(num_waveforms, niScope_wfmInfo());
     auto status = library_->FetchComplex(vi, channel_list, timeout, num_samples, waveform.data(), waveform_info.data());
-    response->set_status(status);
-    if (status == 0) {
-      convert_to_grpc(waveform, response->mutable_wfm());
-      convert_to_grpc(waveform_info, response->mutable_wfm_info());
+    if (status < VI_SUCCESS) {
+      return ConvertApiErrorStatusForViSession(status, vi);
     }
+    response->set_status(status);
+    convert_to_grpc(waveform, response->mutable_wfm());
+    convert_to_grpc(waveform_info, response->mutable_wfm_info());
     return ::grpc::Status::OK;
   }
   catch (nidevice_grpc::LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
   }
   catch (DriverErrorException& ex) {
-    response->set_status(ex.status_);
-    return ::grpc::Status::OK;
+    return ConvertApiErrorStatusForViSession(ex.status_, vi);
   }
 }
 
@@ -367,9 +375,10 @@ void CheckStatus(int status)
   if (context->IsCancelled()) {
     return ::grpc::Status::CANCELLED;
   }
+  ViSession vi = VI_NULL;
   try {
     auto session = request->vi();
-    ViSession vi = session_repository_->access_session(session.id(), session.name());
+    vi = session_repository_->access_session(session.id(), session.name());
     ViConstString channel_list = request->channel_list().c_str();
     ViReal64 timeout = request->timeout();
     ViInt32 num_samples = request->num_samples();
@@ -383,19 +392,19 @@ void CheckStatus(int status)
     std::vector<NIComplexI16_struct> waveform(num_samples * num_waveforms, NIComplexI16_struct());
     std::vector<niScope_wfmInfo> waveform_info(num_waveforms, niScope_wfmInfo());
     auto status = library_->FetchComplexBinary16(vi, channel_list, timeout, num_samples, waveform.data(), waveform_info.data());
-    response->set_status(status);
-    if (status == 0) {
-      convert_to_grpc(waveform, response->mutable_wfm());
-      convert_to_grpc(waveform_info, response->mutable_wfm_info());
+    if (status < VI_SUCCESS) {
+      return ConvertApiErrorStatusForViSession(status, vi);
     }
+    response->set_status(status);
+    convert_to_grpc(waveform, response->mutable_wfm());
+    convert_to_grpc(waveform_info, response->mutable_wfm_info());
     return ::grpc::Status::OK;
   }
   catch (nidevice_grpc::LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
   }
   catch (DriverErrorException& ex) {
-    response->set_status(ex.status_);
-    return ::grpc::Status::OK;
+    return ConvertApiErrorStatusForViSession(ex.status_, vi);
   }
 }
 
@@ -406,9 +415,10 @@ void CheckStatus(int status)
   if (context->IsCancelled()) {
     return ::grpc::Status::CANCELLED;
   }
+  ViSession vi = VI_NULL;
   try {
     auto session = request->vi();
-    ViSession vi = session_repository_->access_session(session.id(), session.name());
+    vi = session_repository_->access_session(session.id(), session.name());
     ViConstString channel_list = request->channel_list().c_str();
     ViReal64 timeout = request->timeout();
     ViInt32 scalar_meas_function;
@@ -430,6 +440,9 @@ void CheckStatus(int status)
     response->mutable_result()->Resize(num_waveforms, 0.0);
     ViReal64* result = response->mutable_result()->mutable_data();
     auto status = library_->FetchMeasurement(vi, channel_list, timeout, scalar_meas_function, result);
+    if (status < VI_SUCCESS) {
+      return ConvertApiErrorStatusForViSession(status, vi);
+    }
     response->set_status(status);
     return ::grpc::Status::OK;
   }
@@ -437,8 +450,7 @@ void CheckStatus(int status)
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
   }
   catch (DriverErrorException& ex) {
-    response->set_status(ex.status_);
-    return ::grpc::Status::OK;
+    return ConvertApiErrorStatusForViSession(ex.status_, vi);
   }
 }
 
@@ -449,9 +461,10 @@ void CheckStatus(int status)
   if (context->IsCancelled()) {
     return ::grpc::Status::CANCELLED;
   }
+  ViSession vi = VI_NULL;
   try {
     auto session = request->vi();
-    ViSession vi = session_repository_->access_session(session.id(), session.name());
+    vi = session_repository_->access_session(session.id(), session.name());
     ViConstString channel_list = request->channel_list().c_str();
 
     while (true) {
@@ -464,11 +477,12 @@ void CheckStatus(int status)
         // buffer is now too small, try again
         continue;
       }
-      response->set_status(status);
-      if (status == 0) {
-        response->set_number_of_coefficient_sets(number_of_coefficient_sets);
-        convert_to_grpc(coefficient_info, response->mutable_coefficient_info());
+      if (status < VI_SUCCESS) {
+        return ConvertApiErrorStatusForViSession(status, vi);
       }
+      response->set_status(status);
+      response->set_number_of_coefficient_sets(number_of_coefficient_sets);
+      convert_to_grpc(coefficient_info, response->mutable_coefficient_info());
       return ::grpc::Status::OK;
     }
   }
@@ -476,8 +490,7 @@ void CheckStatus(int status)
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
   }
   catch (DriverErrorException& ex) {
-    response->set_status(ex.status_);
-    return ::grpc::Status::OK;
+    return ConvertApiErrorStatusForViSession(ex.status_, vi);
   }
 }
 
@@ -488,9 +501,10 @@ void CheckStatus(int status)
   if (context->IsCancelled()) {
     return ::grpc::Status::CANCELLED;
   }
+  ViSession vi = VI_NULL;
   try {
     auto session = request->vi();
-    ViSession vi = session_repository_->access_session(session.id(), session.name());
+    vi = session_repository_->access_session(session.id(), session.name());
     ViConstString channel_list = request->channel_list().c_str();
 
     while (true) {
@@ -503,12 +517,12 @@ void CheckStatus(int status)
         // buffer is now too small, try again
         continue;
       }
-      response->set_status(status);
-      response->set_status(status);
-      if (status == 0) {
-        response->set_number_of_coefficient_sets(number_of_coefficient_sets);
-        convert_to_grpc(coefficient_info, response->mutable_coefficient_info());
+      if (status < VI_SUCCESS) {
+        return ConvertApiErrorStatusForViSession(status, vi);
       }
+      response->set_status(status);
+      response->set_number_of_coefficient_sets(number_of_coefficient_sets);
+      convert_to_grpc(coefficient_info, response->mutable_coefficient_info());
       return ::grpc::Status::OK;
     }
   }
@@ -516,8 +530,7 @@ void CheckStatus(int status)
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
   }
   catch (DriverErrorException& ex) {
-    response->set_status(ex.status_);
-    return ::grpc::Status::OK;
+    return ConvertApiErrorStatusForViSession(ex.status_, vi);
   }
 }
 
@@ -528,9 +541,10 @@ void CheckStatus(int status)
   if (context->IsCancelled()) {
     return ::grpc::Status::CANCELLED;
   }
+  ViSession vi = VI_NULL;
   try {
     auto session = request->vi();
-    ViSession vi = session_repository_->access_session(session.id(), session.name());
+    vi = session_repository_->access_session(session.id(), session.name());
     ViConstString channel_list = request->channel_list().c_str();
     ViReal64 timeout = request->timeout();
     ViInt32 scalar_meas_function;
@@ -552,6 +566,9 @@ void CheckStatus(int status)
     response->mutable_result()->Resize(num_waveforms, 0.0);
     ViReal64* result = response->mutable_result()->mutable_data();
     auto status = library_->ReadMeasurement(vi, channel_list, timeout, scalar_meas_function, result);
+    if (status < VI_SUCCESS) {
+      return ConvertApiErrorStatusForViSession(status, vi);
+    }
     response->set_status(status);
     return ::grpc::Status::OK;
   }
@@ -559,8 +576,7 @@ void CheckStatus(int status)
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
   }
   catch (DriverErrorException& ex) {
-    response->set_status(ex.status_);
-    return ::grpc::Status::OK;
+    return ConvertApiErrorStatusForViSession(ex.status_, vi);
   }
 }
 

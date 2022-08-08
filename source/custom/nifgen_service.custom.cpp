@@ -26,10 +26,11 @@ namespace nifgen_grpc {
     ViInt32* coerced_markers_array = reinterpret_cast<ViInt32*>(response->mutable_coerced_markers_array()->mutable_data());
     ViInt32 sequence_handle{};
     auto status = library_->CreateAdvancedArbSequence(vi, sequence_length, waveform_handles_array, loop_counts_array, sample_counts_array, marker_location_array, coerced_markers_array, &sequence_handle);
-    response->set_status(status);
-    if (status == 0) {
-      response->set_sequence_handle(sequence_handle);
+    if (status < VI_SUCCESS) {
+      return ConvertApiErrorStatusForViSession(status, vi);
     }
+    response->set_status(status);
+    response->set_sequence_handle(sequence_handle);
     return ::grpc::Status::OK;
   }
   catch (nidevice_grpc::LibraryLoadException& ex) {

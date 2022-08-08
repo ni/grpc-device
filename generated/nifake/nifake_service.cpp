@@ -169,7 +169,7 @@ namespace nifake_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        convert_to_grpc(an_array, response->mutable_an_array());
+      convert_to_grpc(an_array, response->mutable_an_array());
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -351,7 +351,7 @@ namespace nifake_grpc {
           return ConvertApiErrorStatusForViSession(status, vi);
         }
         response->set_status(status);
-          response->set_configuration(configuration);
+        response->set_configuration(configuration);
         return ::grpc::Status::OK;
       }
     }
@@ -379,7 +379,7 @@ namespace nifake_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_actual_number_of_samples(actual_number_of_samples);
+      response->set_actual_number_of_samples(actual_number_of_samples);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -403,7 +403,7 @@ namespace nifake_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_a_boolean(a_boolean);
+      response->set_a_boolean(a_boolean);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -427,7 +427,7 @@ namespace nifake_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_a_number(a_number);
+      response->set_a_number(a_number);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -451,8 +451,8 @@ namespace nifake_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_a_string(a_string);
-        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_a_string()));
+      response->set_a_string(a_string);
+      nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_a_string()));
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -474,15 +474,15 @@ namespace nifake_grpc {
         return ConvertApiErrorStatusForViSession(status, 0);
       }
       response->set_status(status);
-        if (flags & 0x1)
-          response->add_flags_array(Bitfield::BITFIELD_FLAG_A);
-        if (flags & 0x2)
-          response->add_flags_array(Bitfield::BITFIELD_FLAG_B);
-        if (flags & 0x4)
-          response->add_flags_array(Bitfield::BITFIELD_FLAG_C);
-        if (flags & 0x8)
-          response->add_flags_array(Bitfield::BITFIELD_FLAG_D);
-        response->set_flags_raw(flags);
+      if (flags & 0x1)
+        response->add_flags_array(Bitfield::BITFIELD_FLAG_A);
+      if (flags & 0x2)
+        response->add_flags_array(Bitfield::BITFIELD_FLAG_B);
+      if (flags & 0x4)
+        response->add_flags_array(Bitfield::BITFIELD_FLAG_C);
+      if (flags & 0x8)
+        response->add_flags_array(Bitfield::BITFIELD_FLAG_D);
+      response->set_flags_raw(flags);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -521,8 +521,8 @@ namespace nifake_grpc {
           return ConvertApiErrorStatusForViSession(status, vi);
         }
         response->set_status(status);
-          response->set_a_string(a_string);
-          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_a_string()));
+        response->set_a_string(a_string);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_a_string()));
         return ::grpc::Status::OK;
       }
     }
@@ -591,8 +591,8 @@ namespace nifake_grpc {
           return ConvertApiErrorStatusForViSession(status, vi);
         }
         response->set_status(status);
-          response->mutable_array_out()->Resize(actual_size, 0);
-          response->set_actual_size(actual_size);
+        response->mutable_array_out()->Resize(actual_size, 0);
+        response->set_actual_size(actual_size);
         return ::grpc::Status::OK;
       }
     }
@@ -628,15 +628,15 @@ namespace nifake_grpc {
           return ConvertApiErrorStatusForViSession(status, vi);
         }
         response->set_status(status);
-          convert_to_grpc(array_out, response->mutable_array_out());
-          {
-            auto shrunk_size = actual_size;
-            auto current_size = response->mutable_array_out()->size();
-            if (shrunk_size != current_size) {
-              response->mutable_array_out()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
-            }
+        convert_to_grpc(array_out, response->mutable_array_out());
+        {
+          auto shrunk_size = actual_size;
+          auto current_size = response->mutable_array_out()->size();
+          if (shrunk_size != current_size) {
+            response->mutable_array_out()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
           }
-          response->set_actual_size(actual_size);
+        }
+        response->set_actual_size(actual_size);
         return ::grpc::Status::OK;
       }
     }
@@ -673,8 +673,8 @@ namespace nifake_grpc {
           return ConvertApiErrorStatusForViSession(status, 0);
         }
         response->set_status(status);
-          response->mutable_array_out()->Resize(actual_size, 0);
-          response->set_actual_size(actual_size);
+        response->mutable_array_out()->Resize(actual_size, 0);
+        response->set_actual_size(actual_size);
         return ::grpc::Status::OK;
       }
     }
@@ -708,9 +708,9 @@ namespace nifake_grpc {
           return ConvertApiErrorStatusForViSession(status, 0);
         }
         response->set_status(status);
-          response->set_array_out(array_out);
-          response->mutable_array_out()->resize(actual_size);
-          response->set_actual_size(actual_size);
+        response->set_array_out(array_out);
+        response->mutable_array_out()->resize(actual_size);
+        response->set_actual_size(actual_size);
         return ::grpc::Status::OK;
       }
     }
@@ -747,9 +747,9 @@ namespace nifake_grpc {
           return ConvertApiErrorStatusForViSession(status, 0);
         }
         response->set_status(status);
-          response->set_array_out(array_out);
-          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_array_out()));
-          response->set_actual_size(actual_size);
+        response->set_array_out(array_out);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_array_out()));
+        response->set_actual_size(actual_size);
         return ::grpc::Status::OK;
       }
     }
@@ -786,9 +786,9 @@ namespace nifake_grpc {
           return ConvertApiErrorStatusForViSession(status, 0);
         }
         response->set_status(status);
-          response->set_string_out(string_out);
-          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_string_out()));
-          response->set_actual_size(actual_size);
+        response->set_string_out(string_out);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_string_out()));
+        response->set_actual_size(actual_size);
         return ::grpc::Status::OK;
       }
     }
@@ -813,7 +813,7 @@ namespace nifake_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_size_out(size_out);
+      response->set_size_out(size_out);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -875,8 +875,8 @@ namespace nifake_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        CopyBytesToEnums(u_int8_enum_array, response->mutable_u_int8_enum_array());
-        response->set_u_int8_enum_array_raw(u_int8_enum_array);
+      CopyBytesToEnums(u_int8_enum_array, response->mutable_u_int8_enum_array());
+      response->set_u_int8_enum_array_raw(u_int8_enum_array);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -902,7 +902,7 @@ namespace nifake_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_attribute_value(attribute_value);
+      response->set_attribute_value(attribute_value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -928,7 +928,7 @@ namespace nifake_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_attribute_value(attribute_value);
+      response->set_attribute_value(attribute_value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -954,7 +954,7 @@ namespace nifake_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_attribute_value(attribute_value);
+      response->set_attribute_value(attribute_value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -980,7 +980,7 @@ namespace nifake_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_attribute_value(attribute_value);
+      response->set_attribute_value(attribute_value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1005,8 +1005,8 @@ namespace nifake_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        auto session_id = session_repository_->resolve_session_id(session_out);
-        response->mutable_session_out()->set_id(session_id);
+      auto session_id = session_repository_->resolve_session_id(session_out);
+      response->mutable_session_out()->set_id(session_id);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1047,8 +1047,8 @@ namespace nifake_grpc {
           return ConvertApiErrorStatusForViSession(status, vi);
         }
         response->set_status(status);
-          response->set_attribute_value(attribute_value);
-          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_attribute_value()));
+        response->set_attribute_value(attribute_value);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_attribute_value()));
         return ::grpc::Status::OK;
       }
     }
@@ -1078,11 +1078,11 @@ namespace nifake_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_month(month);
-        response->set_day(day);
-        response->set_year(year);
-        response->set_hour(hour);
-        response->set_minute(minute);
+      response->set_month(month);
+      response->set_day(day);
+      response->set_year(year);
+      response->set_hour(hour);
+      response->set_minute(minute);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1106,7 +1106,7 @@ namespace nifake_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_months(months);
+      response->set_months(months);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1130,7 +1130,7 @@ namespace nifake_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        convert_to_grpc(cs, response->mutable_cs());
+      convert_to_grpc(cs, response->mutable_cs());
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1155,7 +1155,7 @@ namespace nifake_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        convert_to_grpc(cs, response->mutable_cs());
+      convert_to_grpc(cs, response->mutable_cs());
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1180,9 +1180,9 @@ namespace nifake_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_a_quantity(a_quantity);
-        response->set_a_turtle(static_cast<nifake_grpc::Turtle>(a_turtle));
-        response->set_a_turtle_raw(a_turtle);
+      response->set_a_quantity(a_quantity);
+      response->set_a_turtle(static_cast<nifake_grpc::Turtle>(a_turtle));
+      response->set_a_turtle_raw(a_turtle);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1206,7 +1206,7 @@ namespace nifake_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_a_uint8_number(a_uint8_number);
+      response->set_a_uint8_number(a_uint8_number);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1314,7 +1314,7 @@ namespace nifake_grpc {
         return ConvertApiErrorStatusForViSession(status, 0);
       }
       response->set_status(status);
-        response->mutable_vi()->set_id(session_id);
+      response->mutable_vi()->set_id(session_id);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1349,7 +1349,7 @@ namespace nifake_grpc {
         return ConvertApiErrorStatusForViSession(status, 0);
       }
       response->set_status(status);
-        response->mutable_vi()->set_id(session_id);
+      response->mutable_vi()->set_id(session_id);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1403,7 +1403,7 @@ namespace nifake_grpc {
         return ConvertApiErrorStatusForViSession(status, 0);
       }
       response->set_status(status);
-        response->mutable_vi()->set_id(session_id);
+      response->mutable_vi()->set_id(session_id);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1677,7 +1677,7 @@ namespace nifake_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_reading(reading);
+      response->set_reading(reading);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1710,8 +1710,8 @@ namespace nifake_grpc {
           return ConvertApiErrorStatusForViSession(status, 0);
         }
         response->set_status(status);
-          response->mutable_data()->Resize(buffer_size, 0);
-          response->set_buffer_size(buffer_size);
+        response->mutable_data()->Resize(buffer_size, 0);
+        response->set_buffer_size(buffer_size);
         return ::grpc::Status::OK;
       }
     }
@@ -1750,10 +1750,10 @@ namespace nifake_grpc {
           return ConvertApiErrorStatusForViSession(status, 0);
         }
         response->set_status(status);
-          response->mutable_array_out()->Resize(actual_size, 0);
-          response->set_actual_size(actual_size);
-          response->mutable_other_array_out()->Resize(other_actual_size, 0);
-          response->set_other_actual_size(other_actual_size);
+        response->mutable_array_out()->Resize(actual_size, 0);
+        response->set_actual_size(actual_size);
+        response->mutable_other_array_out()->Resize(other_actual_size, 0);
+        response->set_other_actual_size(other_actual_size);
         return ::grpc::Status::OK;
       }
     }
@@ -1780,7 +1780,7 @@ namespace nifake_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_reading(reading);
+      response->set_reading(reading);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1805,9 +1805,9 @@ namespace nifake_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_a_number(a_number);
-        response->set_a_string(a_string);
-        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_a_string()));
+      response->set_a_number(a_number);
+      response->set_a_string(a_string);
+      nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_a_string()));
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1831,7 +1831,7 @@ namespace nifake_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_timedelta(timedelta);
+      response->set_timedelta(timedelta);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1904,19 +1904,19 @@ namespace nifake_grpc {
           return ConvertApiErrorStatusForViSession(status, vi);
         }
         response->set_status(status);
-          response->set_a_boolean(a_boolean);
-          response->set_an_int32(an_int32);
-          response->set_an_int64(an_int64);
-          response->set_an_int_enum(static_cast<nifake_grpc::Turtle>(an_int_enum));
-          response->set_an_int_enum_raw(an_int_enum);
-          response->set_a_float(a_float);
-          auto a_float_enum_omap_it = floatenum_output_map_.find(a_float_enum);
-          if(a_float_enum_omap_it != floatenum_output_map_.end()) {
-            response->set_a_float_enum_mapped(static_cast<nifake_grpc::FloatEnum>(a_float_enum_omap_it->second));
-          }
-          response->set_a_float_enum_raw(a_float_enum);
-          response->set_a_string(a_string);
-          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_a_string()));
+        response->set_a_boolean(a_boolean);
+        response->set_an_int32(an_int32);
+        response->set_an_int64(an_int64);
+        response->set_an_int_enum(static_cast<nifake_grpc::Turtle>(an_int_enum));
+        response->set_an_int_enum_raw(an_int_enum);
+        response->set_a_float(a_float);
+        auto a_float_enum_omap_it = floatenum_output_map_.find(a_float_enum);
+        if(a_float_enum_omap_it != floatenum_output_map_.end()) {
+          response->set_a_float_enum_mapped(static_cast<nifake_grpc::FloatEnum>(a_float_enum_omap_it->second));
+        }
+        response->set_a_float_enum_raw(a_float_enum);
+        response->set_a_string(a_string);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_a_string()));
         return ::grpc::Status::OK;
       }
     }
@@ -2055,7 +2055,7 @@ namespace nifake_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_output(output);
+      response->set_output(output);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -2175,7 +2175,7 @@ namespace nifake_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_an_array(an_array);
+      response->set_an_array(an_array);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {

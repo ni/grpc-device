@@ -124,8 +124,8 @@ namespace nidaqmx_grpc {
           return ConvertApiErrorStatusForTaskHandle(status, 0);
         }
         response->set_status(status);
-          response->set_device_name_out(device_name_out);
-          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_device_name_out()));
+        response->set_device_name_out(device_name_out);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_device_name_out()));
         return ::grpc::Status::OK;
       }
     }
@@ -150,7 +150,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
-        response->set_disconnected_ports_exist(disconnected_ports_exist);
+      response->set_disconnected_ports_exist(disconnected_ports_exist);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -7039,7 +7039,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
-        response->mutable_task()->set_id(session_id);
+      response->mutable_task()->set_id(session_id);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -7095,7 +7095,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
-        response->mutable_task()->set_id(session_id);
+      response->mutable_task()->set_id(session_id);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -7131,7 +7131,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
-        response->mutable_task()->set_id(session_id);
+      response->mutable_task()->set_id(session_id);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -7241,7 +7241,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
-        response->set_cal_supported(cal_supported);
+      response->set_cal_supported(cal_supported);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -7375,11 +7375,11 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        response->set_year(year);
-        response->set_month(month);
-        response->set_day(day);
-        response->set_hour(hour);
-        response->set_minute(minute);
+      response->set_year(year);
+      response->set_month(month);
+      response->set_day(day);
+      response->set_hour(hour);
+      response->set_minute(minute);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -7408,11 +7408,11 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        response->set_year(year);
-        response->set_month(month);
-        response->set_day(day);
-        response->set_hour(hour);
-        response->set_minute(minute);
+      response->set_year(year);
+      response->set_month(month);
+      response->set_day(day);
+      response->set_hour(hour);
+      response->set_minute(minute);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -7462,9 +7462,9 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
-        for (int i = 0; i < stateVector.size(); ++i) {
-          response->add_power_up_states(stateVector[i]);
-        }
+      for (int i = 0; i < stateVector.size(); ++i) {
+        response->add_power_up_states(stateVector[i]);
+      }
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -7491,7 +7491,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
-        response->mutable_state_array()->Resize(array_size_copy, 0);
+      response->mutable_state_array()->Resize(array_size_copy, 0);
         response->mutable_channel_type_array()->Clear();
         response->mutable_channel_type_array()->Reserve(array_size_copy);
         std::transform(
@@ -7524,7 +7524,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        convert_to_grpc(data, response->mutable_data());
+      convert_to_grpc(data, response->mutable_data());
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -7548,7 +7548,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        convert_to_grpc(data, response->mutable_data());
+      convert_to_grpc(data, response->mutable_data());
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -7585,8 +7585,8 @@ namespace nidaqmx_grpc {
           return ConvertApiErrorStatusForTaskHandle(status, 0);
         }
         response->set_status(status);
-          response->set_port_list(port_list);
-          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_port_list()));
+        response->set_port_list(port_list);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_port_list()));
         return ::grpc::Status::OK;
       }
     }
@@ -7630,7 +7630,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        response->set_value(value);
+      response->set_value(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -7673,7 +7673,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
-        response->set_value(value);
+      response->set_value(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -7716,7 +7716,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
-        response->set_value(value);
+      response->set_value(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -7773,8 +7773,8 @@ namespace nidaqmx_grpc {
           return ConvertApiErrorStatusForTaskHandle(status, 0);
         }
         response->set_status(status);
-          response->set_value(value);
-          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
+        response->set_value(value);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
         return ::grpc::Status::OK;
       }
     }
@@ -7818,7 +7818,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
-        response->set_value(value);
+      response->set_value(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -7863,7 +7863,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        response->set_value(value);
+      response->set_value(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -7908,7 +7908,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        response->set_value(value);
+      response->set_value(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -8010,13 +8010,13 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        auto checked_convert_value = [](auto raw_value) {
-          bool raw_value_is_valid = nidaqmx_grpc::ChannelInt32AttributeValues_IsValid(raw_value);
-          auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
-          return static_cast<nidaqmx_grpc::ChannelInt32AttributeValues>(valid_enum_value);
-        };
-        response->set_value(checked_convert_value(value));
-        response->set_value_raw(value);
+      auto checked_convert_value = [](auto raw_value) {
+        bool raw_value_is_valid = nidaqmx_grpc::ChannelInt32AttributeValues_IsValid(raw_value);
+        auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
+        return static_cast<nidaqmx_grpc::ChannelInt32AttributeValues>(valid_enum_value);
+      };
+      response->set_value(checked_convert_value(value));
+      response->set_value_raw(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -8075,8 +8075,8 @@ namespace nidaqmx_grpc {
           return ConvertApiErrorStatusForTaskHandle(status, task);
         }
         response->set_status(status);
-          response->set_value(value);
-          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
+        response->set_value(value);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
         return ::grpc::Status::OK;
       }
     }
@@ -8122,7 +8122,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        response->set_value(value);
+      response->set_value(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -8165,7 +8165,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
-        response->set_value(value);
+      response->set_value(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -8208,7 +8208,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
-        response->set_value(value);
+      response->set_value(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -8306,13 +8306,13 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
-        auto checked_convert_value = [](auto raw_value) {
-          bool raw_value_is_valid = nidaqmx_grpc::DeviceInt32AttributeValues_IsValid(raw_value);
-          auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
-          return static_cast<nidaqmx_grpc::DeviceInt32AttributeValues>(valid_enum_value);
-        };
-        response->set_value(checked_convert_value(value));
-        response->set_value_raw(value);
+      auto checked_convert_value = [](auto raw_value) {
+        bool raw_value_is_valid = nidaqmx_grpc::DeviceInt32AttributeValues_IsValid(raw_value);
+        auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
+        return static_cast<nidaqmx_grpc::DeviceInt32AttributeValues>(valid_enum_value);
+      };
+      response->set_value(checked_convert_value(value));
+      response->set_value_raw(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -8367,11 +8367,11 @@ namespace nidaqmx_grpc {
           return ConvertApiErrorStatusForTaskHandle(status, 0);
         }
         response->set_status(status);
-          auto checked_convert_value = [](auto raw_value) {
-            bool raw_value_is_valid = nidaqmx_grpc::DeviceInt32AttributeValues_IsValid(raw_value);
-            auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
-            return static_cast<nidaqmx_grpc::DeviceInt32AttributeValues>(valid_enum_value);
-          };
+        auto checked_convert_value = [](auto raw_value) {
+          bool raw_value_is_valid = nidaqmx_grpc::DeviceInt32AttributeValues_IsValid(raw_value);
+          auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
+          return static_cast<nidaqmx_grpc::DeviceInt32AttributeValues>(valid_enum_value);
+        };
           response->mutable_value()->Clear();
           response->mutable_value()->Reserve(size);
           std::transform(
@@ -8438,8 +8438,8 @@ namespace nidaqmx_grpc {
           return ConvertApiErrorStatusForTaskHandle(status, 0);
         }
         response->set_status(status);
-          response->set_value(value);
-          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
+        response->set_value(value);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
         return ::grpc::Status::OK;
       }
     }
@@ -8483,7 +8483,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
-        response->set_value(value);
+      response->set_value(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -8561,7 +8561,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
-        response->set_logic_family(logic_family);
+      response->set_logic_family(logic_family);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -8605,9 +8605,9 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
-        for (int i = 0; i < stateVector.size(); ++i) {
-          response->add_power_up_states(static_cast<PowerUpStates>(stateVector[i]));
-        }
+      for (int i = 0; i < stateVector.size(); ++i) {
+        response->add_power_up_states(static_cast<PowerUpStates>(stateVector[i]));
+      }
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -8651,9 +8651,9 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
-        for (int i = 0; i < stateVector.size(); ++i) {
-          response->add_pull_up_pull_down_states(static_cast<ResistorState>(stateVector[i]));
-        }
+      for (int i = 0; i < stateVector.size(); ++i) {
+        response->add_pull_up_pull_down_states(static_cast<ResistorState>(stateVector[i]));
+      }
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -8690,8 +8690,8 @@ namespace nidaqmx_grpc {
           return ConvertApiErrorStatusForTaskHandle(status, 0);
         }
         response->set_status(status);
-          response->set_port_list(port_list);
-          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_port_list()));
+        response->set_port_list(port_list);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_port_list()));
         return ::grpc::Status::OK;
       }
     }
@@ -8730,8 +8730,8 @@ namespace nidaqmx_grpc {
           return ConvertApiErrorStatusForTaskHandle(status, 0);
         }
         response->set_status(status);
-          response->set_error_string(error_string);
-          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_string()));
+        response->set_error_string(error_string);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_string()));
         return ::grpc::Status::OK;
       }
     }
@@ -8776,7 +8776,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        response->set_value(value);
+      response->set_value(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -8820,7 +8820,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        response->set_value(value);
+      response->set_value(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -8864,13 +8864,13 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        auto checked_convert_value = [](auto raw_value) {
-          bool raw_value_is_valid = nidaqmx_grpc::ExportSignalInt32AttributeValues_IsValid(raw_value);
-          auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
-          return static_cast<nidaqmx_grpc::ExportSignalInt32AttributeValues>(valid_enum_value);
-        };
-        response->set_value(checked_convert_value(value));
-        response->set_value_raw(value);
+      auto checked_convert_value = [](auto raw_value) {
+        bool raw_value_is_valid = nidaqmx_grpc::ExportSignalInt32AttributeValues_IsValid(raw_value);
+        auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
+        return static_cast<nidaqmx_grpc::ExportSignalInt32AttributeValues>(valid_enum_value);
+      };
+      response->set_value(checked_convert_value(value));
+      response->set_value_raw(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -8928,8 +8928,8 @@ namespace nidaqmx_grpc {
           return ConvertApiErrorStatusForTaskHandle(status, task);
         }
         response->set_status(status);
-          response->set_value(value);
-          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
+        response->set_value(value);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
         return ::grpc::Status::OK;
       }
     }
@@ -8974,7 +8974,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        response->set_value(value);
+      response->set_value(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -9011,8 +9011,8 @@ namespace nidaqmx_grpc {
           return ConvertApiErrorStatusForTaskHandle(status, 0);
         }
         response->set_status(status);
-          response->set_error_string(error_string);
-          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_string()));
+        response->set_error_string(error_string);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_string()));
         return ::grpc::Status::OK;
       }
     }
@@ -9037,7 +9037,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        convert_to_grpc(data, response->mutable_data());
+      convert_to_grpc(data, response->mutable_data());
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -9061,7 +9061,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        convert_to_grpc(data, response->mutable_data());
+      convert_to_grpc(data, response->mutable_data());
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -9101,8 +9101,8 @@ namespace nidaqmx_grpc {
           return ConvertApiErrorStatusForTaskHandle(status, task);
         }
         response->set_status(status);
-          response->set_buffer(buffer);
-          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_buffer()));
+        response->set_buffer(buffer);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_buffer()));
         return ::grpc::Status::OK;
       }
     }
@@ -9143,8 +9143,8 @@ namespace nidaqmx_grpc {
           return ConvertApiErrorStatusForTaskHandle(status, task);
         }
         response->set_status(status);
-          response->set_buffer(buffer);
-          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_buffer()));
+        response->set_buffer(buffer);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_buffer()));
         return ::grpc::Status::OK;
       }
     }
@@ -9185,8 +9185,8 @@ namespace nidaqmx_grpc {
           return ConvertApiErrorStatusForTaskHandle(status, task);
         }
         response->set_status(status);
-          response->set_buffer(buffer);
-          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_buffer()));
+        response->set_buffer(buffer);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_buffer()));
         return ::grpc::Status::OK;
       }
     }
@@ -9230,7 +9230,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
-        response->set_value(value);
+      response->set_value(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -9287,8 +9287,8 @@ namespace nidaqmx_grpc {
           return ConvertApiErrorStatusForTaskHandle(status, 0);
         }
         response->set_status(status);
-          response->set_value(value);
-          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
+        response->set_value(value);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
         return ::grpc::Status::OK;
       }
     }
@@ -9332,7 +9332,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
-        response->set_value(value);
+      response->set_value(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -9389,8 +9389,8 @@ namespace nidaqmx_grpc {
           return ConvertApiErrorStatusForTaskHandle(status, 0);
         }
         response->set_status(status);
-          response->set_value(value);
-          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
+        response->set_value(value);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
         return ::grpc::Status::OK;
       }
     }
@@ -9434,7 +9434,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
-        response->set_value(value);
+      response->set_value(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -9491,8 +9491,8 @@ namespace nidaqmx_grpc {
           return ConvertApiErrorStatusForTaskHandle(status, 0);
         }
         response->set_status(status);
-          response->set_value(value);
-          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
+        response->set_value(value);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
         return ::grpc::Status::OK;
       }
     }
@@ -9536,7 +9536,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
-        response->set_value(value);
+      response->set_value(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -9590,7 +9590,7 @@ namespace nidaqmx_grpc {
           return ConvertApiErrorStatusForTaskHandle(status, 0);
         }
         response->set_status(status);
-          response->set_value(value);
+        response->set_value(value);
         return ::grpc::Status::OK;
       }
     }
@@ -9634,7 +9634,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
-        response->set_value(value);
+      response->set_value(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -9732,13 +9732,13 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
-        auto checked_convert_value = [](auto raw_value) {
-          bool raw_value_is_valid = nidaqmx_grpc::PhysicalChannelInt32AttributeValues_IsValid(raw_value);
-          auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
-          return static_cast<nidaqmx_grpc::PhysicalChannelInt32AttributeValues>(valid_enum_value);
-        };
-        response->set_value(checked_convert_value(value));
-        response->set_value_raw(value);
+      auto checked_convert_value = [](auto raw_value) {
+        bool raw_value_is_valid = nidaqmx_grpc::PhysicalChannelInt32AttributeValues_IsValid(raw_value);
+        auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
+        return static_cast<nidaqmx_grpc::PhysicalChannelInt32AttributeValues>(valid_enum_value);
+      };
+      response->set_value(checked_convert_value(value));
+      response->set_value_raw(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -9793,11 +9793,11 @@ namespace nidaqmx_grpc {
           return ConvertApiErrorStatusForTaskHandle(status, 0);
         }
         response->set_status(status);
-          auto checked_convert_value = [](auto raw_value) {
-            bool raw_value_is_valid = nidaqmx_grpc::PhysicalChannelInt32AttributeValues_IsValid(raw_value);
-            auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
-            return static_cast<nidaqmx_grpc::PhysicalChannelInt32AttributeValues>(valid_enum_value);
-          };
+        auto checked_convert_value = [](auto raw_value) {
+          bool raw_value_is_valid = nidaqmx_grpc::PhysicalChannelInt32AttributeValues_IsValid(raw_value);
+          auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
+          return static_cast<nidaqmx_grpc::PhysicalChannelInt32AttributeValues>(valid_enum_value);
+        };
           response->mutable_value()->Clear();
           response->mutable_value()->Reserve(size);
           std::transform(
@@ -9864,8 +9864,8 @@ namespace nidaqmx_grpc {
           return ConvertApiErrorStatusForTaskHandle(status, 0);
         }
         response->set_status(status);
-          response->set_value(value);
-          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
+        response->set_value(value);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
         return ::grpc::Status::OK;
       }
     }
@@ -9909,7 +9909,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
-        response->set_value(value);
+      response->set_value(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -10008,7 +10008,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        response->set_value(value);
+      response->set_value(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -10052,7 +10052,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        response->set_value(value);
+      response->set_value(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -10096,13 +10096,13 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        auto checked_convert_value = [](auto raw_value) {
-          bool raw_value_is_valid = nidaqmx_grpc::ReadInt32AttributeValues_IsValid(raw_value);
-          auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
-          return static_cast<nidaqmx_grpc::ReadInt32AttributeValues>(valid_enum_value);
-        };
-        response->set_value(checked_convert_value(value));
-        response->set_value_raw(value);
+      auto checked_convert_value = [](auto raw_value) {
+        bool raw_value_is_valid = nidaqmx_grpc::ReadInt32AttributeValues_IsValid(raw_value);
+        auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
+        return static_cast<nidaqmx_grpc::ReadInt32AttributeValues>(valid_enum_value);
+      };
+      response->set_value(checked_convert_value(value));
+      response->set_value_raw(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -10160,8 +10160,8 @@ namespace nidaqmx_grpc {
           return ConvertApiErrorStatusForTaskHandle(status, task);
         }
         response->set_status(status);
-          response->set_value(value);
-          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
+        response->set_value(value);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
         return ::grpc::Status::OK;
       }
     }
@@ -10206,7 +10206,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        response->set_value(value);
+      response->set_value(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -10250,7 +10250,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        response->set_value(value);
+      response->set_value(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -10294,7 +10294,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        response->set_value(value);
+      response->set_value(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -10338,13 +10338,13 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        auto checked_convert_value = [](auto raw_value) {
-          bool raw_value_is_valid = nidaqmx_grpc::RealTimeInt32AttributeValues_IsValid(raw_value);
-          auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
-          return static_cast<nidaqmx_grpc::RealTimeInt32AttributeValues>(valid_enum_value);
-        };
-        response->set_value(checked_convert_value(value));
-        response->set_value_raw(value);
+      auto checked_convert_value = [](auto raw_value) {
+        bool raw_value_is_valid = nidaqmx_grpc::RealTimeInt32AttributeValues_IsValid(raw_value);
+        auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
+        return static_cast<nidaqmx_grpc::RealTimeInt32AttributeValues>(valid_enum_value);
+      };
+      response->set_value(checked_convert_value(value));
+      response->set_value_raw(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -10388,7 +10388,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        response->set_value(value);
+      response->set_value(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -10412,7 +10412,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        convert_to_grpc(data, response->mutable_data());
+      convert_to_grpc(data, response->mutable_data());
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -10455,7 +10455,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
-        response->set_value(value);
+      response->set_value(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -10553,13 +10553,13 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
-        auto checked_convert_value = [](auto raw_value) {
-          bool raw_value_is_valid = nidaqmx_grpc::ScaleInt32AttributeValues_IsValid(raw_value);
-          auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
-          return static_cast<nidaqmx_grpc::ScaleInt32AttributeValues>(valid_enum_value);
-        };
-        response->set_value(checked_convert_value(value));
-        response->set_value_raw(value);
+      auto checked_convert_value = [](auto raw_value) {
+        bool raw_value_is_valid = nidaqmx_grpc::ScaleInt32AttributeValues_IsValid(raw_value);
+        auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
+        return static_cast<nidaqmx_grpc::ScaleInt32AttributeValues>(valid_enum_value);
+      };
+      response->set_value(checked_convert_value(value));
+      response->set_value_raw(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -10616,8 +10616,8 @@ namespace nidaqmx_grpc {
           return ConvertApiErrorStatusForTaskHandle(status, 0);
         }
         response->set_status(status);
-          response->set_value(value);
-          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
+        response->set_value(value);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
         return ::grpc::Status::OK;
       }
     }
@@ -10645,11 +10645,11 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
-        response->set_year(year);
-        response->set_month(month);
-        response->set_day(day);
-        response->set_hour(hour);
-        response->set_minute(minute);
+      response->set_year(year);
+      response->set_month(month);
+      response->set_day(day);
+      response->set_hour(hour);
+      response->set_minute(minute);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -10673,7 +10673,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        convert_to_grpc(data, response->mutable_data());
+      convert_to_grpc(data, response->mutable_data());
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -10697,7 +10697,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        convert_to_grpc(data, response->mutable_data());
+      convert_to_grpc(data, response->mutable_data());
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -10721,7 +10721,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        convert_to_grpc(data, response->mutable_data());
+      convert_to_grpc(data, response->mutable_data());
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -10777,8 +10777,8 @@ namespace nidaqmx_grpc {
           return ConvertApiErrorStatusForTaskHandle(status, 0);
         }
         response->set_status(status);
-          response->set_value(value);
-          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
+        response->set_value(value);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
         return ::grpc::Status::OK;
       }
     }
@@ -10821,7 +10821,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
-        response->set_value(value);
+      response->set_value(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -10865,7 +10865,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        response->set_value(value);
+      response->set_value(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -10923,8 +10923,8 @@ namespace nidaqmx_grpc {
           return ConvertApiErrorStatusForTaskHandle(status, task);
         }
         response->set_status(status);
-          response->set_value(value);
-          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
+        response->set_value(value);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
         return ::grpc::Status::OK;
       }
     }
@@ -10969,7 +10969,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        response->set_value(value);
+      response->set_value(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -11013,7 +11013,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        response->set_value(value);
+      response->set_value(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -11057,7 +11057,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        response->set_value(value);
+      response->set_value(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -11102,7 +11102,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        response->set_value(value);
+      response->set_value(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -11147,7 +11147,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        response->set_value(value);
+      response->set_value(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -11192,13 +11192,13 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        auto checked_convert_value = [](auto raw_value) {
-          bool raw_value_is_valid = nidaqmx_grpc::TimingInt32AttributeValues_IsValid(raw_value);
-          auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
-          return static_cast<nidaqmx_grpc::TimingInt32AttributeValues>(valid_enum_value);
-        };
-        response->set_value(checked_convert_value(value));
-        response->set_value_raw(value);
+      auto checked_convert_value = [](auto raw_value) {
+        bool raw_value_is_valid = nidaqmx_grpc::TimingInt32AttributeValues_IsValid(raw_value);
+        auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
+        return static_cast<nidaqmx_grpc::TimingInt32AttributeValues>(valid_enum_value);
+      };
+      response->set_value(checked_convert_value(value));
+      response->set_value_raw(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -11257,8 +11257,8 @@ namespace nidaqmx_grpc {
           return ConvertApiErrorStatusForTaskHandle(status, task);
         }
         response->set_status(status);
-          response->set_value(value);
-          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
+        response->set_value(value);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
         return ::grpc::Status::OK;
       }
     }
@@ -11304,7 +11304,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        convert_to_grpc(value, response->mutable_value());
+      convert_to_grpc(value, response->mutable_value());
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -11349,7 +11349,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        response->set_value(value);
+      response->set_value(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -11394,7 +11394,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        response->set_value(value);
+      response->set_value(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -11438,13 +11438,13 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        auto checked_convert_value = [](auto raw_value) {
-          bool raw_value_is_valid = nidaqmx_grpc::TimingInt32AttributeValues_IsValid(raw_value);
-          auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
-          return static_cast<nidaqmx_grpc::TimingInt32AttributeValues>(valid_enum_value);
-        };
-        response->set_value(checked_convert_value(value));
-        response->set_value_raw(value);
+      auto checked_convert_value = [](auto raw_value) {
+        bool raw_value_is_valid = nidaqmx_grpc::TimingInt32AttributeValues_IsValid(raw_value);
+        auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
+        return static_cast<nidaqmx_grpc::TimingInt32AttributeValues>(valid_enum_value);
+      };
+      response->set_value(checked_convert_value(value));
+      response->set_value_raw(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -11502,8 +11502,8 @@ namespace nidaqmx_grpc {
           return ConvertApiErrorStatusForTaskHandle(status, task);
         }
         response->set_status(status);
-          response->set_value(value);
-          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
+        response->set_value(value);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
         return ::grpc::Status::OK;
       }
     }
@@ -11548,7 +11548,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        convert_to_grpc(value, response->mutable_value());
+      convert_to_grpc(value, response->mutable_value());
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -11592,7 +11592,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        response->set_value(value);
+      response->set_value(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -11636,7 +11636,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        response->set_value(value);
+      response->set_value(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -11680,7 +11680,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        response->set_value(value);
+      response->set_value(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -11724,7 +11724,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        response->set_value(value);
+      response->set_value(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -11824,13 +11824,13 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        auto checked_convert_value = [](auto raw_value) {
-          bool raw_value_is_valid = nidaqmx_grpc::TriggerInt32AttributeValues_IsValid(raw_value);
-          auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
-          return static_cast<nidaqmx_grpc::TriggerInt32AttributeValues>(valid_enum_value);
-        };
-        response->set_value(checked_convert_value(value));
-        response->set_value_raw(value);
+      auto checked_convert_value = [](auto raw_value) {
+        bool raw_value_is_valid = nidaqmx_grpc::TriggerInt32AttributeValues_IsValid(raw_value);
+        auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
+        return static_cast<nidaqmx_grpc::TriggerInt32AttributeValues>(valid_enum_value);
+      };
+      response->set_value(checked_convert_value(value));
+      response->set_value_raw(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -11886,11 +11886,11 @@ namespace nidaqmx_grpc {
           return ConvertApiErrorStatusForTaskHandle(status, task);
         }
         response->set_status(status);
-          auto checked_convert_value = [](auto raw_value) {
-            bool raw_value_is_valid = nidaqmx_grpc::TriggerInt32AttributeValues_IsValid(raw_value);
-            auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
-            return static_cast<nidaqmx_grpc::TriggerInt32AttributeValues>(valid_enum_value);
-          };
+        auto checked_convert_value = [](auto raw_value) {
+          bool raw_value_is_valid = nidaqmx_grpc::TriggerInt32AttributeValues_IsValid(raw_value);
+          auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
+          return static_cast<nidaqmx_grpc::TriggerInt32AttributeValues>(valid_enum_value);
+        };
           response->mutable_value()->Clear();
           response->mutable_value()->Reserve(size);
           std::transform(
@@ -11958,8 +11958,8 @@ namespace nidaqmx_grpc {
           return ConvertApiErrorStatusForTaskHandle(status, task);
         }
         response->set_status(status);
-          response->set_value(value);
-          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
+        response->set_value(value);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
         return ::grpc::Status::OK;
       }
     }
@@ -12004,7 +12004,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        convert_to_grpc(value, response->mutable_value());
+      convert_to_grpc(value, response->mutable_value());
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -12048,7 +12048,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        response->set_value(value);
+      response->set_value(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -12093,7 +12093,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        response->set_value(value);
+      response->set_value(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -12138,7 +12138,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        response->set_value(value);
+      response->set_value(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -12183,13 +12183,13 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        auto checked_convert_value = [](auto raw_value) {
-          bool raw_value_is_valid = nidaqmx_grpc::WatchdogInt32AttributeValues_IsValid(raw_value);
-          auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
-          return static_cast<nidaqmx_grpc::WatchdogInt32AttributeValues>(valid_enum_value);
-        };
-        response->set_value(checked_convert_value(value));
-        response->set_value_raw(value);
+      auto checked_convert_value = [](auto raw_value) {
+        bool raw_value_is_valid = nidaqmx_grpc::WatchdogInt32AttributeValues_IsValid(raw_value);
+        auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
+        return static_cast<nidaqmx_grpc::WatchdogInt32AttributeValues>(valid_enum_value);
+      };
+      response->set_value(checked_convert_value(value));
+      response->set_value_raw(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -12248,8 +12248,8 @@ namespace nidaqmx_grpc {
           return ConvertApiErrorStatusForTaskHandle(status, task);
         }
         response->set_status(status);
-          response->set_value(value);
-          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
+        response->set_value(value);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
         return ::grpc::Status::OK;
       }
     }
@@ -12294,7 +12294,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        response->set_value(value);
+      response->set_value(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -12338,7 +12338,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        response->set_value(value);
+      response->set_value(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -12382,13 +12382,13 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        auto checked_convert_value = [](auto raw_value) {
-          bool raw_value_is_valid = nidaqmx_grpc::WriteInt32AttributeValues_IsValid(raw_value);
-          auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
-          return static_cast<nidaqmx_grpc::WriteInt32AttributeValues>(valid_enum_value);
-        };
-        response->set_value(checked_convert_value(value));
-        response->set_value_raw(value);
+      auto checked_convert_value = [](auto raw_value) {
+        bool raw_value_is_valid = nidaqmx_grpc::WriteInt32AttributeValues_IsValid(raw_value);
+        auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
+        return static_cast<nidaqmx_grpc::WriteInt32AttributeValues>(valid_enum_value);
+      };
+      response->set_value(checked_convert_value(value));
+      response->set_value_raw(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -12446,8 +12446,8 @@ namespace nidaqmx_grpc {
           return ConvertApiErrorStatusForTaskHandle(status, task);
         }
         response->set_status(status);
-          response->set_value(value);
-          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
+        response->set_value(value);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
         return ::grpc::Status::OK;
       }
     }
@@ -12492,7 +12492,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        response->set_value(value);
+      response->set_value(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -12536,7 +12536,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        response->set_value(value);
+      response->set_value(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -12560,7 +12560,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        response->set_is_task_done(is_task_done);
+      response->set_is_task_done(is_task_done);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -12591,7 +12591,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
-        response->mutable_task()->set_id(session_id);
+      response->mutable_task()->set_id(session_id);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -12640,7 +12640,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        response->set_samps_per_chan_read(samps_per_chan_read);
+      response->set_samps_per_chan_read(samps_per_chan_read);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -12666,7 +12666,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        response->set_value(value);
+      response->set_value(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -12720,7 +12720,7 @@ namespace nidaqmx_grpc {
           [&](auto x) {
               return x;
           });
-        response->set_samps_per_chan_read(samps_per_chan_read);
+      response->set_samps_per_chan_read(samps_per_chan_read);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -12766,7 +12766,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        response->set_samps_per_chan_read(samps_per_chan_read);
+      response->set_samps_per_chan_read(samps_per_chan_read);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -12820,7 +12820,7 @@ namespace nidaqmx_grpc {
           [&](auto x) {
               return x;
           });
-        response->set_samps_per_chan_read(samps_per_chan_read);
+      response->set_samps_per_chan_read(samps_per_chan_read);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -12866,7 +12866,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        response->set_samps_per_chan_read(samps_per_chan_read);
+      response->set_samps_per_chan_read(samps_per_chan_read);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -12896,7 +12896,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        response->set_samps_per_chan_read(samps_per_chan_read);
+      response->set_samps_per_chan_read(samps_per_chan_read);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -12942,7 +12942,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        response->set_samps_per_chan_read(samps_per_chan_read);
+      response->set_samps_per_chan_read(samps_per_chan_read);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -12968,7 +12968,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        response->set_value(value);
+      response->set_value(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -12994,7 +12994,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        response->set_value(value);
+      response->set_value(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -13024,7 +13024,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        response->set_samps_per_chan_read(samps_per_chan_read);
+      response->set_samps_per_chan_read(samps_per_chan_read);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -13070,7 +13070,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        response->set_samps_per_chan_read(samps_per_chan_read);
+      response->set_samps_per_chan_read(samps_per_chan_read);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -13118,7 +13118,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        response->set_samps_per_chan_read(samps_per_chan_read);
+      response->set_samps_per_chan_read(samps_per_chan_read);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -13145,8 +13145,8 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        response->set_frequency(frequency);
-        response->set_duty_cycle(duty_cycle);
+      response->set_frequency(frequency);
+      response->set_duty_cycle(duty_cycle);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -13194,7 +13194,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        response->set_samps_per_chan_read(samps_per_chan_read);
+      response->set_samps_per_chan_read(samps_per_chan_read);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -13221,8 +13221,8 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        response->set_high_ticks(high_ticks);
-        response->set_low_ticks(low_ticks);
+      response->set_high_ticks(high_ticks);
+      response->set_low_ticks(low_ticks);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -13270,7 +13270,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        response->set_samps_per_chan_read(samps_per_chan_read);
+      response->set_samps_per_chan_read(samps_per_chan_read);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -13297,8 +13297,8 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        response->set_high_time(high_time);
-        response->set_low_time(low_time);
+      response->set_high_time(high_time);
+      response->set_low_time(low_time);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -13344,9 +13344,9 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        response->set_read_array(read_array);
-        response->set_samps_per_chan_read(samps_per_chan_read);
-        response->set_num_bytes_per_samp(num_bytes_per_samp);
+      response->set_read_array(read_array);
+      response->set_samps_per_chan_read(samps_per_chan_read);
+      response->set_num_bytes_per_samp(num_bytes_per_samp);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -13372,7 +13372,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        response->set_value(value);
+      response->set_value(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -13426,7 +13426,7 @@ namespace nidaqmx_grpc {
           [&](auto x) {
               return x;
           });
-        response->set_samps_per_chan_read(samps_per_chan_read);
+      response->set_samps_per_chan_read(samps_per_chan_read);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -13472,7 +13472,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        response->set_samps_per_chan_read(samps_per_chan_read);
+      response->set_samps_per_chan_read(samps_per_chan_read);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -13517,8 +13517,8 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        response->set_read_array(read_array);
-        response->set_samps_per_chan_read(samps_per_chan_read);
+      response->set_read_array(read_array);
+      response->set_samps_per_chan_read(samps_per_chan_read);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -13548,9 +13548,9 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        response->set_read_array(read_array);
-        response->set_samps_read(samps_read);
-        response->set_num_bytes_per_samp(num_bytes_per_samp);
+      response->set_read_array(read_array);
+      response->set_samps_read(samps_read);
+      response->set_num_bytes_per_samp(num_bytes_per_samp);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -13581,7 +13581,7 @@ namespace nidaqmx_grpc {
           [this](TaskHandle task, int32 status) {
             RegisterDoneEventResponse callback_response;
             auto response = &callback_response;
-            response->set_status(status);
+          response->set_status(status);
             queue_write(callback_response);
             return 0;
         });
@@ -13637,9 +13637,9 @@ namespace nidaqmx_grpc {
           [this](TaskHandle task, int32 every_n_samples_event_type, uInt32 n_samples) {
             RegisterEveryNSamplesEventResponse callback_response;
             auto response = &callback_response;
-            response->set_every_n_samples_event_type(static_cast<nidaqmx_grpc::EveryNSamplesEventType>(every_n_samples_event_type));
-            response->set_every_n_samples_event_type_raw(every_n_samples_event_type);
-            response->set_n_samples(n_samples);
+          response->set_every_n_samples_event_type(static_cast<nidaqmx_grpc::EveryNSamplesEventType>(every_n_samples_event_type));
+          response->set_every_n_samples_event_type_raw(every_n_samples_event_type);
+          response->set_n_samples(n_samples);
             queue_write(callback_response);
             return 0;
         });
@@ -13712,7 +13712,7 @@ namespace nidaqmx_grpc {
           [this](TaskHandle task, int32 signal_id) {
             RegisterSignalEventResponse callback_response;
             auto response = &callback_response;
-            response->set_signal_id(signal_id);
+          response->set_signal_id(signal_id);
             queue_write(callback_response);
             return 0;
         });
@@ -17702,7 +17702,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        response->set_is_late(is_late);
+      response->set_is_late(is_late);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -17743,7 +17743,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        convert_to_grpc(timestamp, response->mutable_timestamp());
+      convert_to_grpc(timestamp, response->mutable_timestamp());
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -17811,7 +17811,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        response->set_samps_per_chan_written(samps_per_chan_written);
+      response->set_samps_per_chan_written(samps_per_chan_written);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -17899,7 +17899,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        response->set_samps_per_chan_written(samps_per_chan_written);
+      response->set_samps_per_chan_written(samps_per_chan_written);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -17947,7 +17947,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        response->set_samps_per_chan_written(samps_per_chan_written);
+      response->set_samps_per_chan_written(samps_per_chan_written);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -18009,7 +18009,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        response->set_samps_per_chan_written(samps_per_chan_written);
+      response->set_samps_per_chan_written(samps_per_chan_written);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -18057,7 +18057,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        response->set_samps_per_chan_written(samps_per_chan_written);
+      response->set_samps_per_chan_written(samps_per_chan_written);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -18103,7 +18103,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        response->set_num_samps_per_chan_written(num_samps_per_chan_written);
+      response->set_num_samps_per_chan_written(num_samps_per_chan_written);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -18176,7 +18176,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        response->set_num_samps_per_chan_written(num_samps_per_chan_written);
+      response->set_num_samps_per_chan_written(num_samps_per_chan_written);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -18249,7 +18249,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        response->set_num_samps_per_chan_written(num_samps_per_chan_written);
+      response->set_num_samps_per_chan_written(num_samps_per_chan_written);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -18321,7 +18321,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        response->set_samps_per_chan_written(samps_per_chan_written);
+      response->set_samps_per_chan_written(samps_per_chan_written);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -18409,7 +18409,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        response->set_samps_per_chan_written(samps_per_chan_written);
+      response->set_samps_per_chan_written(samps_per_chan_written);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -18457,7 +18457,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        response->set_samps_per_chan_written(samps_per_chan_written);
+      response->set_samps_per_chan_written(samps_per_chan_written);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -18502,7 +18502,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        response->set_samps_per_chan_written(samps_per_chan_written);
+      response->set_samps_per_chan_written(samps_per_chan_written);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -18531,7 +18531,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
-        response->set_samps_per_chan_written(samps_per_chan_written);
+      response->set_samps_per_chan_written(samps_per_chan_written);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {

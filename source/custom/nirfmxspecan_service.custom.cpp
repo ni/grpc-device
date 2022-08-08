@@ -2,7 +2,7 @@
 
 namespace nirfmxspecan_grpc {
 
-::grpc::Status NiRFmxSpecAnService::ConvertApiErrorStatusForniRFmxInstrHandle(google::protobuf::int32 status, niRFmxInstrHandle instrumentHandle)
+::grpc::Status NiRFmxSpecAnService::ConvertApiErrorStatusForNiRFmxInstrHandle(google::protobuf::int32 status, niRFmxInstrHandle instrumentHandle)
 {
     const ViInt32 buffer_size = 4096;
     ViStatus error_code {};

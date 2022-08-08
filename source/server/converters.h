@@ -330,7 +330,7 @@ inline ::grpc::Status ApiErrorAndDescriptionToStatus(google::protobuf::int32 sta
     for (size_t index = 0; (index = description.find('"', index)) != std::string::npos; index += 2) {
         description.replace(index, 1, "\\\"");
     }
-    std::string errorMessage = "{ \"code\":\"" + std::to_string(status) + "\", \"" + description + "\" }";
+    std::string errorMessage = "{ \"code\":" + std::to_string(status) + ", \"message\":\"" + description + "\" }";
     return ::grpc::Status(grpc::StatusCode::UNKNOWN, errorMessage);
 }
 }  // namespace nidevice_grpc

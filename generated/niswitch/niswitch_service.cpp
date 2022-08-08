@@ -85,8 +85,8 @@ namespace niswitch_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_path_capability(static_cast<niswitch_grpc::PathCapability>(path_capability));
-        response->set_path_capability_raw(path_capability);
+      response->set_path_capability(static_cast<niswitch_grpc::PathCapability>(path_capability));
+      response->set_path_capability_raw(path_capability);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -573,8 +573,8 @@ namespace niswitch_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_error_message(error_message);
-        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_message()));
+      response->set_error_message(error_message);
+      nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_message()));
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -599,9 +599,9 @@ namespace niswitch_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_error_code(error_code);
-        response->set_error_message(error_message);
-        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_message()));
+      response->set_error_code(error_code);
+      response->set_error_message(error_message);
+      nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_message()));
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -627,7 +627,7 @@ namespace niswitch_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_attribute_value(attribute_value);
+      response->set_attribute_value(attribute_value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -653,7 +653,7 @@ namespace niswitch_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_attribute_value(attribute_value);
+      response->set_attribute_value(attribute_value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -679,7 +679,7 @@ namespace niswitch_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_attribute_value(attribute_value);
+      response->set_attribute_value(attribute_value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -720,8 +720,8 @@ namespace niswitch_grpc {
           return ConvertApiErrorStatusForViSession(status, vi);
         }
         response->set_status(status);
-          response->set_attribute_value(attribute_value);
-          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_attribute_value()));
+        response->set_attribute_value(attribute_value);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_attribute_value()));
         return ::grpc::Status::OK;
       }
     }
@@ -748,8 +748,8 @@ namespace niswitch_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        auto session_id = session_repository_->resolve_session_id(attribute_value);
-        response->mutable_attribute_value()->set_id(session_id);
+      auto session_id = session_repository_->resolve_session_id(attribute_value);
+      response->mutable_attribute_value()->set_id(session_id);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -789,8 +789,8 @@ namespace niswitch_grpc {
           return ConvertApiErrorStatusForViSession(status, vi);
         }
         response->set_status(status);
-          response->set_channel_name_buffer(channel_name_buffer);
-          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_channel_name_buffer()));
+        response->set_channel_name_buffer(channel_name_buffer);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_channel_name_buffer()));
         return ::grpc::Status::OK;
       }
     }
@@ -831,9 +831,9 @@ namespace niswitch_grpc {
           return ConvertApiErrorStatusForViSession(status, vi);
         }
         response->set_status(status);
-          response->set_code(code);
-          response->set_description(description);
-          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_description()));
+        response->set_code(code);
+        response->set_description(description);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_description()));
         return ::grpc::Status::OK;
       }
     }
@@ -873,8 +873,8 @@ namespace niswitch_grpc {
           return ConvertApiErrorStatusForViSession(status, vi);
         }
         response->set_status(status);
-          response->set_coercion_record(coercion_record);
-          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_coercion_record()));
+        response->set_coercion_record(coercion_record);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_coercion_record()));
         return ::grpc::Status::OK;
       }
     }
@@ -914,8 +914,8 @@ namespace niswitch_grpc {
           return ConvertApiErrorStatusForViSession(status, vi);
         }
         response->set_status(status);
-          response->set_interchange_warning(interchange_warning);
-          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_interchange_warning()));
+        response->set_interchange_warning(interchange_warning);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_interchange_warning()));
         return ::grpc::Status::OK;
       }
     }
@@ -957,8 +957,8 @@ namespace niswitch_grpc {
           return ConvertApiErrorStatusForViSession(status, vi);
         }
         response->set_status(status);
-          response->set_path(path);
-          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_path()));
+        response->set_path(path);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_path()));
         return ::grpc::Status::OK;
       }
     }
@@ -984,7 +984,7 @@ namespace niswitch_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_relay_count(relay_count);
+      response->set_relay_count(relay_count);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1024,8 +1024,8 @@ namespace niswitch_grpc {
           return ConvertApiErrorStatusForViSession(status, vi);
         }
         response->set_status(status);
-          response->set_relay_name_buffer(relay_name_buffer);
-          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_relay_name_buffer()));
+        response->set_relay_name_buffer(relay_name_buffer);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_relay_name_buffer()));
         return ::grpc::Status::OK;
       }
     }
@@ -1051,8 +1051,8 @@ namespace niswitch_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_relay_position(static_cast<niswitch_grpc::RelayPosition>(relay_position));
-        response->set_relay_position_raw(relay_position);
+      response->set_relay_position(static_cast<niswitch_grpc::RelayPosition>(relay_position));
+      response->set_relay_position_raw(relay_position);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1085,7 +1085,7 @@ namespace niswitch_grpc {
         return ConvertApiErrorStatusForViSession(status, 0);
       }
       response->set_status(status);
-        response->mutable_vi()->set_id(session_id);
+      response->mutable_vi()->set_id(session_id);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1122,7 +1122,7 @@ namespace niswitch_grpc {
         return ConvertApiErrorStatusForViSession(status, 0);
       }
       response->set_status(status);
-        response->mutable_vi()->set_id(session_id);
+      response->mutable_vi()->set_id(session_id);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1159,7 +1159,7 @@ namespace niswitch_grpc {
         return ConvertApiErrorStatusForViSession(status, 0);
       }
       response->set_status(status);
-        response->mutable_vi()->set_id(session_id);
+      response->mutable_vi()->set_id(session_id);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1230,7 +1230,7 @@ namespace niswitch_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_is_debounced(is_debounced);
+      response->set_is_debounced(is_debounced);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1254,7 +1254,7 @@ namespace niswitch_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_is_scanning(is_scanning);
+      response->set_is_scanning(is_scanning);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1384,10 +1384,10 @@ namespace niswitch_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_instrument_driver_revision(instrument_driver_revision);
-        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_instrument_driver_revision()));
-        response->set_firmware_revision(firmware_revision);
-        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_firmware_revision()));
+      response->set_instrument_driver_revision(instrument_driver_revision);
+      nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_instrument_driver_revision()));
+      response->set_firmware_revision(firmware_revision);
+      nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_firmware_revision()));
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1561,9 +1561,9 @@ namespace niswitch_grpc {
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
-        response->set_self_test_result(self_test_result);
-        response->set_self_test_message(self_test_message);
-        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_self_test_message()));
+      response->set_self_test_result(self_test_result);
+      response->set_self_test_message(self_test_message);
+      nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_self_test_message()));
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {

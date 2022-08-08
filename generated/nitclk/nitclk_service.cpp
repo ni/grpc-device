@@ -119,7 +119,7 @@ namespace nitclk_grpc {
         return ConvertApiErrorStatusForViSession(status, session);
       }
       response->set_status(status);
-        response->set_value(value);
+      response->set_value(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -145,8 +145,8 @@ namespace nitclk_grpc {
         return ConvertApiErrorStatusForViSession(status, session);
       }
       response->set_status(status);
-        auto session_id = session_repository_->resolve_session_id(value);
-        response->mutable_value()->set_id(session_id);
+      auto session_id = session_repository_->resolve_session_id(value);
+      response->mutable_value()->set_id(session_id);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -183,8 +183,8 @@ namespace nitclk_grpc {
           return ConvertApiErrorStatusForViSession(status, 0);
         }
         response->set_status(status);
-          response->set_error_string(error_string);
-          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_string()));
+        response->set_error_string(error_string);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_string()));
         return ::grpc::Status::OK;
       }
     }
@@ -243,7 +243,7 @@ namespace nitclk_grpc {
         return ConvertApiErrorStatusForViSession(status, 0);
       }
       response->set_status(status);
-        response->set_done(done);
+      response->set_done(done);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
