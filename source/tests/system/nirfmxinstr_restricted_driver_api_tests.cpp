@@ -101,54 +101,58 @@ TEST_F(NiRFmxInstrRestrictedDriverApiTests, GetRFmxVersion)
   EXPECT_GT(get_version_response.r_fmx_version().length(), 0);
 }
 
-// GetTracesInfoForMonitorSnapshot
-// GetForceAllTracesEnabled
-// SetForceAllTracesEnabled
-
-TEST_F(NiRFmxInstrRestrictedDriverApiTests, GetAttributeDesiredF64)
+TEST_F(NiRFmxInstrRestrictedDriverApiTests, SetForceAllTracesEnabled_GetForceAllTracesEnabled_AttributeIsAsSet)
 {
   const auto session = init_session(stub(), PXI_5663E);
-  EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, "", NiRFmxInstrAttribute::NIRFMXINSTR_ATTRIBUTE_MECHANICAL_ATTENUATION_VALUE, 150));
+  auto initial_enabled_response = restricted_client::get_force_all_traces_enabled(restricted_stub(), session, "");
+  auto new_enabled_value = initial_enabled_response.attr_val() == 0 ? 1: 0;
+  EXPECT_SUCCESS(session, restricted_client::set_force_all_traces_enabled(restricted_stub(), session, "", new_enabled_value));
+
+  auto get_enabled_response = restricted_client::get_force_all_traces_enabled(restricted_stub(), session, "");
+  EXPECT_RESPONSE_SUCCESS(get_enabled_response);
+  EXPECT_EQ(new_enabled_value, get_enabled_response.attr_val());
+}
+
+TEST_F(NiRFmxInstrRestrictedDriverApiTests, SetAttributeOutOfRange_GetAttributeDesiredF64_DesiredAttributeReturned)
+{
+  const double attenuation = 150.0;
+  const auto session = init_session(stub(), PXI_5663E);
+  EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, "", NiRFmxInstrAttribute::NIRFMXINSTR_ATTRIBUTE_MECHANICAL_ATTENUATION_VALUE, attenuation));
   initiate_to_enter_committed_state(session);
-  auto get_desired_attr_response =  restricted_client::get_attribute_desired_f64(restricted_stub(), session, "", NiRFmxInstrAttribute::NIRFMXINSTR_ATTRIBUTE_MECHANICAL_ATTENUATION_VALUE);
-  EXPECT_EQ(get_desired_attr_response.attr_val(), 150);
-  auto get_attr_response =  client::get_attribute_f64(stub(), session, "", NiRFmxInstrAttribute::NIRFMXINSTR_ATTRIBUTE_MECHANICAL_ATTENUATION_VALUE);
+
+  auto get_desired_attr_response = restricted_client::get_attribute_desired_f64(restricted_stub(), session, "", NiRFmxInstrAttribute::NIRFMXINSTR_ATTRIBUTE_MECHANICAL_ATTENUATION_VALUE);
+  EXPECT_RESPONSE_SUCCESS(get_desired_attr_response);
+  EXPECT_EQ(get_desired_attr_response.attr_val(), attenuation);
+  
+  auto get_attr_response = client::get_attribute_f64(stub(), session, "", NiRFmxInstrAttribute::NIRFMXINSTR_ATTRIBUTE_MECHANICAL_ATTENUATION_VALUE);
   EXPECT_LT(get_attr_response.attr_val(), get_desired_attr_response.attr_val());
 }
 
-TEST_F(NiRFmxInstrRestrictedDriverApiTests, GetAttributeDesiredI32)
+TEST_F(NiRFmxInstrRestrictedDriverApiTests, SetAttributeOutOfRange_GetAttributeDesiredI32_DesiredAttributeReturned)
 {
   const auto session = init_session(stub(), PXI_5663E);
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NiRFmxInstrAttribute::NIRFMXINSTR_ATTRIBUTE_TUNING_SPEED, INT_MAX));
   initiate_to_enter_committed_state(session);
-  auto get_desired_attr_response =  restricted_client::get_attribute_desired_i32(restricted_stub(), session, "", NiRFmxInstrAttribute::NIRFMXINSTR_ATTRIBUTE_TUNING_SPEED);
+  
+  auto get_desired_attr_response = restricted_client::get_attribute_desired_i32(restricted_stub(), session, "", NiRFmxInstrAttribute::NIRFMXINSTR_ATTRIBUTE_TUNING_SPEED);
+  EXPECT_RESPONSE_SUCCESS(get_desired_attr_response);
   EXPECT_EQ(get_desired_attr_response.attr_val(), INT_MAX);
-  auto get_attr_response =  client::get_attribute_i32(stub(), session, "", NiRFmxInstrAttribute::NIRFMXINSTR_ATTRIBUTE_TUNING_SPEED);
+  
+  auto get_attr_response = client::get_attribute_i32(stub(), session, "", NiRFmxInstrAttribute::NIRFMXINSTR_ATTRIBUTE_TUNING_SPEED);
   EXPECT_LT(get_attr_response.attr_val(), get_desired_attr_response.attr_val());
 }
 
-// GetAttributeDesiredI64
-// GetAttributeDesiredString
-// GetAttributeDesiredF64Array
-// GetAttributeDesiredF32Array
-// GetAttributeDesiredF32
-// GetAttributeAuthor
-
-// SaveAllForRevert
-// LoadAllForRevert
-// GetInitiaitedSnapshotStrings
-// GetSnapshotInfoFromCache
-// GetLatestConfigurationSnapshot
-// GetSnapshotState
-// DeleteSnapshot
-// ConvertForPowerUnitsUtility
-// UnregisterSpecialClientSnapshotInterest
-// GetCalibrationPlaneNames
-// GetCalibrationPlaneEnabled
-// GetExternalAttenuationTableNames
-// GetActiveTableName
-// GetSParameterExternalAttenuationType
-// GetSignalConfigurationState64
+TEST_F(NiRFmxInstrRestrictedDriverApiTests, GetAttributeAuthor)
+{
+  const auto session = init_session(stub(), PXI_5663E);
+  EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NiRFmxInstrAttribute::NIRFMXINSTR_ATTRIBUTE_TUNING_SPEED, 2));
+  initiate_to_enter_committed_state(session);
+  
+  auto get_attribute_author_response = restricted_client::get_attribute_author(restricted_stub(), session, "", NIRFMXINSTR_ATTRIBUTE_TUNING_SPEED);
+  EXPECT_RESPONSE_SUCCESS(get_attribute_author_response);
+  printf("\nattribute author %d\n", get_attribute_author_response.attr_val());
+  EXPECT_EQ(get_attribute_author_response.attr_val(), 1); // RfsgAttributeAuthor.User
+}
 
 TEST_F(NiRFmxInstrRestrictedDriverApiTests, SetIOTraceStatus)
 {
@@ -156,9 +160,6 @@ TEST_F(NiRFmxInstrRestrictedDriverApiTests, SetIOTraceStatus)
   auto set_io_trace_status_response = restricted_client::set_io_trace_status(restricted_stub(), session, 1);
   EXPECT_RESPONSE_SUCCESS(set_io_trace_status_response);
 }
-
-// GetActiveResultName
-
 
 }  // namespace
 }  // namespace system

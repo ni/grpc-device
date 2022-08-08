@@ -500,6 +500,7 @@ if(WIN32)
         "source/tests/system/nirfmxbluetooth_driver_api_tests.cpp"
         "source/tests/system/nirfmxbluetooth_session_tests.cpp"
         "source/tests/system/nirfmxinstr_driver_api_tests.cpp"
+        "source/tests/system/nirfmxinstr_restricted_driver_api_tests.cpp"
         "source/tests/system/nirfmxlte_driver_api_tests.cpp"
         "source/tests/system/nirfmxlte_session_tests.cpp"
         "source/tests/system/nirfmxnr_driver_api_tests.cpp"
