@@ -2353,6 +2353,26 @@ attributes = {
         'name': 'AMPM_COMPRESSION_POINT_GAIN_REFERENCE_POWER',
         'type': 'float64'
     },
+    1105974: {
+        'access': 'read-write',
+        'name': 'AMPM_COMPRESSION_POINT_USER_GAIN',
+        'type': 'float64'
+    },
+    1105975: {
+        'access': 'read-write',
+        'name': 'AMPM_RESULTS_COMPRESSION_POINT_GAIN_REFERENCE',
+        'type': 'float64'
+    },
+    1105976: {
+        'access': 'read-write',
+        'name': 'AMPM_RESULTS_PEAK_REFERENCE_POWER',
+        'type': 'float64'
+    },
+    1105977: {
+        'access': 'read-write',
+        'name': 'AMPM_RESULTS_PEAK_REFERENCE_POWER_GAIN',
+        'type': 'float64'
+    },
     1110016: {
         'access': 'read-write',
         'name': 'DPD_MEASUREMENT_ENABLED',
@@ -2708,6 +2728,24 @@ attributes = {
         'access': 'read-write',
         'name': 'DPD_CARRIER_BANDWIDTH',
         'type': 'float64'
+    },
+    1110095: {
+        'access': 'read-write',
+        'enum': 'DpdMemoryPolynomialOrderType',
+        'name': 'DPD_MEMORY_POLYNOMIAL_ORDER_TYPE',
+        'type': 'int32'
+    },
+    1110096: {
+        'access': 'read-write',
+        'enum': 'DpdMemoryPolynomialLeadOrderType',
+        'name': 'DPD_MEMORY_POLYNOMIAL_LEAD_ORDER_TYPE',
+        'type': 'int32'
+    },
+    1110097: {
+        'access': 'read-write',
+        'enum': 'DpdMemoryPolynomialLagOrderType',
+        'name': 'DPD_MEMORY_POLYNOMIAL_LAG_ORDER_TYPE',
+        'type': 'int32'
     },
     1110106: {
         'access': 'read-write',
