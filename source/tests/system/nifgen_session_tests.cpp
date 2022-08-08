@@ -11,7 +11,7 @@ namespace fgen = nifgen_grpc;
 
 const int kInvalidFgenRsrc = -1074134944;
 const int kInvalidFgenSession = -1074130544;
-const char* kViErrorFgenResourceNotFoundMessage = "IVI: (Hex 0xBFFA0060) Insufficient location information or resource not present in the system.\n\nInvalid Identifier: ";
+const char* kViErrorFgenResourceNotFoundMessage = "IVI: Insufficient location information or resource not present in the system.\n\nInvalid Identifier: ";
 const char* kInvalidFgenSessionMessage = "The session handle is not valid.";
 const char* kTestFgenRsrc = "FakeDevice";
 const char* kFgenOptionsString = "Simulate=1, DriverSetup=Model:5421; BoardType:PXI";

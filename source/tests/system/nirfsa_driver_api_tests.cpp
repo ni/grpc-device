@@ -600,7 +600,7 @@ TEST_F(NiRFSADriverApiTests, ErrorMessage_ReturnsErrorMessage)
 
   EXPECT_SUCCESS(session, response);
   EXPECT_EQ(
-      "IVI: (Hex 0xBFFA0012) Attribute or property not supported.",
+      "IVI: Attribute or property not supported.",
       response.error_message());
 }
 
