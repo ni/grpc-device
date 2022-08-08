@@ -1112,8 +1112,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
     u32 size_of_file_path_buffer{};
     auto status = library_->DbGetDatabaseListSizes(ip_address, &size_of_alias_buffer, &size_of_file_path_buffer);
     if (!status_ok(status)) {
-      response->set_status(status);
-      return ::grpc::Status::OK;
+      return ConvertApiErrorStatusForNxDatabaseRef_t(status, 0);
     }
 
     std::string alias_buffer(size_of_alias_buffer, '\0');
