@@ -918,7 +918,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
       }
     }
     if (!status_ok(status)) {
-      return ConvertApiErrorStatusForNxDatabaseRef_t(status, dbobject);
+      return ConvertApiErrorStatusForNxSessionRef_t(status, session);
     }
     response->set_status(status);
     return ::grpc::Status::OK;
@@ -982,7 +982,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
       }
     }
     if (!status_ok(status)) {
-      return ConvertApiErrorStatusForNxDatabaseRef_t(status, dbobject);
+      return ConvertApiErrorStatusForNxSessionRef_t(status, session);
     }
     response->set_status(status);
     return ::grpc::Status::OK;
