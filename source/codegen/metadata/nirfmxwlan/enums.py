@@ -640,21 +640,25 @@ enums = {
             }
         ]
     },
-    'OfdmModAccChannelEstimationLLtfEnabled': {
-        'enum-value-prefix': 'OFDMMODACC_CHANNEL_ESTIMATION_L_LTF_ENABLED',
+    'OfdmModAccChannelEstimationInterpolationType': {
+        'enum-value-prefix': 'OFDMMODACC_CHANNEL_ESTIMATION_INTERPOLATION_TYPE',
         'values': [
             {
-                'name': 'FALSE',
+                'name': 'LINEAR',
                 'value': 0
             },
             {
-                'name': 'TRUE',
+                'name': 'TRIANGULAR_SMOOTHING',
                 'value': 1
+            },
+            {
+                'name': 'WIENER_FILTER',
+                'value': 2
             }
         ]
     },
-    'OfdmModAccChannelEstimationSmoothingEnabled': {
-        'enum-value-prefix': 'OFDMMODACC_CHANNEL_ESTIMATION_SMOOTHING_ENABLED',
+    'OfdmModAccChannelEstimationLLtfEnabled': {
+        'enum-value-prefix': 'OFDMMODACC_CHANNEL_ESTIMATION_L_LTF_ENABLED',
         'values': [
             {
                 'name': 'FALSE',
@@ -968,6 +972,45 @@ enums = {
             },
             {
                 'name': 'TRUE',
+                'value': 1
+            }
+        ]
+    },
+    'OfdmModAccPhaseRotationCoefficient1': {
+        'enum-value-prefix': 'OFDMMODACC_PHASE_ROTATION_COEFFICIENT1',
+        'values': [
+            {
+                'name': 'PLUS_ONE',
+                'value': 0
+            },
+            {
+                'name': 'MINUS_ONE',
+                'value': 1
+            }
+        ]
+    },
+    'OfdmModAccPhaseRotationCoefficient2': {
+        'enum-value-prefix': 'OFDMMODACC_PHASE_ROTATION_COEFFICIENT2',
+        'values': [
+            {
+                'name': 'PLUS_ONE',
+                'value': 0
+            },
+            {
+                'name': 'MINUS_ONE',
+                'value': 1
+            }
+        ]
+    },
+    'OfdmModAccPhaseRotationCoefficient3': {
+        'enum-value-prefix': 'OFDMMODACC_PHASE_ROTATION_COEFFICIENT3',
+        'values': [
+            {
+                'name': 'PLUS_ONE',
+                'value': 0
+            },
+            {
+                'name': 'MINUS_ONE',
                 'value': 1
             }
         ]
