@@ -47,7 +47,6 @@ service NiRFmxInstrRestricted {
   rpc GetCalibrationPlaneEnabled(GetCalibrationPlaneEnabledRequest) returns (GetCalibrationPlaneEnabledResponse);
   rpc GetExternalAttenuationTableNames(GetExternalAttenuationTableNamesRequest) returns (GetExternalAttenuationTableNamesResponse);
   rpc GetActiveTableName(GetActiveTableNameRequest) returns (GetActiveTableNameResponse);
-  rpc GetSParameterExternalAttenuationType(GetSParameterExternalAttenuationTypeRequest) returns (GetSParameterExternalAttenuationTypeResponse);
   rpc GetSignalConfigurationState64(GetSignalConfigurationState64Request) returns (GetSignalConfigurationState64Response);
   rpc SetIOTraceStatus(SetIOTraceStatusRequest) returns (SetIOTraceStatusResponse);
   rpc GetActiveResultName(GetActiveResultNameRequest) returns (GetActiveResultNameResponse);
@@ -76,7 +75,7 @@ message GetRFmxVersionRequest {
 
 message GetRFmxVersionResponse {
   int32 status = 1;
-  string r_fmx_version = 2;
+  string version = 2;
 }
 
 message GetTracesInfoForMonitorSnapshotRequest {
@@ -392,16 +391,6 @@ message GetActiveTableNameRequest {
 message GetActiveTableNameResponse {
   int32 status = 1;
   string active_table_name = 2;
-}
-
-message GetSParameterExternalAttenuationTypeRequest {
-  nidevice_grpc.Session instrument = 1;
-  string selector_string = 2;
-}
-
-message GetSParameterExternalAttenuationTypeResponse {
-  int32 status = 1;
-  int32 s_parameter_type = 2;
 }
 
 message GetSignalConfigurationState64Request {

@@ -53,7 +53,6 @@ GetCalibrationPlaneNamesResponse get_calibration_plane_names(const StubPtr& stub
 GetCalibrationPlaneEnabledResponse get_calibration_plane_enabled(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string);
 GetExternalAttenuationTableNamesResponse get_external_attenuation_table_names(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string);
 GetActiveTableNameResponse get_active_table_name(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string);
-GetSParameterExternalAttenuationTypeResponse get_s_parameter_external_attenuation_type(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string);
 GetSignalConfigurationState64Response get_signal_configuration_state64(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& signal_name, const pb::uint32& signal_type);
 SetIOTraceStatusResponse set_io_trace_status(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::int32& io_trace_status);
 GetActiveResultNameResponse get_active_result_name(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& signal_name, const pb::uint32& signal_type);

@@ -52,7 +52,6 @@ NiRFmxInstrRestrictedLibrary::NiRFmxInstrRestrictedLibrary() : shared_library_(k
   function_pointers_.GetCalibrationPlaneEnabled = reinterpret_cast<GetCalibrationPlaneEnabledPtr>(shared_library_.get_function_pointer("RFmxInstr_GetCalibrationPlaneEnabled"));
   function_pointers_.GetExternalAttenuationTableNames = reinterpret_cast<GetExternalAttenuationTableNamesPtr>(shared_library_.get_function_pointer("RFmxInstr_GetExternalAttenuationTableNames"));
   function_pointers_.GetActiveTableName = reinterpret_cast<GetActiveTableNamePtr>(shared_library_.get_function_pointer("RFmxInstr_GetActiveTableName"));
-  function_pointers_.GetSParameterExternalAttenuationType = reinterpret_cast<GetSParameterExternalAttenuationTypePtr>(shared_library_.get_function_pointer("RFmxInstr_GetSParameterExternalAttenuationType"));
   function_pointers_.GetSignalConfigurationState64 = reinterpret_cast<GetSignalConfigurationState64Ptr>(shared_library_.get_function_pointer("RFmxInstr_GetSignalConfigurationState64"));
   function_pointers_.SetIOTraceStatus = reinterpret_cast<SetIOTraceStatusPtr>(shared_library_.get_function_pointer("RFmxInstr_SetIOTraceStatus"));
   function_pointers_.GetActiveResultName = reinterpret_cast<GetActiveResultNamePtr>(shared_library_.get_function_pointer("RFmxInstr_GetActiveResultName"));
@@ -315,14 +314,6 @@ int32 NiRFmxInstrRestrictedLibrary::GetActiveTableName(niRFmxInstrHandle instrum
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetActiveTableName.");
   }
   return function_pointers_.GetActiveTableName(instrumentHandle, selectorString, arraySize, activeTableName);
-}
-
-int32 NiRFmxInstrRestrictedLibrary::GetSParameterExternalAttenuationType(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* sParameterType)
-{
-  if (!function_pointers_.GetSParameterExternalAttenuationType) {
-    throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetSParameterExternalAttenuationType.");
-  }
-  return function_pointers_.GetSParameterExternalAttenuationType(instrumentHandle, selectorString, sParameterType);
 }
 
 int32 NiRFmxInstrRestrictedLibrary::GetSignalConfigurationState64(niRFmxInstrHandle instrumentHandle, char signalName[], uInt32 signalType, int32* signalState, uInt64* timeStamp)

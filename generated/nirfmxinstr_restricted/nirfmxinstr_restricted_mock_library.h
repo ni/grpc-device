@@ -48,7 +48,6 @@ class NiRFmxInstrRestrictedMockLibrary : public nirfmxinstr_restricted_grpc::NiR
   MOCK_METHOD(int32, GetCalibrationPlaneEnabled, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32* calibrationPlaneEnabled), (override));
   MOCK_METHOD(int32, GetExternalAttenuationTableNames, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32 arraySize, char externalAttenuationTableNames[]), (override));
   MOCK_METHOD(int32, GetActiveTableName, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32 arraySize, char activeTableName[]), (override));
-  MOCK_METHOD(int32, GetSParameterExternalAttenuationType, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32* sParameterType), (override));
   MOCK_METHOD(int32, GetSignalConfigurationState64, (niRFmxInstrHandle instrumentHandle, char signalName[], uInt32 signalType, int32* signalState, uInt64* timeStamp), (override));
   MOCK_METHOD(int32, SetIOTraceStatus, (niRFmxInstrHandle instrumentHandle, int32 IOTraceStatus), (override));
   MOCK_METHOD(int32, GetActiveResultName, (niRFmxInstrHandle instrumentHandle, char signalName[], uInt32 signalType, int32 resultSize, char resultName[], int32* actualResultSize, int32* resultState), (override));

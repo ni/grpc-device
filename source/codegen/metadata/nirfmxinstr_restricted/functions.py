@@ -48,6 +48,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_name': 'version',
                 'name': 'RFmxVersion',
                 'size': {
                     'mechanism': 'ivi-dance',
@@ -1003,27 +1004,6 @@ functions = {
                 },
                 'type': 'char[]'
             }
-        ],
-        'returns': 'int32'
-    },
-    'GetSParameterExternalAttenuationType': {
-        'parameters': [
-            {
-                'direction': 'in',
-                'grpc_name': 'instrument',
-                'name': 'instrumentHandle',
-                'type': 'niRFmxInstrHandle'
-            },
-            {
-                'direction': 'in',
-                'name': 'selectorString',
-                'type': 'char[]'
-            },
-            {
-                'direction': 'out',
-                'name': 'sParameterType',
-                'type': 'int32'
-            },
         ],
         'returns': 'int32'
     },

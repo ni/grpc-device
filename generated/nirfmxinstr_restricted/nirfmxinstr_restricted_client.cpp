@@ -553,23 +553,6 @@ get_active_table_name(const StubPtr& stub, const nidevice_grpc::Session& instrum
   return response;
 }
 
-GetSParameterExternalAttenuationTypeResponse
-get_s_parameter_external_attenuation_type(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string)
-{
-  ::grpc::ClientContext context;
-
-  auto request = GetSParameterExternalAttenuationTypeRequest{};
-  request.mutable_instrument()->CopyFrom(instrument);
-  request.set_selector_string(selector_string);
-
-  auto response = GetSParameterExternalAttenuationTypeResponse{};
-
-  raise_if_error(
-      stub->GetSParameterExternalAttenuationType(&context, request, &response));
-
-  return response;
-}
-
 GetSignalConfigurationState64Response
 get_signal_configuration_state64(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& signal_name, const pb::uint32& signal_type)
 {

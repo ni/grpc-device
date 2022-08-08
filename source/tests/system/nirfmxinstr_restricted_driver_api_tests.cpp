@@ -98,7 +98,7 @@ TEST_F(NiRFmxInstrRestrictedDriverApiTests, GetRFmxVersion)
   const auto session = init_session(stub(), PXI_5663);
   auto get_version_response = restricted_client::get_r_fmx_version(restricted_stub(), session);
   EXPECT_RESPONSE_SUCCESS(get_version_response);
-  EXPECT_GT(get_version_response.r_fmx_version().length(), 0);
+  EXPECT_GT(get_version_response.version().length(), 0);
 }
 
 TEST_F(NiRFmxInstrRestrictedDriverApiTests, SetForceAllTracesEnabled_GetForceAllTracesEnabled_AttributeIsAsSet)

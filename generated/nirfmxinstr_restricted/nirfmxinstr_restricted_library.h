@@ -49,7 +49,6 @@ class NiRFmxInstrRestrictedLibrary : public nirfmxinstr_restricted_grpc::NiRFmxI
   int32 GetCalibrationPlaneEnabled(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* calibrationPlaneEnabled);
   int32 GetExternalAttenuationTableNames(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 arraySize, char externalAttenuationTableNames[]);
   int32 GetActiveTableName(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 arraySize, char activeTableName[]);
-  int32 GetSParameterExternalAttenuationType(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* sParameterType);
   int32 GetSignalConfigurationState64(niRFmxInstrHandle instrumentHandle, char signalName[], uInt32 signalType, int32* signalState, uInt64* timeStamp);
   int32 SetIOTraceStatus(niRFmxInstrHandle instrumentHandle, int32 IOTraceStatus);
   int32 GetActiveResultName(niRFmxInstrHandle instrumentHandle, char signalName[], uInt32 signalType, int32 resultSize, char resultName[], int32* actualResultSize, int32* resultState);
@@ -86,7 +85,6 @@ class NiRFmxInstrRestrictedLibrary : public nirfmxinstr_restricted_grpc::NiRFmxI
   using GetCalibrationPlaneEnabledPtr = int32 (*)(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* calibrationPlaneEnabled);
   using GetExternalAttenuationTableNamesPtr = int32 (*)(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 arraySize, char externalAttenuationTableNames[]);
   using GetActiveTableNamePtr = int32 (*)(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 arraySize, char activeTableName[]);
-  using GetSParameterExternalAttenuationTypePtr = int32 (*)(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* sParameterType);
   using GetSignalConfigurationState64Ptr = int32 (*)(niRFmxInstrHandle instrumentHandle, char signalName[], uInt32 signalType, int32* signalState, uInt64* timeStamp);
   using SetIOTraceStatusPtr = int32 (*)(niRFmxInstrHandle instrumentHandle, int32 IOTraceStatus);
   using GetActiveResultNamePtr = int32 (*)(niRFmxInstrHandle instrumentHandle, char signalName[], uInt32 signalType, int32 resultSize, char resultName[], int32* actualResultSize, int32* resultState);
@@ -123,7 +121,6 @@ class NiRFmxInstrRestrictedLibrary : public nirfmxinstr_restricted_grpc::NiRFmxI
     GetCalibrationPlaneEnabledPtr GetCalibrationPlaneEnabled;
     GetExternalAttenuationTableNamesPtr GetExternalAttenuationTableNames;
     GetActiveTableNamePtr GetActiveTableName;
-    GetSParameterExternalAttenuationTypePtr GetSParameterExternalAttenuationType;
     GetSignalConfigurationState64Ptr GetSignalConfigurationState64;
     SetIOTraceStatusPtr SetIOTraceStatus;
     GetActiveResultNamePtr GetActiveResultName;

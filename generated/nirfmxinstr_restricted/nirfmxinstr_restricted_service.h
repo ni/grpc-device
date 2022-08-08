@@ -72,7 +72,6 @@ public:
   ::grpc::Status GetCalibrationPlaneEnabled(::grpc::ServerContext* context, const GetCalibrationPlaneEnabledRequest* request, GetCalibrationPlaneEnabledResponse* response) override;
   ::grpc::Status GetExternalAttenuationTableNames(::grpc::ServerContext* context, const GetExternalAttenuationTableNamesRequest* request, GetExternalAttenuationTableNamesResponse* response) override;
   ::grpc::Status GetActiveTableName(::grpc::ServerContext* context, const GetActiveTableNameRequest* request, GetActiveTableNameResponse* response) override;
-  ::grpc::Status GetSParameterExternalAttenuationType(::grpc::ServerContext* context, const GetSParameterExternalAttenuationTypeRequest* request, GetSParameterExternalAttenuationTypeResponse* response) override;
   ::grpc::Status GetSignalConfigurationState64(::grpc::ServerContext* context, const GetSignalConfigurationState64Request* request, GetSignalConfigurationState64Response* response) override;
   ::grpc::Status SetIOTraceStatus(::grpc::ServerContext* context, const SetIOTraceStatusRequest* request, SetIOTraceStatusResponse* response) override;
   ::grpc::Status GetActiveResultName(::grpc::ServerContext* context, const GetActiveResultNameRequest* request, GetActiveResultNameResponse* response) override;

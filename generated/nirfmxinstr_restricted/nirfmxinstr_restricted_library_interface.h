@@ -46,7 +46,6 @@ class NiRFmxInstrRestrictedLibraryInterface {
   virtual int32 GetCalibrationPlaneEnabled(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* calibrationPlaneEnabled) = 0;
   virtual int32 GetExternalAttenuationTableNames(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 arraySize, char externalAttenuationTableNames[]) = 0;
   virtual int32 GetActiveTableName(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 arraySize, char activeTableName[]) = 0;
-  virtual int32 GetSParameterExternalAttenuationType(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* sParameterType) = 0;
   virtual int32 GetSignalConfigurationState64(niRFmxInstrHandle instrumentHandle, char signalName[], uInt32 signalType, int32* signalState, uInt64* timeStamp) = 0;
   virtual int32 SetIOTraceStatus(niRFmxInstrHandle instrumentHandle, int32 IOTraceStatus) = 0;
   virtual int32 GetActiveResultName(niRFmxInstrHandle instrumentHandle, char signalName[], uInt32 signalType, int32 resultSize, char resultName[], int32* actualResultSize, int32* resultState) = 0;

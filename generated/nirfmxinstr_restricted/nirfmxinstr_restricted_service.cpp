@@ -121,19 +121,19 @@ namespace nirfmxinstr_restricted_grpc {
         }
         int32 array_size = status;
 
-        std::string r_fmx_version;
+        std::string version;
         if (array_size > 0) {
-            r_fmx_version.resize(array_size - 1);
+            version.resize(array_size - 1);
         }
-        status = library_->GetRFmxVersion(instrument, array_size, (char*)r_fmx_version.data());
+        status = library_->GetRFmxVersion(instrument, array_size, (char*)version.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(array_size)) {
           // buffer is now too small, try again
           continue;
         }
         response->set_status(status);
         if (status_ok(status)) {
-          response->set_r_fmx_version(r_fmx_version);
-          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_r_fmx_version()));
+          response->set_version(version);
+          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_version()));
         }
         return ::grpc::Status::OK;
       }
@@ -1047,30 +1047,6 @@ namespace nirfmxinstr_restricted_grpc {
         }
         return ::grpc::Status::OK;
       }
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiRFmxInstrRestrictedService::GetSParameterExternalAttenuationType(::grpc::ServerContext* context, const GetSParameterExternalAttenuationTypeRequest* request, GetSParameterExternalAttenuationTypeResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
-      int32 s_parameter_type {};
-      auto status = library_->GetSParameterExternalAttenuationType(instrument, selector_string, &s_parameter_type);
-      response->set_status(status);
-      if (status_ok(status)) {
-        response->set_s_parameter_type(s_parameter_type);
-      }
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
