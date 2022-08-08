@@ -9,15 +9,15 @@ using nidevice_grpc::converters::convert_to_grpc;
 
 const auto kErrorReadBufferTooSmall = -200229;
 
-struct DriverErrorException : std::runtime_error {
-  DriverErrorException(int status) : std::runtime_error("") { status_ = status; }
+struct DriverWarningOrErrorException : std::runtime_error {
+  DriverWarningOrErrorException(int status) : std::runtime_error("") { status_ = status; }
   int status_ = 0;
 };
 
 void CheckStatus(int status)
 {
   if (status != 0) {
-    throw DriverErrorException(status);
+    throw DriverWarningOrErrorException(status);
   }
 }
 
@@ -56,8 +56,12 @@ void CheckStatus(int status)
   catch (nidevice_grpc::LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
   }
-  catch (DriverErrorException& ex) {
-    return ConvertApiErrorStatusForViSession(ex.status_, vi);
+  catch (const DriverWarningOrErrorException& ex) {
+    if (ex.status_ < VI_SUCCESS) {
+      return ConvertApiErrorStatusForViSession(ex.status_, vi);
+    }
+    response->set_status(ex.status_);
+    return ::grpc::Status::OK;
   }
 }
 
@@ -96,8 +100,12 @@ void CheckStatus(int status)
   catch (nidevice_grpc::LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
   }
-  catch (DriverErrorException& ex) {
-    return ConvertApiErrorStatusForViSession(ex.status_, vi);
+  catch (const DriverWarningOrErrorException& ex) {
+    if (ex.status_ < VI_SUCCESS) {
+      return ConvertApiErrorStatusForViSession(ex.status_, vi);
+    }
+    response->set_status(ex.status_);
+    return ::grpc::Status::OK;
   }
 }
 
@@ -136,8 +144,12 @@ void CheckStatus(int status)
   catch (nidevice_grpc::LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
   }
-  catch (DriverErrorException& ex) {
-    return ConvertApiErrorStatusForViSession(ex.status_, vi);
+  catch (const DriverWarningOrErrorException& ex) {
+    if (ex.status_ < VI_SUCCESS) {
+      return ConvertApiErrorStatusForViSession(ex.status_, vi);
+    }
+    response->set_status(ex.status_);
+    return ::grpc::Status::OK;
   }
 }
 
@@ -176,8 +188,12 @@ void CheckStatus(int status)
   catch (nidevice_grpc::LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
   }
-  catch (DriverErrorException& ex) {
-    return ConvertApiErrorStatusForViSession(ex.status_, vi);
+  catch (const DriverWarningOrErrorException& ex) {
+    if (ex.status_ < VI_SUCCESS) {
+      return ConvertApiErrorStatusForViSession(ex.status_, vi);
+    }
+    response->set_status(ex.status_);
+    return ::grpc::Status::OK;
   }
 }
 
@@ -227,8 +243,12 @@ void CheckStatus(int status)
   catch (nidevice_grpc::LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
   }
-  catch (DriverErrorException& ex) {
-    return ConvertApiErrorStatusForViSession(ex.status_, vi);
+  catch (const DriverWarningOrErrorException& ex) {
+    if (ex.status_ < VI_SUCCESS) {
+      return ConvertApiErrorStatusForViSession(ex.status_, vi);
+    }
+    response->set_status(ex.status_);
+    return ::grpc::Status::OK;
   }
 }
 
@@ -283,8 +303,12 @@ void CheckStatus(int status)
   catch (nidevice_grpc::LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
   }
-  catch (DriverErrorException& ex) {
-    return ConvertApiErrorStatusForViSession(ex.status_, vi);
+  catch (const DriverWarningOrErrorException& ex) {
+    if (ex.status_ < VI_SUCCESS) {
+      return ConvertApiErrorStatusForViSession(ex.status_, vi);
+    }
+    response->set_status(ex.status_);
+    return ::grpc::Status::OK;
   }
 }
 
@@ -323,8 +347,12 @@ void CheckStatus(int status)
   catch (nidevice_grpc::LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
   }
-  catch (DriverErrorException& ex) {
-    return ConvertApiErrorStatusForViSession(ex.status_, vi);
+  catch (const DriverWarningOrErrorException& ex) {
+    if (ex.status_ < VI_SUCCESS) {
+      return ConvertApiErrorStatusForViSession(ex.status_, vi);
+    }
+    response->set_status(ex.status_);
+    return ::grpc::Status::OK;
   }
 }
 
@@ -363,8 +391,12 @@ void CheckStatus(int status)
   catch (nidevice_grpc::LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
   }
-  catch (DriverErrorException& ex) {
-    return ConvertApiErrorStatusForViSession(ex.status_, vi);
+  catch (const DriverWarningOrErrorException& ex) {
+    if (ex.status_ < VI_SUCCESS) {
+      return ConvertApiErrorStatusForViSession(ex.status_, vi);
+    }
+    response->set_status(ex.status_);
+    return ::grpc::Status::OK;
   }
 }
 
@@ -403,8 +435,12 @@ void CheckStatus(int status)
   catch (nidevice_grpc::LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
   }
-  catch (DriverErrorException& ex) {
-    return ConvertApiErrorStatusForViSession(ex.status_, vi);
+  catch (const DriverWarningOrErrorException& ex) {
+    if (ex.status_ < VI_SUCCESS) {
+      return ConvertApiErrorStatusForViSession(ex.status_, vi);
+    }
+    response->set_status(ex.status_);
+    return ::grpc::Status::OK;
   }
 }
 
@@ -449,8 +485,12 @@ void CheckStatus(int status)
   catch (nidevice_grpc::LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
   }
-  catch (DriverErrorException& ex) {
-    return ConvertApiErrorStatusForViSession(ex.status_, vi);
+  catch (const DriverWarningOrErrorException& ex) {
+    if (ex.status_ < VI_SUCCESS) {
+      return ConvertApiErrorStatusForViSession(ex.status_, vi);
+    }
+    response->set_status(ex.status_);
+    return ::grpc::Status::OK;
   }
 }
 
@@ -489,8 +529,12 @@ void CheckStatus(int status)
   catch (nidevice_grpc::LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
   }
-  catch (DriverErrorException& ex) {
-    return ConvertApiErrorStatusForViSession(ex.status_, vi);
+  catch (const DriverWarningOrErrorException& ex) {
+    if (ex.status_ < VI_SUCCESS) {
+      return ConvertApiErrorStatusForViSession(ex.status_, vi);
+    }
+    response->set_status(ex.status_);
+    return ::grpc::Status::OK;
   }
 }
 
@@ -529,8 +573,12 @@ void CheckStatus(int status)
   catch (nidevice_grpc::LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
   }
-  catch (DriverErrorException& ex) {
-    return ConvertApiErrorStatusForViSession(ex.status_, vi);
+  catch (const DriverWarningOrErrorException& ex) {
+    if (ex.status_ < VI_SUCCESS) {
+      return ConvertApiErrorStatusForViSession(ex.status_, vi);
+    }
+    response->set_status(ex.status_);
+    return ::grpc::Status::OK;
   }
 }
 
@@ -575,8 +623,12 @@ void CheckStatus(int status)
   catch (nidevice_grpc::LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
   }
-  catch (DriverErrorException& ex) {
-    return ConvertApiErrorStatusForViSession(ex.status_, vi);
+  catch (const DriverWarningOrErrorException& ex) {
+    if (ex.status_ < VI_SUCCESS) {
+      return ConvertApiErrorStatusForViSession(ex.status_, vi);
+    }
+    response->set_status(ex.status_);
+    return ::grpc::Status::OK;
   }
 }
 

@@ -3,6 +3,7 @@
 #include <gtest/gtest.h>
 #include <nifake_non_ivi/nifake_non_ivi_mock_library.h>
 #include <nifake_non_ivi/nifake_non_ivi_service.h>
+#include <nlohmann/json.hpp>
 #include <server/feature_toggles.h>
 #include <server/session_resource_repository.h>
 
@@ -11,6 +12,7 @@
 #include <string>
 
 using namespace nifake_non_ivi_grpc;
+using namespace ::nlohmann;
 using namespace ::testing;
 
 bool operator==(const StructWithCoercion_struct& left, const StructWithCoercion& right)
@@ -1704,11 +1706,15 @@ TEST_F(NiFakeNonIviServiceTests, InitWithReturnedSessionFailsInit_AccessSession_
   InitWithReturnedSessionRequest request;
   InitWithReturnedSessionResponse response;
   request.set_handle_name(SESSION_NAME);
-  service_.InitWithReturnedSession(&context, &request, &response);
+  auto status = service_.InitWithReturnedSession(&context, &request, &response);
 
   const auto accessed_handle = resource_repository_->access_session(response.handle().id(), "");
 
-  EXPECT_EQ(FAILED_INIT, response.status());
+  EXPECT_FALSE(status.ok());
+  EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status.error_code());
+  auto error = json::parse(status.error_message());
+  EXPECT_EQ(FAILED_INIT, error.value("code", 0));
+  EXPECT_NE(FAILED_INIT, response.status());
   EXPECT_EQ(0, accessed_handle);
 }
 
@@ -1726,7 +1732,7 @@ TEST_F(NiFakeNonIviServiceTests, GetStringAsReturnedValue_ReturnsString)
   EXPECT_EQ(kDriverSuccess, response.status());
 }
 
-TEST_F(NiFakeNonIviServiceTests, GetStringAsReturnedValueReturnsNull_ReturnsErrorAndEmptryString)
+TEST_F(NiFakeNonIviServiceTests, GetStringAsReturnedValueReturnsNull_ReturnsError)
 {
   constexpr auto FAILED_GET = -1;
   EXPECT_CALL(library_, GetStringAsReturnedValue(_))
@@ -1734,10 +1740,13 @@ TEST_F(NiFakeNonIviServiceTests, GetStringAsReturnedValueReturnsNull_ReturnsErro
   ::grpc::ServerContext context;
   GetStringAsReturnedValueRequest request;
   GetStringAsReturnedValueResponse response;
-  service_.GetStringAsReturnedValue(&context, &request, &response);
+  auto status = service_.GetStringAsReturnedValue(&context, &request, &response);
 
-  EXPECT_THAT(response.string_out(), IsEmpty());
-  EXPECT_EQ(FAILED_GET, response.status());
+  EXPECT_FALSE(status.ok());
+  EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status.error_code());
+  auto error = json::parse(status.error_message());
+  EXPECT_EQ(FAILED_GET, error.value("code", 0));
+  EXPECT_NE(FAILED_GET, response.status());
 }
 
 TEST_F(NiFakeNonIviServiceTests, InitWithError_CallsGetLatestErrorAndReturnsMessage)
@@ -1747,9 +1756,7 @@ TEST_F(NiFakeNonIviServiceTests, InitWithError_CallsGetLatestErrorAndReturnsMess
   const auto ERROR_MESSAGE_BUFFER_SIZE = static_cast<int32>(ERROR_MESSAGE.size() + 1);
   EXPECT_CALL(library_, Init(_, _))
       .WillOnce(Return(SOME_ERROR));
-  EXPECT_CALL(library_, GetLatestErrorMessage(nullptr, 0))
-      .WillOnce(Return(ERROR_MESSAGE_BUFFER_SIZE));
-  EXPECT_CALL(library_, GetLatestErrorMessage(_, ERROR_MESSAGE_BUFFER_SIZE))
+  EXPECT_CALL(library_, GetLatestErrorMessage(_, 4096))
       .WillOnce(
           DoAll(
               SetArrayArgument<0>(ERROR_MESSAGE.c_str(), ERROR_MESSAGE.c_str() + ERROR_MESSAGE_BUFFER_SIZE),
@@ -1757,10 +1764,14 @@ TEST_F(NiFakeNonIviServiceTests, InitWithError_CallsGetLatestErrorAndReturnsMess
   ::grpc::ServerContext context;
   InitRequest request;
   InitResponse response;
-  service_.Init(&context, &request, &response);
+  auto status = service_.Init(&context, &request, &response);
 
-  EXPECT_EQ(ERROR_MESSAGE, response.error_message());
-  EXPECT_EQ(SOME_ERROR, response.status());
+  EXPECT_FALSE(status.ok());
+  EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status.error_code());
+  auto error = json::parse(status.error_message());
+  EXPECT_EQ(SOME_ERROR, error.value("code", 0));
+  EXPECT_EQ(ERROR_MESSAGE, error.value("message", ""));
+  EXPECT_NE(SOME_ERROR, response.status());
 }
 
 TEST_F(NiFakeNonIviServiceTests, InitWithNoError_DoesNotCallGetLatestError)
