@@ -5,6 +5,7 @@
 #include <google/protobuf/util/time_util.h>
 #include <grpcpp/grpcpp.h>
 #include <nidevice.pb.h>          // For common grpc types.
+#include <nlohmann/json.hpp>
 #include <server/common_types.h>  // For common C types.
 #include <server/exceptions.h>
 
@@ -319,7 +320,7 @@ typename TypeToStorageType<TDriverType, TGrpcType>::StorageType allocate_output_
 
 }  // namespace converters
 
-const int kMaxGrpcErrorDescriptionSize = 4096;
+const int kMaxGrpcErrorDescriptionSize = 2048;
 
 inline ::grpc::Status ApiErrorAndDescriptionToStatus(google::protobuf::int32 status, std::string& description)
 {
@@ -330,8 +331,8 @@ inline ::grpc::Status ApiErrorAndDescriptionToStatus(google::protobuf::int32 sta
     for (size_t index = 0; (index = description.find('"', index)) != std::string::npos; index += 2) {
         description.replace(index, 1, "\\\"");
     }
-    std::string errorMessage = "{ \"code\":" + std::to_string(status) + ", \"message\":\"" + description + "\" }";
-    return ::grpc::Status(grpc::StatusCode::UNKNOWN, errorMessage);
+    nlohmann::json jsonError{{"code", status}, {"message", description}};
+    return ::grpc::Status(grpc::StatusCode::UNKNOWN, nlohmann::to_string(jsonError));
 }
 }  // namespace nidevice_grpc
 

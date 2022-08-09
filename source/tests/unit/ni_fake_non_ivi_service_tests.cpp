@@ -1756,7 +1756,7 @@ TEST_F(NiFakeNonIviServiceTests, InitWithError_CallsGetLatestErrorAndReturnsMess
   const auto ERROR_MESSAGE_BUFFER_SIZE = static_cast<int32>(ERROR_MESSAGE.size() + 1);
   EXPECT_CALL(library_, Init(_, _))
       .WillOnce(Return(SOME_ERROR));
-  EXPECT_CALL(library_, GetLatestErrorMessage(_, 4096))
+  EXPECT_CALL(library_, GetLatestErrorMessage(_, 2048))
       .WillOnce(
           DoAll(
               SetArrayArgument<0>(ERROR_MESSAGE.c_str(), ERROR_MESSAGE.c_str() + ERROR_MESSAGE_BUFFER_SIZE),
