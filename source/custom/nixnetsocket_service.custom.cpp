@@ -6,7 +6,7 @@ namespace nixnetsocket_grpc {
 {
     // This implementation assumes this method is always called on the same thread where the error occurred.
     std::string description(nidevice_grpc::kMaxGrpcErrorDescriptionSize, '\0');
-    library_->GetLastErrorStr(description.data(), nidevice_grpc::kMaxGrpcErrorDescriptionSize);
+    library_->GetLastErrorStr(&description[0], nidevice_grpc::kMaxGrpcErrorDescriptionSize);
     return nidevice_grpc::ApiErrorAndDescriptionToStatus(status, description);
 }
 
@@ -14,7 +14,7 @@ namespace nixnetsocket_grpc {
 {
     // This implementation assumes this method is always called on the same thread where the error occurred.
     std::string description(nidevice_grpc::kMaxGrpcErrorDescriptionSize, '\0');
-    library_->GetLastErrorStr(description.data(), nidevice_grpc::kMaxGrpcErrorDescriptionSize);
+    library_->GetLastErrorStr(&description[0], nidevice_grpc::kMaxGrpcErrorDescriptionSize);
     return nidevice_grpc::ApiErrorAndDescriptionToStatus(status, description);
 }
 

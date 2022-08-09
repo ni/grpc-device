@@ -155,8 +155,7 @@ TEST_F(NiRFmxNRDriverApiTests, AcpNonContiguousMultiCarrierFromExample_FetchData
       EXPECT_SUCCESS(session, client::set_attribute_f64(stub(), session, carrier_string_response.selector_string_out(), NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_FREQUENCY, componentCarrierFrequency[i][j]));
     }
   }
-  auto auto_level_response = client::auto_level(stub(), session, "", 10.0e-3);
-  EXPECT_ERROR(IVI_INVALID_VALUE_ERROR, IVI_INVALID_VALUE_ERROR_STR, session, auto_level_response);
+  EXPECT_ERROR(IVI_INVALID_VALUE_ERROR, IVI_INVALID_VALUE_ERROR_STR, session, client::auto_level(stub(), session, "", 10.0e-3));
   EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MEASUREMENT_TYPES_ACP, true));
   EXPECT_SUCCESS(session, client::acp_cfg_measurement_method(stub(), session, "", ACP_MEASUREMENT_METHOD_NORMAL));
   EXPECT_SUCCESS(session, client::acp_cfg_noise_compensation_enabled(stub(), session, "", ACP_NOISE_COMPENSATION_ENABLED_FALSE));
@@ -172,7 +171,6 @@ TEST_F(NiRFmxNRDriverApiTests, AcpNonContiguousMultiCarrierFromExample_FetchData
     fetch_measurement_responses[i] = EXPECT_SUCCESS(session, client::acp_fetch_offset_measurement(stub(), session, subblock_string_response.selector_string_out(), 10.0));
   }
 
-  EXPECT_EQ(0.0, auto_level_response.reference_level());
   EXPECT_LT(0.0, fetch_subblock_responses[0].subblock_power());
   EXPECT_LT(0.0, fetch_subblock_responses[0].integration_bandwidth());
   EXPECT_LT(0.0, fetch_subblock_responses[0].frequency());

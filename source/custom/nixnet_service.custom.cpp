@@ -1189,7 +1189,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
 {
     static_assert(nidevice_grpc::kMaxGrpcErrorDescriptionSize >= 2048, "StatusToString expects a minimum buffer size.");
     std::string description(nidevice_grpc::kMaxGrpcErrorDescriptionSize, '\0');
-    library_->StatusToString(status, nidevice_grpc::kMaxGrpcErrorDescriptionSize, description.data());
+    library_->StatusToString(status, nidevice_grpc::kMaxGrpcErrorDescriptionSize, &description[0]);
     return nidevice_grpc::ApiErrorAndDescriptionToStatus(status, description);
 }
 
@@ -1197,7 +1197,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
 {
     static_assert(nidevice_grpc::kMaxGrpcErrorDescriptionSize >= 2048, "StatusToString expects a minimum buffer size.");
     std::string description(nidevice_grpc::kMaxGrpcErrorDescriptionSize, '\0');
-    library_->StatusToString(status, nidevice_grpc::kMaxGrpcErrorDescriptionSize, description.data());
+    library_->StatusToString(status, nidevice_grpc::kMaxGrpcErrorDescriptionSize, &description[0]);
     return nidevice_grpc::ApiErrorAndDescriptionToStatus(status, description);
 }
 

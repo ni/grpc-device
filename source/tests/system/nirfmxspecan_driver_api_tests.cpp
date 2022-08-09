@@ -1,5 +1,6 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
+#include <nlohmann/json.hpp>
 
 #include <thread>
 #include <tuple>
@@ -14,6 +15,7 @@ using namespace nirfmxspecan_grpc;
 namespace client = nirfmxspecan_grpc::experimental::client;
 namespace instr_client = nirfmxinstr_grpc::experimental::client;
 namespace pb = google::protobuf;
+using nlohmann::json;
 using namespace ::testing;
 
 namespace ni {
@@ -61,8 +63,16 @@ class NiRFmxSpecAnDriverApiTests : public ::testing::Test {
 
   bool is_driver_session_valid(const instr_client::StubPtr& stub, const nidevice_grpc::Session& session)
   {
-    auto response = instr_client::get_attribute_string(stub, session, "", nirfmxinstr_grpc::NiRFmxInstrAttribute::NIRFMXINSTR_ATTRIBUTE_INSTRUMENT_MODEL);
-    return response.status() != INVALID_SESSION_HANDLE_ERROR;
+    try {
+      auto response = instr_client::get_attribute_string(stub, session, "", nirfmxinstr_grpc::NiRFmxInstrAttribute::NIRFMXINSTR_ATTRIBUTE_INSTRUMENT_MODEL);
+      EXPECT_EQ(0, response.status());
+      return true;
+    }
+    catch (const std::runtime_error& ex) {
+      auto error = json::parse(ex.what());
+      EXPECT_EQ(INVALID_SESSION_HANDLE_ERROR, error.value("code", 0));
+      return false;
+    }
   }
 
   void config_dpd_reference_waveform(const nidevice_grpc::Session& session)
@@ -639,9 +649,13 @@ TEST_P(NiRFmxSpecAnDriverApiConflictingResourceInitTests, InitializeResource_Ini
   const auto session1 = init_session(stub(), PXI_5663, std::get<0>(GetParam()));
   EXPECT_VALID_DRIVER_SESSION(session1);
 
-  const auto second_init_response = init(stub(), PXI_5663, std::get<1>(GetParam()));
-
-  EXPECT_RESPONSE_ERROR(DEVICE_IN_USE_ERROR, second_init_response);
+  try {
+    init(stub(), PXI_5663, std::get<1>(GetParam()));
+    EXPECT_FALSE(true);
+  }
+  catch (const std::runtime_error& ex) {
+    EXPECT_STATUS_ERROR(DEVICE_IN_USE_ERROR, ex.what());
+  }
 }
 
 TEST_P(NiRFmxSpecAnDriverApiConflictingResourceInitTests, InitializeAndCloseResource_InitializeResourceThatWouldHaveConflicted_Succeeds)

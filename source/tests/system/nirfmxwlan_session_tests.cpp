@@ -1,4 +1,5 @@
 #include <gtest/gtest.h>
+#include <nlohmann/json.hpp>
 
 #include "device_server.h"
 #include "nirfmxwlan/nirfmxwlan_client.h"
@@ -9,6 +10,7 @@ namespace system {
 namespace {
 
 namespace rfmxwlan = nirfmxwlan_grpc;
+using namespace ::nlohmann;
 
 const int kInvalidRsrc = -200220;
 const int kInvalidRFmxWLANSession = -380598;
@@ -87,9 +89,9 @@ TEST_F(NiRFmxWLANSessionTest, InitializeSessionWithoutDevice_ReturnsDriverError)
   rfmxwlan::InitializeResponse response;
   ::grpc::Status status = call_initialize(kRFmxWLANTestInvalidRsrc, "", "", &response);
 
-  EXPECT_TRUE(status.ok());
-  EXPECT_EQ(kInvalidRsrc, response.status());
-  EXPECT_EQ(0, response.instrument().id());
+  EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status.error_code());
+  auto error = json::parse(status.error_message());
+  EXPECT_EQ(kInvalidRsrc, error.value("code", 0));
 }
 
 TEST_F(NiRFmxWLANSessionTest, InitializedSession_CloseSession_ClosesDriverSession)
@@ -144,8 +146,9 @@ TEST_F(NiRFmxWLANSessionTest, InvalidSession_CloseSession_ReturnsInvalidSessionE
   rfmxwlan::CloseResponse response;
   ::grpc::Status status = GetStub()->Close(&context, request, &response);
 
-  EXPECT_TRUE(status.ok());
-  EXPECT_EQ(kInvalidRFmxWLANSession, response.status());
+  EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status.error_code());
+  auto error = json::parse(status.error_message());
+  EXPECT_EQ(kInvalidRFmxWLANSession, error.value("code", 0));
 }
 
 TEST_F(NiRFmxWLANSessionTest, CallInitializeTwiceWithSameSessionNameOnSameDevice_CloseSessionTwice_SecondCloseReturnsInvalidSessionError)
@@ -167,10 +170,11 @@ TEST_F(NiRFmxWLANSessionTest, CallInitializeTwiceWithSameSessionNameOnSameDevice
 
   EXPECT_TRUE(status_one.ok());
   EXPECT_EQ(0, close_response_one.status());
-  EXPECT_TRUE(status_two.ok());
   // Initialize was only called once in the driver since the second init call to the service found the Session by the same name and returned it.
   // Therefore if we try to close the session again the driver will respond that it's not a valid session (it's already been closed).
-  EXPECT_EQ(kInvalidRFmxWLANSession, close_response_two.status());
+  EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status_two.error_code());
+  auto error = json::parse(status_two.error_message());
+  EXPECT_EQ(kInvalidRFmxWLANSession, error.value("code", 0));
 }
 
 }  // namespace

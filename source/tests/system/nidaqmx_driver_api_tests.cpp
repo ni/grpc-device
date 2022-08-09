@@ -1,6 +1,7 @@
 #include <gmock/gmock.h>
 #include <google/protobuf/util/time_util.h>
 #include <gtest/gtest.h>  // For EXPECT matchers.
+#include <nlohmann/json.hpp>
 
 #include <algorithm>
 #include <cstring>
@@ -12,6 +13,7 @@
 #include "enumerate_devices.h"
 #include "nidaqmx/nidaqmx_client.h"
 
+using namespace ::nlohmann;
 using namespace ::testing;
 using namespace nidaqmx_grpc;
 using google::protobuf::uint32;
@@ -719,17 +721,16 @@ class NiDAQmxDriverApiTests : public Test {
     EXPECT_EQ(::grpc::Status::OK.error_code(), status.error_code());
   }
 
-  template <typename TResponse>
-  void EXPECT_DAQ_ERROR(int32_t expected_error, const TResponse& response)
+  void EXPECT_DAQ_ERROR(int32_t expected_error, const std::string& error_message)
   {
-    EXPECT_EQ(expected_error, response.status());
+    auto error = json::parse(error_message);
+    EXPECT_EQ(expected_error, error.value("code", 0));
   }
 
-  template <typename TResponse>
-  void EXPECT_DAQ_ERROR(int32_t expected_error, const ::grpc::Status& status, const TResponse& response)
+  void EXPECT_DAQ_ERROR(int32_t expected_error, const ::grpc::Status& status)
   {
-    EXPECT_DAQ_ERROR(expected_error, response);
-    EXPECT_EQ(::grpc::Status::OK.error_code(), status.error_code());
+    EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status.error_code());
+    EXPECT_DAQ_ERROR(expected_error, status.error_message());
   }
 
   template <typename T>
@@ -1000,12 +1001,16 @@ TEST_F(NiDAQmxDriverApiTests, GetScaledUnitsAsDouble_Fails)
       ScaleStringAttribute::SCALE_ATTRIBUTE_SCALED_UNITS,
       UNITS);
 
-  auto response = client::get_scale_attribute_double(
+  try {
+    client::get_scale_attribute_double(
       stub(),
       SCALE_NAME,
       (ScaleDoubleAttribute)ScaleStringAttribute::SCALE_ATTRIBUTE_SCALED_UNITS);
-
-  EXPECT_DAQ_ERROR(SPECIFIED_ATTRIBUTE_NOT_VALID_ERROR, response);
+    EXPECT_FALSE(true);
+  }
+  catch (const std::runtime_error& ex) {
+    EXPECT_DAQ_ERROR(SPECIFIED_ATTRIBUTE_NOT_VALID_ERROR, ex.what());
+  }
 }
 
 TEST_F(NiDAQmxDriverApiTests, SetScaledUnits_GetScaledUnits_ReturnsAttribute)
@@ -1078,10 +1083,10 @@ TEST_F(NiDAQmxDriverApiTests, AOVoltageChannel_WriteAODataWithOutOfRangeValue_Re
   auto write_data = generate_random_data(AO_MIN, AO_MAX, 100);
   write_data[80] += AO_MAX;
   WriteAnalogF64Response write_response;
-  write_analog_f64(write_data, write_response);
+  auto status = write_analog_f64(write_data, write_response);
   stop_task();
 
-  EXPECT_EQ(INVALID_AO_DATA_WRITE_ERROR, write_response.status());
+  EXPECT_DAQ_ERROR(INVALID_AO_DATA_WRITE_ERROR, status);
 }
 
 TEST_F(NiDAQmxDriverApiTests, TaskWithAOChannel_GetNthTaskDevice_ReturnsDeviceForChannel)
@@ -1368,7 +1373,7 @@ TEST_F(NiDAQmxDriverApiTests, AIVoltageChannel_WaitForValidTimestamp_ReturnsErro
   auto response = WaitForValidTimestampResponse{};
   auto status = wait_for_valid_timestamp(response);
 
-  EXPECT_DAQ_ERROR(WAIT_FOR_VALID_TIMESTAMP_NOT_SUPPORTED_ERROR, status, response);
+  EXPECT_DAQ_ERROR(WAIT_FOR_VALID_TIMESTAMP_NOT_SUPPORTED_ERROR, status);
 }
 
 TEST_F(NiDAQmxDriverApiTests, AIVoltageChannel_CfgTimeStartTrig_ReturnsError)
@@ -1378,7 +1383,7 @@ TEST_F(NiDAQmxDriverApiTests, AIVoltageChannel_CfgTimeStartTrig_ReturnsError)
   auto response = CfgTimeStartTrigResponse{};
   auto status = cfg_time_start_trig(response);
 
-  EXPECT_DAQ_ERROR(INVALID_ATTRIBUTE_VALUE_ERROR, status, response);
+  EXPECT_DAQ_ERROR(INVALID_ATTRIBUTE_VALUE_ERROR, status);
 }
 
 TEST_F(NiDAQmxDriverApiTests, LoadedVoltageTask_ReadAIData_ReturnsDataInExpectedRange)
@@ -1415,14 +1420,18 @@ TEST_F(NiDAQmxDriverApiTests, AddNetworkDeviceWithInvalidIP_ErrorRetrievingNetwo
   auto response = AddNetworkDeviceResponse{};
   auto status = add_network_device("0.0.0.0", response);
 
-  EXPECT_DAQ_ERROR(RETRIEVING_NETWORK_DEVICE_PROPERTIES_ERROR, status, response);
+  EXPECT_DAQ_ERROR(RETRIEVING_NETWORK_DEVICE_PROPERTIES_ERROR, status);
 }
 
 TEST_F(NiDAQmxDriverApiTests, ConfigureTEDSOnNonTEDSChannel_ErrorTEDSSensorNotDetected)
 {
-  auto response = client::configure_teds(stub(), AI_CHANNEL, "");
-
-  EXPECT_DAQ_ERROR(TEDS_SENSOR_NOT_DETECTED_ERROR, response);
+  try {
+    client::configure_teds(stub(), AI_CHANNEL, "");
+    EXPECT_FALSE(true);
+  }
+  catch (const std::runtime_error& ex) {
+    EXPECT_DAQ_ERROR(TEDS_SENSOR_NOT_DETECTED_ERROR, ex.what());
+  }
 }
 
 TEST_F(NiDAQmxDriverApiTests, HardwareTimedTask_WaitForNextSampleClock_Succeeds)
@@ -1451,7 +1460,7 @@ TEST_F(NiDAQmxDriverApiTests, ConnectBogusTerms_FailsWithInvalidRoutingError)
   auto response = ConnectTermsResponse{};
   auto status = connect_terms("ABC", "123", response);
 
-  EXPECT_DAQ_ERROR(INVALID_TERM_ROUTING_ERROR, status, response);
+  EXPECT_DAQ_ERROR(INVALID_TERM_ROUTING_ERROR, status);
 }
 
 TEST_F(NiDAQmxDriverApiTests, DOWatchdogTask_StartTaskAndWatchdogTask_Succeeds)
@@ -1479,9 +1488,13 @@ TEST_F(NiDAQmxDriverApiTests, DOWatchdogTask_StartTaskAndWatchdogTask_Succeeds)
 
 TEST_F(NiDAQmxDriverApiTests, AutoConfigureCDAQSyncConnections_ReturnsNotSupportedError)
 {
-  auto response = client::auto_configure_cdaq_sync_connections(stub(), DEVICE_NAME, 1.0);
-
-  EXPECT_DAQ_ERROR(DEVICE_DOES_NOT_SUPPORT_CDAQ_SYNC_CONNECTIONS_ERROR, response);
+  try {
+    client::auto_configure_cdaq_sync_connections(stub(), DEVICE_NAME, 1.0);
+    EXPECT_FALSE(true);
+  }
+  catch (const std::runtime_error& ex) {
+    EXPECT_DAQ_ERROR(DEVICE_DOES_NOT_SUPPORT_CDAQ_SYNC_CONNECTIONS_ERROR, ex.what());
+  }
 }
 
 TEST_F(NiDAQmxDriverApiTests, DIChannel_GetSetResetInputBufferSize_UpdatesBufferSize)
@@ -1698,16 +1711,24 @@ TEST_F(NiDAQmxDriverApiTests, AIChannel_ReconfigureSampQuantSampsPerChan_Updates
 
 TEST_F(NiDAQmxDriverApiTests, SetWrongCategoryAttribute_ReturnsNotValidError)
 {
-  auto response = client::get_device_attribute_bool(stub(), DEVICE_NAME, ScaleDoubleAttribute::SCALE_ATTRIBUTE_LIN_SLOPE);
-
-  EXPECT_DAQ_ERROR(SPECIFIED_ATTRIBUTE_NOT_VALID_ERROR, response);
+  try {
+    client::get_device_attribute_bool(stub(), DEVICE_NAME, ScaleDoubleAttribute::SCALE_ATTRIBUTE_LIN_SLOPE);
+    EXPECT_FALSE(true);
+  }
+  catch (const std::runtime_error& ex) {
+    EXPECT_DAQ_ERROR(SPECIFIED_ATTRIBUTE_NOT_VALID_ERROR, ex.what());
+  }
 }
 
 TEST_F(NiDAQmxDriverApiTests, SetWrongDataTypeAttribute_ReturnsNotValidError)
 {
-  auto response = client::get_device_attribute_bool(stub(), DEVICE_NAME, DeviceStringAttribute::DEVICE_ATTRIBUTE_AO_PHYSICAL_CHANS);
-
-  EXPECT_DAQ_ERROR(SPECIFIED_ATTRIBUTE_NOT_VALID_ERROR, response);
+  try {
+    client::get_device_attribute_bool(stub(), DEVICE_NAME, DeviceStringAttribute::DEVICE_ATTRIBUTE_AO_PHYSICAL_CHANS);
+    EXPECT_FALSE(true);
+  }
+  catch (const std::runtime_error& ex) {
+    EXPECT_DAQ_ERROR(SPECIFIED_ATTRIBUTE_NOT_VALID_ERROR, ex.what());
+  }
 }
 
 }  // namespace

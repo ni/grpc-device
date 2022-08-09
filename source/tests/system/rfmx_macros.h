@@ -3,6 +3,7 @@
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
+#include <nlohmann/json.hpp>
 
 #define EXPECT_NO_ERROR_MESSAGE(session, response)                                                  \
   if (1) {                                                                                          \
@@ -31,10 +32,11 @@
     EXPECT_EQ(expected_warning, (response).status());       \
   }
 
-#define EXPECT_RESPONSE_ERROR(expected_error, response) \
-  if (1) {                                              \
-    EXPECT_LT(expected_error, 0);                       \
-    EXPECT_EQ(expected_error, (response).status());     \
+#define EXPECT_STATUS_ERROR(expected_error, error_message) \
+  if (1) {                                                 \
+    EXPECT_LT(expected_error, 0);                          \
+    auto error = nlohmann::json::parse(error_message);     \
+    EXPECT_EQ(expected_error, error.value("code", 0));     \
   }
 
 #define EXPECT_SUCCESS(session_, response_)     \
@@ -44,12 +46,15 @@
     return response;                            \
   })((session_), (response_))
 
-#define EXPECT_ERROR(expected_error_, message_substring_, session_, response_)                 \
-  ([this](auto expected_error, const auto& message_substring, auto& session, auto& response) { \
-    EXPECT_RESPONSE_ERROR(expected_error, response)                                            \
-    EXPECT_ERROR_SUBSTRING(message_substring, session);                                        \
-    return response;                                                                           \
-  })(expected_error_, message_substring_, session_, response_)
+#define EXPECT_ERROR(expected_error_, message_substring_, session_, response_call_) \
+  try {                                                                             \
+    response_call_;                                                                 \
+    EXPECT_FALSE(true);                                                             \
+  }                                                                                 \
+  catch (const std::runtime_error& ex) {                                            \
+    EXPECT_STATUS_ERROR(expected_error_, ex.what());                                \
+    EXPECT_ERROR_SUBSTRING(message_substring_, session_);                           \
+  }
 
 #define EXPECT_WARNING(expected_warning_, message_substring_, session_, response_)               \
   ([this](auto expected_warning, const auto& message_substring, auto& session, auto& response) { \

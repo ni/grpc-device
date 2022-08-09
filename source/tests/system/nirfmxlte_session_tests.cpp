@@ -1,4 +1,5 @@
 #include <gtest/gtest.h>
+#include <nlohmann/json.hpp>
 
 #include "device_server.h"
 #include "nirfmxlte/nirfmxlte_client.h"
@@ -9,6 +10,7 @@ namespace system {
 namespace {
 
 namespace rfmxlte = nirfmxlte_grpc;
+using namespace ::nlohmann;
 
 const int kInvalidRsrc = -200220;
 const int kInvalidRFmxLTESession = -380598;
@@ -87,9 +89,9 @@ TEST_F(NiRFmxLTESessionTest, InitializeSessionWithoutDevice_ReturnsDriverError)
   rfmxlte::InitializeResponse response;
   ::grpc::Status status = call_initialize(kRFmxLTETestInvalidRsrc, "", "", &response);
 
-  EXPECT_TRUE(status.ok());
-  EXPECT_EQ(kInvalidRsrc, response.status());
-  EXPECT_EQ(0, response.instrument().id());
+  EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status.error_code());
+  auto error = json::parse(status.error_message());
+  EXPECT_EQ(kInvalidRsrc, error.value("code", 0));
 }
 
 TEST_F(NiRFmxLTESessionTest, InitializedSession_CloseSession_ClosesDriverSession)
@@ -151,10 +153,11 @@ TEST_F(NiRFmxLTESessionTest, CallInitializeTwiceWithSameSessionNameOnSameDevice_
 
   EXPECT_TRUE(status_one.ok());
   EXPECT_EQ(0, close_response_one.status());
-  EXPECT_TRUE(status_two.ok());
   // Initialize was only called once in the driver since the second init call to the service found the Session by the same name and returned it.
   // Therefore if we try to close the session again the driver will respond that it's not a valid session (it's already been closed).
-  EXPECT_EQ(kInvalidRFmxLTESession, close_response_two.status());
+  EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status_two.error_code());
+  auto error = json::parse(status_two.error_message());
+  EXPECT_EQ(kInvalidRFmxLTESession, error.value("code", 0));
 }
 
 TEST_F(NiRFmxLTESessionTest, InvalidSession_CloseSession_ReturnsInvalidSessionError)
@@ -169,8 +172,9 @@ TEST_F(NiRFmxLTESessionTest, InvalidSession_CloseSession_ReturnsInvalidSessionEr
   rfmxlte::CloseResponse response;
   ::grpc::Status status = GetStub()->Close(&context, request, &response);
 
-  EXPECT_TRUE(status.ok());
-  EXPECT_EQ(kInvalidRFmxLTESession, response.status());
+  EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status.error_code());
+  auto error = json::parse(status.error_message());
+  EXPECT_EQ(kInvalidRFmxLTESession, error.value("code", 0));
 }
 
 }  // namespace
