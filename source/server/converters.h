@@ -325,12 +325,6 @@ const int kMaxGrpcErrorDescriptionSize = 2048;
 inline ::grpc::Status ApiErrorAndDescriptionToStatus(google::protobuf::int32 status, std::string& description)
 {
     converters::trim_trailing_nulls(description);
-    // TODO: AB#2103383: Ensure description strings are properly JSON encoded.
-    // Alex: grpc-device already uses nlohmann::json to parse the config file.
-    // Brad: If you don't want to add a dependency on a full-fledged JSON parser, consider the encodeAndStrcpy function from jsonz.
-    for (size_t index = 0; (index = description.find('"', index)) != std::string::npos; index += 2) {
-        description.replace(index, 1, "\\\"");
-    }
     nlohmann::json jsonError{{"code", status}, {"message", description}};
     return ::grpc::Status(grpc::StatusCode::UNKNOWN, nlohmann::to_string(jsonError));
 }
