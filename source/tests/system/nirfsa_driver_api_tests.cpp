@@ -601,7 +601,7 @@ TEST_F(NiRFSADriverApiTests, ErrorMessage_ReturnsErrorMessage)
   EXPECT_SUCCESS(session, response);
   EXPECT_THAT(
       response.error_message(),
-      HasSubstr("IVI: Attribute or property not supported."));
+      HasSubstr("Attribute or property not supported."));
 }
 
 TEST_F(NiRFSADriverApiTests, GetCalUserDefinedInfo_Succeeds)
