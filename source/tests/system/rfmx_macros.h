@@ -33,11 +33,9 @@
   }
 
 #define EXPECT_STATUS_ERROR(expected_error, error_message) \
-  if (1) {                                                 \
-    EXPECT_LT(expected_error, 0);                          \
-    auto error = nlohmann::json::parse(error_message);     \
-    EXPECT_EQ(expected_error, error.value("code", 0));     \
-  }
+  EXPECT_LT(expected_error, 0);                            \
+  auto error = nlohmann::json::parse(error_message);       \
+  EXPECT_EQ(expected_error, error.value("code", 0));
 
 #define EXPECT_SUCCESS(session_, response_)     \
   ([this](auto& session, auto& response) {      \
@@ -53,7 +51,7 @@
   }                                                                                 \
   catch (const std::runtime_error& ex) {                                            \
     EXPECT_STATUS_ERROR(expected_error_, ex.what());                                \
-    EXPECT_ERROR_SUBSTRING(message_substring_, session_);                           \
+    EXPECT_THAT(error.value("message", ""), HasSubstr(message_substring_));         \
   }
 
 #define EXPECT_WARNING(expected_warning_, message_substring_, session_, response_)               \

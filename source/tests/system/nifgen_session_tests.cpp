@@ -139,11 +139,6 @@ TEST_F(NiFgenSessionTest, InvalidSession_CloseSession_ReturnsInvalidSessionError
   fgen::CloseResponse response;
   ::grpc::Status status = GetStub()->Close(&context, request, &response);
 
-  EXPECT_TRUE(status.ok());
-  EXPECT_EQ(kInvalidFgenSession, response.status());
-  std::string error_message = get_error_message(response.status());
-  EXPECT_STREQ(kInvalidFgenSessionMessage, error_message.c_str());
-
   EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status.error_code());
   auto error = json::parse(status.error_message());
   EXPECT_EQ(kInvalidFgenSession, error.value("code", 0));

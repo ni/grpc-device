@@ -322,11 +322,17 @@ typename TypeToStorageType<TDriverType, TGrpcType>::StorageType allocate_output_
 
 const int kMaxGrpcErrorDescriptionSize = 2048;
 
-inline ::grpc::Status ApiErrorAndDescriptionToStatus(google::protobuf::int32 status, std::string& description)
+inline ::grpc::Status ApiErrorAndDescriptionToStatus(int32_t status, std::string& description, nlohmann::json& jsonError)
 {
-    converters::trim_trailing_nulls(description);
-    nlohmann::json jsonError{{"code", status}, {"message", description}};
-    return ::grpc::Status(grpc::StatusCode::UNKNOWN, nlohmann::to_string(jsonError));
+  converters::trim_trailing_nulls(description);
+  jsonError["code"] = status;
+  jsonError["message"] = description;
+  return ::grpc::Status(grpc::StatusCode::UNKNOWN, nlohmann::to_string(jsonError));
+}
+
+inline ::grpc::Status ApiErrorAndDescriptionToStatus(int32_t status, std::string& description)
+{
+  return ApiErrorAndDescriptionToStatus(status, description, nlohmann::json());
 }
 }  // namespace nidevice_grpc
 

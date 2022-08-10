@@ -70,8 +70,7 @@ class NiRFmxSpecAnDriverApiTests : public ::testing::Test {
     }
     catch (const std::runtime_error& ex) {
       auto error = json::parse(ex.what());
-      EXPECT_EQ(INVALID_SESSION_HANDLE_ERROR, error.value("code", 0));
-      return false;
+      return error.value("code", 0) != INVALID_SESSION_HANDLE_ERROR;
     }
   }
 

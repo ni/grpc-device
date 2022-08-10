@@ -235,6 +235,12 @@ class NiXnetSocketNoHardwareTests : public NiXnetSocketDriverApiTests {
     EXPECT_EQ(error, (response).status());  \
   }
 
+#define EXPECT_XNET_ERROR_CODE(expected, error) \
+  EXPECT_EQ(expected, error.value("code", 0));
+
+#define EXPECT_XNET_ERROR_NUMBER(expected, error) \
+  EXPECT_EQ(expected, error.value("errorNumber", 0));
+
 #define EXPECT_XNET_ERROR(expected_status, error, message, response) \
   if (1) {                                                           \
     EXPECT_EQ(expected_status, (response).status());                 \
@@ -280,36 +286,47 @@ SocketResponse socket(client::StubPtr& stub)
 
 TEST_F(NiXnetSocketNoHardwareTests, InitWithInvalidIpStack_Close_ReturnsAndSetsExpectedErrors)
 {
-  auto socket_response = socket(stub());
+  SocketResponse invalid_socket;
+  invalid_socket.mutable_socket()->set_id(static_cast<uint32_t>(INVALID_XNET_SOCKET));
 
-  auto close_response = client::close(stub(), socket_response.socket());
-
-  EXPECT_XNET_STATUS(GENERIC_NXSOCKET_ERROR, socket_response);
-  EXPECT_EQ(INVALID_IP_STACK_ERROR, socket_response.error_num());
-  EXPECT_THAT(socket_response.error_message(), HasSubstr(INVALID_IP_STACK_MESSAGE));
-  EXPECT_XNET_STATUS(GENERIC_NXSOCKET_ERROR, close_response);
-  EXPECT_EQ(INVALID_SOCKET_ERROR, close_response.error_num());
-  EXPECT_THAT(close_response.error_message(), HasSubstr(INVALID_SOCKET_MESSAGE));
+  try {
+    client::close(stub(), invalid_socket.socket());
+    EXPECT_FALSE(true);
+  }
+  catch (const std::runtime_error& ex) {
+    auto error = json::parse(ex.what());
+    EXPECT_XNET_ERROR_CODE(GENERIC_NXSOCKET_ERROR, error);
+    EXPECT_XNET_ERROR_NUMBER(INVALID_SOCKET_ERROR, error);
+    EXPECT_THAT(error.value("message", ""), HasSubstr(INVALID_SOCKET_MESSAGE));
+  }
 }
 
 TEST_F(NiXnetSocketNoHardwareTests, InitWithInvalidIpStack_Bind_ReturnsAndSetsExpectedErrors)
 {
+  SocketResponse invalid_socket;
+  invalid_socket.mutable_socket()->set_id(static_cast<uint32_t>(INVALID_XNET_SOCKET));
   auto sock_addr = SockAddr{};
   sock_addr.mutable_ipv4()->mutable_addr()->set_addr(0x7F000001);
   sock_addr.mutable_ipv4()->set_port(31764);
-  auto socket_response = socket(stub());
-  auto bind_response = client::bind(stub(), socket_response.socket(), sock_addr);
 
-  EXPECT_XNET_STATUS(GENERIC_NXSOCKET_ERROR, socket_response);
-  EXPECT_XNET_STATUS(GENERIC_NXSOCKET_ERROR, bind_response);
-  EXPECT_EQ(INVALID_SOCKET_ERROR, bind_response.error_num());
-  EXPECT_THAT(bind_response.error_message(), HasSubstr(INVALID_SOCKET_MESSAGE));
+  try {
+    client::bind(stub(), invalid_socket.socket(), sock_addr);
+    EXPECT_FALSE(true);
+  }
+  catch (const std::runtime_error& ex) {
+    auto error = json::parse(ex.what());
+    EXPECT_XNET_ERROR_CODE(GENERIC_NXSOCKET_ERROR, error);
+    EXPECT_XNET_ERROR_NUMBER(INVALID_SOCKET_ERROR, error);
+    EXPECT_THAT(error.value("message", ""), HasSubstr(INVALID_SOCKET_MESSAGE));
+  }
 }
 
 TEST_F(NiXnetSocketNoHardwareTests, SocketAndEmptySet_IsSet_ReturnsFalse)
 {
-  auto socket_response = socket(stub());
-  auto is_set_response = client::fd_is_set(stub(), socket_response.socket(), {});
+  SocketResponse invalid_socket;
+  invalid_socket.mutable_socket()->set_id(static_cast<uint32_t>(INVALID_XNET_SOCKET));
+
+  auto is_set_response = client::fd_is_set(stub(), invalid_socket.socket(), {});
 
   EXPECT_SUCCESS(is_set_response);
   EXPECT_EQ(NXSOCKET_FALSE, is_set_response.is_set());
@@ -317,8 +334,10 @@ TEST_F(NiXnetSocketNoHardwareTests, SocketAndEmptySet_IsSet_ReturnsFalse)
 
 TEST_F(NiXnetSocketNoHardwareTests, SocketAndSetContainingSocket_IsSet_ReturnsTrue)
 {
-  auto socket_response = socket(stub());
-  auto is_set_response = client::fd_is_set(stub(), socket_response.socket(), {socket_response.socket()});
+  SocketResponse invalid_socket;
+  invalid_socket.mutable_socket()->set_id(static_cast<uint32_t>(INVALID_XNET_SOCKET));
+
+  auto is_set_response = client::fd_is_set(stub(), invalid_socket.socket(), {invalid_socket.socket()});
 
   EXPECT_SUCCESS(is_set_response);
   EXPECT_EQ(NXSOCKET_TRUE, is_set_response.is_set());
@@ -326,33 +345,52 @@ TEST_F(NiXnetSocketNoHardwareTests, SocketAndSetContainingSocket_IsSet_ReturnsTr
 
 TEST_F(NiXnetSocketNoHardwareTests, InvalidSocket_Select_ReturnsAndSetsExpectedErrors)
 {
-  auto socket_response = socket(stub());
+  SocketResponse invalid_socket;
+  invalid_socket.mutable_socket()->set_id(static_cast<uint32_t>(INVALID_XNET_SOCKET));
   auto duration = pb::Duration{};
   duration.set_seconds(1);
   duration.set_nanos(500000);
-  auto select_response = client::select(stub(), {socket_response.socket()}, {socket_response.socket()}, {}, duration);
 
-  EXPECT_XNET_STATUS(GENERIC_NXSOCKET_ERROR, select_response);
-  EXPECT_EQ(INVALID_SOCKET_ERROR, select_response.error_num());
-  EXPECT_THAT(select_response.error_message(), HasSubstr(INVALID_SOCKET_MESSAGE));
+  try {
+    client::select(stub(), {invalid_socket.socket()}, {invalid_socket.socket()}, {}, duration);
+    EXPECT_FALSE(true);
+  }
+  catch (const std::runtime_error& ex) {
+    auto error = json::parse(ex.what());
+    EXPECT_XNET_ERROR_CODE(GENERIC_NXSOCKET_ERROR, error);
+    EXPECT_XNET_ERROR_NUMBER(INVALID_SOCKET_ERROR, error);
+    EXPECT_THAT(error.value("message", ""), HasSubstr(INVALID_SOCKET_MESSAGE));
+  }
 }
 
 TEST_F(NiXnetSocketNoHardwareTests, InvalidEmptyConfigJson_IpStackCreate_ReturnsInvalidInterfaceNameError)
 {
   constexpr auto TEST_CONFIG = "{}";
   constexpr auto JSON_OBJECT_MISSING_VALUE = -13017;
-  const auto stack_response = client::ip_stack_create(stub(), "", "{}");
 
-  EXPECT_XNET_STATUS(JSON_OBJECT_MISSING_VALUE, stack_response);
+  try {
+    client::ip_stack_create(stub(), "", "{}");
+    EXPECT_FALSE(true);
+  }
+  catch (const std::runtime_error& ex) {
+    auto error = json::parse(ex.what());
+    EXPECT_XNET_ERROR_CODE(JSON_OBJECT_MISSING_VALUE, error);
+  }
 }
 
 TEST_F(NiXnetSocketNoHardwareTests, ValidConfigJsonForMissingDevice_IpStackCreate_ReturnsInvalidInterfaceNameError)
 {
   const auto TEST_CONFIG = create_simple_config("ENET6");
   constexpr auto INVALID_INTERFACE_NAME = -1074384758;
-  const auto stack_response = client::ip_stack_create(stub(), "", TEST_CONFIG);
 
-  EXPECT_XNET_STATUS(INVALID_INTERFACE_NAME, stack_response);
+  try {
+    client::ip_stack_create(stub(), "", TEST_CONFIG);
+    EXPECT_FALSE(true);
+  }
+  catch (const std::runtime_error& ex) {
+    auto error = json::parse(ex.what());
+    EXPECT_XNET_ERROR_CODE(INVALID_INTERFACE_NAME, error);
+  }
 }
 
 TEST_F(NiXnetSocketNoHardwareTests, StackAlreadyExistsError_StrErrR_ReturnsExpectedMessage)
@@ -369,10 +407,15 @@ TEST_F(NiXnetSocketNoHardwareTests, StackAlreadyExistsError_StrErrRWithZeroBuffe
 {
   constexpr auto STACK_ALREADY_EXISTS = static_cast<int32_t>(0xFFFFCD24);
 
-  const auto str_err = client::str_err_r(stub(), STACK_ALREADY_EXISTS, 0);
-
-  EXPECT_XNET_STATUS(GENERIC_NXSOCKET_ERROR, str_err);
-  EXPECT_EQ("", str_err.error());
+  try {
+    client::str_err_r(stub(), STACK_ALREADY_EXISTS, 0);
+    EXPECT_FALSE(true);
+  }
+  catch (const std::runtime_error& ex) {
+    auto error = json::parse(ex.what());
+    EXPECT_XNET_ERROR_CODE(GENERIC_NXSOCKET_ERROR, error);
+    EXPECT_EQ(std::string(), error.value("message", "default"));
+  }
 }
 
 TEST_F(NiXnetSocketLoopbackTests, IPv4LocalhostAddress_AToNAndPToNRoundtrip_ReturnsCorrectAddr)

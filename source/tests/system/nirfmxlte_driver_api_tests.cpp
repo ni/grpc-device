@@ -1,10 +1,12 @@
 #include <gtest/gtest.h>
+#include <nlohmann/json.hpp>
 
 #include "device_server.h"
 #include "nirfmxlte/nirfmxlte_client.h"
 #include "nirfsa/nirfsa_client.h"
 #include "rfmx_macros.h"
 
+using namespace ::nlohmann;
 using namespace ::testing;
 using namespace nirfmxlte_grpc;
 namespace client = nirfmxlte_grpc::experimental::client;
@@ -341,7 +343,7 @@ TEST_F(NiRFmxLTEDriverApiTests, NBIoTModAccFromExample_FetchData_DataLooksReason
 {
   nidevice_grpc::Session session;
   ModAccFetchCompositeEVMResponse mod_acc_fetch_composite_evm_response;
-  int attempts = 1;
+  int actualStatus = -1, attempts = 1;
   while (1) {
     session = init_session(stub(), PXI_5663E);
     EXPECT_SUCCESS(session, client::cfg_frequency_reference(stub(), session, "", FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK, 10e6));
@@ -359,8 +361,15 @@ TEST_F(NiRFmxLTEDriverApiTests, NBIoTModAccFromExample_FetchData_DataLooksReason
     EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
     // Intermittently fails with: "Autodetected NPUSCH channel parameters are not 3GPP spec compliant."
-    mod_acc_fetch_composite_evm_response = client::mod_acc_fetch_composite_evm(stub(), session, "", 10.0);
-    if (mod_acc_fetch_composite_evm_response.status() == MODACC_NB_IOT_AUTODETECT_CHECK && attempts < 5) {
+    try {
+      mod_acc_fetch_composite_evm_response = client::mod_acc_fetch_composite_evm(stub(), session, "", 10.0);
+      actualStatus = mod_acc_fetch_composite_evm_response.status();
+    }
+    catch (const std::runtime_error& ex) {
+      auto error = json::parse(ex.what());
+      actualStatus = error.value("code", -1);
+    }
+    if (actualStatus == MODACC_NB_IOT_AUTODETECT_CHECK && attempts < 5) {
       TearDown();
       SetUp();
       ++attempts;
@@ -369,10 +378,9 @@ TEST_F(NiRFmxLTEDriverApiTests, NBIoTModAccFromExample_FetchData_DataLooksReason
       break;
     }
   }
-  EXPECT_SUCCESS(session, mod_acc_fetch_composite_evm_response);
-  if (mod_acc_fetch_composite_evm_response.status() < 0) {
-    return;
-  }
+  // If this fails, we want the test to be over now.
+  ASSERT_GE(actualStatus, 0);
+
   const auto mod_acc_fetch_iq_impairments_response = EXPECT_SUCCESS(session, client::mod_acc_fetch_iq_impairments(stub(), session, "", 10.0));
   const auto mod_acc_fetch_in_band_emission_margin_response = EXPECT_SUCCESS(session, client::mod_acc_fetch_in_band_emission_margin(stub(), session, "", 10.0));
   const auto mod_acc_fetch_npusch_constellation_trace_response = EXPECT_SUCCESS(session, client::mod_acc_fetch_npusch_constellation_trace(stub(), session, "", 10.0));
@@ -407,7 +415,7 @@ TEST_F(NiRFmxLTEDriverApiTests, NBIoTModAccAcpChpObwSemCompositeSingleCarrierFro
 {
   nidevice_grpc::Session session;
   ModAccFetchCompositeEVMResponse mod_acc_fetch_composite_evm_response;
-  int attempts = 1;
+  int actualStatus = -1, attempts = 1;
   while (1) {
     session = init_session(stub(), PXI_5663E);
     EXPECT_SUCCESS(session, client::cfg_frequency_reference(stub(), session, "", FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK, 10e6));
@@ -433,8 +441,15 @@ TEST_F(NiRFmxLTEDriverApiTests, NBIoTModAccAcpChpObwSemCompositeSingleCarrierFro
     EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
     // Intermittently fails with: "Autodetected NPUSCH channel parameters are not 3GPP spec compliant."
-    mod_acc_fetch_composite_evm_response = client::mod_acc_fetch_composite_evm(stub(), session, "", 10.0);
-    if (mod_acc_fetch_composite_evm_response.status() == MODACC_NB_IOT_AUTODETECT_CHECK && attempts < 5) {
+    try {
+      mod_acc_fetch_composite_evm_response = client::mod_acc_fetch_composite_evm(stub(), session, "", 10.0);
+      actualStatus = mod_acc_fetch_composite_evm_response.status();
+    }
+    catch (const std::runtime_error& ex) {
+      auto error = json::parse(ex.what());
+      actualStatus = error.value("code", -1);
+    }
+    if (actualStatus == MODACC_NB_IOT_AUTODETECT_CHECK && attempts < 5) {
       TearDown();
       SetUp();
       ++attempts;
@@ -443,10 +458,9 @@ TEST_F(NiRFmxLTEDriverApiTests, NBIoTModAccAcpChpObwSemCompositeSingleCarrierFro
       break;
     }
   }
-  EXPECT_SUCCESS(session, mod_acc_fetch_composite_evm_response);
-  if (mod_acc_fetch_composite_evm_response.status() < 0) {
-    return;
-  }
+  // If this fails, we want the test to be over now.
+  ASSERT_GE(actualStatus, 0);
+
   const auto mod_acc_fetch_iq_impairments_response = EXPECT_SUCCESS(session, client::mod_acc_fetch_iq_impairments(stub(), session, "", 10.0));
   const auto mod_acc_fetch_in_band_emission_margin_response = EXPECT_SUCCESS(session, client::mod_acc_fetch_in_band_emission_margin(stub(), session, "", 10.0));
   const auto acp_fetch_offset_measurement_array_response = EXPECT_SUCCESS(session, client::acp_fetch_offset_measurement_array(stub(), session, "", 10.0));
@@ -1098,7 +1112,6 @@ TEST_F(NiRFmxLTEDriverApiTests, ULModAccSingleCarrierFromExample_FetchData_DataL
     EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
     // Intermittently gives "374603: Unable to synchronize." and outputs nan values
-    mod_acc_fetch_composite_evm_response = client::mod_acc_fetch_composite_evm(stub(), session, "", 10.0);
     if (mod_acc_fetch_composite_evm_response.status() == SYNC_FAILURE_WARNING && attempts < 5) {
       TearDown();
       SetUp();

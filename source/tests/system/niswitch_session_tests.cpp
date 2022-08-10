@@ -14,7 +14,7 @@ using namespace ::nlohmann;
 const int kViErrorRsrcNotFound = -1074118654;
 const int kInvalidSwitchSession = -1074130544;
 const char* kViErrorRsrcNotFoundMessage = "Invalid resource name.\n\nInvalid Identifier: InvalidName";
-const char* kInvalidSwitchSessionMessage = "The session handle is not valid.";
+const char* kInvalidSwitchSessionMessage = "IVI: The session handle is not valid.";
 const char* kTestRsrcName = "";
 const char* kTestSessName = "SessionName";
 const char* kInvalidRsrcName = "InvalidName";
