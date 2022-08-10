@@ -1,7 +1,10 @@
+#include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
 #include "device_server.h"
 #include "nifgen/nifgen_client.h"
+
+using namespace ::testing;
 
 namespace ni {
 namespace tests {
@@ -11,7 +14,7 @@ namespace fgen = nifgen_grpc;
 
 const int kInvalidFgenRsrc = -1074134944;
 const int kInvalidFgenSession = -1074130544;
-const char* kViErrorFgenResourceNotFoundMessage = "IVI: (Hex 0xBFFA0060) Insufficient location information or resource not present in the system.\n\nInvalid Identifier: ";
+const char* kViErrorFgenResourceNotFoundMessage = "Insufficient location information or resource not present in the system.\n\nInvalid Identifier: ";
 const char* kInvalidFgenSessionMessage = "The session handle is not valid.";
 const char* kTestFgenRsrc = "FakeDevice";
 const char* kFgenOptionsString = "Simulate=1, DriverSetup=Model:5421; BoardType:PXI";
@@ -149,7 +152,7 @@ TEST_F(NiFgenSessionTest, InitWithErrorFromDriver_ReturnsUserErrorMessage)
   call_init_with_options(kTestInvalidFgenRsrc, "", "", &initialize_response);
 
   EXPECT_EQ(kInvalidFgenRsrc, initialize_response.status());
-  EXPECT_STREQ(kViErrorFgenResourceNotFoundMessage, initialize_response.error_message().c_str());
+  EXPECT_THAT(initialize_response.error_message().c_str(), HasSubstr(kViErrorFgenResourceNotFoundMessage));
 }
 
 }  // namespace system
