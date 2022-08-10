@@ -1,8 +1,11 @@
+#include <gmock/gmock.h>
 #include <gtest/gtest.h>
 #include <nlohmann/json.hpp>
 
 #include "device_server.h"
 #include "nifgen/nifgen_client.h"
+
+using namespace ::testing;
 
 namespace ni {
 namespace tests {
@@ -13,7 +16,7 @@ using namespace ::nlohmann;
 
 const int kInvalidFgenRsrc = -1074134944;
 const int kInvalidFgenSession = -1074130544;
-const char* kViErrorFgenResourceNotFoundMessage = "IVI: (Hex 0xBFFA0060) Insufficient location information or resource not present in the system.\n\nInvalid Identifier: ";
+const char* kViErrorFgenResourceNotFoundMessage = "Insufficient location information or resource not present in the system.\n\nInvalid Identifier: ";
 const char* kInvalidFgenSessionMessage = "The session handle is not valid.";
 const char* kTestFgenRsrc = "FakeDevice";
 const char* kFgenOptionsString = "Simulate=1, DriverSetup=Model:5421; BoardType:PXI";
@@ -153,7 +156,7 @@ TEST_F(NiFgenSessionTest, InitWithErrorFromDriver_ReturnsUserErrorMessage)
   EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status.error_code());
   auto error = json::parse(status.error_message());
   EXPECT_EQ(kInvalidFgenRsrc, error.value("code", 0));
-  EXPECT_STREQ(kViErrorFgenResourceNotFoundMessage, error.value("message", "").c_str());
+  EXPECT_THAT(error.value("message", "").c_str(), HasSubstr(kViErrorFgenResourceNotFoundMessage));
 }
 
 }  // namespace system

@@ -366,6 +366,9 @@
 #define RFMXSPECAN_ATTR_AMPM_NUMBER_OF_ANALYSIS_THREADS                                0x0010e012
 #define RFMXSPECAN_ATTR_AMPM_RESULTS_MEAN_LINEAR_GAIN                                  0x0010e016
 #define RFMXSPECAN_ATTR_AMPM_RESULTS_1_DB_COMPRESSION_POINT                            0x0010e01d
+#define RFMXSPECAN_ATTR_AMPM_RESULTS_COMPRESSION_POINT_GAIN_REFERENCE                  0x0010e037
+#define RFMXSPECAN_ATTR_AMPM_RESULTS_PEAK_REFERENCE_POWER                              0x0010e038
+#define RFMXSPECAN_ATTR_AMPM_RESULTS_PEAK_REFERENCE_POWER_GAIN                         0x0010e039
 #define RFMXSPECAN_ATTR_AMPM_RESULTS_MEAN_RMS_EVM                                      0x0010e018
 #define RFMXSPECAN_ATTR_AMPM_RESULTS_GAIN_ERROR_RANGE                                  0x0010e01b
 #define RFMXSPECAN_ATTR_AMPM_RESULTS_PHASE_ERROR_RANGE                                 0x0010e01c
@@ -395,12 +398,15 @@
 #define RFMXSPECAN_ATTR_DPD_LOOKUP_TABLE_STEP_SIZE                                     0x0010f010
 #define RFMXSPECAN_ATTR_DPD_MEMORY_POLYNOMIAL_ORDER                                    0x0010f011
 #define RFMXSPECAN_ATTR_DPD_MEMORY_POLYNOMIAL_MEMORY_DEPTH                             0x0010f012
+#define RFMXSPECAN_ATTR_DPD_MEMORY_POLYNOMIAL_ORDER_TYPE                               0x0010f04f
 #define RFMXSPECAN_ATTR_DPD_MEMORY_POLYNOMIAL_LEAD_ORDER                               0x0010f013
 #define RFMXSPECAN_ATTR_DPD_MEMORY_POLYNOMIAL_LAG_ORDER                                0x0010f014
 #define RFMXSPECAN_ATTR_DPD_MEMORY_POLYNOMIAL_LEAD_MEMORY_DEPTH                        0x0010f015
 #define RFMXSPECAN_ATTR_DPD_MEMORY_POLYNOMIAL_LAG_MEMORY_DEPTH                         0x0010f016
 #define RFMXSPECAN_ATTR_DPD_MEMORY_POLYNOMIAL_MAXIMUM_LEAD                             0x0010f017
 #define RFMXSPECAN_ATTR_DPD_MEMORY_POLYNOMIAL_MAXIMUM_LAG                              0x0010f018
+#define RFMXSPECAN_ATTR_DPD_MEMORY_POLYNOMIAL_LEAD_ORDER_TYPE                          0x0010f050
+#define RFMXSPECAN_ATTR_DPD_MEMORY_POLYNOMIAL_LAG_ORDER_TYPE                           0x0010f051
 #define RFMXSPECAN_ATTR_DPD_ITERATIVE_DPD_ENABLED                                      0x0010f01a
 #define RFMXSPECAN_ATTR_DPD_FREQUENCY_OFFSET_CORRECTION_ENABLED                        0x0010f039
 #define RFMXSPECAN_ATTR_DPD_AVERAGING_ENABLED                                          0x0010f01c
@@ -621,6 +627,7 @@
 #define RFMXSPECAN_ATTR_AMPM_COMPRESSION_POINT_LEVEL                                   0x0010e025
 #define RFMXSPECAN_ATTR_AMPM_COMPRESSION_POINT_GAIN_REFERENCE                          0x0010e034
 #define RFMXSPECAN_ATTR_AMPM_COMPRESSION_POINT_GAIN_REFERENCE_POWER                    0x0010e035
+#define RFMXSPECAN_ATTR_AMPM_COMPRESSION_POINT_USER_GAIN                               0x0010e036
 #define RFMXSPECAN_ATTR_AMPM_RESULTS_INPUT_COMPRESSION_POINT                           0x0010e026
 #define RFMXSPECAN_ATTR_AMPM_RESULTS_OUTPUT_COMPRESSION_POINT                          0x0010e027
 #define RFMXSPECAN_ATTR_AMPM_IQ_ORIGIN_OFFSET_CORRECTION_ENABLED                       0x0010e029
@@ -844,9 +851,9 @@
 #define RFMXSPECAN_VAL_AMPM_AVERAGING_ENABLED_TRUE                                                    1
 
 // Values for RFMXSPECAN_ATTR_CCDF_RBW_FILTER_TYPE
-#define RFMXSPECAN_VAL_CCDF_RBW_FILTER_TYPE_NONE                                                      5
 #define RFMXSPECAN_VAL_CCDF_RBW_FILTER_TYPE_GAUSSIAN                                                  1
 #define RFMXSPECAN_VAL_CCDF_RBW_FILTER_TYPE_FLAT                                                      2
+#define RFMXSPECAN_VAL_CCDF_RBW_FILTER_TYPE_NONE                                                      5
 #define RFMXSPECAN_VAL_CCDF_RBW_FILTER_TYPE_RRC                                                       6
 
 // Values for RFMXSPECAN_ATTR_CCDF_THRESHOLD_TYPE
@@ -893,6 +900,21 @@
 #define RFMXSPECAN_VAL_DPD_LOOKUP_TABLE_THRESHOLD_TYPE_RELATIVE                                       0
 #define RFMXSPECAN_VAL_DPD_LOOKUP_TABLE_THRESHOLD_TYPE_ABSOLUTE                                       1
 
+// Values for RFMXSPECAN_ATTR_DPD_MEMORY_POLYNOMIAL_ORDER_TYPE
+#define RFMXSPECAN_VAL_DPD_MEMORY_POLYNOMIAL_ORDER_TYPE_ALL_ORDERS                                    0
+#define RFMXSPECAN_VAL_DPD_MEMORY_POLYNOMIAL_ORDER_TYPE_ODD_ORDERS_ONLY                               1
+#define RFMXSPECAN_VAL_DPD_MEMORY_POLYNOMIAL_ORDER_TYPE_EVEN_ORDERS_ONLY                              2
+
+// Values for RFMXSPECAN_ATTR_DPD_MEMORY_POLYNOMIAL_LEAD_ORDER_TYPE
+#define RFMXSPECAN_VAL_DPD_MEMORY_POLYNOMIAL_LEAD_ORDER_TYPE_ALL_ORDERS                               0
+#define RFMXSPECAN_VAL_DPD_MEMORY_POLYNOMIAL_LEAD_ORDER_TYPE_ODD_ORDERS_ONLY                          1
+#define RFMXSPECAN_VAL_DPD_MEMORY_POLYNOMIAL_LEAD_ORDER_TYPE_EVEN_ORDERS_ONLY                         2
+
+// Values for RFMXSPECAN_ATTR_DPD_MEMORY_POLYNOMIAL_LAG_ORDER_TYPE
+#define RFMXSPECAN_VAL_DPD_MEMORY_POLYNOMIAL_LAG_ORDER_TYPE_ALL_ORDERS                                0
+#define RFMXSPECAN_VAL_DPD_MEMORY_POLYNOMIAL_LAG_ORDER_TYPE_ODD_ORDERS_ONLY                           1
+#define RFMXSPECAN_VAL_DPD_MEMORY_POLYNOMIAL_LAG_ORDER_TYPE_EVEN_ORDERS_ONLY                          2
+
 // Values for RFMXSPECAN_ATTR_DPD_ITERATIVE_DPD_ENABLED
 #define RFMXSPECAN_VAL_DPD_ITERATIVE_DPD_ENABLED_FALSE                                                0
 #define RFMXSPECAN_VAL_DPD_ITERATIVE_DPD_ENABLED_TRUE                                                 1
@@ -925,15 +947,15 @@
 #define RFMXSPECAN_VAL_FCNT_AVERAGING_ENABLED_TRUE                                                    1
 
 // Values for RFMXSPECAN_ATTR_FCNT_AVERAGING_TYPE
-#define RFMXSPECAN_VAL_FCNT_AVERAGING_TYPE_MEAN                                                       6
 #define RFMXSPECAN_VAL_FCNT_AVERAGING_TYPE_MAXIMUM                                                    3
 #define RFMXSPECAN_VAL_FCNT_AVERAGING_TYPE_MINIMUM                                                    4
+#define RFMXSPECAN_VAL_FCNT_AVERAGING_TYPE_MEAN                                                       6
 #define RFMXSPECAN_VAL_FCNT_AVERAGING_TYPE_MINMAX                                                     7
 
 // Values for RFMXSPECAN_ATTR_FCNT_RBW_FILTER_TYPE
-#define RFMXSPECAN_VAL_FCNT_RBW_FILTER_TYPE_NONE                                                      5
 #define RFMXSPECAN_VAL_FCNT_RBW_FILTER_TYPE_GAUSSIAN                                                  1
 #define RFMXSPECAN_VAL_FCNT_RBW_FILTER_TYPE_FLAT                                                      2
+#define RFMXSPECAN_VAL_FCNT_RBW_FILTER_TYPE_NONE                                                      5
 #define RFMXSPECAN_VAL_FCNT_RBW_FILTER_TYPE_RRC                                                       6
 
 // Values for RFMXSPECAN_ATTR_FCNT_THRESHOLD_ENABLED
@@ -960,9 +982,9 @@
 #define RFMXSPECAN_VAL_HARM_AVERAGING_TYPE_MINIMUM                                                    4
 
 // Values for RFMXSPECAN_ATTR_HARM_FUNDAMENTAL_RBW_FILTER_TYPE
-#define RFMXSPECAN_VAL_HARM_RBW_FILTER_TYPE_NONE                                                      5
 #define RFMXSPECAN_VAL_HARM_RBW_FILTER_TYPE_GAUSSIAN                                                  1
 #define RFMXSPECAN_VAL_HARM_RBW_FILTER_TYPE_FLAT                                                      2
+#define RFMXSPECAN_VAL_HARM_RBW_FILTER_TYPE_NONE                                                      5
 #define RFMXSPECAN_VAL_HARM_RBW_FILTER_TYPE_RRC                                                       6
 
 // Values for RFMXSPECAN_ATTR_HARM_HARMONIC_ENABLED
@@ -1377,9 +1399,9 @@
 #define RFMXSPECAN_VAL_TXP_AVERAGING_TYPE_MINIMUM                                                     4
 
 // Values for RFMXSPECAN_ATTR_TXP_RBW_FILTER_TYPE
-#define RFMXSPECAN_VAL_TXP_RBW_FILTER_TYPE_NONE                                                       5
 #define RFMXSPECAN_VAL_TXP_RBW_FILTER_TYPE_GAUSSIAN                                                   1
 #define RFMXSPECAN_VAL_TXP_RBW_FILTER_TYPE_FLAT                                                       2
+#define RFMXSPECAN_VAL_TXP_RBW_FILTER_TYPE_NONE                                                       5
 #define RFMXSPECAN_VAL_TXP_RBW_FILTER_TYPE_RRC                                                        6
 
 // Values for RFMXSPECAN_ATTR_TXP_THRESHOLD_ENABLED
@@ -1578,8 +1600,8 @@
 #define RFMXSPECAN_VAL_SPECTRUM_DETECTOR_TYPE_AVERAGE_LOG                                             7
 
 // Values for RFMXSPECAN_ATTR_SPECTRUM_VBW_FILTER_AUTO_BANDWIDTH
-#define RFMXSPECAN_VAL_SPECTRUM_VBW_FILTER_AUTO_BANDWIDTH_TRUE                                        1
 #define RFMXSPECAN_VAL_SPECTRUM_VBW_FILTER_AUTO_BANDWIDTH_FALSE                                       0
+#define RFMXSPECAN_VAL_SPECTRUM_VBW_FILTER_AUTO_BANDWIDTH_TRUE                                        1
 
 // Values for RFMXSPECAN_ATTR_SPECTRUM_AMPLITUDE_CORRECTION_TYPE
 #define RFMXSPECAN_VAL_SPECTRUM_AMPLITUDE_CORRECTION_TYPE_RF_CENTER_FREQUENCY                         0
@@ -1596,24 +1618,24 @@
 #define RFMXSPECAN_VAL_SPUR_RANGE_DETECTOR_TYPE_AVERAGE_LOG                                           7
 
 // Values for RFMXSPECAN_ATTR_SPUR_RANGE_VBW_FILTER_AUTO_BANDWIDTH
-#define RFMXSPECAN_VAL_SPUR_RANGE_VBW_FILTER_AUTO_BANDWIDTH_TRUE                                      1
 #define RFMXSPECAN_VAL_SPUR_RANGE_VBW_FILTER_AUTO_BANDWIDTH_FALSE                                     0
+#define RFMXSPECAN_VAL_SPUR_RANGE_VBW_FILTER_AUTO_BANDWIDTH_TRUE                                      1
 
 // Values for RFMXSPECAN_ATTR_SPUR_AMPLITUDE_CORRECTION_TYPE
 #define RFMXSPECAN_VAL_SPUR_AMPLITUDE_CORRECTION_TYPE_RF_CENTER_FREQUENCY                             0
 #define RFMXSPECAN_VAL_SPUR_AMPLITUDE_CORRECTION_TYPE_SPECTRUM_FREQUENCY_BIN                          1
 
 // Values for RFMXSPECAN_ATTR_TXP_VBW_FILTER_AUTO_BANDWIDTH
-#define RFMXSPECAN_VAL_TXP_VBW_FILTER_AUTO_BANDWIDTH_TRUE                                             1
 #define RFMXSPECAN_VAL_TXP_VBW_FILTER_AUTO_BANDWIDTH_FALSE                                            0
+#define RFMXSPECAN_VAL_TXP_VBW_FILTER_AUTO_BANDWIDTH_TRUE                                             1
 
 // Values for RFMXSPECAN_ATTR_IM_AMPLITUDE_CORRECTION_TYPE
 #define RFMXSPECAN_VAL_IM_AMPLITUDE_CORRECTION_TYPE_RF_CENTER_FREQUENCY                               0
 #define RFMXSPECAN_VAL_IM_AMPLITUDE_CORRECTION_TYPE_SPECTRUM_FREQUENCY_BIN                            1
 
 // Values for RFMXSPECAN_ATTR_PHASENOISE_RANGE_DEFINITION
-#define RFMXSPECAN_VAL_PHASENOISE_RANGE_DEFINITION_AUTO                                               1
 #define RFMXSPECAN_VAL_PHASENOISE_RANGE_DEFINITION_MANUAL                                             0
+#define RFMXSPECAN_VAL_PHASENOISE_RANGE_DEFINITION_AUTO                                               1
 
 // Values for RFMXSPECAN_ATTR_PHASENOISE_FFT_WINDOW
 #define RFMXSPECAN_VAL_PHASENOISE_FFT_WINDOW_NONE                                                     0
@@ -1699,6 +1721,8 @@
 // Values for RFMXSPECAN_ATTR_AMPM_COMPRESSION_POINT_GAIN_REFERENCE
 #define RFMXSPECAN_VAL_AMPM_COMPRESSION_POINT_GAIN_REFERENCE_AUTO                                     0
 #define RFMXSPECAN_VAL_AMPM_COMPRESSION_POINT_GAIN_REFERENCE_REFERENCE_POWER                          1
+#define RFMXSPECAN_VAL_AMPM_COMPRESSION_POINT_GAIN_REFERENCE_MAX_GAIN                                 2
+#define RFMXSPECAN_VAL_AMPM_COMPRESSION_POINT_GAIN_REFERENCE_USER_DEFINED                             3
 
 // Values for RFMXSPECAN_ATTR_DPD_IQ_ORIGIN_OFFSET_CORRECTION_ENABLED
 #define RFMXSPECAN_VAL_DPD_IQ_ORIGIN_OFFSET_CORRECTION_ENABLED_FALSE                                  0
@@ -3397,8 +3421,8 @@ int32 __stdcall RFmxSpecAn_PAVTCfgSegmentType(
 int32 __stdcall RFmxSpecAn_PAVTCfgMeasurementInterval(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   float64 measurermentOffset,
-   float64 measurermentLength
+   float64 measurementOffset,
+   float64 measurementLength
 );
 
 int32 __stdcall RFmxSpecAn_PAVTCfgSegmentMeasurementInterval(
@@ -9181,6 +9205,24 @@ int32 __stdcall RFmxSpecAn_AMPMGetResults1dBCompressionPoint(
    float64 *attrVal
 );
 
+int32 __stdcall RFmxSpecAn_AMPMGetResultsCompressionPointGainReference(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_AMPMGetResultsPeakReferencePower(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_AMPMGetResultsPeakReferencePowerGain(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
 int32 __stdcall RFmxSpecAn_AMPMGetResultsMeanRMSEVM(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -9303,6 +9345,18 @@ int32 __stdcall RFmxSpecAn_AMPMGetCompressionPointGainReferencePower(
 );
 
 int32 __stdcall RFmxSpecAn_AMPMSetCompressionPointGainReferencePower(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_AMPMGetCompressionPointUserGain(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_AMPMSetCompressionPointUserGain(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
@@ -9684,6 +9738,18 @@ int32 __stdcall RFmxSpecAn_DPDSetMemoryPolynomialMemoryDepth(
    int32 attrVal
 );
 
+int32 __stdcall RFmxSpecAn_DPDGetMemoryPolynomialOrderType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_DPDSetMemoryPolynomialOrderType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
 int32 __stdcall RFmxSpecAn_DPDGetMemoryPolynomialLeadOrder(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -9751,6 +9817,30 @@ int32 __stdcall RFmxSpecAn_DPDGetMemoryPolynomialMaximumLag(
 );
 
 int32 __stdcall RFmxSpecAn_DPDSetMemoryPolynomialMaximumLag(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_DPDGetMemoryPolynomialLeadOrderType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_DPDSetMemoryPolynomialLeadOrderType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_DPDGetMemoryPolynomialLagOrderType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_DPDSetMemoryPolynomialLagOrderType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
