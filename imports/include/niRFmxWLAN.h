@@ -46,6 +46,7 @@
 #define RFMXWLAN_ATTR_OFDM_AUTO_PPDU_TYPE_DETECTION_ENABLED                             0x00a00027
 #define RFMXWLAN_ATTR_OFDM_PPDU_TYPE                                                    0x00a00017
 #define RFMXWLAN_ATTR_OFDM_HEADER_DECODING_ENABLED                                      0x00a00028
+#define RFMXWLAN_ATTR_OFDM_EHT_SIG_COMPRESSION_ENABLED                                  0x00a0003a
 #define RFMXWLAN_ATTR_OFDM_NUMBER_OF_USERS                                              0x00a00018
 #define RFMXWLAN_ATTR_OFDM_MCS_INDEX                                                    0x00a00019
 #define RFMXWLAN_ATTR_OFDM_FEC_CODING_TYPE                                              0x00a00032
@@ -60,11 +61,13 @@
 #define RFMXWLAN_ATTR_OFDM_NUMBER_OF_SPACE_TIME_STREAMS                                 0x00a0001e
 #define RFMXWLAN_ATTR_OFDM_SPACE_TIME_STREAM_OFFSET                                     0x00a0001f
 #define RFMXWLAN_ATTR_OFDM_NUMBER_OF_HE_SIG_B_SYMBOLS                                   0x00a00020
+#define RFMXWLAN_ATTR_OFDM_NUMBER_OF_EHT_SIG_SYMBOLS                                    0x00a0003b
 #define RFMXWLAN_ATTR_OFDM_DCM_ENABLED                                                  0x00a00021
 #define RFMXWLAN_ATTR_OFDM_NUMBER_OF_LTF_SYMBOLS                                        0x00a00022
 #define RFMXWLAN_ATTR_OFDM_MU_MIMO_LTF_MODE_ENABLED                                     0x00a00029
 #define RFMXWLAN_ATTR_OFDM_PREAMBLE_PUNCTURING_ENABLED                                  0x00a0002f
 #define RFMXWLAN_ATTR_OFDM_PREAMBLE_PUNCTURING_BITMAP                                   0x00a00030
+#define RFMXWLAN_ATTR_OFDM_AUTO_PHASE_ROTATION_DETECTION_ENABLED                        0x00a0003c
 #define RFMXWLAN_ATTR_OFDM_PHASE_ROTATION_COEFFICIENT_1                                 0x00a00037
 #define RFMXWLAN_ATTR_OFDM_PHASE_ROTATION_COEFFICIENT_2                                 0x00a00038
 #define RFMXWLAN_ATTR_OFDM_PHASE_ROTATION_COEFFICIENT_3                                 0x00a00039
@@ -146,8 +149,9 @@
 #define RFMXWLAN_ATTR_OFDMMODACC_SYMBOL_CLOCK_ERROR_CORRECTION_ENABLED                  0x00a04010
 #define RFMXWLAN_ATTR_OFDMMODACC_SPECTRUM_INVERTED                                      0x00a0407a
 #define RFMXWLAN_ATTR_OFDMMODACC_CHANNEL_ESTIMATION_TYPE                                0x00a04011
-#define RFMXWLAN_ATTR_OFDMMODACC_CHANNEL_ESTIMATION_SMOOTHING_ENABLED                   0x00a0406a
+#define RFMXWLAN_ATTR_OFDMMODACC_CHANNEL_ESTIMATION_INTERPOLATION_TYPE                  0x00a0406a
 #define RFMXWLAN_ATTR_OFDMMODACC_CHANNEL_ESTIMATION_SMOOTHING_LENGTH                    0x00a0406b
+#define RFMXWLAN_ATTR_OFDMMODACC_CHANNEL_ESTIMATION_RELATIVE_DELAY_SPREAD               0x00a040b7
 #define RFMXWLAN_ATTR_OFDMMODACC_CHANNEL_ESTIMATION_L_LTF_ENABLED                       0x00a04087
 #define RFMXWLAN_ATTR_OFDMMODACC_POWER_MEASUREMENT_ENABLED                              0x00a04017
 #define RFMXWLAN_ATTR_OFDMMODACC_POWER_NUMBER_OF_CUSTOM_GATES                           0x00a04018
@@ -240,6 +244,7 @@
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_SPECTRAL_FLATNESS_MARGIN_SUBCARRIER_INDEX      0x00a04024
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_UNUSED_TONE_ERROR_MARGIN                       0x00a04025
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_UNUSED_TONE_ERROR_MARGIN_RU_INDEX              0x00a04026
+#define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_BURST_START_TIME_MEAN                          0x00a040b0
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_NUMBER_OF_SYMBOLS_USED                         0x00a04016
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_NOISE_COMPENSATION_APPLIED                     0x00a04027
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_FREQUENCY_ERROR_MEAN                           0x00a04028
@@ -281,6 +286,9 @@
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_EHT_SIG_CRC_STATUS                             0x00a04092
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_PSDU_CRC_STATUS                                0x00a0408c
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_PE_DURATION                                    0x00a04095
+#define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_PHASE_ROTATION_COEFFICIENT_1                   0x00a040b8
+#define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_PHASE_ROTATION_COEFFICIENT_2                   0x00a040b9
+#define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_PHASE_ROTATION_COEFFICIENT_3                   0x00a040ba
 #define RFMXWLAN_ATTR_SEM_MEASUREMENT_ENABLED                                           0x00a05000
 #define RFMXWLAN_ATTR_SEM_MASK_TYPE                                                     0x00a05002
 #define RFMXWLAN_ATTR_SEM_CARRIER_INTEGRATION_BANDWIDTH                                 0x00a05005
@@ -429,6 +437,10 @@
 #define RFMXWLAN_VAL_OFDM_HEADER_DECODING_ENABLED_FALSE                                             0
 #define RFMXWLAN_VAL_OFDM_HEADER_DECODING_ENABLED_TRUE                                              1
 
+// Values for RFMXWLAN_ATTR_OFDM_EHT_SIG_COMPRESSION_ENABLED
+#define RFMXWLAN_VAL_OFDM_EHT_SIG_COMPRESSION_ENABLED_FALSE                                         0
+#define RFMXWLAN_VAL_OFDM_EHT_SIG_COMPRESSION_ENABLED_TRUE                                          1
+
 // Values for RFMXWLAN_ATTR_OFDM_FEC_CODING_TYPE
 #define RFMXWLAN_VAL_OFDM_FEC_CODING_TYPE_BCC                                                       0
 #define RFMXWLAN_VAL_OFDM_FEC_CODING_TYPE_LDPC                                                      1
@@ -439,10 +451,10 @@
 #define RFMXWLAN_VAL_OFDM_GUARD_INTERVAL_TYPE_1_16                                                  2
 
 // Values for RFMXWLAN_ATTR_OFDM_LTF_SIZE
+#define RFMXWLAN_VAL_OFDM_LTF_SIZE_NOT_APPLICABLE                                                   -1
 #define RFMXWLAN_VAL_OFDM_LTF_SIZE_4X                                                               0
 #define RFMXWLAN_VAL_OFDM_LTF_SIZE_2X                                                               1
 #define RFMXWLAN_VAL_OFDM_LTF_SIZE_1X                                                               2
-#define RFMXWLAN_VAL_OFDM_LTF_SIZE_NOT_APPLICABLE                                                   -1
 
 // Values for RFMXWLAN_ATTR_OFDM_STBC_ENABLED
 #define RFMXWLAN_VAL_OFDM_STBC_ENABLED_FALSE                                                        0
@@ -459,6 +471,10 @@
 // Values for RFMXWLAN_ATTR_OFDM_PREAMBLE_PUNCTURING_ENABLED
 #define RFMXWLAN_VAL_OFDM_PREAMBLE_PUNCTURING_ENABLED_FALSE                                         0
 #define RFMXWLAN_VAL_OFDM_PREAMBLE_PUNCTURING_ENABLED_TRUE                                          1
+
+// Values for RFMXWLAN_ATTR_OFDM_AUTO_PHASE_ROTATION_DETECTION_ENABLED
+#define RFMXWLAN_VAL_OFDM_AUTO_PHASE_ROTATION_DETECTION_ENABLED_FALSE                               0
+#define RFMXWLAN_VAL_OFDM_AUTO_PHASE_ROTATION_DETECTION_ENABLED_TRUE                                1
 
 // Values for RFMXWLAN_ATTR_OFDM_PHASE_ROTATION_COEFFICIENT_1
 #define RFMXWLAN_VAL_OFDM_PHASE_ROTATION_COEFFICIENT_1_PLUS_ONE                                     0
@@ -611,9 +627,10 @@
 #define RFMXWLAN_VAL_OFDMMODACC_CHANNEL_ESTIMATION_TYPE_REFERENCE                                   0
 #define RFMXWLAN_VAL_OFDMMODACC_CHANNEL_ESTIMATION_TYPE_REFERENCE_AND_DATA                          1
 
-// Values for RFMXWLAN_ATTR_OFDMMODACC_CHANNEL_ESTIMATION_SMOOTHING_ENABLED
-#define RFMXWLAN_VAL_OFDMMODACC_CHANNEL_ESTIMATION_SMOOTHING_ENABLED_FALSE                          0
-#define RFMXWLAN_VAL_OFDMMODACC_CHANNEL_ESTIMATION_SMOOTHING_ENABLED_TRUE                           1
+// Values for RFMXWLAN_ATTR_OFDMMODACC_CHANNEL_ESTIMATION_INTERPOLATION_TYPE
+#define RFMXWLAN_VAL_OFDMMODACC_CHANNEL_ESTIMATION_INTERPOLATION_TYPE_LINEAR                        0
+#define RFMXWLAN_VAL_OFDMMODACC_CHANNEL_ESTIMATION_INTERPOLATION_TYPE_TRIANGULAR_SMOOTHING          1
+#define RFMXWLAN_VAL_OFDMMODACC_CHANNEL_ESTIMATION_INTERPOLATION_TYPE_WIENER_FILTER                 2
 
 // Values for RFMXWLAN_ATTR_OFDMMODACC_CHANNEL_ESTIMATION_L_LTF_ENABLED
 #define RFMXWLAN_VAL_OFDMMODACC_CHANNEL_ESTIMATION_L_LTF_ENABLED_FALSE                              0
@@ -715,6 +732,18 @@
 // Values for RFMXWLAN_ATTR_OFDMMODACC_RESULTS_PSDU_CRC_STATUS
 #define RFMXWLAN_VAL_OFDMMODACC_PSDU_CRC_STATUS_FAIL                                                0
 #define RFMXWLAN_VAL_OFDMMODACC_PSDU_CRC_STATUS_PASS                                                1
+
+// Values for RFMXWLAN_ATTR_OFDMMODACC_RESULTS_PHASE_ROTATION_COEFFICIENT_1
+#define RFMXWLAN_VAL_OFDMMODACC_PHASE_ROTATION_COEFFICIENT_1_PLUS_ONE                               0
+#define RFMXWLAN_VAL_OFDMMODACC_PHASE_ROTATION_COEFFICIENT_1_MINUS_ONE                              1
+
+// Values for RFMXWLAN_ATTR_OFDMMODACC_RESULTS_PHASE_ROTATION_COEFFICIENT_2
+#define RFMXWLAN_VAL_OFDMMODACC_PHASE_ROTATION_COEFFICIENT_2_PLUS_ONE                               0
+#define RFMXWLAN_VAL_OFDMMODACC_PHASE_ROTATION_COEFFICIENT_2_MINUS_ONE                              1
+
+// Values for RFMXWLAN_ATTR_OFDMMODACC_RESULTS_PHASE_ROTATION_COEFFICIENT_3
+#define RFMXWLAN_VAL_OFDMMODACC_PHASE_ROTATION_COEFFICIENT_3_PLUS_ONE                               0
+#define RFMXWLAN_VAL_OFDMMODACC_PHASE_ROTATION_COEFFICIENT_3_MINUS_ONE                              1
 
 // Values for RFMXWLAN_ATTR_SEM_MASK_TYPE
 #define RFMXWLAN_VAL_SEM_MASK_TYPE_STANDARD                                                         0
@@ -2332,6 +2361,25 @@ int32 __stdcall RFmxWLAN_OFDMModAccFetchDecodedServiceBitsTrace(
    int32* actualArraySize
 );
 
+int32 __stdcall RFmxWLAN_OFDMModAccFetchReferenceDataConstellationTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   NIComplexSingle referenceDataConstellation[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccFetchReferenceDataConstellationTraceSplit(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float32 I[],
+   float32 Q[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
 int32 __stdcall RFmxWLAN_OFDMModAccFetchDecodedLSIGBitsTrace(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -2355,6 +2403,17 @@ int32 __stdcall RFmxWLAN_OFDMModAccFetchDecodedSIGBBitsTrace(
    char selectorString[],
    float64 timeout,
    int32 decodedSIGBBits[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccFetchPhaseNoisePSDMeanTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* x0,
+   float64* dx,
+   float32 phaseNoisePSDMean[],
    int32 arraySize,
    int32* actualArraySize
 );
@@ -3128,6 +3187,18 @@ int32 __stdcall RFmxWLAN_SetOFDMHeaderDecodingEnabled(
    int32 attrVal
 );
 
+int32 __stdcall RFmxWLAN_GetOFDMEHTSIGCompressionEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxWLAN_SetOFDMEHTSIGCompressionEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
 int32 __stdcall RFmxWLAN_GetOFDMNumberOfUsers(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -3296,6 +3367,18 @@ int32 __stdcall RFmxWLAN_SetOFDMNumberOfHESIGBSymbols(
    int32 attrVal
 );
 
+int32 __stdcall RFmxWLAN_GetOFDMNumberOfEHTSIGSymbols(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxWLAN_SetOFDMNumberOfEHTSIGSymbols(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
 int32 __stdcall RFmxWLAN_GetOFDMDCMEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -3354,6 +3437,18 @@ int32 __stdcall RFmxWLAN_SetOFDMPreamblePuncturingBitmap(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int64 attrVal
+);
+
+int32 __stdcall RFmxWLAN_GetOFDMAutoPhaseRotationDetectionEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxWLAN_SetOFDMAutoPhaseRotationDetectionEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
 );
 
 int32 __stdcall RFmxWLAN_GetOFDMPhaseRotationCoefficient1(
@@ -4172,13 +4267,13 @@ int32 __stdcall RFmxWLAN_OFDMModAccSetChannelEstimationType(
    int32 attrVal
 );
 
-int32 __stdcall RFmxWLAN_OFDMModAccGetChannelEstimationSmoothingEnabled(
+int32 __stdcall RFmxWLAN_OFDMModAccGetChannelEstimationInterpolationType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 __stdcall RFmxWLAN_OFDMModAccSetChannelEstimationSmoothingEnabled(
+int32 __stdcall RFmxWLAN_OFDMModAccSetChannelEstimationInterpolationType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
@@ -4194,6 +4289,18 @@ int32 __stdcall RFmxWLAN_OFDMModAccSetChannelEstimationSmoothingLength(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccGetChannelEstimationRelativeDelaySpread(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccSetChannelEstimationRelativeDelaySpread(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
 );
 
 int32 __stdcall RFmxWLAN_OFDMModAccGetChannelEstimationLLTFEnabled(
@@ -4880,6 +4987,12 @@ int32 __stdcall RFmxWLAN_OFDMModAccGetResultsUnusedToneErrorMarginRUIndex(
    int32 *attrVal
 );
 
+int32 __stdcall RFmxWLAN_OFDMModAccGetResultsBurstStartTimeMean(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
 int32 __stdcall RFmxWLAN_OFDMModAccGetResultsNumberOfSymbolsUsed(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -5124,6 +5237,24 @@ int32 __stdcall RFmxWLAN_OFDMModAccGetResultsPEDuration(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccGetResultsPhaseRotationCoefficient1(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccGetResultsPhaseRotationCoefficient2(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccGetResultsPhaseRotationCoefficient3(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
 );
 
 int32 __stdcall RFmxWLAN_SEMGetMeasurementEnabled(
@@ -5707,7 +5838,7 @@ int32 __stdcall RFmxWLAN_PowerRampGetResultsFallTimeMean(
 #define RFMXWLAN_ATTR_OFDM_NUMBER_OF_HE_LTF_SYMBOLS                                     0x00a00022
 #define RFMXWLAN_ATTR_OFDM_RU_OFFSET                                                    0x00a0001b
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_RU_OFFSET                                      0x00a04034
-
+#define RFMXWLAN_ATTR_OFDMMODACC_CHANNEL_ESTIMATION_SMOOTHING_ENABLED                   0x00a0406a
 
 // Values for RFMXWLAN_ATTR_OFDMMODACC_CHANNEL_ESTIMATION_TYPE
 #define RFMXWLAN_VAL_OFDMMODACC_CHANNEL_ESTIMATION_TYPE_CHANNEL_ESTIMATION_REFERENCE                0
@@ -5718,6 +5849,10 @@ int32 __stdcall RFmxWLAN_PowerRampGetResultsFallTimeMean(
 #define RFMXWLAN_VAL_OFDM_HE_LTF_SIZE_2X                                                            1
 #define RFMXWLAN_VAL_OFDM_HE_LTF_SIZE_1X                                                            2
 #define RFMXWLAN_VAL_OFDM_HE_LTF_SIZE_NOT_APPLICABLE                                                -1
+
+// Values for RFMXWLAN_ATTR_OFDMMODACC_CHANNEL_ESTIMATION_SMOOTHING_ENABLED
+#define RFMXWLAN_VAL_OFDMMODACC_CHANNEL_ESTIMATION_SMOOTHING_ENABLED_FALSE                          0
+#define RFMXWLAN_VAL_OFDMMODACC_CHANNEL_ESTIMATION_SMOOTHING_ENABLED_TRUE                           1
 
 #ifdef __cplusplus
 extern "C"
@@ -5814,6 +5949,18 @@ int32 __stdcall RFmxWLAN_OFDMModAccGetResultsRUOffset(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccGetChannelEstimationSmoothingEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccSetChannelEstimationSmoothingEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
 );
 
 #ifdef __cplusplus
