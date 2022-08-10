@@ -332,7 +332,8 @@ inline ::grpc::Status ApiErrorAndDescriptionToStatus(int32_t status, std::string
 
 inline ::grpc::Status ApiErrorAndDescriptionToStatus(int32_t status, std::string& description)
 {
-  return ApiErrorAndDescriptionToStatus(status, description, nlohmann::json());
+  nlohmann::json jsonError;
+  return ApiErrorAndDescriptionToStatus(status, description, jsonError);
 }
 }  // namespace nidevice_grpc
 

@@ -1,4 +1,4 @@
-#include <nirfmxspecan_restricted/nirfmxspecan_restricted_service.h>>
+#include <nirfmxspecan_restricted/nirfmxspecan_restricted_service.h>
 
 namespace nirfmxspecan_restricted_grpc {
 
