@@ -2,12 +2,14 @@
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
+#include <nlohmann/json.hpp>
 #include <server/converters.h>
 
 #include <array>
 
 using namespace nidevice_grpc::converters;
 using namespace ::testing;
+using nlohmann::json;
 
 namespace ni {
 namespace tests {
@@ -168,6 +170,41 @@ TEST(ConvertersTests, ArrayAndRawValue_ConvertBitfieldAsEnumArrayInput_ReturnsOr
   const auto converted = convert_bitfield_as_enum_array_input(input_array, INPUT_RAW);
 
   EXPECT_EQ(0x2 | 0x4 | 0x8, converted);
+}
+
+TEST(ConvertersTests, ApiErrorAndDescriptionToStatus_Parse_IncludesCodeAndMessage)
+{
+  const auto TEST_STATUS = -12345;
+  const auto TEST_MESSAGE = std::string("regular_string");
+  std::string description(TEST_MESSAGE);
+
+  auto error_message = nidevice_grpc::ApiErrorAndDescriptionToStatus(TEST_STATUS, description).error_message();
+  auto parsed = json::parse(error_message);
+
+  EXPECT_EQ(TEST_STATUS, parsed.value("code", 0));
+  EXPECT_EQ(TEST_MESSAGE, parsed.value("message", ""));
+}
+
+TEST(ConvertersTests, CustomField_ApiErrorAndDescriptionToStatus_IncludesCustomField)
+{
+  std::string empty_description;
+  nlohmann::json jsonError{{"custom", 1}};
+
+  auto error_message = nidevice_grpc::ApiErrorAndDescriptionToStatus(0, empty_description, jsonError).error_message();
+
+  EXPECT_THAT(error_message, HasSubstr("\"custom\":1"));
+}
+
+TEST(ConvertersTests, QuotedLocalizedDescription_ApiErrorAndDescriptionToStatus_MessageIsEncoded)
+{
+  const auto TEST_MESSAGE = std::string("\"chaîne 😀 localisée\"");
+  std::string description(TEST_MESSAGE);
+
+  auto error_message = nidevice_grpc::ApiErrorAndDescriptionToStatus(0, description).error_message();
+  auto parsed = json::parse(error_message);
+
+  EXPECT_THAT(error_message, Not(HasSubstr(TEST_MESSAGE)));
+  EXPECT_EQ(TEST_MESSAGE, parsed.value("message", ""));
 }
 
 }  // namespace
