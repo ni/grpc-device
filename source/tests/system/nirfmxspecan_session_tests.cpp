@@ -1,5 +1,6 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
+#include <nlohmann/json.hpp>
 
 #include "device_server.h"
 #include "nirfmxspecan/nirfmxspecan_client.h"
@@ -9,6 +10,7 @@ namespace tests {
 namespace system {
 
 namespace rfmxspecan = nirfmxspecan_grpc;
+using namespace ::nlohmann;
 using ::testing::IsEmpty;
 
 const int kInvalidRsrc = -200220;
@@ -77,9 +79,9 @@ TEST_F(NiRFmxSpecAnSessionTest, InitializeSessionWithoutDevice_ReturnsDriverErro
   rfmxspecan::InitializeResponse response;
   ::grpc::Status status = call_initialize(kRFmxSpecAnTestInvalidRsrc, "", "", &response);
 
-  EXPECT_TRUE(status.ok());
-  EXPECT_EQ(kInvalidRsrc, response.status());
-  EXPECT_EQ(0, response.instrument().id());
+  EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status.error_code());
+  auto error = json::parse(status.error_message());
+  EXPECT_EQ(kInvalidRsrc, error.value("code", 0));
 }
 
 TEST_F(NiRFmxSpecAnSessionTest, InitializedSession_CloseSession_ClosesDriverSession)
@@ -105,22 +107,27 @@ TEST_F(NiRFmxSpecAnSessionTest, InitializedSession_CloseSession_ClosesDriverSess
 TEST_F(NiRFmxSpecAnSessionTest, InitWithErrorFromDriver_ReturnsUserErrorMessage)
 {
   rfmxspecan::InitializeResponse init_response;
-  call_initialize(kRFmxSpecAnTestInvalidRsrc, "", "", &init_response);
-  EXPECT_EQ(kInvalidRsrc, init_response.status());
+  auto status = call_initialize(kRFmxSpecAnTestInvalidRsrc, "", "", &init_response);
 
-  nidevice_grpc::Session session = init_response.instrument();
-  EXPECT_EQ(std::string(kRFmxSpecAnErrorResourceNotFoundMessage), init_response.error_message());
+  EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status.error_code());
+  auto error = json::parse(status.error_message());
+  EXPECT_EQ(kInvalidRsrc, error.value("code", 0));
+  EXPECT_STREQ(kRFmxSpecAnErrorResourceNotFoundMessage, error.value("message", "").c_str());
 }
 
 TEST_F(NiRFmxSpecAnSessionTest, InitWithErrorFromDriver_ReinitSuccessfully_ErrorMessageIsEmpty)
 {
   rfmxspecan::InitializeResponse failed_init_response;
-  call_initialize(kRFmxSpecAnTestInvalidRsrc, "", "", &failed_init_response);
+  auto status_one = call_initialize(kRFmxSpecAnTestInvalidRsrc, "", "", &failed_init_response);
 
   rfmxspecan::InitializeResponse successful_init_response;
-  call_initialize(kRFmxSpecAnTestRsrc, kRFmxSpecAnOptionsString, kRFmxSpecAnTestSession, &successful_init_response);
+  auto status_two = call_initialize(kRFmxSpecAnTestRsrc, kRFmxSpecAnOptionsString, kRFmxSpecAnTestSession, &successful_init_response);
 
-  EXPECT_EQ(std::string(kRFmxSpecAnErrorResourceNotFoundMessage), failed_init_response.error_message());
+  EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status_one.error_code());
+  auto error = json::parse(status_one.error_message());
+  EXPECT_STREQ(kRFmxSpecAnErrorResourceNotFoundMessage, error.value("message", "").c_str());
+  EXPECT_EQ(::grpc::StatusCode::OK, status_two.error_code());
+  EXPECT_THAT(status_two.error_message(), IsEmpty());
   EXPECT_THAT(successful_init_response.error_message(), IsEmpty());
 }
 
@@ -136,8 +143,9 @@ TEST_F(NiRFmxSpecAnSessionTest, InvalidSession_CloseSession_ReturnsInvalidSessio
   rfmxspecan::CloseResponse response;
   ::grpc::Status status = GetStub()->Close(&context, request, &response);
 
-  EXPECT_TRUE(status.ok());
-  EXPECT_EQ(kInvalidRFmxSpecAnSession, response.status());
+  EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status.error_code());
+  auto error = json::parse(status.error_message());
+  EXPECT_EQ(kInvalidRFmxSpecAnSession, error.value("code", 0));
 }
 
 }  // namespace system

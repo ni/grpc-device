@@ -1,5 +1,6 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>  // For EXPECT matchers.
+#include <nlohmann/json.hpp>
 
 #include <algorithm>
 
@@ -9,6 +10,7 @@
 #include "niscope/niscope_client.h"
 #include "nitclk/nitclk_client.h"
 
+using namespace ::nlohmann;
 using namespace ::testing;
 using namespace nirfsa_grpc;
 namespace client = nirfsa_grpc::experimental::client;
@@ -30,12 +32,6 @@ template <typename TResponse>
 void EXPECT_SUCCESS(const TResponse& response)
 {
   EXPECT_EQ(0, response.status());
-}
-
-template <typename TResponse>
-void EXPECT_RFSA_ERROR(pb::int32 expected_error, const TResponse& response)
-{
-  EXPECT_EQ(expected_error, response.status());
 }
 
 class NiRFSADriverApiTests : public Test {
@@ -87,12 +83,17 @@ class NiRFSADriverApiTests : public Test {
     check_error(session);
   }
 
-  template <typename TResponse>
-  void EXPECT_RFSA_ERROR(pb::int32 expected_error, const std::string& message_substring, const nidevice_grpc::Session& session, const TResponse& response)
+  std::string EXPECT_RFSA_ERROR(int32_t expected_error, const std::string& error_message)
   {
-    ni::tests::system::EXPECT_RFSA_ERROR(expected_error, response);
-    const auto error = client::get_error(stub(), session);
-    EXPECT_THAT(error.error_description(), HasSubstr(message_substring));
+    auto error = json::parse(error_message);
+    EXPECT_EQ(expected_error, error.value("code", 0));
+    return error.value("message", "");
+  }
+
+  void EXPECT_RFSA_ERROR(pb::int32 expected_error, const std::string& message_substring, const char* error_message, const nidevice_grpc::Session& session)
+  {
+    auto message = EXPECT_RFSA_ERROR(expected_error, error_message);
+    EXPECT_THAT(message, HasSubstr(message_substring));
     clear_error(session);
   }
 
@@ -128,10 +129,14 @@ TEST_F(NiRFSADriverApiTests, Init_Close_Succeeds)
 
 TEST_F(NiRFSADriverApiTests, InitWithErrorFromDriver_ReturnsUserErrorMessage)
 {
-  auto initialize_response = client::init_with_options(stub(), "", false, false, "");
-
-  EXPECT_EQ(-200220, initialize_response.status());
-  EXPECT_STREQ("Device identifier is invalid.", initialize_response.error_message().c_str());
+  try {
+    client::init_with_options(stub(), "", false, false, "");
+    EXPECT_FALSE(true);
+  }
+  catch (const std::runtime_error& ex) {
+    auto message = EXPECT_RFSA_ERROR(-200220, ex.what());
+    EXPECT_STREQ("Device identifier is invalid.", message.c_str());
+  }
 }
 
 MATCHER(IsNonDefaultComplexArray, "")
@@ -498,14 +503,19 @@ TEST_F(NiRFSADriverApiTests, CreateConfigurationListWithInvalidAttribute_Reports
 {
   const auto LIST_NAME = "MyList";
   auto session = init_session(stub(), PXI_5663E);
-  auto response = client::create_configuration_list(
+
+  try {
+    client::create_configuration_list(
       stub(),
       session,
       LIST_NAME,
       {NiRFSAAttribute::NIRFSA_ATTRIBUTE_EXTERNAL_GAIN, NiRFSAAttribute::NIRFSA_ATTRIBUTE_NOTCH_FILTER_ENABLED},
       true);
-
-  EXPECT_RFSA_ERROR(IVI_ATTRIBUTE_NOT_SUPPORTED_ERROR, "Attribute or property not supported.", session, response);
+    EXPECT_FALSE(true);
+  }
+  catch (const std::runtime_error& ex) {
+    EXPECT_RFSA_ERROR(IVI_ATTRIBUTE_NOT_SUPPORTED_ERROR, "Attribute or property not supported.", ex.what(), session);
+  }
 }
 
 TEST_F(NiRFSADriverApiTests, GetScalingCoefficients_ReturnsCoefficients)

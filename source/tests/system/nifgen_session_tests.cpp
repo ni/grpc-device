@@ -1,5 +1,6 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
+#include <nlohmann/json.hpp>
 
 #include "device_server.h"
 #include "nifgen/nifgen_client.h"
@@ -11,6 +12,7 @@ namespace tests {
 namespace system {
 
 namespace fgen = nifgen_grpc;
+using namespace ::nlohmann;
 
 const int kInvalidFgenRsrc = -1074134944;
 const int kInvalidFgenSession = -1074130544;
@@ -107,10 +109,10 @@ TEST_F(NiFgenSessionTest, InitializeSessionWithoutDevice_ReturnsDriverError)
   fgen::InitWithOptionsResponse response;
   ::grpc::Status status = call_init_with_options(kTestInvalidFgenRsrc, "", "", &response);
 
-  EXPECT_TRUE(status.ok());
-  EXPECT_EQ(kInvalidFgenRsrc, response.status());
-  EXPECT_EQ(0, response.vi().id());
-  EXPECT_NE("", response.error_message());
+  EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status.error_code());
+  auto error = json::parse(status.error_message());
+  EXPECT_EQ(kInvalidFgenRsrc, error.value("code", 0));
+  EXPECT_NE("", error.value("message", ""));
 }
 
 TEST_F(NiFgenSessionTest, InitializedSession_CloseSession_ClosesDriverSession)
@@ -140,19 +142,21 @@ TEST_F(NiFgenSessionTest, InvalidSession_CloseSession_ReturnsInvalidSessionError
   fgen::CloseResponse response;
   ::grpc::Status status = GetStub()->Close(&context, request, &response);
 
-  EXPECT_TRUE(status.ok());
-  EXPECT_EQ(kInvalidFgenSession, response.status());
-  std::string error_message = get_error_message(response.status());
-  EXPECT_STREQ(kInvalidFgenSessionMessage, error_message.c_str());
+  EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status.error_code());
+  auto error = json::parse(status.error_message());
+  EXPECT_EQ(kInvalidFgenSession, error.value("code", 0));
+  EXPECT_STREQ(kInvalidFgenSessionMessage, error.value("message", "").c_str());
 }
 
 TEST_F(NiFgenSessionTest, InitWithErrorFromDriver_ReturnsUserErrorMessage)
 {
   fgen::InitWithOptionsResponse initialize_response;
-  call_init_with_options(kTestInvalidFgenRsrc, "", "", &initialize_response);
+  auto status = call_init_with_options(kTestInvalidFgenRsrc, "", "", &initialize_response);
 
-  EXPECT_EQ(kInvalidFgenRsrc, initialize_response.status());
-  EXPECT_THAT(initialize_response.error_message().c_str(), HasSubstr(kViErrorFgenResourceNotFoundMessage));
+  EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status.error_code());
+  auto error = json::parse(status.error_message());
+  EXPECT_EQ(kInvalidFgenRsrc, error.value("code", 0));
+  EXPECT_THAT(error.value("message", "").c_str(), HasSubstr(kViErrorFgenResourceNotFoundMessage));
 }
 
 }  // namespace system

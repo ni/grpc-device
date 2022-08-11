@@ -359,6 +359,7 @@ add_executable(IntegrationTestsRunner
     "${service_output_dir}/nifake_non_ivi/nifake_non_ivi_client.cpp"
     "${service_output_dir}/nifake_non_ivi/nifake_non_ivi_service.cpp"
     "${custom_dir}/nifake_non_ivi_service.custom.cpp"
+    "${custom_dir}/nifake_service.custom.cpp"
 )
 
     set(CMAKE_THREAD_PREFER_PTHREAD TRUE)
@@ -370,7 +371,8 @@ target_link_libraries(IntegrationTestsRunner
     gmock
     ${_GRPC_GRPCPP}
     ${CMAKE_DL_LIBS}
-    Threads::Threads)
+    Threads::Threads
+    nlohmann_json::nlohmann_json)
 
 add_library(TestApi SHARED
     "source/tests/utilities/test_api.cpp")

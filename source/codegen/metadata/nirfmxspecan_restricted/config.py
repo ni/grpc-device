@@ -54,5 +54,6 @@ config = {
     "metadata_version": "0.1",
     "module_name": "nirfmxspecan_restricted",
     "session_class_description": "An NI-RFmxSpecAn instrument handle",
+    'session_handle_parameter_name': 'instrumentHandle',
     "duplicate_resource_handles_allowed": True,
 }

@@ -1,5 +1,6 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
+#include <nlohmann/json.hpp>
 
 #include "device_server.h"
 #include "nidmm/nidmm_client.h"
@@ -10,6 +11,7 @@ namespace tests {
 namespace system {
 
 namespace dmm = nidmm_grpc;
+using namespace ::nlohmann;
 using namespace ::testing;
 
 const int kViErrorDmmRsrcNFound = -1074118656;
@@ -106,10 +108,10 @@ TEST_F(NiDmmSessionTest, InitializeSessionWithoutDevice_ReturnsDriverError)
   dmm::InitWithOptionsResponse response;
   ::grpc::Status status = call_init_with_options(kInvalidRsrc, "", "", &response);
 
-  EXPECT_TRUE(status.ok());
-  EXPECT_EQ(kViErrorDmmRsrcNFound, response.status());
-  EXPECT_EQ(0, response.vi().id());
-  EXPECT_NE("", response.error_message());
+  EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status.error_code());
+  auto error = json::parse(status.error_message());
+  EXPECT_EQ(kViErrorDmmRsrcNFound, error.value("code", 0));
+  EXPECT_NE("", error.value("message", ""));
 }
 
 TEST_F(NiDmmSessionTest, InitializedSession_CloseSession_ClosesDriverSession)
@@ -139,19 +141,21 @@ TEST_F(NiDmmSessionTest, InvalidSession_CloseSession_ReturnsInvalidSesssionError
   dmm::CloseResponse response;
   ::grpc::Status status = GetStub()->Close(&context, request, &response);
 
-  EXPECT_TRUE(status.ok());
-  EXPECT_EQ(kInvalidDmmSession, response.status());
-  std::string error_message = get_error_message(response.status());
-  EXPECT_THAT(error_message.c_str(), HasSubstr(kInvalidDmmSessionMessage));
+  EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status.error_code());
+  auto error = json::parse(status.error_message());
+  EXPECT_EQ(kInvalidDmmSession, error.value("code", 0));
+  EXPECT_THAT(error.value("message", "").c_str(), HasSubstr(kInvalidDmmSessionMessage));
 }
 
 TEST_F(NiDmmSessionTest, InitWithErrorFromDriver_ReturnsUserErrorMessage)
 {
   dmm::InitWithOptionsResponse init_response;
-  call_init_with_options(kInvalidRsrc, "", "", &init_response);
+  auto status = call_init_with_options(kInvalidRsrc, "", "", &init_response);
 
-  EXPECT_EQ(kViErrorDmmRsrcNFound, init_response.status());
-  EXPECT_STREQ(kViErrorDmmRsrcNFoundMessage, init_response.error_message().c_str());
+  EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status.error_code());
+  auto error = json::parse(status.error_message());
+  EXPECT_EQ(kViErrorDmmRsrcNFound, error.value("code", 0));
+  EXPECT_STREQ(kViErrorDmmRsrcNFoundMessage, error.value("message", "").c_str());
 }
 
 }  // namespace system
