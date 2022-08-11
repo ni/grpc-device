@@ -8,6 +8,7 @@ config = {
     'csharp_namespace': 'NationalInstruments.Grpc.NiRFSA',
     'namespace_component': 'nirfsa',
     'close_function': 'Close',
+    'abort_function': 'Abort',
     'custom_types': [
         {
             'name': 'niRFSA_wfmInfo_struct',

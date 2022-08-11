@@ -8,6 +8,7 @@ config = {
     'csharp_namespace': 'NationalInstruments.Grpc.NiRFmxSpecAn',
     'namespace_component': 'nirfmxspecan',
     'close_function': 'Close',
+    'abort_function': 'AbortMeasurements',
     'custom_types': [],
     'additional_headers': { 'custom/nirfmx_errors.h': ['service.cpp'] },
     'type_to_grpc_type': {
