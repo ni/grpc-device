@@ -752,6 +752,7 @@ ${set_response_values(normal_outputs, init_method)}\
     method_call = f'return ConvertApiErrorStatusFor{cpp_handle_type}(status, {session});'
 %>\
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         ${method_call}
       }
 </%block>\
