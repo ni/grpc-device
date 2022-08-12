@@ -50,6 +50,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::AbortWithChannels(::grpc::ServerContext* context, const AbortWithChannelsRequest* request, AbortWithChannelsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -70,6 +74,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::CommitWithChannels(::grpc::ServerContext* context, const CommitWithChannelsRequest* request, CommitWithChannelsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -90,6 +98,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::ConfigureDigitalEdgeMeasureTriggerWithChannels(::grpc::ServerContext* context, const ConfigureDigitalEdgeMeasureTriggerWithChannelsRequest* request, ConfigureDigitalEdgeMeasureTriggerWithChannelsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -127,6 +139,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::ConfigureDigitalEdgePulseTriggerWithChannels(::grpc::ServerContext* context, const ConfigureDigitalEdgePulseTriggerWithChannelsRequest* request, ConfigureDigitalEdgePulseTriggerWithChannelsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -164,6 +180,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::ConfigureDigitalEdgeSequenceAdvanceTriggerWithChannels(::grpc::ServerContext* context, const ConfigureDigitalEdgeSequenceAdvanceTriggerWithChannelsRequest* request, ConfigureDigitalEdgeSequenceAdvanceTriggerWithChannelsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -201,6 +221,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::ConfigureDigitalEdgeShutdownTriggerWithChannels(::grpc::ServerContext* context, const ConfigureDigitalEdgeShutdownTriggerWithChannelsRequest* request, ConfigureDigitalEdgeShutdownTriggerWithChannelsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -238,6 +262,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::ConfigureDigitalEdgeSourceTriggerWithChannels(::grpc::ServerContext* context, const ConfigureDigitalEdgeSourceTriggerWithChannelsRequest* request, ConfigureDigitalEdgeSourceTriggerWithChannelsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -275,6 +303,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::ConfigureDigitalEdgeStartTriggerWithChannels(::grpc::ServerContext* context, const ConfigureDigitalEdgeStartTriggerWithChannelsRequest* request, ConfigureDigitalEdgeStartTriggerWithChannelsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -312,6 +344,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::ConfigureOvp(::grpc::ServerContext* context, const ConfigureOvpRequest* request, ConfigureOvpResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -334,6 +370,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::ConfigureSoftwareEdgeMeasureTriggerWithChannels(::grpc::ServerContext* context, const ConfigureSoftwareEdgeMeasureTriggerWithChannelsRequest* request, ConfigureSoftwareEdgeMeasureTriggerWithChannelsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -354,6 +394,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::ConfigureSoftwareEdgePulseTriggerWithChannels(::grpc::ServerContext* context, const ConfigureSoftwareEdgePulseTriggerWithChannelsRequest* request, ConfigureSoftwareEdgePulseTriggerWithChannelsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -374,6 +418,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::ConfigureSoftwareEdgeSequenceAdvanceTriggerWithChannels(::grpc::ServerContext* context, const ConfigureSoftwareEdgeSequenceAdvanceTriggerWithChannelsRequest* request, ConfigureSoftwareEdgeSequenceAdvanceTriggerWithChannelsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -394,6 +442,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::ConfigureSoftwareEdgeShutdownTriggerWithChannels(::grpc::ServerContext* context, const ConfigureSoftwareEdgeShutdownTriggerWithChannelsRequest* request, ConfigureSoftwareEdgeShutdownTriggerWithChannelsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -414,6 +466,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::ConfigureSoftwareEdgeSourceTriggerWithChannels(::grpc::ServerContext* context, const ConfigureSoftwareEdgeSourceTriggerWithChannelsRequest* request, ConfigureSoftwareEdgeSourceTriggerWithChannelsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -434,6 +490,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::ConfigureSoftwareEdgeStartTriggerWithChannels(::grpc::ServerContext* context, const ConfigureSoftwareEdgeStartTriggerWithChannelsRequest* request, ConfigureSoftwareEdgeStartTriggerWithChannelsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -454,6 +514,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::ConfigureSourceModeWithChannels(::grpc::ServerContext* context, const ConfigureSourceModeWithChannelsRequest* request, ConfigureSourceModeWithChannelsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -490,6 +554,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::CreateAdvancedSequenceCommitStepWithChannels(::grpc::ServerContext* context, const CreateAdvancedSequenceCommitStepWithChannelsRequest* request, CreateAdvancedSequenceCommitStepWithChannelsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -511,6 +579,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::CreateAdvancedSequenceStepWithChannels(::grpc::ServerContext* context, const CreateAdvancedSequenceStepWithChannelsRequest* request, CreateAdvancedSequenceStepWithChannelsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -532,6 +604,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::CreateAdvancedSequenceWithChannels(::grpc::ServerContext* context, const CreateAdvancedSequenceWithChannelsRequest* request, CreateAdvancedSequenceWithChannelsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -556,6 +632,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::CreateAdvancedSequence(::grpc::ServerContext* context, const CreateAdvancedSequenceRequest* request, CreateAdvancedSequenceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -579,6 +659,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::DeleteAdvancedSequenceWithChannels(::grpc::ServerContext* context, const DeleteAdvancedSequenceWithChannelsRequest* request, DeleteAdvancedSequenceWithChannelsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -600,6 +684,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::DisablePulseTriggerWithChannels(::grpc::ServerContext* context, const DisablePulseTriggerWithChannelsRequest* request, DisablePulseTriggerWithChannelsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -620,6 +708,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::DisableSequenceAdvanceTriggerWithChannels(::grpc::ServerContext* context, const DisableSequenceAdvanceTriggerWithChannelsRequest* request, DisableSequenceAdvanceTriggerWithChannelsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -640,6 +732,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::DisableShutdownTriggerWithChannels(::grpc::ServerContext* context, const DisableShutdownTriggerWithChannelsRequest* request, DisableShutdownTriggerWithChannelsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -660,6 +756,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::DisableSourceTriggerWithChannels(::grpc::ServerContext* context, const DisableSourceTriggerWithChannelsRequest* request, DisableSourceTriggerWithChannelsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -680,6 +780,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::DisableStartTriggerWithChannels(::grpc::ServerContext* context, const DisableStartTriggerWithChannelsRequest* request, DisableStartTriggerWithChannelsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -700,6 +804,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::ErrorQuery(::grpc::ServerContext* context, const ErrorQueryRequest* request, ErrorQueryResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -724,6 +832,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::ExportSignalWithChannels(::grpc::ServerContext* context, const ExportSignalWithChannelsRequest* request, ExportSignalWithChannelsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -762,6 +874,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::InitializeWithIndependentChannels(::grpc::ServerContext* context, const InitializeWithIndependentChannelsRequest* request, InitializeWithIndependentChannelsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -801,6 +917,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::InitiateWithChannels(::grpc::ServerContext* context, const InitiateWithChannelsRequest* request, InitiateWithChannelsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -821,6 +941,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::InvalidateAllAttributes(::grpc::ServerContext* context, const InvalidateAllAttributesRequest* request, InvalidateAllAttributesResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -840,6 +964,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::ResetWithChannels(::grpc::ServerContext* context, const ResetWithChannelsRequest* request, ResetWithChannelsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -860,6 +988,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::SendSoftwareEdgeTriggerWithChannels(::grpc::ServerContext* context, const SendSoftwareEdgeTriggerWithChannelsRequest* request, SendSoftwareEdgeTriggerWithChannelsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -896,6 +1028,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::WaitForEventWithChannels(::grpc::ServerContext* context, const WaitForEventWithChannelsRequest* request, WaitForEventWithChannelsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -952,6 +1088,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::CalSelfCalibrate(::grpc::ServerContext* context, const CalSelfCalibrateRequest* request, CalSelfCalibrateResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -972,6 +1112,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::ClearError(::grpc::ServerContext* context, const ClearErrorRequest* request, ClearErrorResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -991,6 +1135,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::ClearInterchangeWarnings(::grpc::ServerContext* context, const ClearInterchangeWarningsRequest* request, ClearInterchangeWarningsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1010,6 +1158,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::Close(::grpc::ServerContext* context, const CloseRequest* request, CloseResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1030,6 +1182,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::Commit(::grpc::ServerContext* context, const CommitRequest* request, CommitResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1049,6 +1205,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::ConfigureApertureTime(::grpc::ServerContext* context, const ConfigureApertureTimeRequest* request, ConfigureApertureTimeResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1086,6 +1246,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::ConfigureAutoZero(::grpc::ServerContext* context, const ConfigureAutoZeroRequest* request, ConfigureAutoZeroResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1122,6 +1286,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::ConfigureCurrentLevel(::grpc::ServerContext* context, const ConfigureCurrentLevelRequest* request, ConfigureCurrentLevelResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1143,6 +1311,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::ConfigureCurrentLevelRange(::grpc::ServerContext* context, const ConfigureCurrentLevelRangeRequest* request, ConfigureCurrentLevelRangeResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1164,6 +1336,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::ConfigureCurrentLimit(::grpc::ServerContext* context, const ConfigureCurrentLimitRequest* request, ConfigureCurrentLimitResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1201,6 +1377,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::ConfigureCurrentLimitRange(::grpc::ServerContext* context, const ConfigureCurrentLimitRangeRequest* request, ConfigureCurrentLimitRangeResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1222,6 +1402,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::ConfigureDigitalEdgeMeasureTrigger(::grpc::ServerContext* context, const ConfigureDigitalEdgeMeasureTriggerRequest* request, ConfigureDigitalEdgeMeasureTriggerResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1258,6 +1442,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::ConfigureDigitalEdgePulseTrigger(::grpc::ServerContext* context, const ConfigureDigitalEdgePulseTriggerRequest* request, ConfigureDigitalEdgePulseTriggerResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1294,6 +1482,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::ConfigureDigitalEdgeSequenceAdvanceTrigger(::grpc::ServerContext* context, const ConfigureDigitalEdgeSequenceAdvanceTriggerRequest* request, ConfigureDigitalEdgeSequenceAdvanceTriggerResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1330,6 +1522,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::ConfigureDigitalEdgeSourceTrigger(::grpc::ServerContext* context, const ConfigureDigitalEdgeSourceTriggerRequest* request, ConfigureDigitalEdgeSourceTriggerResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1366,6 +1562,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::ConfigureDigitalEdgeStartTrigger(::grpc::ServerContext* context, const ConfigureDigitalEdgeStartTriggerRequest* request, ConfigureDigitalEdgeStartTriggerResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1402,6 +1602,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::ConfigureOutputEnabled(::grpc::ServerContext* context, const ConfigureOutputEnabledRequest* request, ConfigureOutputEnabledResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1423,6 +1627,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::ConfigureOutputFunction(::grpc::ServerContext* context, const ConfigureOutputFunctionRequest* request, ConfigureOutputFunctionResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1459,6 +1667,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::ConfigureOutputResistance(::grpc::ServerContext* context, const ConfigureOutputResistanceRequest* request, ConfigureOutputResistanceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1480,6 +1692,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::ConfigurePowerLineFrequency(::grpc::ServerContext* context, const ConfigurePowerLineFrequencyRequest* request, ConfigurePowerLineFrequencyResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1515,6 +1731,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::ConfigurePulseBiasCurrentLevel(::grpc::ServerContext* context, const ConfigurePulseBiasCurrentLevelRequest* request, ConfigurePulseBiasCurrentLevelResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1536,6 +1756,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::ConfigurePulseBiasCurrentLimit(::grpc::ServerContext* context, const ConfigurePulseBiasCurrentLimitRequest* request, ConfigurePulseBiasCurrentLimitResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1557,6 +1781,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::ConfigurePulseBiasVoltageLevel(::grpc::ServerContext* context, const ConfigurePulseBiasVoltageLevelRequest* request, ConfigurePulseBiasVoltageLevelResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1578,6 +1806,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::ConfigurePulseBiasVoltageLimit(::grpc::ServerContext* context, const ConfigurePulseBiasVoltageLimitRequest* request, ConfigurePulseBiasVoltageLimitResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1599,6 +1831,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::ConfigurePulseCurrentLevel(::grpc::ServerContext* context, const ConfigurePulseCurrentLevelRequest* request, ConfigurePulseCurrentLevelResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1620,6 +1856,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::ConfigurePulseCurrentLevelRange(::grpc::ServerContext* context, const ConfigurePulseCurrentLevelRangeRequest* request, ConfigurePulseCurrentLevelRangeResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1641,6 +1881,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::ConfigurePulseCurrentLimit(::grpc::ServerContext* context, const ConfigurePulseCurrentLimitRequest* request, ConfigurePulseCurrentLimitResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1662,6 +1906,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::ConfigurePulseCurrentLimitRange(::grpc::ServerContext* context, const ConfigurePulseCurrentLimitRangeRequest* request, ConfigurePulseCurrentLimitRangeResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1683,6 +1931,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::ConfigurePulseVoltageLevel(::grpc::ServerContext* context, const ConfigurePulseVoltageLevelRequest* request, ConfigurePulseVoltageLevelResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1704,6 +1956,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::ConfigurePulseVoltageLevelRange(::grpc::ServerContext* context, const ConfigurePulseVoltageLevelRangeRequest* request, ConfigurePulseVoltageLevelRangeResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1725,6 +1981,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::ConfigurePulseVoltageLimit(::grpc::ServerContext* context, const ConfigurePulseVoltageLimitRequest* request, ConfigurePulseVoltageLimitResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1746,6 +2006,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::ConfigurePulseVoltageLimitRange(::grpc::ServerContext* context, const ConfigurePulseVoltageLimitRangeRequest* request, ConfigurePulseVoltageLimitRangeResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1767,6 +2031,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::ConfigureSense(::grpc::ServerContext* context, const ConfigureSenseRequest* request, ConfigureSenseResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1803,6 +2071,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::ConfigureSoftwareEdgeMeasureTrigger(::grpc::ServerContext* context, const ConfigureSoftwareEdgeMeasureTriggerRequest* request, ConfigureSoftwareEdgeMeasureTriggerResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1822,6 +2094,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::ConfigureSoftwareEdgePulseTrigger(::grpc::ServerContext* context, const ConfigureSoftwareEdgePulseTriggerRequest* request, ConfigureSoftwareEdgePulseTriggerResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1841,6 +2117,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::ConfigureSoftwareEdgeSequenceAdvanceTrigger(::grpc::ServerContext* context, const ConfigureSoftwareEdgeSequenceAdvanceTriggerRequest* request, ConfigureSoftwareEdgeSequenceAdvanceTriggerResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1860,6 +2140,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::ConfigureSoftwareEdgeSourceTrigger(::grpc::ServerContext* context, const ConfigureSoftwareEdgeSourceTriggerRequest* request, ConfigureSoftwareEdgeSourceTriggerResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1879,6 +2163,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::ConfigureSoftwareEdgeStartTrigger(::grpc::ServerContext* context, const ConfigureSoftwareEdgeStartTriggerRequest* request, ConfigureSoftwareEdgeStartTriggerResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1898,6 +2186,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::ConfigureSourceMode(::grpc::ServerContext* context, const ConfigureSourceModeRequest* request, ConfigureSourceModeResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1933,6 +2225,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::ConfigureVoltageLevel(::grpc::ServerContext* context, const ConfigureVoltageLevelRequest* request, ConfigureVoltageLevelResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1954,6 +2250,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::ConfigureVoltageLevelRange(::grpc::ServerContext* context, const ConfigureVoltageLevelRangeRequest* request, ConfigureVoltageLevelRangeResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1975,6 +2275,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::ConfigureVoltageLimit(::grpc::ServerContext* context, const ConfigureVoltageLimitRequest* request, ConfigureVoltageLimitResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1996,6 +2300,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::ConfigureVoltageLimitRange(::grpc::ServerContext* context, const ConfigureVoltageLimitRangeRequest* request, ConfigureVoltageLimitRangeResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2017,6 +2325,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::CreateAdvancedSequenceStep(::grpc::ServerContext* context, const CreateAdvancedSequenceStepRequest* request, CreateAdvancedSequenceStepResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2037,6 +2349,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::DeleteAdvancedSequence(::grpc::ServerContext* context, const DeleteAdvancedSequenceRequest* request, DeleteAdvancedSequenceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2057,6 +2373,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::Disable(::grpc::ServerContext* context, const DisableRequest* request, DisableResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2076,6 +2396,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::DisablePulseTrigger(::grpc::ServerContext* context, const DisablePulseTriggerRequest* request, DisablePulseTriggerResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2095,6 +2419,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::DisableSequenceAdvanceTrigger(::grpc::ServerContext* context, const DisableSequenceAdvanceTriggerRequest* request, DisableSequenceAdvanceTriggerResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2114,6 +2442,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::DisableSourceTrigger(::grpc::ServerContext* context, const DisableSourceTriggerRequest* request, DisableSourceTriggerResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2133,6 +2465,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::DisableStartTrigger(::grpc::ServerContext* context, const DisableStartTriggerRequest* request, DisableStartTriggerResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2152,6 +2488,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::ErrorMessage(::grpc::ServerContext* context, const ErrorMessageRequest* request, ErrorMessageResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2177,6 +2517,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::ExportAttributeConfigurationBuffer(::grpc::ServerContext* context, const ExportAttributeConfigurationBufferRequest* request, ExportAttributeConfigurationBufferResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2214,6 +2558,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::ExportAttributeConfigurationFile(::grpc::ServerContext* context, const ExportAttributeConfigurationFileRequest* request, ExportAttributeConfigurationFileResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2234,6 +2582,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::ExportSignal(::grpc::ServerContext* context, const ExportSignalRequest* request, ExportSignalResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2271,6 +2623,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::FetchMultiple(::grpc::ServerContext* context, const FetchMultipleRequest* request, FetchMultipleResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2303,6 +2659,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::GetAttributeViBoolean(::grpc::ServerContext* context, const GetAttributeViBooleanRequest* request, GetAttributeViBooleanResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2328,6 +2688,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::GetAttributeViInt32(::grpc::ServerContext* context, const GetAttributeViInt32Request* request, GetAttributeViInt32Response* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2353,6 +2717,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::GetAttributeViInt64(::grpc::ServerContext* context, const GetAttributeViInt64Request* request, GetAttributeViInt64Response* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2378,6 +2746,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::GetAttributeViReal64(::grpc::ServerContext* context, const GetAttributeViReal64Request* request, GetAttributeViReal64Response* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2403,6 +2775,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::GetAttributeViSession(::grpc::ServerContext* context, const GetAttributeViSessionRequest* request, GetAttributeViSessionResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2429,6 +2805,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::GetAttributeViString(::grpc::ServerContext* context, const GetAttributeViStringRequest* request, GetAttributeViStringResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2472,6 +2852,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::GetChannelName(::grpc::ServerContext* context, const GetChannelNameRequest* request, GetChannelNameResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2514,6 +2898,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::GetChannelNameFromString(::grpc::ServerContext* context, const GetChannelNameFromStringRequest* request, GetChannelNameFromStringResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2556,6 +2944,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::GetError(::grpc::ServerContext* context, const GetErrorRequest* request, GetErrorResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2599,6 +2991,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::GetExtCalLastDateAndTime(::grpc::ServerContext* context, const GetExtCalLastDateAndTimeRequest* request, GetExtCalLastDateAndTimeResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2630,6 +3026,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::GetExtCalLastTemp(::grpc::ServerContext* context, const GetExtCalLastTempRequest* request, GetExtCalLastTempResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2653,6 +3053,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::GetExtCalRecommendedInterval(::grpc::ServerContext* context, const GetExtCalRecommendedIntervalRequest* request, GetExtCalRecommendedIntervalResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2676,6 +3080,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::GetNextCoercionRecord(::grpc::ServerContext* context, const GetNextCoercionRecordRequest* request, GetNextCoercionRecordResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2717,6 +3125,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::GetNextInterchangeWarning(::grpc::ServerContext* context, const GetNextInterchangeWarningRequest* request, GetNextInterchangeWarningResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2758,6 +3170,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::GetSelfCalLastDateAndTime(::grpc::ServerContext* context, const GetSelfCalLastDateAndTimeRequest* request, GetSelfCalLastDateAndTimeResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2789,6 +3205,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::GetSelfCalLastTemp(::grpc::ServerContext* context, const GetSelfCalLastTempRequest* request, GetSelfCalLastTempResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2812,6 +3232,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::ImportAttributeConfigurationBuffer(::grpc::ServerContext* context, const ImportAttributeConfigurationBufferRequest* request, ImportAttributeConfigurationBufferResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2833,6 +3257,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::ImportAttributeConfigurationFile(::grpc::ServerContext* context, const ImportAttributeConfigurationFileRequest* request, ImportAttributeConfigurationFileResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2853,6 +3281,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::InitializeWithChannels(::grpc::ServerContext* context, const InitializeWithChannelsRequest* request, InitializeWithChannelsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2893,6 +3325,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::Initiate(::grpc::ServerContext* context, const InitiateRequest* request, InitiateResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2912,6 +3348,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::Measure(::grpc::ServerContext* context, const MeasureRequest* request, MeasureResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2952,6 +3392,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::QueryInCompliance(::grpc::ServerContext* context, const QueryInComplianceRequest* request, QueryInComplianceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2976,6 +3420,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::QueryMaxCurrentLimit(::grpc::ServerContext* context, const QueryMaxCurrentLimitRequest* request, QueryMaxCurrentLimitResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3001,6 +3449,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::QueryMaxVoltageLevel(::grpc::ServerContext* context, const QueryMaxVoltageLevelRequest* request, QueryMaxVoltageLevelResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3026,6 +3478,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::QueryMinCurrentLimit(::grpc::ServerContext* context, const QueryMinCurrentLimitRequest* request, QueryMinCurrentLimitResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3051,6 +3507,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::QueryOutputState(::grpc::ServerContext* context, const QueryOutputStateRequest* request, QueryOutputStateResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3091,6 +3551,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::ReadCurrentTemperature(::grpc::ServerContext* context, const ReadCurrentTemperatureRequest* request, ReadCurrentTemperatureResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3114,6 +3578,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::Reset(::grpc::ServerContext* context, const ResetRequest* request, ResetResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3133,6 +3601,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::ResetDevice(::grpc::ServerContext* context, const ResetDeviceRequest* request, ResetDeviceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3152,6 +3624,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::ResetInterchangeCheck(::grpc::ServerContext* context, const ResetInterchangeCheckRequest* request, ResetInterchangeCheckResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3171,6 +3647,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::ResetWithDefaults(::grpc::ServerContext* context, const ResetWithDefaultsRequest* request, ResetWithDefaultsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3190,6 +3670,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::RevisionQuery(::grpc::ServerContext* context, const RevisionQueryRequest* request, RevisionQueryResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3217,6 +3701,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::SelfTest(::grpc::ServerContext* context, const SelfTestRequest* request, SelfTestResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3243,6 +3731,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::SendSoftwareEdgeTrigger(::grpc::ServerContext* context, const SendSoftwareEdgeTriggerRequest* request, SendSoftwareEdgeTriggerResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3278,6 +3770,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::SetAttributeViBoolean(::grpc::ServerContext* context, const SetAttributeViBooleanRequest* request, SetAttributeViBooleanResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3300,6 +3796,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::SetAttributeViInt32(::grpc::ServerContext* context, const SetAttributeViInt32Request* request, SetAttributeViInt32Response* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3337,6 +3837,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::SetAttributeViInt64(::grpc::ServerContext* context, const SetAttributeViInt64Request* request, SetAttributeViInt64Response* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3359,6 +3863,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::SetAttributeViReal64(::grpc::ServerContext* context, const SetAttributeViReal64Request* request, SetAttributeViReal64Response* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3396,6 +3904,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::SetAttributeViSession(::grpc::ServerContext* context, const SetAttributeViSessionRequest* request, SetAttributeViSessionResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3419,6 +3931,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::SetAttributeViString(::grpc::ServerContext* context, const SetAttributeViStringRequest* request, SetAttributeViStringResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3441,6 +3957,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::SetSequence(::grpc::ServerContext* context, const SetSequenceRequest* request, SetSequenceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3475,6 +3995,10 @@ namespace nidcpower_grpc {
   ::grpc::Status NiDCPowerService::WaitForEvent(::grpc::ServerContext* context, const WaitForEventRequest* request, WaitForEventResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {

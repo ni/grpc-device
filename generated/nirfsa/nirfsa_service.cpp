@@ -70,6 +70,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::CheckAcquisitionStatus(::grpc::ServerContext* context, const CheckAcquisitionStatusRequest* request, CheckAcquisitionStatusResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -93,6 +97,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::ClearError(::grpc::ServerContext* context, const ClearErrorRequest* request, ClearErrorResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -112,6 +120,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::ClearSelfCalibrateRange(::grpc::ServerContext* context, const ClearSelfCalibrateRangeRequest* request, ClearSelfCalibrateRangeResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -131,6 +143,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::Close(::grpc::ServerContext* context, const CloseRequest* request, CloseResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -151,6 +167,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::Commit(::grpc::ServerContext* context, const CommitRequest* request, CommitResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -170,6 +190,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::ConfigureAcquisitionType(::grpc::ServerContext* context, const ConfigureAcquisitionTypeRequest* request, ConfigureAcquisitionTypeResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -205,6 +229,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::ConfigureDeembeddingTableInterpolationLinear(::grpc::ServerContext* context, const ConfigureDeembeddingTableInterpolationLinearRequest* request, ConfigureDeembeddingTableInterpolationLinearResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -242,6 +270,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::ConfigureDeembeddingTableInterpolationNearest(::grpc::ServerContext* context, const ConfigureDeembeddingTableInterpolationNearestRequest* request, ConfigureDeembeddingTableInterpolationNearestResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -263,6 +295,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::ConfigureDeembeddingTableInterpolationSpline(::grpc::ServerContext* context, const ConfigureDeembeddingTableInterpolationSplineRequest* request, ConfigureDeembeddingTableInterpolationSplineResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -284,6 +320,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::ConfigureDigitalEdgeAdvanceTrigger(::grpc::ServerContext* context, const ConfigureDigitalEdgeAdvanceTriggerRequest* request, ConfigureDigitalEdgeAdvanceTriggerResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -339,6 +379,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::ConfigureDigitalEdgeRefTrigger(::grpc::ServerContext* context, const ConfigureDigitalEdgeRefTriggerRequest* request, ConfigureDigitalEdgeRefTriggerResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -395,6 +439,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::ConfigureDigitalEdgeStartTrigger(::grpc::ServerContext* context, const ConfigureDigitalEdgeStartTriggerRequest* request, ConfigureDigitalEdgeStartTriggerResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -450,6 +498,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::ConfigureIQCarrierFrequency(::grpc::ServerContext* context, const ConfigureIQCarrierFrequencyRequest* request, ConfigureIQCarrierFrequencyResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -471,6 +523,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::ConfigureIQPowerEdgeRefTrigger(::grpc::ServerContext* context, const ConfigureIQPowerEdgeRefTriggerRequest* request, ConfigureIQPowerEdgeRefTriggerResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -509,6 +565,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::ConfigureIQRate(::grpc::ServerContext* context, const ConfigureIQRateRequest* request, ConfigureIQRateResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -530,6 +590,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::ConfigureNumberOfRecords(::grpc::ServerContext* context, const ConfigureNumberOfRecordsRequest* request, ConfigureNumberOfRecordsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -552,6 +616,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::ConfigureNumberOfSamples(::grpc::ServerContext* context, const ConfigureNumberOfSamplesRequest* request, ConfigureNumberOfSamplesResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -574,6 +642,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::ConfigurePXIChassisClk10(::grpc::ServerContext* context, const ConfigurePXIChassisClk10Request* request, ConfigurePXIChassisClk10Response* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -613,6 +685,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::ConfigureRefClock(::grpc::ServerContext* context, const ConfigureRefClockRequest* request, ConfigureRefClockResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -653,6 +729,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::ConfigureReferenceLevel(::grpc::ServerContext* context, const ConfigureReferenceLevelRequest* request, ConfigureReferenceLevelResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -674,6 +754,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::ConfigureResolutionBandwidth(::grpc::ServerContext* context, const ConfigureResolutionBandwidthRequest* request, ConfigureResolutionBandwidthResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -695,6 +779,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::ConfigureSoftwareEdgeAdvanceTrigger(::grpc::ServerContext* context, const ConfigureSoftwareEdgeAdvanceTriggerRequest* request, ConfigureSoftwareEdgeAdvanceTriggerResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -714,6 +802,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::ConfigureSoftwareEdgeRefTrigger(::grpc::ServerContext* context, const ConfigureSoftwareEdgeRefTriggerRequest* request, ConfigureSoftwareEdgeRefTriggerResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -734,6 +826,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::ConfigureSoftwareEdgeStartTrigger(::grpc::ServerContext* context, const ConfigureSoftwareEdgeStartTriggerRequest* request, ConfigureSoftwareEdgeStartTriggerResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -753,6 +849,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::ConfigureSpectrumFrequencyCenterSpan(::grpc::ServerContext* context, const ConfigureSpectrumFrequencyCenterSpanRequest* request, ConfigureSpectrumFrequencyCenterSpanResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -775,6 +875,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::ConfigureSpectrumFrequencyStartStop(::grpc::ServerContext* context, const ConfigureSpectrumFrequencyStartStopRequest* request, ConfigureSpectrumFrequencyStartStopResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -797,6 +901,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::CreateConfigurationList(::grpc::ServerContext* context, const CreateConfigurationListRequest* request, CreateConfigurationListResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -820,6 +928,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::CreateConfigurationListStep(::grpc::ServerContext* context, const CreateConfigurationListStepRequest* request, CreateConfigurationListStepResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -840,6 +952,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::CreateDeembeddingSparameterTableArray(::grpc::ServerContext* context, const CreateDeembeddingSparameterTableArrayRequest* request, CreateDeembeddingSparameterTableArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -882,6 +998,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::CreateDeembeddingSparameterTableS2PFile(::grpc::ServerContext* context, const CreateDeembeddingSparameterTableS2PFileRequest* request, CreateDeembeddingSparameterTableS2PFileResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -920,6 +1040,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::DeleteAllDeembeddingTables(::grpc::ServerContext* context, const DeleteAllDeembeddingTablesRequest* request, DeleteAllDeembeddingTablesResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -939,6 +1063,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::DeleteConfigurationList(::grpc::ServerContext* context, const DeleteConfigurationListRequest* request, DeleteConfigurationListResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -959,6 +1087,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::DeleteDeembeddingTable(::grpc::ServerContext* context, const DeleteDeembeddingTableRequest* request, DeleteDeembeddingTableResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -980,6 +1112,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::Disable(::grpc::ServerContext* context, const DisableRequest* request, DisableResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -999,6 +1135,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::DisableAdvanceTrigger(::grpc::ServerContext* context, const DisableAdvanceTriggerRequest* request, DisableAdvanceTriggerResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1018,6 +1158,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::DisableRefTrigger(::grpc::ServerContext* context, const DisableRefTriggerRequest* request, DisableRefTriggerResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1037,6 +1181,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::DisableStartTrigger(::grpc::ServerContext* context, const DisableStartTriggerRequest* request, DisableStartTriggerResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1056,6 +1204,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::EnableSessionAccess(::grpc::ServerContext* context, const EnableSessionAccessRequest* request, EnableSessionAccessResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1076,6 +1228,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::ErrorMessage(::grpc::ServerContext* context, const ErrorMessageRequest* request, ErrorMessageResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1101,6 +1257,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::ErrorQuery(::grpc::ServerContext* context, const ErrorQueryRequest* request, ErrorQueryResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1127,6 +1287,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::ExportSignal(::grpc::ServerContext* context, const ExportSignalRequest* request, ExportSignalResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1183,6 +1347,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::FetchIQMultiRecordComplexF32(::grpc::ServerContext* context, const FetchIQMultiRecordComplexF32Request* request, FetchIQMultiRecordComplexF32Response* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1213,6 +1381,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::FetchIQMultiRecordComplexF64(::grpc::ServerContext* context, const FetchIQMultiRecordComplexF64Request* request, FetchIQMultiRecordComplexF64Response* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1243,6 +1415,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::FetchIQMultiRecordComplexI16(::grpc::ServerContext* context, const FetchIQMultiRecordComplexI16Request* request, FetchIQMultiRecordComplexI16Response* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1273,6 +1449,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::FetchIQSingleRecordComplexF32(::grpc::ServerContext* context, const FetchIQSingleRecordComplexF32Request* request, FetchIQSingleRecordComplexF32Response* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1302,6 +1482,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::FetchIQSingleRecordComplexF64(::grpc::ServerContext* context, const FetchIQSingleRecordComplexF64Request* request, FetchIQSingleRecordComplexF64Response* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1331,6 +1515,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::FetchIQSingleRecordComplexI16(::grpc::ServerContext* context, const FetchIQSingleRecordComplexI16Request* request, FetchIQSingleRecordComplexI16Response* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1360,6 +1548,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::GetAttributeViBoolean(::grpc::ServerContext* context, const GetAttributeViBooleanRequest* request, GetAttributeViBooleanResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1385,6 +1577,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::GetAttributeViInt32(::grpc::ServerContext* context, const GetAttributeViInt32Request* request, GetAttributeViInt32Response* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1410,6 +1606,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::GetAttributeViInt64(::grpc::ServerContext* context, const GetAttributeViInt64Request* request, GetAttributeViInt64Response* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1435,6 +1635,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::GetAttributeViReal64(::grpc::ServerContext* context, const GetAttributeViReal64Request* request, GetAttributeViReal64Response* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1460,6 +1664,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::GetAttributeViSession(::grpc::ServerContext* context, const GetAttributeViSessionRequest* request, GetAttributeViSessionResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1486,6 +1694,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::GetAttributeViString(::grpc::ServerContext* context, const GetAttributeViStringRequest* request, GetAttributeViStringResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1529,6 +1741,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::GetCalUserDefinedInfo(::grpc::ServerContext* context, const GetCalUserDefinedInfoRequest* request, GetCalUserDefinedInfoResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1553,6 +1769,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::GetCalUserDefinedInfoMaxSize(::grpc::ServerContext* context, const GetCalUserDefinedInfoMaxSizeRequest* request, GetCalUserDefinedInfoMaxSizeResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1576,6 +1796,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::GetDeembeddingSparameters(::grpc::ServerContext* context, const GetDeembeddingSparametersRequest* request, GetDeembeddingSparametersResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1622,6 +1846,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::GetDeviceResponse(::grpc::ServerContext* context, const GetDeviceResponseRequest* request, GetDeviceResponseResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1683,6 +1911,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::GetError(::grpc::ServerContext* context, const GetErrorRequest* request, GetErrorResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1726,6 +1958,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::GetExtCalLastDateAndTime(::grpc::ServerContext* context, const GetExtCalLastDateAndTimeRequest* request, GetExtCalLastDateAndTimeResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1757,6 +1993,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::GetExtCalLastTemp(::grpc::ServerContext* context, const GetExtCalLastTempRequest* request, GetExtCalLastTempResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1780,6 +2020,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::GetExtCalRecommendedInterval(::grpc::ServerContext* context, const GetExtCalRecommendedIntervalRequest* request, GetExtCalRecommendedIntervalResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1803,6 +2047,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::GetFetchBacklog(::grpc::ServerContext* context, const GetFetchBacklogRequest* request, GetFetchBacklogResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1828,6 +2076,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::GetFrequencyResponse(::grpc::ServerContext* context, const GetFrequencyResponseRequest* request, GetFrequencyResponseResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1873,6 +2125,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::GetNormalizationCoefficients(::grpc::ServerContext* context, const GetNormalizationCoefficientsRequest* request, GetNormalizationCoefficientsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1918,6 +2174,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::GetNumberOfSpectralLines(::grpc::ServerContext* context, const GetNumberOfSpectralLinesRequest* request, GetNumberOfSpectralLinesResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1942,6 +2202,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::GetRelayName(::grpc::ServerContext* context, const GetRelayNameRequest* request, GetRelayNameResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1984,6 +2248,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::GetRelayOperationsCount(::grpc::ServerContext* context, const GetRelayOperationsCountRequest* request, GetRelayOperationsCountResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2022,6 +2290,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::GetScalingCoefficients(::grpc::ServerContext* context, const GetScalingCoefficientsRequest* request, GetScalingCoefficientsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2067,6 +2339,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::GetSelfCalLastDateAndTime(::grpc::ServerContext* context, const GetSelfCalLastDateAndTimeRequest* request, GetSelfCalLastDateAndTimeResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2099,6 +2375,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::GetSelfCalLastTemp(::grpc::ServerContext* context, const GetSelfCalLastTempRequest* request, GetSelfCalLastTempResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2123,6 +2403,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::GetSpectralInfoForSMT(::grpc::ServerContext* context, const GetSpectralInfoForSMTRequest* request, GetSpectralInfoForSMTResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2146,6 +2430,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::GetStreamEndpointHandle(::grpc::ServerContext* context, const GetStreamEndpointHandleRequest* request, GetStreamEndpointHandleResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2170,6 +2458,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::GetTerminalName(::grpc::ServerContext* context, const GetTerminalNameRequest* request, GetTerminalNameResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2215,6 +2507,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::GetUserData(::grpc::ServerContext* context, const GetUserDataRequest* request, GetUserDataResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2254,6 +2550,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::Init(::grpc::ServerContext* context, const InitRequest* request, InitResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2293,6 +2593,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::InitWithOptions(::grpc::ServerContext* context, const InitWithOptionsRequest* request, InitWithOptionsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2333,6 +2637,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::Initiate(::grpc::ServerContext* context, const InitiateRequest* request, InitiateResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2352,6 +2660,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::InvalidateAllAttributes(::grpc::ServerContext* context, const InvalidateAllAttributesRequest* request, InvalidateAllAttributesResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2371,6 +2683,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::IsSelfCalValid(::grpc::ServerContext* context, const IsSelfCalValidRequest* request, IsSelfCalValidResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2416,6 +2732,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::PerformThermalCorrection(::grpc::ServerContext* context, const PerformThermalCorrectionRequest* request, PerformThermalCorrectionResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2435,6 +2755,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::ReadIQSingleRecordComplexF64(::grpc::ServerContext* context, const ReadIQSingleRecordComplexF64Request* request, ReadIQSingleRecordComplexF64Response* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2463,6 +2787,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::ReadPowerSpectrumF32(::grpc::ServerContext* context, const ReadPowerSpectrumF32Request* request, ReadPowerSpectrumF32Response* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2491,6 +2819,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::ReadPowerSpectrumF64(::grpc::ServerContext* context, const ReadPowerSpectrumF64Request* request, ReadPowerSpectrumF64Response* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2519,6 +2851,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::Reset(::grpc::ServerContext* context, const ResetRequest* request, ResetResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2538,6 +2874,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::ResetAttribute(::grpc::ServerContext* context, const ResetAttributeRequest* request, ResetAttributeResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2559,6 +2899,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::ResetDevice(::grpc::ServerContext* context, const ResetDeviceRequest* request, ResetDeviceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2578,6 +2922,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::ResetWithDefaults(::grpc::ServerContext* context, const ResetWithDefaultsRequest* request, ResetWithDefaultsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2597,6 +2945,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::ResetWithOptions(::grpc::ServerContext* context, const ResetWithOptionsRequest* request, ResetWithOptionsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2632,6 +2984,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::RevisionQuery(::grpc::ServerContext* context, const RevisionQueryRequest* request, RevisionQueryResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2659,6 +3015,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::SelfCal(::grpc::ServerContext* context, const SelfCalRequest* request, SelfCalResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2678,6 +3038,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::SelfCalibrate(::grpc::ServerContext* context, const SelfCalibrateRequest* request, SelfCalibrateResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2713,6 +3077,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::SelfCalibrateRange(::grpc::ServerContext* context, const SelfCalibrateRangeRequest* request, SelfCalibrateRangeResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2752,6 +3120,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::SelfTest(::grpc::ServerContext* context, const SelfTestRequest* request, SelfTestResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2778,6 +3150,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::SendSoftwareEdgeTrigger(::grpc::ServerContext* context, const SendSoftwareEdgeTriggerRequest* request, SendSoftwareEdgeTriggerResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2814,6 +3190,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::SetAttributeViBoolean(::grpc::ServerContext* context, const SetAttributeViBooleanRequest* request, SetAttributeViBooleanResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2836,6 +3216,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::SetAttributeViInt32(::grpc::ServerContext* context, const SetAttributeViInt32Request* request, SetAttributeViInt32Response* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2873,6 +3257,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::SetAttributeViInt64(::grpc::ServerContext* context, const SetAttributeViInt64Request* request, SetAttributeViInt64Response* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2895,6 +3283,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::SetAttributeViReal64(::grpc::ServerContext* context, const SetAttributeViReal64Request* request, SetAttributeViReal64Response* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2917,6 +3309,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::SetAttributeViSession(::grpc::ServerContext* context, const SetAttributeViSessionRequest* request, SetAttributeViSessionResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2940,6 +3336,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::SetAttributeViString(::grpc::ServerContext* context, const SetAttributeViStringRequest* request, SetAttributeViStringResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2981,6 +3381,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::SetCalUserDefinedInfo(::grpc::ServerContext* context, const SetCalUserDefinedInfoRequest* request, SetCalUserDefinedInfoResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3001,6 +3405,10 @@ namespace nirfsa_grpc {
   ::grpc::Status NiRFSAService::SetUserData(::grpc::ServerContext* context, const SetUserDataRequest* request, SetUserDataResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {

@@ -50,6 +50,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::Control4022(::grpc::ServerContext* context, const Control4022Request* request, Control4022Response* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -103,6 +107,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::CheckAttributeViBoolean(::grpc::ServerContext* context, const CheckAttributeViBooleanRequest* request, CheckAttributeViBooleanResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -125,6 +133,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::CheckAttributeViInt32(::grpc::ServerContext* context, const CheckAttributeViInt32Request* request, CheckAttributeViInt32Response* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -162,6 +174,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::CheckAttributeViReal64(::grpc::ServerContext* context, const CheckAttributeViReal64Request* request, CheckAttributeViReal64Response* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -199,6 +215,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::CheckAttributeViSession(::grpc::ServerContext* context, const CheckAttributeViSessionRequest* request, CheckAttributeViSessionResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -222,6 +242,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::CheckAttributeViString(::grpc::ServerContext* context, const CheckAttributeViStringRequest* request, CheckAttributeViStringResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -244,6 +268,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::ClearError(::grpc::ServerContext* context, const ClearErrorRequest* request, ClearErrorResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -263,6 +291,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::ClearInterchangeWarnings(::grpc::ServerContext* context, const ClearInterchangeWarningsRequest* request, ClearInterchangeWarningsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -282,6 +314,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::Close(::grpc::ServerContext* context, const CloseRequest* request, CloseResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -302,6 +338,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::ConfigureACBandwidth(::grpc::ServerContext* context, const ConfigureACBandwidthRequest* request, ConfigureACBandwidthResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -323,6 +363,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::ConfigureADCCalibration(::grpc::ServerContext* context, const ConfigureADCCalibrationRequest* request, ConfigureADCCalibrationResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -343,6 +387,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::ConfigureAutoZeroMode(::grpc::ServerContext* context, const ConfigureAutoZeroModeRequest* request, ConfigureAutoZeroModeResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -363,6 +411,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::ConfigureCableCompType(::grpc::ServerContext* context, const ConfigureCableCompTypeRequest* request, ConfigureCableCompTypeResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -383,6 +435,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::ConfigureCurrentSource(::grpc::ServerContext* context, const ConfigureCurrentSourceRequest* request, ConfigureCurrentSourceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -403,6 +459,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::ConfigureFixedRefJunction(::grpc::ServerContext* context, const ConfigureFixedRefJunctionRequest* request, ConfigureFixedRefJunctionResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -423,6 +483,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::ConfigureFrequencyVoltageRange(::grpc::ServerContext* context, const ConfigureFrequencyVoltageRangeRequest* request, ConfigureFrequencyVoltageRangeResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -458,6 +522,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::ConfigureMeasCompleteDest(::grpc::ServerContext* context, const ConfigureMeasCompleteDestRequest* request, ConfigureMeasCompleteDestResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -478,6 +546,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::ConfigureMeasurementAbsolute(::grpc::ServerContext* context, const ConfigureMeasurementAbsoluteRequest* request, ConfigureMeasurementAbsoluteResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -515,6 +587,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::ConfigureMeasCompleteSlope(::grpc::ServerContext* context, const ConfigureMeasCompleteSlopeRequest* request, ConfigureMeasCompleteSlopeResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -535,6 +611,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::ConfigureMeasurementDigits(::grpc::ServerContext* context, const ConfigureMeasurementDigitsRequest* request, ConfigureMeasurementDigitsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -572,6 +652,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::ConfigureMultiPoint(::grpc::ServerContext* context, const ConfigureMultiPointRequest* request, ConfigureMultiPointResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -655,6 +739,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::ConfigureOffsetCompOhms(::grpc::ServerContext* context, const ConfigureOffsetCompOhmsRequest* request, ConfigureOffsetCompOhmsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -690,6 +778,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::ConfigureOpenCableCompValues(::grpc::ServerContext* context, const ConfigureOpenCableCompValuesRequest* request, ConfigureOpenCableCompValuesResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -711,6 +803,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::ConfigurePowerLineFrequency(::grpc::ServerContext* context, const ConfigurePowerLineFrequencyRequest* request, ConfigurePowerLineFrequencyResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -746,6 +842,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::ConfigureShortCableCompValues(::grpc::ServerContext* context, const ConfigureShortCableCompValuesRequest* request, ConfigureShortCableCompValuesResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -767,6 +867,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::ConfigureRTDCustom(::grpc::ServerContext* context, const ConfigureRTDCustomRequest* request, ConfigureRTDCustomResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -789,6 +893,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::ConfigureRTDType(::grpc::ServerContext* context, const ConfigureRTDTypeRequest* request, ConfigureRTDTypeResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -825,6 +933,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::ConfigureSampleTriggerSlope(::grpc::ServerContext* context, const ConfigureSampleTriggerSlopeRequest* request, ConfigureSampleTriggerSlopeResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -860,6 +972,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::ConfigureThermistorCustom(::grpc::ServerContext* context, const ConfigureThermistorCustomRequest* request, ConfigureThermistorCustomResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -882,6 +998,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::ConfigureThermocouple(::grpc::ServerContext* context, const ConfigureThermocoupleRequest* request, ConfigureThermocoupleResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -933,6 +1053,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::ConfigureThermistorType(::grpc::ServerContext* context, const ConfigureThermistorTypeRequest* request, ConfigureThermistorTypeResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -953,6 +1077,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::ConfigureTransducerType(::grpc::ServerContext* context, const ConfigureTransducerTypeRequest* request, ConfigureTransducerTypeResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -973,6 +1101,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::ConfigureTrigger(::grpc::ServerContext* context, const ConfigureTriggerRequest* request, ConfigureTriggerResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1024,6 +1156,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::ConfigureTriggerSlope(::grpc::ServerContext* context, const ConfigureTriggerSlopeRequest* request, ConfigureTriggerSlopeResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1059,6 +1195,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::ConfigureWaveformAcquisition(::grpc::ServerContext* context, const ConfigureWaveformAcquisitionRequest* request, ConfigureWaveformAcquisitionResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1097,6 +1237,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::ConfigureWaveformCoupling(::grpc::ServerContext* context, const ConfigureWaveformCouplingRequest* request, ConfigureWaveformCouplingResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1117,6 +1261,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::Control(::grpc::ServerContext* context, const ControlRequest* request, ControlResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1152,6 +1300,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::Disable(::grpc::ServerContext* context, const DisableRequest* request, DisableResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1171,6 +1323,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::ExportAttributeConfigurationBuffer(::grpc::ServerContext* context, const ExportAttributeConfigurationBufferRequest* request, ExportAttributeConfigurationBufferResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1208,6 +1364,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::ExportAttributeConfigurationFile(::grpc::ServerContext* context, const ExportAttributeConfigurationFileRequest* request, ExportAttributeConfigurationFileResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1228,6 +1388,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::Fetch(::grpc::ServerContext* context, const FetchRequest* request, FetchResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1267,6 +1431,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::FetchMultiPoint(::grpc::ServerContext* context, const FetchMultiPointRequest* request, FetchMultiPointResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1309,6 +1477,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::FetchWaveform(::grpc::ServerContext* context, const FetchWaveformRequest* request, FetchWaveformResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1351,6 +1523,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::GetApertureTimeInfo(::grpc::ServerContext* context, const GetApertureTimeInfoRequest* request, GetApertureTimeInfoResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1380,6 +1556,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::GetAttributeViBoolean(::grpc::ServerContext* context, const GetAttributeViBooleanRequest* request, GetAttributeViBooleanResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1405,6 +1585,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::GetAttributeViInt32(::grpc::ServerContext* context, const GetAttributeViInt32Request* request, GetAttributeViInt32Response* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1430,6 +1614,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::GetAttributeViReal64(::grpc::ServerContext* context, const GetAttributeViReal64Request* request, GetAttributeViReal64Response* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1455,6 +1643,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::GetAttributeViSession(::grpc::ServerContext* context, const GetAttributeViSessionRequest* request, GetAttributeViSessionResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1481,6 +1673,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::GetAttributeViString(::grpc::ServerContext* context, const GetAttributeViStringRequest* request, GetAttributeViStringResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1524,6 +1720,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::GetAutoRangeValue(::grpc::ServerContext* context, const GetAutoRangeValueRequest* request, GetAutoRangeValueResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1547,6 +1747,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::GetCalDateAndTime(::grpc::ServerContext* context, const GetCalDateAndTimeRequest* request, GetCalDateAndTimeResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1594,6 +1798,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::GetChannelName(::grpc::ServerContext* context, const GetChannelNameRequest* request, GetChannelNameResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1636,6 +1844,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::GetDevTemp(::grpc::ServerContext* context, const GetDevTempRequest* request, GetDevTempResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1660,6 +1872,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::GetError(::grpc::ServerContext* context, const GetErrorRequest* request, GetErrorResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1703,6 +1919,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::GetErrorMessage(::grpc::ServerContext* context, const GetErrorMessageRequest* request, GetErrorMessageResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1745,6 +1965,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::GetExtCalRecommendedInterval(::grpc::ServerContext* context, const GetExtCalRecommendedIntervalRequest* request, GetExtCalRecommendedIntervalResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1768,6 +1992,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::GetLastCalTemp(::grpc::ServerContext* context, const GetLastCalTempRequest* request, GetLastCalTempResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1807,6 +2035,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::GetMeasurementPeriod(::grpc::ServerContext* context, const GetMeasurementPeriodRequest* request, GetMeasurementPeriodResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1830,6 +2062,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::GetNextCoercionRecord(::grpc::ServerContext* context, const GetNextCoercionRecordRequest* request, GetNextCoercionRecordResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1871,6 +2107,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::GetNextInterchangeWarning(::grpc::ServerContext* context, const GetNextInterchangeWarningRequest* request, GetNextInterchangeWarningResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1912,6 +2152,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::GetSelfCalSupported(::grpc::ServerContext* context, const GetSelfCalSupportedRequest* request, GetSelfCalSupportedResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1935,6 +2179,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::ImportAttributeConfigurationBuffer(::grpc::ServerContext* context, const ImportAttributeConfigurationBufferRequest* request, ImportAttributeConfigurationBufferResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1956,6 +2204,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::ImportAttributeConfigurationFile(::grpc::ServerContext* context, const ImportAttributeConfigurationFileRequest* request, ImportAttributeConfigurationFileResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1976,6 +2228,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::Init(::grpc::ServerContext* context, const InitRequest* request, InitResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2015,6 +2271,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::InitWithOptions(::grpc::ServerContext* context, const InitWithOptionsRequest* request, InitWithOptionsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2055,6 +2315,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::Initiate(::grpc::ServerContext* context, const InitiateRequest* request, InitiateResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2074,6 +2338,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::InvalidateAllAttributes(::grpc::ServerContext* context, const InvalidateAllAttributesRequest* request, InvalidateAllAttributesResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2093,6 +2361,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::IsOverRange(::grpc::ServerContext* context, const IsOverRangeRequest* request, IsOverRangeResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2117,6 +2389,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::IsUnderRange(::grpc::ServerContext* context, const IsUnderRangeRequest* request, IsUnderRangeResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2141,6 +2417,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::PerformOpenCableComp(::grpc::ServerContext* context, const PerformOpenCableCompRequest* request, PerformOpenCableCompResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2166,6 +2446,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::PerformShortCableComp(::grpc::ServerContext* context, const PerformShortCableCompRequest* request, PerformShortCableCompResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2191,6 +2475,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::Read(::grpc::ServerContext* context, const ReadRequest* request, ReadResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2230,6 +2518,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::ReadMultiPoint(::grpc::ServerContext* context, const ReadMultiPointRequest* request, ReadMultiPointResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2272,6 +2564,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::ReadStatus(::grpc::ServerContext* context, const ReadStatusRequest* request, ReadStatusResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2298,6 +2594,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::ReadWaveform(::grpc::ServerContext* context, const ReadWaveformRequest* request, ReadWaveformResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2340,6 +2640,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::Reset(::grpc::ServerContext* context, const ResetRequest* request, ResetResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2359,6 +2663,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::ResetInterchangeCheck(::grpc::ServerContext* context, const ResetInterchangeCheckRequest* request, ResetInterchangeCheckResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2378,6 +2686,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::ResetWithDefaults(::grpc::ServerContext* context, const ResetWithDefaultsRequest* request, ResetWithDefaultsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2397,6 +2709,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::RevisionQuery(::grpc::ServerContext* context, const RevisionQueryRequest* request, RevisionQueryResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2424,6 +2740,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::SelfCal(::grpc::ServerContext* context, const SelfCalRequest* request, SelfCalResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2443,6 +2763,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::SelfTest(::grpc::ServerContext* context, const SelfTestRequest* request, SelfTestResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2469,6 +2793,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::SendSoftwareTrigger(::grpc::ServerContext* context, const SendSoftwareTriggerRequest* request, SendSoftwareTriggerResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2488,6 +2816,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::SetAttributeViBoolean(::grpc::ServerContext* context, const SetAttributeViBooleanRequest* request, SetAttributeViBooleanResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2510,6 +2842,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::SetAttributeViInt32(::grpc::ServerContext* context, const SetAttributeViInt32Request* request, SetAttributeViInt32Response* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2547,6 +2883,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::SetAttributeViReal64(::grpc::ServerContext* context, const SetAttributeViReal64Request* request, SetAttributeViReal64Response* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2584,6 +2924,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::SetAttributeViSession(::grpc::ServerContext* context, const SetAttributeViSessionRequest* request, SetAttributeViSessionResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2607,6 +2951,10 @@ namespace nidmm_grpc {
   ::grpc::Status NiDmmService::SetAttributeViString(::grpc::ServerContext* context, const SetAttributeViStringRequest* request, SetAttributeViStringResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {

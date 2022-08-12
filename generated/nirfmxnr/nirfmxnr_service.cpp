@@ -52,6 +52,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::ACPCfgAveraging(::grpc::ServerContext* context, const ACPCfgAveragingRequest* request, ACPCfgAveragingResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -105,6 +110,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::ACPCfgMeasurementMethod(::grpc::ServerContext* context, const ACPCfgMeasurementMethodRequest* request, ACPCfgMeasurementMethodResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -141,6 +151,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::ACPCfgNoiseCompensationEnabled(::grpc::ServerContext* context, const ACPCfgNoiseCompensationEnabledRequest* request, ACPCfgNoiseCompensationEnabledResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -177,6 +192,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::ACPCfgNumberOfENDCOffsets(::grpc::ServerContext* context, const ACPCfgNumberOfENDCOffsetsRequest* request, ACPCfgNumberOfENDCOffsetsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -198,6 +218,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::ACPCfgNumberOfEUTRAOffsets(::grpc::ServerContext* context, const ACPCfgNumberOfEUTRAOffsetsRequest* request, ACPCfgNumberOfEUTRAOffsetsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -219,6 +244,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::ACPCfgNumberOfNROffsets(::grpc::ServerContext* context, const ACPCfgNumberOfNROffsetsRequest* request, ACPCfgNumberOfNROffsetsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -240,6 +270,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::ACPCfgNumberOfUTRAOffsets(::grpc::ServerContext* context, const ACPCfgNumberOfUTRAOffsetsRequest* request, ACPCfgNumberOfUTRAOffsetsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -261,6 +296,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::ACPCfgPowerUnits(::grpc::ServerContext* context, const ACPCfgPowerUnitsRequest* request, ACPCfgPowerUnitsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -297,6 +337,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::ACPCfgRBWFilter(::grpc::ServerContext* context, const ACPCfgRBWFilterRequest* request, ACPCfgRBWFilterResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -350,6 +395,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::ACPCfgSweepTime(::grpc::ServerContext* context, const ACPCfgSweepTimeRequest* request, ACPCfgSweepTimeResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -387,6 +437,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::ACPFetchAbsolutePowersTrace(::grpc::ServerContext* context, const ACPFetchAbsolutePowersTraceRequest* request, ACPFetchAbsolutePowersTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -432,6 +487,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::ACPFetchComponentCarrierMeasurement(::grpc::ServerContext* context, const ACPFetchComponentCarrierMeasurementRequest* request, ACPFetchComponentCarrierMeasurementResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -459,6 +519,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::ACPFetchComponentCarrierMeasurementArray(::grpc::ServerContext* context, const ACPFetchComponentCarrierMeasurementArrayRequest* request, ACPFetchComponentCarrierMeasurementArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -502,6 +567,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::ACPFetchOffsetMeasurement(::grpc::ServerContext* context, const ACPFetchOffsetMeasurementRequest* request, ACPFetchOffsetMeasurementResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -533,6 +603,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::ACPFetchOffsetMeasurementArray(::grpc::ServerContext* context, const ACPFetchOffsetMeasurementArrayRequest* request, ACPFetchOffsetMeasurementArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -582,6 +657,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::ACPFetchRelativePowersTrace(::grpc::ServerContext* context, const ACPFetchRelativePowersTraceRequest* request, ACPFetchRelativePowersTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -627,6 +707,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::ACPFetchSpectrum(::grpc::ServerContext* context, const ACPFetchSpectrumRequest* request, ACPFetchSpectrumResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -671,6 +756,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::ACPFetchSubblockMeasurement(::grpc::ServerContext* context, const ACPFetchSubblockMeasurementRequest* request, ACPFetchSubblockMeasurementResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -700,6 +790,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::ACPFetchTotalAggregatedPower(::grpc::ServerContext* context, const ACPFetchTotalAggregatedPowerRequest* request, ACPFetchTotalAggregatedPowerResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -725,6 +820,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::ACPValidateNoiseCalibrationData(::grpc::ServerContext* context, const ACPValidateNoiseCalibrationDataRequest* request, ACPValidateNoiseCalibrationDataResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -770,6 +870,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::AnalyzeIQ1Waveform(::grpc::ServerContext* context, const AnalyzeIQ1WaveformRequest* request, AnalyzeIQ1WaveformResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -797,6 +902,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::AnalyzeSpectrum1Waveform(::grpc::ServerContext* context, const AnalyzeSpectrum1WaveformRequest* request, AnalyzeSpectrum1WaveformResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -824,6 +934,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::AutoLevel(::grpc::ServerContext* context, const AutoLevelRequest* request, AutoLevelResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -849,6 +964,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::BuildBandwidthPartString(::grpc::ServerContext* context, const BuildBandwidthPartStringRequest* request, BuildBandwidthPartStringResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -890,6 +1010,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::BuildCORESETClusterString(::grpc::ServerContext* context, const BuildCORESETClusterStringRequest* request, BuildCORESETClusterStringResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -931,6 +1056,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::BuildCORESETString(::grpc::ServerContext* context, const BuildCORESETStringRequest* request, BuildCORESETStringResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -972,6 +1102,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::BuildCarrierString(::grpc::ServerContext* context, const BuildCarrierStringRequest* request, BuildCarrierStringResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1013,6 +1148,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::BuildListStepString(::grpc::ServerContext* context, const BuildListStepStringRequest* request, BuildListStepStringResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1055,6 +1195,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::BuildListString(::grpc::ServerContext* context, const BuildListStringRequest* request, BuildListStringResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1096,6 +1241,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::BuildOffsetString(::grpc::ServerContext* context, const BuildOffsetStringRequest* request, BuildOffsetStringResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1137,6 +1287,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::BuildPDCCHString(::grpc::ServerContext* context, const BuildPDCCHStringRequest* request, BuildPDCCHStringResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1178,6 +1333,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::BuildPDSCHClusterString(::grpc::ServerContext* context, const BuildPDSCHClusterStringRequest* request, BuildPDSCHClusterStringResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1219,6 +1379,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::BuildPDSCHString(::grpc::ServerContext* context, const BuildPDSCHStringRequest* request, BuildPDSCHStringResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1260,6 +1425,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::BuildPUSCHClusterString(::grpc::ServerContext* context, const BuildPUSCHClusterStringRequest* request, BuildPUSCHClusterStringResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1301,6 +1471,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::BuildPUSCHString(::grpc::ServerContext* context, const BuildPUSCHStringRequest* request, BuildPUSCHStringResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1342,6 +1517,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::BuildSignalString(::grpc::ServerContext* context, const BuildSignalStringRequest* request, BuildSignalStringResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1383,6 +1563,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::BuildSubblockString(::grpc::ServerContext* context, const BuildSubblockStringRequest* request, BuildSubblockStringResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1424,6 +1609,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::BuildUserString(::grpc::ServerContext* context, const BuildUserStringRequest* request, BuildUserStringResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1465,6 +1655,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::CHPCfgAveraging(::grpc::ServerContext* context, const CHPCfgAveragingRequest* request, CHPCfgAveragingResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1518,6 +1713,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::CHPCfgRBWFilter(::grpc::ServerContext* context, const CHPCfgRBWFilterRequest* request, CHPCfgRBWFilterResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1571,6 +1771,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::CHPCfgSweepTime(::grpc::ServerContext* context, const CHPCfgSweepTimeRequest* request, CHPCfgSweepTimeResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1608,6 +1813,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::CHPFetchComponentCarrierMeasurement(::grpc::ServerContext* context, const CHPFetchComponentCarrierMeasurementRequest* request, CHPFetchComponentCarrierMeasurementResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1635,6 +1845,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::CHPFetchComponentCarrierMeasurementArray(::grpc::ServerContext* context, const CHPFetchComponentCarrierMeasurementArrayRequest* request, CHPFetchComponentCarrierMeasurementArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1678,6 +1893,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::CHPFetchSpectrum(::grpc::ServerContext* context, const CHPFetchSpectrumRequest* request, CHPFetchSpectrumResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1722,6 +1942,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::CHPFetchSubblockPower(::grpc::ServerContext* context, const CHPFetchSubblockPowerRequest* request, CHPFetchSubblockPowerResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1747,6 +1972,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::CHPFetchTotalAggregatedPower(::grpc::ServerContext* context, const CHPFetchTotalAggregatedPowerRequest* request, CHPFetchTotalAggregatedPowerResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1772,6 +2002,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::CHPValidateNoiseCalibrationData(::grpc::ServerContext* context, const CHPValidateNoiseCalibrationDataRequest* request, CHPValidateNoiseCalibrationDataResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1797,6 +2032,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::CfgDigitalEdgeTrigger(::grpc::ServerContext* context, const CfgDigitalEdgeTriggerRequest* request, CfgDigitalEdgeTriggerResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1855,6 +2095,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::CfgExternalAttenuation(::grpc::ServerContext* context, const CfgExternalAttenuationRequest* request, CfgExternalAttenuationResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1876,6 +2121,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::CfgFrequency(::grpc::ServerContext* context, const CfgFrequencyRequest* request, CfgFrequencyResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1897,6 +2147,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::CfgFrequencyReference(::grpc::ServerContext* context, const CfgFrequencyReferenceRequest* request, CfgFrequencyReferenceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1938,6 +2193,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::CfgIQPowerEdgeTrigger(::grpc::ServerContext* context, const CfgIQPowerEdgeTriggerRequest* request, CfgIQPowerEdgeTriggerResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2011,6 +2271,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::CfgMechanicalAttenuation(::grpc::ServerContext* context, const CfgMechanicalAttenuationRequest* request, CfgMechanicalAttenuationResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2048,6 +2313,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::CfgRF(::grpc::ServerContext* context, const CfgRFRequest* request, CfgRFResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2071,6 +2341,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::CfgRFAttenuation(::grpc::ServerContext* context, const CfgRFAttenuationRequest* request, CfgRFAttenuationResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2108,6 +2383,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::CfgReferenceLevel(::grpc::ServerContext* context, const CfgReferenceLevelRequest* request, CfgReferenceLevelResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2129,6 +2409,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::CfgSoftwareEdgeTrigger(::grpc::ServerContext* context, const CfgSoftwareEdgeTriggerRequest* request, CfgSoftwareEdgeTriggerResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2151,6 +2436,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::CfggNodeBCategory(::grpc::ServerContext* context, const CfggNodeBCategoryRequest* request, CfggNodeBCategoryResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2187,6 +2477,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::CheckMeasurementStatus(::grpc::ServerContext* context, const CheckMeasurementStatusRequest* request, CheckMeasurementStatusResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2211,6 +2506,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::ClearAllNamedResults(::grpc::ServerContext* context, const ClearAllNamedResultsRequest* request, ClearAllNamedResultsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2231,6 +2531,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::ClearNamedResult(::grpc::ServerContext* context, const ClearNamedResultRequest* request, ClearNamedResultResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2251,6 +2556,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::ClearNoiseCalibrationDatabase(::grpc::ServerContext* context, const ClearNoiseCalibrationDatabaseRequest* request, ClearNoiseCalibrationDatabaseResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2271,6 +2581,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::CloneSignalConfiguration(::grpc::ServerContext* context, const CloneSignalConfigurationRequest* request, CloneSignalConfigurationResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2292,6 +2607,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::Close(::grpc::ServerContext* context, const CloseRequest* request, CloseResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2313,6 +2633,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::Commit(::grpc::ServerContext* context, const CommitRequest* request, CommitResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2333,6 +2658,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::CreateList(::grpc::ServerContext* context, const CreateListRequest* request, CreateListResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2353,6 +2683,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::CreateListStep(::grpc::ServerContext* context, const CreateListStepRequest* request, CreateListStepResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2377,6 +2712,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::CreateSignalConfiguration(::grpc::ServerContext* context, const CreateSignalConfigurationRequest* request, CreateSignalConfigurationResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2397,6 +2737,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::DeleteList(::grpc::ServerContext* context, const DeleteListRequest* request, DeleteListResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2417,6 +2762,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::DeleteSignalConfiguration(::grpc::ServerContext* context, const DeleteSignalConfigurationRequest* request, DeleteSignalConfigurationResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2437,6 +2787,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::DisableTrigger(::grpc::ServerContext* context, const DisableTriggerRequest* request, DisableTriggerResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2457,6 +2812,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::GetAllNamedResultNames(::grpc::ServerContext* context, const GetAllNamedResultNamesRequest* request, GetAllNamedResultNamesResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2501,6 +2861,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::GetAttributeF32(::grpc::ServerContext* context, const GetAttributeF32Request* request, GetAttributeF32Response* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2526,6 +2891,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::GetAttributeF32Array(::grpc::ServerContext* context, const GetAttributeF32ArrayRequest* request, GetAttributeF32ArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2566,6 +2936,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::GetAttributeF64(::grpc::ServerContext* context, const GetAttributeF64Request* request, GetAttributeF64Response* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2591,6 +2966,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::GetAttributeF64Array(::grpc::ServerContext* context, const GetAttributeF64ArrayRequest* request, GetAttributeF64ArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2631,6 +3011,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::GetAttributeI16(::grpc::ServerContext* context, const GetAttributeI16Request* request, GetAttributeI16Response* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2656,6 +3041,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::GetAttributeI32(::grpc::ServerContext* context, const GetAttributeI32Request* request, GetAttributeI32Response* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2687,6 +3077,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::GetAttributeI32Array(::grpc::ServerContext* context, const GetAttributeI32ArrayRequest* request, GetAttributeI32ArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2741,6 +3136,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::GetAttributeI64(::grpc::ServerContext* context, const GetAttributeI64Request* request, GetAttributeI64Response* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2766,6 +3166,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::GetAttributeI64Array(::grpc::ServerContext* context, const GetAttributeI64ArrayRequest* request, GetAttributeI64ArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2806,6 +3211,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::GetAttributeI8(::grpc::ServerContext* context, const GetAttributeI8Request* request, GetAttributeI8Response* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2831,6 +3241,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::GetAttributeI8Array(::grpc::ServerContext* context, const GetAttributeI8ArrayRequest* request, GetAttributeI8ArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2879,6 +3294,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::GetAttributeNIComplexDoubleArray(::grpc::ServerContext* context, const GetAttributeNIComplexDoubleArrayRequest* request, GetAttributeNIComplexDoubleArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2925,6 +3345,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::GetAttributeNIComplexSingleArray(::grpc::ServerContext* context, const GetAttributeNIComplexSingleArrayRequest* request, GetAttributeNIComplexSingleArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2971,6 +3396,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::GetAttributeString(::grpc::ServerContext* context, const GetAttributeStringRequest* request, GetAttributeStringResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3014,6 +3444,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::GetAttributeU16(::grpc::ServerContext* context, const GetAttributeU16Request* request, GetAttributeU16Response* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3039,6 +3474,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::GetAttributeU32(::grpc::ServerContext* context, const GetAttributeU32Request* request, GetAttributeU32Response* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3064,6 +3504,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::GetAttributeU32Array(::grpc::ServerContext* context, const GetAttributeU32ArrayRequest* request, GetAttributeU32ArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3104,6 +3549,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::GetAttributeU64Array(::grpc::ServerContext* context, const GetAttributeU64ArrayRequest* request, GetAttributeU64ArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3144,6 +3594,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::GetAttributeU8(::grpc::ServerContext* context, const GetAttributeU8Request* request, GetAttributeU8Response* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3169,6 +3624,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::GetAttributeU8Array(::grpc::ServerContext* context, const GetAttributeU8ArrayRequest* request, GetAttributeU8ArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3209,6 +3669,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::GetError(::grpc::ServerContext* context, const GetErrorRequest* request, GetErrorResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3252,6 +3717,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::GetErrorString(::grpc::ServerContext* context, const GetErrorStringRequest* request, GetErrorStringResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3294,6 +3764,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::Initialize(::grpc::ServerContext* context, const InitializeRequest* request, InitializeResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3334,6 +3809,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::InitializeFromNIRFSASession(::grpc::ServerContext* context, const InitializeFromNIRFSASessionRequest* request, InitializeFromNIRFSASessionResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3372,6 +3852,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::Initiate(::grpc::ServerContext* context, const InitiateRequest* request, InitiateResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3393,6 +3878,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::ModAccAutoLevel(::grpc::ServerContext* context, const ModAccAutoLevelRequest* request, ModAccAutoLevelResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3414,6 +3904,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::ModAccCfgMeasurementMode(::grpc::ServerContext* context, const ModAccCfgMeasurementModeRequest* request, ModAccCfgMeasurementModeResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3450,6 +3945,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::ModAccCfgNoiseCompensationEnabled(::grpc::ServerContext* context, const ModAccCfgNoiseCompensationEnabledRequest* request, ModAccCfgNoiseCompensationEnabledResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3486,6 +3986,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::ModAccCfgReferenceWaveform(::grpc::ServerContext* context, const ModAccCfgReferenceWaveformRequest* request, ModAccCfgReferenceWaveformResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3510,6 +4015,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::ModAccClearNoiseCalibrationDatabase(::grpc::ServerContext* context, const ModAccClearNoiseCalibrationDatabaseRequest* request, ModAccClearNoiseCalibrationDatabaseResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3529,6 +4039,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::ModAccFetchCompositeEVM(::grpc::ServerContext* context, const ModAccFetchCompositeEVMRequest* request, ModAccFetchCompositeEVMResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3556,6 +4071,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::ModAccFetchFrequencyErrorMean(::grpc::ServerContext* context, const ModAccFetchFrequencyErrorMeanRequest* request, ModAccFetchFrequencyErrorMeanResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3581,6 +4101,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::ModAccFetchIQGainImbalancePerSubcarrierMeanTrace(::grpc::ServerContext* context, const ModAccFetchIQGainImbalancePerSubcarrierMeanTraceRequest* request, ModAccFetchIQGainImbalancePerSubcarrierMeanTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3625,6 +4150,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::ModAccFetchIQQuadratureErrorPerSubcarrierMeanTrace(::grpc::ServerContext* context, const ModAccFetchIQQuadratureErrorPerSubcarrierMeanTraceRequest* request, ModAccFetchIQQuadratureErrorPerSubcarrierMeanTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3669,6 +4199,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::ModAccFetchInBandEmissionTrace(::grpc::ServerContext* context, const ModAccFetchInBandEmissionTraceRequest* request, ModAccFetchInBandEmissionTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3716,6 +4251,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::ModAccFetchPBCHDMRSConstellationTrace(::grpc::ServerContext* context, const ModAccFetchPBCHDMRSConstellationTraceRequest* request, ModAccFetchPBCHDMRSConstellationTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3762,6 +4302,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::ModAccFetchPBCHDMRSRMSEVMPerSubcarrierMeanTrace(::grpc::ServerContext* context, const ModAccFetchPBCHDMRSRMSEVMPerSubcarrierMeanTraceRequest* request, ModAccFetchPBCHDMRSRMSEVMPerSubcarrierMeanTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3806,6 +4351,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::ModAccFetchPBCHDMRSRMSEVMPerSymbolMeanTrace(::grpc::ServerContext* context, const ModAccFetchPBCHDMRSRMSEVMPerSymbolMeanTraceRequest* request, ModAccFetchPBCHDMRSRMSEVMPerSymbolMeanTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3850,6 +4400,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::ModAccFetchPBCHDataConstellationTrace(::grpc::ServerContext* context, const ModAccFetchPBCHDataConstellationTraceRequest* request, ModAccFetchPBCHDataConstellationTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3896,6 +4451,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::ModAccFetchPBCHDataRMSEVMPerSubcarrierMeanTrace(::grpc::ServerContext* context, const ModAccFetchPBCHDataRMSEVMPerSubcarrierMeanTraceRequest* request, ModAccFetchPBCHDataRMSEVMPerSubcarrierMeanTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3940,6 +4500,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::ModAccFetchPBCHDataRMSEVMPerSymbolMeanTrace(::grpc::ServerContext* context, const ModAccFetchPBCHDataRMSEVMPerSymbolMeanTraceRequest* request, ModAccFetchPBCHDataRMSEVMPerSymbolMeanTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3984,6 +4549,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::ModAccFetchPDSCH1024QAMConstellationTrace(::grpc::ServerContext* context, const ModAccFetchPDSCH1024QAMConstellationTraceRequest* request, ModAccFetchPDSCH1024QAMConstellationTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -4030,6 +4600,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::ModAccFetchPDSCH16QAMConstellationTrace(::grpc::ServerContext* context, const ModAccFetchPDSCH16QAMConstellationTraceRequest* request, ModAccFetchPDSCH16QAMConstellationTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -4076,6 +4651,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::ModAccFetchPDSCH256QAMConstellationTrace(::grpc::ServerContext* context, const ModAccFetchPDSCH256QAMConstellationTraceRequest* request, ModAccFetchPDSCH256QAMConstellationTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -4122,6 +4702,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::ModAccFetchPDSCH64QAMConstellationTrace(::grpc::ServerContext* context, const ModAccFetchPDSCH64QAMConstellationTraceRequest* request, ModAccFetchPDSCH64QAMConstellationTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -4168,6 +4753,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::ModAccFetchPDSCH8PSKConstellationTrace(::grpc::ServerContext* context, const ModAccFetchPDSCH8PSKConstellationTraceRequest* request, ModAccFetchPDSCH8PSKConstellationTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -4214,6 +4804,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::ModAccFetchPDSCHDMRSConstellationTrace(::grpc::ServerContext* context, const ModAccFetchPDSCHDMRSConstellationTraceRequest* request, ModAccFetchPDSCHDMRSConstellationTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -4260,6 +4855,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::ModAccFetchPDSCHDataConstellationTrace(::grpc::ServerContext* context, const ModAccFetchPDSCHDataConstellationTraceRequest* request, ModAccFetchPDSCHDataConstellationTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -4306,6 +4906,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::ModAccFetchPDSCHDemodulatedBits(::grpc::ServerContext* context, const ModAccFetchPDSCHDemodulatedBitsRequest* request, ModAccFetchPDSCHDemodulatedBitsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -4354,6 +4959,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::ModAccFetchPDSCHPTRSConstellationTrace(::grpc::ServerContext* context, const ModAccFetchPDSCHPTRSConstellationTraceRequest* request, ModAccFetchPDSCHPTRSConstellationTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -4400,6 +5010,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::ModAccFetchPDSCHQPSKConstellationTrace(::grpc::ServerContext* context, const ModAccFetchPDSCHQPSKConstellationTraceRequest* request, ModAccFetchPDSCHQPSKConstellationTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -4446,6 +5061,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::ModAccFetchPSSConstellationTrace(::grpc::ServerContext* context, const ModAccFetchPSSConstellationTraceRequest* request, ModAccFetchPSSConstellationTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -4492,6 +5112,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::ModAccFetchPSSRMSEVMPerSubcarrierMeanTrace(::grpc::ServerContext* context, const ModAccFetchPSSRMSEVMPerSubcarrierMeanTraceRequest* request, ModAccFetchPSSRMSEVMPerSubcarrierMeanTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -4536,6 +5161,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::ModAccFetchPSSRMSEVMPerSymbolMeanTrace(::grpc::ServerContext* context, const ModAccFetchPSSRMSEVMPerSymbolMeanTraceRequest* request, ModAccFetchPSSRMSEVMPerSymbolMeanTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -4580,6 +5210,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::ModAccFetchPUSCHDMRSConstellationTrace(::grpc::ServerContext* context, const ModAccFetchPUSCHDMRSConstellationTraceRequest* request, ModAccFetchPUSCHDMRSConstellationTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -4626,6 +5261,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::ModAccFetchPUSCHDataConstellationTrace(::grpc::ServerContext* context, const ModAccFetchPUSCHDataConstellationTraceRequest* request, ModAccFetchPUSCHDataConstellationTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -4672,6 +5312,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::ModAccFetchPUSCHDemodulatedBits(::grpc::ServerContext* context, const ModAccFetchPUSCHDemodulatedBitsRequest* request, ModAccFetchPUSCHDemodulatedBitsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -4720,6 +5365,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::ModAccFetchPUSCHPTRSConstellationTrace(::grpc::ServerContext* context, const ModAccFetchPUSCHPTRSConstellationTraceRequest* request, ModAccFetchPUSCHPTRSConstellationTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -4766,6 +5416,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::ModAccFetchPeakEVMPerSlotMaximumTrace(::grpc::ServerContext* context, const ModAccFetchPeakEVMPerSlotMaximumTraceRequest* request, ModAccFetchPeakEVMPerSlotMaximumTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -4810,6 +5465,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::ModAccFetchPeakEVMPerSubcarrierMaximumTrace(::grpc::ServerContext* context, const ModAccFetchPeakEVMPerSubcarrierMaximumTraceRequest* request, ModAccFetchPeakEVMPerSubcarrierMaximumTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -4854,6 +5514,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::ModAccFetchPeakEVMPerSymbolMaximumTrace(::grpc::ServerContext* context, const ModAccFetchPeakEVMPerSymbolMaximumTraceRequest* request, ModAccFetchPeakEVMPerSymbolMaximumTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -4898,6 +5563,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::ModAccFetchRMSEVMHighPerSymbolMeanTrace(::grpc::ServerContext* context, const ModAccFetchRMSEVMHighPerSymbolMeanTraceRequest* request, ModAccFetchRMSEVMHighPerSymbolMeanTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -4942,6 +5612,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::ModAccFetchRMSEVMLowPerSymbolMeanTrace(::grpc::ServerContext* context, const ModAccFetchRMSEVMLowPerSymbolMeanTraceRequest* request, ModAccFetchRMSEVMLowPerSymbolMeanTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -4986,6 +5661,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::ModAccFetchRMSEVMPerSlotMeanTrace(::grpc::ServerContext* context, const ModAccFetchRMSEVMPerSlotMeanTraceRequest* request, ModAccFetchRMSEVMPerSlotMeanTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -5030,6 +5710,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::ModAccFetchRMSEVMPerSubcarrierMeanTrace(::grpc::ServerContext* context, const ModAccFetchRMSEVMPerSubcarrierMeanTraceRequest* request, ModAccFetchRMSEVMPerSubcarrierMeanTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -5074,6 +5759,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::ModAccFetchRMSEVMPerSymbolMeanTrace(::grpc::ServerContext* context, const ModAccFetchRMSEVMPerSymbolMeanTraceRequest* request, ModAccFetchRMSEVMPerSymbolMeanTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -5118,6 +5808,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::ModAccFetchSSSConstellationTrace(::grpc::ServerContext* context, const ModAccFetchSSSConstellationTraceRequest* request, ModAccFetchSSSConstellationTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -5164,6 +5859,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::ModAccFetchSSSRMSEVMPerSubcarrierMeanTrace(::grpc::ServerContext* context, const ModAccFetchSSSRMSEVMPerSubcarrierMeanTraceRequest* request, ModAccFetchSSSRMSEVMPerSubcarrierMeanTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -5208,6 +5908,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::ModAccFetchSSSRMSEVMPerSymbolMeanTrace(::grpc::ServerContext* context, const ModAccFetchSSSRMSEVMPerSymbolMeanTraceRequest* request, ModAccFetchSSSRMSEVMPerSymbolMeanTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -5252,6 +5957,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::ModAccFetchSpectralFlatnessTrace(::grpc::ServerContext* context, const ModAccFetchSpectralFlatnessTraceRequest* request, ModAccFetchSpectralFlatnessTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -5302,6 +6012,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::ModAccFetchSubblockInBandEmissionTrace(::grpc::ServerContext* context, const ModAccFetchSubblockInBandEmissionTraceRequest* request, ModAccFetchSubblockInBandEmissionTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -5348,6 +6063,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::ModAccValidateCalibrationData(::grpc::ServerContext* context, const ModAccValidateCalibrationDataRequest* request, ModAccValidateCalibrationDataResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -5373,6 +6093,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::OBWCfgAveraging(::grpc::ServerContext* context, const OBWCfgAveragingRequest* request, OBWCfgAveragingResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -5426,6 +6151,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::OBWCfgRBWFilter(::grpc::ServerContext* context, const OBWCfgRBWFilterRequest* request, OBWCfgRBWFilterResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -5479,6 +6209,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::OBWCfgSweepTime(::grpc::ServerContext* context, const OBWCfgSweepTimeRequest* request, OBWCfgSweepTimeResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -5516,6 +6251,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::OBWFetchMeasurement(::grpc::ServerContext* context, const OBWFetchMeasurementRequest* request, OBWFetchMeasurementResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -5547,6 +6287,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::OBWFetchSpectrum(::grpc::ServerContext* context, const OBWFetchSpectrumRequest* request, OBWFetchSpectrumResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -5591,6 +6336,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::PVTCfgAveraging(::grpc::ServerContext* context, const PVTCfgAveragingRequest* request, PVTCfgAveragingResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -5644,6 +6394,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::PVTCfgMeasurementMethod(::grpc::ServerContext* context, const PVTCfgMeasurementMethodRequest* request, PVTCfgMeasurementMethodResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -5680,6 +6435,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::PVTCfgOFFPowerExclusionPeriods(::grpc::ServerContext* context, const PVTCfgOFFPowerExclusionPeriodsRequest* request, PVTCfgOFFPowerExclusionPeriodsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -5702,6 +6462,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::PVTFetchMeasurement(::grpc::ServerContext* context, const PVTFetchMeasurementRequest* request, PVTFetchMeasurementResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -5736,6 +6501,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::PVTFetchMeasurementArray(::grpc::ServerContext* context, const PVTFetchMeasurementArrayRequest* request, PVTFetchMeasurementArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -5797,6 +6567,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::PVTFetchSignalPowerTrace(::grpc::ServerContext* context, const PVTFetchSignalPowerTraceRequest* request, PVTFetchSignalPowerTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -5844,6 +6619,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::PVTFetchWindowedSignalPowerTrace(::grpc::ServerContext* context, const PVTFetchWindowedSignalPowerTraceRequest* request, PVTFetchWindowedSignalPowerTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -5888,6 +6668,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::ResetAttribute(::grpc::ServerContext* context, const ResetAttributeRequest* request, ResetAttributeResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -5909,6 +6694,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::ResetToDefault(::grpc::ServerContext* context, const ResetToDefaultRequest* request, ResetToDefaultResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -5929,6 +6719,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::SEMCfgAveraging(::grpc::ServerContext* context, const SEMCfgAveragingRequest* request, SEMCfgAveragingResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -5982,6 +6777,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::SEMCfgComponentCarrierRatedOutputPower(::grpc::ServerContext* context, const SEMCfgComponentCarrierRatedOutputPowerRequest* request, SEMCfgComponentCarrierRatedOutputPowerResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -6003,6 +6803,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::SEMCfgComponentCarrierRatedOutputPowerArray(::grpc::ServerContext* context, const SEMCfgComponentCarrierRatedOutputPowerArrayRequest* request, SEMCfgComponentCarrierRatedOutputPowerArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -6025,6 +6830,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::SEMCfgNumberOfOffsets(::grpc::ServerContext* context, const SEMCfgNumberOfOffsetsRequest* request, SEMCfgNumberOfOffsetsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -6046,6 +6856,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::SEMCfgOffsetAbsoluteLimit(::grpc::ServerContext* context, const SEMCfgOffsetAbsoluteLimitRequest* request, SEMCfgOffsetAbsoluteLimitResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -6068,6 +6883,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::SEMCfgOffsetAbsoluteLimitArray(::grpc::ServerContext* context, const SEMCfgOffsetAbsoluteLimitArrayRequest* request, SEMCfgOffsetAbsoluteLimitArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -6107,6 +6927,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::SEMCfgOffsetBandwidthIntegral(::grpc::ServerContext* context, const SEMCfgOffsetBandwidthIntegralRequest* request, SEMCfgOffsetBandwidthIntegralResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -6128,6 +6953,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::SEMCfgOffsetBandwidthIntegralArray(::grpc::ServerContext* context, const SEMCfgOffsetBandwidthIntegralArrayRequest* request, SEMCfgOffsetBandwidthIntegralArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -6150,6 +6980,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::SEMCfgOffsetFrequency(::grpc::ServerContext* context, const SEMCfgOffsetFrequencyRequest* request, SEMCfgOffsetFrequencyResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -6188,6 +7023,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::SEMCfgOffsetFrequencyArray(::grpc::ServerContext* context, const SEMCfgOffsetFrequencyArrayRequest* request, SEMCfgOffsetFrequencyArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -6238,6 +7078,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::SEMCfgOffsetLimitFailMask(::grpc::ServerContext* context, const SEMCfgOffsetLimitFailMaskRequest* request, SEMCfgOffsetLimitFailMaskResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -6274,6 +7119,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::SEMCfgOffsetLimitFailMaskArray(::grpc::ServerContext* context, const SEMCfgOffsetLimitFailMaskArrayRequest* request, SEMCfgOffsetLimitFailMaskArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -6304,6 +7154,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::SEMCfgOffsetRBWFilter(::grpc::ServerContext* context, const SEMCfgOffsetRBWFilterRequest* request, SEMCfgOffsetRBWFilterResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -6341,6 +7196,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::SEMCfgOffsetRBWFilterArray(::grpc::ServerContext* context, const SEMCfgOffsetRBWFilterArrayRequest* request, SEMCfgOffsetRBWFilterArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -6388,6 +7248,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::SEMCfgOffsetRelativeLimit(::grpc::ServerContext* context, const SEMCfgOffsetRelativeLimitRequest* request, SEMCfgOffsetRelativeLimitResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -6410,6 +7275,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::SEMCfgOffsetRelativeLimitArray(::grpc::ServerContext* context, const SEMCfgOffsetRelativeLimitArrayRequest* request, SEMCfgOffsetRelativeLimitArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -6449,6 +7319,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::SEMCfgSweepTime(::grpc::ServerContext* context, const SEMCfgSweepTimeRequest* request, SEMCfgSweepTimeResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -6486,6 +7361,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::SEMCfgUplinkMaskType(::grpc::ServerContext* context, const SEMCfgUplinkMaskTypeRequest* request, SEMCfgUplinkMaskTypeResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -6522,6 +7402,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::SEMFetchComponentCarrierMeasurement(::grpc::ServerContext* context, const SEMFetchComponentCarrierMeasurementRequest* request, SEMFetchComponentCarrierMeasurementResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -6553,6 +7438,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::SEMFetchComponentCarrierMeasurementArray(::grpc::ServerContext* context, const SEMFetchComponentCarrierMeasurementArrayRequest* request, SEMFetchComponentCarrierMeasurementArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -6602,6 +7492,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::SEMFetchLowerOffsetMargin(::grpc::ServerContext* context, const SEMFetchLowerOffsetMarginRequest* request, SEMFetchLowerOffsetMarginResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -6636,6 +7531,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::SEMFetchLowerOffsetMarginArray(::grpc::ServerContext* context, const SEMFetchLowerOffsetMarginArrayRequest* request, SEMFetchLowerOffsetMarginArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -6697,6 +7597,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::SEMFetchLowerOffsetPower(::grpc::ServerContext* context, const SEMFetchLowerOffsetPowerRequest* request, SEMFetchLowerOffsetPowerResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -6730,6 +7635,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::SEMFetchLowerOffsetPowerArray(::grpc::ServerContext* context, const SEMFetchLowerOffsetPowerArrayRequest* request, SEMFetchLowerOffsetPowerArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -6782,6 +7692,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::SEMFetchMeasurementStatus(::grpc::ServerContext* context, const SEMFetchMeasurementStatusRequest* request, SEMFetchMeasurementStatusResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -6808,6 +7723,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::SEMFetchSpectrum(::grpc::ServerContext* context, const SEMFetchSpectrumRequest* request, SEMFetchSpectrumResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -6855,6 +7775,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::SEMFetchSubblockMeasurement(::grpc::ServerContext* context, const SEMFetchSubblockMeasurementRequest* request, SEMFetchSubblockMeasurementResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -6884,6 +7809,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::SEMFetchTotalAggregatedPower(::grpc::ServerContext* context, const SEMFetchTotalAggregatedPowerRequest* request, SEMFetchTotalAggregatedPowerResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -6909,6 +7839,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::SEMFetchUpperOffsetMargin(::grpc::ServerContext* context, const SEMFetchUpperOffsetMarginRequest* request, SEMFetchUpperOffsetMarginResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -6943,6 +7878,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::SEMFetchUpperOffsetMarginArray(::grpc::ServerContext* context, const SEMFetchUpperOffsetMarginArrayRequest* request, SEMFetchUpperOffsetMarginArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -7004,6 +7944,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::SEMFetchUpperOffsetPower(::grpc::ServerContext* context, const SEMFetchUpperOffsetPowerRequest* request, SEMFetchUpperOffsetPowerResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -7037,6 +7982,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::SEMFetchUpperOffsetPowerArray(::grpc::ServerContext* context, const SEMFetchUpperOffsetPowerArrayRequest* request, SEMFetchUpperOffsetPowerArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -7089,6 +8039,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::SelectMeasurements(::grpc::ServerContext* context, const SelectMeasurementsRequest* request, SelectMeasurementsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -7126,6 +8081,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::SendSoftwareEdgeTrigger(::grpc::ServerContext* context, const SendSoftwareEdgeTriggerRequest* request, SendSoftwareEdgeTriggerResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -7145,6 +8105,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::SetAttributeF32(::grpc::ServerContext* context, const SetAttributeF32Request* request, SetAttributeF32Response* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -7167,6 +8132,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::SetAttributeF32Array(::grpc::ServerContext* context, const SetAttributeF32ArrayRequest* request, SetAttributeF32ArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -7190,6 +8160,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::SetAttributeF64(::grpc::ServerContext* context, const SetAttributeF64Request* request, SetAttributeF64Response* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -7212,6 +8187,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::SetAttributeF64Array(::grpc::ServerContext* context, const SetAttributeF64ArrayRequest* request, SetAttributeF64ArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -7235,6 +8215,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::SetAttributeI16(::grpc::ServerContext* context, const SetAttributeI16Request* request, SetAttributeI16Response* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -7269,6 +8254,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::SetAttributeI32(::grpc::ServerContext* context, const SetAttributeI32Request* request, SetAttributeI32Response* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -7306,6 +8296,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::SetAttributeI32Array(::grpc::ServerContext* context, const SetAttributeI32ArrayRequest* request, SetAttributeI32ArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -7337,6 +8332,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::SetAttributeI64(::grpc::ServerContext* context, const SetAttributeI64Request* request, SetAttributeI64Response* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -7359,6 +8359,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::SetAttributeI64Array(::grpc::ServerContext* context, const SetAttributeI64ArrayRequest* request, SetAttributeI64ArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -7382,6 +8387,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::SetAttributeI8(::grpc::ServerContext* context, const SetAttributeI8Request* request, SetAttributeI8Response* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -7416,6 +8426,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::SetAttributeI8Array(::grpc::ServerContext* context, const SetAttributeI8ArrayRequest* request, SetAttributeI8ArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -7459,6 +8474,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::SetAttributeNIComplexDoubleArray(::grpc::ServerContext* context, const SetAttributeNIComplexDoubleArrayRequest* request, SetAttributeNIComplexDoubleArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -7482,6 +8502,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::SetAttributeNIComplexSingleArray(::grpc::ServerContext* context, const SetAttributeNIComplexSingleArrayRequest* request, SetAttributeNIComplexSingleArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -7505,6 +8530,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::SetAttributeString(::grpc::ServerContext* context, const SetAttributeStringRequest* request, SetAttributeStringResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -7546,6 +8576,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::SetAttributeU16(::grpc::ServerContext* context, const SetAttributeU16Request* request, SetAttributeU16Response* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -7580,6 +8615,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::SetAttributeU32(::grpc::ServerContext* context, const SetAttributeU32Request* request, SetAttributeU32Response* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -7602,6 +8642,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::SetAttributeU32Array(::grpc::ServerContext* context, const SetAttributeU32ArrayRequest* request, SetAttributeU32ArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -7625,6 +8670,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::SetAttributeU64Array(::grpc::ServerContext* context, const SetAttributeU64ArrayRequest* request, SetAttributeU64ArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -7648,6 +8698,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::SetAttributeU8(::grpc::ServerContext* context, const SetAttributeU8Request* request, SetAttributeU8Response* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -7670,6 +8725,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::SetAttributeU8Array(::grpc::ServerContext* context, const SetAttributeU8ArrayRequest* request, SetAttributeU8ArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -7693,6 +8753,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::TXPFetchMeasurement(::grpc::ServerContext* context, const TXPFetchMeasurementRequest* request, TXPFetchMeasurementResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -7720,6 +8785,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::TXPFetchPowerTrace(::grpc::ServerContext* context, const TXPFetchPowerTraceRequest* request, TXPFetchPowerTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -7764,6 +8834,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::WaitForAcquisitionComplete(::grpc::ServerContext* context, const WaitForAcquisitionCompleteRequest* request, WaitForAcquisitionCompleteResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -7784,6 +8859,11 @@ namespace nirfmxnr_grpc {
   ::grpc::Status NiRFmxNRService::WaitForMeasurementComplete(::grpc::ServerContext* context, const WaitForMeasurementCompleteRequest* request, WaitForMeasurementCompleteResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {

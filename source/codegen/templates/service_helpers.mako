@@ -272,6 +272,33 @@ ${populate_response(function_data=function_data, output_parameters=output_parame
       return ::grpc::Status::OK;\
 </%def>
 
+## Generate the core body for abort if cancel.
+<%def name="define_abort_if_cancelled(function_name, functions)">\
+<%
+  config = data['config']
+  abort_function = service_helpers.get_abort_function(config)
+%>\
+    if (context->IsCancelled()) {
+% if abort_function is not None:
+<%
+    parameters = functions[abort_function]['parameters']
+    output_parameters = [p for p in parameters if common_helpers.is_output_parameter(p)]
+%>\
+% if abort_function != function_name:
+${initialize_input_params(function_name, parameters)}\
+${initialize_output_params(output_parameters)}\
+${call_library_method(
+  function_name=abort_function, 
+  function_data=functions[abort_function], 
+  arg_string=service_helpers.create_args(parameters))
+}\
+${populate_response(function_data=functions[abort_function], output_parameters=output_parameters)}\
+% endif
+% endif
+      return ::grpc::Status::CANCELLED;
+    }
+</%def>
+
 ## Initialize the input parameters to the API call.
 <%def name="initialize_input_params(function_name, parameters)">\
 <%

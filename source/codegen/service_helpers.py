@@ -341,6 +341,24 @@ def get_cname(functions, method_name, c_function_prefix):
         return functions[method_name]["cname"]
     return c_function_prefix + method_name
 
+    
+def get_abort_function(config):
+    """Get the abort function."""
+    if "abort_function" in config:
+        return config["abort_function"]
+    context_manager_name = get_context_manager_name(config)
+    if context_manager_name is not None and "abort_function" in context_manager_name:
+        return context_manager_name["abort_function"]
+    return None
+
+
+def get_context_manager_name(config):
+    """Get the get_context_manager_name."""
+    if "context_manager_name" in config and config["context_manager_name"] is not None:
+        if "abort_function" in config["context_manager_name"]:
+            return config["context_manager_name"]
+    return None
+
 
 def is_private_method(function_data):
     """Whether the function is private."""

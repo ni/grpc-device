@@ -78,6 +78,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::AbortKeepAlive(::grpc::ServerContext* context, const AbortKeepAliveRequest* request, AbortKeepAliveResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -97,6 +101,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::ApplyLevelsAndTiming(::grpc::ServerContext* context, const ApplyLevelsAndTimingRequest* request, ApplyLevelsAndTimingResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -122,6 +130,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::ApplyTDROffsets(::grpc::ServerContext* context, const ApplyTDROffsetsRequest* request, ApplyTDROffsetsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -144,6 +156,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::BurstPattern(::grpc::ServerContext* context, const BurstPatternRequest* request, BurstPatternResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -168,6 +184,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::BurstPatternSynchronized(::grpc::ServerContext* context, const BurstPatternSynchronizedRequest* request, BurstPatternSynchronizedResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -198,6 +218,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::ClearError(::grpc::ServerContext* context, const ClearErrorRequest* request, ClearErrorResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -217,6 +241,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::ClockGeneratorAbort(::grpc::ServerContext* context, const ClockGeneratorAbortRequest* request, ClockGeneratorAbortResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -237,6 +265,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::ClockGeneratorGenerateClock(::grpc::ServerContext* context, const ClockGeneratorGenerateClockRequest* request, ClockGeneratorGenerateClockResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -259,6 +291,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::ClockGeneratorInitiate(::grpc::ServerContext* context, const ClockGeneratorInitiateRequest* request, ClockGeneratorInitiateResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -279,6 +315,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::Close(::grpc::ServerContext* context, const CloseRequest* request, CloseResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -299,6 +339,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::Commit(::grpc::ServerContext* context, const CommitRequest* request, CommitResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -318,6 +362,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::ConfigureActiveLoadLevels(::grpc::ServerContext* context, const ConfigureActiveLoadLevelsRequest* request, ConfigureActiveLoadLevelsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -341,6 +389,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::ConfigureCycleNumberHistoryRAMTrigger(::grpc::ServerContext* context, const ConfigureCycleNumberHistoryRAMTriggerRequest* request, ConfigureCycleNumberHistoryRAMTriggerResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -362,6 +414,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::ConfigureDigitalEdgeConditionalJumpTrigger(::grpc::ServerContext* context, const ConfigureDigitalEdgeConditionalJumpTriggerRequest* request, ConfigureDigitalEdgeConditionalJumpTriggerResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -399,6 +455,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::ConfigureDigitalEdgeStartTrigger(::grpc::ServerContext* context, const ConfigureDigitalEdgeStartTriggerRequest* request, ConfigureDigitalEdgeStartTriggerResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -435,6 +495,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::ConfigureFirstFailureHistoryRAMTrigger(::grpc::ServerContext* context, const ConfigureFirstFailureHistoryRAMTriggerRequest* request, ConfigureFirstFailureHistoryRAMTriggerResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -455,6 +519,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::ConfigureHistoryRAMCyclesToAcquire(::grpc::ServerContext* context, const ConfigureHistoryRAMCyclesToAcquireRequest* request, ConfigureHistoryRAMCyclesToAcquireResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -490,6 +558,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::ConfigurePatternBurstSites(::grpc::ServerContext* context, const ConfigurePatternBurstSitesRequest* request, ConfigurePatternBurstSitesResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -510,6 +582,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::ConfigurePatternLabelHistoryRAMTrigger(::grpc::ServerContext* context, const ConfigurePatternLabelHistoryRAMTriggerRequest* request, ConfigurePatternLabelHistoryRAMTriggerResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -533,6 +609,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::ConfigureStartLabel(::grpc::ServerContext* context, const ConfigureStartLabelRequest* request, ConfigureStartLabelResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -553,6 +633,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::ConfigureSoftwareEdgeConditionalJumpTrigger(::grpc::ServerContext* context, const ConfigureSoftwareEdgeConditionalJumpTriggerRequest* request, ConfigureSoftwareEdgeConditionalJumpTriggerResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -573,6 +657,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::ConfigureSoftwareEdgeStartTrigger(::grpc::ServerContext* context, const ConfigureSoftwareEdgeStartTriggerRequest* request, ConfigureSoftwareEdgeStartTriggerResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -592,6 +680,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::ConfigureTerminationMode(::grpc::ServerContext* context, const ConfigureTerminationModeRequest* request, ConfigureTerminationModeResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -628,6 +720,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::ConfigureTimeSetCompareEdgesStrobe(::grpc::ServerContext* context, const ConfigureTimeSetCompareEdgesStrobeRequest* request, ConfigureTimeSetCompareEdgesStrobeResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -650,6 +746,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::ConfigureTimeSetCompareEdgesStrobe2x(::grpc::ServerContext* context, const ConfigureTimeSetCompareEdgesStrobe2xRequest* request, ConfigureTimeSetCompareEdgesStrobe2xResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -673,6 +773,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::ConfigureTimeSetDriveEdges(::grpc::ServerContext* context, const ConfigureTimeSetDriveEdgesRequest* request, ConfigureTimeSetDriveEdgesResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -714,6 +818,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::ConfigureTimeSetDriveEdges2x(::grpc::ServerContext* context, const ConfigureTimeSetDriveEdges2xRequest* request, ConfigureTimeSetDriveEdges2xResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -757,6 +865,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::ConfigureTimeSetDriveFormat(::grpc::ServerContext* context, const ConfigureTimeSetDriveFormatRequest* request, ConfigureTimeSetDriveFormatResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -794,6 +906,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::ConfigureTimeSetEdge(::grpc::ServerContext* context, const ConfigureTimeSetEdgeRequest* request, ConfigureTimeSetEdgeResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -832,6 +948,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::ConfigureTimeSetEdgeMultiplier(::grpc::ServerContext* context, const ConfigureTimeSetEdgeMultiplierRequest* request, ConfigureTimeSetEdgeMultiplierResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -854,6 +974,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::ConfigureTimeSetPeriod(::grpc::ServerContext* context, const ConfigureTimeSetPeriodRequest* request, ConfigureTimeSetPeriodResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -875,6 +999,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::ConfigureVoltageLevels(::grpc::ServerContext* context, const ConfigureVoltageLevelsRequest* request, ConfigureVoltageLevelsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -900,6 +1028,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::CreateCaptureWaveformFromFileDigicapture(::grpc::ServerContext* context, const CreateCaptureWaveformFromFileDigicaptureRequest* request, CreateCaptureWaveformFromFileDigicaptureResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -921,6 +1053,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::CreateCaptureWaveformParallel(::grpc::ServerContext* context, const CreateCaptureWaveformParallelRequest* request, CreateCaptureWaveformParallelResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -942,6 +1078,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::CreateCaptureWaveformSerial(::grpc::ServerContext* context, const CreateCaptureWaveformSerialRequest* request, CreateCaptureWaveformSerialResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -980,6 +1120,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::CreateChannelMap(::grpc::ServerContext* context, const CreateChannelMapRequest* request, CreateChannelMapResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1000,6 +1144,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::CreateSourceWaveformFromFileTDMS(::grpc::ServerContext* context, const CreateSourceWaveformFromFileTDMSRequest* request, CreateSourceWaveformFromFileTDMSResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1022,6 +1170,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::CreatePinMap(::grpc::ServerContext* context, const CreatePinMapRequest* request, CreatePinMapResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1043,6 +1195,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::CreatePinGroup(::grpc::ServerContext* context, const CreatePinGroupRequest* request, CreatePinGroupResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1064,6 +1220,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::CreateSourceWaveformParallel(::grpc::ServerContext* context, const CreateSourceWaveformParallelRequest* request, CreateSourceWaveformParallelResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1101,6 +1261,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::CreateSourceWaveformSerial(::grpc::ServerContext* context, const CreateSourceWaveformSerialRequest* request, CreateSourceWaveformSerialResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1155,6 +1319,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::CreateTimeSet(::grpc::ServerContext* context, const CreateTimeSetRequest* request, CreateTimeSetResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1175,6 +1343,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::DeleteAllTimeSets(::grpc::ServerContext* context, const DeleteAllTimeSetsRequest* request, DeleteAllTimeSetsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1194,6 +1366,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::DisableConditionalJumpTrigger(::grpc::ServerContext* context, const DisableConditionalJumpTriggerRequest* request, DisableConditionalJumpTriggerResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1214,6 +1390,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::DisableSites(::grpc::ServerContext* context, const DisableSitesRequest* request, DisableSitesResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1234,6 +1414,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::DisableStartTrigger(::grpc::ServerContext* context, const DisableStartTriggerRequest* request, DisableStartTriggerResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1253,6 +1437,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::EnableMatchFailCombination(::grpc::ServerContext* context, const EnableMatchFailCombinationRequest* request, EnableMatchFailCombinationResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1280,6 +1468,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::EnableSites(::grpc::ServerContext* context, const EnableSitesRequest* request, EnableSitesResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1300,6 +1492,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::EndChannelMap(::grpc::ServerContext* context, const EndChannelMapRequest* request, EndChannelMapResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1319,6 +1515,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::ErrorMessage(::grpc::ServerContext* context, const ErrorMessageRequest* request, ErrorMessageResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1344,6 +1544,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::ExportSignal(::grpc::ServerContext* context, const ExportSignalRequest* request, ExportSignalResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1381,6 +1585,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::FetchCaptureWaveformU32(::grpc::ServerContext* context, const FetchCaptureWaveformU32Request* request, FetchCaptureWaveformU32Response* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1425,6 +1633,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::FetchHistoryRAMCycleInformation(::grpc::ServerContext* context, const FetchHistoryRAMCycleInformationRequest* request, FetchHistoryRAMCycleInformationResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1458,6 +1670,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::FetchHistoryRAMCyclePinData(::grpc::ServerContext* context, const FetchHistoryRAMCyclePinDataRequest* request, FetchHistoryRAMCyclePinDataResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1508,6 +1724,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::FetchHistoryRAMScanCycleNumber(::grpc::ServerContext* context, const FetchHistoryRAMScanCycleNumberRequest* request, FetchHistoryRAMScanCycleNumberResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1533,6 +1753,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::FrequencyCounterConfigureMeasurementMode(::grpc::ServerContext* context, const FrequencyCounterConfigureMeasurementModeRequest* request, FrequencyCounterConfigureMeasurementModeResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1568,6 +1792,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::FrequencyCounterConfigureMeasurementTime(::grpc::ServerContext* context, const FrequencyCounterConfigureMeasurementTimeRequest* request, FrequencyCounterConfigureMeasurementTimeResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1589,6 +1817,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::FrequencyCounterMeasureFrequency(::grpc::ServerContext* context, const FrequencyCounterMeasureFrequencyRequest* request, FrequencyCounterMeasureFrequencyResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1628,6 +1860,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::GetAttributeViBoolean(::grpc::ServerContext* context, const GetAttributeViBooleanRequest* request, GetAttributeViBooleanResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1653,6 +1889,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::GetAttributeViInt32(::grpc::ServerContext* context, const GetAttributeViInt32Request* request, GetAttributeViInt32Response* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1678,6 +1918,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::GetAttributeViInt64(::grpc::ServerContext* context, const GetAttributeViInt64Request* request, GetAttributeViInt64Response* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1703,6 +1947,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::GetAttributeViReal64(::grpc::ServerContext* context, const GetAttributeViReal64Request* request, GetAttributeViReal64Response* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1728,6 +1976,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::GetAttributeViSession(::grpc::ServerContext* context, const GetAttributeViSessionRequest* request, GetAttributeViSessionResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1754,6 +2006,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::GetAttributeViString(::grpc::ServerContext* context, const GetAttributeViStringRequest* request, GetAttributeViStringResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1797,6 +2053,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::GetChannelName(::grpc::ServerContext* context, const GetChannelNameRequest* request, GetChannelNameResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1839,6 +2099,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::GetChannelNameFromString(::grpc::ServerContext* context, const GetChannelNameFromStringRequest* request, GetChannelNameFromStringResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1881,6 +2145,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::GetError(::grpc::ServerContext* context, const GetErrorRequest* request, GetErrorResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1924,6 +2192,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::GetFailCount(::grpc::ServerContext* context, const GetFailCountRequest* request, GetFailCountResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1963,6 +2235,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::GetHistoryRAMSampleCount(::grpc::ServerContext* context, const GetHistoryRAMSampleCountRequest* request, GetHistoryRAMSampleCountResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1987,6 +2263,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::GetPatternPinIndexes(::grpc::ServerContext* context, const GetPatternPinIndexesRequest* request, GetPatternPinIndexesResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2026,6 +2306,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::GetPatternName(::grpc::ServerContext* context, const GetPatternNameRequest* request, GetPatternNameResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2068,6 +2352,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::GetPatternPinList(::grpc::ServerContext* context, const GetPatternPinListRequest* request, GetPatternPinListResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2110,6 +2398,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::GetPinName(::grpc::ServerContext* context, const GetPinNameRequest* request, GetPinNameResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2152,6 +2444,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::GetPinResultsPinInformation(::grpc::ServerContext* context, const GetPinResultsPinInformationRequest* request, GetPinResultsPinInformationResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2197,6 +2493,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::GetSitePassFail(::grpc::ServerContext* context, const GetSitePassFailRequest* request, GetSitePassFailResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2236,6 +2536,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::GetSiteResultsSiteNumbers(::grpc::ServerContext* context, const GetSiteResultsSiteNumbersRequest* request, GetSiteResultsSiteNumbersResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2291,6 +2595,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::GetTimeSetDriveFormat(::grpc::ServerContext* context, const GetTimeSetDriveFormatRequest* request, GetTimeSetDriveFormatResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2317,6 +2625,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::GetTimeSetEdge(::grpc::ServerContext* context, const GetTimeSetEdgeRequest* request, GetTimeSetEdgeResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2358,6 +2670,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::GetTimeSetEdgeMultiplier(::grpc::ServerContext* context, const GetTimeSetEdgeMultiplierRequest* request, GetTimeSetEdgeMultiplierResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2383,6 +2699,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::GetTimeSetName(::grpc::ServerContext* context, const GetTimeSetNameRequest* request, GetTimeSetNameResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2425,6 +2745,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::GetTimeSetPeriod(::grpc::ServerContext* context, const GetTimeSetPeriodRequest* request, GetTimeSetPeriodResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2449,6 +2773,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::Init(::grpc::ServerContext* context, const InitRequest* request, InitResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2488,6 +2816,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::InitWithOptions(::grpc::ServerContext* context, const InitWithOptionsRequest* request, InitWithOptionsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2528,6 +2860,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::Initiate(::grpc::ServerContext* context, const InitiateRequest* request, InitiateResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2547,6 +2883,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::IsDone(::grpc::ServerContext* context, const IsDoneRequest* request, IsDoneResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2570,6 +2910,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::IsSiteEnabled(::grpc::ServerContext* context, const IsSiteEnabledRequest* request, IsSiteEnabledResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2594,6 +2938,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::LoadLevels(::grpc::ServerContext* context, const LoadLevelsRequest* request, LoadLevelsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2614,6 +2962,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::LoadPattern(::grpc::ServerContext* context, const LoadPatternRequest* request, LoadPatternResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2634,6 +2986,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::LoadPinMap(::grpc::ServerContext* context, const LoadPinMapRequest* request, LoadPinMapResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2654,6 +3010,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::LoadSpecifications(::grpc::ServerContext* context, const LoadSpecificationsRequest* request, LoadSpecificationsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2674,6 +3034,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::LoadTiming(::grpc::ServerContext* context, const LoadTimingRequest* request, LoadTimingResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2694,6 +3058,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::MapPinToChannel(::grpc::ServerContext* context, const MapPinToChannelRequest* request, MapPinToChannelResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2716,6 +3084,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::PPMUConfigureApertureTime(::grpc::ServerContext* context, const PPMUConfigureApertureTimeRequest* request, PPMUConfigureApertureTimeResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2753,6 +3125,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::PPMUConfigureCurrentLevel(::grpc::ServerContext* context, const PPMUConfigureCurrentLevelRequest* request, PPMUConfigureCurrentLevelResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2774,6 +3150,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::PPMUConfigureCurrentLevelRange(::grpc::ServerContext* context, const PPMUConfigureCurrentLevelRangeRequest* request, PPMUConfigureCurrentLevelRangeResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2795,6 +3175,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::PPMUConfigureCurrentLimit(::grpc::ServerContext* context, const PPMUConfigureCurrentLimitRequest* request, PPMUConfigureCurrentLimitResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2832,6 +3216,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::PPMUConfigureCurrentLimitRange(::grpc::ServerContext* context, const PPMUConfigureCurrentLimitRangeRequest* request, PPMUConfigureCurrentLimitRangeResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2853,6 +3241,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::PPMUConfigureOutputFunction(::grpc::ServerContext* context, const PPMUConfigureOutputFunctionRequest* request, PPMUConfigureOutputFunctionResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2889,6 +3281,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::PPMUConfigureVoltageLevel(::grpc::ServerContext* context, const PPMUConfigureVoltageLevelRequest* request, PPMUConfigureVoltageLevelResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2910,6 +3306,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::PPMUConfigureVoltageLimits(::grpc::ServerContext* context, const PPMUConfigureVoltageLimitsRequest* request, PPMUConfigureVoltageLimitsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2932,6 +3332,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::PPMUMeasure(::grpc::ServerContext* context, const PPMUMeasureRequest* request, PPMUMeasureResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2987,6 +3391,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::PPMUSource(::grpc::ServerContext* context, const PPMUSourceRequest* request, PPMUSourceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3007,6 +3415,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::ReadSequencerFlag(::grpc::ServerContext* context, const ReadSequencerFlagRequest* request, ReadSequencerFlagResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3031,6 +3443,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::ReadSequencerRegister(::grpc::ServerContext* context, const ReadSequencerRegisterRequest* request, ReadSequencerRegisterResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3055,6 +3471,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::ReadStatic(::grpc::ServerContext* context, const ReadStaticRequest* request, ReadStaticResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3095,6 +3515,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::Reset(::grpc::ServerContext* context, const ResetRequest* request, ResetResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3114,6 +3538,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::ResetAttribute(::grpc::ServerContext* context, const ResetAttributeRequest* request, ResetAttributeResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3135,6 +3563,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::ResetDevice(::grpc::ServerContext* context, const ResetDeviceRequest* request, ResetDeviceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3154,6 +3586,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::SelectFunction(::grpc::ServerContext* context, const SelectFunctionRequest* request, SelectFunctionResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3190,6 +3626,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::SelfCalibrate(::grpc::ServerContext* context, const SelfCalibrateRequest* request, SelfCalibrateResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3209,6 +3649,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::SelfTest(::grpc::ServerContext* context, const SelfTestRequest* request, SelfTestResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3235,6 +3679,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::SendSoftwareEdgeTrigger(::grpc::ServerContext* context, const SendSoftwareEdgeTriggerRequest* request, SendSoftwareEdgeTriggerResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3271,6 +3719,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::SetAttributeViBoolean(::grpc::ServerContext* context, const SetAttributeViBooleanRequest* request, SetAttributeViBooleanResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3293,6 +3745,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::SetAttributeViInt32(::grpc::ServerContext* context, const SetAttributeViInt32Request* request, SetAttributeViInt32Response* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3330,6 +3786,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::SetAttributeViInt64(::grpc::ServerContext* context, const SetAttributeViInt64Request* request, SetAttributeViInt64Response* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3352,6 +3812,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::SetAttributeViReal64(::grpc::ServerContext* context, const SetAttributeViReal64Request* request, SetAttributeViReal64Response* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3374,6 +3838,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::SetAttributeViSession(::grpc::ServerContext* context, const SetAttributeViSessionRequest* request, SetAttributeViSessionResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3397,6 +3865,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::SetAttributeViString(::grpc::ServerContext* context, const SetAttributeViStringRequest* request, SetAttributeViStringResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3419,6 +3891,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::TDR(::grpc::ServerContext* context, const TDRRequest* request, TDRResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3459,6 +3935,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::UnloadAllPatterns(::grpc::ServerContext* context, const UnloadAllPatternsRequest* request, UnloadAllPatternsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3479,6 +3959,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::UnloadSpecifications(::grpc::ServerContext* context, const UnloadSpecificationsRequest* request, UnloadSpecificationsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3499,6 +3983,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::WaitUntilDone(::grpc::ServerContext* context, const WaitUntilDoneRequest* request, WaitUntilDoneResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3519,6 +4007,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::WriteSequencerFlag(::grpc::ServerContext* context, const WriteSequencerFlagRequest* request, WriteSequencerFlagResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3540,6 +4032,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::WriteSequencerFlagSynchronized(::grpc::ServerContext* context, const WriteSequencerFlagSynchronizedRequest* request, WriteSequencerFlagSynchronizedResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3567,6 +4063,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::WriteSequencerRegister(::grpc::ServerContext* context, const WriteSequencerRegisterRequest* request, WriteSequencerRegisterResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3588,6 +4088,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::WriteSourceWaveformBroadcastU32(::grpc::ServerContext* context, const WriteSourceWaveformBroadcastU32Request* request, WriteSourceWaveformBroadcastU32Response* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3610,6 +4114,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::WriteSourceWaveformDataFromFileTDMS(::grpc::ServerContext* context, const WriteSourceWaveformDataFromFileTDMSRequest* request, WriteSourceWaveformDataFromFileTDMSResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3631,6 +4139,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::WriteStatic(::grpc::ServerContext* context, const WriteStaticRequest* request, WriteStaticResponse* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3667,6 +4179,10 @@ namespace nidigitalpattern_grpc {
   ::grpc::Status NiDigitalService::WriteSourceWaveformSiteUniqueU32(::grpc::ServerContext* context, const WriteSourceWaveformSiteUniqueU32Request* request, WriteSourceWaveformSiteUniqueU32Response* response)
   {
     if (context->IsCancelled()) {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->Abort(vi);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {

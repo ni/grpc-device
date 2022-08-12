@@ -121,9 +121,7 @@ ${mako_helper.define_async_callback_method_body(function_name=function_name, fun
 % else:
   ::grpc::Status ${service_class_prefix}Service::${method_name}(::grpc::ServerContext* context, ${request_param}, ${response_param})
   {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
+${mako_helper.define_abort_if_cancelled(function_name=function_name, functions=functions)}\
     try {
 %   if common_helpers.has_unsupported_parameter(function_data):
       return ::grpc::Status(::grpc::UNIMPLEMENTED, "TODO: This server handler has not been implemented.");

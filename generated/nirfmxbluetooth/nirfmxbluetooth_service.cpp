@@ -52,6 +52,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::ACPCfgAveraging(::grpc::ServerContext* context, const ACPCfgAveragingRequest* request, ACPCfgAveragingResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -89,6 +94,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::ACPCfgBurstSynchronizationType(::grpc::ServerContext* context, const ACPCfgBurstSynchronizationTypeRequest* request, ACPCfgBurstSynchronizationTypeResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -125,6 +135,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::ACPCfgNumberOfOffsets(::grpc::ServerContext* context, const ACPCfgNumberOfOffsetsRequest* request, ACPCfgNumberOfOffsetsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -146,6 +161,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::ACPCfgOffsetChannelMode(::grpc::ServerContext* context, const ACPCfgOffsetChannelModeRequest* request, ACPCfgOffsetChannelModeResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -182,6 +202,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::ACPFetchAbsolutePowerTrace(::grpc::ServerContext* context, const ACPFetchAbsolutePowerTraceRequest* request, ACPFetchAbsolutePowerTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -226,6 +251,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::ACPFetchMaskTrace(::grpc::ServerContext* context, const ACPFetchMaskTraceRequest* request, ACPFetchMaskTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -273,6 +303,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::ACPFetchMeasurementStatus(::grpc::ServerContext* context, const ACPFetchMeasurementStatusRequest* request, ACPFetchMeasurementStatusResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -299,6 +334,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::ACPFetchOffsetMeasurement(::grpc::ServerContext* context, const ACPFetchOffsetMeasurementRequest* request, ACPFetchOffsetMeasurementResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -334,6 +374,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::ACPFetchOffsetMeasurementArray(::grpc::ServerContext* context, const ACPFetchOffsetMeasurementArrayRequest* request, ACPFetchOffsetMeasurementArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -389,6 +434,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::ACPFetchReferenceChannelPower(::grpc::ServerContext* context, const ACPFetchReferenceChannelPowerRequest* request, ACPFetchReferenceChannelPowerResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -414,6 +464,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::ACPFetchSpectrum(::grpc::ServerContext* context, const ACPFetchSpectrumRequest* request, ACPFetchSpectrumResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -478,6 +533,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::AnalyzeIQ1Waveform(::grpc::ServerContext* context, const AnalyzeIQ1WaveformRequest* request, AnalyzeIQ1WaveformResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -505,6 +565,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::AutoDetectSignal(::grpc::ServerContext* context, const AutoDetectSignalRequest* request, AutoDetectSignalResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -526,6 +591,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::AutoLevel(::grpc::ServerContext* context, const AutoLevelRequest* request, AutoLevelResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -551,6 +621,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::BuildOffsetString(::grpc::ServerContext* context, const BuildOffsetStringRequest* request, BuildOffsetStringResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -592,6 +667,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::BuildSignalString(::grpc::ServerContext* context, const BuildSignalStringRequest* request, BuildSignalStringResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -633,6 +713,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::BuildSlotString(::grpc::ServerContext* context, const BuildSlotStringRequest* request, BuildSlotStringResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -674,6 +759,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::CfgChannelNumber(::grpc::ServerContext* context, const CfgChannelNumberRequest* request, CfgChannelNumberResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -695,6 +785,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::CfgDataRate(::grpc::ServerContext* context, const CfgDataRateRequest* request, CfgDataRateResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -716,6 +811,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::CfgDigitalEdgeTrigger(::grpc::ServerContext* context, const CfgDigitalEdgeTriggerRequest* request, CfgDigitalEdgeTriggerResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -755,6 +855,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::CfgExternalAttenuation(::grpc::ServerContext* context, const CfgExternalAttenuationRequest* request, CfgExternalAttenuationResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -776,6 +881,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::CfgFrequency(::grpc::ServerContext* context, const CfgFrequencyRequest* request, CfgFrequencyResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -797,6 +907,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::CfgFrequencyChannelNumber(::grpc::ServerContext* context, const CfgFrequencyChannelNumberRequest* request, CfgFrequencyChannelNumberResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -834,6 +949,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::CfgFrequencyReference(::grpc::ServerContext* context, const CfgFrequencyReferenceRequest* request, CfgFrequencyReferenceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -875,6 +995,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::CfgIQPowerEdgeTrigger(::grpc::ServerContext* context, const CfgIQPowerEdgeTriggerRequest* request, CfgIQPowerEdgeTriggerResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -948,6 +1073,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::CfgLEDirectionFinding(::grpc::ServerContext* context, const CfgLEDirectionFindingRequest* request, CfgLEDirectionFindingResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -986,6 +1116,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::CfgMechanicalAttenuation(::grpc::ServerContext* context, const CfgMechanicalAttenuationRequest* request, CfgMechanicalAttenuationResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1023,6 +1158,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::CfgPacketType(::grpc::ServerContext* context, const CfgPacketTypeRequest* request, CfgPacketTypeResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1059,6 +1199,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::CfgPayloadBitPattern(::grpc::ServerContext* context, const CfgPayloadBitPatternRequest* request, CfgPayloadBitPatternResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1095,6 +1240,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::CfgPayloadLength(::grpc::ServerContext* context, const CfgPayloadLengthRequest* request, CfgPayloadLengthResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1132,6 +1282,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::CfgRF(::grpc::ServerContext* context, const CfgRFRequest* request, CfgRFResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1155,6 +1310,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::CfgRFAttenuation(::grpc::ServerContext* context, const CfgRFAttenuationRequest* request, CfgRFAttenuationResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1192,6 +1352,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::CfgReferenceLevel(::grpc::ServerContext* context, const CfgReferenceLevelRequest* request, CfgReferenceLevelResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1213,6 +1378,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::CfgSoftwareEdgeTrigger(::grpc::ServerContext* context, const CfgSoftwareEdgeTriggerRequest* request, CfgSoftwareEdgeTriggerResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1235,6 +1405,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::CheckMeasurementStatus(::grpc::ServerContext* context, const CheckMeasurementStatusRequest* request, CheckMeasurementStatusResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1259,6 +1434,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::ClearAllNamedResults(::grpc::ServerContext* context, const ClearAllNamedResultsRequest* request, ClearAllNamedResultsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1279,6 +1459,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::ClearNamedResult(::grpc::ServerContext* context, const ClearNamedResultRequest* request, ClearNamedResultResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1299,6 +1484,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::CloneSignalConfiguration(::grpc::ServerContext* context, const CloneSignalConfigurationRequest* request, CloneSignalConfigurationResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1320,6 +1510,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::Close(::grpc::ServerContext* context, const CloseRequest* request, CloseResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1341,6 +1536,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::Commit(::grpc::ServerContext* context, const CommitRequest* request, CommitResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1361,6 +1561,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::CreateSignalConfiguration(::grpc::ServerContext* context, const CreateSignalConfigurationRequest* request, CreateSignalConfigurationResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1381,6 +1586,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::DeleteSignalConfiguration(::grpc::ServerContext* context, const DeleteSignalConfigurationRequest* request, DeleteSignalConfigurationResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1401,6 +1611,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::DisableTrigger(::grpc::ServerContext* context, const DisableTriggerRequest* request, DisableTriggerResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1421,6 +1636,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::FrequencyRangeCfgAveraging(::grpc::ServerContext* context, const FrequencyRangeCfgAveragingRequest* request, FrequencyRangeCfgAveragingResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1458,6 +1678,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::FrequencyRangeCfgSpan(::grpc::ServerContext* context, const FrequencyRangeCfgSpanRequest* request, FrequencyRangeCfgSpanResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1479,6 +1704,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::FrequencyRangeFetchMeasurement(::grpc::ServerContext* context, const FrequencyRangeFetchMeasurementRequest* request, FrequencyRangeFetchMeasurementResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1506,6 +1736,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::FrequencyRangeFetchSpectrum(::grpc::ServerContext* context, const FrequencyRangeFetchSpectrumRequest* request, FrequencyRangeFetchSpectrumResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1550,6 +1785,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::GetAllNamedResultNames(::grpc::ServerContext* context, const GetAllNamedResultNamesRequest* request, GetAllNamedResultNamesResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1594,6 +1834,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::GetAttributeF32(::grpc::ServerContext* context, const GetAttributeF32Request* request, GetAttributeF32Response* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1619,6 +1864,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::GetAttributeF32Array(::grpc::ServerContext* context, const GetAttributeF32ArrayRequest* request, GetAttributeF32ArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1659,6 +1909,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::GetAttributeF64(::grpc::ServerContext* context, const GetAttributeF64Request* request, GetAttributeF64Response* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1684,6 +1939,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::GetAttributeF64Array(::grpc::ServerContext* context, const GetAttributeF64ArrayRequest* request, GetAttributeF64ArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1724,6 +1984,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::GetAttributeI16(::grpc::ServerContext* context, const GetAttributeI16Request* request, GetAttributeI16Response* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1749,6 +2014,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::GetAttributeI32(::grpc::ServerContext* context, const GetAttributeI32Request* request, GetAttributeI32Response* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1780,6 +2050,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::GetAttributeI32Array(::grpc::ServerContext* context, const GetAttributeI32ArrayRequest* request, GetAttributeI32ArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1834,6 +2109,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::GetAttributeI64(::grpc::ServerContext* context, const GetAttributeI64Request* request, GetAttributeI64Response* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1859,6 +2139,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::GetAttributeI64Array(::grpc::ServerContext* context, const GetAttributeI64ArrayRequest* request, GetAttributeI64ArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1899,6 +2184,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::GetAttributeI8(::grpc::ServerContext* context, const GetAttributeI8Request* request, GetAttributeI8Response* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1924,6 +2214,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::GetAttributeI8Array(::grpc::ServerContext* context, const GetAttributeI8ArrayRequest* request, GetAttributeI8ArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1972,6 +2267,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::GetAttributeNIComplexDoubleArray(::grpc::ServerContext* context, const GetAttributeNIComplexDoubleArrayRequest* request, GetAttributeNIComplexDoubleArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2018,6 +2318,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::GetAttributeNIComplexSingleArray(::grpc::ServerContext* context, const GetAttributeNIComplexSingleArrayRequest* request, GetAttributeNIComplexSingleArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2064,6 +2369,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::GetAttributeString(::grpc::ServerContext* context, const GetAttributeStringRequest* request, GetAttributeStringResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2107,6 +2417,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::GetAttributeU16(::grpc::ServerContext* context, const GetAttributeU16Request* request, GetAttributeU16Response* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2132,6 +2447,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::GetAttributeU32(::grpc::ServerContext* context, const GetAttributeU32Request* request, GetAttributeU32Response* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2157,6 +2477,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::GetAttributeU32Array(::grpc::ServerContext* context, const GetAttributeU32ArrayRequest* request, GetAttributeU32ArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2197,6 +2522,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::GetAttributeU64Array(::grpc::ServerContext* context, const GetAttributeU64ArrayRequest* request, GetAttributeU64ArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2237,6 +2567,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::GetAttributeU8(::grpc::ServerContext* context, const GetAttributeU8Request* request, GetAttributeU8Response* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2262,6 +2597,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::GetAttributeU8Array(::grpc::ServerContext* context, const GetAttributeU8ArrayRequest* request, GetAttributeU8ArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2302,6 +2642,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::GetError(::grpc::ServerContext* context, const GetErrorRequest* request, GetErrorResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2345,6 +2690,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::GetErrorString(::grpc::ServerContext* context, const GetErrorStringRequest* request, GetErrorStringResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2387,6 +2737,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::Initialize(::grpc::ServerContext* context, const InitializeRequest* request, InitializeResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2427,6 +2782,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::InitializeFromNIRFSASession(::grpc::ServerContext* context, const InitializeFromNIRFSASessionRequest* request, InitializeFromNIRFSASessionResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2465,6 +2825,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::Initiate(::grpc::ServerContext* context, const InitiateRequest* request, InitiateResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2486,6 +2851,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::ModAccCfgAveraging(::grpc::ServerContext* context, const ModAccCfgAveragingRequest* request, ModAccCfgAveragingResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2523,6 +2893,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::ModAccCfgBurstSynchronizationType(::grpc::ServerContext* context, const ModAccCfgBurstSynchronizationTypeRequest* request, ModAccCfgBurstSynchronizationTypeResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2559,6 +2934,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::ModAccFetchConstellationTrace(::grpc::ServerContext* context, const ModAccFetchConstellationTraceRequest* request, ModAccFetchConstellationTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2605,6 +2985,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::ModAccFetchDEVM(::grpc::ServerContext* context, const ModAccFetchDEVMRequest* request, ModAccFetchDEVMResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2634,6 +3019,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::ModAccFetchDEVMMagnitudeError(::grpc::ServerContext* context, const ModAccFetchDEVMMagnitudeErrorRequest* request, ModAccFetchDEVMMagnitudeErrorResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2661,6 +3051,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::ModAccFetchDEVMPerSymbolTrace(::grpc::ServerContext* context, const ModAccFetchDEVMPerSymbolTraceRequest* request, ModAccFetchDEVMPerSymbolTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2701,6 +3096,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::ModAccFetchDEVMPhaseError(::grpc::ServerContext* context, const ModAccFetchDEVMPhaseErrorRequest* request, ModAccFetchDEVMPhaseErrorResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2728,6 +3128,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::ModAccFetchDemodulatedBitTrace(::grpc::ServerContext* context, const ModAccFetchDemodulatedBitTraceRequest* request, ModAccFetchDemodulatedBitTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2776,6 +3181,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::ModAccFetchDf1(::grpc::ServerContext* context, const ModAccFetchDf1Request* request, ModAccFetchDf1Response* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2803,6 +3213,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::ModAccFetchDf1maxTrace(::grpc::ServerContext* context, const ModAccFetchDf1maxTraceRequest* request, ModAccFetchDf1maxTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2846,6 +3261,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::ModAccFetchDf2(::grpc::ServerContext* context, const ModAccFetchDf2Request* request, ModAccFetchDf2Response* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2873,6 +3293,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::ModAccFetchDf2maxTrace(::grpc::ServerContext* context, const ModAccFetchDf2maxTraceRequest* request, ModAccFetchDf2maxTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2916,6 +3341,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::ModAccFetchFrequencyErrorBR(::grpc::ServerContext* context, const ModAccFetchFrequencyErrorBRRequest* request, ModAccFetchFrequencyErrorBRResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2945,6 +3375,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::ModAccFetchFrequencyErrorEDR(::grpc::ServerContext* context, const ModAccFetchFrequencyErrorEDRRequest* request, ModAccFetchFrequencyErrorEDRResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2974,6 +3409,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::ModAccFetchFrequencyErrorLE(::grpc::ServerContext* context, const ModAccFetchFrequencyErrorLERequest* request, ModAccFetchFrequencyErrorLEResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3005,6 +3445,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::ModAccFetchFrequencyErrorTraceBR(::grpc::ServerContext* context, const ModAccFetchFrequencyErrorTraceBRRequest* request, ModAccFetchFrequencyErrorTraceBRResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3048,6 +3493,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::ModAccFetchFrequencyErrorTraceLE(::grpc::ServerContext* context, const ModAccFetchFrequencyErrorTraceLERequest* request, ModAccFetchFrequencyErrorTraceLEResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3091,6 +3541,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::ModAccFetchFrequencyErrorWiPlusW0TraceEDR(::grpc::ServerContext* context, const ModAccFetchFrequencyErrorWiPlusW0TraceEDRRequest* request, ModAccFetchFrequencyErrorWiPlusW0TraceEDRResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3134,6 +3589,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::ModAccFetchFrequencyTrace(::grpc::ServerContext* context, const ModAccFetchFrequencyTraceRequest* request, ModAccFetchFrequencyTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3178,6 +3638,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::ModAccFetchRMSDEVMTrace(::grpc::ServerContext* context, const ModAccFetchRMSDEVMTraceRequest* request, ModAccFetchRMSDEVMTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3218,6 +3683,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::ResetAttribute(::grpc::ServerContext* context, const ResetAttributeRequest* request, ResetAttributeResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3239,6 +3709,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::ResetToDefault(::grpc::ServerContext* context, const ResetToDefaultRequest* request, ResetToDefaultResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3259,6 +3734,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::SelectMeasurements(::grpc::ServerContext* context, const SelectMeasurementsRequest* request, SelectMeasurementsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3296,6 +3776,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::SendSoftwareEdgeTrigger(::grpc::ServerContext* context, const SendSoftwareEdgeTriggerRequest* request, SendSoftwareEdgeTriggerResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3315,6 +3800,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::SetAttributeF32(::grpc::ServerContext* context, const SetAttributeF32Request* request, SetAttributeF32Response* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3337,6 +3827,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::SetAttributeF32Array(::grpc::ServerContext* context, const SetAttributeF32ArrayRequest* request, SetAttributeF32ArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3360,6 +3855,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::SetAttributeF64(::grpc::ServerContext* context, const SetAttributeF64Request* request, SetAttributeF64Response* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3382,6 +3882,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::SetAttributeF64Array(::grpc::ServerContext* context, const SetAttributeF64ArrayRequest* request, SetAttributeF64ArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3405,6 +3910,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::SetAttributeI16(::grpc::ServerContext* context, const SetAttributeI16Request* request, SetAttributeI16Response* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3439,6 +3949,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::SetAttributeI32(::grpc::ServerContext* context, const SetAttributeI32Request* request, SetAttributeI32Response* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3476,6 +3991,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::SetAttributeI32Array(::grpc::ServerContext* context, const SetAttributeI32ArrayRequest* request, SetAttributeI32ArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3507,6 +4027,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::SetAttributeI64(::grpc::ServerContext* context, const SetAttributeI64Request* request, SetAttributeI64Response* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3529,6 +4054,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::SetAttributeI64Array(::grpc::ServerContext* context, const SetAttributeI64ArrayRequest* request, SetAttributeI64ArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3552,6 +4082,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::SetAttributeI8(::grpc::ServerContext* context, const SetAttributeI8Request* request, SetAttributeI8Response* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3586,6 +4121,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::SetAttributeI8Array(::grpc::ServerContext* context, const SetAttributeI8ArrayRequest* request, SetAttributeI8ArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3629,6 +4169,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::SetAttributeNIComplexDoubleArray(::grpc::ServerContext* context, const SetAttributeNIComplexDoubleArrayRequest* request, SetAttributeNIComplexDoubleArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3652,6 +4197,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::SetAttributeNIComplexSingleArray(::grpc::ServerContext* context, const SetAttributeNIComplexSingleArrayRequest* request, SetAttributeNIComplexSingleArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3675,6 +4225,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::SetAttributeString(::grpc::ServerContext* context, const SetAttributeStringRequest* request, SetAttributeStringResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3716,6 +4271,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::SetAttributeU16(::grpc::ServerContext* context, const SetAttributeU16Request* request, SetAttributeU16Response* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3750,6 +4310,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::SetAttributeU32(::grpc::ServerContext* context, const SetAttributeU32Request* request, SetAttributeU32Response* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3772,6 +4337,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::SetAttributeU32Array(::grpc::ServerContext* context, const SetAttributeU32ArrayRequest* request, SetAttributeU32ArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3795,6 +4365,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::SetAttributeU64Array(::grpc::ServerContext* context, const SetAttributeU64ArrayRequest* request, SetAttributeU64ArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3818,6 +4393,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::SetAttributeU8(::grpc::ServerContext* context, const SetAttributeU8Request* request, SetAttributeU8Response* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3840,6 +4420,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::SetAttributeU8Array(::grpc::ServerContext* context, const SetAttributeU8ArrayRequest* request, SetAttributeU8ArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3863,6 +4448,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::TXPCfgAveraging(::grpc::ServerContext* context, const TXPCfgAveragingRequest* request, TXPCfgAveragingResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3900,6 +4490,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::TXPCfgBurstSynchronizationType(::grpc::ServerContext* context, const TXPCfgBurstSynchronizationTypeRequest* request, TXPCfgBurstSynchronizationTypeResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3936,6 +4531,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::TXPFetchEDRPowers(::grpc::ServerContext* context, const TXPFetchEDRPowersRequest* request, TXPFetchEDRPowersResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3965,6 +4565,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::TXPFetchLECTEReferencePeriodPowers(::grpc::ServerContext* context, const TXPFetchLECTEReferencePeriodPowersRequest* request, TXPFetchLECTEReferencePeriodPowersResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3992,6 +4597,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::TXPFetchLECTETransmitSlotPowers(::grpc::ServerContext* context, const TXPFetchLECTETransmitSlotPowersRequest* request, TXPFetchLECTETransmitSlotPowersResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -4019,6 +4629,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::TXPFetchLECTETransmitSlotPowersArray(::grpc::ServerContext* context, const TXPFetchLECTETransmitSlotPowersArrayRequest* request, TXPFetchLECTETransmitSlotPowersArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -4062,6 +4677,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::TXPFetchPowerTrace(::grpc::ServerContext* context, const TXPFetchPowerTraceRequest* request, TXPFetchPowerTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -4106,6 +4726,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::TXPFetchPowers(::grpc::ServerContext* context, const TXPFetchPowersRequest* request, TXPFetchPowersResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -4137,6 +4762,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::TwentydBBandwidthCfgAveraging(::grpc::ServerContext* context, const TwentydBBandwidthCfgAveragingRequest* request, TwentydBBandwidthCfgAveragingResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -4174,6 +4804,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::TwentydBBandwidthFetchMeasurement(::grpc::ServerContext* context, const TwentydBBandwidthFetchMeasurementRequest* request, TwentydBBandwidthFetchMeasurementResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -4205,6 +4840,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::TwentydBBandwidthFetchSpectrum(::grpc::ServerContext* context, const TwentydBBandwidthFetchSpectrumRequest* request, TwentydBBandwidthFetchSpectrumResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -4249,6 +4889,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::WaitForAcquisitionComplete(::grpc::ServerContext* context, const WaitForAcquisitionCompleteRequest* request, WaitForAcquisitionCompleteResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -4269,6 +4914,11 @@ namespace nirfmxbluetooth_grpc {
   ::grpc::Status NiRFmxBluetoothService::WaitForMeasurementComplete(::grpc::ServerContext* context, const WaitForMeasurementCompleteRequest* request, WaitForMeasurementCompleteResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {

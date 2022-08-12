@@ -73,6 +73,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::AnalyzeIQ1Waveform(::grpc::ServerContext* context, const AnalyzeIQ1WaveformRequest* request, AnalyzeIQ1WaveformResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -100,6 +105,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::AnalyzeNWaveformsIQ(::grpc::ServerContext* context, const AnalyzeNWaveformsIQRequest* request, AnalyzeNWaveformsIQResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -145,6 +155,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::AnalyzeNWaveformsSpectrum(::grpc::ServerContext* context, const AnalyzeNWaveformsSpectrumRequest* request, AnalyzeNWaveformsSpectrumResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -190,6 +205,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::AnalyzeSpectrum1Waveform(::grpc::ServerContext* context, const AnalyzeSpectrum1WaveformRequest* request, AnalyzeSpectrum1WaveformResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -217,6 +237,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::AutoDetectSignal(::grpc::ServerContext* context, const AutoDetectSignalRequest* request, AutoDetectSignalResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -238,6 +263,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::AutoLevel(::grpc::ServerContext* context, const AutoLevelRequest* request, AutoLevelResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -259,6 +289,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::BuildChainString(::grpc::ServerContext* context, const BuildChainStringRequest* request, BuildChainStringResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -300,6 +335,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::BuildGateString(::grpc::ServerContext* context, const BuildGateStringRequest* request, BuildGateStringResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -341,6 +381,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::BuildOffsetString(::grpc::ServerContext* context, const BuildOffsetStringRequest* request, BuildOffsetStringResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -382,6 +427,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::BuildSegmentString(::grpc::ServerContext* context, const BuildSegmentStringRequest* request, BuildSegmentStringResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -423,6 +473,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::BuildSignalString(::grpc::ServerContext* context, const BuildSignalStringRequest* request, BuildSignalStringResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -464,6 +519,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::BuildStreamString(::grpc::ServerContext* context, const BuildStreamStringRequest* request, BuildStreamStringResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -505,6 +565,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::BuildUserString(::grpc::ServerContext* context, const BuildUserStringRequest* request, BuildUserStringResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -546,6 +611,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::CfgChannelBandwidth(::grpc::ServerContext* context, const CfgChannelBandwidthRequest* request, CfgChannelBandwidthResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -567,6 +637,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::CfgDigitalEdgeTrigger(::grpc::ServerContext* context, const CfgDigitalEdgeTriggerRequest* request, CfgDigitalEdgeTriggerResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -606,6 +681,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::CfgExternalAttenuation(::grpc::ServerContext* context, const CfgExternalAttenuationRequest* request, CfgExternalAttenuationResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -627,6 +707,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::CfgFrequency(::grpc::ServerContext* context, const CfgFrequencyRequest* request, CfgFrequencyResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -648,6 +733,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::CfgFrequencyArray(::grpc::ServerContext* context, const CfgFrequencyArrayRequest* request, CfgFrequencyArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -670,6 +760,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::CfgFrequencyReference(::grpc::ServerContext* context, const CfgFrequencyReferenceRequest* request, CfgFrequencyReferenceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -711,6 +806,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::CfgIQPowerEdgeTrigger(::grpc::ServerContext* context, const CfgIQPowerEdgeTriggerRequest* request, CfgIQPowerEdgeTriggerResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -784,6 +884,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::CfgMechanicalAttenuation(::grpc::ServerContext* context, const CfgMechanicalAttenuationRequest* request, CfgMechanicalAttenuationResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -821,6 +926,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::CfgNumberOfFrequencySegmentsAndReceiveChains(::grpc::ServerContext* context, const CfgNumberOfFrequencySegmentsAndReceiveChainsRequest* request, CfgNumberOfFrequencySegmentsAndReceiveChainsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -843,6 +953,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::CfgRFAttenuation(::grpc::ServerContext* context, const CfgRFAttenuationRequest* request, CfgRFAttenuationResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -880,6 +995,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::CfgReferenceLevel(::grpc::ServerContext* context, const CfgReferenceLevelRequest* request, CfgReferenceLevelResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -901,6 +1021,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::CfgSelectedPortsMultiple(::grpc::ServerContext* context, const CfgSelectedPortsMultipleRequest* request, CfgSelectedPortsMultipleResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -922,6 +1047,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::CfgSoftwareEdgeTrigger(::grpc::ServerContext* context, const CfgSoftwareEdgeTriggerRequest* request, CfgSoftwareEdgeTriggerResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -944,6 +1074,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::CfgStandard(::grpc::ServerContext* context, const CfgStandardRequest* request, CfgStandardResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -980,6 +1115,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::CheckMeasurementStatus(::grpc::ServerContext* context, const CheckMeasurementStatusRequest* request, CheckMeasurementStatusResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1004,6 +1144,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::ClearAllNamedResults(::grpc::ServerContext* context, const ClearAllNamedResultsRequest* request, ClearAllNamedResultsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1024,6 +1169,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::ClearNamedResult(::grpc::ServerContext* context, const ClearNamedResultRequest* request, ClearNamedResultResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1044,6 +1194,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::CloneSignalConfiguration(::grpc::ServerContext* context, const CloneSignalConfigurationRequest* request, CloneSignalConfigurationResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1065,6 +1220,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::Close(::grpc::ServerContext* context, const CloseRequest* request, CloseResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1086,6 +1246,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::Commit(::grpc::ServerContext* context, const CommitRequest* request, CommitResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1106,6 +1271,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::CreateSignalConfiguration(::grpc::ServerContext* context, const CreateSignalConfigurationRequest* request, CreateSignalConfigurationResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1126,6 +1296,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::DSSSModAccCfgAcquisitionLength(::grpc::ServerContext* context, const DSSSModAccCfgAcquisitionLengthRequest* request, DSSSModAccCfgAcquisitionLengthResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1163,6 +1338,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::DSSSModAccCfgAveraging(::grpc::ServerContext* context, const DSSSModAccCfgAveragingRequest* request, DSSSModAccCfgAveragingResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1200,6 +1380,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::DSSSModAccCfgEVMUnit(::grpc::ServerContext* context, const DSSSModAccCfgEVMUnitRequest* request, DSSSModAccCfgEVMUnitResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1236,6 +1421,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::DSSSModAccCfgMeasurementLength(::grpc::ServerContext* context, const DSSSModAccCfgMeasurementLengthRequest* request, DSSSModAccCfgMeasurementLengthResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1258,6 +1448,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::DSSSModAccCfgPowerMeasurementCustomGateArray(::grpc::ServerContext* context, const DSSSModAccCfgPowerMeasurementCustomGateArrayRequest* request, DSSSModAccCfgPowerMeasurementCustomGateArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1297,6 +1492,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::DSSSModAccCfgPowerMeasurementEnabled(::grpc::ServerContext* context, const DSSSModAccCfgPowerMeasurementEnabledRequest* request, DSSSModAccCfgPowerMeasurementEnabledResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1333,6 +1533,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::DSSSModAccCfgPowerMeasurementNumberOfCustomGates(::grpc::ServerContext* context, const DSSSModAccCfgPowerMeasurementNumberOfCustomGatesRequest* request, DSSSModAccCfgPowerMeasurementNumberOfCustomGatesResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1354,6 +1559,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::DSSSModAccFetchAveragePowers(::grpc::ServerContext* context, const DSSSModAccFetchAveragePowersRequest* request, DSSSModAccFetchAveragePowersResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1385,6 +1595,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::DSSSModAccFetchConstellationTrace(::grpc::ServerContext* context, const DSSSModAccFetchConstellationTraceRequest* request, DSSSModAccFetchConstellationTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1431,6 +1646,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::DSSSModAccFetchCustomGatePowersArray(::grpc::ServerContext* context, const DSSSModAccFetchCustomGatePowersArrayRequest* request, DSSSModAccFetchCustomGatePowersArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1474,6 +1694,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::DSSSModAccFetchDecodedHeaderBitsTrace(::grpc::ServerContext* context, const DSSSModAccFetchDecodedHeaderBitsTraceRequest* request, DSSSModAccFetchDecodedHeaderBitsTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1514,6 +1739,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::DSSSModAccFetchDecodedPSDUBitsTrace(::grpc::ServerContext* context, const DSSSModAccFetchDecodedPSDUBitsTraceRequest* request, DSSSModAccFetchDecodedPSDUBitsTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1554,6 +1784,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::DSSSModAccFetchEVM(::grpc::ServerContext* context, const DSSSModAccFetchEVMRequest* request, DSSSModAccFetchEVMResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1591,6 +1826,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::DSSSModAccFetchEVMPerChipMeanTrace(::grpc::ServerContext* context, const DSSSModAccFetchEVMPerChipMeanTraceRequest* request, DSSSModAccFetchEVMPerChipMeanTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1635,6 +1875,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::DSSSModAccFetchIQImpairments(::grpc::ServerContext* context, const DSSSModAccFetchIQImpairmentsRequest* request, DSSSModAccFetchIQImpairmentsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1664,6 +1909,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::DSSSModAccFetchPPDUInformation(::grpc::ServerContext* context, const DSSSModAccFetchPPDUInformationRequest* request, DSSSModAccFetchPPDUInformationResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1703,6 +1953,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::DSSSModAccFetchPeakPowers(::grpc::ServerContext* context, const DSSSModAccFetchPeakPowersRequest* request, DSSSModAccFetchPeakPowersResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1734,6 +1989,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::DeleteSignalConfiguration(::grpc::ServerContext* context, const DeleteSignalConfigurationRequest* request, DeleteSignalConfigurationResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1754,6 +2014,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::DisableTrigger(::grpc::ServerContext* context, const DisableTriggerRequest* request, DisableTriggerResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1774,6 +2039,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::GetAllNamedResultNames(::grpc::ServerContext* context, const GetAllNamedResultNamesRequest* request, GetAllNamedResultNamesResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1818,6 +2088,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::GetAttributeF32(::grpc::ServerContext* context, const GetAttributeF32Request* request, GetAttributeF32Response* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1843,6 +2118,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::GetAttributeF32Array(::grpc::ServerContext* context, const GetAttributeF32ArrayRequest* request, GetAttributeF32ArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1883,6 +2163,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::GetAttributeF64(::grpc::ServerContext* context, const GetAttributeF64Request* request, GetAttributeF64Response* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1908,6 +2193,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::GetAttributeF64Array(::grpc::ServerContext* context, const GetAttributeF64ArrayRequest* request, GetAttributeF64ArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1948,6 +2238,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::GetAttributeI16(::grpc::ServerContext* context, const GetAttributeI16Request* request, GetAttributeI16Response* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1973,6 +2268,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::GetAttributeI32(::grpc::ServerContext* context, const GetAttributeI32Request* request, GetAttributeI32Response* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2004,6 +2304,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::GetAttributeI32Array(::grpc::ServerContext* context, const GetAttributeI32ArrayRequest* request, GetAttributeI32ArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2058,6 +2363,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::GetAttributeI64(::grpc::ServerContext* context, const GetAttributeI64Request* request, GetAttributeI64Response* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2083,6 +2393,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::GetAttributeI64Array(::grpc::ServerContext* context, const GetAttributeI64ArrayRequest* request, GetAttributeI64ArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2123,6 +2438,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::GetAttributeI8(::grpc::ServerContext* context, const GetAttributeI8Request* request, GetAttributeI8Response* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2148,6 +2468,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::GetAttributeI8Array(::grpc::ServerContext* context, const GetAttributeI8ArrayRequest* request, GetAttributeI8ArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2196,6 +2521,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::GetAttributeNIComplexDoubleArray(::grpc::ServerContext* context, const GetAttributeNIComplexDoubleArrayRequest* request, GetAttributeNIComplexDoubleArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2242,6 +2572,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::GetAttributeNIComplexSingleArray(::grpc::ServerContext* context, const GetAttributeNIComplexSingleArrayRequest* request, GetAttributeNIComplexSingleArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2288,6 +2623,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::GetAttributeString(::grpc::ServerContext* context, const GetAttributeStringRequest* request, GetAttributeStringResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2331,6 +2671,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::GetAttributeU16(::grpc::ServerContext* context, const GetAttributeU16Request* request, GetAttributeU16Response* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2356,6 +2701,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::GetAttributeU32(::grpc::ServerContext* context, const GetAttributeU32Request* request, GetAttributeU32Response* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2381,6 +2731,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::GetAttributeU32Array(::grpc::ServerContext* context, const GetAttributeU32ArrayRequest* request, GetAttributeU32ArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2421,6 +2776,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::GetAttributeU64Array(::grpc::ServerContext* context, const GetAttributeU64ArrayRequest* request, GetAttributeU64ArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2461,6 +2821,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::GetAttributeU8(::grpc::ServerContext* context, const GetAttributeU8Request* request, GetAttributeU8Response* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2486,6 +2851,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::GetAttributeU8Array(::grpc::ServerContext* context, const GetAttributeU8ArrayRequest* request, GetAttributeU8ArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2526,6 +2896,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::GetError(::grpc::ServerContext* context, const GetErrorRequest* request, GetErrorResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2569,6 +2944,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::GetErrorString(::grpc::ServerContext* context, const GetErrorStringRequest* request, GetErrorStringResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2611,6 +2991,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::Initialize(::grpc::ServerContext* context, const InitializeRequest* request, InitializeResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2651,6 +3036,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::InitializeFromNIRFSASession(::grpc::ServerContext* context, const InitializeFromNIRFSASessionRequest* request, InitializeFromNIRFSASessionResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2689,6 +3079,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::Initiate(::grpc::ServerContext* context, const InitiateRequest* request, InitiateResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2710,6 +3105,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccAutoLevel(::grpc::ServerContext* context, const OFDMModAccAutoLevelRequest* request, OFDMModAccAutoLevelResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2731,6 +3131,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccCfg1ReferenceWaveform(::grpc::ServerContext* context, const OFDMModAccCfg1ReferenceWaveformRequest* request, OFDMModAccCfg1ReferenceWaveformResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2755,6 +3160,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccCfgAcquisitionLength(::grpc::ServerContext* context, const OFDMModAccCfgAcquisitionLengthRequest* request, OFDMModAccCfgAcquisitionLengthResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2792,6 +3202,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccCfgAmplitudeTrackingEnabled(::grpc::ServerContext* context, const OFDMModAccCfgAmplitudeTrackingEnabledRequest* request, OFDMModAccCfgAmplitudeTrackingEnabledResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2828,6 +3243,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccCfgAveraging(::grpc::ServerContext* context, const OFDMModAccCfgAveragingRequest* request, OFDMModAccCfgAveragingResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2865,6 +3285,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccCfgChannelEstimationType(::grpc::ServerContext* context, const OFDMModAccCfgChannelEstimationTypeRequest* request, OFDMModAccCfgChannelEstimationTypeResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2901,6 +3326,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccCfgCommonClockSourceEnabled(::grpc::ServerContext* context, const OFDMModAccCfgCommonClockSourceEnabledRequest* request, OFDMModAccCfgCommonClockSourceEnabledResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2937,6 +3367,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccCfgEVMUnit(::grpc::ServerContext* context, const OFDMModAccCfgEVMUnitRequest* request, OFDMModAccCfgEVMUnitResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2973,6 +3408,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccCfgFrequencyErrorEstimationMethod(::grpc::ServerContext* context, const OFDMModAccCfgFrequencyErrorEstimationMethodRequest* request, OFDMModAccCfgFrequencyErrorEstimationMethodResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3009,6 +3449,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccCfgMeasurementLength(::grpc::ServerContext* context, const OFDMModAccCfgMeasurementLengthRequest* request, OFDMModAccCfgMeasurementLengthResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3031,6 +3476,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccCfgMeasurementMode(::grpc::ServerContext* context, const OFDMModAccCfgMeasurementModeRequest* request, OFDMModAccCfgMeasurementModeResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3067,6 +3517,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccCfgNReferenceWaveforms(::grpc::ServerContext* context, const OFDMModAccCfgNReferenceWaveformsRequest* request, OFDMModAccCfgNReferenceWaveformsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3110,6 +3565,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccCfgNoiseCompensationEnabled(::grpc::ServerContext* context, const OFDMModAccCfgNoiseCompensationEnabledRequest* request, OFDMModAccCfgNoiseCompensationEnabledResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3146,6 +3606,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccCfgOptimizeDynamicRangeForEVM(::grpc::ServerContext* context, const OFDMModAccCfgOptimizeDynamicRangeForEVMRequest* request, OFDMModAccCfgOptimizeDynamicRangeForEVMResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3183,6 +3648,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccCfgPhaseTrackingEnabled(::grpc::ServerContext* context, const OFDMModAccCfgPhaseTrackingEnabledRequest* request, OFDMModAccCfgPhaseTrackingEnabledResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3219,6 +3689,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccCfgSymbolClockErrorCorrectionEnabled(::grpc::ServerContext* context, const OFDMModAccCfgSymbolClockErrorCorrectionEnabledRequest* request, OFDMModAccCfgSymbolClockErrorCorrectionEnabledResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3255,6 +3730,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccClearNoiseCalibrationDatabase(::grpc::ServerContext* context, const OFDMModAccClearNoiseCalibrationDatabaseRequest* request, OFDMModAccClearNoiseCalibrationDatabaseResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3274,6 +3754,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchChainDataRMSEVMPerSymbolMeanTrace(::grpc::ServerContext* context, const OFDMModAccFetchChainDataRMSEVMPerSymbolMeanTraceRequest* request, OFDMModAccFetchChainDataRMSEVMPerSymbolMeanTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3318,6 +3803,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchChainPilotRMSEVMPerSymbolMeanTrace(::grpc::ServerContext* context, const OFDMModAccFetchChainPilotRMSEVMPerSymbolMeanTraceRequest* request, OFDMModAccFetchChainPilotRMSEVMPerSymbolMeanTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3362,6 +3852,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchChainRMSEVM(::grpc::ServerContext* context, const OFDMModAccFetchChainRMSEVMRequest* request, OFDMModAccFetchChainRMSEVMResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3391,6 +3886,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchChainRMSEVMPerSubcarrierMeanTrace(::grpc::ServerContext* context, const OFDMModAccFetchChainRMSEVMPerSubcarrierMeanTraceRequest* request, OFDMModAccFetchChainRMSEVMPerSubcarrierMeanTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3435,6 +3935,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchChainRMSEVMPerSymbolMeanTrace(::grpc::ServerContext* context, const OFDMModAccFetchChainRMSEVMPerSymbolMeanTraceRequest* request, OFDMModAccFetchChainRMSEVMPerSymbolMeanTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3479,6 +3984,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchChannelFrequencyResponseMeanTrace(::grpc::ServerContext* context, const OFDMModAccFetchChannelFrequencyResponseMeanTraceRequest* request, OFDMModAccFetchChannelFrequencyResponseMeanTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3526,6 +4036,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchCommonPilotErrorTrace(::grpc::ServerContext* context, const OFDMModAccFetchCommonPilotErrorTraceRequest* request, OFDMModAccFetchCommonPilotErrorTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3573,6 +4088,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchCompositeRMSEVM(::grpc::ServerContext* context, const OFDMModAccFetchCompositeRMSEVMRequest* request, OFDMModAccFetchCompositeRMSEVMResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3602,6 +4122,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchCrossPower(::grpc::ServerContext* context, const OFDMModAccFetchCrossPowerRequest* request, OFDMModAccFetchCrossPowerResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3627,6 +4152,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchCustomGatePowersArray(::grpc::ServerContext* context, const OFDMModAccFetchCustomGatePowersArrayRequest* request, OFDMModAccFetchCustomGatePowersArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3670,6 +4200,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchDataAveragePower(::grpc::ServerContext* context, const OFDMModAccFetchDataAveragePowerRequest* request, OFDMModAccFetchDataAveragePowerResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3695,6 +4230,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchDataConstellationTrace(::grpc::ServerContext* context, const OFDMModAccFetchDataConstellationTraceRequest* request, OFDMModAccFetchDataConstellationTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3741,6 +4281,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchDataPeakPower(::grpc::ServerContext* context, const OFDMModAccFetchDataPeakPowerRequest* request, OFDMModAccFetchDataPeakPowerResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3766,6 +4311,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchDecodedEHTSIGBitsTrace(::grpc::ServerContext* context, const OFDMModAccFetchDecodedEHTSIGBitsTraceRequest* request, OFDMModAccFetchDecodedEHTSIGBitsTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3806,6 +4356,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchDecodedLSIGBitsTrace(::grpc::ServerContext* context, const OFDMModAccFetchDecodedLSIGBitsTraceRequest* request, OFDMModAccFetchDecodedLSIGBitsTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3846,6 +4401,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchDecodedPSDUBitsTrace(::grpc::ServerContext* context, const OFDMModAccFetchDecodedPSDUBitsTraceRequest* request, OFDMModAccFetchDecodedPSDUBitsTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3886,6 +4446,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchDecodedSIGBBitsTrace(::grpc::ServerContext* context, const OFDMModAccFetchDecodedSIGBBitsTraceRequest* request, OFDMModAccFetchDecodedSIGBBitsTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3926,6 +4491,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchDecodedSIGBitsTrace(::grpc::ServerContext* context, const OFDMModAccFetchDecodedSIGBitsTraceRequest* request, OFDMModAccFetchDecodedSIGBitsTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3966,6 +4536,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchDecodedServiceBitsTrace(::grpc::ServerContext* context, const OFDMModAccFetchDecodedServiceBitsTraceRequest* request, OFDMModAccFetchDecodedServiceBitsTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -4006,6 +4581,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchDecodedUSIGBitsTrace(::grpc::ServerContext* context, const OFDMModAccFetchDecodedUSIGBitsTraceRequest* request, OFDMModAccFetchDecodedUSIGBitsTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -4046,6 +4626,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchEVMSubcarrierIndices(::grpc::ServerContext* context, const OFDMModAccFetchEVMSubcarrierIndicesRequest* request, OFDMModAccFetchEVMSubcarrierIndicesResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -4086,6 +4671,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchFrequencyErrorCCDF10Percent(::grpc::ServerContext* context, const OFDMModAccFetchFrequencyErrorCCDF10PercentRequest* request, OFDMModAccFetchFrequencyErrorCCDF10PercentResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -4111,6 +4701,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchFrequencyErrorMean(::grpc::ServerContext* context, const OFDMModAccFetchFrequencyErrorMeanRequest* request, OFDMModAccFetchFrequencyErrorMeanResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -4136,6 +4731,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchGroupDelayMeanTrace(::grpc::ServerContext* context, const OFDMModAccFetchGroupDelayMeanTraceRequest* request, OFDMModAccFetchGroupDelayMeanTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -4180,6 +4780,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchGuardIntervalType(::grpc::ServerContext* context, const OFDMModAccFetchGuardIntervalTypeRequest* request, OFDMModAccFetchGuardIntervalTypeResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -4206,6 +4811,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchIQGainImbalancePerSubcarrierMeanTrace(::grpc::ServerContext* context, const OFDMModAccFetchIQGainImbalancePerSubcarrierMeanTraceRequest* request, OFDMModAccFetchIQGainImbalancePerSubcarrierMeanTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -4250,6 +4860,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchIQImpairments(::grpc::ServerContext* context, const OFDMModAccFetchIQImpairmentsRequest* request, OFDMModAccFetchIQImpairmentsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -4283,6 +4898,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchIQQuadratureErrorPerSubcarrierMeanTrace(::grpc::ServerContext* context, const OFDMModAccFetchIQQuadratureErrorPerSubcarrierMeanTraceRequest* request, OFDMModAccFetchIQQuadratureErrorPerSubcarrierMeanTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -4327,6 +4947,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchLSIGParityCheckStatus(::grpc::ServerContext* context, const OFDMModAccFetchLSIGParityCheckStatusRequest* request, OFDMModAccFetchLSIGParityCheckStatusResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -4353,6 +4978,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchLTFSize(::grpc::ServerContext* context, const OFDMModAccFetchLTFSizeRequest* request, OFDMModAccFetchLTFSizeResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -4379,6 +5009,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchMCSIndex(::grpc::ServerContext* context, const OFDMModAccFetchMCSIndexRequest* request, OFDMModAccFetchMCSIndexResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -4404,6 +5039,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchNumberOfHESIGBSymbols(::grpc::ServerContext* context, const OFDMModAccFetchNumberOfHESIGBSymbolsRequest* request, OFDMModAccFetchNumberOfHESIGBSymbolsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -4429,6 +5069,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchNumberOfSpaceTimeStreams(::grpc::ServerContext* context, const OFDMModAccFetchNumberOfSpaceTimeStreamsRequest* request, OFDMModAccFetchNumberOfSpaceTimeStreamsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -4454,6 +5099,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchNumberOfUsers(::grpc::ServerContext* context, const OFDMModAccFetchNumberOfUsersRequest* request, OFDMModAccFetchNumberOfUsersResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -4479,6 +5129,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchNumberofSymbolsUsed(::grpc::ServerContext* context, const OFDMModAccFetchNumberofSymbolsUsedRequest* request, OFDMModAccFetchNumberofSymbolsUsedResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -4504,6 +5159,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchPEAveragePower(::grpc::ServerContext* context, const OFDMModAccFetchPEAveragePowerRequest* request, OFDMModAccFetchPEAveragePowerResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -4529,6 +5189,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchPEDuration(::grpc::ServerContext* context, const OFDMModAccFetchPEDurationRequest* request, OFDMModAccFetchPEDurationResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -4554,6 +5219,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchPEPeakPower(::grpc::ServerContext* context, const OFDMModAccFetchPEPeakPowerRequest* request, OFDMModAccFetchPEPeakPowerResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -4579,6 +5249,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchPPDUAveragePower(::grpc::ServerContext* context, const OFDMModAccFetchPPDUAveragePowerRequest* request, OFDMModAccFetchPPDUAveragePowerResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -4604,6 +5279,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchPPDUPeakPower(::grpc::ServerContext* context, const OFDMModAccFetchPPDUPeakPowerRequest* request, OFDMModAccFetchPPDUPeakPowerResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -4629,6 +5309,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchPPDUType(::grpc::ServerContext* context, const OFDMModAccFetchPPDUTypeRequest* request, OFDMModAccFetchPPDUTypeResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -4655,6 +5340,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchPSDUCRCStatus(::grpc::ServerContext* context, const OFDMModAccFetchPSDUCRCStatusRequest* request, OFDMModAccFetchPSDUCRCStatusResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -4681,6 +5371,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchPilotConstellationTrace(::grpc::ServerContext* context, const OFDMModAccFetchPilotConstellationTraceRequest* request, OFDMModAccFetchPilotConstellationTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -4727,6 +5422,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchPreambleAveragePowers80211ac(::grpc::ServerContext* context, const OFDMModAccFetchPreambleAveragePowers80211acRequest* request, OFDMModAccFetchPreambleAveragePowers80211acResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -4758,6 +5458,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchPreambleAveragePowers80211ax(::grpc::ServerContext* context, const OFDMModAccFetchPreambleAveragePowers80211axRequest* request, OFDMModAccFetchPreambleAveragePowers80211axResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -4791,6 +5496,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchPreambleAveragePowers80211n(::grpc::ServerContext* context, const OFDMModAccFetchPreambleAveragePowers80211nRequest* request, OFDMModAccFetchPreambleAveragePowers80211nResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -4822,6 +5532,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchPreambleAveragePowersCommon(::grpc::ServerContext* context, const OFDMModAccFetchPreambleAveragePowersCommonRequest* request, OFDMModAccFetchPreambleAveragePowersCommonResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -4851,6 +5566,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchPreambleFrequencyErrorTrace(::grpc::ServerContext* context, const OFDMModAccFetchPreambleFrequencyErrorTraceRequest* request, OFDMModAccFetchPreambleFrequencyErrorTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -4895,6 +5615,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchPreamblePeakPowers80211ac(::grpc::ServerContext* context, const OFDMModAccFetchPreamblePeakPowers80211acRequest* request, OFDMModAccFetchPreamblePeakPowers80211acResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -4926,6 +5651,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchPreamblePeakPowers80211ax(::grpc::ServerContext* context, const OFDMModAccFetchPreamblePeakPowers80211axRequest* request, OFDMModAccFetchPreamblePeakPowers80211axResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -4959,6 +5689,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchPreamblePeakPowers80211n(::grpc::ServerContext* context, const OFDMModAccFetchPreamblePeakPowers80211nRequest* request, OFDMModAccFetchPreamblePeakPowers80211nResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -4990,6 +5725,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchPreamblePeakPowersCommon(::grpc::ServerContext* context, const OFDMModAccFetchPreamblePeakPowersCommonRequest* request, OFDMModAccFetchPreamblePeakPowersCommonResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -5019,6 +5759,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchRUOffsetAndSize(::grpc::ServerContext* context, const OFDMModAccFetchRUOffsetAndSizeRequest* request, OFDMModAccFetchRUOffsetAndSizeResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -5046,6 +5791,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchSIGBCRCStatus(::grpc::ServerContext* context, const OFDMModAccFetchSIGBCRCStatusRequest* request, OFDMModAccFetchSIGBCRCStatusResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -5072,6 +5822,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchSIGCRCStatus(::grpc::ServerContext* context, const OFDMModAccFetchSIGCRCStatusRequest* request, OFDMModAccFetchSIGCRCStatusResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -5098,6 +5853,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchSpectralFlatness(::grpc::ServerContext* context, const OFDMModAccFetchSpectralFlatnessRequest* request, OFDMModAccFetchSpectralFlatnessResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -5125,6 +5885,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchSpectralFlatnessMeanTrace(::grpc::ServerContext* context, const OFDMModAccFetchSpectralFlatnessMeanTraceRequest* request, OFDMModAccFetchSpectralFlatnessMeanTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -5175,6 +5940,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchStreamDataRMSEVMPerSymbolMeanTrace(::grpc::ServerContext* context, const OFDMModAccFetchStreamDataRMSEVMPerSymbolMeanTraceRequest* request, OFDMModAccFetchStreamDataRMSEVMPerSymbolMeanTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -5219,6 +5989,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchStreamPilotRMSEVMPerSymbolMeanTrace(::grpc::ServerContext* context, const OFDMModAccFetchStreamPilotRMSEVMPerSymbolMeanTraceRequest* request, OFDMModAccFetchStreamPilotRMSEVMPerSymbolMeanTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -5263,6 +6038,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchStreamRMSEVM(::grpc::ServerContext* context, const OFDMModAccFetchStreamRMSEVMRequest* request, OFDMModAccFetchStreamRMSEVMResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -5292,6 +6072,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchStreamRMSEVMPerSubcarrierMeanTrace(::grpc::ServerContext* context, const OFDMModAccFetchStreamRMSEVMPerSubcarrierMeanTraceRequest* request, OFDMModAccFetchStreamRMSEVMPerSubcarrierMeanTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -5336,6 +6121,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchStreamRMSEVMPerSymbolMeanTrace(::grpc::ServerContext* context, const OFDMModAccFetchStreamRMSEVMPerSymbolMeanTraceRequest* request, OFDMModAccFetchStreamRMSEVMPerSymbolMeanTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -5380,6 +6170,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchSubcarrierChainEVMPerSymbolTrace(::grpc::ServerContext* context, const OFDMModAccFetchSubcarrierChainEVMPerSymbolTraceRequest* request, OFDMModAccFetchSubcarrierChainEVMPerSymbolTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -5425,6 +6220,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchSubcarrierStreamEVMPerSymbolTrace(::grpc::ServerContext* context, const OFDMModAccFetchSubcarrierStreamEVMPerSymbolTraceRequest* request, OFDMModAccFetchSubcarrierStreamEVMPerSymbolTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -5470,6 +6270,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchSymbolChainEVMPerSubcarrierTrace(::grpc::ServerContext* context, const OFDMModAccFetchSymbolChainEVMPerSubcarrierTraceRequest* request, OFDMModAccFetchSymbolChainEVMPerSubcarrierTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -5515,6 +6320,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchSymbolClockErrorMean(::grpc::ServerContext* context, const OFDMModAccFetchSymbolClockErrorMeanRequest* request, OFDMModAccFetchSymbolClockErrorMeanResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -5540,6 +6350,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchSymbolStreamEVMPerSubcarrierTrace(::grpc::ServerContext* context, const OFDMModAccFetchSymbolStreamEVMPerSubcarrierTraceRequest* request, OFDMModAccFetchSymbolStreamEVMPerSubcarrierTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -5585,6 +6400,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchUnusedToneError(::grpc::ServerContext* context, const OFDMModAccFetchUnusedToneErrorRequest* request, OFDMModAccFetchUnusedToneErrorResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -5612,6 +6432,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchUnusedToneErrorMarginPerRU(::grpc::ServerContext* context, const OFDMModAccFetchUnusedToneErrorMarginPerRURequest* request, OFDMModAccFetchUnusedToneErrorMarginPerRUResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -5652,6 +6477,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchUnusedToneErrorMeanTrace(::grpc::ServerContext* context, const OFDMModAccFetchUnusedToneErrorMeanTraceRequest* request, OFDMModAccFetchUnusedToneErrorMeanTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -5699,6 +6529,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchUserDataConstellationTrace(::grpc::ServerContext* context, const OFDMModAccFetchUserDataConstellationTraceRequest* request, OFDMModAccFetchUserDataConstellationTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -5745,6 +6580,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchUserPilotConstellationTrace(::grpc::ServerContext* context, const OFDMModAccFetchUserPilotConstellationTraceRequest* request, OFDMModAccFetchUserPilotConstellationTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -5791,6 +6631,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchUserPower(::grpc::ServerContext* context, const OFDMModAccFetchUserPowerRequest* request, OFDMModAccFetchUserPowerResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -5816,6 +6661,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchUserStreamDataRMSEVMPerSymbolMeanTrace(::grpc::ServerContext* context, const OFDMModAccFetchUserStreamDataRMSEVMPerSymbolMeanTraceRequest* request, OFDMModAccFetchUserStreamDataRMSEVMPerSymbolMeanTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -5860,6 +6710,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchUserStreamPilotRMSEVMPerSymbolMeanTrace(::grpc::ServerContext* context, const OFDMModAccFetchUserStreamPilotRMSEVMPerSymbolMeanTraceRequest* request, OFDMModAccFetchUserStreamPilotRMSEVMPerSymbolMeanTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -5904,6 +6759,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchUserStreamRMSEVM(::grpc::ServerContext* context, const OFDMModAccFetchUserStreamRMSEVMRequest* request, OFDMModAccFetchUserStreamRMSEVMResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -5933,6 +6793,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchUserStreamRMSEVMPerSubcarrierMeanTrace(::grpc::ServerContext* context, const OFDMModAccFetchUserStreamRMSEVMPerSubcarrierMeanTraceRequest* request, OFDMModAccFetchUserStreamRMSEVMPerSubcarrierMeanTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -5977,6 +6842,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchUserStreamRMSEVMPerSymbolMeanTrace(::grpc::ServerContext* context, const OFDMModAccFetchUserStreamRMSEVMPerSymbolMeanTraceRequest* request, OFDMModAccFetchUserStreamRMSEVMPerSymbolMeanTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -6021,6 +6891,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::OFDMModAccValidateCalibrationData(::grpc::ServerContext* context, const OFDMModAccValidateCalibrationDataRequest* request, OFDMModAccValidateCalibrationDataResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -6046,6 +6921,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::PowerRampCfgAcquisitionLength(::grpc::ServerContext* context, const PowerRampCfgAcquisitionLengthRequest* request, PowerRampCfgAcquisitionLengthResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -6067,6 +6947,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::PowerRampCfgAveraging(::grpc::ServerContext* context, const PowerRampCfgAveragingRequest* request, PowerRampCfgAveragingResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -6104,6 +6989,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::PowerRampFetchFallTrace(::grpc::ServerContext* context, const PowerRampFetchFallTraceRequest* request, PowerRampFetchFallTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -6157,6 +7047,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::PowerRampFetchMeasurement(::grpc::ServerContext* context, const PowerRampFetchMeasurementRequest* request, PowerRampFetchMeasurementResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -6184,6 +7079,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::PowerRampFetchRiseTrace(::grpc::ServerContext* context, const PowerRampFetchRiseTraceRequest* request, PowerRampFetchRiseTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -6237,6 +7137,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::ResetAttribute(::grpc::ServerContext* context, const ResetAttributeRequest* request, ResetAttributeResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -6258,6 +7163,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::ResetToDefault(::grpc::ServerContext* context, const ResetToDefaultRequest* request, ResetToDefaultResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -6278,6 +7188,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::SEMCfgAveraging(::grpc::ServerContext* context, const SEMCfgAveragingRequest* request, SEMCfgAveragingResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -6331,6 +7246,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::SEMCfgMaskType(::grpc::ServerContext* context, const SEMCfgMaskTypeRequest* request, SEMCfgMaskTypeResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -6367,6 +7287,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::SEMCfgNumberOfOffsets(::grpc::ServerContext* context, const SEMCfgNumberOfOffsetsRequest* request, SEMCfgNumberOfOffsetsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -6388,6 +7313,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::SEMCfgOffsetFrequencyArray(::grpc::ServerContext* context, const SEMCfgOffsetFrequencyArrayRequest* request, SEMCfgOffsetFrequencyArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -6438,6 +7368,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::SEMCfgOffsetRelativeLimitArray(::grpc::ServerContext* context, const SEMCfgOffsetRelativeLimitArrayRequest* request, SEMCfgOffsetRelativeLimitArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -6477,6 +7412,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::SEMCfgSpan(::grpc::ServerContext* context, const SEMCfgSpanRequest* request, SEMCfgSpanResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -6514,6 +7454,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::SEMCfgSweepTime(::grpc::ServerContext* context, const SEMCfgSweepTimeRequest* request, SEMCfgSweepTimeResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -6551,6 +7496,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::SEMFetchCarrierMeasurement(::grpc::ServerContext* context, const SEMFetchCarrierMeasurementRequest* request, SEMFetchCarrierMeasurementResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -6578,6 +7528,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::SEMFetchLowerOffsetMargin(::grpc::ServerContext* context, const SEMFetchLowerOffsetMarginRequest* request, SEMFetchLowerOffsetMarginResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -6612,6 +7567,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::SEMFetchLowerOffsetMarginArray(::grpc::ServerContext* context, const SEMFetchLowerOffsetMarginArrayRequest* request, SEMFetchLowerOffsetMarginArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -6673,6 +7633,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::SEMFetchLowerOffsetPower(::grpc::ServerContext* context, const SEMFetchLowerOffsetPowerRequest* request, SEMFetchLowerOffsetPowerResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -6706,6 +7671,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::SEMFetchLowerOffsetPowerArray(::grpc::ServerContext* context, const SEMFetchLowerOffsetPowerArrayRequest* request, SEMFetchLowerOffsetPowerArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -6758,6 +7728,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::SEMFetchMeasurementStatus(::grpc::ServerContext* context, const SEMFetchMeasurementStatusRequest* request, SEMFetchMeasurementStatusResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -6784,6 +7759,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::SEMFetchSpectrum(::grpc::ServerContext* context, const SEMFetchSpectrumRequest* request, SEMFetchSpectrumResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -6831,6 +7811,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::SEMFetchUpperOffsetMargin(::grpc::ServerContext* context, const SEMFetchUpperOffsetMarginRequest* request, SEMFetchUpperOffsetMarginResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -6865,6 +7850,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::SEMFetchUpperOffsetMarginArray(::grpc::ServerContext* context, const SEMFetchUpperOffsetMarginArrayRequest* request, SEMFetchUpperOffsetMarginArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -6926,6 +7916,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::SEMFetchUpperOffsetPower(::grpc::ServerContext* context, const SEMFetchUpperOffsetPowerRequest* request, SEMFetchUpperOffsetPowerResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -6959,6 +7954,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::SEMFetchUpperOffsetPowerArray(::grpc::ServerContext* context, const SEMFetchUpperOffsetPowerArrayRequest* request, SEMFetchUpperOffsetPowerArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -7011,6 +8011,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::SelectMeasurements(::grpc::ServerContext* context, const SelectMeasurementsRequest* request, SelectMeasurementsResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -7048,6 +8053,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::SendSoftwareEdgeTrigger(::grpc::ServerContext* context, const SendSoftwareEdgeTriggerRequest* request, SendSoftwareEdgeTriggerResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -7067,6 +8077,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::SetAttributeF32(::grpc::ServerContext* context, const SetAttributeF32Request* request, SetAttributeF32Response* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -7089,6 +8104,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::SetAttributeF32Array(::grpc::ServerContext* context, const SetAttributeF32ArrayRequest* request, SetAttributeF32ArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -7112,6 +8132,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::SetAttributeF64(::grpc::ServerContext* context, const SetAttributeF64Request* request, SetAttributeF64Response* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -7134,6 +8159,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::SetAttributeF64Array(::grpc::ServerContext* context, const SetAttributeF64ArrayRequest* request, SetAttributeF64ArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -7157,6 +8187,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::SetAttributeI16(::grpc::ServerContext* context, const SetAttributeI16Request* request, SetAttributeI16Response* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -7191,6 +8226,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::SetAttributeI32(::grpc::ServerContext* context, const SetAttributeI32Request* request, SetAttributeI32Response* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -7228,6 +8268,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::SetAttributeI32Array(::grpc::ServerContext* context, const SetAttributeI32ArrayRequest* request, SetAttributeI32ArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -7259,6 +8304,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::SetAttributeI64(::grpc::ServerContext* context, const SetAttributeI64Request* request, SetAttributeI64Response* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -7281,6 +8331,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::SetAttributeI64Array(::grpc::ServerContext* context, const SetAttributeI64ArrayRequest* request, SetAttributeI64ArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -7304,6 +8359,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::SetAttributeI8(::grpc::ServerContext* context, const SetAttributeI8Request* request, SetAttributeI8Response* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -7338,6 +8398,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::SetAttributeI8Array(::grpc::ServerContext* context, const SetAttributeI8ArrayRequest* request, SetAttributeI8ArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -7381,6 +8446,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::SetAttributeNIComplexDoubleArray(::grpc::ServerContext* context, const SetAttributeNIComplexDoubleArrayRequest* request, SetAttributeNIComplexDoubleArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -7404,6 +8474,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::SetAttributeNIComplexSingleArray(::grpc::ServerContext* context, const SetAttributeNIComplexSingleArrayRequest* request, SetAttributeNIComplexSingleArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -7427,6 +8502,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::SetAttributeString(::grpc::ServerContext* context, const SetAttributeStringRequest* request, SetAttributeStringResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -7468,6 +8548,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::SetAttributeU16(::grpc::ServerContext* context, const SetAttributeU16Request* request, SetAttributeU16Response* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -7502,6 +8587,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::SetAttributeU32(::grpc::ServerContext* context, const SetAttributeU32Request* request, SetAttributeU32Response* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -7524,6 +8614,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::SetAttributeU32Array(::grpc::ServerContext* context, const SetAttributeU32ArrayRequest* request, SetAttributeU32ArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -7547,6 +8642,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::SetAttributeU64Array(::grpc::ServerContext* context, const SetAttributeU64ArrayRequest* request, SetAttributeU64ArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -7570,6 +8670,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::SetAttributeU8(::grpc::ServerContext* context, const SetAttributeU8Request* request, SetAttributeU8Response* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -7592,6 +8697,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::SetAttributeU8Array(::grpc::ServerContext* context, const SetAttributeU8ArrayRequest* request, SetAttributeU8ArrayResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -7615,6 +8725,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::TXPCfgAveraging(::grpc::ServerContext* context, const TXPCfgAveragingRequest* request, TXPCfgAveragingResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -7652,6 +8767,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::TXPCfgBurstDetectionEnabled(::grpc::ServerContext* context, const TXPCfgBurstDetectionEnabledRequest* request, TXPCfgBurstDetectionEnabledResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -7688,6 +8808,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::TXPCfgMaximumMeasurementInterval(::grpc::ServerContext* context, const TXPCfgMaximumMeasurementIntervalRequest* request, TXPCfgMaximumMeasurementIntervalResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -7709,6 +8834,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::TXPFetchMeasurement(::grpc::ServerContext* context, const TXPFetchMeasurementRequest* request, TXPFetchMeasurementResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -7736,6 +8866,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::TXPFetchPowerTrace(::grpc::ServerContext* context, const TXPFetchPowerTraceRequest* request, TXPFetchPowerTraceResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -7780,6 +8915,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::WaitForAcquisitionComplete(::grpc::ServerContext* context, const WaitForAcquisitionCompleteRequest* request, WaitForAcquisitionCompleteResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -7800,6 +8940,11 @@ namespace nirfmxwlan_grpc {
   ::grpc::Status NiRFmxWLANService::WaitForMeasurementComplete(::grpc::ServerContext* context, const WaitForMeasurementCompleteRequest* request, WaitForMeasurementCompleteResponse* response)
   {
     if (context->IsCancelled()) {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      auto status = library_->AbortMeasurements(instrument, selector_string);
+      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
