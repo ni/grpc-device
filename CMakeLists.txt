@@ -76,7 +76,7 @@ set(metadata_dir ${CMAKE_SOURCE_DIR}/source/codegen/metadata)
 set(service_output_dir ${CMAKE_SOURCE_DIR}/generated)
 set(codegen_dir ${CMAKE_SOURCE_DIR}/source/codegen)
 set(custom_dir ${CMAKE_SOURCE_DIR}/source/custom)
-set(nidrivers "nidaqmx" "nidcpower" "nidigitalpattern" "nidmm" "nifake" "nifake_extension" "nifake_non_ivi" "nifgen" "nirfmxbluetooth" "nirfmxinstr" "nirfmxlte" "nirfmxnr" "nirfmxspecan" "nirfmxspecan_restricted" "nirfmxwlan" "nirfsa" "nirfsg" "niscope" "niswitch" "nisync" "nitclk" "nixnet" "nixnetsocket")
+set(nidrivers "nidaqmx" "nidcpower" "nidigitalpattern" "nidmm" "nifake" "nifake_extension" "nifake_non_ivi" "nifgen" "nimxlcTerminalAdaptor_restricted" "nirfmxbluetooth" "nirfmxinstr" "nirfmxlte" "nirfmxnr" "nirfmxspecan" "nirfmxspecan_restricted" "nirfmxwlan" "nirfsa" "nirfsg" "niscope" "niswitch" "nisync" "nitclk" "nixnet" "nixnetsocket")
 
 #----------------------------------------------------------------------
 # Create NI Driver APIs proto and server files
@@ -307,7 +307,7 @@ target_link_libraries(ni_grpc_device_server
 set_target_properties(ni_grpc_device_server PROPERTIES BUILD_WITH_INSTALL_RPATH TRUE)
 
 if(WIN32)
-  target_link_libraries(ni_grpc_device_server Delayimp nidaqmx nidcpower niDigital nidmm niFgen niScope niRFmxBT niRFmxInstr niRFmxLTE niRFmxNR niRFmxSpecAn niRFmxWLAN niRFSA niRFSG niswitch nisync niTClk nixnet nixntipstack)
+  target_link_libraries(ni_grpc_device_server Delayimp nidaqmx nidcpower niDigital nidmm niFgen nimxlcTerminalAdaptor niScope niRFmxBT niRFmxInstr niRFmxLTE niRFmxNR niRFmxSpecAn niRFmxWLAN niRFSA niRFSG niswitch nisync niTClk nixnet nixntipstack)
   set_target_properties(ni_grpc_device_server PROPERTIES LINK_FLAGS "/DELAYLOAD:nicaiu.dll /DELAYLOAD:nidcpower_64.dll /DELAYLOAD:niDigital_64.dll /DELAYLOAD:nidmm_64.dll /DELAYLOAD:niFgen_64.dll /DELAYLOAD:niRFmxBT.dll /DELAYLOAD:niRFmxInstr.dll /DELAYLOAD:niRFmxLTE.dll /DELAYLOAD:niRFmxNR.dll /DELAYLOAD:niRFmxSpecAn.dll /DELAYLOAD:niRFmxWLAN.dll /DELAYLOAD:niRFSA_64.dll /DELAYLOAD:niRFSG_64.dll /DELAYLOAD:niScope_64.dll /DELAYLOAD:niswitch_64.dll /DELAYLOAD:nisync.dll /DELAYLOAD:niTClk_64.dll /DELAYLOAD:nixnet.dll /DELAYLOAD:nixntipstack.dll")
   set(ni_grpc_device_server CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /DELAYLOAD:nicaiu.dll /DELAYLOAD:nidcpower_64.dll /DELAYLOAD:niDigital_64.dll /DELAYLOAD:nidmm_64.dll /DELAYLOAD:niFgen_64.dll /DELAYLOAD:niScope_64.dll /DELAYLOAD:niRFmxBT.dll /DELAYLOAD:niRFmxInstr.dll /DELAYLOAD:niRFmxLTE.dll /DELAYLOAD:niRFmxNR.dll /DELAYLOAD:niRFmxSpecAn.dll /DELAYLOAD:niRFmxWLAN.dll /DELAYLOAD:niRFSA_64.dll /DELAYLOAD:niRFSG_64.dll /DELAYLOAD:niswitch_64.dll /DELAYLOAD:nisync.dll /DELAYLOAD:niTClk_64.dll /DELAYLOAD:nixnet.dll /DELAYLOAD:nixntipstack.dll")
 endif()
