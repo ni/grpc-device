@@ -292,7 +292,6 @@ ${call_library_method(
   function_data=functions[abort_function], 
   arg_string=service_helpers.create_args(parameters))
 }\
-${populate_response(function_data=functions[abort_function], output_parameters=output_parameters)}\
 % endif
 % endif
       return ::grpc::Status::CANCELLED;

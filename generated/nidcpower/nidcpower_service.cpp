@@ -53,7 +53,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -77,7 +76,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -101,7 +99,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -142,7 +139,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -183,7 +179,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -224,7 +219,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -265,7 +259,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -306,7 +299,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -347,7 +339,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -373,7 +364,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -397,7 +387,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -421,7 +410,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -445,7 +433,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -469,7 +456,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -493,7 +479,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -517,7 +502,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -557,7 +541,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -582,7 +565,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -607,7 +589,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -635,7 +616,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -662,7 +642,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -687,7 +666,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -711,7 +689,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -735,7 +712,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -759,7 +735,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -783,7 +758,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -807,7 +781,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -835,7 +808,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -877,7 +849,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -920,7 +891,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -944,7 +914,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -967,7 +936,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -991,7 +959,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1031,7 +998,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1091,7 +1057,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1115,7 +1080,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1138,7 +1102,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1161,7 +1124,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1185,7 +1147,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1208,7 +1169,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1249,7 +1209,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1289,7 +1248,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1314,7 +1272,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1339,7 +1296,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1380,7 +1336,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1405,7 +1360,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1445,7 +1399,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1485,7 +1438,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1525,7 +1477,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1565,7 +1516,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1605,7 +1555,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1630,7 +1579,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1670,7 +1618,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1695,7 +1642,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1734,7 +1680,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1759,7 +1704,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1784,7 +1728,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1809,7 +1752,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1834,7 +1776,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1859,7 +1800,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1884,7 +1824,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1909,7 +1848,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1934,7 +1872,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1959,7 +1896,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -1984,7 +1920,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2009,7 +1944,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2034,7 +1968,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2074,7 +2007,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2097,7 +2029,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2120,7 +2051,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2143,7 +2073,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2166,7 +2095,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2189,7 +2117,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2228,7 +2155,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2253,7 +2179,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2278,7 +2203,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2303,7 +2227,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2328,7 +2251,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2352,7 +2274,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2376,7 +2297,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2399,7 +2319,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2422,7 +2341,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2445,7 +2363,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2468,7 +2385,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2491,7 +2407,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2520,7 +2435,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2561,7 +2475,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2585,7 +2498,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2626,7 +2538,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2662,7 +2573,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2691,7 +2601,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2720,7 +2629,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2749,7 +2657,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2778,7 +2685,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2808,7 +2714,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2855,7 +2760,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2901,7 +2805,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2947,7 +2850,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -2994,7 +2896,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3029,7 +2930,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3056,7 +2956,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3083,7 +2982,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3128,7 +3026,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3173,7 +3070,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3208,7 +3104,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3235,7 +3130,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3260,7 +3154,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3284,7 +3177,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3328,7 +3220,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3351,7 +3242,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3395,7 +3285,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3423,7 +3312,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3452,7 +3340,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3481,7 +3368,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3510,7 +3396,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3554,7 +3439,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3581,7 +3465,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3604,7 +3487,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3627,7 +3509,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3650,7 +3531,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3673,7 +3553,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3704,7 +3583,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3734,7 +3612,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3773,7 +3650,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3799,7 +3675,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3840,7 +3715,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3866,7 +3740,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3907,7 +3780,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3934,7 +3806,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3960,7 +3831,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
@@ -3998,7 +3868,6 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
-      response->set_status(status);
       return ::grpc::Status::CANCELLED;
     }
     try {
