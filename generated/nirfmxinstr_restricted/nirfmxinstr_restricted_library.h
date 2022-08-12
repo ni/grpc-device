@@ -51,6 +51,8 @@ class NiRFmxInstrRestrictedLibrary : public nirfmxinstr_restricted_grpc::NiRFmxI
   int32 GetActiveTableName(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 arraySize, char activeTableName[]);
   int32 GetSignalConfigurationState64(niRFmxInstrHandle instrumentHandle, char signalName[], uInt32 signalType, int32* signalState, uInt64* timeStamp);
   int32 SetIOTraceStatus(niRFmxInstrHandle instrumentHandle, int32 IOTraceStatus);
+  int32 GetError(niRFmxInstrHandle instrumentHandle, int32* errorCode, int32 errorDescriptionBufferSize, char errorDescription[]);
+  int32 GetErrorString(niRFmxInstrHandle instrumentHandle, int32 errorCode, int32 errorDescriptionBufferSize, char errorDescription[]);
   int32 GetActiveResultName(niRFmxInstrHandle instrumentHandle, char signalName[], uInt32 signalType, int32 resultSize, char resultName[], int32* actualResultSize, int32* resultState);
 
  private:
@@ -87,6 +89,8 @@ class NiRFmxInstrRestrictedLibrary : public nirfmxinstr_restricted_grpc::NiRFmxI
   using GetActiveTableNamePtr = int32 (*)(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 arraySize, char activeTableName[]);
   using GetSignalConfigurationState64Ptr = int32 (*)(niRFmxInstrHandle instrumentHandle, char signalName[], uInt32 signalType, int32* signalState, uInt64* timeStamp);
   using SetIOTraceStatusPtr = int32 (*)(niRFmxInstrHandle instrumentHandle, int32 IOTraceStatus);
+  using GetErrorPtr = int32 (*)(niRFmxInstrHandle instrumentHandle, int32* errorCode, int32 errorDescriptionBufferSize, char errorDescription[]);
+  using GetErrorStringPtr = int32 (*)(niRFmxInstrHandle instrumentHandle, int32 errorCode, int32 errorDescriptionBufferSize, char errorDescription[]);
   using GetActiveResultNamePtr = int32 (*)(niRFmxInstrHandle instrumentHandle, char signalName[], uInt32 signalType, int32 resultSize, char resultName[], int32* actualResultSize, int32* resultState);
 
   typedef struct FunctionPointers {
@@ -123,6 +127,8 @@ class NiRFmxInstrRestrictedLibrary : public nirfmxinstr_restricted_grpc::NiRFmxI
     GetActiveTableNamePtr GetActiveTableName;
     GetSignalConfigurationState64Ptr GetSignalConfigurationState64;
     SetIOTraceStatusPtr SetIOTraceStatus;
+    GetErrorPtr GetError;
+    GetErrorStringPtr GetErrorString;
     GetActiveResultNamePtr GetActiveResultName;
   } FunctionLoadStatus;
 

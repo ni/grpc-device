@@ -54,6 +54,8 @@ NiRFmxInstrRestrictedLibrary::NiRFmxInstrRestrictedLibrary() : shared_library_(k
   function_pointers_.GetActiveTableName = reinterpret_cast<GetActiveTableNamePtr>(shared_library_.get_function_pointer("RFmxInstr_GetActiveTableName"));
   function_pointers_.GetSignalConfigurationState64 = reinterpret_cast<GetSignalConfigurationState64Ptr>(shared_library_.get_function_pointer("RFmxInstr_GetSignalConfigurationState64"));
   function_pointers_.SetIOTraceStatus = reinterpret_cast<SetIOTraceStatusPtr>(shared_library_.get_function_pointer("RFmxInstr_SetIOTraceStatus"));
+  function_pointers_.GetError = reinterpret_cast<GetErrorPtr>(shared_library_.get_function_pointer("RFmxInstr_GetError"));
+  function_pointers_.GetErrorString = reinterpret_cast<GetErrorStringPtr>(shared_library_.get_function_pointer("RFmxInstr_GetErrorString"));
   function_pointers_.GetActiveResultName = reinterpret_cast<GetActiveResultNamePtr>(shared_library_.get_function_pointer("RFmxInstr_GetActiveResultName"));
 }
 
@@ -330,6 +332,22 @@ int32 NiRFmxInstrRestrictedLibrary::SetIOTraceStatus(niRFmxInstrHandle instrumen
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_SetIOTraceStatus.");
   }
   return function_pointers_.SetIOTraceStatus(instrumentHandle, IOTraceStatus);
+}
+
+int32 NiRFmxInstrRestrictedLibrary::GetError(niRFmxInstrHandle instrumentHandle, int32* errorCode, int32 errorDescriptionBufferSize, char errorDescription[])
+{
+  if (!function_pointers_.GetError) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetError.");
+  }
+  return function_pointers_.GetError(instrumentHandle, errorCode, errorDescriptionBufferSize, errorDescription);
+}
+
+int32 NiRFmxInstrRestrictedLibrary::GetErrorString(niRFmxInstrHandle instrumentHandle, int32 errorCode, int32 errorDescriptionBufferSize, char errorDescription[])
+{
+  if (!function_pointers_.GetErrorString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetErrorString.");
+  }
+  return function_pointers_.GetErrorString(instrumentHandle, errorCode, errorDescriptionBufferSize, errorDescription);
 }
 
 int32 NiRFmxInstrRestrictedLibrary::GetActiveResultName(niRFmxInstrHandle instrumentHandle, char signalName[], uInt32 signalType, int32 resultSize, char resultName[], int32* actualResultSize, int32* resultState)
