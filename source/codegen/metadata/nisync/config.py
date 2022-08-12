@@ -8,6 +8,7 @@ config = {
     "csharp_namespace": "NationalInstruments.Grpc.Sync",
     "namespace_component": "nisync",
     "close_function": "Close",
+    "abort_function": None,
     "context_manager_name": {
         "abort_function": "Abort",
         "initiate_function": "InitiateAcquisition",
