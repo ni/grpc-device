@@ -197,7 +197,7 @@ TEST(ConvertersTests, CustomField_ApiErrorAndDescriptionToStatus_IncludesCustomF
 
 TEST(ConvertersTests, QuotedLocalizedDescription_ApiErrorAndDescriptionToStatus_MessageIsEncoded)
 {
-  const auto TEST_MESSAGE = std::string(u8"\"chaîne 😀 localisée\"");
+  const auto TEST_MESSAGE = std::string("\"chaîne 😀 localisée\"");
   std::string description(TEST_MESSAGE);
 
   auto error_message = nidevice_grpc::ApiErrorAndDescriptionToStatus(0, description).error_message();
