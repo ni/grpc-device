@@ -9,6 +9,7 @@ config = {
     'csharp_namespace': 'NationalInstruments.Grpc.FakeExtension',
     'namespace_component': 'nifake_extension',
     'close_function': None,
+    'abort_function': None,
     'driver_name': 'NI-FAKE-EXTENSION',
     'custom_types': [],
     'status_ok': 'status >= 0',

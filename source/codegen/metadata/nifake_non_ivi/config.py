@@ -9,6 +9,7 @@ config = {
     'csharp_namespace': 'NationalInstruments.Grpc.FakeNonIvi',
     'namespace_component': 'nifake_non_ivi',
     'close_function': 'Close',
+    'abort_function': None,
     'driver_name': 'NI-FAKE-NON-IVI',
     'resource_handle_type': ['FakeHandle', 'SecondarySessionHandle'],
     'status_ok': 'status >= 0',

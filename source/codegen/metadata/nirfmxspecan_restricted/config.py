@@ -9,6 +9,7 @@ config = {
     "csharp_namespace": "NationalInstruments.Grpc.NiRFmxSpecAnRestricted",
     "namespace_component": "nirfmxspecan_restricted",
     'close_function': None,
+    'abort_function': None,
     "custom_types": [],
     "type_to_grpc_type": {
         "char[]": "string",
