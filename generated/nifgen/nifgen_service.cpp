@@ -1228,6 +1228,50 @@ namespace nifgen_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiFgenService::CreateAdvancedArbSequence(::grpc::ServerContext* context, const CreateAdvancedArbSequenceRequest* request, CreateAdvancedArbSequenceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto sequence_length_determine_from_sizes = std::array<int, 4>
+      {
+        request->waveform_handles_array_size(),
+        request->loop_counts_array_size(),
+        request->sample_counts_array_size(),
+        request->marker_location_array_size()
+      };
+      const auto sequence_length_size_calculation = calculate_linked_array_size(sequence_length_determine_from_sizes, false);
+
+      if (sequence_length_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [waveform_handles_array, loop_counts_array, sample_counts_array, marker_location_array] do not match");
+      }
+      auto sequence_length = sequence_length_size_calculation.size;
+
+      auto waveform_handles_array = const_cast<ViInt32*>(reinterpret_cast<const ViInt32*>(request->waveform_handles_array().data()));
+      auto loop_counts_array = const_cast<ViInt32*>(reinterpret_cast<const ViInt32*>(request->loop_counts_array().data()));
+      auto sample_counts_array = const_cast<ViInt32*>(reinterpret_cast<const ViInt32*>(request->sample_counts_array().data()));
+      auto marker_location_array = const_cast<ViInt32*>(reinterpret_cast<const ViInt32*>(request->marker_location_array().data()));
+      response->mutable_coerced_markers_array()->Resize(sequence_length, 0);
+      ViInt32* coerced_markers_array = reinterpret_cast<ViInt32*>(response->mutable_coerced_markers_array()->mutable_data());
+      ViInt32 sequence_handle {};
+      auto status = library_->CreateAdvancedArbSequence(vi, sequence_length, waveform_handles_array, loop_counts_array, sample_counts_array, marker_location_array, coerced_markers_array, &sequence_handle);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
+      response->set_status(status);
+      response->set_sequence_handle(sequence_handle);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiFgenService::CreateArbSequence(::grpc::ServerContext* context, const CreateArbSequenceRequest* request, CreateArbSequenceResponse* response)
   {
     if (context->IsCancelled()) {
