@@ -2039,6 +2039,96 @@ namespace niscope_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiScopeService::GetNormalizationCoefficients(::grpc::ServerContext* context, const GetNormalizationCoefficientsRequest* request, GetNormalizationCoefficientsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto channel_list = request->channel_list().c_str();
+      ViInt32 number_of_coefficient_sets {};
+      while (true) {
+        auto status = library_->GetNormalizationCoefficients(vi, channel_list, 0, nullptr, &number_of_coefficient_sets);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+        }
+        std::vector<niScope_coefficientInfo> coefficient_info(number_of_coefficient_sets, niScope_coefficientInfo());
+        auto buffer_size = number_of_coefficient_sets;
+        status = library_->GetNormalizationCoefficients(vi, channel_list, buffer_size, coefficient_info.data(), &number_of_coefficient_sets);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+        }
+        response->set_status(status);
+        convert_to_grpc(coefficient_info, response->mutable_coefficient_info());
+        {
+          auto shrunk_size = number_of_coefficient_sets;
+          auto current_size = response->mutable_coefficient_info()->size();
+          if (shrunk_size != current_size) {
+            response->mutable_coefficient_info()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
+          }
+        }
+        response->set_number_of_coefficient_sets(number_of_coefficient_sets);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiScopeService::GetScalingCoefficients(::grpc::ServerContext* context, const GetScalingCoefficientsRequest* request, GetScalingCoefficientsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto channel_list = request->channel_list().c_str();
+      ViInt32 number_of_coefficient_sets {};
+      while (true) {
+        auto status = library_->GetScalingCoefficients(vi, channel_list, 0, nullptr, &number_of_coefficient_sets);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+        }
+        std::vector<niScope_coefficientInfo> coefficient_info(number_of_coefficient_sets, niScope_coefficientInfo());
+        auto buffer_size = number_of_coefficient_sets;
+        status = library_->GetScalingCoefficients(vi, channel_list, buffer_size, coefficient_info.data(), &number_of_coefficient_sets);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
+        }
+        response->set_status(status);
+        convert_to_grpc(coefficient_info, response->mutable_coefficient_info());
+        {
+          auto shrunk_size = number_of_coefficient_sets;
+          auto current_size = response->mutable_coefficient_info()->size();
+          if (shrunk_size != current_size) {
+            response->mutable_coefficient_info()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
+          }
+        }
+        response->set_number_of_coefficient_sets(number_of_coefficient_sets);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiScopeService::GetStreamEndpointHandle(::grpc::ServerContext* context, const GetStreamEndpointHandleRequest* request, GetStreamEndpointHandleResponse* response)
   {
     if (context->IsCancelled()) {
