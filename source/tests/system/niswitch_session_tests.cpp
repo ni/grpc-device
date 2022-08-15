@@ -1,4 +1,6 @@
+#include <gmock/gmock.h>
 #include <gtest/gtest.h>
+
 #include <nlohmann/json.hpp>
 
 #include "device_server.h"
@@ -14,7 +16,7 @@ using namespace ::nlohmann;
 const int kViErrorRsrcNotFound = -1074118654;
 const int kInvalidSwitchSession = -1074130544;
 const char* kViErrorRsrcNotFoundMessage = "Invalid resource name.\n\nInvalid Identifier: InvalidName";
-const char* kInvalidSwitchSessionMessage = "IVI: The session handle is not valid.";
+const char* kInvalidSwitchSessionMessage = "The session handle is not valid.";
 const char* kTestRsrcName = "";
 const char* kTestSessName = "SessionName";
 const char* kInvalidRsrcName = "InvalidName";
@@ -121,7 +123,7 @@ TEST_F(NiSwitchSessionTest, InitializedSession_CloseSession_ClosesDriverSession)
   EXPECT_EQ(0, close_response.status());
 }
 
-TEST_F(NiSwitchSessionTest, InvalidSession_CloseSession_ReturnsInvalidSesssionError)
+TEST_F(NiSwitchSessionTest, InvalidSession_CloseSession_ReturnsInvalidSessionError)
 {
   nidevice_grpc::Session session;
   session.set_id(NULL);
@@ -135,7 +137,7 @@ TEST_F(NiSwitchSessionTest, InvalidSession_CloseSession_ReturnsInvalidSesssionEr
   EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status.error_code());
   auto error = json::parse(status.error_message());
   EXPECT_EQ(kInvalidSwitchSession, error.value("code", 0));
-  EXPECT_STREQ(kInvalidSwitchSessionMessage, error.value("message", "").c_str());
+  EXPECT_THAT(error.value("message", ""), ::testing::HasSubstr(kInvalidSwitchSessionMessage));
 }
 
 TEST_F(NiSwitchSessionTest, InitWithErrorFromDriver_ReturnsUserErrorMessage)
