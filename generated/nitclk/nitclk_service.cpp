@@ -176,7 +176,7 @@ namespace nitclk_grpc {
 
         std::string value;
         if (buf_size > 0) {
-            value.resize(buf_size - 1);
+            value.resize(buf_size /* Workaround: strlen-bug */);
         }
         status = library_->GetAttributeViString(session, channel_name, attribute_id, buf_size, (ViChar*)value.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(buf_size)) {

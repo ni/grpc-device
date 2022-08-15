@@ -337,7 +337,8 @@ functions = {
                 },
                 'size': {
                     'mechanism': 'ivi-dance',
-                    'value': 'bufSize'
+                    'value': 'bufSize',
+                    'tags': ['strlen-bug']
                 },
                 'name': 'value',
                 'type': 'ViChar[]'
