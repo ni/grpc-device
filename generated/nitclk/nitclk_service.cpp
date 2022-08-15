@@ -156,6 +156,49 @@ namespace nitclk_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiTClkService::GetAttributeViString(::grpc::ServerContext* context, const GetAttributeViStringRequest* request, GetAttributeViStringResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      ViSession session = session_repository_->access_session(session_grpc_session.id(), session_grpc_session.name());
+      auto channel_name = request->channel_name().c_str();
+      ViAttr attribute_id = request->attribute_id();
+
+      while (true) {
+        auto status = library_->GetAttributeViString(session, channel_name, attribute_id, 0, nullptr);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, session);
+        }
+        ViInt32 buf_size = status;
+
+        std::string value;
+        if (buf_size > 0) {
+            value.resize(buf_size - 1);
+        }
+        status = library_->GetAttributeViString(session, channel_name, attribute_id, buf_size, (ViChar*)value.data());
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(buf_size)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, session);
+        }
+        response->set_status(status);
+        response->set_value(value);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiTClkService::GetExtendedErrorInfo(::grpc::ServerContext* context, const GetExtendedErrorInfoRequest* request, GetExtendedErrorInfoResponse* response)
   {
     if (context->IsCancelled()) {
