@@ -853,6 +853,7 @@ functions = {
         'returns':'ViStatus'
     },
     'CreateAdvancedArbSequence':{
+        'codegen_method': 'CustomCode',
         'parameters':[
             {
                 'name':'vi',
@@ -905,7 +906,7 @@ functions = {
                 'direction':'out',
                 'type':'ViInt32[]',
                 'size':{
-                    'mechanism':'passed-in',
+                    'mechanism':'custom-code',
                     'value':'sequenceLength'
                 }
             },
