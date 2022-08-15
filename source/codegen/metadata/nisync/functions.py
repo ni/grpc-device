@@ -624,7 +624,6 @@ functions = {
         "returns": "ViStatus",
     },
     "ReadMultipleTriggerTimeStamp": {
-        "codegen_method": "CustomCode",
         "parameters": [
             {
                 "direction": "in",
