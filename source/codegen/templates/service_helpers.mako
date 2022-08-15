@@ -276,10 +276,11 @@ ${populate_response(function_data=function_data, output_parameters=output_parame
 <%def name="define_abort_if_cancelled(function_name, functions)">\
 <%
   config = data['config']
+  function_data = functions[function_name]
   abort_function = service_helpers.get_abort_function(config)
 %>\
     if (context->IsCancelled()) {
-% if abort_function is not None:
+% if abort_function is not None and common_helpers.can_abort_from_method(function_data):
 <%
     parameters = functions[abort_function]['parameters']
     output_parameters = [p for p in parameters if common_helpers.is_output_parameter(p)]

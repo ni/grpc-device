@@ -129,6 +129,7 @@ functions = {
         "returns": "ViStatus"
     },
     "BurstPatternSynchronized":{
+        "can_abort_from": False,
         "parameters":[
             {
                 "name":"sessionCount",
@@ -1103,6 +1104,7 @@ functions = {
         "returns": "ViStatus"
     },
     "EnableMatchFailCombination":{
+        "can_abort_from": False,
         "parameters":[
             {
                 "name":"sessionCount",
@@ -2198,6 +2200,7 @@ functions = {
     },
     "Init": {
         "init_method": True,
+        "can_abort_from": False,
         "cname": "niDigital_init",
         "parameters": [
             {
@@ -2231,6 +2234,7 @@ functions = {
     },
     "InitWithOptions": {
         "init_method": True,
+        "can_abort_from": False,
         "codegen_method": "public",
         "parameters": [
             {
@@ -3156,6 +3160,7 @@ functions = {
         "returns": "ViStatus"
     },
     "WriteSequencerFlagSynchronized":{
+        "can_abort_from": False,
         "parameters":[
             {
                 "name":"sessionCount",

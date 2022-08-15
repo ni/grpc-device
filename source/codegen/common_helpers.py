@@ -733,6 +733,14 @@ def is_init_method(function_data):
     """Whether the function is an init_method."""
     return function_data.get("init_method", False)
 
+    
+def can_abort_from_method(function_data):
+    """Whether the function is an init_method."""
+    can_abort_from = function_data.get("can_abort_from", False)
+    if can_abort_from is None:
+        return True
+    return can_abort_from
+
 
 def _get_session_output_param(function_data):
     return next(
