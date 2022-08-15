@@ -862,7 +862,6 @@ functions = {
             {
                 'name':'sequenceLength',
                 'direction':'in',
-                'include_in_proto': False,
                 'type':'ViInt32'
             },
             {
