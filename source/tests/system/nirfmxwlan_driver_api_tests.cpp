@@ -666,6 +666,7 @@ TEST_F(NiRFmxWLANDriverApiTests, OFDMModAccTriggerBasedPPDUFromExample_FetchData
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXWLAN_ATTRIBUTE_OFDM_GUARD_INTERVAL_TYPE, NIRFMXWLAN_INT32_OFDM_GUARD_INTERVAL_TYPE_1_4));
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXWLAN_ATTRIBUTE_OFDM_LTF_SIZE, NIRFMXWLAN_INT32_OFDM_LTF_SIZE_4X));
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXWLAN_ATTRIBUTE_OFDM_PE_DISAMBIGUITY, 0));
+  EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXWLAN_ATTRIBUTE_OFDM_PPDU_TYPE, NIRFMXWLAN_INT32_OFDM_PPDU_TYPE_SU));
   EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MEASUREMENT_TYPES_OFDMMODACC, true));
   EXPECT_SUCCESS(session, client::ofdm_mod_acc_cfg_measurement_length(stub(), session, "", 0, 16));
   EXPECT_SUCCESS(session, client::set_attribute_i32(stub(), session, "", NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_UNUSED_TONE_ERROR_MASK_REFERENCE, NIRFMXWLAN_INT32_OFDMMODACC_UNUSED_TONE_ERROR_MASK_REFERENCE_LIMIT1));
