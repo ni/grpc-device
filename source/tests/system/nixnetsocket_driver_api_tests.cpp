@@ -414,7 +414,7 @@ TEST_F(NiXnetSocketNoHardwareTests, StackAlreadyExistsError_StrErrRWithZeroBuffe
   catch (const std::runtime_error& ex) {
     auto error = json::parse(ex.what());
     EXPECT_XNET_ERROR_CODE(GENERIC_NXSOCKET_ERROR, error);
-    EXPECT_EQ(std::string(), error.value("message", "default"));
+    EXPECT_EQ(std::string("Unknown"), error.value("message", "default"));
   }
 }
 
