@@ -1039,7 +1039,7 @@ namespace nixnetsocket_grpc {
       auto error = library_->StrErrR(errnum, (char*)buf.data(), buf_len);
       auto status = error ? 0 : -1;
       if (!status_ok(status)) {
-        return nidevice_grpc::ApiErrorAndDescriptionToStatus(status, std::string("Unknown"));
+        return nidevice_grpc::ApiErrorToStatus(status);
       }
       response->set_status(status);
       response->set_error(error);

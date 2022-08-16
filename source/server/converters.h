@@ -5,12 +5,12 @@
 #include <google/protobuf/util/time_util.h>
 #include <grpcpp/grpcpp.h>
 #include <nidevice.pb.h>          // For common grpc types.
-#include <nlohmann/json.hpp>
 #include <server/common_types.h>  // For common C types.
 #include <server/exceptions.h>
 
 #include <algorithm>
 #include <limits>
+#include <nlohmann/json.hpp>
 #include <numeric>
 #include <string>
 #include <vector>
@@ -334,6 +334,12 @@ inline ::grpc::Status ApiErrorAndDescriptionToStatus(int32_t status, std::string
 {
   nlohmann::json jsonError;
   return ApiErrorAndDescriptionToStatus(status, description, jsonError);
+}
+
+inline ::grpc::Status ApiErrorToStatus(int32_t status)
+{
+  std::string description("Unknown");
+  return ApiErrorAndDescriptionToStatus(status, description);
 }
 }  // namespace nidevice_grpc
 
