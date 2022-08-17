@@ -571,7 +571,7 @@ TEST_F(NiRFmxWLANDriverApiTests, OFDMModAccMIMOFromExample_FetchData_DataLooksRe
   EXPECT_NE(0.0, ofdm_mod_acc_fetch_composite_rmsevm_response.composite_rms_evm_mean());
   EXPECT_NE(0.0, ofdm_mod_acc_fetch_composite_rmsevm_response.composite_data_rms_evm_mean());
   EXPECT_LT(0.0, ofdm_mod_acc_fetch_composite_rmsevm_response.composite_pilot_rms_evm_mean());
-  EXPECT_EQ(16, ofdm_mod_acc_fetch_numberof_symbols_used_response.number_of_symbols_used());
+  EXPECT_NE(0, ofdm_mod_acc_fetch_numberof_symbols_used_response.number_of_symbols_used());
   EXPECT_EQ(2, ofdm_mod_acc_fetch_ppdu_type_response.ppdu_type());
   EXPECT_EQ(-1, ofdm_mod_acc_fetch_lsig_parity_check_status_response.l_sig_parity_check_status());
   EXPECT_EQ(0, ofdm_mod_acc_fetch_sigcrc_status_response.sig_crc_status());
@@ -589,13 +589,13 @@ TEST_F(NiRFmxWLANDriverApiTests, OFDMModAccMIMOFromExample_FetchData_DataLooksRe
   EXPECT_LT(0.0, ofdm_mod_acc_fetch_stream_rmsevm_response_vec[0][0].stream_pilot_rms_evm_mean());
   EXPECT_EQ(-28.0, ofdm_mod_acc_fetch_stream_rmsevm_per_subcarrier_mean_trace_response_vec[0][0].x0());
   EXPECT_EQ(1.0, ofdm_mod_acc_fetch_stream_rmsevm_per_subcarrier_mean_trace_response_vec[0][0].dx());
-  EXPECT_EQ(57, ofdm_mod_acc_fetch_stream_rmsevm_per_subcarrier_mean_trace_response_vec[0][0].stream_rms_evm_per_subcarrier_mean_size());
-  EXPECT_EQ(57, ofdm_mod_acc_fetch_stream_rmsevm_per_subcarrier_mean_trace_response_vec[0][0].stream_rms_evm_per_subcarrier_mean().size());
+  EXPECT_NE(0, ofdm_mod_acc_fetch_stream_rmsevm_per_subcarrier_mean_trace_response_vec[0][0].stream_rms_evm_per_subcarrier_mean_size());
+  EXPECT_NE(0, ofdm_mod_acc_fetch_stream_rmsevm_per_subcarrier_mean_trace_response_vec[0][0].stream_rms_evm_per_subcarrier_mean().size());
   EXPECT_NE(0.0, ofdm_mod_acc_fetch_stream_rmsevm_per_subcarrier_mean_trace_response_vec[0][0].stream_rms_evm_per_subcarrier_mean(0));
-  EXPECT_EQ(64, ofdm_mod_acc_fetch_pilot_constellation_trace_response_vec[0][0].pilot_constellation().size());
+  EXPECT_NE(0, ofdm_mod_acc_fetch_pilot_constellation_trace_response_vec[0][0].pilot_constellation().size());
   EXPECT_NE(0.0, ofdm_mod_acc_fetch_pilot_constellation_trace_response_vec[0][0].pilot_constellation(0).real());
   EXPECT_NE(0.0, ofdm_mod_acc_fetch_pilot_constellation_trace_response_vec[0][0].pilot_constellation(0).imaginary());
-  EXPECT_EQ(832, ofdm_mod_acc_fetch_data_constellation_trace_response_vec[0][0].data_constellation().size());
+  EXPECT_NE(0, ofdm_mod_acc_fetch_data_constellation_trace_response_vec[0][0].data_constellation().size());
   EXPECT_NE(0.0, ofdm_mod_acc_fetch_data_constellation_trace_response_vec[0][0].data_constellation(0).real());
   EXPECT_NE(0.0, ofdm_mod_acc_fetch_data_constellation_trace_response_vec[0][0].data_constellation(0).imaginary());
   EXPECT_NE(0.0, ofdm_mod_acc_fetch_cross_power_response_vec[0][0].cross_power_mean());
