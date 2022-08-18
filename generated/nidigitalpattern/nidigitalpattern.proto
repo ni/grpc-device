@@ -950,7 +950,7 @@ message ErrorMessageRequest {
 
 message ErrorMessageResponse {
   int32 status = 1;
-  string error_message = 2;
+  string error_message = 2 [deprecated = true];
 }
 
 message ExportSignalRequest {
@@ -1324,7 +1324,7 @@ message InitRequest {
 message InitResponse {
   int32 status = 1;
   nidevice_grpc.Session vi = 2;
-  string error_message = 3;
+  string error_message = 3 [deprecated = true];
 }
 
 message InitWithOptionsRequest {
@@ -1338,7 +1338,7 @@ message InitWithOptionsRequest {
 message InitWithOptionsResponse {
   int32 status = 1;
   nidevice_grpc.Session vi = 2;
-  string error_message = 3;
+  string error_message = 3 [deprecated = true];
 }
 
 message InitiateRequest {

@@ -100,7 +100,11 @@ message ${common_helpers.snake_to_pascal(function)}Request {
 %>\
 message ${common_helpers.snake_to_pascal(function)}Response {
 % for parameter in response_parameters:
+% if common_helpers.is_get_last_error_output_param(parameter) & (parameter["name"] == "error_message"):
+  ${parameter["type"]} ${parameter["name"]} = ${parameter["grpc_field_number"]} [deprecated = true];
+% else:
   ${parameter["type"]} ${parameter["name"]} = ${parameter["grpc_field_number"]};
+% endif
 % endfor
 }
 </%def>
