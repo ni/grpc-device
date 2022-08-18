@@ -2,10 +2,10 @@
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
-#include <nlohmann/json.hpp>
 #include <server/converters.h>
 
 #include <array>
+#include <nlohmann/json.hpp>
 
 using namespace nidevice_grpc::converters;
 using namespace ::testing;
@@ -170,6 +170,18 @@ TEST(ConvertersTests, ArrayAndRawValue_ConvertBitfieldAsEnumArrayInput_ReturnsOr
   const auto converted = convert_bitfield_as_enum_array_input(input_array, INPUT_RAW);
 
   EXPECT_EQ(0x2 | 0x4 | 0x8, converted);
+}
+
+TEST(ConvertersTests, ApiErrorToStatus_Parse_IncludesCodeAndUnknownMessage)
+{
+  const auto TEST_STATUS = -12345;
+  const auto EXPECTED_MESSAGE = std::string("Unknown");
+
+  auto error_message = nidevice_grpc::ApiErrorToStatus(TEST_STATUS).error_message();
+  auto parsed = json::parse(error_message);
+
+  EXPECT_EQ(TEST_STATUS, parsed.value("code", 0));
+  EXPECT_EQ(EXPECTED_MESSAGE, parsed.value("message", ""));
 }
 
 TEST(ConvertersTests, ApiErrorAndDescriptionToStatus_Parse_IncludesCodeAndMessage)

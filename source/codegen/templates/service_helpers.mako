@@ -745,9 +745,14 @@ ${set_response_values(normal_outputs, init_method)}\
       handle_type = parameter['type']
       break
   cpp_handle_type = handle_type[0].upper() + handle_type[1:]
+  method_call = ""
+  if function_data.get('exclude_from_get_last_error', False):
+    method_call = f'return nidevice_grpc::ApiErrorToStatus(status);'
+  else:
+    method_call = f'return ConvertApiErrorStatusFor{cpp_handle_type}(status, {session});'
 %>\
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusFor${cpp_handle_type}(status, ${session});
+        ${method_call}
       }
 </%block>\
 </%def>

@@ -403,7 +403,7 @@ TEST_F(NiXnetSocketNoHardwareTests, StackAlreadyExistsError_StrErrR_ReturnsExpec
   EXPECT_EQ("An IP Stack with the specified name already exists. The name provided to IP Stack create must be a system-wide unique name.", str_err.error());
 }
 
-TEST_F(NiXnetSocketNoHardwareTests, StackAlreadyExistsError_StrErrRWithZeroBuffer_ReturnsEmptyString)
+TEST_F(NiXnetSocketNoHardwareTests, StackAlreadyExistsError_StrErrRWithZeroBuffer_ReturnsGenericSocketError)
 {
   constexpr auto STACK_ALREADY_EXISTS = static_cast<int32_t>(0xFFFFCD24);
 
@@ -414,7 +414,7 @@ TEST_F(NiXnetSocketNoHardwareTests, StackAlreadyExistsError_StrErrRWithZeroBuffe
   catch (const std::runtime_error& ex) {
     auto error = json::parse(ex.what());
     EXPECT_XNET_ERROR_CODE(GENERIC_NXSOCKET_ERROR, error);
-    EXPECT_EQ(std::string(), error.value("message", "default"));
+    EXPECT_EQ(std::string("Unknown"), error.value("message", "default"));
   }
 }
 

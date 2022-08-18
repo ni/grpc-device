@@ -1,4 +1,5 @@
 #include <gtest/gtest.h>
+
 #include <nlohmann/json.hpp>
 
 #include "device_server.h"
@@ -1130,11 +1131,8 @@ TEST_F(NiRFmxLTEDriverApiTests, ULModAccSingleCarrierFromExample_FetchData_DataL
   const auto mod_acc_fetch_pusch_constellation_trace_response = EXPECT_SUCCESS(session, client::mod_acc_fetch_pusch_constellation_trace(stub(), session, "", 10.0));
   const auto mod_acc_fetch_evm_per_subcarrier_trace_response = EXPECT_SUCCESS(session, client::mod_acc_fetch_evm_per_subcarrier_trace(stub(), session, "", 10.0));
 
-  EXPECT_LT(0.0, mod_acc_fetch_composite_evm_response.mean_rms_composite_evm());
-  EXPECT_LT(0.0, mod_acc_fetch_composite_evm_response.maximum_peak_composite_evm());
-  EXPECT_NE(0.0, mod_acc_fetch_composite_evm_response.mean_frequency_error());
   EXPECT_LE(0, mod_acc_fetch_composite_evm_response.peak_composite_evm_symbol_index());
-  EXPECT_LT(0, mod_acc_fetch_composite_evm_response.peak_composite_evm_subcarrier_index());
+  EXPECT_LE(0, mod_acc_fetch_composite_evm_response.peak_composite_evm_subcarrier_index());
   EXPECT_EQ(0, mod_acc_fetch_composite_evm_response.peak_composite_evm_slot_index());
   EXPECT_GT(0.0, mod_acc_fetch_iq_impairments_response.mean_iq_origin_offset());
   EXPECT_NE(0.0, mod_acc_fetch_iq_impairments_response.mean_iq_gain_imbalance());
