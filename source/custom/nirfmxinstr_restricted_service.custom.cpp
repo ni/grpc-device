@@ -16,4 +16,27 @@ namespace nirfmxinstr_restricted_grpc {
     return nidevice_grpc::ApiErrorAndDescriptionToStatus(status, description);
 }
 
+::grpc::Status NiRFmxInstrRestrictedService::LoadConfigurationsFromJSON(::grpc::ServerContext* context, const LoadConfigurationsFromJSONRequest* request, LoadConfigurationsFromJSONResponse* response)
+{
+  if (context->IsCancelled()) {
+    return ::grpc::Status::CANCELLED;
+  }
+  try {
+    auto grpc_session = request->instrument();
+    niRFmxInstrHandle instrument = session_repository_->access_session(grpc_session.id(), grpc_session.name());
+    auto jsonString = request->json_string();
+    int32 arraySize = jsonString.length();
+
+    auto status = library_->LoadConfigurationsFromJSON(instrument, (char*)jsonString.c_str(), arraySize);
+    if (status < 0) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, 0);
+    }
+
+    response->set_status(status);
+    return ::grpc::Status::OK;
+  }
+  catch (nidevice_grpc::LibraryLoadException& ex) {
+    return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+  }
+}
 }  // namespace nirfmxinstr_restricted_grpc

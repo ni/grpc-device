@@ -16,117 +16,120 @@ package nirfmxinstr_restricted_grpc;
 import "session.proto";
 
 service NiRFmxInstrRestricted {
-  rpc RegisterSpecialClientSnapshotInterest(RegisterSpecialClientSnapshotInterestRequest) returns (RegisterSpecialClientSnapshotInterestResponse);
-  rpc GetOpenSessionsInformation(GetOpenSessionsInformationRequest) returns (GetOpenSessionsInformationResponse);
-  rpc GetRFmxVersion(GetRFmxVersionRequest) returns (GetRFmxVersionResponse);
-  rpc GetTracesInfoForMonitorSnapshot(GetTracesInfoForMonitorSnapshotRequest) returns (GetTracesInfoForMonitorSnapshotResponse);
-  rpc GetForceAllTracesEnabled(GetForceAllTracesEnabledRequest) returns (GetForceAllTracesEnabledResponse);
-  rpc SetForceAllTracesEnabled(SetForceAllTracesEnabledRequest) returns (SetForceAllTracesEnabledResponse);
-  rpc SaveConfigurationsToJSON(SaveConfigurationsToJSONRequest) returns (SaveConfigurationsToJSONResponse);
-  rpc LoadConfigurationsFromJSON(LoadConfigurationsFromJSONRequest) returns (LoadConfigurationsFromJSONResponse);
+  rpc ConvertForPowerUnitsUtility(ConvertForPowerUnitsUtilityRequest) returns (ConvertForPowerUnitsUtilityResponse);
+  rpc DeleteSnapshot(DeleteSnapshotRequest) returns (DeleteSnapshotResponse);
+  rpc GetActiveResultName(GetActiveResultNameRequest) returns (GetActiveResultNameResponse);
+  rpc GetActiveTableName(GetActiveTableNameRequest) returns (GetActiveTableNameResponse);
+  rpc GetAttributeAuthor(GetAttributeAuthorRequest) returns (GetAttributeAuthorResponse);
+  rpc GetAttributeDesiredF32(GetAttributeDesiredF32Request) returns (GetAttributeDesiredF32Response);
+  rpc GetAttributeDesiredF32Array(GetAttributeDesiredF32ArrayRequest) returns (GetAttributeDesiredF32ArrayResponse);
   rpc GetAttributeDesiredF64(GetAttributeDesiredF64Request) returns (GetAttributeDesiredF64Response);
+  rpc GetAttributeDesiredF64Array(GetAttributeDesiredF64ArrayRequest) returns (GetAttributeDesiredF64ArrayResponse);
   rpc GetAttributeDesiredI32(GetAttributeDesiredI32Request) returns (GetAttributeDesiredI32Response);
   rpc GetAttributeDesiredI64(GetAttributeDesiredI64Request) returns (GetAttributeDesiredI64Response);
   rpc GetAttributeDesiredString(GetAttributeDesiredStringRequest) returns (GetAttributeDesiredStringResponse);
-  rpc GetAttributeDesiredF64Array(GetAttributeDesiredF64ArrayRequest) returns (GetAttributeDesiredF64ArrayResponse);
-  rpc GetAttributeDesiredF32Array(GetAttributeDesiredF32ArrayRequest) returns (GetAttributeDesiredF32ArrayResponse);
-  rpc GetAttributeDesiredF32(GetAttributeDesiredF32Request) returns (GetAttributeDesiredF32Response);
-  rpc GetAttributeAuthor(GetAttributeAuthorRequest) returns (GetAttributeAuthorResponse);
+  rpc GetCalibrationPlaneEnabled(GetCalibrationPlaneEnabledRequest) returns (GetCalibrationPlaneEnabledResponse);
+  rpc GetCalibrationPlaneNames(GetCalibrationPlaneNamesRequest) returns (GetCalibrationPlaneNamesResponse);
+  rpc GetExternalAttenuationTableNames(GetExternalAttenuationTableNamesRequest) returns (GetExternalAttenuationTableNamesResponse);
+  rpc GetForceAllTracesEnabled(GetForceAllTracesEnabledRequest) returns (GetForceAllTracesEnabledResponse);
+  rpc GetInitiaitedSnapshotStrings(GetInitiaitedSnapshotStringsRequest) returns (GetInitiaitedSnapshotStringsResponse);
+  rpc GetLatestConfigurationSnapshot(GetLatestConfigurationSnapshotRequest) returns (GetLatestConfigurationSnapshotResponse);
+  rpc GetOpenSessionsInformation(GetOpenSessionsInformationRequest) returns (GetOpenSessionsInformationResponse);
   rpc GetPrivilegeLevel(GetPrivilegeLevelRequest) returns (GetPrivilegeLevelResponse);
+  rpc GetRFmxVersion(GetRFmxVersionRequest) returns (GetRFmxVersionResponse);
+  rpc GetSignalConfigurationState64(GetSignalConfigurationState64Request) returns (GetSignalConfigurationState64Response);
+  rpc GetSnapshotState(GetSnapshotStateRequest) returns (GetSnapshotStateResponse);
+  rpc GetTracesInfoForMonitorSnapshot(GetTracesInfoForMonitorSnapshotRequest) returns (GetTracesInfoForMonitorSnapshotResponse);
+  rpc LoadAllForRevert(LoadAllForRevertRequest) returns (LoadAllForRevertResponse);
+  rpc LoadConfigurationsFromJSON(LoadConfigurationsFromJSONRequest) returns (LoadConfigurationsFromJSONResponse);
+  rpc RegisterSpecialClientSnapshotInterest(RegisterSpecialClientSnapshotInterestRequest) returns (RegisterSpecialClientSnapshotInterestResponse);
   rpc RequestPrivilege(RequestPrivilegeRequest) returns (RequestPrivilegeResponse);
   rpc SaveAllForRevert(SaveAllForRevertRequest) returns (SaveAllForRevertResponse);
-  rpc LoadAllForRevert(LoadAllForRevertRequest) returns (LoadAllForRevertResponse);
-  rpc GetInitiaitedSnapshotStrings(GetInitiaitedSnapshotStringsRequest) returns (GetInitiaitedSnapshotStringsResponse);
-  rpc GetSnapshotInfoFromCache(GetSnapshotInfoFromCacheRequest) returns (GetSnapshotInfoFromCacheResponse);
-  rpc GetLatestConfigurationSnapshot(GetLatestConfigurationSnapshotRequest) returns (GetLatestConfigurationSnapshotResponse);
-  rpc GetSnapshotState(GetSnapshotStateRequest) returns (GetSnapshotStateResponse);
-  rpc DeleteSnapshot(DeleteSnapshotRequest) returns (DeleteSnapshotResponse);
-  rpc ConvertForPowerUnitsUtility(ConvertForPowerUnitsUtilityRequest) returns (ConvertForPowerUnitsUtilityResponse);
-  rpc UnregisterSpecialClientSnapshotInterest(UnregisterSpecialClientSnapshotInterestRequest) returns (UnregisterSpecialClientSnapshotInterestResponse);
-  rpc GetCalibrationPlaneNames(GetCalibrationPlaneNamesRequest) returns (GetCalibrationPlaneNamesResponse);
-  rpc GetCalibrationPlaneEnabled(GetCalibrationPlaneEnabledRequest) returns (GetCalibrationPlaneEnabledResponse);
-  rpc GetExternalAttenuationTableNames(GetExternalAttenuationTableNamesRequest) returns (GetExternalAttenuationTableNamesResponse);
-  rpc GetActiveTableName(GetActiveTableNameRequest) returns (GetActiveTableNameResponse);
-  rpc GetSignalConfigurationState64(GetSignalConfigurationState64Request) returns (GetSignalConfigurationState64Response);
+  rpc SaveConfigurationsToJSON(SaveConfigurationsToJSONRequest) returns (SaveConfigurationsToJSONResponse);
+  rpc SetForceAllTracesEnabled(SetForceAllTracesEnabledRequest) returns (SetForceAllTracesEnabledResponse);
   rpc SetIOTraceStatus(SetIOTraceStatusRequest) returns (SetIOTraceStatusResponse);
-  rpc GetActiveResultName(GetActiveResultNameRequest) returns (GetActiveResultNameResponse);
+  rpc UnregisterSpecialClientSnapshotInterest(UnregisterSpecialClientSnapshotInterestRequest) returns (UnregisterSpecialClientSnapshotInterestResponse);
 }
 
-message RegisterSpecialClientSnapshotInterestRequest {
-  string resource_name = 1;
-}
-
-message RegisterSpecialClientSnapshotInterestResponse {
-  int32 status = 1;
-}
-
-message GetOpenSessionsInformationRequest {
-  string resource_name = 1;
-}
-
-message GetOpenSessionsInformationResponse {
-  int32 status = 1;
-  string info_json = 2;
-}
-
-message GetRFmxVersionRequest {
+message ConvertForPowerUnitsUtilityRequest {
   nidevice_grpc.Session instrument = 1;
+  double reference_or_trigger_level_in = 2;
+  int32 input_power_units = 3;
+  int32 output_power_units = 4;
+  int32 terminal_configuration = 5;
+  double bandwidth = 6;
 }
 
-message GetRFmxVersionResponse {
+message ConvertForPowerUnitsUtilityResponse {
   int32 status = 1;
-  string version = 2;
+  double reference_or_trigger_level_out = 2;
 }
 
-message GetTracesInfoForMonitorSnapshotRequest {
+message DeleteSnapshotRequest {
+  nidevice_grpc.Session instrument = 1;
+  int32 personality = 2;
+  string selector_string = 3;
+}
+
+message DeleteSnapshotResponse {
+  int32 status = 1;
+}
+
+message GetActiveResultNameRequest {
+  nidevice_grpc.Session instrument = 1;
+  string signal_name = 2;
+  uint32 signal_type = 3;
+}
+
+message GetActiveResultNameResponse {
+  int32 status = 1;
+  string result_name = 2;
+  int32 actual_result_size = 3;
+  int32 result_state = 4;
+}
+
+message GetActiveTableNameRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
 }
 
-message GetTracesInfoForMonitorSnapshotResponse {
+message GetActiveTableNameResponse {
   int32 status = 1;
-  int32 all_traces_enabled = 2;
+  string active_table_name = 2;
 }
 
-message GetForceAllTracesEnabledRequest {
+message GetAttributeAuthorRequest {
   nidevice_grpc.Session instrument = 1;
-  string channel_name = 2;
+  string selector_string = 2;
+  int32 attribute_id = 3;
 }
 
-message GetForceAllTracesEnabledResponse {
+message GetAttributeAuthorResponse {
   int32 status = 1;
   int32 attr_val = 2;
 }
 
-message SetForceAllTracesEnabledRequest {
+message GetAttributeDesiredF32Request {
   nidevice_grpc.Session instrument = 1;
   string channel_name = 2;
-  int32 attr_val = 3;
+  int32 attribute_id = 3;
 }
 
-message SetForceAllTracesEnabledResponse {
+message GetAttributeDesiredF32Response {
   int32 status = 1;
+  float attr_val = 2;
 }
 
-message SaveConfigurationsToJSONRequest {
+message GetAttributeDesiredF32ArrayRequest {
   nidevice_grpc.Session instrument = 1;
-  string signal_names = 2;
+  string channel_name = 2;
+  int32 attribute_id = 3;
 }
 
-message SaveConfigurationsToJSONResponse {
+message GetAttributeDesiredF32ArrayResponse {
   int32 status = 1;
-  string json_string_out = 2;
+  repeated float attr_val = 2;
   int32 actual_array_size = 3;
-}
-
-message LoadConfigurationsFromJSONRequest {
-  nidevice_grpc.Session instrument = 1;
-  string json_string = 2;
-  int32 array_size = 3;
-}
-
-message LoadConfigurationsFromJSONResponse {
-  int32 status = 1;
 }
 
 message GetAttributeDesiredF64Request {
@@ -138,6 +141,18 @@ message GetAttributeDesiredF64Request {
 message GetAttributeDesiredF64Response {
   int32 status = 1;
   double attr_val = 2;
+}
+
+message GetAttributeDesiredF64ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string channel_name = 2;
+  int32 attribute_id = 3;
+}
+
+message GetAttributeDesiredF64ArrayResponse {
+  int32 status = 1;
+  repeated double attr_val = 2;
+  int32 actual_array_size = 3;
 }
 
 message GetAttributeDesiredI32Request {
@@ -173,87 +188,44 @@ message GetAttributeDesiredStringResponse {
   string attr_val = 2;
 }
 
-message GetAttributeDesiredF64ArrayRequest {
-  nidevice_grpc.Session instrument = 1;
-  string channel_name = 2;
-  int32 attribute_id = 3;
-}
-
-message GetAttributeDesiredF64ArrayResponse {
-  int32 status = 1;
-  repeated double attr_val = 2;
-  int32 actual_array_size = 3;
-}
-
-message GetAttributeDesiredF32ArrayRequest {
-  nidevice_grpc.Session instrument = 1;
-  string channel_name = 2;
-  int32 attribute_id = 3;
-}
-
-message GetAttributeDesiredF32ArrayResponse {
-  int32 status = 1;
-  repeated float attr_val = 2;
-  int32 actual_array_size = 3;
-}
-
-message GetAttributeDesiredF32Request {
-  nidevice_grpc.Session instrument = 1;
-  string channel_name = 2;
-  int32 attribute_id = 3;
-}
-
-message GetAttributeDesiredF32Response {
-  int32 status = 1;
-  float attr_val = 2;
-}
-
-message GetAttributeAuthorRequest {
+message GetCalibrationPlaneEnabledRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  int32 attribute_id = 3;
 }
 
-message GetAttributeAuthorResponse {
+message GetCalibrationPlaneEnabledResponse {
+  int32 status = 1;
+  int32 calibration_plane_enabled = 2;
+}
+
+message GetCalibrationPlaneNamesRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message GetCalibrationPlaneNamesResponse {
+  int32 status = 1;
+  string calibration_plane_names = 2;
+}
+
+message GetExternalAttenuationTableNamesRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message GetExternalAttenuationTableNamesResponse {
+  int32 status = 1;
+  string external_attenuation_table_names = 2;
+}
+
+message GetForceAllTracesEnabledRequest {
+  nidevice_grpc.Session instrument = 1;
+  string channel_name = 2;
+}
+
+message GetForceAllTracesEnabledResponse {
   int32 status = 1;
   int32 attr_val = 2;
-}
-
-message GetPrivilegeLevelRequest {
-  nidevice_grpc.Session instrument = 1;
-}
-
-message GetPrivilegeLevelResponse {
-  int32 status = 1;
-  int32 is_connection_alive = 2;
-  int32 privilege_level = 3;
-}
-
-message RequestPrivilegeRequest {
-  nidevice_grpc.Session instrument = 1;
-  int32 privilege_level = 2;
-}
-
-message RequestPrivilegeResponse {
-  int32 status = 1;
-}
-
-message SaveAllForRevertRequest {
-  nidevice_grpc.Session instrument = 1;
-  string file_path = 2;
-}
-
-message SaveAllForRevertResponse {
-  int32 status = 1;
-}
-
-message LoadAllForRevertRequest {
-  nidevice_grpc.Session instrument = 1;
-  string file_path = 2;
-}
-
-message LoadAllForRevertResponse {
-  int32 status = 1;
 }
 
 message GetInitiaitedSnapshotStringsRequest {
@@ -275,25 +247,6 @@ message GetInitiaitedSnapshotStringsResponse {
   int32 snapshot_timestamp_array_actual_size = 12;
 }
 
-message GetSnapshotInfoFromCacheRequest {
-  nidevice_grpc.Session instrument = 1;
-  uint64 snapshot_info_cache_index = 2;
-}
-
-message GetSnapshotInfoFromCacheResponse {
-  int32 status = 1;
-  repeated int32 personality_id_array = 2;
-  int32 personality_id_array_actual_size = 3;
-  string signal_names = 4;
-  int32 signal_names_actual_size = 5;
-  string result_names = 6;
-  int32 result_names_actual_size = 7;
-  string snapshot_identifiers = 8;
-  int32 snapshot_identifiers_actual_size = 9;
-  repeated uint64 snapshot_timestamp_array = 10;
-  int32 snapshot_timestamp_array_actual_size = 11;
-}
-
 message GetLatestConfigurationSnapshotRequest {
   nidevice_grpc.Session instrument = 1;
 }
@@ -310,87 +263,32 @@ message GetLatestConfigurationSnapshotResponse {
   uint64 signal_timestamp = 9;
 }
 
-message GetSnapshotStateRequest {
-  nidevice_grpc.Session instrument = 1;
-  int32 personality = 2;
-  string selector_string = 3;
-}
-
-message GetSnapshotStateResponse {
-  int32 status = 1;
-  int32 snapshot_state = 2;
-}
-
-message DeleteSnapshotRequest {
-  nidevice_grpc.Session instrument = 1;
-  int32 personality = 2;
-  string selector_string = 3;
-}
-
-message DeleteSnapshotResponse {
-  int32 status = 1;
-}
-
-message ConvertForPowerUnitsUtilityRequest {
-  nidevice_grpc.Session instrument = 1;
-  double reference_or_trigger_level_in = 2;
-  int32 input_power_units = 3;
-  int32 output_power_units = 4;
-  int32 terminal_configuration = 5;
-  double bandwidth = 6;
-}
-
-message ConvertForPowerUnitsUtilityResponse {
-  int32 status = 1;
-  double reference_or_trigger_level_out = 2;
-}
-
-message UnregisterSpecialClientSnapshotInterestRequest {
+message GetOpenSessionsInformationRequest {
   string resource_name = 1;
 }
 
-message UnregisterSpecialClientSnapshotInterestResponse {
+message GetOpenSessionsInformationResponse {
   int32 status = 1;
+  string info_json = 2;
 }
 
-message GetCalibrationPlaneNamesRequest {
+message GetPrivilegeLevelRequest {
   nidevice_grpc.Session instrument = 1;
-  string selector_string = 2;
 }
 
-message GetCalibrationPlaneNamesResponse {
+message GetPrivilegeLevelResponse {
   int32 status = 1;
-  string calibration_plane_names = 2;
+  int32 is_connection_alive = 2;
+  int32 privilege_level = 3;
 }
 
-message GetCalibrationPlaneEnabledRequest {
+message GetRFmxVersionRequest {
   nidevice_grpc.Session instrument = 1;
-  string selector_string = 2;
 }
 
-message GetCalibrationPlaneEnabledResponse {
+message GetRFmxVersionResponse {
   int32 status = 1;
-  int32 calibration_plane_enabled = 2;
-}
-
-message GetExternalAttenuationTableNamesRequest {
-  nidevice_grpc.Session instrument = 1;
-  string selector_string = 2;
-}
-
-message GetExternalAttenuationTableNamesResponse {
-  int32 status = 1;
-  string external_attenuation_table_names = 2;
-}
-
-message GetActiveTableNameRequest {
-  nidevice_grpc.Session instrument = 1;
-  string selector_string = 2;
-}
-
-message GetActiveTableNameResponse {
-  int32 status = 1;
-  string active_table_name = 2;
+  string version = 2;
 }
 
 message GetSignalConfigurationState64Request {
@@ -405,6 +303,92 @@ message GetSignalConfigurationState64Response {
   uint64 time_stamp = 3;
 }
 
+message GetSnapshotStateRequest {
+  nidevice_grpc.Session instrument = 1;
+  int32 personality = 2;
+  string selector_string = 3;
+}
+
+message GetSnapshotStateResponse {
+  int32 status = 1;
+  int32 snapshot_state = 2;
+}
+
+message GetTracesInfoForMonitorSnapshotRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message GetTracesInfoForMonitorSnapshotResponse {
+  int32 status = 1;
+  int32 all_traces_enabled = 2;
+}
+
+message LoadAllForRevertRequest {
+  nidevice_grpc.Session instrument = 1;
+  string file_path = 2;
+}
+
+message LoadAllForRevertResponse {
+  int32 status = 1;
+}
+
+message LoadConfigurationsFromJSONRequest {
+  nidevice_grpc.Session instrument = 1;
+  string json_string = 2;
+}
+
+message LoadConfigurationsFromJSONResponse {
+  int32 status = 1;
+}
+
+message RegisterSpecialClientSnapshotInterestRequest {
+  string resource_name = 1;
+}
+
+message RegisterSpecialClientSnapshotInterestResponse {
+  int32 status = 1;
+}
+
+message RequestPrivilegeRequest {
+  nidevice_grpc.Session instrument = 1;
+  int32 privilege_level = 2;
+}
+
+message RequestPrivilegeResponse {
+  int32 status = 1;
+}
+
+message SaveAllForRevertRequest {
+  nidevice_grpc.Session instrument = 1;
+  string file_path = 2;
+}
+
+message SaveAllForRevertResponse {
+  int32 status = 1;
+}
+
+message SaveConfigurationsToJSONRequest {
+  nidevice_grpc.Session instrument = 1;
+  string signal_names = 2;
+}
+
+message SaveConfigurationsToJSONResponse {
+  int32 status = 1;
+  string json_string_out = 2;
+  int32 actual_array_size = 3;
+}
+
+message SetForceAllTracesEnabledRequest {
+  nidevice_grpc.Session instrument = 1;
+  string channel_name = 2;
+  int32 attr_val = 3;
+}
+
+message SetForceAllTracesEnabledResponse {
+  int32 status = 1;
+}
+
 message SetIOTraceStatusRequest {
   nidevice_grpc.Session instrument = 1;
   int32 io_trace_status = 2;
@@ -414,16 +398,11 @@ message SetIOTraceStatusResponse {
   int32 status = 1;
 }
 
-message GetActiveResultNameRequest {
-  nidevice_grpc.Session instrument = 1;
-  string signal_name = 2;
-  uint32 signal_type = 3;
+message UnregisterSpecialClientSnapshotInterestRequest {
+  string resource_name = 1;
 }
 
-message GetActiveResultNameResponse {
+message UnregisterSpecialClientSnapshotInterestResponse {
   int32 status = 1;
-  string result_name = 2;
-  int32 actual_result_size = 3;
-  int32 result_state = 4;
 }
 
