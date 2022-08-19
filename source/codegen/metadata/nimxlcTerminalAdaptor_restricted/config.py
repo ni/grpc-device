@@ -31,10 +31,10 @@ config = {
         'NIComplexSingle': 'nidevice_grpc.NIComplexNumberF32',
         'NIComplexDouble': 'nidevice_grpc.NIComplexNumber',
         'nierr_Status': 'nierrStatus',
-        'nimxlc_DeviceContainer': 'bytes',
-        'nimxlc_DeviceIterator': 'bytes',
-        'nimxlc_TerminalContainer': 'bytes',
-        'nimxlc_TerminalIterator': 'bytes'
+        'nimxlc_DeviceContainer': 'nidevice_grpc.Session',
+        'nimxlc_DeviceIterator': 'nidevice_grpc.Session',
+        'nimxlc_TerminalContainer': 'nidevice_grpc.Session',
+        'nimxlc_TerminalIterator': 'nidevice_grpc.Session'
     },
     'driver_name': 'NI-MXLCTERMINALADAPTOR-RESTRICTED',
     "resource_handle_type": "nimxlc_Session",
