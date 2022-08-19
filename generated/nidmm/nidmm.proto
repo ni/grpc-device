@@ -1148,7 +1148,7 @@ message GetErrorMessageRequest {
 
 message GetErrorMessageResponse {
   int32 status = 1;
-  string error_message = 2 [deprecated = true];
+  string error_message = 2;
 }
 
 message GetExtCalRecommendedIntervalRequest {

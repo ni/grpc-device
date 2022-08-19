@@ -1310,7 +1310,7 @@ message ErrorMessageRequest {
 
 message ErrorMessageResponse {
   int32 status = 1;
-  string error_message = 2 [deprecated = true];
+  string error_message = 2;
 }
 
 message ErrorQueryRequest {
@@ -1320,7 +1320,7 @@ message ErrorQueryRequest {
 message ErrorQueryResponse {
   int32 status = 1;
   sint32 error_code = 2;
-  string error_message = 3 [deprecated = true];
+  string error_message = 3;
 }
 
 message ExportSignalRequest {
