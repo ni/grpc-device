@@ -1,2 +1,2 @@
-namespace nimxlcTerminalAdaptor_restricted_grpc {
-}  // namespace nimxlcTerminalAdaptor_restricted_grpc
+namespace nimxlcterminaladaptor_restricted_grpc {
+}  // namespace nimxlcterminaladaptor_restricted_grpc
