@@ -20,8 +20,9 @@ service NiFake {
   rpc AcceptListOfDurationsInSeconds(AcceptListOfDurationsInSecondsRequest) returns (AcceptListOfDurationsInSecondsResponse);
   rpc AcceptViSessionArray(AcceptViSessionArrayRequest) returns (AcceptViSessionArrayResponse);
   rpc AcceptViUInt32Array(AcceptViUInt32ArrayRequest) returns (AcceptViUInt32ArrayResponse);
-  rpc BoolArrayOutputFunction(BoolArrayOutputFunctionRequest) returns (BoolArrayOutputFunctionResponse);
   rpc BoolArrayInputFunction(BoolArrayInputFunctionRequest) returns (BoolArrayInputFunctionResponse);
+  rpc BoolArrayOutputFunction(BoolArrayOutputFunctionRequest) returns (BoolArrayOutputFunctionResponse);
+  rpc CloseExtCal(CloseExtCalRequest) returns (CloseExtCalResponse);
   rpc CommandWithReservedParam(CommandWithReservedParamRequest) returns (CommandWithReservedParamResponse);
   rpc CreateConfigurationList(CreateConfigurationListRequest) returns (CreateConfigurationListResponse);
   rpc DoubleAllTheNums(DoubleAllTheNumsRequest) returns (DoubleAllTheNumsResponse);
@@ -32,9 +33,7 @@ service NiFake {
   rpc GetABoolean(GetABooleanRequest) returns (GetABooleanResponse);
   rpc GetANumber(GetANumberRequest) returns (GetANumberResponse);
   rpc GetAStringOfFixedMaximumSize(GetAStringOfFixedMaximumSizeRequest) returns (GetAStringOfFixedMaximumSizeResponse);
-  rpc GetBitfieldAsEnumArray(GetBitfieldAsEnumArrayRequest) returns (GetBitfieldAsEnumArrayResponse);
   rpc GetAnIviDanceString(GetAnIviDanceStringRequest) returns (GetAnIviDanceStringResponse);
-  rpc UseATwoDimensionParameter(UseATwoDimensionParameterRequest) returns (UseATwoDimensionParameterResponse);
   rpc GetAnIviDanceWithATwistArray(GetAnIviDanceWithATwistArrayRequest) returns (GetAnIviDanceWithATwistArrayResponse);
   rpc GetAnIviDanceWithATwistArrayOfCustomType(GetAnIviDanceWithATwistArrayOfCustomTypeRequest) returns (GetAnIviDanceWithATwistArrayOfCustomTypeResponse);
   rpc GetAnIviDanceWithATwistArrayWithInputArray(GetAnIviDanceWithATwistArrayWithInputArrayRequest) returns (GetAnIviDanceWithATwistArrayWithInputArrayResponse);
@@ -50,17 +49,18 @@ service NiFake {
   rpc GetAttributeViReal64(GetAttributeViReal64Request) returns (GetAttributeViReal64Response);
   rpc GetAttributeViSession(GetAttributeViSessionRequest) returns (GetAttributeViSessionResponse);
   rpc GetAttributeViString(GetAttributeViStringRequest) returns (GetAttributeViStringResponse);
+  rpc GetBitfieldAsEnumArray(GetBitfieldAsEnumArrayRequest) returns (GetBitfieldAsEnumArrayResponse);
   rpc GetCalDateAndTime(GetCalDateAndTimeRequest) returns (GetCalDateAndTimeResponse);
   rpc GetCalInterval(GetCalIntervalRequest) returns (GetCalIntervalResponse);
   rpc GetCustomType(GetCustomTypeRequest) returns (GetCustomTypeResponse);
   rpc GetCustomTypeArray(GetCustomTypeArrayRequest) returns (GetCustomTypeArrayResponse);
   rpc GetEnumValue(GetEnumValueRequest) returns (GetEnumValueResponse);
-  rpc GetViUInt8(GetViUInt8Request) returns (GetViUInt8Response);
   rpc GetViInt32Array(GetViInt32ArrayRequest) returns (GetViInt32ArrayResponse);
   rpc GetViUInt32Array(GetViUInt32ArrayRequest) returns (GetViUInt32ArrayResponse);
+  rpc GetViUInt8(GetViUInt8Request) returns (GetViUInt8Response);
   rpc ImportAttributeConfigurationBuffer(ImportAttributeConfigurationBufferRequest) returns (ImportAttributeConfigurationBufferResponse);
-  rpc InitWithOptions(InitWithOptionsRequest) returns (InitWithOptionsResponse);
   rpc InitExtCal(InitExtCalRequest) returns (InitExtCalResponse);
+  rpc InitWithOptions(InitWithOptionsRequest) returns (InitWithOptionsResponse);
   rpc InitWithVarArgs(InitWithVarArgsRequest) returns (InitWithVarArgsResponse);
   rpc MultipleArrayTypes(MultipleArrayTypesRequest) returns (MultipleArrayTypesResponse);
   rpc MultipleArraysSameSize(MultipleArraysSameSizeRequest) returns (MultipleArraysSameSizeResponse);
@@ -70,7 +70,7 @@ service NiFake {
   rpc PoorlyNamedSimpleFunction(PoorlyNamedSimpleFunctionRequest) returns (PoorlyNamedSimpleFunctionResponse);
   rpc Read(ReadRequest) returns (ReadResponse);
   rpc ReadDataWithInOutIviTwist(ReadDataWithInOutIviTwistRequest) returns (ReadDataWithInOutIviTwistResponse);
-  rpc ReadDataWithMultpleIviTwistParamSets(ReadDataWithMultpleIviTwistParamSetsRequest) returns (ReadDataWithMultpleIviTwistParamSetsResponse);
+  rpc ReadDataWithMultipleIviTwistParamSets(ReadDataWithMultipleIviTwistParamSetsRequest) returns (ReadDataWithMultipleIviTwistParamSetsResponse);
   rpc ReadFromChannel(ReadFromChannelRequest) returns (ReadFromChannelResponse);
   rpc ReturnANumberAndAString(ReturnANumberAndAStringRequest) returns (ReturnANumberAndAStringResponse);
   rpc ReturnDurationInSeconds(ReturnDurationInSecondsRequest) returns (ReturnDurationInSecondsResponse);
@@ -81,12 +81,12 @@ service NiFake {
   rpc StringValuedEnumInputFunctionWithDefaults(StringValuedEnumInputFunctionWithDefaultsRequest) returns (StringValuedEnumInputFunctionWithDefaultsResponse);
   rpc TwoInputFunction(TwoInputFunctionRequest) returns (TwoInputFunctionResponse);
   rpc Use64BitNumber(Use64BitNumberRequest) returns (Use64BitNumberResponse);
-  rpc WriteWaveform(WriteWaveformRequest) returns (WriteWaveformResponse);
-  rpc Close(CloseRequest) returns (CloseResponse);
-  rpc CloseExtCal(CloseExtCalRequest) returns (CloseExtCalResponse);
+  rpc UseATwoDimensionParameter(UseATwoDimensionParameterRequest) returns (UseATwoDimensionParameterResponse);
+  rpc ViInt16ArrayInputFunction(ViInt16ArrayInputFunctionRequest) returns (ViInt16ArrayInputFunctionResponse);
   rpc ViUInt8ArrayInputFunction(ViUInt8ArrayInputFunctionRequest) returns (ViUInt8ArrayInputFunctionResponse);
   rpc ViUInt8ArrayOutputFunction(ViUInt8ArrayOutputFunctionRequest) returns (ViUInt8ArrayOutputFunctionResponse);
-  rpc ViInt16ArrayInputFunction(ViInt16ArrayInputFunctionRequest) returns (ViInt16ArrayInputFunctionResponse);
+  rpc WriteWaveform(WriteWaveformRequest) returns (WriteWaveformResponse);
+  rpc Close(CloseRequest) returns (CloseResponse);
 }
 
 enum NiFakeAttribute {
@@ -205,6 +205,16 @@ message AcceptViUInt32ArrayResponse {
   int32 status = 1;
 }
 
+message BoolArrayInputFunctionRequest {
+  nidevice_grpc.Session vi = 1;
+  sint32 number_of_elements = 2;
+  repeated bool an_array = 3;
+}
+
+message BoolArrayInputFunctionResponse {
+  int32 status = 1;
+}
+
 message BoolArrayOutputFunctionRequest {
   nidevice_grpc.Session vi = 1;
   sint32 number_of_elements = 2;
@@ -215,13 +225,12 @@ message BoolArrayOutputFunctionResponse {
   repeated bool an_array = 2;
 }
 
-message BoolArrayInputFunctionRequest {
+message CloseExtCalRequest {
   nidevice_grpc.Session vi = 1;
-  sint32 number_of_elements = 2;
-  repeated bool an_array = 3;
+  sint32 action = 2;
 }
 
-message BoolArrayInputFunctionResponse {
+message CloseExtCalResponse {
   int32 status = 1;
 }
 
@@ -320,15 +329,6 @@ message GetAStringOfFixedMaximumSizeResponse {
   string a_string = 2;
 }
 
-message GetBitfieldAsEnumArrayRequest {
-}
-
-message GetBitfieldAsEnumArrayResponse {
-  int32 status = 1;
-  repeated Bitfield flags_array = 2;
-  int64 flags_raw = 3;
-}
-
 message GetAnIviDanceStringRequest {
   nidevice_grpc.Session vi = 1;
 }
@@ -336,16 +336,6 @@ message GetAnIviDanceStringRequest {
 message GetAnIviDanceStringResponse {
   int32 status = 1;
   string a_string = 2;
-}
-
-message UseATwoDimensionParameterRequest {
-  nidevice_grpc.Session vi = 1;
-  repeated sint32 array = 2;
-  repeated sint32 array_lengths = 3;
-}
-
-message UseATwoDimensionParameterResponse {
-  int32 status = 1;
 }
 
 message GetAnIviDanceWithATwistArrayRequest {
@@ -500,6 +490,15 @@ message GetAttributeViStringResponse {
   string attribute_value = 2;
 }
 
+message GetBitfieldAsEnumArrayRequest {
+}
+
+message GetBitfieldAsEnumArrayResponse {
+  int32 status = 1;
+  repeated Bitfield flags_array = 2;
+  int64 flags_raw = 3;
+}
+
 message GetCalDateAndTimeRequest {
   nidevice_grpc.Session vi = 1;
   sint32 cal_type = 2;
@@ -553,15 +552,6 @@ message GetEnumValueResponse {
   sint32 a_turtle_raw = 4;
 }
 
-message GetViUInt8Request {
-  nidevice_grpc.Session vi = 1;
-}
-
-message GetViUInt8Response {
-  int32 status = 1;
-  uint32 a_uint8_number = 2;
-}
-
 message GetViInt32ArrayRequest {
   nidevice_grpc.Session vi = 1;
   sint32 array_len = 2;
@@ -582,6 +572,15 @@ message GetViUInt32ArrayResponse {
   repeated uint32 u_int32_array = 2;
 }
 
+message GetViUInt8Request {
+  nidevice_grpc.Session vi = 1;
+}
+
+message GetViUInt8Response {
+  int32 status = 1;
+  uint32 a_uint8_number = 2;
+}
+
 message ImportAttributeConfigurationBufferRequest {
   nidevice_grpc.Session vi = 1;
   bytes configuration = 2;
@@ -589,6 +588,17 @@ message ImportAttributeConfigurationBufferRequest {
 
 message ImportAttributeConfigurationBufferResponse {
   int32 status = 1;
+}
+
+message InitExtCalRequest {
+  string session_name = 1;
+  string resource_name = 2;
+  string calibration_password = 3;
+}
+
+message InitExtCalResponse {
+  int32 status = 1;
+  nidevice_grpc.Session vi = 2;
 }
 
 message InitWithOptionsRequest {
@@ -600,17 +610,6 @@ message InitWithOptionsRequest {
 }
 
 message InitWithOptionsResponse {
-  int32 status = 1;
-  nidevice_grpc.Session vi = 2;
-}
-
-message InitExtCalRequest {
-  string session_name = 1;
-  string resource_name = 2;
-  string calibration_password = 3;
-}
-
-message InitExtCalResponse {
   int32 status = 1;
   nidevice_grpc.Session vi = 2;
 }
@@ -721,10 +720,10 @@ message ReadDataWithInOutIviTwistResponse {
   sint32 buffer_size = 3;
 }
 
-message ReadDataWithMultpleIviTwistParamSetsRequest {
+message ReadDataWithMultipleIviTwistParamSetsRequest {
 }
 
-message ReadDataWithMultpleIviTwistParamSetsResponse {
+message ReadDataWithMultipleIviTwistParamSetsResponse {
   int32 status = 1;
   repeated sint32 array_out = 2;
   sint32 actual_size = 3;
@@ -841,29 +840,22 @@ message Use64BitNumberResponse {
   int64 output = 2;
 }
 
-message WriteWaveformRequest {
+message UseATwoDimensionParameterRequest {
   nidevice_grpc.Session vi = 1;
-  repeated double waveform = 2;
+  repeated sint32 array = 2;
+  repeated sint32 array_lengths = 3;
 }
 
-message WriteWaveformResponse {
+message UseATwoDimensionParameterResponse {
   int32 status = 1;
 }
 
-message CloseRequest {
+message ViInt16ArrayInputFunctionRequest {
   nidevice_grpc.Session vi = 1;
+  repeated sint32 an_array = 2;
 }
 
-message CloseResponse {
-  int32 status = 1;
-}
-
-message CloseExtCalRequest {
-  nidevice_grpc.Session vi = 1;
-  sint32 action = 2;
-}
-
-message CloseExtCalResponse {
+message ViInt16ArrayInputFunctionResponse {
   int32 status = 1;
 }
 
@@ -887,12 +879,20 @@ message ViUInt8ArrayOutputFunctionResponse {
   bytes an_array = 2;
 }
 
-message ViInt16ArrayInputFunctionRequest {
+message WriteWaveformRequest {
   nidevice_grpc.Session vi = 1;
-  repeated sint32 an_array = 2;
+  repeated double waveform = 2;
 }
 
-message ViInt16ArrayInputFunctionResponse {
+message WriteWaveformResponse {
+  int32 status = 1;
+}
+
+message CloseRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message CloseResponse {
   int32 status = 1;
 }
 

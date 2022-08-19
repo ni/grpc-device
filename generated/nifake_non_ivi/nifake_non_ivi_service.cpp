@@ -63,6 +63,9 @@ namespace nifake_non_ivi_grpc {
       FakeHandle handle = session_repository_->access_session(handle_grpc_session.id(), handle_grpc_session.name());
       session_repository_->remove_session(handle_grpc_session.id(), handle_grpc_session.name());
       auto status = library_->Close(handle);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForFakeHandle(status, handle);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -83,6 +86,9 @@ namespace nifake_non_ivi_grpc {
       SecondarySessionHandle secondary_session_handle = secondary_session_handle_resource_repository_->access_session(secondary_session_handle_grpc_session.id(), secondary_session_handle_grpc_session.name());
       secondary_session_handle_resource_repository_->remove_session(secondary_session_handle_grpc_session.id(), secondary_session_handle_grpc_session.name());
       auto status = library_->CloseSecondarySession(secondary_session_handle);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForSecondarySessionHandle(status, secondary_session_handle);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -136,9 +142,8 @@ namespace nifake_non_ivi_grpc {
 
       while (true) {
         auto status = library_->GetLatestErrorMessage(nullptr, 0);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForFakeHandle(status, 0);
         }
         uInt32 size = status;
 
@@ -151,11 +156,12 @@ namespace nifake_non_ivi_grpc {
           // buffer is now too small, try again
           continue;
         }
-        response->set_status(status);
-        if (status_ok(status)) {
-          response->set_message(message);
-          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_message()));
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForFakeHandle(status, 0);
         }
+        response->set_status(status);
+        response->set_message(message);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_message()));
         return ::grpc::Status::OK;
       }
     }
@@ -175,11 +181,12 @@ namespace nifake_non_ivi_grpc {
       std::string buf(512 - 1, '\0');
       auto string_out = library_->GetStringAsReturnedValue((char*)buf.data());
       auto status = string_out ? 0 : -1;
-      response->set_status(status);
-      if (status_ok(status)) {
-        response->set_string_out(string_out);
-        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_string_out()));
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForFakeHandle(status, 0);
       }
+      response->set_status(status);
+      response->set_string_out(string_out);
+      nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_string_out()));
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -218,10 +225,11 @@ namespace nifake_non_ivi_grpc {
 
       double value {};
       auto status = library_->GetMarbleAttributeDouble(handle, attribute, &value);
-      response->set_status(status);
-      if (status_ok(status)) {
-        response->set_value(value);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForFakeHandle(status, handle);
       }
+      response->set_status(status);
+      response->set_value(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -260,16 +268,17 @@ namespace nifake_non_ivi_grpc {
 
       int32 value {};
       auto status = library_->GetMarbleAttributeInt32(handle, attribute, &value);
-      response->set_status(status);
-      if (status_ok(status)) {
-        auto checked_convert_value = [](auto raw_value) {
-          bool raw_value_is_valid = nifake_non_ivi_grpc::MarbleInt32AttributeValues_IsValid(raw_value);
-          auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
-          return static_cast<nifake_non_ivi_grpc::MarbleInt32AttributeValues>(valid_enum_value);
-        };
-        response->set_value(checked_convert_value(value));
-        response->set_value_raw(value);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForFakeHandle(status, handle);
       }
+      response->set_status(status);
+      auto checked_convert_value = [](auto raw_value) {
+        bool raw_value_is_valid = nifake_non_ivi_grpc::MarbleInt32AttributeValues_IsValid(raw_value);
+        auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
+        return static_cast<nifake_non_ivi_grpc::MarbleInt32AttributeValues>(valid_enum_value);
+      };
+      response->set_value(checked_convert_value(value));
+      response->set_value_raw(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -309,13 +318,15 @@ namespace nifake_non_ivi_grpc {
       response->mutable_value_raw()->Resize(10, 0);
       int32* value = reinterpret_cast<int32*>(response->mutable_value_raw()->mutable_data());
       auto status = library_->GetMarbleAttributeInt32Array(handle, attribute, value);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForFakeHandle(status, handle);
+      }
       response->set_status(status);
-      if (status_ok(status)) {
-        auto checked_convert_value = [](auto raw_value) {
-          bool raw_value_is_valid = nifake_non_ivi_grpc::MarbleInt32AttributeValues_IsValid(raw_value);
-          auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
-          return static_cast<nifake_non_ivi_grpc::MarbleInt32AttributeValues>(valid_enum_value);
-        };
+      auto checked_convert_value = [](auto raw_value) {
+        bool raw_value_is_valid = nifake_non_ivi_grpc::MarbleInt32AttributeValues_IsValid(raw_value);
+        auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
+        return static_cast<nifake_non_ivi_grpc::MarbleInt32AttributeValues>(valid_enum_value);
+      };
         response->mutable_value()->Clear();
         response->mutable_value()->Reserve(10);
         std::transform(
@@ -325,7 +336,6 @@ namespace nifake_non_ivi_grpc {
           [&](auto x) {
               return checked_convert_value(x);
           });
-      }
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -352,14 +362,11 @@ namespace nifake_non_ivi_grpc {
       const std::string& grpc_device_session_name = request->session_name();
       auto cleanup_lambda = [&] (FakeHandle id) { library_->Close(id); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForFakeHandle(status, 0);
+      }
       response->set_status(status);
-      if (status_ok(status)) {
-        response->mutable_handle()->set_id(session_id);
-      }
-      else {
-        const auto error_message = get_last_error(library_);
-        response->set_error_message(error_message);
-      }
+      response->mutable_handle()->set_id(session_id);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -390,10 +397,11 @@ namespace nifake_non_ivi_grpc {
       const std::string& grpc_device_session_name = request->session_name();
       auto cleanup_lambda = [&] (FakeHandle id) { library_->Close(id); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
-      response->set_status(status);
-      if (status_ok(status)) {
-        response->mutable_handle()->set_id(session_id);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForFakeHandle(status, 0);
       }
+      response->set_status(status);
+      response->mutable_handle()->set_id(session_id);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -430,10 +438,11 @@ namespace nifake_non_ivi_grpc {
       const std::string& grpc_device_session_name = request->session_name();
       auto cleanup_lambda = [&] (FakeHandle id) { library_->Close(id); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
-      response->set_status(status);
-      if (status_ok(status)) {
-        response->mutable_handle()->set_id(session_id);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForFakeHandle(status, 0);
       }
+      response->set_status(status);
+      response->mutable_handle()->set_id(session_id);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -462,10 +471,11 @@ namespace nifake_non_ivi_grpc {
       const std::string& grpc_device_session_name = request->session_name();
       auto cleanup_lambda = [&] (SecondarySessionHandle id) { library_->CloseSecondarySession(id); };
       int status = secondary_session_handle_resource_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
-      response->set_status(status);
-      if (status_ok(status)) {
-        response->mutable_secondary_session_handle()->set_id(session_id);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForFakeHandle(status, 0);
       }
+      response->set_status(status);
+      response->mutable_secondary_session_handle()->set_id(session_id);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -495,10 +505,11 @@ namespace nifake_non_ivi_grpc {
       const std::string& grpc_device_session_name = request->handle_name();
       auto cleanup_lambda = [&] (FakeHandle id) { library_->Close(id); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
-      response->set_status(status);
-      if (status_ok(status)) {
-        response->mutable_handle()->set_id(session_id);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForFakeHandle(status, 0);
       }
+      response->set_status(status);
+      response->mutable_handle()->set_id(session_id);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -528,10 +539,11 @@ namespace nifake_non_ivi_grpc {
       const std::string& grpc_device_session_name = request->handle_name();
       auto cleanup_lambda = [&] (FakeHandle id) { library_->Close(id); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
-      response->set_status(status);
-      if (status_ok(status)) {
-        response->mutable_handle()->set_id(session_id);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForFakeHandle(status, 0);
       }
+      response->set_status(status);
+      response->mutable_handle()->set_id(session_id);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -605,6 +617,9 @@ namespace nifake_non_ivi_grpc {
         });
 
       auto status = library_->InputArraysWithNarrowIntegerTypes(u16_array.data(), i16_array.data(), i8_array.data());
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForFakeHandle(status, 0);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -629,9 +644,10 @@ namespace nifake_non_ivi_grpc {
       response->mutable_data()->Resize((size_one < 0) ? size_two : size_one + 1, 0);
       int32* data = reinterpret_cast<int32*>(response->mutable_data()->mutable_data());
       auto status = library_->IotaWithCustomSize(size_one, size_two, data);
-      response->set_status(status);
-      if (status_ok(status)) {
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForFakeHandle(status, 0);
       }
+      response->set_status(status);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -654,8 +670,10 @@ namespace nifake_non_ivi_grpc {
       std::vector<myInt16> i16_data(number_of_i16_samples);
       std::vector<myInt8> i8_data(number_of_i8_samples);
       auto status = library_->OutputArraysWithNarrowIntegerTypes(number_of_u16_samples, u16_data.data(), number_of_i16_samples, i16_data.data(), number_of_i8_samples, i8_data.data());
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForFakeHandle(status, 0);
+      }
       response->set_status(status);
-      if (status_ok(status)) {
         response->mutable_u16_data()->Clear();
         response->mutable_u16_data()->Reserve(number_of_u16_samples);
         std::transform(
@@ -683,7 +701,6 @@ namespace nifake_non_ivi_grpc {
           [&](auto x) {
               return x;
           });
-      }
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -701,6 +718,9 @@ namespace nifake_non_ivi_grpc {
     try {
       const myUInt8* u8_array = (const myUInt8*)request->u8_array().c_str();
       auto status = library_->InputArrayOfBytes(u8_array);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForFakeHandle(status, 0);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -720,10 +740,11 @@ namespace nifake_non_ivi_grpc {
       int32 number_of_u8_samples = request->number_of_u8_samples();
       std::string u8_data(number_of_u8_samples, '\0');
       auto status = library_->OutputArrayOfBytes(number_of_u8_samples, (myUInt8*)u8_data.data());
-      response->set_status(status);
-      if (status_ok(status)) {
-        response->set_u8_data(u8_data);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForFakeHandle(status, 0);
       }
+      response->set_status(status);
+      response->set_u8_data(u8_data);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -744,9 +765,11 @@ namespace nifake_non_ivi_grpc {
       int32* i32_data = reinterpret_cast<int32*>(response->mutable_i32_data()->mutable_data());
       std::vector<myUInt16> u16_data(array_size_copy);
       auto status = library_->OutputArraysWithPassedInByPtrMechanism(i32_data, u16_data.data(), &array_size_copy);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForFakeHandle(status, 0);
+      }
       response->set_status(status);
-      if (status_ok(status)) {
-        response->mutable_i32_data()->Resize(array_size_copy, 0);
+      response->mutable_i32_data()->Resize(array_size_copy, 0);
         response->mutable_u16_data()->Clear();
         response->mutable_u16_data()->Reserve(array_size_copy);
         std::transform(
@@ -756,7 +779,6 @@ namespace nifake_non_ivi_grpc {
           [&](auto x) {
               return x;
           });
-      }
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -787,7 +809,7 @@ namespace nifake_non_ivi_grpc {
           [this](myInt16 data_out) {
             RegisterCallbackResponse callback_response;
             auto response = &callback_response;
-            response->set_data_out(data_out);
+          response->set_data_out(data_out);
             queue_write(callback_response);
             return 0;
         });
@@ -828,6 +850,9 @@ namespace nifake_non_ivi_grpc {
     try {
       auto when = convert_from_grpc<CVIAbsoluteTime>(request->when());
       auto status = library_->InputTimestamp(when);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForFakeHandle(status, 0);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -846,10 +871,11 @@ namespace nifake_non_ivi_grpc {
     try {
       CVIAbsoluteTime when {};
       auto status = library_->OutputTimestamp(&when);
-      response->set_status(status);
-      if (status_ok(status)) {
-        convert_to_grpc(when, response->mutable_when());
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForFakeHandle(status, 0);
       }
+      response->set_status(status);
+      convert_to_grpc(when, response->mutable_when());
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -893,6 +919,9 @@ namespace nifake_non_ivi_grpc {
       }
 
       auto status = library_->InputVarArgs(input_name, get_channelName_if(string_and_enums, 0), get_color_if(string_and_enums, 0), get_powerUpState_if(string_and_enums, 0), get_channelName_if(string_and_enums, 1), get_color_if(string_and_enums, 1), get_powerUpState_if(string_and_enums, 1), get_channelName_if(string_and_enums, 2), get_color_if(string_and_enums, 2), get_powerUpState_if(string_and_enums, 2), get_channelName_if(string_and_enums, 3), get_color_if(string_and_enums, 3), get_powerUpState_if(string_and_enums, 3));
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForFakeHandle(status, 0);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -933,11 +962,12 @@ namespace nifake_non_ivi_grpc {
       std::vector<int32> colorVector;
       colorVector.resize(channel_names.size());
       auto status = library_->OutputVarArgs(input_name, get_channelName_if(channel_names, 0), get_color_if(colorVector, 0), get_channelName_if(channel_names, 1), get_color_if(colorVector, 1), get_channelName_if(channel_names, 2), get_color_if(colorVector, 2), get_channelName_if(channel_names, 3), get_color_if(colorVector, 3));
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForFakeHandle(status, 0);
+      }
       response->set_status(status);
-      if (status_ok(status)) {
-        for (int i = 0; i < colorVector.size(); ++i) {
-          response->add_colors(static_cast<BeautifulColor>(colorVector[i]));
-        }
+      for (int i = 0; i < colorVector.size(); ++i) {
+        response->add_colors(static_cast<BeautifulColor>(colorVector[i]));
       }
       return ::grpc::Status::OK;
     }
@@ -976,6 +1006,9 @@ namespace nifake_non_ivi_grpc {
       }
 
       auto status = library_->ResetMarbleAttribute(handle, attribute);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForFakeHandle(status, handle);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1023,6 +1056,9 @@ namespace nifake_non_ivi_grpc {
       auto i8 = static_cast<myInt8>(i8_raw);
 
       auto status = library_->ScalarsWithNarrowIntegerTypes(u16, i16, i8);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForFakeHandle(status, 0);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1065,6 +1101,9 @@ namespace nifake_non_ivi_grpc {
 
       double value = request->value();
       auto status = library_->SetMarbleAttributeDouble(handle, attribute, value);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForFakeHandle(status, handle);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1119,6 +1158,9 @@ namespace nifake_non_ivi_grpc {
       }
 
       auto status = library_->SetMarbleAttributeInt32(handle, attribute, value);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForFakeHandle(status, handle);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1146,6 +1188,9 @@ namespace nifake_non_ivi_grpc {
 
       int32 size = request->size();
       auto status = library_->SetColors(colors, size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForFakeHandle(status, 0);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1165,10 +1210,11 @@ namespace nifake_non_ivi_grpc {
       int32 number_of_structs = request->number_of_structs();
       std::vector<StructWithCoercion_struct> structs(number_of_structs, StructWithCoercion_struct());
       auto status = library_->GetStructsWithCoercion(number_of_structs, structs.data());
-      response->set_status(status);
-      if (status_ok(status)) {
-        convert_to_grpc(structs, response->mutable_structs());
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForFakeHandle(status, 0);
       }
+      response->set_status(status);
+      convert_to_grpc(structs, response->mutable_structs());
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1186,6 +1232,9 @@ namespace nifake_non_ivi_grpc {
     try {
       auto structs = convert_from_grpc<StructWithCoercion_struct>(request->structs());
       auto status = library_->SetStructsWithCoercion(structs.data());
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForFakeHandle(status, 0);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1226,6 +1275,9 @@ namespace nifake_non_ivi_grpc {
       }
 
       auto status = library_->InputStringValuedEnum(a_name);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForFakeHandle(status, 0);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1245,6 +1297,9 @@ namespace nifake_non_ivi_grpc {
       auto bools = convert_from_grpc<int32>(request->bools());
       int32 size = static_cast<int32>(request->bools().size());
       auto status = library_->WriteBooleanArray(bools.data(), size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForFakeHandle(status, 0);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }

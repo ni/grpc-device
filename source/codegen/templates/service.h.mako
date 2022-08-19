@@ -16,6 +16,7 @@ namespace_prefix = config["namespace_component"] + "_grpc::"
 custom_types = common_helpers.get_custom_types(config)
 (input_custom_types, output_custom_types) = common_helpers.get_input_and_output_custom_types(functions)
 resource_repository_deps = service_helpers.get_driver_shared_resource_repository_ptr_deps(config, functions)
+resource_handle_types = service_helpers.get_resource_handle_types(config)
 
 async_functions = service_helpers.get_async_functions(functions)
 has_async_functions = any(async_functions)
@@ -94,6 +95,12 @@ private:
   ${driver_library_interface}* library_;
 % for resource_handle_type in resource_repository_deps:
   ${resource_repository_deps[resource_handle_type].resource_repository_alias} ${resource_repository_deps[resource_handle_type].field_name};
+% endfor
+% for resource_handle_type in resource_handle_types:
+<%
+  cpp_handle_type = resource_handle_type[0].upper() + resource_handle_type[1:]
+%>\
+  ::grpc::Status ConvertApiErrorStatusFor${cpp_handle_type}(google::protobuf::int32 status, ${resource_handle_type} ${config["session_handle_parameter_name"]});
 % endfor
 % if common_helpers.has_viboolean_array_param(functions):
   void Copy(const std::vector<ViBoolean>& input, google::protobuf::RepeatedField<bool>* output);

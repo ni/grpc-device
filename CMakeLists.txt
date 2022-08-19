@@ -76,7 +76,7 @@ set(metadata_dir ${CMAKE_SOURCE_DIR}/source/codegen/metadata)
 set(service_output_dir ${CMAKE_SOURCE_DIR}/generated)
 set(codegen_dir ${CMAKE_SOURCE_DIR}/source/codegen)
 set(custom_dir ${CMAKE_SOURCE_DIR}/source/custom)
-set(nidrivers "nidaqmx" "nidcpower" "nidigitalpattern" "nidmm" "nifake" "nifake_extension" "nifake_non_ivi" "nifgen" "nimxlcTerminalAdaptor_restricted" "nirfmxbluetooth" "nirfmxinstr" "nirfmxlte" "nirfmxnr" "nirfmxspecan" "nirfmxspecan_restricted" "nirfmxwlan" "nirfsa" "nirfsg" "niscope" "niswitch" "nisync" "nitclk" "nixnet" "nixnetsocket")
+set(nidrivers "nidaqmx" "nidcpower" "nidigitalpattern" "nidmm" "nifake" "nifake_extension" "nifake_non_ivi" "nifgen" "nimxlcTerminalAdaptor_restricted" "nirfmxbluetooth" "nirfmxinstr" "nirfmxinstr_restricted" "nirfmxlte" "nirfmxnr" "nirfmxspecan" "nirfmxspecan_restricted" "nirfmxwlan" "nirfsa" "nirfsg" "niscope" "niswitch" "nisync" "nitclk" "nixnet" "nixnetsocket")
 
 #----------------------------------------------------------------------
 # Create NI Driver APIs proto and server files
@@ -359,6 +359,7 @@ add_executable(IntegrationTestsRunner
     "${service_output_dir}/nifake_non_ivi/nifake_non_ivi_client.cpp"
     "${service_output_dir}/nifake_non_ivi/nifake_non_ivi_service.cpp"
     "${custom_dir}/nifake_non_ivi_service.custom.cpp"
+    "${custom_dir}/nifake_service.custom.cpp"
 )
 
     set(CMAKE_THREAD_PREFER_PTHREAD TRUE)
@@ -370,7 +371,8 @@ target_link_libraries(IntegrationTestsRunner
     gmock
     ${_GRPC_GRPCPP}
     ${CMAKE_DL_LIBS}
-    Threads::Threads)
+    Threads::Threads
+    nlohmann_json::nlohmann_json)
 
 add_library(TestApi SHARED
     "source/tests/utilities/test_api.cpp")
@@ -500,6 +502,7 @@ if(WIN32)
         "source/tests/system/nirfmxbluetooth_driver_api_tests.cpp"
         "source/tests/system/nirfmxbluetooth_session_tests.cpp"
         "source/tests/system/nirfmxinstr_driver_api_tests.cpp"
+        "source/tests/system/nirfmxinstr_restricted_driver_api_tests.cpp"
         "source/tests/system/nirfmxlte_driver_api_tests.cpp"
         "source/tests/system/nirfmxlte_session_tests.cpp"
         "source/tests/system/nirfmxnr_driver_api_tests.cpp"

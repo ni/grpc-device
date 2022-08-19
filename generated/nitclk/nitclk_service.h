@@ -59,6 +59,7 @@ public:
 private:
   NiTClkLibraryInterface* library_;
   ResourceRepositorySharedPtr session_repository_;
+  ::grpc::Status ConvertApiErrorStatusForViSession(google::protobuf::int32 status, ViSession session_number);
 
   NiTClkFeatureToggles feature_toggles_;
 };

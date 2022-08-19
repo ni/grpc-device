@@ -1,5 +1,6 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
+#include <nlohmann/json.hpp>
 
 #include "device_server.h"
 #include "nidcpower/nidcpower_client.h"
@@ -9,6 +10,7 @@ namespace tests {
 namespace system {
 
 namespace dcpower = nidcpower_grpc;
+using namespace ::nlohmann;
 using namespace ::testing;
 
 const int kInvalidRsrc = -1074118656;
@@ -120,10 +122,10 @@ TEST_F(NiDCPowerSessionTest, InitializeSessionWithoutDevice_ReturnsDriverError)
   dcpower::InitializeWithChannelsResponse response;
   ::grpc::Status status = call_initialize_with_channels(kTestInvalidRsrc, "", "", &response);
 
-  EXPECT_TRUE(status.ok());
-  EXPECT_EQ(kInvalidRsrc, response.status());
-  EXPECT_EQ(0, response.vi().id());
-  EXPECT_NE("", response.error_message());
+  EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status.error_code());
+  auto error = json::parse(status.error_message());
+  EXPECT_EQ(kInvalidRsrc, error.value("code", 0));
+  EXPECT_NE("", error.value("message", ""));
 }
 
 TEST_F(NiDCPowerSessionTest, InitializedSession_CloseSession_ClosesDriverSession)
@@ -155,19 +157,21 @@ TEST_F(NiDCPowerSessionTest, InvalidSession_CloseSession_ReturnsInvalidSessionEr
   dcpower::CloseResponse response;
   ::grpc::Status status = GetStub()->Close(&context, request, &response);
 
-  EXPECT_TRUE(status.ok());
-  EXPECT_EQ(kInvalidDCPowerSession, response.status());
-  std::string error_message = get_error_message(response.status());
-  EXPECT_THAT(error_message.c_str(), HasSubstr(kInvalidDCPowerSessionMessage));
+  EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status.error_code());
+  auto error = json::parse(status.error_message());
+  EXPECT_EQ(kInvalidDCPowerSession, error.value("code", 0));
+  EXPECT_THAT(error.value("message", "").c_str(), HasSubstr(kInvalidDCPowerSessionMessage));
 }
 
 TEST_F(NiDCPowerSessionTest, InitWithErrorFromDriver_ReturnsUserErrorMessage)
 {
   dcpower::InitializeWithChannelsResponse initialize_response;
-  call_initialize_with_channels(kTestInvalidRsrc, "", "", &initialize_response);
+  auto status = call_initialize_with_channels(kTestInvalidRsrc, "", "", &initialize_response);
 
-  EXPECT_EQ(kInvalidRsrc, initialize_response.status());
-  EXPECT_STREQ(kViErrorResourceNotFoundMessage, initialize_response.error_message().c_str());
+  EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status.error_code());
+  auto error = json::parse(status.error_message());
+  EXPECT_EQ(kInvalidRsrc, error.value("code", 0));
+  EXPECT_STREQ(kViErrorResourceNotFoundMessage, error.value("message", "").c_str());
 }
 
 }  // namespace system

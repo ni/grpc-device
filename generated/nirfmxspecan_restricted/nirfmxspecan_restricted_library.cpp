@@ -22,6 +22,8 @@ NiRFmxSpecAnRestrictedLibrary::NiRFmxSpecAnRestrictedLibrary() : shared_library_
     return;
   }
   function_pointers_.CacheResult = reinterpret_cast<CacheResultPtr>(shared_library_.get_function_pointer("RFmxSpecAn_CacheResult"));
+  function_pointers_.GetError = reinterpret_cast<GetErrorPtr>(shared_library_.get_function_pointer("RFmxSpecAn_GetError"));
+  function_pointers_.GetErrorString = reinterpret_cast<GetErrorStringPtr>(shared_library_.get_function_pointer("RFmxSpecAn_GetErrorString"));
   function_pointers_.IQFetchDataOverrideBehavior = reinterpret_cast<IQFetchDataOverrideBehaviorPtr>(shared_library_.get_function_pointer("RFmxSpecAn_IQFetchDataOverrideBehavior"));
 }
 
@@ -42,6 +44,22 @@ int32 NiRFmxSpecAnRestrictedLibrary::CacheResult(niRFmxInstrHandle instrumentHan
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_CacheResult.");
   }
   return function_pointers_.CacheResult(instrumentHandle, selectorString, selectorStringOutSize, selectorStringOut);
+}
+
+int32 NiRFmxSpecAnRestrictedLibrary::GetError(niRFmxInstrHandle instrumentHandle, int32* errorCode, int32 errorDescriptionBufferSize, char errorDescription[])
+{
+  if (!function_pointers_.GetError) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_GetError.");
+  }
+  return function_pointers_.GetError(instrumentHandle, errorCode, errorDescriptionBufferSize, errorDescription);
+}
+
+int32 NiRFmxSpecAnRestrictedLibrary::GetErrorString(niRFmxInstrHandle instrumentHandle, int32 errorCode, int32 errorDescriptionBufferSize, char errorDescription[])
+{
+  if (!function_pointers_.GetErrorString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_GetErrorString.");
+  }
+  return function_pointers_.GetErrorString(instrumentHandle, errorCode, errorDescriptionBufferSize, errorDescription);
 }
 
 int32 NiRFmxSpecAnRestrictedLibrary::IQFetchDataOverrideBehavior(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 recordToFetch, int64 samplesToRead, int32 deleteOnFetch, float64* t0, float64* dt, NIComplexSingle data[], int32 arraySize, int32* actualArraySize)

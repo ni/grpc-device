@@ -59,6 +59,7 @@ config = {
     'metadata_version': '0.1',
     'module_name': 'nirfmxnr',
     'session_class_description': 'An NI-RFmxNR instrument handle',
+    'session_handle_parameter_name': 'instrumentHandle',
     'duplicate_resource_handles_allowed': True
 }
 

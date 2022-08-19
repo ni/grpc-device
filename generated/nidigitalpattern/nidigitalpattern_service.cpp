@@ -65,6 +65,9 @@ namespace nidigitalpattern_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -84,6 +87,9 @@ namespace nidigitalpattern_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->AbortKeepAlive(vi);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -109,6 +115,9 @@ namespace nidigitalpattern_grpc {
       auto initial_state_low_pins = request->initial_state_low_pins().c_str();
       auto initial_state_tristate_pins = request->initial_state_tristate_pins().c_str();
       auto status = library_->ApplyLevelsAndTiming(vi, site_list, levels_sheet, timing_sheet, initial_state_high_pins, initial_state_low_pins, initial_state_tristate_pins);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -131,6 +140,9 @@ namespace nidigitalpattern_grpc {
       ViInt32 num_offsets = static_cast<ViInt32>(request->offsets().size());
       auto offsets = const_cast<ViReal64*>(request->offsets().data());
       auto status = library_->ApplyTDROffsets(vi, channel_list, num_offsets, offsets);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -155,6 +167,9 @@ namespace nidigitalpattern_grpc {
       ViBoolean wait_until_done = request->wait_until_done();
       ViReal64 timeout = request->timeout();
       auto status = library_->BurstPattern(vi, site_list, start_label, select_digital_function, wait_until_done, timeout);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -185,6 +200,9 @@ namespace nidigitalpattern_grpc {
       ViBoolean wait_until_done = request->wait_until_done();
       ViReal64 timeout = request->timeout();
       auto status = library_->BurstPatternSynchronized(session_count, sessions.data(), site_list, start_label, select_digital_function, wait_until_done, timeout);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, 0);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -204,6 +222,9 @@ namespace nidigitalpattern_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->ClearError(vi);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -224,6 +245,9 @@ namespace nidigitalpattern_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto channel_list = request->channel_list().c_str();
       auto status = library_->ClockGeneratorAbort(vi, channel_list);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -246,6 +270,9 @@ namespace nidigitalpattern_grpc {
       ViReal64 frequency = request->frequency();
       ViBoolean select_digital_function = request->select_digital_function();
       auto status = library_->ClockGeneratorGenerateClock(vi, channel_list, frequency, select_digital_function);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -266,6 +293,9 @@ namespace nidigitalpattern_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto channel_list = request->channel_list().c_str();
       auto status = library_->ClockGeneratorInitiate(vi, channel_list);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -286,6 +316,9 @@ namespace nidigitalpattern_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       session_repository_->remove_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Close(vi);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -305,6 +338,9 @@ namespace nidigitalpattern_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Commit(vi);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -328,6 +364,9 @@ namespace nidigitalpattern_grpc {
       ViReal64 ioh = request->ioh();
       ViReal64 vcom = request->vcom();
       auto status = library_->ConfigureActiveLoadLevels(vi, channel_list, iol, ioh, vcom);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -349,6 +388,9 @@ namespace nidigitalpattern_grpc {
       ViInt64 cycle_number = request->cycle_number();
       ViInt32 pretrigger_samples = request->pretrigger_samples();
       auto status = library_->ConfigureCycleNumberHistoryRAMTrigger(vi, cycle_number, pretrigger_samples);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -386,6 +428,9 @@ namespace nidigitalpattern_grpc {
       }
 
       auto status = library_->ConfigureDigitalEdgeConditionalJumpTrigger(vi, trigger_identifier, source, edge);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -422,6 +467,9 @@ namespace nidigitalpattern_grpc {
       }
 
       auto status = library_->ConfigureDigitalEdgeStartTrigger(vi, source, edge);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -442,6 +490,9 @@ namespace nidigitalpattern_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViInt32 pretrigger_samples = request->pretrigger_samples();
       auto status = library_->ConfigureFirstFailureHistoryRAMTrigger(vi, pretrigger_samples);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -477,6 +528,9 @@ namespace nidigitalpattern_grpc {
       }
 
       auto status = library_->ConfigureHistoryRAMCyclesToAcquire(vi, cycles_to_acquire);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -497,6 +551,9 @@ namespace nidigitalpattern_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto site_list = request->site_list().c_str();
       auto status = library_->ConfigurePatternBurstSites(vi, site_list);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -520,6 +577,9 @@ namespace nidigitalpattern_grpc {
       ViInt64 cycle_offset = request->cycle_offset();
       ViInt32 pretrigger_samples = request->pretrigger_samples();
       auto status = library_->ConfigurePatternLabelHistoryRAMTrigger(vi, label, vector_offset, cycle_offset, pretrigger_samples);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -540,6 +600,9 @@ namespace nidigitalpattern_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto label = request->label().c_str();
       auto status = library_->ConfigureStartLabel(vi, label);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -560,6 +623,9 @@ namespace nidigitalpattern_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto trigger_identifier = request->trigger_identifier().c_str();
       auto status = library_->ConfigureSoftwareEdgeConditionalJumpTrigger(vi, trigger_identifier);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -579,6 +645,9 @@ namespace nidigitalpattern_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->ConfigureSoftwareEdgeStartTrigger(vi);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -615,6 +684,9 @@ namespace nidigitalpattern_grpc {
       }
 
       auto status = library_->ConfigureTerminationMode(vi, channel_list, mode);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -637,6 +709,9 @@ namespace nidigitalpattern_grpc {
       auto time_set_name = request->time_set_name().c_str();
       ViReal64 strobe_edge = request->strobe_edge();
       auto status = library_->ConfigureTimeSetCompareEdgesStrobe(vi, pin_list, time_set_name, strobe_edge);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -660,6 +735,9 @@ namespace nidigitalpattern_grpc {
       ViReal64 strobe_edge = request->strobe_edge();
       ViReal64 strobe2_edge = request->strobe2_edge();
       auto status = library_->ConfigureTimeSetCompareEdgesStrobe2x(vi, pin_list, time_set_name, strobe_edge, strobe2_edge);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -701,6 +779,9 @@ namespace nidigitalpattern_grpc {
       ViReal64 drive_return_edge = request->drive_return_edge();
       ViReal64 drive_off_edge = request->drive_off_edge();
       auto status = library_->ConfigureTimeSetDriveEdges(vi, pin_list, time_set_name, format, drive_on_edge, drive_data_edge, drive_return_edge, drive_off_edge);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -744,6 +825,9 @@ namespace nidigitalpattern_grpc {
       ViReal64 drive_data2_edge = request->drive_data2_edge();
       ViReal64 drive_return2_edge = request->drive_return2_edge();
       auto status = library_->ConfigureTimeSetDriveEdges2x(vi, pin_list, time_set_name, format, drive_on_edge, drive_data_edge, drive_return_edge, drive_off_edge, drive_data2_edge, drive_return2_edge);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -781,6 +865,9 @@ namespace nidigitalpattern_grpc {
       }
 
       auto status = library_->ConfigureTimeSetDriveFormat(vi, pin_list, time_set_name, drive_format);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -819,6 +906,9 @@ namespace nidigitalpattern_grpc {
 
       ViReal64 time = request->time();
       auto status = library_->ConfigureTimeSetEdge(vi, pin_list, time_set_name, edge, time);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -841,6 +931,9 @@ namespace nidigitalpattern_grpc {
       auto time_set_name = request->time_set_name().c_str();
       ViInt32 edge_multiplier = request->edge_multiplier();
       auto status = library_->ConfigureTimeSetEdgeMultiplier(vi, pin_list, time_set_name, edge_multiplier);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -862,6 +955,9 @@ namespace nidigitalpattern_grpc {
       auto time_set_name = request->time_set_name().c_str();
       ViReal64 period = request->period();
       auto status = library_->ConfigureTimeSetPeriod(vi, time_set_name, period);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -887,6 +983,9 @@ namespace nidigitalpattern_grpc {
       ViReal64 voh = request->voh();
       ViReal64 vterm = request->vterm();
       auto status = library_->ConfigureVoltageLevels(vi, channel_list, vil, vih, vol, voh, vterm);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -908,6 +1007,9 @@ namespace nidigitalpattern_grpc {
       auto waveform_name = request->waveform_name().c_str();
       auto waveform_file_path = request->waveform_file_path().c_str();
       auto status = library_->CreateCaptureWaveformFromFileDigicapture(vi, waveform_name, waveform_file_path);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -929,6 +1031,9 @@ namespace nidigitalpattern_grpc {
       auto pin_list = request->pin_list().c_str();
       auto waveform_name = request->waveform_name().c_str();
       auto status = library_->CreateCaptureWaveformParallel(vi, pin_list, waveform_name);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -967,6 +1072,9 @@ namespace nidigitalpattern_grpc {
       }
 
       auto status = library_->CreateCaptureWaveformSerial(vi, pin_list, waveform_name, sample_width, bit_order);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -987,6 +1095,9 @@ namespace nidigitalpattern_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViInt32 num_sites = request->num_sites();
       auto status = library_->CreateChannelMap(vi, num_sites);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1009,6 +1120,9 @@ namespace nidigitalpattern_grpc {
       auto waveform_file_path = request->waveform_file_path().c_str();
       ViBoolean write_waveform_data = request->write_waveform_data();
       auto status = library_->CreateSourceWaveformFromFileTDMS(vi, waveform_name, waveform_file_path, write_waveform_data);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1030,6 +1144,9 @@ namespace nidigitalpattern_grpc {
       auto dut_pin_list = request->dut_pin_list().c_str();
       auto system_pin_list = request->system_pin_list().c_str();
       auto status = library_->CreatePinMap(vi, dut_pin_list, system_pin_list);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1051,6 +1168,9 @@ namespace nidigitalpattern_grpc {
       auto pin_group_name = request->pin_group_name().c_str();
       auto pin_list = request->pin_list().c_str();
       auto status = library_->CreatePinGroup(vi, pin_group_name, pin_list);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1088,6 +1208,9 @@ namespace nidigitalpattern_grpc {
       }
 
       auto status = library_->CreateSourceWaveformParallel(vi, pin_list, waveform_name, data_mapping);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1142,6 +1265,9 @@ namespace nidigitalpattern_grpc {
       }
 
       auto status = library_->CreateSourceWaveformSerial(vi, pin_list, waveform_name, data_mapping, sample_width, bit_order);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1162,6 +1288,9 @@ namespace nidigitalpattern_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto name = request->name().c_str();
       auto status = library_->CreateTimeSet(vi, name);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1181,6 +1310,9 @@ namespace nidigitalpattern_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->DeleteAllTimeSets(vi);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1201,6 +1333,9 @@ namespace nidigitalpattern_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto trigger_identifier = request->trigger_identifier().c_str();
       auto status = library_->DisableConditionalJumpTrigger(vi, trigger_identifier);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1221,6 +1356,9 @@ namespace nidigitalpattern_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto site_list = request->site_list().c_str();
       auto status = library_->DisableSites(vi, site_list);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1240,6 +1378,9 @@ namespace nidigitalpattern_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->DisableStartTrigger(vi);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1267,6 +1408,9 @@ namespace nidigitalpattern_grpc {
       auto sync_session_grpc_session = request->sync_session();
       ViSession sync_session = session_repository_->access_session(sync_session_grpc_session.id(), sync_session_grpc_session.name());
       auto status = library_->EnableMatchFailCombination(session_count, sessions.data(), sync_session);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, sync_session);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1287,6 +1431,9 @@ namespace nidigitalpattern_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto site_list = request->site_list().c_str();
       auto status = library_->EnableSites(vi, site_list);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1306,6 +1453,9 @@ namespace nidigitalpattern_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->EndChannelMap(vi);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1327,11 +1477,12 @@ namespace nidigitalpattern_grpc {
       ViStatus error_code = request->error_code();
       std::string error_message(256 - 1, '\0');
       auto status = library_->ErrorMessage(vi, error_code, (ViChar*)error_message.data());
-      response->set_status(status);
-      if (status_ok(status)) {
-        response->set_error_message(error_message);
-        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_message()));
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
       }
+      response->set_status(status);
+      response->set_error_message(error_message);
+      nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_message()));
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1368,6 +1519,9 @@ namespace nidigitalpattern_grpc {
       auto signal_identifier = request->signal_identifier().c_str();
       auto output_terminal = request->output_terminal().c_str();
       auto status = library_->ExportSignal(vi, signal, signal_identifier, output_terminal);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1394,9 +1548,8 @@ namespace nidigitalpattern_grpc {
       ViInt32 actual_samples_per_waveform {};
       while (true) {
         auto status = library_->FetchCaptureWaveformU32(vi, site_list, waveform_name, samples_to_read, timeout, 0, nullptr, &actual_num_waveforms, &actual_samples_per_waveform);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
         }
         response->mutable_data()->Resize(actual_num_waveforms, 0);
         ViUInt32* data = reinterpret_cast<ViUInt32*>(response->mutable_data()->mutable_data());
@@ -1406,12 +1559,13 @@ namespace nidigitalpattern_grpc {
           // buffer is now too small, try again
           continue;
         }
-        response->set_status(status);
-        if (status_ok(status)) {
-          response->mutable_data()->Resize(actual_num_waveforms, 0);
-          response->set_actual_num_waveforms(actual_num_waveforms);
-          response->set_actual_samples_per_waveform(actual_samples_per_waveform);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
         }
+        response->set_status(status);
+        response->mutable_data()->Resize(actual_num_waveforms, 0);
+        response->set_actual_num_waveforms(actual_num_waveforms);
+        response->set_actual_samples_per_waveform(actual_samples_per_waveform);
         return ::grpc::Status::OK;
       }
     }
@@ -1438,14 +1592,15 @@ namespace nidigitalpattern_grpc {
       ViInt64 cycle_number {};
       ViInt32 num_dut_cycles {};
       auto status = library_->FetchHistoryRAMCycleInformation(vi, site, sample_index, &pattern_index, &time_set_index, &vector_number, &cycle_number, &num_dut_cycles);
-      response->set_status(status);
-      if (status_ok(status)) {
-        response->set_pattern_index(pattern_index);
-        response->set_time_set_index(time_set_index);
-        response->set_vector_number(vector_number);
-        response->set_cycle_number(cycle_number);
-        response->set_num_dut_cycles(num_dut_cycles);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
       }
+      response->set_status(status);
+      response->set_pattern_index(pattern_index);
+      response->set_time_set_index(time_set_index);
+      response->set_vector_number(vector_number);
+      response->set_cycle_number(cycle_number);
+      response->set_num_dut_cycles(num_dut_cycles);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1470,9 +1625,8 @@ namespace nidigitalpattern_grpc {
       ViInt32 actual_num_pin_data {};
       while (true) {
         auto status = library_->FetchHistoryRAMCyclePinData(vi, site, pin_list, sample_index, dut_cycle_index, 0, nullptr, nullptr, nullptr, &actual_num_pin_data);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
         }
         std::string expected_pin_states(actual_num_pin_data, '\0');
         std::string actual_pin_states(actual_num_pin_data, '\0');
@@ -1483,18 +1637,19 @@ namespace nidigitalpattern_grpc {
           // buffer is now too small, try again
           continue;
         }
-        response->set_status(status);
-        if (status_ok(status)) {
-          CopyBytesToEnums(expected_pin_states, response->mutable_expected_pin_states());
-          response->set_expected_pin_states_raw(expected_pin_states);
-          response->mutable_expected_pin_states()->Resize(actual_num_pin_data, 0);
-          CopyBytesToEnums(actual_pin_states, response->mutable_actual_pin_states());
-          response->set_actual_pin_states_raw(actual_pin_states);
-          response->mutable_actual_pin_states()->Resize(actual_num_pin_data, 0);
-          convert_to_grpc(per_pin_pass_fail, response->mutable_per_pin_pass_fail());
-          response->mutable_per_pin_pass_fail()->Resize(actual_num_pin_data, 0);
-          response->set_actual_num_pin_data(actual_num_pin_data);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
         }
+        response->set_status(status);
+        CopyBytesToEnums(expected_pin_states, response->mutable_expected_pin_states());
+        response->set_expected_pin_states_raw(expected_pin_states);
+        response->mutable_expected_pin_states()->Resize(actual_num_pin_data, 0);
+        CopyBytesToEnums(actual_pin_states, response->mutable_actual_pin_states());
+        response->set_actual_pin_states_raw(actual_pin_states);
+        response->mutable_actual_pin_states()->Resize(actual_num_pin_data, 0);
+        convert_to_grpc(per_pin_pass_fail, response->mutable_per_pin_pass_fail());
+        response->mutable_per_pin_pass_fail()->Resize(actual_num_pin_data, 0);
+        response->set_actual_num_pin_data(actual_num_pin_data);
         return ::grpc::Status::OK;
       }
     }
@@ -1517,10 +1672,11 @@ namespace nidigitalpattern_grpc {
       ViInt64 sample_index = request->sample_index();
       ViInt64 scan_cycle_number {};
       auto status = library_->FetchHistoryRAMScanCycleNumber(vi, site, sample_index, &scan_cycle_number);
-      response->set_status(status);
-      if (status_ok(status)) {
-        response->set_scan_cycle_number(scan_cycle_number);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
       }
+      response->set_status(status);
+      response->set_scan_cycle_number(scan_cycle_number);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1555,6 +1711,9 @@ namespace nidigitalpattern_grpc {
       }
 
       auto status = library_->FrequencyCounterConfigureMeasurementMode(vi, measurement_mode);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1576,6 +1735,9 @@ namespace nidigitalpattern_grpc {
       auto channel_list = request->channel_list().c_str();
       ViReal64 measurement_time = request->measurement_time();
       auto status = library_->FrequencyCounterConfigureMeasurementTime(vi, channel_list, measurement_time);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -1598,9 +1760,8 @@ namespace nidigitalpattern_grpc {
       ViInt32 actual_num_frequencies {};
       while (true) {
         auto status = library_->FrequencyCounterMeasureFrequency(vi, channel_list, 0, nullptr, &actual_num_frequencies);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
         }
         response->mutable_frequencies()->Resize(actual_num_frequencies, 0);
         ViReal64* frequencies = response->mutable_frequencies()->mutable_data();
@@ -1610,11 +1771,12 @@ namespace nidigitalpattern_grpc {
           // buffer is now too small, try again
           continue;
         }
-        response->set_status(status);
-        if (status_ok(status)) {
-          response->mutable_frequencies()->Resize(actual_num_frequencies, 0);
-          response->set_actual_num_frequencies(actual_num_frequencies);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
         }
+        response->set_status(status);
+        response->mutable_frequencies()->Resize(actual_num_frequencies, 0);
+        response->set_actual_num_frequencies(actual_num_frequencies);
         return ::grpc::Status::OK;
       }
     }
@@ -1637,10 +1799,11 @@ namespace nidigitalpattern_grpc {
       ViAttr attribute = request->attribute();
       ViBoolean value {};
       auto status = library_->GetAttributeViBoolean(vi, channel_name, attribute, &value);
-      response->set_status(status);
-      if (status_ok(status)) {
-        response->set_value(value);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
       }
+      response->set_status(status);
+      response->set_value(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1662,10 +1825,11 @@ namespace nidigitalpattern_grpc {
       ViAttr attribute = request->attribute();
       ViInt32 value {};
       auto status = library_->GetAttributeViInt32(vi, channel_name, attribute, &value);
-      response->set_status(status);
-      if (status_ok(status)) {
-        response->set_value(value);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
       }
+      response->set_status(status);
+      response->set_value(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1687,10 +1851,11 @@ namespace nidigitalpattern_grpc {
       ViAttr attribute = request->attribute();
       ViInt64 value {};
       auto status = library_->GetAttributeViInt64(vi, channel_name, attribute, &value);
-      response->set_status(status);
-      if (status_ok(status)) {
-        response->set_value(value);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
       }
+      response->set_status(status);
+      response->set_value(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1712,10 +1877,11 @@ namespace nidigitalpattern_grpc {
       ViAttr attribute = request->attribute();
       ViReal64 value {};
       auto status = library_->GetAttributeViReal64(vi, channel_name, attribute, &value);
-      response->set_status(status);
-      if (status_ok(status)) {
-        response->set_value(value);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
       }
+      response->set_status(status);
+      response->set_value(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1737,11 +1903,12 @@ namespace nidigitalpattern_grpc {
       ViAttr attribute = request->attribute();
       ViSession value {};
       auto status = library_->GetAttributeViSession(vi, channel_list, attribute, &value);
-      response->set_status(status);
-      if (status_ok(status)) {
-        auto session_id = session_repository_->resolve_session_id(value);
-        response->mutable_value()->set_id(session_id);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
       }
+      response->set_status(status);
+      auto session_id = session_repository_->resolve_session_id(value);
+      response->mutable_value()->set_id(session_id);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1764,9 +1931,8 @@ namespace nidigitalpattern_grpc {
 
       while (true) {
         auto status = library_->GetAttributeViString(vi, channel_name, attribute, 0, nullptr);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
         }
         ViInt32 buffer_size = status;
 
@@ -1779,11 +1945,12 @@ namespace nidigitalpattern_grpc {
           // buffer is now too small, try again
           continue;
         }
-        response->set_status(status);
-        if (status_ok(status)) {
-          response->set_value(value);
-          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
         }
+        response->set_status(status);
+        response->set_value(value);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
         return ::grpc::Status::OK;
       }
     }
@@ -1806,9 +1973,8 @@ namespace nidigitalpattern_grpc {
 
       while (true) {
         auto status = library_->GetChannelName(vi, index, 0, nullptr);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
         }
         ViInt32 name_buffer_size = status;
 
@@ -1821,11 +1987,12 @@ namespace nidigitalpattern_grpc {
           // buffer is now too small, try again
           continue;
         }
-        response->set_status(status);
-        if (status_ok(status)) {
-          response->set_name(name);
-          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_name()));
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
         }
+        response->set_status(status);
+        response->set_name(name);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_name()));
         return ::grpc::Status::OK;
       }
     }
@@ -1848,9 +2015,8 @@ namespace nidigitalpattern_grpc {
 
       while (true) {
         auto status = library_->GetChannelNameFromString(vi, indices, 0, nullptr);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
         }
         ViInt32 name_buffer_size = status;
 
@@ -1863,11 +2029,12 @@ namespace nidigitalpattern_grpc {
           // buffer is now too small, try again
           continue;
         }
-        response->set_status(status);
-        if (status_ok(status)) {
-          response->set_names(names);
-          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_names()));
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
         }
+        response->set_status(status);
+        response->set_names(names);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_names()));
         return ::grpc::Status::OK;
       }
     }
@@ -1889,9 +2056,8 @@ namespace nidigitalpattern_grpc {
 
       while (true) {
         auto status = library_->GetError(vi, nullptr, 0, nullptr);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
         }
         ViInt32 error_description_buffer_size = status;
 
@@ -1905,12 +2071,13 @@ namespace nidigitalpattern_grpc {
           // buffer is now too small, try again
           continue;
         }
-        response->set_status(status);
-        if (status_ok(status)) {
-          response->set_error_code(error_code);
-          response->set_error_description(error_description);
-          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_description()));
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
         }
+        response->set_status(status);
+        response->set_error_code(error_code);
+        response->set_error_description(error_description);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_description()));
         return ::grpc::Status::OK;
       }
     }
@@ -1933,9 +2100,8 @@ namespace nidigitalpattern_grpc {
       ViInt32 actual_num_read {};
       while (true) {
         auto status = library_->GetFailCount(vi, channel_list, 0, nullptr, &actual_num_read);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
         }
         response->mutable_failure_count()->Resize(actual_num_read, 0);
         ViInt64* failure_count = response->mutable_failure_count()->mutable_data();
@@ -1945,11 +2111,12 @@ namespace nidigitalpattern_grpc {
           // buffer is now too small, try again
           continue;
         }
-        response->set_status(status);
-        if (status_ok(status)) {
-          response->mutable_failure_count()->Resize(actual_num_read, 0);
-          response->set_actual_num_read(actual_num_read);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
         }
+        response->set_status(status);
+        response->mutable_failure_count()->Resize(actual_num_read, 0);
+        response->set_actual_num_read(actual_num_read);
         return ::grpc::Status::OK;
       }
     }
@@ -1971,10 +2138,11 @@ namespace nidigitalpattern_grpc {
       auto site = request->site().c_str();
       ViInt64 sample_count {};
       auto status = library_->GetHistoryRAMSampleCount(vi, site, &sample_count);
-      response->set_status(status);
-      if (status_ok(status)) {
-        response->set_sample_count(sample_count);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
       }
+      response->set_status(status);
+      response->set_sample_count(sample_count);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1996,9 +2164,8 @@ namespace nidigitalpattern_grpc {
       ViInt32 actual_num_pins {};
       while (true) {
         auto status = library_->GetPatternPinIndexes(vi, start_label, 0, nullptr, &actual_num_pins);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
         }
         response->mutable_pin_indexes()->Resize(actual_num_pins, 0);
         ViInt32* pin_indexes = reinterpret_cast<ViInt32*>(response->mutable_pin_indexes()->mutable_data());
@@ -2008,11 +2175,12 @@ namespace nidigitalpattern_grpc {
           // buffer is now too small, try again
           continue;
         }
-        response->set_status(status);
-        if (status_ok(status)) {
-          response->mutable_pin_indexes()->Resize(actual_num_pins, 0);
-          response->set_actual_num_pins(actual_num_pins);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
         }
+        response->set_status(status);
+        response->mutable_pin_indexes()->Resize(actual_num_pins, 0);
+        response->set_actual_num_pins(actual_num_pins);
         return ::grpc::Status::OK;
       }
     }
@@ -2035,9 +2203,8 @@ namespace nidigitalpattern_grpc {
 
       while (true) {
         auto status = library_->GetPatternName(vi, pattern_index, 0, nullptr);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
         }
         ViInt32 name_buffer_size = status;
 
@@ -2050,11 +2217,12 @@ namespace nidigitalpattern_grpc {
           // buffer is now too small, try again
           continue;
         }
-        response->set_status(status);
-        if (status_ok(status)) {
-          response->set_name(name);
-          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_name()));
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
         }
+        response->set_status(status);
+        response->set_name(name);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_name()));
         return ::grpc::Status::OK;
       }
     }
@@ -2077,9 +2245,8 @@ namespace nidigitalpattern_grpc {
 
       while (true) {
         auto status = library_->GetPatternPinList(vi, start_label, 0, nullptr);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
         }
         ViInt32 pin_list_buffer_size = status;
 
@@ -2092,11 +2259,12 @@ namespace nidigitalpattern_grpc {
           // buffer is now too small, try again
           continue;
         }
-        response->set_status(status);
-        if (status_ok(status)) {
-          response->set_pin_list(pin_list);
-          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_pin_list()));
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
         }
+        response->set_status(status);
+        response->set_pin_list(pin_list);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_pin_list()));
         return ::grpc::Status::OK;
       }
     }
@@ -2119,9 +2287,8 @@ namespace nidigitalpattern_grpc {
 
       while (true) {
         auto status = library_->GetPinName(vi, pin_index, 0, nullptr);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
         }
         ViInt32 name_buffer_size = status;
 
@@ -2134,11 +2301,12 @@ namespace nidigitalpattern_grpc {
           // buffer is now too small, try again
           continue;
         }
-        response->set_status(status);
-        if (status_ok(status)) {
-          response->set_name(name);
-          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_name()));
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
         }
+        response->set_status(status);
+        response->set_name(name);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_name()));
         return ::grpc::Status::OK;
       }
     }
@@ -2161,9 +2329,8 @@ namespace nidigitalpattern_grpc {
       ViInt32 actual_num_values {};
       while (true) {
         auto status = library_->GetPinResultsPinInformation(vi, channel_list, 0, nullptr, nullptr, nullptr, &actual_num_values);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
         }
         response->mutable_pin_indexes()->Resize(actual_num_values, 0);
         ViInt32* pin_indexes = reinterpret_cast<ViInt32*>(response->mutable_pin_indexes()->mutable_data());
@@ -2177,13 +2344,14 @@ namespace nidigitalpattern_grpc {
           // buffer is now too small, try again
           continue;
         }
-        response->set_status(status);
-        if (status_ok(status)) {
-          response->mutable_pin_indexes()->Resize(actual_num_values, 0);
-          response->mutable_site_numbers()->Resize(actual_num_values, 0);
-          response->mutable_channel_indexes()->Resize(actual_num_values, 0);
-          response->set_actual_num_values(actual_num_values);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
         }
+        response->set_status(status);
+        response->mutable_pin_indexes()->Resize(actual_num_values, 0);
+        response->mutable_site_numbers()->Resize(actual_num_values, 0);
+        response->mutable_channel_indexes()->Resize(actual_num_values, 0);
+        response->set_actual_num_values(actual_num_values);
         return ::grpc::Status::OK;
       }
     }
@@ -2206,9 +2374,8 @@ namespace nidigitalpattern_grpc {
       ViInt32 actual_num_sites {};
       while (true) {
         auto status = library_->GetSitePassFail(vi, site_list, 0, nullptr, &actual_num_sites);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
         }
         std::vector<ViBoolean> pass_fail(actual_num_sites, ViBoolean());
         auto pass_fail_buffer_size = actual_num_sites;
@@ -2217,12 +2384,13 @@ namespace nidigitalpattern_grpc {
           // buffer is now too small, try again
           continue;
         }
-        response->set_status(status);
-        if (status_ok(status)) {
-          convert_to_grpc(pass_fail, response->mutable_pass_fail());
-          response->mutable_pass_fail()->Resize(actual_num_sites, 0);
-          response->set_actual_num_sites(actual_num_sites);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
         }
+        response->set_status(status);
+        convert_to_grpc(pass_fail, response->mutable_pass_fail());
+        response->mutable_pass_fail()->Resize(actual_num_sites, 0);
+        response->set_actual_num_sites(actual_num_sites);
         return ::grpc::Status::OK;
       }
     }
@@ -2261,9 +2429,8 @@ namespace nidigitalpattern_grpc {
       ViInt32 actual_num_site_numbers {};
       while (true) {
         auto status = library_->GetSiteResultsSiteNumbers(vi, site_list, site_result_type, 0, nullptr, &actual_num_site_numbers);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
         }
         response->mutable_site_numbers()->Resize(actual_num_site_numbers, 0);
         ViInt32* site_numbers = reinterpret_cast<ViInt32*>(response->mutable_site_numbers()->mutable_data());
@@ -2273,11 +2440,12 @@ namespace nidigitalpattern_grpc {
           // buffer is now too small, try again
           continue;
         }
-        response->set_status(status);
-        if (status_ok(status)) {
-          response->mutable_site_numbers()->Resize(actual_num_site_numbers, 0);
-          response->set_actual_num_site_numbers(actual_num_site_numbers);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
         }
+        response->set_status(status);
+        response->mutable_site_numbers()->Resize(actual_num_site_numbers, 0);
+        response->set_actual_num_site_numbers(actual_num_site_numbers);
         return ::grpc::Status::OK;
       }
     }
@@ -2300,11 +2468,12 @@ namespace nidigitalpattern_grpc {
       auto time_set_name = request->time_set_name().c_str();
       ViInt32 format {};
       auto status = library_->GetTimeSetDriveFormat(vi, pin, time_set_name, &format);
-      response->set_status(status);
-      if (status_ok(status)) {
-        response->set_format(static_cast<nidigitalpattern_grpc::DriveFormat>(format));
-        response->set_format_raw(format);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
       }
+      response->set_status(status);
+      response->set_format(static_cast<nidigitalpattern_grpc::DriveFormat>(format));
+      response->set_format_raw(format);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -2342,10 +2511,11 @@ namespace nidigitalpattern_grpc {
 
       ViReal64 time {};
       auto status = library_->GetTimeSetEdge(vi, pin, time_set_name, edge, &time);
-      response->set_status(status);
-      if (status_ok(status)) {
-        response->set_time(time);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
       }
+      response->set_status(status);
+      response->set_time(time);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -2367,10 +2537,11 @@ namespace nidigitalpattern_grpc {
       auto time_set_name = request->time_set_name().c_str();
       ViInt32 edge_multiplier {};
       auto status = library_->GetTimeSetEdgeMultiplier(vi, pin, time_set_name, &edge_multiplier);
-      response->set_status(status);
-      if (status_ok(status)) {
-        response->set_edge_multiplier(edge_multiplier);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
       }
+      response->set_status(status);
+      response->set_edge_multiplier(edge_multiplier);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -2392,9 +2563,8 @@ namespace nidigitalpattern_grpc {
 
       while (true) {
         auto status = library_->GetTimeSetName(vi, time_set_index, 0, nullptr);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
         }
         ViInt32 name_buffer_size = status;
 
@@ -2407,11 +2577,12 @@ namespace nidigitalpattern_grpc {
           // buffer is now too small, try again
           continue;
         }
-        response->set_status(status);
-        if (status_ok(status)) {
-          response->set_name(name);
-          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_name()));
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
         }
+        response->set_status(status);
+        response->set_name(name);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_name()));
         return ::grpc::Status::OK;
       }
     }
@@ -2433,10 +2604,11 @@ namespace nidigitalpattern_grpc {
       auto time_set_name = request->time_set_name().c_str();
       ViReal64 period {};
       auto status = library_->GetTimeSetPeriod(vi, time_set_name, &period);
-      response->set_status(status);
-      if (status_ok(status)) {
-        response->set_period(period);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
       }
+      response->set_status(status);
+      response->set_period(period);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -2465,14 +2637,11 @@ namespace nidigitalpattern_grpc {
       const std::string& grpc_device_session_name = request->session_name();
       auto cleanup_lambda = [&] (ViSession id) { library_->Close(id); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, 0);
+      }
       response->set_status(status);
-      if (status_ok(status)) {
-        response->mutable_vi()->set_id(session_id);
-      }
-      else {
-        const auto error_message = get_last_error_message(library_);
-        response->set_error_message(error_message);
-      }
+      response->mutable_vi()->set_id(session_id);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -2505,14 +2674,11 @@ namespace nidigitalpattern_grpc {
       const std::string& grpc_device_session_name = request->session_name();
       auto cleanup_lambda = [&] (ViSession id) { library_->Close(id); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, 0);
+      }
       response->set_status(status);
-      if (status_ok(status)) {
-        response->mutable_vi()->set_id(session_id);
-      }
-      else {
-        const auto error_message = get_last_error_message(library_);
-        response->set_error_message(error_message);
-      }
+      response->mutable_vi()->set_id(session_id);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -2534,6 +2700,9 @@ namespace nidigitalpattern_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Initiate(vi);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2554,10 +2723,11 @@ namespace nidigitalpattern_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViBoolean done {};
       auto status = library_->IsDone(vi, &done);
-      response->set_status(status);
-      if (status_ok(status)) {
-        response->set_done(done);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
       }
+      response->set_status(status);
+      response->set_done(done);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -2578,10 +2748,11 @@ namespace nidigitalpattern_grpc {
       auto site = request->site().c_str();
       ViBoolean enable {};
       auto status = library_->IsSiteEnabled(vi, site, &enable);
-      response->set_status(status);
-      if (status_ok(status)) {
-        response->set_enable(enable);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
       }
+      response->set_status(status);
+      response->set_enable(enable);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -2601,6 +2772,9 @@ namespace nidigitalpattern_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto file_path = request->file_path().c_str();
       auto status = library_->LoadLevels(vi, file_path);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2621,6 +2795,9 @@ namespace nidigitalpattern_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto file_path = request->file_path().c_str();
       auto status = library_->LoadPattern(vi, file_path);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2641,6 +2818,9 @@ namespace nidigitalpattern_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto file_path = request->file_path().c_str();
       auto status = library_->LoadPinMap(vi, file_path);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2661,6 +2841,9 @@ namespace nidigitalpattern_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto file_path = request->file_path().c_str();
       auto status = library_->LoadSpecifications(vi, file_path);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2681,6 +2864,9 @@ namespace nidigitalpattern_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto file_path = request->file_path().c_str();
       auto status = library_->LoadTiming(vi, file_path);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2703,6 +2889,9 @@ namespace nidigitalpattern_grpc {
       ViInt32 site = request->site();
       auto channel = request->channel().c_str();
       auto status = library_->MapPinToChannel(vi, pin, site, channel);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2740,6 +2929,9 @@ namespace nidigitalpattern_grpc {
       }
 
       auto status = library_->PPMUConfigureApertureTime(vi, channel_list, aperture_time, units);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2761,6 +2953,9 @@ namespace nidigitalpattern_grpc {
       auto channel_list = request->channel_list().c_str();
       ViReal64 current_level = request->current_level();
       auto status = library_->PPMUConfigureCurrentLevel(vi, channel_list, current_level);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2782,6 +2977,9 @@ namespace nidigitalpattern_grpc {
       auto channel_list = request->channel_list().c_str();
       ViReal64 range = request->range();
       auto status = library_->PPMUConfigureCurrentLevelRange(vi, channel_list, range);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2819,6 +3017,9 @@ namespace nidigitalpattern_grpc {
 
       ViReal64 limit = request->limit();
       auto status = library_->PPMUConfigureCurrentLimit(vi, channel_list, behavior, limit);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2840,6 +3041,9 @@ namespace nidigitalpattern_grpc {
       auto channel_list = request->channel_list().c_str();
       ViReal64 range = request->range();
       auto status = library_->PPMUConfigureCurrentLimitRange(vi, channel_list, range);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2876,6 +3080,9 @@ namespace nidigitalpattern_grpc {
       }
 
       auto status = library_->PPMUConfigureOutputFunction(vi, channel_list, output_function);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2897,6 +3104,9 @@ namespace nidigitalpattern_grpc {
       auto channel_list = request->channel_list().c_str();
       ViReal64 voltage_level = request->voltage_level();
       auto status = library_->PPMUConfigureVoltageLevel(vi, channel_list, voltage_level);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2919,6 +3129,9 @@ namespace nidigitalpattern_grpc {
       ViReal64 lower_voltage_limit = request->lower_voltage_limit();
       ViReal64 upper_voltage_limit = request->upper_voltage_limit();
       auto status = library_->PPMUConfigureVoltageLimits(vi, channel_list, lower_voltage_limit, upper_voltage_limit);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2957,9 +3170,8 @@ namespace nidigitalpattern_grpc {
       ViInt32 actual_num_read {};
       while (true) {
         auto status = library_->PPMUMeasure(vi, channel_list, measurement_type, 0, nullptr, &actual_num_read);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
         }
         response->mutable_measurements()->Resize(actual_num_read, 0);
         ViReal64* measurements = response->mutable_measurements()->mutable_data();
@@ -2969,11 +3181,12 @@ namespace nidigitalpattern_grpc {
           // buffer is now too small, try again
           continue;
         }
-        response->set_status(status);
-        if (status_ok(status)) {
-          response->mutable_measurements()->Resize(actual_num_read, 0);
-          response->set_actual_num_read(actual_num_read);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
         }
+        response->set_status(status);
+        response->mutable_measurements()->Resize(actual_num_read, 0);
+        response->set_actual_num_read(actual_num_read);
         return ::grpc::Status::OK;
       }
     }
@@ -2994,6 +3207,9 @@ namespace nidigitalpattern_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto channel_list = request->channel_list().c_str();
       auto status = library_->PPMUSource(vi, channel_list);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -3015,10 +3231,11 @@ namespace nidigitalpattern_grpc {
       auto flag = request->flag().c_str();
       ViBoolean value {};
       auto status = library_->ReadSequencerFlag(vi, flag, &value);
-      response->set_status(status);
-      if (status_ok(status)) {
-        response->set_value(value);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
       }
+      response->set_status(status);
+      response->set_value(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -3039,10 +3256,11 @@ namespace nidigitalpattern_grpc {
       auto reg = request->reg().c_str();
       ViInt32 value {};
       auto status = library_->ReadSequencerRegister(vi, reg, &value);
-      response->set_status(status);
-      if (status_ok(status)) {
-        response->set_value(value);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
       }
+      response->set_status(status);
+      response->set_value(value);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -3064,9 +3282,8 @@ namespace nidigitalpattern_grpc {
       ViInt32 actual_num_read {};
       while (true) {
         auto status = library_->ReadStatic(vi, channel_list, 0, nullptr, &actual_num_read);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
         }
         std::string data(actual_num_read, '\0');
         auto buffer_size = actual_num_read;
@@ -3075,13 +3292,14 @@ namespace nidigitalpattern_grpc {
           // buffer is now too small, try again
           continue;
         }
-        response->set_status(status);
-        if (status_ok(status)) {
-          CopyBytesToEnums(data, response->mutable_data());
-          response->set_data_raw(data);
-          response->mutable_data()->Resize(actual_num_read, 0);
-          response->set_actual_num_read(actual_num_read);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
         }
+        response->set_status(status);
+        CopyBytesToEnums(data, response->mutable_data());
+        response->set_data_raw(data);
+        response->mutable_data()->Resize(actual_num_read, 0);
+        response->set_actual_num_read(actual_num_read);
         return ::grpc::Status::OK;
       }
     }
@@ -3101,6 +3319,9 @@ namespace nidigitalpattern_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Reset(vi);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -3122,6 +3343,9 @@ namespace nidigitalpattern_grpc {
       auto channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
       auto status = library_->ResetAttribute(vi, channel_name, attribute_id);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -3141,6 +3365,9 @@ namespace nidigitalpattern_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->ResetDevice(vi);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -3177,6 +3404,9 @@ namespace nidigitalpattern_grpc {
       }
 
       auto status = library_->SelectFunction(vi, channel_list, function);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -3196,6 +3426,9 @@ namespace nidigitalpattern_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->SelfCalibrate(vi);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -3217,12 +3450,13 @@ namespace nidigitalpattern_grpc {
       ViInt16 test_result {};
       std::string test_message(2048 - 1, '\0');
       auto status = library_->SelfTest(vi, &test_result, (ViChar*)test_message.data());
-      response->set_status(status);
-      if (status_ok(status)) {
-        response->set_test_result(test_result);
-        response->set_test_message(test_message);
-        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_test_message()));
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
       }
+      response->set_status(status);
+      response->set_test_result(test_result);
+      response->set_test_message(test_message);
+      nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_test_message()));
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -3258,6 +3492,9 @@ namespace nidigitalpattern_grpc {
 
       auto trigger_identifier = request->trigger_identifier().c_str();
       auto status = library_->SendSoftwareEdgeTrigger(vi, trigger, trigger_identifier);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -3280,6 +3517,9 @@ namespace nidigitalpattern_grpc {
       ViAttr attribute = request->attribute();
       ViBoolean value = request->value();
       auto status = library_->SetAttributeViBoolean(vi, channel_name, attribute, value);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -3317,6 +3557,9 @@ namespace nidigitalpattern_grpc {
       }
 
       auto status = library_->SetAttributeViInt32(vi, channel_name, attribute, value);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -3339,6 +3582,9 @@ namespace nidigitalpattern_grpc {
       ViAttr attribute = request->attribute();
       ViInt64 value = request->value_raw();
       auto status = library_->SetAttributeViInt64(vi, channel_name, attribute, value);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -3361,6 +3607,9 @@ namespace nidigitalpattern_grpc {
       ViAttr attribute = request->attribute();
       ViReal64 value = request->value_raw();
       auto status = library_->SetAttributeViReal64(vi, channel_name, attribute, value);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -3384,6 +3633,9 @@ namespace nidigitalpattern_grpc {
       auto value_grpc_session = request->value();
       ViSession value = session_repository_->access_session(value_grpc_session.id(), value_grpc_session.name());
       auto status = library_->SetAttributeViSession(vi, channel_list, attribute, value);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -3406,6 +3658,9 @@ namespace nidigitalpattern_grpc {
       ViAttr attribute = request->attribute();
       auto value = request->value_raw().c_str();
       auto status = library_->SetAttributeViString(vi, channel_name, attribute, value);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -3429,9 +3684,8 @@ namespace nidigitalpattern_grpc {
       ViInt32 actual_num_offsets {};
       while (true) {
         auto status = library_->TDR(vi, channel_list, apply_offsets, 0, nullptr, &actual_num_offsets);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
         }
         response->mutable_offsets()->Resize(actual_num_offsets, 0);
         ViReal64* offsets = response->mutable_offsets()->mutable_data();
@@ -3441,11 +3695,12 @@ namespace nidigitalpattern_grpc {
           // buffer is now too small, try again
           continue;
         }
-        response->set_status(status);
-        if (status_ok(status)) {
-          response->mutable_offsets()->Resize(actual_num_offsets, 0);
-          response->set_actual_num_offsets(actual_num_offsets);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(status, vi);
         }
+        response->set_status(status);
+        response->mutable_offsets()->Resize(actual_num_offsets, 0);
+        response->set_actual_num_offsets(actual_num_offsets);
         return ::grpc::Status::OK;
       }
     }
@@ -3466,6 +3721,9 @@ namespace nidigitalpattern_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViBoolean unload_keep_alive_pattern = request->unload_keep_alive_pattern();
       auto status = library_->UnloadAllPatterns(vi, unload_keep_alive_pattern);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -3486,6 +3744,9 @@ namespace nidigitalpattern_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto file_path = request->file_path().c_str();
       auto status = library_->UnloadSpecifications(vi, file_path);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -3506,6 +3767,9 @@ namespace nidigitalpattern_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViReal64 timeout = request->timeout();
       auto status = library_->WaitUntilDone(vi, timeout);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -3527,6 +3791,9 @@ namespace nidigitalpattern_grpc {
       auto flag = request->flag().c_str();
       ViBoolean value = request->value();
       auto status = library_->WriteSequencerFlag(vi, flag, value);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -3554,6 +3821,9 @@ namespace nidigitalpattern_grpc {
       auto flag = request->flag().c_str();
       ViBoolean value = request->value();
       auto status = library_->WriteSequencerFlagSynchronized(session_count, sessions.data(), flag, value);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, 0);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -3575,6 +3845,9 @@ namespace nidigitalpattern_grpc {
       auto reg = request->reg().c_str();
       ViInt32 value = request->value();
       auto status = library_->WriteSequencerRegister(vi, reg, value);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -3597,6 +3870,9 @@ namespace nidigitalpattern_grpc {
       ViInt32 waveform_size = static_cast<ViInt32>(request->waveform_data().size());
       auto waveform_data = const_cast<ViUInt32*>(reinterpret_cast<const ViUInt32*>(request->waveform_data().data()));
       auto status = library_->WriteSourceWaveformBroadcastU32(vi, waveform_name, waveform_size, waveform_data);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -3618,6 +3894,9 @@ namespace nidigitalpattern_grpc {
       auto waveform_name = request->waveform_name().c_str();
       auto waveform_file_path = request->waveform_file_path().c_str();
       auto status = library_->WriteSourceWaveformDataFromFileTDMS(vi, waveform_name, waveform_file_path);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -3654,6 +3933,9 @@ namespace nidigitalpattern_grpc {
       }
 
       auto status = library_->WriteStatic(vi, channel_list, state);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -3678,6 +3960,9 @@ namespace nidigitalpattern_grpc {
       ViInt32 samples_per_waveform = request->samples_per_waveform();
       auto waveform_data = const_cast<ViUInt32*>(reinterpret_cast<const ViUInt32*>(request->waveform_data().data()));
       auto status = library_->WriteSourceWaveformSiteUniqueU32(vi, site_list, waveform_name, num_waveforms, samples_per_waveform, waveform_data);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(status, vi);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }

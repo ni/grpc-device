@@ -431,6 +431,7 @@ public:
 private:
   NiDAQmxLibraryInterface* library_;
   ResourceRepositorySharedPtr session_repository_;
+  ::grpc::Status ConvertApiErrorStatusForTaskHandle(google::protobuf::int32 status, TaskHandle task);
 
   NiDAQmxFeatureToggles feature_toggles_;
 };

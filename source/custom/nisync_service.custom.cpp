@@ -25,15 +25,24 @@ namespace nisync_grpc {
     ViInt32* detected_edge_buffer = reinterpret_cast<ViInt32*>(response->mutable_detected_edge_buffer()->mutable_data());
     ViUInt32 timestamps_read {};
     auto status = library_->ReadMultipleTriggerTimeStamp(vi, terminal, timestamps_to_read, timeout, time_seconds_buffer, time_nanoseconds_buffer, time_fractional_nanoseconds_buffer, detected_edge_buffer, &timestamps_read);
-    response->set_status(status);
-    if (status == VI_SUCCESS || status == NISYNC_ERROR_DRIVER_TIMEOUT) {
-      response->set_timestamps_read(timestamps_read);
+    if (status < VI_SUCCESS && status != NISYNC_ERROR_DRIVER_TIMEOUT) {
+      return ConvertApiErrorStatusForViSession(status, vi);
     }
+    response->set_status(status);
+    response->set_timestamps_read(timestamps_read);
     return ::grpc::Status::OK;
   }
   catch (nidevice_grpc::LibraryLoadException& ex) {
     return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
   }
+}
+
+::grpc::Status NiSyncService::ConvertApiErrorStatusForViSession(google::protobuf::int32 status, ViSession vi)
+{
+    static_assert(nidevice_grpc::kMaxGrpcErrorDescriptionSize >= 256, "ErrorMessage expects a minimum buffer size.");
+    std::string description(nidevice_grpc::kMaxGrpcErrorDescriptionSize, '\0');
+    library_->ErrorMessage(vi, status, &description[0]);
+    return nidevice_grpc::ApiErrorAndDescriptionToStatus(status, description);
 }
 
 }  // namespace nisync_grpc

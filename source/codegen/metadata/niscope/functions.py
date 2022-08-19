@@ -2000,7 +2000,6 @@ functions = {
         'returns':'ViStatus'
     },
     'GetNormalizationCoefficients':{
-        'codegen_method': 'CustomCode',
         'parameters':[
             {
                 'name':'vi',
@@ -2038,7 +2037,6 @@ functions = {
         'returns':'ViStatus'
     },
     'GetScalingCoefficients': {
-        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',

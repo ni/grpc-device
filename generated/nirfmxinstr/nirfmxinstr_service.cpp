@@ -59,9 +59,8 @@ namespace nirfmxinstr_grpc {
 
       while (true) {
         auto status = library_->BuildCalibrationPlaneString(calibration_plane_name, 0, nullptr);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, 0);
         }
         int32 selector_string_length = status;
 
@@ -74,11 +73,12 @@ namespace nirfmxinstr_grpc {
           // buffer is now too small, try again
           continue;
         }
-        response->set_status(status);
-        if (status_ok(status)) {
-          response->set_selector_string(selector_string);
-          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_selector_string()));
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, 0);
         }
+        response->set_status(status);
+        response->set_selector_string(selector_string);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_selector_string()));
         return ::grpc::Status::OK;
       }
     }
@@ -100,9 +100,8 @@ namespace nirfmxinstr_grpc {
 
       while (true) {
         auto status = library_->BuildInstrumentString(selector_string, instrument_number, 0, nullptr);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, 0);
         }
         int32 selector_string_out_length = status;
 
@@ -115,11 +114,12 @@ namespace nirfmxinstr_grpc {
           // buffer is now too small, try again
           continue;
         }
-        response->set_status(status);
-        if (status_ok(status)) {
-          response->set_selector_string_out(selector_string_out);
-          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_selector_string_out()));
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, 0);
         }
+        response->set_status(status);
+        response->set_selector_string_out(selector_string_out);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_selector_string_out()));
         return ::grpc::Status::OK;
       }
     }
@@ -141,9 +141,8 @@ namespace nirfmxinstr_grpc {
 
       while (true) {
         auto status = library_->BuildLOString(selector_string, lo_index, 0, nullptr);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, 0);
         }
         int32 selector_string_out_length = status;
 
@@ -156,11 +155,12 @@ namespace nirfmxinstr_grpc {
           // buffer is now too small, try again
           continue;
         }
-        response->set_status(status);
-        if (status_ok(status)) {
-          response->set_selector_string_out(selector_string_out);
-          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_selector_string_out()));
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, 0);
         }
+        response->set_status(status);
+        response->set_selector_string_out(selector_string_out);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_selector_string_out()));
         return ::grpc::Status::OK;
       }
     }
@@ -182,9 +182,8 @@ namespace nirfmxinstr_grpc {
 
       while (true) {
         auto status = library_->BuildModuleString(selector_string, module_name, 0, nullptr);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, 0);
         }
         int32 selector_string_out_length = status;
 
@@ -197,11 +196,12 @@ namespace nirfmxinstr_grpc {
           // buffer is now too small, try again
           continue;
         }
-        response->set_status(status);
-        if (status_ok(status)) {
-          response->set_selector_string_out(selector_string_out);
-          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_selector_string_out()));
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, 0);
         }
+        response->set_status(status);
+        response->set_selector_string_out(selector_string_out);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_selector_string_out()));
         return ::grpc::Status::OK;
       }
     }
@@ -239,6 +239,9 @@ namespace nirfmxinstr_grpc {
       }
 
       auto status = library_->CfgExternalAttenuationInterpolationLinear(instrument, selector_string, table_name, format);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -260,6 +263,9 @@ namespace nirfmxinstr_grpc {
       char* selector_string = (char*)request->selector_string().c_str();
       char* table_name = (char*)request->table_name().c_str();
       auto status = library_->CfgExternalAttenuationInterpolationNearest(instrument, selector_string, table_name);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -281,6 +287,9 @@ namespace nirfmxinstr_grpc {
       char* selector_string = (char*)request->selector_string().c_str();
       char* table_name = (char*)request->table_name().c_str();
       auto status = library_->CfgExternalAttenuationInterpolationSpline(instrument, selector_string, table_name);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -321,6 +330,9 @@ namespace nirfmxinstr_grpc {
       auto array_size = array_size_size_calculation.size;
 
       auto status = library_->CfgExternalAttenuationTable(instrument, selector_string, table_name, frequency, external_attenuation, array_size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -362,6 +374,9 @@ namespace nirfmxinstr_grpc {
 
       float64 frequency_reference_frequency = request->frequency_reference_frequency();
       auto status = library_->CfgFrequencyReference(instrument, channel_name, frequency_reference_source, frequency_reference_frequency);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -399,6 +414,9 @@ namespace nirfmxinstr_grpc {
 
       float64 mechanical_attenuation_value = request->mechanical_attenuation_value();
       auto status = library_->CfgMechanicalAttenuation(instrument, channel_name, mechanical_attenuation_auto, mechanical_attenuation_value);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -436,6 +454,9 @@ namespace nirfmxinstr_grpc {
 
       float64 rf_attenuation_value = request->rf_attenuation_value();
       auto status = library_->CfgRFAttenuation(instrument, channel_name, rf_attenuation_auto, rf_attenuation_value);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -478,6 +499,9 @@ namespace nirfmxinstr_grpc {
       }
 
       auto status = library_->CfgSParameterExternalAttenuationTable(instrument, selector_string, table_name, frequency, frequency_array_size, s_parameters.data(), s_parameter_table_size, number_of_ports, s_parameter_orientation);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -514,6 +538,9 @@ namespace nirfmxinstr_grpc {
       }
 
       auto status = library_->CfgSParameterExternalAttenuationType(instrument, selector_string, s_parameter_type);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -534,10 +561,11 @@ namespace nirfmxinstr_grpc {
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       int32 acquisition_done {};
       auto status = library_->CheckAcquisitionStatus(instrument, &acquisition_done);
-      response->set_status(status);
-      if (status_ok(status)) {
-        response->set_acquisition_done(acquisition_done);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
+      response->set_status(status);
+      response->set_acquisition_done(acquisition_done);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -559,12 +587,13 @@ namespace nirfmxinstr_grpc {
       int32 list_exists {};
       int32 personality {};
       auto status = library_->CheckIfListExists(instrument, list_name, &list_exists, &personality);
-      response->set_status(status);
-      if (status_ok(status)) {
-        response->set_list_exists(list_exists);
-        response->set_personality(static_cast<nirfmxinstr_grpc::Personality>(personality));
-        response->set_personality_raw(personality);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
+      response->set_status(status);
+      response->set_list_exists(list_exists);
+      response->set_personality(static_cast<nirfmxinstr_grpc::Personality>(personality));
+      response->set_personality_raw(personality);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -586,12 +615,13 @@ namespace nirfmxinstr_grpc {
       int32 signal_configuration_exists {};
       int32 personality {};
       auto status = library_->CheckIfSignalConfigurationExists(instrument, signal_name, &signal_configuration_exists, &personality);
-      response->set_status(status);
-      if (status_ok(status)) {
-        response->set_signal_configuration_exists(signal_configuration_exists);
-        response->set_personality(static_cast<nirfmxinstr_grpc::Personality>(personality));
-        response->set_personality_raw(personality);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
+      response->set_status(status);
+      response->set_signal_configuration_exists(signal_configuration_exists);
+      response->set_personality(static_cast<nirfmxinstr_grpc::Personality>(personality));
+      response->set_personality_raw(personality);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -612,6 +642,9 @@ namespace nirfmxinstr_grpc {
       int32 force_destroy = request->force_destroy();
       session_repository_->remove_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       auto status = library_->Close(instrument, force_destroy);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -632,6 +665,9 @@ namespace nirfmxinstr_grpc {
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto status = library_->DeleteAllExternalAttenuationTables(instrument, selector_string);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -653,6 +689,9 @@ namespace nirfmxinstr_grpc {
       char* selector_string = (char*)request->selector_string().c_str();
       char* table_name = (char*)request->table_name().c_str();
       auto status = library_->DeleteExternalAttenuationTable(instrument, selector_string, table_name);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -673,6 +712,9 @@ namespace nirfmxinstr_grpc {
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto status = library_->DisableCalibrationPlane(instrument, selector_string);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -693,6 +735,9 @@ namespace nirfmxinstr_grpc {
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto status = library_->EnableCalibrationPlane(instrument, selector_string);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -748,6 +793,9 @@ namespace nirfmxinstr_grpc {
       }
 
       auto status = library_->ExportSignal(instrument, export_signal_source, export_signal_output_terminal);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -770,10 +818,11 @@ namespace nirfmxinstr_grpc {
       int32 attribute_id = request->attribute_id();
       float32 attr_val {};
       auto status = library_->GetAttributeF32(instrument, channel_name, attribute_id, &attr_val);
-      response->set_status(status);
-      if (status_ok(status)) {
-        response->set_attr_val(attr_val);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
+      response->set_status(status);
+      response->set_attr_val(attr_val);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -796,9 +845,8 @@ namespace nirfmxinstr_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->GetAttributeF32Array(instrument, channel_name, attribute_id, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->mutable_attr_val()->Resize(actual_array_size, 0);
         float32* attr_val = response->mutable_attr_val()->mutable_data();
@@ -808,11 +856,12 @@ namespace nirfmxinstr_grpc {
           // buffer is now too small, try again
           continue;
         }
-        response->set_status(status);
-        if (status_ok(status)) {
-          response->mutable_attr_val()->Resize(actual_array_size, 0);
-          response->set_actual_array_size(actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
+        response->set_status(status);
+        response->mutable_attr_val()->Resize(actual_array_size, 0);
+        response->set_actual_array_size(actual_array_size);
         return ::grpc::Status::OK;
       }
     }
@@ -835,10 +884,11 @@ namespace nirfmxinstr_grpc {
       int32 attribute_id = request->attribute_id();
       float64 attr_val {};
       auto status = library_->GetAttributeF64(instrument, channel_name, attribute_id, &attr_val);
-      response->set_status(status);
-      if (status_ok(status)) {
-        response->set_attr_val(attr_val);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
+      response->set_status(status);
+      response->set_attr_val(attr_val);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -861,9 +911,8 @@ namespace nirfmxinstr_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->GetAttributeF64Array(instrument, channel_name, attribute_id, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->mutable_attr_val()->Resize(actual_array_size, 0);
         float64* attr_val = response->mutable_attr_val()->mutable_data();
@@ -873,11 +922,12 @@ namespace nirfmxinstr_grpc {
           // buffer is now too small, try again
           continue;
         }
-        response->set_status(status);
-        if (status_ok(status)) {
-          response->mutable_attr_val()->Resize(actual_array_size, 0);
-          response->set_actual_array_size(actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
+        response->set_status(status);
+        response->mutable_attr_val()->Resize(actual_array_size, 0);
+        response->set_actual_array_size(actual_array_size);
         return ::grpc::Status::OK;
       }
     }
@@ -900,10 +950,11 @@ namespace nirfmxinstr_grpc {
       int32 attribute_id = request->attribute_id();
       int16 attr_val {};
       auto status = library_->GetAttributeI16(instrument, channel_name, attribute_id, &attr_val);
-      response->set_status(status);
-      if (status_ok(status)) {
-        response->set_attr_val(attr_val);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
+      response->set_status(status);
+      response->set_attr_val(attr_val);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -925,16 +976,17 @@ namespace nirfmxinstr_grpc {
       int32 attribute_id = request->attribute_id();
       int32 attr_val {};
       auto status = library_->GetAttributeI32(instrument, channel_name, attribute_id, &attr_val);
-      response->set_status(status);
-      if (status_ok(status)) {
-        auto checked_convert_attr_val = [](auto raw_value) {
-          bool raw_value_is_valid = nirfmxinstr_grpc::NiRFmxInstrInt32AttributeValues_IsValid(raw_value);
-          auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
-          return static_cast<nirfmxinstr_grpc::NiRFmxInstrInt32AttributeValues>(valid_enum_value);
-        };
-        response->set_attr_val(checked_convert_attr_val(attr_val));
-        response->set_attr_val_raw(attr_val);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
+      response->set_status(status);
+      auto checked_convert_attr_val = [](auto raw_value) {
+        bool raw_value_is_valid = nirfmxinstr_grpc::NiRFmxInstrInt32AttributeValues_IsValid(raw_value);
+        auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
+        return static_cast<nirfmxinstr_grpc::NiRFmxInstrInt32AttributeValues>(valid_enum_value);
+      };
+      response->set_attr_val(checked_convert_attr_val(attr_val));
+      response->set_attr_val_raw(attr_val);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -957,9 +1009,8 @@ namespace nirfmxinstr_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->GetAttributeI32Array(instrument, channel_name, attribute_id, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->mutable_attr_val_raw()->Resize(actual_array_size, 0);
         int32* attr_val = reinterpret_cast<int32*>(response->mutable_attr_val_raw()->mutable_data());
@@ -969,13 +1020,15 @@ namespace nirfmxinstr_grpc {
           // buffer is now too small, try again
           continue;
         }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        }
         response->set_status(status);
-        if (status_ok(status)) {
-          auto checked_convert_attr_val = [](auto raw_value) {
-            bool raw_value_is_valid = nirfmxinstr_grpc::NiRFmxInstrInt32AttributeValues_IsValid(raw_value);
-            auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
-            return static_cast<nirfmxinstr_grpc::NiRFmxInstrInt32AttributeValues>(valid_enum_value);
-          };
+        auto checked_convert_attr_val = [](auto raw_value) {
+          bool raw_value_is_valid = nirfmxinstr_grpc::NiRFmxInstrInt32AttributeValues_IsValid(raw_value);
+          auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
+          return static_cast<nirfmxinstr_grpc::NiRFmxInstrInt32AttributeValues>(valid_enum_value);
+        };
           response->mutable_attr_val()->Clear();
           response->mutable_attr_val()->Reserve(actual_array_size);
           std::transform(
@@ -985,9 +1038,8 @@ namespace nirfmxinstr_grpc {
             [&](auto x) {
                 return checked_convert_attr_val(x);
             });
-          response->mutable_attr_val()->Resize(actual_array_size, 0);
-          response->set_actual_array_size(actual_array_size);
-        }
+        response->mutable_attr_val()->Resize(actual_array_size, 0);
+        response->set_actual_array_size(actual_array_size);
         return ::grpc::Status::OK;
       }
     }
@@ -1010,10 +1062,11 @@ namespace nirfmxinstr_grpc {
       int32 attribute_id = request->attribute_id();
       int64 attr_val {};
       auto status = library_->GetAttributeI64(instrument, channel_name, attribute_id, &attr_val);
-      response->set_status(status);
-      if (status_ok(status)) {
-        response->set_attr_val(attr_val);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
+      response->set_status(status);
+      response->set_attr_val(attr_val);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1036,9 +1089,8 @@ namespace nirfmxinstr_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->GetAttributeI64Array(instrument, channel_name, attribute_id, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->mutable_attr_val()->Resize(actual_array_size, 0);
         int64* attr_val = reinterpret_cast<int64*>(response->mutable_attr_val()->mutable_data());
@@ -1048,11 +1100,12 @@ namespace nirfmxinstr_grpc {
           // buffer is now too small, try again
           continue;
         }
-        response->set_status(status);
-        if (status_ok(status)) {
-          response->mutable_attr_val()->Resize(actual_array_size, 0);
-          response->set_actual_array_size(actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
+        response->set_status(status);
+        response->mutable_attr_val()->Resize(actual_array_size, 0);
+        response->set_actual_array_size(actual_array_size);
         return ::grpc::Status::OK;
       }
     }
@@ -1075,10 +1128,11 @@ namespace nirfmxinstr_grpc {
       int32 attribute_id = request->attribute_id();
       int8 attr_val {};
       auto status = library_->GetAttributeI8(instrument, channel_name, attribute_id, &attr_val);
-      response->set_status(status);
-      if (status_ok(status)) {
-        response->set_attr_val(attr_val);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
+      response->set_status(status);
+      response->set_attr_val(attr_val);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1101,9 +1155,8 @@ namespace nirfmxinstr_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->GetAttributeI8Array(instrument, channel_name, attribute_id, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         std::vector<int8> attr_val(actual_array_size);
         auto array_size = actual_array_size;
@@ -1112,8 +1165,10 @@ namespace nirfmxinstr_grpc {
           // buffer is now too small, try again
           continue;
         }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        }
         response->set_status(status);
-        if (status_ok(status)) {
           response->mutable_attr_val()->Clear();
           response->mutable_attr_val()->Reserve(actual_array_size);
           std::transform(
@@ -1123,9 +1178,8 @@ namespace nirfmxinstr_grpc {
             [&](auto x) {
                 return x;
             });
-          response->mutable_attr_val()->Resize(actual_array_size, 0);
-          response->set_actual_array_size(actual_array_size);
-        }
+        response->mutable_attr_val()->Resize(actual_array_size, 0);
+        response->set_actual_array_size(actual_array_size);
         return ::grpc::Status::OK;
       }
     }
@@ -1149,9 +1203,8 @@ namespace nirfmxinstr_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->GetAttributeNIComplexDoubleArray(instrument, channel_name, attribute_id, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         std::vector<NIComplexDouble> attr_val(actual_array_size, NIComplexDouble());
         auto array_size = actual_array_size;
@@ -1160,18 +1213,19 @@ namespace nirfmxinstr_grpc {
           // buffer is now too small, try again
           continue;
         }
-        response->set_status(status);
-        if (status_ok(status)) {
-          convert_to_grpc(attr_val, response->mutable_attr_val());
-          {
-            auto shrunk_size = actual_array_size;
-            auto current_size = response->mutable_attr_val()->size();
-            if (shrunk_size != current_size) {
-              response->mutable_attr_val()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
-            }
-          }
-          response->set_actual_array_size(actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
+        response->set_status(status);
+        convert_to_grpc(attr_val, response->mutable_attr_val());
+        {
+          auto shrunk_size = actual_array_size;
+          auto current_size = response->mutable_attr_val()->size();
+          if (shrunk_size != current_size) {
+            response->mutable_attr_val()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
+          }
+        }
+        response->set_actual_array_size(actual_array_size);
         return ::grpc::Status::OK;
       }
     }
@@ -1195,9 +1249,8 @@ namespace nirfmxinstr_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->GetAttributeNIComplexSingleArray(instrument, channel_name, attribute_id, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         std::vector<NIComplexSingle> attr_val(actual_array_size, NIComplexSingle());
         auto array_size = actual_array_size;
@@ -1206,18 +1259,19 @@ namespace nirfmxinstr_grpc {
           // buffer is now too small, try again
           continue;
         }
-        response->set_status(status);
-        if (status_ok(status)) {
-          convert_to_grpc(attr_val, response->mutable_attr_val());
-          {
-            auto shrunk_size = actual_array_size;
-            auto current_size = response->mutable_attr_val()->size();
-            if (shrunk_size != current_size) {
-              response->mutable_attr_val()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
-            }
-          }
-          response->set_actual_array_size(actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
+        response->set_status(status);
+        convert_to_grpc(attr_val, response->mutable_attr_val());
+        {
+          auto shrunk_size = actual_array_size;
+          auto current_size = response->mutable_attr_val()->size();
+          if (shrunk_size != current_size) {
+            response->mutable_attr_val()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
+          }
+        }
+        response->set_actual_array_size(actual_array_size);
         return ::grpc::Status::OK;
       }
     }
@@ -1241,9 +1295,8 @@ namespace nirfmxinstr_grpc {
 
       while (true) {
         auto status = library_->GetAttributeString(instrument, channel_name, attribute_id, 0, nullptr);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         int32 array_size = status;
 
@@ -1256,11 +1309,12 @@ namespace nirfmxinstr_grpc {
           // buffer is now too small, try again
           continue;
         }
-        response->set_status(status);
-        if (status_ok(status)) {
-          response->set_attr_val(attr_val);
-          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_attr_val()));
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
+        response->set_status(status);
+        response->set_attr_val(attr_val);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_attr_val()));
         return ::grpc::Status::OK;
       }
     }
@@ -1283,10 +1337,11 @@ namespace nirfmxinstr_grpc {
       int32 attribute_id = request->attribute_id();
       uInt16 attr_val {};
       auto status = library_->GetAttributeU16(instrument, channel_name, attribute_id, &attr_val);
-      response->set_status(status);
-      if (status_ok(status)) {
-        response->set_attr_val(attr_val);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
+      response->set_status(status);
+      response->set_attr_val(attr_val);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1308,10 +1363,11 @@ namespace nirfmxinstr_grpc {
       int32 attribute_id = request->attribute_id();
       uInt32 attr_val {};
       auto status = library_->GetAttributeU32(instrument, channel_name, attribute_id, &attr_val);
-      response->set_status(status);
-      if (status_ok(status)) {
-        response->set_attr_val(attr_val);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
+      response->set_status(status);
+      response->set_attr_val(attr_val);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1334,9 +1390,8 @@ namespace nirfmxinstr_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->GetAttributeU32Array(instrument, channel_name, attribute_id, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->mutable_attr_val()->Resize(actual_array_size, 0);
         uInt32* attr_val = reinterpret_cast<uInt32*>(response->mutable_attr_val()->mutable_data());
@@ -1346,11 +1401,12 @@ namespace nirfmxinstr_grpc {
           // buffer is now too small, try again
           continue;
         }
-        response->set_status(status);
-        if (status_ok(status)) {
-          response->mutable_attr_val()->Resize(actual_array_size, 0);
-          response->set_actual_array_size(actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
+        response->set_status(status);
+        response->mutable_attr_val()->Resize(actual_array_size, 0);
+        response->set_actual_array_size(actual_array_size);
         return ::grpc::Status::OK;
       }
     }
@@ -1374,9 +1430,8 @@ namespace nirfmxinstr_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->GetAttributeU64Array(instrument, channel_name, attribute_id, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->mutable_attr_val()->Resize(actual_array_size, 0);
         uInt64* attr_val = reinterpret_cast<uInt64*>(response->mutable_attr_val()->mutable_data());
@@ -1386,11 +1441,12 @@ namespace nirfmxinstr_grpc {
           // buffer is now too small, try again
           continue;
         }
-        response->set_status(status);
-        if (status_ok(status)) {
-          response->mutable_attr_val()->Resize(actual_array_size, 0);
-          response->set_actual_array_size(actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
+        response->set_status(status);
+        response->mutable_attr_val()->Resize(actual_array_size, 0);
+        response->set_actual_array_size(actual_array_size);
         return ::grpc::Status::OK;
       }
     }
@@ -1413,10 +1469,11 @@ namespace nirfmxinstr_grpc {
       int32 attribute_id = request->attribute_id();
       uInt8 attr_val {};
       auto status = library_->GetAttributeU8(instrument, channel_name, attribute_id, &attr_val);
-      response->set_status(status);
-      if (status_ok(status)) {
-        response->set_attr_val(attr_val);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
+      response->set_status(status);
+      response->set_attr_val(attr_val);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1439,9 +1496,8 @@ namespace nirfmxinstr_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->GetAttributeU8Array(instrument, channel_name, attribute_id, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         std::string attr_val(actual_array_size, '\0');
         auto array_size = actual_array_size;
@@ -1450,12 +1506,13 @@ namespace nirfmxinstr_grpc {
           // buffer is now too small, try again
           continue;
         }
-        response->set_status(status);
-        if (status_ok(status)) {
-          response->set_attr_val(attr_val);
-          response->mutable_attr_val()->resize(actual_array_size);
-          response->set_actual_array_size(actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
+        response->set_status(status);
+        response->set_attr_val(attr_val);
+        response->mutable_attr_val()->resize(actual_array_size);
+        response->set_actual_array_size(actual_array_size);
         return ::grpc::Status::OK;
       }
     }
@@ -1478,9 +1535,8 @@ namespace nirfmxinstr_grpc {
 
       while (true) {
         auto status = library_->GetAvailablePorts(instrument, selector_string, 0, nullptr);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         int32 array_size = status;
 
@@ -1493,11 +1549,12 @@ namespace nirfmxinstr_grpc {
           // buffer is now too small, try again
           continue;
         }
-        response->set_status(status);
-        if (status_ok(status)) {
-          response->set_available_ports(available_ports);
-          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_available_ports()));
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
+        response->set_status(status);
+        response->set_available_ports(available_ports);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_available_ports()));
         return ::grpc::Status::OK;
       }
     }
@@ -1519,9 +1576,8 @@ namespace nirfmxinstr_grpc {
 
       while (true) {
         auto status = library_->GetError(instrument, nullptr, 0, nullptr);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         int32 error_description_buffer_size = status;
 
@@ -1535,12 +1591,13 @@ namespace nirfmxinstr_grpc {
           // buffer is now too small, try again
           continue;
         }
-        response->set_status(status);
-        if (status_ok(status)) {
-          response->set_error_code(error_code);
-          response->set_error_description(error_description);
-          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_description()));
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
+        response->set_status(status);
+        response->set_error_code(error_code);
+        response->set_error_description(error_description);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_description()));
         return ::grpc::Status::OK;
       }
     }
@@ -1563,9 +1620,8 @@ namespace nirfmxinstr_grpc {
 
       while (true) {
         auto status = library_->GetErrorString(instrument, error_code, 0, nullptr);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         int32 error_description_buffer_size = status;
 
@@ -1578,11 +1634,12 @@ namespace nirfmxinstr_grpc {
           // buffer is now too small, try again
           continue;
         }
-        response->set_status(status);
-        if (status_ok(status)) {
-          response->set_error_description(error_description);
-          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_description()));
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
+        response->set_status(status);
+        response->set_error_description(error_description);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_description()));
         return ::grpc::Status::OK;
       }
     }
@@ -1604,10 +1661,11 @@ namespace nirfmxinstr_grpc {
       char* selector_string = (char*)request->selector_string().c_str();
       float64 external_attenuation {};
       auto status = library_->GetExternalAttenuationTableActualValue(instrument, selector_string, &external_attenuation);
-      response->set_status(status);
-      if (status_ok(status)) {
-        response->set_external_attenuation(external_attenuation);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
+      response->set_status(status);
+      response->set_external_attenuation(external_attenuation);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1646,9 +1704,8 @@ namespace nirfmxinstr_grpc {
       int32 actual_personality_array_size {};
       while (true) {
         auto status = library_->GetListNames(instrument, selector_string, personality_filter, nullptr, 0, &actual_list_names_size, nullptr, 0, &actual_personality_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         std::string list_names;
         if (actual_list_names_size > 0) {
@@ -1663,11 +1720,13 @@ namespace nirfmxinstr_grpc {
           // buffer is now too small, try again
           continue;
         }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        }
         response->set_status(status);
-        if (status_ok(status)) {
-          response->set_list_names(list_names);
-          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_list_names()));
-          response->set_actual_list_names_size(actual_list_names_size);
+        response->set_list_names(list_names);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_list_names()));
+        response->set_actual_list_names_size(actual_list_names_size);
           response->mutable_personality()->Clear();
           response->mutable_personality()->Reserve(actual_personality_array_size);
           std::transform(
@@ -1677,9 +1736,8 @@ namespace nirfmxinstr_grpc {
             [&](auto x) {
                 return static_cast<nirfmxinstr_grpc::Personality>(x);
             });
-          response->mutable_personality()->Resize(actual_personality_array_size, 0);
-          response->set_actual_personality_array_size(actual_personality_array_size);
-        }
+        response->mutable_personality()->Resize(actual_personality_array_size, 0);
+        response->set_actual_personality_array_size(actual_personality_array_size);
         return ::grpc::Status::OK;
       }
     }
@@ -1735,11 +1793,12 @@ namespace nirfmxinstr_grpc {
       char* selector_string = (char*)request->selector_string().c_str();
       int32 s_parameter_type {};
       auto status = library_->GetSParameterExternalAttenuationType(instrument, selector_string, &s_parameter_type);
-      response->set_status(status);
-      if (status_ok(status)) {
-        response->set_s_parameter_type(static_cast<nirfmxinstr_grpc::SParameterType>(s_parameter_type));
-        response->set_s_parameter_type_raw(s_parameter_type);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
+      response->set_status(status);
+      response->set_s_parameter_type(static_cast<nirfmxinstr_grpc::SParameterType>(s_parameter_type));
+      response->set_s_parameter_type_raw(s_parameter_type);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1776,10 +1835,11 @@ namespace nirfmxinstr_grpc {
 
       CVIAbsoluteTime timestamp {};
       auto status = library_->GetSelfCalibrateLastDateAndTime(instrument, selector_string, self_calibrate_step, &timestamp);
-      response->set_status(status);
-      if (status_ok(status)) {
-        convert_to_grpc(timestamp, response->mutable_timestamp());
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
+      response->set_status(status);
+      convert_to_grpc(timestamp, response->mutable_timestamp());
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1816,10 +1876,11 @@ namespace nirfmxinstr_grpc {
 
       float64 temperature {};
       auto status = library_->GetSelfCalibrateLastTemperature(instrument, selector_string, self_calibrate_step, &temperature);
-      response->set_status(status);
-      if (status_ok(status)) {
-        response->set_temperature(temperature);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
+      response->set_status(status);
+      response->set_temperature(temperature);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1858,9 +1919,8 @@ namespace nirfmxinstr_grpc {
       int32 actual_personality_array_size {};
       while (true) {
         auto status = library_->GetSignalConfigurationNames(instrument, selector_string, personality_filter, nullptr, 0, &actual_signal_names_size, nullptr, 0, &actual_personality_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         std::string signal_names;
         if (actual_signal_names_size > 0) {
@@ -1875,14 +1935,15 @@ namespace nirfmxinstr_grpc {
           // buffer is now too small, try again
           continue;
         }
-        response->set_status(status);
-        if (status_ok(status)) {
-          response->set_signal_names(signal_names);
-          nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_signal_names()));
-          response->set_actual_signal_names_size(actual_signal_names_size);
-          response->mutable_personality()->Resize(actual_personality_array_size, 0);
-          response->set_actual_personality_array_size(actual_personality_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
+        response->set_status(status);
+        response->set_signal_names(signal_names);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_signal_names()));
+        response->set_actual_signal_names_size(actual_signal_names_size);
+        response->mutable_personality()->Resize(actual_personality_array_size, 0);
+        response->set_actual_personality_array_size(actual_personality_array_size);
         return ::grpc::Status::OK;
       }
     }
@@ -1912,15 +1973,12 @@ namespace nirfmxinstr_grpc {
       const std::string& grpc_device_session_name = request->session_name();
       auto cleanup_lambda = [&] (niRFmxInstrHandle id) { library_->Close(id, RFMXINSTR_VAL_FALSE); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, 0);
+      }
       response->set_status(status);
-      if (status_ok(status)) {
-        response->mutable_instrument()->set_id(session_id);
-        response->set_is_new_session(is_new_session);
-      }
-      else {
-        const auto error_message = get_last_error_message(library_);
-        response->set_error_message(error_message);
-      }
+      response->mutable_instrument()->set_id(session_id);
+      response->set_is_new_session(is_new_session);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1951,14 +2009,11 @@ namespace nirfmxinstr_grpc {
       const std::string& grpc_device_session_name = request->session_name();
       auto cleanup_lambda = [&] (niRFmxInstrHandle id) { library_->Close(id, RFMXINSTR_VAL_FALSE); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, 0);
+      }
       response->set_status(status);
-      if (status_ok(status)) {
-        response->mutable_instrument()->set_id(session_id);
-      }
-      else {
-        const auto error_message = get_last_error_message(library_);
-        response->set_error_message(error_message);
-      }
+      response->mutable_instrument()->set_id(session_id);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -1995,14 +2050,11 @@ namespace nirfmxinstr_grpc {
       const std::string& grpc_device_session_name = request->session_name();
       auto cleanup_lambda = [&] (niRFmxInstrHandle id) { library_->Close(id, RFMXINSTR_VAL_FALSE); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, 0);
+      }
       response->set_status(status);
-      if (status_ok(status)) {
-        response->mutable_instrument()->set_id(session_id);
-      }
-      else {
-        const auto error_message = get_last_error_message(library_);
-        response->set_error_message(error_message);
-      }
+      response->mutable_instrument()->set_id(session_id);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -2027,31 +2079,32 @@ namespace nirfmxinstr_grpc {
       int32 self_calibrate_valid {};
       int32 valid_steps {};
       auto status = library_->IsSelfCalibrateValid(instrument, selector_string, &self_calibrate_valid, &valid_steps);
-      response->set_status(status);
-      if (status_ok(status)) {
-        response->set_self_calibrate_valid(self_calibrate_valid);
-        if (valid_steps & 0x20)
-          response->add_valid_steps_array(SelfCalStep::SELF_CAL_STEP_AMPLITUDE_ACCURACY);
-        if (valid_steps & 0x200)
-          response->add_valid_steps_array(SelfCalStep::SELF_CAL_STEP_DC_OFFSET);
-        if (valid_steps & 0x8)
-          response->add_valid_steps_array(SelfCalStep::SELF_CAL_STEP_DIGITIZER_SELF_CAL);
-        if (valid_steps & 0x2)
-          response->add_valid_steps_array(SelfCalStep::SELF_CAL_STEP_GAIN_REFERENCE);
-        if (valid_steps & 0x4)
-          response->add_valid_steps_array(SelfCalStep::SELF_CAL_STEP_IF_FLATNESS);
-        if (valid_steps & 0x80)
-          response->add_valid_steps_array(SelfCalStep::SELF_CAL_STEP_IMAGE_SUPPRESSION);
-        if (valid_steps & 0x10)
-          response->add_valid_steps_array(SelfCalStep::SELF_CAL_STEP_LO_SELF_CAL);
-        if (valid_steps & 0x1)
-          response->add_valid_steps_array(SelfCalStep::SELF_CAL_STEP_PRESELECTOR_ALIGNMENT);
-        if (valid_steps & 0x40)
-          response->add_valid_steps_array(SelfCalStep::SELF_CAL_STEP_RESIDUAL_LO_POWER);
-        if (valid_steps & 0x100)
-          response->add_valid_steps_array(SelfCalStep::SELF_CAL_STEP_SYNTHESIZER_ALIGNMENT);
-        response->set_valid_steps_raw(valid_steps);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
+      response->set_status(status);
+      response->set_self_calibrate_valid(self_calibrate_valid);
+      if (valid_steps & 0x20)
+        response->add_valid_steps_array(SelfCalStep::SELF_CAL_STEP_AMPLITUDE_ACCURACY);
+      if (valid_steps & 0x200)
+        response->add_valid_steps_array(SelfCalStep::SELF_CAL_STEP_DC_OFFSET);
+      if (valid_steps & 0x8)
+        response->add_valid_steps_array(SelfCalStep::SELF_CAL_STEP_DIGITIZER_SELF_CAL);
+      if (valid_steps & 0x2)
+        response->add_valid_steps_array(SelfCalStep::SELF_CAL_STEP_GAIN_REFERENCE);
+      if (valid_steps & 0x4)
+        response->add_valid_steps_array(SelfCalStep::SELF_CAL_STEP_IF_FLATNESS);
+      if (valid_steps & 0x80)
+        response->add_valid_steps_array(SelfCalStep::SELF_CAL_STEP_IMAGE_SUPPRESSION);
+      if (valid_steps & 0x10)
+        response->add_valid_steps_array(SelfCalStep::SELF_CAL_STEP_LO_SELF_CAL);
+      if (valid_steps & 0x1)
+        response->add_valid_steps_array(SelfCalStep::SELF_CAL_STEP_PRESELECTOR_ALIGNMENT);
+      if (valid_steps & 0x40)
+        response->add_valid_steps_array(SelfCalStep::SELF_CAL_STEP_RESIDUAL_LO_POWER);
+      if (valid_steps & 0x100)
+        response->add_valid_steps_array(SelfCalStep::SELF_CAL_STEP_SYNTHESIZER_ALIGNMENT);
+      response->set_valid_steps_raw(valid_steps);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -2072,6 +2125,9 @@ namespace nirfmxinstr_grpc {
       char* file_path = (char*)request->file_path().c_str();
       int32 load_rf_instr_configuration = request->load_rf_instr_configuration();
       auto status = library_->LoadAllConfigurations(instrument, file_path, load_rf_instr_configuration);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2110,6 +2166,9 @@ namespace nirfmxinstr_grpc {
       }
 
       auto status = library_->LoadSParameterExternalAttenuationTableFromS2PFile(instrument, selector_string, table_name, s2p_file_path, s_parameter_orientation);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2131,6 +2190,9 @@ namespace nirfmxinstr_grpc {
       char* channel_name = (char*)request->channel_name().c_str();
       int32 attribute_id = request->attribute_id();
       auto status = library_->ResetAttribute(instrument, channel_name, attribute_id);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2150,6 +2212,9 @@ namespace nirfmxinstr_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       auto status = library_->ResetDriver(instrument);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2169,6 +2234,9 @@ namespace nirfmxinstr_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       auto status = library_->ResetEntireSession(instrument);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2188,6 +2256,9 @@ namespace nirfmxinstr_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       auto status = library_->ResetToDefault(instrument);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2208,6 +2279,9 @@ namespace nirfmxinstr_grpc {
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       char* file_path = (char*)request->file_path().c_str();
       auto status = library_->SaveAllConfigurations(instrument, file_path);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2229,6 +2303,9 @@ namespace nirfmxinstr_grpc {
       char* selector_string = (char*)request->selector_string().c_str();
       char* table_name = (char*)request->table_name().c_str();
       auto status = library_->SelectActiveExternalAttenuationTable(instrument, selector_string, table_name);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2265,6 +2342,9 @@ namespace nirfmxinstr_grpc {
       }
 
       auto status = library_->SelfCalibrate(instrument, selector_string, steps_to_omit);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2305,6 +2385,9 @@ namespace nirfmxinstr_grpc {
       float64 minimum_reference_level = request->minimum_reference_level();
       float64 maximum_reference_level = request->maximum_reference_level();
       auto status = library_->SelfCalibrateRange(instrument, selector_string, steps_to_omit, minimum_frequency, maximum_frequency, minimum_reference_level, maximum_reference_level);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2324,6 +2407,9 @@ namespace nirfmxinstr_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       auto status = library_->SendSoftwareEdgeAdvanceTrigger(instrument);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2343,6 +2429,9 @@ namespace nirfmxinstr_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       auto status = library_->SendSoftwareEdgeStartTrigger(instrument);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2365,6 +2454,9 @@ namespace nirfmxinstr_grpc {
       int32 attribute_id = request->attribute_id();
       float32 attr_val = request->attr_val();
       auto status = library_->SetAttributeF32(instrument, channel_name, attribute_id, attr_val);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2388,6 +2480,9 @@ namespace nirfmxinstr_grpc {
       auto attr_val = const_cast<float32*>(request->attr_val().data());
       int32 array_size = static_cast<int32>(request->attr_val().size());
       auto status = library_->SetAttributeF32Array(instrument, channel_name, attribute_id, attr_val, array_size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2410,6 +2505,9 @@ namespace nirfmxinstr_grpc {
       int32 attribute_id = request->attribute_id();
       float64 attr_val = request->attr_val();
       auto status = library_->SetAttributeF64(instrument, channel_name, attribute_id, attr_val);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2433,6 +2531,9 @@ namespace nirfmxinstr_grpc {
       auto attr_val = const_cast<float64*>(request->attr_val().data());
       int32 array_size = static_cast<int32>(request->attr_val().size());
       auto status = library_->SetAttributeF64Array(instrument, channel_name, attribute_id, attr_val, array_size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2464,6 +2565,9 @@ namespace nirfmxinstr_grpc {
       auto attr_val = static_cast<int16>(attr_val_raw);
 
       auto status = library_->SetAttributeI16(instrument, channel_name, attribute_id, attr_val);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2504,6 +2608,9 @@ namespace nirfmxinstr_grpc {
       }
 
       auto status = library_->SetAttributeI32(instrument, channel_name, attribute_id, attr_val);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2535,6 +2642,9 @@ namespace nirfmxinstr_grpc {
 
       int32 array_size = static_cast<int32>(request->attr_val().size());
       auto status = library_->SetAttributeI32Array(instrument, channel_name, attribute_id, attr_val, array_size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2557,6 +2667,9 @@ namespace nirfmxinstr_grpc {
       int32 attribute_id = request->attribute_id();
       int64 attr_val = request->attr_val();
       auto status = library_->SetAttributeI64(instrument, channel_name, attribute_id, attr_val);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2580,6 +2693,9 @@ namespace nirfmxinstr_grpc {
       auto attr_val = const_cast<int64*>(reinterpret_cast<const int64*>(request->attr_val().data()));
       int32 array_size = static_cast<int32>(request->attr_val().size());
       auto status = library_->SetAttributeI64Array(instrument, channel_name, attribute_id, attr_val, array_size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2611,6 +2727,9 @@ namespace nirfmxinstr_grpc {
       auto attr_val = static_cast<int8>(attr_val_raw);
 
       auto status = library_->SetAttributeI8(instrument, channel_name, attribute_id, attr_val);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2654,6 +2773,9 @@ namespace nirfmxinstr_grpc {
 
       int32 array_size = static_cast<int32>(request->attr_val().size());
       auto status = library_->SetAttributeI8Array(instrument, channel_name, attribute_id, attr_val.data(), array_size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2680,6 +2802,9 @@ namespace nirfmxinstr_grpc {
       auto attr_val = convert_from_grpc<NIComplexDouble>(request->attr_val());
       int32 array_size = static_cast<int32>(request->attr_val().size());
       auto status = library_->SetAttributeNIComplexDoubleArray(instrument, channel_name, attribute_id, attr_val.data(), array_size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2703,6 +2828,9 @@ namespace nirfmxinstr_grpc {
       auto attr_val = convert_from_grpc<NIComplexSingle>(request->attr_val());
       int32 array_size = static_cast<int32>(request->attr_val().size());
       auto status = library_->SetAttributeNIComplexSingleArray(instrument, channel_name, attribute_id, attr_val.data(), array_size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2744,6 +2872,9 @@ namespace nirfmxinstr_grpc {
       }
 
       auto status = library_->SetAttributeString(instrument, channel_name, attribute_id, attr_val);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2775,6 +2906,9 @@ namespace nirfmxinstr_grpc {
       auto attr_val = static_cast<uInt16>(attr_val_raw);
 
       auto status = library_->SetAttributeU16(instrument, channel_name, attribute_id, attr_val);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2800,6 +2934,9 @@ namespace nirfmxinstr_grpc {
       int32 attribute_id = request->attribute_id();
       uInt32 attr_val = request->attr_val();
       auto status = library_->SetAttributeU32(instrument, channel_name, attribute_id, attr_val);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2823,6 +2960,9 @@ namespace nirfmxinstr_grpc {
       auto attr_val = const_cast<uInt32*>(reinterpret_cast<const uInt32*>(request->attr_val().data()));
       int32 array_size = static_cast<int32>(request->attr_val().size());
       auto status = library_->SetAttributeU32Array(instrument, channel_name, attribute_id, attr_val, array_size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2846,6 +2986,9 @@ namespace nirfmxinstr_grpc {
       auto attr_val = const_cast<uInt64*>(reinterpret_cast<const uInt64*>(request->attr_val().data()));
       int32 array_size = static_cast<int32>(request->attr_val().size());
       auto status = library_->SetAttributeU64Array(instrument, channel_name, attribute_id, attr_val, array_size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2868,6 +3011,9 @@ namespace nirfmxinstr_grpc {
       int32 attribute_id = request->attribute_id();
       uInt8 attr_val = request->attr_val();
       auto status = library_->SetAttributeU8(instrument, channel_name, attribute_id, attr_val);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2891,6 +3037,9 @@ namespace nirfmxinstr_grpc {
       uInt8* attr_val = (uInt8*)request->attr_val().c_str();
       int32 array_size = static_cast<int32>(request->attr_val().size());
       auto status = library_->SetAttributeU8Array(instrument, channel_name, attribute_id, attr_val, array_size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }
@@ -2911,10 +3060,11 @@ namespace nirfmxinstr_grpc {
       float64 fractional_seconds = request->fractional_seconds();
       CVIAbsoluteTime timestamp {};
       auto status = library_->TimestampFromValues(seconds_since_1970, fractional_seconds, &timestamp);
-      response->set_status(status);
-      if (status_ok(status)) {
-        convert_to_grpc(timestamp, response->mutable_timestamp());
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, 0);
       }
+      response->set_status(status);
+      convert_to_grpc(timestamp, response->mutable_timestamp());
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -2934,11 +3084,12 @@ namespace nirfmxinstr_grpc {
       int64 seconds_since_1970 {};
       float64 fractional_seconds {};
       auto status = library_->ValuesFromTimestamp(timestamp, &seconds_since_1970, &fractional_seconds);
-      response->set_status(status);
-      if (status_ok(status)) {
-        response->set_seconds_since_1970(seconds_since_1970);
-        response->set_fractional_seconds(fractional_seconds);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, 0);
       }
+      response->set_status(status);
+      response->set_seconds_since_1970(seconds_since_1970);
+      response->set_fractional_seconds(fractional_seconds);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -2958,6 +3109,9 @@ namespace nirfmxinstr_grpc {
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       float64 timeout = request->timeout();
       auto status = library_->WaitForAcquisitionComplete(instrument, timeout);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+      }
       response->set_status(status);
       return ::grpc::Status::OK;
     }

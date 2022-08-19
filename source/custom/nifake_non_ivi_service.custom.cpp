@@ -50,4 +50,19 @@ namespace nifake_non_ivi_grpc {
       request->start(),
       request->stop());
 }
+
+::grpc::Status NiFakeNonIviService::ConvertApiErrorStatusForFakeHandle(google::protobuf::int32 status, FakeHandle handle)
+{
+  std::string description(nidevice_grpc::kMaxGrpcErrorDescriptionSize, '\0');
+  library_->GetLatestErrorMessage(&description[0], nidevice_grpc::kMaxGrpcErrorDescriptionSize);
+  return nidevice_grpc::ApiErrorAndDescriptionToStatus(status, description);
+}
+
+::grpc::Status NiFakeNonIviService::ConvertApiErrorStatusForSecondarySessionHandle(google::protobuf::int32 status, SecondarySessionHandle handle)
+{
+  std::string description(nidevice_grpc::kMaxGrpcErrorDescriptionSize, '\0');
+  library_->GetLatestErrorMessage(&description[0], nidevice_grpc::kMaxGrpcErrorDescriptionSize);
+  return nidevice_grpc::ApiErrorAndDescriptionToStatus(status, description);
+}
+
 }  // namespace nifake_non_ivi_grpc
