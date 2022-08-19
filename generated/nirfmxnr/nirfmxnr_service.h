@@ -148,6 +148,7 @@ public:
   ::grpc::Status ModAccClearNoiseCalibrationDatabase(::grpc::ServerContext* context, const ModAccClearNoiseCalibrationDatabaseRequest* request, ModAccClearNoiseCalibrationDatabaseResponse* response) override;
   ::grpc::Status ModAccFetchCompositeEVM(::grpc::ServerContext* context, const ModAccFetchCompositeEVMRequest* request, ModAccFetchCompositeEVMResponse* response) override;
   ::grpc::Status ModAccFetchFrequencyErrorMean(::grpc::ServerContext* context, const ModAccFetchFrequencyErrorMeanRequest* request, ModAccFetchFrequencyErrorMeanResponse* response) override;
+  ::grpc::Status ModAccFetchFrequencyErrorPerSlotMaximumTrace(::grpc::ServerContext* context, const ModAccFetchFrequencyErrorPerSlotMaximumTraceRequest* request, ModAccFetchFrequencyErrorPerSlotMaximumTraceResponse* response) override;
   ::grpc::Status ModAccFetchIQGainImbalancePerSubcarrierMeanTrace(::grpc::ServerContext* context, const ModAccFetchIQGainImbalancePerSubcarrierMeanTraceRequest* request, ModAccFetchIQGainImbalancePerSubcarrierMeanTraceResponse* response) override;
   ::grpc::Status ModAccFetchIQQuadratureErrorPerSubcarrierMeanTrace(::grpc::ServerContext* context, const ModAccFetchIQQuadratureErrorPerSubcarrierMeanTraceRequest* request, ModAccFetchIQQuadratureErrorPerSubcarrierMeanTraceResponse* response) override;
   ::grpc::Status ModAccFetchInBandEmissionTrace(::grpc::ServerContext* context, const ModAccFetchInBandEmissionTraceRequest* request, ModAccFetchInBandEmissionTraceResponse* response) override;
