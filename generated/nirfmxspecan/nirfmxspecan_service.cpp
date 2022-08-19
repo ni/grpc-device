@@ -7727,6 +7727,9 @@ namespace nirfmxspecan_grpc {
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
+    catch (nidevice_grpc::SessionException& ex) {
+      return ::grpc::Status(::grpc::INVALID_ARGUMENT, ex.what());
+    }
   }
 
   //---------------------------------------------------------------------
@@ -7761,6 +7764,9 @@ namespace nirfmxspecan_grpc {
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+    catch (nidevice_grpc::SessionException& ex) {
+      return ::grpc::Status(::grpc::INVALID_ARGUMENT, ex.what());
     }
   }
 

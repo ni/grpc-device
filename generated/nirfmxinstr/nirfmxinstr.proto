@@ -68,6 +68,7 @@ service NiRFmxInstr {
   rpc GetListNames(GetListNamesRequest) returns (GetListNamesResponse);
   rpc GetNIRFSASession(GetNIRFSASessionRequest) returns (GetNIRFSASessionResponse);
   rpc GetNIRFSASessionArray(GetNIRFSASessionArrayRequest) returns (GetNIRFSASessionArrayResponse);
+  rpc GetSParameterExternalAttenuationType(GetSParameterExternalAttenuationTypeRequest) returns (GetSParameterExternalAttenuationTypeResponse);
   rpc GetSelfCalibrateLastDateAndTime(GetSelfCalibrateLastDateAndTimeRequest) returns (GetSelfCalibrateLastDateAndTimeResponse);
   rpc GetSelfCalibrateLastTemperature(GetSelfCalibrateLastTemperatureRequest) returns (GetSelfCalibrateLastTemperatureResponse);
   rpc GetSignalConfigurationNames(GetSignalConfigurationNamesRequest) returns (GetSignalConfigurationNamesResponse);
@@ -274,6 +275,7 @@ enum Personality {
   PERSONALITY_NR = 256;
   PERSONALITY_SPECAN = 1;
   PERSONALITY_TDSCDMA = 64;
+  PERSONALITY_VNA = 4096;
   PERSONALITY_WCDMA = 16;
   PERSONALITY_WLAN = 512;
 }
@@ -997,6 +999,17 @@ message GetNIRFSASessionArrayResponse {
   int32 status = 1;
   repeated nidevice_grpc.Session nirfsa_sessions = 2;
   int32 actual_array_size = 3;
+}
+
+message GetSParameterExternalAttenuationTypeRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message GetSParameterExternalAttenuationTypeResponse {
+  int32 status = 1;
+  SParameterType s_parameter_type = 2;
+  int32 s_parameter_type_raw = 3;
 }
 
 message GetSelfCalibrateLastDateAndTimeRequest {

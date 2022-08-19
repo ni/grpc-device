@@ -426,6 +426,12 @@ def get_driver_service_readiness(config: dict) -> str:
     return to_cpp_readiness(readiness)
 
 
+def is_restricted_driver_service(config):
+    """Whether the driver service is restricted."""
+    readiness = common_helpers.get_driver_readiness(config)
+    return readiness == "RestrictedNextRelease" or readiness == "RestrictedRelease"
+
+
 def to_cpp_readiness(user_readiness: str) -> str:
     """Get the C++ constant representing the given code_readiness."""
     return f"CodeReadiness::k{user_readiness}"

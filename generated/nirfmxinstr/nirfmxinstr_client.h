@@ -72,6 +72,7 @@ GetExternalAttenuationTableActualValueResponse get_external_attenuation_table_ac
 GetListNamesResponse get_list_names(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<Personality, pb::int32>& personality_filter);
 GetNIRFSASessionResponse get_nirfsa_session(const StubPtr& stub, const nidevice_grpc::Session& instrument);
 GetNIRFSASessionArrayResponse get_nirfsa_session_array(const StubPtr& stub, const nidevice_grpc::Session& instrument);
+GetSParameterExternalAttenuationTypeResponse get_s_parameter_external_attenuation_type(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string);
 GetSelfCalibrateLastDateAndTimeResponse get_self_calibrate_last_date_and_time(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<SelfCalStep, pb::int64>& self_calibrate_step);
 GetSelfCalibrateLastTemperatureResponse get_self_calibrate_last_temperature(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<SelfCalStep, pb::int64>& self_calibrate_step);
 GetSignalConfigurationNamesResponse get_signal_configuration_names(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<Personality, pb::int32>& personality_filter);

@@ -535,6 +535,10 @@ enums = {
                 'value': 64
             },
             {
+                'name': 'VNA',
+                'value': 4096
+            },
+            {
                 'name': 'WCDMA',
                 'value': 16
             },

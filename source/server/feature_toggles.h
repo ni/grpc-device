@@ -16,8 +16,10 @@ class FeatureToggles {
   enum class CodeReadiness {
     kPrototype = 0,
     kIncomplete = 1,
-    kNextRelease = 2,
-    kRelease = 3,
+    kRestrictedNextRelease = 2,
+    kNextRelease = 3,
+    kRestrictedRelease = 4,
+    kRelease = 5,
   };
 
   FeatureToggles() {}
@@ -34,6 +36,5 @@ class FeatureToggles {
   CodeReadiness app_readiness_ = CodeReadiness::kRelease;
 };
 }  // namespace nidevice_grpc
-
 
 #endif /* NIDEVICE_GRPC_FEATURE_TOGGLES_H */

@@ -1543,6 +1543,28 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'GetSParameterExternalAttenuationType': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'out',
+                'enum': 'SParameterType',
+                'name': 'sParameterType',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'GetSelfCalibrateLastDateAndTime': {
         'parameters': [
             {

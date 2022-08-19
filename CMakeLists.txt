@@ -505,6 +505,7 @@ if(WIN32)
         "source/tests/system/nirfmxnr_driver_api_tests.cpp"
         "source/tests/system/nirfmxnr_session_tests.cpp"
         "source/tests/system/nirfmxspecan_driver_api_tests.cpp"
+        "source/tests/system/nirfmxspecan_restricted_driver_api_tests.cpp"
         "source/tests/system/nirfmxspecan_session_tests.cpp"
         "source/tests/system/nirfmxwlan_driver_api_tests.cpp"
         "source/tests/system/nirfmxwlan_session_tests.cpp"

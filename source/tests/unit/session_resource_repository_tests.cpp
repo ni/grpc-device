@@ -246,7 +246,7 @@ TEST(SessionResourceRepositoryTests, AddSessionResource_AccessFromDifferentRepos
   EXPECT_EQ(kNoSession, session_from_other_repository);
 }
 
-TEST(SessionResourceRepositoryTests, AddSessionResource_AddSessionWithSameNameFromDifferentRepository_FailsWithoutCallingInit)
+TEST(SessionResourceRepositoryTests, AddSessionResource_AddSessionWithSameNameFromDifferentRepository_ThrowsSessionException)
 {
   SessionRepository repository;
   SessionResourceRepository<int32_t> resource_repository(
@@ -265,15 +265,24 @@ TEST(SessionResourceRepositoryTests, AddSessionResource_AddSessionWithSameNameFr
   const int32_t kErrorCode = 9999;
   using MockInitDelegate = ::testing::MockFunction<std::tuple<int32_t, int32_t>(void)>;
   MockInitDelegate mock_init;
-  uint32_t second_session_id;
-  result = other_resource_repository.add_session(
-      kTestResource,
-      mock_init.AsStdFunction(),
-      [](int32_t handle) { FAIL() << "Unexpected Cleanup"; },
-      second_session_id);
-
+  uint32_t second_session_id = kNoSession;
+  EXPECT_THROW(
+      {
+        try {
+          result = other_resource_repository.add_session(
+              kTestResource,
+              mock_init.AsStdFunction(),
+              [](int32_t handle) { FAIL() << "Unexpected Cleanup"; },
+              second_session_id);
+        }
+        catch (const nidevice_grpc::SessionException& ex) {
+          const std::string expected_message("The session name \"" + kTestResource + "\" is being used by a different driver.");
+          EXPECT_STREQ(expected_message.c_str(), ex.what());
+          throw;
+        }
+      },
+      nidevice_grpc::SessionException);
   EXPECT_EQ(kNoSession, second_session_id);
-  EXPECT_NE(kNoError, result);
 }
 
 template <typename TResource>
