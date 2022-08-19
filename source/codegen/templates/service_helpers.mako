@@ -37,7 +37,7 @@ ${call_library_method(
       const std::string& grpc_device_session_name = request->${session_field_name}();
       auto cleanup_lambda = [&] (${resource_handle_type} id) { library_->${close_function_call}; };
       int status = ${service_helpers.session_repository_field_name(session_output_param, config)}->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
-${populate_response(function_data=function_data, output_parameters=output_parameters, init_method=True)}\
+${populate_response(function_data=function_data, parameters=parameters, init_method=True)}\
       return ::grpc::Status::OK;\
 </%def>
 
@@ -87,10 +87,7 @@ ${call_library_method(
   arg_string=service_helpers.create_args_for_ivi_dance(parameters),
   indent_level=1)
 }\
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+${populate_error_check(function_data, parameters, indent_level=1)}\
         ${size_param['type']} ${common_helpers.get_cpp_local_name(size_param)} = status;
 
 <%block filter="common_helpers.indent(1)">\
@@ -109,7 +106,7 @@ ${call_library_method(
           // buffer is now too small, try again
           continue;
         }
-${populate_response(function_data=function_data, output_parameters=output_parameters, indent_level=1)}\
+${populate_response(function_data=function_data, parameters=parameters, indent_level=1)}\
         return ::grpc::Status::OK;
       }\
 </%def>
@@ -132,10 +129,7 @@ ${call_library_method(
   arg_string=service_helpers.create_args_for_ivi_dance_with_a_twist(parameters),
   indent_level=1)
 }\
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
-        }
+${populate_error_check(function_data, parameters, indent_level=1)}\
 <%block filter="common_helpers.indent(1)">\
 ${initialize_output_params(array_output_parameters)}\
 </%block>\
@@ -155,7 +149,7 @@ ${call_library_method(
           // buffer is now too small, try again
           continue;
         }
-${populate_response(function_data=function_data, output_parameters=output_parameters, indent_level=1)}\
+${populate_response(function_data=function_data, parameters=parameters, indent_level=1)}\
         return ::grpc::Status::OK;
       }\
 </%def>
@@ -244,7 +238,7 @@ ${call_library_method(
   arg_string=service_helpers.create_args(parameters),
   library_lval=service_helpers.get_library_lval_for_potentially_umockable_function(config, parameters))
 }\
-${populate_response(function_data=function_data, output_parameters=output_parameters)}\
+${populate_response(function_data=function_data, parameters=parameters)}\
       return ::grpc::Status::OK;\
 </%def>
 
@@ -268,7 +262,7 @@ ${call_library_method(
   function_data=function_data, 
   arg_string=service_helpers.create_args(parameters))
 }\
-${populate_response(function_data=function_data, output_parameters=output_parameters)}\
+${populate_response(function_data=function_data, parameters=parameters)}\
       return ::grpc::Status::OK;\
 </%def>
 
@@ -719,30 +713,47 @@ ${initialize_hardcoded_parameter(parameter)}
 
 
 ## Handles populating the response message after calling the driver API.
-<%def name="populate_response(function_data, output_parameters, indent_level=0, init_method=False)">\
+<%def name="populate_response(function_data, parameters, indent_level=0, init_method=False)">\
 <%
+  output_parameters = [p for p in parameters if common_helpers.is_output_parameter(p)]
   get_last_error_outputs = service_helpers.get_last_error_output_params(output_parameters)
   normal_outputs = [p for p in output_parameters if not p in get_last_error_outputs]
 %>\
 <%block filter="common_helpers.indent(indent_level)">\
+${populate_error_check(function_data, parameters)}\
       response->set_status(status);
 %if output_parameters:
-      if (status_ok(status)) {
 ${set_response_values(normal_outputs, init_method)}\
-      }
-%   if any(get_last_error_outputs):
-      else {
-%     for get_last_error_output in get_last_error_outputs:
-<%
-  get_last_error_output_name = common_helpers.get_grpc_field_name(get_last_error_output)
-  get_last_error_method_name = get_last_error_output["get_last_error"]
-%>\
-        const auto ${get_last_error_output_name} = ${get_last_error_method_name}(library_);
-        response->set_${get_last_error_output_name}(${get_last_error_output_name});
-%     endfor
-      }
-%   endif
 %endif
+</%block>\
+</%def>
+
+## Handles populating the response message after calling the driver API.
+<%def name="populate_error_check(function_data, parameters, indent_level=0)">\
+<%
+  config = data['config']
+  input_parameters = [p for p in parameters if common_helpers.is_input_parameter(p)]
+  resource_handle_types = service_helpers.get_resource_handle_types(config)
+%>\
+<%block filter="common_helpers.indent(indent_level)">\
+<%
+  session = 0
+  handle_type = resource_handle_types[0]
+  for parameter in input_parameters:
+    if parameter['type'] in resource_handle_types:
+      session = common_helpers.get_cpp_local_name(parameter)
+      handle_type = parameter['type']
+      break
+  cpp_handle_type = handle_type[0].upper() + handle_type[1:]
+  method_call = ""
+  if function_data.get('exclude_from_get_last_error', False):
+    method_call = f'return nidevice_grpc::ApiErrorToStatus(status);'
+  else:
+    method_call = f'return ConvertApiErrorStatusFor{cpp_handle_type}(status, {session});'
+%>\
+      if (!status_ok(status)) {
+        ${method_call}
+      }
 </%block>\
 </%def>
 
@@ -766,13 +777,13 @@ ${set_response_values(normal_outputs, init_method)}\
     varargs_parameter_name = common_helpers.get_cpp_local_name(varargs_parameter)
 %>\
 ## Note that this currently only supports one repeated output parameter.
-        for (int i = 0; i < ${parameter_name}Vector.size(); ++i) {
+      for (int i = 0; i < ${parameter_name}Vector.size(); ++i) {
 %     if 'enum' in parameter:
-          response->add_${varargs_parameter_name}(static_cast<${parameter['enum']}>(${parameter_name}Vector[i]));
+        response->add_${varargs_parameter_name}(static_cast<${parameter['enum']}>(${parameter_name}Vector[i]));
 %     else:
-          response->add_${varargs_parameter_name}(${parameter_name}Vector[i]);
+        response->add_${varargs_parameter_name}(${parameter_name}Vector[i]);
 %     endif
-        }
+      }
 %   elif common_helpers.is_repeated_varargs_parameter(parameter): #pass
 %   elif common_helpers.is_enum(parameter) == True:
 <%
@@ -789,21 +800,21 @@ ${set_response_values(normal_outputs, init_method)}\
   use_checked_enum_conversion = parameter.get("use_checked_enum_conversion", False)
 %>\
 %     if has_mapped_enum:
-        auto ${mapped_enum_iterator_name} = ${map_name}.find(${parameter_name});
-        if(${mapped_enum_iterator_name} != ${map_name}.end()) {
-          response->set_${field_name}_mapped(static_cast<${namespace_prefix}${mapped_enum_name}>(${mapped_enum_iterator_name}->second));
-        }
+      auto ${mapped_enum_iterator_name} = ${map_name}.find(${parameter_name});
+      if(${mapped_enum_iterator_name} != ${map_name}.end()) {
+        response->set_${field_name}_mapped(static_cast<${namespace_prefix}${mapped_enum_name}>(${mapped_enum_iterator_name}->second));
+      }
 %     endif
 %     if has_unmapped_enum:
 %       if use_checked_enum_conversion:
-        auto checked_convert_${parameter_name} = [](auto raw_value) {
-          bool raw_value_is_valid = ${namespace_prefix}${parameter["enum"]}_IsValid(raw_value);
-          auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
-          return static_cast<${namespace_prefix}${parameter["enum"]}>(valid_enum_value);
-        };
+      auto checked_convert_${parameter_name} = [](auto raw_value) {
+        bool raw_value_is_valid = ${namespace_prefix}${parameter["enum"]}_IsValid(raw_value);
+        auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
+        return static_cast<${namespace_prefix}${parameter["enum"]}>(valid_enum_value);
+      };
 %       endif
 %       if is_string:
-        CopyBytesToEnums(${parameter_name}, response->mutable_${field_name}());
+      CopyBytesToEnums(${parameter_name}, response->mutable_${field_name}());
 %       elif uses_raw_output_as_read_buffer:
 <%
       raw_response_field = f"response->{field_name}_raw()"
@@ -814,47 +825,47 @@ ${set_response_values(normal_outputs, init_method)}\
 ${initialize_response_buffer(parameter_name=parameter_name, parameter=parameter)}\
 ${copy_to_response_with_transform(source_buffer=raw_response_field, parameter_name=parameter_name, transform_x=convert_x_to_enum, size=common_helpers.get_size_expression(parameter))}\
 %       elif parameter['type'] == 'ViReal64':
-        if(${parameter_name} == (int)${parameter_name}) {
-          response->set_${field_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(static_cast<int>(${parameter_name})));
-        }
+      if(${parameter_name} == (int)${parameter_name}) {
+        response->set_${field_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(static_cast<int>(${parameter_name})));
+      }
 %       elif parameter.get("use_checked_enum_conversion", False):
-        response->set_${field_name}(checked_convert_${parameter_name}(${parameter_name}));
+      response->set_${field_name}(checked_convert_${parameter_name}(${parameter_name}));
 %       else:
-        response->set_${field_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(${parameter_name}));
+      response->set_${field_name}(static_cast<${namespace_prefix}${parameter["enum"]}>(${parameter_name}));
 %       endif
 %     endif
 %     if is_bitfield_as_enum_array:
 %       for flag_value, flag_enum_name in service_helpers.get_bitfield_value_to_name_mapping(parameter, enums).items():
-        if (${parameter_name} & ${hex(flag_value)})
-          response->add_${field_name}_array(${flag_enum_name});
+      if (${parameter_name} & ${hex(flag_value)})
+        response->add_${field_name}_array(${flag_enum_name});
 %       endfor
 %     endif
 %     if not uses_raw_output_as_read_buffer: # Set data to raw, unless we *got* the data from raw.
-        response->set_${field_name}_raw(${parameter_name});
+      response->set_${field_name}_raw(${parameter_name});
 %     endif
 %   elif service_helpers.is_output_array_that_needs_coercion(parameter):
 ${initialize_response_buffer(parameter_name=parameter_name, parameter=parameter)}\
 ${copy_to_response_with_transform(source_buffer=parameter_name, parameter_name=parameter_name, transform_x="x", size=common_helpers.get_size_expression(parameter))}\
 %   elif common_helpers.supports_standard_copy_conversion_routines(parameter):
-        convert_to_grpc(${str.join(", ", [f'{parameter_name}', f'response->mutable_{field_name}()'] + parameter.get("additional_arguments_to_copy_convert", []))});
+      convert_to_grpc(${str.join(", ", [f'{parameter_name}', f'response->mutable_{field_name}()'] + parameter.get("additional_arguments_to_copy_convert", []))});
 %   elif common_helpers.is_string_arg(parameter):
-        response->set_${field_name}(${parameter_name});
+      response->set_${field_name}(${parameter_name});
 %   elif parameter['grpc_type'] == 'nidevice_grpc.Session':
 %      if not init_method: # Non-init methods need to resolve the session ID from the out param.
-        auto session_id = ${service_helpers.session_repository_field_name(parameter, config)}->resolve_session_id(${parameter_name});
+      auto session_id = ${service_helpers.session_repository_field_name(parameter, config)}->resolve_session_id(${parameter_name});
 %      endif
-        response->mutable_${field_name}()->set_id(session_id);
+      response->mutable_${field_name}()->set_id(session_id);
 %   elif common_helpers.is_array(parameter['type']):
 %     if common_helpers.get_size_mechanism(parameter) == 'passed-in-by-ptr':
 ### size may have changed
-        response->mutable_${field_name}()->Resize(${common_helpers.get_size_expression(parameter)}, 0);
+      response->mutable_${field_name}()->Resize(${common_helpers.get_size_expression(parameter)}, 0);
 %     endif
 ### pass: other array types don't need to copy.
 %   else:
-        response->set_${field_name}(${parameter_name});
+      response->set_${field_name}(${parameter_name});
 %   endif
 %   if common_helpers.is_regular_string_arg(parameter):
-        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_${field_name}()));
+      nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_${field_name}()));
 %   endif
 ### Handle ivi-dance-with-a-twist resizing.
 %   if common_helpers.is_ivi_dance_array_with_a_twist_param(parameter):
@@ -862,22 +873,22 @@ ${copy_to_response_with_transform(source_buffer=parameter_name, parameter_name=p
   size = common_helpers.get_size_expression(parameter)
 %>\
 %     if common_helpers.is_regular_byte_array_arg(parameter):
-        response->mutable_${field_name}()->resize(${size});
+      response->mutable_${field_name}()->resize(${size});
 %     elif common_helpers.is_regular_string_arg(parameter):
 ### pass: handled above with trim_trailing_nulls for all string outputs.
 %     elif common_helpers.is_struct(parameter):
 ##        RepeatedPtrField doesn't support Resize(), so use DeleteSubrange()
 ##        to delete any extra elements.
-        {
-          auto shrunk_size = ${size};
-          auto current_size = response->mutable_${field_name}()->size();
-          if (shrunk_size != current_size) {
-            response->mutable_${field_name}()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
-          }
+      {
+        auto shrunk_size = ${size};
+        auto current_size = response->mutable_${field_name}()->size();
+        if (shrunk_size != current_size) {
+          response->mutable_${field_name}()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
         }
+      }
 %     else:
 ## This code doesn't handle all parameter types (i.e., enums), see what initialize_output_params() does for that.
-        response->mutable_${field_name}()->Resize(${size}, 0);
+      response->mutable_${field_name}()->Resize(${size}, 0);
 %     endif
 %   endif
 % endfor

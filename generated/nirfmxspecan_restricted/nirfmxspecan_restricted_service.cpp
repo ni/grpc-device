@@ -61,11 +61,12 @@ namespace nirfmxspecan_restricted_grpc {
           selector_string_out.resize(selector_string_out_size - 1);
       }
       auto status = library_->CacheResult(instrument, selector_string, selector_string_out_size, (char*)selector_string_out.data());
-      response->set_status(status);
-      if (status_ok(status)) {
-        response->set_selector_string_out(selector_string_out);
-        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_selector_string_out()));
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
+      response->set_status(status);
+      response->set_selector_string_out(selector_string_out);
+      nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_selector_string_out()));
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -93,9 +94,8 @@ namespace nirfmxspecan_restricted_grpc {
       int32 actual_array_size {};
       while (true) {
         auto status = library_->IQFetchDataOverrideBehavior(instrument, selector_string, timeout, record_to_fetch, samples_to_read, delete_on_fetch, &t0, &dt, nullptr, 0, &actual_array_size);
-        if (status < 0) {
-          response->set_status(status);
-          return ::grpc::Status::OK;
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         std::vector<NIComplexSingle> data(actual_array_size, NIComplexSingle());
         auto array_size = actual_array_size;
@@ -104,20 +104,21 @@ namespace nirfmxspecan_restricted_grpc {
           // buffer is now too small, try again
           continue;
         }
-        response->set_status(status);
-        if (status_ok(status)) {
-          response->set_t0(t0);
-          response->set_dt(dt);
-          convert_to_grpc(data, response->mutable_data());
-          {
-            auto shrunk_size = actual_array_size;
-            auto current_size = response->mutable_data()->size();
-            if (shrunk_size != current_size) {
-              response->mutable_data()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
-            }
-          }
-          response->set_actual_array_size(actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
+        response->set_status(status);
+        response->set_t0(t0);
+        response->set_dt(dt);
+        convert_to_grpc(data, response->mutable_data());
+        {
+          auto shrunk_size = actual_array_size;
+          auto current_size = response->mutable_data()->size();
+          if (shrunk_size != current_size) {
+            response->mutable_data()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
+          }
+        }
+        response->set_actual_array_size(actual_array_size);
         return ::grpc::Status::OK;
       }
     }

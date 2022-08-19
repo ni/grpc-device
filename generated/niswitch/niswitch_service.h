@@ -104,6 +104,7 @@ public:
 private:
   NiSwitchLibraryInterface* library_;
   ResourceRepositorySharedPtr session_repository_;
+  ::grpc::Status ConvertApiErrorStatusForViSession(google::protobuf::int32 status, ViSession vi);
 
   NiSwitchFeatureToggles feature_toggles_;
 };

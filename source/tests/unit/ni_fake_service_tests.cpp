@@ -4,11 +4,14 @@
 #include <nifake/nifake_service.h>
 #include <nifake_extension/nifake_extension_mock_library.h>
 #include <nifake_extension/nifake_extension_service.h>
+#include <nlohmann/json.hpp>
 #include <server/session_repository.h>
 
 #include <array>
 #include <iostream>
 #include <string>
+
+using namespace ::nlohmann;
 
 // fixes seg faults caused by https://github.com/grpc/grpc/issues/14633
 static grpc::internal::GrpcLibraryInitializer g_gli_initializer;
@@ -423,8 +426,12 @@ TEST(NiFakeServiceTests, NiFakeService_FunctionCallErrors_ResponseValuesNotSet)
   nifake_grpc::GetABooleanResponse response;
   ::grpc::Status status = service.GetABoolean(&context, &request, &response);
 
-  EXPECT_TRUE(status.ok());
-  EXPECT_EQ(kDriverFailure, response.status());
+  EXPECT_FALSE(status.ok());
+  EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status.error_code());
+  auto error = json::parse(status.error_message());
+  EXPECT_EQ(kDriverFailure, error.value("code", 0));
+  EXPECT_TRUE(error.contains("message"));
+  EXPECT_NE(kDriverFailure, response.status());
   EXPECT_NE(a_boolean, response.a_boolean());
 }
 
@@ -2590,29 +2597,29 @@ TEST(NiFakeServiceTests, FakeService_ReadDataWithInOutIviTwist_DoesTwistAndRetur
   EXPECT_THAT(response.data(), ElementsAreArray(DATA, BUFFER_SIZE));
 }
 
-TEST(NiFakeServiceTests, FakeService_ReadDataWithMultpleIviTwistParamSets_DoesTwistAndReturnsCorrectData)
+TEST(NiFakeServiceTests, FakeService_ReadDataWithMultipleIviTwistParamSets_DoesTwistAndReturnsCorrectData)
 {
   const auto DATA = std::vector<::google::protobuf::int32>{1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
   const auto OTHER_DATA = std::vector<::google::protobuf::int32>{100, 200, 300, 400};
   FakeServiceHolder service_holder;
   // First call expects pointer-to-zero and sets the size.
-  EXPECT_CALL(service_holder.library, ReadDataWithMultpleIviTwistParamSets(0, nullptr, _, 0, nullptr, _))
+  EXPECT_CALL(service_holder.library, ReadDataWithMultipleIviTwistParamSets(0, nullptr, _, 0, nullptr, _))
       .WillOnce(
           DoAll(
               SetArgPointee<2>(DATA.size()),
               SetArgPointee<5>(OTHER_DATA.size()),
               Return(kDriverSuccess)));
   // Second call expects pointer-to-size and sets the output data.
-  EXPECT_CALL(service_holder.library, ReadDataWithMultpleIviTwistParamSets(static_cast<ViInt32>(DATA.size()), _, _, static_cast<ViInt32>(OTHER_DATA.size()), _, _))
+  EXPECT_CALL(service_holder.library, ReadDataWithMultipleIviTwistParamSets(static_cast<ViInt32>(DATA.size()), _, _, static_cast<ViInt32>(OTHER_DATA.size()), _, _))
       .WillOnce(
           DoAll(
               SetArrayArgument<1>(DATA.cbegin(), DATA.cend()),
               SetArrayArgument<4>(OTHER_DATA.cbegin(), OTHER_DATA.cend()),
               Return(kDriverSuccess)));
 
-  auto request = ReadDataWithMultpleIviTwistParamSetsRequest{};
-  auto response = ReadDataWithMultpleIviTwistParamSetsResponse{};
-  service_holder.service.ReadDataWithMultpleIviTwistParamSets(&service_holder.context, &request, &response);
+  auto request = ReadDataWithMultipleIviTwistParamSetsRequest{};
+  auto response = ReadDataWithMultipleIviTwistParamSetsResponse{};
+  service_holder.service.ReadDataWithMultipleIviTwistParamSets(&service_holder.context, &request, &response);
 
   EXPECT_EQ(0, response.status());
   EXPECT_THAT(response.array_out(), ElementsAreArray(DATA.data(), DATA.size()));

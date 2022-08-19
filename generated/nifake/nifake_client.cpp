@@ -84,6 +84,24 @@ accept_vi_uint32_array(const StubPtr& stub, const nidevice_grpc::Session& vi, co
   return response;
 }
 
+BoolArrayInputFunctionResponse
+bool_array_input_function(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& number_of_elements, const std::vector<bool>& an_array)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BoolArrayInputFunctionRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_number_of_elements(number_of_elements);
+  copy_array(an_array, request.mutable_an_array());
+
+  auto response = BoolArrayInputFunctionResponse{};
+
+  raise_if_error(
+      stub->BoolArrayInputFunction(&context, request, &response));
+
+  return response;
+}
+
 BoolArrayOutputFunctionResponse
 bool_array_output_function(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& number_of_elements)
 {
@@ -101,20 +119,19 @@ bool_array_output_function(const StubPtr& stub, const nidevice_grpc::Session& vi
   return response;
 }
 
-BoolArrayInputFunctionResponse
-bool_array_input_function(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& number_of_elements, const std::vector<bool>& an_array)
+CloseExtCalResponse
+close_ext_cal(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& action)
 {
   ::grpc::ClientContext context;
 
-  auto request = BoolArrayInputFunctionRequest{};
+  auto request = CloseExtCalRequest{};
   request.mutable_vi()->CopyFrom(vi);
-  request.set_number_of_elements(number_of_elements);
-  copy_array(an_array, request.mutable_an_array());
+  request.set_action(action);
 
-  auto response = BoolArrayInputFunctionResponse{};
+  auto response = CloseExtCalResponse{};
 
   raise_if_error(
-      stub->BoolArrayInputFunction(&context, request, &response));
+      stub->CloseExtCal(&context, request, &response));
 
   return response;
 }
@@ -290,21 +307,6 @@ get_a_string_of_fixed_maximum_size(const StubPtr& stub, const nidevice_grpc::Ses
   return response;
 }
 
-GetBitfieldAsEnumArrayResponse
-get_bitfield_as_enum_array(const StubPtr& stub)
-{
-  ::grpc::ClientContext context;
-
-  auto request = GetBitfieldAsEnumArrayRequest{};
-
-  auto response = GetBitfieldAsEnumArrayResponse{};
-
-  raise_if_error(
-      stub->GetBitfieldAsEnumArray(&context, request, &response));
-
-  return response;
-}
-
 GetAnIviDanceStringResponse
 get_an_ivi_dance_string(const StubPtr& stub, const nidevice_grpc::Session& vi)
 {
@@ -317,24 +319,6 @@ get_an_ivi_dance_string(const StubPtr& stub, const nidevice_grpc::Session& vi)
 
   raise_if_error(
       stub->GetAnIviDanceString(&context, request, &response));
-
-  return response;
-}
-
-UseATwoDimensionParameterResponse
-use_a_two_dimension_parameter(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::vector<pb::int32>& array, const std::vector<pb::int32>& array_lengths)
-{
-  ::grpc::ClientContext context;
-
-  auto request = UseATwoDimensionParameterRequest{};
-  request.mutable_vi()->CopyFrom(vi);
-  copy_array(array, request.mutable_array());
-  copy_array(array_lengths, request.mutable_array_lengths());
-
-  auto response = UseATwoDimensionParameterResponse{};
-
-  raise_if_error(
-      stub->UseATwoDimensionParameter(&context, request, &response));
 
   return response;
 }
@@ -589,6 +573,21 @@ get_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, c
   return response;
 }
 
+GetBitfieldAsEnumArrayResponse
+get_bitfield_as_enum_array(const StubPtr& stub)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetBitfieldAsEnumArrayRequest{};
+
+  auto response = GetBitfieldAsEnumArrayResponse{};
+
+  raise_if_error(
+      stub->GetBitfieldAsEnumArray(&context, request, &response));
+
+  return response;
+}
+
 GetCalDateAndTimeResponse
 get_cal_date_and_time(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& cal_type)
 {
@@ -671,22 +670,6 @@ get_enum_value(const StubPtr& stub, const nidevice_grpc::Session& vi)
   return response;
 }
 
-GetViUInt8Response
-get_vi_uint8(const StubPtr& stub, const nidevice_grpc::Session& vi)
-{
-  ::grpc::ClientContext context;
-
-  auto request = GetViUInt8Request{};
-  request.mutable_vi()->CopyFrom(vi);
-
-  auto response = GetViUInt8Response{};
-
-  raise_if_error(
-      stub->GetViUInt8(&context, request, &response));
-
-  return response;
-}
-
 GetViInt32ArrayResponse
 get_vi_int32_array(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& array_len)
 {
@@ -721,6 +704,22 @@ get_vi_uint32_array(const StubPtr& stub, const nidevice_grpc::Session& vi, const
   return response;
 }
 
+GetViUInt8Response
+get_vi_uint8(const StubPtr& stub, const nidevice_grpc::Session& vi)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetViUInt8Request{};
+  request.mutable_vi()->CopyFrom(vi);
+
+  auto response = GetViUInt8Response{};
+
+  raise_if_error(
+      stub->GetViUInt8(&context, request, &response));
+
+  return response;
+}
+
 ImportAttributeConfigurationBufferResponse
 import_attribute_configuration_buffer(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& configuration)
 {
@@ -734,6 +733,23 @@ import_attribute_configuration_buffer(const StubPtr& stub, const nidevice_grpc::
 
   raise_if_error(
       stub->ImportAttributeConfigurationBuffer(&context, request, &response));
+
+  return response;
+}
+
+InitExtCalResponse
+init_ext_cal(const StubPtr& stub, const pb::string& resource_name, const pb::string& calibration_password)
+{
+  ::grpc::ClientContext context;
+
+  auto request = InitExtCalRequest{};
+  request.set_resource_name(resource_name);
+  request.set_calibration_password(calibration_password);
+
+  auto response = InitExtCalResponse{};
+
+  raise_if_error(
+      stub->InitExtCal(&context, request, &response));
 
   return response;
 }
@@ -753,23 +769,6 @@ init_with_options(const StubPtr& stub, const pb::string& resource_name, const bo
 
   raise_if_error(
       stub->InitWithOptions(&context, request, &response));
-
-  return response;
-}
-
-InitExtCalResponse
-init_ext_cal(const StubPtr& stub, const pb::string& resource_name, const pb::string& calibration_password)
-{
-  ::grpc::ClientContext context;
-
-  auto request = InitExtCalRequest{};
-  request.set_resource_name(resource_name);
-  request.set_calibration_password(calibration_password);
-
-  auto response = InitExtCalResponse{};
-
-  raise_if_error(
-      stub->InitExtCal(&context, request, &response));
 
   return response;
 }
@@ -953,17 +952,17 @@ read_data_with_in_out_ivi_twist(const StubPtr& stub)
   return response;
 }
 
-ReadDataWithMultpleIviTwistParamSetsResponse
-read_data_with_multple_ivi_twist_param_sets(const StubPtr& stub)
+ReadDataWithMultipleIviTwistParamSetsResponse
+read_data_with_multiple_ivi_twist_param_sets(const StubPtr& stub)
 {
   ::grpc::ClientContext context;
 
-  auto request = ReadDataWithMultpleIviTwistParamSetsRequest{};
+  auto request = ReadDataWithMultipleIviTwistParamSetsRequest{};
 
-  auto response = ReadDataWithMultpleIviTwistParamSetsResponse{};
+  auto response = ReadDataWithMultipleIviTwistParamSetsResponse{};
 
   raise_if_error(
-      stub->ReadDataWithMultpleIviTwistParamSets(&context, request, &response));
+      stub->ReadDataWithMultipleIviTwistParamSets(&context, request, &response));
 
   return response;
 }
@@ -1145,52 +1144,37 @@ use64_bit_number(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb
   return response;
 }
 
-WriteWaveformResponse
-write_waveform(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::vector<double>& waveform)
+UseATwoDimensionParameterResponse
+use_a_two_dimension_parameter(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::vector<pb::int32>& array, const std::vector<pb::int32>& array_lengths)
 {
   ::grpc::ClientContext context;
 
-  auto request = WriteWaveformRequest{};
+  auto request = UseATwoDimensionParameterRequest{};
   request.mutable_vi()->CopyFrom(vi);
-  copy_array(waveform, request.mutable_waveform());
+  copy_array(array, request.mutable_array());
+  copy_array(array_lengths, request.mutable_array_lengths());
 
-  auto response = WriteWaveformResponse{};
+  auto response = UseATwoDimensionParameterResponse{};
 
   raise_if_error(
-      stub->WriteWaveform(&context, request, &response));
+      stub->UseATwoDimensionParameter(&context, request, &response));
 
   return response;
 }
 
-CloseResponse
-close(const StubPtr& stub, const nidevice_grpc::Session& vi)
+ViInt16ArrayInputFunctionResponse
+vi_int16_array_input_function(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::vector<pb::int32>& an_array)
 {
   ::grpc::ClientContext context;
 
-  auto request = CloseRequest{};
+  auto request = ViInt16ArrayInputFunctionRequest{};
   request.mutable_vi()->CopyFrom(vi);
+  copy_array(an_array, request.mutable_an_array());
 
-  auto response = CloseResponse{};
+  auto response = ViInt16ArrayInputFunctionResponse{};
 
   raise_if_error(
-      stub->Close(&context, request, &response));
-
-  return response;
-}
-
-CloseExtCalResponse
-close_ext_cal(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& action)
-{
-  ::grpc::ClientContext context;
-
-  auto request = CloseExtCalRequest{};
-  request.mutable_vi()->CopyFrom(vi);
-  request.set_action(action);
-
-  auto response = CloseExtCalResponse{};
-
-  raise_if_error(
-      stub->CloseExtCal(&context, request, &response));
+      stub->ViInt16ArrayInputFunction(&context, request, &response));
 
   return response;
 }
@@ -1230,19 +1214,35 @@ vi_uint8_array_output_function(const StubPtr& stub, const nidevice_grpc::Session
   return response;
 }
 
-ViInt16ArrayInputFunctionResponse
-vi_int16_array_input_function(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::vector<pb::int32>& an_array)
+WriteWaveformResponse
+write_waveform(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::vector<double>& waveform)
 {
   ::grpc::ClientContext context;
 
-  auto request = ViInt16ArrayInputFunctionRequest{};
+  auto request = WriteWaveformRequest{};
   request.mutable_vi()->CopyFrom(vi);
-  copy_array(an_array, request.mutable_an_array());
+  copy_array(waveform, request.mutable_waveform());
 
-  auto response = ViInt16ArrayInputFunctionResponse{};
+  auto response = WriteWaveformResponse{};
 
   raise_if_error(
-      stub->ViInt16ArrayInputFunction(&context, request, &response));
+      stub->WriteWaveform(&context, request, &response));
+
+  return response;
+}
+
+CloseResponse
+close(const StubPtr& stub, const nidevice_grpc::Session& vi)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CloseRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+
+  auto response = CloseResponse{};
+
+  raise_if_error(
+      stub->Close(&context, request, &response));
 
   return response;
 }

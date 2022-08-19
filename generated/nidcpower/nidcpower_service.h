@@ -177,6 +177,7 @@ public:
 private:
   NiDCPowerLibraryInterface* library_;
   ResourceRepositorySharedPtr session_repository_;
+  ::grpc::Status ConvertApiErrorStatusForViSession(google::protobuf::int32 status, ViSession vi);
   void Copy(const std::vector<ViBoolean>& input, google::protobuf::RepeatedField<bool>* output);
 
   NiDCPowerFeatureToggles feature_toggles_;

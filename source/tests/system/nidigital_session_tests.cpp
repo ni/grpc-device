@@ -1,4 +1,5 @@
 #include <gtest/gtest.h>
+#include <nlohmann/json.hpp>
 
 #include "device_server.h"
 #include "nidigitalpattern/nidigitalpattern_client.h"
@@ -8,6 +9,7 @@ namespace tests {
 namespace system {
 
 namespace digital = nidigitalpattern_grpc;
+using namespace ::nlohmann;
 
 const int kDigitalRsrcNotFound = -1074098043;
 const char* kDigitalRsrcNotFoundMessage = "Specified string is not valid, because it is empty.";
@@ -85,10 +87,10 @@ TEST_F(NiDigitalSessionTest, InitializeSessionWithoutDevice_ReturnsDriverError)
   digital::InitWithOptionsResponse response;
   ::grpc::Status status = call_init_with_options(kDigitalInvalidResourceName, "", "", &response);
 
-  EXPECT_TRUE(status.ok());
-  EXPECT_EQ(kDigitalRsrcNotFound, response.status());
-  EXPECT_EQ(0, response.vi().id());
-  EXPECT_NE("", response.error_message());
+  EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status.error_code());
+  auto error = json::parse(status.error_message());
+  EXPECT_EQ(kDigitalRsrcNotFound, error.value("code", 0));
+  EXPECT_NE("", error.value("message", ""));
 }
 
 TEST_F(NiDigitalSessionTest, InitializedSession_CloseSession_ClosesDriverSession)
@@ -110,10 +112,12 @@ TEST_F(NiDigitalSessionTest, InitializedSession_CloseSession_ClosesDriverSession
 TEST_F(NiDigitalSessionTest, InitWithErrorFromDriver_ReturnsUserErrorMessage)
 {
   digital::InitWithOptionsResponse init_response;
-  call_init_with_options(kDigitalInvalidResourceName, "", "", &init_response);
+  auto status = call_init_with_options(kDigitalInvalidResourceName, "", "", &init_response);
 
-  EXPECT_EQ(kDigitalRsrcNotFound, init_response.status());
-  EXPECT_STREQ(kDigitalRsrcNotFoundMessage, init_response.error_message().c_str());
+  EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status.error_code());
+  auto error = json::parse(status.error_message());
+  EXPECT_EQ(kDigitalRsrcNotFound, error.value("code", 0));
+  EXPECT_STREQ(kDigitalRsrcNotFoundMessage, error.value("message", "").c_str());
 }
 
 }  // namespace system

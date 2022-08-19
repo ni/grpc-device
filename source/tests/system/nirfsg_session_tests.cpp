@@ -1,4 +1,5 @@
 #include <gtest/gtest.h>
+#include <nlohmann/json.hpp>
 
 #include "device_server.h"
 #include "nirfsg/nirfsg_client.h"
@@ -8,6 +9,7 @@ namespace tests {
 namespace system {
 
 namespace rfsg = nirfsg_grpc;
+using namespace ::nlohmann;
 
 const int kInvalidRsrc = -200220;
 const int kInvalidRFSGSession = -1074130544;
@@ -91,10 +93,10 @@ TEST_F(NiRFSGSessionTest, InitializeSessionWithoutDevice_ReturnsDriverError)
   rfsg::InitWithOptionsResponse response;
   ::grpc::Status status = call_init_with_options(kRFSGTestInvalidRsrc, "", "", &response);
 
-  EXPECT_TRUE(status.ok());
-  EXPECT_EQ(kInvalidRsrc, response.status());
-  EXPECT_EQ(0, response.vi().id());
-  EXPECT_NE("", response.error_message());
+  EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status.error_code());
+  auto error = json::parse(status.error_message());
+  EXPECT_EQ(kInvalidRsrc, error.value("code", 0));
+  EXPECT_NE("", error.value("message", ""));
 }
 
 TEST_F(NiRFSGSessionTest, InitializedSession_CloseSession_ClosesDriverSession)
@@ -116,10 +118,12 @@ TEST_F(NiRFSGSessionTest, InitializedSession_CloseSession_ClosesDriverSession)
 TEST_F(NiRFSGSessionTest, InitWithErrorFromDriver_ReturnsUserErrorMessage)
 {
   rfsg::InitWithOptionsResponse init_response;
-  call_init_with_options(kRFSGTestInvalidRsrc, "", "", &init_response);
+  auto status = call_init_with_options(kRFSGTestInvalidRsrc, "", "", &init_response);
 
-  EXPECT_EQ(kInvalidRsrc, init_response.status());
-  EXPECT_STREQ(kRFSGErrorResourceNotFoundMessage, init_response.error_message().c_str());
+  EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status.error_code());
+  auto error = json::parse(status.error_message());
+  EXPECT_EQ(kInvalidRsrc, error.value("code", 0));
+  EXPECT_STREQ(kRFSGErrorResourceNotFoundMessage, error.value("message", "").c_str());
 }
 
 TEST_F(NiRFSGSessionTest, InvalidSession_CloseSession_ReturnsInvalidSessionError)
@@ -133,8 +137,9 @@ TEST_F(NiRFSGSessionTest, InvalidSession_CloseSession_ReturnsInvalidSessionError
   rfsg::CloseResponse response;
   ::grpc::Status status = GetStub()->Close(&context, request, &response);
 
-  EXPECT_TRUE(status.ok());
-  EXPECT_EQ(kInvalidRFSGSession, response.status());
+  EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status.error_code());
+  auto error = json::parse(status.error_message());
+  EXPECT_EQ(kInvalidRFSGSession, error.value("code", 0));
 }
 
 }  // namespace system

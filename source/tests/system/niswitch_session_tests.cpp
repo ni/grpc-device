@@ -1,4 +1,7 @@
+#include <gmock/gmock.h>
 #include <gtest/gtest.h>
+
+#include <nlohmann/json.hpp>
 
 #include "device_server.h"
 #include "niswitch/niswitch_client.h"
@@ -8,6 +11,7 @@ namespace tests {
 namespace system {
 
 namespace niswitch = niswitch_grpc;
+using namespace ::nlohmann;
 
 const int kViErrorRsrcNotFound = -1074118654;
 const int kInvalidSwitchSession = -1074130544;
@@ -97,10 +101,10 @@ TEST_F(NiSwitchSessionTest, InitializeSessionWithoutDevice_ReturnsDriverError)
   niswitch::InitWithTopologyResponse response;
   ::grpc::Status status = call_init_with_topology(kInvalidRsrcName, "", "", &response);
 
-  EXPECT_TRUE(status.ok());
-  EXPECT_EQ(kViErrorRsrcNotFound, response.status());
-  EXPECT_EQ(0, response.vi().id());
-  EXPECT_NE("", response.error_message());
+  EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status.error_code());
+  auto error = json::parse(status.error_message());
+  EXPECT_EQ(kViErrorRsrcNotFound, error.value("code", 0));
+  EXPECT_NE("", error.value("message", ""));
 }
 
 TEST_F(NiSwitchSessionTest, InitializedSession_CloseSession_ClosesDriverSession)
@@ -119,7 +123,7 @@ TEST_F(NiSwitchSessionTest, InitializedSession_CloseSession_ClosesDriverSession)
   EXPECT_EQ(0, close_response.status());
 }
 
-TEST_F(NiSwitchSessionTest, InvalidSession_CloseSession_ReturnsInvalidSesssionError)
+TEST_F(NiSwitchSessionTest, InvalidSession_CloseSession_ReturnsInvalidSessionError)
 {
   nidevice_grpc::Session session;
   session.set_id(NULL);
@@ -130,19 +134,21 @@ TEST_F(NiSwitchSessionTest, InvalidSession_CloseSession_ReturnsInvalidSesssionEr
   niswitch::CloseResponse response;
   ::grpc::Status status = GetStub()->Close(&context, request, &response);
 
-  EXPECT_TRUE(status.ok());
-  EXPECT_EQ(kInvalidSwitchSession, response.status());
-  std::string error_message = get_error_message(response.status());
-  EXPECT_STREQ(kInvalidSwitchSessionMessage, error_message.c_str());
+  EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status.error_code());
+  auto error = json::parse(status.error_message());
+  EXPECT_EQ(kInvalidSwitchSession, error.value("code", 0));
+  EXPECT_THAT(error.value("message", ""), ::testing::HasSubstr(kInvalidSwitchSessionMessage));
 }
 
 TEST_F(NiSwitchSessionTest, InitWithErrorFromDriver_ReturnsUserErrorMessage)
 {
   niswitch::InitWithTopologyResponse init_response;
-  call_init_with_topology(kInvalidRsrcName, "", "", &init_response);
+  auto status = call_init_with_topology(kInvalidRsrcName, "", "", &init_response);
 
-  EXPECT_EQ(kViErrorRsrcNotFound, init_response.status());
-  EXPECT_STREQ(kViErrorRsrcNotFoundMessage, init_response.error_message().c_str());
+  EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status.error_code());
+  auto error = json::parse(status.error_message());
+  EXPECT_EQ(kViErrorRsrcNotFound, error.value("code", 0));
+  EXPECT_STREQ(kViErrorRsrcNotFoundMessage, error.value("message", "").c_str());
 }
 
 }  // namespace system

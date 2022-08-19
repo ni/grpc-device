@@ -18,6 +18,8 @@ namespace unit {
 class NiRFmxSpecAnRestrictedMockLibrary : public nirfmxspecan_restricted_grpc::NiRFmxSpecAnRestrictedLibraryInterface {
  public:
   MOCK_METHOD(int32, CacheResult, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32 selectorStringOutSize, char selectorStringOut[]), (override));
+  MOCK_METHOD(int32, GetError, (niRFmxInstrHandle instrumentHandle, int32* errorCode, int32 errorDescriptionBufferSize, char errorDescription[]), (override));
+  MOCK_METHOD(int32, GetErrorString, (niRFmxInstrHandle instrumentHandle, int32 errorCode, int32 errorDescriptionBufferSize, char errorDescription[]), (override));
   MOCK_METHOD(int32, IQFetchDataOverrideBehavior, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 recordToFetch, int64 samplesToRead, int32 deleteOnFetch, float64* t0, float64* dt, NIComplexSingle data[], int32 arraySize, int32* actualArraySize), (override));
 };
 

@@ -101,6 +101,43 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
+    'BoolArrayInputFunction': {
+        'codegen_method': 'public',
+        'documentation': {
+            'description': 'This function accepts an array of booleans.'
+        },
+        'parameters': [
+            {
+                'direction': 'in',
+                'documentation': {
+                    'description': 'Identifies a particular instrument session. You obtain the **vi** parameter from niFake_InitWithOptions.'
+                },
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'documentation': {
+                    'description': 'Number of elements in the array.'
+                },
+                'name': 'numberOfElements',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'in',
+                'documentation': {
+                    'description': 'Input boolean array'
+                },
+                'name': 'anArray',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'numberOfElements'
+                },
+                'type': 'ViBoolean[]'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
     'BoolArrayOutputFunction': {
         'codegen_method': 'public',
         'documentation': {
@@ -138,40 +175,20 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
-    'BoolArrayInputFunction': {
+    'CloseExtCal': {
         'codegen_method': 'public',
-        'documentation': {
-            'description': 'This function accepts an array of booleans.'
-        },
+        'custom_close_method': True,
         'parameters': [
-            {
-                'direction': 'in',
-                'documentation': {
-                    'description': 'Identifies a particular instrument session. You obtain the **vi** parameter from niFake_InitWithOptions.'
-                },
+           {
                 'name': 'vi',
+                'direction': 'in',
                 'type': 'ViSession'
-            },
-            {
+           },
+           {
+                'name': 'action',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Number of elements in the array.'
-                },
-                'name': 'numberOfElements',
                 'type': 'ViInt32'
-            },
-            {
-                'direction': 'in',
-                'documentation': {
-                    'description': 'Input boolean array'
-                },
-                'name': 'anArray',
-                'size': {
-                    'mechanism': 'passed-in',
-                    'value': 'numberOfElements'
-                },
-                'type': 'ViBoolean[]'
-            }
+           }
         ],
         'returns': 'ViStatus'
     },
@@ -503,55 +520,6 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
-    'GetAStringUsingCustomCode': {
-        'codegen_method': 'no',
-        'documentation': {
-            'description': 'Returns a number and a string.',
-            'note': 'This function rules!'
-        },
-        'parameters': [
-            {
-                'direction': 'in',
-                'documentation': {
-                    'description': 'Identifies a particular instrument session.'
-                },
-                'name': 'vi',
-                'type': 'ViSession'
-            },
-            {
-                'direction': 'in',
-                'documentation': {
-                    'description': 'Contains a number.'
-                },
-                'name': 'aNumber',
-                'type': 'ViInt16'
-            },
-            {
-                'direction': 'out',
-                'documentation': {
-                    'description': 'Contains a string of length aNumber.'
-                },
-                'name': 'aString',
-                'size': {
-                    'mechanism': 'custom-code',
-                    'value': 'a_number'
-                },
-                'type': 'ViChar[]'
-            }
-        ],
-        'returns': 'ViStatus'
-    },
-    'GetBitfieldAsEnumArray': {
-        'parameters': [
-            {
-                'bitfield_as_enum_array': 'Bitfield',
-                'direction': 'out',
-                'name': 'flags',
-                'type': 'ViInt64',
-            }
-        ],
-        'returns': 'ViStatus'
-    },
     'GetAnIviDanceString': {
         'codegen_method': 'public',
         'documentation': {
@@ -586,39 +554,6 @@ functions = {
                 },
                 'type': 'ViChar[]'
             }
-        ],
-        'returns': 'ViStatus'
-    },
-    'UseATwoDimensionParameter': {
-        'parameters': [
-            {
-                'name': 'vi',
-                'direction': 'in',
-                'type': 'ViSession'
-            },
-            {
-                'direction': 'in',
-                'name': 'array',
-                'size': {
-                    'mechanism': 'two-dimension',
-                    'value': 'arrayLengths'
-                },
-                'type': 'ViInt32[]'
-            },
-            {
-                'direction': 'in',
-                'name': 'arrayLengths',
-                'size': {
-                    'mechanism': 'len',
-                    'value': 'arraySize'
-                },
-                'type': 'ViInt32[]'
-            },
-            {
-                'direction': 'in',
-                'name': 'arraySize',
-                'type': 'ViInt32'
-            },
         ],
         'returns': 'ViStatus'
     },
@@ -799,91 +734,6 @@ functions = {
                 'name': 'actualSize',
                 'direction': 'out',
                 'type': 'ViInt32'
-            }
-        ],
-        'returns': 'ViStatus'
-    },
-    'GetArrayForCustomCodeCustomType': {
-        'codegen_method': 'no',
-        'documentation': {
-            'description': 'This function returns an array for use in custom-code size mechanism.'
-        },
-        'parameters': [
-            {
-                'direction': 'in',
-                'documentation': {
-                    'description': 'Identifies a particular instrument session.'
-                },
-                'name': 'vi',
-                'type': 'ViSession'
-            },
-            {
-                'include_in_proto': False,
-                'direction': 'in',
-                'documentation': {
-                    'description': 'Number of elements in the array.'
-                },
-                'name': 'numberOfElements',
-                'size': {
-                    'mechanism': 'custom-code',
-                    'value': '',
-                },
-                'type': 'ViInt32'
-            },
-            {
-                'direction': 'out',
-                'documentation': {
-                    'description': 'Array of custom type using custom-code size mechanism'
-                },
-                'name': 'arrayOut',
-                'size': {
-                    'mechanism': 'custom-code',
-                    'value': ''
-                },
-                'type': 'struct CustomStruct[]',
-                'grpc_type': 'repeated FakeCustomStruct'
-            }
-        ],
-        'returns': 'ViStatus'
-    },
-    'GetArrayForCustomCodeDouble': {
-        'codegen_method': 'no',
-        'documentation': {
-            'description': 'This function returns an array for use in custom-code size mechanism.'
-        },
-        'parameters': [
-            {
-                'direction': 'in',
-                'documentation': {
-                    'description': 'Identifies a particular instrument session.'
-                },
-                'name': 'vi',
-                'type': 'ViSession'
-            },
-            {
-                'include_in_proto': False,
-                'direction': 'in',
-                'documentation': {
-                    'description': 'Number of elements in the array.'
-                },
-                'name': 'numberOfElements',
-                'size': {
-                    'mechanism': 'custom-code',
-                    'value': '',
-                },
-                'type': 'ViInt32'
-            },
-            {
-                'direction': 'out',
-                'documentation': {
-                    'description': 'Array of double using custom-code size mechanism'
-                },
-                'name': 'arrayOut',
-                'size': {
-                    'mechanism': 'custom-code',
-                    'value': 'number_of_elements'
-                },
-                'type': 'ViReal64[]'
             }
         ],
         'returns': 'ViStatus'
@@ -1212,6 +1062,17 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
+    'GetBitfieldAsEnumArray': {
+        'parameters': [
+            {
+                'bitfield_as_enum_array': 'Bitfield',
+                'direction': 'out',
+                'name': 'flags',
+                'type': 'ViInt64',
+            }
+        ],
+        'returns': 'ViStatus'
+    },
     'GetCalDateAndTime': {
         'codegen_method': 'public',
         'documentation': {
@@ -1467,22 +1328,6 @@ functions = {
         'returns': 'ViStatus',
         'use_session_lock': False
     },
-    'GetViUInt8': {
-        'codegen_method': 'public',
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
-            },
-            {
-                'direction': 'out',
-                'name': 'aUint8Number',
-                'type': 'ViUInt8'
-            }
-        ],
-        'returns': 'ViStatus'
-    },
     'GetViInt32Array': {
         'parameters': [
             {
@@ -1531,6 +1376,22 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
+    'GetViUInt8': {
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'out',
+                'name': 'aUint8Number',
+                'type': 'ViUInt8'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
     'ImportAttributeConfigurationBuffer': {
         'documentation': {
             'description': 'Import configuration buffer.'
@@ -1560,6 +1421,29 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
+    'InitExtCal': {
+        'codegen_method': 'public',
+        'init_method' : True,
+        'custom_close' : 'CloseExtCal(id, 0)',
+         'parameters': [
+            {
+                'name': 'resourceName',
+                'direction': 'in',
+                'type': 'ViRsrc'
+            },
+            {
+                'name': 'calibrationPassword',
+                'direction': 'in',
+                'type': 'ViString'
+            },
+            {
+                'name': 'vi',
+                'direction': 'out',
+                'type': 'ViSession'
+            }
+        ],
+        'returns': 'ViStatus'
+     },
     'InitWithOptions': {
         'codegen_method': 'public',
         'init_method': True,
@@ -1641,46 +1525,6 @@ functions = {
         'returns': 'ViStatus',
         'use_session_lock': False
     },
-    'Initiate': {
-        'codegen_method': 'private',
-        'documentation': {
-            'description': 'Initiates a thingie.'
-        },
-        'parameters': [
-            {
-                'direction': 'in',
-                'documentation': {
-                    'description': 'Identifies a particular instrument session.'
-                },
-                'name': 'vi',
-                'type': 'ViSession'
-            }
-        ],
-        'returns': 'ViStatus'
-    },
-    'InitExtCal': {
-        'codegen_method': 'public',
-        'init_method' : True,
-        'custom_close' : 'CloseExtCal(id, 0)',
-         'parameters': [
-            {
-                'name': 'resourceName',
-                'direction': 'in',
-                'type': 'ViRsrc'
-            },
-            {
-                'name': 'calibrationPassword',
-                'direction': 'in',
-                'type': 'ViString'
-            },
-            {
-                'name': 'vi',
-                'direction': 'out',
-                'type': 'ViSession'
-            }
-        ],
-        'returns': 'ViStatus'
-     },
     'InitWithVarArgs': {
         'codegen_method': 'public',
         'init_method': True,
@@ -1721,18 +1565,11 @@ functions = {
         ],
         'returns': 'ViStatus',
     },
-    'LockSession': {
-        'codegen_method': 'no',
+    'Initiate': {
+        'codegen_method': 'private',
         'documentation': {
-            'description': 'Lock.'
+            'description': 'Initiates a thingie.'
         },
-        'method_templates': [
-            {
-                'documentation_filename': 'lock',
-                'method_python_name_suffix': '',
-                'session_filename': 'lock'
-            }
-        ],
         'parameters': [
             {
                 'direction': 'in',
@@ -1741,20 +1578,9 @@ functions = {
                 },
                 'name': 'vi',
                 'type': 'ViSession'
-            },
-            {
-                'direction': 'out',
-                'documentation': {
-                    'description': 'Optional'
-                },
-                'name': 'callerHasLock',
-                'type': 'ViBoolean'
             }
         ],
-        'python_name': 'lock',
-        'render_in_session_base': True,
-        'returns': 'ViStatus',
-        'use_session_lock': False
+        'returns': 'ViStatus'
     },
     'MultipleArrayTypes': {
         'codegen_method': 'public',
@@ -2214,7 +2040,7 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
-    'ReadDataWithMultpleIviTwistParamSets': {
+    'ReadDataWithMultipleIviTwistParamSets': {
         'parameters': [
             {
                 'name': 'bufferSize',
@@ -2873,41 +2699,6 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
-    'UnlockSession': {
-        'codegen_method': 'no',
-        'documentation': {
-            'description': 'Unlock'
-        },
-        'method_templates': [
-            {
-                'documentation_filename': 'unlock',
-                'method_python_name_suffix': '',
-                'session_filename': 'unlock'
-            }
-        ],
-        'parameters': [
-            {
-                'direction': 'in',
-                'documentation': {
-                    'description': 'Identifies a particular instrument session.'
-                },
-                'name': 'vi',
-                'type': 'ViSession'
-            },
-            {
-                'direction': 'out',
-                'documentation': {
-                    'description': 'Optional'
-                },
-                'name': 'callerHasLock',
-                'type': 'ViBoolean'
-            }
-        ],
-        'python_name': 'unlock',
-        'render_in_session_base': True,
-        'returns': 'ViStatus',
-        'use_session_lock': False
-    },
     'Use64BitNumber': {
         'codegen_method': 'public',
         'documentation': {
@@ -2938,6 +2729,114 @@ functions = {
                 },
                 'name': 'output',
                 'type': 'ViInt64'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'UseATwoDimensionParameter': {
+        'parameters': [
+            {
+                'name': 'vi',
+                'direction': 'in',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'array',
+                'size': {
+                    'mechanism': 'two-dimension',
+                    'value': 'arrayLengths'
+                },
+                'type': 'ViInt32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arrayLengths',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'arraySize'
+                },
+                'type': 'ViInt32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'ViInt32'
+            },
+        ],
+        'returns': 'ViStatus'
+    },
+    'ViInt16ArrayInputFunction': {
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'numberOfElements',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'in',
+                'name': 'anArray',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'numberOfElements'
+                },
+                'type': 'ViInt16[]'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'ViUInt8ArrayInputFunction': {
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'numberOfElements',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'in',
+                'name': 'anArray',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'numberOfElements'
+                },
+                'type': 'ViUInt8[]'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'ViUInt8ArrayOutputFunction': {
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'numberOfElements',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'anArray',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'numberOfElements'
+                },
+                'type': 'ViUInt8[]'
             }
         ],
         'returns': 'ViStatus'
@@ -3011,23 +2910,6 @@ functions = {
         'python_name': '_close',
         'returns': 'ViStatus',
         'use_session_lock': False
-    },
-    'CloseExtCal': {
-        'codegen_method': 'public',
-        'custom_close_method': True,
-        'parameters': [
-           {
-                'name': 'vi',
-                'direction': 'in',
-                'type': 'ViSession'
-           },
-           {
-                'name': 'action',
-                'direction': 'in',
-                'type': 'ViInt32'
-           }
-        ],
-        'returns': 'ViStatus'
     },
     'error_message': {
         'codegen_method': 'private',
@@ -3105,79 +2987,4 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
-    'ViUInt8ArrayInputFunction': {
-        'codegen_method': 'public',
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
-            },
-            {
-                'direction': 'in',
-                'name': 'numberOfElements',
-                'type': 'ViInt32'
-            },
-            {
-                'direction': 'in',
-                'name': 'anArray',
-                'size': {
-                    'mechanism': 'passed-in',
-                    'value': 'numberOfElements'
-                },
-                'type': 'ViUInt8[]'
-            }
-        ],
-        'returns': 'ViStatus'
-    },
-    'ViUInt8ArrayOutputFunction': {
-        'codegen_method': 'public',
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
-            },
-            {
-                'direction': 'in',
-                'name': 'numberOfElements',
-                'type': 'ViInt32'
-            },
-            {
-                'direction': 'out',
-                'name': 'anArray',
-                'size': {
-                    'mechanism': 'passed-in',
-                    'value': 'numberOfElements'
-                },
-                'type': 'ViUInt8[]'
-            }
-        ],
-        'returns': 'ViStatus'
-    },
-    'ViInt16ArrayInputFunction': {
-        'codegen_method': 'public',
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
-            },
-            {
-                'direction': 'in',
-                'name': 'numberOfElements',
-                'type': 'ViInt32'
-            },
-            {
-                'direction': 'in',
-                'name': 'anArray',
-                'size': {
-                    'mechanism': 'len',
-                    'value': 'numberOfElements'
-                },
-                'type': 'ViInt16[]'
-            }
-        ],
-        'returns': 'ViStatus'
-    }
 }

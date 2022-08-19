@@ -1,4 +1,5 @@
 #include <gtest/gtest.h>
+#include <nlohmann/json.hpp>
 
 #include "device_server.h"
 #include "niscope/niscope_client.h"
@@ -8,6 +9,7 @@ namespace tests {
 namespace system {
 
 namespace scope = niscope_grpc;
+using namespace ::nlohmann;
 
 const int kViErrorRsrcNFound = -1073807343;
 const int kInvalidScopeSession = -1074130544;
@@ -97,10 +99,10 @@ TEST_F(NiScopeSessionTest, InitializeSessionWithoutDevice_ReturnsDriverError)
   scope::InitWithOptionsResponse response;
   ::grpc::Status status = call_init_with_options(kInvalidResourceName, "", "", &response);
 
-  EXPECT_TRUE(status.ok());
-  EXPECT_EQ(kViErrorRsrcNFound, response.status());
-  EXPECT_EQ(0, response.vi().id());
-  EXPECT_NE("", response.error_message());
+  EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status.error_code());
+  auto error = json::parse(status.error_message());
+  EXPECT_EQ(kViErrorRsrcNFound, error.value("code", 0));
+  EXPECT_NE("", error.value("message", ""));
 }
 
 TEST_F(NiScopeSessionTest, InitializedSession_CloseSession_ClosesDriverSession)
@@ -130,19 +132,21 @@ TEST_F(NiScopeSessionTest, InvalidSession_CloseSession_ReturnsInvalidSesssionErr
   scope::CloseResponse response;
   ::grpc::Status status = GetStub()->Close(&context, request, &response);
 
-  EXPECT_TRUE(status.ok());
-  EXPECT_EQ(kInvalidScopeSession, response.status());
-  std::string error_message = get_error_message(response.status());
-  EXPECT_STREQ(kInvalidScopeSessionMessage, error_message.c_str());
+  EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status.error_code());
+  auto error = json::parse(status.error_message());
+  EXPECT_EQ(kInvalidScopeSession, error.value("code", 0));
+  EXPECT_STREQ(kInvalidScopeSessionMessage, error.value("message", "").c_str());
 }
 
 TEST_F(NiScopeSessionTest, InitWithErrorFromDriver_ReturnsUserErrorMessage)
 {
   scope::InitWithOptionsResponse init_response;
-  call_init_with_options(kInvalidResourceName, "", "", &init_response);
+  auto status = call_init_with_options(kInvalidResourceName, "", "", &init_response);
 
-  EXPECT_EQ(kViErrorRsrcNFound, init_response.status());
-  EXPECT_STREQ(kViErrorRsrcNFoundMessage, init_response.error_message().c_str());
+  EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status.error_code());
+  auto error = json::parse(status.error_message());
+  EXPECT_EQ(kViErrorRsrcNFound, error.value("code", 0));
+  EXPECT_STREQ(kViErrorRsrcNFoundMessage, error.value("message", "").c_str());
 }
 
 }  // namespace system
