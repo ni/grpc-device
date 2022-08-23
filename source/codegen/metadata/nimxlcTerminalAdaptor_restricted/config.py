@@ -32,9 +32,6 @@ config = {
         'NIComplexDouble': 'nidevice_grpc.NIComplexNumber',
         'nierr_Status': 'NIErrStatus',
         'nimxlc_DeviceContainer': 'repeated NIMXLCDevice',
-        # 'nimxlc_DeviceIterator': 'nidevice_grpc.Session',
-        # 'nimxlc_TerminalContainer': 'repeated NIMXLCTerminal',
-        # 'nimxlc_TerminalIterator': 'nidevice_grpc.Session'
     },
     'driver_name': 'NI-MXLCTERMINALADAPTOR-RESTRICTED',
     "resource_handle_type": "nimxlc_Session",

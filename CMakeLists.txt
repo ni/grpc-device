@@ -354,6 +354,7 @@ add_executable(IntegrationTestsRunner
     "${proto_srcs_dir}/nifake.grpc.pb.cc"
     "${proto_srcs_dir}/nifake_non_ivi.pb.cc"
     "${proto_srcs_dir}/nifake_non_ivi.grpc.pb.cc"
+    "${proto_srcs_dir}/nimxlcTerminalAdaptor_restricted.pb.cc"
     "${service_output_dir}/nifake/nifake_client.cpp"
     "${service_output_dir}/nifake/nifake_service.cpp"
     "${service_output_dir}/nifake_non_ivi/nifake_non_ivi_client.cpp"
@@ -410,6 +411,7 @@ add_executable(UnitTestsRunner
     "${proto_srcs_dir}/nifake_extension.grpc.pb.cc"
     "${proto_srcs_dir}/nifake_non_ivi.pb.cc"
     "${proto_srcs_dir}/nifake_non_ivi.grpc.pb.cc"
+    "${proto_srcs_dir}/nimxlcTerminalAdaptor_restricted.pb.cc"
     "${proto_srcs_dir}/nixnet.grpc.pb.cc"
     "${proto_srcs_dir}/nixnet.pb.cc"
     "${proto_srcs_dir}/nixnetsocket.pb.cc"
@@ -420,6 +422,7 @@ add_executable(UnitTestsRunner
     "${custom_dir}/nifake_service.custom.cpp"
     "${custom_dir}/nifake_extension_service.custom.cpp"
     "${custom_dir}/nifake_non_ivi_service.custom.cpp"
+    "${custom_dir}/nimxlcTerminalAdaptor_restricted_service.custom.cpp"
     "${custom_dir}/nixnet_service.custom.cpp"
 )
 

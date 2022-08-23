@@ -130,6 +130,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'pointer': True,
                 'grpc_type': 'repeated NIMXLCDevice',
                 'name': 'container_out',
                 'return_value': True,

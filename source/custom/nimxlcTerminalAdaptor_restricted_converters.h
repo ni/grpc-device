@@ -39,20 +39,6 @@ inline NiErrStatusInputConverter convert_from_grpc(const NIErrStatus& input)
 {
   return NiErrStatusInputConverter(input);
 }
-
-struct TerminalInfo
-{
-  std::string name;
-  std::string visibility;
-};
-
-struct DeviceInfo
-{
-  std::string name;
-  bool supportsOnBoardClock;
-  std::vector<TerminalInfo> terminals;
-};
-
 }  // namespace nimxlcTerminalAdaptor_restricted_grpc
 
 // Template specializations go in nidevice_grpc::converters.
