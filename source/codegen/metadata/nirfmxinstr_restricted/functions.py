@@ -900,8 +900,7 @@ functions = {
         ],
         'returns': 'int32'
     },
-    'LoadConfigurationsFromJSON': {
-        'codegen_method': 'CustomCode',
+'LoadConfigurationsFromJSON': {
         'parameters': [
             {
                 'direction': 'in',
@@ -912,12 +911,15 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'jsonString',
-                'type': 'char[]'
+                'type': 'char[]',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'arraySize',
+                },
             },
             {
                 'direction': 'in',
                 'name': 'arraySize',
-                'include_in_proto': False,
                 'type': 'int32'
             }
         ],

@@ -913,6 +913,30 @@ namespace nirfmxinstr_restricted_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxInstrRestrictedService::LoadConfigurationsFromJSON(::grpc::ServerContext* context, const LoadConfigurationsFromJSONRequest* request, LoadConfigurationsFromJSONResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* json_string = (char*)request->json_string().c_str();
+      int32 array_size = static_cast<int32>(request->json_string().size());
+      auto status = library_->LoadConfigurationsFromJSON(instrument, json_string, array_size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxInstrRestrictedService::RegisterSpecialClientSnapshotInterest(::grpc::ServerContext* context, const RegisterSpecialClientSnapshotInterestRequest* request, RegisterSpecialClientSnapshotInterestResponse* response)
   {
     if (context->IsCancelled()) {
