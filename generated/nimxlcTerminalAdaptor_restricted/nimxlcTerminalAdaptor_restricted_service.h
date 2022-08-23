@@ -46,6 +46,7 @@ public:
   ::grpc::Status RefreshTerminalCache(::grpc::ServerContext* context, const RefreshTerminalCacheRequest* request, RefreshTerminalCacheResponse* response) override;
   ::grpc::Status HasTerminalInformationChanged(::grpc::ServerContext* context, const HasTerminalInformationChangedRequest* request, HasTerminalInformationChangedResponse* response) override;
   ::grpc::Status GetSystemChangeNumber(::grpc::ServerContext* context, const GetSystemChangeNumberRequest* request, GetSystemChangeNumberResponse* response) override;
+  ::grpc::Status GetDeviceContainer(::grpc::ServerContext* context, const GetDeviceContainerRequest* request, GetDeviceContainerResponse* response) override;
 private:
   NimxlcTerminalAdaptorRestrictedLibraryInterface* library_;
   ResourceRepositorySharedPtr session_repository_;

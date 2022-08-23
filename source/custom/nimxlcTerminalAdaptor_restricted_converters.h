@@ -16,8 +16,8 @@ namespace nimxlcterminaladaptor_restricted_grpc {
 // Add underscore to usings so they don't conflict with including files in the same namespace.
 namespace pb_ = ::google::protobuf;
 
-struct niErrStatusInputConverter {
-  niErrStatusInputConverter(const nierrStatus& input)
+struct NiErrStatusInputConverter {
+  NiErrStatusInputConverter(const NIErrStatus& input)
   {
     status.code = input.code();
     status.capacity = input.capacity();
@@ -35,10 +35,23 @@ struct niErrStatusInputConverter {
 };
 
 template <typename TniErrStatus>
-inline niErrStatusInputConverter convert_from_grpc(const nierrStatus& input)
+inline NiErrStatusInputConverter convert_from_grpc(const NIErrStatus& input)
 {
-  return niErrStatusInputConverter(input);
+  return NiErrStatusInputConverter(input);
 }
+
+struct TerminalInfo
+{
+  std::string name;
+  std::string visibility;
+};
+
+struct DeviceInfo
+{
+  std::string name;
+  bool supportsOnBoardClock;
+  std::vector<TerminalInfo> terminals;
+};
 
 }  // namespace nimxlcTerminalAdaptor_restricted_grpc
 
@@ -46,7 +59,7 @@ inline niErrStatusInputConverter convert_from_grpc(const nierrStatus& input)
 namespace nidevice_grpc {
 namespace converters {
 
-inline void convert_to_grpc(nierr_Status& input, nimxlcterminaladaptor_restricted_grpc::nierrStatus* output)
+inline void convert_to_grpc(nierr_Status& input, nimxlcterminaladaptor_restricted_grpc::NIErrStatus* output)
 {
   output->set_code(input.code);
   output->set_capacity(input.capacity);

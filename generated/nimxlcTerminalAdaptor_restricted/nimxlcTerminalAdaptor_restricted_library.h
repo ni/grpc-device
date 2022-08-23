@@ -23,6 +23,20 @@ class NimxlcTerminalAdaptorRestrictedLibrary : public nimxlcterminaladaptor_rest
   void refreshTerminalCache(nimxlc_Session session, nierr_Status* cStatus);
   bool hasTerminalInformationChanged(nimxlc_Session session, uint32_t systemChangeNumber, nierr_Status* cStatus);
   uint32_t getSystemChangeNumber(nimxlc_Session session, nierr_Status* cStatus);
+  nimxlc_DeviceContainer getDeviceContainer(nimxlc_Session session, nierr_Status* cStatus);
+  nimxlc_DeviceIterator DeviceContainer_begin(nimxlc_DeviceContainer container);
+  void DeviceIterator_next(nimxlc_DeviceIterator* iterator);
+  nimxlc_TerminalContainer DeviceIterator_getTerminalContainer(nimxlc_DeviceContainer container, nimxlc_DeviceIterator iterator, nierr_Status* cStatus);
+  const char* DeviceIterator_getDeviceName(nimxlc_DeviceContainer container, nimxlc_DeviceIterator iterator, nierr_Status* cStatus);
+  bool DeviceIterator_supportsOnBoardClock(nimxlc_DeviceContainer container, nimxlc_DeviceIterator iterator, nierr_Status* cStatus);
+  bool DeviceIterator_isEnd(nimxlc_DeviceContainer container, nimxlc_DeviceIterator iterator);
+  void DeviceContainer_destroy(nimxlc_DeviceContainer container);
+  nimxlc_TerminalIterator TerminalContainer_begin(nimxlc_TerminalContainer container);
+  void TerminalIterator_next(nimxlc_TerminalIterator* iterator);
+  bool TerminalIterator_isEnd(nimxlc_TerminalContainer container, nimxlc_TerminalIterator iterator);
+  void TerminalContainer_destroy(nimxlc_TerminalContainer container);
+  const char* TerminalIterator_getTerminalName(nimxlc_TerminalContainer container, nimxlc_TerminalIterator iterator, nierr_Status* cStatus);
+  const char* TerminalIterator_getVisibility(nimxlc_TerminalContainer container, nimxlc_TerminalIterator iterator, nierr_Status* cStatus);
 
  private:
   using createSessionPtr = nimxlc_Session (*)(const char hostname[], nierr_Status* cStatus);
@@ -30,6 +44,20 @@ class NimxlcTerminalAdaptorRestrictedLibrary : public nimxlcterminaladaptor_rest
   using refreshTerminalCachePtr = void (*)(nimxlc_Session session, nierr_Status* cStatus);
   using hasTerminalInformationChangedPtr = bool (*)(nimxlc_Session session, uint32_t systemChangeNumber, nierr_Status* cStatus);
   using getSystemChangeNumberPtr = uint32_t (*)(nimxlc_Session session, nierr_Status* cStatus);
+  using getDeviceContainerPtr = nimxlc_DeviceContainer (*)(nimxlc_Session session, nierr_Status* cStatus);
+  using DeviceContainer_beginPtr = nimxlc_DeviceIterator (*)(nimxlc_DeviceContainer container);
+  using DeviceIterator_nextPtr = void (*)(nimxlc_DeviceIterator* iterator);
+  using DeviceIterator_getTerminalContainerPtr = nimxlc_TerminalContainer (*)(nimxlc_DeviceContainer container, nimxlc_DeviceIterator iterator, nierr_Status* cStatus);
+  using DeviceIterator_getDeviceNamePtr = const char* (*)(nimxlc_DeviceContainer container, nimxlc_DeviceIterator iterator, nierr_Status* cStatus);
+  using DeviceIterator_supportsOnBoardClockPtr = bool (*)(nimxlc_DeviceContainer container, nimxlc_DeviceIterator iterator, nierr_Status* cStatus);
+  using DeviceIterator_isEndPtr = bool (*)(nimxlc_DeviceContainer container, nimxlc_DeviceIterator iterator);
+  using DeviceContainer_destroyPtr = void (*)(nimxlc_DeviceContainer container);
+  using TerminalContainer_beginPtr = nimxlc_TerminalIterator (*)(nimxlc_TerminalContainer container);
+  using TerminalIterator_nextPtr = void (*)(nimxlc_TerminalIterator* iterator);
+  using TerminalIterator_isEndPtr = bool (*)(nimxlc_TerminalContainer container, nimxlc_TerminalIterator iterator);
+  using TerminalContainer_destroyPtr = void (*)(nimxlc_TerminalContainer container);
+  using TerminalIterator_getTerminalNamePtr = const char* (*)(nimxlc_TerminalContainer container, nimxlc_TerminalIterator iterator, nierr_Status* cStatus);
+  using TerminalIterator_getVisibilityPtr = const char* (*)(nimxlc_TerminalContainer container, nimxlc_TerminalIterator iterator, nierr_Status* cStatus);
 
   typedef struct FunctionPointers {
     createSessionPtr createSession;
@@ -37,6 +65,20 @@ class NimxlcTerminalAdaptorRestrictedLibrary : public nimxlcterminaladaptor_rest
     refreshTerminalCachePtr refreshTerminalCache;
     hasTerminalInformationChangedPtr hasTerminalInformationChanged;
     getSystemChangeNumberPtr getSystemChangeNumber;
+    getDeviceContainerPtr getDeviceContainer;
+    DeviceContainer_beginPtr DeviceContainer_begin;
+    DeviceIterator_nextPtr DeviceIterator_next;
+    DeviceIterator_getTerminalContainerPtr DeviceIterator_getTerminalContainer;
+    DeviceIterator_getDeviceNamePtr DeviceIterator_getDeviceName;
+    DeviceIterator_supportsOnBoardClockPtr DeviceIterator_supportsOnBoardClock;
+    DeviceIterator_isEndPtr DeviceIterator_isEnd;
+    DeviceContainer_destroyPtr DeviceContainer_destroy;
+    TerminalContainer_beginPtr TerminalContainer_begin;
+    TerminalIterator_nextPtr TerminalIterator_next;
+    TerminalIterator_isEndPtr TerminalIterator_isEnd;
+    TerminalContainer_destroyPtr TerminalContainer_destroy;
+    TerminalIterator_getTerminalNamePtr TerminalIterator_getTerminalName;
+    TerminalIterator_getVisibilityPtr TerminalIterator_getVisibility;
   } FunctionLoadStatus;
 
   nidevice_grpc::SharedLibrary shared_library_;

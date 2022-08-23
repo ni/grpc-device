@@ -21,15 +21,26 @@ service NimxlcTerminalAdaptorRestricted {
   rpc RefreshTerminalCache(RefreshTerminalCacheRequest) returns (RefreshTerminalCacheResponse);
   rpc HasTerminalInformationChanged(HasTerminalInformationChangedRequest) returns (HasTerminalInformationChangedResponse);
   rpc GetSystemChangeNumber(GetSystemChangeNumberRequest) returns (GetSystemChangeNumberResponse);
+  rpc GetDeviceContainer(GetDeviceContainerRequest) returns (GetDeviceContainerResponse);
 }
 
-message nierrStatus {
+message NIErrStatus {
   int32 code = 1;
   uint32 capacity = 2;
   bytes reallocJson = 3;
   string json = 4;
 }
 
+message NIMXLCDevice {
+  string name = 1;
+  bool supportsOnboardClock = 2;
+  repeated NIMXLCTerminal terminals= 3;
+}
+
+message NIMXLCTerminal {
+  string name = 1;
+  string visibility = 2;
+}
 message CreateSessionRequest {
   string session_name = 1;
   string hostname = 2;
@@ -37,7 +48,7 @@ message CreateSessionRequest {
 
 message CreateSessionResponse {
   int32 status = 1;
-  nierrStatus c_status = 2;
+  NIErrStatus c_status = 2;
   nidevice_grpc.Session handle = 3;
 }
 
@@ -55,7 +66,7 @@ message RefreshTerminalCacheRequest {
 
 message RefreshTerminalCacheResponse {
   int32 status = 1;
-  nierrStatus c_status = 2;
+  NIErrStatus c_status = 2;
 }
 
 message HasTerminalInformationChangedRequest {
@@ -65,7 +76,7 @@ message HasTerminalInformationChangedRequest {
 
 message HasTerminalInformationChangedResponse {
   int32 status = 1;
-  nierrStatus c_status = 2;
+  NIErrStatus c_status = 2;
   bool bool_out = 3;
 }
 
@@ -75,7 +86,17 @@ message GetSystemChangeNumberRequest {
 
 message GetSystemChangeNumberResponse {
   int32 status = 1;
-  nierrStatus c_status = 2;
+  NIErrStatus c_status = 2;
   uint32 uint32_out = 3;
+}
+
+message GetDeviceContainerRequest {
+  nidevice_grpc.Session session = 1;
+}
+
+message GetDeviceContainerResponse {
+  int32 status = 1;
+  NIErrStatus c_status = 2;
+  repeated NIMXLCDevice container_out = 3;
 }
 

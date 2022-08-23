@@ -27,6 +27,7 @@ DestroySessionResponse destroy_session(const StubPtr& stub, const nidevice_grpc:
 RefreshTerminalCacheResponse refresh_terminal_cache(const StubPtr& stub, const nidevice_grpc::Session& session);
 HasTerminalInformationChangedResponse has_terminal_information_changed(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::uint32& system_change_number);
 GetSystemChangeNumberResponse get_system_change_number(const StubPtr& stub, const nidevice_grpc::Session& session);
+GetDeviceContainerResponse get_device_container(const StubPtr& stub, const nidevice_grpc::Session& session);
 
 } // namespace nimxlcterminaladaptor_restricted_grpc::experimental::client
 

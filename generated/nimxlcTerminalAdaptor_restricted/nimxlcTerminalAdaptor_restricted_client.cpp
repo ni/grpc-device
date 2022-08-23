@@ -98,5 +98,21 @@ get_system_change_number(const StubPtr& stub, const nidevice_grpc::Session& sess
   return response;
 }
 
+GetDeviceContainerResponse
+get_device_container(const StubPtr& stub, const nidevice_grpc::Session& session)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetDeviceContainerRequest{};
+  request.mutable_session()->CopyFrom(session);
+
+  auto response = GetDeviceContainerResponse{};
+
+  raise_if_error(
+      stub->GetDeviceContainer(&context, request, &response));
+
+  return response;
+}
+
 
 } // namespace nimxlcterminaladaptor_restricted_grpc::experimental::client

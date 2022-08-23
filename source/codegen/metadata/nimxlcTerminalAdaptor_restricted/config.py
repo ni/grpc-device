@@ -30,11 +30,11 @@ config = {
         'uInt8[]': 'bytes',
         'NIComplexSingle': 'nidevice_grpc.NIComplexNumberF32',
         'NIComplexDouble': 'nidevice_grpc.NIComplexNumber',
-        'nierr_Status': 'nierrStatus',
-        'nimxlc_DeviceContainer': 'nidevice_grpc.Session',
-        'nimxlc_DeviceIterator': 'nidevice_grpc.Session',
-        'nimxlc_TerminalContainer': 'nidevice_grpc.Session',
-        'nimxlc_TerminalIterator': 'nidevice_grpc.Session'
+        'nierr_Status': 'NIErrStatus',
+        'nimxlc_DeviceContainer': 'repeated NIMXLCDevice',
+        # 'nimxlc_DeviceIterator': 'nidevice_grpc.Session',
+        # 'nimxlc_TerminalContainer': 'repeated NIMXLCTerminal',
+        # 'nimxlc_TerminalIterator': 'nidevice_grpc.Session'
     },
     'driver_name': 'NI-MXLCTERMINALADAPTOR-RESTRICTED',
     "resource_handle_type": "nimxlc_Session",

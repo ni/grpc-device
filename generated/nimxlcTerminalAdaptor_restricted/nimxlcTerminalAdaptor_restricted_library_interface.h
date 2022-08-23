@@ -20,6 +20,20 @@ class NimxlcTerminalAdaptorRestrictedLibraryInterface {
   virtual void refreshTerminalCache(nimxlc_Session session, nierr_Status* cStatus) = 0;
   virtual bool hasTerminalInformationChanged(nimxlc_Session session, uint32_t systemChangeNumber, nierr_Status* cStatus) = 0;
   virtual uint32_t getSystemChangeNumber(nimxlc_Session session, nierr_Status* cStatus) = 0;
+  virtual nimxlc_DeviceContainer getDeviceContainer(nimxlc_Session session, nierr_Status* cStatus) = 0;
+  virtual nimxlc_DeviceIterator DeviceContainer_begin(nimxlc_DeviceContainer container) = 0;
+  virtual void DeviceIterator_next(nimxlc_DeviceIterator* iterator) = 0;
+  virtual nimxlc_TerminalContainer DeviceIterator_getTerminalContainer(nimxlc_DeviceContainer container, nimxlc_DeviceIterator iterator, nierr_Status* cStatus) = 0;
+  virtual const char* DeviceIterator_getDeviceName(nimxlc_DeviceContainer container, nimxlc_DeviceIterator iterator, nierr_Status* cStatus) = 0;
+  virtual bool DeviceIterator_supportsOnBoardClock(nimxlc_DeviceContainer container, nimxlc_DeviceIterator iterator, nierr_Status* cStatus) = 0;
+  virtual bool DeviceIterator_isEnd(nimxlc_DeviceContainer container, nimxlc_DeviceIterator iterator) = 0;
+  virtual void DeviceContainer_destroy(nimxlc_DeviceContainer container) = 0;
+  virtual nimxlc_TerminalIterator TerminalContainer_begin(nimxlc_TerminalContainer container) = 0;
+  virtual void TerminalIterator_next(nimxlc_TerminalIterator* iterator) = 0;
+  virtual bool TerminalIterator_isEnd(nimxlc_TerminalContainer container, nimxlc_TerminalIterator iterator) = 0;
+  virtual void TerminalContainer_destroy(nimxlc_TerminalContainer container) = 0;
+  virtual const char* TerminalIterator_getTerminalName(nimxlc_TerminalContainer container, nimxlc_TerminalIterator iterator, nierr_Status* cStatus) = 0;
+  virtual const char* TerminalIterator_getVisibility(nimxlc_TerminalContainer container, nimxlc_TerminalIterator iterator, nierr_Status* cStatus) = 0;
 };
 
 }  // namespace nimxlcterminaladaptor_restricted_grpc
