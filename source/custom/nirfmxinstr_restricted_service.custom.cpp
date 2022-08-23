@@ -15,5 +15,4 @@ namespace nirfmxinstr_restricted_grpc {
     }
     return nidevice_grpc::ApiErrorAndDescriptionToStatus(status, description);
 }
-
 }  // namespace nirfmxinstr_restricted_grpc

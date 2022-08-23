@@ -17,137 +17,130 @@
 
 namespace nirfmxinstr_restricted_grpc::experimental::client {
 
-RegisterSpecialClientSnapshotInterestResponse
-register_special_client_snapshot_interest(const StubPtr& stub, const pb::string& resource_name)
+ConvertForPowerUnitsUtilityResponse
+convert_for_power_units_utility(const StubPtr& stub, const nidevice_grpc::Session& instrument, const double& reference_or_trigger_level_in, const pb::int32& input_power_units, const pb::int32& output_power_units, const pb::int32& terminal_configuration, const double& bandwidth)
 {
   ::grpc::ClientContext context;
 
-  auto request = RegisterSpecialClientSnapshotInterestRequest{};
-  request.set_resource_name(resource_name);
-
-  auto response = RegisterSpecialClientSnapshotInterestResponse{};
-
-  raise_if_error(
-      stub->RegisterSpecialClientSnapshotInterest(&context, request, &response));
-
-  return response;
-}
-
-GetOpenSessionsInformationResponse
-get_open_sessions_information(const StubPtr& stub, const pb::string& resource_name)
-{
-  ::grpc::ClientContext context;
-
-  auto request = GetOpenSessionsInformationRequest{};
-  request.set_resource_name(resource_name);
-
-  auto response = GetOpenSessionsInformationResponse{};
-
-  raise_if_error(
-      stub->GetOpenSessionsInformation(&context, request, &response));
-
-  return response;
-}
-
-GetRFmxVersionResponse
-get_r_fmx_version(const StubPtr& stub, const nidevice_grpc::Session& instrument)
-{
-  ::grpc::ClientContext context;
-
-  auto request = GetRFmxVersionRequest{};
+  auto request = ConvertForPowerUnitsUtilityRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
+  request.set_reference_or_trigger_level_in(reference_or_trigger_level_in);
+  request.set_input_power_units(input_power_units);
+  request.set_output_power_units(output_power_units);
+  request.set_terminal_configuration(terminal_configuration);
+  request.set_bandwidth(bandwidth);
 
-  auto response = GetRFmxVersionResponse{};
+  auto response = ConvertForPowerUnitsUtilityResponse{};
 
   raise_if_error(
-      stub->GetRFmxVersion(&context, request, &response));
+      stub->ConvertForPowerUnitsUtility(&context, request, &response));
 
   return response;
 }
 
-GetTracesInfoForMonitorSnapshotResponse
-get_traces_info_for_monitor_snapshot(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string)
+DeleteSnapshotResponse
+delete_snapshot(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::int32& personality, const pb::string& selector_string)
 {
   ::grpc::ClientContext context;
 
-  auto request = GetTracesInfoForMonitorSnapshotRequest{};
+  auto request = DeleteSnapshotRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_personality(personality);
+  request.set_selector_string(selector_string);
+
+  auto response = DeleteSnapshotResponse{};
+
+  raise_if_error(
+      stub->DeleteSnapshot(&context, request, &response));
+
+  return response;
+}
+
+GetActiveResultNameResponse
+get_active_result_name(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& signal_name, const pb::uint32& signal_type)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetActiveResultNameRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_signal_name(signal_name);
+  request.set_signal_type(signal_type);
+
+  auto response = GetActiveResultNameResponse{};
+
+  raise_if_error(
+      stub->GetActiveResultName(&context, request, &response));
+
+  return response;
+}
+
+GetActiveTableNameResponse
+get_active_table_name(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetActiveTableNameRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
 
-  auto response = GetTracesInfoForMonitorSnapshotResponse{};
+  auto response = GetActiveTableNameResponse{};
 
   raise_if_error(
-      stub->GetTracesInfoForMonitorSnapshot(&context, request, &response));
+      stub->GetActiveTableName(&context, request, &response));
 
   return response;
 }
 
-GetForceAllTracesEnabledResponse
-get_force_all_traces_enabled(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name)
+GetAttributeAuthorResponse
+get_attribute_author(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::int32& attribute_id)
 {
   ::grpc::ClientContext context;
 
-  auto request = GetForceAllTracesEnabledRequest{};
+  auto request = GetAttributeAuthorRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_attribute_id(attribute_id);
+
+  auto response = GetAttributeAuthorResponse{};
+
+  raise_if_error(
+      stub->GetAttributeAuthor(&context, request, &response));
+
+  return response;
+}
+
+GetAttributeDesiredF32Response
+get_attribute_desired_f32(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const pb::int32& attribute_id)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetAttributeDesiredF32Request{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_channel_name(channel_name);
+  request.set_attribute_id(attribute_id);
 
-  auto response = GetForceAllTracesEnabledResponse{};
+  auto response = GetAttributeDesiredF32Response{};
 
   raise_if_error(
-      stub->GetForceAllTracesEnabled(&context, request, &response));
+      stub->GetAttributeDesiredF32(&context, request, &response));
 
   return response;
 }
 
-SetForceAllTracesEnabledResponse
-set_force_all_traces_enabled(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const pb::int32& attr_val)
+GetAttributeDesiredF32ArrayResponse
+get_attribute_desired_f32_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const pb::int32& attribute_id)
 {
   ::grpc::ClientContext context;
 
-  auto request = SetForceAllTracesEnabledRequest{};
+  auto request = GetAttributeDesiredF32ArrayRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_channel_name(channel_name);
-  request.set_attr_val(attr_val);
+  request.set_attribute_id(attribute_id);
 
-  auto response = SetForceAllTracesEnabledResponse{};
-
-  raise_if_error(
-      stub->SetForceAllTracesEnabled(&context, request, &response));
-
-  return response;
-}
-
-SaveConfigurationsToJSONResponse
-save_configurations_to_json(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& signal_names)
-{
-  ::grpc::ClientContext context;
-
-  auto request = SaveConfigurationsToJSONRequest{};
-  request.mutable_instrument()->CopyFrom(instrument);
-  request.set_signal_names(signal_names);
-
-  auto response = SaveConfigurationsToJSONResponse{};
+  auto response = GetAttributeDesiredF32ArrayResponse{};
 
   raise_if_error(
-      stub->SaveConfigurationsToJSON(&context, request, &response));
-
-  return response;
-}
-
-LoadConfigurationsFromJSONResponse
-load_configurations_from_json(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& json_string, const pb::int32& array_size)
-{
-  ::grpc::ClientContext context;
-
-  auto request = LoadConfigurationsFromJSONRequest{};
-  request.mutable_instrument()->CopyFrom(instrument);
-  request.set_json_string(json_string);
-  request.set_array_size(array_size);
-
-  auto response = LoadConfigurationsFromJSONResponse{};
-
-  raise_if_error(
-      stub->LoadConfigurationsFromJSON(&context, request, &response));
+      stub->GetAttributeDesiredF32Array(&context, request, &response));
 
   return response;
 }
@@ -166,6 +159,24 @@ get_attribute_desired_f64(const StubPtr& stub, const nidevice_grpc::Session& ins
 
   raise_if_error(
       stub->GetAttributeDesiredF64(&context, request, &response));
+
+  return response;
+}
+
+GetAttributeDesiredF64ArrayResponse
+get_attribute_desired_f64_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const pb::int32& attribute_id)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetAttributeDesiredF64ArrayRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_channel_name(channel_name);
+  request.set_attribute_id(attribute_id);
+
+  auto response = GetAttributeDesiredF64ArrayResponse{};
+
+  raise_if_error(
+      stub->GetAttributeDesiredF64Array(&context, request, &response));
 
   return response;
 }
@@ -224,74 +235,118 @@ get_attribute_desired_string(const StubPtr& stub, const nidevice_grpc::Session& 
   return response;
 }
 
-GetAttributeDesiredF64ArrayResponse
-get_attribute_desired_f64_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const pb::int32& attribute_id)
+GetCalibrationPlaneEnabledResponse
+get_calibration_plane_enabled(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string)
 {
   ::grpc::ClientContext context;
 
-  auto request = GetAttributeDesiredF64ArrayRequest{};
-  request.mutable_instrument()->CopyFrom(instrument);
-  request.set_channel_name(channel_name);
-  request.set_attribute_id(attribute_id);
-
-  auto response = GetAttributeDesiredF64ArrayResponse{};
-
-  raise_if_error(
-      stub->GetAttributeDesiredF64Array(&context, request, &response));
-
-  return response;
-}
-
-GetAttributeDesiredF32ArrayResponse
-get_attribute_desired_f32_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const pb::int32& attribute_id)
-{
-  ::grpc::ClientContext context;
-
-  auto request = GetAttributeDesiredF32ArrayRequest{};
-  request.mutable_instrument()->CopyFrom(instrument);
-  request.set_channel_name(channel_name);
-  request.set_attribute_id(attribute_id);
-
-  auto response = GetAttributeDesiredF32ArrayResponse{};
-
-  raise_if_error(
-      stub->GetAttributeDesiredF32Array(&context, request, &response));
-
-  return response;
-}
-
-GetAttributeDesiredF32Response
-get_attribute_desired_f32(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const pb::int32& attribute_id)
-{
-  ::grpc::ClientContext context;
-
-  auto request = GetAttributeDesiredF32Request{};
-  request.mutable_instrument()->CopyFrom(instrument);
-  request.set_channel_name(channel_name);
-  request.set_attribute_id(attribute_id);
-
-  auto response = GetAttributeDesiredF32Response{};
-
-  raise_if_error(
-      stub->GetAttributeDesiredF32(&context, request, &response));
-
-  return response;
-}
-
-GetAttributeAuthorResponse
-get_attribute_author(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::int32& attribute_id)
-{
-  ::grpc::ClientContext context;
-
-  auto request = GetAttributeAuthorRequest{};
+  auto request = GetCalibrationPlaneEnabledRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  request.set_attribute_id(attribute_id);
 
-  auto response = GetAttributeAuthorResponse{};
+  auto response = GetCalibrationPlaneEnabledResponse{};
 
   raise_if_error(
-      stub->GetAttributeAuthor(&context, request, &response));
+      stub->GetCalibrationPlaneEnabled(&context, request, &response));
+
+  return response;
+}
+
+GetCalibrationPlaneNamesResponse
+get_calibration_plane_names(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetCalibrationPlaneNamesRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = GetCalibrationPlaneNamesResponse{};
+
+  raise_if_error(
+      stub->GetCalibrationPlaneNames(&context, request, &response));
+
+  return response;
+}
+
+GetExternalAttenuationTableNamesResponse
+get_external_attenuation_table_names(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetExternalAttenuationTableNamesRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = GetExternalAttenuationTableNamesResponse{};
+
+  raise_if_error(
+      stub->GetExternalAttenuationTableNames(&context, request, &response));
+
+  return response;
+}
+
+GetForceAllTracesEnabledResponse
+get_force_all_traces_enabled(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetForceAllTracesEnabledRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_channel_name(channel_name);
+
+  auto response = GetForceAllTracesEnabledResponse{};
+
+  raise_if_error(
+      stub->GetForceAllTracesEnabled(&context, request, &response));
+
+  return response;
+}
+
+GetInitiaitedSnapshotStringsResponse
+get_initiaited_snapshot_strings(const StubPtr& stub, const nidevice_grpc::Session& instrument)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetInitiaitedSnapshotStringsRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+
+  auto response = GetInitiaitedSnapshotStringsResponse{};
+
+  raise_if_error(
+      stub->GetInitiaitedSnapshotStrings(&context, request, &response));
+
+  return response;
+}
+
+GetLatestConfigurationSnapshotResponse
+get_latest_configuration_snapshot(const StubPtr& stub, const nidevice_grpc::Session& instrument)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetLatestConfigurationSnapshotRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+
+  auto response = GetLatestConfigurationSnapshotResponse{};
+
+  raise_if_error(
+      stub->GetLatestConfigurationSnapshot(&context, request, &response));
+
+  return response;
+}
+
+GetOpenSessionsInformationResponse
+get_open_sessions_information(const StubPtr& stub, const pb::string& resource_name)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetOpenSessionsInformationRequest{};
+  request.set_resource_name(resource_name);
+
+  auto response = GetOpenSessionsInformationResponse{};
+
+  raise_if_error(
+      stub->GetOpenSessionsInformation(&context, request, &response));
 
   return response;
 }
@@ -308,6 +363,125 @@ get_privilege_level(const StubPtr& stub, const nidevice_grpc::Session& instrumen
 
   raise_if_error(
       stub->GetPrivilegeLevel(&context, request, &response));
+
+  return response;
+}
+
+GetRFmxVersionResponse
+get_r_fmx_version(const StubPtr& stub, const nidevice_grpc::Session& instrument)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetRFmxVersionRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+
+  auto response = GetRFmxVersionResponse{};
+
+  raise_if_error(
+      stub->GetRFmxVersion(&context, request, &response));
+
+  return response;
+}
+
+GetSignalConfigurationState64Response
+get_signal_configuration_state64(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& signal_name, const pb::uint32& signal_type)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetSignalConfigurationState64Request{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_signal_name(signal_name);
+  request.set_signal_type(signal_type);
+
+  auto response = GetSignalConfigurationState64Response{};
+
+  raise_if_error(
+      stub->GetSignalConfigurationState64(&context, request, &response));
+
+  return response;
+}
+
+GetSnapshotStateResponse
+get_snapshot_state(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::int32& personality, const pb::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetSnapshotStateRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_personality(personality);
+  request.set_selector_string(selector_string);
+
+  auto response = GetSnapshotStateResponse{};
+
+  raise_if_error(
+      stub->GetSnapshotState(&context, request, &response));
+
+  return response;
+}
+
+GetTracesInfoForMonitorSnapshotResponse
+get_traces_info_for_monitor_snapshot(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetTracesInfoForMonitorSnapshotRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = GetTracesInfoForMonitorSnapshotResponse{};
+
+  raise_if_error(
+      stub->GetTracesInfoForMonitorSnapshot(&context, request, &response));
+
+  return response;
+}
+
+LoadAllForRevertResponse
+load_all_for_revert(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& file_path)
+{
+  ::grpc::ClientContext context;
+
+  auto request = LoadAllForRevertRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_file_path(file_path);
+
+  auto response = LoadAllForRevertResponse{};
+
+  raise_if_error(
+      stub->LoadAllForRevert(&context, request, &response));
+
+  return response;
+}
+
+LoadConfigurationsFromJSONResponse
+load_configurations_from_json(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& json_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = LoadConfigurationsFromJSONRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_json_string(json_string);
+
+  auto response = LoadConfigurationsFromJSONResponse{};
+
+  raise_if_error(
+      stub->LoadConfigurationsFromJSON(&context, request, &response));
+
+  return response;
+}
+
+RegisterSpecialClientSnapshotInterestResponse
+register_special_client_snapshot_interest(const StubPtr& stub, const pb::string& resource_name)
+{
+  ::grpc::ClientContext context;
+
+  auto request = RegisterSpecialClientSnapshotInterestRequest{};
+  request.set_resource_name(resource_name);
+
+  auto response = RegisterSpecialClientSnapshotInterestResponse{};
+
+  raise_if_error(
+      stub->RegisterSpecialClientSnapshotInterest(&context, request, &response));
 
   return response;
 }
@@ -346,227 +520,37 @@ save_all_for_revert(const StubPtr& stub, const nidevice_grpc::Session& instrumen
   return response;
 }
 
-LoadAllForRevertResponse
-load_all_for_revert(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& file_path)
+SaveConfigurationsToJSONResponse
+save_configurations_to_json(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& signal_names)
 {
   ::grpc::ClientContext context;
 
-  auto request = LoadAllForRevertRequest{};
+  auto request = SaveConfigurationsToJSONRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
-  request.set_file_path(file_path);
+  request.set_signal_names(signal_names);
 
-  auto response = LoadAllForRevertResponse{};
+  auto response = SaveConfigurationsToJSONResponse{};
 
   raise_if_error(
-      stub->LoadAllForRevert(&context, request, &response));
+      stub->SaveConfigurationsToJSON(&context, request, &response));
 
   return response;
 }
 
-GetInitiaitedSnapshotStringsResponse
-get_initiaited_snapshot_strings(const StubPtr& stub, const nidevice_grpc::Session& instrument)
+SetForceAllTracesEnabledResponse
+set_force_all_traces_enabled(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& channel_name, const pb::int32& attr_val)
 {
   ::grpc::ClientContext context;
 
-  auto request = GetInitiaitedSnapshotStringsRequest{};
+  auto request = SetForceAllTracesEnabledRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
+  request.set_channel_name(channel_name);
+  request.set_attr_val(attr_val);
 
-  auto response = GetInitiaitedSnapshotStringsResponse{};
-
-  raise_if_error(
-      stub->GetInitiaitedSnapshotStrings(&context, request, &response));
-
-  return response;
-}
-
-GetSnapshotInfoFromCacheResponse
-get_snapshot_info_from_cache(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::uint64& snapshot_info_cache_index)
-{
-  ::grpc::ClientContext context;
-
-  auto request = GetSnapshotInfoFromCacheRequest{};
-  request.mutable_instrument()->CopyFrom(instrument);
-  request.set_snapshot_info_cache_index(snapshot_info_cache_index);
-
-  auto response = GetSnapshotInfoFromCacheResponse{};
+  auto response = SetForceAllTracesEnabledResponse{};
 
   raise_if_error(
-      stub->GetSnapshotInfoFromCache(&context, request, &response));
-
-  return response;
-}
-
-GetLatestConfigurationSnapshotResponse
-get_latest_configuration_snapshot(const StubPtr& stub, const nidevice_grpc::Session& instrument)
-{
-  ::grpc::ClientContext context;
-
-  auto request = GetLatestConfigurationSnapshotRequest{};
-  request.mutable_instrument()->CopyFrom(instrument);
-
-  auto response = GetLatestConfigurationSnapshotResponse{};
-
-  raise_if_error(
-      stub->GetLatestConfigurationSnapshot(&context, request, &response));
-
-  return response;
-}
-
-GetSnapshotStateResponse
-get_snapshot_state(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::int32& personality, const pb::string& selector_string)
-{
-  ::grpc::ClientContext context;
-
-  auto request = GetSnapshotStateRequest{};
-  request.mutable_instrument()->CopyFrom(instrument);
-  request.set_personality(personality);
-  request.set_selector_string(selector_string);
-
-  auto response = GetSnapshotStateResponse{};
-
-  raise_if_error(
-      stub->GetSnapshotState(&context, request, &response));
-
-  return response;
-}
-
-DeleteSnapshotResponse
-delete_snapshot(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::int32& personality, const pb::string& selector_string)
-{
-  ::grpc::ClientContext context;
-
-  auto request = DeleteSnapshotRequest{};
-  request.mutable_instrument()->CopyFrom(instrument);
-  request.set_personality(personality);
-  request.set_selector_string(selector_string);
-
-  auto response = DeleteSnapshotResponse{};
-
-  raise_if_error(
-      stub->DeleteSnapshot(&context, request, &response));
-
-  return response;
-}
-
-ConvertForPowerUnitsUtilityResponse
-convert_for_power_units_utility(const StubPtr& stub, const nidevice_grpc::Session& instrument, const double& reference_or_trigger_level_in, const pb::int32& input_power_units, const pb::int32& output_power_units, const pb::int32& terminal_configuration, const double& bandwidth)
-{
-  ::grpc::ClientContext context;
-
-  auto request = ConvertForPowerUnitsUtilityRequest{};
-  request.mutable_instrument()->CopyFrom(instrument);
-  request.set_reference_or_trigger_level_in(reference_or_trigger_level_in);
-  request.set_input_power_units(input_power_units);
-  request.set_output_power_units(output_power_units);
-  request.set_terminal_configuration(terminal_configuration);
-  request.set_bandwidth(bandwidth);
-
-  auto response = ConvertForPowerUnitsUtilityResponse{};
-
-  raise_if_error(
-      stub->ConvertForPowerUnitsUtility(&context, request, &response));
-
-  return response;
-}
-
-UnregisterSpecialClientSnapshotInterestResponse
-unregister_special_client_snapshot_interest(const StubPtr& stub, const pb::string& resource_name)
-{
-  ::grpc::ClientContext context;
-
-  auto request = UnregisterSpecialClientSnapshotInterestRequest{};
-  request.set_resource_name(resource_name);
-
-  auto response = UnregisterSpecialClientSnapshotInterestResponse{};
-
-  raise_if_error(
-      stub->UnregisterSpecialClientSnapshotInterest(&context, request, &response));
-
-  return response;
-}
-
-GetCalibrationPlaneNamesResponse
-get_calibration_plane_names(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string)
-{
-  ::grpc::ClientContext context;
-
-  auto request = GetCalibrationPlaneNamesRequest{};
-  request.mutable_instrument()->CopyFrom(instrument);
-  request.set_selector_string(selector_string);
-
-  auto response = GetCalibrationPlaneNamesResponse{};
-
-  raise_if_error(
-      stub->GetCalibrationPlaneNames(&context, request, &response));
-
-  return response;
-}
-
-GetCalibrationPlaneEnabledResponse
-get_calibration_plane_enabled(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string)
-{
-  ::grpc::ClientContext context;
-
-  auto request = GetCalibrationPlaneEnabledRequest{};
-  request.mutable_instrument()->CopyFrom(instrument);
-  request.set_selector_string(selector_string);
-
-  auto response = GetCalibrationPlaneEnabledResponse{};
-
-  raise_if_error(
-      stub->GetCalibrationPlaneEnabled(&context, request, &response));
-
-  return response;
-}
-
-GetExternalAttenuationTableNamesResponse
-get_external_attenuation_table_names(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string)
-{
-  ::grpc::ClientContext context;
-
-  auto request = GetExternalAttenuationTableNamesRequest{};
-  request.mutable_instrument()->CopyFrom(instrument);
-  request.set_selector_string(selector_string);
-
-  auto response = GetExternalAttenuationTableNamesResponse{};
-
-  raise_if_error(
-      stub->GetExternalAttenuationTableNames(&context, request, &response));
-
-  return response;
-}
-
-GetActiveTableNameResponse
-get_active_table_name(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string)
-{
-  ::grpc::ClientContext context;
-
-  auto request = GetActiveTableNameRequest{};
-  request.mutable_instrument()->CopyFrom(instrument);
-  request.set_selector_string(selector_string);
-
-  auto response = GetActiveTableNameResponse{};
-
-  raise_if_error(
-      stub->GetActiveTableName(&context, request, &response));
-
-  return response;
-}
-
-GetSignalConfigurationState64Response
-get_signal_configuration_state64(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& signal_name, const pb::uint32& signal_type)
-{
-  ::grpc::ClientContext context;
-
-  auto request = GetSignalConfigurationState64Request{};
-  request.mutable_instrument()->CopyFrom(instrument);
-  request.set_signal_name(signal_name);
-  request.set_signal_type(signal_type);
-
-  auto response = GetSignalConfigurationState64Response{};
-
-  raise_if_error(
-      stub->GetSignalConfigurationState64(&context, request, &response));
+      stub->SetForceAllTracesEnabled(&context, request, &response));
 
   return response;
 }
@@ -588,20 +572,18 @@ set_io_trace_status(const StubPtr& stub, const nidevice_grpc::Session& instrumen
   return response;
 }
 
-GetActiveResultNameResponse
-get_active_result_name(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& signal_name, const pb::uint32& signal_type)
+UnregisterSpecialClientSnapshotInterestResponse
+unregister_special_client_snapshot_interest(const StubPtr& stub, const pb::string& resource_name)
 {
   ::grpc::ClientContext context;
 
-  auto request = GetActiveResultNameRequest{};
-  request.mutable_instrument()->CopyFrom(instrument);
-  request.set_signal_name(signal_name);
-  request.set_signal_type(signal_type);
+  auto request = UnregisterSpecialClientSnapshotInterestRequest{};
+  request.set_resource_name(resource_name);
 
-  auto response = GetActiveResultNameResponse{};
+  auto response = UnregisterSpecialClientSnapshotInterestResponse{};
 
   raise_if_error(
-      stub->GetActiveResultName(&context, request, &response));
+      stub->UnregisterSpecialClientSnapshotInterest(&context, request, &response));
 
   return response;
 }
