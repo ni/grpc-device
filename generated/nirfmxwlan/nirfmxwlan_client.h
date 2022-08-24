@@ -161,6 +161,7 @@ OFDMModAccFetchPPDUAveragePowerResponse ofdm_mod_acc_fetch_ppdu_average_power(co
 OFDMModAccFetchPPDUPeakPowerResponse ofdm_mod_acc_fetch_ppdu_peak_power(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout);
 OFDMModAccFetchPPDUTypeResponse ofdm_mod_acc_fetch_ppdu_type(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout);
 OFDMModAccFetchPSDUCRCStatusResponse ofdm_mod_acc_fetch_psducrc_status(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout);
+OFDMModAccFetchPhaseNoisePSDMeanTraceResponse ofdm_mod_acc_fetch_phase_noise_psd_mean_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout);
 OFDMModAccFetchPilotConstellationTraceResponse ofdm_mod_acc_fetch_pilot_constellation_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout);
 OFDMModAccFetchPreambleAveragePowers80211acResponse ofdm_mod_acc_fetch_preamble_average_powers80211ac(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout);
 OFDMModAccFetchPreambleAveragePowers80211axResponse ofdm_mod_acc_fetch_preamble_average_powers80211ax(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout);

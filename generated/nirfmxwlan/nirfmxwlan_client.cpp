@@ -2708,6 +2708,24 @@ ofdm_mod_acc_fetch_psducrc_status(const StubPtr& stub, const nidevice_grpc::Sess
   return response;
 }
 
+OFDMModAccFetchPhaseNoisePSDMeanTraceResponse
+ofdm_mod_acc_fetch_phase_noise_psd_mean_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = OFDMModAccFetchPhaseNoisePSDMeanTraceRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = OFDMModAccFetchPhaseNoisePSDMeanTraceResponse{};
+
+  raise_if_error(
+      stub->OFDMModAccFetchPhaseNoisePSDMeanTrace(&context, request, &response));
+
+  return response;
+}
+
 OFDMModAccFetchPilotConstellationTraceResponse
 ofdm_mod_acc_fetch_pilot_constellation_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
 {
