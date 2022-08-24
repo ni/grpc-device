@@ -60,6 +60,14 @@ if len(sys.argv) >= 4:
     OPTIONS = ""
 
 
+def check_for_warning(response, vi):
+    if response.status > 0:
+        warning_message = client.ErrorMessage(
+            nidcpower_types.ErrorMessageRequest(vi=vi, error_code=response.status)
+        )
+        sys.stderr.write(f"{warning_message}\nWarning status: {response.status}\n")
+
+
 # Create the communication channel for the remote host and create connections to the NI-DCPower and
 # session services.
 channel = grpc.insecure_channel(f"{SERVER_ADDRESS}:{SERVER_PORT}")
@@ -77,8 +85,7 @@ try:
         )
     )
     vi = initialize_with_channels_response.vi
-    if initialize_with_channels_response.status > 0:
-        sys.stderr.write(f"Warning: {initialize_with_channels_response.status}\n")
+    check_for_warning(initialize_with_channels_response, vi)
 
     # Specify when the measure unit should acquire measurements.
     configure_measure_when = client.SetAttributeViInt32(
@@ -165,6 +172,7 @@ try:
             fetch_multiple_response = client.FetchMultiple(
                 nidcpower_types.FetchMultipleRequest(vi=vi, timeout=10, count=RECORD_LENGTH)
             )
+            check_for_warning(fetch_multiple_response, vi)
 
             # Append the fetched values in the buffer.
             y_axis.extend(fetch_multiple_response.voltage_measurements)
@@ -202,9 +210,11 @@ except grpc.RpcError as rpc_error:
             "The operation is not implemented or is not supported/enabled in this service"
         )
     elif rpc_error.code() == grpc.StatusCode.UNKNOWN:
-        # The error details is a JSON string containing both the status code and the description.
-        error_details = json.loads(error_message);
-        error_message = f"Failed with status {error_details['code']}\n{error_details['message']}"
+        try:
+            error_details = json.loads(error_message)
+            error_message = f"{error_details['message']}\nError status: {error_details['code']}"
+        except (JSONDecodeError, KeyError):
+            pass
     print(f"{error_message}")
 
 finally:
