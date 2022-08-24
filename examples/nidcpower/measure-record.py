@@ -61,6 +61,7 @@ if len(sys.argv) >= 4:
 
 
 def check_for_warning(response, vi):
+    """Print to console if the status indicates a warning."""
     if response.status > 0:
         warning_message = client.ErrorMessage(
             nidcpower_types.ErrorMessageRequest(vi=vi, error_code=response.status)
@@ -213,7 +214,7 @@ except grpc.RpcError as rpc_error:
         try:
             error_details = json.loads(error_message)
             error_message = f"{error_details['message']}\nError status: {error_details['code']}"
-        except (JSONDecodeError, KeyError):
+        except (json.JSONDecodeError, KeyError):
             pass
     print(f"{error_message}")
 
