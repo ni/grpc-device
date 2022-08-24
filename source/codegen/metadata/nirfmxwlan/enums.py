@@ -977,7 +977,7 @@ enums = {
         ]
     },
     'OfdmModAccPhaseRotationCoefficient1': {
-        'enum-value-prefix': 'OFDMMODACC_PHASE_ROTATION_COEFFICIENT1',
+        'enum-value-prefix': 'OFDMMODACC_PHASE_ROTATION_COEFFICIENT_1',
         'values': [
             {
                 'name': 'PLUS_ONE',
@@ -990,7 +990,7 @@ enums = {
         ]
     },
     'OfdmModAccPhaseRotationCoefficient2': {
-        'enum-value-prefix': 'OFDMMODACC_PHASE_ROTATION_COEFFICIENT2',
+        'enum-value-prefix': 'OFDMMODACC_PHASE_ROTATION_COEFFICIENT_2',
         'values': [
             {
                 'name': 'PLUS_ONE',
@@ -1003,7 +1003,7 @@ enums = {
         ]
     },
     'OfdmModAccPhaseRotationCoefficient3': {
-        'enum-value-prefix': 'OFDMMODACC_PHASE_ROTATION_COEFFICIENT3',
+        'enum-value-prefix': 'OFDMMODACC_PHASE_ROTATION_COEFFICIENT_3',
         'values': [
             {
                 'name': 'PLUS_ONE',
