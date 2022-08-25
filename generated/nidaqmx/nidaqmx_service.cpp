@@ -58,6 +58,7 @@ namespace nidaqmx_grpc {
       auto port_list = request->port_list().c_str();
       auto status = library_->AddCDAQSyncConnection(port_list);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
@@ -81,6 +82,7 @@ namespace nidaqmx_grpc {
       auto channel_names = request->channel_names().c_str();
       auto status = library_->AddGlobalChansToTask(task, channel_names);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -107,6 +109,7 @@ namespace nidaqmx_grpc {
       while (true) {
         auto status = library_->AddNetworkDevice(ip_address, device_name, attempt_reservation, timeout, nullptr, 0);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForTaskHandle(status, 0);
         }
         uInt32 device_name_out_buffer_size = status;
@@ -121,6 +124,7 @@ namespace nidaqmx_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForTaskHandle(status, 0);
         }
         response->set_status(status);
@@ -147,6 +151,7 @@ namespace nidaqmx_grpc {
       bool32 disconnected_ports_exist {};
       auto status = library_->AreConfiguredCDAQSyncPortsDisconnected(chassis_devices_ports, timeout, &disconnected_ports_exist);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
@@ -170,6 +175,7 @@ namespace nidaqmx_grpc {
       float64 timeout = request->timeout();
       auto status = library_->AutoConfigureCDAQSyncConnections(chassis_devices_ports, timeout);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
@@ -198,6 +204,7 @@ namespace nidaqmx_grpc {
       float64* reverse_coeffs = response->mutable_reverse_coeffs()->mutable_data();
       auto status = library_->CalculateReversePolyCoeff(forward_coeffs, num_forward_coeffs_in, min_val_x, max_val_x, num_points_to_compute, reverse_poly_order, reverse_coeffs);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
@@ -239,6 +246,7 @@ namespace nidaqmx_grpc {
       uInt32 pretrigger_samples = request->pretrigger_samples();
       auto status = library_->CfgAnlgEdgeRefTrig(task, trigger_source, trigger_slope, trigger_level, pretrigger_samples);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -279,6 +287,7 @@ namespace nidaqmx_grpc {
       float64 trigger_level = request->trigger_level();
       auto status = library_->CfgAnlgEdgeStartTrig(task, trigger_source, trigger_slope, trigger_level);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -317,6 +326,7 @@ namespace nidaqmx_grpc {
 
       auto status = library_->CfgAnlgMultiEdgeRefTrig(task, trigger_sources, trigger_slope_array, trigger_level_array, pretrigger_samples, array_size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -354,6 +364,7 @@ namespace nidaqmx_grpc {
 
       auto status = library_->CfgAnlgMultiEdgeStartTrig(task, trigger_sources, trigger_slope_array, trigger_level_array, array_size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -396,6 +407,7 @@ namespace nidaqmx_grpc {
       uInt32 pretrigger_samples = request->pretrigger_samples();
       auto status = library_->CfgAnlgWindowRefTrig(task, trigger_source, trigger_when, window_top, window_bottom, pretrigger_samples);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -437,6 +449,7 @@ namespace nidaqmx_grpc {
       float64 window_bottom = request->window_bottom();
       auto status = library_->CfgAnlgWindowStartTrig(task, trigger_source, trigger_when, window_top, window_bottom);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -526,6 +539,7 @@ namespace nidaqmx_grpc {
 
       auto status = library_->CfgBurstHandshakingTimingExportClock(task, sample_mode, samps_per_chan, sample_clk_rate, sample_clk_outp_term, sample_clk_pulse_polarity, pause_when, ready_event_active_level);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -615,6 +629,7 @@ namespace nidaqmx_grpc {
 
       auto status = library_->CfgBurstHandshakingTimingImportClock(task, sample_mode, samps_per_chan, sample_clk_rate, sample_clk_src, sample_clk_active_edge, pause_when, ready_event_active_level);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -656,6 +671,7 @@ namespace nidaqmx_grpc {
       uInt64 samps_per_chan = request->samps_per_chan();
       auto status = library_->CfgChangeDetectionTiming(task, rising_edge_chan, falling_edge_chan, sample_mode, samps_per_chan);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -696,6 +712,7 @@ namespace nidaqmx_grpc {
       uInt32 pretrigger_samples = request->pretrigger_samples();
       auto status = library_->CfgDigEdgeRefTrig(task, trigger_source, trigger_edge, pretrigger_samples);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -735,6 +752,7 @@ namespace nidaqmx_grpc {
 
       auto status = library_->CfgDigEdgeStartTrig(task, trigger_source, trigger_edge);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -776,6 +794,7 @@ namespace nidaqmx_grpc {
       uInt32 pretrigger_samples = request->pretrigger_samples();
       auto status = library_->CfgDigPatternRefTrig(task, trigger_source, trigger_pattern, trigger_when, pretrigger_samples);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -816,6 +835,7 @@ namespace nidaqmx_grpc {
 
       auto status = library_->CfgDigPatternStartTrig(task, trigger_source, trigger_pattern, trigger_when);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -855,6 +875,7 @@ namespace nidaqmx_grpc {
       uInt64 samps_per_chan = request->samps_per_chan();
       auto status = library_->CfgHandshakingTiming(task, sample_mode, samps_per_chan);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -894,6 +915,7 @@ namespace nidaqmx_grpc {
       uInt64 samps_per_chan = request->samps_per_chan();
       auto status = library_->CfgImplicitTiming(task, sample_mode, samps_per_chan);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -917,6 +939,7 @@ namespace nidaqmx_grpc {
       uInt32 num_samps_per_chan = request->num_samps_per_chan();
       auto status = library_->CfgInputBuffer(task, num_samps_per_chan);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -940,6 +963,7 @@ namespace nidaqmx_grpc {
       uInt32 num_samps_per_chan = request->num_samps_per_chan();
       auto status = library_->CfgOutputBuffer(task, num_samps_per_chan);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -997,6 +1021,7 @@ namespace nidaqmx_grpc {
       uInt64 samps_per_chan = request->samps_per_chan();
       auto status = library_->CfgPipelinedSampClkTiming(task, source, rate, active_edge, sample_mode, samps_per_chan);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -1054,6 +1079,7 @@ namespace nidaqmx_grpc {
       uInt64 samps_per_chan = request->samps_per_chan();
       auto status = library_->CfgSampClkTiming(task, source, rate, active_edge, sample_mode, samps_per_chan);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -1093,6 +1119,7 @@ namespace nidaqmx_grpc {
 
       auto status = library_->CfgTimeStartTrig(task, when, timescale);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -1138,6 +1165,7 @@ namespace nidaqmx_grpc {
 
       auto status = library_->CfgWatchdogAOExpirStates(task, channel_names, expir_state_array, output_type_array, array_size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -1171,6 +1199,7 @@ namespace nidaqmx_grpc {
       uInt32 array_size = static_cast<uInt32>(request->expir_state_array().size());
       auto status = library_->CfgWatchdogCOExpirStates(task, channel_names, expir_state_array, array_size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -1204,6 +1233,7 @@ namespace nidaqmx_grpc {
       uInt32 array_size = static_cast<uInt32>(request->expir_state_array().size());
       auto status = library_->CfgWatchdogDOExpirStates(task, channel_names, expir_state_array, array_size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -1225,6 +1255,7 @@ namespace nidaqmx_grpc {
       auto physical_channel = request->physical_channel().c_str();
       auto status = library_->ClearTEDS(physical_channel);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
@@ -1248,6 +1279,7 @@ namespace nidaqmx_grpc {
       session_repository_->remove_session(task_grpc_session.id(), task_grpc_session.name());
       auto status = library_->ClearTask(task);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -1304,6 +1336,7 @@ namespace nidaqmx_grpc {
 
       auto status = library_->ConfigureLogging(task, file_path, logging_mode, group_name, operation);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -1326,6 +1359,7 @@ namespace nidaqmx_grpc {
       auto file_path = request->file_path().c_str();
       auto status = library_->ConfigureTEDS(physical_channel, file_path);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
@@ -1364,6 +1398,7 @@ namespace nidaqmx_grpc {
 
       auto status = library_->ConnectTerms(source_terminal, destination_terminal, signal_modifiers);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
@@ -1402,6 +1437,7 @@ namespace nidaqmx_grpc {
 
       auto status = library_->ControlWatchdogTask(task, action);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -1496,6 +1532,7 @@ namespace nidaqmx_grpc {
       auto custom_scale_name = request->custom_scale_name().c_str();
       auto status = library_->CreateAIAccel4WireDCVoltageChan(task, physical_channel, name_to_assign_to_channel, terminal_config, min_val, max_val, units, sensitivity, sensitivity_units, voltage_excit_source, voltage_excit_val, use_excit_for_scaling, custom_scale_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -1589,6 +1626,7 @@ namespace nidaqmx_grpc {
       auto custom_scale_name = request->custom_scale_name().c_str();
       auto status = library_->CreateAIAccelChan(task, physical_channel, name_to_assign_to_channel, terminal_config, min_val, max_val, units, sensitivity, sensitivity_units, current_excit_source, current_excit_val, custom_scale_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -1665,6 +1703,7 @@ namespace nidaqmx_grpc {
       auto custom_scale_name = request->custom_scale_name().c_str();
       auto status = library_->CreateAIAccelChargeChan(task, physical_channel, name_to_assign_to_channel, terminal_config, min_val, max_val, units, sensitivity, sensitivity_units, custom_scale_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -1742,6 +1781,7 @@ namespace nidaqmx_grpc {
       auto custom_scale_name = request->custom_scale_name().c_str();
       auto status = library_->CreateAIBridgeChan(task, physical_channel, name_to_assign_to_channel, min_val, max_val, units, bridge_config, voltage_excit_source, voltage_excit_val, nominal_bridge_resistance, custom_scale_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -1801,6 +1841,7 @@ namespace nidaqmx_grpc {
       auto custom_scale_name = request->custom_scale_name().c_str();
       auto status = library_->CreateAIChargeChan(task, physical_channel, name_to_assign_to_channel, terminal_config, min_val, max_val, units, custom_scale_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -1877,6 +1918,7 @@ namespace nidaqmx_grpc {
       auto custom_scale_name = request->custom_scale_name().c_str();
       auto status = library_->CreateAICurrentChan(task, physical_channel, name_to_assign_to_channel, terminal_config, min_val, max_val, units, shunt_resistor_loc, ext_shunt_resistor_val, custom_scale_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -1953,6 +1995,7 @@ namespace nidaqmx_grpc {
       auto custom_scale_name = request->custom_scale_name().c_str();
       auto status = library_->CreateAICurrentRMSChan(task, physical_channel, name_to_assign_to_channel, terminal_config, min_val, max_val, units, shunt_resistor_loc, ext_shunt_resistor_val, custom_scale_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -2066,6 +2109,7 @@ namespace nidaqmx_grpc {
       auto custom_scale_name = request->custom_scale_name().c_str();
       auto status = library_->CreateAIForceBridgePolynomialChan(task, physical_channel, name_to_assign_to_channel, min_val, max_val, units, bridge_config, voltage_excit_source, voltage_excit_val, nominal_bridge_resistance, forward_coeffs, num_forward_coeffs, reverse_coeffs, num_reverse_coeffs, electrical_units, physical_units, custom_scale_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -2179,6 +2223,7 @@ namespace nidaqmx_grpc {
       auto custom_scale_name = request->custom_scale_name().c_str();
       auto status = library_->CreateAIForceBridgeTableChan(task, physical_channel, name_to_assign_to_channel, min_val, max_val, units, bridge_config, voltage_excit_source, voltage_excit_val, nominal_bridge_resistance, electrical_vals, num_electrical_vals, electrical_units, physical_vals, num_physical_vals, physical_units, custom_scale_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -2292,6 +2337,7 @@ namespace nidaqmx_grpc {
       auto custom_scale_name = request->custom_scale_name().c_str();
       auto status = library_->CreateAIForceBridgeTwoPointLinChan(task, physical_channel, name_to_assign_to_channel, min_val, max_val, units, bridge_config, voltage_excit_source, voltage_excit_val, nominal_bridge_resistance, first_electrical_val, second_electrical_val, electrical_units, first_physical_val, second_physical_val, physical_units, custom_scale_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -2385,6 +2431,7 @@ namespace nidaqmx_grpc {
       auto custom_scale_name = request->custom_scale_name().c_str();
       auto status = library_->CreateAIForceIEPEChan(task, physical_channel, name_to_assign_to_channel, terminal_config, min_val, max_val, units, sensitivity, sensitivity_units, current_excit_source, current_excit_val, custom_scale_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -2430,6 +2477,7 @@ namespace nidaqmx_grpc {
       auto custom_scale_name = request->custom_scale_name().c_str();
       auto status = library_->CreateAIFreqVoltageChan(task, physical_channel, name_to_assign_to_channel, min_val, max_val, units, threshold_level, hysteresis, custom_scale_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -2506,6 +2554,7 @@ namespace nidaqmx_grpc {
       auto custom_scale_name = request->custom_scale_name().c_str();
       auto status = library_->CreateAIMicrophoneChan(task, physical_channel, name_to_assign_to_channel, terminal_config, units, mic_sensitivity, max_snd_press_level, current_excit_source, current_excit_val, custom_scale_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -2566,6 +2615,7 @@ namespace nidaqmx_grpc {
       auto custom_scale_name = request->custom_scale_name().c_str();
       auto status = library_->CreateAIPosEddyCurrProxProbeChan(task, physical_channel, name_to_assign_to_channel, min_val, max_val, units, sensitivity, sensitivity_units, custom_scale_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -2660,6 +2710,7 @@ namespace nidaqmx_grpc {
       auto custom_scale_name = request->custom_scale_name().c_str();
       auto status = library_->CreateAIPosLVDTChan(task, physical_channel, name_to_assign_to_channel, min_val, max_val, units, sensitivity, sensitivity_units, voltage_excit_source, voltage_excit_val, voltage_excit_freq, ac_excit_wire_mode, custom_scale_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -2754,6 +2805,7 @@ namespace nidaqmx_grpc {
       auto custom_scale_name = request->custom_scale_name().c_str();
       auto status = library_->CreateAIPosRVDTChan(task, physical_channel, name_to_assign_to_channel, min_val, max_val, units, sensitivity, sensitivity_units, voltage_excit_source, voltage_excit_val, voltage_excit_freq, ac_excit_wire_mode, custom_scale_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -2867,6 +2919,7 @@ namespace nidaqmx_grpc {
       auto custom_scale_name = request->custom_scale_name().c_str();
       auto status = library_->CreateAIPressureBridgePolynomialChan(task, physical_channel, name_to_assign_to_channel, min_val, max_val, units, bridge_config, voltage_excit_source, voltage_excit_val, nominal_bridge_resistance, forward_coeffs, num_forward_coeffs, reverse_coeffs, num_reverse_coeffs, electrical_units, physical_units, custom_scale_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -2980,6 +3033,7 @@ namespace nidaqmx_grpc {
       auto custom_scale_name = request->custom_scale_name().c_str();
       auto status = library_->CreateAIPressureBridgeTableChan(task, physical_channel, name_to_assign_to_channel, min_val, max_val, units, bridge_config, voltage_excit_source, voltage_excit_val, nominal_bridge_resistance, electrical_vals, num_electrical_vals, electrical_units, physical_vals, num_physical_vals, physical_units, custom_scale_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -3093,6 +3147,7 @@ namespace nidaqmx_grpc {
       auto custom_scale_name = request->custom_scale_name().c_str();
       auto status = library_->CreateAIPressureBridgeTwoPointLinChan(task, physical_channel, name_to_assign_to_channel, min_val, max_val, units, bridge_config, voltage_excit_source, voltage_excit_val, nominal_bridge_resistance, first_electrical_val, second_electrical_val, electrical_units, first_physical_val, second_physical_val, physical_units, custom_scale_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -3185,6 +3240,7 @@ namespace nidaqmx_grpc {
       float64 r0 = request->r0();
       auto status = library_->CreateAIRTDChan(task, physical_channel, name_to_assign_to_channel, min_val, max_val, units, rtd_type, resistance_config, current_excit_source, current_excit_val, r0);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -3261,6 +3317,7 @@ namespace nidaqmx_grpc {
       auto custom_scale_name = request->custom_scale_name().c_str();
       auto status = library_->CreateAIResistanceChan(task, physical_channel, name_to_assign_to_channel, min_val, max_val, units, resistance_config, current_excit_source, current_excit_val, custom_scale_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -3343,6 +3400,7 @@ namespace nidaqmx_grpc {
       float64 lead_wire_resistance = request->lead_wire_resistance();
       auto status = library_->CreateAIRosetteStrainGageChan(task, physical_channel, name_to_assign_to_channel, min_val, max_val, rosette_type, gage_orientation, rosette_meas_types, num_rosette_meas_types, strain_config, voltage_excit_source, voltage_excit_val, gage_factor, nominal_gage_resistance, poisson_ratio, lead_wire_resistance);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -3424,6 +3482,7 @@ namespace nidaqmx_grpc {
       auto custom_scale_name = request->custom_scale_name().c_str();
       auto status = library_->CreateAIStrainGageChan(task, physical_channel, name_to_assign_to_channel, min_val, max_val, units, strain_config, voltage_excit_source, voltage_excit_val, gage_factor, initial_bridge_voltage, nominal_gage_resistance, poisson_ratio, lead_wire_resistance, custom_scale_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -3464,6 +3523,7 @@ namespace nidaqmx_grpc {
 
       auto status = library_->CreateAITempBuiltInSensorChan(task, physical_channel, name_to_assign_to_channel, units);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -3540,6 +3600,7 @@ namespace nidaqmx_grpc {
       auto cjc_channel = request->cjc_channel().c_str();
       auto status = library_->CreateAIThrmcplChan(task, physical_channel, name_to_assign_to_channel, min_val, max_val, units, thermocouple_type, cjc_source, cjc_val, cjc_channel);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -3618,6 +3679,7 @@ namespace nidaqmx_grpc {
       float64 c = request->c();
       auto status = library_->CreateAIThrmstrChanIex(task, physical_channel, name_to_assign_to_channel, min_val, max_val, units, resistance_config, current_excit_source, current_excit_val, a, b, c);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -3697,6 +3759,7 @@ namespace nidaqmx_grpc {
       float64 r1 = request->r1();
       auto status = library_->CreateAIThrmstrChanVex(task, physical_channel, name_to_assign_to_channel, min_val, max_val, units, resistance_config, voltage_excit_source, voltage_excit_val, a, b, c, r1);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -3810,6 +3873,7 @@ namespace nidaqmx_grpc {
       auto custom_scale_name = request->custom_scale_name().c_str();
       auto status = library_->CreateAITorqueBridgePolynomialChan(task, physical_channel, name_to_assign_to_channel, min_val, max_val, units, bridge_config, voltage_excit_source, voltage_excit_val, nominal_bridge_resistance, forward_coeffs, num_forward_coeffs, reverse_coeffs, num_reverse_coeffs, electrical_units, physical_units, custom_scale_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -3923,6 +3987,7 @@ namespace nidaqmx_grpc {
       auto custom_scale_name = request->custom_scale_name().c_str();
       auto status = library_->CreateAITorqueBridgeTableChan(task, physical_channel, name_to_assign_to_channel, min_val, max_val, units, bridge_config, voltage_excit_source, voltage_excit_val, nominal_bridge_resistance, electrical_vals, num_electrical_vals, electrical_units, physical_vals, num_physical_vals, physical_units, custom_scale_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -4036,6 +4101,7 @@ namespace nidaqmx_grpc {
       auto custom_scale_name = request->custom_scale_name().c_str();
       auto status = library_->CreateAITorqueBridgeTwoPointLinChan(task, physical_channel, name_to_assign_to_channel, min_val, max_val, units, bridge_config, voltage_excit_source, voltage_excit_val, nominal_bridge_resistance, first_electrical_val, second_electrical_val, electrical_units, first_physical_val, second_physical_val, physical_units, custom_scale_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -4129,6 +4195,7 @@ namespace nidaqmx_grpc {
       auto custom_scale_name = request->custom_scale_name().c_str();
       auto status = library_->CreateAIVelocityIEPEChan(task, physical_channel, name_to_assign_to_channel, terminal_config, min_val, max_val, units, sensitivity, sensitivity_units, current_excit_source, current_excit_val, custom_scale_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -4188,6 +4255,7 @@ namespace nidaqmx_grpc {
       auto custom_scale_name = request->custom_scale_name().c_str();
       auto status = library_->CreateAIVoltageChan(task, physical_channel, name_to_assign_to_channel, terminal_config, min_val, max_val, units, custom_scale_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -4281,6 +4349,7 @@ namespace nidaqmx_grpc {
       auto custom_scale_name = request->custom_scale_name().c_str();
       auto status = library_->CreateAIVoltageChanWithExcit(task, physical_channel, name_to_assign_to_channel, terminal_config, min_val, max_val, units, bridge_config, voltage_excit_source, voltage_excit_val, use_excit_for_scaling, custom_scale_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -4340,6 +4409,7 @@ namespace nidaqmx_grpc {
       auto custom_scale_name = request->custom_scale_name().c_str();
       auto status = library_->CreateAIVoltageRMSChan(task, physical_channel, name_to_assign_to_channel, terminal_config, min_val, max_val, units, custom_scale_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -4383,6 +4453,7 @@ namespace nidaqmx_grpc {
       auto custom_scale_name = request->custom_scale_name().c_str();
       auto status = library_->CreateAOCurrentChan(task, physical_channel, name_to_assign_to_channel, min_val, max_val, units, custom_scale_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -4426,6 +4497,7 @@ namespace nidaqmx_grpc {
       float64 offset = request->offset();
       auto status = library_->CreateAOFuncGenChan(task, physical_channel, name_to_assign_to_channel, type, freq, amplitude, offset);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -4469,6 +4541,7 @@ namespace nidaqmx_grpc {
       auto custom_scale_name = request->custom_scale_name().c_str();
       auto status = library_->CreateAOVoltageChan(task, physical_channel, name_to_assign_to_channel, min_val, max_val, units, custom_scale_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -4546,6 +4619,7 @@ namespace nidaqmx_grpc {
       auto custom_scale_name = request->custom_scale_name().c_str();
       auto status = library_->CreateCIAngEncoderChan(task, counter, name_to_assign_to_channel, decoding_type, zidx_enable, zidx_val, zidx_phase, units, pulses_per_rev, initial_angle, custom_scale_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -4606,6 +4680,7 @@ namespace nidaqmx_grpc {
       auto custom_scale_name = request->custom_scale_name().c_str();
       auto status = library_->CreateCIAngVelocityChan(task, counter, name_to_assign_to_channel, min_val, max_val, decoding_type, units, pulses_per_rev, custom_scale_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -4663,6 +4738,7 @@ namespace nidaqmx_grpc {
 
       auto status = library_->CreateCICountEdgesChan(task, counter, name_to_assign_to_channel, edge, initial_count, count_direction);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -4706,6 +4782,7 @@ namespace nidaqmx_grpc {
       auto custom_scale_name = request->custom_scale_name().c_str();
       auto status = library_->CreateCIDutyCycleChan(task, counter, name_to_assign_to_channel, min_freq, max_freq, edge, custom_scale_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -4783,6 +4860,7 @@ namespace nidaqmx_grpc {
       auto custom_scale_name = request->custom_scale_name().c_str();
       auto status = library_->CreateCIFreqChan(task, counter, name_to_assign_to_channel, min_val, max_val, units, edge, meas_method, meas_time, divisor, custom_scale_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -4840,6 +4918,7 @@ namespace nidaqmx_grpc {
       auto custom_scale_name = request->custom_scale_name().c_str();
       auto status = library_->CreateCIGPSTimestampChan(task, counter, name_to_assign_to_channel, units, sync_method, custom_scale_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -4917,6 +4996,7 @@ namespace nidaqmx_grpc {
       auto custom_scale_name = request->custom_scale_name().c_str();
       auto status = library_->CreateCILinEncoderChan(task, counter, name_to_assign_to_channel, decoding_type, zidx_enable, zidx_val, zidx_phase, units, dist_per_pulse, initial_pos, custom_scale_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -4977,6 +5057,7 @@ namespace nidaqmx_grpc {
       auto custom_scale_name = request->custom_scale_name().c_str();
       auto status = library_->CreateCILinVelocityChan(task, counter, name_to_assign_to_channel, min_val, max_val, decoding_type, units, dist_per_pulse, custom_scale_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -5054,6 +5135,7 @@ namespace nidaqmx_grpc {
       auto custom_scale_name = request->custom_scale_name().c_str();
       auto status = library_->CreateCIPeriodChan(task, counter, name_to_assign_to_channel, min_val, max_val, units, edge, meas_method, meas_time, divisor, custom_scale_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -5096,6 +5178,7 @@ namespace nidaqmx_grpc {
 
       auto status = library_->CreateCIPulseChanFreq(task, counter, name_to_assign_to_channel, min_val, max_val, units);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -5123,6 +5206,7 @@ namespace nidaqmx_grpc {
       float64 max_val = request->max_val();
       auto status = library_->CreateCIPulseChanTicks(task, counter, name_to_assign_to_channel, source_terminal, min_val, max_val);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -5165,6 +5249,7 @@ namespace nidaqmx_grpc {
 
       auto status = library_->CreateCIPulseChanTime(task, counter, name_to_assign_to_channel, min_val, max_val, units);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -5224,6 +5309,7 @@ namespace nidaqmx_grpc {
       auto custom_scale_name = request->custom_scale_name().c_str();
       auto status = library_->CreateCIPulseWidthChan(task, counter, name_to_assign_to_channel, min_val, max_val, units, starting_edge, custom_scale_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -5267,6 +5353,7 @@ namespace nidaqmx_grpc {
       auto custom_scale_name = request->custom_scale_name().c_str();
       auto status = library_->CreateCISemiPeriodChan(task, counter, name_to_assign_to_channel, min_val, max_val, units, custom_scale_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -5342,6 +5429,7 @@ namespace nidaqmx_grpc {
       auto custom_scale_name = request->custom_scale_name().c_str();
       auto status = library_->CreateCITwoEdgeSepChan(task, counter, name_to_assign_to_channel, min_val, max_val, units, first_edge, second_edge, custom_scale_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -5401,6 +5489,7 @@ namespace nidaqmx_grpc {
       float64 duty_cycle = request->duty_cycle();
       auto status = library_->CreateCOPulseChanFreq(task, counter, name_to_assign_to_channel, units, idle_state, initial_delay, freq, duty_cycle);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -5445,6 +5534,7 @@ namespace nidaqmx_grpc {
       int32 high_ticks = request->high_ticks();
       auto status = library_->CreateCOPulseChanTicks(task, counter, name_to_assign_to_channel, source_terminal, idle_state, initial_delay, low_ticks, high_ticks);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -5504,6 +5594,7 @@ namespace nidaqmx_grpc {
       float64 high_time = request->high_time();
       auto status = library_->CreateCOPulseChanTime(task, counter, name_to_assign_to_channel, units, idle_state, initial_delay, low_time, high_time);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -5544,6 +5635,7 @@ namespace nidaqmx_grpc {
 
       auto status = library_->CreateDIChan(task, lines, name_to_assign_to_lines, line_grouping);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -5584,6 +5676,7 @@ namespace nidaqmx_grpc {
 
       auto status = library_->CreateDOChan(task, lines, name_to_assign_to_lines, line_grouping);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -5624,6 +5717,7 @@ namespace nidaqmx_grpc {
       auto scaled_units = request->scaled_units().c_str();
       auto status = library_->CreateLinScale(name, slope, y_intercept, pre_scaled_units, scaled_units);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
@@ -5666,6 +5760,7 @@ namespace nidaqmx_grpc {
       auto scaled_units = request->scaled_units().c_str();
       auto status = library_->CreateMapScale(name, prescaled_min, prescaled_max, scaled_min, scaled_max, pre_scaled_units, scaled_units);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
@@ -5708,6 +5803,7 @@ namespace nidaqmx_grpc {
       auto scaled_units = request->scaled_units().c_str();
       auto status = library_->CreatePolynomialScale(name, forward_coeffs, num_forward_coeffs_in, reverse_coeffs, num_reverse_coeffs_in, pre_scaled_units, scaled_units);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
@@ -5784,6 +5880,7 @@ namespace nidaqmx_grpc {
       auto custom_scale_name = request->custom_scale_name().c_str();
       auto status = library_->CreateTEDSAIAccelChan(task, physical_channel, name_to_assign_to_channel, terminal_config, min_val, max_val, units, current_excit_source, current_excit_val, custom_scale_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -5844,6 +5941,7 @@ namespace nidaqmx_grpc {
       auto custom_scale_name = request->custom_scale_name().c_str();
       auto status = library_->CreateTEDSAIBridgeChan(task, physical_channel, name_to_assign_to_channel, min_val, max_val, units, voltage_excit_source, voltage_excit_val, custom_scale_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -5920,6 +6018,7 @@ namespace nidaqmx_grpc {
       auto custom_scale_name = request->custom_scale_name().c_str();
       auto status = library_->CreateTEDSAICurrentChan(task, physical_channel, name_to_assign_to_channel, terminal_config, min_val, max_val, units, shunt_resistor_loc, ext_shunt_resistor_val, custom_scale_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -5980,6 +6079,7 @@ namespace nidaqmx_grpc {
       auto custom_scale_name = request->custom_scale_name().c_str();
       auto status = library_->CreateTEDSAIForceBridgeChan(task, physical_channel, name_to_assign_to_channel, min_val, max_val, units, voltage_excit_source, voltage_excit_val, custom_scale_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -6056,6 +6156,7 @@ namespace nidaqmx_grpc {
       auto custom_scale_name = request->custom_scale_name().c_str();
       auto status = library_->CreateTEDSAIForceIEPEChan(task, physical_channel, name_to_assign_to_channel, terminal_config, min_val, max_val, units, current_excit_source, current_excit_val, custom_scale_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -6131,6 +6232,7 @@ namespace nidaqmx_grpc {
       auto custom_scale_name = request->custom_scale_name().c_str();
       auto status = library_->CreateTEDSAIMicrophoneChan(task, physical_channel, name_to_assign_to_channel, terminal_config, units, max_snd_press_level, current_excit_source, current_excit_val, custom_scale_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -6208,6 +6310,7 @@ namespace nidaqmx_grpc {
       auto custom_scale_name = request->custom_scale_name().c_str();
       auto status = library_->CreateTEDSAIPosLVDTChan(task, physical_channel, name_to_assign_to_channel, min_val, max_val, units, voltage_excit_source, voltage_excit_val, voltage_excit_freq, ac_excit_wire_mode, custom_scale_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -6285,6 +6388,7 @@ namespace nidaqmx_grpc {
       auto custom_scale_name = request->custom_scale_name().c_str();
       auto status = library_->CreateTEDSAIPosRVDTChan(task, physical_channel, name_to_assign_to_channel, min_val, max_val, units, voltage_excit_source, voltage_excit_val, voltage_excit_freq, ac_excit_wire_mode, custom_scale_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -6345,6 +6449,7 @@ namespace nidaqmx_grpc {
       auto custom_scale_name = request->custom_scale_name().c_str();
       auto status = library_->CreateTEDSAIPressureBridgeChan(task, physical_channel, name_to_assign_to_channel, min_val, max_val, units, voltage_excit_source, voltage_excit_val, custom_scale_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -6420,6 +6525,7 @@ namespace nidaqmx_grpc {
       float64 current_excit_val = request->current_excit_val();
       auto status = library_->CreateTEDSAIRTDChan(task, physical_channel, name_to_assign_to_channel, min_val, max_val, units, resistance_config, current_excit_source, current_excit_val);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -6496,6 +6602,7 @@ namespace nidaqmx_grpc {
       auto custom_scale_name = request->custom_scale_name().c_str();
       auto status = library_->CreateTEDSAIResistanceChan(task, physical_channel, name_to_assign_to_channel, min_val, max_val, units, resistance_config, current_excit_source, current_excit_val, custom_scale_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -6558,6 +6665,7 @@ namespace nidaqmx_grpc {
       auto custom_scale_name = request->custom_scale_name().c_str();
       auto status = library_->CreateTEDSAIStrainGageChan(task, physical_channel, name_to_assign_to_channel, min_val, max_val, units, voltage_excit_source, voltage_excit_val, initial_bridge_voltage, lead_wire_resistance, custom_scale_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -6618,6 +6726,7 @@ namespace nidaqmx_grpc {
       auto cjc_channel = request->cjc_channel().c_str();
       auto status = library_->CreateTEDSAIThrmcplChan(task, physical_channel, name_to_assign_to_channel, min_val, max_val, units, cjc_source, cjc_val, cjc_channel);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -6693,6 +6802,7 @@ namespace nidaqmx_grpc {
       float64 current_excit_val = request->current_excit_val();
       auto status = library_->CreateTEDSAIThrmstrChanIex(task, physical_channel, name_to_assign_to_channel, min_val, max_val, units, resistance_config, current_excit_source, current_excit_val);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -6769,6 +6879,7 @@ namespace nidaqmx_grpc {
       float64 r1 = request->r1();
       auto status = library_->CreateTEDSAIThrmstrChanVex(task, physical_channel, name_to_assign_to_channel, min_val, max_val, units, resistance_config, voltage_excit_source, voltage_excit_val, r1);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -6829,6 +6940,7 @@ namespace nidaqmx_grpc {
       auto custom_scale_name = request->custom_scale_name().c_str();
       auto status = library_->CreateTEDSAITorqueBridgeChan(task, physical_channel, name_to_assign_to_channel, min_val, max_val, units, voltage_excit_source, voltage_excit_val, custom_scale_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -6888,6 +7000,7 @@ namespace nidaqmx_grpc {
       auto custom_scale_name = request->custom_scale_name().c_str();
       auto status = library_->CreateTEDSAIVoltageChan(task, physical_channel, name_to_assign_to_channel, terminal_config, min_val, max_val, units, custom_scale_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -6964,6 +7077,7 @@ namespace nidaqmx_grpc {
       auto custom_scale_name = request->custom_scale_name().c_str();
       auto status = library_->CreateTEDSAIVoltageChanWithExcit(task, physical_channel, name_to_assign_to_channel, terminal_config, min_val, max_val, units, voltage_excit_source, voltage_excit_val, custom_scale_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -7006,6 +7120,7 @@ namespace nidaqmx_grpc {
       auto scaled_units = request->scaled_units().c_str();
       auto status = library_->CreateTableScale(name, prescaled_vals, num_prescaled_vals_in, scaled_vals, num_scaled_vals_in, pre_scaled_units, scaled_units);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
@@ -7036,6 +7151,7 @@ namespace nidaqmx_grpc {
       auto cleanup_lambda = [&] (TaskHandle id) { library_->ClearTask(id); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
@@ -7092,6 +7208,7 @@ namespace nidaqmx_grpc {
       auto cleanup_lambda = [&] (TaskHandle id) { library_->ClearTask(id); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
@@ -7128,6 +7245,7 @@ namespace nidaqmx_grpc {
       auto cleanup_lambda = [&] (TaskHandle id) { library_->ClearTask(id); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
@@ -7153,6 +7271,7 @@ namespace nidaqmx_grpc {
       auto device_name = request->device_name().c_str();
       auto status = library_->DeleteNetworkDevice(device_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
@@ -7174,6 +7293,7 @@ namespace nidaqmx_grpc {
       auto channel_name = request->channel_name().c_str();
       auto status = library_->DeleteSavedGlobalChan(channel_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
@@ -7195,6 +7315,7 @@ namespace nidaqmx_grpc {
       auto scale_name = request->scale_name().c_str();
       auto status = library_->DeleteSavedScale(scale_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
@@ -7216,6 +7337,7 @@ namespace nidaqmx_grpc {
       auto task_name = request->task_name().c_str();
       auto status = library_->DeleteSavedTask(task_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
@@ -7238,6 +7360,7 @@ namespace nidaqmx_grpc {
       bool32 cal_supported {};
       auto status = library_->DeviceSupportsCal(device_name, &cal_supported);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
@@ -7261,6 +7384,7 @@ namespace nidaqmx_grpc {
       TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
       auto status = library_->DisableRefTrig(task);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -7283,6 +7407,7 @@ namespace nidaqmx_grpc {
       TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
       auto status = library_->DisableStartTrig(task);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -7305,6 +7430,7 @@ namespace nidaqmx_grpc {
       auto destination_terminal = request->destination_terminal().c_str();
       auto status = library_->DisconnectTerms(source_terminal, destination_terminal);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
@@ -7344,6 +7470,7 @@ namespace nidaqmx_grpc {
       auto output_terminal = request->output_terminal().c_str();
       auto status = library_->ExportSignal(task, signal_id, output_terminal);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -7372,6 +7499,7 @@ namespace nidaqmx_grpc {
       uInt32 minute {};
       auto status = library_->GetAIChanCalCalDate(task, channel_name, &year, &month, &day, &hour, &minute);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -7405,6 +7533,7 @@ namespace nidaqmx_grpc {
       uInt32 minute {};
       auto status = library_->GetAIChanCalExpDate(task, channel_name, &year, &month, &day, &hour, &minute);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -7459,6 +7588,7 @@ namespace nidaqmx_grpc {
       stateVector.resize(channels.size());
       auto status = ((NiDAQmxLibrary*)library_)->GetAnalogPowerUpStates(device_name, get_channelName_if(channels, 0), get_state_if(stateVector, 0), get_channelType_if(channels, 0), get_channelName_if(channels, 1), get_state_if(stateVector, 1), get_channelType_if(channels, 1), get_channelName_if(channels, 2), get_state_if(stateVector, 2), get_channelType_if(channels, 2), get_channelName_if(channels, 3), get_state_if(stateVector, 3), get_channelType_if(channels, 3), get_channelName_if(channels, 4), get_state_if(stateVector, 4), get_channelType_if(channels, 4), get_channelName_if(channels, 5), get_state_if(stateVector, 5), get_channelType_if(channels, 5), get_channelName_if(channels, 6), get_state_if(stateVector, 6), get_channelType_if(channels, 6), get_channelName_if(channels, 7), get_state_if(stateVector, 7), get_channelType_if(channels, 7), get_channelName_if(channels, 8), get_state_if(stateVector, 8), get_channelType_if(channels, 8), get_channelName_if(channels, 9), get_state_if(stateVector, 9), get_channelType_if(channels, 9), get_channelName_if(channels, 10), get_state_if(stateVector, 10), get_channelType_if(channels, 10), get_channelName_if(channels, 11), get_state_if(stateVector, 11), get_channelType_if(channels, 11), get_channelName_if(channels, 12), get_state_if(stateVector, 12), get_channelType_if(channels, 12), get_channelName_if(channels, 13), get_state_if(stateVector, 13), get_channelType_if(channels, 13), get_channelName_if(channels, 14), get_state_if(stateVector, 14), get_channelType_if(channels, 14), get_channelName_if(channels, 15), get_state_if(stateVector, 15), get_channelType_if(channels, 15), get_channelName_if(channels, 16), get_state_if(stateVector, 16), get_channelType_if(channels, 16), get_channelName_if(channels, 17), get_state_if(stateVector, 17), get_channelType_if(channels, 17), get_channelName_if(channels, 18), get_state_if(stateVector, 18), get_channelType_if(channels, 18), get_channelName_if(channels, 19), get_state_if(stateVector, 19), get_channelType_if(channels, 19), get_channelName_if(channels, 20), get_state_if(stateVector, 20), get_channelType_if(channels, 20), get_channelName_if(channels, 21), get_state_if(stateVector, 21), get_channelType_if(channels, 21), get_channelName_if(channels, 22), get_state_if(stateVector, 22), get_channelType_if(channels, 22), get_channelName_if(channels, 23), get_state_if(stateVector, 23), get_channelType_if(channels, 23), get_channelName_if(channels, 24), get_state_if(stateVector, 24), get_channelType_if(channels, 24), get_channelName_if(channels, 25), get_state_if(stateVector, 25), get_channelType_if(channels, 25), get_channelName_if(channels, 26), get_state_if(stateVector, 26), get_channelType_if(channels, 26), get_channelName_if(channels, 27), get_state_if(stateVector, 27), get_channelType_if(channels, 27), get_channelName_if(channels, 28), get_state_if(stateVector, 28), get_channelType_if(channels, 28), get_channelName_if(channels, 29), get_state_if(stateVector, 29), get_channelType_if(channels, 29), get_channelName_if(channels, 30), get_state_if(stateVector, 30), get_channelType_if(channels, 30), get_channelName_if(channels, 31), get_state_if(stateVector, 31), get_channelType_if(channels, 31), get_channelName_if(channels, 32), get_state_if(stateVector, 32), get_channelType_if(channels, 32), get_channelName_if(channels, 33), get_state_if(stateVector, 33), get_channelType_if(channels, 33), get_channelName_if(channels, 34), get_state_if(stateVector, 34), get_channelType_if(channels, 34), get_channelName_if(channels, 35), get_state_if(stateVector, 35), get_channelType_if(channels, 35), get_channelName_if(channels, 36), get_state_if(stateVector, 36), get_channelType_if(channels, 36), get_channelName_if(channels, 37), get_state_if(stateVector, 37), get_channelType_if(channels, 37), get_channelName_if(channels, 38), get_state_if(stateVector, 38), get_channelType_if(channels, 38), get_channelName_if(channels, 39), get_state_if(stateVector, 39), get_channelType_if(channels, 39), get_channelName_if(channels, 40), get_state_if(stateVector, 40), get_channelType_if(channels, 40), get_channelName_if(channels, 41), get_state_if(stateVector, 41), get_channelType_if(channels, 41), get_channelName_if(channels, 42), get_state_if(stateVector, 42), get_channelType_if(channels, 42), get_channelName_if(channels, 43), get_state_if(stateVector, 43), get_channelType_if(channels, 43), get_channelName_if(channels, 44), get_state_if(stateVector, 44), get_channelType_if(channels, 44), get_channelName_if(channels, 45), get_state_if(stateVector, 45), get_channelType_if(channels, 45), get_channelName_if(channels, 46), get_state_if(stateVector, 46), get_channelType_if(channels, 46), get_channelName_if(channels, 47), get_state_if(stateVector, 47), get_channelType_if(channels, 47), get_channelName_if(channels, 48), get_state_if(stateVector, 48), get_channelType_if(channels, 48), get_channelName_if(channels, 49), get_state_if(stateVector, 49), get_channelType_if(channels, 49), get_channelName_if(channels, 50), get_state_if(stateVector, 50), get_channelType_if(channels, 50), get_channelName_if(channels, 51), get_state_if(stateVector, 51), get_channelType_if(channels, 51), get_channelName_if(channels, 52), get_state_if(stateVector, 52), get_channelType_if(channels, 52), get_channelName_if(channels, 53), get_state_if(stateVector, 53), get_channelType_if(channels, 53), get_channelName_if(channels, 54), get_state_if(stateVector, 54), get_channelType_if(channels, 54), get_channelName_if(channels, 55), get_state_if(stateVector, 55), get_channelType_if(channels, 55), get_channelName_if(channels, 56), get_state_if(stateVector, 56), get_channelType_if(channels, 56), get_channelName_if(channels, 57), get_state_if(stateVector, 57), get_channelType_if(channels, 57), get_channelName_if(channels, 58), get_state_if(stateVector, 58), get_channelType_if(channels, 58), get_channelName_if(channels, 59), get_state_if(stateVector, 59), get_channelType_if(channels, 59), get_channelName_if(channels, 60), get_state_if(stateVector, 60), get_channelType_if(channels, 60), get_channelName_if(channels, 61), get_state_if(stateVector, 61), get_channelType_if(channels, 61), get_channelName_if(channels, 62), get_state_if(stateVector, 62), get_channelType_if(channels, 62), get_channelName_if(channels, 63), get_state_if(stateVector, 63), get_channelType_if(channels, 63), get_channelName_if(channels, 64), get_state_if(stateVector, 64), get_channelType_if(channels, 64), get_channelName_if(channels, 65), get_state_if(stateVector, 65), get_channelType_if(channels, 65), get_channelName_if(channels, 66), get_state_if(stateVector, 66), get_channelType_if(channels, 66), get_channelName_if(channels, 67), get_state_if(stateVector, 67), get_channelType_if(channels, 67), get_channelName_if(channels, 68), get_state_if(stateVector, 68), get_channelType_if(channels, 68), get_channelName_if(channels, 69), get_state_if(stateVector, 69), get_channelType_if(channels, 69), get_channelName_if(channels, 70), get_state_if(stateVector, 70), get_channelType_if(channels, 70), get_channelName_if(channels, 71), get_state_if(stateVector, 71), get_channelType_if(channels, 71), get_channelName_if(channels, 72), get_state_if(stateVector, 72), get_channelType_if(channels, 72), get_channelName_if(channels, 73), get_state_if(stateVector, 73), get_channelType_if(channels, 73), get_channelName_if(channels, 74), get_state_if(stateVector, 74), get_channelType_if(channels, 74), get_channelName_if(channels, 75), get_state_if(stateVector, 75), get_channelType_if(channels, 75), get_channelName_if(channels, 76), get_state_if(stateVector, 76), get_channelType_if(channels, 76), get_channelName_if(channels, 77), get_state_if(stateVector, 77), get_channelType_if(channels, 77), get_channelName_if(channels, 78), get_state_if(stateVector, 78), get_channelType_if(channels, 78), get_channelName_if(channels, 79), get_state_if(stateVector, 79), get_channelType_if(channels, 79), get_channelName_if(channels, 80), get_state_if(stateVector, 80), get_channelType_if(channels, 80), get_channelName_if(channels, 81), get_state_if(stateVector, 81), get_channelType_if(channels, 81), get_channelName_if(channels, 82), get_state_if(stateVector, 82), get_channelType_if(channels, 82), get_channelName_if(channels, 83), get_state_if(stateVector, 83), get_channelType_if(channels, 83), get_channelName_if(channels, 84), get_state_if(stateVector, 84), get_channelType_if(channels, 84), get_channelName_if(channels, 85), get_state_if(stateVector, 85), get_channelType_if(channels, 85), get_channelName_if(channels, 86), get_state_if(stateVector, 86), get_channelType_if(channels, 86), get_channelName_if(channels, 87), get_state_if(stateVector, 87), get_channelType_if(channels, 87), get_channelName_if(channels, 88), get_state_if(stateVector, 88), get_channelType_if(channels, 88), get_channelName_if(channels, 89), get_state_if(stateVector, 89), get_channelType_if(channels, 89), get_channelName_if(channels, 90), get_state_if(stateVector, 90), get_channelType_if(channels, 90), get_channelName_if(channels, 91), get_state_if(stateVector, 91), get_channelType_if(channels, 91), get_channelName_if(channels, 92), get_state_if(stateVector, 92), get_channelType_if(channels, 92), get_channelName_if(channels, 93), get_state_if(stateVector, 93), get_channelType_if(channels, 93), get_channelName_if(channels, 94), get_state_if(stateVector, 94), get_channelType_if(channels, 94), get_channelName_if(channels, 95), get_state_if(stateVector, 95), get_channelType_if(channels, 95), get_channelName_if(channels, 96), get_state_if(stateVector, 96), get_channelType_if(channels, 96));
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
@@ -7488,6 +7618,7 @@ namespace nidaqmx_grpc {
       int32* channel_type_array = reinterpret_cast<int32*>(response->mutable_channel_type_array_raw()->mutable_data());
       auto status = library_->GetAnalogPowerUpStatesWithOutputType(channel_names, state_array, channel_type_array, &array_size_copy);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
@@ -7521,6 +7652,7 @@ namespace nidaqmx_grpc {
       CVIAbsoluteTime data {};
       auto status = library_->GetArmStartTrigTimestampVal(task, &data);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -7545,6 +7677,7 @@ namespace nidaqmx_grpc {
       CVIAbsoluteTime data {};
       auto status = library_->GetArmStartTrigTrigWhen(task, &data);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -7568,6 +7701,7 @@ namespace nidaqmx_grpc {
       while (true) {
         auto status = library_->GetAutoConfiguredCDAQSyncConnections(nullptr, 0);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForTaskHandle(status, 0);
         }
         uInt32 port_list_size = status;
@@ -7582,6 +7716,7 @@ namespace nidaqmx_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForTaskHandle(status, 0);
         }
         response->set_status(status);
@@ -7627,6 +7762,7 @@ namespace nidaqmx_grpc {
       uInt32 value {};
       auto status = library_->GetBufferAttributeUInt32(task, attribute, &value);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -7670,6 +7806,7 @@ namespace nidaqmx_grpc {
       bool32 value {};
       auto status = library_->GetCalInfoAttributeBool(device_name, attribute, &value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
@@ -7713,6 +7850,7 @@ namespace nidaqmx_grpc {
       float64 value {};
       auto status = library_->GetCalInfoAttributeDouble(device_name, attribute, &value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
@@ -7756,6 +7894,7 @@ namespace nidaqmx_grpc {
       while (true) {
         auto status = library_->GetCalInfoAttributeString(device_name, attribute, nullptr, 0);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForTaskHandle(status, 0);
         }
         uInt32 size = status;
@@ -7770,6 +7909,7 @@ namespace nidaqmx_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForTaskHandle(status, 0);
         }
         response->set_status(status);
@@ -7815,6 +7955,7 @@ namespace nidaqmx_grpc {
       uInt32 value {};
       auto status = library_->GetCalInfoAttributeUInt32(device_name, attribute, &value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
@@ -7860,6 +8001,7 @@ namespace nidaqmx_grpc {
       bool32 value {};
       auto status = library_->GetChanAttributeBool(task, channel, attribute, &value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -7905,6 +8047,7 @@ namespace nidaqmx_grpc {
       float64 value {};
       auto status = library_->GetChanAttributeDouble(task, channel, attribute, &value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -7950,6 +8093,7 @@ namespace nidaqmx_grpc {
       while (true) {
         auto status = library_->GetChanAttributeDoubleArray(task, channel, attribute, nullptr, 0);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForTaskHandle(status, task);
         }
         uInt32 size = status;
@@ -7962,6 +8106,7 @@ namespace nidaqmx_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForTaskHandle(status, task);
         }
         response->set_status(status);
@@ -8007,6 +8152,7 @@ namespace nidaqmx_grpc {
       int32 value {};
       auto status = library_->GetChanAttributeInt32(task, channel, attribute, &value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -8058,6 +8204,7 @@ namespace nidaqmx_grpc {
       while (true) {
         auto status = library_->GetChanAttributeString(task, channel, attribute, nullptr, 0);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForTaskHandle(status, task);
         }
         uInt32 size = status;
@@ -8072,6 +8219,7 @@ namespace nidaqmx_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForTaskHandle(status, task);
         }
         response->set_status(status);
@@ -8119,6 +8267,7 @@ namespace nidaqmx_grpc {
       uInt32 value {};
       auto status = library_->GetChanAttributeUInt32(task, channel, attribute, &value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -8162,6 +8311,7 @@ namespace nidaqmx_grpc {
       bool32 value {};
       auto status = library_->GetDeviceAttributeBool(device_name, attribute, &value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
@@ -8205,6 +8355,7 @@ namespace nidaqmx_grpc {
       float64 value {};
       auto status = library_->GetDeviceAttributeDouble(device_name, attribute, &value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
@@ -8248,6 +8399,7 @@ namespace nidaqmx_grpc {
       while (true) {
         auto status = library_->GetDeviceAttributeDoubleArray(device_name, attribute, nullptr, 0);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForTaskHandle(status, 0);
         }
         uInt32 size = status;
@@ -8260,6 +8412,7 @@ namespace nidaqmx_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForTaskHandle(status, 0);
         }
         response->set_status(status);
@@ -8303,6 +8456,7 @@ namespace nidaqmx_grpc {
       int32 value {};
       auto status = library_->GetDeviceAttributeInt32(device_name, attribute, &value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
@@ -8352,6 +8506,7 @@ namespace nidaqmx_grpc {
       while (true) {
         auto status = library_->GetDeviceAttributeInt32Array(device_name, attribute, nullptr, 0);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForTaskHandle(status, 0);
         }
         uInt32 size = status;
@@ -8364,6 +8519,7 @@ namespace nidaqmx_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForTaskHandle(status, 0);
         }
         response->set_status(status);
@@ -8421,6 +8577,7 @@ namespace nidaqmx_grpc {
       while (true) {
         auto status = library_->GetDeviceAttributeString(device_name, attribute, nullptr, 0);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForTaskHandle(status, 0);
         }
         uInt32 size = status;
@@ -8435,6 +8592,7 @@ namespace nidaqmx_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForTaskHandle(status, 0);
         }
         response->set_status(status);
@@ -8480,6 +8638,7 @@ namespace nidaqmx_grpc {
       uInt32 value {};
       auto status = library_->GetDeviceAttributeUInt32(device_name, attribute, &value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
@@ -8523,6 +8682,7 @@ namespace nidaqmx_grpc {
       while (true) {
         auto status = library_->GetDeviceAttributeUInt32Array(device_name, attribute, nullptr, 0);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForTaskHandle(status, 0);
         }
         uInt32 size = status;
@@ -8535,6 +8695,7 @@ namespace nidaqmx_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForTaskHandle(status, 0);
         }
         response->set_status(status);
@@ -8558,6 +8719,7 @@ namespace nidaqmx_grpc {
       int32 logic_family {};
       auto status = library_->GetDigitalLogicFamilyPowerUpState(device_name, &logic_family);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
@@ -8602,6 +8764,7 @@ namespace nidaqmx_grpc {
       stateVector.resize(channel_name.size());
       auto status = ((NiDAQmxLibrary*)library_)->GetDigitalPowerUpStates(device_name, get_channelName_if(channel_name, 0), get_state_if(stateVector, 0), get_channelName_if(channel_name, 1), get_state_if(stateVector, 1), get_channelName_if(channel_name, 2), get_state_if(stateVector, 2), get_channelName_if(channel_name, 3), get_state_if(stateVector, 3), get_channelName_if(channel_name, 4), get_state_if(stateVector, 4), get_channelName_if(channel_name, 5), get_state_if(stateVector, 5), get_channelName_if(channel_name, 6), get_state_if(stateVector, 6), get_channelName_if(channel_name, 7), get_state_if(stateVector, 7), get_channelName_if(channel_name, 8), get_state_if(stateVector, 8), get_channelName_if(channel_name, 9), get_state_if(stateVector, 9), get_channelName_if(channel_name, 10), get_state_if(stateVector, 10), get_channelName_if(channel_name, 11), get_state_if(stateVector, 11), get_channelName_if(channel_name, 12), get_state_if(stateVector, 12), get_channelName_if(channel_name, 13), get_state_if(stateVector, 13), get_channelName_if(channel_name, 14), get_state_if(stateVector, 14), get_channelName_if(channel_name, 15), get_state_if(stateVector, 15), get_channelName_if(channel_name, 16), get_state_if(stateVector, 16), get_channelName_if(channel_name, 17), get_state_if(stateVector, 17), get_channelName_if(channel_name, 18), get_state_if(stateVector, 18), get_channelName_if(channel_name, 19), get_state_if(stateVector, 19), get_channelName_if(channel_name, 20), get_state_if(stateVector, 20), get_channelName_if(channel_name, 21), get_state_if(stateVector, 21), get_channelName_if(channel_name, 22), get_state_if(stateVector, 22), get_channelName_if(channel_name, 23), get_state_if(stateVector, 23), get_channelName_if(channel_name, 24), get_state_if(stateVector, 24), get_channelName_if(channel_name, 25), get_state_if(stateVector, 25), get_channelName_if(channel_name, 26), get_state_if(stateVector, 26), get_channelName_if(channel_name, 27), get_state_if(stateVector, 27), get_channelName_if(channel_name, 28), get_state_if(stateVector, 28), get_channelName_if(channel_name, 29), get_state_if(stateVector, 29), get_channelName_if(channel_name, 30), get_state_if(stateVector, 30), get_channelName_if(channel_name, 31), get_state_if(stateVector, 31), get_channelName_if(channel_name, 32), get_state_if(stateVector, 32), get_channelName_if(channel_name, 33), get_state_if(stateVector, 33), get_channelName_if(channel_name, 34), get_state_if(stateVector, 34), get_channelName_if(channel_name, 35), get_state_if(stateVector, 35), get_channelName_if(channel_name, 36), get_state_if(stateVector, 36), get_channelName_if(channel_name, 37), get_state_if(stateVector, 37), get_channelName_if(channel_name, 38), get_state_if(stateVector, 38), get_channelName_if(channel_name, 39), get_state_if(stateVector, 39), get_channelName_if(channel_name, 40), get_state_if(stateVector, 40), get_channelName_if(channel_name, 41), get_state_if(stateVector, 41), get_channelName_if(channel_name, 42), get_state_if(stateVector, 42), get_channelName_if(channel_name, 43), get_state_if(stateVector, 43), get_channelName_if(channel_name, 44), get_state_if(stateVector, 44), get_channelName_if(channel_name, 45), get_state_if(stateVector, 45), get_channelName_if(channel_name, 46), get_state_if(stateVector, 46), get_channelName_if(channel_name, 47), get_state_if(stateVector, 47), get_channelName_if(channel_name, 48), get_state_if(stateVector, 48), get_channelName_if(channel_name, 49), get_state_if(stateVector, 49), get_channelName_if(channel_name, 50), get_state_if(stateVector, 50), get_channelName_if(channel_name, 51), get_state_if(stateVector, 51), get_channelName_if(channel_name, 52), get_state_if(stateVector, 52), get_channelName_if(channel_name, 53), get_state_if(stateVector, 53), get_channelName_if(channel_name, 54), get_state_if(stateVector, 54), get_channelName_if(channel_name, 55), get_state_if(stateVector, 55), get_channelName_if(channel_name, 56), get_state_if(stateVector, 56), get_channelName_if(channel_name, 57), get_state_if(stateVector, 57), get_channelName_if(channel_name, 58), get_state_if(stateVector, 58), get_channelName_if(channel_name, 59), get_state_if(stateVector, 59), get_channelName_if(channel_name, 60), get_state_if(stateVector, 60), get_channelName_if(channel_name, 61), get_state_if(stateVector, 61), get_channelName_if(channel_name, 62), get_state_if(stateVector, 62), get_channelName_if(channel_name, 63), get_state_if(stateVector, 63), get_channelName_if(channel_name, 64), get_state_if(stateVector, 64), get_channelName_if(channel_name, 65), get_state_if(stateVector, 65), get_channelName_if(channel_name, 66), get_state_if(stateVector, 66), get_channelName_if(channel_name, 67), get_state_if(stateVector, 67), get_channelName_if(channel_name, 68), get_state_if(stateVector, 68), get_channelName_if(channel_name, 69), get_state_if(stateVector, 69), get_channelName_if(channel_name, 70), get_state_if(stateVector, 70), get_channelName_if(channel_name, 71), get_state_if(stateVector, 71), get_channelName_if(channel_name, 72), get_state_if(stateVector, 72), get_channelName_if(channel_name, 73), get_state_if(stateVector, 73), get_channelName_if(channel_name, 74), get_state_if(stateVector, 74), get_channelName_if(channel_name, 75), get_state_if(stateVector, 75), get_channelName_if(channel_name, 76), get_state_if(stateVector, 76), get_channelName_if(channel_name, 77), get_state_if(stateVector, 77), get_channelName_if(channel_name, 78), get_state_if(stateVector, 78), get_channelName_if(channel_name, 79), get_state_if(stateVector, 79), get_channelName_if(channel_name, 80), get_state_if(stateVector, 80), get_channelName_if(channel_name, 81), get_state_if(stateVector, 81), get_channelName_if(channel_name, 82), get_state_if(stateVector, 82), get_channelName_if(channel_name, 83), get_state_if(stateVector, 83), get_channelName_if(channel_name, 84), get_state_if(stateVector, 84), get_channelName_if(channel_name, 85), get_state_if(stateVector, 85), get_channelName_if(channel_name, 86), get_state_if(stateVector, 86), get_channelName_if(channel_name, 87), get_state_if(stateVector, 87), get_channelName_if(channel_name, 88), get_state_if(stateVector, 88), get_channelName_if(channel_name, 89), get_state_if(stateVector, 89), get_channelName_if(channel_name, 90), get_state_if(stateVector, 90), get_channelName_if(channel_name, 91), get_state_if(stateVector, 91), get_channelName_if(channel_name, 92), get_state_if(stateVector, 92), get_channelName_if(channel_name, 93), get_state_if(stateVector, 93), get_channelName_if(channel_name, 94), get_state_if(stateVector, 94), get_channelName_if(channel_name, 95), get_state_if(stateVector, 95), get_channelName_if(channel_name, 96), get_state_if(stateVector, 96));
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
@@ -8648,6 +8811,7 @@ namespace nidaqmx_grpc {
       stateVector.resize(channel_name.size());
       auto status = ((NiDAQmxLibrary*)library_)->GetDigitalPullUpPullDownStates(device_name, get_channelName_if(channel_name, 0), get_state_if(stateVector, 0), get_channelName_if(channel_name, 1), get_state_if(stateVector, 1), get_channelName_if(channel_name, 2), get_state_if(stateVector, 2), get_channelName_if(channel_name, 3), get_state_if(stateVector, 3), get_channelName_if(channel_name, 4), get_state_if(stateVector, 4), get_channelName_if(channel_name, 5), get_state_if(stateVector, 5), get_channelName_if(channel_name, 6), get_state_if(stateVector, 6), get_channelName_if(channel_name, 7), get_state_if(stateVector, 7), get_channelName_if(channel_name, 8), get_state_if(stateVector, 8), get_channelName_if(channel_name, 9), get_state_if(stateVector, 9), get_channelName_if(channel_name, 10), get_state_if(stateVector, 10), get_channelName_if(channel_name, 11), get_state_if(stateVector, 11), get_channelName_if(channel_name, 12), get_state_if(stateVector, 12), get_channelName_if(channel_name, 13), get_state_if(stateVector, 13), get_channelName_if(channel_name, 14), get_state_if(stateVector, 14), get_channelName_if(channel_name, 15), get_state_if(stateVector, 15), get_channelName_if(channel_name, 16), get_state_if(stateVector, 16), get_channelName_if(channel_name, 17), get_state_if(stateVector, 17), get_channelName_if(channel_name, 18), get_state_if(stateVector, 18), get_channelName_if(channel_name, 19), get_state_if(stateVector, 19), get_channelName_if(channel_name, 20), get_state_if(stateVector, 20), get_channelName_if(channel_name, 21), get_state_if(stateVector, 21), get_channelName_if(channel_name, 22), get_state_if(stateVector, 22), get_channelName_if(channel_name, 23), get_state_if(stateVector, 23), get_channelName_if(channel_name, 24), get_state_if(stateVector, 24), get_channelName_if(channel_name, 25), get_state_if(stateVector, 25), get_channelName_if(channel_name, 26), get_state_if(stateVector, 26), get_channelName_if(channel_name, 27), get_state_if(stateVector, 27), get_channelName_if(channel_name, 28), get_state_if(stateVector, 28), get_channelName_if(channel_name, 29), get_state_if(stateVector, 29), get_channelName_if(channel_name, 30), get_state_if(stateVector, 30), get_channelName_if(channel_name, 31), get_state_if(stateVector, 31), get_channelName_if(channel_name, 32), get_state_if(stateVector, 32), get_channelName_if(channel_name, 33), get_state_if(stateVector, 33), get_channelName_if(channel_name, 34), get_state_if(stateVector, 34), get_channelName_if(channel_name, 35), get_state_if(stateVector, 35), get_channelName_if(channel_name, 36), get_state_if(stateVector, 36), get_channelName_if(channel_name, 37), get_state_if(stateVector, 37), get_channelName_if(channel_name, 38), get_state_if(stateVector, 38), get_channelName_if(channel_name, 39), get_state_if(stateVector, 39), get_channelName_if(channel_name, 40), get_state_if(stateVector, 40), get_channelName_if(channel_name, 41), get_state_if(stateVector, 41), get_channelName_if(channel_name, 42), get_state_if(stateVector, 42), get_channelName_if(channel_name, 43), get_state_if(stateVector, 43), get_channelName_if(channel_name, 44), get_state_if(stateVector, 44), get_channelName_if(channel_name, 45), get_state_if(stateVector, 45), get_channelName_if(channel_name, 46), get_state_if(stateVector, 46), get_channelName_if(channel_name, 47), get_state_if(stateVector, 47), get_channelName_if(channel_name, 48), get_state_if(stateVector, 48), get_channelName_if(channel_name, 49), get_state_if(stateVector, 49), get_channelName_if(channel_name, 50), get_state_if(stateVector, 50), get_channelName_if(channel_name, 51), get_state_if(stateVector, 51), get_channelName_if(channel_name, 52), get_state_if(stateVector, 52), get_channelName_if(channel_name, 53), get_state_if(stateVector, 53), get_channelName_if(channel_name, 54), get_state_if(stateVector, 54), get_channelName_if(channel_name, 55), get_state_if(stateVector, 55), get_channelName_if(channel_name, 56), get_state_if(stateVector, 56), get_channelName_if(channel_name, 57), get_state_if(stateVector, 57), get_channelName_if(channel_name, 58), get_state_if(stateVector, 58), get_channelName_if(channel_name, 59), get_state_if(stateVector, 59), get_channelName_if(channel_name, 60), get_state_if(stateVector, 60), get_channelName_if(channel_name, 61), get_state_if(stateVector, 61), get_channelName_if(channel_name, 62), get_state_if(stateVector, 62), get_channelName_if(channel_name, 63), get_state_if(stateVector, 63), get_channelName_if(channel_name, 64), get_state_if(stateVector, 64), get_channelName_if(channel_name, 65), get_state_if(stateVector, 65), get_channelName_if(channel_name, 66), get_state_if(stateVector, 66), get_channelName_if(channel_name, 67), get_state_if(stateVector, 67), get_channelName_if(channel_name, 68), get_state_if(stateVector, 68), get_channelName_if(channel_name, 69), get_state_if(stateVector, 69), get_channelName_if(channel_name, 70), get_state_if(stateVector, 70), get_channelName_if(channel_name, 71), get_state_if(stateVector, 71), get_channelName_if(channel_name, 72), get_state_if(stateVector, 72), get_channelName_if(channel_name, 73), get_state_if(stateVector, 73), get_channelName_if(channel_name, 74), get_state_if(stateVector, 74), get_channelName_if(channel_name, 75), get_state_if(stateVector, 75), get_channelName_if(channel_name, 76), get_state_if(stateVector, 76), get_channelName_if(channel_name, 77), get_state_if(stateVector, 77), get_channelName_if(channel_name, 78), get_state_if(stateVector, 78), get_channelName_if(channel_name, 79), get_state_if(stateVector, 79), get_channelName_if(channel_name, 80), get_state_if(stateVector, 80), get_channelName_if(channel_name, 81), get_state_if(stateVector, 81), get_channelName_if(channel_name, 82), get_state_if(stateVector, 82), get_channelName_if(channel_name, 83), get_state_if(stateVector, 83), get_channelName_if(channel_name, 84), get_state_if(stateVector, 84), get_channelName_if(channel_name, 85), get_state_if(stateVector, 85), get_channelName_if(channel_name, 86), get_state_if(stateVector, 86), get_channelName_if(channel_name, 87), get_state_if(stateVector, 87), get_channelName_if(channel_name, 88), get_state_if(stateVector, 88), get_channelName_if(channel_name, 89), get_state_if(stateVector, 89), get_channelName_if(channel_name, 90), get_state_if(stateVector, 90), get_channelName_if(channel_name, 91), get_state_if(stateVector, 91), get_channelName_if(channel_name, 92), get_state_if(stateVector, 92), get_channelName_if(channel_name, 93), get_state_if(stateVector, 93), get_channelName_if(channel_name, 94), get_state_if(stateVector, 94), get_channelName_if(channel_name, 95), get_state_if(stateVector, 95), get_channelName_if(channel_name, 96), get_state_if(stateVector, 96));
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
@@ -8673,6 +8837,7 @@ namespace nidaqmx_grpc {
       while (true) {
         auto status = library_->GetDisconnectedCDAQSyncPorts(nullptr, 0);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForTaskHandle(status, 0);
         }
         uInt32 port_list_size = status;
@@ -8687,6 +8852,7 @@ namespace nidaqmx_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForTaskHandle(status, 0);
         }
         response->set_status(status);
@@ -8713,6 +8879,7 @@ namespace nidaqmx_grpc {
       while (true) {
         auto status = library_->GetErrorString(error_code, nullptr, 0);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForTaskHandle(status, 0);
         }
         uInt32 buffer_size = status;
@@ -8727,6 +8894,7 @@ namespace nidaqmx_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForTaskHandle(status, 0);
         }
         response->set_status(status);
@@ -8773,6 +8941,7 @@ namespace nidaqmx_grpc {
       bool32 value {};
       auto status = library_->GetExportedSignalAttributeBool(task, attribute, &value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -8817,6 +8986,7 @@ namespace nidaqmx_grpc {
       float64 value {};
       auto status = library_->GetExportedSignalAttributeDouble(task, attribute, &value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -8861,6 +9031,7 @@ namespace nidaqmx_grpc {
       int32 value {};
       auto status = library_->GetExportedSignalAttributeInt32(task, attribute, &value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -8911,6 +9082,7 @@ namespace nidaqmx_grpc {
       while (true) {
         auto status = library_->GetExportedSignalAttributeString(task, attribute, nullptr, 0);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForTaskHandle(status, task);
         }
         uInt32 size = status;
@@ -8925,6 +9097,7 @@ namespace nidaqmx_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForTaskHandle(status, task);
         }
         response->set_status(status);
@@ -8971,6 +9144,7 @@ namespace nidaqmx_grpc {
       uInt32 value {};
       auto status = library_->GetExportedSignalAttributeUInt32(task, attribute, &value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -8994,6 +9168,7 @@ namespace nidaqmx_grpc {
       while (true) {
         auto status = library_->GetExtendedErrorInfo(nullptr, 0);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForTaskHandle(status, 0);
         }
         uInt32 buffer_size = status;
@@ -9008,6 +9183,7 @@ namespace nidaqmx_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForTaskHandle(status, 0);
         }
         response->set_status(status);
@@ -9034,6 +9210,7 @@ namespace nidaqmx_grpc {
       CVIAbsoluteTime data {};
       auto status = library_->GetFirstSampClkWhen(task, &data);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -9058,6 +9235,7 @@ namespace nidaqmx_grpc {
       CVIAbsoluteTime data {};
       auto status = library_->GetFirstSampTimestampVal(task, &data);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -9084,6 +9262,7 @@ namespace nidaqmx_grpc {
       while (true) {
         auto status = library_->GetNthTaskChannel(task, index, nullptr, 0);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForTaskHandle(status, task);
         }
         int32 buffer_size = status;
@@ -9098,6 +9277,7 @@ namespace nidaqmx_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForTaskHandle(status, task);
         }
         response->set_status(status);
@@ -9126,6 +9306,7 @@ namespace nidaqmx_grpc {
       while (true) {
         auto status = library_->GetNthTaskDevice(task, index, nullptr, 0);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForTaskHandle(status, task);
         }
         int32 buffer_size = status;
@@ -9140,6 +9321,7 @@ namespace nidaqmx_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForTaskHandle(status, task);
         }
         response->set_status(status);
@@ -9168,6 +9350,7 @@ namespace nidaqmx_grpc {
       while (true) {
         auto status = library_->GetNthTaskReadChannel(task, index, nullptr, 0);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForTaskHandle(status, task);
         }
         int32 buffer_size = status;
@@ -9182,6 +9365,7 @@ namespace nidaqmx_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForTaskHandle(status, task);
         }
         response->set_status(status);
@@ -9227,6 +9411,7 @@ namespace nidaqmx_grpc {
       bool32 value {};
       auto status = library_->GetPersistedChanAttributeBool(channel, attribute, &value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
@@ -9270,6 +9455,7 @@ namespace nidaqmx_grpc {
       while (true) {
         auto status = library_->GetPersistedChanAttributeString(channel, attribute, nullptr, 0);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForTaskHandle(status, 0);
         }
         uInt32 size = status;
@@ -9284,6 +9470,7 @@ namespace nidaqmx_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForTaskHandle(status, 0);
         }
         response->set_status(status);
@@ -9329,6 +9516,7 @@ namespace nidaqmx_grpc {
       bool32 value {};
       auto status = library_->GetPersistedScaleAttributeBool(scale_name, attribute, &value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
@@ -9372,6 +9560,7 @@ namespace nidaqmx_grpc {
       while (true) {
         auto status = library_->GetPersistedScaleAttributeString(scale_name, attribute, nullptr, 0);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForTaskHandle(status, 0);
         }
         uInt32 size = status;
@@ -9386,6 +9575,7 @@ namespace nidaqmx_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForTaskHandle(status, 0);
         }
         response->set_status(status);
@@ -9431,6 +9621,7 @@ namespace nidaqmx_grpc {
       bool32 value {};
       auto status = library_->GetPersistedTaskAttributeBool(task_name, attribute, &value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
@@ -9474,6 +9665,7 @@ namespace nidaqmx_grpc {
       while (true) {
         auto status = library_->GetPersistedTaskAttributeString(task_name, attribute, nullptr, 0);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForTaskHandle(status, 0);
         }
         uInt32 size = status;
@@ -9488,6 +9680,7 @@ namespace nidaqmx_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForTaskHandle(status, 0);
         }
         response->set_status(status);
@@ -9533,6 +9726,7 @@ namespace nidaqmx_grpc {
       bool32 value {};
       auto status = library_->GetPhysicalChanAttributeBool(physical_channel, attribute, &value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
@@ -9576,6 +9770,7 @@ namespace nidaqmx_grpc {
       while (true) {
         auto status = library_->GetPhysicalChanAttributeBytes(physical_channel, attribute, nullptr, 0);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForTaskHandle(status, 0);
         }
         uInt32 size = status;
@@ -9587,6 +9782,7 @@ namespace nidaqmx_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForTaskHandle(status, 0);
         }
         response->set_status(status);
@@ -9631,6 +9827,7 @@ namespace nidaqmx_grpc {
       float64 value {};
       auto status = library_->GetPhysicalChanAttributeDouble(physical_channel, attribute, &value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
@@ -9674,6 +9871,7 @@ namespace nidaqmx_grpc {
       while (true) {
         auto status = library_->GetPhysicalChanAttributeDoubleArray(physical_channel, attribute, nullptr, 0);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForTaskHandle(status, 0);
         }
         uInt32 size = status;
@@ -9686,6 +9884,7 @@ namespace nidaqmx_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForTaskHandle(status, 0);
         }
         response->set_status(status);
@@ -9729,6 +9928,7 @@ namespace nidaqmx_grpc {
       int32 value {};
       auto status = library_->GetPhysicalChanAttributeInt32(physical_channel, attribute, &value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
@@ -9778,6 +9978,7 @@ namespace nidaqmx_grpc {
       while (true) {
         auto status = library_->GetPhysicalChanAttributeInt32Array(physical_channel, attribute, nullptr, 0);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForTaskHandle(status, 0);
         }
         uInt32 size = status;
@@ -9790,6 +9991,7 @@ namespace nidaqmx_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForTaskHandle(status, 0);
         }
         response->set_status(status);
@@ -9847,6 +10049,7 @@ namespace nidaqmx_grpc {
       while (true) {
         auto status = library_->GetPhysicalChanAttributeString(physical_channel, attribute, nullptr, 0);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForTaskHandle(status, 0);
         }
         uInt32 size = status;
@@ -9861,6 +10064,7 @@ namespace nidaqmx_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForTaskHandle(status, 0);
         }
         response->set_status(status);
@@ -9906,6 +10110,7 @@ namespace nidaqmx_grpc {
       uInt32 value {};
       auto status = library_->GetPhysicalChanAttributeUInt32(physical_channel, attribute, &value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
@@ -9949,6 +10154,7 @@ namespace nidaqmx_grpc {
       while (true) {
         auto status = library_->GetPhysicalChanAttributeUInt32Array(physical_channel, attribute, nullptr, 0);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForTaskHandle(status, 0);
         }
         uInt32 size = status;
@@ -9961,6 +10167,7 @@ namespace nidaqmx_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForTaskHandle(status, 0);
         }
         response->set_status(status);
@@ -10005,6 +10212,7 @@ namespace nidaqmx_grpc {
       bool32 value {};
       auto status = library_->GetReadAttributeBool(task, attribute, &value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -10049,6 +10257,7 @@ namespace nidaqmx_grpc {
       float64 value {};
       auto status = library_->GetReadAttributeDouble(task, attribute, &value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -10093,6 +10302,7 @@ namespace nidaqmx_grpc {
       int32 value {};
       auto status = library_->GetReadAttributeInt32(task, attribute, &value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -10143,6 +10353,7 @@ namespace nidaqmx_grpc {
       while (true) {
         auto status = library_->GetReadAttributeString(task, attribute, nullptr, 0);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForTaskHandle(status, task);
         }
         uInt32 size = status;
@@ -10157,6 +10368,7 @@ namespace nidaqmx_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForTaskHandle(status, task);
         }
         response->set_status(status);
@@ -10203,6 +10415,7 @@ namespace nidaqmx_grpc {
       uInt32 value {};
       auto status = library_->GetReadAttributeUInt32(task, attribute, &value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -10247,6 +10460,7 @@ namespace nidaqmx_grpc {
       uInt64 value {};
       auto status = library_->GetReadAttributeUInt64(task, attribute, &value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -10291,6 +10505,7 @@ namespace nidaqmx_grpc {
       bool32 value {};
       auto status = library_->GetRealTimeAttributeBool(task, attribute, &value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -10335,6 +10550,7 @@ namespace nidaqmx_grpc {
       int32 value {};
       auto status = library_->GetRealTimeAttributeInt32(task, attribute, &value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -10385,6 +10601,7 @@ namespace nidaqmx_grpc {
       uInt32 value {};
       auto status = library_->GetRealTimeAttributeUInt32(task, attribute, &value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -10409,6 +10626,7 @@ namespace nidaqmx_grpc {
       CVIAbsoluteTime data {};
       auto status = library_->GetRefTrigTimestampVal(task, &data);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -10452,6 +10670,7 @@ namespace nidaqmx_grpc {
       float64 value {};
       auto status = library_->GetScaleAttributeDouble(scale_name, attribute, &value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
@@ -10495,6 +10714,7 @@ namespace nidaqmx_grpc {
       while (true) {
         auto status = library_->GetScaleAttributeDoubleArray(scale_name, attribute, nullptr, 0);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForTaskHandle(status, 0);
         }
         uInt32 size = status;
@@ -10507,6 +10727,7 @@ namespace nidaqmx_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForTaskHandle(status, 0);
         }
         response->set_status(status);
@@ -10550,6 +10771,7 @@ namespace nidaqmx_grpc {
       int32 value {};
       auto status = library_->GetScaleAttributeInt32(scale_name, attribute, &value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
@@ -10599,6 +10821,7 @@ namespace nidaqmx_grpc {
       while (true) {
         auto status = library_->GetScaleAttributeString(scale_name, attribute, nullptr, 0);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForTaskHandle(status, 0);
         }
         uInt32 size = status;
@@ -10613,6 +10836,7 @@ namespace nidaqmx_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForTaskHandle(status, 0);
         }
         response->set_status(status);
@@ -10642,6 +10866,7 @@ namespace nidaqmx_grpc {
       uInt32 minute {};
       auto status = library_->GetSelfCalLastDateAndTime(device_name, &year, &month, &day, &hour, &minute);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
@@ -10670,6 +10895,7 @@ namespace nidaqmx_grpc {
       CVIAbsoluteTime data {};
       auto status = library_->GetStartTrigTimestampVal(task, &data);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -10694,6 +10920,7 @@ namespace nidaqmx_grpc {
       CVIAbsoluteTime data {};
       auto status = library_->GetStartTrigTrigWhen(task, &data);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -10718,6 +10945,7 @@ namespace nidaqmx_grpc {
       CVIAbsoluteTime data {};
       auto status = library_->GetSyncPulseTimeWhen(task, &data);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -10760,6 +10988,7 @@ namespace nidaqmx_grpc {
       while (true) {
         auto status = library_->GetSystemInfoAttributeString(attribute, nullptr, 0);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForTaskHandle(status, 0);
         }
         uInt32 size = status;
@@ -10774,6 +11003,7 @@ namespace nidaqmx_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForTaskHandle(status, 0);
         }
         response->set_status(status);
@@ -10818,6 +11048,7 @@ namespace nidaqmx_grpc {
       uInt32 value {};
       auto status = library_->GetSystemInfoAttributeUInt32(attribute, &value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
@@ -10862,6 +11093,7 @@ namespace nidaqmx_grpc {
       bool32 value {};
       auto status = library_->GetTaskAttributeBool(task, attribute, &value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -10906,6 +11138,7 @@ namespace nidaqmx_grpc {
       while (true) {
         auto status = library_->GetTaskAttributeString(task, attribute, nullptr, 0);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForTaskHandle(status, task);
         }
         uInt32 size = status;
@@ -10920,6 +11153,7 @@ namespace nidaqmx_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForTaskHandle(status, task);
         }
         response->set_status(status);
@@ -10966,6 +11200,7 @@ namespace nidaqmx_grpc {
       uInt32 value {};
       auto status = library_->GetTaskAttributeUInt32(task, attribute, &value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -11010,6 +11245,7 @@ namespace nidaqmx_grpc {
       bool32 value {};
       auto status = library_->GetTimingAttributeBool(task, attribute, &value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -11054,6 +11290,7 @@ namespace nidaqmx_grpc {
       float64 value {};
       auto status = library_->GetTimingAttributeDouble(task, attribute, &value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -11099,6 +11336,7 @@ namespace nidaqmx_grpc {
       bool32 value {};
       auto status = library_->GetTimingAttributeExBool(task, device_names, attribute, &value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -11144,6 +11382,7 @@ namespace nidaqmx_grpc {
       float64 value {};
       auto status = library_->GetTimingAttributeExDouble(task, device_names, attribute, &value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -11189,6 +11428,7 @@ namespace nidaqmx_grpc {
       int32 value {};
       auto status = library_->GetTimingAttributeExInt32(task, device_names, attribute, &value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -11240,6 +11480,7 @@ namespace nidaqmx_grpc {
       while (true) {
         auto status = library_->GetTimingAttributeExString(task, device_names, attribute, nullptr, 0);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForTaskHandle(status, task);
         }
         uInt32 size = status;
@@ -11254,6 +11495,7 @@ namespace nidaqmx_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForTaskHandle(status, task);
         }
         response->set_status(status);
@@ -11301,6 +11543,7 @@ namespace nidaqmx_grpc {
       CVIAbsoluteTime value {};
       auto status = library_->GetTimingAttributeExTimestamp(task, device_names, attribute, &value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -11346,6 +11589,7 @@ namespace nidaqmx_grpc {
       uInt32 value {};
       auto status = library_->GetTimingAttributeExUInt32(task, device_names, attribute, &value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -11391,6 +11635,7 @@ namespace nidaqmx_grpc {
       uInt64 value {};
       auto status = library_->GetTimingAttributeExUInt64(task, device_names, attribute, &value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -11435,6 +11680,7 @@ namespace nidaqmx_grpc {
       int32 value {};
       auto status = library_->GetTimingAttributeInt32(task, attribute, &value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -11485,6 +11731,7 @@ namespace nidaqmx_grpc {
       while (true) {
         auto status = library_->GetTimingAttributeString(task, attribute, nullptr, 0);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForTaskHandle(status, task);
         }
         uInt32 size = status;
@@ -11499,6 +11746,7 @@ namespace nidaqmx_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForTaskHandle(status, task);
         }
         response->set_status(status);
@@ -11545,6 +11793,7 @@ namespace nidaqmx_grpc {
       CVIAbsoluteTime value {};
       auto status = library_->GetTimingAttributeTimestamp(task, attribute, &value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -11589,6 +11838,7 @@ namespace nidaqmx_grpc {
       uInt32 value {};
       auto status = library_->GetTimingAttributeUInt32(task, attribute, &value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -11633,6 +11883,7 @@ namespace nidaqmx_grpc {
       uInt64 value {};
       auto status = library_->GetTimingAttributeUInt64(task, attribute, &value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -11677,6 +11928,7 @@ namespace nidaqmx_grpc {
       bool32 value {};
       auto status = library_->GetTrigAttributeBool(task, attribute, &value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -11721,6 +11973,7 @@ namespace nidaqmx_grpc {
       float64 value {};
       auto status = library_->GetTrigAttributeDouble(task, attribute, &value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -11765,6 +12018,7 @@ namespace nidaqmx_grpc {
       while (true) {
         auto status = library_->GetTrigAttributeDoubleArray(task, attribute, nullptr, 0);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForTaskHandle(status, task);
         }
         uInt32 size = status;
@@ -11777,6 +12031,7 @@ namespace nidaqmx_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForTaskHandle(status, task);
         }
         response->set_status(status);
@@ -11821,6 +12076,7 @@ namespace nidaqmx_grpc {
       int32 value {};
       auto status = library_->GetTrigAttributeInt32(task, attribute, &value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -11871,6 +12127,7 @@ namespace nidaqmx_grpc {
       while (true) {
         auto status = library_->GetTrigAttributeInt32Array(task, attribute, nullptr, 0);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForTaskHandle(status, task);
         }
         uInt32 size = status;
@@ -11883,6 +12140,7 @@ namespace nidaqmx_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForTaskHandle(status, task);
         }
         response->set_status(status);
@@ -11941,6 +12199,7 @@ namespace nidaqmx_grpc {
       while (true) {
         auto status = library_->GetTrigAttributeString(task, attribute, nullptr, 0);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForTaskHandle(status, task);
         }
         uInt32 size = status;
@@ -11955,6 +12214,7 @@ namespace nidaqmx_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForTaskHandle(status, task);
         }
         response->set_status(status);
@@ -12001,6 +12261,7 @@ namespace nidaqmx_grpc {
       CVIAbsoluteTime value {};
       auto status = library_->GetTrigAttributeTimestamp(task, attribute, &value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -12045,6 +12306,7 @@ namespace nidaqmx_grpc {
       uInt32 value {};
       auto status = library_->GetTrigAttributeUInt32(task, attribute, &value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -12090,6 +12352,7 @@ namespace nidaqmx_grpc {
       bool32 value {};
       auto status = library_->GetWatchdogAttributeBool(task, lines, attribute, &value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -12135,6 +12398,7 @@ namespace nidaqmx_grpc {
       float64 value {};
       auto status = library_->GetWatchdogAttributeDouble(task, lines, attribute, &value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -12180,6 +12444,7 @@ namespace nidaqmx_grpc {
       int32 value {};
       auto status = library_->GetWatchdogAttributeInt32(task, lines, attribute, &value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -12231,6 +12496,7 @@ namespace nidaqmx_grpc {
       while (true) {
         auto status = library_->GetWatchdogAttributeString(task, lines, attribute, nullptr, 0);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForTaskHandle(status, task);
         }
         uInt32 size = status;
@@ -12245,6 +12511,7 @@ namespace nidaqmx_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForTaskHandle(status, task);
         }
         response->set_status(status);
@@ -12291,6 +12558,7 @@ namespace nidaqmx_grpc {
       bool32 value {};
       auto status = library_->GetWriteAttributeBool(task, attribute, &value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -12335,6 +12603,7 @@ namespace nidaqmx_grpc {
       float64 value {};
       auto status = library_->GetWriteAttributeDouble(task, attribute, &value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -12379,6 +12648,7 @@ namespace nidaqmx_grpc {
       int32 value {};
       auto status = library_->GetWriteAttributeInt32(task, attribute, &value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -12429,6 +12699,7 @@ namespace nidaqmx_grpc {
       while (true) {
         auto status = library_->GetWriteAttributeString(task, attribute, nullptr, 0);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForTaskHandle(status, task);
         }
         uInt32 size = status;
@@ -12443,6 +12714,7 @@ namespace nidaqmx_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForTaskHandle(status, task);
         }
         response->set_status(status);
@@ -12489,6 +12761,7 @@ namespace nidaqmx_grpc {
       uInt32 value {};
       auto status = library_->GetWriteAttributeUInt32(task, attribute, &value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -12533,6 +12806,7 @@ namespace nidaqmx_grpc {
       uInt64 value {};
       auto status = library_->GetWriteAttributeUInt64(task, attribute, &value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -12557,6 +12831,7 @@ namespace nidaqmx_grpc {
       bool32 is_task_done {};
       auto status = library_->IsTaskDone(task, &is_task_done);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -12588,6 +12863,7 @@ namespace nidaqmx_grpc {
       auto cleanup_lambda = [&] (TaskHandle id) { library_->ClearTask(id); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
@@ -12637,6 +12913,7 @@ namespace nidaqmx_grpc {
       int32 samps_per_chan_read {};
       auto status = library_->ReadAnalogF64(task, num_samps_per_chan, timeout, fill_mode, read_array, array_size_in_samps, &samps_per_chan_read, reserved);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -12663,6 +12940,7 @@ namespace nidaqmx_grpc {
       float64 value {};
       auto status = library_->ReadAnalogScalarF64(task, timeout, &value, reserved);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -12708,6 +12986,7 @@ namespace nidaqmx_grpc {
       int32 samps_per_chan_read {};
       auto status = library_->ReadBinaryI16(task, num_samps_per_chan, timeout, fill_mode, read_array.data(), array_size_in_samps, &samps_per_chan_read, reserved);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -12763,6 +13042,7 @@ namespace nidaqmx_grpc {
       int32 samps_per_chan_read {};
       auto status = library_->ReadBinaryI32(task, num_samps_per_chan, timeout, fill_mode, read_array, array_size_in_samps, &samps_per_chan_read, reserved);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -12808,6 +13088,7 @@ namespace nidaqmx_grpc {
       int32 samps_per_chan_read {};
       auto status = library_->ReadBinaryU16(task, num_samps_per_chan, timeout, fill_mode, read_array.data(), array_size_in_samps, &samps_per_chan_read, reserved);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -12863,6 +13144,7 @@ namespace nidaqmx_grpc {
       int32 samps_per_chan_read {};
       auto status = library_->ReadBinaryU32(task, num_samps_per_chan, timeout, fill_mode, read_array, array_size_in_samps, &samps_per_chan_read, reserved);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -12893,6 +13175,7 @@ namespace nidaqmx_grpc {
       int32 samps_per_chan_read {};
       auto status = library_->ReadCounterF64(task, num_samps_per_chan, timeout, read_array, array_size_in_samps, &samps_per_chan_read, reserved);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -12939,6 +13222,7 @@ namespace nidaqmx_grpc {
       int32 samps_per_chan_read {};
       auto status = library_->ReadCounterF64Ex(task, num_samps_per_chan, timeout, fill_mode, read_array, array_size_in_samps, &samps_per_chan_read, reserved);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -12965,6 +13249,7 @@ namespace nidaqmx_grpc {
       float64 value {};
       auto status = library_->ReadCounterScalarF64(task, timeout, &value, reserved);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -12991,6 +13276,7 @@ namespace nidaqmx_grpc {
       uInt32 value {};
       auto status = library_->ReadCounterScalarU32(task, timeout, &value, reserved);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -13021,6 +13307,7 @@ namespace nidaqmx_grpc {
       int32 samps_per_chan_read {};
       auto status = library_->ReadCounterU32(task, num_samps_per_chan, timeout, read_array, array_size_in_samps, &samps_per_chan_read, reserved);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -13067,6 +13354,7 @@ namespace nidaqmx_grpc {
       int32 samps_per_chan_read {};
       auto status = library_->ReadCounterU32Ex(task, num_samps_per_chan, timeout, fill_mode, read_array, array_size_in_samps, &samps_per_chan_read, reserved);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -13115,6 +13403,7 @@ namespace nidaqmx_grpc {
       int32 samps_per_chan_read {};
       auto status = library_->ReadCtrFreq(task, num_samps_per_chan, timeout, interleaved, read_array_frequency, read_array_duty_cycle, array_size_in_samps, &samps_per_chan_read, reserved);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -13142,6 +13431,7 @@ namespace nidaqmx_grpc {
       float64 duty_cycle {};
       auto status = library_->ReadCtrFreqScalar(task, timeout, &frequency, &duty_cycle, reserved);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -13191,6 +13481,7 @@ namespace nidaqmx_grpc {
       int32 samps_per_chan_read {};
       auto status = library_->ReadCtrTicks(task, num_samps_per_chan, timeout, interleaved, read_array_high_ticks, read_array_low_ticks, array_size_in_samps, &samps_per_chan_read, reserved);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -13218,6 +13509,7 @@ namespace nidaqmx_grpc {
       uInt32 low_ticks {};
       auto status = library_->ReadCtrTicksScalar(task, timeout, &high_ticks, &low_ticks, reserved);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -13267,6 +13559,7 @@ namespace nidaqmx_grpc {
       int32 samps_per_chan_read {};
       auto status = library_->ReadCtrTime(task, num_samps_per_chan, timeout, interleaved, read_array_high_time, read_array_low_time, array_size_in_samps, &samps_per_chan_read, reserved);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -13294,6 +13587,7 @@ namespace nidaqmx_grpc {
       float64 low_time {};
       auto status = library_->ReadCtrTimeScalar(task, timeout, &high_time, &low_time, reserved);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -13341,6 +13635,7 @@ namespace nidaqmx_grpc {
       int32 num_bytes_per_samp {};
       auto status = library_->ReadDigitalLines(task, num_samps_per_chan, timeout, fill_mode, (uInt8*)read_array.data(), array_size_in_bytes, &samps_per_chan_read, &num_bytes_per_samp, reserved);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -13369,6 +13664,7 @@ namespace nidaqmx_grpc {
       uInt32 value {};
       auto status = library_->ReadDigitalScalarU32(task, timeout, &value, reserved);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -13414,6 +13710,7 @@ namespace nidaqmx_grpc {
       int32 samps_per_chan_read {};
       auto status = library_->ReadDigitalU16(task, num_samps_per_chan, timeout, fill_mode, read_array.data(), array_size_in_samps, &samps_per_chan_read, reserved);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -13469,6 +13766,7 @@ namespace nidaqmx_grpc {
       int32 samps_per_chan_read {};
       auto status = library_->ReadDigitalU32(task, num_samps_per_chan, timeout, fill_mode, read_array, array_size_in_samps, &samps_per_chan_read, reserved);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -13514,6 +13812,7 @@ namespace nidaqmx_grpc {
       int32 samps_per_chan_read {};
       auto status = library_->ReadDigitalU8(task, num_samps_per_chan, timeout, fill_mode, (uInt8*)read_array.data(), array_size_in_samps, &samps_per_chan_read, reserved);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -13545,6 +13844,7 @@ namespace nidaqmx_grpc {
       int32 num_bytes_per_samp {};
       auto status = library_->ReadRaw(task, num_samps_per_chan, timeout, (uInt8*)read_array.data(), array_size_in_bytes, &samps_read, &num_bytes_per_samp, reserved);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -13772,6 +14072,7 @@ namespace nidaqmx_grpc {
       auto port_list = request->port_list().c_str();
       auto status = library_->RemoveCDAQSyncConnection(port_list);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
@@ -13794,6 +14095,7 @@ namespace nidaqmx_grpc {
       bool32 override_reservation = request->override_reservation();
       auto status = library_->ReserveNetworkDevice(device_name, override_reservation);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
@@ -13835,6 +14137,7 @@ namespace nidaqmx_grpc {
 
       auto status = library_->ResetBufferAttribute(task, attribute);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -13877,6 +14180,7 @@ namespace nidaqmx_grpc {
 
       auto status = library_->ResetChanAttribute(task, channel, attribute);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -13898,6 +14202,7 @@ namespace nidaqmx_grpc {
       auto device_name = request->device_name().c_str();
       auto status = library_->ResetDevice(device_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
@@ -13939,6 +14244,7 @@ namespace nidaqmx_grpc {
 
       auto status = library_->ResetExportedSignalAttribute(task, attribute);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -13980,6 +14286,7 @@ namespace nidaqmx_grpc {
 
       auto status = library_->ResetReadAttribute(task, attribute);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -14021,6 +14328,7 @@ namespace nidaqmx_grpc {
 
       auto status = library_->ResetRealTimeAttribute(task, attribute);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -14062,6 +14370,7 @@ namespace nidaqmx_grpc {
 
       auto status = library_->ResetTimingAttribute(task, attribute);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -14104,6 +14413,7 @@ namespace nidaqmx_grpc {
 
       auto status = library_->ResetTimingAttributeEx(task, device_names, attribute);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -14145,6 +14455,7 @@ namespace nidaqmx_grpc {
 
       auto status = library_->ResetTrigAttribute(task, attribute);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -14187,6 +14498,7 @@ namespace nidaqmx_grpc {
 
       auto status = library_->ResetWatchdogAttribute(task, lines, attribute);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -14228,6 +14540,7 @@ namespace nidaqmx_grpc {
 
       auto status = library_->ResetWriteAttribute(task, attribute);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -14269,6 +14582,7 @@ namespace nidaqmx_grpc {
 
       auto status = library_->SaveGlobalChan(task, channel_name, save_as, author, options);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -14308,6 +14622,7 @@ namespace nidaqmx_grpc {
 
       auto status = library_->SaveScale(scale_name, save_as, author, options);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
@@ -14348,6 +14663,7 @@ namespace nidaqmx_grpc {
 
       auto status = library_->SaveTask(task, save_as, author, options);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -14369,6 +14685,7 @@ namespace nidaqmx_grpc {
       auto device_name = request->device_name().c_str();
       auto status = library_->SelfCal(device_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
@@ -14390,6 +14707,7 @@ namespace nidaqmx_grpc {
       auto device_name = request->device_name().c_str();
       auto status = library_->SelfTestDevice(device_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
@@ -14418,6 +14736,7 @@ namespace nidaqmx_grpc {
       uInt32 minute = request->minute();
       auto status = library_->SetAIChanCalCalDate(task, channel_name, year, month, day, hour, minute);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -14446,6 +14765,7 @@ namespace nidaqmx_grpc {
       uInt32 minute = request->minute();
       auto status = library_->SetAIChanCalExpDate(task, channel_name, year, month, day, hour, minute);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -14493,6 +14813,7 @@ namespace nidaqmx_grpc {
 
       auto status = ((NiDAQmxLibrary*)library_)->SetAnalogPowerUpStates(device_name, get_channelNames_if(power_up_states, 0), get_state_if(power_up_states, 0), get_channelType_if(power_up_states, 0), get_channelNames_if(power_up_states, 1), get_state_if(power_up_states, 1), get_channelType_if(power_up_states, 1), get_channelNames_if(power_up_states, 2), get_state_if(power_up_states, 2), get_channelType_if(power_up_states, 2), get_channelNames_if(power_up_states, 3), get_state_if(power_up_states, 3), get_channelType_if(power_up_states, 3), get_channelNames_if(power_up_states, 4), get_state_if(power_up_states, 4), get_channelType_if(power_up_states, 4), get_channelNames_if(power_up_states, 5), get_state_if(power_up_states, 5), get_channelType_if(power_up_states, 5), get_channelNames_if(power_up_states, 6), get_state_if(power_up_states, 6), get_channelType_if(power_up_states, 6), get_channelNames_if(power_up_states, 7), get_state_if(power_up_states, 7), get_channelType_if(power_up_states, 7), get_channelNames_if(power_up_states, 8), get_state_if(power_up_states, 8), get_channelType_if(power_up_states, 8), get_channelNames_if(power_up_states, 9), get_state_if(power_up_states, 9), get_channelType_if(power_up_states, 9), get_channelNames_if(power_up_states, 10), get_state_if(power_up_states, 10), get_channelType_if(power_up_states, 10), get_channelNames_if(power_up_states, 11), get_state_if(power_up_states, 11), get_channelType_if(power_up_states, 11), get_channelNames_if(power_up_states, 12), get_state_if(power_up_states, 12), get_channelType_if(power_up_states, 12), get_channelNames_if(power_up_states, 13), get_state_if(power_up_states, 13), get_channelType_if(power_up_states, 13), get_channelNames_if(power_up_states, 14), get_state_if(power_up_states, 14), get_channelType_if(power_up_states, 14), get_channelNames_if(power_up_states, 15), get_state_if(power_up_states, 15), get_channelType_if(power_up_states, 15), get_channelNames_if(power_up_states, 16), get_state_if(power_up_states, 16), get_channelType_if(power_up_states, 16), get_channelNames_if(power_up_states, 17), get_state_if(power_up_states, 17), get_channelType_if(power_up_states, 17), get_channelNames_if(power_up_states, 18), get_state_if(power_up_states, 18), get_channelType_if(power_up_states, 18), get_channelNames_if(power_up_states, 19), get_state_if(power_up_states, 19), get_channelType_if(power_up_states, 19), get_channelNames_if(power_up_states, 20), get_state_if(power_up_states, 20), get_channelType_if(power_up_states, 20), get_channelNames_if(power_up_states, 21), get_state_if(power_up_states, 21), get_channelType_if(power_up_states, 21), get_channelNames_if(power_up_states, 22), get_state_if(power_up_states, 22), get_channelType_if(power_up_states, 22), get_channelNames_if(power_up_states, 23), get_state_if(power_up_states, 23), get_channelType_if(power_up_states, 23), get_channelNames_if(power_up_states, 24), get_state_if(power_up_states, 24), get_channelType_if(power_up_states, 24), get_channelNames_if(power_up_states, 25), get_state_if(power_up_states, 25), get_channelType_if(power_up_states, 25), get_channelNames_if(power_up_states, 26), get_state_if(power_up_states, 26), get_channelType_if(power_up_states, 26), get_channelNames_if(power_up_states, 27), get_state_if(power_up_states, 27), get_channelType_if(power_up_states, 27), get_channelNames_if(power_up_states, 28), get_state_if(power_up_states, 28), get_channelType_if(power_up_states, 28), get_channelNames_if(power_up_states, 29), get_state_if(power_up_states, 29), get_channelType_if(power_up_states, 29), get_channelNames_if(power_up_states, 30), get_state_if(power_up_states, 30), get_channelType_if(power_up_states, 30), get_channelNames_if(power_up_states, 31), get_state_if(power_up_states, 31), get_channelType_if(power_up_states, 31), get_channelNames_if(power_up_states, 32), get_state_if(power_up_states, 32), get_channelType_if(power_up_states, 32), get_channelNames_if(power_up_states, 33), get_state_if(power_up_states, 33), get_channelType_if(power_up_states, 33), get_channelNames_if(power_up_states, 34), get_state_if(power_up_states, 34), get_channelType_if(power_up_states, 34), get_channelNames_if(power_up_states, 35), get_state_if(power_up_states, 35), get_channelType_if(power_up_states, 35), get_channelNames_if(power_up_states, 36), get_state_if(power_up_states, 36), get_channelType_if(power_up_states, 36), get_channelNames_if(power_up_states, 37), get_state_if(power_up_states, 37), get_channelType_if(power_up_states, 37), get_channelNames_if(power_up_states, 38), get_state_if(power_up_states, 38), get_channelType_if(power_up_states, 38), get_channelNames_if(power_up_states, 39), get_state_if(power_up_states, 39), get_channelType_if(power_up_states, 39), get_channelNames_if(power_up_states, 40), get_state_if(power_up_states, 40), get_channelType_if(power_up_states, 40), get_channelNames_if(power_up_states, 41), get_state_if(power_up_states, 41), get_channelType_if(power_up_states, 41), get_channelNames_if(power_up_states, 42), get_state_if(power_up_states, 42), get_channelType_if(power_up_states, 42), get_channelNames_if(power_up_states, 43), get_state_if(power_up_states, 43), get_channelType_if(power_up_states, 43), get_channelNames_if(power_up_states, 44), get_state_if(power_up_states, 44), get_channelType_if(power_up_states, 44), get_channelNames_if(power_up_states, 45), get_state_if(power_up_states, 45), get_channelType_if(power_up_states, 45), get_channelNames_if(power_up_states, 46), get_state_if(power_up_states, 46), get_channelType_if(power_up_states, 46), get_channelNames_if(power_up_states, 47), get_state_if(power_up_states, 47), get_channelType_if(power_up_states, 47), get_channelNames_if(power_up_states, 48), get_state_if(power_up_states, 48), get_channelType_if(power_up_states, 48), get_channelNames_if(power_up_states, 49), get_state_if(power_up_states, 49), get_channelType_if(power_up_states, 49), get_channelNames_if(power_up_states, 50), get_state_if(power_up_states, 50), get_channelType_if(power_up_states, 50), get_channelNames_if(power_up_states, 51), get_state_if(power_up_states, 51), get_channelType_if(power_up_states, 51), get_channelNames_if(power_up_states, 52), get_state_if(power_up_states, 52), get_channelType_if(power_up_states, 52), get_channelNames_if(power_up_states, 53), get_state_if(power_up_states, 53), get_channelType_if(power_up_states, 53), get_channelNames_if(power_up_states, 54), get_state_if(power_up_states, 54), get_channelType_if(power_up_states, 54), get_channelNames_if(power_up_states, 55), get_state_if(power_up_states, 55), get_channelType_if(power_up_states, 55), get_channelNames_if(power_up_states, 56), get_state_if(power_up_states, 56), get_channelType_if(power_up_states, 56), get_channelNames_if(power_up_states, 57), get_state_if(power_up_states, 57), get_channelType_if(power_up_states, 57), get_channelNames_if(power_up_states, 58), get_state_if(power_up_states, 58), get_channelType_if(power_up_states, 58), get_channelNames_if(power_up_states, 59), get_state_if(power_up_states, 59), get_channelType_if(power_up_states, 59), get_channelNames_if(power_up_states, 60), get_state_if(power_up_states, 60), get_channelType_if(power_up_states, 60), get_channelNames_if(power_up_states, 61), get_state_if(power_up_states, 61), get_channelType_if(power_up_states, 61), get_channelNames_if(power_up_states, 62), get_state_if(power_up_states, 62), get_channelType_if(power_up_states, 62), get_channelNames_if(power_up_states, 63), get_state_if(power_up_states, 63), get_channelType_if(power_up_states, 63), get_channelNames_if(power_up_states, 64), get_state_if(power_up_states, 64), get_channelType_if(power_up_states, 64), get_channelNames_if(power_up_states, 65), get_state_if(power_up_states, 65), get_channelType_if(power_up_states, 65), get_channelNames_if(power_up_states, 66), get_state_if(power_up_states, 66), get_channelType_if(power_up_states, 66), get_channelNames_if(power_up_states, 67), get_state_if(power_up_states, 67), get_channelType_if(power_up_states, 67), get_channelNames_if(power_up_states, 68), get_state_if(power_up_states, 68), get_channelType_if(power_up_states, 68), get_channelNames_if(power_up_states, 69), get_state_if(power_up_states, 69), get_channelType_if(power_up_states, 69), get_channelNames_if(power_up_states, 70), get_state_if(power_up_states, 70), get_channelType_if(power_up_states, 70), get_channelNames_if(power_up_states, 71), get_state_if(power_up_states, 71), get_channelType_if(power_up_states, 71), get_channelNames_if(power_up_states, 72), get_state_if(power_up_states, 72), get_channelType_if(power_up_states, 72), get_channelNames_if(power_up_states, 73), get_state_if(power_up_states, 73), get_channelType_if(power_up_states, 73), get_channelNames_if(power_up_states, 74), get_state_if(power_up_states, 74), get_channelType_if(power_up_states, 74), get_channelNames_if(power_up_states, 75), get_state_if(power_up_states, 75), get_channelType_if(power_up_states, 75), get_channelNames_if(power_up_states, 76), get_state_if(power_up_states, 76), get_channelType_if(power_up_states, 76), get_channelNames_if(power_up_states, 77), get_state_if(power_up_states, 77), get_channelType_if(power_up_states, 77), get_channelNames_if(power_up_states, 78), get_state_if(power_up_states, 78), get_channelType_if(power_up_states, 78), get_channelNames_if(power_up_states, 79), get_state_if(power_up_states, 79), get_channelType_if(power_up_states, 79), get_channelNames_if(power_up_states, 80), get_state_if(power_up_states, 80), get_channelType_if(power_up_states, 80), get_channelNames_if(power_up_states, 81), get_state_if(power_up_states, 81), get_channelType_if(power_up_states, 81), get_channelNames_if(power_up_states, 82), get_state_if(power_up_states, 82), get_channelType_if(power_up_states, 82), get_channelNames_if(power_up_states, 83), get_state_if(power_up_states, 83), get_channelType_if(power_up_states, 83), get_channelNames_if(power_up_states, 84), get_state_if(power_up_states, 84), get_channelType_if(power_up_states, 84), get_channelNames_if(power_up_states, 85), get_state_if(power_up_states, 85), get_channelType_if(power_up_states, 85), get_channelNames_if(power_up_states, 86), get_state_if(power_up_states, 86), get_channelType_if(power_up_states, 86), get_channelNames_if(power_up_states, 87), get_state_if(power_up_states, 87), get_channelType_if(power_up_states, 87), get_channelNames_if(power_up_states, 88), get_state_if(power_up_states, 88), get_channelType_if(power_up_states, 88), get_channelNames_if(power_up_states, 89), get_state_if(power_up_states, 89), get_channelType_if(power_up_states, 89), get_channelNames_if(power_up_states, 90), get_state_if(power_up_states, 90), get_channelType_if(power_up_states, 90), get_channelNames_if(power_up_states, 91), get_state_if(power_up_states, 91), get_channelType_if(power_up_states, 91), get_channelNames_if(power_up_states, 92), get_state_if(power_up_states, 92), get_channelType_if(power_up_states, 92), get_channelNames_if(power_up_states, 93), get_state_if(power_up_states, 93), get_channelType_if(power_up_states, 93), get_channelNames_if(power_up_states, 94), get_state_if(power_up_states, 94), get_channelType_if(power_up_states, 94), get_channelNames_if(power_up_states, 95), get_state_if(power_up_states, 95), get_channelType_if(power_up_states, 95), get_channelNames_if(power_up_states, 96), get_state_if(power_up_states, 96), get_channelType_if(power_up_states, 96));
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
@@ -14536,6 +14857,7 @@ namespace nidaqmx_grpc {
 
       auto status = library_->SetAnalogPowerUpStatesWithOutputType(channel_names, state_array, channel_type_array, array_size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
@@ -14559,6 +14881,7 @@ namespace nidaqmx_grpc {
       auto data = convert_from_grpc<CVIAbsoluteTime>(request->data());
       auto status = library_->SetArmStartTrigTrigWhen(task, data);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -14601,6 +14924,7 @@ namespace nidaqmx_grpc {
       uInt32 value = request->value();
       auto status = library_->SetBufferAttributeUInt32(task, attribute, value);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -14643,6 +14967,7 @@ namespace nidaqmx_grpc {
       auto size = 0U;
       auto status = library_->SetCalInfoAttributeBool(device_name, attribute, value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
@@ -14685,6 +15010,7 @@ namespace nidaqmx_grpc {
       auto size = 0U;
       auto status = library_->SetCalInfoAttributeDouble(device_name, attribute, value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
@@ -14727,6 +15053,7 @@ namespace nidaqmx_grpc {
       auto size = 0U;
       auto status = library_->SetCalInfoAttributeString(device_name, attribute, value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
@@ -14769,6 +15096,7 @@ namespace nidaqmx_grpc {
       auto size = 0U;
       auto status = library_->SetCalInfoAttributeUInt32(device_name, attribute, value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
@@ -14813,6 +15141,7 @@ namespace nidaqmx_grpc {
       auto size = 0U;
       auto status = library_->SetChanAttributeBool(task, channel, attribute, value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -14857,6 +15186,7 @@ namespace nidaqmx_grpc {
       auto size = 0U;
       auto status = library_->SetChanAttributeDouble(task, channel, attribute, value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -14901,6 +15231,7 @@ namespace nidaqmx_grpc {
       uInt32 size = static_cast<uInt32>(request->value().size());
       auto status = library_->SetChanAttributeDoubleArray(task, channel, attribute, value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -14960,6 +15291,7 @@ namespace nidaqmx_grpc {
       auto size = 0U;
       auto status = library_->SetChanAttributeInt32(task, channel, attribute, value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -15004,6 +15336,7 @@ namespace nidaqmx_grpc {
       auto size = 0U;
       auto status = library_->SetChanAttributeString(task, channel, attribute, value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -15048,6 +15381,7 @@ namespace nidaqmx_grpc {
       auto size = 0U;
       auto status = library_->SetChanAttributeUInt32(task, channel, attribute, value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -15085,6 +15419,7 @@ namespace nidaqmx_grpc {
 
       auto status = library_->SetDigitalLogicFamilyPowerUpState(device_name, logic_family);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
@@ -15126,6 +15461,7 @@ namespace nidaqmx_grpc {
 
       auto status = ((NiDAQmxLibrary*)library_)->SetDigitalPowerUpStates(device_name, get_channelNames_if(power_up_states, 0), get_state_if(power_up_states, 0), get_channelNames_if(power_up_states, 1), get_state_if(power_up_states, 1), get_channelNames_if(power_up_states, 2), get_state_if(power_up_states, 2), get_channelNames_if(power_up_states, 3), get_state_if(power_up_states, 3), get_channelNames_if(power_up_states, 4), get_state_if(power_up_states, 4), get_channelNames_if(power_up_states, 5), get_state_if(power_up_states, 5), get_channelNames_if(power_up_states, 6), get_state_if(power_up_states, 6), get_channelNames_if(power_up_states, 7), get_state_if(power_up_states, 7), get_channelNames_if(power_up_states, 8), get_state_if(power_up_states, 8), get_channelNames_if(power_up_states, 9), get_state_if(power_up_states, 9), get_channelNames_if(power_up_states, 10), get_state_if(power_up_states, 10), get_channelNames_if(power_up_states, 11), get_state_if(power_up_states, 11), get_channelNames_if(power_up_states, 12), get_state_if(power_up_states, 12), get_channelNames_if(power_up_states, 13), get_state_if(power_up_states, 13), get_channelNames_if(power_up_states, 14), get_state_if(power_up_states, 14), get_channelNames_if(power_up_states, 15), get_state_if(power_up_states, 15), get_channelNames_if(power_up_states, 16), get_state_if(power_up_states, 16), get_channelNames_if(power_up_states, 17), get_state_if(power_up_states, 17), get_channelNames_if(power_up_states, 18), get_state_if(power_up_states, 18), get_channelNames_if(power_up_states, 19), get_state_if(power_up_states, 19), get_channelNames_if(power_up_states, 20), get_state_if(power_up_states, 20), get_channelNames_if(power_up_states, 21), get_state_if(power_up_states, 21), get_channelNames_if(power_up_states, 22), get_state_if(power_up_states, 22), get_channelNames_if(power_up_states, 23), get_state_if(power_up_states, 23), get_channelNames_if(power_up_states, 24), get_state_if(power_up_states, 24), get_channelNames_if(power_up_states, 25), get_state_if(power_up_states, 25), get_channelNames_if(power_up_states, 26), get_state_if(power_up_states, 26), get_channelNames_if(power_up_states, 27), get_state_if(power_up_states, 27), get_channelNames_if(power_up_states, 28), get_state_if(power_up_states, 28), get_channelNames_if(power_up_states, 29), get_state_if(power_up_states, 29), get_channelNames_if(power_up_states, 30), get_state_if(power_up_states, 30), get_channelNames_if(power_up_states, 31), get_state_if(power_up_states, 31), get_channelNames_if(power_up_states, 32), get_state_if(power_up_states, 32), get_channelNames_if(power_up_states, 33), get_state_if(power_up_states, 33), get_channelNames_if(power_up_states, 34), get_state_if(power_up_states, 34), get_channelNames_if(power_up_states, 35), get_state_if(power_up_states, 35), get_channelNames_if(power_up_states, 36), get_state_if(power_up_states, 36), get_channelNames_if(power_up_states, 37), get_state_if(power_up_states, 37), get_channelNames_if(power_up_states, 38), get_state_if(power_up_states, 38), get_channelNames_if(power_up_states, 39), get_state_if(power_up_states, 39), get_channelNames_if(power_up_states, 40), get_state_if(power_up_states, 40), get_channelNames_if(power_up_states, 41), get_state_if(power_up_states, 41), get_channelNames_if(power_up_states, 42), get_state_if(power_up_states, 42), get_channelNames_if(power_up_states, 43), get_state_if(power_up_states, 43), get_channelNames_if(power_up_states, 44), get_state_if(power_up_states, 44), get_channelNames_if(power_up_states, 45), get_state_if(power_up_states, 45), get_channelNames_if(power_up_states, 46), get_state_if(power_up_states, 46), get_channelNames_if(power_up_states, 47), get_state_if(power_up_states, 47), get_channelNames_if(power_up_states, 48), get_state_if(power_up_states, 48), get_channelNames_if(power_up_states, 49), get_state_if(power_up_states, 49), get_channelNames_if(power_up_states, 50), get_state_if(power_up_states, 50), get_channelNames_if(power_up_states, 51), get_state_if(power_up_states, 51), get_channelNames_if(power_up_states, 52), get_state_if(power_up_states, 52), get_channelNames_if(power_up_states, 53), get_state_if(power_up_states, 53), get_channelNames_if(power_up_states, 54), get_state_if(power_up_states, 54), get_channelNames_if(power_up_states, 55), get_state_if(power_up_states, 55), get_channelNames_if(power_up_states, 56), get_state_if(power_up_states, 56), get_channelNames_if(power_up_states, 57), get_state_if(power_up_states, 57), get_channelNames_if(power_up_states, 58), get_state_if(power_up_states, 58), get_channelNames_if(power_up_states, 59), get_state_if(power_up_states, 59), get_channelNames_if(power_up_states, 60), get_state_if(power_up_states, 60), get_channelNames_if(power_up_states, 61), get_state_if(power_up_states, 61), get_channelNames_if(power_up_states, 62), get_state_if(power_up_states, 62), get_channelNames_if(power_up_states, 63), get_state_if(power_up_states, 63), get_channelNames_if(power_up_states, 64), get_state_if(power_up_states, 64), get_channelNames_if(power_up_states, 65), get_state_if(power_up_states, 65), get_channelNames_if(power_up_states, 66), get_state_if(power_up_states, 66), get_channelNames_if(power_up_states, 67), get_state_if(power_up_states, 67), get_channelNames_if(power_up_states, 68), get_state_if(power_up_states, 68), get_channelNames_if(power_up_states, 69), get_state_if(power_up_states, 69), get_channelNames_if(power_up_states, 70), get_state_if(power_up_states, 70), get_channelNames_if(power_up_states, 71), get_state_if(power_up_states, 71), get_channelNames_if(power_up_states, 72), get_state_if(power_up_states, 72), get_channelNames_if(power_up_states, 73), get_state_if(power_up_states, 73), get_channelNames_if(power_up_states, 74), get_state_if(power_up_states, 74), get_channelNames_if(power_up_states, 75), get_state_if(power_up_states, 75), get_channelNames_if(power_up_states, 76), get_state_if(power_up_states, 76), get_channelNames_if(power_up_states, 77), get_state_if(power_up_states, 77), get_channelNames_if(power_up_states, 78), get_state_if(power_up_states, 78), get_channelNames_if(power_up_states, 79), get_state_if(power_up_states, 79), get_channelNames_if(power_up_states, 80), get_state_if(power_up_states, 80), get_channelNames_if(power_up_states, 81), get_state_if(power_up_states, 81), get_channelNames_if(power_up_states, 82), get_state_if(power_up_states, 82), get_channelNames_if(power_up_states, 83), get_state_if(power_up_states, 83), get_channelNames_if(power_up_states, 84), get_state_if(power_up_states, 84), get_channelNames_if(power_up_states, 85), get_state_if(power_up_states, 85), get_channelNames_if(power_up_states, 86), get_state_if(power_up_states, 86), get_channelNames_if(power_up_states, 87), get_state_if(power_up_states, 87), get_channelNames_if(power_up_states, 88), get_state_if(power_up_states, 88), get_channelNames_if(power_up_states, 89), get_state_if(power_up_states, 89), get_channelNames_if(power_up_states, 90), get_state_if(power_up_states, 90), get_channelNames_if(power_up_states, 91), get_state_if(power_up_states, 91), get_channelNames_if(power_up_states, 92), get_state_if(power_up_states, 92), get_channelNames_if(power_up_states, 93), get_state_if(power_up_states, 93), get_channelNames_if(power_up_states, 94), get_state_if(power_up_states, 94), get_channelNames_if(power_up_states, 95), get_state_if(power_up_states, 95), get_channelNames_if(power_up_states, 96), get_state_if(power_up_states, 96));
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
@@ -15167,6 +15503,7 @@ namespace nidaqmx_grpc {
 
       auto status = ((NiDAQmxLibrary*)library_)->SetDigitalPullUpPullDownStates(device_name, get_channelNames_if(pull_up_pull_down_states, 0), get_state_if(pull_up_pull_down_states, 0), get_channelNames_if(pull_up_pull_down_states, 1), get_state_if(pull_up_pull_down_states, 1), get_channelNames_if(pull_up_pull_down_states, 2), get_state_if(pull_up_pull_down_states, 2), get_channelNames_if(pull_up_pull_down_states, 3), get_state_if(pull_up_pull_down_states, 3), get_channelNames_if(pull_up_pull_down_states, 4), get_state_if(pull_up_pull_down_states, 4), get_channelNames_if(pull_up_pull_down_states, 5), get_state_if(pull_up_pull_down_states, 5), get_channelNames_if(pull_up_pull_down_states, 6), get_state_if(pull_up_pull_down_states, 6), get_channelNames_if(pull_up_pull_down_states, 7), get_state_if(pull_up_pull_down_states, 7), get_channelNames_if(pull_up_pull_down_states, 8), get_state_if(pull_up_pull_down_states, 8), get_channelNames_if(pull_up_pull_down_states, 9), get_state_if(pull_up_pull_down_states, 9), get_channelNames_if(pull_up_pull_down_states, 10), get_state_if(pull_up_pull_down_states, 10), get_channelNames_if(pull_up_pull_down_states, 11), get_state_if(pull_up_pull_down_states, 11), get_channelNames_if(pull_up_pull_down_states, 12), get_state_if(pull_up_pull_down_states, 12), get_channelNames_if(pull_up_pull_down_states, 13), get_state_if(pull_up_pull_down_states, 13), get_channelNames_if(pull_up_pull_down_states, 14), get_state_if(pull_up_pull_down_states, 14), get_channelNames_if(pull_up_pull_down_states, 15), get_state_if(pull_up_pull_down_states, 15), get_channelNames_if(pull_up_pull_down_states, 16), get_state_if(pull_up_pull_down_states, 16), get_channelNames_if(pull_up_pull_down_states, 17), get_state_if(pull_up_pull_down_states, 17), get_channelNames_if(pull_up_pull_down_states, 18), get_state_if(pull_up_pull_down_states, 18), get_channelNames_if(pull_up_pull_down_states, 19), get_state_if(pull_up_pull_down_states, 19), get_channelNames_if(pull_up_pull_down_states, 20), get_state_if(pull_up_pull_down_states, 20), get_channelNames_if(pull_up_pull_down_states, 21), get_state_if(pull_up_pull_down_states, 21), get_channelNames_if(pull_up_pull_down_states, 22), get_state_if(pull_up_pull_down_states, 22), get_channelNames_if(pull_up_pull_down_states, 23), get_state_if(pull_up_pull_down_states, 23), get_channelNames_if(pull_up_pull_down_states, 24), get_state_if(pull_up_pull_down_states, 24), get_channelNames_if(pull_up_pull_down_states, 25), get_state_if(pull_up_pull_down_states, 25), get_channelNames_if(pull_up_pull_down_states, 26), get_state_if(pull_up_pull_down_states, 26), get_channelNames_if(pull_up_pull_down_states, 27), get_state_if(pull_up_pull_down_states, 27), get_channelNames_if(pull_up_pull_down_states, 28), get_state_if(pull_up_pull_down_states, 28), get_channelNames_if(pull_up_pull_down_states, 29), get_state_if(pull_up_pull_down_states, 29), get_channelNames_if(pull_up_pull_down_states, 30), get_state_if(pull_up_pull_down_states, 30), get_channelNames_if(pull_up_pull_down_states, 31), get_state_if(pull_up_pull_down_states, 31), get_channelNames_if(pull_up_pull_down_states, 32), get_state_if(pull_up_pull_down_states, 32), get_channelNames_if(pull_up_pull_down_states, 33), get_state_if(pull_up_pull_down_states, 33), get_channelNames_if(pull_up_pull_down_states, 34), get_state_if(pull_up_pull_down_states, 34), get_channelNames_if(pull_up_pull_down_states, 35), get_state_if(pull_up_pull_down_states, 35), get_channelNames_if(pull_up_pull_down_states, 36), get_state_if(pull_up_pull_down_states, 36), get_channelNames_if(pull_up_pull_down_states, 37), get_state_if(pull_up_pull_down_states, 37), get_channelNames_if(pull_up_pull_down_states, 38), get_state_if(pull_up_pull_down_states, 38), get_channelNames_if(pull_up_pull_down_states, 39), get_state_if(pull_up_pull_down_states, 39), get_channelNames_if(pull_up_pull_down_states, 40), get_state_if(pull_up_pull_down_states, 40), get_channelNames_if(pull_up_pull_down_states, 41), get_state_if(pull_up_pull_down_states, 41), get_channelNames_if(pull_up_pull_down_states, 42), get_state_if(pull_up_pull_down_states, 42), get_channelNames_if(pull_up_pull_down_states, 43), get_state_if(pull_up_pull_down_states, 43), get_channelNames_if(pull_up_pull_down_states, 44), get_state_if(pull_up_pull_down_states, 44), get_channelNames_if(pull_up_pull_down_states, 45), get_state_if(pull_up_pull_down_states, 45), get_channelNames_if(pull_up_pull_down_states, 46), get_state_if(pull_up_pull_down_states, 46), get_channelNames_if(pull_up_pull_down_states, 47), get_state_if(pull_up_pull_down_states, 47), get_channelNames_if(pull_up_pull_down_states, 48), get_state_if(pull_up_pull_down_states, 48), get_channelNames_if(pull_up_pull_down_states, 49), get_state_if(pull_up_pull_down_states, 49), get_channelNames_if(pull_up_pull_down_states, 50), get_state_if(pull_up_pull_down_states, 50), get_channelNames_if(pull_up_pull_down_states, 51), get_state_if(pull_up_pull_down_states, 51), get_channelNames_if(pull_up_pull_down_states, 52), get_state_if(pull_up_pull_down_states, 52), get_channelNames_if(pull_up_pull_down_states, 53), get_state_if(pull_up_pull_down_states, 53), get_channelNames_if(pull_up_pull_down_states, 54), get_state_if(pull_up_pull_down_states, 54), get_channelNames_if(pull_up_pull_down_states, 55), get_state_if(pull_up_pull_down_states, 55), get_channelNames_if(pull_up_pull_down_states, 56), get_state_if(pull_up_pull_down_states, 56), get_channelNames_if(pull_up_pull_down_states, 57), get_state_if(pull_up_pull_down_states, 57), get_channelNames_if(pull_up_pull_down_states, 58), get_state_if(pull_up_pull_down_states, 58), get_channelNames_if(pull_up_pull_down_states, 59), get_state_if(pull_up_pull_down_states, 59), get_channelNames_if(pull_up_pull_down_states, 60), get_state_if(pull_up_pull_down_states, 60), get_channelNames_if(pull_up_pull_down_states, 61), get_state_if(pull_up_pull_down_states, 61), get_channelNames_if(pull_up_pull_down_states, 62), get_state_if(pull_up_pull_down_states, 62), get_channelNames_if(pull_up_pull_down_states, 63), get_state_if(pull_up_pull_down_states, 63), get_channelNames_if(pull_up_pull_down_states, 64), get_state_if(pull_up_pull_down_states, 64), get_channelNames_if(pull_up_pull_down_states, 65), get_state_if(pull_up_pull_down_states, 65), get_channelNames_if(pull_up_pull_down_states, 66), get_state_if(pull_up_pull_down_states, 66), get_channelNames_if(pull_up_pull_down_states, 67), get_state_if(pull_up_pull_down_states, 67), get_channelNames_if(pull_up_pull_down_states, 68), get_state_if(pull_up_pull_down_states, 68), get_channelNames_if(pull_up_pull_down_states, 69), get_state_if(pull_up_pull_down_states, 69), get_channelNames_if(pull_up_pull_down_states, 70), get_state_if(pull_up_pull_down_states, 70), get_channelNames_if(pull_up_pull_down_states, 71), get_state_if(pull_up_pull_down_states, 71), get_channelNames_if(pull_up_pull_down_states, 72), get_state_if(pull_up_pull_down_states, 72), get_channelNames_if(pull_up_pull_down_states, 73), get_state_if(pull_up_pull_down_states, 73), get_channelNames_if(pull_up_pull_down_states, 74), get_state_if(pull_up_pull_down_states, 74), get_channelNames_if(pull_up_pull_down_states, 75), get_state_if(pull_up_pull_down_states, 75), get_channelNames_if(pull_up_pull_down_states, 76), get_state_if(pull_up_pull_down_states, 76), get_channelNames_if(pull_up_pull_down_states, 77), get_state_if(pull_up_pull_down_states, 77), get_channelNames_if(pull_up_pull_down_states, 78), get_state_if(pull_up_pull_down_states, 78), get_channelNames_if(pull_up_pull_down_states, 79), get_state_if(pull_up_pull_down_states, 79), get_channelNames_if(pull_up_pull_down_states, 80), get_state_if(pull_up_pull_down_states, 80), get_channelNames_if(pull_up_pull_down_states, 81), get_state_if(pull_up_pull_down_states, 81), get_channelNames_if(pull_up_pull_down_states, 82), get_state_if(pull_up_pull_down_states, 82), get_channelNames_if(pull_up_pull_down_states, 83), get_state_if(pull_up_pull_down_states, 83), get_channelNames_if(pull_up_pull_down_states, 84), get_state_if(pull_up_pull_down_states, 84), get_channelNames_if(pull_up_pull_down_states, 85), get_state_if(pull_up_pull_down_states, 85), get_channelNames_if(pull_up_pull_down_states, 86), get_state_if(pull_up_pull_down_states, 86), get_channelNames_if(pull_up_pull_down_states, 87), get_state_if(pull_up_pull_down_states, 87), get_channelNames_if(pull_up_pull_down_states, 88), get_state_if(pull_up_pull_down_states, 88), get_channelNames_if(pull_up_pull_down_states, 89), get_state_if(pull_up_pull_down_states, 89), get_channelNames_if(pull_up_pull_down_states, 90), get_state_if(pull_up_pull_down_states, 90), get_channelNames_if(pull_up_pull_down_states, 91), get_state_if(pull_up_pull_down_states, 91), get_channelNames_if(pull_up_pull_down_states, 92), get_state_if(pull_up_pull_down_states, 92), get_channelNames_if(pull_up_pull_down_states, 93), get_state_if(pull_up_pull_down_states, 93), get_channelNames_if(pull_up_pull_down_states, 94), get_state_if(pull_up_pull_down_states, 94), get_channelNames_if(pull_up_pull_down_states, 95), get_state_if(pull_up_pull_down_states, 95), get_channelNames_if(pull_up_pull_down_states, 96), get_state_if(pull_up_pull_down_states, 96));
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
@@ -15210,6 +15547,7 @@ namespace nidaqmx_grpc {
       auto size = 0U;
       auto status = library_->SetExportedSignalAttributeBool(task, attribute, value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -15253,6 +15591,7 @@ namespace nidaqmx_grpc {
       auto size = 0U;
       auto status = library_->SetExportedSignalAttributeDouble(task, attribute, value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -15311,6 +15650,7 @@ namespace nidaqmx_grpc {
       auto size = 0U;
       auto status = library_->SetExportedSignalAttributeInt32(task, attribute, value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -15354,6 +15694,7 @@ namespace nidaqmx_grpc {
       auto size = 0U;
       auto status = library_->SetExportedSignalAttributeString(task, attribute, value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -15397,6 +15738,7 @@ namespace nidaqmx_grpc {
       auto size = 0U;
       auto status = library_->SetExportedSignalAttributeUInt32(task, attribute, value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -15420,6 +15762,7 @@ namespace nidaqmx_grpc {
       auto data = convert_from_grpc<CVIAbsoluteTime>(request->data());
       auto status = library_->SetFirstSampClkWhen(task, data);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -15463,6 +15806,7 @@ namespace nidaqmx_grpc {
       auto size = 0U;
       auto status = library_->SetReadAttributeBool(task, attribute, value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -15506,6 +15850,7 @@ namespace nidaqmx_grpc {
       auto size = 0U;
       auto status = library_->SetReadAttributeDouble(task, attribute, value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -15564,6 +15909,7 @@ namespace nidaqmx_grpc {
       auto size = 0U;
       auto status = library_->SetReadAttributeInt32(task, attribute, value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -15607,6 +15953,7 @@ namespace nidaqmx_grpc {
       auto size = 0U;
       auto status = library_->SetReadAttributeString(task, attribute, value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -15650,6 +15997,7 @@ namespace nidaqmx_grpc {
       auto size = 0U;
       auto status = library_->SetReadAttributeUInt32(task, attribute, value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -15693,6 +16041,7 @@ namespace nidaqmx_grpc {
       auto size = 0U;
       auto status = library_->SetReadAttributeUInt64(task, attribute, value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -15736,6 +16085,7 @@ namespace nidaqmx_grpc {
       auto size = 0U;
       auto status = library_->SetRealTimeAttributeBool(task, attribute, value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -15794,6 +16144,7 @@ namespace nidaqmx_grpc {
       auto size = 0U;
       auto status = library_->SetRealTimeAttributeInt32(task, attribute, value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -15837,6 +16188,7 @@ namespace nidaqmx_grpc {
       auto size = 0U;
       auto status = library_->SetRealTimeAttributeUInt32(task, attribute, value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -15879,6 +16231,7 @@ namespace nidaqmx_grpc {
       auto size = 0U;
       auto status = library_->SetScaleAttributeDouble(scale_name, attribute, value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
@@ -15921,6 +16274,7 @@ namespace nidaqmx_grpc {
       uInt32 size = static_cast<uInt32>(request->value().size());
       auto status = library_->SetScaleAttributeDoubleArray(scale_name, attribute, value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
@@ -15978,6 +16332,7 @@ namespace nidaqmx_grpc {
       auto size = 0U;
       auto status = library_->SetScaleAttributeInt32(scale_name, attribute, value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
@@ -16020,6 +16375,7 @@ namespace nidaqmx_grpc {
       auto size = 0U;
       auto status = library_->SetScaleAttributeString(scale_name, attribute, value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
@@ -16043,6 +16399,7 @@ namespace nidaqmx_grpc {
       auto data = convert_from_grpc<CVIAbsoluteTime>(request->data());
       auto status = library_->SetStartTrigTrigWhen(task, data);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -16066,6 +16423,7 @@ namespace nidaqmx_grpc {
       auto data = convert_from_grpc<CVIAbsoluteTime>(request->data());
       auto status = library_->SetSyncPulseTimeWhen(task, data);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -16109,6 +16467,7 @@ namespace nidaqmx_grpc {
       auto size = 0U;
       auto status = library_->SetTimingAttributeBool(task, attribute, value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -16152,6 +16511,7 @@ namespace nidaqmx_grpc {
       auto size = 0U;
       auto status = library_->SetTimingAttributeDouble(task, attribute, value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -16196,6 +16556,7 @@ namespace nidaqmx_grpc {
       auto size = 0U;
       auto status = library_->SetTimingAttributeExBool(task, device_names, attribute, value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -16240,6 +16601,7 @@ namespace nidaqmx_grpc {
       auto size = 0U;
       auto status = library_->SetTimingAttributeExDouble(task, device_names, attribute, value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -16299,6 +16661,7 @@ namespace nidaqmx_grpc {
       auto size = 0U;
       auto status = library_->SetTimingAttributeExInt32(task, device_names, attribute, value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -16343,6 +16706,7 @@ namespace nidaqmx_grpc {
       auto size = 0U;
       auto status = library_->SetTimingAttributeExString(task, device_names, attribute, value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -16387,6 +16751,7 @@ namespace nidaqmx_grpc {
       auto size = 0U;
       auto status = library_->SetTimingAttributeExTimestamp(task, device_names, attribute, value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -16431,6 +16796,7 @@ namespace nidaqmx_grpc {
       auto size = 0U;
       auto status = library_->SetTimingAttributeExUInt32(task, device_names, attribute, value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -16475,6 +16841,7 @@ namespace nidaqmx_grpc {
       auto size = 0U;
       auto status = library_->SetTimingAttributeExUInt64(task, device_names, attribute, value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -16533,6 +16900,7 @@ namespace nidaqmx_grpc {
       auto size = 0U;
       auto status = library_->SetTimingAttributeInt32(task, attribute, value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -16576,6 +16944,7 @@ namespace nidaqmx_grpc {
       auto size = 0U;
       auto status = library_->SetTimingAttributeString(task, attribute, value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -16619,6 +16988,7 @@ namespace nidaqmx_grpc {
       auto size = 0U;
       auto status = library_->SetTimingAttributeTimestamp(task, attribute, value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -16662,6 +17032,7 @@ namespace nidaqmx_grpc {
       auto size = 0U;
       auto status = library_->SetTimingAttributeUInt32(task, attribute, value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -16705,6 +17076,7 @@ namespace nidaqmx_grpc {
       auto size = 0U;
       auto status = library_->SetTimingAttributeUInt64(task, attribute, value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -16748,6 +17120,7 @@ namespace nidaqmx_grpc {
       auto size = 0U;
       auto status = library_->SetTrigAttributeBool(task, attribute, value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -16791,6 +17164,7 @@ namespace nidaqmx_grpc {
       auto size = 0U;
       auto status = library_->SetTrigAttributeDouble(task, attribute, value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -16834,6 +17208,7 @@ namespace nidaqmx_grpc {
       uInt32 size = static_cast<uInt32>(request->value().size());
       auto status = library_->SetTrigAttributeDoubleArray(task, attribute, value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -16892,6 +17267,7 @@ namespace nidaqmx_grpc {
       auto size = 0U;
       auto status = library_->SetTrigAttributeInt32(task, attribute, value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -16935,6 +17311,7 @@ namespace nidaqmx_grpc {
       uInt32 size = static_cast<uInt32>(request->value().size());
       auto status = library_->SetTrigAttributeInt32Array(task, attribute, value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -16978,6 +17355,7 @@ namespace nidaqmx_grpc {
       auto size = 0U;
       auto status = library_->SetTrigAttributeString(task, attribute, value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -17021,6 +17399,7 @@ namespace nidaqmx_grpc {
       auto size = 0U;
       auto status = library_->SetTrigAttributeTimestamp(task, attribute, value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -17064,6 +17443,7 @@ namespace nidaqmx_grpc {
       auto size = 0U;
       auto status = library_->SetTrigAttributeUInt32(task, attribute, value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -17108,6 +17488,7 @@ namespace nidaqmx_grpc {
       auto size = 0U;
       auto status = library_->SetWatchdogAttributeBool(task, lines, attribute, value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -17152,6 +17533,7 @@ namespace nidaqmx_grpc {
       auto size = 0U;
       auto status = library_->SetWatchdogAttributeDouble(task, lines, attribute, value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -17211,6 +17593,7 @@ namespace nidaqmx_grpc {
       auto size = 0U;
       auto status = library_->SetWatchdogAttributeInt32(task, lines, attribute, value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -17255,6 +17638,7 @@ namespace nidaqmx_grpc {
       auto size = 0U;
       auto status = library_->SetWatchdogAttributeString(task, lines, attribute, value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -17298,6 +17682,7 @@ namespace nidaqmx_grpc {
       auto size = 0U;
       auto status = library_->SetWriteAttributeBool(task, attribute, value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -17341,6 +17726,7 @@ namespace nidaqmx_grpc {
       auto size = 0U;
       auto status = library_->SetWriteAttributeDouble(task, attribute, value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -17399,6 +17785,7 @@ namespace nidaqmx_grpc {
       auto size = 0U;
       auto status = library_->SetWriteAttributeInt32(task, attribute, value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -17442,6 +17829,7 @@ namespace nidaqmx_grpc {
       auto size = 0U;
       auto status = library_->SetWriteAttributeString(task, attribute, value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -17485,6 +17873,7 @@ namespace nidaqmx_grpc {
       auto size = 0U;
       auto status = library_->SetWriteAttributeUInt32(task, attribute, value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -17528,6 +17917,7 @@ namespace nidaqmx_grpc {
       auto size = 0U;
       auto status = library_->SetWriteAttributeUInt64(task, attribute, value, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -17551,6 +17941,7 @@ namespace nidaqmx_grpc {
       auto file_path = request->file_path().c_str();
       auto status = library_->StartNewFile(task, file_path);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -17573,6 +17964,7 @@ namespace nidaqmx_grpc {
       TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
       auto status = library_->StartTask(task);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -17595,6 +17987,7 @@ namespace nidaqmx_grpc {
       TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
       auto status = library_->StopTask(task);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -17633,6 +18026,7 @@ namespace nidaqmx_grpc {
 
       auto status = library_->TaskControl(task, action);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -17654,6 +18048,7 @@ namespace nidaqmx_grpc {
       auto output_terminal = request->output_terminal().c_str();
       auto status = library_->TristateOutputTerm(output_terminal);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
@@ -17675,6 +18070,7 @@ namespace nidaqmx_grpc {
       auto device_name = request->device_name().c_str();
       auto status = library_->UnreserveNetworkDevice(device_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
@@ -17699,6 +18095,7 @@ namespace nidaqmx_grpc {
       bool32 is_late {};
       auto status = library_->WaitForNextSampleClock(task, timeout, &is_late);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -17740,6 +18137,7 @@ namespace nidaqmx_grpc {
       CVIAbsoluteTime timestamp {};
       auto status = library_->WaitForValidTimestamp(task, timestamp_event, timeout, &timestamp);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -17764,6 +18162,7 @@ namespace nidaqmx_grpc {
       float64 time_to_wait = request->time_to_wait();
       auto status = library_->WaitUntilTaskDone(task, time_to_wait);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -17808,6 +18207,7 @@ namespace nidaqmx_grpc {
       int32 samps_per_chan_written {};
       auto status = library_->WriteAnalogF64(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array, &samps_per_chan_written, reserved);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -17835,6 +18235,7 @@ namespace nidaqmx_grpc {
       auto reserved = nullptr;
       auto status = library_->WriteAnalogScalarF64(task, auto_start, timeout, value, reserved);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -17896,6 +18297,7 @@ namespace nidaqmx_grpc {
       int32 samps_per_chan_written {};
       auto status = library_->WriteBinaryI16(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array.data(), &samps_per_chan_written, reserved);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -17944,6 +18346,7 @@ namespace nidaqmx_grpc {
       int32 samps_per_chan_written {};
       auto status = library_->WriteBinaryI32(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array, &samps_per_chan_written, reserved);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -18006,6 +18409,7 @@ namespace nidaqmx_grpc {
       int32 samps_per_chan_written {};
       auto status = library_->WriteBinaryU16(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array.data(), &samps_per_chan_written, reserved);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -18054,6 +18458,7 @@ namespace nidaqmx_grpc {
       int32 samps_per_chan_written {};
       auto status = library_->WriteBinaryU32(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array, &samps_per_chan_written, reserved);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -18100,6 +18505,7 @@ namespace nidaqmx_grpc {
       int32 num_samps_per_chan_written {};
       auto status = library_->WriteCtrFreq(task, num_samps_per_chan, auto_start, timeout, data_layout, frequency, duty_cycle, &num_samps_per_chan_written, reserved);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -18128,6 +18534,7 @@ namespace nidaqmx_grpc {
       auto reserved = nullptr;
       auto status = library_->WriteCtrFreqScalar(task, auto_start, timeout, frequency, duty_cycle, reserved);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -18173,6 +18580,7 @@ namespace nidaqmx_grpc {
       int32 num_samps_per_chan_written {};
       auto status = library_->WriteCtrTicks(task, num_samps_per_chan, auto_start, timeout, data_layout, high_ticks, low_ticks, &num_samps_per_chan_written, reserved);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -18201,6 +18609,7 @@ namespace nidaqmx_grpc {
       auto reserved = nullptr;
       auto status = library_->WriteCtrTicksScalar(task, auto_start, timeout, high_ticks, low_ticks, reserved);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -18246,6 +18655,7 @@ namespace nidaqmx_grpc {
       int32 num_samps_per_chan_written {};
       auto status = library_->WriteCtrTime(task, num_samps_per_chan, auto_start, timeout, data_layout, high_time, low_time, &num_samps_per_chan_written, reserved);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -18274,6 +18684,7 @@ namespace nidaqmx_grpc {
       auto reserved = nullptr;
       auto status = library_->WriteCtrTimeScalar(task, auto_start, timeout, high_time, low_time, reserved);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -18318,6 +18729,7 @@ namespace nidaqmx_grpc {
       int32 samps_per_chan_written {};
       auto status = library_->WriteDigitalLines(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array, &samps_per_chan_written, reserved);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -18345,6 +18757,7 @@ namespace nidaqmx_grpc {
       auto reserved = nullptr;
       auto status = library_->WriteDigitalScalarU32(task, auto_start, timeout, value, reserved);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -18406,6 +18819,7 @@ namespace nidaqmx_grpc {
       int32 samps_per_chan_written {};
       auto status = library_->WriteDigitalU16(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array.data(), &samps_per_chan_written, reserved);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -18454,6 +18868,7 @@ namespace nidaqmx_grpc {
       int32 samps_per_chan_written {};
       auto status = library_->WriteDigitalU32(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array, &samps_per_chan_written, reserved);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -18499,6 +18914,7 @@ namespace nidaqmx_grpc {
       int32 samps_per_chan_written {};
       auto status = library_->WriteDigitalU8(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array, &samps_per_chan_written, reserved);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -18528,6 +18944,7 @@ namespace nidaqmx_grpc {
       int32 samps_per_chan_written {};
       auto status = library_->WriteRaw(task, num_samps, auto_start, timeout, write_array, &samps_per_chan_written, reserved);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, task);
       }
       response->set_status(status);
@@ -18568,6 +18985,7 @@ namespace nidaqmx_grpc {
 
       auto status = library_->WriteToTEDSFromArray(physical_channel, bit_stream, array_size, basic_teds_options);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);
@@ -18606,6 +19024,7 @@ namespace nidaqmx_grpc {
 
       auto status = library_->WriteToTEDSFromFile(physical_channel, file_path, basic_teds_options);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForTaskHandle(status, 0);
       }
       response->set_status(status);

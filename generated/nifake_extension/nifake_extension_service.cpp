@@ -54,6 +54,7 @@ namespace nifake_extension_grpc {
       ViInt32 param = request->param();
       auto status = library_->AddCoolFunctionality(vi, param);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);

@@ -58,6 +58,7 @@ namespace nirfsa_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -81,6 +82,7 @@ namespace nirfsa_grpc {
       ViBoolean is_done {};
       auto status = library_->CheckAcquisitionStatus(vi, &is_done);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -104,6 +106,7 @@ namespace nirfsa_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->ClearError(vi);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -126,6 +129,7 @@ namespace nirfsa_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->ClearSelfCalibrateRange(vi);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -149,6 +153,7 @@ namespace nirfsa_grpc {
       session_repository_->remove_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Close(vi);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -171,6 +176,7 @@ namespace nirfsa_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Commit(vi);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -209,6 +215,7 @@ namespace nirfsa_grpc {
 
       auto status = library_->ConfigureAcquisitionType(vi, acquisition_type);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -249,6 +256,7 @@ namespace nirfsa_grpc {
 
       auto status = library_->ConfigureDeembeddingTableInterpolationLinear(vi, port, table_name, format);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -273,6 +281,7 @@ namespace nirfsa_grpc {
       auto table_name = request->table_name().c_str();
       auto status = library_->ConfigureDeembeddingTableInterpolationNearest(vi, port, table_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -297,6 +306,7 @@ namespace nirfsa_grpc {
       auto table_name = request->table_name().c_str();
       auto status = library_->ConfigureDeembeddingTableInterpolationSpline(vi, port, table_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -355,6 +365,7 @@ namespace nirfsa_grpc {
 
       auto status = library_->ConfigureDigitalEdgeAdvanceTrigger(vi, source, edge);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -414,6 +425,7 @@ namespace nirfsa_grpc {
       ViInt64 pretrigger_samples = request->pretrigger_samples();
       auto status = library_->ConfigureDigitalEdgeRefTrigger(vi, source, edge, pretrigger_samples);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -472,6 +484,7 @@ namespace nirfsa_grpc {
 
       auto status = library_->ConfigureDigitalEdgeStartTrigger(vi, source, edge);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -496,6 +509,7 @@ namespace nirfsa_grpc {
       ViReal64 carrier_frequency = request->carrier_frequency();
       auto status = library_->ConfigureIQCarrierFrequency(vi, channel_list, carrier_frequency);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -537,6 +551,7 @@ namespace nirfsa_grpc {
       ViInt64 pretrigger_samples = request->pretrigger_samples();
       auto status = library_->ConfigureIQPowerEdgeRefTrigger(vi, source, level, slope, pretrigger_samples);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -561,6 +576,7 @@ namespace nirfsa_grpc {
       ViReal64 iq_rate = request->iq_rate();
       auto status = library_->ConfigureIQRate(vi, channel_list, iq_rate);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -586,6 +602,7 @@ namespace nirfsa_grpc {
       ViInt64 number_of_records = request->number_of_records();
       auto status = library_->ConfigureNumberOfRecords(vi, channel_list, number_of_records_is_finite, number_of_records);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -611,6 +628,7 @@ namespace nirfsa_grpc {
       ViInt64 samples_per_record = request->samples_per_record();
       auto status = library_->ConfigureNumberOfSamples(vi, channel_list, number_of_samples_is_finite, samples_per_record);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -653,6 +671,7 @@ namespace nirfsa_grpc {
 
       auto status = library_->ConfigurePXIChassisClk10(vi, pxi_clk10_source);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -696,6 +715,7 @@ namespace nirfsa_grpc {
       ViReal64 ref_clock_rate = request->ref_clock_rate();
       auto status = library_->ConfigureRefClock(vi, clock_source, ref_clock_rate);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -720,6 +740,7 @@ namespace nirfsa_grpc {
       ViReal64 reference_level = request->reference_level();
       auto status = library_->ConfigureReferenceLevel(vi, channel_list, reference_level);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -744,6 +765,7 @@ namespace nirfsa_grpc {
       ViReal64 resolution_bandwidth = request->resolution_bandwidth();
       auto status = library_->ConfigureResolutionBandwidth(vi, channel_list, resolution_bandwidth);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -766,6 +788,7 @@ namespace nirfsa_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->ConfigureSoftwareEdgeAdvanceTrigger(vi);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -789,6 +812,7 @@ namespace nirfsa_grpc {
       ViInt64 pretrigger_samples = request->pretrigger_samples();
       auto status = library_->ConfigureSoftwareEdgeRefTrigger(vi, pretrigger_samples);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -811,6 +835,7 @@ namespace nirfsa_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->ConfigureSoftwareEdgeStartTrigger(vi);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -836,6 +861,7 @@ namespace nirfsa_grpc {
       ViReal64 span = request->span();
       auto status = library_->ConfigureSpectrumFrequencyCenterSpan(vi, channel_list, center_frequency, span);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -861,6 +887,7 @@ namespace nirfsa_grpc {
       ViReal64 stop_frequency = request->stop_frequency();
       auto status = library_->ConfigureSpectrumFrequencyStartStop(vi, channel_list, start_frequency, stop_frequency);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -887,6 +914,7 @@ namespace nirfsa_grpc {
       ViBoolean set_as_active_list = request->set_as_active_list();
       auto status = library_->CreateConfigurationList(vi, list_name, number_of_list_attributes, list_attribute_ids, set_as_active_list);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -910,6 +938,7 @@ namespace nirfsa_grpc {
       ViBoolean set_as_active_step = request->set_as_active_step();
       auto status = library_->CreateConfigurationListStep(vi, set_as_active_step);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -955,6 +984,7 @@ namespace nirfsa_grpc {
 
       auto status = library_->CreateDeembeddingSparameterTableArray(vi, port, table_name, frequencies, frequencies_size, sparameter_table.data(), sparameter_table_size, number_of_ports, sparameter_orientation);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -996,6 +1026,7 @@ namespace nirfsa_grpc {
 
       auto status = library_->CreateDeembeddingSparameterTableS2PFile(vi, port, table_name, s2p_file_path, sparameter_orientation);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -1018,6 +1049,7 @@ namespace nirfsa_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->DeleteAllDeembeddingTables(vi);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -1041,6 +1073,7 @@ namespace nirfsa_grpc {
       auto list_name = request->list_name().c_str();
       auto status = library_->DeleteConfigurationList(vi, list_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -1065,6 +1098,7 @@ namespace nirfsa_grpc {
       auto table_name = request->table_name().c_str();
       auto status = library_->DeleteDeembeddingTable(vi, port, table_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -1087,6 +1121,7 @@ namespace nirfsa_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Disable(vi);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -1109,6 +1144,7 @@ namespace nirfsa_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->DisableAdvanceTrigger(vi);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -1131,6 +1167,7 @@ namespace nirfsa_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->DisableRefTrigger(vi);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -1153,6 +1190,7 @@ namespace nirfsa_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->DisableStartTrigger(vi);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -1176,6 +1214,7 @@ namespace nirfsa_grpc {
       ViBoolean enable = request->enable();
       auto status = library_->EnableSessionAccess(vi, enable);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -1200,6 +1239,7 @@ namespace nirfsa_grpc {
       std::string error_message(1024 - 1, '\0');
       auto status = library_->ErrorMessage(vi, status_code, (ViChar*)error_message.data());
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -1226,6 +1266,7 @@ namespace nirfsa_grpc {
       std::string error_message(1024 - 1, '\0');
       auto status = library_->ErrorQuery(vi, &error_code, (ViChar*)error_message.data());
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -1288,6 +1329,7 @@ namespace nirfsa_grpc {
 
       auto status = library_->ExportSignal(vi, signal, signal_identifier, output_terminal);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -1317,6 +1359,7 @@ namespace nirfsa_grpc {
       std::vector<niRFSA_wfmInfo_struct> wfm_info(number_of_records, niRFSA_wfmInfo_struct());
       auto status = library_->FetchIQMultiRecordComplexF32(vi, channel_list, starting_record, number_of_records, number_of_samples, timeout, data.data(), wfm_info.data());
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -1348,6 +1391,7 @@ namespace nirfsa_grpc {
       std::vector<niRFSA_wfmInfo_struct> wfm_info(number_of_records, niRFSA_wfmInfo_struct());
       auto status = library_->FetchIQMultiRecordComplexF64(vi, channel_list, starting_record, number_of_records, number_of_samples, timeout, data.data(), wfm_info.data());
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -1379,6 +1423,7 @@ namespace nirfsa_grpc {
       std::vector<niRFSA_wfmInfo_struct> wfm_info(number_of_records, niRFSA_wfmInfo_struct());
       auto status = library_->FetchIQMultiRecordComplexI16(vi, channel_list, starting_record, number_of_records, number_of_samples, timeout, data.data(), wfm_info.data());
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -1409,6 +1454,7 @@ namespace nirfsa_grpc {
       niRFSA_wfmInfo_struct wfm_info {};
       auto status = library_->FetchIQSingleRecordComplexF32(vi, channel_list, record_number, number_of_samples, timeout, data.data(), &wfm_info);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -1439,6 +1485,7 @@ namespace nirfsa_grpc {
       niRFSA_wfmInfo_struct wfm_info {};
       auto status = library_->FetchIQSingleRecordComplexF64(vi, channel_list, record_number, number_of_samples, timeout, data.data(), &wfm_info);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -1469,6 +1516,7 @@ namespace nirfsa_grpc {
       niRFSA_wfmInfo_struct wfm_info {};
       auto status = library_->FetchIQSingleRecordComplexI16(vi, channel_list, record_number, number_of_samples, timeout, data.data(), &wfm_info);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -1496,6 +1544,7 @@ namespace nirfsa_grpc {
       ViBoolean value {};
       auto status = library_->GetAttributeViBoolean(vi, channel_name, attribute_id, &value);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -1522,6 +1571,7 @@ namespace nirfsa_grpc {
       ViInt32 value {};
       auto status = library_->GetAttributeViInt32(vi, channel_name, attribute_id, &value);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -1548,6 +1598,7 @@ namespace nirfsa_grpc {
       ViInt64 value {};
       auto status = library_->GetAttributeViInt64(vi, channel_name, attribute_id, &value);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -1574,6 +1625,7 @@ namespace nirfsa_grpc {
       ViReal64 value {};
       auto status = library_->GetAttributeViReal64(vi, channel_name, attribute_id, &value);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -1600,6 +1652,7 @@ namespace nirfsa_grpc {
       ViSession value {};
       auto status = library_->GetAttributeViSession(vi, channel_name, attribute_id, &value);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -1628,6 +1681,7 @@ namespace nirfsa_grpc {
       while (true) {
         auto status = library_->GetAttributeViString(vi, channel_name, attribute_id, 0, nullptr);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForViSession(status, vi);
         }
         ViInt32 buf_size = status;
@@ -1642,6 +1696,7 @@ namespace nirfsa_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForViSession(status, vi);
         }
         response->set_status(status);
@@ -1668,6 +1723,7 @@ namespace nirfsa_grpc {
       std::string info(2048 - 1, '\0');
       auto status = library_->GetCalUserDefinedInfo(vi, (ViChar*)info.data());
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -1693,6 +1749,7 @@ namespace nirfsa_grpc {
       ViInt32 info_size {};
       auto status = library_->GetCalUserDefinedInfoMaxSize(vi, &info_size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -1719,6 +1776,7 @@ namespace nirfsa_grpc {
       while (true) {
         auto status = library_->GetDeembeddingSparameters(vi, nullptr, 0, &number_of_sparameters, &number_of_ports);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForViSession(status, vi);
         }
         std::vector<NIComplexNumber_struct> sparameters(number_of_sparameters, NIComplexNumber_struct());
@@ -1729,6 +1787,7 @@ namespace nirfsa_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForViSession(status, vi);
         }
         response->set_status(status);
@@ -1781,6 +1840,7 @@ namespace nirfsa_grpc {
       while (true) {
         auto status = library_->GetDeviceResponse(vi, channel_list, response_type, 0, nullptr, nullptr, nullptr, &number_of_frequencies);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForViSession(status, vi);
         }
         response->mutable_frequencies()->Resize(number_of_frequencies, 0);
@@ -1796,6 +1856,7 @@ namespace nirfsa_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForViSession(status, vi);
         }
         response->set_status(status);
@@ -1825,6 +1886,7 @@ namespace nirfsa_grpc {
       while (true) {
         auto status = library_->GetError(vi, nullptr, 0, nullptr);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForViSession(status, vi);
         }
         ViInt32 error_description_buffer_size = status;
@@ -1840,6 +1902,7 @@ namespace nirfsa_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForViSession(status, vi);
         }
         response->set_status(status);
@@ -1871,6 +1934,7 @@ namespace nirfsa_grpc {
       ViInt32 minute {};
       auto status = library_->GetExtCalLastDateAndTime(vi, &year, &month, &day, &hour, &minute);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -1899,6 +1963,7 @@ namespace nirfsa_grpc {
       ViReal64 temperature {};
       auto status = library_->GetExtCalLastTemp(vi, &temperature);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -1923,6 +1988,7 @@ namespace nirfsa_grpc {
       ViInt32 months {};
       auto status = library_->GetExtCalRecommendedInterval(vi, &months);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -1949,6 +2015,7 @@ namespace nirfsa_grpc {
       ViInt64 backlog {};
       auto status = library_->GetFetchBacklog(vi, channel_list, record_number, &backlog);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -1975,6 +2042,7 @@ namespace nirfsa_grpc {
       while (true) {
         auto status = library_->GetFrequencyResponse(vi, channel_list, 0, nullptr, nullptr, nullptr, &number_of_frequencies);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForViSession(status, vi);
         }
         response->mutable_frequencies()->Resize(number_of_frequencies, 0);
@@ -1990,6 +2058,7 @@ namespace nirfsa_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForViSession(status, vi);
         }
         response->set_status(status);
@@ -2020,6 +2089,7 @@ namespace nirfsa_grpc {
       while (true) {
         auto status = library_->GetNormalizationCoefficients(vi, channel_list, 0, nullptr, &number_of_coefficient_sets);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForViSession(status, vi);
         }
         std::vector<niRFSA_coefficientInfo_struct> coefficient_info(number_of_coefficient_sets, niRFSA_coefficientInfo_struct());
@@ -2030,6 +2100,7 @@ namespace nirfsa_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForViSession(status, vi);
         }
         response->set_status(status);
@@ -2064,6 +2135,7 @@ namespace nirfsa_grpc {
       ViInt32 number_of_spectral_lines {};
       auto status = library_->GetNumberOfSpectralLines(vi, channel_list, &number_of_spectral_lines);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -2091,6 +2163,7 @@ namespace nirfsa_grpc {
       while (true) {
         auto status = library_->GetRelayName(vi, channel_list, index, nullptr, &buffer_size);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForViSession(status, vi);
         }
         std::string name;
@@ -2103,6 +2176,7 @@ namespace nirfsa_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForViSession(status, vi);
         }
         response->set_status(status);
@@ -2132,6 +2206,7 @@ namespace nirfsa_grpc {
       while (true) {
         auto status = library_->GetRelayOperationsCount(vi, channel_list, nullptr, &buffer_size);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForViSession(status, vi);
         }
         response->mutable_operations_count()->Resize(buffer_size, 0);
@@ -2142,6 +2217,7 @@ namespace nirfsa_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForViSession(status, vi);
         }
         response->set_status(status);
@@ -2170,6 +2246,7 @@ namespace nirfsa_grpc {
       while (true) {
         auto status = library_->GetScalingCoefficients(vi, channel_list, 0, nullptr, &number_of_coefficient_sets);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForViSession(status, vi);
         }
         std::vector<niRFSA_coefficientInfo_struct> coefficient_info(number_of_coefficient_sets, niRFSA_coefficientInfo_struct());
@@ -2180,6 +2257,7 @@ namespace nirfsa_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForViSession(status, vi);
         }
         response->set_status(status);
@@ -2218,6 +2296,7 @@ namespace nirfsa_grpc {
       ViInt32 minute {};
       auto status = library_->GetSelfCalLastDateAndTime(vi, self_calibration_step, &year, &month, &day, &hour, &minute);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -2247,6 +2326,7 @@ namespace nirfsa_grpc {
       ViReal64 temp {};
       auto status = library_->GetSelfCalLastTemp(vi, self_calibration_step, &temp);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -2271,6 +2351,7 @@ namespace nirfsa_grpc {
       SmtSpectrumInfo_struct spectrum_info {};
       auto status = library_->GetSpectralInfoForSMT(vi, &spectrum_info);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -2296,6 +2377,7 @@ namespace nirfsa_grpc {
       ViUInt32 writer_handle {};
       auto status = library_->GetStreamEndpointHandle(vi, stream_endpoint, &writer_handle);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -2341,6 +2423,7 @@ namespace nirfsa_grpc {
       }
       auto status = library_->GetTerminalName(vi, signal, signal_identifier, buffer_size, (ViChar*)terminal_name.data());
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -2368,6 +2451,7 @@ namespace nirfsa_grpc {
       while (true) {
         auto status = library_->GetUserData(vi, identifier, 0, nullptr, &actual_data_size);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForViSession(status, vi);
         }
         std::string data(actual_data_size, '\0');
@@ -2378,6 +2462,7 @@ namespace nirfsa_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForViSession(status, vi);
         }
         response->set_status(status);
@@ -2414,6 +2499,7 @@ namespace nirfsa_grpc {
       auto cleanup_lambda = [&] (ViSession id) { library_->Close(id); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, 0);
       }
       response->set_status(status);
@@ -2451,6 +2537,7 @@ namespace nirfsa_grpc {
       auto cleanup_lambda = [&] (ViSession id) { library_->Close(id); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, 0);
       }
       response->set_status(status);
@@ -2477,6 +2564,7 @@ namespace nirfsa_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Initiate(vi);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -2499,6 +2587,7 @@ namespace nirfsa_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->InvalidateAllAttributes(vi);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -2523,6 +2612,7 @@ namespace nirfsa_grpc {
       ViInt64 valid_steps {};
       auto status = library_->IsSelfCalValid(vi, &self_cal_valid, &valid_steps);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -2567,6 +2657,7 @@ namespace nirfsa_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->PerformThermalCorrection(vi);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -2594,6 +2685,7 @@ namespace nirfsa_grpc {
       niRFSA_wfmInfo_struct wfm_info {};
       auto status = library_->ReadIQSingleRecordComplexF64(vi, channel_list, timeout, data.data(), data_array_size, &wfm_info);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -2624,6 +2716,7 @@ namespace nirfsa_grpc {
       niRFSA_spectrumInfo_struct spectrum_info {};
       auto status = library_->ReadPowerSpectrumF32(vi, channel_list, timeout, power_spectrum_data, data_array_size, &spectrum_info);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -2653,6 +2746,7 @@ namespace nirfsa_grpc {
       niRFSA_spectrumInfo_struct spectrum_info {};
       auto status = library_->ReadPowerSpectrumF64(vi, channel_list, timeout, power_spectrum_data, data_array_size, &spectrum_info);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -2676,6 +2770,7 @@ namespace nirfsa_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Reset(vi);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -2700,6 +2795,7 @@ namespace nirfsa_grpc {
       ViAttr attribute_id = request->attribute_id();
       auto status = library_->ResetAttribute(vi, channel_name, attribute_id);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -2722,6 +2818,7 @@ namespace nirfsa_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->ResetDevice(vi);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -2744,6 +2841,7 @@ namespace nirfsa_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->ResetWithDefaults(vi);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -2782,6 +2880,7 @@ namespace nirfsa_grpc {
 
       auto status = library_->ResetWithOptions(vi, steps_to_omit);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -2806,6 +2905,7 @@ namespace nirfsa_grpc {
       std::string instr_rev(256 - 1, '\0');
       auto status = library_->RevisionQuery(vi, (ViChar*)driver_rev.data(), (ViChar*)instr_rev.data());
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -2832,6 +2932,7 @@ namespace nirfsa_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->SelfCal(vi);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -2870,6 +2971,7 @@ namespace nirfsa_grpc {
 
       auto status = library_->SelfCalibrate(vi, steps_to_omit);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -2912,6 +3014,7 @@ namespace nirfsa_grpc {
       ViReal64 max_reference_level = request->max_reference_level();
       auto status = library_->SelfCalibrateRange(vi, steps_to_omit, min_frequency, max_frequency, min_reference_level, max_reference_level);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -2936,6 +3039,7 @@ namespace nirfsa_grpc {
       std::string test_message(2048 - 1, '\0');
       auto status = library_->SelfTest(vi, &test_result, (ViChar*)test_message.data());
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -2978,6 +3082,7 @@ namespace nirfsa_grpc {
       auto trigger_identifier = request->trigger_identifier().c_str();
       auto status = library_->SendSoftwareEdgeTrigger(vi, trigger, trigger_identifier);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -3003,6 +3108,7 @@ namespace nirfsa_grpc {
       ViBoolean value = request->value();
       auto status = library_->SetAttributeViBoolean(vi, channel_name, attribute_id, value);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -3043,6 +3149,7 @@ namespace nirfsa_grpc {
 
       auto status = library_->SetAttributeViInt32(vi, channel_name, attribute_id, value);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -3068,6 +3175,7 @@ namespace nirfsa_grpc {
       ViInt64 value = request->value_raw();
       auto status = library_->SetAttributeViInt64(vi, channel_name, attribute_id, value);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -3093,6 +3201,7 @@ namespace nirfsa_grpc {
       ViReal64 value = request->value_raw();
       auto status = library_->SetAttributeViReal64(vi, channel_name, attribute_id, value);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -3119,6 +3228,7 @@ namespace nirfsa_grpc {
       ViSession value = session_repository_->access_session(value_grpc_session.id(), value_grpc_session.name());
       auto status = library_->SetAttributeViSession(vi, channel_name, attribute_id, value);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -3163,6 +3273,7 @@ namespace nirfsa_grpc {
 
       auto status = library_->SetAttributeViString(vi, channel_name, attribute_id, value);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -3186,6 +3297,7 @@ namespace nirfsa_grpc {
       auto info = request->info().c_str();
       auto status = library_->SetCalUserDefinedInfo(vi, info);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -3211,6 +3323,7 @@ namespace nirfsa_grpc {
       std::string data(buffer_size, '\0');
       auto status = library_->SetUserData(vi, identifier, buffer_size, (ViInt8*)data.data());
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);

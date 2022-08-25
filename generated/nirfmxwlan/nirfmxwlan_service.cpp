@@ -61,6 +61,7 @@ namespace nirfmxwlan_grpc {
       char* selector_string = (char*)request->selector_string().c_str();
       auto status = library_->AbortMeasurements(instrument, selector_string);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -91,6 +92,7 @@ namespace nirfmxwlan_grpc {
       auto reserved = 0;
       auto status = library_->AnalyzeIQ1Waveform(instrument, selector_string, result_name, x0, dx, iq.data(), array_size, reset, reserved);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -139,6 +141,7 @@ namespace nirfmxwlan_grpc {
       int32 reset = request->reset();
       auto status = library_->AnalyzeNWaveformsIQ(instrument, selector_string, result_name, x0, dx, iq.data(), iq_sizes, array_size, reset);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -187,6 +190,7 @@ namespace nirfmxwlan_grpc {
       int32 reset = request->reset();
       auto status = library_->AnalyzeNWaveformsSpectrum(instrument, selector_string, result_name, x0, dx, spectrum, spectrum_sizes, array_size, reset);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -217,6 +221,7 @@ namespace nirfmxwlan_grpc {
       auto reserved = 0;
       auto status = library_->AnalyzeSpectrum1Waveform(instrument, selector_string, result_name, x0, dx, spectrum, array_size, reset, reserved);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -241,6 +246,7 @@ namespace nirfmxwlan_grpc {
       float64 timeout = request->timeout();
       auto status = library_->AutoDetectSignal(instrument, selector_string, timeout);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -265,6 +271,7 @@ namespace nirfmxwlan_grpc {
       float64 measurement_interval = request->measurement_interval();
       auto status = library_->AutoLevel(instrument, selector_string, measurement_interval);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -289,6 +296,7 @@ namespace nirfmxwlan_grpc {
       while (true) {
         auto status = library_->BuildChainString(selector_string, chain_number, 0, nullptr);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, 0);
         }
         int32 selector_string_out_length = status;
@@ -303,6 +311,7 @@ namespace nirfmxwlan_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, 0);
         }
         response->set_status(status);
@@ -330,6 +339,7 @@ namespace nirfmxwlan_grpc {
       while (true) {
         auto status = library_->BuildGateString(selector_string, gate_number, 0, nullptr);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, 0);
         }
         int32 selector_string_out_length = status;
@@ -344,6 +354,7 @@ namespace nirfmxwlan_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, 0);
         }
         response->set_status(status);
@@ -371,6 +382,7 @@ namespace nirfmxwlan_grpc {
       while (true) {
         auto status = library_->BuildOffsetString(selector_string, offset_number, 0, nullptr);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, 0);
         }
         int32 selector_string_out_length = status;
@@ -385,6 +397,7 @@ namespace nirfmxwlan_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, 0);
         }
         response->set_status(status);
@@ -412,6 +425,7 @@ namespace nirfmxwlan_grpc {
       while (true) {
         auto status = library_->BuildSegmentString(selector_string, segment_number, 0, nullptr);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, 0);
         }
         int32 selector_string_out_length = status;
@@ -426,6 +440,7 @@ namespace nirfmxwlan_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, 0);
         }
         response->set_status(status);
@@ -453,6 +468,7 @@ namespace nirfmxwlan_grpc {
       while (true) {
         auto status = library_->BuildSignalString(signal_name, result_name, 0, nullptr);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, 0);
         }
         int32 selector_string_length = status;
@@ -467,6 +483,7 @@ namespace nirfmxwlan_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, 0);
         }
         response->set_status(status);
@@ -494,6 +511,7 @@ namespace nirfmxwlan_grpc {
       while (true) {
         auto status = library_->BuildStreamString(selector_string, stream_number, 0, nullptr);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, 0);
         }
         int32 selector_string_out_length = status;
@@ -508,6 +526,7 @@ namespace nirfmxwlan_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, 0);
         }
         response->set_status(status);
@@ -535,6 +554,7 @@ namespace nirfmxwlan_grpc {
       while (true) {
         auto status = library_->BuildUserString(selector_string, user_number, 0, nullptr);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, 0);
         }
         int32 selector_string_out_length = status;
@@ -549,6 +569,7 @@ namespace nirfmxwlan_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, 0);
         }
         response->set_status(status);
@@ -576,6 +597,7 @@ namespace nirfmxwlan_grpc {
       float64 channel_bandwidth = request->channel_bandwidth();
       auto status = library_->CfgChannelBandwidth(instrument, selector_string, channel_bandwidth);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -618,6 +640,7 @@ namespace nirfmxwlan_grpc {
       int32 enable_trigger = request->enable_trigger();
       auto status = library_->CfgDigitalEdgeTrigger(instrument, selector_string, digital_edge_source, digital_edge, trigger_delay, enable_trigger);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -642,6 +665,7 @@ namespace nirfmxwlan_grpc {
       float64 external_attenuation = request->external_attenuation();
       auto status = library_->CfgExternalAttenuation(instrument, selector_string, external_attenuation);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -666,6 +690,7 @@ namespace nirfmxwlan_grpc {
       float64 center_frequency = request->center_frequency();
       auto status = library_->CfgFrequency(instrument, selector_string, center_frequency);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -691,6 +716,7 @@ namespace nirfmxwlan_grpc {
       int32 number_of_elements = static_cast<int32>(request->center_frequency().size());
       auto status = library_->CfgFrequencyArray(instrument, selector_string, center_frequency, number_of_elements);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -735,6 +761,7 @@ namespace nirfmxwlan_grpc {
       float64 frequency_reference_frequency = request->frequency_reference_frequency();
       auto status = library_->CfgFrequencyReference(instrument, channel_name, frequency_reference_source, frequency_reference_frequency);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -811,6 +838,7 @@ namespace nirfmxwlan_grpc {
       int32 enable_trigger = request->enable_trigger();
       auto status = library_->CfgIQPowerEdgeTrigger(instrument, selector_string, iq_power_edge_source, iq_power_edge_slope, iq_power_edge_level, trigger_delay, trigger_min_quiet_time_mode, trigger_min_quiet_time_duration, iq_power_edge_level_type, enable_trigger);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -851,6 +879,7 @@ namespace nirfmxwlan_grpc {
       float64 mechanical_attenuation_value = request->mechanical_attenuation_value();
       auto status = library_->CfgMechanicalAttenuation(instrument, channel_name, mechanical_attenuation_auto, mechanical_attenuation_value);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -876,6 +905,7 @@ namespace nirfmxwlan_grpc {
       int32 number_of_receive_chains = request->number_of_receive_chains();
       auto status = library_->CfgNumberOfFrequencySegmentsAndReceiveChains(instrument, selector_string, number_of_frequency_segments, number_of_receive_chains);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -916,6 +946,7 @@ namespace nirfmxwlan_grpc {
       float64 rf_attenuation_value = request->rf_attenuation_value();
       auto status = library_->CfgRFAttenuation(instrument, channel_name, rf_attenuation_auto, rf_attenuation_value);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -940,6 +971,7 @@ namespace nirfmxwlan_grpc {
       float64 reference_level = request->reference_level();
       auto status = library_->CfgReferenceLevel(instrument, selector_string, reference_level);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -964,6 +996,7 @@ namespace nirfmxwlan_grpc {
       char* selected_ports = (char*)request->selected_ports().c_str();
       auto status = library_->CfgSelectedPortsMultiple(instrument, selector_string, selected_ports);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -989,6 +1022,7 @@ namespace nirfmxwlan_grpc {
       int32 enable_trigger = request->enable_trigger();
       auto status = library_->CfgSoftwareEdgeTrigger(instrument, selector_string, trigger_delay, enable_trigger);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -1028,6 +1062,7 @@ namespace nirfmxwlan_grpc {
 
       auto status = library_->CfgStandard(instrument, selector_string, standard);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -1052,6 +1087,7 @@ namespace nirfmxwlan_grpc {
       int32 is_done {};
       auto status = library_->CheckMeasurementStatus(instrument, selector_string, &is_done);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -1076,6 +1112,7 @@ namespace nirfmxwlan_grpc {
       char* selector_string = (char*)request->selector_string().c_str();
       auto status = library_->ClearAllNamedResults(instrument, selector_string);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -1099,6 +1136,7 @@ namespace nirfmxwlan_grpc {
       char* selector_string = (char*)request->selector_string().c_str();
       auto status = library_->ClearNamedResult(instrument, selector_string);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -1123,6 +1161,7 @@ namespace nirfmxwlan_grpc {
       char* new_signal_name = (char*)request->new_signal_name().c_str();
       auto status = library_->CloneSignalConfiguration(instrument, old_signal_name, new_signal_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -1147,6 +1186,7 @@ namespace nirfmxwlan_grpc {
       session_repository_->remove_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       auto status = library_->Close(instrument, force_destroy);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -1170,6 +1210,7 @@ namespace nirfmxwlan_grpc {
       char* selector_string = (char*)request->selector_string().c_str();
       auto status = library_->Commit(instrument, selector_string);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -1193,6 +1234,7 @@ namespace nirfmxwlan_grpc {
       char* signal_name = (char*)request->signal_name().c_str();
       auto status = library_->CreateSignalConfiguration(instrument, signal_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -1233,6 +1275,7 @@ namespace nirfmxwlan_grpc {
       float64 acquisition_length = request->acquisition_length();
       auto status = library_->DSSSModAccCfgAcquisitionLength(instrument, selector_string, acquisition_length_mode, acquisition_length);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -1273,6 +1316,7 @@ namespace nirfmxwlan_grpc {
       int32 averaging_count = request->averaging_count();
       auto status = library_->DSSSModAccCfgAveraging(instrument, selector_string, averaging_enabled, averaging_count);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -1312,6 +1356,7 @@ namespace nirfmxwlan_grpc {
 
       auto status = library_->DSSSModAccCfgEVMUnit(instrument, selector_string, evm_unit);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -1337,6 +1382,7 @@ namespace nirfmxwlan_grpc {
       int32 maximum_measurement_length = request->maximum_measurement_length();
       auto status = library_->DSSSModAccCfgMeasurementLength(instrument, selector_string, measurement_offset, maximum_measurement_length);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -1379,6 +1425,7 @@ namespace nirfmxwlan_grpc {
 
       auto status = library_->DSSSModAccCfgPowerMeasurementCustomGateArray(instrument, selector_string, start_time, stop_time, number_of_elements);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -1418,6 +1465,7 @@ namespace nirfmxwlan_grpc {
 
       auto status = library_->DSSSModAccCfgPowerMeasurementEnabled(instrument, selector_string, power_measurement_enabled);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -1442,6 +1490,7 @@ namespace nirfmxwlan_grpc {
       int32 number_of_custom_gates = request->number_of_custom_gates();
       auto status = library_->DSSSModAccCfgPowerMeasurementNumberOfCustomGates(instrument, selector_string, number_of_custom_gates);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -1470,6 +1519,7 @@ namespace nirfmxwlan_grpc {
       float64 ppdu_average_power_mean {};
       auto status = library_->DSSSModAccFetchAveragePowers(instrument, selector_string, timeout, &preamble_average_power_mean, &header_average_power_mean, &data_average_power_mean, &ppdu_average_power_mean);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -1500,6 +1550,7 @@ namespace nirfmxwlan_grpc {
       while (true) {
         auto status = library_->DSSSModAccFetchConstellationTrace(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         std::vector<NIComplexSingle> constellation(actual_array_size, NIComplexSingle());
@@ -1510,6 +1561,7 @@ namespace nirfmxwlan_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->set_status(status);
@@ -1546,6 +1598,7 @@ namespace nirfmxwlan_grpc {
       while (true) {
         auto status = library_->DSSSModAccFetchCustomGatePowersArray(instrument, selector_string, timeout, nullptr, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->mutable_average_power_mean()->Resize(actual_array_size, 0);
@@ -1559,6 +1612,7 @@ namespace nirfmxwlan_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->set_status(status);
@@ -1589,6 +1643,7 @@ namespace nirfmxwlan_grpc {
       while (true) {
         auto status = library_->DSSSModAccFetchDecodedHeaderBitsTrace(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->mutable_decoded_header_bits()->Resize(actual_array_size, 0);
@@ -1600,6 +1655,7 @@ namespace nirfmxwlan_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->set_status(status);
@@ -1629,6 +1685,7 @@ namespace nirfmxwlan_grpc {
       while (true) {
         auto status = library_->DSSSModAccFetchDecodedPSDUBitsTrace(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->mutable_decoded_psdu_bits()->Resize(actual_array_size, 0);
@@ -1640,6 +1697,7 @@ namespace nirfmxwlan_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->set_status(status);
@@ -1674,6 +1732,7 @@ namespace nirfmxwlan_grpc {
       int32 number_of_chips_used {};
       auto status = library_->DSSSModAccFetchEVM(instrument, selector_string, timeout, &rms_evm_mean, &peak_evm_80211_2016_maximum, &peak_evm_80211_2007_maximum, &peak_evm_80211_1999_maximum, &frequency_error_mean, &chip_clock_error_mean, &number_of_chips_used);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -1709,6 +1768,7 @@ namespace nirfmxwlan_grpc {
       while (true) {
         auto status = library_->DSSSModAccFetchEVMPerChipMeanTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->mutable_evm_per_chip_mean()->Resize(actual_array_size, 0);
@@ -1720,6 +1780,7 @@ namespace nirfmxwlan_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->set_status(status);
@@ -1752,6 +1813,7 @@ namespace nirfmxwlan_grpc {
       float64 iq_quadrature_error_mean {};
       auto status = library_->DSSSModAccFetchIQImpairments(instrument, selector_string, timeout, &iq_origin_offset_mean, &iq_gain_imbalance_mean, &iq_quadrature_error_mean);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -1785,6 +1847,7 @@ namespace nirfmxwlan_grpc {
       int32 psdu_crc_status {};
       auto status = library_->DSSSModAccFetchPPDUInformation(instrument, selector_string, timeout, &data_modulation_format, &payload_length, &preamble_type, &locked_clocks_bit, &header_crc_status, &psdu_crc_status);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -1823,6 +1886,7 @@ namespace nirfmxwlan_grpc {
       float64 ppdu_peak_power_maximum {};
       auto status = library_->DSSSModAccFetchPeakPowers(instrument, selector_string, timeout, &preamble_peak_power_maximum, &header_peak_power_maximum, &data_peak_power_maximum, &ppdu_peak_power_maximum);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -1850,6 +1914,7 @@ namespace nirfmxwlan_grpc {
       char* signal_name = (char*)request->signal_name().c_str();
       auto status = library_->DeleteSignalConfiguration(instrument, signal_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -1873,6 +1938,7 @@ namespace nirfmxwlan_grpc {
       char* selector_string = (char*)request->selector_string().c_str();
       auto status = library_->DisableTrigger(instrument, selector_string);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -1899,6 +1965,7 @@ namespace nirfmxwlan_grpc {
       while (true) {
         auto status = library_->GetAllNamedResultNames(instrument, selector_string, nullptr, 0, &actual_result_names_size, &default_result_exists);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         std::string result_names;
@@ -1912,6 +1979,7 @@ namespace nirfmxwlan_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->set_status(status);
@@ -1942,6 +2010,7 @@ namespace nirfmxwlan_grpc {
       float32 attr_val {};
       auto status = library_->GetAttributeF32(instrument, selector_string, attribute_id, &attr_val);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -1969,6 +2038,7 @@ namespace nirfmxwlan_grpc {
       while (true) {
         auto status = library_->GetAttributeF32Array(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->mutable_attr_val()->Resize(actual_array_size, 0);
@@ -1980,6 +2050,7 @@ namespace nirfmxwlan_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->set_status(status);
@@ -2008,6 +2079,7 @@ namespace nirfmxwlan_grpc {
       float64 attr_val {};
       auto status = library_->GetAttributeF64(instrument, selector_string, attribute_id, &attr_val);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -2035,6 +2107,7 @@ namespace nirfmxwlan_grpc {
       while (true) {
         auto status = library_->GetAttributeF64Array(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->mutable_attr_val()->Resize(actual_array_size, 0);
@@ -2046,6 +2119,7 @@ namespace nirfmxwlan_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->set_status(status);
@@ -2074,6 +2148,7 @@ namespace nirfmxwlan_grpc {
       int16 attr_val {};
       auto status = library_->GetAttributeI16(instrument, selector_string, attribute_id, &attr_val);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -2100,6 +2175,7 @@ namespace nirfmxwlan_grpc {
       int32 attr_val {};
       auto status = library_->GetAttributeI32(instrument, selector_string, attribute_id, &attr_val);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -2133,6 +2209,7 @@ namespace nirfmxwlan_grpc {
       while (true) {
         auto status = library_->GetAttributeI32Array(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->mutable_attr_val_raw()->Resize(actual_array_size, 0);
@@ -2144,6 +2221,7 @@ namespace nirfmxwlan_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->set_status(status);
@@ -2186,6 +2264,7 @@ namespace nirfmxwlan_grpc {
       int64 attr_val {};
       auto status = library_->GetAttributeI64(instrument, selector_string, attribute_id, &attr_val);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -2213,6 +2292,7 @@ namespace nirfmxwlan_grpc {
       while (true) {
         auto status = library_->GetAttributeI64Array(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->mutable_attr_val()->Resize(actual_array_size, 0);
@@ -2224,6 +2304,7 @@ namespace nirfmxwlan_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->set_status(status);
@@ -2252,6 +2333,7 @@ namespace nirfmxwlan_grpc {
       int8 attr_val {};
       auto status = library_->GetAttributeI8(instrument, selector_string, attribute_id, &attr_val);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -2279,6 +2361,7 @@ namespace nirfmxwlan_grpc {
       while (true) {
         auto status = library_->GetAttributeI8Array(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         std::vector<int8> attr_val(actual_array_size);
@@ -2289,6 +2372,7 @@ namespace nirfmxwlan_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->set_status(status);
@@ -2327,6 +2411,7 @@ namespace nirfmxwlan_grpc {
       while (true) {
         auto status = library_->GetAttributeNIComplexDoubleArray(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         std::vector<NIComplexDouble> attr_val(actual_array_size, NIComplexDouble());
@@ -2337,6 +2422,7 @@ namespace nirfmxwlan_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->set_status(status);
@@ -2373,6 +2459,7 @@ namespace nirfmxwlan_grpc {
       while (true) {
         auto status = library_->GetAttributeNIComplexSingleArray(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         std::vector<NIComplexSingle> attr_val(actual_array_size, NIComplexSingle());
@@ -2383,6 +2470,7 @@ namespace nirfmxwlan_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->set_status(status);
@@ -2419,6 +2507,7 @@ namespace nirfmxwlan_grpc {
       while (true) {
         auto status = library_->GetAttributeString(instrument, selector_string, attribute_id, 0, nullptr);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         int32 array_size = status;
@@ -2433,6 +2522,7 @@ namespace nirfmxwlan_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->set_status(status);
@@ -2461,6 +2551,7 @@ namespace nirfmxwlan_grpc {
       uInt16 attr_val {};
       auto status = library_->GetAttributeU16(instrument, selector_string, attribute_id, &attr_val);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -2487,6 +2578,7 @@ namespace nirfmxwlan_grpc {
       uInt32 attr_val {};
       auto status = library_->GetAttributeU32(instrument, selector_string, attribute_id, &attr_val);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -2514,6 +2606,7 @@ namespace nirfmxwlan_grpc {
       while (true) {
         auto status = library_->GetAttributeU32Array(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->mutable_attr_val()->Resize(actual_array_size, 0);
@@ -2525,6 +2618,7 @@ namespace nirfmxwlan_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->set_status(status);
@@ -2554,6 +2648,7 @@ namespace nirfmxwlan_grpc {
       while (true) {
         auto status = library_->GetAttributeU64Array(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->mutable_attr_val()->Resize(actual_array_size, 0);
@@ -2565,6 +2660,7 @@ namespace nirfmxwlan_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->set_status(status);
@@ -2593,6 +2689,7 @@ namespace nirfmxwlan_grpc {
       uInt8 attr_val {};
       auto status = library_->GetAttributeU8(instrument, selector_string, attribute_id, &attr_val);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -2620,6 +2717,7 @@ namespace nirfmxwlan_grpc {
       while (true) {
         auto status = library_->GetAttributeU8Array(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         std::string attr_val(actual_array_size, '\0');
@@ -2630,6 +2728,7 @@ namespace nirfmxwlan_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->set_status(status);
@@ -2658,6 +2757,7 @@ namespace nirfmxwlan_grpc {
       while (true) {
         auto status = library_->GetError(instrument, nullptr, 0, nullptr);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         int32 error_description_buffer_size = status;
@@ -2673,6 +2773,7 @@ namespace nirfmxwlan_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->set_status(status);
@@ -2702,6 +2803,7 @@ namespace nirfmxwlan_grpc {
       while (true) {
         auto status = library_->GetErrorString(instrument, error_code, 0, nullptr);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         int32 error_description_buffer_size = status;
@@ -2716,6 +2818,7 @@ namespace nirfmxwlan_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->set_status(status);
@@ -2751,6 +2854,7 @@ namespace nirfmxwlan_grpc {
       auto cleanup_lambda = [&] (niRFmxInstrHandle id) { library_->Close(id, RFMXWLAN_VAL_FALSE); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, 0);
       }
       response->set_status(status);
@@ -2787,6 +2891,7 @@ namespace nirfmxwlan_grpc {
       auto cleanup_lambda = [&] (niRFmxInstrHandle id) { library_->Close(id, RFMXWLAN_VAL_FALSE); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, 0);
       }
       response->set_status(status);
@@ -2815,6 +2920,7 @@ namespace nirfmxwlan_grpc {
       char* result_name = (char*)request->result_name().c_str();
       auto status = library_->Initiate(instrument, selector_string, result_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -2839,6 +2945,7 @@ namespace nirfmxwlan_grpc {
       float64 timeout = request->timeout();
       auto status = library_->OFDMModAccAutoLevel(instrument, selector_string, timeout);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -2866,6 +2973,7 @@ namespace nirfmxwlan_grpc {
       int32 array_size = static_cast<int32>(request->reference_waveform().size());
       auto status = library_->OFDMModAccCfg1ReferenceWaveform(instrument, selector_string, x0, dx, reference_waveform.data(), array_size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -2906,6 +3014,7 @@ namespace nirfmxwlan_grpc {
       float64 acquisition_length = request->acquisition_length();
       auto status = library_->OFDMModAccCfgAcquisitionLength(instrument, selector_string, acquisition_length_mode, acquisition_length);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -2945,6 +3054,7 @@ namespace nirfmxwlan_grpc {
 
       auto status = library_->OFDMModAccCfgAmplitudeTrackingEnabled(instrument, selector_string, amplitude_tracking_enabled);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -2985,6 +3095,7 @@ namespace nirfmxwlan_grpc {
       int32 averaging_count = request->averaging_count();
       auto status = library_->OFDMModAccCfgAveraging(instrument, selector_string, averaging_enabled, averaging_count);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -3024,6 +3135,7 @@ namespace nirfmxwlan_grpc {
 
       auto status = library_->OFDMModAccCfgChannelEstimationType(instrument, selector_string, channel_estimation_type);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -3063,6 +3175,7 @@ namespace nirfmxwlan_grpc {
 
       auto status = library_->OFDMModAccCfgCommonClockSourceEnabled(instrument, selector_string, common_clock_source_enabled);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -3102,6 +3215,7 @@ namespace nirfmxwlan_grpc {
 
       auto status = library_->OFDMModAccCfgEVMUnit(instrument, selector_string, evm_unit);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -3141,6 +3255,7 @@ namespace nirfmxwlan_grpc {
 
       auto status = library_->OFDMModAccCfgFrequencyErrorEstimationMethod(instrument, selector_string, frequency_error_estimation_method);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -3166,6 +3281,7 @@ namespace nirfmxwlan_grpc {
       int32 maximum_measurement_length = request->maximum_measurement_length();
       auto status = library_->OFDMModAccCfgMeasurementLength(instrument, selector_string, measurement_offset, maximum_measurement_length);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -3205,6 +3321,7 @@ namespace nirfmxwlan_grpc {
 
       auto status = library_->OFDMModAccCfgMeasurementMode(instrument, selector_string, measurement_mode);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -3251,6 +3368,7 @@ namespace nirfmxwlan_grpc {
 
       auto status = library_->OFDMModAccCfgNReferenceWaveforms(instrument, selector_string, x0, dx, reference_waveform.data(), reference_waveform_sizes, array_size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -3290,6 +3408,7 @@ namespace nirfmxwlan_grpc {
 
       auto status = library_->OFDMModAccCfgNoiseCompensationEnabled(instrument, selector_string, noise_compensation_enabled);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -3330,6 +3449,7 @@ namespace nirfmxwlan_grpc {
       double optimize_dynamic_range_for_evm_margin = request->optimize_dynamic_range_for_evm_margin();
       auto status = library_->OFDMModAccCfgOptimizeDynamicRangeForEVM(instrument, selector_string, optimize_dynamic_range_for_evm_enabled, optimize_dynamic_range_for_evm_margin);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -3369,6 +3489,7 @@ namespace nirfmxwlan_grpc {
 
       auto status = library_->OFDMModAccCfgPhaseTrackingEnabled(instrument, selector_string, phase_tracking_enabled);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -3408,6 +3529,7 @@ namespace nirfmxwlan_grpc {
 
       auto status = library_->OFDMModAccCfgSymbolClockErrorCorrectionEnabled(instrument, selector_string, symbol_clock_error_correction_enabled);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -3430,6 +3552,7 @@ namespace nirfmxwlan_grpc {
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       auto status = library_->OFDMModAccClearNoiseCalibrationDatabase(instrument);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -3458,6 +3581,7 @@ namespace nirfmxwlan_grpc {
       while (true) {
         auto status = library_->OFDMModAccFetchChainDataRMSEVMPerSymbolMeanTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->mutable_chain_data_rms_evm_per_symbol_mean()->Resize(actual_array_size, 0);
@@ -3469,6 +3593,7 @@ namespace nirfmxwlan_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->set_status(status);
@@ -3502,6 +3627,7 @@ namespace nirfmxwlan_grpc {
       while (true) {
         auto status = library_->OFDMModAccFetchChainPilotRMSEVMPerSymbolMeanTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->mutable_chain_pilot_rms_evm_per_symbol_mean()->Resize(actual_array_size, 0);
@@ -3513,6 +3639,7 @@ namespace nirfmxwlan_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->set_status(status);
@@ -3545,6 +3672,7 @@ namespace nirfmxwlan_grpc {
       float64 chain_pilot_rms_evm_mean {};
       auto status = library_->OFDMModAccFetchChainRMSEVM(instrument, selector_string, timeout, &chain_rms_evm_mean, &chain_data_rms_evm_mean, &chain_pilot_rms_evm_mean);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -3576,6 +3704,7 @@ namespace nirfmxwlan_grpc {
       while (true) {
         auto status = library_->OFDMModAccFetchChainRMSEVMPerSubcarrierMeanTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->mutable_chain_rms_evm_per_subcarrier_mean()->Resize(actual_array_size, 0);
@@ -3587,6 +3716,7 @@ namespace nirfmxwlan_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->set_status(status);
@@ -3620,6 +3750,7 @@ namespace nirfmxwlan_grpc {
       while (true) {
         auto status = library_->OFDMModAccFetchChainRMSEVMPerSymbolMeanTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->mutable_chain_rms_evm_per_symbol_mean()->Resize(actual_array_size, 0);
@@ -3631,6 +3762,7 @@ namespace nirfmxwlan_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->set_status(status);
@@ -3664,6 +3796,7 @@ namespace nirfmxwlan_grpc {
       while (true) {
         auto status = library_->OFDMModAccFetchChannelFrequencyResponseMeanTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->mutable_channel_frequency_response_mean_magnitude()->Resize(actual_array_size, 0);
@@ -3677,6 +3810,7 @@ namespace nirfmxwlan_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->set_status(status);
@@ -3711,6 +3845,7 @@ namespace nirfmxwlan_grpc {
       while (true) {
         auto status = library_->OFDMModAccFetchCommonPilotErrorTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->mutable_common_pilot_error_magnitude()->Resize(actual_array_size, 0);
@@ -3724,6 +3859,7 @@ namespace nirfmxwlan_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->set_status(status);
@@ -3757,6 +3893,7 @@ namespace nirfmxwlan_grpc {
       float64 composite_pilot_rms_evm_mean {};
       auto status = library_->OFDMModAccFetchCompositeRMSEVM(instrument, selector_string, timeout, &composite_rms_evm_mean, &composite_data_rms_evm_mean, &composite_pilot_rms_evm_mean);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -3785,6 +3922,7 @@ namespace nirfmxwlan_grpc {
       float64 cross_power_mean {};
       auto status = library_->OFDMModAccFetchCrossPower(instrument, selector_string, timeout, &cross_power_mean);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -3812,6 +3950,7 @@ namespace nirfmxwlan_grpc {
       while (true) {
         auto status = library_->OFDMModAccFetchCustomGatePowersArray(instrument, selector_string, timeout, nullptr, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->mutable_average_power_mean()->Resize(actual_array_size, 0);
@@ -3825,6 +3964,7 @@ namespace nirfmxwlan_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->set_status(status);
@@ -3854,6 +3994,7 @@ namespace nirfmxwlan_grpc {
       float64 data_average_power_mean {};
       auto status = library_->OFDMModAccFetchDataAveragePower(instrument, selector_string, timeout, &data_average_power_mean);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -3881,6 +4022,7 @@ namespace nirfmxwlan_grpc {
       while (true) {
         auto status = library_->OFDMModAccFetchDataConstellationTrace(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         std::vector<NIComplexSingle> data_constellation(actual_array_size, NIComplexSingle());
@@ -3891,6 +4033,7 @@ namespace nirfmxwlan_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->set_status(status);
@@ -3926,6 +4069,7 @@ namespace nirfmxwlan_grpc {
       float64 data_peak_power_maximum {};
       auto status = library_->OFDMModAccFetchDataPeakPower(instrument, selector_string, timeout, &data_peak_power_maximum);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -3953,6 +4097,7 @@ namespace nirfmxwlan_grpc {
       while (true) {
         auto status = library_->OFDMModAccFetchDecodedEHTSIGBitsTrace(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->mutable_decoded_eht_sig_bits()->Resize(actual_array_size, 0);
@@ -3964,6 +4109,7 @@ namespace nirfmxwlan_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->set_status(status);
@@ -3993,6 +4139,7 @@ namespace nirfmxwlan_grpc {
       while (true) {
         auto status = library_->OFDMModAccFetchDecodedLSIGBitsTrace(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->mutable_decoded_l_sig_bits()->Resize(actual_array_size, 0);
@@ -4004,6 +4151,7 @@ namespace nirfmxwlan_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->set_status(status);
@@ -4033,6 +4181,7 @@ namespace nirfmxwlan_grpc {
       while (true) {
         auto status = library_->OFDMModAccFetchDecodedPSDUBitsTrace(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->mutable_decoded_psdu_bits()->Resize(actual_array_size, 0);
@@ -4044,6 +4193,7 @@ namespace nirfmxwlan_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->set_status(status);
@@ -4073,6 +4223,7 @@ namespace nirfmxwlan_grpc {
       while (true) {
         auto status = library_->OFDMModAccFetchDecodedSIGBBitsTrace(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->mutable_decoded_sig_b_bits()->Resize(actual_array_size, 0);
@@ -4084,6 +4235,7 @@ namespace nirfmxwlan_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->set_status(status);
@@ -4113,6 +4265,7 @@ namespace nirfmxwlan_grpc {
       while (true) {
         auto status = library_->OFDMModAccFetchDecodedSIGBitsTrace(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->mutable_decoded_sig_bits()->Resize(actual_array_size, 0);
@@ -4124,6 +4277,7 @@ namespace nirfmxwlan_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->set_status(status);
@@ -4153,6 +4307,7 @@ namespace nirfmxwlan_grpc {
       while (true) {
         auto status = library_->OFDMModAccFetchDecodedServiceBitsTrace(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->mutable_decoded_service_bits()->Resize(actual_array_size, 0);
@@ -4164,6 +4319,7 @@ namespace nirfmxwlan_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->set_status(status);
@@ -4193,6 +4349,7 @@ namespace nirfmxwlan_grpc {
       while (true) {
         auto status = library_->OFDMModAccFetchDecodedUSIGBitsTrace(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->mutable_decoded_u_sig_bits()->Resize(actual_array_size, 0);
@@ -4204,6 +4361,7 @@ namespace nirfmxwlan_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->set_status(status);
@@ -4233,6 +4391,7 @@ namespace nirfmxwlan_grpc {
       while (true) {
         auto status = library_->OFDMModAccFetchEVMSubcarrierIndices(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->mutable_subcarrier_indices()->Resize(actual_array_size, 0);
@@ -4244,6 +4403,7 @@ namespace nirfmxwlan_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->set_status(status);
@@ -4272,6 +4432,7 @@ namespace nirfmxwlan_grpc {
       float64 frequency_error_ccdf_10_percent {};
       auto status = library_->OFDMModAccFetchFrequencyErrorCCDF10Percent(instrument, selector_string, timeout, &frequency_error_ccdf_10_percent);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -4298,6 +4459,7 @@ namespace nirfmxwlan_grpc {
       float64 frequency_error_mean {};
       auto status = library_->OFDMModAccFetchFrequencyErrorMean(instrument, selector_string, timeout, &frequency_error_mean);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -4327,6 +4489,7 @@ namespace nirfmxwlan_grpc {
       while (true) {
         auto status = library_->OFDMModAccFetchGroupDelayMeanTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->mutable_group_delay_mean()->Resize(actual_array_size, 0);
@@ -4338,6 +4501,7 @@ namespace nirfmxwlan_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->set_status(status);
@@ -4368,6 +4532,7 @@ namespace nirfmxwlan_grpc {
       int32 guard_interval_type {};
       auto status = library_->OFDMModAccFetchGuardIntervalType(instrument, selector_string, timeout, &guard_interval_type);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -4398,6 +4563,7 @@ namespace nirfmxwlan_grpc {
       while (true) {
         auto status = library_->OFDMModAccFetchIQGainImbalancePerSubcarrierMeanTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->mutable_iq_gain_imbalance_per_subcarrier_mean()->Resize(actual_array_size, 0);
@@ -4409,6 +4575,7 @@ namespace nirfmxwlan_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->set_status(status);
@@ -4443,6 +4610,7 @@ namespace nirfmxwlan_grpc {
       float64 iq_timing_skew_mean {};
       auto status = library_->OFDMModAccFetchIQImpairments(instrument, selector_string, timeout, &relative_iq_origin_offset_mean, &iq_gain_imbalance_mean, &iq_quadrature_error_mean, &absolute_iq_origin_offset_mean, &iq_timing_skew_mean);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -4476,6 +4644,7 @@ namespace nirfmxwlan_grpc {
       while (true) {
         auto status = library_->OFDMModAccFetchIQQuadratureErrorPerSubcarrierMeanTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->mutable_iq_quadrature_error_per_subcarrier_mean()->Resize(actual_array_size, 0);
@@ -4487,6 +4656,7 @@ namespace nirfmxwlan_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->set_status(status);
@@ -4517,6 +4687,7 @@ namespace nirfmxwlan_grpc {
       int32 l_sig_parity_check_status {};
       auto status = library_->OFDMModAccFetchLSIGParityCheckStatus(instrument, selector_string, timeout, &l_sig_parity_check_status);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -4544,6 +4715,7 @@ namespace nirfmxwlan_grpc {
       int32 ltf_size {};
       auto status = library_->OFDMModAccFetchLTFSize(instrument, selector_string, timeout, &ltf_size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -4571,6 +4743,7 @@ namespace nirfmxwlan_grpc {
       int32 mcs_index {};
       auto status = library_->OFDMModAccFetchMCSIndex(instrument, selector_string, timeout, &mcs_index);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -4597,6 +4770,7 @@ namespace nirfmxwlan_grpc {
       int32 number_of_he_sig_b_symbols {};
       auto status = library_->OFDMModAccFetchNumberOfHESIGBSymbols(instrument, selector_string, timeout, &number_of_he_sig_b_symbols);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -4623,6 +4797,7 @@ namespace nirfmxwlan_grpc {
       int32 number_of_space_time_streams {};
       auto status = library_->OFDMModAccFetchNumberOfSpaceTimeStreams(instrument, selector_string, timeout, &number_of_space_time_streams);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -4649,6 +4824,7 @@ namespace nirfmxwlan_grpc {
       int32 number_of_users {};
       auto status = library_->OFDMModAccFetchNumberOfUsers(instrument, selector_string, timeout, &number_of_users);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -4675,6 +4851,7 @@ namespace nirfmxwlan_grpc {
       int32 number_of_symbols_used {};
       auto status = library_->OFDMModAccFetchNumberofSymbolsUsed(instrument, selector_string, timeout, &number_of_symbols_used);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -4701,6 +4878,7 @@ namespace nirfmxwlan_grpc {
       float64 pe_average_power_mean {};
       auto status = library_->OFDMModAccFetchPEAveragePower(instrument, selector_string, timeout, &pe_average_power_mean);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -4727,6 +4905,7 @@ namespace nirfmxwlan_grpc {
       float64 pe_duration {};
       auto status = library_->OFDMModAccFetchPEDuration(instrument, selector_string, timeout, &pe_duration);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -4753,6 +4932,7 @@ namespace nirfmxwlan_grpc {
       float64 pe_peak_power_maximum {};
       auto status = library_->OFDMModAccFetchPEPeakPower(instrument, selector_string, timeout, &pe_peak_power_maximum);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -4779,6 +4959,7 @@ namespace nirfmxwlan_grpc {
       float64 ppdu_average_power_mean {};
       auto status = library_->OFDMModAccFetchPPDUAveragePower(instrument, selector_string, timeout, &ppdu_average_power_mean);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -4805,6 +4986,7 @@ namespace nirfmxwlan_grpc {
       float64 ppdu_peak_power_maximum {};
       auto status = library_->OFDMModAccFetchPPDUPeakPower(instrument, selector_string, timeout, &ppdu_peak_power_maximum);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -4831,6 +5013,7 @@ namespace nirfmxwlan_grpc {
       int32 ppdu_type {};
       auto status = library_->OFDMModAccFetchPPDUType(instrument, selector_string, timeout, &ppdu_type);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -4858,6 +5041,7 @@ namespace nirfmxwlan_grpc {
       int32 psdu_crc_status {};
       auto status = library_->OFDMModAccFetchPSDUCRCStatus(instrument, selector_string, timeout, &psdu_crc_status);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -4888,6 +5072,7 @@ namespace nirfmxwlan_grpc {
       while (true) {
         auto status = library_->OFDMModAccFetchPhaseNoisePSDMeanTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->mutable_phase_noise_psd_mean()->Resize(actual_array_size, 0);
@@ -4899,6 +5084,7 @@ namespace nirfmxwlan_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->set_status(status);
@@ -4930,6 +5116,7 @@ namespace nirfmxwlan_grpc {
       while (true) {
         auto status = library_->OFDMModAccFetchPilotConstellationTrace(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         std::vector<NIComplexSingle> pilot_constellation(actual_array_size, NIComplexSingle());
@@ -4940,6 +5127,7 @@ namespace nirfmxwlan_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->set_status(status);
@@ -4978,6 +5166,7 @@ namespace nirfmxwlan_grpc {
       float64 vht_sig_b_average_power_mean {};
       auto status = library_->OFDMModAccFetchPreambleAveragePowers80211ac(instrument, selector_string, timeout, &vht_sig_a_average_power_mean, &vht_stf_average_power_mean, &vht_ltf_average_power_mean, &vht_sig_b_average_power_mean);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -5011,6 +5200,7 @@ namespace nirfmxwlan_grpc {
       float64 he_ltf_average_power_mean {};
       auto status = library_->OFDMModAccFetchPreambleAveragePowers80211ax(instrument, selector_string, timeout, &rl_sig_average_power_mean, &he_sig_a_average_power_mean, &he_sig_b_average_power_mean, &he_stf_average_power_mean, &he_ltf_average_power_mean);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -5044,6 +5234,7 @@ namespace nirfmxwlan_grpc {
       float64 ht_eltf_average_power_mean {};
       auto status = library_->OFDMModAccFetchPreambleAveragePowers80211n(instrument, selector_string, timeout, &ht_sig_average_power_mean, &ht_stf_average_power_mean, &ht_dltf_average_power_mean, &ht_eltf_average_power_mean);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -5075,6 +5266,7 @@ namespace nirfmxwlan_grpc {
       float64 l_sig_average_power_mean {};
       auto status = library_->OFDMModAccFetchPreambleAveragePowersCommon(instrument, selector_string, timeout, &l_stf_average_power_mean, &l_ltf_average_power_mean, &l_sig_average_power_mean);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -5106,6 +5298,7 @@ namespace nirfmxwlan_grpc {
       while (true) {
         auto status = library_->OFDMModAccFetchPreambleFrequencyErrorTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->mutable_preamble_frequency_error()->Resize(actual_array_size, 0);
@@ -5117,6 +5310,7 @@ namespace nirfmxwlan_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->set_status(status);
@@ -5150,6 +5344,7 @@ namespace nirfmxwlan_grpc {
       float64 vht_sig_b_peak_power_maximum {};
       auto status = library_->OFDMModAccFetchPreamblePeakPowers80211ac(instrument, selector_string, timeout, &vht_sig_a_peak_power_maximum, &vht_stf_peak_power_maximum, &vht_ltf_peak_power_maximum, &vht_sig_b_peak_power_maximum);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -5183,6 +5378,7 @@ namespace nirfmxwlan_grpc {
       float64 he_ltf_peak_power_maximum {};
       auto status = library_->OFDMModAccFetchPreamblePeakPowers80211ax(instrument, selector_string, timeout, &rl_sig_peak_power_maximum, &he_sig_a_peak_power_maximum, &he_sig_b_peak_power_maximum, &he_stf_peak_power_maximum, &he_ltf_peak_power_maximum);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -5216,6 +5412,7 @@ namespace nirfmxwlan_grpc {
       float64 ht_eltf_peak_power_maximum {};
       auto status = library_->OFDMModAccFetchPreamblePeakPowers80211n(instrument, selector_string, timeout, &ht_sig_peak_power_maximum, &ht_stf_peak_power_maximum, &ht_dltf_peak_power_maximum, &ht_eltf_peak_power_maximum);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -5247,6 +5444,7 @@ namespace nirfmxwlan_grpc {
       float64 l_sig_peak_power_maximum {};
       auto status = library_->OFDMModAccFetchPreamblePeakPowersCommon(instrument, selector_string, timeout, &l_stf_peak_power_maximum, &l_ltf_peak_power_maximum, &l_sig_peak_power_maximum);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -5276,6 +5474,7 @@ namespace nirfmxwlan_grpc {
       int32 ru_size {};
       auto status = library_->OFDMModAccFetchRUOffsetAndSize(instrument, selector_string, timeout, &ru_offset, &ru_size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -5303,6 +5502,7 @@ namespace nirfmxwlan_grpc {
       int32 sig_b_crc_status {};
       auto status = library_->OFDMModAccFetchSIGBCRCStatus(instrument, selector_string, timeout, &sig_b_crc_status);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -5330,6 +5530,7 @@ namespace nirfmxwlan_grpc {
       int32 sig_crc_status {};
       auto status = library_->OFDMModAccFetchSIGCRCStatus(instrument, selector_string, timeout, &sig_crc_status);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -5358,6 +5559,7 @@ namespace nirfmxwlan_grpc {
       int32 spectral_flatness_margin_subcarrier_index {};
       auto status = library_->OFDMModAccFetchSpectralFlatness(instrument, selector_string, timeout, &spectral_flatness_margin, &spectral_flatness_margin_subcarrier_index);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -5388,6 +5590,7 @@ namespace nirfmxwlan_grpc {
       while (true) {
         auto status = library_->OFDMModAccFetchSpectralFlatnessMeanTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, nullptr, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->mutable_spectral_flatness_mean()->Resize(actual_array_size, 0);
@@ -5403,6 +5606,7 @@ namespace nirfmxwlan_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->set_status(status);
@@ -5438,6 +5642,7 @@ namespace nirfmxwlan_grpc {
       while (true) {
         auto status = library_->OFDMModAccFetchStreamDataRMSEVMPerSymbolMeanTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->mutable_stream_data_rms_evm_per_symbol_mean()->Resize(actual_array_size, 0);
@@ -5449,6 +5654,7 @@ namespace nirfmxwlan_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->set_status(status);
@@ -5482,6 +5688,7 @@ namespace nirfmxwlan_grpc {
       while (true) {
         auto status = library_->OFDMModAccFetchStreamPilotRMSEVMPerSymbolMeanTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->mutable_stream_pilot_rms_evm_per_symbol_mean()->Resize(actual_array_size, 0);
@@ -5493,6 +5700,7 @@ namespace nirfmxwlan_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->set_status(status);
@@ -5525,6 +5733,7 @@ namespace nirfmxwlan_grpc {
       float64 stream_pilot_rms_evm_mean {};
       auto status = library_->OFDMModAccFetchStreamRMSEVM(instrument, selector_string, timeout, &stream_rms_evm_mean, &stream_data_rms_evm_mean, &stream_pilot_rms_evm_mean);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -5556,6 +5765,7 @@ namespace nirfmxwlan_grpc {
       while (true) {
         auto status = library_->OFDMModAccFetchStreamRMSEVMPerSubcarrierMeanTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->mutable_stream_rms_evm_per_subcarrier_mean()->Resize(actual_array_size, 0);
@@ -5567,6 +5777,7 @@ namespace nirfmxwlan_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->set_status(status);
@@ -5600,6 +5811,7 @@ namespace nirfmxwlan_grpc {
       while (true) {
         auto status = library_->OFDMModAccFetchStreamRMSEVMPerSymbolMeanTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->mutable_stream_rms_evm_per_symbol_mean()->Resize(actual_array_size, 0);
@@ -5611,6 +5823,7 @@ namespace nirfmxwlan_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->set_status(status);
@@ -5645,6 +5858,7 @@ namespace nirfmxwlan_grpc {
       while (true) {
         auto status = library_->OFDMModAccFetchSubcarrierChainEVMPerSymbolTrace(instrument, selector_string, timeout, subcarrier_index, &x0, &dx, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->mutable_subcarrier_chain_evm_per_symbol()->Resize(actual_array_size, 0);
@@ -5656,6 +5870,7 @@ namespace nirfmxwlan_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->set_status(status);
@@ -5690,6 +5905,7 @@ namespace nirfmxwlan_grpc {
       while (true) {
         auto status = library_->OFDMModAccFetchSubcarrierStreamEVMPerSymbolTrace(instrument, selector_string, timeout, subcarrier_index, &x0, &dx, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->mutable_subcarrier_stream_evm_per_symbol()->Resize(actual_array_size, 0);
@@ -5701,6 +5917,7 @@ namespace nirfmxwlan_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->set_status(status);
@@ -5735,6 +5952,7 @@ namespace nirfmxwlan_grpc {
       while (true) {
         auto status = library_->OFDMModAccFetchSymbolChainEVMPerSubcarrierTrace(instrument, selector_string, timeout, symbol_index, &x0, &dx, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->mutable_symbol_chain_evm_per_subcarrier()->Resize(actual_array_size, 0);
@@ -5746,6 +5964,7 @@ namespace nirfmxwlan_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->set_status(status);
@@ -5776,6 +5995,7 @@ namespace nirfmxwlan_grpc {
       float64 symbol_clock_error_mean {};
       auto status = library_->OFDMModAccFetchSymbolClockErrorMean(instrument, selector_string, timeout, &symbol_clock_error_mean);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -5806,6 +6026,7 @@ namespace nirfmxwlan_grpc {
       while (true) {
         auto status = library_->OFDMModAccFetchSymbolStreamEVMPerSubcarrierTrace(instrument, selector_string, timeout, symbol_index, &x0, &dx, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->mutable_symbol_stream_evm_per_subcarrier()->Resize(actual_array_size, 0);
@@ -5817,6 +6038,7 @@ namespace nirfmxwlan_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->set_status(status);
@@ -5848,6 +6070,7 @@ namespace nirfmxwlan_grpc {
       int32 unused_tone_error_margin_ru_index {};
       auto status = library_->OFDMModAccFetchUnusedToneError(instrument, selector_string, timeout, &unused_tone_error_margin, &unused_tone_error_margin_ru_index);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -5876,6 +6099,7 @@ namespace nirfmxwlan_grpc {
       while (true) {
         auto status = library_->OFDMModAccFetchUnusedToneErrorMarginPerRU(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->mutable_unused_tone_error_margin_per_ru()->Resize(actual_array_size, 0);
@@ -5887,6 +6111,7 @@ namespace nirfmxwlan_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->set_status(status);
@@ -5918,6 +6143,7 @@ namespace nirfmxwlan_grpc {
       while (true) {
         auto status = library_->OFDMModAccFetchUnusedToneErrorMeanTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->mutable_unused_tone_error()->Resize(actual_array_size, 0);
@@ -5931,6 +6157,7 @@ namespace nirfmxwlan_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->set_status(status);
@@ -5963,6 +6190,7 @@ namespace nirfmxwlan_grpc {
       while (true) {
         auto status = library_->OFDMModAccFetchUserDataConstellationTrace(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         std::vector<NIComplexSingle> user_data_constellation(actual_array_size, NIComplexSingle());
@@ -5973,6 +6201,7 @@ namespace nirfmxwlan_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->set_status(status);
@@ -6009,6 +6238,7 @@ namespace nirfmxwlan_grpc {
       while (true) {
         auto status = library_->OFDMModAccFetchUserPilotConstellationTrace(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         std::vector<NIComplexSingle> user_pilot_constellation(actual_array_size, NIComplexSingle());
@@ -6019,6 +6249,7 @@ namespace nirfmxwlan_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->set_status(status);
@@ -6054,6 +6285,7 @@ namespace nirfmxwlan_grpc {
       float64 user_power_mean {};
       auto status = library_->OFDMModAccFetchUserPower(instrument, selector_string, timeout, &user_power_mean);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -6083,6 +6315,7 @@ namespace nirfmxwlan_grpc {
       while (true) {
         auto status = library_->OFDMModAccFetchUserStreamDataRMSEVMPerSymbolMeanTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->mutable_user_stream_data_rms_evm_per_symbol_mean()->Resize(actual_array_size, 0);
@@ -6094,6 +6327,7 @@ namespace nirfmxwlan_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->set_status(status);
@@ -6127,6 +6361,7 @@ namespace nirfmxwlan_grpc {
       while (true) {
         auto status = library_->OFDMModAccFetchUserStreamPilotRMSEVMPerSymbolMeanTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->mutable_user_stream_pilot_rms_evm_per_symbol_mean()->Resize(actual_array_size, 0);
@@ -6138,6 +6373,7 @@ namespace nirfmxwlan_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->set_status(status);
@@ -6170,6 +6406,7 @@ namespace nirfmxwlan_grpc {
       float64 user_stream_pilot_rms_evm_mean {};
       auto status = library_->OFDMModAccFetchUserStreamRMSEVM(instrument, selector_string, timeout, &user_stream_rms_evm_mean, &user_stream_data_rms_evm_mean, &user_stream_pilot_rms_evm_mean);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -6201,6 +6438,7 @@ namespace nirfmxwlan_grpc {
       while (true) {
         auto status = library_->OFDMModAccFetchUserStreamRMSEVMPerSubcarrierMeanTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->mutable_user_stream_rms_evm_per_subcarrier_mean()->Resize(actual_array_size, 0);
@@ -6212,6 +6450,7 @@ namespace nirfmxwlan_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->set_status(status);
@@ -6245,6 +6484,7 @@ namespace nirfmxwlan_grpc {
       while (true) {
         auto status = library_->OFDMModAccFetchUserStreamRMSEVMPerSymbolMeanTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->mutable_user_stream_rms_evm_per_symbol_mean()->Resize(actual_array_size, 0);
@@ -6256,6 +6496,7 @@ namespace nirfmxwlan_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->set_status(status);
@@ -6285,6 +6526,7 @@ namespace nirfmxwlan_grpc {
       int32 calibration_data_valid {};
       auto status = library_->OFDMModAccValidateCalibrationData(instrument, selector_string, &calibration_data_valid);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -6311,6 +6553,7 @@ namespace nirfmxwlan_grpc {
       float64 acquisition_length = request->acquisition_length();
       auto status = library_->PowerRampCfgAcquisitionLength(instrument, selector_string, acquisition_length);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -6351,6 +6594,7 @@ namespace nirfmxwlan_grpc {
       int32 averaging_count = request->averaging_count();
       auto status = library_->PowerRampCfgAveraging(instrument, selector_string, averaging_enabled, averaging_count);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -6379,6 +6623,7 @@ namespace nirfmxwlan_grpc {
       while (true) {
         auto status = library_->PowerRampFetchFallTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, nullptr, nullptr, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->mutable_raw_waveform()->Resize(actual_array_size, 0);
@@ -6396,6 +6641,7 @@ namespace nirfmxwlan_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->set_status(status);
@@ -6430,6 +6676,7 @@ namespace nirfmxwlan_grpc {
       float64 fall_time_mean {};
       auto status = library_->PowerRampFetchMeasurement(instrument, selector_string, timeout, &rise_time_mean, &fall_time_mean);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -6460,6 +6707,7 @@ namespace nirfmxwlan_grpc {
       while (true) {
         auto status = library_->PowerRampFetchRiseTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, nullptr, nullptr, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->mutable_raw_waveform()->Resize(actual_array_size, 0);
@@ -6477,6 +6725,7 @@ namespace nirfmxwlan_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->set_status(status);
@@ -6509,6 +6758,7 @@ namespace nirfmxwlan_grpc {
       int32 attribute_id = request->attribute_id();
       auto status = library_->ResetAttribute(instrument, selector_string, attribute_id);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -6532,6 +6782,7 @@ namespace nirfmxwlan_grpc {
       char* selector_string = (char*)request->selector_string().c_str();
       auto status = library_->ResetToDefault(instrument, selector_string);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -6588,6 +6839,7 @@ namespace nirfmxwlan_grpc {
 
       auto status = library_->SEMCfgAveraging(instrument, selector_string, averaging_enabled, averaging_count, averaging_type);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -6627,6 +6879,7 @@ namespace nirfmxwlan_grpc {
 
       auto status = library_->SEMCfgMaskType(instrument, selector_string, mask_type);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -6651,6 +6904,7 @@ namespace nirfmxwlan_grpc {
       int32 number_of_offsets = request->number_of_offsets();
       auto status = library_->SEMCfgNumberOfOffsets(instrument, selector_string, number_of_offsets);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -6704,6 +6958,7 @@ namespace nirfmxwlan_grpc {
 
       auto status = library_->SEMCfgOffsetFrequencyArray(instrument, selector_string, offset_start_frequency, offset_stop_frequency, offset_sideband, number_of_elements);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -6746,6 +7001,7 @@ namespace nirfmxwlan_grpc {
 
       auto status = library_->SEMCfgOffsetRelativeLimitArray(instrument, selector_string, relative_limit_start, relative_limit_stop, number_of_elements);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -6786,6 +7042,7 @@ namespace nirfmxwlan_grpc {
       float64 span = request->span();
       auto status = library_->SEMCfgSpan(instrument, selector_string, span_auto, span);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -6826,6 +7083,7 @@ namespace nirfmxwlan_grpc {
       float64 sweep_time_interval = request->sweep_time_interval();
       auto status = library_->SEMCfgSweepTime(instrument, selector_string, sweep_time_auto, sweep_time_interval);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -6852,6 +7110,7 @@ namespace nirfmxwlan_grpc {
       float64 relative_power {};
       auto status = library_->SEMFetchCarrierMeasurement(instrument, selector_string, timeout, &absolute_power, &relative_power);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -6883,6 +7142,7 @@ namespace nirfmxwlan_grpc {
       float64 margin_relative_power {};
       auto status = library_->SEMFetchLowerOffsetMargin(instrument, selector_string, timeout, &measurement_status, &margin, &margin_frequency, &margin_absolute_power, &margin_relative_power);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -6915,6 +7175,7 @@ namespace nirfmxwlan_grpc {
       while (true) {
         auto status = library_->SEMFetchLowerOffsetMarginArray(instrument, selector_string, timeout, nullptr, nullptr, nullptr, nullptr, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->mutable_measurement_status_raw()->Resize(actual_array_size, 0);
@@ -6934,6 +7195,7 @@ namespace nirfmxwlan_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->set_status(status);
@@ -6979,6 +7241,7 @@ namespace nirfmxwlan_grpc {
       float64 peak_relative_power {};
       auto status = library_->SEMFetchLowerOffsetPower(instrument, selector_string, timeout, &total_absolute_power, &total_relative_power, &peak_absolute_power, &peak_frequency, &peak_relative_power);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -7010,6 +7273,7 @@ namespace nirfmxwlan_grpc {
       while (true) {
         auto status = library_->SEMFetchLowerOffsetPowerArray(instrument, selector_string, timeout, nullptr, nullptr, nullptr, nullptr, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->mutable_total_absolute_power()->Resize(actual_array_size, 0);
@@ -7029,6 +7293,7 @@ namespace nirfmxwlan_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->set_status(status);
@@ -7061,6 +7326,7 @@ namespace nirfmxwlan_grpc {
       int32 measurement_status {};
       auto status = library_->SEMFetchMeasurementStatus(instrument, selector_string, timeout, &measurement_status);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -7091,6 +7357,7 @@ namespace nirfmxwlan_grpc {
       while (true) {
         auto status = library_->SEMFetchSpectrum(instrument, selector_string, timeout, &x0, &dx, nullptr, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->mutable_spectrum()->Resize(actual_array_size, 0);
@@ -7104,6 +7371,7 @@ namespace nirfmxwlan_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->set_status(status);
@@ -7139,6 +7407,7 @@ namespace nirfmxwlan_grpc {
       float64 margin_relative_power {};
       auto status = library_->SEMFetchUpperOffsetMargin(instrument, selector_string, timeout, &measurement_status, &margin, &margin_frequency, &margin_absolute_power, &margin_relative_power);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -7171,6 +7440,7 @@ namespace nirfmxwlan_grpc {
       while (true) {
         auto status = library_->SEMFetchUpperOffsetMarginArray(instrument, selector_string, timeout, nullptr, nullptr, nullptr, nullptr, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->mutable_measurement_status_raw()->Resize(actual_array_size, 0);
@@ -7190,6 +7460,7 @@ namespace nirfmxwlan_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->set_status(status);
@@ -7235,6 +7506,7 @@ namespace nirfmxwlan_grpc {
       float64 peak_relative_power {};
       auto status = library_->SEMFetchUpperOffsetPower(instrument, selector_string, timeout, &total_absolute_power, &total_relative_power, &peak_absolute_power, &peak_frequency, &peak_relative_power);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -7266,6 +7538,7 @@ namespace nirfmxwlan_grpc {
       while (true) {
         auto status = library_->SEMFetchUpperOffsetPowerArray(instrument, selector_string, timeout, nullptr, nullptr, nullptr, nullptr, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->mutable_total_absolute_power()->Resize(actual_array_size, 0);
@@ -7285,6 +7558,7 @@ namespace nirfmxwlan_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->set_status(status);
@@ -7332,6 +7606,7 @@ namespace nirfmxwlan_grpc {
       int32 enable_all_traces = request->enable_all_traces();
       auto status = library_->SelectMeasurements(instrument, selector_string, measurements, enable_all_traces);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -7354,6 +7629,7 @@ namespace nirfmxwlan_grpc {
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       auto status = library_->SendSoftwareEdgeTrigger(instrument);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -7379,6 +7655,7 @@ namespace nirfmxwlan_grpc {
       float32 attr_val = request->attr_val();
       auto status = library_->SetAttributeF32(instrument, selector_string, attribute_id, attr_val);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -7405,6 +7682,7 @@ namespace nirfmxwlan_grpc {
       int32 array_size = static_cast<int32>(request->attr_val().size());
       auto status = library_->SetAttributeF32Array(instrument, selector_string, attribute_id, attr_val, array_size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -7430,6 +7708,7 @@ namespace nirfmxwlan_grpc {
       float64 attr_val = request->attr_val();
       auto status = library_->SetAttributeF64(instrument, selector_string, attribute_id, attr_val);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -7456,6 +7735,7 @@ namespace nirfmxwlan_grpc {
       int32 array_size = static_cast<int32>(request->attr_val().size());
       auto status = library_->SetAttributeF64Array(instrument, selector_string, attribute_id, attr_val, array_size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -7490,6 +7770,7 @@ namespace nirfmxwlan_grpc {
 
       auto status = library_->SetAttributeI16(instrument, selector_string, attribute_id, attr_val);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -7533,6 +7814,7 @@ namespace nirfmxwlan_grpc {
 
       auto status = library_->SetAttributeI32(instrument, selector_string, attribute_id, attr_val);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -7567,6 +7849,7 @@ namespace nirfmxwlan_grpc {
       int32 array_size = static_cast<int32>(request->attr_val().size());
       auto status = library_->SetAttributeI32Array(instrument, selector_string, attribute_id, attr_val, array_size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -7592,6 +7875,7 @@ namespace nirfmxwlan_grpc {
       int64 attr_val = request->attr_val();
       auto status = library_->SetAttributeI64(instrument, selector_string, attribute_id, attr_val);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -7618,6 +7902,7 @@ namespace nirfmxwlan_grpc {
       int32 array_size = static_cast<int32>(request->attr_val().size());
       auto status = library_->SetAttributeI64Array(instrument, selector_string, attribute_id, attr_val, array_size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -7652,6 +7937,7 @@ namespace nirfmxwlan_grpc {
 
       auto status = library_->SetAttributeI8(instrument, selector_string, attribute_id, attr_val);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -7698,6 +7984,7 @@ namespace nirfmxwlan_grpc {
       int32 array_size = static_cast<int32>(request->attr_val().size());
       auto status = library_->SetAttributeI8Array(instrument, selector_string, attribute_id, attr_val.data(), array_size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -7727,6 +8014,7 @@ namespace nirfmxwlan_grpc {
       int32 array_size = static_cast<int32>(request->attr_val().size());
       auto status = library_->SetAttributeNIComplexDoubleArray(instrument, selector_string, attribute_id, attr_val.data(), array_size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -7753,6 +8041,7 @@ namespace nirfmxwlan_grpc {
       int32 array_size = static_cast<int32>(request->attr_val().size());
       auto status = library_->SetAttributeNIComplexSingleArray(instrument, selector_string, attribute_id, attr_val.data(), array_size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -7797,6 +8086,7 @@ namespace nirfmxwlan_grpc {
 
       auto status = library_->SetAttributeString(instrument, selector_string, attribute_id, attr_val);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -7831,6 +8121,7 @@ namespace nirfmxwlan_grpc {
 
       auto status = library_->SetAttributeU16(instrument, selector_string, attribute_id, attr_val);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -7859,6 +8150,7 @@ namespace nirfmxwlan_grpc {
       uInt32 attr_val = request->attr_val();
       auto status = library_->SetAttributeU32(instrument, selector_string, attribute_id, attr_val);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -7885,6 +8177,7 @@ namespace nirfmxwlan_grpc {
       int32 array_size = static_cast<int32>(request->attr_val().size());
       auto status = library_->SetAttributeU32Array(instrument, selector_string, attribute_id, attr_val, array_size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -7911,6 +8204,7 @@ namespace nirfmxwlan_grpc {
       int32 array_size = static_cast<int32>(request->attr_val().size());
       auto status = library_->SetAttributeU64Array(instrument, selector_string, attribute_id, attr_val, array_size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -7936,6 +8230,7 @@ namespace nirfmxwlan_grpc {
       uInt8 attr_val = request->attr_val();
       auto status = library_->SetAttributeU8(instrument, selector_string, attribute_id, attr_val);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -7962,6 +8257,7 @@ namespace nirfmxwlan_grpc {
       int32 array_size = static_cast<int32>(request->attr_val().size());
       auto status = library_->SetAttributeU8Array(instrument, selector_string, attribute_id, attr_val, array_size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -8002,6 +8298,7 @@ namespace nirfmxwlan_grpc {
       int32 averaging_count = request->averaging_count();
       auto status = library_->TXPCfgAveraging(instrument, selector_string, averaging_enabled, averaging_count);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -8041,6 +8338,7 @@ namespace nirfmxwlan_grpc {
 
       auto status = library_->TXPCfgBurstDetectionEnabled(instrument, selector_string, burst_detection_enabled);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -8065,6 +8363,7 @@ namespace nirfmxwlan_grpc {
       float64 maximum_measurement_interval = request->maximum_measurement_interval();
       auto status = library_->TXPCfgMaximumMeasurementInterval(instrument, selector_string, maximum_measurement_interval);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -8091,6 +8390,7 @@ namespace nirfmxwlan_grpc {
       float64 peak_power_maximum {};
       auto status = library_->TXPFetchMeasurement(instrument, selector_string, timeout, &average_power_mean, &peak_power_maximum);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -8121,6 +8421,7 @@ namespace nirfmxwlan_grpc {
       while (true) {
         auto status = library_->TXPFetchPowerTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->mutable_power()->Resize(actual_array_size, 0);
@@ -8132,6 +8433,7 @@ namespace nirfmxwlan_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
         }
         response->set_status(status);
@@ -8160,6 +8462,7 @@ namespace nirfmxwlan_grpc {
       float64 timeout = request->timeout();
       auto status = library_->WaitForAcquisitionComplete(instrument, timeout);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);
@@ -8184,6 +8487,7 @@ namespace nirfmxwlan_grpc {
       float64 timeout = request->timeout();
       auto status = library_->WaitForMeasurementComplete(instrument, selector_string, timeout);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
       }
       response->set_status(status);

@@ -58,6 +58,7 @@ namespace nidcpower_grpc {
       auto channel_name = request->channel_name().c_str();
       auto status = library_->AbortWithChannels(vi, channel_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -81,6 +82,7 @@ namespace nidcpower_grpc {
       auto channel_name = request->channel_name().c_str();
       auto status = library_->CommitWithChannels(vi, channel_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -121,6 +123,7 @@ namespace nidcpower_grpc {
 
       auto status = library_->ConfigureDigitalEdgeMeasureTriggerWithChannels(vi, channel_name, input_terminal, edge);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -161,6 +164,7 @@ namespace nidcpower_grpc {
 
       auto status = library_->ConfigureDigitalEdgePulseTriggerWithChannels(vi, channel_name, input_terminal, edge);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -201,6 +205,7 @@ namespace nidcpower_grpc {
 
       auto status = library_->ConfigureDigitalEdgeSequenceAdvanceTriggerWithChannels(vi, channel_name, input_terminal, edge);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -241,6 +246,7 @@ namespace nidcpower_grpc {
 
       auto status = library_->ConfigureDigitalEdgeShutdownTriggerWithChannels(vi, channel_name, input_terminal, edge);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -281,6 +287,7 @@ namespace nidcpower_grpc {
 
       auto status = library_->ConfigureDigitalEdgeSourceTriggerWithChannels(vi, channel_name, input_terminal, edge);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -321,6 +328,7 @@ namespace nidcpower_grpc {
 
       auto status = library_->ConfigureDigitalEdgeStartTriggerWithChannels(vi, channel_name, input_terminal, edge);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -346,6 +354,7 @@ namespace nidcpower_grpc {
       ViReal64 limit = request->limit();
       auto status = library_->ConfigureOvp(vi, channel_name, enabled, limit);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -369,6 +378,7 @@ namespace nidcpower_grpc {
       auto channel_name = request->channel_name().c_str();
       auto status = library_->ConfigureSoftwareEdgeMeasureTriggerWithChannels(vi, channel_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -392,6 +402,7 @@ namespace nidcpower_grpc {
       auto channel_name = request->channel_name().c_str();
       auto status = library_->ConfigureSoftwareEdgePulseTriggerWithChannels(vi, channel_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -415,6 +426,7 @@ namespace nidcpower_grpc {
       auto channel_name = request->channel_name().c_str();
       auto status = library_->ConfigureSoftwareEdgeSequenceAdvanceTriggerWithChannels(vi, channel_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -438,6 +450,7 @@ namespace nidcpower_grpc {
       auto channel_name = request->channel_name().c_str();
       auto status = library_->ConfigureSoftwareEdgeShutdownTriggerWithChannels(vi, channel_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -461,6 +474,7 @@ namespace nidcpower_grpc {
       auto channel_name = request->channel_name().c_str();
       auto status = library_->ConfigureSoftwareEdgeSourceTriggerWithChannels(vi, channel_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -484,6 +498,7 @@ namespace nidcpower_grpc {
       auto channel_name = request->channel_name().c_str();
       auto status = library_->ConfigureSoftwareEdgeStartTriggerWithChannels(vi, channel_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -523,6 +538,7 @@ namespace nidcpower_grpc {
 
       auto status = library_->ConfigureSourceModeWithChannels(vi, channel_name, source_mode);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -547,6 +563,7 @@ namespace nidcpower_grpc {
       ViBoolean set_as_active_step = request->set_as_active_step();
       auto status = library_->CreateAdvancedSequenceCommitStepWithChannels(vi, channel_name, set_as_active_step);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -571,6 +588,7 @@ namespace nidcpower_grpc {
       ViBoolean set_as_active_step = request->set_as_active_step();
       auto status = library_->CreateAdvancedSequenceStepWithChannels(vi, channel_name, set_as_active_step);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -598,6 +616,7 @@ namespace nidcpower_grpc {
       ViBoolean set_as_active_sequence = request->set_as_active_sequence();
       auto status = library_->CreateAdvancedSequenceWithChannels(vi, channel_name, sequence_name, attribute_id_count, attribute_ids, set_as_active_sequence);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -624,6 +643,7 @@ namespace nidcpower_grpc {
       ViBoolean set_as_active_sequence = request->set_as_active_sequence();
       auto status = library_->CreateAdvancedSequence(vi, sequence_name, attribute_id_count, attribute_ids, set_as_active_sequence);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -648,6 +668,7 @@ namespace nidcpower_grpc {
       auto sequence_name = request->sequence_name().c_str();
       auto status = library_->DeleteAdvancedSequenceWithChannels(vi, channel_name, sequence_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -671,6 +692,7 @@ namespace nidcpower_grpc {
       auto channel_name = request->channel_name().c_str();
       auto status = library_->DisablePulseTriggerWithChannels(vi, channel_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -694,6 +716,7 @@ namespace nidcpower_grpc {
       auto channel_name = request->channel_name().c_str();
       auto status = library_->DisableSequenceAdvanceTriggerWithChannels(vi, channel_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -717,6 +740,7 @@ namespace nidcpower_grpc {
       auto channel_name = request->channel_name().c_str();
       auto status = library_->DisableShutdownTriggerWithChannels(vi, channel_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -740,6 +764,7 @@ namespace nidcpower_grpc {
       auto channel_name = request->channel_name().c_str();
       auto status = library_->DisableSourceTriggerWithChannels(vi, channel_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -763,6 +788,7 @@ namespace nidcpower_grpc {
       auto channel_name = request->channel_name().c_str();
       auto status = library_->DisableStartTriggerWithChannels(vi, channel_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -787,6 +813,7 @@ namespace nidcpower_grpc {
       ViInt32 error_code {};
       auto status = library_->ErrorQuery(vi, &error_code, error_message);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -829,6 +856,7 @@ namespace nidcpower_grpc {
       auto output_terminal = request->output_terminal().c_str();
       auto status = library_->ExportSignalWithChannels(vi, channel_name, signal, signal_identifier, output_terminal);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -861,6 +889,7 @@ namespace nidcpower_grpc {
       auto cleanup_lambda = [&] (ViSession id) { library_->Close(id); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, 0);
       }
       response->set_status(status);
@@ -888,6 +917,7 @@ namespace nidcpower_grpc {
       auto channel_name = request->channel_name().c_str();
       auto status = library_->InitiateWithChannels(vi, channel_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -910,6 +940,7 @@ namespace nidcpower_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->InvalidateAllAttributes(vi);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -933,6 +964,7 @@ namespace nidcpower_grpc {
       auto channel_name = request->channel_name().c_str();
       auto status = library_->ResetWithChannels(vi, channel_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -972,6 +1004,7 @@ namespace nidcpower_grpc {
 
       auto status = library_->SendSoftwareEdgeTriggerWithChannels(vi, channel_name, trigger);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -1012,6 +1045,7 @@ namespace nidcpower_grpc {
       ViReal64 timeout = request->timeout();
       auto status = library_->WaitForEventWithChannels(vi, channel_name, event_id, timeout);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -1034,6 +1068,7 @@ namespace nidcpower_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -1057,6 +1092,7 @@ namespace nidcpower_grpc {
       auto channel_name = request->channel_name().c_str();
       auto status = library_->CalSelfCalibrate(vi, channel_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -1079,6 +1115,7 @@ namespace nidcpower_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->ClearError(vi);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -1101,6 +1138,7 @@ namespace nidcpower_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->ClearInterchangeWarnings(vi);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -1124,6 +1162,7 @@ namespace nidcpower_grpc {
       session_repository_->remove_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Close(vi);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -1146,6 +1185,7 @@ namespace nidcpower_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Commit(vi);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -1186,6 +1226,7 @@ namespace nidcpower_grpc {
 
       auto status = library_->ConfigureApertureTime(vi, channel_name, aperture_time, units);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -1225,6 +1266,7 @@ namespace nidcpower_grpc {
 
       auto status = library_->ConfigureAutoZero(vi, channel_name, auto_zero);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -1249,6 +1291,7 @@ namespace nidcpower_grpc {
       ViReal64 level = request->level();
       auto status = library_->ConfigureCurrentLevel(vi, channel_name, level);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -1273,6 +1316,7 @@ namespace nidcpower_grpc {
       ViReal64 range = request->range();
       auto status = library_->ConfigureCurrentLevelRange(vi, channel_name, range);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -1313,6 +1357,7 @@ namespace nidcpower_grpc {
       ViReal64 limit = request->limit();
       auto status = library_->ConfigureCurrentLimit(vi, channel_name, behavior, limit);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -1337,6 +1382,7 @@ namespace nidcpower_grpc {
       ViReal64 range = request->range();
       auto status = library_->ConfigureCurrentLimitRange(vi, channel_name, range);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -1376,6 +1422,7 @@ namespace nidcpower_grpc {
 
       auto status = library_->ConfigureDigitalEdgeMeasureTrigger(vi, input_terminal, edge);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -1415,6 +1462,7 @@ namespace nidcpower_grpc {
 
       auto status = library_->ConfigureDigitalEdgePulseTrigger(vi, input_terminal, edge);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -1454,6 +1502,7 @@ namespace nidcpower_grpc {
 
       auto status = library_->ConfigureDigitalEdgeSequenceAdvanceTrigger(vi, input_terminal, edge);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -1493,6 +1542,7 @@ namespace nidcpower_grpc {
 
       auto status = library_->ConfigureDigitalEdgeSourceTrigger(vi, input_terminal, edge);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -1532,6 +1582,7 @@ namespace nidcpower_grpc {
 
       auto status = library_->ConfigureDigitalEdgeStartTrigger(vi, input_terminal, edge);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -1556,6 +1607,7 @@ namespace nidcpower_grpc {
       ViBoolean enabled = request->enabled();
       auto status = library_->ConfigureOutputEnabled(vi, channel_name, enabled);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -1595,6 +1647,7 @@ namespace nidcpower_grpc {
 
       auto status = library_->ConfigureOutputFunction(vi, channel_name, function);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -1619,6 +1672,7 @@ namespace nidcpower_grpc {
       ViReal64 resistance = request->resistance();
       auto status = library_->ConfigureOutputResistance(vi, channel_name, resistance);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -1657,6 +1711,7 @@ namespace nidcpower_grpc {
 
       auto status = library_->ConfigurePowerLineFrequency(vi, powerline_frequency);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -1681,6 +1736,7 @@ namespace nidcpower_grpc {
       ViReal64 level = request->level();
       auto status = library_->ConfigurePulseBiasCurrentLevel(vi, channel_name, level);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -1705,6 +1761,7 @@ namespace nidcpower_grpc {
       ViReal64 limit = request->limit();
       auto status = library_->ConfigurePulseBiasCurrentLimit(vi, channel_name, limit);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -1729,6 +1786,7 @@ namespace nidcpower_grpc {
       ViReal64 level = request->level();
       auto status = library_->ConfigurePulseBiasVoltageLevel(vi, channel_name, level);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -1753,6 +1811,7 @@ namespace nidcpower_grpc {
       ViReal64 limit = request->limit();
       auto status = library_->ConfigurePulseBiasVoltageLimit(vi, channel_name, limit);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -1777,6 +1836,7 @@ namespace nidcpower_grpc {
       ViReal64 level = request->level();
       auto status = library_->ConfigurePulseCurrentLevel(vi, channel_name, level);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -1801,6 +1861,7 @@ namespace nidcpower_grpc {
       ViReal64 range = request->range();
       auto status = library_->ConfigurePulseCurrentLevelRange(vi, channel_name, range);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -1825,6 +1886,7 @@ namespace nidcpower_grpc {
       ViReal64 limit = request->limit();
       auto status = library_->ConfigurePulseCurrentLimit(vi, channel_name, limit);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -1849,6 +1911,7 @@ namespace nidcpower_grpc {
       ViReal64 range = request->range();
       auto status = library_->ConfigurePulseCurrentLimitRange(vi, channel_name, range);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -1873,6 +1936,7 @@ namespace nidcpower_grpc {
       ViReal64 level = request->level();
       auto status = library_->ConfigurePulseVoltageLevel(vi, channel_name, level);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -1897,6 +1961,7 @@ namespace nidcpower_grpc {
       ViReal64 range = request->range();
       auto status = library_->ConfigurePulseVoltageLevelRange(vi, channel_name, range);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -1921,6 +1986,7 @@ namespace nidcpower_grpc {
       ViReal64 limit = request->limit();
       auto status = library_->ConfigurePulseVoltageLimit(vi, channel_name, limit);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -1945,6 +2011,7 @@ namespace nidcpower_grpc {
       ViReal64 range = request->range();
       auto status = library_->ConfigurePulseVoltageLimitRange(vi, channel_name, range);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -1984,6 +2051,7 @@ namespace nidcpower_grpc {
 
       auto status = library_->ConfigureSense(vi, channel_name, sense);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -2006,6 +2074,7 @@ namespace nidcpower_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->ConfigureSoftwareEdgeMeasureTrigger(vi);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -2028,6 +2097,7 @@ namespace nidcpower_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->ConfigureSoftwareEdgePulseTrigger(vi);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -2050,6 +2120,7 @@ namespace nidcpower_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->ConfigureSoftwareEdgeSequenceAdvanceTrigger(vi);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -2072,6 +2143,7 @@ namespace nidcpower_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->ConfigureSoftwareEdgeSourceTrigger(vi);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -2094,6 +2166,7 @@ namespace nidcpower_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->ConfigureSoftwareEdgeStartTrigger(vi);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -2132,6 +2205,7 @@ namespace nidcpower_grpc {
 
       auto status = library_->ConfigureSourceMode(vi, source_mode);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -2156,6 +2230,7 @@ namespace nidcpower_grpc {
       ViReal64 level = request->level();
       auto status = library_->ConfigureVoltageLevel(vi, channel_name, level);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -2180,6 +2255,7 @@ namespace nidcpower_grpc {
       ViReal64 range = request->range();
       auto status = library_->ConfigureVoltageLevelRange(vi, channel_name, range);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -2204,6 +2280,7 @@ namespace nidcpower_grpc {
       ViReal64 limit = request->limit();
       auto status = library_->ConfigureVoltageLimit(vi, channel_name, limit);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -2228,6 +2305,7 @@ namespace nidcpower_grpc {
       ViReal64 range = request->range();
       auto status = library_->ConfigureVoltageLimitRange(vi, channel_name, range);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -2251,6 +2329,7 @@ namespace nidcpower_grpc {
       ViBoolean set_as_active_step = request->set_as_active_step();
       auto status = library_->CreateAdvancedSequenceStep(vi, set_as_active_step);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -2274,6 +2353,7 @@ namespace nidcpower_grpc {
       auto sequence_name = request->sequence_name().c_str();
       auto status = library_->DeleteAdvancedSequence(vi, sequence_name);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -2296,6 +2376,7 @@ namespace nidcpower_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Disable(vi);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -2318,6 +2399,7 @@ namespace nidcpower_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->DisablePulseTrigger(vi);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -2340,6 +2422,7 @@ namespace nidcpower_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->DisableSequenceAdvanceTrigger(vi);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -2362,6 +2445,7 @@ namespace nidcpower_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->DisableSourceTrigger(vi);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -2384,6 +2468,7 @@ namespace nidcpower_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->DisableStartTrigger(vi);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -2408,6 +2493,7 @@ namespace nidcpower_grpc {
       std::string error_message(256 - 1, '\0');
       auto status = library_->ErrorMessage(vi, error_code, (ViChar*)error_message.data());
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -2434,6 +2520,7 @@ namespace nidcpower_grpc {
       while (true) {
         auto status = library_->ExportAttributeConfigurationBuffer(vi, 0, nullptr);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForViSession(status, vi);
         }
         ViInt32 size = status;
@@ -2446,6 +2533,7 @@ namespace nidcpower_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForViSession(status, vi);
         }
         response->set_status(status);
@@ -2470,6 +2558,7 @@ namespace nidcpower_grpc {
       auto file_path = request->file_path().c_str();
       auto status = library_->ExportAttributeConfigurationFile(vi, file_path);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -2510,6 +2599,7 @@ namespace nidcpower_grpc {
       auto output_terminal = request->output_terminal().c_str();
       auto status = library_->ExportSignal(vi, signal, signal_identifier, output_terminal);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -2541,6 +2631,7 @@ namespace nidcpower_grpc {
       ViInt32 actual_count {};
       auto status = library_->FetchMultiple(vi, channel_name, timeout, count, voltage_measurements, current_measurements, in_compliance.data(), &actual_count);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -2568,6 +2659,7 @@ namespace nidcpower_grpc {
       ViBoolean attribute_value {};
       auto status = library_->GetAttributeViBoolean(vi, channel_name, attribute_id, &attribute_value);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -2594,6 +2686,7 @@ namespace nidcpower_grpc {
       ViInt32 attribute_value {};
       auto status = library_->GetAttributeViInt32(vi, channel_name, attribute_id, &attribute_value);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -2620,6 +2713,7 @@ namespace nidcpower_grpc {
       ViInt64 attribute_value {};
       auto status = library_->GetAttributeViInt64(vi, channel_name, attribute_id, &attribute_value);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -2646,6 +2740,7 @@ namespace nidcpower_grpc {
       ViReal64 attribute_value {};
       auto status = library_->GetAttributeViReal64(vi, channel_name, attribute_id, &attribute_value);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -2672,6 +2767,7 @@ namespace nidcpower_grpc {
       ViSession attribute_value {};
       auto status = library_->GetAttributeViSession(vi, channel_name, attribute_id, &attribute_value);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -2700,6 +2796,7 @@ namespace nidcpower_grpc {
       while (true) {
         auto status = library_->GetAttributeViString(vi, channel_name, attribute_id, 0, nullptr);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForViSession(status, vi);
         }
         ViInt32 buffer_size = status;
@@ -2714,6 +2811,7 @@ namespace nidcpower_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForViSession(status, vi);
         }
         response->set_status(status);
@@ -2742,6 +2840,7 @@ namespace nidcpower_grpc {
       while (true) {
         auto status = library_->GetChannelName(vi, index, 0, nullptr);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForViSession(status, vi);
         }
         ViInt32 buffer_size = status;
@@ -2756,6 +2855,7 @@ namespace nidcpower_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForViSession(status, vi);
         }
         response->set_status(status);
@@ -2784,6 +2884,7 @@ namespace nidcpower_grpc {
       while (true) {
         auto status = library_->GetChannelNameFromString(vi, index, 0, nullptr);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForViSession(status, vi);
         }
         ViInt32 buffer_size = status;
@@ -2798,6 +2899,7 @@ namespace nidcpower_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForViSession(status, vi);
         }
         response->set_status(status);
@@ -2825,6 +2927,7 @@ namespace nidcpower_grpc {
       while (true) {
         auto status = library_->GetError(vi, nullptr, 0, nullptr);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForViSession(status, vi);
         }
         ViInt32 buffer_size = status;
@@ -2840,6 +2943,7 @@ namespace nidcpower_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForViSession(status, vi);
         }
         response->set_status(status);
@@ -2871,6 +2975,7 @@ namespace nidcpower_grpc {
       ViInt32 minute {};
       auto status = library_->GetExtCalLastDateAndTime(vi, &year, &month, &day, &hour, &minute);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -2899,6 +3004,7 @@ namespace nidcpower_grpc {
       ViReal64 temperature {};
       auto status = library_->GetExtCalLastTemp(vi, &temperature);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -2923,6 +3029,7 @@ namespace nidcpower_grpc {
       ViInt32 months {};
       auto status = library_->GetExtCalRecommendedInterval(vi, &months);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -2948,6 +3055,7 @@ namespace nidcpower_grpc {
       while (true) {
         auto status = library_->GetNextCoercionRecord(vi, 0, nullptr);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForViSession(status, vi);
         }
         ViInt32 buffer_size = status;
@@ -2962,6 +3070,7 @@ namespace nidcpower_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForViSession(status, vi);
         }
         response->set_status(status);
@@ -2989,6 +3098,7 @@ namespace nidcpower_grpc {
       while (true) {
         auto status = library_->GetNextInterchangeWarning(vi, 0, nullptr);
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForViSession(status, vi);
         }
         ViInt32 buffer_size = status;
@@ -3003,6 +3113,7 @@ namespace nidcpower_grpc {
           continue;
         }
         if (!status_ok(status)) {
+          context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
           return ConvertApiErrorStatusForViSession(status, vi);
         }
         response->set_status(status);
@@ -3033,6 +3144,7 @@ namespace nidcpower_grpc {
       ViInt32 minute {};
       auto status = library_->GetSelfCalLastDateAndTime(vi, &year, &month, &day, &hour, &minute);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -3061,6 +3173,7 @@ namespace nidcpower_grpc {
       ViReal64 temperature {};
       auto status = library_->GetSelfCalLastTemp(vi, &temperature);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -3086,6 +3199,7 @@ namespace nidcpower_grpc {
       auto configuration = const_cast<ViAddr*>(reinterpret_cast<const ViAddr*>(request->configuration().data()));
       auto status = library_->ImportAttributeConfigurationBuffer(vi, size, configuration);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -3109,6 +3223,7 @@ namespace nidcpower_grpc {
       auto file_path = request->file_path().c_str();
       auto status = library_->ImportAttributeConfigurationFile(vi, file_path);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -3142,6 +3257,7 @@ namespace nidcpower_grpc {
       auto cleanup_lambda = [&] (ViSession id) { library_->Close(id); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, 0);
       }
       response->set_status(status);
@@ -3168,6 +3284,7 @@ namespace nidcpower_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Initiate(vi);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -3208,6 +3325,7 @@ namespace nidcpower_grpc {
       ViReal64 measurement {};
       auto status = library_->Measure(vi, channel_name, measurement_type, &measurement);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -3233,6 +3351,7 @@ namespace nidcpower_grpc {
       ViBoolean in_compliance {};
       auto status = library_->QueryInCompliance(vi, channel_name, &in_compliance);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -3259,6 +3378,7 @@ namespace nidcpower_grpc {
       ViReal64 max_current_limit {};
       auto status = library_->QueryMaxCurrentLimit(vi, channel_name, voltage_level, &max_current_limit);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -3285,6 +3405,7 @@ namespace nidcpower_grpc {
       ViReal64 max_voltage_level {};
       auto status = library_->QueryMaxVoltageLevel(vi, channel_name, current_limit, &max_voltage_level);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -3311,6 +3432,7 @@ namespace nidcpower_grpc {
       ViReal64 min_current_limit {};
       auto status = library_->QueryMinCurrentLimit(vi, channel_name, voltage_level, &min_current_limit);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -3352,6 +3474,7 @@ namespace nidcpower_grpc {
       ViBoolean in_state {};
       auto status = library_->QueryOutputState(vi, channel_name, output_state, &in_state);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -3376,6 +3499,7 @@ namespace nidcpower_grpc {
       ViReal64 temperature {};
       auto status = library_->ReadCurrentTemperature(vi, &temperature);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -3399,6 +3523,7 @@ namespace nidcpower_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Reset(vi);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -3421,6 +3546,7 @@ namespace nidcpower_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->ResetDevice(vi);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -3443,6 +3569,7 @@ namespace nidcpower_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->ResetInterchangeCheck(vi);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -3465,6 +3592,7 @@ namespace nidcpower_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->ResetWithDefaults(vi);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -3489,6 +3617,7 @@ namespace nidcpower_grpc {
       std::string firmware_revision(256 - 1, '\0');
       auto status = library_->RevisionQuery(vi, (ViChar*)instrument_driver_revision.data(), (ViChar*)firmware_revision.data());
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -3517,6 +3646,7 @@ namespace nidcpower_grpc {
       std::string self_test_message(256 - 1, '\0');
       auto status = library_->SelfTest(vi, &self_test_result, (ViChar*)self_test_message.data());
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -3558,6 +3688,7 @@ namespace nidcpower_grpc {
 
       auto status = library_->SendSoftwareEdgeTrigger(vi, trigger);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -3583,6 +3714,7 @@ namespace nidcpower_grpc {
       ViBoolean attribute_value = request->attribute_value();
       auto status = library_->SetAttributeViBoolean(vi, channel_name, attribute_id, attribute_value);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -3623,6 +3755,7 @@ namespace nidcpower_grpc {
 
       auto status = library_->SetAttributeViInt32(vi, channel_name, attribute_id, attribute_value);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -3648,6 +3781,7 @@ namespace nidcpower_grpc {
       ViInt64 attribute_value = request->attribute_value_raw();
       auto status = library_->SetAttributeViInt64(vi, channel_name, attribute_id, attribute_value);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -3688,6 +3822,7 @@ namespace nidcpower_grpc {
 
       auto status = library_->SetAttributeViReal64(vi, channel_name, attribute_id, attribute_value);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -3714,6 +3849,7 @@ namespace nidcpower_grpc {
       ViSession attribute_value = session_repository_->access_session(attribute_value_grpc_session.id(), attribute_value_grpc_session.name());
       auto status = library_->SetAttributeViSession(vi, channel_name, attribute_id, attribute_value);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -3739,6 +3875,7 @@ namespace nidcpower_grpc {
       auto attribute_value = request->attribute_value_raw().c_str();
       auto status = library_->SetAttributeViString(vi, channel_name, attribute_id, attribute_value);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -3776,6 +3913,7 @@ namespace nidcpower_grpc {
 
       auto status = library_->SetSequence(vi, channel_name, values, source_delays, size);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
@@ -3815,6 +3953,7 @@ namespace nidcpower_grpc {
       ViReal64 timeout = request->timeout();
       auto status = library_->WaitForEvent(vi, event_id, timeout);
       if (!status_ok(status)) {
+        context->AddTrailingMetadata("nidevice-status-code", std::to_string(status));
         return ConvertApiErrorStatusForViSession(status, vi);
       }
       response->set_status(status);
