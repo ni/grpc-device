@@ -120,6 +120,7 @@ class NiRFmxNRLibraryInterface {
   virtual int32 ModAccClearNoiseCalibrationDatabase(niRFmxInstrHandle instrumentHandle) = 0;
   virtual int32 ModAccFetchCompositeEVM(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* compositeRMSEVMMean, float64* compositePeakEVMMaximum) = 0;
   virtual int32 ModAccFetchFrequencyErrorMean(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* frequencyErrorMean) = 0;
+  virtual int32 ModAccFetchFrequencyErrorPerSlotMaximumTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 frequencyErrorPerSlotMaximum[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 ModAccFetchIQGainImbalancePerSubcarrierMeanTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 iqGainImbalancePerSubcarrierMean[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 ModAccFetchIQQuadratureErrorPerSubcarrierMeanTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 iqQuadratureErrorPerSubcarrierMean[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 ModAccFetchInBandEmissionTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 inBandEmission[], float32 inBandEmissionMask[], int32 arraySize, int32* actualArraySize) = 0;

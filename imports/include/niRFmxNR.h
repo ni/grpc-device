@@ -43,8 +43,9 @@
 #define RFMXNR_ATTR_AUTO_RESOURCE_BLOCK_DETECTION_ENABLED                                  0x0090001f
 #define RFMXNR_ATTR_DOWNLINK_CHANNEL_CONFIGURATION_MODE                                    0x0090008e
 #define RFMXNR_ATTR_AUTO_INCREMENT_CELL_ID_ENABLED                                         0x0090009f
+#define RFMXNR_ATTR_DOWNLINK_TEST_MODEL_CELL_ID_MODE                                       0x0090011e
 #define RFMXNR_ATTR_NUMBER_OF_SUBBLOCKS                                                    0x00900010
-#define RFMXNR_ATTR_SUBBLOCK_FREQUENCY_DEFINITION                                          0x00900011
+#define RFMXNR_ATTR_SUBBLOCK_FREQUENCY                                                     0x0090011f
 #define RFMXNR_ATTR_SUBBLOCK_TRANSMIT_LO_FREQUENCY                                         0x00900060
 #define RFMXNR_ATTR_PHASE_COMPENSATION_FREQUENCY                                           0x00900061
 #define RFMXNR_ATTR_FREQUENCY_RANGE                                                        0x00900035
@@ -138,7 +139,6 @@
 #define RFMXNR_ATTR_PDSCH_PTRS_RE_OFFSET                                                   0x0090007f
 #define RFMXNR_ATTR_PDSCH_SLOT_ALLOCATION                                                  0x00900080
 #define RFMXNR_ATTR_PDSCH_SYMBOL_ALLOCATION                                                0x00900081
-#define RFMXNR_ATTR_PDSCH_PRESENT_IN_SSB_RESOURCE_BLOCK                                    0x00900097
 #define RFMXNR_ATTR_NUMBER_OF_CORESETS                                                     0x00900106
 #define RFMXNR_ATTR_CORESET_SYMBOL_OFFSET                                                  0x00900107
 #define RFMXNR_ATTR_CORESET_NUMBER_OF_SYMBOLS                                              0x00900108
@@ -167,6 +167,7 @@
 #define RFMXNR_ATTR_SSS_POWER                                                              0x00900087
 #define RFMXNR_ATTR_PBCH_POWER                                                             0x00900088
 #define RFMXNR_ATTR_PBCH_DMRS_POWER                                                        0x00900089
+#define RFMXNR_ATTR_SSB_HRF_INDEX                                                          0x00900120
 #define RFMXNR_ATTR_NUMBER_OF_STEPS                                                        0x00900ff8
 #define RFMXNR_ATTR_LIST_STEP_TIMER_DURATION                                               0x00900ff9
 #define RFMXNR_ATTR_LIST_STEP_TIMER_UNIT                                                   0x00900ff6
@@ -190,8 +191,9 @@
 #define RFMXNR_ATTR_MODACC_MEASUREMENT_LENGTH                                              0x00904007
 #define RFMXNR_ATTR_MODACC_SPECTRUM_INVERTED                                               0x00904008
 #define RFMXNR_ATTR_MODACC_CHANNEL_ESTIMATION_TYPE                                         0x00904009
-#define RFMXNR_ATTR_MODACC_PHASE_TRACKING_ENABLED                                          0x00904051
-#define RFMXNR_ATTR_MODACC_TIMING_TRACKING_ENABLED                                         0x00904052
+#define RFMXNR_ATTR_MODACC_PHASE_TRACKING_MODE                                             0x00904051
+#define RFMXNR_ATTR_MODACC_TIMING_TRACKING_MODE                                            0x00904052
+#define RFMXNR_ATTR_MODACC_PRE_FFT_ERROR_ESTIMATION_INTERVAL                               0x009040a0
 #define RFMXNR_ATTR_MODACC_EVM_UNIT                                                        0x0090400a
 #define RFMXNR_ATTR_MODACC_FFT_WINDOW_TYPE                                                 0x0090400b
 #define RFMXNR_ATTR_MODACC_FFT_WINDOW_OFFSET                                               0x0090400c
@@ -208,6 +210,9 @@
 #define RFMXNR_ATTR_MODACC_AVERAGING_ENABLED                                               0x00904011
 #define RFMXNR_ATTR_MODACC_AVERAGING_COUNT                                                 0x00904012
 #define RFMXNR_ATTR_MODACC_AUTO_LEVEL_ALLOW_OVERFLOW                                       0x00904097
+#define RFMXNR_ATTR_MODACC_SHORT_FRAME_ENABLED                                             0x0090409d
+#define RFMXNR_ATTR_MODACC_SHORT_FRAME_LENGTH                                              0x0090409e
+#define RFMXNR_ATTR_MODACC_SHORT_FRAME_LENGTH_UNIT                                         0x0090409f
 #define RFMXNR_ATTR_MODACC_ALL_TRACES_ENABLED                                              0x00904013
 #define RFMXNR_ATTR_MODACC_NUMBER_OF_ANALYSIS_THREADS                                      0x00904014
 #define RFMXNR_ATTR_MODACC_RESULTS_COMPOSITE_RMS_EVM_MEAN                                  0x00904016
@@ -265,7 +270,9 @@
 #define RFMXNR_ATTR_MODACC_RESULTS_SPECTRAL_FLATNESS_RANGE2_MINIMUM_SUBCARRIER_INDEX       0x00904090
 #define RFMXNR_ATTR_MODACC_RESULTS_COMPONENT_CARRIER_TIME_OFFSET_MEAN                      0x00904032
 #define RFMXNR_ATTR_MODACC_RESULTS_COMPONENT_CARRIER_FREQUENCY_ERROR_MEAN                  0x0090402d
+#define RFMXNR_ATTR_MODACC_RESULTS_COMPONENT_CARRIER_SLOT_FREQUENCY_ERROR_MAXIMUM          0x009040a1
 #define RFMXNR_ATTR_MODACC_RESULTS_COMPONENT_CARRIER_SYMBOL_CLOCK_ERROR_MEAN               0x00904033
+#define RFMXNR_ATTR_MODACC_RESULTS_COMPONENT_CARRIER_SLOT_IQ_ORIGIN_OFFSET_MAXIMUM         0x009040a2
 #define RFMXNR_ATTR_MODACC_RESULTS_COMPONENT_CARRIER_IQ_ORIGIN_OFFSET_MEAN                 0x0090402e
 #define RFMXNR_ATTR_MODACC_RESULTS_COMPONENT_CARRIER_IQ_GAIN_IMBALANCE_MEAN                0x0090402f
 #define RFMXNR_ATTR_MODACC_RESULTS_COMPONENT_CARRIER_QUADRATURE_ERROR_MEAN                 0x00904030
@@ -531,9 +538,9 @@
 #define RFMXNR_VAL_AUTO_INCREMENT_CELL_ID_ENABLED_FALSE                                           0
 #define RFMXNR_VAL_AUTO_INCREMENT_CELL_ID_ENABLED_TRUE                                            1
 
-// Values for RFMXNR_ATTR_SUBBLOCK_FREQUENCY_DEFINITION
-#define RFMXNR_VAL_SUBBLOCK_FREQUENCY_DEFINITION_RELATIVE                                         0
-#define RFMXNR_VAL_SUBBLOCK_FREQUENCY_DEFINITION_ABSOLUTE                                         1
+// Values for RFMXNR_ATTR_DOWNLINK_TEST_MODEL_CELL_ID_MODE
+#define RFMXNR_VAL_DOWNLINK_TEST_MODEL_CELL_ID_MODE_AUTO                                          0
+#define RFMXNR_VAL_DOWNLINK_TEST_MODEL_CELL_ID_MODE_MANUAL                                        1
 
 // Values for RFMXNR_ATTR_FREQUENCY_RANGE
 #define RFMXNR_VAL_FREQUENCY_RANGE_RANGE1                                                         0
@@ -552,6 +559,8 @@
 #define RFMXNR_VAL_DOWNLINK_TEST_MODEL_TM3_1A                                                     5
 #define RFMXNR_VAL_DOWNLINK_TEST_MODEL_TM3_2                                                      6
 #define RFMXNR_VAL_DOWNLINK_TEST_MODEL_TM3_3                                                      7
+#define RFMXNR_VAL_DOWNLINK_TEST_MODEL_TM2B                                                       8
+#define RFMXNR_VAL_DOWNLINK_TEST_MODEL_TM3_1B                                                     9
 
 // Values for RFMXNR_ATTR_DOWNLINK_TEST_MODEL_MODULATION_TYPE
 #define RFMXNR_VAL_DOWNLINK_TEST_MODEL_MODULATION_TYPE_Standard                                   0
@@ -672,10 +681,6 @@
 #define RFMXNR_VAL_PDSCH_PTRS_POWER_MODE_STANDARD                                                 0
 #define RFMXNR_VAL_PDSCH_PTRS_POWER_MODE_USER_DEFINED                                             1
 
-// Values for RFMXNR_ATTR_PDSCH_PRESENT_IN_SSB_RESOURCE_BLOCK
-#define RFMXNR_VAL_PDSCH_PRESENT_IN_SSB_RESOURCE_BLOCK_FALSE                                      0
-#define RFMXNR_VAL_PDSCH_PRESENT_IN_SSB_RESOURCE_BLOCK_TRUE                                       1
-
 // Values for RFMXNR_ATTR_CORESET_PRECODING_GRANULARITY
 #define RFMXNR_VAL_CORESET_PRECODING_GRANULARITY_SAME_AS_REG_BUNDLE                               0
 #define RFMXNR_VAL_CORESET_PRECODING_GRANULARITY_ALL_CONTIGUOUS_RESOURCE_BLOCKS                   1
@@ -703,8 +708,8 @@
 #define RFMXNR_VAL_LIST_STEP_TIMER_UNIT_TIME                                                      6
 
 // Values for RFMXNR_ATTR_MODACC_MULTICARRIER_FILTER_ENABLED
-#define RFMXNR_VAL_MODACC_MULTICARRIER_FILTER_ENABLED_TRUE                                        1
 #define RFMXNR_VAL_MODACC_MULTICARRIER_FILTER_ENABLED_FALSE                                       0
+#define RFMXNR_VAL_MODACC_MULTICARRIER_FILTER_ENABLED_TRUE                                        1
 
 // Values for ModAccCalibrationDataValid
 #define RFMXNR_VAL_MODACC_CALIBRATION_DATA_VALID_FALSE                                            0
@@ -773,13 +778,18 @@
 #define RFMXNR_VAL_MODACC_CHANNEL_ESTIMATION_TYPE_REFERENCE                                       0
 #define RFMXNR_VAL_MODACC_CHANNEL_ESTIMATION_TYPE_REFERENCE_AND_DATA                              1
 
-// Values for RFMXNR_ATTR_MODACC_PHASE_TRACKING_ENABLED
-#define RFMXNR_VAL_MODACC_PHASE_TRACKING_ENABLED_FALSE                                            0
-#define RFMXNR_VAL_MODACC_PHASE_TRACKING_ENABLED_TRUE                                             1
+// Values for RFMXNR_ATTR_MODACC_PHASE_TRACKING_MODE
+#define RFMXNR_VAL_MODACC_PHASE_TRACKING_MODE_DISABLED                                            0
+#define RFMXNR_VAL_MODACC_PHASE_TRACKING_MODE_REFERENCE_AND_DATA                                  1
+#define RFMXNR_VAL_MODACC_PHASE_TRACKING_MODE_PTRS                                                2
 
-// Values for RFMXNR_ATTR_MODACC_TIMING_TRACKING_ENABLED
-#define RFMXNR_VAL_MODACC_TIMING_TRACKING_ENABLED_FALSE                                           0
-#define RFMXNR_VAL_MODACC_TIMING_TRACKING_ENABLED_TRUE                                            1
+// Values for RFMXNR_ATTR_MODACC_TIMING_TRACKING_MODE
+#define RFMXNR_VAL_MODACC_TIMING_TRACKING_MODE_DISABLED                                           0
+#define RFMXNR_VAL_MODACC_TIMING_TRACKING_MODE_REFERENCE_AND_DATA                                 1
+
+// Values for RFMXNR_ATTR_MODACC_PRE_FFT_ERROR_ESTIMATION_INTERVAL
+#define RFMXNR_VAL_MODACC_PRE_FFT_ERROR_ESTIMATION_INTERVAL_SLOT                                  0
+#define RFMXNR_VAL_MODACC_PRE_FFT_ERROR_ESTIMATION_INTERVAL_MEASUREMENT_LENGTH                    1
 
 // Values for RFMXNR_ATTR_MODACC_EVM_UNIT
 #define RFMXNR_VAL_MODACC_EVM_UNIT_PERCENTAGE                                                     0
@@ -836,6 +846,16 @@
 // Values for RFMXNR_ATTR_ACP_CHANNEL_CONFIGURATION_TYPE
 #define RFMXNR_VAL_ACP_CHANNEL_CONFIGURATION_TYPE_STANDARD                                        0
 #define RFMXNR_VAL_ACP_CHANNEL_CONFIGURATION_TYPE_CUSTOM                                          1
+#define RFMXNR_VAL_ACP_CHANNEL_CONFIGURATION_TYPE_NS_29                                           2
+
+// Values for RFMXNR_ATTR_MODACC_SHORT_FRAME_ENABLED
+#define RFMXNR_VAL_MODACC_SHORT_FRAME_ENABLED_FALSE                                               0
+#define RFMXNR_VAL_MODACC_SHORT_FRAME_ENABLED_TRUE                                                1
+
+// Values for RFMXNR_ATTR_MODACC_SHORT_FRAME_LENGTH_UNIT
+#define RFMXNR_VAL_MODACC_SHORT_FRAME_LENGTH_UNIT_SLOT                                            1
+#define RFMXNR_VAL_MODACC_SHORT_FRAME_LENGTH_UNIT_SUBFRAME                                        3
+#define RFMXNR_VAL_MODACC_SHORT_FRAME_LENGTH_UNIT_TIME                                            6
 
 // Values for RFMXNR_ATTR_MODACC_RESULTS_SCH_DETECTED_MODULATION_TYPE
 #define RFMXNR_VAL_MODACC_RESULTS_SCH_DETECTED_MODULATION_TYPE_PI_BY_2_BPSK                       0
@@ -2655,6 +2675,17 @@ int32 __stdcall RFmxNR_ModAccFetchPDSCHDataConstellationTraceSplit(
    int32* actualArraySize
 );
 
+int32 __stdcall RFmxNR_ModAccFetchFrequencyErrorPerSlotMaximumTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* x0,
+   float64* dx,
+   float32 frequencyErrorPerSlotMaximum[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
 int32 __stdcall RFmxNR_ModAccFetchPSSRMSEVMPerSubcarrierMeanTrace(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -3445,6 +3476,18 @@ int32 __stdcall RFmxNR_SetAutoIncrementCellIDEnabled(
    int32 attrVal
 );
 
+int32 __stdcall RFmxNR_GetDownlinkTestModelCellIDMode(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxNR_SetDownlinkTestModelCellIDMode(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
 int32 __stdcall RFmxNR_GetNumberOfSubblocks(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -3457,16 +3500,16 @@ int32 __stdcall RFmxNR_SetNumberOfSubblocks(
    int32 attrVal
 );
 
-int32 __stdcall RFmxNR_GetSubblockFrequencyDefinition(
+int32 __stdcall RFmxNR_GetSubblockFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   int32 *attrVal
+   float64 *attrVal
 );
 
-int32 __stdcall RFmxNR_SetSubblockFrequencyDefinition(
+int32 __stdcall RFmxNR_SetSubblockFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   int32 attrVal
+   float64 attrVal
 );
 
 int32 __stdcall RFmxNR_GetSubblockTransmitLOFrequency(
@@ -4593,18 +4636,6 @@ int32 __stdcall RFmxNR_SetPDSCHSymbolAllocation(
    char attrVal[]
 );
 
-int32 __stdcall RFmxNR_GetPDSCHPresentInSSBResourceBlock(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxNR_SetPDSCHPresentInSSBResourceBlock(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
 int32 __stdcall RFmxNR_GetNumberOfCORESETs(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -4941,6 +4972,18 @@ int32 __stdcall RFmxNR_SetPBCHDMRSPower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
+);
+
+int32 __stdcall RFmxNR_GetSSBHRFIndex(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxNR_SetSSBHRFIndex(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
 );
 
 int32 __stdcall RFmxNR_GetNumberOfSteps(
@@ -5303,25 +5346,37 @@ int32 __stdcall RFmxNR_ModAccSetChannelEstimationType(
    int32 attrVal
 );
 
-int32 __stdcall RFmxNR_ModAccGetPhaseTrackingEnabled(
+int32 __stdcall RFmxNR_ModAccGetPhaseTrackingMode(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 __stdcall RFmxNR_ModAccSetPhaseTrackingEnabled(
+int32 __stdcall RFmxNR_ModAccSetPhaseTrackingMode(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
 );
 
-int32 __stdcall RFmxNR_ModAccGetTimingTrackingEnabled(
+int32 __stdcall RFmxNR_ModAccGetTimingTrackingMode(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
 );
 
-int32 __stdcall RFmxNR_ModAccSetTimingTrackingEnabled(
+int32 __stdcall RFmxNR_ModAccSetTimingTrackingMode(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxNR_ModAccGetPreFFTErrorEstimationInterval(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxNR_ModAccSetPreFFTErrorEstimationInterval(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
@@ -5514,6 +5569,42 @@ int32 __stdcall RFmxNR_ModAccGetAutoLevelAllowOverflow(
 );
 
 int32 __stdcall RFmxNR_ModAccSetAutoLevelAllowOverflow(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxNR_ModAccGetShortFrameEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxNR_ModAccSetShortFrameEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxNR_ModAccGetShortFrameLength(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxNR_ModAccSetShortFrameLength(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxNR_ModAccGetShortFrameLengthUnit(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxNR_ModAccSetShortFrameLengthUnit(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
@@ -5873,7 +5964,19 @@ int32 __stdcall RFmxNR_ModAccGetResultsComponentCarrierFrequencyErrorMean(
    float64 *attrVal
 );
 
+int32 __stdcall RFmxNR_ModAccGetResultsComponentCarrierSlotFrequencyErrorMaximum(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
 int32 __stdcall RFmxNR_ModAccGetResultsComponentCarrierSymbolClockErrorMean(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxNR_ModAccGetResultsComponentCarrierSlotIQOriginOffsetMaximum(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
@@ -7711,6 +7814,10 @@ int32 __stdcall RFmxNR_PVTGetResultsPeakWindowedOFFPowerTime(
 
 #define RFMXNR_ATTR_MODACC_EVM_WITH_EXCLUSION_PERIOD_ENABLED                               0x0090400f
 #define RFMXNR_ATTR_MODACC_IQ_IMPAIRMENTS_ESTIMATION_ENABLED                               0x00904077
+#define RFMXNR_ATTR_PDSCH_PRESENT_IN_SSB_RESOURCE_BLOCK                                    0x00900097
+#define RFMXNR_ATTR_SUBBLOCK_FREQUENCY_DEFINITION                                          0x00900011
+#define RFMXNR_ATTR_MODACC_PHASE_TRACKING_ENABLED                                          0x00904051
+#define RFMXNR_ATTR_MODACC_TIMING_TRACKING_ENABLED                                         0x00904052
 
 // Values for RFMXNR_ATTR_MODACC_EVM_WITH_EXCLUSION_PERIOD_ENABLED
 #define RFMXNR_VAL_MODACC_EVM_WITH_EXCLUSION_PERIOD_ENABLED_FALSE                                 0
@@ -7719,6 +7826,22 @@ int32 __stdcall RFmxNR_PVTGetResultsPeakWindowedOFFPowerTime(
 // Values for RFMXNR_ATTR_MODACC_IQ_IMPAIRMENTS_ESTIMATION_ENABLED
 #define RFMXNR_VAL_MODACC_IQ_IMPAIRMENTS_ESTIMATION_ENABLED_FALSE                                 0
 #define RFMXNR_VAL_MODACC_IQ_IMPAIRMENTS_ESTIMATION_ENABLED_TRUE                                  1
+
+// Values for RFMXNR_ATTR_PDSCH_PRESENT_IN_SSB_RESOURCE_BLOCK
+#define RFMXNR_VAL_PDSCH_PRESENT_IN_SSB_RESOURCE_BLOCK_FALSE                                      0
+#define RFMXNR_VAL_PDSCH_PRESENT_IN_SSB_RESOURCE_BLOCK_TRUE                                       1
+
+// Values for RFMXNR_ATTR_SUBBLOCK_FREQUENCY_DEFINITION
+#define RFMXNR_VAL_SUBBLOCK_FREQUENCY_DEFINITION_RELATIVE                                         0
+#define RFMXNR_VAL_SUBBLOCK_FREQUENCY_DEFINITION_ABSOLUTE                                         1
+
+// Values for RFMXNR_ATTR_MODACC_PHASE_TRACKING_ENABLED
+#define RFMXNR_VAL_MODACC_PHASE_TRACKING_ENABLED_FALSE                                            0
+#define RFMXNR_VAL_MODACC_PHASE_TRACKING_ENABLED_TRUE                                             1
+
+// Values for RFMXNR_ATTR_MODACC_TIMING_TRACKING_ENABLED
+#define RFMXNR_VAL_MODACC_TIMING_TRACKING_ENABLED_FALSE                                           0
+#define RFMXNR_VAL_MODACC_TIMING_TRACKING_ENABLED_TRUE                                            1
 
 #ifdef __cplusplus
 extern "C"
@@ -7798,6 +7921,54 @@ int32 __stdcall RFmxNR_SEMFetchSubblockPower(
    char selectorString[],
    float64 timeout,
    float64* subblockPower
+);
+
+int32 __stdcall RFmxNR_GetPDSCHPresentInSSBResourceBlock(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxNR_SetPDSCHPresentInSSBResourceBlock(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxNR_GetSubblockFrequencyDefinition(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxNR_SetSubblockFrequencyDefinition(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxNR_ModAccGetPhaseTrackingEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxNR_ModAccSetPhaseTrackingEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxNR_ModAccGetTimingTrackingEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxNR_ModAccSetTimingTrackingEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
 );
 
 #ifdef __cplusplus

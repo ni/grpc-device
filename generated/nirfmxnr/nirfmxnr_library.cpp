@@ -126,6 +126,7 @@ NiRFmxNRLibrary::NiRFmxNRLibrary() : shared_library_(kLibraryName)
   function_pointers_.ModAccClearNoiseCalibrationDatabase = reinterpret_cast<ModAccClearNoiseCalibrationDatabasePtr>(shared_library_.get_function_pointer("RFmxNR_ModAccClearNoiseCalibrationDatabase"));
   function_pointers_.ModAccFetchCompositeEVM = reinterpret_cast<ModAccFetchCompositeEVMPtr>(shared_library_.get_function_pointer("RFmxNR_ModAccFetchCompositeEVM"));
   function_pointers_.ModAccFetchFrequencyErrorMean = reinterpret_cast<ModAccFetchFrequencyErrorMeanPtr>(shared_library_.get_function_pointer("RFmxNR_ModAccFetchFrequencyErrorMean"));
+  function_pointers_.ModAccFetchFrequencyErrorPerSlotMaximumTrace = reinterpret_cast<ModAccFetchFrequencyErrorPerSlotMaximumTracePtr>(shared_library_.get_function_pointer("RFmxNR_ModAccFetchFrequencyErrorPerSlotMaximumTrace"));
   function_pointers_.ModAccFetchIQGainImbalancePerSubcarrierMeanTrace = reinterpret_cast<ModAccFetchIQGainImbalancePerSubcarrierMeanTracePtr>(shared_library_.get_function_pointer("RFmxNR_ModAccFetchIQGainImbalancePerSubcarrierMeanTrace"));
   function_pointers_.ModAccFetchIQQuadratureErrorPerSubcarrierMeanTrace = reinterpret_cast<ModAccFetchIQQuadratureErrorPerSubcarrierMeanTracePtr>(shared_library_.get_function_pointer("RFmxNR_ModAccFetchIQQuadratureErrorPerSubcarrierMeanTrace"));
   function_pointers_.ModAccFetchInBandEmissionTrace = reinterpret_cast<ModAccFetchInBandEmissionTracePtr>(shared_library_.get_function_pointer("RFmxNR_ModAccFetchInBandEmissionTrace"));
@@ -1508,6 +1509,18 @@ int32 NiRFmxNRLibrary::ModAccFetchFrequencyErrorMean(niRFmxInstrHandle instrumen
   return RFmxNR_ModAccFetchFrequencyErrorMean(instrumentHandle, selectorString, timeout, frequencyErrorMean);
 #else
   return function_pointers_.ModAccFetchFrequencyErrorMean(instrumentHandle, selectorString, timeout, frequencyErrorMean);
+#endif
+}
+
+int32 NiRFmxNRLibrary::ModAccFetchFrequencyErrorPerSlotMaximumTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 frequencyErrorPerSlotMaximum[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.ModAccFetchFrequencyErrorPerSlotMaximumTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxNR_ModAccFetchFrequencyErrorPerSlotMaximumTrace.");
+  }
+#if defined(_MSC_VER)
+  return RFmxNR_ModAccFetchFrequencyErrorPerSlotMaximumTrace(instrumentHandle, selectorString, timeout, x0, dx, frequencyErrorPerSlotMaximum, arraySize, actualArraySize);
+#else
+  return function_pointers_.ModAccFetchFrequencyErrorPerSlotMaximumTrace(instrumentHandle, selectorString, timeout, x0, dx, frequencyErrorPerSlotMaximum, arraySize, actualArraySize);
 #endif
 }
 

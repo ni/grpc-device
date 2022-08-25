@@ -2075,6 +2075,24 @@ mod_acc_fetch_frequency_error_mean(const StubPtr& stub, const nidevice_grpc::Ses
   return response;
 }
 
+ModAccFetchFrequencyErrorPerSlotMaximumTraceResponse
+mod_acc_fetch_frequency_error_per_slot_maximum_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ModAccFetchFrequencyErrorPerSlotMaximumTraceRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = ModAccFetchFrequencyErrorPerSlotMaximumTraceResponse{};
+
+  raise_if_error(
+      stub->ModAccFetchFrequencyErrorPerSlotMaximumTrace(&context, request, &response));
+
+  return response;
+}
+
 ModAccFetchIQGainImbalancePerSubcarrierMeanTraceResponse
 mod_acc_fetch_iq_gain_imbalance_per_subcarrier_mean_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout)
 {
