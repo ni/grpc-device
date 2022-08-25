@@ -17,7 +17,7 @@
 #include "nidmm/nidmm_service_registrar.h"
 #include "nifgen/nifgen_service_registrar.h"
 #if defined(_MSC_VER)
-#include "nimxlcTerminalAdaptor_restricted/nimxlcTerminalAdaptor_restricted_service_registrar.h"
+#include "nimxlcterminaladaptor_restricted/nimxlcterminaladaptor_restricted_service_registrar.h"
 #endif // defined(_MSC_VER)
 #if defined(_MSC_VER)
 #include "nirfmxbluetooth/nirfmxbluetooth_service_registrar.h"

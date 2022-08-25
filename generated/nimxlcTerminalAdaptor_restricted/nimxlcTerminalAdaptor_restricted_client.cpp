@@ -4,11 +4,11 @@
 //---------------------------------------------------------------------
 // EXPERIMENTAL Client convenience wrapper for NI-MXLCTERMINALADAPTOR-RESTRICTED.
 //---------------------------------------------------------------------
-#include "nimxlcTerminalAdaptor_restricted_client.h"
+#include "nimxlcterminaladaptor_restricted_client.h"
 
 #include <grpcpp/grpcpp.h>
 
-#include <nimxlcTerminalAdaptor_restricted.grpc.pb.h>
+#include <nimxlcterminaladaptor_restricted.grpc.pb.h>
 
 #include <cstdint>
 #include <memory>

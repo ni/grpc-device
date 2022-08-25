@@ -10,7 +10,7 @@ config = {
     'namespace_component': 'nimxlcterminaladaptor_restricted',
     'close_function': 'destroySession',
     'additional_headers': { 
-        "custom/nimxlcTerminalAdaptor_restricted_converters.h": ["service.cpp"],
+        "custom/nimxlcterminaladaptor_restricted_converters.h": ["service.cpp"],
     },
     'custom_types': [],
     "type_to_grpc_type": {
@@ -58,7 +58,7 @@ config = {
     },
     'linux_rt_support': False,
     'metadata_version': '0.1',
-    'module_name': 'nimxlcTerminalAdaptor_restricted',
+    'module_name': 'nimxlcterminaladaptor_restricted',
     'session_class_description': 'An handle to a Routing Adaptor session.',
     'session_handle_parameter_name': 'session',
     "duplicate_resource_handles_allowed": True,

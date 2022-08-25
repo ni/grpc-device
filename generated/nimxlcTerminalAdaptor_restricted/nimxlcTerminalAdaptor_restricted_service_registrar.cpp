@@ -4,12 +4,12 @@
 //---------------------------------------------------------------------
 // Service registrar implementation for the NI-MXLCTERMINALADAPTOR-RESTRICTED Metadata
 //---------------------------------------------------------------------
-#include "nimxlcTerminalAdaptor_restricted_library.h"
+#include "nimxlcterminaladaptor_restricted_library.h"
 
 #include <grpcpp/server_builder.h>
 
-#include "nimxlcTerminalAdaptor_restricted_service.h"
-#include "nimxlcTerminalAdaptor_restricted_service_registrar.h"
+#include "nimxlcterminaladaptor_restricted_service.h"
+#include "nimxlcterminaladaptor_restricted_service_registrar.h"
 
 namespace nimxlcterminaladaptor_restricted_grpc {
 

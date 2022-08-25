@@ -76,7 +76,7 @@ set(metadata_dir ${CMAKE_SOURCE_DIR}/source/codegen/metadata)
 set(service_output_dir ${CMAKE_SOURCE_DIR}/generated)
 set(codegen_dir ${CMAKE_SOURCE_DIR}/source/codegen)
 set(custom_dir ${CMAKE_SOURCE_DIR}/source/custom)
-set(nidrivers "nidaqmx" "nidcpower" "nidigitalpattern" "nidmm" "nifake" "nifake_extension" "nifake_non_ivi" "nifgen" "nimxlcTerminalAdaptor_restricted" "nirfmxbluetooth" "nirfmxinstr" "nirfmxinstr_restricted" "nirfmxlte" "nirfmxnr" "nirfmxspecan" "nirfmxspecan_restricted" "nirfmxwlan" "nirfsa" "nirfsg" "niscope" "niswitch" "nisync" "nitclk" "nixnet" "nixnetsocket")
+set(nidrivers "nidaqmx" "nidcpower" "nidigitalpattern" "nidmm" "nifake" "nifake_extension" "nifake_non_ivi" "nifgen" "nimxlcterminaladaptor_restricted" "nirfmxbluetooth" "nirfmxinstr" "nirfmxinstr_restricted" "nirfmxlte" "nirfmxnr" "nirfmxspecan" "nirfmxspecan_restricted" "nirfmxwlan" "nirfsa" "nirfsg" "niscope" "niswitch" "nisync" "nitclk" "nixnet" "nixnetsocket")
 
 #----------------------------------------------------------------------
 # Create NI Driver APIs proto and server files
@@ -354,7 +354,7 @@ add_executable(IntegrationTestsRunner
     "${proto_srcs_dir}/nifake.grpc.pb.cc"
     "${proto_srcs_dir}/nifake_non_ivi.pb.cc"
     "${proto_srcs_dir}/nifake_non_ivi.grpc.pb.cc"
-    "${proto_srcs_dir}/nimxlcTerminalAdaptor_restricted.pb.cc"
+    "${proto_srcs_dir}/nimxlcterminaladaptor_restricted.pb.cc"
     "${service_output_dir}/nifake/nifake_client.cpp"
     "${service_output_dir}/nifake/nifake_service.cpp"
     "${service_output_dir}/nifake_non_ivi/nifake_non_ivi_client.cpp"
@@ -412,7 +412,7 @@ add_executable(UnitTestsRunner
     "${proto_srcs_dir}/nifake_extension.grpc.pb.cc"
     "${proto_srcs_dir}/nifake_non_ivi.pb.cc"
     "${proto_srcs_dir}/nifake_non_ivi.grpc.pb.cc"
-    "${proto_srcs_dir}/nimxlcTerminalAdaptor_restricted.pb.cc"
+    "${proto_srcs_dir}/nimxlcterminaladaptor_restricted.pb.cc"
     "${proto_srcs_dir}/nixnet.grpc.pb.cc"
     "${proto_srcs_dir}/nixnet.pb.cc"
     "${proto_srcs_dir}/nixnetsocket.pb.cc"
@@ -423,7 +423,7 @@ add_executable(UnitTestsRunner
     "${custom_dir}/nifake_service.custom.cpp"
     "${custom_dir}/nifake_extension_service.custom.cpp"
     "${custom_dir}/nifake_non_ivi_service.custom.cpp"
-    "${custom_dir}/nimxlcTerminalAdaptor_restricted_service.custom.cpp"
+    "${custom_dir}/nimxlcterminaladaptor_restricted_service.custom.cpp"
     "${custom_dir}/nixnet_service.custom.cpp"
 )
 

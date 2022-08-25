@@ -1,9 +1,9 @@
 #define NOMINMAX
 
-#include <custom/nimxlcTerminalAdaptor_restricted_converters.h>
+#include <custom/nimxlcterminaladaptor_restricted_converters.h>
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
-#include <nimxlcTerminalAdaptor_restricted/nimxlcTerminalAdaptor_restricted_mock_library.h>
+#include <nimxlcterminaladaptor_restricted/nimxlcterminaladaptor_restricted_mock_library.h>
 
 #include <algorithm>
 #include <numeric>
@@ -26,7 +26,7 @@ void assert_nierr_statuses_are_equal(nierr_Status* error1, nimxlcterminaladaptor
   EXPECT_EQ(error1->json, error2.json());
 }
 
-TEST(nimxlcTerminalAdaptor_restricted_tests, nierr_Status_ConvertToGrpc_StatusValuesAreEqual)
+TEST(nimxlcterminaladaptor_restricted_tests, nierr_Status_ConvertToGrpc_StatusValuesAreEqual)
 {
   std::string description = "test_string";
   nierr_Status input;

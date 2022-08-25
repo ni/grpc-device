@@ -9,7 +9,7 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-#include "nimxlcTerminalAdaptor_restricted_library_interface.h"
+#include "nimxlcterminaladaptor_restricted_library_interface.h"
 
 namespace ni {
 namespace tests {

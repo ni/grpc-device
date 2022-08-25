@@ -4,14 +4,14 @@
 //---------------------------------------------------------------------
 // Service implementation for the NI-MXLCTERMINALADAPTOR-RESTRICTED Metadata
 //---------------------------------------------------------------------
-#include "nimxlcTerminalAdaptor_restricted_service.h"
+#include "nimxlcterminaladaptor_restricted_service.h"
 
 #include <sstream>
 #include <fstream>
 #include <iostream>
 #include <atomic>
 #include <vector>
-#include "custom/nimxlcTerminalAdaptor_restricted_converters.h"
+#include "custom/nimxlcterminaladaptor_restricted_converters.h"
 #include <server/converters.h>
 
 namespace nimxlcterminaladaptor_restricted_grpc {
@@ -184,7 +184,7 @@ namespace nimxlcterminaladaptor_restricted_grpc {
   NimxlcTerminalAdaptorRestrictedFeatureToggles::NimxlcTerminalAdaptorRestrictedFeatureToggles(
     const nidevice_grpc::FeatureToggles& feature_toggles)
     : is_enabled(
-        feature_toggles.is_feature_enabled("nimxlcTerminalAdaptor_restricted", CodeReadiness::kRestrictedNextRelease))
+        feature_toggles.is_feature_enabled("nimxlcterminaladaptor_restricted", CodeReadiness::kRestrictedNextRelease))
   {
   }
 } // namespace nimxlcterminaladaptor_restricted_grpc

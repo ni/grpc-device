@@ -1,9 +1,9 @@
 #include <vector>
 #include <server/converters.h>
 #include <nierr_Status.h>
-#include <nimxlcTerminalAdaptor_restricted.pb.h>
-#include <nimxlcTerminalAdaptor_restricted/nimxlcTerminalAdaptor_restricted_service.h>
-#include <custom/nimxlcTerminalAdaptor_restricted_converters.h>
+#include <nimxlcterminaladaptor_restricted.pb.h>
+#include <nimxlcterminaladaptor_restricted/nimxlcterminaladaptor_restricted_service.h>
+#include <custom/nimxlcterminaladaptor_restricted_converters.h>
 
 namespace nimxlcterminaladaptor_restricted_grpc {
 

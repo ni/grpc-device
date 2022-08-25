@@ -5,7 +5,7 @@
 #include <gtest/gtest.h>
 
 #include "device_server.h"
-#include "nimxlcTerminalAdaptor_restricted/nimxlcTerminalAdaptor_restricted_client.h"
+#include "nimxlcterminaladaptor_restricted/nimxlcterminaladaptor_restricted_client.h"
 
 using namespace ::testing;
 using namespace nimxlcterminaladaptor_restricted_grpc;

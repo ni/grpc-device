@@ -9,7 +9,7 @@
 
 #include <grpcpp/grpcpp.h>
 
-#include <nimxlcTerminalAdaptor_restricted.grpc.pb.h>
+#include <nimxlcterminaladaptor_restricted.grpc.pb.h>
 #include <tests/utilities/client_helpers.h>
 
 #include <memory>

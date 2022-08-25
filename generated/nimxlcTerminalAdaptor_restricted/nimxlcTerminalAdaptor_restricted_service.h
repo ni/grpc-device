@@ -7,7 +7,7 @@
 #ifndef NIMXLCTERMINALADAPTOR_RESTRICTED_GRPC_SERVICE_H
 #define NIMXLCTERMINALADAPTOR_RESTRICTED_GRPC_SERVICE_H
 
-#include <nimxlcTerminalAdaptor_restricted.grpc.pb.h>
+#include <nimxlcterminaladaptor_restricted.grpc.pb.h>
 #include <condition_variable>
 #include <grpcpp/grpcpp.h>
 #include <grpcpp/health_check_service_interface.h>
@@ -19,7 +19,7 @@
 #include <server/shared_library.h>
 #include <server/exceptions.h>
 
-#include "nimxlcTerminalAdaptor_restricted_library_interface.h"
+#include "nimxlcterminaladaptor_restricted_library_interface.h"
 
 namespace nimxlcterminaladaptor_restricted_grpc {
 

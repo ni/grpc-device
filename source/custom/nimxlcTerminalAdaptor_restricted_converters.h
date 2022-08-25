@@ -1,8 +1,8 @@
 #ifndef NIDEVICE_GRPC_DEVICE_NIMXLCTERMINALADAPTOR_RESTRICTED_CONVERTERS_H
 #define NIDEVICE_GRPC_DEVICE_NIMXLCTERMINALADAPTOR_RESTRICTED_CONVERTERS_H
 
-#include "nimxlcTerminalAdaptor_restricted.pb.h"
-#include "nimxlcTerminalAdaptor_restricted/nimxlcTerminalAdaptor_restricted_library_interface.h"
+#include "nimxlcterminaladaptor_restricted.pb.h"
+#include "nimxlcterminaladaptor_restricted/nimxlcterminaladaptor_restricted_library_interface.h"
 #include "server/converters.h"
 #include "server/session_resource_repository.h"
 #include <nierr_Status.h>
@@ -39,7 +39,7 @@ inline NiErrStatusInputConverter convert_from_grpc(const NIErrStatus& input)
 {
   return NiErrStatusInputConverter(input);
 }
-}  // namespace nimxlcTerminalAdaptor_restricted_grpc
+}  // namespace nimxlcterminaladaptor_restricted_grpc
 
 // Template specializations go in nidevice_grpc::converters.
 namespace nidevice_grpc {

@@ -6,7 +6,7 @@
 #ifndef NIMXLCTERMINALADAPTOR_RESTRICTED_GRPC_LIBRARY_H
 #define NIMXLCTERMINALADAPTOR_RESTRICTED_GRPC_LIBRARY_H
 
-#include "nimxlcTerminalAdaptor_restricted_library_interface.h"
+#include "nimxlcterminaladaptor_restricted_library_interface.h"
 
 #include <server/shared_library.h>
 
