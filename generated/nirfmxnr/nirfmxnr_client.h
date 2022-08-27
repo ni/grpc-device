@@ -127,6 +127,7 @@ ModAccCfgReferenceWaveformResponse mod_acc_cfg_reference_waveform(const StubPtr&
 ModAccClearNoiseCalibrationDatabaseResponse mod_acc_clear_noise_calibration_database(const StubPtr& stub, const nidevice_grpc::Session& instrument);
 ModAccFetchCompositeEVMResponse mod_acc_fetch_composite_evm(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout);
 ModAccFetchFrequencyErrorMeanResponse mod_acc_fetch_frequency_error_mean(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout);
+ModAccFetchFrequencyErrorPerSlotMaximumTraceResponse mod_acc_fetch_frequency_error_per_slot_maximum_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout);
 ModAccFetchIQGainImbalancePerSubcarrierMeanTraceResponse mod_acc_fetch_iq_gain_imbalance_per_subcarrier_mean_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout);
 ModAccFetchIQQuadratureErrorPerSubcarrierMeanTraceResponse mod_acc_fetch_iq_quadrature_error_per_subcarrier_mean_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout);
 ModAccFetchInBandEmissionTraceResponse mod_acc_fetch_in_band_emission_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout);

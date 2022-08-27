@@ -182,6 +182,7 @@ public:
   ::grpc::Status OFDMModAccFetchPPDUPeakPower(::grpc::ServerContext* context, const OFDMModAccFetchPPDUPeakPowerRequest* request, OFDMModAccFetchPPDUPeakPowerResponse* response) override;
   ::grpc::Status OFDMModAccFetchPPDUType(::grpc::ServerContext* context, const OFDMModAccFetchPPDUTypeRequest* request, OFDMModAccFetchPPDUTypeResponse* response) override;
   ::grpc::Status OFDMModAccFetchPSDUCRCStatus(::grpc::ServerContext* context, const OFDMModAccFetchPSDUCRCStatusRequest* request, OFDMModAccFetchPSDUCRCStatusResponse* response) override;
+  ::grpc::Status OFDMModAccFetchPhaseNoisePSDMeanTrace(::grpc::ServerContext* context, const OFDMModAccFetchPhaseNoisePSDMeanTraceRequest* request, OFDMModAccFetchPhaseNoisePSDMeanTraceResponse* response) override;
   ::grpc::Status OFDMModAccFetchPilotConstellationTrace(::grpc::ServerContext* context, const OFDMModAccFetchPilotConstellationTraceRequest* request, OFDMModAccFetchPilotConstellationTraceResponse* response) override;
   ::grpc::Status OFDMModAccFetchPreambleAveragePowers80211ac(::grpc::ServerContext* context, const OFDMModAccFetchPreambleAveragePowers80211acRequest* request, OFDMModAccFetchPreambleAveragePowers80211acResponse* response) override;
   ::grpc::Status OFDMModAccFetchPreambleAveragePowers80211ax(::grpc::ServerContext* context, const OFDMModAccFetchPreambleAveragePowers80211axRequest* request, OFDMModAccFetchPreambleAveragePowers80211axResponse* response) override;

@@ -713,6 +713,14 @@ enums = {
             {
                 'name': 'TM3_3',
                 'value': 7
+            },
+            {
+                'name': 'TM2B',
+                'value': 8
+            },
+            {
+                'name': 'TM3_1B',
+                'value': 9
             }
         ]
     },
@@ -1333,15 +1341,32 @@ enums = {
             }
         ]
     },
-    'ModAccPhaseTrackingEnabled': {
-        'enum-value-prefix': 'MODACC_PHASE_TRACKING_ENABLED',
+    'ModAccPhaseTrackingMode': {
+        'enum-value-prefix': 'MODACC_PHASE_TRACKING_MODE',
         'values': [
             {
-                'name': 'FALSE',
+                'name': 'DISABLED',
                 'value': 0
             },
             {
-                'name': 'TRUE',
+                'name': 'REFERENCE_AND_DATA',
+                'value': 1
+            },
+            {
+                'name': 'PTRS',
+                'value': 2
+            }
+        ]
+    },
+    'ModAccPreFftErrorEstimationInterval': {
+        'enum-value-prefix': 'MODACC_PRE_FFT_ERROR_ESTIMATION_INTERVAL',
+        'values': [
+            {
+                'name': 'SLOT',
+                'value': 0
+            },
+            {
+                'name': 'MEASUREMENT_LENGTH',
                 'value': 1
             }
         ]
@@ -1432,15 +1457,15 @@ enums = {
             }
         ]
     },
-    'ModAccTimingTrackingEnabled': {
-        'enum-value-prefix': 'MODACC_TIMING_TRACKING_ENABLED',
+    'ModAccTimingTrackingMode': {
+        'enum-value-prefix': 'MODACC_TIMING_TRACKING_MODE',
         'values': [
             {
-                'name': 'FALSE',
+                'name': 'DISABLED',
                 'value': 0
             },
             {
-                'name': 'TRUE',
+                'name': 'REFERENCE_AND_DATA',
                 'value': 1
             }
         ]

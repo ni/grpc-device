@@ -3727,6 +3727,50 @@ namespace nirfmxnr_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxNRService::ModAccFetchFrequencyErrorPerSlotMaximumTrace(::grpc::ServerContext* context, const ModAccFetchFrequencyErrorPerSlotMaximumTraceRequest* request, ModAccFetchFrequencyErrorPerSlotMaximumTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->ModAccFetchFrequencyErrorPerSlotMaximumTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        }
+        response->mutable_frequency_error_per_slot_maximum()->Resize(actual_array_size, 0);
+        float32* frequency_error_per_slot_maximum = response->mutable_frequency_error_per_slot_maximum()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->ModAccFetchFrequencyErrorPerSlotMaximumTrace(instrument, selector_string, timeout, &x0, &dx, frequency_error_per_slot_maximum, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        }
+        response->set_status(status);
+        response->set_x0(x0);
+        response->set_dx(dx);
+        response->mutable_frequency_error_per_slot_maximum()->Resize(actual_array_size, 0);
+        response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxNRService::ModAccFetchIQGainImbalancePerSubcarrierMeanTrace(::grpc::ServerContext* context, const ModAccFetchIQGainImbalancePerSubcarrierMeanTraceRequest* request, ModAccFetchIQGainImbalancePerSubcarrierMeanTraceResponse* response)
   {
     if (context->IsCancelled()) {

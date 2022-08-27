@@ -4872,6 +4872,50 @@ namespace nirfmxwlan_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchPhaseNoisePSDMeanTrace(::grpc::ServerContext* context, const OFDMModAccFetchPhaseNoisePSDMeanTraceRequest* request, OFDMModAccFetchPhaseNoisePSDMeanTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      char* selector_string = (char*)request->selector_string().c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->OFDMModAccFetchPhaseNoisePSDMeanTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        }
+        response->mutable_phase_noise_psd_mean()->Resize(actual_array_size, 0);
+        float32* phase_noise_psd_mean = response->mutable_phase_noise_psd_mean()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->OFDMModAccFetchPhaseNoisePSDMeanTrace(instrument, selector_string, timeout, &x0, &dx, phase_noise_psd_mean, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        }
+        response->set_status(status);
+        response->set_x0(x0);
+        response->set_dx(dx);
+        response->mutable_phase_noise_psd_mean()->Resize(actual_array_size, 0);
+        response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchPilotConstellationTrace(::grpc::ServerContext* context, const OFDMModAccFetchPilotConstellationTraceRequest* request, OFDMModAccFetchPilotConstellationTraceResponse* response)
   {
     if (context->IsCancelled()) {
