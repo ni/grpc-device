@@ -749,7 +749,7 @@ ${set_response_values(normal_outputs, init_method)}\
   if function_data.get('exclude_from_get_last_error', False):
     method_call = f'return nidevice_grpc::ApiErrorToStatus(status);'
   else:
-    method_call = f'return ConvertApiErrorStatusFor{cpp_handle_type}(status, {session});'
+    method_call = f'return ConvertApiErrorStatusFor{cpp_handle_type}(context, status, {session});'
 %>\
       if (!status_ok(status)) {
         ${method_call}

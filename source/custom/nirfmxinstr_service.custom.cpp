@@ -26,7 +26,7 @@ const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
     while (true) {
       auto status = library_->GetNIRFSASessionArray(instrument, nullptr, 0, &actual_array_size);
       if (status < 0) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       array_size = actual_array_size;
       nirfsa_sessions.resize(array_size);
@@ -42,7 +42,7 @@ const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
         return ::grpc::Status(::grpc::INVALID_ARGUMENT, stream.str());
       }
       if (status < 0) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       for (auto i = 0; i < array_size; ++i) {
@@ -82,7 +82,7 @@ const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
     while (true) {
       auto status = library_->BuildPortString(selector_string, port_name, device_name, channel_number, 0, nullptr);
       if (status < 0) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, 0);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
       }
       int32 selector_string_out_length = status + std::to_string(channel_number).length();  // AB#1835966: RFmx Instr BuildPortString2 Bug.
 
@@ -96,7 +96,7 @@ const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
         continue;
       }
       if (status < 0) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, 0);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
       }
       response->set_status(status);
       response->set_selector_string_out(selector_string_out);
@@ -109,18 +109,18 @@ const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
   }
 }
 
-::grpc::Status NiRFmxInstrService::ConvertApiErrorStatusForNiRFmxInstrHandle(google::protobuf::int32 status, niRFmxInstrHandle instrumentHandle)
+::grpc::Status NiRFmxInstrService::ConvertApiErrorStatusForNiRFmxInstrHandle(::grpc::ServerContext* context, google::protobuf::int32 status, niRFmxInstrHandle instrumentHandle)
 {
-    int32 error_code {};
-    std::string description(nidevice_grpc::kMaxGrpcErrorDescriptionSize, '\0');
-    // Try first to get the most recent error with a dynamic message.
-    library_->GetError(instrumentHandle, &error_code, nidevice_grpc::kMaxGrpcErrorDescriptionSize, &description[0]);
-    if (error_code != status) {
-        // Since another thread has changed the status, fall back to the static message lookup.
-        description.assign(nidevice_grpc::kMaxGrpcErrorDescriptionSize, '\0');
-        library_->GetErrorString(instrumentHandle, status, nidevice_grpc::kMaxGrpcErrorDescriptionSize, &description[0]);
-    }
-    return nidevice_grpc::ApiErrorAndDescriptionToStatus(status, description);
+  int32 error_code{};
+  std::string description(nidevice_grpc::kMaxGrpcErrorDescriptionSize, '\0');
+  // Try first to get the most recent error with a dynamic message.
+  library_->GetError(instrumentHandle, &error_code, nidevice_grpc::kMaxGrpcErrorDescriptionSize, &description[0]);
+  if (error_code != status) {
+    // Since another thread has changed the status, fall back to the static message lookup.
+    description.assign(nidevice_grpc::kMaxGrpcErrorDescriptionSize, '\0');
+    library_->GetErrorString(instrumentHandle, status, nidevice_grpc::kMaxGrpcErrorDescriptionSize, &description[0]);
+  }
+  return nidevice_grpc::ApiErrorAndDescriptionToStatus(context, status, description);
 }
 
 }  // namespace nirfmxinstr_grpc

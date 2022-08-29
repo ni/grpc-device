@@ -10,7 +10,6 @@
 
 #include <algorithm>
 #include <limits>
-#include <nlohmann/json.hpp>
 #include <numeric>
 #include <string>
 #include <vector>
@@ -322,24 +321,17 @@ typename TypeToStorageType<TDriverType, TGrpcType>::StorageType allocate_output_
 
 const int kMaxGrpcErrorDescriptionSize = 2048;
 
-inline ::grpc::Status ApiErrorAndDescriptionToStatus(int32_t status, std::string& description, nlohmann::json& jsonError)
+inline ::grpc::Status ApiErrorAndDescriptionToStatus(::grpc::ServerContext* context, int32_t status, std::string& description)
 {
+  context->AddTrailingMetadata("ni-error", std::to_string(status));
   converters::trim_trailing_nulls(description);
-  jsonError["code"] = status;
-  jsonError["message"] = description;
-  return ::grpc::Status(grpc::StatusCode::UNKNOWN, nlohmann::to_string(jsonError));
+  return ::grpc::Status(grpc::StatusCode::UNKNOWN, description);
 }
 
-inline ::grpc::Status ApiErrorAndDescriptionToStatus(int32_t status, std::string& description)
-{
-  nlohmann::json jsonError;
-  return ApiErrorAndDescriptionToStatus(status, description, jsonError);
-}
-
-inline ::grpc::Status ApiErrorToStatus(int32_t status)
+inline ::grpc::Status ApiErrorToStatus(::grpc::ServerContext* context, int32_t status)
 {
   std::string description("Unknown");
-  return ApiErrorAndDescriptionToStatus(status, description);
+  return ApiErrorAndDescriptionToStatus(context, status, description);
 }
 }  // namespace nidevice_grpc
 

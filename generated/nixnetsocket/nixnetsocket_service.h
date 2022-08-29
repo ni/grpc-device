@@ -78,8 +78,8 @@ private:
   NiXnetSocketLibraryInterface* library_;
   ResourceRepositorySharedPtr session_repository_;
   nxIpStackRef_tResourceRepositorySharedPtr nx_ip_stack_ref_t_resource_repository_;
-  ::grpc::Status ConvertApiErrorStatusForNxSOCKET(google::protobuf::int32 status, nxSOCKET socket);
-  ::grpc::Status ConvertApiErrorStatusForNxIpStackRef_t(google::protobuf::int32 status, nxIpStackRef_t socket);
+  ::grpc::Status ConvertApiErrorStatusForNxSOCKET(::grpc::ServerContext* context, google::protobuf::int32 status, nxSOCKET socket);
+  ::grpc::Status ConvertApiErrorStatusForNxIpStackRef_t(::grpc::ServerContext* context, google::protobuf::int32 status, nxIpStackRef_t socket);
 
   NiXnetSocketFeatureToggles feature_toggles_;
 };

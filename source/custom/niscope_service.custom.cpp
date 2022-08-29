@@ -47,7 +47,7 @@ void CheckStatus(int status)
     std::vector<niScope_wfmInfo> waveform_info(num_waveforms, niScope_wfmInfo());
     auto status = library_->Fetch(vi, channel_list, timeout, num_samples, waveform, waveform_info.data());
     if (status < VI_SUCCESS) {
-      return ConvertApiErrorStatusForViSession(status, vi);
+      return ConvertApiErrorStatusForViSession(context, status, vi);
     }
     response->set_status(status);
     convert_to_grpc(waveform_info, response->mutable_wfm_info());
@@ -58,7 +58,7 @@ void CheckStatus(int status)
   }
   catch (const DriverWarningOrErrorException& ex) {
     if (ex.status_ < VI_SUCCESS) {
-      return ConvertApiErrorStatusForViSession(ex.status_, vi);
+      return ConvertApiErrorStatusForViSession(context, ex.status_, vi);
     }
     response->set_status(ex.status_);
     return ::grpc::Status::OK;
@@ -91,7 +91,7 @@ void CheckStatus(int status)
     std::vector<niScope_wfmInfo> waveform_info(num_waveforms, niScope_wfmInfo());
     auto status = library_->FetchBinary8(vi, channel_list, timeout, num_samples, waveform, waveform_info.data());
     if (status < VI_SUCCESS) {
-      return ConvertApiErrorStatusForViSession(status, vi);
+      return ConvertApiErrorStatusForViSession(context, status, vi);
     }
     response->set_status(status);
     convert_to_grpc(waveform_info, response->mutable_wfm_info());
@@ -102,7 +102,7 @@ void CheckStatus(int status)
   }
   catch (const DriverWarningOrErrorException& ex) {
     if (ex.status_ < VI_SUCCESS) {
-      return ConvertApiErrorStatusForViSession(ex.status_, vi);
+      return ConvertApiErrorStatusForViSession(context, ex.status_, vi);
     }
     response->set_status(ex.status_);
     return ::grpc::Status::OK;
@@ -134,7 +134,7 @@ void CheckStatus(int status)
     std::vector<niScope_wfmInfo> waveform_info(num_waveforms, niScope_wfmInfo());
     auto status = library_->FetchBinary16(vi, channel_list, timeout, num_samples, waveform.data(), waveform_info.data());
     if (status < VI_SUCCESS) {
-      return ConvertApiErrorStatusForViSession(status, vi);
+      return ConvertApiErrorStatusForViSession(context, status, vi);
     }
     response->set_status(status);
     convert_to_grpc(waveform_info, response->mutable_wfm_info());
@@ -146,7 +146,7 @@ void CheckStatus(int status)
   }
   catch (const DriverWarningOrErrorException& ex) {
     if (ex.status_ < VI_SUCCESS) {
-      return ConvertApiErrorStatusForViSession(ex.status_, vi);
+      return ConvertApiErrorStatusForViSession(context, ex.status_, vi);
     }
     response->set_status(ex.status_);
     return ::grpc::Status::OK;
@@ -178,7 +178,7 @@ void CheckStatus(int status)
     std::vector<niScope_wfmInfo> waveform_info(num_waveforms, niScope_wfmInfo());
     auto status = library_->FetchBinary32(vi, channel_list, timeout, num_samples, waveform.data(), waveform_info.data());
     if (status < VI_SUCCESS) {
-      return ConvertApiErrorStatusForViSession(status, vi);
+      return ConvertApiErrorStatusForViSession(context, status, vi);
     }
     response->set_status(status);
     response->mutable_waveform()->Add(waveform.begin(), waveform.end());
@@ -190,7 +190,7 @@ void CheckStatus(int status)
   }
   catch (const DriverWarningOrErrorException& ex) {
     if (ex.status_ < VI_SUCCESS) {
-      return ConvertApiErrorStatusForViSession(ex.status_, vi);
+      return ConvertApiErrorStatusForViSession(context, ex.status_, vi);
     }
     response->set_status(ex.status_);
     return ::grpc::Status::OK;
@@ -234,7 +234,7 @@ void CheckStatus(int status)
     std::vector<niScope_wfmInfo> waveform_info(measurement_waveform_size, niScope_wfmInfo());
     auto status = library_->FetchArrayMeasurement(vi, channel_list, timeout, array_meas_function, measurement_waveform_size, meas_wfm, waveform_info.data());
     if (status < VI_SUCCESS) {
-      return ConvertApiErrorStatusForViSession(status, vi);
+      return ConvertApiErrorStatusForViSession(context, status, vi);
     }
     response->set_status(status);
     convert_to_grpc(waveform_info, response->mutable_wfm_info());
@@ -245,7 +245,7 @@ void CheckStatus(int status)
   }
   catch (const DriverWarningOrErrorException& ex) {
     if (ex.status_ < VI_SUCCESS) {
-      return ConvertApiErrorStatusForViSession(ex.status_, vi);
+      return ConvertApiErrorStatusForViSession(context, ex.status_, vi);
     }
     response->set_status(ex.status_);
     return ::grpc::Status::OK;
@@ -294,7 +294,7 @@ void CheckStatus(int status)
     std::vector<ViInt32> num_in_stats(num_waveforms, 0);
     auto status = library_->FetchMeasurementStats(vi, channel_list, timeout, scalar_meas_function, result, mean, stdev, min, max, num_in_stats.data());
     if (status < VI_SUCCESS) {
-      return ConvertApiErrorStatusForViSession(status, vi);
+      return ConvertApiErrorStatusForViSession(context, status, vi);
     }
     response->set_status(status);
     response->mutable_num_in_stats()->Add(num_in_stats.begin(), num_in_stats.end());
@@ -305,7 +305,7 @@ void CheckStatus(int status)
   }
   catch (const DriverWarningOrErrorException& ex) {
     if (ex.status_ < VI_SUCCESS) {
-      return ConvertApiErrorStatusForViSession(ex.status_, vi);
+      return ConvertApiErrorStatusForViSession(context, ex.status_, vi);
     }
     response->set_status(ex.status_);
     return ::grpc::Status::OK;
@@ -338,7 +338,7 @@ void CheckStatus(int status)
     std::vector<niScope_wfmInfo> waveform_info(num_waveforms, niScope_wfmInfo());
     auto status = library_->Read(vi, channel_list, timeout, num_samples, waveform, waveform_info.data());
     if (status < VI_SUCCESS) {
-      return ConvertApiErrorStatusForViSession(status, vi);
+      return ConvertApiErrorStatusForViSession(context, status, vi);
     }
     response->set_status(status);
     convert_to_grpc(waveform_info, response->mutable_wfm_info());
@@ -349,7 +349,7 @@ void CheckStatus(int status)
   }
   catch (const DriverWarningOrErrorException& ex) {
     if (ex.status_ < VI_SUCCESS) {
-      return ConvertApiErrorStatusForViSession(ex.status_, vi);
+      return ConvertApiErrorStatusForViSession(context, ex.status_, vi);
     }
     response->set_status(ex.status_);
     return ::grpc::Status::OK;
@@ -381,7 +381,7 @@ void CheckStatus(int status)
     std::vector<niScope_wfmInfo> waveform_info(num_waveforms, niScope_wfmInfo());
     auto status = library_->FetchComplex(vi, channel_list, timeout, num_samples, waveform.data(), waveform_info.data());
     if (status < VI_SUCCESS) {
-      return ConvertApiErrorStatusForViSession(status, vi);
+      return ConvertApiErrorStatusForViSession(context, status, vi);
     }
     response->set_status(status);
     convert_to_grpc(waveform, response->mutable_wfm());
@@ -393,7 +393,7 @@ void CheckStatus(int status)
   }
   catch (const DriverWarningOrErrorException& ex) {
     if (ex.status_ < VI_SUCCESS) {
-      return ConvertApiErrorStatusForViSession(ex.status_, vi);
+      return ConvertApiErrorStatusForViSession(context, ex.status_, vi);
     }
     response->set_status(ex.status_);
     return ::grpc::Status::OK;
@@ -425,7 +425,7 @@ void CheckStatus(int status)
     std::vector<niScope_wfmInfo> waveform_info(num_waveforms, niScope_wfmInfo());
     auto status = library_->FetchComplexBinary16(vi, channel_list, timeout, num_samples, waveform.data(), waveform_info.data());
     if (status < VI_SUCCESS) {
-      return ConvertApiErrorStatusForViSession(status, vi);
+      return ConvertApiErrorStatusForViSession(context, status, vi);
     }
     response->set_status(status);
     convert_to_grpc(waveform, response->mutable_wfm());
@@ -437,7 +437,7 @@ void CheckStatus(int status)
   }
   catch (const DriverWarningOrErrorException& ex) {
     if (ex.status_ < VI_SUCCESS) {
-      return ConvertApiErrorStatusForViSession(ex.status_, vi);
+      return ConvertApiErrorStatusForViSession(context, ex.status_, vi);
     }
     response->set_status(ex.status_);
     return ::grpc::Status::OK;
@@ -477,7 +477,7 @@ void CheckStatus(int status)
     ViReal64* result = response->mutable_result()->mutable_data();
     auto status = library_->FetchMeasurement(vi, channel_list, timeout, scalar_meas_function, result);
     if (status < VI_SUCCESS) {
-      return ConvertApiErrorStatusForViSession(status, vi);
+      return ConvertApiErrorStatusForViSession(context, status, vi);
     }
     response->set_status(status);
     return ::grpc::Status::OK;
@@ -487,7 +487,7 @@ void CheckStatus(int status)
   }
   catch (const DriverWarningOrErrorException& ex) {
     if (ex.status_ < VI_SUCCESS) {
-      return ConvertApiErrorStatusForViSession(ex.status_, vi);
+      return ConvertApiErrorStatusForViSession(context, ex.status_, vi);
     }
     response->set_status(ex.status_);
     return ::grpc::Status::OK;
@@ -527,7 +527,7 @@ void CheckStatus(int status)
     ViReal64* result = response->mutable_result()->mutable_data();
     auto status = library_->ReadMeasurement(vi, channel_list, timeout, scalar_meas_function, result);
     if (status < VI_SUCCESS) {
-      return ConvertApiErrorStatusForViSession(status, vi);
+      return ConvertApiErrorStatusForViSession(context, status, vi);
     }
     response->set_status(status);
     return ::grpc::Status::OK;
@@ -537,25 +537,25 @@ void CheckStatus(int status)
   }
   catch (const DriverWarningOrErrorException& ex) {
     if (ex.status_ < VI_SUCCESS) {
-      return ConvertApiErrorStatusForViSession(ex.status_, vi);
+      return ConvertApiErrorStatusForViSession(context, ex.status_, vi);
     }
     response->set_status(ex.status_);
     return ::grpc::Status::OK;
   }
 }
 
-::grpc::Status NiScopeService::ConvertApiErrorStatusForViSession(google::protobuf::int32 status, ViSession vi)
+::grpc::Status NiScopeService::ConvertApiErrorStatusForViSession(::grpc::ServerContext* context, google::protobuf::int32 status, ViSession vi)
 {
-    ViStatus error_code {};
-    std::string description(nidevice_grpc::kMaxGrpcErrorDescriptionSize, '\0');
-    // Try first to get the most recent error with a dynamic message.
-    library_->GetError(vi, &error_code, nidevice_grpc::kMaxGrpcErrorDescriptionSize, &description[0]);
-    if (error_code != status) {
-        // Since another thread has changed the status, fall back to the static message lookup.
-        description.assign(nidevice_grpc::kMaxGrpcErrorDescriptionSize, '\0');
-        library_->GetErrorMessage(vi, status, nidevice_grpc::kMaxGrpcErrorDescriptionSize, &description[0]);
-    }
-    return nidevice_grpc::ApiErrorAndDescriptionToStatus(status, description);
+  ViStatus error_code{};
+  std::string description(nidevice_grpc::kMaxGrpcErrorDescriptionSize, '\0');
+  // Try first to get the most recent error with a dynamic message.
+  library_->GetError(vi, &error_code, nidevice_grpc::kMaxGrpcErrorDescriptionSize, &description[0]);
+  if (error_code != status) {
+    // Since another thread has changed the status, fall back to the static message lookup.
+    description.assign(nidevice_grpc::kMaxGrpcErrorDescriptionSize, '\0');
+    library_->GetErrorMessage(vi, status, nidevice_grpc::kMaxGrpcErrorDescriptionSize, &description[0]);
+  }
+  return nidevice_grpc::ApiErrorAndDescriptionToStatus(context, status, description);
 }
 
 }  // namespace niscope_grpc

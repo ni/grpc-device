@@ -4,16 +4,16 @@
 
 namespace nidcpower_grpc {
 
-class DriverWarningOrErrorException : public std::runtime_error{
-  private:
-    int status_ = 0;
+class DriverWarningOrErrorException : public std::runtime_error {
+ private:
+  int status_ = 0;
 
-  public:
-    DriverWarningOrErrorException(int status) : std::runtime_error(""), status_(status) { }
-    int status() const
-    {
-      return status_;
-    }
+ public:
+  DriverWarningOrErrorException(int status) : std::runtime_error(""), status_(status) {}
+  int status() const
+  {
+    return status_;
+  }
 };
 
 static void CheckStatus(int status)
@@ -45,7 +45,7 @@ static void CheckStatus(int status)
 
     auto status = library_->MeasureMultiple(vi, channel_name, voltage_measurements, current_measurements);
     if (status < VI_SUCCESS) {
-      return ConvertApiErrorStatusForViSession(status, vi);
+      return ConvertApiErrorStatusForViSession(context, status, vi);
     }
     response->set_status(status);
     return ::grpc::Status::OK;
@@ -55,26 +55,26 @@ static void CheckStatus(int status)
   }
   catch (const DriverWarningOrErrorException& ex) {
     if (ex.status() < VI_SUCCESS) {
-      return ConvertApiErrorStatusForViSession(ex.status(), vi);
+      return ConvertApiErrorStatusForViSession(context, ex.status(), vi);
     }
     response->set_status(ex.status());
     return ::grpc::Status::OK;
   }
 }
 
-::grpc::Status NiDCPowerService::ConvertApiErrorStatusForViSession(google::protobuf::int32 status, ViSession vi)
+::grpc::Status NiDCPowerService::ConvertApiErrorStatusForViSession(::grpc::ServerContext* context, google::protobuf::int32 status, ViSession vi)
 {
-    static_assert(nidevice_grpc::kMaxGrpcErrorDescriptionSize >= 256, "ErrorMessage expects a minimum buffer size.");
-    ViStatus error_code {};
-    std::string description(nidevice_grpc::kMaxGrpcErrorDescriptionSize, '\0');
-    // Try first to get the most recent error with a dynamic message.
-    library_->GetError(vi, &error_code, nidevice_grpc::kMaxGrpcErrorDescriptionSize, &description[0]);
-    if (error_code != status) {
-        // Since another thread has changed the status, fall back to the static message lookup.
-        description.assign(nidevice_grpc::kMaxGrpcErrorDescriptionSize, '\0');
-        library_->ErrorMessage(vi, status, &description[0]);
-    }
-    return nidevice_grpc::ApiErrorAndDescriptionToStatus(status, description);
+  static_assert(nidevice_grpc::kMaxGrpcErrorDescriptionSize >= 256, "ErrorMessage expects a minimum buffer size.");
+  ViStatus error_code{};
+  std::string description(nidevice_grpc::kMaxGrpcErrorDescriptionSize, '\0');
+  // Try first to get the most recent error with a dynamic message.
+  library_->GetError(vi, &error_code, nidevice_grpc::kMaxGrpcErrorDescriptionSize, &description[0]);
+  if (error_code != status) {
+    // Since another thread has changed the status, fall back to the static message lookup.
+    description.assign(nidevice_grpc::kMaxGrpcErrorDescriptionSize, '\0');
+    library_->ErrorMessage(vi, status, &description[0]);
+  }
+  return nidevice_grpc::ApiErrorAndDescriptionToStatus(context, status, description);
 }
 
 }  // namespace nidcpower_grpc
