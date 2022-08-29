@@ -1176,6 +1176,19 @@ enums = {
             }
         ]
     },
+    'ModAccMulticarrierTimeSynchronizationMode': {
+        'enum-value-prefix': 'MODACC_MULTICARRIER_TIME_SYNCHRONIZATION_MODE',
+        'values': [
+            {
+                'name': 'COMMON',
+                'value': 0
+            },
+            {
+                'name': 'PER_CARRIER',
+                'value': 1
+            }
+        ]
+    },
     'ModAccSpectralFlatnessCondition': {
         'enum-value-prefix': 'MODACC_SPECTRAL_FLATNESS_CONDITION',
         'values': [
