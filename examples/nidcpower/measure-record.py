@@ -86,7 +86,6 @@ try:
         )
     )
     vi = initialize_with_channels_response.vi
-    check_for_warning(initialize_with_channels_response, vi)
 
     # Specify when the measure unit should acquire measurements.
     configure_measure_when = client.SetAttributeViInt32(
@@ -141,6 +140,7 @@ try:
             vi=vi,
         )
     )
+    check_for_warning(initiate_response, vi)
 
     # Setup a plot to draw the captured waveform.
     fig = plt.figure("Waveform Graph")
