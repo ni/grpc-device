@@ -1,7 +1,7 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
-#include <nlohmann/json.hpp>
 
+#include <nlohmann/json.hpp>
 #include <thread>
 #include <tuple>
 
@@ -68,7 +68,7 @@ class NiRFmxSpecAnDriverApiTests : public ::testing::Test {
       EXPECT_EQ(0, response.status());
       return true;
     }
-    catch (const std::runtime_error& ex) {
+    catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
       auto error = json::parse(ex.what());
       return error.value("code", 0) != INVALID_SESSION_HANDLE_ERROR;
     }
@@ -652,7 +652,7 @@ TEST_P(NiRFmxSpecAnDriverApiConflictingResourceInitTests, InitializeResource_Ini
     init(stub(), PXI_5663, std::get<1>(GetParam()));
     EXPECT_FALSE(true);
   }
-  catch (const std::runtime_error& ex) {
+  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
     EXPECT_STATUS_ERROR(DEVICE_IN_USE_ERROR, ex.what());
   }
 }
