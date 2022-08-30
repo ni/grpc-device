@@ -28,7 +28,8 @@ abort_generation(const StubPtr& stub, const nidevice_grpc::Session& vi)
   auto response = AbortGenerationResponse{};
 
   raise_if_error(
-      stub->AbortGeneration(&context, request, &response));
+      stub->AbortGeneration(&context, request, &response),
+      context);
 
   return response;
 }
@@ -45,7 +46,8 @@ adjust_sample_clock_relative_delay(const StubPtr& stub, const nidevice_grpc::Ses
   auto response = AdjustSampleClockRelativeDelayResponse{};
 
   raise_if_error(
-      stub->AdjustSampleClockRelativeDelay(&context, request, &response));
+      stub->AdjustSampleClockRelativeDelay(&context, request, &response),
+      context);
 
   return response;
 }
@@ -64,7 +66,8 @@ allocate_named_waveform(const StubPtr& stub, const nidevice_grpc::Session& vi, c
   auto response = AllocateNamedWaveformResponse{};
 
   raise_if_error(
-      stub->AllocateNamedWaveform(&context, request, &response));
+      stub->AllocateNamedWaveform(&context, request, &response),
+      context);
 
   return response;
 }
@@ -82,7 +85,8 @@ allocate_waveform(const StubPtr& stub, const nidevice_grpc::Session& vi, const p
   auto response = AllocateWaveformResponse{};
 
   raise_if_error(
-      stub->AllocateWaveform(&context, request, &response));
+      stub->AllocateWaveform(&context, request, &response),
+      context);
 
   return response;
 }
@@ -101,7 +105,8 @@ check_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi
   auto response = CheckAttributeViBooleanResponse{};
 
   raise_if_error(
-      stub->CheckAttributeViBoolean(&context, request, &response));
+      stub->CheckAttributeViBoolean(&context, request, &response),
+      context);
 
   return response;
 }
@@ -127,7 +132,8 @@ check_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, 
   auto response = CheckAttributeViInt32Response{};
 
   raise_if_error(
-      stub->CheckAttributeViInt32(&context, request, &response));
+      stub->CheckAttributeViInt32(&context, request, &response),
+      context);
 
   return response;
 }
@@ -146,7 +152,8 @@ check_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, 
   auto response = CheckAttributeViInt64Response{};
 
   raise_if_error(
-      stub->CheckAttributeViInt64(&context, request, &response));
+      stub->CheckAttributeViInt64(&context, request, &response),
+      context);
 
   return response;
 }
@@ -172,7 +179,8 @@ check_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi,
   auto response = CheckAttributeViReal64Response{};
 
   raise_if_error(
-      stub->CheckAttributeViReal64(&context, request, &response));
+      stub->CheckAttributeViReal64(&context, request, &response),
+      context);
 
   return response;
 }
@@ -191,7 +199,8 @@ check_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi
   auto response = CheckAttributeViSessionResponse{};
 
   raise_if_error(
-      stub->CheckAttributeViSession(&context, request, &response));
+      stub->CheckAttributeViSession(&context, request, &response),
+      context);
 
   return response;
 }
@@ -210,7 +219,8 @@ check_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi,
   auto response = CheckAttributeViStringResponse{};
 
   raise_if_error(
-      stub->CheckAttributeViString(&context, request, &response));
+      stub->CheckAttributeViString(&context, request, &response),
+      context);
 
   return response;
 }
@@ -226,7 +236,8 @@ clear_arb_memory(const StubPtr& stub, const nidevice_grpc::Session& vi)
   auto response = ClearArbMemoryResponse{};
 
   raise_if_error(
-      stub->ClearArbMemory(&context, request, &response));
+      stub->ClearArbMemory(&context, request, &response),
+      context);
 
   return response;
 }
@@ -250,7 +261,8 @@ clear_arb_sequence(const StubPtr& stub, const nidevice_grpc::Session& vi, const 
   auto response = ClearArbSequenceResponse{};
 
   raise_if_error(
-      stub->ClearArbSequence(&context, request, &response));
+      stub->ClearArbSequence(&context, request, &response),
+      context);
 
   return response;
 }
@@ -274,7 +286,8 @@ clear_arb_waveform(const StubPtr& stub, const nidevice_grpc::Session& vi, const 
   auto response = ClearArbWaveformResponse{};
 
   raise_if_error(
-      stub->ClearArbWaveform(&context, request, &response));
+      stub->ClearArbWaveform(&context, request, &response),
+      context);
 
   return response;
 }
@@ -290,7 +303,8 @@ clear_error(const StubPtr& stub, const nidevice_grpc::Session& vi)
   auto response = ClearErrorResponse{};
 
   raise_if_error(
-      stub->ClearError(&context, request, &response));
+      stub->ClearError(&context, request, &response),
+      context);
 
   return response;
 }
@@ -314,7 +328,8 @@ clear_freq_list(const StubPtr& stub, const nidevice_grpc::Session& vi, const sim
   auto response = ClearFreqListResponse{};
 
   raise_if_error(
-      stub->ClearFreqList(&context, request, &response));
+      stub->ClearFreqList(&context, request, &response),
+      context);
 
   return response;
 }
@@ -330,7 +345,8 @@ clear_interchange_warnings(const StubPtr& stub, const nidevice_grpc::Session& vi
   auto response = ClearInterchangeWarningsResponse{};
 
   raise_if_error(
-      stub->ClearInterchangeWarnings(&context, request, &response));
+      stub->ClearInterchangeWarnings(&context, request, &response),
+      context);
 
   return response;
 }
@@ -347,7 +363,8 @@ clear_user_standard_waveform(const StubPtr& stub, const nidevice_grpc::Session& 
   auto response = ClearUserStandardWaveformResponse{};
 
   raise_if_error(
-      stub->ClearUserStandardWaveform(&context, request, &response));
+      stub->ClearUserStandardWaveform(&context, request, &response),
+      context);
 
   return response;
 }
@@ -363,7 +380,8 @@ close(const StubPtr& stub, const nidevice_grpc::Session& vi)
   auto response = CloseResponse{};
 
   raise_if_error(
-      stub->Close(&context, request, &response));
+      stub->Close(&context, request, &response),
+      context);
 
   return response;
 }
@@ -379,7 +397,8 @@ commit(const StubPtr& stub, const nidevice_grpc::Session& vi)
   auto response = CommitResponse{};
 
   raise_if_error(
-      stub->Commit(&context, request, &response));
+      stub->Commit(&context, request, &response),
+      context);
 
   return response;
 }
@@ -397,7 +416,8 @@ configure_amplitude(const StubPtr& stub, const nidevice_grpc::Session& vi, const
   auto response = ConfigureAmplitudeResponse{};
 
   raise_if_error(
-      stub->ConfigureAmplitude(&context, request, &response));
+      stub->ConfigureAmplitude(&context, request, &response),
+      context);
 
   return response;
 }
@@ -417,7 +437,8 @@ configure_arb_sequence(const StubPtr& stub, const nidevice_grpc::Session& vi, co
   auto response = ConfigureArbSequenceResponse{};
 
   raise_if_error(
-      stub->ConfigureArbSequence(&context, request, &response));
+      stub->ConfigureArbSequence(&context, request, &response),
+      context);
 
   return response;
 }
@@ -437,7 +458,8 @@ configure_arb_waveform(const StubPtr& stub, const nidevice_grpc::Session& vi, co
   auto response = ConfigureArbWaveformResponse{};
 
   raise_if_error(
-      stub->ConfigureArbWaveform(&context, request, &response));
+      stub->ConfigureArbWaveform(&context, request, &response),
+      context);
 
   return response;
 }
@@ -454,7 +476,8 @@ configure_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const 
   auto response = ConfigureChannelsResponse{};
 
   raise_if_error(
-      stub->ConfigureChannels(&context, request, &response));
+      stub->ConfigureChannels(&context, request, &response),
+      context);
 
   return response;
 }
@@ -478,7 +501,8 @@ configure_clock_mode(const StubPtr& stub, const nidevice_grpc::Session& vi, cons
   auto response = ConfigureClockModeResponse{};
 
   raise_if_error(
-      stub->ConfigureClockMode(&context, request, &response));
+      stub->ConfigureClockMode(&context, request, &response),
+      context);
 
   return response;
 }
@@ -496,7 +520,8 @@ configure_custom_fir_filter_coefficients(const StubPtr& stub, const nidevice_grp
   auto response = ConfigureCustomFIRFilterCoefficientsResponse{};
 
   raise_if_error(
-      stub->ConfigureCustomFIRFilterCoefficients(&context, request, &response));
+      stub->ConfigureCustomFIRFilterCoefficients(&context, request, &response),
+      context);
 
   return response;
 }
@@ -515,7 +540,8 @@ configure_digital_edge_script_trigger(const StubPtr& stub, const nidevice_grpc::
   auto response = ConfigureDigitalEdgeScriptTriggerResponse{};
 
   raise_if_error(
-      stub->ConfigureDigitalEdgeScriptTrigger(&context, request, &response));
+      stub->ConfigureDigitalEdgeScriptTrigger(&context, request, &response),
+      context);
 
   return response;
 }
@@ -533,7 +559,8 @@ configure_digital_edge_start_trigger(const StubPtr& stub, const nidevice_grpc::S
   auto response = ConfigureDigitalEdgeStartTriggerResponse{};
 
   raise_if_error(
-      stub->ConfigureDigitalEdgeStartTrigger(&context, request, &response));
+      stub->ConfigureDigitalEdgeStartTrigger(&context, request, &response),
+      context);
 
   return response;
 }
@@ -559,7 +586,8 @@ configure_digital_level_script_trigger(const StubPtr& stub, const nidevice_grpc:
   auto response = ConfigureDigitalLevelScriptTriggerResponse{};
 
   raise_if_error(
-      stub->ConfigureDigitalLevelScriptTrigger(&context, request, &response));
+      stub->ConfigureDigitalLevelScriptTrigger(&context, request, &response),
+      context);
 
   return response;
 }
@@ -580,7 +608,8 @@ configure_freq_list(const StubPtr& stub, const nidevice_grpc::Session& vi, const
   auto response = ConfigureFreqListResponse{};
 
   raise_if_error(
-      stub->ConfigureFreqList(&context, request, &response));
+      stub->ConfigureFreqList(&context, request, &response),
+      context);
 
   return response;
 }
@@ -598,7 +627,8 @@ configure_frequency(const StubPtr& stub, const nidevice_grpc::Session& vi, const
   auto response = ConfigureFrequencyResponse{};
 
   raise_if_error(
-      stub->ConfigureFrequency(&context, request, &response));
+      stub->ConfigureFrequency(&context, request, &response),
+      context);
 
   return response;
 }
@@ -616,7 +646,8 @@ configure_operation_mode(const StubPtr& stub, const nidevice_grpc::Session& vi, 
   auto response = ConfigureOperationModeResponse{};
 
   raise_if_error(
-      stub->ConfigureOperationMode(&context, request, &response));
+      stub->ConfigureOperationMode(&context, request, &response),
+      context);
 
   return response;
 }
@@ -634,7 +665,8 @@ configure_output_enabled(const StubPtr& stub, const nidevice_grpc::Session& vi, 
   auto response = ConfigureOutputEnabledResponse{};
 
   raise_if_error(
-      stub->ConfigureOutputEnabled(&context, request, &response));
+      stub->ConfigureOutputEnabled(&context, request, &response),
+      context);
 
   return response;
 }
@@ -652,7 +684,8 @@ configure_output_impedance(const StubPtr& stub, const nidevice_grpc::Session& vi
   auto response = ConfigureOutputImpedanceResponse{};
 
   raise_if_error(
-      stub->ConfigureOutputImpedance(&context, request, &response));
+      stub->ConfigureOutputImpedance(&context, request, &response),
+      context);
 
   return response;
 }
@@ -676,7 +709,8 @@ configure_output_mode(const StubPtr& stub, const nidevice_grpc::Session& vi, con
   auto response = ConfigureOutputModeResponse{};
 
   raise_if_error(
-      stub->ConfigureOutputMode(&context, request, &response));
+      stub->ConfigureOutputMode(&context, request, &response),
+      context);
 
   return response;
 }
@@ -693,7 +727,8 @@ configure_p2p_endpoint_fullness_start_trigger(const StubPtr& stub, const nidevic
   auto response = ConfigureP2PEndpointFullnessStartTriggerResponse{};
 
   raise_if_error(
-      stub->ConfigureP2PEndpointFullnessStartTrigger(&context, request, &response));
+      stub->ConfigureP2PEndpointFullnessStartTrigger(&context, request, &response),
+      context);
 
   return response;
 }
@@ -711,7 +746,8 @@ configure_reference_clock(const StubPtr& stub, const nidevice_grpc::Session& vi,
   auto response = ConfigureReferenceClockResponse{};
 
   raise_if_error(
-      stub->ConfigureReferenceClock(&context, request, &response));
+      stub->ConfigureReferenceClock(&context, request, &response),
+      context);
 
   return response;
 }
@@ -728,7 +764,8 @@ configure_sample_clock_source(const StubPtr& stub, const nidevice_grpc::Session&
   auto response = ConfigureSampleClockSourceResponse{};
 
   raise_if_error(
-      stub->ConfigureSampleClockSource(&context, request, &response));
+      stub->ConfigureSampleClockSource(&context, request, &response),
+      context);
 
   return response;
 }
@@ -745,7 +782,8 @@ configure_sample_rate(const StubPtr& stub, const nidevice_grpc::Session& vi, con
   auto response = ConfigureSampleRateResponse{};
 
   raise_if_error(
-      stub->ConfigureSampleRate(&context, request, &response));
+      stub->ConfigureSampleRate(&context, request, &response),
+      context);
 
   return response;
 }
@@ -762,7 +800,8 @@ configure_software_edge_script_trigger(const StubPtr& stub, const nidevice_grpc:
   auto response = ConfigureSoftwareEdgeScriptTriggerResponse{};
 
   raise_if_error(
-      stub->ConfigureSoftwareEdgeScriptTrigger(&context, request, &response));
+      stub->ConfigureSoftwareEdgeScriptTrigger(&context, request, &response),
+      context);
 
   return response;
 }
@@ -778,7 +817,8 @@ configure_software_edge_start_trigger(const StubPtr& stub, const nidevice_grpc::
   auto response = ConfigureSoftwareEdgeStartTriggerResponse{};
 
   raise_if_error(
-      stub->ConfigureSoftwareEdgeStartTrigger(&context, request, &response));
+      stub->ConfigureSoftwareEdgeStartTrigger(&context, request, &response),
+      context);
 
   return response;
 }
@@ -807,7 +847,8 @@ configure_standard_waveform(const StubPtr& stub, const nidevice_grpc::Session& v
   auto response = ConfigureStandardWaveformResponse{};
 
   raise_if_error(
-      stub->ConfigureStandardWaveform(&context, request, &response));
+      stub->ConfigureStandardWaveform(&context, request, &response),
+      context);
 
   return response;
 }
@@ -825,7 +866,8 @@ configure_synchronization(const StubPtr& stub, const nidevice_grpc::Session& vi,
   auto response = ConfigureSynchronizationResponse{};
 
   raise_if_error(
-      stub->ConfigureSynchronization(&context, request, &response));
+      stub->ConfigureSynchronization(&context, request, &response),
+      context);
 
   return response;
 }
@@ -850,7 +892,8 @@ configure_trigger_mode(const StubPtr& stub, const nidevice_grpc::Session& vi, co
   auto response = ConfigureTriggerModeResponse{};
 
   raise_if_error(
-      stub->ConfigureTriggerMode(&context, request, &response));
+      stub->ConfigureTriggerMode(&context, request, &response),
+      context);
 
   return response;
 }
@@ -870,7 +913,8 @@ create_advanced_arb_sequence(const StubPtr& stub, const nidevice_grpc::Session& 
   auto response = CreateAdvancedArbSequenceResponse{};
 
   raise_if_error(
-      stub->CreateAdvancedArbSequence(&context, request, &response));
+      stub->CreateAdvancedArbSequence(&context, request, &response),
+      context);
 
   return response;
 }
@@ -888,7 +932,8 @@ create_arb_sequence(const StubPtr& stub, const nidevice_grpc::Session& vi, const
   auto response = CreateArbSequenceResponse{};
 
   raise_if_error(
-      stub->CreateArbSequence(&context, request, &response));
+      stub->CreateArbSequence(&context, request, &response),
+      context);
 
   return response;
 }
@@ -914,7 +959,8 @@ create_freq_list(const StubPtr& stub, const nidevice_grpc::Session& vi, const si
   auto response = CreateFreqListResponse{};
 
   raise_if_error(
-      stub->CreateFreqList(&context, request, &response));
+      stub->CreateFreqList(&context, request, &response),
+      context);
 
   return response;
 }
@@ -932,7 +978,8 @@ create_waveform_complex_f64(const StubPtr& stub, const nidevice_grpc::Session& v
   auto response = CreateWaveformComplexF64Response{};
 
   raise_if_error(
-      stub->CreateWaveformComplexF64(&context, request, &response));
+      stub->CreateWaveformComplexF64(&context, request, &response),
+      context);
 
   return response;
 }
@@ -950,7 +997,8 @@ create_waveform_f64(const StubPtr& stub, const nidevice_grpc::Session& vi, const
   auto response = CreateWaveformF64Response{};
 
   raise_if_error(
-      stub->CreateWaveformF64(&context, request, &response));
+      stub->CreateWaveformF64(&context, request, &response),
+      context);
 
   return response;
 }
@@ -976,7 +1024,8 @@ create_waveform_from_file_f64(const StubPtr& stub, const nidevice_grpc::Session&
   auto response = CreateWaveformFromFileF64Response{};
 
   raise_if_error(
-      stub->CreateWaveformFromFileF64(&context, request, &response));
+      stub->CreateWaveformFromFileF64(&context, request, &response),
+      context);
 
   return response;
 }
@@ -996,7 +1045,8 @@ create_waveform_from_file_hws(const StubPtr& stub, const nidevice_grpc::Session&
   auto response = CreateWaveformFromFileHWSResponse{};
 
   raise_if_error(
-      stub->CreateWaveformFromFileHWS(&context, request, &response));
+      stub->CreateWaveformFromFileHWS(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1014,7 +1064,8 @@ create_waveform_i16(const StubPtr& stub, const nidevice_grpc::Session& vi, const
   auto response = CreateWaveformI16Response{};
 
   raise_if_error(
-      stub->CreateWaveformI16(&context, request, &response));
+      stub->CreateWaveformI16(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1040,7 +1091,8 @@ create_waveform_from_file_i16(const StubPtr& stub, const nidevice_grpc::Session&
   auto response = CreateWaveformFromFileI16Response{};
 
   raise_if_error(
-      stub->CreateWaveformFromFileI16(&context, request, &response));
+      stub->CreateWaveformFromFileI16(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1058,7 +1110,8 @@ define_user_standard_waveform(const StubPtr& stub, const nidevice_grpc::Session&
   auto response = DefineUserStandardWaveformResponse{};
 
   raise_if_error(
-      stub->DefineUserStandardWaveform(&context, request, &response));
+      stub->DefineUserStandardWaveform(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1076,7 +1129,8 @@ delete_named_waveform(const StubPtr& stub, const nidevice_grpc::Session& vi, con
   auto response = DeleteNamedWaveformResponse{};
 
   raise_if_error(
-      stub->DeleteNamedWaveform(&context, request, &response));
+      stub->DeleteNamedWaveform(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1094,7 +1148,8 @@ delete_script(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::s
   auto response = DeleteScriptResponse{};
 
   raise_if_error(
-      stub->DeleteScript(&context, request, &response));
+      stub->DeleteScript(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1110,7 +1165,8 @@ disable(const StubPtr& stub, const nidevice_grpc::Session& vi)
   auto response = DisableResponse{};
 
   raise_if_error(
-      stub->Disable(&context, request, &response));
+      stub->Disable(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1127,7 +1183,8 @@ disable_analog_filter(const StubPtr& stub, const nidevice_grpc::Session& vi, con
   auto response = DisableAnalogFilterResponse{};
 
   raise_if_error(
-      stub->DisableAnalogFilter(&context, request, &response));
+      stub->DisableAnalogFilter(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1144,7 +1201,8 @@ disable_digital_filter(const StubPtr& stub, const nidevice_grpc::Session& vi, co
   auto response = DisableDigitalFilterResponse{};
 
   raise_if_error(
-      stub->DisableDigitalFilter(&context, request, &response));
+      stub->DisableDigitalFilter(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1161,7 +1219,8 @@ disable_digital_patterning(const StubPtr& stub, const nidevice_grpc::Session& vi
   auto response = DisableDigitalPatterningResponse{};
 
   raise_if_error(
-      stub->DisableDigitalPatterning(&context, request, &response));
+      stub->DisableDigitalPatterning(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1178,7 +1237,8 @@ disable_script_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, co
   auto response = DisableScriptTriggerResponse{};
 
   raise_if_error(
-      stub->DisableScriptTrigger(&context, request, &response));
+      stub->DisableScriptTrigger(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1194,7 +1254,8 @@ disable_start_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi)
   auto response = DisableStartTriggerResponse{};
 
   raise_if_error(
-      stub->DisableStartTrigger(&context, request, &response));
+      stub->DisableStartTrigger(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1212,7 +1273,8 @@ enable_analog_filter(const StubPtr& stub, const nidevice_grpc::Session& vi, cons
   auto response = EnableAnalogFilterResponse{};
 
   raise_if_error(
-      stub->EnableAnalogFilter(&context, request, &response));
+      stub->EnableAnalogFilter(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1229,7 +1291,8 @@ enable_digital_filter(const StubPtr& stub, const nidevice_grpc::Session& vi, con
   auto response = EnableDigitalFilterResponse{};
 
   raise_if_error(
-      stub->EnableDigitalFilter(&context, request, &response));
+      stub->EnableDigitalFilter(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1246,7 +1309,8 @@ enable_digital_patterning(const StubPtr& stub, const nidevice_grpc::Session& vi,
   auto response = EnableDigitalPatterningResponse{};
 
   raise_if_error(
-      stub->EnableDigitalPatterning(&context, request, &response));
+      stub->EnableDigitalPatterning(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1263,7 +1327,8 @@ error_handler(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::i
   auto response = ErrorHandlerResponse{};
 
   raise_if_error(
-      stub->ErrorHandler(&context, request, &response));
+      stub->ErrorHandler(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1280,7 +1345,8 @@ error_message(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::i
   auto response = ErrorMessageResponse{};
 
   raise_if_error(
-      stub->ErrorMessage(&context, request, &response));
+      stub->ErrorMessage(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1296,7 +1362,8 @@ error_query(const StubPtr& stub, const nidevice_grpc::Session& vi)
   auto response = ErrorQueryResponse{};
 
   raise_if_error(
-      stub->ErrorQuery(&context, request, &response));
+      stub->ErrorQuery(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1312,7 +1379,8 @@ export_attribute_configuration_buffer(const StubPtr& stub, const nidevice_grpc::
   auto response = ExportAttributeConfigurationBufferResponse{};
 
   raise_if_error(
-      stub->ExportAttributeConfigurationBuffer(&context, request, &response));
+      stub->ExportAttributeConfigurationBuffer(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1329,7 +1397,8 @@ export_attribute_configuration_file(const StubPtr& stub, const nidevice_grpc::Se
   auto response = ExportAttributeConfigurationFileResponse{};
 
   raise_if_error(
-      stub->ExportAttributeConfigurationFile(&context, request, &response));
+      stub->ExportAttributeConfigurationFile(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1355,7 +1424,8 @@ export_signal(const StubPtr& stub, const nidevice_grpc::Session& vi, const simpl
   auto response = ExportSignalResponse{};
 
   raise_if_error(
-      stub->ExportSignal(&context, request, &response));
+      stub->ExportSignal(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1373,7 +1443,8 @@ get_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, 
   auto response = GetAttributeViBooleanResponse{};
 
   raise_if_error(
-      stub->GetAttributeViBoolean(&context, request, &response));
+      stub->GetAttributeViBoolean(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1391,7 +1462,8 @@ get_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, co
   auto response = GetAttributeViInt32Response{};
 
   raise_if_error(
-      stub->GetAttributeViInt32(&context, request, &response));
+      stub->GetAttributeViInt32(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1409,7 +1481,8 @@ get_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, co
   auto response = GetAttributeViInt64Response{};
 
   raise_if_error(
-      stub->GetAttributeViInt64(&context, request, &response));
+      stub->GetAttributeViInt64(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1427,7 +1500,8 @@ get_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, c
   auto response = GetAttributeViReal64Response{};
 
   raise_if_error(
-      stub->GetAttributeViReal64(&context, request, &response));
+      stub->GetAttributeViReal64(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1445,7 +1519,8 @@ get_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, 
   auto response = GetAttributeViSessionResponse{};
 
   raise_if_error(
-      stub->GetAttributeViSession(&context, request, &response));
+      stub->GetAttributeViSession(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1463,7 +1538,8 @@ get_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, c
   auto response = GetAttributeViStringResponse{};
 
   raise_if_error(
-      stub->GetAttributeViString(&context, request, &response));
+      stub->GetAttributeViString(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1480,7 +1556,8 @@ get_channel_name(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb
   auto response = GetChannelNameResponse{};
 
   raise_if_error(
-      stub->GetChannelName(&context, request, &response));
+      stub->GetChannelName(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1496,7 +1573,8 @@ get_error(const StubPtr& stub, const nidevice_grpc::Session& vi)
   auto response = GetErrorResponse{};
 
   raise_if_error(
-      stub->GetError(&context, request, &response));
+      stub->GetError(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1512,7 +1590,8 @@ get_ext_cal_last_date_and_time(const StubPtr& stub, const nidevice_grpc::Session
   auto response = GetExtCalLastDateAndTimeResponse{};
 
   raise_if_error(
-      stub->GetExtCalLastDateAndTime(&context, request, &response));
+      stub->GetExtCalLastDateAndTime(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1528,7 +1607,8 @@ get_ext_cal_last_temp(const StubPtr& stub, const nidevice_grpc::Session& vi)
   auto response = GetExtCalLastTempResponse{};
 
   raise_if_error(
-      stub->GetExtCalLastTemp(&context, request, &response));
+      stub->GetExtCalLastTemp(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1544,7 +1624,8 @@ get_ext_cal_recommended_interval(const StubPtr& stub, const nidevice_grpc::Sessi
   auto response = GetExtCalRecommendedIntervalResponse{};
 
   raise_if_error(
-      stub->GetExtCalRecommendedInterval(&context, request, &response));
+      stub->GetExtCalRecommendedInterval(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1561,7 +1642,8 @@ get_fir_filter_coefficients(const StubPtr& stub, const nidevice_grpc::Session& v
   auto response = GetFIRFilterCoefficientsResponse{};
 
   raise_if_error(
-      stub->GetFIRFilterCoefficients(&context, request, &response));
+      stub->GetFIRFilterCoefficients(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1577,7 +1659,8 @@ get_hardware_state(const StubPtr& stub, const nidevice_grpc::Session& vi)
   auto response = GetHardwareStateResponse{};
 
   raise_if_error(
-      stub->GetHardwareState(&context, request, &response));
+      stub->GetHardwareState(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1593,7 +1676,8 @@ get_next_coercion_record(const StubPtr& stub, const nidevice_grpc::Session& vi)
   auto response = GetNextCoercionRecordResponse{};
 
   raise_if_error(
-      stub->GetNextCoercionRecord(&context, request, &response));
+      stub->GetNextCoercionRecord(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1609,7 +1693,8 @@ get_next_interchange_warning(const StubPtr& stub, const nidevice_grpc::Session& 
   auto response = GetNextInterchangeWarningResponse{};
 
   raise_if_error(
-      stub->GetNextInterchangeWarning(&context, request, &response));
+      stub->GetNextInterchangeWarning(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1625,7 +1710,8 @@ get_self_cal_last_date_and_time(const StubPtr& stub, const nidevice_grpc::Sessio
   auto response = GetSelfCalLastDateAndTimeResponse{};
 
   raise_if_error(
-      stub->GetSelfCalLastDateAndTime(&context, request, &response));
+      stub->GetSelfCalLastDateAndTime(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1641,7 +1727,8 @@ get_self_cal_last_temp(const StubPtr& stub, const nidevice_grpc::Session& vi)
   auto response = GetSelfCalLastTempResponse{};
 
   raise_if_error(
-      stub->GetSelfCalLastTemp(&context, request, &response));
+      stub->GetSelfCalLastTemp(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1657,7 +1744,8 @@ get_self_cal_supported(const StubPtr& stub, const nidevice_grpc::Session& vi)
   auto response = GetSelfCalSupportedResponse{};
 
   raise_if_error(
-      stub->GetSelfCalSupported(&context, request, &response));
+      stub->GetSelfCalSupported(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1674,7 +1762,8 @@ get_stream_endpoint_handle(const StubPtr& stub, const nidevice_grpc::Session& vi
   auto response = GetStreamEndpointHandleResponse{};
 
   raise_if_error(
-      stub->GetStreamEndpointHandle(&context, request, &response));
+      stub->GetStreamEndpointHandle(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1691,7 +1780,8 @@ import_attribute_configuration_buffer(const StubPtr& stub, const nidevice_grpc::
   auto response = ImportAttributeConfigurationBufferResponse{};
 
   raise_if_error(
-      stub->ImportAttributeConfigurationBuffer(&context, request, &response));
+      stub->ImportAttributeConfigurationBuffer(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1708,7 +1798,8 @@ import_attribute_configuration_file(const StubPtr& stub, const nidevice_grpc::Se
   auto response = ImportAttributeConfigurationFileResponse{};
 
   raise_if_error(
-      stub->ImportAttributeConfigurationFile(&context, request, &response));
+      stub->ImportAttributeConfigurationFile(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1726,7 +1817,8 @@ init(const StubPtr& stub, const pb::string& resource_name, const bool& id_query,
   auto response = InitResponse{};
 
   raise_if_error(
-      stub->Init(&context, request, &response));
+      stub->Init(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1745,7 +1837,8 @@ init_with_options(const StubPtr& stub, const pb::string& resource_name, const bo
   auto response = InitWithOptionsResponse{};
 
   raise_if_error(
-      stub->InitWithOptions(&context, request, &response));
+      stub->InitWithOptions(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1764,7 +1857,8 @@ initialize_with_channels(const StubPtr& stub, const pb::string& resource_name, c
   auto response = InitializeWithChannelsResponse{};
 
   raise_if_error(
-      stub->InitializeWithChannels(&context, request, &response));
+      stub->InitializeWithChannels(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1780,7 +1874,8 @@ initiate_generation(const StubPtr& stub, const nidevice_grpc::Session& vi)
   auto response = InitiateGenerationResponse{};
 
   raise_if_error(
-      stub->InitiateGeneration(&context, request, &response));
+      stub->InitiateGeneration(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1796,7 +1891,8 @@ invalidate_all_attributes(const StubPtr& stub, const nidevice_grpc::Session& vi)
   auto response = InvalidateAllAttributesResponse{};
 
   raise_if_error(
-      stub->InvalidateAllAttributes(&context, request, &response));
+      stub->InvalidateAllAttributes(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1812,7 +1908,8 @@ is_done(const StubPtr& stub, const nidevice_grpc::Session& vi)
   auto response = IsDoneResponse{};
 
   raise_if_error(
-      stub->IsDone(&context, request, &response));
+      stub->IsDone(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1829,7 +1926,8 @@ manual_enable_p2p_stream(const StubPtr& stub, const nidevice_grpc::Session& vi, 
   auto response = ManualEnableP2PStreamResponse{};
 
   raise_if_error(
-      stub->ManualEnableP2PStream(&context, request, &response));
+      stub->ManualEnableP2PStream(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1845,7 +1943,8 @@ query_arb_seq_capabilities(const StubPtr& stub, const nidevice_grpc::Session& vi
   auto response = QueryArbSeqCapabilitiesResponse{};
 
   raise_if_error(
-      stub->QueryArbSeqCapabilities(&context, request, &response));
+      stub->QueryArbSeqCapabilities(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1861,7 +1960,8 @@ query_arb_wfm_capabilities(const StubPtr& stub, const nidevice_grpc::Session& vi
   auto response = QueryArbWfmCapabilitiesResponse{};
 
   raise_if_error(
-      stub->QueryArbWfmCapabilities(&context, request, &response));
+      stub->QueryArbWfmCapabilities(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1877,7 +1977,8 @@ query_freq_list_capabilities(const StubPtr& stub, const nidevice_grpc::Session& 
   auto response = QueryFreqListCapabilitiesResponse{};
 
   raise_if_error(
-      stub->QueryFreqListCapabilities(&context, request, &response));
+      stub->QueryFreqListCapabilities(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1893,7 +1994,8 @@ read_current_temperature(const StubPtr& stub, const nidevice_grpc::Session& vi)
   auto response = ReadCurrentTemperatureResponse{};
 
   raise_if_error(
-      stub->ReadCurrentTemperature(&context, request, &response));
+      stub->ReadCurrentTemperature(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1909,7 +2011,8 @@ reset(const StubPtr& stub, const nidevice_grpc::Session& vi)
   auto response = ResetResponse{};
 
   raise_if_error(
-      stub->Reset(&context, request, &response));
+      stub->Reset(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1927,7 +2030,8 @@ reset_attribute(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb:
   auto response = ResetAttributeResponse{};
 
   raise_if_error(
-      stub->ResetAttribute(&context, request, &response));
+      stub->ResetAttribute(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1943,7 +2047,8 @@ reset_device(const StubPtr& stub, const nidevice_grpc::Session& vi)
   auto response = ResetDeviceResponse{};
 
   raise_if_error(
-      stub->ResetDevice(&context, request, &response));
+      stub->ResetDevice(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1959,7 +2064,8 @@ reset_interchange_check(const StubPtr& stub, const nidevice_grpc::Session& vi)
   auto response = ResetInterchangeCheckResponse{};
 
   raise_if_error(
-      stub->ResetInterchangeCheck(&context, request, &response));
+      stub->ResetInterchangeCheck(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1975,7 +2081,8 @@ reset_with_defaults(const StubPtr& stub, const nidevice_grpc::Session& vi)
   auto response = ResetWithDefaultsResponse{};
 
   raise_if_error(
-      stub->ResetWithDefaults(&context, request, &response));
+      stub->ResetWithDefaults(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1991,7 +2098,8 @@ revision_query(const StubPtr& stub, const nidevice_grpc::Session& vi)
   auto response = RevisionQueryResponse{};
 
   raise_if_error(
-      stub->RevisionQuery(&context, request, &response));
+      stub->RevisionQuery(&context, request, &response),
+      context);
 
   return response;
 }
@@ -2024,7 +2132,8 @@ route_signal_out(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb
   auto response = RouteSignalOutResponse{};
 
   raise_if_error(
-      stub->RouteSignalOut(&context, request, &response));
+      stub->RouteSignalOut(&context, request, &response),
+      context);
 
   return response;
 }
@@ -2040,7 +2149,8 @@ self_cal(const StubPtr& stub, const nidevice_grpc::Session& vi)
   auto response = SelfCalResponse{};
 
   raise_if_error(
-      stub->SelfCal(&context, request, &response));
+      stub->SelfCal(&context, request, &response),
+      context);
 
   return response;
 }
@@ -2056,7 +2166,8 @@ self_test(const StubPtr& stub, const nidevice_grpc::Session& vi)
   auto response = SelfTestResponse{};
 
   raise_if_error(
-      stub->SelfTest(&context, request, &response));
+      stub->SelfTest(&context, request, &response),
+      context);
 
   return response;
 }
@@ -2081,7 +2192,8 @@ send_software_edge_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi
   auto response = SendSoftwareEdgeTriggerResponse{};
 
   raise_if_error(
-      stub->SendSoftwareEdgeTrigger(&context, request, &response));
+      stub->SendSoftwareEdgeTrigger(&context, request, &response),
+      context);
 
   return response;
 }
@@ -2100,7 +2212,8 @@ set_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, 
   auto response = SetAttributeViBooleanResponse{};
 
   raise_if_error(
-      stub->SetAttributeViBoolean(&context, request, &response));
+      stub->SetAttributeViBoolean(&context, request, &response),
+      context);
 
   return response;
 }
@@ -2126,7 +2239,8 @@ set_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, co
   auto response = SetAttributeViInt32Response{};
 
   raise_if_error(
-      stub->SetAttributeViInt32(&context, request, &response));
+      stub->SetAttributeViInt32(&context, request, &response),
+      context);
 
   return response;
 }
@@ -2145,7 +2259,8 @@ set_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, co
   auto response = SetAttributeViInt64Response{};
 
   raise_if_error(
-      stub->SetAttributeViInt64(&context, request, &response));
+      stub->SetAttributeViInt64(&context, request, &response),
+      context);
 
   return response;
 }
@@ -2171,7 +2286,8 @@ set_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, c
   auto response = SetAttributeViReal64Response{};
 
   raise_if_error(
-      stub->SetAttributeViReal64(&context, request, &response));
+      stub->SetAttributeViReal64(&context, request, &response),
+      context);
 
   return response;
 }
@@ -2190,7 +2306,8 @@ set_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, 
   auto response = SetAttributeViSessionResponse{};
 
   raise_if_error(
-      stub->SetAttributeViSession(&context, request, &response));
+      stub->SetAttributeViSession(&context, request, &response),
+      context);
 
   return response;
 }
@@ -2209,7 +2326,8 @@ set_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, c
   auto response = SetAttributeViStringResponse{};
 
   raise_if_error(
-      stub->SetAttributeViString(&context, request, &response));
+      stub->SetAttributeViString(&context, request, &response),
+      context);
 
   return response;
 }
@@ -2236,7 +2354,8 @@ set_named_waveform_next_write_position(const StubPtr& stub, const nidevice_grpc:
   auto response = SetNamedWaveformNextWritePositionResponse{};
 
   raise_if_error(
-      stub->SetNamedWaveformNextWritePosition(&context, request, &response));
+      stub->SetNamedWaveformNextWritePosition(&context, request, &response),
+      context);
 
   return response;
 }
@@ -2263,7 +2382,8 @@ set_waveform_next_write_position(const StubPtr& stub, const nidevice_grpc::Sessi
   auto response = SetWaveformNextWritePositionResponse{};
 
   raise_if_error(
-      stub->SetWaveformNextWritePosition(&context, request, &response));
+      stub->SetWaveformNextWritePosition(&context, request, &response),
+      context);
 
   return response;
 }
@@ -2280,7 +2400,8 @@ wait_until_done(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb:
   auto response = WaitUntilDoneResponse{};
 
   raise_if_error(
-      stub->WaitUntilDone(&context, request, &response));
+      stub->WaitUntilDone(&context, request, &response),
+      context);
 
   return response;
 }
@@ -2299,7 +2420,8 @@ write_binary16_waveform(const StubPtr& stub, const nidevice_grpc::Session& vi, c
   auto response = WriteBinary16WaveformResponse{};
 
   raise_if_error(
-      stub->WriteBinary16Waveform(&context, request, &response));
+      stub->WriteBinary16Waveform(&context, request, &response),
+      context);
 
   return response;
 }
@@ -2318,7 +2440,8 @@ write_complex_binary16_waveform(const StubPtr& stub, const nidevice_grpc::Sessio
   auto response = WriteComplexBinary16WaveformResponse{};
 
   raise_if_error(
-      stub->WriteComplexBinary16Waveform(&context, request, &response));
+      stub->WriteComplexBinary16Waveform(&context, request, &response),
+      context);
 
   return response;
 }
@@ -2337,7 +2460,8 @@ write_named_waveform_f64(const StubPtr& stub, const nidevice_grpc::Session& vi, 
   auto response = WriteNamedWaveformF64Response{};
 
   raise_if_error(
-      stub->WriteNamedWaveformF64(&context, request, &response));
+      stub->WriteNamedWaveformF64(&context, request, &response),
+      context);
 
   return response;
 }
@@ -2356,7 +2480,8 @@ write_named_waveform_i16(const StubPtr& stub, const nidevice_grpc::Session& vi, 
   auto response = WriteNamedWaveformI16Response{};
 
   raise_if_error(
-      stub->WriteNamedWaveformI16(&context, request, &response));
+      stub->WriteNamedWaveformI16(&context, request, &response),
+      context);
 
   return response;
 }
@@ -2374,7 +2499,8 @@ write_p2p_endpoint_i16(const StubPtr& stub, const nidevice_grpc::Session& vi, co
   auto response = WriteP2PEndpointI16Response{};
 
   raise_if_error(
-      stub->WriteP2PEndpointI16(&context, request, &response));
+      stub->WriteP2PEndpointI16(&context, request, &response),
+      context);
 
   return response;
 }
@@ -2392,7 +2518,8 @@ write_script(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::st
   auto response = WriteScriptResponse{};
 
   raise_if_error(
-      stub->WriteScript(&context, request, &response));
+      stub->WriteScript(&context, request, &response),
+      context);
 
   return response;
 }
@@ -2411,7 +2538,8 @@ write_waveform(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::
   auto response = WriteWaveformResponse{};
 
   raise_if_error(
-      stub->WriteWaveform(&context, request, &response));
+      stub->WriteWaveform(&context, request, &response),
+      context);
 
   return response;
 }
@@ -2430,7 +2558,8 @@ write_waveform_complex_f64(const StubPtr& stub, const nidevice_grpc::Session& vi
   auto response = WriteWaveformComplexF64Response{};
 
   raise_if_error(
-      stub->WriteWaveformComplexF64(&context, request, &response));
+      stub->WriteWaveformComplexF64(&context, request, &response),
+      context);
 
   return response;
 }
@@ -2449,7 +2578,8 @@ write_named_waveform_complex_f64(const StubPtr& stub, const nidevice_grpc::Sessi
   auto response = WriteNamedWaveformComplexF64Response{};
 
   raise_if_error(
-      stub->WriteNamedWaveformComplexF64(&context, request, &response));
+      stub->WriteNamedWaveformComplexF64(&context, request, &response),
+      context);
 
   return response;
 }
@@ -2468,7 +2598,8 @@ write_named_waveform_complex_i16(const StubPtr& stub, const nidevice_grpc::Sessi
   auto response = WriteNamedWaveformComplexI16Response{};
 
   raise_if_error(
-      stub->WriteNamedWaveformComplexI16(&context, request, &response));
+      stub->WriteNamedWaveformComplexI16(&context, request, &response),
+      context);
 
   return response;
 }
