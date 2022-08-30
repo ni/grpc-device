@@ -28,6 +28,7 @@ If they are not passed in as command line arguments, then by default the server 
 "localhost:31763", with "SimulatedRFSA" as the physical channel name.
 """
 
+import json
 import math
 import sys
 
@@ -59,80 +60,52 @@ channel = grpc.insecure_channel(f"{SERVER_ADDRESS}:{SERVER_PORT}")
 client = grpc_nirfsa.NiRFSAStub(channel)
 vi = None
 
-
-def raise_if_error(response):
-    """Raise an exception if an error was returned."""
-    if response.status != 0:
-        error_response = client.ErrorMessage(
-            nirfsa_types.ErrorMessageRequest(status_code=response.status)
-        )
-        raise Exception(f"Error: {error_response.error_message}")
-
-    return response
-
-
-def raise_if_initialization_error(response):
-    """Raise an exception if an error was returned from Initialize."""
-    if response.status < 0:
-        raise RuntimeError(f"Error: {response.error_message or response.status}")
+def check_for_warning(response, vi):
+    """Print to console if the status indicates a warning."""
     if response.status > 0:
-        sys.stderr.write(f"Warning: {response.error_message or response.status}\n")
-    return response
-
+        warning_message = client.ErrorMessage(
+            nirfsa_types.ErrorMessageRequest(vi = vi, error_code=response.status))
+        sys.stderr.write(f"{warning_message}\nWarning status: {response.status}\n")
 
 try:
-    init_response = raise_if_initialization_error(
-        client.InitWithOptions(
-            nirfsa_types.InitWithOptionsRequest(
-                session_name=SESSION_NAME, resource_name=RESOURCE, option_string=OPTIONS
-            )
+    init_response = client.InitWithOptions(
+        nirfsa_types.InitWithOptionsRequest(
+            session_name=SESSION_NAME, resource_name=RESOURCE, option_string=OPTIONS
         )
     )
     vi = init_response.vi
 
-    raise_if_error(
-        client.ConfigureRefClock(
-            nirfsa_types.ConfigureRefClockRequest(
-                vi=vi,
-                clock_source_mapped=nirfsa_types.RefClockSource.REF_CLOCK_SOURCE_ONBOARD_CLOCK,
-                ref_clock_rate=10e6,
-            )
+    client.ConfigureRefClock(
+        nirfsa_types.ConfigureRefClockRequest(
+            vi=vi,
+            clock_source_mapped=nirfsa_types.RefClockSource.REF_CLOCK_SOURCE_ONBOARD_CLOCK,
+            ref_clock_rate=10e6,
         )
     )
-    raise_if_error(
-        client.ConfigureReferenceLevel(
-            nirfsa_types.ConfigureReferenceLevelRequest(vi=vi, reference_level=0)
-        )
-    )
-    raise_if_error(
-        client.ConfigureAcquisitionType(
-            nirfsa_types.ConfigureAcquisitionTypeRequest(
-                vi=vi, acquisition_type=nirfsa_types.AcquisitionType.ACQUISITION_TYPE_IQ
-            )
-        )
-    )
-    raise_if_error(
-        client.ConfigureIQCarrierFrequency(
-            nirfsa_types.ConfigureIQCarrierFrequencyRequest(vi=vi, carrier_frequency=1e9)
-        )
-    )
-    raise_if_error(
-        client.ConfigureNumberOfSamples(
-            nirfsa_types.ConfigureNumberOfSamplesRequest(
-                vi=vi, number_of_samples_is_finite=True, samples_per_record=NUMBER_OF_SAMPLES
-            )
-        )
-    )
-    raise_if_error(client.ConfigureIQRate(nirfsa_types.ConfigureIQRateRequest(vi=vi, iq_rate=1e6)))
-
-    read_response = raise_if_error(
-        client.ReadIQSingleRecordComplexF64(
-            nirfsa_types.ReadIQSingleRecordComplexF64Request(
-                vi=vi, timeout=10.0, data_array_size=NUMBER_OF_SAMPLES
-            )
-        )
+    client.ConfigureReferenceLevel(
+        nirfsa_types.ConfigureReferenceLevelRequest(vi=vi, reference_level=0)
     )
 
+    client.ConfigureAcquisitionType(
+        nirfsa_types.ConfigureAcquisitionTypeRequest(
+            vi=vi, acquisition_type=nirfsa_types.AcquisitionType.ACQUISITION_TYPE_IQ
+        )
+    )
+    client.ConfigureIQCarrierFrequency(
+        nirfsa_types.ConfigureIQCarrierFrequencyRequest(vi=vi, carrier_frequency=1e9)
+    )
+    client.ConfigureNumberOfSamples(
+        nirfsa_types.ConfigureNumberOfSamplesRequest(
+            vi=vi, number_of_samples_is_finite=True, samples_per_record=NUMBER_OF_SAMPLES
+        )
+    )
+    read_response = client.ReadIQSingleRecordComplexF64(
+        nirfsa_types.ReadIQSingleRecordComplexF64Request(
+            vi=vi, timeout=10.0, data_array_size=NUMBER_OF_SAMPLES
+        )
+    )
+    check_for_warning(read_response, vi)
+    
     accumulator = 0.0
     for sample in read_response.data:
         magnitude_squared = sample.real**2 + sample.imaginary**2
@@ -152,6 +125,12 @@ except grpc.RpcError as rpc_error:
         error_message = (
             "The operation is not implemented or is not supported/enabled in this service"
         )
+    elif rpc_error.code() == grpc.StatusCode.UNKNOWN:
+        try:
+            error_details = json.loads(error_message)
+            error_message = f"{error_details['message']}\nError status: {error_details['code']}"
+        except (json.JSONDecodeError, KeyError):
+            pass
     print(f"{error_message}")
 finally:
     if vi:
