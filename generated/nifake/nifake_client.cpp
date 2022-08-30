@@ -28,7 +28,8 @@ abort(const StubPtr& stub, const nidevice_grpc::Session& vi)
   auto response = AbortResponse{};
 
   raise_if_error(
-      stub->Abort(&context, request, &response));
+      stub->Abort(&context, request, &response),
+      context);
 
   return response;
 }
@@ -45,7 +46,8 @@ accept_list_of_durations_in_seconds(const StubPtr& stub, const nidevice_grpc::Se
   auto response = AcceptListOfDurationsInSecondsResponse{};
 
   raise_if_error(
-      stub->AcceptListOfDurationsInSeconds(&context, request, &response));
+      stub->AcceptListOfDurationsInSeconds(&context, request, &response),
+      context);
 
   return response;
 }
@@ -62,7 +64,8 @@ accept_vi_session_array(const StubPtr& stub, const pb::uint32& session_count, co
   auto response = AcceptViSessionArrayResponse{};
 
   raise_if_error(
-      stub->AcceptViSessionArray(&context, request, &response));
+      stub->AcceptViSessionArray(&context, request, &response),
+      context);
 
   return response;
 }
@@ -79,7 +82,8 @@ accept_vi_uint32_array(const StubPtr& stub, const nidevice_grpc::Session& vi, co
   auto response = AcceptViUInt32ArrayResponse{};
 
   raise_if_error(
-      stub->AcceptViUInt32Array(&context, request, &response));
+      stub->AcceptViUInt32Array(&context, request, &response),
+      context);
 
   return response;
 }
@@ -97,7 +101,8 @@ bool_array_input_function(const StubPtr& stub, const nidevice_grpc::Session& vi,
   auto response = BoolArrayInputFunctionResponse{};
 
   raise_if_error(
-      stub->BoolArrayInputFunction(&context, request, &response));
+      stub->BoolArrayInputFunction(&context, request, &response),
+      context);
 
   return response;
 }
@@ -114,7 +119,8 @@ bool_array_output_function(const StubPtr& stub, const nidevice_grpc::Session& vi
   auto response = BoolArrayOutputFunctionResponse{};
 
   raise_if_error(
-      stub->BoolArrayOutputFunction(&context, request, &response));
+      stub->BoolArrayOutputFunction(&context, request, &response),
+      context);
 
   return response;
 }
@@ -131,7 +137,8 @@ close_ext_cal(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::i
   auto response = CloseExtCalResponse{};
 
   raise_if_error(
-      stub->CloseExtCal(&context, request, &response));
+      stub->CloseExtCal(&context, request, &response),
+      context);
 
   return response;
 }
@@ -147,7 +154,8 @@ command_with_reserved_param(const StubPtr& stub, const nidevice_grpc::Session& v
   auto response = CommandWithReservedParamResponse{};
 
   raise_if_error(
-      stub->CommandWithReservedParam(&context, request, &response));
+      stub->CommandWithReservedParam(&context, request, &response),
+      context);
 
   return response;
 }
@@ -163,7 +171,8 @@ create_configuration_list(const StubPtr& stub, const std::vector<NiFakeAttribute
   auto response = CreateConfigurationListResponse{};
 
   raise_if_error(
-      stub->CreateConfigurationList(&context, request, &response));
+      stub->CreateConfigurationList(&context, request, &response),
+      context);
 
   return response;
 }
@@ -180,7 +189,8 @@ double_all_the_nums(const StubPtr& stub, const nidevice_grpc::Session& vi, const
   auto response = DoubleAllTheNumsResponse{};
 
   raise_if_error(
-      stub->DoubleAllTheNums(&context, request, &response));
+      stub->DoubleAllTheNums(&context, request, &response),
+      context);
 
   return response;
 }
@@ -197,7 +207,8 @@ enum_array_output_function(const StubPtr& stub, const nidevice_grpc::Session& vi
   auto response = EnumArrayOutputFunctionResponse{};
 
   raise_if_error(
-      stub->EnumArrayOutputFunction(&context, request, &response));
+      stub->EnumArrayOutputFunction(&context, request, &response),
+      context);
 
   return response;
 }
@@ -221,7 +232,8 @@ enum_input_function_with_defaults(const StubPtr& stub, const nidevice_grpc::Sess
   auto response = EnumInputFunctionWithDefaultsResponse{};
 
   raise_if_error(
-      stub->EnumInputFunctionWithDefaults(&context, request, &response));
+      stub->EnumInputFunctionWithDefaults(&context, request, &response),
+      context);
 
   return response;
 }
@@ -237,7 +249,8 @@ export_attribute_configuration_buffer(const StubPtr& stub, const nidevice_grpc::
   auto response = ExportAttributeConfigurationBufferResponse{};
 
   raise_if_error(
-      stub->ExportAttributeConfigurationBuffer(&context, request, &response));
+      stub->ExportAttributeConfigurationBuffer(&context, request, &response),
+      context);
 
   return response;
 }
@@ -254,7 +267,8 @@ fetch_waveform(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::
   auto response = FetchWaveformResponse{};
 
   raise_if_error(
-      stub->FetchWaveform(&context, request, &response));
+      stub->FetchWaveform(&context, request, &response),
+      context);
 
   return response;
 }
@@ -270,7 +284,8 @@ get_a_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi)
   auto response = GetABooleanResponse{};
 
   raise_if_error(
-      stub->GetABoolean(&context, request, &response));
+      stub->GetABoolean(&context, request, &response),
+      context);
 
   return response;
 }
@@ -286,7 +301,8 @@ get_a_number(const StubPtr& stub, const nidevice_grpc::Session& vi)
   auto response = GetANumberResponse{};
 
   raise_if_error(
-      stub->GetANumber(&context, request, &response));
+      stub->GetANumber(&context, request, &response),
+      context);
 
   return response;
 }
@@ -302,7 +318,8 @@ get_a_string_of_fixed_maximum_size(const StubPtr& stub, const nidevice_grpc::Ses
   auto response = GetAStringOfFixedMaximumSizeResponse{};
 
   raise_if_error(
-      stub->GetAStringOfFixedMaximumSize(&context, request, &response));
+      stub->GetAStringOfFixedMaximumSize(&context, request, &response),
+      context);
 
   return response;
 }
@@ -318,7 +335,8 @@ get_an_ivi_dance_string(const StubPtr& stub, const nidevice_grpc::Session& vi)
   auto response = GetAnIviDanceStringResponse{};
 
   raise_if_error(
-      stub->GetAnIviDanceString(&context, request, &response));
+      stub->GetAnIviDanceString(&context, request, &response),
+      context);
 
   return response;
 }
@@ -335,7 +353,8 @@ get_an_ivi_dance_with_a_twist_array(const StubPtr& stub, const nidevice_grpc::Se
   auto response = GetAnIviDanceWithATwistArrayResponse{};
 
   raise_if_error(
-      stub->GetAnIviDanceWithATwistArray(&context, request, &response));
+      stub->GetAnIviDanceWithATwistArray(&context, request, &response),
+      context);
 
   return response;
 }
@@ -351,7 +370,8 @@ get_an_ivi_dance_with_a_twist_array_of_custom_type(const StubPtr& stub, const ni
   auto response = GetAnIviDanceWithATwistArrayOfCustomTypeResponse{};
 
   raise_if_error(
-      stub->GetAnIviDanceWithATwistArrayOfCustomType(&context, request, &response));
+      stub->GetAnIviDanceWithATwistArrayOfCustomType(&context, request, &response),
+      context);
 
   return response;
 }
@@ -367,7 +387,8 @@ get_an_ivi_dance_with_a_twist_array_with_input_array(const StubPtr& stub, const 
   auto response = GetAnIviDanceWithATwistArrayWithInputArrayResponse{};
 
   raise_if_error(
-      stub->GetAnIviDanceWithATwistArrayWithInputArray(&context, request, &response));
+      stub->GetAnIviDanceWithATwistArrayWithInputArray(&context, request, &response),
+      context);
 
   return response;
 }
@@ -382,7 +403,8 @@ get_an_ivi_dance_with_a_twist_byte_array(const StubPtr& stub)
   auto response = GetAnIviDanceWithATwistByteArrayResponse{};
 
   raise_if_error(
-      stub->GetAnIviDanceWithATwistByteArray(&context, request, &response));
+      stub->GetAnIviDanceWithATwistByteArray(&context, request, &response),
+      context);
 
   return response;
 }
@@ -397,7 +419,8 @@ get_an_ivi_dance_with_a_twist_string(const StubPtr& stub)
   auto response = GetAnIviDanceWithATwistStringResponse{};
 
   raise_if_error(
-      stub->GetAnIviDanceWithATwistString(&context, request, &response));
+      stub->GetAnIviDanceWithATwistString(&context, request, &response),
+      context);
 
   return response;
 }
@@ -412,7 +435,8 @@ get_an_ivi_dance_with_a_twist_string_strlen_bug(const StubPtr& stub)
   auto response = GetAnIviDanceWithATwistStringStrlenBugResponse{};
 
   raise_if_error(
-      stub->GetAnIviDanceWithATwistStringStrlenBug(&context, request, &response));
+      stub->GetAnIviDanceWithATwistStringStrlenBug(&context, request, &response),
+      context);
 
   return response;
 }
@@ -428,7 +452,8 @@ get_array_size_for_custom_code(const StubPtr& stub, const nidevice_grpc::Session
   auto response = GetArraySizeForCustomCodeResponse{};
 
   raise_if_error(
-      stub->GetArraySizeForCustomCode(&context, request, &response));
+      stub->GetArraySizeForCustomCode(&context, request, &response),
+      context);
 
   return response;
 }
@@ -444,7 +469,8 @@ get_array_using_ivi_dance(const StubPtr& stub, const nidevice_grpc::Session& vi)
   auto response = GetArrayUsingIviDanceResponse{};
 
   raise_if_error(
-      stub->GetArrayUsingIviDance(&context, request, &response));
+      stub->GetArrayUsingIviDance(&context, request, &response),
+      context);
 
   return response;
 }
@@ -461,7 +487,8 @@ get_array_vi_uint8_with_enum(const StubPtr& stub, const nidevice_grpc::Session& 
   auto response = GetArrayViUInt8WithEnumResponse{};
 
   raise_if_error(
-      stub->GetArrayViUInt8WithEnum(&context, request, &response));
+      stub->GetArrayViUInt8WithEnum(&context, request, &response),
+      context);
 
   return response;
 }
@@ -479,7 +506,8 @@ get_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, 
   auto response = GetAttributeViBooleanResponse{};
 
   raise_if_error(
-      stub->GetAttributeViBoolean(&context, request, &response));
+      stub->GetAttributeViBoolean(&context, request, &response),
+      context);
 
   return response;
 }
@@ -497,7 +525,8 @@ get_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, co
   auto response = GetAttributeViInt32Response{};
 
   raise_if_error(
-      stub->GetAttributeViInt32(&context, request, &response));
+      stub->GetAttributeViInt32(&context, request, &response),
+      context);
 
   return response;
 }
@@ -515,7 +544,8 @@ get_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, co
   auto response = GetAttributeViInt64Response{};
 
   raise_if_error(
-      stub->GetAttributeViInt64(&context, request, &response));
+      stub->GetAttributeViInt64(&context, request, &response),
+      context);
 
   return response;
 }
@@ -533,7 +563,8 @@ get_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, c
   auto response = GetAttributeViReal64Response{};
 
   raise_if_error(
-      stub->GetAttributeViReal64(&context, request, &response));
+      stub->GetAttributeViReal64(&context, request, &response),
+      context);
 
   return response;
 }
@@ -550,7 +581,8 @@ get_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, 
   auto response = GetAttributeViSessionResponse{};
 
   raise_if_error(
-      stub->GetAttributeViSession(&context, request, &response));
+      stub->GetAttributeViSession(&context, request, &response),
+      context);
 
   return response;
 }
@@ -568,7 +600,8 @@ get_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, c
   auto response = GetAttributeViStringResponse{};
 
   raise_if_error(
-      stub->GetAttributeViString(&context, request, &response));
+      stub->GetAttributeViString(&context, request, &response),
+      context);
 
   return response;
 }
@@ -583,7 +616,8 @@ get_bitfield_as_enum_array(const StubPtr& stub)
   auto response = GetBitfieldAsEnumArrayResponse{};
 
   raise_if_error(
-      stub->GetBitfieldAsEnumArray(&context, request, &response));
+      stub->GetBitfieldAsEnumArray(&context, request, &response),
+      context);
 
   return response;
 }
@@ -600,7 +634,8 @@ get_cal_date_and_time(const StubPtr& stub, const nidevice_grpc::Session& vi, con
   auto response = GetCalDateAndTimeResponse{};
 
   raise_if_error(
-      stub->GetCalDateAndTime(&context, request, &response));
+      stub->GetCalDateAndTime(&context, request, &response),
+      context);
 
   return response;
 }
@@ -616,7 +651,8 @@ get_cal_interval(const StubPtr& stub, const nidevice_grpc::Session& vi)
   auto response = GetCalIntervalResponse{};
 
   raise_if_error(
-      stub->GetCalInterval(&context, request, &response));
+      stub->GetCalInterval(&context, request, &response),
+      context);
 
   return response;
 }
@@ -632,7 +668,8 @@ get_custom_type(const StubPtr& stub, const nidevice_grpc::Session& vi)
   auto response = GetCustomTypeResponse{};
 
   raise_if_error(
-      stub->GetCustomType(&context, request, &response));
+      stub->GetCustomType(&context, request, &response),
+      context);
 
   return response;
 }
@@ -649,7 +686,8 @@ get_custom_type_array(const StubPtr& stub, const nidevice_grpc::Session& vi, con
   auto response = GetCustomTypeArrayResponse{};
 
   raise_if_error(
-      stub->GetCustomTypeArray(&context, request, &response));
+      stub->GetCustomTypeArray(&context, request, &response),
+      context);
 
   return response;
 }
@@ -665,7 +703,8 @@ get_enum_value(const StubPtr& stub, const nidevice_grpc::Session& vi)
   auto response = GetEnumValueResponse{};
 
   raise_if_error(
-      stub->GetEnumValue(&context, request, &response));
+      stub->GetEnumValue(&context, request, &response),
+      context);
 
   return response;
 }
@@ -682,7 +721,8 @@ get_vi_int32_array(const StubPtr& stub, const nidevice_grpc::Session& vi, const 
   auto response = GetViInt32ArrayResponse{};
 
   raise_if_error(
-      stub->GetViInt32Array(&context, request, &response));
+      stub->GetViInt32Array(&context, request, &response),
+      context);
 
   return response;
 }
@@ -699,7 +739,8 @@ get_vi_uint32_array(const StubPtr& stub, const nidevice_grpc::Session& vi, const
   auto response = GetViUInt32ArrayResponse{};
 
   raise_if_error(
-      stub->GetViUInt32Array(&context, request, &response));
+      stub->GetViUInt32Array(&context, request, &response),
+      context);
 
   return response;
 }
@@ -715,7 +756,8 @@ get_vi_uint8(const StubPtr& stub, const nidevice_grpc::Session& vi)
   auto response = GetViUInt8Response{};
 
   raise_if_error(
-      stub->GetViUInt8(&context, request, &response));
+      stub->GetViUInt8(&context, request, &response),
+      context);
 
   return response;
 }
@@ -732,7 +774,8 @@ import_attribute_configuration_buffer(const StubPtr& stub, const nidevice_grpc::
   auto response = ImportAttributeConfigurationBufferResponse{};
 
   raise_if_error(
-      stub->ImportAttributeConfigurationBuffer(&context, request, &response));
+      stub->ImportAttributeConfigurationBuffer(&context, request, &response),
+      context);
 
   return response;
 }
@@ -749,7 +792,8 @@ init_ext_cal(const StubPtr& stub, const pb::string& resource_name, const pb::str
   auto response = InitExtCalResponse{};
 
   raise_if_error(
-      stub->InitExtCal(&context, request, &response));
+      stub->InitExtCal(&context, request, &response),
+      context);
 
   return response;
 }
@@ -768,7 +812,8 @@ init_with_options(const StubPtr& stub, const pb::string& resource_name, const bo
   auto response = InitWithOptionsResponse{};
 
   raise_if_error(
-      stub->InitWithOptions(&context, request, &response));
+      stub->InitWithOptions(&context, request, &response),
+      context);
 
   return response;
 }
@@ -785,7 +830,8 @@ init_with_var_args(const StubPtr& stub, const pb::string& resource_name, const s
   auto response = InitWithVarArgsResponse{};
 
   raise_if_error(
-      stub->InitWithVarArgs(&context, request, &response));
+      stub->InitWithVarArgs(&context, request, &response),
+      context);
 
   return response;
 }
@@ -804,7 +850,8 @@ multiple_array_types(const StubPtr& stub, const nidevice_grpc::Session& vi, cons
   auto response = MultipleArrayTypesResponse{};
 
   raise_if_error(
-      stub->MultipleArrayTypes(&context, request, &response));
+      stub->MultipleArrayTypes(&context, request, &response),
+      context);
 
   return response;
 }
@@ -824,7 +871,8 @@ multiple_arrays_same_size(const StubPtr& stub, const nidevice_grpc::Session& vi,
   auto response = MultipleArraysSameSizeResponse{};
 
   raise_if_error(
-      stub->MultipleArraysSameSize(&context, request, &response));
+      stub->MultipleArraysSameSize(&context, request, &response),
+      context);
 
   return response;
 }
@@ -845,7 +893,8 @@ multiple_arrays_same_size_with_optional(const StubPtr& stub, const nidevice_grpc
   auto response = MultipleArraysSameSizeWithOptionalResponse{};
 
   raise_if_error(
-      stub->MultipleArraysSameSizeWithOptional(&context, request, &response));
+      stub->MultipleArraysSameSizeWithOptional(&context, request, &response),
+      context);
 
   return response;
 }
@@ -862,7 +911,8 @@ one_input_function(const StubPtr& stub, const nidevice_grpc::Session& vi, const 
   auto response = OneInputFunctionResponse{};
 
   raise_if_error(
-      stub->OneInputFunction(&context, request, &response));
+      stub->OneInputFunction(&context, request, &response),
+      context);
 
   return response;
 }
@@ -899,7 +949,8 @@ parameters_are_multiple_types(const StubPtr& stub, const nidevice_grpc::Session&
   auto response = ParametersAreMultipleTypesResponse{};
 
   raise_if_error(
-      stub->ParametersAreMultipleTypes(&context, request, &response));
+      stub->ParametersAreMultipleTypes(&context, request, &response),
+      context);
 
   return response;
 }
@@ -915,7 +966,8 @@ poorly_named_simple_function(const StubPtr& stub, const nidevice_grpc::Session& 
   auto response = PoorlyNamedSimpleFunctionResponse{};
 
   raise_if_error(
-      stub->PoorlyNamedSimpleFunction(&context, request, &response));
+      stub->PoorlyNamedSimpleFunction(&context, request, &response),
+      context);
 
   return response;
 }
@@ -932,7 +984,8 @@ read(const StubPtr& stub, const nidevice_grpc::Session& vi, const double& maximu
   auto response = ReadResponse{};
 
   raise_if_error(
-      stub->Read(&context, request, &response));
+      stub->Read(&context, request, &response),
+      context);
 
   return response;
 }
@@ -947,7 +1000,8 @@ read_data_with_in_out_ivi_twist(const StubPtr& stub)
   auto response = ReadDataWithInOutIviTwistResponse{};
 
   raise_if_error(
-      stub->ReadDataWithInOutIviTwist(&context, request, &response));
+      stub->ReadDataWithInOutIviTwist(&context, request, &response),
+      context);
 
   return response;
 }
@@ -962,7 +1016,8 @@ read_data_with_multiple_ivi_twist_param_sets(const StubPtr& stub)
   auto response = ReadDataWithMultipleIviTwistParamSetsResponse{};
 
   raise_if_error(
-      stub->ReadDataWithMultipleIviTwistParamSets(&context, request, &response));
+      stub->ReadDataWithMultipleIviTwistParamSets(&context, request, &response),
+      context);
 
   return response;
 }
@@ -980,7 +1035,8 @@ read_from_channel(const StubPtr& stub, const nidevice_grpc::Session& vi, const p
   auto response = ReadFromChannelResponse{};
 
   raise_if_error(
-      stub->ReadFromChannel(&context, request, &response));
+      stub->ReadFromChannel(&context, request, &response),
+      context);
 
   return response;
 }
@@ -996,7 +1052,8 @@ return_a_number_and_a_string(const StubPtr& stub, const nidevice_grpc::Session& 
   auto response = ReturnANumberAndAStringResponse{};
 
   raise_if_error(
-      stub->ReturnANumberAndAString(&context, request, &response));
+      stub->ReturnANumberAndAString(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1012,7 +1069,8 @@ return_duration_in_seconds(const StubPtr& stub, const nidevice_grpc::Session& vi
   auto response = ReturnDurationInSecondsResponse{};
 
   raise_if_error(
-      stub->ReturnDurationInSeconds(&context, request, &response));
+      stub->ReturnDurationInSeconds(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1029,7 +1087,8 @@ return_list_of_durations_in_seconds(const StubPtr& stub, const nidevice_grpc::Se
   auto response = ReturnListOfDurationsInSecondsResponse{};
 
   raise_if_error(
-      stub->ReturnListOfDurationsInSeconds(&context, request, &response));
+      stub->ReturnListOfDurationsInSeconds(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1046,7 +1105,8 @@ return_multiple_types(const StubPtr& stub, const nidevice_grpc::Session& vi, con
   auto response = ReturnMultipleTypesResponse{};
 
   raise_if_error(
-      stub->ReturnMultipleTypes(&context, request, &response));
+      stub->ReturnMultipleTypes(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1063,7 +1123,8 @@ set_custom_type(const StubPtr& stub, const nidevice_grpc::Session& vi, const Fak
   auto response = SetCustomTypeResponse{};
 
   raise_if_error(
-      stub->SetCustomType(&context, request, &response));
+      stub->SetCustomType(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1080,7 +1141,8 @@ set_custom_type_array(const StubPtr& stub, const nidevice_grpc::Session& vi, con
   auto response = SetCustomTypeArrayResponse{};
 
   raise_if_error(
-      stub->SetCustomTypeArray(&context, request, &response));
+      stub->SetCustomTypeArray(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1104,7 +1166,8 @@ string_valued_enum_input_function_with_defaults(const StubPtr& stub, const nidev
   auto response = StringValuedEnumInputFunctionWithDefaultsResponse{};
 
   raise_if_error(
-      stub->StringValuedEnumInputFunctionWithDefaults(&context, request, &response));
+      stub->StringValuedEnumInputFunctionWithDefaults(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1122,7 +1185,8 @@ two_input_function(const StubPtr& stub, const nidevice_grpc::Session& vi, const 
   auto response = TwoInputFunctionResponse{};
 
   raise_if_error(
-      stub->TwoInputFunction(&context, request, &response));
+      stub->TwoInputFunction(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1139,7 +1203,8 @@ use64_bit_number(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb
   auto response = Use64BitNumberResponse{};
 
   raise_if_error(
-      stub->Use64BitNumber(&context, request, &response));
+      stub->Use64BitNumber(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1157,7 +1222,8 @@ use_a_two_dimension_parameter(const StubPtr& stub, const nidevice_grpc::Session&
   auto response = UseATwoDimensionParameterResponse{};
 
   raise_if_error(
-      stub->UseATwoDimensionParameter(&context, request, &response));
+      stub->UseATwoDimensionParameter(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1174,7 +1240,8 @@ vi_int16_array_input_function(const StubPtr& stub, const nidevice_grpc::Session&
   auto response = ViInt16ArrayInputFunctionResponse{};
 
   raise_if_error(
-      stub->ViInt16ArrayInputFunction(&context, request, &response));
+      stub->ViInt16ArrayInputFunction(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1192,7 +1259,8 @@ vi_uint8_array_input_function(const StubPtr& stub, const nidevice_grpc::Session&
   auto response = ViUInt8ArrayInputFunctionResponse{};
 
   raise_if_error(
-      stub->ViUInt8ArrayInputFunction(&context, request, &response));
+      stub->ViUInt8ArrayInputFunction(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1209,7 +1277,8 @@ vi_uint8_array_output_function(const StubPtr& stub, const nidevice_grpc::Session
   auto response = ViUInt8ArrayOutputFunctionResponse{};
 
   raise_if_error(
-      stub->ViUInt8ArrayOutputFunction(&context, request, &response));
+      stub->ViUInt8ArrayOutputFunction(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1226,7 +1295,8 @@ write_waveform(const StubPtr& stub, const nidevice_grpc::Session& vi, const std:
   auto response = WriteWaveformResponse{};
 
   raise_if_error(
-      stub->WriteWaveform(&context, request, &response));
+      stub->WriteWaveform(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1242,7 +1312,8 @@ close(const StubPtr& stub, const nidevice_grpc::Session& vi)
   auto response = CloseResponse{};
 
   raise_if_error(
-      stub->Close(&context, request, &response));
+      stub->Close(&context, request, &response),
+      context);
 
   return response;
 }

@@ -1,8 +1,8 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>  // For EXPECT matchers.
-#include <nlohmann/json.hpp>
 
 #include <algorithm>
+#include <nlohmann/json.hpp>
 
 #include "device_server.h"
 #include "niRFSAErrors.h"
@@ -133,7 +133,7 @@ TEST_F(NiRFSADriverApiTests, InitWithErrorFromDriver_ReturnsUserErrorMessage)
     client::init_with_options(stub(), "", false, false, "");
     EXPECT_FALSE(true);
   }
-  catch (const std::runtime_error& ex) {
+  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
     auto message = EXPECT_RFSA_ERROR(-200220, ex.what());
     EXPECT_STREQ("Device identifier is invalid.", message.c_str());
   }
@@ -506,14 +506,14 @@ TEST_F(NiRFSADriverApiTests, CreateConfigurationListWithInvalidAttribute_Reports
 
   try {
     client::create_configuration_list(
-      stub(),
-      session,
-      LIST_NAME,
-      {NiRFSAAttribute::NIRFSA_ATTRIBUTE_EXTERNAL_GAIN, NiRFSAAttribute::NIRFSA_ATTRIBUTE_NOTCH_FILTER_ENABLED},
-      true);
+        stub(),
+        session,
+        LIST_NAME,
+        {NiRFSAAttribute::NIRFSA_ATTRIBUTE_EXTERNAL_GAIN, NiRFSAAttribute::NIRFSA_ATTRIBUTE_NOTCH_FILTER_ENABLED},
+        true);
     EXPECT_FALSE(true);
   }
-  catch (const std::runtime_error& ex) {
+  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
     EXPECT_RFSA_ERROR(IVI_ATTRIBUTE_NOT_SUPPORTED_ERROR, "Attribute or property not supported.", ex.what(), session);
   }
 }

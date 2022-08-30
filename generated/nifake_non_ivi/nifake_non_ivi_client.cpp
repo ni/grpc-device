@@ -28,7 +28,8 @@ close(const StubPtr& stub, const nidevice_grpc::Session& handle)
   auto response = CloseResponse{};
 
   raise_if_error(
-      stub->Close(&context, request, &response));
+      stub->Close(&context, request, &response),
+      context);
 
   return response;
 }
@@ -44,7 +45,8 @@ close_secondary_session(const StubPtr& stub, const nidevice_grpc::Session& secon
   auto response = CloseSecondarySessionResponse{};
 
   raise_if_error(
-      stub->CloseSecondarySession(&context, request, &response));
+      stub->CloseSecondarySession(&context, request, &response),
+      context);
 
   return response;
 }
@@ -60,7 +62,8 @@ get_cross_driver_session(const StubPtr& stub, const nidevice_grpc::Session& hand
   auto response = GetCrossDriverSessionResponse{};
 
   raise_if_error(
-      stub->GetCrossDriverSession(&context, request, &response));
+      stub->GetCrossDriverSession(&context, request, &response),
+      context);
 
   return response;
 }
@@ -75,7 +78,8 @@ get_latest_error_message(const StubPtr& stub)
   auto response = GetLatestErrorMessageResponse{};
 
   raise_if_error(
-      stub->GetLatestErrorMessage(&context, request, &response));
+      stub->GetLatestErrorMessage(&context, request, &response),
+      context);
 
   return response;
 }
@@ -90,7 +94,8 @@ get_string_as_returned_value(const StubPtr& stub)
   auto response = GetStringAsReturnedValueResponse{};
 
   raise_if_error(
-      stub->GetStringAsReturnedValue(&context, request, &response));
+      stub->GetStringAsReturnedValue(&context, request, &response),
+      context);
 
   return response;
 }
@@ -114,7 +119,8 @@ get_marble_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& h
   auto response = GetMarbleAttributeDoubleResponse{};
 
   raise_if_error(
-      stub->GetMarbleAttributeDouble(&context, request, &response));
+      stub->GetMarbleAttributeDouble(&context, request, &response),
+      context);
 
   return response;
 }
@@ -138,7 +144,8 @@ get_marble_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& ha
   auto response = GetMarbleAttributeInt32Response{};
 
   raise_if_error(
-      stub->GetMarbleAttributeInt32(&context, request, &response));
+      stub->GetMarbleAttributeInt32(&context, request, &response),
+      context);
 
   return response;
 }
@@ -162,7 +169,8 @@ get_marble_attribute_int32_array(const StubPtr& stub, const nidevice_grpc::Sessi
   auto response = GetMarbleAttributeInt32ArrayResponse{};
 
   raise_if_error(
-      stub->GetMarbleAttributeInt32Array(&context, request, &response));
+      stub->GetMarbleAttributeInt32Array(&context, request, &response),
+      context);
 
   return response;
 }
@@ -178,7 +186,8 @@ init(const StubPtr& stub, const pb::string& session_name)
   auto response = InitResponse{};
 
   raise_if_error(
-      stub->Init(&context, request, &response));
+      stub->Init(&context, request, &response),
+      context);
 
   return response;
 }
@@ -194,7 +203,8 @@ init_from_cross_driver_session(const StubPtr& stub, const nidevice_grpc::Session
   auto response = InitFromCrossDriverSessionResponse{};
 
   raise_if_error(
-      stub->InitFromCrossDriverSession(&context, request, &response));
+      stub->InitFromCrossDriverSession(&context, request, &response),
+      context);
 
   return response;
 }
@@ -210,7 +220,8 @@ init_from_cross_driver_session_array(const StubPtr& stub, const std::vector<nide
   auto response = InitFromCrossDriverSessionArrayResponse{};
 
   raise_if_error(
-      stub->InitFromCrossDriverSessionArray(&context, request, &response));
+      stub->InitFromCrossDriverSessionArray(&context, request, &response),
+      context);
 
   return response;
 }
@@ -225,7 +236,8 @@ init_secondary_session(const StubPtr& stub)
   auto response = InitSecondarySessionResponse{};
 
   raise_if_error(
-      stub->InitSecondarySession(&context, request, &response));
+      stub->InitSecondarySession(&context, request, &response),
+      context);
 
   return response;
 }
@@ -241,7 +253,8 @@ init_with_handle_name_as_session_name(const StubPtr& stub, const pb::string& han
   auto response = InitWithHandleNameAsSessionNameResponse{};
 
   raise_if_error(
-      stub->InitWithHandleNameAsSessionName(&context, request, &response));
+      stub->InitWithHandleNameAsSessionName(&context, request, &response),
+      context);
 
   return response;
 }
@@ -257,7 +270,8 @@ init_with_returned_session(const StubPtr& stub, const pb::string& handle_name)
   auto response = InitWithReturnedSessionResponse{};
 
   raise_if_error(
-      stub->InitWithReturnedSession(&context, request, &response));
+      stub->InitWithReturnedSession(&context, request, &response),
+      context);
 
   return response;
 }
@@ -275,7 +289,8 @@ input_arrays_with_narrow_integer_types(const StubPtr& stub, const std::vector<pb
   auto response = InputArraysWithNarrowIntegerTypesResponse{};
 
   raise_if_error(
-      stub->InputArraysWithNarrowIntegerTypes(&context, request, &response));
+      stub->InputArraysWithNarrowIntegerTypes(&context, request, &response),
+      context);
 
   return response;
 }
@@ -292,7 +307,8 @@ iota_with_custom_size(const StubPtr& stub, const pb::int32& size_one, const pb::
   auto response = IotaWithCustomSizeResponse{};
 
   raise_if_error(
-      stub->IotaWithCustomSize(&context, request, &response));
+      stub->IotaWithCustomSize(&context, request, &response),
+      context);
 
   return response;
 }
@@ -310,7 +326,8 @@ output_arrays_with_narrow_integer_types(const StubPtr& stub, const pb::int32& nu
   auto response = OutputArraysWithNarrowIntegerTypesResponse{};
 
   raise_if_error(
-      stub->OutputArraysWithNarrowIntegerTypes(&context, request, &response));
+      stub->OutputArraysWithNarrowIntegerTypes(&context, request, &response),
+      context);
 
   return response;
 }
@@ -326,7 +343,8 @@ input_array_of_bytes(const StubPtr& stub, const pb::string& u8_array)
   auto response = InputArrayOfBytesResponse{};
 
   raise_if_error(
-      stub->InputArrayOfBytes(&context, request, &response));
+      stub->InputArrayOfBytes(&context, request, &response),
+      context);
 
   return response;
 }
@@ -342,7 +360,8 @@ output_array_of_bytes(const StubPtr& stub, const pb::int32& number_of_u8_samples
   auto response = OutputArrayOfBytesResponse{};
 
   raise_if_error(
-      stub->OutputArrayOfBytes(&context, request, &response));
+      stub->OutputArrayOfBytes(&context, request, &response),
+      context);
 
   return response;
 }
@@ -358,7 +377,8 @@ output_arrays_with_passed_in_by_ptr_mechanism(const StubPtr& stub, const pb::int
   auto response = OutputArraysWithPassedInByPtrMechanismResponse{};
 
   raise_if_error(
-      stub->OutputArraysWithPassedInByPtrMechanism(&context, request, &response));
+      stub->OutputArraysWithPassedInByPtrMechanism(&context, request, &response),
+      context);
 
   return response;
 }
@@ -393,7 +413,8 @@ input_timestamp(const StubPtr& stub, const google::protobuf::Timestamp& when)
   auto response = InputTimestampResponse{};
 
   raise_if_error(
-      stub->InputTimestamp(&context, request, &response));
+      stub->InputTimestamp(&context, request, &response),
+      context);
 
   return response;
 }
@@ -408,7 +429,8 @@ output_timestamp(const StubPtr& stub)
   auto response = OutputTimestampResponse{};
 
   raise_if_error(
-      stub->OutputTimestamp(&context, request, &response));
+      stub->OutputTimestamp(&context, request, &response),
+      context);
 
   return response;
 }
@@ -425,7 +447,8 @@ input_var_args(const StubPtr& stub, const pb::string& input_name, const std::vec
   auto response = InputVarArgsResponse{};
 
   raise_if_error(
-      stub->InputVarArgs(&context, request, &response));
+      stub->InputVarArgs(&context, request, &response),
+      context);
 
   return response;
 }
@@ -442,7 +465,8 @@ output_var_args(const StubPtr& stub, const pb::string& input_name, const std::ve
   auto response = OutputVarArgsResponse{};
 
   raise_if_error(
-      stub->OutputVarArgs(&context, request, &response));
+      stub->OutputVarArgs(&context, request, &response),
+      context);
 
   return response;
 }
@@ -466,7 +490,8 @@ reset_marble_attribute(const StubPtr& stub, const nidevice_grpc::Session& handle
   auto response = ResetMarbleAttributeResponse{};
 
   raise_if_error(
-      stub->ResetMarbleAttribute(&context, request, &response));
+      stub->ResetMarbleAttribute(&context, request, &response),
+      context);
 
   return response;
 }
@@ -484,7 +509,8 @@ scalars_with_narrow_integer_types(const StubPtr& stub, const pb::uint32& u16, co
   auto response = ScalarsWithNarrowIntegerTypesResponse{};
 
   raise_if_error(
-      stub->ScalarsWithNarrowIntegerTypes(&context, request, &response));
+      stub->ScalarsWithNarrowIntegerTypes(&context, request, &response),
+      context);
 
   return response;
 }
@@ -509,7 +535,8 @@ set_marble_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& h
   auto response = SetMarbleAttributeDoubleResponse{};
 
   raise_if_error(
-      stub->SetMarbleAttributeDouble(&context, request, &response));
+      stub->SetMarbleAttributeDouble(&context, request, &response),
+      context);
 
   return response;
 }
@@ -541,7 +568,8 @@ set_marble_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& ha
   auto response = SetMarbleAttributeInt32Response{};
 
   raise_if_error(
-      stub->SetMarbleAttributeInt32(&context, request, &response));
+      stub->SetMarbleAttributeInt32(&context, request, &response),
+      context);
 
   return response;
 }
@@ -558,7 +586,8 @@ set_colors(const StubPtr& stub, const std::vector<pb::int32>& colors, const pb::
   auto response = SetColorsResponse{};
 
   raise_if_error(
-      stub->SetColors(&context, request, &response));
+      stub->SetColors(&context, request, &response),
+      context);
 
   return response;
 }
@@ -574,7 +603,8 @@ get_structs_with_coercion(const StubPtr& stub, const pb::int32& number_of_struct
   auto response = GetStructsWithCoercionResponse{};
 
   raise_if_error(
-      stub->GetStructsWithCoercion(&context, request, &response));
+      stub->GetStructsWithCoercion(&context, request, &response),
+      context);
 
   return response;
 }
@@ -590,7 +620,8 @@ set_structs_with_coercion(const StubPtr& stub, const std::vector<StructWithCoerc
   auto response = SetStructsWithCoercionResponse{};
 
   raise_if_error(
-      stub->SetStructsWithCoercion(&context, request, &response));
+      stub->SetStructsWithCoercion(&context, request, &response),
+      context);
 
   return response;
 }
@@ -613,7 +644,8 @@ input_string_valued_enum(const StubPtr& stub, const simple_variant<MobileOSNames
   auto response = InputStringValuedEnumResponse{};
 
   raise_if_error(
-      stub->InputStringValuedEnum(&context, request, &response));
+      stub->InputStringValuedEnum(&context, request, &response),
+      context);
 
   return response;
 }
@@ -629,7 +661,8 @@ write_boolean_array(const StubPtr& stub, const std::vector<bool>& bools)
   auto response = WriteBooleanArrayResponse{};
 
   raise_if_error(
-      stub->WriteBooleanArray(&context, request, &response));
+      stub->WriteBooleanArray(&context, request, &response),
+      context);
 
   return response;
 }

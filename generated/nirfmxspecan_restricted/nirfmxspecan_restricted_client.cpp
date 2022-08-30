@@ -30,7 +30,8 @@ cache_result(const StubPtr& stub, const nidevice_grpc::Session& instrument, cons
   auto response = CacheResultResponse{};
 
   raise_if_error(
-      stub->CacheResult(&context, request, &response));
+      stub->CacheResult(&context, request, &response),
+      context);
 
   return response;
 }
@@ -51,7 +52,8 @@ iq_fetch_data_override_behavior(const StubPtr& stub, const nidevice_grpc::Sessio
   auto response = IQFetchDataOverrideBehaviorResponse{};
 
   raise_if_error(
-      stub->IQFetchDataOverrideBehavior(&context, request, &response));
+      stub->IQFetchDataOverrideBehavior(&context, request, &response),
+      context);
 
   return response;
 }

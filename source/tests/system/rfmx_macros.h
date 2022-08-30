@@ -3,6 +3,7 @@
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
+
 #include <nlohmann/json.hpp>
 
 #define EXPECT_NO_ERROR_MESSAGE(session, response)                                                  \
@@ -49,7 +50,7 @@
     response_call_;                                                                 \
     EXPECT_FALSE(true);                                                             \
   }                                                                                 \
-  catch (const std::runtime_error& ex) {                                            \
+  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {        \
     EXPECT_STATUS_ERROR(expected_error_, ex.what());                                \
     EXPECT_THAT(error.value("message", ""), HasSubstr(message_substring_));         \
   }

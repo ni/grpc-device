@@ -1,10 +1,10 @@
 #include <gmock/gmock.h>
 #include <google/protobuf/util/time_util.h>
 #include <gtest/gtest.h>  // For EXPECT matchers.
-#include <nlohmann/json.hpp>
 
 #include <algorithm>
 #include <cstring>
+#include <nlohmann/json.hpp>
 #include <random>
 #include <stdexcept>
 #include <vector>
@@ -675,12 +675,12 @@ class NiDAQmxDriverApiTests : public Test {
     return stub()->CfgWatchdogDOExpirStates(&context, request, &response);
   }
 
-  void raise_if_error(::grpc::Status status)
-  {
-    if (!status.ok()) {
-      throw new std::runtime_error(status.error_message());
-    }
-  }
+  // void raise_if_error(::grpc::Status status)
+  // {
+  //   if (!status.ok()) {
+  //     throw new std::runtime_error(status.error_message());
+  //   }
+  // }
 
   std::unique_ptr<NiDAQmx::Stub>& stub()
   {
@@ -1003,12 +1003,12 @@ TEST_F(NiDAQmxDriverApiTests, GetScaledUnitsAsDouble_Fails)
 
   try {
     client::get_scale_attribute_double(
-      stub(),
-      SCALE_NAME,
-      (ScaleDoubleAttribute)ScaleStringAttribute::SCALE_ATTRIBUTE_SCALED_UNITS);
+        stub(),
+        SCALE_NAME,
+        (ScaleDoubleAttribute)ScaleStringAttribute::SCALE_ATTRIBUTE_SCALED_UNITS);
     EXPECT_FALSE(true);
   }
-  catch (const std::runtime_error& ex) {
+  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
     EXPECT_DAQ_ERROR(SPECIFIED_ATTRIBUTE_NOT_VALID_ERROR, ex.what());
   }
 }
@@ -1429,7 +1429,7 @@ TEST_F(NiDAQmxDriverApiTests, ConfigureTEDSOnNonTEDSChannel_ErrorTEDSSensorNotDe
     client::configure_teds(stub(), AI_CHANNEL, "");
     EXPECT_FALSE(true);
   }
-  catch (const std::runtime_error& ex) {
+  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
     EXPECT_DAQ_ERROR(TEDS_SENSOR_NOT_DETECTED_ERROR, ex.what());
   }
 }
@@ -1492,7 +1492,7 @@ TEST_F(NiDAQmxDriverApiTests, AutoConfigureCDAQSyncConnections_ReturnsNotSupport
     client::auto_configure_cdaq_sync_connections(stub(), DEVICE_NAME, 1.0);
     EXPECT_FALSE(true);
   }
-  catch (const std::runtime_error& ex) {
+  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
     EXPECT_DAQ_ERROR(DEVICE_DOES_NOT_SUPPORT_CDAQ_SYNC_CONNECTIONS_ERROR, ex.what());
   }
 }
@@ -1715,7 +1715,7 @@ TEST_F(NiDAQmxDriverApiTests, SetWrongCategoryAttribute_ReturnsNotValidError)
     client::get_device_attribute_bool(stub(), DEVICE_NAME, ScaleDoubleAttribute::SCALE_ATTRIBUTE_LIN_SLOPE);
     EXPECT_FALSE(true);
   }
-  catch (const std::runtime_error& ex) {
+  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
     EXPECT_DAQ_ERROR(SPECIFIED_ATTRIBUTE_NOT_VALID_ERROR, ex.what());
   }
 }
@@ -1726,7 +1726,7 @@ TEST_F(NiDAQmxDriverApiTests, SetWrongDataTypeAttribute_ReturnsNotValidError)
     client::get_device_attribute_bool(stub(), DEVICE_NAME, DeviceStringAttribute::DEVICE_ATTRIBUTE_AO_PHYSICAL_CHANS);
     EXPECT_FALSE(true);
   }
-  catch (const std::runtime_error& ex) {
+  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
     EXPECT_DAQ_ERROR(SPECIFIED_ATTRIBUTE_NOT_VALID_ERROR, ex.what());
   }
 }

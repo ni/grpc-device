@@ -28,7 +28,8 @@ accept(const StubPtr& stub, const nidevice_grpc::Session& socket)
   auto response = AcceptResponse{};
 
   raise_if_error(
-      stub->Accept(&context, request, &response));
+      stub->Accept(&context, request, &response),
+      context);
 
   return response;
 }
@@ -45,7 +46,8 @@ bind(const StubPtr& stub, const nidevice_grpc::Session& socket, const SockAddr& 
   auto response = BindResponse{};
 
   raise_if_error(
-      stub->Bind(&context, request, &response));
+      stub->Bind(&context, request, &response),
+      context);
 
   return response;
 }
@@ -61,7 +63,8 @@ close(const StubPtr& stub, const nidevice_grpc::Session& socket)
   auto response = CloseResponse{};
 
   raise_if_error(
-      stub->Close(&context, request, &response));
+      stub->Close(&context, request, &response),
+      context);
 
   return response;
 }
@@ -78,7 +81,8 @@ connect(const StubPtr& stub, const nidevice_grpc::Session& socket, const SockAdd
   auto response = ConnectResponse{};
 
   raise_if_error(
-      stub->Connect(&context, request, &response));
+      stub->Connect(&context, request, &response),
+      context);
 
   return response;
 }
@@ -95,7 +99,8 @@ fd_is_set(const StubPtr& stub, const nidevice_grpc::Session& fd, const std::vect
   auto response = FdIsSetResponse{};
 
   raise_if_error(
-      stub->FdIsSet(&context, request, &response));
+      stub->FdIsSet(&context, request, &response),
+      context);
 
   return response;
 }
@@ -114,7 +119,8 @@ get_addr_info(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, cons
   auto response = GetAddrInfoResponse{};
 
   raise_if_error(
-      stub->GetAddrInfo(&context, request, &response));
+      stub->GetAddrInfo(&context, request, &response),
+      context);
 
   return response;
 }
@@ -134,7 +140,8 @@ get_name_info(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, cons
   auto response = GetNameInfoResponse{};
 
   raise_if_error(
-      stub->GetNameInfo(&context, request, &response));
+      stub->GetNameInfo(&context, request, &response),
+      context);
 
   return response;
 }
@@ -150,7 +157,8 @@ get_peer_name(const StubPtr& stub, const nidevice_grpc::Session& socket)
   auto response = GetPeerNameResponse{};
 
   raise_if_error(
-      stub->GetPeerName(&context, request, &response));
+      stub->GetPeerName(&context, request, &response),
+      context);
 
   return response;
 }
@@ -166,7 +174,8 @@ get_sock_name(const StubPtr& stub, const nidevice_grpc::Session& socket)
   auto response = GetSockNameResponse{};
 
   raise_if_error(
-      stub->GetSockName(&context, request, &response));
+      stub->GetSockName(&context, request, &response),
+      context);
 
   return response;
 }
@@ -198,7 +207,8 @@ get_sock_opt(const StubPtr& stub, const nidevice_grpc::Session& socket, const si
   auto response = GetSockOptResponse{};
 
   raise_if_error(
-      stub->GetSockOpt(&context, request, &response));
+      stub->GetSockOpt(&context, request, &response),
+      context);
 
   return response;
 }
@@ -215,7 +225,8 @@ inet_addr(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const pb
   auto response = InetAddrResponse{};
 
   raise_if_error(
-      stub->InetAddr(&context, request, &response));
+      stub->InetAddr(&context, request, &response),
+      context);
 
   return response;
 }
@@ -232,7 +243,8 @@ inet_a_to_n(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const 
   auto response = InetAToNResponse{};
 
   raise_if_error(
-      stub->InetAToN(&context, request, &response));
+      stub->InetAToN(&context, request, &response),
+      context);
 
   return response;
 }
@@ -249,7 +261,8 @@ inet_n_to_a(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const 
   auto response = InetNToAResponse{};
 
   raise_if_error(
-      stub->InetNToA(&context, request, &response));
+      stub->InetNToA(&context, request, &response),
+      context);
 
   return response;
 }
@@ -266,7 +279,8 @@ inet_n_to_p(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const 
   auto response = InetNToPResponse{};
 
   raise_if_error(
-      stub->InetNToP(&context, request, &response));
+      stub->InetNToP(&context, request, &response),
+      context);
 
   return response;
 }
@@ -291,7 +305,8 @@ inet_p_to_n(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const 
   auto response = InetPToNResponse{};
 
   raise_if_error(
-      stub->InetPToN(&context, request, &response));
+      stub->InetPToN(&context, request, &response),
+      context);
 
   return response;
 }
@@ -307,7 +322,8 @@ ip_stack_clear(const StubPtr& stub, const nidevice_grpc::Session& stack_ref)
   auto response = IpStackClearResponse{};
 
   raise_if_error(
-      stub->IpStackClear(&context, request, &response));
+      stub->IpStackClear(&context, request, &response),
+      context);
 
   return response;
 }
@@ -324,7 +340,8 @@ ip_stack_create(const StubPtr& stub, const pb::string& stack_name, const pb::str
   auto response = IpStackCreateResponse{};
 
   raise_if_error(
-      stub->IpStackCreate(&context, request, &response));
+      stub->IpStackCreate(&context, request, &response),
+      context);
 
   return response;
 }
@@ -347,7 +364,8 @@ ip_stack_get_all_stacks_info_str(const StubPtr& stub, const simple_variant<IPSta
   auto response = IpStackGetAllStacksInfoStrResponse{};
 
   raise_if_error(
-      stub->IpStackGetAllStacksInfoStr(&context, request, &response));
+      stub->IpStackGetAllStacksInfoStr(&context, request, &response),
+      context);
 
   return response;
 }
@@ -363,7 +381,8 @@ ip_stack_get_info(const StubPtr& stub, const nidevice_grpc::Session& stack_ref)
   auto response = IpStackGetInfoResponse{};
 
   raise_if_error(
-      stub->IpStackGetInfo(&context, request, &response));
+      stub->IpStackGetInfo(&context, request, &response),
+      context);
 
   return response;
 }
@@ -379,7 +398,8 @@ ip_stack_open(const StubPtr& stub, const pb::string& stack_name)
   auto response = IpStackOpenResponse{};
 
   raise_if_error(
-      stub->IpStackOpen(&context, request, &response));
+      stub->IpStackOpen(&context, request, &response),
+      context);
 
   return response;
 }
@@ -397,7 +417,8 @@ ip_stack_wait_for_interface(const StubPtr& stub, const nidevice_grpc::Session& s
   auto response = IpStackWaitForInterfaceResponse{};
 
   raise_if_error(
-      stub->IpStackWaitForInterface(&context, request, &response));
+      stub->IpStackWaitForInterface(&context, request, &response),
+      context);
 
   return response;
 }
@@ -414,7 +435,8 @@ listen(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::int3
   auto response = ListenResponse{};
 
   raise_if_error(
-      stub->Listen(&context, request, &response));
+      stub->Listen(&context, request, &response),
+      context);
 
   return response;
 }
@@ -432,7 +454,8 @@ recv(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::int32&
   auto response = RecvResponse{};
 
   raise_if_error(
-      stub->Recv(&context, request, &response));
+      stub->Recv(&context, request, &response),
+      context);
 
   return response;
 }
@@ -450,7 +473,8 @@ recv_from(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::i
   auto response = RecvFromResponse{};
 
   raise_if_error(
-      stub->RecvFrom(&context, request, &response));
+      stub->RecvFrom(&context, request, &response),
+      context);
 
   return response;
 }
@@ -469,7 +493,8 @@ select(const StubPtr& stub, const std::vector<nidevice_grpc::Session>& readfds, 
   auto response = SelectResponse{};
 
   raise_if_error(
-      stub->Select(&context, request, &response));
+      stub->Select(&context, request, &response),
+      context);
 
   return response;
 }
@@ -487,7 +512,8 @@ send(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::string
   auto response = SendResponse{};
 
   raise_if_error(
-      stub->Send(&context, request, &response));
+      stub->Send(&context, request, &response),
+      context);
 
   return response;
 }
@@ -506,7 +532,8 @@ send_to(const StubPtr& stub, const nidevice_grpc::Session& socket, const pb::str
   auto response = SendToResponse{};
 
   raise_if_error(
-      stub->SendTo(&context, request, &response));
+      stub->SendTo(&context, request, &response),
+      context);
 
   return response;
 }
@@ -539,7 +566,8 @@ set_sock_opt(const StubPtr& stub, const nidevice_grpc::Session& socket, const si
   auto response = SetSockOptResponse{};
 
   raise_if_error(
-      stub->SetSockOpt(&context, request, &response));
+      stub->SetSockOpt(&context, request, &response),
+      context);
 
   return response;
 }
@@ -563,7 +591,8 @@ shutdown(const StubPtr& stub, const nidevice_grpc::Session& socket, const simple
   auto response = ShutdownResponse{};
 
   raise_if_error(
-      stub->Shutdown(&context, request, &response));
+      stub->Shutdown(&context, request, &response),
+      context);
 
   return response;
 }
@@ -603,7 +632,8 @@ socket(const StubPtr& stub, const nidevice_grpc::Session& stack_ref, const simpl
   auto response = SocketResponse{};
 
   raise_if_error(
-      stub->Socket(&context, request, &response));
+      stub->Socket(&context, request, &response),
+      context);
 
   return response;
 }
@@ -620,7 +650,8 @@ str_err_r(const StubPtr& stub, const pb::int32& errnum, const pb::uint64& buf_le
   auto response = StrErrRResponse{};
 
   raise_if_error(
-      stub->StrErrR(&context, request, &response));
+      stub->StrErrR(&context, request, &response),
+      context);
 
   return response;
 }
