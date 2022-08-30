@@ -76,7 +76,9 @@ try:
     # Open session to NI-SCOPE module with options.
     init_with_options_response = niscope_client.InitWithOptions(
         niscope_types.InitWithOptionsRequest(
-            resource_name=RESOURCE, id_query=False, option_string=OPTIONS
+            resource_name=RESOURCE,
+            id_query=False,
+            option_string=OPTIONS,
         )
     )
     vi = init_with_options_response.vi

@@ -123,19 +123,22 @@ try:
 
     load_pin_map_response = nidigital_client.LoadPinMap(
         nidigital_types.LoadPinMapRequest(
-            vi=vi, file_path=os.path.join(DIRECTORY_PATH, "PinMap.pinmap")
+            vi=vi,
+            file_path=os.path.join(DIRECTORY_PATH, "PinMap.pinmap"),
         )
     )
 
     load_specification_response = nidigital_client.LoadSpecifications(
         nidigital_types.LoadSpecificationsRequest(
-            vi=vi, file_path=os.path.join(DIRECTORY_PATH, "Specifications.specs")
+            vi=vi,
+            file_path=os.path.join(DIRECTORY_PATH, "Specifications.specs"),
         )
     )
 
     load_timing_response = nidigital_client.LoadTiming(
         nidigital_types.LoadTimingRequest(
-            vi=vi, file_path=os.path.join(DIRECTORY_PATH, "Timing.digitiming")
+            vi=vi,
+            file_path=os.path.join(DIRECTORY_PATH, "Timing.digitiming"),
         )
     )
 
@@ -153,13 +156,20 @@ try:
 
     load_pattern_response = nidigital_client.LoadPattern(
         nidigital_types.LoadPatternRequest(
-            vi=vi, file_path=os.path.join(DIRECTORY_PATH, "Pattern.digipat")
+            vi=vi,
+            file_path=os.path.join(DIRECTORY_PATH, "Pattern.digipat"),
         )
     )
 
     configure_voltage_response = nidigital_client.ConfigureVoltageLevels(
         nidigital_types.ConfigureVoltageLevelsRequest(
-            vi=vi, channel_list=CHANNEL_LIST, vil=VIL, vih=VIH, vol=VOL, voh=VOH, vterm=VTERM
+            vi=vi,
+            channel_list=CHANNEL_LIST,
+            vil=VIL,
+            vih=VIH,
+            vol=VOL,
+            voh=VOH,
+            vterm=VTERM,
         )
     )
 
@@ -183,7 +193,11 @@ try:
 
         configure_active_load_levels_response = nidigital_client.ConfigureActiveLoadLevels(
             nidigital_types.ConfigureActiveLoadLevelsRequest(
-                vi=vi, channel_list=CHANNEL_LIST, iol=IOL, ioh=IOH, vcom=VCOM
+                vi=vi,
+                channel_list=CHANNEL_LIST,
+                iol=IOL,
+                ioh=IOH,
+                vcom=VCOM,
             )
         )
 

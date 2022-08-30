@@ -76,7 +76,9 @@ try:
     # Initalize NI-FGEN session
     init_with_options_resp = nifgen_client.InitWithOptions(
         nifgen_types.InitWithOptionsRequest(
-            session_name=SESSION_NAME, resource_name=RESOURCE, option_string=OPTIONS
+            session_name=SESSION_NAME,
+            resource_name=RESOURCE,
+            option_string=OPTIONS,
         )
     )
     vi = init_with_options_resp.vi
@@ -89,14 +91,17 @@ try:
     # Configure output mode
     config_out_resp = nifgen_client.ConfigureOutputMode(
         nifgen_types.ConfigureOutputModeRequest(
-            vi=vi, output_mode=nifgen_types.OutputMode.OUTPUT_MODE_NIFGEN_VAL_OUTPUT_ARB
+            vi=vi,
+            output_mode=nifgen_types.OutputMode.OUTPUT_MODE_NIFGEN_VAL_OUTPUT_ARB,
         )
     )
 
     # Create waveform
     create_waveform_resp = nifgen_client.CreateWaveformF64(
         nifgen_types.CreateWaveformF64Request(
-            vi=vi, channel_name=CHANNEL_NAME, waveform_data_array=SINE
+            vi=vi,
+            channel_name=CHANNEL_NAME,
+            waveform_data_array=SINE,
         )
     )
     waveform_handle = create_waveform_resp.waveform_handle
@@ -115,7 +120,8 @@ try:
     # Configure clockmode to VAL_HIGH_RESOLUTION
     config_clckmode_resp = nifgen_client.ConfigureClockMode(
         nifgen_types.ConfigureClockModeRequest(
-            vi=vi, clock_mode=nifgen_types.ClockMode.CLOCK_MODE_NIFGEN_VAL_HIGH_RESOLUTION
+            vi=vi,
+            clock_mode=nifgen_types.ClockMode.CLOCK_MODE_NIFGEN_VAL_HIGH_RESOLUTION,
         )
     )
 

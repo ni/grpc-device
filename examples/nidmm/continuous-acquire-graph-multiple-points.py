@@ -77,7 +77,10 @@ try:
     # Open session to NI-DMM with options
     init_with_options_response = nidmm_client.InitWithOptions(
         nidmm_types.InitWithOptionsRequest(
-            session_name=SESSION_NAME, resource_name=RESOURCE, id_query=False, option_string=OPTIONS
+            session_name=SESSION_NAME,
+            resource_name=RESOURCE,
+            id_query=False,
+            option_string=OPTIONS,
         )
     )
     vi = init_with_options_response.vi
@@ -106,7 +109,8 @@ try:
     # Configure powerline frequency
     config_powlinefreq_response = nidmm_client.ConfigurePowerLineFrequency(
         nidmm_types.ConfigurePowerLineFrequencyRequest(
-            vi=vi, power_line_frequency_hz=POWERLINE_FREQ
+            vi=vi,
+            power_line_frequency_hz=POWERLINE_FREQ,
         )
     )
 
@@ -158,7 +162,9 @@ try:
                 # Fetch data
                 fetch_multipoints_response = nidmm_client.FetchMultiPoint(
                     nidmm_types.FetchMultiPointRequest(
-                        vi=vi, maximum_time=-1, array_size=pts_available
+                        vi=vi,
+                        maximum_time=-1,
+                        array_size=pts_available,
                     )
                 )
                 check_for_warning(fetch_multipoints_response, vi)

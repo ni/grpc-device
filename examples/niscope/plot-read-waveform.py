@@ -73,7 +73,10 @@ try:
     # Initialize the scope
     init_result = niscope_client.InitWithOptions(
         niscope_types.InitWithOptionsRequest(
-            session_name="demo", resource_name=RESOURCE, id_query=False, option_string=OPTIONS
+            session_name="demo",
+            resource_name=RESOURCE,
+            id_query=False,
+            option_string=OPTIONS,
         )
     )
     vi = init_result.vi

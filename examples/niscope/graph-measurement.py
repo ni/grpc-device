@@ -77,7 +77,10 @@ try:
     # Initialize the scope
     init_result = niscope_client.InitWithOptions(
         niscope_types.InitWithOptionsRequest(
-            session_name="demo", resource_name=RESOURCE, id_query=False, option_string=OPTIONS
+            session_name="demo",
+            resource_name=RESOURCE,
+            id_query=False,
+            option_string=OPTIONS,
         )
     )
     vi = init_result.vi
@@ -150,7 +153,10 @@ try:
             # Read a waveform from the scope
             read_result = niscope_client.Read(
                 niscope_types.ReadRequest(
-                    vi=vi, channel_list=CHANNELS, timeout=1, num_samples=10000
+                    vi=vi,
+                    channel_list=CHANNELS,
+                    timeout=1,
+                    num_samples=10000,
                 )
             )
             check_for_warning(read_result, vi)
