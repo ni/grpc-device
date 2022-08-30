@@ -64,8 +64,10 @@ class grpc_driver_error : public std::runtime_error {
   grpc_driver_error(const std::string& message, ::grpc::StatusCode code, const std::multimap<grpc::string_ref, grpc::string_ref>& trailers)
       : std::runtime_error(message), code_(code)
   {
-    for (auto trailer : trailers) {
-      trailers_.emplace(trailer.first.data(), trailer.second.data());
+    for (const auto& trailer : trailers) {
+      trailers_.emplace(
+          std::string(trailer.first.data(), trailer.first.length()),
+          std::string(trailer.second.data(), trailer.second.length()));
     }
   }
   ::grpc::StatusCode StatusCode() const
