@@ -675,13 +675,6 @@ class NiDAQmxDriverApiTests : public Test {
     return stub()->CfgWatchdogDOExpirStates(&context, request, &response);
   }
 
-  // void raise_if_error(::grpc::Status status)
-  // {
-  //   if (!status.ok()) {
-  //     throw new std::runtime_error(status.error_message());
-  //   }
-  // }
-
   std::unique_ptr<NiDAQmx::Stub>& stub()
   {
     return nidaqmx_stub_;
