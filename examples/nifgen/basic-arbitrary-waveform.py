@@ -71,6 +71,7 @@ def check_for_warning(response, vi):
         )
         sys.stderr.write(f"{warning_message}\nWarning status: {response.status}\n")
 
+
 try:
     # Initalize NI-FGEN session
     init_with_options_resp = nifgen_client.InitWithOptions(

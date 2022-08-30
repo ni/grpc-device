@@ -98,6 +98,7 @@ if len(sys.argv) >= 4:
 channel = grpc.insecure_channel(f"{SERVER_ADDRESS}:{SERVER_PORT}")
 nidigital_client = grpc_nidigital.NiDigitalStub(channel)
 
+
 def check_for_warning(response, vi):
     """Print to console if the status indicates a warning."""
     if response.status > 0:

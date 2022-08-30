@@ -106,7 +106,9 @@ try:
     )
 
     # Initiate acquisition.
-    initiate_response = niscope_client.InitiateAcquisition(niscope_types.InitiateAcquisitionRequest(vi=vi))
+    initiate_response = niscope_client.InitiateAcquisition(
+        niscope_types.InitiateAcquisitionRequest(vi=vi)
+    )
     check_for_warning(initiate_response, vi)
 
     # Fetch waveforms.
