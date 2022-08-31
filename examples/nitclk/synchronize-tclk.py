@@ -55,26 +55,29 @@ else:
 channel = grpc.insecure_channel(f"{SERVER_ADDRESS}:{SERVER_PORT}")
 nifgen_client = grpc_nifgen.NiFgenStub(channel)
 nitclk_client = grpc_nitclk.NiTClkStub(channel)
+sessions = []
 
 
-def check_for_error(service, vi, status):
-    """Raise an exception if the status indicates an error."""
-    if status != 0:
-        if service == nifgen_client:
-            error_handler_request = nifgen_types.ErrorHandlerRequest(vi=vi, error_code=status)
-            error_handler_response = nifgen_client.ErrorHandler(error_handler_request)
-            raise Exception(error_handler_response.error_message)
-        else:
-            error_info_request = nitclk_types.GetExtendedErrorInfoRequest()
-            error_info_response = nitclk_client.GetExtendedErrorInfo(error_info_request)
-            raise Exception(error_info_response.error_string)
+def check_for_fgen_warning(response, vi):
+    """Print to console if the status indicates a warning."""
+    if response.status > 0:
+        warning_message = nifgen_client.ErrorHandler(
+            nifgen_types.ErrorHandlerRequest(vi=vi, error_code=response.status)
+        )
+        sys.stderr.write(f"{warning_message.error_message}\nWarning status: {response.status}\n")
+
+
+def check_for_tclk_warning(response):
+    """Print to console if the status indicates a warning."""
+    if response.status > 0:
+        warning_message = nitclk_client.GetExtendedErrorInfo(
+            nitclk_types.GetExtendedErrorInfoRequest()
+        )
+        sys.stderr.write(f"{warning_message.error_string}\nWarning status: {response.status}\n")
 
 
 try:
-    # list of sessions
-    sessions = []
-    i = 0
-    for resource in RESOURCES:
+    for i, resource in enumerate(RESOURCES, start=1):
         # Initalize NI-FGEN session
         init_with_options_resp = nifgen_client.InitWithOptions(
             nifgen_types.InitWithOptionsRequest(
@@ -83,49 +86,37 @@ try:
         )
         vi = init_with_options_resp.vi
         sessions.append(vi)
-        check_for_error(nifgen_client, vi, init_with_options_resp.status)
 
         # Configure channels
-        config_channels_resp = nifgen_client.ConfigureChannels(
-            nifgen_types.ConfigureChannelsRequest(vi=vi, channels="0")
-        )
-        check_for_error(nifgen_client, vi, config_channels_resp.status)
+        nifgen_client.ConfigureChannels(nifgen_types.ConfigureChannelsRequest(vi=vi, channels="0"))
 
         # Configure output mode
-        config_out_resp = nifgen_client.ConfigureOutputMode(
+        nifgen_client.ConfigureOutputMode(
             nifgen_types.ConfigureOutputModeRequest(
                 vi=vi, output_mode=nifgen_types.OutputMode.OUTPUT_MODE_NIFGEN_VAL_OUTPUT_ARB
             )
         )
 
         # Configure sample rate
-        config_sample_rate_resp = nifgen_client.ConfigureSampleRate(
+        nifgen_client.ConfigureSampleRate(
             nifgen_types.ConfigureSampleRateRequest(vi=vi, sample_rate=SAMPLE_RATE)
         )
-        check_for_error(nifgen_client, vi, config_sample_rate_resp.status)
 
         # Create waveform
-        create_waveform_resp = nifgen_client.CreateWaveformF64(
+        nifgen_client.CreateWaveformF64(
             nifgen_types.CreateWaveformF64Request(
                 vi=vi, channel_name="0", waveform_data_array=WAVEFORM_DATA
             )
         )
-        check_for_error(nifgen_client, vi, create_waveform_resp.status)
 
-        i += 1
-
-    config_hom_trig_resp = nitclk_client.ConfigureForHomogeneousTriggers(
+    nitclk_client.ConfigureForHomogeneousTriggers(
         nitclk_types.ConfigureForHomogeneousTriggersRequest(sessions=sessions)
     )
-    check_for_error(nitclk_client, None, config_hom_trig_resp.status)
 
     # Synchronize and start generation
-    sync_resp = nitclk_client.Synchronize(
-        nitclk_types.SynchronizeRequest(sessions=sessions, min_tclk_period=0)
-    )
-    check_for_error(nitclk_client, None, sync_resp.status)
-    initiate_resp = nitclk_client.Initiate(nitclk_types.InitiateRequest(sessions=sessions))
-    check_for_error(nitclk_client, None, initiate_resp.status)
+    nitclk_client.Synchronize(nitclk_types.SynchronizeRequest(sessions=sessions, min_tclk_period=0))
+    initiate_response = nitclk_client.Initiate(nitclk_types.InitiateRequest(sessions=sessions))
+    check_for_tclk_warning(initiate_response)
 
     print(f"Generating square wave with sample rate {SAMPLE_RATE} on {RESOURCES}...")
     print("Close the graph or press Ctrl+C to stop generation")
@@ -142,9 +133,12 @@ try:
     except KeyboardInterrupt:
         pass
 
-# If NI-FGEN API throws an exception, print the error message
+# If NI-FGEN API throws an exception, print the error message.
 except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
+    for key, value in rpc_error.trailing_metadata() or []:
+        if key == "ni-error":
+            error_message += f"\nError status: {value}"
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
         error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"
     elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
@@ -152,9 +146,8 @@ except grpc.RpcError as rpc_error:
             "The operation is not implemented or is not supported/enabled in this service"
         )
     print(error_message)
+
 finally:
-    for vi in sessions:
-        if vi.id != 0:
-            # Close NI-FGEN session
-            close_session_response = nifgen_client.Close(nifgen_types.CloseRequest(vi=vi))
-            check_for_error(nifgen_client, vi, close_session_response.status)
+    # Close the NI-FGEN sessions.
+    for session in sessions:
+        nifgen_client.Close(nifgen_types.CloseRequest(vi=session))

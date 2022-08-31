@@ -61,21 +61,13 @@ channel = grpc.insecure_channel(f"{SERVER_ADDRESS}:{SERVER_PORT}")
 niswitch_client = grpc_niswitch.NiSwitchStub(channel)
 
 
-def check_for_error(vi, status):
-    """Raise an exception if the status indicates an error."""
-    if status != 0:
-        error_message_response = niswitch_client.ErrorMessage(
-            niswitch_types.ErrorMessageRequest(vi=vi, error_code=status)
-        )
-        raise Exception(error_message_response.error_message)
-
-
-def check_for_initialization_error(response):
-    """Raise an exception if an error was returned from Initialize."""
-    if response.status < 0:
-        raise RuntimeError(f"Error: {response.error_message or response.status}")
+def check_for_warning(response, vi):
+    """Print to console if the status indicates a warning."""
     if response.status > 0:
-        sys.stderr.write(f"Warning: {response.error_message or response.status}\n")
+        warning_message = niswitch_client.ErrorMessage(
+            niswitch_types.ErrorMessageRequest(vi=vi, error_code=response.status)
+        )
+        sys.stderr.write(f"{warning_message.error_message}\nWarning status: {response.status}\n")
 
 
 try:
@@ -90,38 +82,30 @@ try:
         )
     )
     vi = init_with_topology_response.vi
-    check_for_initialization_error(init_with_topology_response)
     print("Topology set to : ", TOPOLOGY_STRING)
 
     # Close the relay. Use values that are valid for the model being used.
-    check_for_error(
-        vi,
-        (
-            niswitch_client.RelayControl(
-                niswitch_types.RelayControlRequest(
-                    vi=vi,
-                    relay_name=RELAY_NAME,
-                    relay_action=niswitch_types.RelayAction.RELAY_ACTION_NISWITCH_VAL_CLOSE_RELAY,
-                )
-            )
-        ).status,
+    niswitch_client.RelayControl(
+        niswitch_types.RelayControlRequest(
+            vi=vi,
+            relay_name=RELAY_NAME,
+            relay_action=niswitch_types.RelayAction.RELAY_ACTION_NISWITCH_VAL_CLOSE_RELAY,
+        )
     )
     print("Relay closed.")
 
     # Wait for debounce
-    check_for_error(
-        vi,
-        (
-            niswitch_client.WaitForDebounce(
-                niswitch_types.WaitForDebounceRequest(vi=vi, maximum_time_ms=MAX_DEBOUNCE_TIME)
-            )
-        ).status,
+    niswitch_client.WaitForDebounce(
+        niswitch_types.WaitForDebounceRequest(vi=vi, maximum_time_ms=MAX_DEBOUNCE_TIME)
     )
     print("Wait for debounce to complete.")
 
 # If NI-SWITCH API throws an exception, print the error message
 except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
+    for key, value in rpc_error.trailing_metadata() or []:
+        if key == "ni-error":
+            error_message += f"\nError status: {value}"
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
         error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"
     elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
@@ -133,4 +117,4 @@ except grpc.RpcError as rpc_error:
 finally:
     if "vi" in vars() and vi.id != 0:
         # close the session.
-        check_for_error(vi, (niswitch_client.Close(niswitch_types.CloseRequest(vi=vi))).status)
+        niswitch_client.Close(niswitch_types.CloseRequest(vi=vi))

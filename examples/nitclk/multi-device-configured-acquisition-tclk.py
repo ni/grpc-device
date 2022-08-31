@@ -80,23 +80,27 @@ nitclk_client = grpc_tclk.NiTClkStub(channel)
 sessions = []
 
 
-def check_for_error(client, vi, status):
-    """Raise an exception if the status indicates an error."""
-    if status != 0:
-        if client == niscope_client:
-            error_message_request = niscope_types.GetErrorMessageRequest(vi=vi, error_code=status)
-            error_message_response = niscope_client.GetErrorMessage(error_message_request)
-            raise Exception(error_message_response.error_message)
-        else:
-            error_message_request = nitclk_types.GetExtendedErrorInfoRequest()
-            error_message_response = nitclk_client.GetExtendedErrorInfo(error_message_request)
-            raise Exception(error_message_response.error_string)
+def check_for_scope_warning(response, vi):
+    """Print to console if the status indicates a warning."""
+    if response.status > 0:
+        warning_message = niscope_client.GetErrorMessage(
+            niscope_types.GetErrorMessageRequest(vi=vi, error_code=response.status)
+        )
+        sys.stderr.write(f"{warning_message.error_message}\nWarning status: {response.status}\n")
+
+
+def check_for_tclk_warning(response):
+    """Print to console if the status indicates a warning."""
+    if response.status > 0:
+        warning_message = nitclk_client.GetExtendedErrorInfo(
+            nitclk_types.GetExtendedErrorInfoRequest()
+        )
+        sys.stderr.write(f"{warning_message.error_string}\nWarning status: {response.status}\n")
 
 
 try:
     # Initialize the session
-    i = 1
-    for resource in RESOURCES:
+    for i, resource in enumerate(RESOURCES, start=1):
         init_result = niscope_client.InitWithOptions(
             niscope_types.InitWithOptionsRequest(
                 session_name="session" + str(i),
@@ -106,21 +110,18 @@ try:
                 option_string=OPTIONS,
             )
         )
-        i = i + 1
         sessions.append(init_result.vi)
-        check_for_error(niscope_client, init_result.vi, init_result.status)
 
     for session in sessions:
         # Configure Acquisition Type
-        acquisition_type_result = niscope_client.ConfigureAcquisition(
+        niscope_client.ConfigureAcquisition(
             niscope_types.ConfigureAcquisitionRequest(
                 vi=session, acquisition_type=0  # NISCOPE_VAL_NORMAL
             )
         )
-        check_for_error(niscope_client, session, acquisition_type_result.status)
 
         # Configure Vertical
-        vertical_result = niscope_client.ConfigureVertical(
+        niscope_client.ConfigureVertical(
             niscope_types.ConfigureVerticalRequest(
                 vi=session,
                 channel_list=CHANNELS,
@@ -131,10 +132,9 @@ try:
                 probe_attenuation=1.0,
             )
         )
-        check_for_error(niscope_client, session, vertical_result.status)
 
         # Configure Channel Characteristics
-        channel_characteristics_result = niscope_client.ConfigureChanCharacteristics(
+        niscope_client.ConfigureChanCharacteristics(
             niscope_types.ConfigureChanCharacteristicsRequest(
                 vi=session,
                 channel_list=CHANNELS,
@@ -142,10 +142,9 @@ try:
                 max_input_frequency=0.0,
             )
         )
-        check_for_error(niscope_client, session, channel_characteristics_result.status)
 
         # Configure Horizontal Timing
-        config_result = niscope_client.ConfigureHorizontalTiming(
+        niscope_client.ConfigureHorizontalTiming(
             niscope_types.ConfigureHorizontalTimingRequest(
                 vi=session,
                 min_sample_rate=100000000.0,
@@ -155,7 +154,6 @@ try:
                 enforce_realtime=True,
             )
         )
-        check_for_error(niscope_client, session, config_result.status)
 
     vi = sessions[0]
     # Get the trigger type from the user
@@ -169,7 +167,7 @@ try:
 
     # Assign the default values for the trigger attribute that depends on the trigger type
     if trigger_type == "1":
-        trigger_edge_result = niscope_client.ConfigureTriggerEdge(
+        niscope_client.ConfigureTriggerEdge(
             niscope_types.ConfigureTriggerEdgeRequest(
                 vi=vi,
                 trigger_source="0",
@@ -180,9 +178,8 @@ try:
                 delay=0.0,
             )
         )
-        check_for_error(niscope_client, vi, trigger_edge_result.status)
     elif trigger_type == "2":
-        trigger_hysteresis_result = niscope_client.ConfigureTriggerHysteresis(
+        niscope_client.ConfigureTriggerHysteresis(
             niscope_types.ConfigureTriggerHysteresisRequest(
                 vi=vi,
                 trigger_source="0",
@@ -194,9 +191,8 @@ try:
                 delay=0.0,
             )
         )
-        check_for_error(niscope_client, vi, trigger_hysteresis_result.status)
     elif trigger_type == "3":
-        trigger_digital_result = niscope_client.ConfigureTriggerDigital(
+        niscope_client.ConfigureTriggerDigital(
             niscope_types.ConfigureTriggerDigitalRequest(
                 vi=vi,
                 trigger_source="VAL_PFI_1",
@@ -205,9 +201,8 @@ try:
                 delay=0.0,
             )
         )
-        check_for_error(niscope_client, vi, trigger_digital_result.status)
     elif trigger_type == "4":
-        trigger_window_result = niscope_client.ConfigureTriggerWindow(
+        niscope_client.ConfigureTriggerWindow(
             niscope_types.ConfigureTriggerWindowRequest(
                 vi=vi,
                 trigger_source="0",
@@ -219,12 +214,10 @@ try:
                 delay=0.0,
             )
         )
-        check_for_error(niscope_client, vi, trigger_window_result.status)
     elif trigger_type == "5":
-        trigger_immediate_result = niscope_client.ConfigureTriggerImmediate(
+        niscope_client.ConfigureTriggerImmediate(
             niscope_types.ConfigureTriggerImmediateRequest(vi=vi)
         )
-        check_for_error(niscope_client, vi, trigger_immediate_result.status)
     else:
         raise Exception("Enter a Valid Input")
 
@@ -235,21 +228,19 @@ try:
     ):
         # Use NI-TClk to configure appropriate parameters, synchronize digitizers, and initiate
         # operation.
-        homogenous_trigger_result = nitclk_client.ConfigureForHomogeneousTriggers(
+        nitclk_client.ConfigureForHomogeneousTriggers(
             nitclk_types.ConfigureForHomogeneousTriggersRequest(sessions=sessions)
         )
-        check_for_error(nitclk_client, vi, homogenous_trigger_result.status)
 
-        synchronize_result = nitclk_client.Synchronize(
+        nitclk_client.Synchronize(
             nitclk_types.SynchronizeRequest(sessions=sessions, min_tclk_period=0.0)
         )
-        check_for_error(nitclk_client, vi, synchronize_result.status)
     previous_min_sample_rate = min_sample_rate
     previous_max_input_frequency = max_input_frequency
     previous_min_record_length = num_records
 
     initiate_result = nitclk_client.Initiate(nitclk_types.InitiateRequest(sessions=sessions))
-    check_for_error(nitclk_client, vi, initiate_result.status)
+    check_for_tclk_warning(initiate_result)
 
     # Setup a plot to draw the captured waveform
     fig = plt.figure("Waveform Graph")
@@ -277,7 +268,7 @@ try:
                         vi=sessions[i], channel_list=CHANNELS, timeout=1, num_samples=500
                     )
                 )
-                check_for_error(niscope_client, session, fetch_result.status)
+                check_for_scope_warning(fetch_result, vi)
                 plt.subplot(1, len(sessions), i + 1, label=str(i))
                 # Round the array to 2 decimal places and Update the plot with the new waveform
                 data = np.array(fetch_result.waveform[0:500])
@@ -303,6 +294,9 @@ try:
 
 except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
+    for key, value in rpc_error.trailing_metadata() or []:
+        if key == "ni-error":
+            error_message += f"\nError status: {value}"
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
         error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"
     elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
@@ -312,8 +306,6 @@ except grpc.RpcError as rpc_error:
     print(f"{error_message}")
 
 finally:
-    if "vi" in vars() and vi.id != 0:
-        # close the sessions.
-        for session in sessions:
-            close_request_result = niscope_client.Close(niscope_types.CloseRequest(vi=session))
-            check_for_error(niscope_client, session, close_request_result.status)
+    # Close the NI-SCOPE sessions.
+    for session in sessions:
+        niscope_client.Close(niscope_types.CloseRequest(vi=session))

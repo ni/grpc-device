@@ -62,21 +62,13 @@ niswitch_client = grpc_niswitch.NiSwitchStub(channel)
 number_of_triggers = 5
 
 
-def check_for_error(vi, status):
-    """Raise an exception if the status indicates an error."""
-    if status != 0:
-        error_message_response = niswitch_client.ErrorMessage(
-            niswitch_types.ErrorMessageRequest(vi=vi, error_code=status)
-        )
-        raise Exception(error_message_response.error_message)
-
-
-def check_for_initialization_error(response):
-    """Raise an exception if an error was returned from Initialize."""
-    if response.status < 0:
-        raise RuntimeError(f"Error: {response.error_message or response.status}")
+def check_for_warning(response, vi):
+    """Print to console if the status indicates a warning."""
     if response.status > 0:
-        sys.stderr.write(f"Warning: {response.error_message or response.status}\n")
+        warning_message = niswitch_client.ErrorMessage(
+            niswitch_types.ErrorMessageRequest(vi=vi, error_code=response.status)
+        )
+        sys.stderr.write(f"{warning_message.error_message}\nWarning status: {response.status}\n")
 
 
 try:
@@ -91,75 +83,53 @@ try:
         )
     )
     vi = init_with_topology_response.vi
-    check_for_initialization_error(init_with_topology_response)
     print("Topology set to : ", TOPOLOGY_STRING)
 
     # Configure the scan list.
-    check_for_error(
-        vi,
-        (
-            niswitch_client.ConfigureScanList(
-                niswitch_types.ConfigureScanListRequest(
-                    vi=vi,
-                    scanlist=SCAN_LIST,
-                    scan_mode=niswitch_types.ScanMode.SCAN_MODE_NISWITCH_VAL_BREAK_BEFORE_MAKE,
-                )
-            )
-        ).status,
+    niswitch_client.ConfigureScanList(
+        niswitch_types.ConfigureScanListRequest(
+            vi=vi,
+            scanlist=SCAN_LIST,
+            scan_mode=niswitch_types.ScanMode.SCAN_MODE_NISWITCH_VAL_BREAK_BEFORE_MAKE,
+        )
     )
 
     # Configures the trigger to be software trigger.
-    check_for_error(
-        vi,
-        (
-            niswitch_client.ConfigureScanTrigger(
-                niswitch_types.ConfigureScanTriggerRequest(
-                    vi=vi,
-                    trigger_input=niswitch_types.TriggerInput.TRIGGER_INPUT_NISWITCH_VAL_SOFTWARE_TRIG,
-                    scan_advanced_output=niswitch_types.ScanAdvancedOutput.SCAN_ADVANCED_OUTPUT_NISWITCH_VAL_NONE,
-                )
-            )
-        ).status,
+    niswitch_client.ConfigureScanTrigger(
+        niswitch_types.ConfigureScanTriggerRequest(
+            vi=vi,
+            trigger_input=niswitch_types.TriggerInput.TRIGGER_INPUT_NISWITCH_VAL_SOFTWARE_TRIG,
+            scan_advanced_output=niswitch_types.ScanAdvancedOutput.SCAN_ADVANCED_OUTPUT_NISWITCH_VAL_NONE,
+        )
     )
     print("Configured the trigger as Software Trigger")
 
     # Loop through scan list continuously
-    check_for_error(
-        vi,
-        (
-            niswitch_client.SetContinuousScan(
-                niswitch_types.SetContinuousScanRequest(vi=vi, continuous_scan=True)
-            )
-        ).status,
+    niswitch_client.SetContinuousScan(
+        niswitch_types.SetContinuousScanRequest(vi=vi, continuous_scan=True)
     )
 
     # Initiate scanning
-    check_for_error(
-        vi, (niswitch_client.InitiateScan(niswitch_types.InitiateScanRequest(vi=vi))).status
-    )
+    niswitch_client.InitiateScan(niswitch_types.InitiateScanRequest(vi=vi))
     print("Scanning initiated...")
 
     # Send software trigger to module in a loop
     for x in range(number_of_triggers):
         # Wait for 500 ms
         time.sleep(0.5)
-        check_for_error(
-            vi,
-            (
-                niswitch_client.SendSoftwareTrigger(
-                    niswitch_types.SendSoftwareTriggerRequest(vi=vi)
-                )
-            ).status,
-        )
-        number_of_triggers = number_of_triggers - 1
+        niswitch_client.SendSoftwareTrigger(niswitch_types.SendSoftwareTriggerRequest(vi=vi))
+        number_of_triggers -= 1
 
     # Abort Scanning
-    check_for_error(vi, (niswitch_client.AbortScan(niswitch_types.AbortScanRequest(vi=vi))).status)
+    niswitch_client.AbortScan(niswitch_types.AbortScanRequest(vi=vi))
     print("Scanning completed.")
 
 # If NI-SWITCH API throws an exception, print the error message
 except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
+    for key, value in rpc_error.trailing_metadata() or []:
+        if key == "ni-error":
+            error_message += f"\nError status: {value}"
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
         error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"
     elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
@@ -171,4 +141,4 @@ except grpc.RpcError as rpc_error:
 finally:
     if "vi" in vars() and vi.id != 0:
         # close the session.
-        check_for_error(vi, (niswitch_client.Close(niswitch_types.CloseRequest(vi=vi))).status)
+        niswitch_client.Close(niswitch_types.CloseRequest(vi=vi))
