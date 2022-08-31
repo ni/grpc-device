@@ -6,794 +6,794 @@
 //---------------------------------------------------------------------
 #include "nifake_non_ivi_service.h"
 
-#include <server/callback_router.h>
-#include <server/converters.h>
-#include <server/server_reactor.h>
-
-#include <atomic>
+#include <sstream>
 #include <fstream>
 #include <iostream>
-#include <sstream>
+#include <atomic>
 #include <vector>
-
 #include "custom/nifake_non_ivi_errors.h"
+#include <server/converters.h>
+#include <server/callback_router.h>
+#include <server/server_reactor.h>
 
 namespace nifake_non_ivi_grpc {
 
-using nidevice_grpc::converters::allocate_output_storage;
-using nidevice_grpc::converters::calculate_linked_array_size;
-using nidevice_grpc::converters::convert_from_grpc;
-using nidevice_grpc::converters::convert_to_grpc;
-using nidevice_grpc::converters::MatchState;
+  using nidevice_grpc::converters::allocate_output_storage;
+  using nidevice_grpc::converters::calculate_linked_array_size;
+  using nidevice_grpc::converters::convert_from_grpc;
+  using nidevice_grpc::converters::convert_to_grpc;
+  using nidevice_grpc::converters::MatchState;
 
-const auto kErrorReadBufferTooSmall = -200229;
-const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
+  const auto kErrorReadBufferTooSmall = -200229;
+  const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
 
-NiFakeNonIviService::NiFakeNonIviService(
-    NiFakeNonIviLibraryInterface* library,
-    ResourceRepositorySharedPtr resource_repository,
-    SecondarySessionHandleResourceRepositorySharedPtr secondary_session_handle_resource_repository,
-    FakeCrossDriverHandleResourceRepositorySharedPtr fake_cross_driver_handle_resource_repository,
-    const NiFakeNonIviFeatureToggles& feature_toggles)
-    : library_(library),
+  NiFakeNonIviService::NiFakeNonIviService(
+      NiFakeNonIviLibraryInterface* library,
+      ResourceRepositorySharedPtr resource_repository,
+      SecondarySessionHandleResourceRepositorySharedPtr secondary_session_handle_resource_repository,
+      FakeCrossDriverHandleResourceRepositorySharedPtr fake_cross_driver_handle_resource_repository,
+      const NiFakeNonIviFeatureToggles& feature_toggles)
+      : library_(library),
       session_repository_(resource_repository),
       secondary_session_handle_resource_repository_(secondary_session_handle_resource_repository),
       fake_cross_driver_handle_resource_repository_(fake_cross_driver_handle_resource_repository),
       feature_toggles_(feature_toggles)
-{
-}
-
-NiFakeNonIviService::~NiFakeNonIviService()
-{
-}
-
-// Returns true if it's safe to use outputs of a method with the given status.
-inline bool status_ok(int32 status)
-{
-  return status >= 0;
-}
-
-//---------------------------------------------------------------------
-//---------------------------------------------------------------------
-::grpc::Status NiFakeNonIviService::Close(::grpc::ServerContext* context, const CloseRequest* request, CloseResponse* response)
-{
-  if (context->IsCancelled()) {
-    return ::grpc::Status::CANCELLED;
+  {
   }
-  try {
-    auto handle_grpc_session = request->handle();
-    FakeHandle handle = session_repository_->access_session(handle_grpc_session.id(), handle_grpc_session.name());
-    session_repository_->remove_session(handle_grpc_session.id(), handle_grpc_session.name());
-    auto status = library_->Close(handle);
-    if (!status_ok(status)) {
-      return ConvertApiErrorStatusForFakeHandle(context, status, handle);
+
+  NiFakeNonIviService::~NiFakeNonIviService()
+  {
+  }
+
+  // Returns true if it's safe to use outputs of a method with the given status.
+  inline bool status_ok(int32 status)
+  {
+    return status >= 0;
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeNonIviService::Close(::grpc::ServerContext* context, const CloseRequest* request, CloseResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
     }
-    response->set_status(status);
-    return ::grpc::Status::OK;
-  }
-  catch (nidevice_grpc::LibraryLoadException& ex) {
-    return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-  }
-}
-
-//---------------------------------------------------------------------
-//---------------------------------------------------------------------
-::grpc::Status NiFakeNonIviService::CloseSecondarySession(::grpc::ServerContext* context, const CloseSecondarySessionRequest* request, CloseSecondarySessionResponse* response)
-{
-  if (context->IsCancelled()) {
-    return ::grpc::Status::CANCELLED;
-  }
-  try {
-    auto secondary_session_handle_grpc_session = request->secondary_session_handle();
-    SecondarySessionHandle secondary_session_handle = secondary_session_handle_resource_repository_->access_session(secondary_session_handle_grpc_session.id(), secondary_session_handle_grpc_session.name());
-    secondary_session_handle_resource_repository_->remove_session(secondary_session_handle_grpc_session.id(), secondary_session_handle_grpc_session.name());
-    auto status = library_->CloseSecondarySession(secondary_session_handle);
-    if (!status_ok(status)) {
-      return ConvertApiErrorStatusForSecondarySessionHandle(context, status, secondary_session_handle);
-    }
-    response->set_status(status);
-    return ::grpc::Status::OK;
-  }
-  catch (nidevice_grpc::LibraryLoadException& ex) {
-    return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-  }
-}
-
-//---------------------------------------------------------------------
-//---------------------------------------------------------------------
-::grpc::Status NiFakeNonIviService::GetCrossDriverSession(::grpc::ServerContext* context, const GetCrossDriverSessionRequest* request, GetCrossDriverSessionResponse* response)
-{
-  if (context->IsCancelled()) {
-    return ::grpc::Status::CANCELLED;
-  }
-  try {
-    auto handle_grpc_session = request->handle();
-    FakeHandle handle = session_repository_->access_session(handle_grpc_session.id(), handle_grpc_session.name());
-
-    auto initiating_session_id = session_repository_->access_session_id(handle_grpc_session.id(), handle_grpc_session.name());
-    auto init_lambda = [&]() {
-      FakeCrossDriverHandle cross_driver_session;
-      int status = library_->GetCrossDriverSession(handle, &cross_driver_session);
-      return std::make_tuple(status, cross_driver_session);
-    };
-    uint32_t session_id = 0;
-    const std::string& grpc_device_session_name = request->session_name();
-    int status = fake_cross_driver_handle_resource_repository_->add_dependent_session(grpc_device_session_name, init_lambda, initiating_session_id, session_id);
-    response->set_status(status);
-    if (status == 0) {
-      response->mutable_cross_driver_session()->set_id(session_id);
-    }
-    return ::grpc::Status::OK;
-  }
-  catch (nidevice_grpc::LibraryLoadException& ex) {
-    return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-  }
-  catch (nidevice_grpc::SessionException& ex) {
-    return ::grpc::Status(::grpc::INVALID_ARGUMENT, ex.what());
-  }
-}
-
-//---------------------------------------------------------------------
-//---------------------------------------------------------------------
-::grpc::Status NiFakeNonIviService::GetLatestErrorMessage(::grpc::ServerContext* context, const GetLatestErrorMessageRequest* request, GetLatestErrorMessageResponse* response)
-{
-  if (context->IsCancelled()) {
-    return ::grpc::Status::CANCELLED;
-  }
-  try {
-    while (true) {
-      auto status = library_->GetLatestErrorMessage(nullptr, 0);
+    try {
+      auto handle_grpc_session = request->handle();
+      FakeHandle handle = session_repository_->access_session(handle_grpc_session.id(), handle_grpc_session.name());
+      session_repository_->remove_session(handle_grpc_session.id(), handle_grpc_session.name());
+      auto status = library_->Close(handle);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForFakeHandle(context, status, 0);
+        return ConvertApiErrorStatusForFakeHandle(context, status, handle);
       }
-      uInt32 size = status;
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
 
-      std::string message;
-      if (size > 0) {
-        message.resize(size - 1);
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeNonIviService::CloseSecondarySession(::grpc::ServerContext* context, const CloseSecondarySessionRequest* request, CloseSecondarySessionResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto secondary_session_handle_grpc_session = request->secondary_session_handle();
+      SecondarySessionHandle secondary_session_handle = secondary_session_handle_resource_repository_->access_session(secondary_session_handle_grpc_session.id(), secondary_session_handle_grpc_session.name());
+      secondary_session_handle_resource_repository_->remove_session(secondary_session_handle_grpc_session.id(), secondary_session_handle_grpc_session.name());
+      auto status = library_->CloseSecondarySession(secondary_session_handle);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForSecondarySessionHandle(context, status, secondary_session_handle);
       }
-      status = library_->GetLatestErrorMessage((char*)message.data(), size);
-      if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(size)) {
-        // buffer is now too small, try again
-        continue;
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeNonIviService::GetCrossDriverSession(::grpc::ServerContext* context, const GetCrossDriverSessionRequest* request, GetCrossDriverSessionResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto handle_grpc_session = request->handle();
+      FakeHandle handle = session_repository_->access_session(handle_grpc_session.id(), handle_grpc_session.name());
+
+      auto initiating_session_id = session_repository_->access_session_id(handle_grpc_session.id(), handle_grpc_session.name());
+      auto init_lambda = [&] () {
+        FakeCrossDriverHandle cross_driver_session;
+        int status = library_->GetCrossDriverSession(handle, &cross_driver_session);
+        return std::make_tuple(status, cross_driver_session);
+      };
+      uint32_t session_id = 0;
+      const std::string& grpc_device_session_name = request->session_name();
+      int status = fake_cross_driver_handle_resource_repository_->add_dependent_session(grpc_device_session_name, init_lambda, initiating_session_id, session_id);
+      response->set_status(status);
+      if (status == 0) {
+        response->mutable_cross_driver_session()->set_id(session_id);
       }
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+    catch (nidevice_grpc::SessionException& ex) {
+      return ::grpc::Status(::grpc::INVALID_ARGUMENT, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeNonIviService::GetLatestErrorMessage(::grpc::ServerContext* context, const GetLatestErrorMessageRequest* request, GetLatestErrorMessageResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+
+      while (true) {
+        auto status = library_->GetLatestErrorMessage(nullptr, 0);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForFakeHandle(context, status, 0);
+        }
+        uInt32 size = status;
+
+        std::string message;
+        if (size > 0) {
+            message.resize(size - 1);
+        }
+        status = library_->GetLatestErrorMessage((char*)message.data(), size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(size)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForFakeHandle(context, status, 0);
+        }
+        response->set_status(status);
+        response->set_message(message);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_message()));
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeNonIviService::GetStringAsReturnedValue(::grpc::ServerContext* context, const GetStringAsReturnedValueRequest* request, GetStringAsReturnedValueResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      std::string buf(512 - 1, '\0');
+      auto string_out = library_->GetStringAsReturnedValue((char*)buf.data());
+      auto status = string_out ? 0 : -1;
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForFakeHandle(context, status, 0);
       }
       response->set_status(status);
-      response->set_message(message);
-      nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_message()));
+      response->set_string_out(string_out);
+      nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_string_out()));
       return ::grpc::Status::OK;
     }
-  }
-  catch (nidevice_grpc::LibraryLoadException& ex) {
-    return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-  }
-}
-
-//---------------------------------------------------------------------
-//---------------------------------------------------------------------
-::grpc::Status NiFakeNonIviService::GetStringAsReturnedValue(::grpc::ServerContext* context, const GetStringAsReturnedValueRequest* request, GetStringAsReturnedValueResponse* response)
-{
-  if (context->IsCancelled()) {
-    return ::grpc::Status::CANCELLED;
-  }
-  try {
-    std::string buf(512 - 1, '\0');
-    auto string_out = library_->GetStringAsReturnedValue((char*)buf.data());
-    auto status = string_out ? 0 : -1;
-    if (!status_ok(status)) {
-      return ConvertApiErrorStatusForFakeHandle(context, status, 0);
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
-    response->set_status(status);
-    response->set_string_out(string_out);
-    nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_string_out()));
-    return ::grpc::Status::OK;
   }
-  catch (nidevice_grpc::LibraryLoadException& ex) {
-    return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-  }
-}
 
-//---------------------------------------------------------------------
-//---------------------------------------------------------------------
-::grpc::Status NiFakeNonIviService::GetMarbleAttributeDouble(::grpc::ServerContext* context, const GetMarbleAttributeDoubleRequest* request, GetMarbleAttributeDoubleResponse* response)
-{
-  if (context->IsCancelled()) {
-    return ::grpc::Status::CANCELLED;
-  }
-  try {
-    auto handle_grpc_session = request->handle();
-    FakeHandle handle = session_repository_->access_session(handle_grpc_session.id(), handle_grpc_session.name());
-    int32 attribute;
-    switch (request->attribute_enum_case()) {
-      case nifake_non_ivi_grpc::GetMarbleAttributeDoubleRequest::AttributeEnumCase::kAttribute: {
-        attribute = static_cast<int32>(request->attribute());
-        attribute = nifake_non_ivi_grpc::MarbleDoubleAttribute_IsValid(attribute) ? attribute : 0;
-        break;
-      }
-      case nifake_non_ivi_grpc::GetMarbleAttributeDoubleRequest::AttributeEnumCase::kAttributeRaw: {
-        attribute = static_cast<int32>(request->attribute_raw());
-        auto attribute_is_valid = nifake_non_ivi_grpc::MarbleDoubleAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
-        attribute = attribute_is_valid ? attribute : 0;
-        break;
-      }
-      case nifake_non_ivi_grpc::GetMarbleAttributeDoubleRequest::AttributeEnumCase::ATTRIBUTE_ENUM_NOT_SET: {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for attribute was not specified or out of range");
-        break;
-      }
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeNonIviService::GetMarbleAttributeDouble(::grpc::ServerContext* context, const GetMarbleAttributeDoubleRequest* request, GetMarbleAttributeDoubleResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
     }
-
-    double value{};
-    auto status = library_->GetMarbleAttributeDouble(handle, attribute, &value);
-    if (!status_ok(status)) {
-      return ConvertApiErrorStatusForFakeHandle(context, status, handle);
-    }
-    response->set_status(status);
-    response->set_value(value);
-    return ::grpc::Status::OK;
-  }
-  catch (nidevice_grpc::LibraryLoadException& ex) {
-    return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-  }
-}
-
-//---------------------------------------------------------------------
-//---------------------------------------------------------------------
-::grpc::Status NiFakeNonIviService::GetMarbleAttributeInt32(::grpc::ServerContext* context, const GetMarbleAttributeInt32Request* request, GetMarbleAttributeInt32Response* response)
-{
-  if (context->IsCancelled()) {
-    return ::grpc::Status::CANCELLED;
-  }
-  try {
-    auto handle_grpc_session = request->handle();
-    FakeHandle handle = session_repository_->access_session(handle_grpc_session.id(), handle_grpc_session.name());
-    int32 attribute;
-    switch (request->attribute_enum_case()) {
-      case nifake_non_ivi_grpc::GetMarbleAttributeInt32Request::AttributeEnumCase::kAttribute: {
-        attribute = static_cast<int32>(request->attribute());
-        attribute = nifake_non_ivi_grpc::MarbleInt32Attribute_IsValid(attribute) ? attribute : 0;
-        break;
+    try {
+      auto handle_grpc_session = request->handle();
+      FakeHandle handle = session_repository_->access_session(handle_grpc_session.id(), handle_grpc_session.name());
+      int32 attribute;
+      switch (request->attribute_enum_case()) {
+        case nifake_non_ivi_grpc::GetMarbleAttributeDoubleRequest::AttributeEnumCase::kAttribute: {
+          attribute = static_cast<int32>(request->attribute());
+          attribute = nifake_non_ivi_grpc::MarbleDoubleAttribute_IsValid(attribute) ? attribute : 0;
+          break;
+        }
+        case nifake_non_ivi_grpc::GetMarbleAttributeDoubleRequest::AttributeEnumCase::kAttributeRaw: {
+          attribute = static_cast<int32>(request->attribute_raw());
+          auto attribute_is_valid = nifake_non_ivi_grpc::MarbleDoubleAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          attribute = attribute_is_valid ? attribute : 0;
+          break;
+        }
+        case nifake_non_ivi_grpc::GetMarbleAttributeDoubleRequest::AttributeEnumCase::ATTRIBUTE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for attribute was not specified or out of range");
+          break;
+        }
       }
-      case nifake_non_ivi_grpc::GetMarbleAttributeInt32Request::AttributeEnumCase::kAttributeRaw: {
-        attribute = static_cast<int32>(request->attribute_raw());
-        auto attribute_is_valid = nifake_non_ivi_grpc::MarbleInt32Attribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
-        attribute = attribute_is_valid ? attribute : 0;
-        break;
+
+      double value {};
+      auto status = library_->GetMarbleAttributeDouble(handle, attribute, &value);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForFakeHandle(context, status, handle);
       }
-      case nifake_non_ivi_grpc::GetMarbleAttributeInt32Request::AttributeEnumCase::ATTRIBUTE_ENUM_NOT_SET: {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for attribute was not specified or out of range");
-        break;
+      response->set_status(status);
+      response->set_value(value);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeNonIviService::GetMarbleAttributeInt32(::grpc::ServerContext* context, const GetMarbleAttributeInt32Request* request, GetMarbleAttributeInt32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto handle_grpc_session = request->handle();
+      FakeHandle handle = session_repository_->access_session(handle_grpc_session.id(), handle_grpc_session.name());
+      int32 attribute;
+      switch (request->attribute_enum_case()) {
+        case nifake_non_ivi_grpc::GetMarbleAttributeInt32Request::AttributeEnumCase::kAttribute: {
+          attribute = static_cast<int32>(request->attribute());
+          attribute = nifake_non_ivi_grpc::MarbleInt32Attribute_IsValid(attribute) ? attribute : 0;
+          break;
+        }
+        case nifake_non_ivi_grpc::GetMarbleAttributeInt32Request::AttributeEnumCase::kAttributeRaw: {
+          attribute = static_cast<int32>(request->attribute_raw());
+          auto attribute_is_valid = nifake_non_ivi_grpc::MarbleInt32Attribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          attribute = attribute_is_valid ? attribute : 0;
+          break;
+        }
+        case nifake_non_ivi_grpc::GetMarbleAttributeInt32Request::AttributeEnumCase::ATTRIBUTE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for attribute was not specified or out of range");
+          break;
+        }
       }
-    }
 
-    int32 value{};
-    auto status = library_->GetMarbleAttributeInt32(handle, attribute, &value);
-    if (!status_ok(status)) {
-      return ConvertApiErrorStatusForFakeHandle(context, status, handle);
-    }
-    response->set_status(status);
-    auto checked_convert_value = [](auto raw_value) {
-      bool raw_value_is_valid = nifake_non_ivi_grpc::MarbleInt32AttributeValues_IsValid(raw_value);
-      auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
-      return static_cast<nifake_non_ivi_grpc::MarbleInt32AttributeValues>(valid_enum_value);
-    };
-    response->set_value(checked_convert_value(value));
-    response->set_value_raw(value);
-    return ::grpc::Status::OK;
-  }
-  catch (nidevice_grpc::LibraryLoadException& ex) {
-    return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-  }
-}
-
-//---------------------------------------------------------------------
-//---------------------------------------------------------------------
-::grpc::Status NiFakeNonIviService::GetMarbleAttributeInt32Array(::grpc::ServerContext* context, const GetMarbleAttributeInt32ArrayRequest* request, GetMarbleAttributeInt32ArrayResponse* response)
-{
-  if (context->IsCancelled()) {
-    return ::grpc::Status::CANCELLED;
-  }
-  try {
-    auto handle_grpc_session = request->handle();
-    FakeHandle handle = session_repository_->access_session(handle_grpc_session.id(), handle_grpc_session.name());
-    int32 attribute;
-    switch (request->attribute_enum_case()) {
-      case nifake_non_ivi_grpc::GetMarbleAttributeInt32ArrayRequest::AttributeEnumCase::kAttribute: {
-        attribute = static_cast<int32>(request->attribute());
-        attribute = nifake_non_ivi_grpc::MarbleInt32ArrayAttribute_IsValid(attribute) ? attribute : 0;
-        break;
+      int32 value {};
+      auto status = library_->GetMarbleAttributeInt32(handle, attribute, &value);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForFakeHandle(context, status, handle);
       }
-      case nifake_non_ivi_grpc::GetMarbleAttributeInt32ArrayRequest::AttributeEnumCase::kAttributeRaw: {
-        attribute = static_cast<int32>(request->attribute_raw());
-        auto attribute_is_valid = nifake_non_ivi_grpc::MarbleInt32ArrayAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
-        attribute = attribute_is_valid ? attribute : 0;
-        break;
+      response->set_status(status);
+      auto checked_convert_value = [](auto raw_value) {
+        bool raw_value_is_valid = nifake_non_ivi_grpc::MarbleInt32AttributeValues_IsValid(raw_value);
+        auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
+        return static_cast<nifake_non_ivi_grpc::MarbleInt32AttributeValues>(valid_enum_value);
+      };
+      response->set_value(checked_convert_value(value));
+      response->set_value_raw(value);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeNonIviService::GetMarbleAttributeInt32Array(::grpc::ServerContext* context, const GetMarbleAttributeInt32ArrayRequest* request, GetMarbleAttributeInt32ArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto handle_grpc_session = request->handle();
+      FakeHandle handle = session_repository_->access_session(handle_grpc_session.id(), handle_grpc_session.name());
+      int32 attribute;
+      switch (request->attribute_enum_case()) {
+        case nifake_non_ivi_grpc::GetMarbleAttributeInt32ArrayRequest::AttributeEnumCase::kAttribute: {
+          attribute = static_cast<int32>(request->attribute());
+          attribute = nifake_non_ivi_grpc::MarbleInt32ArrayAttribute_IsValid(attribute) ? attribute : 0;
+          break;
+        }
+        case nifake_non_ivi_grpc::GetMarbleAttributeInt32ArrayRequest::AttributeEnumCase::kAttributeRaw: {
+          attribute = static_cast<int32>(request->attribute_raw());
+          auto attribute_is_valid = nifake_non_ivi_grpc::MarbleInt32ArrayAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          attribute = attribute_is_valid ? attribute : 0;
+          break;
+        }
+        case nifake_non_ivi_grpc::GetMarbleAttributeInt32ArrayRequest::AttributeEnumCase::ATTRIBUTE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for attribute was not specified or out of range");
+          break;
+        }
       }
-      case nifake_non_ivi_grpc::GetMarbleAttributeInt32ArrayRequest::AttributeEnumCase::ATTRIBUTE_ENUM_NOT_SET: {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for attribute was not specified or out of range");
-        break;
+
+      response->mutable_value_raw()->Resize(10, 0);
+      int32* value = reinterpret_cast<int32*>(response->mutable_value_raw()->mutable_data());
+      auto status = library_->GetMarbleAttributeInt32Array(handle, attribute, value);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForFakeHandle(context, status, handle);
       }
+      response->set_status(status);
+      auto checked_convert_value = [](auto raw_value) {
+        bool raw_value_is_valid = nifake_non_ivi_grpc::MarbleInt32AttributeValues_IsValid(raw_value);
+        auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
+        return static_cast<nifake_non_ivi_grpc::MarbleInt32AttributeValues>(valid_enum_value);
+      };
+        response->mutable_value()->Clear();
+        response->mutable_value()->Reserve(10);
+        std::transform(
+          response->value_raw().begin(),
+          response->value_raw().begin() + 10,
+          google::protobuf::RepeatedFieldBackInserter(response->mutable_value()),
+          [&](auto x) {
+              return checked_convert_value(x);
+          });
+      return ::grpc::Status::OK;
     }
-
-    response->mutable_value_raw()->Resize(10, 0);
-    int32* value = reinterpret_cast<int32*>(response->mutable_value_raw()->mutable_data());
-    auto status = library_->GetMarbleAttributeInt32Array(handle, attribute, value);
-    if (!status_ok(status)) {
-      return ConvertApiErrorStatusForFakeHandle(context, status, handle);
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
-    response->set_status(status);
-    auto checked_convert_value = [](auto raw_value) {
-      bool raw_value_is_valid = nifake_non_ivi_grpc::MarbleInt32AttributeValues_IsValid(raw_value);
-      auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
-      return static_cast<nifake_non_ivi_grpc::MarbleInt32AttributeValues>(valid_enum_value);
-    };
-    response->mutable_value()->Clear();
-    response->mutable_value()->Reserve(10);
-    std::transform(
-        response->value_raw().begin(),
-        response->value_raw().begin() + 10,
-        google::protobuf::RepeatedFieldBackInserter(response->mutable_value()),
-        [&](auto x) {
-          return checked_convert_value(x);
-        });
-    return ::grpc::Status::OK;
   }
-  catch (nidevice_grpc::LibraryLoadException& ex) {
-    return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-  }
-}
 
-//---------------------------------------------------------------------
-//---------------------------------------------------------------------
-::grpc::Status NiFakeNonIviService::Init(::grpc::ServerContext* context, const InitRequest* request, InitResponse* response)
-{
-  if (context->IsCancelled()) {
-    return ::grpc::Status::CANCELLED;
-  }
-  try {
-    auto session_name = request->session_name().c_str();
-
-    auto init_lambda = [&]() {
-      FakeHandle handle;
-      auto status = library_->Init(session_name, &handle);
-      return std::make_tuple(status, handle);
-    };
-    uint32_t session_id = 0;
-    const std::string& grpc_device_session_name = request->session_name();
-    auto cleanup_lambda = [&](FakeHandle id) { library_->Close(id); };
-    int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
-    if (!status_ok(status)) {
-      return ConvertApiErrorStatusForFakeHandle(context, status, 0);
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeNonIviService::Init(::grpc::ServerContext* context, const InitRequest* request, InitResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
     }
-    response->set_status(status);
-    response->mutable_handle()->set_id(session_id);
-    return ::grpc::Status::OK;
-  }
-  catch (nidevice_grpc::LibraryLoadException& ex) {
-    return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-  }
-  catch (nidevice_grpc::SessionException& ex) {
-    return ::grpc::Status(::grpc::INVALID_ARGUMENT, ex.what());
-  }
-}
+    try {
+      auto session_name = request->session_name().c_str();
 
-//---------------------------------------------------------------------
-//---------------------------------------------------------------------
-::grpc::Status NiFakeNonIviService::InitFromCrossDriverSession(::grpc::ServerContext* context, const InitFromCrossDriverSessionRequest* request, InitFromCrossDriverSessionResponse* response)
-{
-  if (context->IsCancelled()) {
-    return ::grpc::Status::CANCELLED;
-  }
-  try {
-    auto cross_driver_session_grpc_session = request->cross_driver_session();
-    int32 cross_driver_session = fake_cross_driver_handle_resource_repository_->access_session(cross_driver_session_grpc_session.id(), cross_driver_session_grpc_session.name());
-
-    auto init_lambda = [&]() {
-      FakeHandle handle;
-      auto status = library_->InitFromCrossDriverSession(cross_driver_session, &handle);
-      return std::make_tuple(status, handle);
-    };
-    uint32_t session_id = 0;
-    const std::string& grpc_device_session_name = request->session_name();
-    auto cleanup_lambda = [&](FakeHandle id) { library_->Close(id); };
-    int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
-    if (!status_ok(status)) {
-      return ConvertApiErrorStatusForFakeHandle(context, status, 0);
+      auto init_lambda = [&] () {
+        FakeHandle handle;
+        auto status = library_->Init(session_name, &handle);
+        return std::make_tuple(status, handle);
+      };
+      uint32_t session_id = 0;
+      const std::string& grpc_device_session_name = request->session_name();
+      auto cleanup_lambda = [&] (FakeHandle id) { library_->Close(id); };
+      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForFakeHandle(context, status, 0);
+      }
+      response->set_status(status);
+      response->mutable_handle()->set_id(session_id);
+      return ::grpc::Status::OK;
     }
-    response->set_status(status);
-    response->mutable_handle()->set_id(session_id);
-    return ::grpc::Status::OK;
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+    catch (nidevice_grpc::SessionException& ex) {
+      return ::grpc::Status(::grpc::INVALID_ARGUMENT, ex.what());
+    }
   }
-  catch (nidevice_grpc::LibraryLoadException& ex) {
-    return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-  }
-  catch (nidevice_grpc::SessionException& ex) {
-    return ::grpc::Status(::grpc::INVALID_ARGUMENT, ex.what());
-  }
-}
 
-//---------------------------------------------------------------------
-//---------------------------------------------------------------------
-::grpc::Status NiFakeNonIviService::InitFromCrossDriverSessionArray(::grpc::ServerContext* context, const InitFromCrossDriverSessionArrayRequest* request, InitFromCrossDriverSessionArrayResponse* response)
-{
-  if (context->IsCancelled()) {
-    return ::grpc::Status::CANCELLED;
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeNonIviService::InitFromCrossDriverSession(::grpc::ServerContext* context, const InitFromCrossDriverSessionRequest* request, InitFromCrossDriverSessionResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto cross_driver_session_grpc_session = request->cross_driver_session();
+      int32 cross_driver_session = fake_cross_driver_handle_resource_repository_->access_session(cross_driver_session_grpc_session.id(), cross_driver_session_grpc_session.name());
+
+      auto init_lambda = [&] () {
+        FakeHandle handle;
+        auto status = library_->InitFromCrossDriverSession(cross_driver_session, &handle);
+        return std::make_tuple(status, handle);
+      };
+      uint32_t session_id = 0;
+      const std::string& grpc_device_session_name = request->session_name();
+      auto cleanup_lambda = [&] (FakeHandle id) { library_->Close(id); };
+      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForFakeHandle(context, status, 0);
+      }
+      response->set_status(status);
+      response->mutable_handle()->set_id(session_id);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+    catch (nidevice_grpc::SessionException& ex) {
+      return ::grpc::Status(::grpc::INVALID_ARGUMENT, ex.what());
+    }
   }
-  try {
-    auto cross_driver_session_array_request = request->cross_driver_session_array();
-    std::vector<int32> cross_driver_session_array;
-    std::transform(
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeNonIviService::InitFromCrossDriverSessionArray(::grpc::ServerContext* context, const InitFromCrossDriverSessionArrayRequest* request, InitFromCrossDriverSessionArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto cross_driver_session_array_request = request->cross_driver_session_array();
+      std::vector<int32> cross_driver_session_array;
+      std::transform(
         cross_driver_session_array_request.begin(),
         cross_driver_session_array_request.end(),
         std::back_inserter(cross_driver_session_array),
-        [&](auto session) { return fake_cross_driver_handle_resource_repository_->access_session(session.id(), session.name()); });
-    int32 number_of_cross_driver_sessions = static_cast<int32>(request->cross_driver_session_array().size());
+        [&](auto session) { return fake_cross_driver_handle_resource_repository_->access_session(session.id(), session.name()); }); 
+      int32 number_of_cross_driver_sessions = static_cast<int32>(request->cross_driver_session_array().size());
 
-    auto init_lambda = [&]() {
-      FakeHandle handle;
-      auto status = library_->InitFromCrossDriverSessionArray(cross_driver_session_array.data(), number_of_cross_driver_sessions, &handle);
-      return std::make_tuple(status, handle);
-    };
-    uint32_t session_id = 0;
-    const std::string& grpc_device_session_name = request->session_name();
-    auto cleanup_lambda = [&](FakeHandle id) { library_->Close(id); };
-    int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
-    if (!status_ok(status)) {
-      return ConvertApiErrorStatusForFakeHandle(context, status, 0);
+      auto init_lambda = [&] () {
+        FakeHandle handle;
+        auto status = library_->InitFromCrossDriverSessionArray(cross_driver_session_array.data(), number_of_cross_driver_sessions, &handle);
+        return std::make_tuple(status, handle);
+      };
+      uint32_t session_id = 0;
+      const std::string& grpc_device_session_name = request->session_name();
+      auto cleanup_lambda = [&] (FakeHandle id) { library_->Close(id); };
+      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForFakeHandle(context, status, 0);
+      }
+      response->set_status(status);
+      response->mutable_handle()->set_id(session_id);
+      return ::grpc::Status::OK;
     }
-    response->set_status(status);
-    response->mutable_handle()->set_id(session_id);
-    return ::grpc::Status::OK;
-  }
-  catch (nidevice_grpc::LibraryLoadException& ex) {
-    return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-  }
-  catch (nidevice_grpc::SessionException& ex) {
-    return ::grpc::Status(::grpc::INVALID_ARGUMENT, ex.what());
-  }
-}
-
-//---------------------------------------------------------------------
-//---------------------------------------------------------------------
-::grpc::Status NiFakeNonIviService::InitSecondarySession(::grpc::ServerContext* context, const InitSecondarySessionRequest* request, InitSecondarySessionResponse* response)
-{
-  if (context->IsCancelled()) {
-    return ::grpc::Status::CANCELLED;
-  }
-  try {
-    auto init_lambda = [&]() {
-      SecondarySessionHandle secondary_session_handle;
-      auto status = library_->InitSecondarySession(&secondary_session_handle);
-      return std::make_tuple(status, secondary_session_handle);
-    };
-    uint32_t session_id = 0;
-    const std::string& grpc_device_session_name = request->session_name();
-    auto cleanup_lambda = [&](SecondarySessionHandle id) { library_->CloseSecondarySession(id); };
-    int status = secondary_session_handle_resource_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
-    if (!status_ok(status)) {
-      return ConvertApiErrorStatusForFakeHandle(context, status, 0);
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
-    response->set_status(status);
-    response->mutable_secondary_session_handle()->set_id(session_id);
-    return ::grpc::Status::OK;
-  }
-  catch (nidevice_grpc::LibraryLoadException& ex) {
-    return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-  }
-  catch (nidevice_grpc::SessionException& ex) {
-    return ::grpc::Status(::grpc::INVALID_ARGUMENT, ex.what());
-  }
-}
-
-//---------------------------------------------------------------------
-//---------------------------------------------------------------------
-::grpc::Status NiFakeNonIviService::InitWithHandleNameAsSessionName(::grpc::ServerContext* context, const InitWithHandleNameAsSessionNameRequest* request, InitWithHandleNameAsSessionNameResponse* response)
-{
-  if (context->IsCancelled()) {
-    return ::grpc::Status::CANCELLED;
-  }
-  try {
-    auto handle_name = request->handle_name().c_str();
-
-    auto init_lambda = [&]() {
-      FakeHandle handle;
-      auto status = library_->InitWithHandleNameAsSessionName(handle_name, &handle);
-      return std::make_tuple(status, handle);
-    };
-    uint32_t session_id = 0;
-    const std::string& grpc_device_session_name = request->handle_name();
-    auto cleanup_lambda = [&](FakeHandle id) { library_->Close(id); };
-    int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
-    if (!status_ok(status)) {
-      return ConvertApiErrorStatusForFakeHandle(context, status, 0);
+    catch (nidevice_grpc::SessionException& ex) {
+      return ::grpc::Status(::grpc::INVALID_ARGUMENT, ex.what());
     }
-    response->set_status(status);
-    response->mutable_handle()->set_id(session_id);
-    return ::grpc::Status::OK;
   }
-  catch (nidevice_grpc::LibraryLoadException& ex) {
-    return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-  }
-  catch (nidevice_grpc::SessionException& ex) {
-    return ::grpc::Status(::grpc::INVALID_ARGUMENT, ex.what());
-  }
-}
 
-//---------------------------------------------------------------------
-//---------------------------------------------------------------------
-::grpc::Status NiFakeNonIviService::InitWithReturnedSession(::grpc::ServerContext* context, const InitWithReturnedSessionRequest* request, InitWithReturnedSessionResponse* response)
-{
-  if (context->IsCancelled()) {
-    return ::grpc::Status::CANCELLED;
-  }
-  try {
-    auto handle_name = request->handle_name().c_str();
-
-    auto init_lambda = [&]() {
-      auto handle = library_->InitWithReturnedSession(handle_name);
-      auto status = handle == 0xDEADBEEF ? -1 : 0;
-      return std::make_tuple(status, handle);
-    };
-    uint32_t session_id = 0;
-    const std::string& grpc_device_session_name = request->handle_name();
-    auto cleanup_lambda = [&](FakeHandle id) { library_->Close(id); };
-    int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
-    if (!status_ok(status)) {
-      return ConvertApiErrorStatusForFakeHandle(context, status, 0);
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeNonIviService::InitSecondarySession(::grpc::ServerContext* context, const InitSecondarySessionRequest* request, InitSecondarySessionResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
     }
-    response->set_status(status);
-    response->mutable_handle()->set_id(session_id);
-    return ::grpc::Status::OK;
-  }
-  catch (nidevice_grpc::LibraryLoadException& ex) {
-    return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-  }
-  catch (nidevice_grpc::SessionException& ex) {
-    return ::grpc::Status(::grpc::INVALID_ARGUMENT, ex.what());
-  }
-}
+    try {
 
-//---------------------------------------------------------------------
-//---------------------------------------------------------------------
-::grpc::Status NiFakeNonIviService::InputArraysWithNarrowIntegerTypes(::grpc::ServerContext* context, const InputArraysWithNarrowIntegerTypesRequest* request, InputArraysWithNarrowIntegerTypesResponse* response)
-{
-  if (context->IsCancelled()) {
-    return ::grpc::Status::CANCELLED;
+      auto init_lambda = [&] () {
+        SecondarySessionHandle secondary_session_handle;
+        auto status = library_->InitSecondarySession(&secondary_session_handle);
+        return std::make_tuple(status, secondary_session_handle);
+      };
+      uint32_t session_id = 0;
+      const std::string& grpc_device_session_name = request->session_name();
+      auto cleanup_lambda = [&] (SecondarySessionHandle id) { library_->CloseSecondarySession(id); };
+      int status = secondary_session_handle_resource_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForFakeHandle(context, status, 0);
+      }
+      response->set_status(status);
+      response->mutable_secondary_session_handle()->set_id(session_id);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+    catch (nidevice_grpc::SessionException& ex) {
+      return ::grpc::Status(::grpc::INVALID_ARGUMENT, ex.what());
+    }
   }
-  try {
-    auto u16_array_raw = request->u16_array();
-    auto u16_array = std::vector<myUInt16>();
-    u16_array.reserve(u16_array_raw.size());
-    std::transform(
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeNonIviService::InitWithHandleNameAsSessionName(::grpc::ServerContext* context, const InitWithHandleNameAsSessionNameRequest* request, InitWithHandleNameAsSessionNameResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto handle_name = request->handle_name().c_str();
+
+      auto init_lambda = [&] () {
+        FakeHandle handle;
+        auto status = library_->InitWithHandleNameAsSessionName(handle_name, &handle);
+        return std::make_tuple(status, handle);
+      };
+      uint32_t session_id = 0;
+      const std::string& grpc_device_session_name = request->handle_name();
+      auto cleanup_lambda = [&] (FakeHandle id) { library_->Close(id); };
+      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForFakeHandle(context, status, 0);
+      }
+      response->set_status(status);
+      response->mutable_handle()->set_id(session_id);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+    catch (nidevice_grpc::SessionException& ex) {
+      return ::grpc::Status(::grpc::INVALID_ARGUMENT, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeNonIviService::InitWithReturnedSession(::grpc::ServerContext* context, const InitWithReturnedSessionRequest* request, InitWithReturnedSessionResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto handle_name = request->handle_name().c_str();
+
+      auto init_lambda = [&] () {
+        auto handle = library_->InitWithReturnedSession(handle_name);
+        auto status = handle == 0xDEADBEEF ? -1 : 0;
+        return std::make_tuple(status, handle);
+      };
+      uint32_t session_id = 0;
+      const std::string& grpc_device_session_name = request->handle_name();
+      auto cleanup_lambda = [&] (FakeHandle id) { library_->Close(id); };
+      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForFakeHandle(context, status, 0);
+      }
+      response->set_status(status);
+      response->mutable_handle()->set_id(session_id);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+    catch (nidevice_grpc::SessionException& ex) {
+      return ::grpc::Status(::grpc::INVALID_ARGUMENT, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeNonIviService::InputArraysWithNarrowIntegerTypes(::grpc::ServerContext* context, const InputArraysWithNarrowIntegerTypesRequest* request, InputArraysWithNarrowIntegerTypesResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto u16_array_raw = request->u16_array();
+      auto u16_array = std::vector<myUInt16>();
+      u16_array.reserve(u16_array_raw.size());
+      std::transform(
         u16_array_raw.begin(),
         u16_array_raw.end(),
         std::back_inserter(u16_array),
         [](auto x) {
-          if (x < std::numeric_limits<myUInt16>::min() || x > std::numeric_limits<myUInt16>::max()) {
-            std::string message("value ");
-            message.append(std::to_string(x));
-            message.append(" doesn't fit in datatype ");
-            message.append("myUInt16");
-            throw nidevice_grpc::ValueOutOfRangeException(message);
-          }
-          return static_cast<myUInt16>(x);
+              if (x < std::numeric_limits<myUInt16>::min() || x > std::numeric_limits<myUInt16>::max()) {
+                  std::string message("value ");
+                  message.append(std::to_string(x));
+                  message.append(" doesn't fit in datatype ");
+                  message.append("myUInt16");
+                  throw nidevice_grpc::ValueOutOfRangeException(message);
+              }
+              return static_cast<myUInt16>(x);
         });
 
-    auto i16_array_raw = request->i16_array();
-    auto i16_array = std::vector<myInt16>();
-    i16_array.reserve(i16_array_raw.size());
-    std::transform(
+      auto i16_array_raw = request->i16_array();
+      auto i16_array = std::vector<myInt16>();
+      i16_array.reserve(i16_array_raw.size());
+      std::transform(
         i16_array_raw.begin(),
         i16_array_raw.end(),
         std::back_inserter(i16_array),
         [](auto x) {
-          if (x < std::numeric_limits<myInt16>::min() || x > std::numeric_limits<myInt16>::max()) {
-            std::string message("value ");
-            message.append(std::to_string(x));
-            message.append(" doesn't fit in datatype ");
-            message.append("myInt16");
-            throw nidevice_grpc::ValueOutOfRangeException(message);
-          }
-          return static_cast<myInt16>(x);
+              if (x < std::numeric_limits<myInt16>::min() || x > std::numeric_limits<myInt16>::max()) {
+                  std::string message("value ");
+                  message.append(std::to_string(x));
+                  message.append(" doesn't fit in datatype ");
+                  message.append("myInt16");
+                  throw nidevice_grpc::ValueOutOfRangeException(message);
+              }
+              return static_cast<myInt16>(x);
         });
 
-    auto i8_array_raw = request->i8_array();
-    auto i8_array = std::vector<myInt8>();
-    i8_array.reserve(i8_array_raw.size());
-    std::transform(
+      auto i8_array_raw = request->i8_array();
+      auto i8_array = std::vector<myInt8>();
+      i8_array.reserve(i8_array_raw.size());
+      std::transform(
         i8_array_raw.begin(),
         i8_array_raw.end(),
         std::back_inserter(i8_array),
         [](auto x) {
-          if (x < std::numeric_limits<myInt8>::min() || x > std::numeric_limits<myInt8>::max()) {
-            std::string message("value ");
-            message.append(std::to_string(x));
-            message.append(" doesn't fit in datatype ");
-            message.append("myInt8");
-            throw nidevice_grpc::ValueOutOfRangeException(message);
-          }
-          return static_cast<myInt8>(x);
+              if (x < std::numeric_limits<myInt8>::min() || x > std::numeric_limits<myInt8>::max()) {
+                  std::string message("value ");
+                  message.append(std::to_string(x));
+                  message.append(" doesn't fit in datatype ");
+                  message.append("myInt8");
+                  throw nidevice_grpc::ValueOutOfRangeException(message);
+              }
+              return static_cast<myInt8>(x);
         });
 
-    auto status = library_->InputArraysWithNarrowIntegerTypes(u16_array.data(), i16_array.data(), i8_array.data());
-    if (!status_ok(status)) {
-      return ConvertApiErrorStatusForFakeHandle(context, status, 0);
+      auto status = library_->InputArraysWithNarrowIntegerTypes(u16_array.data(), i16_array.data(), i8_array.data());
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForFakeHandle(context, status, 0);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
     }
-    response->set_status(status);
-    return ::grpc::Status::OK;
-  }
-  catch (nidevice_grpc::LibraryLoadException& ex) {
-    return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-  }
-  catch (nidevice_grpc::ValueOutOfRangeException& ex) {
-    return ::grpc::Status(::grpc::OUT_OF_RANGE, ex.what());
-  }
-}
-
-//---------------------------------------------------------------------
-//---------------------------------------------------------------------
-::grpc::Status NiFakeNonIviService::IotaWithCustomSize(::grpc::ServerContext* context, const IotaWithCustomSizeRequest* request, IotaWithCustomSizeResponse* response)
-{
-  if (context->IsCancelled()) {
-    return ::grpc::Status::CANCELLED;
-  }
-  try {
-    int32 size_one = request->size_one();
-    int32 size_two = request->size_two();
-    response->mutable_data()->Resize((size_one < 0) ? size_two : size_one + 1, 0);
-    int32* data = reinterpret_cast<int32*>(response->mutable_data()->mutable_data());
-    auto status = library_->IotaWithCustomSize(size_one, size_two, data);
-    if (!status_ok(status)) {
-      return ConvertApiErrorStatusForFakeHandle(context, status, 0);
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
-    response->set_status(status);
-    return ::grpc::Status::OK;
-  }
-  catch (nidevice_grpc::LibraryLoadException& ex) {
-    return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-  }
-}
-
-//---------------------------------------------------------------------
-//---------------------------------------------------------------------
-::grpc::Status NiFakeNonIviService::OutputArraysWithNarrowIntegerTypes(::grpc::ServerContext* context, const OutputArraysWithNarrowIntegerTypesRequest* request, OutputArraysWithNarrowIntegerTypesResponse* response)
-{
-  if (context->IsCancelled()) {
-    return ::grpc::Status::CANCELLED;
-  }
-  try {
-    int32 number_of_u16_samples = request->number_of_u16_samples();
-    int32 number_of_i16_samples = request->number_of_i16_samples();
-    int32 number_of_i8_samples = request->number_of_i8_samples();
-    std::vector<myUInt16> u16_data(number_of_u16_samples);
-    std::vector<myInt16> i16_data(number_of_i16_samples);
-    std::vector<myInt8> i8_data(number_of_i8_samples);
-    auto status = library_->OutputArraysWithNarrowIntegerTypes(number_of_u16_samples, u16_data.data(), number_of_i16_samples, i16_data.data(), number_of_i8_samples, i8_data.data());
-    if (!status_ok(status)) {
-      return ConvertApiErrorStatusForFakeHandle(context, status, 0);
+    catch (nidevice_grpc::ValueOutOfRangeException& ex) {
+      return ::grpc::Status(::grpc::OUT_OF_RANGE, ex.what());
     }
-    response->set_status(status);
-    response->mutable_u16_data()->Clear();
-    response->mutable_u16_data()->Reserve(number_of_u16_samples);
-    std::transform(
-        u16_data.begin(),
-        u16_data.begin() + number_of_u16_samples,
-        google::protobuf::RepeatedFieldBackInserter(response->mutable_u16_data()),
-        [&](auto x) {
-          return x;
-        });
-    response->mutable_i16_data()->Clear();
-    response->mutable_i16_data()->Reserve(number_of_i16_samples);
-    std::transform(
-        i16_data.begin(),
-        i16_data.begin() + number_of_i16_samples,
-        google::protobuf::RepeatedFieldBackInserter(response->mutable_i16_data()),
-        [&](auto x) {
-          return x;
-        });
-    response->mutable_i8_data()->Clear();
-    response->mutable_i8_data()->Reserve(number_of_i8_samples);
-    std::transform(
-        i8_data.begin(),
-        i8_data.begin() + number_of_i8_samples,
-        google::protobuf::RepeatedFieldBackInserter(response->mutable_i8_data()),
-        [&](auto x) {
-          return x;
-        });
-    return ::grpc::Status::OK;
   }
-  catch (nidevice_grpc::LibraryLoadException& ex) {
-    return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-  }
-}
 
-//---------------------------------------------------------------------
-//---------------------------------------------------------------------
-::grpc::Status NiFakeNonIviService::InputArrayOfBytes(::grpc::ServerContext* context, const InputArrayOfBytesRequest* request, InputArrayOfBytesResponse* response)
-{
-  if (context->IsCancelled()) {
-    return ::grpc::Status::CANCELLED;
-  }
-  try {
-    const myUInt8* u8_array = (const myUInt8*)request->u8_array().c_str();
-    auto status = library_->InputArrayOfBytes(u8_array);
-    if (!status_ok(status)) {
-      return ConvertApiErrorStatusForFakeHandle(context, status, 0);
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeNonIviService::IotaWithCustomSize(::grpc::ServerContext* context, const IotaWithCustomSizeRequest* request, IotaWithCustomSizeResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
     }
-    response->set_status(status);
-    return ::grpc::Status::OK;
-  }
-  catch (nidevice_grpc::LibraryLoadException& ex) {
-    return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-  }
-}
-
-//---------------------------------------------------------------------
-//---------------------------------------------------------------------
-::grpc::Status NiFakeNonIviService::OutputArrayOfBytes(::grpc::ServerContext* context, const OutputArrayOfBytesRequest* request, OutputArrayOfBytesResponse* response)
-{
-  if (context->IsCancelled()) {
-    return ::grpc::Status::CANCELLED;
-  }
-  try {
-    int32 number_of_u8_samples = request->number_of_u8_samples();
-    std::string u8_data(number_of_u8_samples, '\0');
-    auto status = library_->OutputArrayOfBytes(number_of_u8_samples, (myUInt8*)u8_data.data());
-    if (!status_ok(status)) {
-      return ConvertApiErrorStatusForFakeHandle(context, status, 0);
+    try {
+      int32 size_one = request->size_one();
+      int32 size_two = request->size_two();
+      response->mutable_data()->Resize((size_one < 0) ? size_two : size_one + 1, 0);
+      int32* data = reinterpret_cast<int32*>(response->mutable_data()->mutable_data());
+      auto status = library_->IotaWithCustomSize(size_one, size_two, data);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForFakeHandle(context, status, 0);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
     }
-    response->set_status(status);
-    response->set_u8_data(u8_data);
-    return ::grpc::Status::OK;
-  }
-  catch (nidevice_grpc::LibraryLoadException& ex) {
-    return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-  }
-}
-
-//---------------------------------------------------------------------
-//---------------------------------------------------------------------
-::grpc::Status NiFakeNonIviService::OutputArraysWithPassedInByPtrMechanism(::grpc::ServerContext* context, const OutputArraysWithPassedInByPtrMechanismRequest* request, OutputArraysWithPassedInByPtrMechanismResponse* response)
-{
-  if (context->IsCancelled()) {
-    return ::grpc::Status::CANCELLED;
-  }
-  try {
-    int32 array_size_copy = request->array_size();
-    response->mutable_i32_data()->Resize(array_size_copy, 0);
-    int32* i32_data = reinterpret_cast<int32*>(response->mutable_i32_data()->mutable_data());
-    std::vector<myUInt16> u16_data(array_size_copy);
-    auto status = library_->OutputArraysWithPassedInByPtrMechanism(i32_data, u16_data.data(), &array_size_copy);
-    if (!status_ok(status)) {
-      return ConvertApiErrorStatusForFakeHandle(context, status, 0);
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
-    response->set_status(status);
-    response->mutable_i32_data()->Resize(array_size_copy, 0);
-    response->mutable_u16_data()->Clear();
-    response->mutable_u16_data()->Reserve(array_size_copy);
-    std::transform(
-        u16_data.begin(),
-        u16_data.begin() + array_size_copy,
-        google::protobuf::RepeatedFieldBackInserter(response->mutable_u16_data()),
-        [&](auto x) {
-          return x;
-        });
-    return ::grpc::Status::OK;
   }
-  catch (nidevice_grpc::LibraryLoadException& ex) {
-    return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-  }
-}
 
-//---------------------------------------------------------------------
-//---------------------------------------------------------------------
-::grpc::ServerWriteReactor<RegisterCallbackResponse>*
-NiFakeNonIviService::RegisterCallback(::grpc::CallbackServerContext* context, const RegisterCallbackRequest* request)
-{
-  using CallbackRouter = nidevice_grpc::CallbackRouter<int32, myInt16>;
-  class RegisterCallbackReactor : public nidevice_grpc::ServerWriterReactor<RegisterCallbackResponse, nidevice_grpc::CallbackRegistration> {
-   public:
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeNonIviService::OutputArraysWithNarrowIntegerTypes(::grpc::ServerContext* context, const OutputArraysWithNarrowIntegerTypesRequest* request, OutputArraysWithNarrowIntegerTypesResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      int32 number_of_u16_samples = request->number_of_u16_samples();
+      int32 number_of_i16_samples = request->number_of_i16_samples();
+      int32 number_of_i8_samples = request->number_of_i8_samples();
+      std::vector<myUInt16> u16_data(number_of_u16_samples);
+      std::vector<myInt16> i16_data(number_of_i16_samples);
+      std::vector<myInt8> i8_data(number_of_i8_samples);
+      auto status = library_->OutputArraysWithNarrowIntegerTypes(number_of_u16_samples, u16_data.data(), number_of_i16_samples, i16_data.data(), number_of_i8_samples, i8_data.data());
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForFakeHandle(context, status, 0);
+      }
+      response->set_status(status);
+        response->mutable_u16_data()->Clear();
+        response->mutable_u16_data()->Reserve(number_of_u16_samples);
+        std::transform(
+          u16_data.begin(),
+          u16_data.begin() + number_of_u16_samples,
+          google::protobuf::RepeatedFieldBackInserter(response->mutable_u16_data()),
+          [&](auto x) {
+              return x;
+          });
+        response->mutable_i16_data()->Clear();
+        response->mutable_i16_data()->Reserve(number_of_i16_samples);
+        std::transform(
+          i16_data.begin(),
+          i16_data.begin() + number_of_i16_samples,
+          google::protobuf::RepeatedFieldBackInserter(response->mutable_i16_data()),
+          [&](auto x) {
+              return x;
+          });
+        response->mutable_i8_data()->Clear();
+        response->mutable_i8_data()->Reserve(number_of_i8_samples);
+        std::transform(
+          i8_data.begin(),
+          i8_data.begin() + number_of_i8_samples,
+          google::protobuf::RepeatedFieldBackInserter(response->mutable_i8_data()),
+          [&](auto x) {
+              return x;
+          });
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeNonIviService::InputArrayOfBytes(::grpc::ServerContext* context, const InputArrayOfBytesRequest* request, InputArrayOfBytesResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      const myUInt8* u8_array = (const myUInt8*)request->u8_array().c_str();
+      auto status = library_->InputArrayOfBytes(u8_array);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForFakeHandle(context, status, 0);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeNonIviService::OutputArrayOfBytes(::grpc::ServerContext* context, const OutputArrayOfBytesRequest* request, OutputArrayOfBytesResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      int32 number_of_u8_samples = request->number_of_u8_samples();
+      std::string u8_data(number_of_u8_samples, '\0');
+      auto status = library_->OutputArrayOfBytes(number_of_u8_samples, (myUInt8*)u8_data.data());
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForFakeHandle(context, status, 0);
+      }
+      response->set_status(status);
+      response->set_u8_data(u8_data);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeNonIviService::OutputArraysWithPassedInByPtrMechanism(::grpc::ServerContext* context, const OutputArraysWithPassedInByPtrMechanismRequest* request, OutputArraysWithPassedInByPtrMechanismResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      int32 array_size_copy = request->array_size();
+      response->mutable_i32_data()->Resize(array_size_copy, 0);
+      int32* i32_data = reinterpret_cast<int32*>(response->mutable_i32_data()->mutable_data());
+      std::vector<myUInt16> u16_data(array_size_copy);
+      auto status = library_->OutputArraysWithPassedInByPtrMechanism(i32_data, u16_data.data(), &array_size_copy);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForFakeHandle(context, status, 0);
+      }
+      response->set_status(status);
+      response->mutable_i32_data()->Resize(array_size_copy, 0);
+        response->mutable_u16_data()->Clear();
+        response->mutable_u16_data()->Reserve(array_size_copy);
+        std::transform(
+          u16_data.begin(),
+          u16_data.begin() + array_size_copy,
+          google::protobuf::RepeatedFieldBackInserter(response->mutable_u16_data()),
+          [&](auto x) {
+              return x;
+          });
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::ServerWriteReactor<RegisterCallbackResponse>*
+  NiFakeNonIviService::RegisterCallback(::grpc::CallbackServerContext* context, const RegisterCallbackRequest* request)
+  {
+    using CallbackRouter = nidevice_grpc::CallbackRouter<int32, myInt16>;
+    class RegisterCallbackReactor : public nidevice_grpc::ServerWriterReactor<RegisterCallbackResponse, nidevice_grpc::CallbackRegistration> {
+    public:
     RegisterCallbackReactor(const RegisterCallbackRequest& request, NiFakeNonIviLibraryInterface* library, const ResourceRepositorySharedPtr& session_repository)
     {
       auto status = start(&request, library, session_repository);
@@ -806,13 +806,13 @@ NiFakeNonIviService::RegisterCallback(::grpc::CallbackServerContext* context, co
     {
       try {
         auto handler = CallbackRouter::register_handler(
-            [this](myInt16 data_out) {
-              RegisterCallbackResponse callback_response;
-              auto response = &callback_response;
-              response->set_data_out(data_out);
-              queue_write(callback_response);
-              return 0;
-            });
+          [this](myInt16 data_out) {
+            RegisterCallbackResponse callback_response;
+            auto response = &callback_response;
+          response->set_data_out(data_out);
+            queue_write(callback_response);
+            return 0;
+        });
 
         myInt16 input_data = request->input_data();
 
@@ -830,498 +830,499 @@ NiFakeNonIviService::RegisterCallback(::grpc::CallbackServerContext* context, co
         this->set_producer(std::move(handler));
       }
       catch (nidevice_grpc::LibraryLoadException& ex) {
-        return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+         return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
       }
 
       return ::grpc::Status::OK;
     }
-  };
-
-  return new RegisterCallbackReactor(*request, library_, session_repository_);
-}
-
-//---------------------------------------------------------------------
-//---------------------------------------------------------------------
-::grpc::Status NiFakeNonIviService::InputTimestamp(::grpc::ServerContext* context, const InputTimestampRequest* request, InputTimestampResponse* response)
-{
-  if (context->IsCancelled()) {
-    return ::grpc::Status::CANCELLED;
-  }
-  try {
-    auto when = convert_from_grpc<CVIAbsoluteTime>(request->when());
-    auto status = library_->InputTimestamp(when);
-    if (!status_ok(status)) {
-      return ConvertApiErrorStatusForFakeHandle(context, status, 0);
-    }
-    response->set_status(status);
-    return ::grpc::Status::OK;
-  }
-  catch (nidevice_grpc::LibraryLoadException& ex) {
-    return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-  }
-}
-
-//---------------------------------------------------------------------
-//---------------------------------------------------------------------
-::grpc::Status NiFakeNonIviService::OutputTimestamp(::grpc::ServerContext* context, const OutputTimestampRequest* request, OutputTimestampResponse* response)
-{
-  if (context->IsCancelled()) {
-    return ::grpc::Status::CANCELLED;
-  }
-  try {
-    CVIAbsoluteTime when{};
-    auto status = library_->OutputTimestamp(&when);
-    if (!status_ok(status)) {
-      return ConvertApiErrorStatusForFakeHandle(context, status, 0);
-    }
-    response->set_status(status);
-    convert_to_grpc(when, response->mutable_when());
-    return ::grpc::Status::OK;
-  }
-  catch (nidevice_grpc::LibraryLoadException& ex) {
-    return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-  }
-}
-
-//---------------------------------------------------------------------
-//---------------------------------------------------------------------
-::grpc::Status NiFakeNonIviService::InputVarArgs(::grpc::ServerContext* context, const InputVarArgsRequest* request, InputVarArgsResponse* response)
-{
-  if (context->IsCancelled()) {
-    return ::grpc::Status::CANCELLED;
-  }
-  try {
-    auto input_name = request->input_name().c_str();
-    auto get_channelName_if = [](const google::protobuf::RepeatedPtrField<StringAndEnum>& vector, int n) -> const char* {
-      if (vector.size() > n) {
-        return vector[n].channel_name().c_str();
-      }
-      return nullptr;
     };
-    auto get_color_if = [](const google::protobuf::RepeatedPtrField<StringAndEnum>& vector, int n) -> int32 {
-      if (vector.size() > n) {
-        return vector[n].color();
-      }
-      return 0;
-    };
-    auto get_powerUpState_if = [](const google::protobuf::RepeatedPtrField<StringAndEnum>& vector, int n) -> double {
-      if (vector.size() > n) {
-        return vector[n].power_up_state();
-      }
-      return 0;
-    };
-    auto string_and_enums = request->string_and_enums();
-    if (string_and_enums.size() == 0) {
-      return ::grpc::Status(::grpc::INVALID_ARGUMENT, "No values for stringAndEnums were specified");
-    }
-    if (string_and_enums.size() > 3) {
-      return ::grpc::Status(::grpc::INVALID_ARGUMENT, "More than 3 values for stringAndEnums were specified");
-    }
 
-    auto status = library_->InputVarArgs(input_name, get_channelName_if(string_and_enums, 0), get_color_if(string_and_enums, 0), get_powerUpState_if(string_and_enums, 0), get_channelName_if(string_and_enums, 1), get_color_if(string_and_enums, 1), get_powerUpState_if(string_and_enums, 1), get_channelName_if(string_and_enums, 2), get_color_if(string_and_enums, 2), get_powerUpState_if(string_and_enums, 2), get_channelName_if(string_and_enums, 3), get_color_if(string_and_enums, 3), get_powerUpState_if(string_and_enums, 3));
-    if (!status_ok(status)) {
-      return ConvertApiErrorStatusForFakeHandle(context, status, 0);
-    }
-    response->set_status(status);
-    return ::grpc::Status::OK;
+    return new RegisterCallbackReactor(*request, library_, session_repository_);
   }
-  catch (nidevice_grpc::LibraryLoadException& ex) {
-    return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-  }
-}
 
-//---------------------------------------------------------------------
-//---------------------------------------------------------------------
-::grpc::Status NiFakeNonIviService::OutputVarArgs(::grpc::ServerContext* context, const OutputVarArgsRequest* request, OutputVarArgsResponse* response)
-{
-  if (context->IsCancelled()) {
-    return ::grpc::Status::CANCELLED;
-  }
-  try {
-    auto input_name = request->input_name().c_str();
-    auto get_channelName_if = [](const google::protobuf::RepeatedPtrField<std::string>& vector, int n) -> const char* {
-      if (vector.size() > n) {
-        return vector[n].c_str();
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeNonIviService::InputTimestamp(::grpc::ServerContext* context, const InputTimestampRequest* request, InputTimestampResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto when = convert_from_grpc<CVIAbsoluteTime>(request->when());
+      auto status = library_->InputTimestamp(when);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForFakeHandle(context, status, 0);
       }
-      return nullptr;
-    };
-    auto channel_names = request->channel_names();
-    if (channel_names.size() == 0) {
-      return ::grpc::Status(::grpc::INVALID_ARGUMENT, "No values for channelNames were specified");
+      response->set_status(status);
+      return ::grpc::Status::OK;
     }
-    if (channel_names.size() > 3) {
-      return ::grpc::Status(::grpc::INVALID_ARGUMENT, "More than 3 values for channelNames were specified");
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
+  }
 
-    auto get_color_if = [](std::vector<int32>& vector, int n) -> int32* {
-      if (vector.size() > n) {
-        return &(vector[n]);
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeNonIviService::OutputTimestamp(::grpc::ServerContext* context, const OutputTimestampRequest* request, OutputTimestampResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      CVIAbsoluteTime when {};
+      auto status = library_->OutputTimestamp(&when);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForFakeHandle(context, status, 0);
       }
-      return nullptr;
-    };
-    std::vector<int32> colorVector;
-    colorVector.resize(channel_names.size());
-    auto status = library_->OutputVarArgs(input_name, get_channelName_if(channel_names, 0), get_color_if(colorVector, 0), get_channelName_if(channel_names, 1), get_color_if(colorVector, 1), get_channelName_if(channel_names, 2), get_color_if(colorVector, 2), get_channelName_if(channel_names, 3), get_color_if(colorVector, 3));
-    if (!status_ok(status)) {
-      return ConvertApiErrorStatusForFakeHandle(context, status, 0);
+      response->set_status(status);
+      convert_to_grpc(when, response->mutable_when());
+      return ::grpc::Status::OK;
     }
-    response->set_status(status);
-    for (int i = 0; i < colorVector.size(); ++i) {
-      response->add_colors(static_cast<BeautifulColor>(colorVector[i]));
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
-    return ::grpc::Status::OK;
   }
-  catch (nidevice_grpc::LibraryLoadException& ex) {
-    return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-  }
-}
 
-//---------------------------------------------------------------------
-//---------------------------------------------------------------------
-::grpc::Status NiFakeNonIviService::ResetMarbleAttribute(::grpc::ServerContext* context, const ResetMarbleAttributeRequest* request, ResetMarbleAttributeResponse* response)
-{
-  if (context->IsCancelled()) {
-    return ::grpc::Status::CANCELLED;
-  }
-  try {
-    auto handle_grpc_session = request->handle();
-    FakeHandle handle = session_repository_->access_session(handle_grpc_session.id(), handle_grpc_session.name());
-    int32 attribute;
-    switch (request->attribute_enum_case()) {
-      case nifake_non_ivi_grpc::ResetMarbleAttributeRequest::AttributeEnumCase::kAttribute: {
-        attribute = static_cast<int32>(request->attribute());
-        attribute = nifake_non_ivi_grpc::MarbleResetAttribute_IsValid(attribute) ? attribute : 0;
-        break;
-      }
-      case nifake_non_ivi_grpc::ResetMarbleAttributeRequest::AttributeEnumCase::kAttributeRaw: {
-        attribute = static_cast<int32>(request->attribute_raw());
-        auto attribute_is_valid = nifake_non_ivi_grpc::MarbleResetAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
-        attribute = attribute_is_valid ? attribute : 0;
-        break;
-      }
-      case nifake_non_ivi_grpc::ResetMarbleAttributeRequest::AttributeEnumCase::ATTRIBUTE_ENUM_NOT_SET: {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for attribute was not specified or out of range");
-        break;
-      }
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeNonIviService::InputVarArgs(::grpc::ServerContext* context, const InputVarArgsRequest* request, InputVarArgsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
     }
-
-    auto status = library_->ResetMarbleAttribute(handle, attribute);
-    if (!status_ok(status)) {
-      return ConvertApiErrorStatusForFakeHandle(context, status, handle);
-    }
-    response->set_status(status);
-    return ::grpc::Status::OK;
-  }
-  catch (nidevice_grpc::LibraryLoadException& ex) {
-    return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-  }
-}
-
-//---------------------------------------------------------------------
-//---------------------------------------------------------------------
-::grpc::Status NiFakeNonIviService::ScalarsWithNarrowIntegerTypes(::grpc::ServerContext* context, const ScalarsWithNarrowIntegerTypesRequest* request, ScalarsWithNarrowIntegerTypesResponse* response)
-{
-  if (context->IsCancelled()) {
-    return ::grpc::Status::CANCELLED;
-  }
-  try {
-    auto u16_raw = request->u16();
-    if (u16_raw < std::numeric_limits<myUInt16>::min() || u16_raw > std::numeric_limits<myUInt16>::max()) {
-      std::string message("value ");
-      message.append(std::to_string(u16_raw));
-      message.append(" doesn't fit in datatype ");
-      message.append("myUInt16");
-      throw nidevice_grpc::ValueOutOfRangeException(message);
-    }
-    auto u16 = static_cast<myUInt16>(u16_raw);
-
-    auto i16_raw = request->i16();
-    if (i16_raw < std::numeric_limits<myInt16>::min() || i16_raw > std::numeric_limits<myInt16>::max()) {
-      std::string message("value ");
-      message.append(std::to_string(i16_raw));
-      message.append(" doesn't fit in datatype ");
-      message.append("myInt16");
-      throw nidevice_grpc::ValueOutOfRangeException(message);
-    }
-    auto i16 = static_cast<myInt16>(i16_raw);
-
-    auto i8_raw = request->i8();
-    if (i8_raw < std::numeric_limits<myInt8>::min() || i8_raw > std::numeric_limits<myInt8>::max()) {
-      std::string message("value ");
-      message.append(std::to_string(i8_raw));
-      message.append(" doesn't fit in datatype ");
-      message.append("myInt8");
-      throw nidevice_grpc::ValueOutOfRangeException(message);
-    }
-    auto i8 = static_cast<myInt8>(i8_raw);
-
-    auto status = library_->ScalarsWithNarrowIntegerTypes(u16, i16, i8);
-    if (!status_ok(status)) {
-      return ConvertApiErrorStatusForFakeHandle(context, status, 0);
-    }
-    response->set_status(status);
-    return ::grpc::Status::OK;
-  }
-  catch (nidevice_grpc::LibraryLoadException& ex) {
-    return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-  }
-  catch (nidevice_grpc::ValueOutOfRangeException& ex) {
-    return ::grpc::Status(::grpc::OUT_OF_RANGE, ex.what());
-  }
-}
-
-//---------------------------------------------------------------------
-//---------------------------------------------------------------------
-::grpc::Status NiFakeNonIviService::SetMarbleAttributeDouble(::grpc::ServerContext* context, const SetMarbleAttributeDoubleRequest* request, SetMarbleAttributeDoubleResponse* response)
-{
-  if (context->IsCancelled()) {
-    return ::grpc::Status::CANCELLED;
-  }
-  try {
-    auto handle_grpc_session = request->handle();
-    FakeHandle handle = session_repository_->access_session(handle_grpc_session.id(), handle_grpc_session.name());
-    int32 attribute;
-    switch (request->attribute_enum_case()) {
-      case nifake_non_ivi_grpc::SetMarbleAttributeDoubleRequest::AttributeEnumCase::kAttribute: {
-        attribute = static_cast<int32>(request->attribute());
-        attribute = nifake_non_ivi_grpc::MarbleDoubleAttribute_IsValid(attribute) ? attribute : 0;
-        break;
+    try {
+      auto input_name = request->input_name().c_str();
+      auto get_channelName_if = [](const google::protobuf::RepeatedPtrField<StringAndEnum>& vector, int n) -> const char* {
+            if (vector.size() > n) {
+                  return vector[n].channel_name().c_str();
+            }
+            return nullptr;
+      };
+      auto get_color_if = [](const google::protobuf::RepeatedPtrField<StringAndEnum>& vector, int n) -> int32 {
+            if (vector.size() > n) {
+                  return vector[n].color();
+            }
+            return 0;
+      };
+      auto get_powerUpState_if = [](const google::protobuf::RepeatedPtrField<StringAndEnum>& vector, int n) -> double {
+            if (vector.size() > n) {
+                  return vector[n].power_up_state();
+            }
+            return 0;
+      };
+      auto string_and_enums = request->string_and_enums();
+      if (string_and_enums.size() == 0) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "No values for stringAndEnums were specified");
       }
-      case nifake_non_ivi_grpc::SetMarbleAttributeDoubleRequest::AttributeEnumCase::kAttributeRaw: {
-        attribute = static_cast<int32>(request->attribute_raw());
-        auto attribute_is_valid = nifake_non_ivi_grpc::MarbleDoubleAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
-        attribute = attribute_is_valid ? attribute : 0;
-        break;
+      if (string_and_enums.size() > 3) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "More than 3 values for stringAndEnums were specified");
       }
-      case nifake_non_ivi_grpc::SetMarbleAttributeDoubleRequest::AttributeEnumCase::ATTRIBUTE_ENUM_NOT_SET: {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for attribute was not specified or out of range");
-        break;
-      }
-    }
 
-    double value = request->value();
-    auto status = library_->SetMarbleAttributeDouble(handle, attribute, value);
-    if (!status_ok(status)) {
-      return ConvertApiErrorStatusForFakeHandle(context, status, handle);
+      auto status = library_->InputVarArgs(input_name, get_channelName_if(string_and_enums, 0), get_color_if(string_and_enums, 0), get_powerUpState_if(string_and_enums, 0), get_channelName_if(string_and_enums, 1), get_color_if(string_and_enums, 1), get_powerUpState_if(string_and_enums, 1), get_channelName_if(string_and_enums, 2), get_color_if(string_and_enums, 2), get_powerUpState_if(string_and_enums, 2), get_channelName_if(string_and_enums, 3), get_color_if(string_and_enums, 3), get_powerUpState_if(string_and_enums, 3));
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForFakeHandle(context, status, 0);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
     }
-    response->set_status(status);
-    return ::grpc::Status::OK;
-  }
-  catch (nidevice_grpc::LibraryLoadException& ex) {
-    return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-  }
-}
-
-//---------------------------------------------------------------------
-//---------------------------------------------------------------------
-::grpc::Status NiFakeNonIviService::SetMarbleAttributeInt32(::grpc::ServerContext* context, const SetMarbleAttributeInt32Request* request, SetMarbleAttributeInt32Response* response)
-{
-  if (context->IsCancelled()) {
-    return ::grpc::Status::CANCELLED;
-  }
-  try {
-    auto handle_grpc_session = request->handle();
-    FakeHandle handle = session_repository_->access_session(handle_grpc_session.id(), handle_grpc_session.name());
-    int32 attribute;
-    switch (request->attribute_enum_case()) {
-      case nifake_non_ivi_grpc::SetMarbleAttributeInt32Request::AttributeEnumCase::kAttribute: {
-        attribute = static_cast<int32>(request->attribute());
-        attribute = nifake_non_ivi_grpc::MarbleInt32Attribute_IsValid(attribute) ? attribute : 0;
-        break;
-      }
-      case nifake_non_ivi_grpc::SetMarbleAttributeInt32Request::AttributeEnumCase::kAttributeRaw: {
-        attribute = static_cast<int32>(request->attribute_raw());
-        auto attribute_is_valid = nifake_non_ivi_grpc::MarbleInt32Attribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
-        attribute = attribute_is_valid ? attribute : 0;
-        break;
-      }
-      case nifake_non_ivi_grpc::SetMarbleAttributeInt32Request::AttributeEnumCase::ATTRIBUTE_ENUM_NOT_SET: {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for attribute was not specified or out of range");
-        break;
-      }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
+  }
 
-    int32 value;
-    switch (request->value_enum_case()) {
-      case nifake_non_ivi_grpc::SetMarbleAttributeInt32Request::ValueEnumCase::kValue: {
-        value = static_cast<int32>(request->value());
-        break;
-      }
-      case nifake_non_ivi_grpc::SetMarbleAttributeInt32Request::ValueEnumCase::kValueRaw: {
-        value = static_cast<int32>(request->value_raw());
-        break;
-      }
-      case nifake_non_ivi_grpc::SetMarbleAttributeInt32Request::ValueEnumCase::VALUE_ENUM_NOT_SET: {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for value was not specified or out of range");
-        break;
-      }
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeNonIviService::OutputVarArgs(::grpc::ServerContext* context, const OutputVarArgsRequest* request, OutputVarArgsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
     }
+    try {
+      auto input_name = request->input_name().c_str();
+      auto get_channelName_if = [](const google::protobuf::RepeatedPtrField<std::string>& vector, int n) -> const char* {
+            if (vector.size() > n) {
+                  return vector[n].c_str();
+            }
+            return nullptr;
+      };
+      auto channel_names = request->channel_names();
+      if (channel_names.size() == 0) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "No values for channelNames were specified");
+      }
+      if (channel_names.size() > 3) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "More than 3 values for channelNames were specified");
+      }
 
-    auto status = library_->SetMarbleAttributeInt32(handle, attribute, value);
-    if (!status_ok(status)) {
-      return ConvertApiErrorStatusForFakeHandle(context, status, handle);
+      auto get_color_if = [](std::vector<int32>& vector, int n) -> int32* {
+            if (vector.size() > n) {
+                  return &(vector[n]);
+            }
+            return nullptr;
+      };
+      std::vector<int32> colorVector;
+      colorVector.resize(channel_names.size());
+      auto status = library_->OutputVarArgs(input_name, get_channelName_if(channel_names, 0), get_color_if(colorVector, 0), get_channelName_if(channel_names, 1), get_color_if(colorVector, 1), get_channelName_if(channel_names, 2), get_color_if(colorVector, 2), get_channelName_if(channel_names, 3), get_color_if(colorVector, 3));
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForFakeHandle(context, status, 0);
+      }
+      response->set_status(status);
+      for (int i = 0; i < colorVector.size(); ++i) {
+        response->add_colors(static_cast<BeautifulColor>(colorVector[i]));
+      }
+      return ::grpc::Status::OK;
     }
-    response->set_status(status);
-    return ::grpc::Status::OK;
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
   }
-  catch (nidevice_grpc::LibraryLoadException& ex) {
-    return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-  }
-}
 
-//---------------------------------------------------------------------
-//---------------------------------------------------------------------
-::grpc::Status NiFakeNonIviService::SetColors(::grpc::ServerContext* context, const SetColorsRequest* request, SetColorsResponse* response)
-{
-  if (context->IsCancelled()) {
-    return ::grpc::Status::CANCELLED;
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeNonIviService::ResetMarbleAttribute(::grpc::ServerContext* context, const ResetMarbleAttributeRequest* request, ResetMarbleAttributeResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto handle_grpc_session = request->handle();
+      FakeHandle handle = session_repository_->access_session(handle_grpc_session.id(), handle_grpc_session.name());
+      int32 attribute;
+      switch (request->attribute_enum_case()) {
+        case nifake_non_ivi_grpc::ResetMarbleAttributeRequest::AttributeEnumCase::kAttribute: {
+          attribute = static_cast<int32>(request->attribute());
+          attribute = nifake_non_ivi_grpc::MarbleResetAttribute_IsValid(attribute) ? attribute : 0;
+          break;
+        }
+        case nifake_non_ivi_grpc::ResetMarbleAttributeRequest::AttributeEnumCase::kAttributeRaw: {
+          attribute = static_cast<int32>(request->attribute_raw());
+          auto attribute_is_valid = nifake_non_ivi_grpc::MarbleResetAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          attribute = attribute_is_valid ? attribute : 0;
+          break;
+        }
+        case nifake_non_ivi_grpc::ResetMarbleAttributeRequest::AttributeEnumCase::ATTRIBUTE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for attribute was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->ResetMarbleAttribute(handle, attribute);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForFakeHandle(context, status, handle);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
   }
-  try {
-    auto colors_vector = std::vector<int32>();
-    colors_vector.reserve(request->colors().size());
-    std::transform(
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeNonIviService::ScalarsWithNarrowIntegerTypes(::grpc::ServerContext* context, const ScalarsWithNarrowIntegerTypesRequest* request, ScalarsWithNarrowIntegerTypesResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto u16_raw = request->u16();
+      if (u16_raw < std::numeric_limits<myUInt16>::min() || u16_raw > std::numeric_limits<myUInt16>::max()) {
+          std::string message("value ");
+          message.append(std::to_string(u16_raw));
+          message.append(" doesn't fit in datatype ");
+          message.append("myUInt16");
+          throw nidevice_grpc::ValueOutOfRangeException(message);
+      }
+      auto u16 = static_cast<myUInt16>(u16_raw);
+
+      auto i16_raw = request->i16();
+      if (i16_raw < std::numeric_limits<myInt16>::min() || i16_raw > std::numeric_limits<myInt16>::max()) {
+          std::string message("value ");
+          message.append(std::to_string(i16_raw));
+          message.append(" doesn't fit in datatype ");
+          message.append("myInt16");
+          throw nidevice_grpc::ValueOutOfRangeException(message);
+      }
+      auto i16 = static_cast<myInt16>(i16_raw);
+
+      auto i8_raw = request->i8();
+      if (i8_raw < std::numeric_limits<myInt8>::min() || i8_raw > std::numeric_limits<myInt8>::max()) {
+          std::string message("value ");
+          message.append(std::to_string(i8_raw));
+          message.append(" doesn't fit in datatype ");
+          message.append("myInt8");
+          throw nidevice_grpc::ValueOutOfRangeException(message);
+      }
+      auto i8 = static_cast<myInt8>(i8_raw);
+
+      auto status = library_->ScalarsWithNarrowIntegerTypes(u16, i16, i8);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForFakeHandle(context, status, 0);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+    catch (nidevice_grpc::ValueOutOfRangeException& ex) {
+      return ::grpc::Status(::grpc::OUT_OF_RANGE, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeNonIviService::SetMarbleAttributeDouble(::grpc::ServerContext* context, const SetMarbleAttributeDoubleRequest* request, SetMarbleAttributeDoubleResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto handle_grpc_session = request->handle();
+      FakeHandle handle = session_repository_->access_session(handle_grpc_session.id(), handle_grpc_session.name());
+      int32 attribute;
+      switch (request->attribute_enum_case()) {
+        case nifake_non_ivi_grpc::SetMarbleAttributeDoubleRequest::AttributeEnumCase::kAttribute: {
+          attribute = static_cast<int32>(request->attribute());
+          attribute = nifake_non_ivi_grpc::MarbleDoubleAttribute_IsValid(attribute) ? attribute : 0;
+          break;
+        }
+        case nifake_non_ivi_grpc::SetMarbleAttributeDoubleRequest::AttributeEnumCase::kAttributeRaw: {
+          attribute = static_cast<int32>(request->attribute_raw());
+          auto attribute_is_valid = nifake_non_ivi_grpc::MarbleDoubleAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          attribute = attribute_is_valid ? attribute : 0;
+          break;
+        }
+        case nifake_non_ivi_grpc::SetMarbleAttributeDoubleRequest::AttributeEnumCase::ATTRIBUTE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for attribute was not specified or out of range");
+          break;
+        }
+      }
+
+      double value = request->value();
+      auto status = library_->SetMarbleAttributeDouble(handle, attribute, value);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForFakeHandle(context, status, handle);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeNonIviService::SetMarbleAttributeInt32(::grpc::ServerContext* context, const SetMarbleAttributeInt32Request* request, SetMarbleAttributeInt32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto handle_grpc_session = request->handle();
+      FakeHandle handle = session_repository_->access_session(handle_grpc_session.id(), handle_grpc_session.name());
+      int32 attribute;
+      switch (request->attribute_enum_case()) {
+        case nifake_non_ivi_grpc::SetMarbleAttributeInt32Request::AttributeEnumCase::kAttribute: {
+          attribute = static_cast<int32>(request->attribute());
+          attribute = nifake_non_ivi_grpc::MarbleInt32Attribute_IsValid(attribute) ? attribute : 0;
+          break;
+        }
+        case nifake_non_ivi_grpc::SetMarbleAttributeInt32Request::AttributeEnumCase::kAttributeRaw: {
+          attribute = static_cast<int32>(request->attribute_raw());
+          auto attribute_is_valid = nifake_non_ivi_grpc::MarbleInt32Attribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          attribute = attribute_is_valid ? attribute : 0;
+          break;
+        }
+        case nifake_non_ivi_grpc::SetMarbleAttributeInt32Request::AttributeEnumCase::ATTRIBUTE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for attribute was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 value;
+      switch (request->value_enum_case()) {
+        case nifake_non_ivi_grpc::SetMarbleAttributeInt32Request::ValueEnumCase::kValue: {
+          value = static_cast<int32>(request->value());
+          break;
+        }
+        case nifake_non_ivi_grpc::SetMarbleAttributeInt32Request::ValueEnumCase::kValueRaw: {
+          value = static_cast<int32>(request->value_raw());
+          break;
+        }
+        case nifake_non_ivi_grpc::SetMarbleAttributeInt32Request::ValueEnumCase::VALUE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for value was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->SetMarbleAttributeInt32(handle, attribute, value);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForFakeHandle(context, status, handle);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeNonIviService::SetColors(::grpc::ServerContext* context, const SetColorsRequest* request, SetColorsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto colors_vector = std::vector<int32>();
+      colors_vector.reserve(request->colors().size());
+      std::transform(
         request->colors().begin(),
         request->colors().end(),
         std::back_inserter(colors_vector),
         [](auto x) { return x; });
-    auto colors = colors_vector.data();
+      auto colors = colors_vector.data();
 
-    int32 size = request->size();
-    auto status = library_->SetColors(colors, size);
-    if (!status_ok(status)) {
-      return ConvertApiErrorStatusForFakeHandle(context, status, 0);
+      int32 size = request->size();
+      auto status = library_->SetColors(colors, size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForFakeHandle(context, status, 0);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
     }
-    response->set_status(status);
-    return ::grpc::Status::OK;
-  }
-  catch (nidevice_grpc::LibraryLoadException& ex) {
-    return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-  }
-}
-
-//---------------------------------------------------------------------
-//---------------------------------------------------------------------
-::grpc::Status NiFakeNonIviService::GetStructsWithCoercion(::grpc::ServerContext* context, const GetStructsWithCoercionRequest* request, GetStructsWithCoercionResponse* response)
-{
-  if (context->IsCancelled()) {
-    return ::grpc::Status::CANCELLED;
-  }
-  try {
-    int32 number_of_structs = request->number_of_structs();
-    std::vector<StructWithCoercion_struct> structs(number_of_structs, StructWithCoercion_struct());
-    auto status = library_->GetStructsWithCoercion(number_of_structs, structs.data());
-    if (!status_ok(status)) {
-      return ConvertApiErrorStatusForFakeHandle(context, status, 0);
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
-    response->set_status(status);
-    convert_to_grpc(structs, response->mutable_structs());
-    return ::grpc::Status::OK;
   }
-  catch (nidevice_grpc::LibraryLoadException& ex) {
-    return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-  }
-}
 
-//---------------------------------------------------------------------
-//---------------------------------------------------------------------
-::grpc::Status NiFakeNonIviService::SetStructsWithCoercion(::grpc::ServerContext* context, const SetStructsWithCoercionRequest* request, SetStructsWithCoercionResponse* response)
-{
-  if (context->IsCancelled()) {
-    return ::grpc::Status::CANCELLED;
-  }
-  try {
-    auto structs = convert_from_grpc<StructWithCoercion_struct>(request->structs());
-    auto status = library_->SetStructsWithCoercion(structs.data());
-    if (!status_ok(status)) {
-      return ConvertApiErrorStatusForFakeHandle(context, status, 0);
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeNonIviService::GetStructsWithCoercion(::grpc::ServerContext* context, const GetStructsWithCoercionRequest* request, GetStructsWithCoercionResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
     }
-    response->set_status(status);
-    return ::grpc::Status::OK;
+    try {
+      int32 number_of_structs = request->number_of_structs();
+      std::vector<StructWithCoercion_struct> structs(number_of_structs, StructWithCoercion_struct());
+      auto status = library_->GetStructsWithCoercion(number_of_structs, structs.data());
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForFakeHandle(context, status, 0);
+      }
+      response->set_status(status);
+      convert_to_grpc(structs, response->mutable_structs());
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
   }
-  catch (nidevice_grpc::LibraryLoadException& ex) {
-    return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-  }
-  catch (nidevice_grpc::ValueOutOfRangeException& ex) {
-    return ::grpc::Status(::grpc::OUT_OF_RANGE, ex.what());
-  }
-}
 
-//---------------------------------------------------------------------
-//---------------------------------------------------------------------
-::grpc::Status NiFakeNonIviService::InputStringValuedEnum(::grpc::ServerContext* context, const InputStringValuedEnumRequest* request, InputStringValuedEnumResponse* response)
-{
-  if (context->IsCancelled()) {
-    return ::grpc::Status::CANCELLED;
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeNonIviService::SetStructsWithCoercion(::grpc::ServerContext* context, const SetStructsWithCoercionRequest* request, SetStructsWithCoercionResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto structs = convert_from_grpc<StructWithCoercion_struct>(request->structs());
+      auto status = library_->SetStructsWithCoercion(structs.data());
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForFakeHandle(context, status, 0);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+    catch (nidevice_grpc::ValueOutOfRangeException& ex) {
+      return ::grpc::Status(::grpc::OUT_OF_RANGE, ex.what());
+    }
   }
-  try {
-    char* a_name;
-    switch (request->a_name_enum_case()) {
-      case nifake_non_ivi_grpc::InputStringValuedEnumRequest::ANameEnumCase::kANameMapped: {
-        auto a_name_imap_it = mobileosnames_input_map_.find(request->a_name_mapped());
-        if (a_name_imap_it == mobileosnames_input_map_.end()) {
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for a_name_mapped was not specified or out of range.");
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeNonIviService::InputStringValuedEnum(::grpc::ServerContext* context, const InputStringValuedEnumRequest* request, InputStringValuedEnumResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      char* a_name;
+      switch (request->a_name_enum_case()) {
+        case nifake_non_ivi_grpc::InputStringValuedEnumRequest::ANameEnumCase::kANameMapped: {
+          auto a_name_imap_it = mobileosnames_input_map_.find(request->a_name_mapped());
+          if (a_name_imap_it == mobileosnames_input_map_.end()) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for a_name_mapped was not specified or out of range.");
+          }
+          a_name = const_cast<char*>((a_name_imap_it->second).c_str());
+          break;
         }
-        a_name = const_cast<char*>((a_name_imap_it->second).c_str());
-        break;
+        case nifake_non_ivi_grpc::InputStringValuedEnumRequest::ANameEnumCase::kANameRaw: {
+          a_name = const_cast<char*>(request->a_name_raw().c_str());
+          break;
+        }
+        case nifake_non_ivi_grpc::InputStringValuedEnumRequest::ANameEnumCase::A_NAME_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for a_name was not specified or out of range");
+          break;
+        }
       }
-      case nifake_non_ivi_grpc::InputStringValuedEnumRequest::ANameEnumCase::kANameRaw: {
-        a_name = const_cast<char*>(request->a_name_raw().c_str());
-        break;
+
+      auto status = library_->InputStringValuedEnum(a_name);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForFakeHandle(context, status, 0);
       }
-      case nifake_non_ivi_grpc::InputStringValuedEnumRequest::ANameEnumCase::A_NAME_ENUM_NOT_SET: {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for a_name was not specified or out of range");
-        break;
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeNonIviService::WriteBooleanArray(::grpc::ServerContext* context, const WriteBooleanArrayRequest* request, WriteBooleanArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto bools = convert_from_grpc<int32>(request->bools());
+      int32 size = static_cast<int32>(request->bools().size());
+      auto status = library_->WriteBooleanArray(bools.data(), size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForFakeHandle(context, status, 0);
       }
+      response->set_status(status);
+      return ::grpc::Status::OK;
     }
-
-    auto status = library_->InputStringValuedEnum(a_name);
-    if (!status_ok(status)) {
-      return ConvertApiErrorStatusForFakeHandle(context, status, 0);
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
     }
-    response->set_status(status);
-    return ::grpc::Status::OK;
   }
-  catch (nidevice_grpc::LibraryLoadException& ex) {
-    return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-  }
-}
 
-//---------------------------------------------------------------------
-//---------------------------------------------------------------------
-::grpc::Status NiFakeNonIviService::WriteBooleanArray(::grpc::ServerContext* context, const WriteBooleanArrayRequest* request, WriteBooleanArrayResponse* response)
-{
-  if (context->IsCancelled()) {
-    return ::grpc::Status::CANCELLED;
-  }
-  try {
-    auto bools = convert_from_grpc<int32>(request->bools());
-    int32 size = static_cast<int32>(request->bools().size());
-    auto status = library_->WriteBooleanArray(bools.data(), size);
-    if (!status_ok(status)) {
-      return ConvertApiErrorStatusForFakeHandle(context, status, 0);
-    }
-    response->set_status(status);
-    return ::grpc::Status::OK;
-  }
-  catch (nidevice_grpc::LibraryLoadException& ex) {
-    return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-  }
-}
 
-NiFakeNonIviFeatureToggles::NiFakeNonIviFeatureToggles(
+  NiFakeNonIviFeatureToggles::NiFakeNonIviFeatureToggles(
     const nidevice_grpc::FeatureToggles& feature_toggles)
     : is_enabled(
-          feature_toggles.is_feature_enabled("nifake_non_ivi", CodeReadiness::kNextRelease)),
+        feature_toggles.is_feature_enabled("nifake_non_ivi", CodeReadiness::kNextRelease)),
       is_allow_undefined_attributes_enabled(
-          feature_toggles.is_feature_enabled("nifake_non_ivi.allow_undefined_attributes", CodeReadiness::kPrototype))
-{
-}
-}  // namespace nifake_non_ivi_grpc
+        feature_toggles.is_feature_enabled("nifake_non_ivi.allow_undefined_attributes", CodeReadiness::kPrototype))
+  {
+  }
+} // namespace nifake_non_ivi_grpc
 
 namespace nidevice_grpc {
 namespace converters {
 template <>
-void convert_to_grpc(const StructWithCoercion_struct& input, nifake_non_ivi_grpc::StructWithCoercion* output)
+void convert_to_grpc(const StructWithCoercion_struct& input, nifake_non_ivi_grpc::StructWithCoercion* output) 
 {
   output->set_first(input.first);
   output->set_second(input.second);
@@ -1329,35 +1330,36 @@ void convert_to_grpc(const StructWithCoercion_struct& input, nifake_non_ivi_grpc
 }
 
 template <>
-StructWithCoercion_struct convert_from_grpc(const nifake_non_ivi_grpc::StructWithCoercion& input)
+StructWithCoercion_struct convert_from_grpc(const nifake_non_ivi_grpc::StructWithCoercion& input) 
 {
-  auto output = StructWithCoercion_struct();
+  auto output = StructWithCoercion_struct();  
   if (input.first() < std::numeric_limits<myInt16>::min() || input.first() > std::numeric_limits<myInt16>::max()) {
-    std::string message("value ");
-    message.append(std::to_string(input.first()));
-    message.append(" doesn't fit in datatype ");
-    message.append("myInt16");
-    throw nidevice_grpc::ValueOutOfRangeException(message);
+      std::string message("value ");
+      message.append(std::to_string(input.first()));
+      message.append(" doesn't fit in datatype ");
+      message.append("myInt16");
+      throw nidevice_grpc::ValueOutOfRangeException(message);
   }
   output.first = static_cast<myInt16>(input.first());
   if (input.second() < std::numeric_limits<myUInt16>::min() || input.second() > std::numeric_limits<myUInt16>::max()) {
-    std::string message("value ");
-    message.append(std::to_string(input.second()));
-    message.append(" doesn't fit in datatype ");
-    message.append("myUInt16");
-    throw nidevice_grpc::ValueOutOfRangeException(message);
+      std::string message("value ");
+      message.append(std::to_string(input.second()));
+      message.append(" doesn't fit in datatype ");
+      message.append("myUInt16");
+      throw nidevice_grpc::ValueOutOfRangeException(message);
   }
   output.second = static_cast<myUInt16>(input.second());
   if (input.third() < std::numeric_limits<myInt8>::min() || input.third() > std::numeric_limits<myInt8>::max()) {
-    std::string message("value ");
-    message.append(std::to_string(input.third()));
-    message.append(" doesn't fit in datatype ");
-    message.append("myInt8");
-    throw nidevice_grpc::ValueOutOfRangeException(message);
+      std::string message("value ");
+      message.append(std::to_string(input.third()));
+      message.append(" doesn't fit in datatype ");
+      message.append("myInt8");
+      throw nidevice_grpc::ValueOutOfRangeException(message);
   }
   output.third = static_cast<myInt8>(input.third());
   return output;
 }
 
-}  // namespace converters
-}  // namespace nidevice_grpc
+} // converters
+} // nidevice_grpc
+
