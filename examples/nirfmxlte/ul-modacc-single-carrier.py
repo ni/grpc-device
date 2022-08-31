@@ -246,6 +246,7 @@ try:
     mean_iq_origin_offset = modacc_fetch_iq_impairments_response.mean_iq_origin_offset
     mean_iq_gain_imbalance = modacc_fetch_iq_impairments_response.mean_iq_gain_imbalance
     mean_iq_quadrature_error = modacc_fetch_iq_impairments_response.mean_iq_quadrature_error
+
     modacc_fetch_in_band_emission_margin_response = client.ModAccFetchInBandEmissionMargin(
         nirfmxlte_types.ModAccFetchInBandEmissionMarginRequest(
             instrument=instr,

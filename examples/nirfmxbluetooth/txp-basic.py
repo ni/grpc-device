@@ -272,21 +272,19 @@ try:
         txp_fetch_lecte_reference_period_powers_response.reference_period_peak_absolute_power_deviation_maximum
     )
 
-    txp_fetch_lecte_transmit_slot_powers_array_response = (
-        client.TXPFetchLECTETransmitSlotPowersArray(
-            nirfmxbluetooth_types.TXPFetchLECTETransmitSlotPowersArrayRequest(
-                instrument=instr,
-                selector_string="",
-                timeout=10.0,
-            )
+    txp_fetch_lecte_transmit_slot_powers_response = client.TXPFetchLECTETransmitSlotPowersArray(
+        nirfmxbluetooth_types.TXPFetchLECTETransmitSlotPowersArrayRequest(
+            instrument=instr,
+            selector_string="",
+            timeout=10.0,
         )
     )
-    check_for_warning(txp_fetch_lecte_transmit_slot_powers_array_response, instr)
+    check_for_warning(txp_fetch_lecte_transmit_slot_powers_response, instr)
     transmit_slot_average_power_mean = (
-        txp_fetch_lecte_transmit_slot_powers_array_response.transmit_slot_average_power_mean
+        txp_fetch_lecte_transmit_slot_powers_response.transmit_slot_average_power_mean
     )
     transmit_slot_peak_absolute_power_deviation_maximum = (
-        txp_fetch_lecte_transmit_slot_powers_array_response.transmit_slot_peak_absolute_power_deviation_maximum
+        txp_fetch_lecte_transmit_slot_powers_response.transmit_slot_peak_absolute_power_deviation_maximum
     )
 
     txp_fetch_power_trace_response = client.TXPFetchPowerTrace(

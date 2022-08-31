@@ -273,7 +273,7 @@ try:
     absolute_power = acp_fetch_component_carrier_measurement_response.absolute_power
     relative_power = acp_fetch_component_carrier_measurement_response.relative_power
 
-    absolute_powers_trace_results = []  # type: List[Tuple[float, float, float]]
+    absolute_powers_trace_results = []
     for i in range(NUMBER_OF_OFFSETS):
         acp_fetch_absolute_powers_trace_response = client.ACPFetchAbsolutePowersTrace(
             nirfmxlte_types.ACPFetchAbsolutePowersTraceRequest(
@@ -292,7 +292,7 @@ try:
             )
         )
 
-    relative_powers_trace_results = []  # type: List[Tuple[float, float, float]]
+    relative_powers_trace_results = []
     for i in range(NUMBER_OF_OFFSETS):
         acp_fetch_relative_powers_trace_response = client.ACPFetchRelativePowersTrace(
             nirfmxlte_types.ACPFetchRelativePowersTraceRequest(
