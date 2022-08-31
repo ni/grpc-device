@@ -42,7 +42,6 @@ If they are not passed in as command line arguments, then by default the server 
 "localhost:31763", with "SimulatedDevice" as the resource name.
 """
 
-from distutils.command import check
 import json
 import sys
 
@@ -247,18 +246,22 @@ try:
     mean_iq_origin_offset = modacc_fetch_iq_impairments_response.mean_iq_origin_offset
     mean_iq_gain_imbalance = modacc_fetch_iq_impairments_response.mean_iq_gain_imbalance
     mean_iq_quadrature_error = modacc_fetch_iq_impairments_response.mean_iq_quadrature_error
-    modacc_fetch_in_band_emission_margin_response = raise_if_error(
-        client.ModAccFetchInBandEmissionMargin(
-            nirfmxlte_types.ModAccFetchInBandEmissionMarginRequest(
-                instrument=instr, selector_string="", timeout=10.0
-            )
+    modacc_fetch_in_band_emission_margin_response = client.ModAccFetchInBandEmissionMargin(
+        nirfmxlte_types.ModAccFetchInBandEmissionMarginRequest(
+            instrument=instr,
+            selector_string="",
+            timeout=10.0,
         )
     )
+    check_for_warning(modacc_fetch_in_band_emission_margin_response, instr)
+
     in_band_emission_margin = modacc_fetch_in_band_emission_margin_response.in_band_emission_margin
 
     modacc_fetch_pusch_constellation_trace_response = client.ModAccFetchPUSCHConstellationTrace(
         nirfmxlte_types.ModAccFetchPUSCHConstellationTraceRequest(
-            instrument=instr, selector_string="", timeout=10.0
+            instrument=instr,
+            selector_string="",
+            timeout=10.0,
         )
     )
     check_for_warning(modacc_fetch_pusch_constellation_trace_response, instr)
@@ -267,7 +270,9 @@ try:
 
     modacc_fetch_evm_per_subcarrier_trace_response = client.ModAccFetchEVMPerSubcarrierTrace(
         nirfmxlte_types.ModAccFetchEVMPerSubcarrierTraceRequest(
-            instrument=instr, selector_string="", timeout=10.0
+            instrument=instr,
+            selector_string="",
+            timeout=10.0,
         )
     )
     check_for_warning(modacc_fetch_evm_per_subcarrier_trace_response, instr)

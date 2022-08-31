@@ -44,7 +44,6 @@ If they are not passed in as command line arguments, then by default the server 
 "localhost:31763", with "SimulatedDevice" as the resource name.
 """
 
-from distutils.command import check
 import json
 import sys
 

@@ -35,7 +35,6 @@ If they are not passed in as command line arguments, then by default the server 
 "localhost:31763", with "SimulatedDevice" as the resource name.
 """
 
-from bisect import insort_left
 import json
 import sys
 

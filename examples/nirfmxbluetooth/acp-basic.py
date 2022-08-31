@@ -179,15 +179,14 @@ try:
         )
     )
 
-    raise_if_error(
-        client.ACPCfgOffsetChannelMode(
-            nirfmxbluetooth_types.ACPCfgOffsetChannelModeRequest(
-                instrument=instr,
-                selector_string="",
-                offset_channel_mode=offset_channel_mode,
-            )
+    client.ACPCfgOffsetChannelMode(
+        nirfmxbluetooth_types.ACPCfgOffsetChannelModeRequest(
+            instrument=instr,
+            selector_string="",
+            offset_channel_mode=offset_channel_mode,
         )
     )
+
     if offset_channel_mode == nirfmxbluetooth_types.ACP_OFFSET_CHANNEL_MODE_SYMMETRIC:
         client.ACPCfgNumberOfOffsets(
             nirfmxbluetooth_types.ACPCfgNumberOfOffsetsRequest(
