@@ -71,7 +71,7 @@ def check_for_warning(response, vi):
         warning_message = client.ErrorMessage(
             nirfsa_types.ErrorMessageRequest(vi=vi, error_code=response.status)
         )
-        sys.stderr.write(f"{warning_message}\nWarning status: {response.status}\n")
+        sys.stderr.write(f"{warning_message.error_message}\nWarning status: {response.status}\n")
 
 
 try:
@@ -116,6 +116,7 @@ try:
         )
     )
     check_for_warning(read_response, vi)
+
     # We will find the highest peak in a bin, which is not the actual highest
     # peak and frequency we could find in the acquisition.
     # For an accurate peak search, we can analyze the data with the Spectral Measurements Toolset.
