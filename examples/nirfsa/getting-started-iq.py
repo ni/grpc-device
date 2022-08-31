@@ -60,12 +60,15 @@ channel = grpc.insecure_channel(f"{SERVER_ADDRESS}:{SERVER_PORT}")
 client = grpc_nirfsa.NiRFSAStub(channel)
 vi = None
 
+
 def check_for_warning(response, vi):
     """Print to console if the status indicates a warning."""
     if response.status > 0:
         warning_message = client.ErrorMessage(
-            nirfsa_types.ErrorMessageRequest(vi = vi, error_code=response.status))
+            nirfsa_types.ErrorMessageRequest(vi=vi, error_code=response.status)
+        )
         sys.stderr.write(f"{warning_message}\nWarning status: {response.status}\n")
+
 
 try:
     init_response = client.InitWithOptions(
@@ -105,7 +108,7 @@ try:
         )
     )
     check_for_warning(read_response, vi)
-    
+
     accumulator = 0.0
     for sample in read_response.data:
         magnitude_squared = sample.real**2 + sample.imaginary**2

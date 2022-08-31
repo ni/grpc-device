@@ -56,13 +56,15 @@ channel = grpc.insecure_channel(f"{SERVER_ADDRESS}:{SERVER_PORT}")
 client = grpc_nirfsg.NiRFSGStub(channel)
 vi = None
 
-    
+
 def check_for_warning(response, vi):
     """Print to console if the status indicates a warning."""
     if response.status > 0:
         warning_message = client.ErrorMessage(
-            nirfsg_types.ErrorMessageRequest(vi = vi, error_code=response.status))
+            nirfsg_types.ErrorMessageRequest(vi=vi, error_code=response.status)
+        )
         sys.stderr.write(f"{warning_message}\nWarning status: {response.status}\n")
+
 
 try:
     response = client.InitWithOptions(
@@ -71,7 +73,7 @@ try:
         )
     )
     vi = response.vi
-    
+
     client.ConfigureRF(nirfsg_types.ConfigureRFRequest(vi=vi, frequency=1e9, power_level=-5))
     initiate_response = client.Initiate(nirfsg_types.InitiateRequest(vi=vi))
     check_for_warning(initiate_response, vi)

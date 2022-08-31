@@ -24,9 +24,9 @@ If they are not passed in as command line arguments, then by default the server 
 "localhost:31763", with "SimulatedRFSG" as the physical channel name.
 """
 
+import json
 import sys
 import time
-import json
 
 import grpc
 import nirfsg_pb2 as nirfsg_types

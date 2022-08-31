@@ -32,9 +32,9 @@ If they are not passed in as command line arguments, then by default the server 
 "localhost:31763", with "SimulatedRFSA" as the physical channel name.
 """
 
+import json
 import math
 import sys
-import json
 
 import grpc
 import nirfsa_pb2 as nirfsa_types
@@ -64,13 +64,16 @@ channel = grpc.insecure_channel(f"{SERVER_ADDRESS}:{SERVER_PORT}")
 client = grpc_nirfsa.NiRFSAStub(channel)
 vi = None
 
+
 def check_for_warning(response, vi):
     """Print to console if the status indicates a warning."""
     if response.status > 0:
         warning_message = client.ErrorMessage(
-            nirfsa_types.ErrorMessageRequest(vi = vi, error_code=response.status))
+            nirfsa_types.ErrorMessageRequest(vi=vi, error_code=response.status)
+        )
         sys.stderr.write(f"{warning_message}\nWarning status: {response.status}\n")
-        
+
+
 try:
     init_response = client.InitWithOptions(
         nirfsa_types.InitWithOptionsRequest(
