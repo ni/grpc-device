@@ -58,10 +58,10 @@ if len(sys.argv) >= 4:
 def check_for_warning(response, vi):
     """Print to console if the status indicates a warning."""
     if response.status > 0:
-        warning_message = niscope_client.ErrorMessage(
-            niscope_types.ErrorMessageRequest(vi=vi, error_code=response.status)
+        warning_message = niscope_client.GetErrorMessage(
+            niscope_types.GetErrorMessageRequest(vi=vi, error_code=response.status)
         )
-        sys.stderr.write(f"{warning_message}\nWarning status: {response.status}\n")
+        sys.stderr.write(f"{warning_message.error_message}\nWarning status: {response.status}\n")
 
 
 # Create the communcation channel for the remote host (in this case we are connecting to a local

@@ -67,10 +67,10 @@ nidmm_client = grpc_nidmm.NiDmmStub(channel)
 def check_for_warning(response, vi):
     """Print to console if the status indicates a warning."""
     if response.status > 0:
-        warning_message = nidmm_client.ErrorMessage(
-            nidmm_types.ErrorMessageRequest(vi=vi, error_code=response.status)
+        warning_message = nidmm_client.GetErrorMessage(
+            nidmm_types.GetErrorMessageRequest(vi=vi, error_code=response.status)
         )
-        sys.stderr.write(f"{warning_message}\nWarning status: {response.status}\n")
+        sys.stderr.write(f"{warning_message.error_message}\nWarning status: {response.status}\n")
 
 
 try:

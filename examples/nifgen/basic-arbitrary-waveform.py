@@ -69,7 +69,7 @@ def check_for_warning(response, vi):
         warning_message = nifgen_client.ErrorMessage(
             nifgen_types.ErrorMessageRequest(vi=vi, error_code=response.status)
         )
-        sys.stderr.write(f"{warning_message}\nWarning status: {response.status}\n")
+        sys.stderr.write(f"{warning_message.error_message}\nWarning status: {response.status}\n")
 
 
 try:
