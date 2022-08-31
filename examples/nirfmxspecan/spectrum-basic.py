@@ -34,6 +34,7 @@ If they are not passed in as command line arguments, then by default the server 
 "localhost:31763", with "SimulatedRFSA" as the resource name.
 """
 
+import json
 import sys
 from math import floor
 
@@ -74,92 +75,76 @@ def _format_frequency(f):
     return f"{f:.3f} G{suffix}"
 
 
-def raise_if_initialization_error(response):
-    """Raise an exception if an error was returned from Initialize."""
-    if response.status < 0:
-        raise RuntimeError(f"Error: {response.error_message or response.status}")
+def check_for_warning(response, instrument):
+    """Print to console if the status indicates a warning."""
     if response.status > 0:
-        sys.stderr.write(f"Warning: {response.error_message or response.status}\n")
-    return response
-
-
-def raise_if_error(response):
-    """Raise an exception if an error was returned."""
-    if response.status != 0:
-        error_response = client.GetError(
-            nirfmxspecan_types.GetErrorRequest(
-                instrument=instr,
+        warning_message = client.GetErrorString(
+            nirfmxspecan_types.GetErrorStringRequest(
+                instrument=instrument,
+                error_code=response.status,
             )
         )
-        if response.status < 0:
-            raise RuntimeError(f"Error: {error_response.error_description or response.status}")
-        else:
-            sys.stderr.write(f"Warning: {error_response.error_description or response.status}\n")
-
-    return response
+        sys.stderr.write(
+            f"{warning_message.error_description}\nWarning status: {response.status}\n"
+        )
 
 
 try:
-    init_response = raise_if_error(
-        client.Initialize(
-            nirfmxspecan_types.InitializeRequest(
-                session_name=SESSION_NAME, resource_name=RESOURCE, option_string=OPTIONS
-            )
+    init_response = client.Initialize(
+        nirfmxspecan_types.InitializeRequest(
+            session_name=SESSION_NAME,
+            resource_name=RESOURCE,
+            option_string=OPTIONS,
         )
     )
     instr = init_response.instrument
 
-    raise_if_error(
-        client.CfgRF(
-            nirfmxspecan_types.CfgRFRequest(
-                instrument=instr,
-                selector_string="",
-                center_frequency=1e9,
-                reference_level=0,
-                external_attenuation=0,
-            )
+    client.CfgRF(
+        nirfmxspecan_types.CfgRFRequest(
+            instrument=instr,
+            selector_string="",
+            center_frequency=1e9,
+            reference_level=0,
+            external_attenuation=0,
         )
     )
 
-    raise_if_error(
-        client.SpectrumCfgSpan(
-            nirfmxspecan_types.SpectrumCfgSpanRequest(
-                instrument=instr, selector_string="", span=1e6
-            )
+    client.SpectrumCfgSpan(
+        nirfmxspecan_types.SpectrumCfgSpanRequest(
+            instrument=instr,
+            selector_string="",
+            span=1e6,
         )
     )
 
-    raise_if_error(
-        client.SpectrumCfgRBWFilter(
-            nirfmxspecan_types.SpectrumCfgRBWFilterRequest(
-                instrument=instr,
-                selector_string="",
-                rbw_auto=nirfmxspecan_types.SPECTRUM_RBW_AUTO_BANDWIDTH_TRUE,
-                rbw=100e3,
-                rbw_filter_type=nirfmxspecan_types.SPECTRUM_RBW_FILTER_TYPE_GAUSSIAN,
-            )
+    client.SpectrumCfgRBWFilter(
+        nirfmxspecan_types.SpectrumCfgRBWFilterRequest(
+            instrument=instr,
+            selector_string="",
+            rbw_auto=nirfmxspecan_types.SPECTRUM_RBW_AUTO_BANDWIDTH_TRUE,
+            rbw=100e3,
+            rbw_filter_type=nirfmxspecan_types.SPECTRUM_RBW_FILTER_TYPE_GAUSSIAN,
         )
     )
 
-    raise_if_error(
-        client.SpectrumCfgAveraging(
-            nirfmxspecan_types.SpectrumCfgAveragingRequest(
-                instrument=instr,
-                selector_string="",
-                averaging_enabled=nirfmxspecan_types.SPECTRUM_AVERAGING_ENABLED_FALSE,
-                averaging_count=10,
-                averaging_type=nirfmxspecan_types.SPECTRUM_AVERAGING_TYPE_RMS,
-            )
+    client.SpectrumCfgAveraging(
+        nirfmxspecan_types.SpectrumCfgAveragingRequest(
+            instrument=instr,
+            selector_string="",
+            averaging_enabled=nirfmxspecan_types.SPECTRUM_AVERAGING_ENABLED_FALSE,
+            averaging_count=10,
+            averaging_type=nirfmxspecan_types.SPECTRUM_AVERAGING_TYPE_RMS,
         )
     )
 
-    read_response = raise_if_error(
-        client.SpectrumRead(
-            nirfmxspecan_types.SpectrumReadRequest(
-                instrument=instr, selector_string="", timeout=10.0
-            )
+    read_response = client.SpectrumRead(
+        nirfmxspecan_types.SpectrumReadRequest(
+            instrument=instr,
+            selector_string="",
+            timeout=10.0,
         )
     )
+    check_for_warning(read_response, instr)
 
     print(
         f"min frequency: {_format_frequency(read_response.x0)}: {read_response.spectrum[0]:.1f} dBm"
@@ -179,6 +164,12 @@ except grpc.RpcError as rpc_error:
         error_message = (
             "The operation is not implemented or is not supported/enabled in this service"
         )
+    elif rpc_error.code() == grpc.StatusCode.UNKNOWN:
+        try:
+            error_details = json.loads(error_message)
+            error_message = f"{error_details['message']}\nError status: {error_details['code']}"
+        except (json.JSONDecodeError, KeyError):
+            pass
     sys.stderr.write(f"{error_message}\n")
 finally:
     if instr:
