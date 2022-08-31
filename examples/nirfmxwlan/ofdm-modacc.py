@@ -82,7 +82,7 @@ def check_for_warning(response, instrument):
     """Print to console if the status indicates a warning."""
     if response.status > 0:
         warning_message = client.GetErrorString(
-            nirfmxspecan_types.GetErrorStringRequest(
+            nirfmxwlan_types.GetErrorStringRequest(
                 instrument=instrument,
                 error_code=response.status,
             )
