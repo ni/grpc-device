@@ -2,6 +2,7 @@
 #include <gtest/gtest.h>  // For EXPECT matchers.
 
 #include <algorithm>
+#include <nlohmann/json.hpp>
 
 #include "device_server.h"
 #include "niRFSAErrors.h"

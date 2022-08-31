@@ -4,6 +4,7 @@
 
 #include <algorithm>
 #include <cstring>
+#include <nlohmann/json.hpp>
 #include <random>
 #include <stdexcept>
 #include <vector>
