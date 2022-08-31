@@ -85,7 +85,7 @@ try:
     client.ConfigureRF(nirfsg_types.ConfigureRFRequest(vi=vi, frequency=1.5e9, power_level=-5))
     initiate_response = client.Initiate(nirfsg_types.InitiateRequest(vi=vi))
     check_for_warning(initiate_response, vi)
-    
+
     print("Generating tone...")
     time.sleep(2)
 except grpc.RpcError as rpc_error:
