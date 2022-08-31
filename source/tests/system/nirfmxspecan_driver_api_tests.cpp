@@ -1,7 +1,6 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
-#include <nlohmann/json.hpp>
 #include <thread>
 #include <tuple>
 
@@ -15,7 +14,6 @@ using namespace nirfmxspecan_grpc;
 namespace client = nirfmxspecan_grpc::experimental::client;
 namespace instr_client = nirfmxinstr_grpc::experimental::client;
 namespace pb = google::protobuf;
-using nlohmann::json;
 using namespace ::testing;
 
 namespace ni {
@@ -69,8 +67,8 @@ class NiRFmxSpecAnDriverApiTests : public ::testing::Test {
       return true;
     }
     catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-      auto error = json::parse(ex.what());
-      return error.value("code", 0) != INVALID_SESSION_HANDLE_ERROR;
+      const auto& error = ex.Trailers().find("ni-error")->second;
+      return std::stoi(error) != INVALID_SESSION_HANDLE_ERROR;
     }
   }
 
@@ -653,7 +651,7 @@ TEST_P(NiRFmxSpecAnDriverApiConflictingResourceInitTests, InitializeResource_Ini
     EXPECT_FALSE(true);
   }
   catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-    EXPECT_STATUS_ERROR(DEVICE_IN_USE_ERROR, ex.what());
+    EXPECT_STATUS_ERROR(DEVICE_IN_USE_ERROR, ex);
   }
 }
 

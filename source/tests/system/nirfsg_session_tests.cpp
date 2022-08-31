@@ -1,5 +1,4 @@
 #include <gtest/gtest.h>
-#include <nlohmann/json.hpp>
 
 #include "device_server.h"
 #include "nirfsg/nirfsg_client.h"
@@ -9,7 +8,6 @@ namespace tests {
 namespace system {
 
 namespace rfsg = nirfsg_grpc;
-using namespace ::nlohmann;
 
 const int kInvalidRsrc = -200220;
 const int kInvalidRFSGSession = -1074130544;
@@ -46,6 +44,7 @@ class NiRFSGSessionTest : public ::testing::Test {
     request.set_id_query(false);
 
     ::grpc::Status status = GetStub()->InitWithOptions(&context, request, response);
+    nidevice_grpc::experimental::client::raise_if_error(status, context);
     return status;
   }
 
@@ -88,17 +87,6 @@ TEST_F(NiRFSGSessionTest, InitializeSessionWithDeviceAndNoSessionName_CreatesDri
   EXPECT_EQ("", response.error_message());
 }
 
-TEST_F(NiRFSGSessionTest, InitializeSessionWithoutDevice_ReturnsDriverError)
-{
-  rfsg::InitWithOptionsResponse response;
-  ::grpc::Status status = call_init_with_options(kRFSGTestInvalidRsrc, "", "", &response);
-
-  EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status.error_code());
-  auto error = json::parse(status.error_message());
-  EXPECT_EQ(kInvalidRsrc, error.value("code", 0));
-  EXPECT_NE("", error.value("message", ""));
-}
-
 TEST_F(NiRFSGSessionTest, InitializedSession_CloseSession_ClosesDriverSession)
 {
   rfsg::InitWithOptionsResponse init_response;
@@ -115,15 +103,19 @@ TEST_F(NiRFSGSessionTest, InitializedSession_CloseSession_ClosesDriverSession)
   EXPECT_EQ(0, close_response.status());
 }
 
-TEST_F(NiRFSGSessionTest, InitWithErrorFromDriver_ReturnsUserErrorMessage)
+TEST_F(NiRFSGSessionTest, InitWithErrorFromDriver_ReturnsDriverErrorWithUserErrorMessage)
 {
-  rfsg::InitWithOptionsResponse init_response;
-  auto status = call_init_with_options(kRFSGTestInvalidRsrc, "", "", &init_response);
-
-  EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status.error_code());
-  auto error = json::parse(status.error_message());
-  EXPECT_EQ(kInvalidRsrc, error.value("code", 0));
-  EXPECT_STREQ(kRFSGErrorResourceNotFoundMessage, error.value("message", "").c_str());
+  try {
+    rfsg::InitWithOptionsResponse init_response;
+    call_init_with_options(kRFSGTestInvalidRsrc, "", "", &init_response);
+    EXPECT_FALSE(true);
+  }
+  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
+    EXPECT_EQ(::grpc::StatusCode::UNKNOWN, ex.StatusCode());
+    const auto& error = ex.Trailers().find("ni-error")->second;
+    EXPECT_EQ(kInvalidRsrc, std::stoi(error));
+    EXPECT_STREQ(kRFSGErrorResourceNotFoundMessage, ex.what());
+  }
 }
 
 TEST_F(NiRFSGSessionTest, InvalidSession_CloseSession_ReturnsInvalidSessionError)
@@ -131,15 +123,20 @@ TEST_F(NiRFSGSessionTest, InvalidSession_CloseSession_ReturnsInvalidSessionError
   nidevice_grpc::Session session;
   session.set_id(0UL);
 
-  ::grpc::ClientContext context;
-  rfsg::CloseRequest request;
-  request.mutable_vi()->set_id(session.id());
-  rfsg::CloseResponse response;
-  ::grpc::Status status = GetStub()->Close(&context, request, &response);
-
-  EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status.error_code());
-  auto error = json::parse(status.error_message());
-  EXPECT_EQ(kInvalidRFSGSession, error.value("code", 0));
+  try {
+    ::grpc::ClientContext context;
+    rfsg::CloseRequest request;
+    request.mutable_vi()->set_id(session.id());
+    rfsg::CloseResponse response;
+    auto status = GetStub()->Close(&context, request, &response);
+    nidevice_grpc::experimental::client::raise_if_error(status, context);
+    EXPECT_FALSE(true);
+  }
+  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
+    EXPECT_EQ(::grpc::StatusCode::UNKNOWN, ex.StatusCode());
+    const auto& error = ex.Trailers().find("ni-error")->second;
+    EXPECT_EQ(kInvalidRFSGSession, std::stoi(error));
+  }
 }
 
 }  // namespace system

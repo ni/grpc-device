@@ -1,6 +1,5 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
-#include <nlohmann/json.hpp>
 
 #include "device_server.h"
 #include "nirfmxspecan/nirfmxspecan_client.h"
@@ -10,7 +9,6 @@ namespace tests {
 namespace system {
 
 namespace rfmxspecan = nirfmxspecan_grpc;
-using namespace ::nlohmann;
 using ::testing::IsEmpty;
 
 const int kInvalidRsrc = -200220;
@@ -46,6 +44,7 @@ class NiRFmxSpecAnSessionTest : public ::testing::Test {
     request.set_session_name(session_name);
 
     ::grpc::Status status = GetStub()->Initialize(&context, request, response);
+    nidevice_grpc::experimental::client::raise_if_error(status, context);
     return status;
   }
 
@@ -74,16 +73,6 @@ TEST_F(NiRFmxSpecAnSessionTest, InitializeSessionWithDeviceAndNoSessionName_Crea
   EXPECT_NE(0, response.instrument().id());
 }
 
-TEST_F(NiRFmxSpecAnSessionTest, InitializeSessionWithoutDevice_ReturnsDriverError)
-{
-  rfmxspecan::InitializeResponse response;
-  ::grpc::Status status = call_initialize(kRFmxSpecAnTestInvalidRsrc, "", "", &response);
-
-  EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status.error_code());
-  auto error = json::parse(status.error_message());
-  EXPECT_EQ(kInvalidRsrc, error.value("code", 0));
-}
-
 TEST_F(NiRFmxSpecAnSessionTest, InitializedSession_CloseSession_ClosesDriverSession)
 {
   rfmxspecan::InitializeResponse init_response;
@@ -104,28 +93,36 @@ TEST_F(NiRFmxSpecAnSessionTest, InitializedSession_CloseSession_ClosesDriverSess
 
 // Note: the error_message is included in the Init response because querying for errors
 // afterwards will fail to get the error_message if the request is handled on a different thread.
-TEST_F(NiRFmxSpecAnSessionTest, InitWithErrorFromDriver_ReturnsUserErrorMessage)
+TEST_F(NiRFmxSpecAnSessionTest, InitWithErrorFromDriver_ReturnsDriverErrorWithUserErrorMessage)
 {
-  rfmxspecan::InitializeResponse init_response;
-  auto status = call_initialize(kRFmxSpecAnTestInvalidRsrc, "", "", &init_response);
-
-  EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status.error_code());
-  auto error = json::parse(status.error_message());
-  EXPECT_EQ(kInvalidRsrc, error.value("code", 0));
-  EXPECT_STREQ(kRFmxSpecAnErrorResourceNotFoundMessage, error.value("message", "").c_str());
+  try {
+    rfmxspecan::InitializeResponse init_response;
+    call_initialize(kRFmxSpecAnTestInvalidRsrc, "", "", &init_response);
+    EXPECT_FALSE(true);
+  }
+  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
+    EXPECT_EQ(::grpc::StatusCode::UNKNOWN, ex.StatusCode());
+    const auto& error = ex.Trailers().find("ni-error")->second;
+    EXPECT_EQ(kInvalidRsrc, std::stoi(error));
+    EXPECT_STREQ(kRFmxSpecAnErrorResourceNotFoundMessage, ex.what());
+  }
 }
 
 TEST_F(NiRFmxSpecAnSessionTest, InitWithErrorFromDriver_ReinitSuccessfully_ErrorMessageIsEmpty)
 {
-  rfmxspecan::InitializeResponse failed_init_response;
-  auto status_one = call_initialize(kRFmxSpecAnTestInvalidRsrc, "", "", &failed_init_response);
+  try {
+    rfmxspecan::InitializeResponse failed_init_response;
+    call_initialize(kRFmxSpecAnTestInvalidRsrc, "", "", &failed_init_response);
+    EXPECT_FALSE(true);
+  }
+  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
+    EXPECT_EQ(::grpc::StatusCode::UNKNOWN, ex.StatusCode());
+    EXPECT_STREQ(kRFmxSpecAnErrorResourceNotFoundMessage, ex.what());
+  }
 
   rfmxspecan::InitializeResponse successful_init_response;
   auto status_two = call_initialize(kRFmxSpecAnTestRsrc, kRFmxSpecAnOptionsString, kRFmxSpecAnTestSession, &successful_init_response);
 
-  EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status_one.error_code());
-  auto error = json::parse(status_one.error_message());
-  EXPECT_STREQ(kRFmxSpecAnErrorResourceNotFoundMessage, error.value("message", "").c_str());
   EXPECT_EQ(::grpc::StatusCode::OK, status_two.error_code());
   EXPECT_THAT(status_two.error_message(), IsEmpty());
   EXPECT_THAT(successful_init_response.error_message(), IsEmpty());
@@ -136,16 +133,21 @@ TEST_F(NiRFmxSpecAnSessionTest, InvalidSession_CloseSession_ReturnsInvalidSessio
   nidevice_grpc::Session session;
   session.set_id(0UL);
 
-  ::grpc::ClientContext context;
-  rfmxspecan::CloseRequest request;
-  request.mutable_instrument()->set_id(session.id());
-  request.set_force_destroy(false);
-  rfmxspecan::CloseResponse response;
-  ::grpc::Status status = GetStub()->Close(&context, request, &response);
-
-  EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status.error_code());
-  auto error = json::parse(status.error_message());
-  EXPECT_EQ(kInvalidRFmxSpecAnSession, error.value("code", 0));
+  try {
+    ::grpc::ClientContext context;
+    rfmxspecan::CloseRequest request;
+    request.mutable_instrument()->set_id(session.id());
+    request.set_force_destroy(false);
+    rfmxspecan::CloseResponse response;
+    ::grpc::Status status = GetStub()->Close(&context, request, &response);
+    nidevice_grpc::experimental::client::raise_if_error(status, context);
+    EXPECT_FALSE(true);
+  }
+  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
+    EXPECT_EQ(::grpc::StatusCode::UNKNOWN, ex.StatusCode());
+    const auto& error = ex.Trailers().find("ni-error")->second;
+    EXPECT_EQ(kInvalidRFmxSpecAnSession, std::stoi(error));
+  }
 }
 
 }  // namespace system

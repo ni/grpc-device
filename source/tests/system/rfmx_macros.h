@@ -33,10 +33,10 @@
     EXPECT_EQ(expected_warning, (response).status());       \
   }
 
-#define EXPECT_STATUS_ERROR(expected_error, error_message) \
-  EXPECT_LT(expected_error, 0);                            \
-  auto error = nlohmann::json::parse(error_message);       \
-  EXPECT_EQ(expected_error, error.value("code", 0));
+#define EXPECT_STATUS_ERROR(expected_error, exception)               \
+  EXPECT_LT(expected_error, 0);                                      \
+  const auto& error = exception.Trailers().find("ni-error")->second; \
+  EXPECT_EQ(expected_error, std::stoi(error));
 
 #define EXPECT_SUCCESS(session_, response_)     \
   ([this](auto& session, auto& response) {      \
@@ -51,8 +51,8 @@
     EXPECT_FALSE(true);                                                             \
   }                                                                                 \
   catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {        \
-    EXPECT_STATUS_ERROR(expected_error_, ex.what());                                \
-    EXPECT_THAT(error.value("message", ""), HasSubstr(message_substring_));         \
+    EXPECT_STATUS_ERROR(expected_error_, ex);                                       \
+    EXPECT_THAT(ex.what(), HasSubstr(message_substring_));                          \
   }
 
 #define EXPECT_WARNING(expected_warning_, message_substring_, session_, response_)               \

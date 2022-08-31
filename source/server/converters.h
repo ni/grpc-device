@@ -321,18 +321,21 @@ typename TypeToStorageType<TDriverType, TGrpcType>::StorageType allocate_output_
 
 const int kMaxGrpcErrorDescriptionSize = 2048;
 
-inline ::grpc::Status ApiErrorAndDescriptionToStatus(::grpc::ServerContext* context, int32_t status, std::string& description)
+template <typename TServerContext>
+inline ::grpc::Status ApiErrorAndDescriptionToStatus(TServerContext* context, int32_t status, std::string& description)
 {
   context->AddTrailingMetadata("ni-error", std::to_string(status));
   converters::trim_trailing_nulls(description);
   return ::grpc::Status(grpc::StatusCode::UNKNOWN, description);
 }
 
-inline ::grpc::Status ApiErrorToStatus(::grpc::ServerContext* context, int32_t status)
+template <typename TServerContext>
+inline ::grpc::Status ApiErrorToStatus(TServerContext* context, int32_t status)
 {
   std::string description("Unknown");
   return ApiErrorAndDescriptionToStatus(context, status, description);
 }
+
 }  // namespace nidevice_grpc
 
 #endif /* NIDEVICE_GRPC_DEVICE_CONVERTERS_H */

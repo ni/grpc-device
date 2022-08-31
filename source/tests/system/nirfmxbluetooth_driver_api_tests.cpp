@@ -7,7 +7,6 @@
 #include "rfmx_macros.h"
 #include "waveform_helpers.h"
 
-using namespace ::nlohmann;
 using namespace ::testing;
 using namespace nirfmxbluetooth_grpc;
 namespace client = nirfmxbluetooth_grpc::experimental::client;

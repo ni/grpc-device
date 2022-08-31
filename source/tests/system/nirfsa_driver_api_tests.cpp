@@ -2,7 +2,6 @@
 #include <gtest/gtest.h>  // For EXPECT matchers.
 
 #include <algorithm>
-#include <nlohmann/json.hpp>
 
 #include "device_server.h"
 #include "niRFSAErrors.h"
@@ -10,7 +9,6 @@
 #include "niscope/niscope_client.h"
 #include "nitclk/nitclk_client.h"
 
-using namespace ::nlohmann;
 using namespace ::testing;
 using namespace nirfsa_grpc;
 namespace client = nirfsa_grpc::experimental::client;
@@ -83,16 +81,16 @@ class NiRFSADriverApiTests : public Test {
     check_error(session);
   }
 
-  std::string EXPECT_RFSA_ERROR(int32_t expected_error, const std::string& error_message)
+  std::string EXPECT_RFSA_ERROR(int32_t expected_error, const nidevice_grpc::experimental::client::grpc_driver_error& ex)
   {
-    auto error = json::parse(error_message);
-    EXPECT_EQ(expected_error, error.value("code", 0));
-    return error.value("message", "");
+    const auto& error = ex.Trailers().find("ni-error")->second;
+    EXPECT_EQ(expected_error, std::stoi(error));
+    return ex.what();
   }
 
-  void EXPECT_RFSA_ERROR(pb::int32 expected_error, const std::string& message_substring, const char* error_message, const nidevice_grpc::Session& session)
+  void EXPECT_RFSA_ERROR(int32_t expected_error, const std::string& message_substring, const nidevice_grpc::experimental::client::grpc_driver_error& ex, const nidevice_grpc::Session& session)
   {
-    auto message = EXPECT_RFSA_ERROR(expected_error, error_message);
+    auto message = EXPECT_RFSA_ERROR(expected_error, ex);
     EXPECT_THAT(message, HasSubstr(message_substring));
     clear_error(session);
   }
@@ -127,14 +125,14 @@ TEST_F(NiRFSADriverApiTests, Init_Close_Succeeds)
   EXPECT_SUCCESS(session, close_response);
 }
 
-TEST_F(NiRFSADriverApiTests, InitWithErrorFromDriver_ReturnsUserErrorMessage)
+TEST_F(NiRFSADriverApiTests, InitWithErrorFromDriver_ReturnsDriverErrorWithUserErrorMessage)
 {
   try {
     client::init_with_options(stub(), "", false, false, "");
     EXPECT_FALSE(true);
   }
   catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-    auto message = EXPECT_RFSA_ERROR(-200220, ex.what());
+    auto message = EXPECT_RFSA_ERROR(-200220, ex);
     EXPECT_STREQ("Device identifier is invalid.", message.c_str());
   }
 }
@@ -514,7 +512,7 @@ TEST_F(NiRFSADriverApiTests, CreateConfigurationListWithInvalidAttribute_Reports
     EXPECT_FALSE(true);
   }
   catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-    EXPECT_RFSA_ERROR(IVI_ATTRIBUTE_NOT_SUPPORTED_ERROR, "Attribute or property not supported.", ex.what(), session);
+    EXPECT_RFSA_ERROR(IVI_ATTRIBUTE_NOT_SUPPORTED_ERROR, "Attribute or property not supported.", ex, session);
   }
 }
 

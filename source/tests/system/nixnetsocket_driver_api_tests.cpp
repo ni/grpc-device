@@ -235,11 +235,13 @@ class NiXnetSocketNoHardwareTests : public NiXnetSocketDriverApiTests {
     EXPECT_EQ(error, (response).status());  \
   }
 
-#define EXPECT_XNET_ERROR_CODE(expected, error) \
-  EXPECT_EQ(expected, error.value("code", 0));
+#define EXPECT_XNET_ERROR_CODE(expected, ex)                     \
+  const auto& err_code = ex.Trailers().find("ni-error")->second; \
+  EXPECT_EQ(expected, std::stoi(err_code));
 
-#define EXPECT_XNET_ERROR_NUMBER(expected, error) \
-  EXPECT_EQ(expected, error.value("errorNumber", 0));
+#define EXPECT_XNET_ERROR_NUMBER(expected, ex)                         \
+  const auto& socket_err = ex.Trailers().find("socket-error")->second; \
+  EXPECT_EQ(expected, std::stoi(socket_err));
 
 #define EXPECT_XNET_ERROR(expected_status, error, message, response) \
   if (1) {                                                           \
@@ -294,10 +296,10 @@ TEST_F(NiXnetSocketNoHardwareTests, InitWithInvalidIpStack_Close_ReturnsAndSetsE
     EXPECT_FALSE(true);
   }
   catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-    auto error = json::parse(ex.what());
-    EXPECT_XNET_ERROR_CODE(GENERIC_NXSOCKET_ERROR, error);
-    EXPECT_XNET_ERROR_NUMBER(INVALID_SOCKET_ERROR, error);
-    EXPECT_THAT(error.value("message", ""), HasSubstr(INVALID_SOCKET_MESSAGE));
+    EXPECT_EQ(::grpc::StatusCode::UNKNOWN, ex.StatusCode());
+    EXPECT_XNET_ERROR_CODE(GENERIC_NXSOCKET_ERROR, ex);
+    EXPECT_XNET_ERROR_NUMBER(INVALID_SOCKET_ERROR, ex);
+    EXPECT_THAT(ex.what(), HasSubstr(INVALID_SOCKET_MESSAGE));
   }
 }
 
@@ -314,10 +316,10 @@ TEST_F(NiXnetSocketNoHardwareTests, InitWithInvalidIpStack_Bind_ReturnsAndSetsEx
     EXPECT_FALSE(true);
   }
   catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-    auto error = json::parse(ex.what());
-    EXPECT_XNET_ERROR_CODE(GENERIC_NXSOCKET_ERROR, error);
-    EXPECT_XNET_ERROR_NUMBER(INVALID_SOCKET_ERROR, error);
-    EXPECT_THAT(error.value("message", ""), HasSubstr(INVALID_SOCKET_MESSAGE));
+    EXPECT_EQ(::grpc::StatusCode::UNKNOWN, ex.StatusCode());
+    EXPECT_XNET_ERROR_CODE(GENERIC_NXSOCKET_ERROR, ex);
+    EXPECT_XNET_ERROR_NUMBER(INVALID_SOCKET_ERROR, ex);
+    EXPECT_THAT(ex.what(), HasSubstr(INVALID_SOCKET_MESSAGE));
   }
 }
 
@@ -356,10 +358,10 @@ TEST_F(NiXnetSocketNoHardwareTests, InvalidSocket_Select_ReturnsAndSetsExpectedE
     EXPECT_FALSE(true);
   }
   catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-    auto error = json::parse(ex.what());
-    EXPECT_XNET_ERROR_CODE(GENERIC_NXSOCKET_ERROR, error);
-    EXPECT_XNET_ERROR_NUMBER(INVALID_SOCKET_ERROR, error);
-    EXPECT_THAT(error.value("message", ""), HasSubstr(INVALID_SOCKET_MESSAGE));
+    EXPECT_EQ(::grpc::StatusCode::UNKNOWN, ex.StatusCode());
+    EXPECT_XNET_ERROR_CODE(GENERIC_NXSOCKET_ERROR, ex);
+    EXPECT_XNET_ERROR_NUMBER(INVALID_SOCKET_ERROR, ex);
+    EXPECT_THAT(ex.what(), HasSubstr(INVALID_SOCKET_MESSAGE));
   }
 }
 
@@ -373,8 +375,7 @@ TEST_F(NiXnetSocketNoHardwareTests, InvalidEmptyConfigJson_IpStackCreate_Returns
     EXPECT_FALSE(true);
   }
   catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-    auto error = json::parse(ex.what());
-    EXPECT_XNET_ERROR_CODE(JSON_OBJECT_MISSING_VALUE, error);
+    EXPECT_XNET_ERROR_CODE(JSON_OBJECT_MISSING_VALUE, ex);
   }
 }
 
@@ -388,8 +389,7 @@ TEST_F(NiXnetSocketNoHardwareTests, ValidConfigJsonForMissingDevice_IpStackCreat
     EXPECT_FALSE(true);
   }
   catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-    auto error = json::parse(ex.what());
-    EXPECT_XNET_ERROR_CODE(INVALID_INTERFACE_NAME, error);
+    EXPECT_XNET_ERROR_CODE(INVALID_INTERFACE_NAME, ex);
   }
 }
 
@@ -412,9 +412,8 @@ TEST_F(NiXnetSocketNoHardwareTests, StackAlreadyExistsError_StrErrRWithZeroBuffe
     EXPECT_FALSE(true);
   }
   catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-    auto error = json::parse(ex.what());
-    EXPECT_XNET_ERROR_CODE(GENERIC_NXSOCKET_ERROR, error);
-    EXPECT_EQ(std::string("Unknown"), error.value("message", "default"));
+    EXPECT_XNET_ERROR_CODE(GENERIC_NXSOCKET_ERROR, ex);
+    EXPECT_STREQ("Unknown", ex.what());
   }
 }
 
