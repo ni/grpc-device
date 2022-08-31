@@ -366,7 +366,7 @@ TEST_F(NiRFmxLTEDriverApiTests, NBIoTModAccFromExample_FetchData_DataLooksReason
       mod_acc_fetch_composite_evm_response = client::mod_acc_fetch_composite_evm(stub(), session, "", 10.0);
       actualStatus = mod_acc_fetch_composite_evm_response.status();
     }
-    catch (const std::runtime_error& ex) {
+    catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
       auto error = json::parse(ex.what());
       actualStatus = error.value("code", -1);
     }
@@ -446,7 +446,7 @@ TEST_F(NiRFmxLTEDriverApiTests, NBIoTModAccAcpChpObwSemCompositeSingleCarrierFro
       mod_acc_fetch_composite_evm_response = client::mod_acc_fetch_composite_evm(stub(), session, "", 10.0);
       actualStatus = mod_acc_fetch_composite_evm_response.status();
     }
-    catch (const std::runtime_error& ex) {
+    catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
       auto error = json::parse(ex.what());
       actualStatus = error.value("code", -1);
     }

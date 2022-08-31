@@ -28,7 +28,8 @@ add_cdaq_sync_connection(const StubPtr& stub, const pb::string& port_list)
   auto response = AddCDAQSyncConnectionResponse{};
 
   raise_if_error(
-      stub->AddCDAQSyncConnection(&context, request, &response));
+      stub->AddCDAQSyncConnection(&context, request, &response),
+      context);
 
   return response;
 }
@@ -45,7 +46,8 @@ add_global_chans_to_task(const StubPtr& stub, const nidevice_grpc::Session& task
   auto response = AddGlobalChansToTaskResponse{};
 
   raise_if_error(
-      stub->AddGlobalChansToTask(&context, request, &response));
+      stub->AddGlobalChansToTask(&context, request, &response),
+      context);
 
   return response;
 }
@@ -64,7 +66,8 @@ add_network_device(const StubPtr& stub, const pb::string& ip_address, const pb::
   auto response = AddNetworkDeviceResponse{};
 
   raise_if_error(
-      stub->AddNetworkDevice(&context, request, &response));
+      stub->AddNetworkDevice(&context, request, &response),
+      context);
 
   return response;
 }
@@ -81,7 +84,8 @@ are_configured_cdaq_sync_ports_disconnected(const StubPtr& stub, const pb::strin
   auto response = AreConfiguredCDAQSyncPortsDisconnectedResponse{};
 
   raise_if_error(
-      stub->AreConfiguredCDAQSyncPortsDisconnected(&context, request, &response));
+      stub->AreConfiguredCDAQSyncPortsDisconnected(&context, request, &response),
+      context);
 
   return response;
 }
@@ -98,7 +102,8 @@ auto_configure_cdaq_sync_connections(const StubPtr& stub, const pb::string& chas
   auto response = AutoConfigureCDAQSyncConnectionsResponse{};
 
   raise_if_error(
-      stub->AutoConfigureCDAQSyncConnections(&context, request, &response));
+      stub->AutoConfigureCDAQSyncConnections(&context, request, &response),
+      context);
 
   return response;
 }
@@ -118,7 +123,8 @@ calculate_reverse_poly_coeff(const StubPtr& stub, const std::vector<double>& for
   auto response = CalculateReversePolyCoeffResponse{};
 
   raise_if_error(
-      stub->CalculateReversePolyCoeff(&context, request, &response));
+      stub->CalculateReversePolyCoeff(&context, request, &response),
+      context);
 
   return response;
 }
@@ -145,7 +151,8 @@ cfg_anlg_edge_ref_trig(const StubPtr& stub, const nidevice_grpc::Session& task, 
   auto response = CfgAnlgEdgeRefTrigResponse{};
 
   raise_if_error(
-      stub->CfgAnlgEdgeRefTrig(&context, request, &response));
+      stub->CfgAnlgEdgeRefTrig(&context, request, &response),
+      context);
 
   return response;
 }
@@ -171,7 +178,8 @@ cfg_anlg_edge_start_trig(const StubPtr& stub, const nidevice_grpc::Session& task
   auto response = CfgAnlgEdgeStartTrigResponse{};
 
   raise_if_error(
-      stub->CfgAnlgEdgeStartTrig(&context, request, &response));
+      stub->CfgAnlgEdgeStartTrig(&context, request, &response),
+      context);
 
   return response;
 }
@@ -191,7 +199,8 @@ cfg_anlg_multi_edge_ref_trig(const StubPtr& stub, const nidevice_grpc::Session& 
   auto response = CfgAnlgMultiEdgeRefTrigResponse{};
 
   raise_if_error(
-      stub->CfgAnlgMultiEdgeRefTrig(&context, request, &response));
+      stub->CfgAnlgMultiEdgeRefTrig(&context, request, &response),
+      context);
 
   return response;
 }
@@ -210,7 +219,8 @@ cfg_anlg_multi_edge_start_trig(const StubPtr& stub, const nidevice_grpc::Session
   auto response = CfgAnlgMultiEdgeStartTrigResponse{};
 
   raise_if_error(
-      stub->CfgAnlgMultiEdgeStartTrig(&context, request, &response));
+      stub->CfgAnlgMultiEdgeStartTrig(&context, request, &response),
+      context);
 
   return response;
 }
@@ -238,7 +248,8 @@ cfg_anlg_window_ref_trig(const StubPtr& stub, const nidevice_grpc::Session& task
   auto response = CfgAnlgWindowRefTrigResponse{};
 
   raise_if_error(
-      stub->CfgAnlgWindowRefTrig(&context, request, &response));
+      stub->CfgAnlgWindowRefTrig(&context, request, &response),
+      context);
 
   return response;
 }
@@ -265,7 +276,8 @@ cfg_anlg_window_start_trig(const StubPtr& stub, const nidevice_grpc::Session& ta
   auto response = CfgAnlgWindowStartTrigResponse{};
 
   raise_if_error(
-      stub->CfgAnlgWindowStartTrig(&context, request, &response));
+      stub->CfgAnlgWindowStartTrig(&context, request, &response),
+      context);
 
   return response;
 }
@@ -316,7 +328,8 @@ cfg_burst_handshaking_timing_export_clock(const StubPtr& stub, const nidevice_gr
   auto response = CfgBurstHandshakingTimingExportClockResponse{};
 
   raise_if_error(
-      stub->CfgBurstHandshakingTimingExportClock(&context, request, &response));
+      stub->CfgBurstHandshakingTimingExportClock(&context, request, &response),
+      context);
 
   return response;
 }
@@ -367,7 +380,8 @@ cfg_burst_handshaking_timing_import_clock(const StubPtr& stub, const nidevice_gr
   auto response = CfgBurstHandshakingTimingImportClockResponse{};
 
   raise_if_error(
-      stub->CfgBurstHandshakingTimingImportClock(&context, request, &response));
+      stub->CfgBurstHandshakingTimingImportClock(&context, request, &response),
+      context);
 
   return response;
 }
@@ -394,7 +408,8 @@ cfg_change_detection_timing(const StubPtr& stub, const nidevice_grpc::Session& t
   auto response = CfgChangeDetectionTimingResponse{};
 
   raise_if_error(
-      stub->CfgChangeDetectionTiming(&context, request, &response));
+      stub->CfgChangeDetectionTiming(&context, request, &response),
+      context);
 
   return response;
 }
@@ -420,7 +435,8 @@ cfg_dig_edge_ref_trig(const StubPtr& stub, const nidevice_grpc::Session& task, c
   auto response = CfgDigEdgeRefTrigResponse{};
 
   raise_if_error(
-      stub->CfgDigEdgeRefTrig(&context, request, &response));
+      stub->CfgDigEdgeRefTrig(&context, request, &response),
+      context);
 
   return response;
 }
@@ -445,7 +461,8 @@ cfg_dig_edge_start_trig(const StubPtr& stub, const nidevice_grpc::Session& task,
   auto response = CfgDigEdgeStartTrigResponse{};
 
   raise_if_error(
-      stub->CfgDigEdgeStartTrig(&context, request, &response));
+      stub->CfgDigEdgeStartTrig(&context, request, &response),
+      context);
 
   return response;
 }
@@ -472,7 +489,8 @@ cfg_dig_pattern_ref_trig(const StubPtr& stub, const nidevice_grpc::Session& task
   auto response = CfgDigPatternRefTrigResponse{};
 
   raise_if_error(
-      stub->CfgDigPatternRefTrig(&context, request, &response));
+      stub->CfgDigPatternRefTrig(&context, request, &response),
+      context);
 
   return response;
 }
@@ -498,7 +516,8 @@ cfg_dig_pattern_start_trig(const StubPtr& stub, const nidevice_grpc::Session& ta
   auto response = CfgDigPatternStartTrigResponse{};
 
   raise_if_error(
-      stub->CfgDigPatternStartTrig(&context, request, &response));
+      stub->CfgDigPatternStartTrig(&context, request, &response),
+      context);
 
   return response;
 }
@@ -523,7 +542,8 @@ cfg_handshaking_timing(const StubPtr& stub, const nidevice_grpc::Session& task, 
   auto response = CfgHandshakingTimingResponse{};
 
   raise_if_error(
-      stub->CfgHandshakingTiming(&context, request, &response));
+      stub->CfgHandshakingTiming(&context, request, &response),
+      context);
 
   return response;
 }
@@ -548,7 +568,8 @@ cfg_implicit_timing(const StubPtr& stub, const nidevice_grpc::Session& task, con
   auto response = CfgImplicitTimingResponse{};
 
   raise_if_error(
-      stub->CfgImplicitTiming(&context, request, &response));
+      stub->CfgImplicitTiming(&context, request, &response),
+      context);
 
   return response;
 }
@@ -565,7 +586,8 @@ cfg_input_buffer(const StubPtr& stub, const nidevice_grpc::Session& task, const 
   auto response = CfgInputBufferResponse{};
 
   raise_if_error(
-      stub->CfgInputBuffer(&context, request, &response));
+      stub->CfgInputBuffer(&context, request, &response),
+      context);
 
   return response;
 }
@@ -582,7 +604,8 @@ cfg_output_buffer(const StubPtr& stub, const nidevice_grpc::Session& task, const
   auto response = CfgOutputBufferResponse{};
 
   raise_if_error(
-      stub->CfgOutputBuffer(&context, request, &response));
+      stub->CfgOutputBuffer(&context, request, &response),
+      context);
 
   return response;
 }
@@ -617,7 +640,8 @@ cfg_pipelined_samp_clk_timing(const StubPtr& stub, const nidevice_grpc::Session&
   auto response = CfgPipelinedSampClkTimingResponse{};
 
   raise_if_error(
-      stub->CfgPipelinedSampClkTiming(&context, request, &response));
+      stub->CfgPipelinedSampClkTiming(&context, request, &response),
+      context);
 
   return response;
 }
@@ -652,7 +676,8 @@ cfg_samp_clk_timing(const StubPtr& stub, const nidevice_grpc::Session& task, con
   auto response = CfgSampClkTimingResponse{};
 
   raise_if_error(
-      stub->CfgSampClkTiming(&context, request, &response));
+      stub->CfgSampClkTiming(&context, request, &response),
+      context);
 
   return response;
 }
@@ -677,7 +702,8 @@ cfg_time_start_trig(const StubPtr& stub, const nidevice_grpc::Session& task, con
   auto response = CfgTimeStartTrigResponse{};
 
   raise_if_error(
-      stub->CfgTimeStartTrig(&context, request, &response));
+      stub->CfgTimeStartTrig(&context, request, &response),
+      context);
 
   return response;
 }
@@ -696,7 +722,8 @@ cfg_watchdog_ao_expir_states(const StubPtr& stub, const nidevice_grpc::Session& 
   auto response = CfgWatchdogAOExpirStatesResponse{};
 
   raise_if_error(
-      stub->CfgWatchdogAOExpirStates(&context, request, &response));
+      stub->CfgWatchdogAOExpirStates(&context, request, &response),
+      context);
 
   return response;
 }
@@ -714,7 +741,8 @@ cfg_watchdog_co_expir_states(const StubPtr& stub, const nidevice_grpc::Session& 
   auto response = CfgWatchdogCOExpirStatesResponse{};
 
   raise_if_error(
-      stub->CfgWatchdogCOExpirStates(&context, request, &response));
+      stub->CfgWatchdogCOExpirStates(&context, request, &response),
+      context);
 
   return response;
 }
@@ -732,7 +760,8 @@ cfg_watchdog_do_expir_states(const StubPtr& stub, const nidevice_grpc::Session& 
   auto response = CfgWatchdogDOExpirStatesResponse{};
 
   raise_if_error(
-      stub->CfgWatchdogDOExpirStates(&context, request, &response));
+      stub->CfgWatchdogDOExpirStates(&context, request, &response),
+      context);
 
   return response;
 }
@@ -748,7 +777,8 @@ clear_teds(const StubPtr& stub, const pb::string& physical_channel)
   auto response = ClearTEDSResponse{};
 
   raise_if_error(
-      stub->ClearTEDS(&context, request, &response));
+      stub->ClearTEDS(&context, request, &response),
+      context);
 
   return response;
 }
@@ -764,7 +794,8 @@ clear_task(const StubPtr& stub, const nidevice_grpc::Session& task)
   auto response = ClearTaskResponse{};
 
   raise_if_error(
-      stub->ClearTask(&context, request, &response));
+      stub->ClearTask(&context, request, &response),
+      context);
 
   return response;
 }
@@ -798,7 +829,8 @@ configure_logging(const StubPtr& stub, const nidevice_grpc::Session& task, const
   auto response = ConfigureLoggingResponse{};
 
   raise_if_error(
-      stub->ConfigureLogging(&context, request, &response));
+      stub->ConfigureLogging(&context, request, &response),
+      context);
 
   return response;
 }
@@ -815,7 +847,8 @@ configure_teds(const StubPtr& stub, const pb::string& physical_channel, const pb
   auto response = ConfigureTEDSResponse{};
 
   raise_if_error(
-      stub->ConfigureTEDS(&context, request, &response));
+      stub->ConfigureTEDS(&context, request, &response),
+      context);
 
   return response;
 }
@@ -840,7 +873,8 @@ connect_terms(const StubPtr& stub, const pb::string& source_terminal, const pb::
   auto response = ConnectTermsResponse{};
 
   raise_if_error(
-      stub->ConnectTerms(&context, request, &response));
+      stub->ConnectTerms(&context, request, &response),
+      context);
 
   return response;
 }
@@ -864,7 +898,8 @@ control_watchdog_task(const StubPtr& stub, const nidevice_grpc::Session& task, c
   auto response = ControlWatchdogTaskResponse{};
 
   raise_if_error(
-      stub->ControlWatchdogTask(&context, request, &response));
+      stub->ControlWatchdogTask(&context, request, &response),
+      context);
 
   return response;
 }
@@ -920,7 +955,8 @@ create_ai_accel4_wire_dc_voltage_chan(const StubPtr& stub, const nidevice_grpc::
   auto response = CreateAIAccel4WireDCVoltageChanResponse{};
 
   raise_if_error(
-      stub->CreateAIAccel4WireDCVoltageChan(&context, request, &response));
+      stub->CreateAIAccel4WireDCVoltageChan(&context, request, &response),
+      context);
 
   return response;
 }
@@ -975,7 +1011,8 @@ create_ai_accel_chan(const StubPtr& stub, const nidevice_grpc::Session& task, co
   auto response = CreateAIAccelChanResponse{};
 
   raise_if_error(
-      stub->CreateAIAccelChan(&context, request, &response));
+      stub->CreateAIAccelChan(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1021,7 +1058,8 @@ create_ai_accel_charge_chan(const StubPtr& stub, const nidevice_grpc::Session& t
   auto response = CreateAIAccelChargeChanResponse{};
 
   raise_if_error(
-      stub->CreateAIAccelChargeChan(&context, request, &response));
+      stub->CreateAIAccelChargeChan(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1068,7 +1106,8 @@ create_ai_bridge_chan(const StubPtr& stub, const nidevice_grpc::Session& task, c
   auto response = CreateAIBridgeChanResponse{};
 
   raise_if_error(
-      stub->CreateAIBridgeChan(&context, request, &response));
+      stub->CreateAIBridgeChan(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1105,7 +1144,8 @@ create_ai_charge_chan(const StubPtr& stub, const nidevice_grpc::Session& task, c
   auto response = CreateAIChargeChanResponse{};
 
   raise_if_error(
-      stub->CreateAIChargeChan(&context, request, &response));
+      stub->CreateAIChargeChan(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1151,7 +1191,8 @@ create_ai_current_chan(const StubPtr& stub, const nidevice_grpc::Session& task, 
   auto response = CreateAICurrentChanResponse{};
 
   raise_if_error(
-      stub->CreateAICurrentChan(&context, request, &response));
+      stub->CreateAICurrentChan(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1197,7 +1238,8 @@ create_ai_current_rms_chan(const StubPtr& stub, const nidevice_grpc::Session& ta
   auto response = CreateAICurrentRMSChanResponse{};
 
   raise_if_error(
-      stub->CreateAICurrentRMSChan(&context, request, &response));
+      stub->CreateAICurrentRMSChan(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1262,7 +1304,8 @@ create_ai_force_bridge_polynomial_chan(const StubPtr& stub, const nidevice_grpc:
   auto response = CreateAIForceBridgePolynomialChanResponse{};
 
   raise_if_error(
-      stub->CreateAIForceBridgePolynomialChan(&context, request, &response));
+      stub->CreateAIForceBridgePolynomialChan(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1327,7 +1370,8 @@ create_ai_force_bridge_table_chan(const StubPtr& stub, const nidevice_grpc::Sess
   auto response = CreateAIForceBridgeTableChanResponse{};
 
   raise_if_error(
-      stub->CreateAIForceBridgeTableChan(&context, request, &response));
+      stub->CreateAIForceBridgeTableChan(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1394,7 +1438,8 @@ create_ai_force_bridge_two_point_lin_chan(const StubPtr& stub, const nidevice_gr
   auto response = CreateAIForceBridgeTwoPointLinChanResponse{};
 
   raise_if_error(
-      stub->CreateAIForceBridgeTwoPointLinChan(&context, request, &response));
+      stub->CreateAIForceBridgeTwoPointLinChan(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1449,7 +1494,8 @@ create_ai_force_iepe_chan(const StubPtr& stub, const nidevice_grpc::Session& tas
   auto response = CreateAIForceIEPEChanResponse{};
 
   raise_if_error(
-      stub->CreateAIForceIEPEChan(&context, request, &response));
+      stub->CreateAIForceIEPEChan(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1480,7 +1526,8 @@ create_ai_freq_voltage_chan(const StubPtr& stub, const nidevice_grpc::Session& t
   auto response = CreateAIFreqVoltageChanResponse{};
 
   raise_if_error(
-      stub->CreateAIFreqVoltageChan(&context, request, &response));
+      stub->CreateAIFreqVoltageChan(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1526,7 +1573,8 @@ create_ai_microphone_chan(const StubPtr& stub, const nidevice_grpc::Session& tas
   auto response = CreateAIMicrophoneChanResponse{};
 
   raise_if_error(
-      stub->CreateAIMicrophoneChan(&context, request, &response));
+      stub->CreateAIMicrophoneChan(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1564,7 +1612,8 @@ create_ai_pos_eddy_curr_prox_probe_chan(const StubPtr& stub, const nidevice_grpc
   auto response = CreateAIPosEddyCurrProxProbeChanResponse{};
 
   raise_if_error(
-      stub->CreateAIPosEddyCurrProxProbeChan(&context, request, &response));
+      stub->CreateAIPosEddyCurrProxProbeChan(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1620,7 +1669,8 @@ create_ai_pos_lvdt_chan(const StubPtr& stub, const nidevice_grpc::Session& task,
   auto response = CreateAIPosLVDTChanResponse{};
 
   raise_if_error(
-      stub->CreateAIPosLVDTChan(&context, request, &response));
+      stub->CreateAIPosLVDTChan(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1676,7 +1726,8 @@ create_ai_pos_rvdt_chan(const StubPtr& stub, const nidevice_grpc::Session& task,
   auto response = CreateAIPosRVDTChanResponse{};
 
   raise_if_error(
-      stub->CreateAIPosRVDTChan(&context, request, &response));
+      stub->CreateAIPosRVDTChan(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1741,7 +1792,8 @@ create_ai_pressure_bridge_polynomial_chan(const StubPtr& stub, const nidevice_gr
   auto response = CreateAIPressureBridgePolynomialChanResponse{};
 
   raise_if_error(
-      stub->CreateAIPressureBridgePolynomialChan(&context, request, &response));
+      stub->CreateAIPressureBridgePolynomialChan(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1806,7 +1858,8 @@ create_ai_pressure_bridge_table_chan(const StubPtr& stub, const nidevice_grpc::S
   auto response = CreateAIPressureBridgeTableChanResponse{};
 
   raise_if_error(
-      stub->CreateAIPressureBridgeTableChan(&context, request, &response));
+      stub->CreateAIPressureBridgeTableChan(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1873,7 +1926,8 @@ create_ai_pressure_bridge_two_point_lin_chan(const StubPtr& stub, const nidevice
   auto response = CreateAIPressureBridgeTwoPointLinChanResponse{};
 
   raise_if_error(
-      stub->CreateAIPressureBridgeTwoPointLinChan(&context, request, &response));
+      stub->CreateAIPressureBridgeTwoPointLinChan(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1927,7 +1981,8 @@ create_airtd_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const
   auto response = CreateAIRTDChanResponse{};
 
   raise_if_error(
-      stub->CreateAIRTDChan(&context, request, &response));
+      stub->CreateAIRTDChan(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1973,7 +2028,8 @@ create_ai_resistance_chan(const StubPtr& stub, const nidevice_grpc::Session& tas
   auto response = CreateAIResistanceChanResponse{};
 
   raise_if_error(
-      stub->CreateAIResistanceChan(&context, request, &response));
+      stub->CreateAIResistanceChan(&context, request, &response),
+      context);
 
   return response;
 }
@@ -2024,7 +2080,8 @@ create_ai_rosette_strain_gage_chan(const StubPtr& stub, const nidevice_grpc::Ses
   auto response = CreateAIRosetteStrainGageChanResponse{};
 
   raise_if_error(
-      stub->CreateAIRosetteStrainGageChan(&context, request, &response));
+      stub->CreateAIRosetteStrainGageChan(&context, request, &response),
+      context);
 
   return response;
 }
@@ -2075,7 +2132,8 @@ create_ai_strain_gage_chan(const StubPtr& stub, const nidevice_grpc::Session& ta
   auto response = CreateAIStrainGageChanResponse{};
 
   raise_if_error(
-      stub->CreateAIStrainGageChan(&context, request, &response));
+      stub->CreateAIStrainGageChan(&context, request, &response),
+      context);
 
   return response;
 }
@@ -2101,7 +2159,8 @@ create_ai_temp_built_in_sensor_chan(const StubPtr& stub, const nidevice_grpc::Se
   auto response = CreateAITempBuiltInSensorChanResponse{};
 
   raise_if_error(
-      stub->CreateAITempBuiltInSensorChan(&context, request, &response));
+      stub->CreateAITempBuiltInSensorChan(&context, request, &response),
+      context);
 
   return response;
 }
@@ -2147,7 +2206,8 @@ create_ai_thrmcpl_chan(const StubPtr& stub, const nidevice_grpc::Session& task, 
   auto response = CreateAIThrmcplChanResponse{};
 
   raise_if_error(
-      stub->CreateAIThrmcplChan(&context, request, &response));
+      stub->CreateAIThrmcplChan(&context, request, &response),
+      context);
 
   return response;
 }
@@ -2195,7 +2255,8 @@ create_ai_thrmstr_chan_iex(const StubPtr& stub, const nidevice_grpc::Session& ta
   auto response = CreateAIThrmstrChanIexResponse{};
 
   raise_if_error(
-      stub->CreateAIThrmstrChanIex(&context, request, &response));
+      stub->CreateAIThrmstrChanIex(&context, request, &response),
+      context);
 
   return response;
 }
@@ -2244,7 +2305,8 @@ create_ai_thrmstr_chan_vex(const StubPtr& stub, const nidevice_grpc::Session& ta
   auto response = CreateAIThrmstrChanVexResponse{};
 
   raise_if_error(
-      stub->CreateAIThrmstrChanVex(&context, request, &response));
+      stub->CreateAIThrmstrChanVex(&context, request, &response),
+      context);
 
   return response;
 }
@@ -2309,7 +2371,8 @@ create_ai_torque_bridge_polynomial_chan(const StubPtr& stub, const nidevice_grpc
   auto response = CreateAITorqueBridgePolynomialChanResponse{};
 
   raise_if_error(
-      stub->CreateAITorqueBridgePolynomialChan(&context, request, &response));
+      stub->CreateAITorqueBridgePolynomialChan(&context, request, &response),
+      context);
 
   return response;
 }
@@ -2374,7 +2437,8 @@ create_ai_torque_bridge_table_chan(const StubPtr& stub, const nidevice_grpc::Ses
   auto response = CreateAITorqueBridgeTableChanResponse{};
 
   raise_if_error(
-      stub->CreateAITorqueBridgeTableChan(&context, request, &response));
+      stub->CreateAITorqueBridgeTableChan(&context, request, &response),
+      context);
 
   return response;
 }
@@ -2441,7 +2505,8 @@ create_ai_torque_bridge_two_point_lin_chan(const StubPtr& stub, const nidevice_g
   auto response = CreateAITorqueBridgeTwoPointLinChanResponse{};
 
   raise_if_error(
-      stub->CreateAITorqueBridgeTwoPointLinChan(&context, request, &response));
+      stub->CreateAITorqueBridgeTwoPointLinChan(&context, request, &response),
+      context);
 
   return response;
 }
@@ -2496,7 +2561,8 @@ create_ai_velocity_iepe_chan(const StubPtr& stub, const nidevice_grpc::Session& 
   auto response = CreateAIVelocityIEPEChanResponse{};
 
   raise_if_error(
-      stub->CreateAIVelocityIEPEChan(&context, request, &response));
+      stub->CreateAIVelocityIEPEChan(&context, request, &response),
+      context);
 
   return response;
 }
@@ -2533,7 +2599,8 @@ create_ai_voltage_chan(const StubPtr& stub, const nidevice_grpc::Session& task, 
   auto response = CreateAIVoltageChanResponse{};
 
   raise_if_error(
-      stub->CreateAIVoltageChan(&context, request, &response));
+      stub->CreateAIVoltageChan(&context, request, &response),
+      context);
 
   return response;
 }
@@ -2588,7 +2655,8 @@ create_ai_voltage_chan_with_excit(const StubPtr& stub, const nidevice_grpc::Sess
   auto response = CreateAIVoltageChanWithExcitResponse{};
 
   raise_if_error(
-      stub->CreateAIVoltageChanWithExcit(&context, request, &response));
+      stub->CreateAIVoltageChanWithExcit(&context, request, &response),
+      context);
 
   return response;
 }
@@ -2625,7 +2693,8 @@ create_ai_voltage_rms_chan(const StubPtr& stub, const nidevice_grpc::Session& ta
   auto response = CreateAIVoltageRMSChanResponse{};
 
   raise_if_error(
-      stub->CreateAIVoltageRMSChan(&context, request, &response));
+      stub->CreateAIVoltageRMSChan(&context, request, &response),
+      context);
 
   return response;
 }
@@ -2654,7 +2723,8 @@ create_ao_current_chan(const StubPtr& stub, const nidevice_grpc::Session& task, 
   auto response = CreateAOCurrentChanResponse{};
 
   raise_if_error(
-      stub->CreateAOCurrentChan(&context, request, &response));
+      stub->CreateAOCurrentChan(&context, request, &response),
+      context);
 
   return response;
 }
@@ -2683,7 +2753,8 @@ create_ao_func_gen_chan(const StubPtr& stub, const nidevice_grpc::Session& task,
   auto response = CreateAOFuncGenChanResponse{};
 
   raise_if_error(
-      stub->CreateAOFuncGenChan(&context, request, &response));
+      stub->CreateAOFuncGenChan(&context, request, &response),
+      context);
 
   return response;
 }
@@ -2712,7 +2783,8 @@ create_ao_voltage_chan(const StubPtr& stub, const nidevice_grpc::Session& task, 
   auto response = CreateAOVoltageChanResponse{};
 
   raise_if_error(
-      stub->CreateAOVoltageChan(&context, request, &response));
+      stub->CreateAOVoltageChan(&context, request, &response),
+      context);
 
   return response;
 }
@@ -2759,7 +2831,8 @@ create_ci_ang_encoder_chan(const StubPtr& stub, const nidevice_grpc::Session& ta
   auto response = CreateCIAngEncoderChanResponse{};
 
   raise_if_error(
-      stub->CreateCIAngEncoderChan(&context, request, &response));
+      stub->CreateCIAngEncoderChan(&context, request, &response),
+      context);
 
   return response;
 }
@@ -2797,7 +2870,8 @@ create_ci_ang_velocity_chan(const StubPtr& stub, const nidevice_grpc::Session& t
   auto response = CreateCIAngVelocityChanResponse{};
 
   raise_if_error(
-      stub->CreateCIAngVelocityChan(&context, request, &response));
+      stub->CreateCIAngVelocityChan(&context, request, &response),
+      context);
 
   return response;
 }
@@ -2832,7 +2906,8 @@ create_ci_count_edges_chan(const StubPtr& stub, const nidevice_grpc::Session& ta
   auto response = CreateCICountEdgesChanResponse{};
 
   raise_if_error(
-      stub->CreateCICountEdgesChan(&context, request, &response));
+      stub->CreateCICountEdgesChan(&context, request, &response),
+      context);
 
   return response;
 }
@@ -2861,7 +2936,8 @@ create_ci_duty_cycle_chan(const StubPtr& stub, const nidevice_grpc::Session& tas
   auto response = CreateCIDutyCycleChanResponse{};
 
   raise_if_error(
-      stub->CreateCIDutyCycleChan(&context, request, &response));
+      stub->CreateCIDutyCycleChan(&context, request, &response),
+      context);
 
   return response;
 }
@@ -2908,7 +2984,8 @@ create_ci_freq_chan(const StubPtr& stub, const nidevice_grpc::Session& task, con
   auto response = CreateCIFreqChanResponse{};
 
   raise_if_error(
-      stub->CreateCIFreqChan(&context, request, &response));
+      stub->CreateCIFreqChan(&context, request, &response),
+      context);
 
   return response;
 }
@@ -2943,7 +3020,8 @@ create_cigps_timestamp_chan(const StubPtr& stub, const nidevice_grpc::Session& t
   auto response = CreateCIGPSTimestampChanResponse{};
 
   raise_if_error(
-      stub->CreateCIGPSTimestampChan(&context, request, &response));
+      stub->CreateCIGPSTimestampChan(&context, request, &response),
+      context);
 
   return response;
 }
@@ -2990,7 +3068,8 @@ create_ci_lin_encoder_chan(const StubPtr& stub, const nidevice_grpc::Session& ta
   auto response = CreateCILinEncoderChanResponse{};
 
   raise_if_error(
-      stub->CreateCILinEncoderChan(&context, request, &response));
+      stub->CreateCILinEncoderChan(&context, request, &response),
+      context);
 
   return response;
 }
@@ -3028,7 +3107,8 @@ create_ci_lin_velocity_chan(const StubPtr& stub, const nidevice_grpc::Session& t
   auto response = CreateCILinVelocityChanResponse{};
 
   raise_if_error(
-      stub->CreateCILinVelocityChan(&context, request, &response));
+      stub->CreateCILinVelocityChan(&context, request, &response),
+      context);
 
   return response;
 }
@@ -3075,7 +3155,8 @@ create_ci_period_chan(const StubPtr& stub, const nidevice_grpc::Session& task, c
   auto response = CreateCIPeriodChanResponse{};
 
   raise_if_error(
-      stub->CreateCIPeriodChan(&context, request, &response));
+      stub->CreateCIPeriodChan(&context, request, &response),
+      context);
 
   return response;
 }
@@ -3103,7 +3184,8 @@ create_ci_pulse_chan_freq(const StubPtr& stub, const nidevice_grpc::Session& tas
   auto response = CreateCIPulseChanFreqResponse{};
 
   raise_if_error(
-      stub->CreateCIPulseChanFreq(&context, request, &response));
+      stub->CreateCIPulseChanFreq(&context, request, &response),
+      context);
 
   return response;
 }
@@ -3124,7 +3206,8 @@ create_ci_pulse_chan_ticks(const StubPtr& stub, const nidevice_grpc::Session& ta
   auto response = CreateCIPulseChanTicksResponse{};
 
   raise_if_error(
-      stub->CreateCIPulseChanTicks(&context, request, &response));
+      stub->CreateCIPulseChanTicks(&context, request, &response),
+      context);
 
   return response;
 }
@@ -3152,7 +3235,8 @@ create_ci_pulse_chan_time(const StubPtr& stub, const nidevice_grpc::Session& tas
   auto response = CreateCIPulseChanTimeResponse{};
 
   raise_if_error(
-      stub->CreateCIPulseChanTime(&context, request, &response));
+      stub->CreateCIPulseChanTime(&context, request, &response),
+      context);
 
   return response;
 }
@@ -3189,7 +3273,8 @@ create_ci_pulse_width_chan(const StubPtr& stub, const nidevice_grpc::Session& ta
   auto response = CreateCIPulseWidthChanResponse{};
 
   raise_if_error(
-      stub->CreateCIPulseWidthChan(&context, request, &response));
+      stub->CreateCIPulseWidthChan(&context, request, &response),
+      context);
 
   return response;
 }
@@ -3218,7 +3303,8 @@ create_ci_semi_period_chan(const StubPtr& stub, const nidevice_grpc::Session& ta
   auto response = CreateCISemiPeriodChanResponse{};
 
   raise_if_error(
-      stub->CreateCISemiPeriodChan(&context, request, &response));
+      stub->CreateCISemiPeriodChan(&context, request, &response),
+      context);
 
   return response;
 }
@@ -3263,7 +3349,8 @@ create_ci_two_edge_sep_chan(const StubPtr& stub, const nidevice_grpc::Session& t
   auto response = CreateCITwoEdgeSepChanResponse{};
 
   raise_if_error(
-      stub->CreateCITwoEdgeSepChan(&context, request, &response));
+      stub->CreateCITwoEdgeSepChan(&context, request, &response),
+      context);
 
   return response;
 }
@@ -3300,7 +3387,8 @@ create_co_pulse_chan_freq(const StubPtr& stub, const nidevice_grpc::Session& tas
   auto response = CreateCOPulseChanFreqResponse{};
 
   raise_if_error(
-      stub->CreateCOPulseChanFreq(&context, request, &response));
+      stub->CreateCOPulseChanFreq(&context, request, &response),
+      context);
 
   return response;
 }
@@ -3330,7 +3418,8 @@ create_co_pulse_chan_ticks(const StubPtr& stub, const nidevice_grpc::Session& ta
   auto response = CreateCOPulseChanTicksResponse{};
 
   raise_if_error(
-      stub->CreateCOPulseChanTicks(&context, request, &response));
+      stub->CreateCOPulseChanTicks(&context, request, &response),
+      context);
 
   return response;
 }
@@ -3367,7 +3456,8 @@ create_co_pulse_chan_time(const StubPtr& stub, const nidevice_grpc::Session& tas
   auto response = CreateCOPulseChanTimeResponse{};
 
   raise_if_error(
-      stub->CreateCOPulseChanTime(&context, request, &response));
+      stub->CreateCOPulseChanTime(&context, request, &response),
+      context);
 
   return response;
 }
@@ -3393,7 +3483,8 @@ create_di_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb
   auto response = CreateDIChanResponse{};
 
   raise_if_error(
-      stub->CreateDIChan(&context, request, &response));
+      stub->CreateDIChan(&context, request, &response),
+      context);
 
   return response;
 }
@@ -3419,7 +3510,8 @@ create_do_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const pb
   auto response = CreateDOChanResponse{};
 
   raise_if_error(
-      stub->CreateDOChan(&context, request, &response));
+      stub->CreateDOChan(&context, request, &response),
+      context);
 
   return response;
 }
@@ -3446,7 +3538,8 @@ create_lin_scale(const StubPtr& stub, const pb::string& name, const double& slop
   auto response = CreateLinScaleResponse{};
 
   raise_if_error(
-      stub->CreateLinScale(&context, request, &response));
+      stub->CreateLinScale(&context, request, &response),
+      context);
 
   return response;
 }
@@ -3475,7 +3568,8 @@ create_map_scale(const StubPtr& stub, const pb::string& name, const double& pres
   auto response = CreateMapScaleResponse{};
 
   raise_if_error(
-      stub->CreateMapScale(&context, request, &response));
+      stub->CreateMapScale(&context, request, &response),
+      context);
 
   return response;
 }
@@ -3502,7 +3596,8 @@ create_polynomial_scale(const StubPtr& stub, const pb::string& name, const std::
   auto response = CreatePolynomialScaleResponse{};
 
   raise_if_error(
-      stub->CreatePolynomialScale(&context, request, &response));
+      stub->CreatePolynomialScale(&context, request, &response),
+      context);
 
   return response;
 }
@@ -3548,7 +3643,8 @@ create_tedsai_accel_chan(const StubPtr& stub, const nidevice_grpc::Session& task
   auto response = CreateTEDSAIAccelChanResponse{};
 
   raise_if_error(
-      stub->CreateTEDSAIAccelChan(&context, request, &response));
+      stub->CreateTEDSAIAccelChan(&context, request, &response),
+      context);
 
   return response;
 }
@@ -3586,7 +3682,8 @@ create_tedsai_bridge_chan(const StubPtr& stub, const nidevice_grpc::Session& tas
   auto response = CreateTEDSAIBridgeChanResponse{};
 
   raise_if_error(
-      stub->CreateTEDSAIBridgeChan(&context, request, &response));
+      stub->CreateTEDSAIBridgeChan(&context, request, &response),
+      context);
 
   return response;
 }
@@ -3632,7 +3729,8 @@ create_tedsai_current_chan(const StubPtr& stub, const nidevice_grpc::Session& ta
   auto response = CreateTEDSAICurrentChanResponse{};
 
   raise_if_error(
-      stub->CreateTEDSAICurrentChan(&context, request, &response));
+      stub->CreateTEDSAICurrentChan(&context, request, &response),
+      context);
 
   return response;
 }
@@ -3670,7 +3768,8 @@ create_tedsai_force_bridge_chan(const StubPtr& stub, const nidevice_grpc::Sessio
   auto response = CreateTEDSAIForceBridgeChanResponse{};
 
   raise_if_error(
-      stub->CreateTEDSAIForceBridgeChan(&context, request, &response));
+      stub->CreateTEDSAIForceBridgeChan(&context, request, &response),
+      context);
 
   return response;
 }
@@ -3716,7 +3815,8 @@ create_tedsai_force_iepe_chan(const StubPtr& stub, const nidevice_grpc::Session&
   auto response = CreateTEDSAIForceIEPEChanResponse{};
 
   raise_if_error(
-      stub->CreateTEDSAIForceIEPEChan(&context, request, &response));
+      stub->CreateTEDSAIForceIEPEChan(&context, request, &response),
+      context);
 
   return response;
 }
@@ -3761,7 +3861,8 @@ create_tedsai_microphone_chan(const StubPtr& stub, const nidevice_grpc::Session&
   auto response = CreateTEDSAIMicrophoneChanResponse{};
 
   raise_if_error(
-      stub->CreateTEDSAIMicrophoneChan(&context, request, &response));
+      stub->CreateTEDSAIMicrophoneChan(&context, request, &response),
+      context);
 
   return response;
 }
@@ -3808,7 +3909,8 @@ create_tedsai_pos_lvdt_chan(const StubPtr& stub, const nidevice_grpc::Session& t
   auto response = CreateTEDSAIPosLVDTChanResponse{};
 
   raise_if_error(
-      stub->CreateTEDSAIPosLVDTChan(&context, request, &response));
+      stub->CreateTEDSAIPosLVDTChan(&context, request, &response),
+      context);
 
   return response;
 }
@@ -3855,7 +3957,8 @@ create_tedsai_pos_rvdt_chan(const StubPtr& stub, const nidevice_grpc::Session& t
   auto response = CreateTEDSAIPosRVDTChanResponse{};
 
   raise_if_error(
-      stub->CreateTEDSAIPosRVDTChan(&context, request, &response));
+      stub->CreateTEDSAIPosRVDTChan(&context, request, &response),
+      context);
 
   return response;
 }
@@ -3893,7 +3996,8 @@ create_tedsai_pressure_bridge_chan(const StubPtr& stub, const nidevice_grpc::Ses
   auto response = CreateTEDSAIPressureBridgeChanResponse{};
 
   raise_if_error(
-      stub->CreateTEDSAIPressureBridgeChan(&context, request, &response));
+      stub->CreateTEDSAIPressureBridgeChan(&context, request, &response),
+      context);
 
   return response;
 }
@@ -3938,7 +4042,8 @@ create_tedsairtd_chan(const StubPtr& stub, const nidevice_grpc::Session& task, c
   auto response = CreateTEDSAIRTDChanResponse{};
 
   raise_if_error(
-      stub->CreateTEDSAIRTDChan(&context, request, &response));
+      stub->CreateTEDSAIRTDChan(&context, request, &response),
+      context);
 
   return response;
 }
@@ -3984,7 +4089,8 @@ create_tedsai_resistance_chan(const StubPtr& stub, const nidevice_grpc::Session&
   auto response = CreateTEDSAIResistanceChanResponse{};
 
   raise_if_error(
-      stub->CreateTEDSAIResistanceChan(&context, request, &response));
+      stub->CreateTEDSAIResistanceChan(&context, request, &response),
+      context);
 
   return response;
 }
@@ -4024,7 +4130,8 @@ create_tedsai_strain_gage_chan(const StubPtr& stub, const nidevice_grpc::Session
   auto response = CreateTEDSAIStrainGageChanResponse{};
 
   raise_if_error(
-      stub->CreateTEDSAIStrainGageChan(&context, request, &response));
+      stub->CreateTEDSAIStrainGageChan(&context, request, &response),
+      context);
 
   return response;
 }
@@ -4062,7 +4169,8 @@ create_tedsai_thrmcpl_chan(const StubPtr& stub, const nidevice_grpc::Session& ta
   auto response = CreateTEDSAIThrmcplChanResponse{};
 
   raise_if_error(
-      stub->CreateTEDSAIThrmcplChan(&context, request, &response));
+      stub->CreateTEDSAIThrmcplChan(&context, request, &response),
+      context);
 
   return response;
 }
@@ -4107,7 +4215,8 @@ create_tedsai_thrmstr_chan_iex(const StubPtr& stub, const nidevice_grpc::Session
   auto response = CreateTEDSAIThrmstrChanIexResponse{};
 
   raise_if_error(
-      stub->CreateTEDSAIThrmstrChanIex(&context, request, &response));
+      stub->CreateTEDSAIThrmstrChanIex(&context, request, &response),
+      context);
 
   return response;
 }
@@ -4153,7 +4262,8 @@ create_tedsai_thrmstr_chan_vex(const StubPtr& stub, const nidevice_grpc::Session
   auto response = CreateTEDSAIThrmstrChanVexResponse{};
 
   raise_if_error(
-      stub->CreateTEDSAIThrmstrChanVex(&context, request, &response));
+      stub->CreateTEDSAIThrmstrChanVex(&context, request, &response),
+      context);
 
   return response;
 }
@@ -4191,7 +4301,8 @@ create_tedsai_torque_bridge_chan(const StubPtr& stub, const nidevice_grpc::Sessi
   auto response = CreateTEDSAITorqueBridgeChanResponse{};
 
   raise_if_error(
-      stub->CreateTEDSAITorqueBridgeChan(&context, request, &response));
+      stub->CreateTEDSAITorqueBridgeChan(&context, request, &response),
+      context);
 
   return response;
 }
@@ -4228,7 +4339,8 @@ create_tedsai_voltage_chan(const StubPtr& stub, const nidevice_grpc::Session& ta
   auto response = CreateTEDSAIVoltageChanResponse{};
 
   raise_if_error(
-      stub->CreateTEDSAIVoltageChan(&context, request, &response));
+      stub->CreateTEDSAIVoltageChan(&context, request, &response),
+      context);
 
   return response;
 }
@@ -4274,7 +4386,8 @@ create_tedsai_voltage_chan_with_excit(const StubPtr& stub, const nidevice_grpc::
   auto response = CreateTEDSAIVoltageChanWithExcitResponse{};
 
   raise_if_error(
-      stub->CreateTEDSAIVoltageChanWithExcit(&context, request, &response));
+      stub->CreateTEDSAIVoltageChanWithExcit(&context, request, &response),
+      context);
 
   return response;
 }
@@ -4301,7 +4414,8 @@ create_table_scale(const StubPtr& stub, const pb::string& name, const std::vecto
   auto response = CreateTableScaleResponse{};
 
   raise_if_error(
-      stub->CreateTableScale(&context, request, &response));
+      stub->CreateTableScale(&context, request, &response),
+      context);
 
   return response;
 }
@@ -4317,7 +4431,8 @@ create_task(const StubPtr& stub, const pb::string& session_name)
   auto response = CreateTaskResponse{};
 
   raise_if_error(
-      stub->CreateTask(&context, request, &response));
+      stub->CreateTask(&context, request, &response),
+      context);
 
   return response;
 }
@@ -4336,7 +4451,8 @@ create_watchdog_timer_task(const StubPtr& stub, const pb::string& device_name, c
   auto response = CreateWatchdogTimerTaskResponse{};
 
   raise_if_error(
-      stub->CreateWatchdogTimerTask(&context, request, &response));
+      stub->CreateWatchdogTimerTask(&context, request, &response),
+      context);
 
   return response;
 }
@@ -4354,7 +4470,8 @@ create_watchdog_timer_task_ex(const StubPtr& stub, const pb::string& device_name
   auto response = CreateWatchdogTimerTaskExResponse{};
 
   raise_if_error(
-      stub->CreateWatchdogTimerTaskEx(&context, request, &response));
+      stub->CreateWatchdogTimerTaskEx(&context, request, &response),
+      context);
 
   return response;
 }
@@ -4370,7 +4487,8 @@ delete_network_device(const StubPtr& stub, const pb::string& device_name)
   auto response = DeleteNetworkDeviceResponse{};
 
   raise_if_error(
-      stub->DeleteNetworkDevice(&context, request, &response));
+      stub->DeleteNetworkDevice(&context, request, &response),
+      context);
 
   return response;
 }
@@ -4386,7 +4504,8 @@ delete_saved_global_chan(const StubPtr& stub, const pb::string& channel_name)
   auto response = DeleteSavedGlobalChanResponse{};
 
   raise_if_error(
-      stub->DeleteSavedGlobalChan(&context, request, &response));
+      stub->DeleteSavedGlobalChan(&context, request, &response),
+      context);
 
   return response;
 }
@@ -4402,7 +4521,8 @@ delete_saved_scale(const StubPtr& stub, const pb::string& scale_name)
   auto response = DeleteSavedScaleResponse{};
 
   raise_if_error(
-      stub->DeleteSavedScale(&context, request, &response));
+      stub->DeleteSavedScale(&context, request, &response),
+      context);
 
   return response;
 }
@@ -4418,7 +4538,8 @@ delete_saved_task(const StubPtr& stub, const pb::string& task_name)
   auto response = DeleteSavedTaskResponse{};
 
   raise_if_error(
-      stub->DeleteSavedTask(&context, request, &response));
+      stub->DeleteSavedTask(&context, request, &response),
+      context);
 
   return response;
 }
@@ -4434,7 +4555,8 @@ device_supports_cal(const StubPtr& stub, const pb::string& device_name)
   auto response = DeviceSupportsCalResponse{};
 
   raise_if_error(
-      stub->DeviceSupportsCal(&context, request, &response));
+      stub->DeviceSupportsCal(&context, request, &response),
+      context);
 
   return response;
 }
@@ -4450,7 +4572,8 @@ disable_ref_trig(const StubPtr& stub, const nidevice_grpc::Session& task)
   auto response = DisableRefTrigResponse{};
 
   raise_if_error(
-      stub->DisableRefTrig(&context, request, &response));
+      stub->DisableRefTrig(&context, request, &response),
+      context);
 
   return response;
 }
@@ -4466,7 +4589,8 @@ disable_start_trig(const StubPtr& stub, const nidevice_grpc::Session& task)
   auto response = DisableStartTrigResponse{};
 
   raise_if_error(
-      stub->DisableStartTrig(&context, request, &response));
+      stub->DisableStartTrig(&context, request, &response),
+      context);
 
   return response;
 }
@@ -4483,7 +4607,8 @@ disconnect_terms(const StubPtr& stub, const pb::string& source_terminal, const p
   auto response = DisconnectTermsResponse{};
 
   raise_if_error(
-      stub->DisconnectTerms(&context, request, &response));
+      stub->DisconnectTerms(&context, request, &response),
+      context);
 
   return response;
 }
@@ -4508,7 +4633,8 @@ export_signal(const StubPtr& stub, const nidevice_grpc::Session& task, const sim
   auto response = ExportSignalResponse{};
 
   raise_if_error(
-      stub->ExportSignal(&context, request, &response));
+      stub->ExportSignal(&context, request, &response),
+      context);
 
   return response;
 }
@@ -4525,7 +4651,8 @@ get_ai_chan_cal_cal_date(const StubPtr& stub, const nidevice_grpc::Session& task
   auto response = GetAIChanCalCalDateResponse{};
 
   raise_if_error(
-      stub->GetAIChanCalCalDate(&context, request, &response));
+      stub->GetAIChanCalCalDate(&context, request, &response),
+      context);
 
   return response;
 }
@@ -4542,7 +4669,8 @@ get_ai_chan_cal_exp_date(const StubPtr& stub, const nidevice_grpc::Session& task
   auto response = GetAIChanCalExpDateResponse{};
 
   raise_if_error(
-      stub->GetAIChanCalExpDate(&context, request, &response));
+      stub->GetAIChanCalExpDate(&context, request, &response),
+      context);
 
   return response;
 }
@@ -4559,7 +4687,8 @@ get_analog_power_up_states(const StubPtr& stub, const pb::string& device_name, c
   auto response = GetAnalogPowerUpStatesResponse{};
 
   raise_if_error(
-      stub->GetAnalogPowerUpStates(&context, request, &response));
+      stub->GetAnalogPowerUpStates(&context, request, &response),
+      context);
 
   return response;
 }
@@ -4576,7 +4705,8 @@ get_analog_power_up_states_with_output_type(const StubPtr& stub, const pb::strin
   auto response = GetAnalogPowerUpStatesWithOutputTypeResponse{};
 
   raise_if_error(
-      stub->GetAnalogPowerUpStatesWithOutputType(&context, request, &response));
+      stub->GetAnalogPowerUpStatesWithOutputType(&context, request, &response),
+      context);
 
   return response;
 }
@@ -4592,7 +4722,8 @@ get_arm_start_trig_timestamp_val(const StubPtr& stub, const nidevice_grpc::Sessi
   auto response = GetArmStartTrigTimestampValResponse{};
 
   raise_if_error(
-      stub->GetArmStartTrigTimestampVal(&context, request, &response));
+      stub->GetArmStartTrigTimestampVal(&context, request, &response),
+      context);
 
   return response;
 }
@@ -4608,7 +4739,8 @@ get_arm_start_trig_trig_when(const StubPtr& stub, const nidevice_grpc::Session& 
   auto response = GetArmStartTrigTrigWhenResponse{};
 
   raise_if_error(
-      stub->GetArmStartTrigTrigWhen(&context, request, &response));
+      stub->GetArmStartTrigTrigWhen(&context, request, &response),
+      context);
 
   return response;
 }
@@ -4623,7 +4755,8 @@ get_auto_configured_cdaq_sync_connections(const StubPtr& stub)
   auto response = GetAutoConfiguredCDAQSyncConnectionsResponse{};
 
   raise_if_error(
-      stub->GetAutoConfiguredCDAQSyncConnections(&context, request, &response));
+      stub->GetAutoConfiguredCDAQSyncConnections(&context, request, &response),
+      context);
 
   return response;
 }
@@ -4647,7 +4780,8 @@ get_buffer_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& t
   auto response = GetBufferAttributeUInt32Response{};
 
   raise_if_error(
-      stub->GetBufferAttributeUInt32(&context, request, &response));
+      stub->GetBufferAttributeUInt32(&context, request, &response),
+      context);
 
   return response;
 }
@@ -4671,7 +4805,8 @@ get_cal_info_attribute_bool(const StubPtr& stub, const pb::string& device_name, 
   auto response = GetCalInfoAttributeBoolResponse{};
 
   raise_if_error(
-      stub->GetCalInfoAttributeBool(&context, request, &response));
+      stub->GetCalInfoAttributeBool(&context, request, &response),
+      context);
 
   return response;
 }
@@ -4695,7 +4830,8 @@ get_cal_info_attribute_double(const StubPtr& stub, const pb::string& device_name
   auto response = GetCalInfoAttributeDoubleResponse{};
 
   raise_if_error(
-      stub->GetCalInfoAttributeDouble(&context, request, &response));
+      stub->GetCalInfoAttributeDouble(&context, request, &response),
+      context);
 
   return response;
 }
@@ -4719,7 +4855,8 @@ get_cal_info_attribute_string(const StubPtr& stub, const pb::string& device_name
   auto response = GetCalInfoAttributeStringResponse{};
 
   raise_if_error(
-      stub->GetCalInfoAttributeString(&context, request, &response));
+      stub->GetCalInfoAttributeString(&context, request, &response),
+      context);
 
   return response;
 }
@@ -4743,7 +4880,8 @@ get_cal_info_attribute_uint32(const StubPtr& stub, const pb::string& device_name
   auto response = GetCalInfoAttributeUInt32Response{};
 
   raise_if_error(
-      stub->GetCalInfoAttributeUInt32(&context, request, &response));
+      stub->GetCalInfoAttributeUInt32(&context, request, &response),
+      context);
 
   return response;
 }
@@ -4768,7 +4906,8 @@ get_chan_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& task,
   auto response = GetChanAttributeBoolResponse{};
 
   raise_if_error(
-      stub->GetChanAttributeBool(&context, request, &response));
+      stub->GetChanAttributeBool(&context, request, &response),
+      context);
 
   return response;
 }
@@ -4793,7 +4932,8 @@ get_chan_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& tas
   auto response = GetChanAttributeDoubleResponse{};
 
   raise_if_error(
-      stub->GetChanAttributeDouble(&context, request, &response));
+      stub->GetChanAttributeDouble(&context, request, &response),
+      context);
 
   return response;
 }
@@ -4818,7 +4958,8 @@ get_chan_attribute_double_array(const StubPtr& stub, const nidevice_grpc::Sessio
   auto response = GetChanAttributeDoubleArrayResponse{};
 
   raise_if_error(
-      stub->GetChanAttributeDoubleArray(&context, request, &response));
+      stub->GetChanAttributeDoubleArray(&context, request, &response),
+      context);
 
   return response;
 }
@@ -4843,7 +4984,8 @@ get_chan_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& task
   auto response = GetChanAttributeInt32Response{};
 
   raise_if_error(
-      stub->GetChanAttributeInt32(&context, request, &response));
+      stub->GetChanAttributeInt32(&context, request, &response),
+      context);
 
   return response;
 }
@@ -4868,7 +5010,8 @@ get_chan_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& tas
   auto response = GetChanAttributeStringResponse{};
 
   raise_if_error(
-      stub->GetChanAttributeString(&context, request, &response));
+      stub->GetChanAttributeString(&context, request, &response),
+      context);
 
   return response;
 }
@@ -4893,7 +5036,8 @@ get_chan_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& tas
   auto response = GetChanAttributeUInt32Response{};
 
   raise_if_error(
-      stub->GetChanAttributeUInt32(&context, request, &response));
+      stub->GetChanAttributeUInt32(&context, request, &response),
+      context);
 
   return response;
 }
@@ -4917,7 +5061,8 @@ get_device_attribute_bool(const StubPtr& stub, const pb::string& device_name, co
   auto response = GetDeviceAttributeBoolResponse{};
 
   raise_if_error(
-      stub->GetDeviceAttributeBool(&context, request, &response));
+      stub->GetDeviceAttributeBool(&context, request, &response),
+      context);
 
   return response;
 }
@@ -4941,7 +5086,8 @@ get_device_attribute_double(const StubPtr& stub, const pb::string& device_name, 
   auto response = GetDeviceAttributeDoubleResponse{};
 
   raise_if_error(
-      stub->GetDeviceAttributeDouble(&context, request, &response));
+      stub->GetDeviceAttributeDouble(&context, request, &response),
+      context);
 
   return response;
 }
@@ -4965,7 +5111,8 @@ get_device_attribute_double_array(const StubPtr& stub, const pb::string& device_
   auto response = GetDeviceAttributeDoubleArrayResponse{};
 
   raise_if_error(
-      stub->GetDeviceAttributeDoubleArray(&context, request, &response));
+      stub->GetDeviceAttributeDoubleArray(&context, request, &response),
+      context);
 
   return response;
 }
@@ -4989,7 +5136,8 @@ get_device_attribute_int32(const StubPtr& stub, const pb::string& device_name, c
   auto response = GetDeviceAttributeInt32Response{};
 
   raise_if_error(
-      stub->GetDeviceAttributeInt32(&context, request, &response));
+      stub->GetDeviceAttributeInt32(&context, request, &response),
+      context);
 
   return response;
 }
@@ -5013,7 +5161,8 @@ get_device_attribute_int32_array(const StubPtr& stub, const pb::string& device_n
   auto response = GetDeviceAttributeInt32ArrayResponse{};
 
   raise_if_error(
-      stub->GetDeviceAttributeInt32Array(&context, request, &response));
+      stub->GetDeviceAttributeInt32Array(&context, request, &response),
+      context);
 
   return response;
 }
@@ -5037,7 +5186,8 @@ get_device_attribute_string(const StubPtr& stub, const pb::string& device_name, 
   auto response = GetDeviceAttributeStringResponse{};
 
   raise_if_error(
-      stub->GetDeviceAttributeString(&context, request, &response));
+      stub->GetDeviceAttributeString(&context, request, &response),
+      context);
 
   return response;
 }
@@ -5061,7 +5211,8 @@ get_device_attribute_uint32(const StubPtr& stub, const pb::string& device_name, 
   auto response = GetDeviceAttributeUInt32Response{};
 
   raise_if_error(
-      stub->GetDeviceAttributeUInt32(&context, request, &response));
+      stub->GetDeviceAttributeUInt32(&context, request, &response),
+      context);
 
   return response;
 }
@@ -5085,7 +5236,8 @@ get_device_attribute_uint32_array(const StubPtr& stub, const pb::string& device_
   auto response = GetDeviceAttributeUInt32ArrayResponse{};
 
   raise_if_error(
-      stub->GetDeviceAttributeUInt32Array(&context, request, &response));
+      stub->GetDeviceAttributeUInt32Array(&context, request, &response),
+      context);
 
   return response;
 }
@@ -5101,7 +5253,8 @@ get_digital_logic_family_power_up_state(const StubPtr& stub, const pb::string& d
   auto response = GetDigitalLogicFamilyPowerUpStateResponse{};
 
   raise_if_error(
-      stub->GetDigitalLogicFamilyPowerUpState(&context, request, &response));
+      stub->GetDigitalLogicFamilyPowerUpState(&context, request, &response),
+      context);
 
   return response;
 }
@@ -5118,7 +5271,8 @@ get_digital_power_up_states(const StubPtr& stub, const pb::string& device_name, 
   auto response = GetDigitalPowerUpStatesResponse{};
 
   raise_if_error(
-      stub->GetDigitalPowerUpStates(&context, request, &response));
+      stub->GetDigitalPowerUpStates(&context, request, &response),
+      context);
 
   return response;
 }
@@ -5135,7 +5289,8 @@ get_digital_pull_up_pull_down_states(const StubPtr& stub, const pb::string& devi
   auto response = GetDigitalPullUpPullDownStatesResponse{};
 
   raise_if_error(
-      stub->GetDigitalPullUpPullDownStates(&context, request, &response));
+      stub->GetDigitalPullUpPullDownStates(&context, request, &response),
+      context);
 
   return response;
 }
@@ -5150,7 +5305,8 @@ get_disconnected_cdaq_sync_ports(const StubPtr& stub)
   auto response = GetDisconnectedCDAQSyncPortsResponse{};
 
   raise_if_error(
-      stub->GetDisconnectedCDAQSyncPorts(&context, request, &response));
+      stub->GetDisconnectedCDAQSyncPorts(&context, request, &response),
+      context);
 
   return response;
 }
@@ -5166,7 +5322,8 @@ get_error_string(const StubPtr& stub, const pb::int32& error_code)
   auto response = GetErrorStringResponse{};
 
   raise_if_error(
-      stub->GetErrorString(&context, request, &response));
+      stub->GetErrorString(&context, request, &response),
+      context);
 
   return response;
 }
@@ -5190,7 +5347,8 @@ get_exported_signal_attribute_bool(const StubPtr& stub, const nidevice_grpc::Ses
   auto response = GetExportedSignalAttributeBoolResponse{};
 
   raise_if_error(
-      stub->GetExportedSignalAttributeBool(&context, request, &response));
+      stub->GetExportedSignalAttributeBool(&context, request, &response),
+      context);
 
   return response;
 }
@@ -5214,7 +5372,8 @@ get_exported_signal_attribute_double(const StubPtr& stub, const nidevice_grpc::S
   auto response = GetExportedSignalAttributeDoubleResponse{};
 
   raise_if_error(
-      stub->GetExportedSignalAttributeDouble(&context, request, &response));
+      stub->GetExportedSignalAttributeDouble(&context, request, &response),
+      context);
 
   return response;
 }
@@ -5238,7 +5397,8 @@ get_exported_signal_attribute_int32(const StubPtr& stub, const nidevice_grpc::Se
   auto response = GetExportedSignalAttributeInt32Response{};
 
   raise_if_error(
-      stub->GetExportedSignalAttributeInt32(&context, request, &response));
+      stub->GetExportedSignalAttributeInt32(&context, request, &response),
+      context);
 
   return response;
 }
@@ -5262,7 +5422,8 @@ get_exported_signal_attribute_string(const StubPtr& stub, const nidevice_grpc::S
   auto response = GetExportedSignalAttributeStringResponse{};
 
   raise_if_error(
-      stub->GetExportedSignalAttributeString(&context, request, &response));
+      stub->GetExportedSignalAttributeString(&context, request, &response),
+      context);
 
   return response;
 }
@@ -5286,7 +5447,8 @@ get_exported_signal_attribute_uint32(const StubPtr& stub, const nidevice_grpc::S
   auto response = GetExportedSignalAttributeUInt32Response{};
 
   raise_if_error(
-      stub->GetExportedSignalAttributeUInt32(&context, request, &response));
+      stub->GetExportedSignalAttributeUInt32(&context, request, &response),
+      context);
 
   return response;
 }
@@ -5301,7 +5463,8 @@ get_extended_error_info(const StubPtr& stub)
   auto response = GetExtendedErrorInfoResponse{};
 
   raise_if_error(
-      stub->GetExtendedErrorInfo(&context, request, &response));
+      stub->GetExtendedErrorInfo(&context, request, &response),
+      context);
 
   return response;
 }
@@ -5317,7 +5480,8 @@ get_first_samp_clk_when(const StubPtr& stub, const nidevice_grpc::Session& task)
   auto response = GetFirstSampClkWhenResponse{};
 
   raise_if_error(
-      stub->GetFirstSampClkWhen(&context, request, &response));
+      stub->GetFirstSampClkWhen(&context, request, &response),
+      context);
 
   return response;
 }
@@ -5333,7 +5497,8 @@ get_first_samp_timestamp_val(const StubPtr& stub, const nidevice_grpc::Session& 
   auto response = GetFirstSampTimestampValResponse{};
 
   raise_if_error(
-      stub->GetFirstSampTimestampVal(&context, request, &response));
+      stub->GetFirstSampTimestampVal(&context, request, &response),
+      context);
 
   return response;
 }
@@ -5350,7 +5515,8 @@ get_nth_task_channel(const StubPtr& stub, const nidevice_grpc::Session& task, co
   auto response = GetNthTaskChannelResponse{};
 
   raise_if_error(
-      stub->GetNthTaskChannel(&context, request, &response));
+      stub->GetNthTaskChannel(&context, request, &response),
+      context);
 
   return response;
 }
@@ -5367,7 +5533,8 @@ get_nth_task_device(const StubPtr& stub, const nidevice_grpc::Session& task, con
   auto response = GetNthTaskDeviceResponse{};
 
   raise_if_error(
-      stub->GetNthTaskDevice(&context, request, &response));
+      stub->GetNthTaskDevice(&context, request, &response),
+      context);
 
   return response;
 }
@@ -5384,7 +5551,8 @@ get_nth_task_read_channel(const StubPtr& stub, const nidevice_grpc::Session& tas
   auto response = GetNthTaskReadChannelResponse{};
 
   raise_if_error(
-      stub->GetNthTaskReadChannel(&context, request, &response));
+      stub->GetNthTaskReadChannel(&context, request, &response),
+      context);
 
   return response;
 }
@@ -5408,7 +5576,8 @@ get_persisted_chan_attribute_bool(const StubPtr& stub, const pb::string& channel
   auto response = GetPersistedChanAttributeBoolResponse{};
 
   raise_if_error(
-      stub->GetPersistedChanAttributeBool(&context, request, &response));
+      stub->GetPersistedChanAttributeBool(&context, request, &response),
+      context);
 
   return response;
 }
@@ -5432,7 +5601,8 @@ get_persisted_chan_attribute_string(const StubPtr& stub, const pb::string& chann
   auto response = GetPersistedChanAttributeStringResponse{};
 
   raise_if_error(
-      stub->GetPersistedChanAttributeString(&context, request, &response));
+      stub->GetPersistedChanAttributeString(&context, request, &response),
+      context);
 
   return response;
 }
@@ -5456,7 +5626,8 @@ get_persisted_scale_attribute_bool(const StubPtr& stub, const pb::string& scale_
   auto response = GetPersistedScaleAttributeBoolResponse{};
 
   raise_if_error(
-      stub->GetPersistedScaleAttributeBool(&context, request, &response));
+      stub->GetPersistedScaleAttributeBool(&context, request, &response),
+      context);
 
   return response;
 }
@@ -5480,7 +5651,8 @@ get_persisted_scale_attribute_string(const StubPtr& stub, const pb::string& scal
   auto response = GetPersistedScaleAttributeStringResponse{};
 
   raise_if_error(
-      stub->GetPersistedScaleAttributeString(&context, request, &response));
+      stub->GetPersistedScaleAttributeString(&context, request, &response),
+      context);
 
   return response;
 }
@@ -5504,7 +5676,8 @@ get_persisted_task_attribute_bool(const StubPtr& stub, const pb::string& task_na
   auto response = GetPersistedTaskAttributeBoolResponse{};
 
   raise_if_error(
-      stub->GetPersistedTaskAttributeBool(&context, request, &response));
+      stub->GetPersistedTaskAttributeBool(&context, request, &response),
+      context);
 
   return response;
 }
@@ -5528,7 +5701,8 @@ get_persisted_task_attribute_string(const StubPtr& stub, const pb::string& task_
   auto response = GetPersistedTaskAttributeStringResponse{};
 
   raise_if_error(
-      stub->GetPersistedTaskAttributeString(&context, request, &response));
+      stub->GetPersistedTaskAttributeString(&context, request, &response),
+      context);
 
   return response;
 }
@@ -5552,7 +5726,8 @@ get_physical_chan_attribute_bool(const StubPtr& stub, const pb::string& physical
   auto response = GetPhysicalChanAttributeBoolResponse{};
 
   raise_if_error(
-      stub->GetPhysicalChanAttributeBool(&context, request, &response));
+      stub->GetPhysicalChanAttributeBool(&context, request, &response),
+      context);
 
   return response;
 }
@@ -5576,7 +5751,8 @@ get_physical_chan_attribute_bytes(const StubPtr& stub, const pb::string& physica
   auto response = GetPhysicalChanAttributeBytesResponse{};
 
   raise_if_error(
-      stub->GetPhysicalChanAttributeBytes(&context, request, &response));
+      stub->GetPhysicalChanAttributeBytes(&context, request, &response),
+      context);
 
   return response;
 }
@@ -5600,7 +5776,8 @@ get_physical_chan_attribute_double(const StubPtr& stub, const pb::string& physic
   auto response = GetPhysicalChanAttributeDoubleResponse{};
 
   raise_if_error(
-      stub->GetPhysicalChanAttributeDouble(&context, request, &response));
+      stub->GetPhysicalChanAttributeDouble(&context, request, &response),
+      context);
 
   return response;
 }
@@ -5624,7 +5801,8 @@ get_physical_chan_attribute_double_array(const StubPtr& stub, const pb::string& 
   auto response = GetPhysicalChanAttributeDoubleArrayResponse{};
 
   raise_if_error(
-      stub->GetPhysicalChanAttributeDoubleArray(&context, request, &response));
+      stub->GetPhysicalChanAttributeDoubleArray(&context, request, &response),
+      context);
 
   return response;
 }
@@ -5648,7 +5826,8 @@ get_physical_chan_attribute_int32(const StubPtr& stub, const pb::string& physica
   auto response = GetPhysicalChanAttributeInt32Response{};
 
   raise_if_error(
-      stub->GetPhysicalChanAttributeInt32(&context, request, &response));
+      stub->GetPhysicalChanAttributeInt32(&context, request, &response),
+      context);
 
   return response;
 }
@@ -5672,7 +5851,8 @@ get_physical_chan_attribute_int32_array(const StubPtr& stub, const pb::string& p
   auto response = GetPhysicalChanAttributeInt32ArrayResponse{};
 
   raise_if_error(
-      stub->GetPhysicalChanAttributeInt32Array(&context, request, &response));
+      stub->GetPhysicalChanAttributeInt32Array(&context, request, &response),
+      context);
 
   return response;
 }
@@ -5696,7 +5876,8 @@ get_physical_chan_attribute_string(const StubPtr& stub, const pb::string& physic
   auto response = GetPhysicalChanAttributeStringResponse{};
 
   raise_if_error(
-      stub->GetPhysicalChanAttributeString(&context, request, &response));
+      stub->GetPhysicalChanAttributeString(&context, request, &response),
+      context);
 
   return response;
 }
@@ -5720,7 +5901,8 @@ get_physical_chan_attribute_uint32(const StubPtr& stub, const pb::string& physic
   auto response = GetPhysicalChanAttributeUInt32Response{};
 
   raise_if_error(
-      stub->GetPhysicalChanAttributeUInt32(&context, request, &response));
+      stub->GetPhysicalChanAttributeUInt32(&context, request, &response),
+      context);
 
   return response;
 }
@@ -5744,7 +5926,8 @@ get_physical_chan_attribute_uint32_array(const StubPtr& stub, const pb::string& 
   auto response = GetPhysicalChanAttributeUInt32ArrayResponse{};
 
   raise_if_error(
-      stub->GetPhysicalChanAttributeUInt32Array(&context, request, &response));
+      stub->GetPhysicalChanAttributeUInt32Array(&context, request, &response),
+      context);
 
   return response;
 }
@@ -5768,7 +5951,8 @@ get_read_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& task,
   auto response = GetReadAttributeBoolResponse{};
 
   raise_if_error(
-      stub->GetReadAttributeBool(&context, request, &response));
+      stub->GetReadAttributeBool(&context, request, &response),
+      context);
 
   return response;
 }
@@ -5792,7 +5976,8 @@ get_read_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& tas
   auto response = GetReadAttributeDoubleResponse{};
 
   raise_if_error(
-      stub->GetReadAttributeDouble(&context, request, &response));
+      stub->GetReadAttributeDouble(&context, request, &response),
+      context);
 
   return response;
 }
@@ -5816,7 +6001,8 @@ get_read_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& task
   auto response = GetReadAttributeInt32Response{};
 
   raise_if_error(
-      stub->GetReadAttributeInt32(&context, request, &response));
+      stub->GetReadAttributeInt32(&context, request, &response),
+      context);
 
   return response;
 }
@@ -5840,7 +6026,8 @@ get_read_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& tas
   auto response = GetReadAttributeStringResponse{};
 
   raise_if_error(
-      stub->GetReadAttributeString(&context, request, &response));
+      stub->GetReadAttributeString(&context, request, &response),
+      context);
 
   return response;
 }
@@ -5864,7 +6051,8 @@ get_read_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& tas
   auto response = GetReadAttributeUInt32Response{};
 
   raise_if_error(
-      stub->GetReadAttributeUInt32(&context, request, &response));
+      stub->GetReadAttributeUInt32(&context, request, &response),
+      context);
 
   return response;
 }
@@ -5888,7 +6076,8 @@ get_read_attribute_uint64(const StubPtr& stub, const nidevice_grpc::Session& tas
   auto response = GetReadAttributeUInt64Response{};
 
   raise_if_error(
-      stub->GetReadAttributeUInt64(&context, request, &response));
+      stub->GetReadAttributeUInt64(&context, request, &response),
+      context);
 
   return response;
 }
@@ -5912,7 +6101,8 @@ get_real_time_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& 
   auto response = GetRealTimeAttributeBoolResponse{};
 
   raise_if_error(
-      stub->GetRealTimeAttributeBool(&context, request, &response));
+      stub->GetRealTimeAttributeBool(&context, request, &response),
+      context);
 
   return response;
 }
@@ -5936,7 +6126,8 @@ get_real_time_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session&
   auto response = GetRealTimeAttributeInt32Response{};
 
   raise_if_error(
-      stub->GetRealTimeAttributeInt32(&context, request, &response));
+      stub->GetRealTimeAttributeInt32(&context, request, &response),
+      context);
 
   return response;
 }
@@ -5960,7 +6151,8 @@ get_real_time_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session
   auto response = GetRealTimeAttributeUInt32Response{};
 
   raise_if_error(
-      stub->GetRealTimeAttributeUInt32(&context, request, &response));
+      stub->GetRealTimeAttributeUInt32(&context, request, &response),
+      context);
 
   return response;
 }
@@ -5976,7 +6168,8 @@ get_ref_trig_timestamp_val(const StubPtr& stub, const nidevice_grpc::Session& ta
   auto response = GetRefTrigTimestampValResponse{};
 
   raise_if_error(
-      stub->GetRefTrigTimestampVal(&context, request, &response));
+      stub->GetRefTrigTimestampVal(&context, request, &response),
+      context);
 
   return response;
 }
@@ -6000,7 +6193,8 @@ get_scale_attribute_double(const StubPtr& stub, const pb::string& scale_name, co
   auto response = GetScaleAttributeDoubleResponse{};
 
   raise_if_error(
-      stub->GetScaleAttributeDouble(&context, request, &response));
+      stub->GetScaleAttributeDouble(&context, request, &response),
+      context);
 
   return response;
 }
@@ -6024,7 +6218,8 @@ get_scale_attribute_double_array(const StubPtr& stub, const pb::string& scale_na
   auto response = GetScaleAttributeDoubleArrayResponse{};
 
   raise_if_error(
-      stub->GetScaleAttributeDoubleArray(&context, request, &response));
+      stub->GetScaleAttributeDoubleArray(&context, request, &response),
+      context);
 
   return response;
 }
@@ -6048,7 +6243,8 @@ get_scale_attribute_int32(const StubPtr& stub, const pb::string& scale_name, con
   auto response = GetScaleAttributeInt32Response{};
 
   raise_if_error(
-      stub->GetScaleAttributeInt32(&context, request, &response));
+      stub->GetScaleAttributeInt32(&context, request, &response),
+      context);
 
   return response;
 }
@@ -6072,7 +6268,8 @@ get_scale_attribute_string(const StubPtr& stub, const pb::string& scale_name, co
   auto response = GetScaleAttributeStringResponse{};
 
   raise_if_error(
-      stub->GetScaleAttributeString(&context, request, &response));
+      stub->GetScaleAttributeString(&context, request, &response),
+      context);
 
   return response;
 }
@@ -6088,7 +6285,8 @@ get_self_cal_last_date_and_time(const StubPtr& stub, const pb::string& device_na
   auto response = GetSelfCalLastDateAndTimeResponse{};
 
   raise_if_error(
-      stub->GetSelfCalLastDateAndTime(&context, request, &response));
+      stub->GetSelfCalLastDateAndTime(&context, request, &response),
+      context);
 
   return response;
 }
@@ -6104,7 +6302,8 @@ get_start_trig_timestamp_val(const StubPtr& stub, const nidevice_grpc::Session& 
   auto response = GetStartTrigTimestampValResponse{};
 
   raise_if_error(
-      stub->GetStartTrigTimestampVal(&context, request, &response));
+      stub->GetStartTrigTimestampVal(&context, request, &response),
+      context);
 
   return response;
 }
@@ -6120,7 +6319,8 @@ get_start_trig_trig_when(const StubPtr& stub, const nidevice_grpc::Session& task
   auto response = GetStartTrigTrigWhenResponse{};
 
   raise_if_error(
-      stub->GetStartTrigTrigWhen(&context, request, &response));
+      stub->GetStartTrigTrigWhen(&context, request, &response),
+      context);
 
   return response;
 }
@@ -6136,7 +6336,8 @@ get_sync_pulse_time_when(const StubPtr& stub, const nidevice_grpc::Session& task
   auto response = GetSyncPulseTimeWhenResponse{};
 
   raise_if_error(
-      stub->GetSyncPulseTimeWhen(&context, request, &response));
+      stub->GetSyncPulseTimeWhen(&context, request, &response),
+      context);
 
   return response;
 }
@@ -6159,7 +6360,8 @@ get_system_info_attribute_string(const StubPtr& stub, const simple_variant<Syste
   auto response = GetSystemInfoAttributeStringResponse{};
 
   raise_if_error(
-      stub->GetSystemInfoAttributeString(&context, request, &response));
+      stub->GetSystemInfoAttributeString(&context, request, &response),
+      context);
 
   return response;
 }
@@ -6182,7 +6384,8 @@ get_system_info_attribute_uint32(const StubPtr& stub, const simple_variant<Syste
   auto response = GetSystemInfoAttributeUInt32Response{};
 
   raise_if_error(
-      stub->GetSystemInfoAttributeUInt32(&context, request, &response));
+      stub->GetSystemInfoAttributeUInt32(&context, request, &response),
+      context);
 
   return response;
 }
@@ -6206,7 +6409,8 @@ get_task_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& task,
   auto response = GetTaskAttributeBoolResponse{};
 
   raise_if_error(
-      stub->GetTaskAttributeBool(&context, request, &response));
+      stub->GetTaskAttributeBool(&context, request, &response),
+      context);
 
   return response;
 }
@@ -6230,7 +6434,8 @@ get_task_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& tas
   auto response = GetTaskAttributeStringResponse{};
 
   raise_if_error(
-      stub->GetTaskAttributeString(&context, request, &response));
+      stub->GetTaskAttributeString(&context, request, &response),
+      context);
 
   return response;
 }
@@ -6254,7 +6459,8 @@ get_task_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& tas
   auto response = GetTaskAttributeUInt32Response{};
 
   raise_if_error(
-      stub->GetTaskAttributeUInt32(&context, request, &response));
+      stub->GetTaskAttributeUInt32(&context, request, &response),
+      context);
 
   return response;
 }
@@ -6278,7 +6484,8 @@ get_timing_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& tas
   auto response = GetTimingAttributeBoolResponse{};
 
   raise_if_error(
-      stub->GetTimingAttributeBool(&context, request, &response));
+      stub->GetTimingAttributeBool(&context, request, &response),
+      context);
 
   return response;
 }
@@ -6302,7 +6509,8 @@ get_timing_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& t
   auto response = GetTimingAttributeDoubleResponse{};
 
   raise_if_error(
-      stub->GetTimingAttributeDouble(&context, request, &response));
+      stub->GetTimingAttributeDouble(&context, request, &response),
+      context);
 
   return response;
 }
@@ -6327,7 +6535,8 @@ get_timing_attribute_ex_bool(const StubPtr& stub, const nidevice_grpc::Session& 
   auto response = GetTimingAttributeExBoolResponse{};
 
   raise_if_error(
-      stub->GetTimingAttributeExBool(&context, request, &response));
+      stub->GetTimingAttributeExBool(&context, request, &response),
+      context);
 
   return response;
 }
@@ -6352,7 +6561,8 @@ get_timing_attribute_ex_double(const StubPtr& stub, const nidevice_grpc::Session
   auto response = GetTimingAttributeExDoubleResponse{};
 
   raise_if_error(
-      stub->GetTimingAttributeExDouble(&context, request, &response));
+      stub->GetTimingAttributeExDouble(&context, request, &response),
+      context);
 
   return response;
 }
@@ -6377,7 +6587,8 @@ get_timing_attribute_ex_int32(const StubPtr& stub, const nidevice_grpc::Session&
   auto response = GetTimingAttributeExInt32Response{};
 
   raise_if_error(
-      stub->GetTimingAttributeExInt32(&context, request, &response));
+      stub->GetTimingAttributeExInt32(&context, request, &response),
+      context);
 
   return response;
 }
@@ -6402,7 +6613,8 @@ get_timing_attribute_ex_string(const StubPtr& stub, const nidevice_grpc::Session
   auto response = GetTimingAttributeExStringResponse{};
 
   raise_if_error(
-      stub->GetTimingAttributeExString(&context, request, &response));
+      stub->GetTimingAttributeExString(&context, request, &response),
+      context);
 
   return response;
 }
@@ -6427,7 +6639,8 @@ get_timing_attribute_ex_timestamp(const StubPtr& stub, const nidevice_grpc::Sess
   auto response = GetTimingAttributeExTimestampResponse{};
 
   raise_if_error(
-      stub->GetTimingAttributeExTimestamp(&context, request, &response));
+      stub->GetTimingAttributeExTimestamp(&context, request, &response),
+      context);
 
   return response;
 }
@@ -6452,7 +6665,8 @@ get_timing_attribute_ex_uint32(const StubPtr& stub, const nidevice_grpc::Session
   auto response = GetTimingAttributeExUInt32Response{};
 
   raise_if_error(
-      stub->GetTimingAttributeExUInt32(&context, request, &response));
+      stub->GetTimingAttributeExUInt32(&context, request, &response),
+      context);
 
   return response;
 }
@@ -6477,7 +6691,8 @@ get_timing_attribute_ex_uint64(const StubPtr& stub, const nidevice_grpc::Session
   auto response = GetTimingAttributeExUInt64Response{};
 
   raise_if_error(
-      stub->GetTimingAttributeExUInt64(&context, request, &response));
+      stub->GetTimingAttributeExUInt64(&context, request, &response),
+      context);
 
   return response;
 }
@@ -6501,7 +6716,8 @@ get_timing_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& ta
   auto response = GetTimingAttributeInt32Response{};
 
   raise_if_error(
-      stub->GetTimingAttributeInt32(&context, request, &response));
+      stub->GetTimingAttributeInt32(&context, request, &response),
+      context);
 
   return response;
 }
@@ -6525,7 +6741,8 @@ get_timing_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& t
   auto response = GetTimingAttributeStringResponse{};
 
   raise_if_error(
-      stub->GetTimingAttributeString(&context, request, &response));
+      stub->GetTimingAttributeString(&context, request, &response),
+      context);
 
   return response;
 }
@@ -6549,7 +6766,8 @@ get_timing_attribute_timestamp(const StubPtr& stub, const nidevice_grpc::Session
   auto response = GetTimingAttributeTimestampResponse{};
 
   raise_if_error(
-      stub->GetTimingAttributeTimestamp(&context, request, &response));
+      stub->GetTimingAttributeTimestamp(&context, request, &response),
+      context);
 
   return response;
 }
@@ -6573,7 +6791,8 @@ get_timing_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& t
   auto response = GetTimingAttributeUInt32Response{};
 
   raise_if_error(
-      stub->GetTimingAttributeUInt32(&context, request, &response));
+      stub->GetTimingAttributeUInt32(&context, request, &response),
+      context);
 
   return response;
 }
@@ -6597,7 +6816,8 @@ get_timing_attribute_uint64(const StubPtr& stub, const nidevice_grpc::Session& t
   auto response = GetTimingAttributeUInt64Response{};
 
   raise_if_error(
-      stub->GetTimingAttributeUInt64(&context, request, &response));
+      stub->GetTimingAttributeUInt64(&context, request, &response),
+      context);
 
   return response;
 }
@@ -6621,7 +6841,8 @@ get_trig_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& task,
   auto response = GetTrigAttributeBoolResponse{};
 
   raise_if_error(
-      stub->GetTrigAttributeBool(&context, request, &response));
+      stub->GetTrigAttributeBool(&context, request, &response),
+      context);
 
   return response;
 }
@@ -6645,7 +6866,8 @@ get_trig_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& tas
   auto response = GetTrigAttributeDoubleResponse{};
 
   raise_if_error(
-      stub->GetTrigAttributeDouble(&context, request, &response));
+      stub->GetTrigAttributeDouble(&context, request, &response),
+      context);
 
   return response;
 }
@@ -6669,7 +6891,8 @@ get_trig_attribute_double_array(const StubPtr& stub, const nidevice_grpc::Sessio
   auto response = GetTrigAttributeDoubleArrayResponse{};
 
   raise_if_error(
-      stub->GetTrigAttributeDoubleArray(&context, request, &response));
+      stub->GetTrigAttributeDoubleArray(&context, request, &response),
+      context);
 
   return response;
 }
@@ -6693,7 +6916,8 @@ get_trig_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& task
   auto response = GetTrigAttributeInt32Response{};
 
   raise_if_error(
-      stub->GetTrigAttributeInt32(&context, request, &response));
+      stub->GetTrigAttributeInt32(&context, request, &response),
+      context);
 
   return response;
 }
@@ -6717,7 +6941,8 @@ get_trig_attribute_int32_array(const StubPtr& stub, const nidevice_grpc::Session
   auto response = GetTrigAttributeInt32ArrayResponse{};
 
   raise_if_error(
-      stub->GetTrigAttributeInt32Array(&context, request, &response));
+      stub->GetTrigAttributeInt32Array(&context, request, &response),
+      context);
 
   return response;
 }
@@ -6741,7 +6966,8 @@ get_trig_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& tas
   auto response = GetTrigAttributeStringResponse{};
 
   raise_if_error(
-      stub->GetTrigAttributeString(&context, request, &response));
+      stub->GetTrigAttributeString(&context, request, &response),
+      context);
 
   return response;
 }
@@ -6765,7 +6991,8 @@ get_trig_attribute_timestamp(const StubPtr& stub, const nidevice_grpc::Session& 
   auto response = GetTrigAttributeTimestampResponse{};
 
   raise_if_error(
-      stub->GetTrigAttributeTimestamp(&context, request, &response));
+      stub->GetTrigAttributeTimestamp(&context, request, &response),
+      context);
 
   return response;
 }
@@ -6789,7 +7016,8 @@ get_trig_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& tas
   auto response = GetTrigAttributeUInt32Response{};
 
   raise_if_error(
-      stub->GetTrigAttributeUInt32(&context, request, &response));
+      stub->GetTrigAttributeUInt32(&context, request, &response),
+      context);
 
   return response;
 }
@@ -6814,7 +7042,8 @@ get_watchdog_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& t
   auto response = GetWatchdogAttributeBoolResponse{};
 
   raise_if_error(
-      stub->GetWatchdogAttributeBool(&context, request, &response));
+      stub->GetWatchdogAttributeBool(&context, request, &response),
+      context);
 
   return response;
 }
@@ -6839,7 +7068,8 @@ get_watchdog_attribute_double(const StubPtr& stub, const nidevice_grpc::Session&
   auto response = GetWatchdogAttributeDoubleResponse{};
 
   raise_if_error(
-      stub->GetWatchdogAttributeDouble(&context, request, &response));
+      stub->GetWatchdogAttributeDouble(&context, request, &response),
+      context);
 
   return response;
 }
@@ -6864,7 +7094,8 @@ get_watchdog_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& 
   auto response = GetWatchdogAttributeInt32Response{};
 
   raise_if_error(
-      stub->GetWatchdogAttributeInt32(&context, request, &response));
+      stub->GetWatchdogAttributeInt32(&context, request, &response),
+      context);
 
   return response;
 }
@@ -6889,7 +7120,8 @@ get_watchdog_attribute_string(const StubPtr& stub, const nidevice_grpc::Session&
   auto response = GetWatchdogAttributeStringResponse{};
 
   raise_if_error(
-      stub->GetWatchdogAttributeString(&context, request, &response));
+      stub->GetWatchdogAttributeString(&context, request, &response),
+      context);
 
   return response;
 }
@@ -6913,7 +7145,8 @@ get_write_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& task
   auto response = GetWriteAttributeBoolResponse{};
 
   raise_if_error(
-      stub->GetWriteAttributeBool(&context, request, &response));
+      stub->GetWriteAttributeBool(&context, request, &response),
+      context);
 
   return response;
 }
@@ -6937,7 +7170,8 @@ get_write_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& ta
   auto response = GetWriteAttributeDoubleResponse{};
 
   raise_if_error(
-      stub->GetWriteAttributeDouble(&context, request, &response));
+      stub->GetWriteAttributeDouble(&context, request, &response),
+      context);
 
   return response;
 }
@@ -6961,7 +7195,8 @@ get_write_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& tas
   auto response = GetWriteAttributeInt32Response{};
 
   raise_if_error(
-      stub->GetWriteAttributeInt32(&context, request, &response));
+      stub->GetWriteAttributeInt32(&context, request, &response),
+      context);
 
   return response;
 }
@@ -6985,7 +7220,8 @@ get_write_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& ta
   auto response = GetWriteAttributeStringResponse{};
 
   raise_if_error(
-      stub->GetWriteAttributeString(&context, request, &response));
+      stub->GetWriteAttributeString(&context, request, &response),
+      context);
 
   return response;
 }
@@ -7009,7 +7245,8 @@ get_write_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& ta
   auto response = GetWriteAttributeUInt32Response{};
 
   raise_if_error(
-      stub->GetWriteAttributeUInt32(&context, request, &response));
+      stub->GetWriteAttributeUInt32(&context, request, &response),
+      context);
 
   return response;
 }
@@ -7033,7 +7270,8 @@ get_write_attribute_uint64(const StubPtr& stub, const nidevice_grpc::Session& ta
   auto response = GetWriteAttributeUInt64Response{};
 
   raise_if_error(
-      stub->GetWriteAttributeUInt64(&context, request, &response));
+      stub->GetWriteAttributeUInt64(&context, request, &response),
+      context);
 
   return response;
 }
@@ -7049,7 +7287,8 @@ is_task_done(const StubPtr& stub, const nidevice_grpc::Session& task)
   auto response = IsTaskDoneResponse{};
 
   raise_if_error(
-      stub->IsTaskDone(&context, request, &response));
+      stub->IsTaskDone(&context, request, &response),
+      context);
 
   return response;
 }
@@ -7065,7 +7304,8 @@ load_task(const StubPtr& stub, const pb::string& session_name)
   auto response = LoadTaskResponse{};
 
   raise_if_error(
-      stub->LoadTask(&context, request, &response));
+      stub->LoadTask(&context, request, &response),
+      context);
 
   return response;
 }
@@ -7092,7 +7332,8 @@ read_analog_f64(const StubPtr& stub, const nidevice_grpc::Session& task, const p
   auto response = ReadAnalogF64Response{};
 
   raise_if_error(
-      stub->ReadAnalogF64(&context, request, &response));
+      stub->ReadAnalogF64(&context, request, &response),
+      context);
 
   return response;
 }
@@ -7109,7 +7350,8 @@ read_analog_scalar_f64(const StubPtr& stub, const nidevice_grpc::Session& task, 
   auto response = ReadAnalogScalarF64Response{};
 
   raise_if_error(
-      stub->ReadAnalogScalarF64(&context, request, &response));
+      stub->ReadAnalogScalarF64(&context, request, &response),
+      context);
 
   return response;
 }
@@ -7136,7 +7378,8 @@ read_binary_i16(const StubPtr& stub, const nidevice_grpc::Session& task, const p
   auto response = ReadBinaryI16Response{};
 
   raise_if_error(
-      stub->ReadBinaryI16(&context, request, &response));
+      stub->ReadBinaryI16(&context, request, &response),
+      context);
 
   return response;
 }
@@ -7163,7 +7406,8 @@ read_binary_i32(const StubPtr& stub, const nidevice_grpc::Session& task, const p
   auto response = ReadBinaryI32Response{};
 
   raise_if_error(
-      stub->ReadBinaryI32(&context, request, &response));
+      stub->ReadBinaryI32(&context, request, &response),
+      context);
 
   return response;
 }
@@ -7190,7 +7434,8 @@ read_binary_u16(const StubPtr& stub, const nidevice_grpc::Session& task, const p
   auto response = ReadBinaryU16Response{};
 
   raise_if_error(
-      stub->ReadBinaryU16(&context, request, &response));
+      stub->ReadBinaryU16(&context, request, &response),
+      context);
 
   return response;
 }
@@ -7217,7 +7462,8 @@ read_binary_u32(const StubPtr& stub, const nidevice_grpc::Session& task, const p
   auto response = ReadBinaryU32Response{};
 
   raise_if_error(
-      stub->ReadBinaryU32(&context, request, &response));
+      stub->ReadBinaryU32(&context, request, &response),
+      context);
 
   return response;
 }
@@ -7236,7 +7482,8 @@ read_counter_f64(const StubPtr& stub, const nidevice_grpc::Session& task, const 
   auto response = ReadCounterF64Response{};
 
   raise_if_error(
-      stub->ReadCounterF64(&context, request, &response));
+      stub->ReadCounterF64(&context, request, &response),
+      context);
 
   return response;
 }
@@ -7263,7 +7510,8 @@ read_counter_f64_ex(const StubPtr& stub, const nidevice_grpc::Session& task, con
   auto response = ReadCounterF64ExResponse{};
 
   raise_if_error(
-      stub->ReadCounterF64Ex(&context, request, &response));
+      stub->ReadCounterF64Ex(&context, request, &response),
+      context);
 
   return response;
 }
@@ -7280,7 +7528,8 @@ read_counter_scalar_f64(const StubPtr& stub, const nidevice_grpc::Session& task,
   auto response = ReadCounterScalarF64Response{};
 
   raise_if_error(
-      stub->ReadCounterScalarF64(&context, request, &response));
+      stub->ReadCounterScalarF64(&context, request, &response),
+      context);
 
   return response;
 }
@@ -7297,7 +7546,8 @@ read_counter_scalar_u32(const StubPtr& stub, const nidevice_grpc::Session& task,
   auto response = ReadCounterScalarU32Response{};
 
   raise_if_error(
-      stub->ReadCounterScalarU32(&context, request, &response));
+      stub->ReadCounterScalarU32(&context, request, &response),
+      context);
 
   return response;
 }
@@ -7316,7 +7566,8 @@ read_counter_u32(const StubPtr& stub, const nidevice_grpc::Session& task, const 
   auto response = ReadCounterU32Response{};
 
   raise_if_error(
-      stub->ReadCounterU32(&context, request, &response));
+      stub->ReadCounterU32(&context, request, &response),
+      context);
 
   return response;
 }
@@ -7343,7 +7594,8 @@ read_counter_u32_ex(const StubPtr& stub, const nidevice_grpc::Session& task, con
   auto response = ReadCounterU32ExResponse{};
 
   raise_if_error(
-      stub->ReadCounterU32Ex(&context, request, &response));
+      stub->ReadCounterU32Ex(&context, request, &response),
+      context);
 
   return response;
 }
@@ -7370,7 +7622,8 @@ read_ctr_freq(const StubPtr& stub, const nidevice_grpc::Session& task, const pb:
   auto response = ReadCtrFreqResponse{};
 
   raise_if_error(
-      stub->ReadCtrFreq(&context, request, &response));
+      stub->ReadCtrFreq(&context, request, &response),
+      context);
 
   return response;
 }
@@ -7387,7 +7640,8 @@ read_ctr_freq_scalar(const StubPtr& stub, const nidevice_grpc::Session& task, co
   auto response = ReadCtrFreqScalarResponse{};
 
   raise_if_error(
-      stub->ReadCtrFreqScalar(&context, request, &response));
+      stub->ReadCtrFreqScalar(&context, request, &response),
+      context);
 
   return response;
 }
@@ -7414,7 +7668,8 @@ read_ctr_ticks(const StubPtr& stub, const nidevice_grpc::Session& task, const pb
   auto response = ReadCtrTicksResponse{};
 
   raise_if_error(
-      stub->ReadCtrTicks(&context, request, &response));
+      stub->ReadCtrTicks(&context, request, &response),
+      context);
 
   return response;
 }
@@ -7431,7 +7686,8 @@ read_ctr_ticks_scalar(const StubPtr& stub, const nidevice_grpc::Session& task, c
   auto response = ReadCtrTicksScalarResponse{};
 
   raise_if_error(
-      stub->ReadCtrTicksScalar(&context, request, &response));
+      stub->ReadCtrTicksScalar(&context, request, &response),
+      context);
 
   return response;
 }
@@ -7458,7 +7714,8 @@ read_ctr_time(const StubPtr& stub, const nidevice_grpc::Session& task, const pb:
   auto response = ReadCtrTimeResponse{};
 
   raise_if_error(
-      stub->ReadCtrTime(&context, request, &response));
+      stub->ReadCtrTime(&context, request, &response),
+      context);
 
   return response;
 }
@@ -7475,7 +7732,8 @@ read_ctr_time_scalar(const StubPtr& stub, const nidevice_grpc::Session& task, co
   auto response = ReadCtrTimeScalarResponse{};
 
   raise_if_error(
-      stub->ReadCtrTimeScalar(&context, request, &response));
+      stub->ReadCtrTimeScalar(&context, request, &response),
+      context);
 
   return response;
 }
@@ -7502,7 +7760,8 @@ read_digital_lines(const StubPtr& stub, const nidevice_grpc::Session& task, cons
   auto response = ReadDigitalLinesResponse{};
 
   raise_if_error(
-      stub->ReadDigitalLines(&context, request, &response));
+      stub->ReadDigitalLines(&context, request, &response),
+      context);
 
   return response;
 }
@@ -7519,7 +7778,8 @@ read_digital_scalar_u32(const StubPtr& stub, const nidevice_grpc::Session& task,
   auto response = ReadDigitalScalarU32Response{};
 
   raise_if_error(
-      stub->ReadDigitalScalarU32(&context, request, &response));
+      stub->ReadDigitalScalarU32(&context, request, &response),
+      context);
 
   return response;
 }
@@ -7546,7 +7806,8 @@ read_digital_u16(const StubPtr& stub, const nidevice_grpc::Session& task, const 
   auto response = ReadDigitalU16Response{};
 
   raise_if_error(
-      stub->ReadDigitalU16(&context, request, &response));
+      stub->ReadDigitalU16(&context, request, &response),
+      context);
 
   return response;
 }
@@ -7573,7 +7834,8 @@ read_digital_u32(const StubPtr& stub, const nidevice_grpc::Session& task, const 
   auto response = ReadDigitalU32Response{};
 
   raise_if_error(
-      stub->ReadDigitalU32(&context, request, &response));
+      stub->ReadDigitalU32(&context, request, &response),
+      context);
 
   return response;
 }
@@ -7600,7 +7862,8 @@ read_digital_u8(const StubPtr& stub, const nidevice_grpc::Session& task, const p
   auto response = ReadDigitalU8Response{};
 
   raise_if_error(
-      stub->ReadDigitalU8(&context, request, &response));
+      stub->ReadDigitalU8(&context, request, &response),
+      context);
 
   return response;
 }
@@ -7619,7 +7882,8 @@ read_raw(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::int3
   auto response = ReadRawResponse{};
 
   raise_if_error(
-      stub->ReadRaw(&context, request, &response));
+      stub->ReadRaw(&context, request, &response),
+      context);
 
   return response;
 }
@@ -7679,7 +7943,8 @@ remove_cdaq_sync_connection(const StubPtr& stub, const pb::string& port_list)
   auto response = RemoveCDAQSyncConnectionResponse{};
 
   raise_if_error(
-      stub->RemoveCDAQSyncConnection(&context, request, &response));
+      stub->RemoveCDAQSyncConnection(&context, request, &response),
+      context);
 
   return response;
 }
@@ -7696,7 +7961,8 @@ reserve_network_device(const StubPtr& stub, const pb::string& device_name, const
   auto response = ReserveNetworkDeviceResponse{};
 
   raise_if_error(
-      stub->ReserveNetworkDevice(&context, request, &response));
+      stub->ReserveNetworkDevice(&context, request, &response),
+      context);
 
   return response;
 }
@@ -7720,7 +7986,8 @@ reset_buffer_attribute(const StubPtr& stub, const nidevice_grpc::Session& task, 
   auto response = ResetBufferAttributeResponse{};
 
   raise_if_error(
-      stub->ResetBufferAttribute(&context, request, &response));
+      stub->ResetBufferAttribute(&context, request, &response),
+      context);
 
   return response;
 }
@@ -7745,7 +8012,8 @@ reset_chan_attribute(const StubPtr& stub, const nidevice_grpc::Session& task, co
   auto response = ResetChanAttributeResponse{};
 
   raise_if_error(
-      stub->ResetChanAttribute(&context, request, &response));
+      stub->ResetChanAttribute(&context, request, &response),
+      context);
 
   return response;
 }
@@ -7761,7 +8029,8 @@ reset_device(const StubPtr& stub, const pb::string& device_name)
   auto response = ResetDeviceResponse{};
 
   raise_if_error(
-      stub->ResetDevice(&context, request, &response));
+      stub->ResetDevice(&context, request, &response),
+      context);
 
   return response;
 }
@@ -7785,7 +8054,8 @@ reset_exported_signal_attribute(const StubPtr& stub, const nidevice_grpc::Sessio
   auto response = ResetExportedSignalAttributeResponse{};
 
   raise_if_error(
-      stub->ResetExportedSignalAttribute(&context, request, &response));
+      stub->ResetExportedSignalAttribute(&context, request, &response),
+      context);
 
   return response;
 }
@@ -7809,7 +8079,8 @@ reset_read_attribute(const StubPtr& stub, const nidevice_grpc::Session& task, co
   auto response = ResetReadAttributeResponse{};
 
   raise_if_error(
-      stub->ResetReadAttribute(&context, request, &response));
+      stub->ResetReadAttribute(&context, request, &response),
+      context);
 
   return response;
 }
@@ -7833,7 +8104,8 @@ reset_real_time_attribute(const StubPtr& stub, const nidevice_grpc::Session& tas
   auto response = ResetRealTimeAttributeResponse{};
 
   raise_if_error(
-      stub->ResetRealTimeAttribute(&context, request, &response));
+      stub->ResetRealTimeAttribute(&context, request, &response),
+      context);
 
   return response;
 }
@@ -7857,7 +8129,8 @@ reset_timing_attribute(const StubPtr& stub, const nidevice_grpc::Session& task, 
   auto response = ResetTimingAttributeResponse{};
 
   raise_if_error(
-      stub->ResetTimingAttribute(&context, request, &response));
+      stub->ResetTimingAttribute(&context, request, &response),
+      context);
 
   return response;
 }
@@ -7882,7 +8155,8 @@ reset_timing_attribute_ex(const StubPtr& stub, const nidevice_grpc::Session& tas
   auto response = ResetTimingAttributeExResponse{};
 
   raise_if_error(
-      stub->ResetTimingAttributeEx(&context, request, &response));
+      stub->ResetTimingAttributeEx(&context, request, &response),
+      context);
 
   return response;
 }
@@ -7906,7 +8180,8 @@ reset_trig_attribute(const StubPtr& stub, const nidevice_grpc::Session& task, co
   auto response = ResetTrigAttributeResponse{};
 
   raise_if_error(
-      stub->ResetTrigAttribute(&context, request, &response));
+      stub->ResetTrigAttribute(&context, request, &response),
+      context);
 
   return response;
 }
@@ -7931,7 +8206,8 @@ reset_watchdog_attribute(const StubPtr& stub, const nidevice_grpc::Session& task
   auto response = ResetWatchdogAttributeResponse{};
 
   raise_if_error(
-      stub->ResetWatchdogAttribute(&context, request, &response));
+      stub->ResetWatchdogAttribute(&context, request, &response),
+      context);
 
   return response;
 }
@@ -7955,7 +8231,8 @@ reset_write_attribute(const StubPtr& stub, const nidevice_grpc::Session& task, c
   auto response = ResetWriteAttributeResponse{};
 
   raise_if_error(
-      stub->ResetWriteAttribute(&context, request, &response));
+      stub->ResetWriteAttribute(&context, request, &response),
+      context);
 
   return response;
 }
@@ -7982,7 +8259,8 @@ save_global_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const 
   auto response = SaveGlobalChanResponse{};
 
   raise_if_error(
-      stub->SaveGlobalChan(&context, request, &response));
+      stub->SaveGlobalChan(&context, request, &response),
+      context);
 
   return response;
 }
@@ -8008,7 +8286,8 @@ save_scale(const StubPtr& stub, const pb::string& scale_name, const pb::string& 
   auto response = SaveScaleResponse{};
 
   raise_if_error(
-      stub->SaveScale(&context, request, &response));
+      stub->SaveScale(&context, request, &response),
+      context);
 
   return response;
 }
@@ -8034,7 +8313,8 @@ save_task(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::str
   auto response = SaveTaskResponse{};
 
   raise_if_error(
-      stub->SaveTask(&context, request, &response));
+      stub->SaveTask(&context, request, &response),
+      context);
 
   return response;
 }
@@ -8050,7 +8330,8 @@ self_cal(const StubPtr& stub, const pb::string& device_name)
   auto response = SelfCalResponse{};
 
   raise_if_error(
-      stub->SelfCal(&context, request, &response));
+      stub->SelfCal(&context, request, &response),
+      context);
 
   return response;
 }
@@ -8066,7 +8347,8 @@ self_test_device(const StubPtr& stub, const pb::string& device_name)
   auto response = SelfTestDeviceResponse{};
 
   raise_if_error(
-      stub->SelfTestDevice(&context, request, &response));
+      stub->SelfTestDevice(&context, request, &response),
+      context);
 
   return response;
 }
@@ -8088,7 +8370,8 @@ set_ai_chan_cal_cal_date(const StubPtr& stub, const nidevice_grpc::Session& task
   auto response = SetAIChanCalCalDateResponse{};
 
   raise_if_error(
-      stub->SetAIChanCalCalDate(&context, request, &response));
+      stub->SetAIChanCalCalDate(&context, request, &response),
+      context);
 
   return response;
 }
@@ -8110,7 +8393,8 @@ set_ai_chan_cal_exp_date(const StubPtr& stub, const nidevice_grpc::Session& task
   auto response = SetAIChanCalExpDateResponse{};
 
   raise_if_error(
-      stub->SetAIChanCalExpDate(&context, request, &response));
+      stub->SetAIChanCalExpDate(&context, request, &response),
+      context);
 
   return response;
 }
@@ -8127,7 +8411,8 @@ set_analog_power_up_states(const StubPtr& stub, const pb::string& device_name, c
   auto response = SetAnalogPowerUpStatesResponse{};
 
   raise_if_error(
-      stub->SetAnalogPowerUpStates(&context, request, &response));
+      stub->SetAnalogPowerUpStates(&context, request, &response),
+      context);
 
   return response;
 }
@@ -8145,7 +8430,8 @@ set_analog_power_up_states_with_output_type(const StubPtr& stub, const pb::strin
   auto response = SetAnalogPowerUpStatesWithOutputTypeResponse{};
 
   raise_if_error(
-      stub->SetAnalogPowerUpStatesWithOutputType(&context, request, &response));
+      stub->SetAnalogPowerUpStatesWithOutputType(&context, request, &response),
+      context);
 
   return response;
 }
@@ -8162,7 +8448,8 @@ set_arm_start_trig_trig_when(const StubPtr& stub, const nidevice_grpc::Session& 
   auto response = SetArmStartTrigTrigWhenResponse{};
 
   raise_if_error(
-      stub->SetArmStartTrigTrigWhen(&context, request, &response));
+      stub->SetArmStartTrigTrigWhen(&context, request, &response),
+      context);
 
   return response;
 }
@@ -8187,7 +8474,8 @@ set_buffer_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& t
   auto response = SetBufferAttributeUInt32Response{};
 
   raise_if_error(
-      stub->SetBufferAttributeUInt32(&context, request, &response));
+      stub->SetBufferAttributeUInt32(&context, request, &response),
+      context);
 
   return response;
 }
@@ -8212,7 +8500,8 @@ set_cal_info_attribute_bool(const StubPtr& stub, const pb::string& device_name, 
   auto response = SetCalInfoAttributeBoolResponse{};
 
   raise_if_error(
-      stub->SetCalInfoAttributeBool(&context, request, &response));
+      stub->SetCalInfoAttributeBool(&context, request, &response),
+      context);
 
   return response;
 }
@@ -8237,7 +8526,8 @@ set_cal_info_attribute_double(const StubPtr& stub, const pb::string& device_name
   auto response = SetCalInfoAttributeDoubleResponse{};
 
   raise_if_error(
-      stub->SetCalInfoAttributeDouble(&context, request, &response));
+      stub->SetCalInfoAttributeDouble(&context, request, &response),
+      context);
 
   return response;
 }
@@ -8262,7 +8552,8 @@ set_cal_info_attribute_string(const StubPtr& stub, const pb::string& device_name
   auto response = SetCalInfoAttributeStringResponse{};
 
   raise_if_error(
-      stub->SetCalInfoAttributeString(&context, request, &response));
+      stub->SetCalInfoAttributeString(&context, request, &response),
+      context);
 
   return response;
 }
@@ -8287,7 +8578,8 @@ set_cal_info_attribute_uint32(const StubPtr& stub, const pb::string& device_name
   auto response = SetCalInfoAttributeUInt32Response{};
 
   raise_if_error(
-      stub->SetCalInfoAttributeUInt32(&context, request, &response));
+      stub->SetCalInfoAttributeUInt32(&context, request, &response),
+      context);
 
   return response;
 }
@@ -8313,7 +8605,8 @@ set_chan_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& task,
   auto response = SetChanAttributeBoolResponse{};
 
   raise_if_error(
-      stub->SetChanAttributeBool(&context, request, &response));
+      stub->SetChanAttributeBool(&context, request, &response),
+      context);
 
   return response;
 }
@@ -8339,7 +8632,8 @@ set_chan_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& tas
   auto response = SetChanAttributeDoubleResponse{};
 
   raise_if_error(
-      stub->SetChanAttributeDouble(&context, request, &response));
+      stub->SetChanAttributeDouble(&context, request, &response),
+      context);
 
   return response;
 }
@@ -8365,7 +8659,8 @@ set_chan_attribute_double_array(const StubPtr& stub, const nidevice_grpc::Sessio
   auto response = SetChanAttributeDoubleArrayResponse{};
 
   raise_if_error(
-      stub->SetChanAttributeDoubleArray(&context, request, &response));
+      stub->SetChanAttributeDoubleArray(&context, request, &response),
+      context);
 
   return response;
 }
@@ -8398,7 +8693,8 @@ set_chan_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& task
   auto response = SetChanAttributeInt32Response{};
 
   raise_if_error(
-      stub->SetChanAttributeInt32(&context, request, &response));
+      stub->SetChanAttributeInt32(&context, request, &response),
+      context);
 
   return response;
 }
@@ -8424,7 +8720,8 @@ set_chan_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& tas
   auto response = SetChanAttributeStringResponse{};
 
   raise_if_error(
-      stub->SetChanAttributeString(&context, request, &response));
+      stub->SetChanAttributeString(&context, request, &response),
+      context);
 
   return response;
 }
@@ -8450,7 +8747,8 @@ set_chan_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& tas
   auto response = SetChanAttributeUInt32Response{};
 
   raise_if_error(
-      stub->SetChanAttributeUInt32(&context, request, &response));
+      stub->SetChanAttributeUInt32(&context, request, &response),
+      context);
 
   return response;
 }
@@ -8474,7 +8772,8 @@ set_digital_logic_family_power_up_state(const StubPtr& stub, const pb::string& d
   auto response = SetDigitalLogicFamilyPowerUpStateResponse{};
 
   raise_if_error(
-      stub->SetDigitalLogicFamilyPowerUpState(&context, request, &response));
+      stub->SetDigitalLogicFamilyPowerUpState(&context, request, &response),
+      context);
 
   return response;
 }
@@ -8491,7 +8790,8 @@ set_digital_power_up_states(const StubPtr& stub, const pb::string& device_name, 
   auto response = SetDigitalPowerUpStatesResponse{};
 
   raise_if_error(
-      stub->SetDigitalPowerUpStates(&context, request, &response));
+      stub->SetDigitalPowerUpStates(&context, request, &response),
+      context);
 
   return response;
 }
@@ -8508,7 +8808,8 @@ set_digital_pull_up_pull_down_states(const StubPtr& stub, const pb::string& devi
   auto response = SetDigitalPullUpPullDownStatesResponse{};
 
   raise_if_error(
-      stub->SetDigitalPullUpPullDownStates(&context, request, &response));
+      stub->SetDigitalPullUpPullDownStates(&context, request, &response),
+      context);
 
   return response;
 }
@@ -8533,7 +8834,8 @@ set_exported_signal_attribute_bool(const StubPtr& stub, const nidevice_grpc::Ses
   auto response = SetExportedSignalAttributeBoolResponse{};
 
   raise_if_error(
-      stub->SetExportedSignalAttributeBool(&context, request, &response));
+      stub->SetExportedSignalAttributeBool(&context, request, &response),
+      context);
 
   return response;
 }
@@ -8558,7 +8860,8 @@ set_exported_signal_attribute_double(const StubPtr& stub, const nidevice_grpc::S
   auto response = SetExportedSignalAttributeDoubleResponse{};
 
   raise_if_error(
-      stub->SetExportedSignalAttributeDouble(&context, request, &response));
+      stub->SetExportedSignalAttributeDouble(&context, request, &response),
+      context);
 
   return response;
 }
@@ -8590,7 +8893,8 @@ set_exported_signal_attribute_int32(const StubPtr& stub, const nidevice_grpc::Se
   auto response = SetExportedSignalAttributeInt32Response{};
 
   raise_if_error(
-      stub->SetExportedSignalAttributeInt32(&context, request, &response));
+      stub->SetExportedSignalAttributeInt32(&context, request, &response),
+      context);
 
   return response;
 }
@@ -8615,7 +8919,8 @@ set_exported_signal_attribute_string(const StubPtr& stub, const nidevice_grpc::S
   auto response = SetExportedSignalAttributeStringResponse{};
 
   raise_if_error(
-      stub->SetExportedSignalAttributeString(&context, request, &response));
+      stub->SetExportedSignalAttributeString(&context, request, &response),
+      context);
 
   return response;
 }
@@ -8640,7 +8945,8 @@ set_exported_signal_attribute_uint32(const StubPtr& stub, const nidevice_grpc::S
   auto response = SetExportedSignalAttributeUInt32Response{};
 
   raise_if_error(
-      stub->SetExportedSignalAttributeUInt32(&context, request, &response));
+      stub->SetExportedSignalAttributeUInt32(&context, request, &response),
+      context);
 
   return response;
 }
@@ -8657,7 +8963,8 @@ set_first_samp_clk_when(const StubPtr& stub, const nidevice_grpc::Session& task,
   auto response = SetFirstSampClkWhenResponse{};
 
   raise_if_error(
-      stub->SetFirstSampClkWhen(&context, request, &response));
+      stub->SetFirstSampClkWhen(&context, request, &response),
+      context);
 
   return response;
 }
@@ -8682,7 +8989,8 @@ set_read_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& task,
   auto response = SetReadAttributeBoolResponse{};
 
   raise_if_error(
-      stub->SetReadAttributeBool(&context, request, &response));
+      stub->SetReadAttributeBool(&context, request, &response),
+      context);
 
   return response;
 }
@@ -8707,7 +9015,8 @@ set_read_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& tas
   auto response = SetReadAttributeDoubleResponse{};
 
   raise_if_error(
-      stub->SetReadAttributeDouble(&context, request, &response));
+      stub->SetReadAttributeDouble(&context, request, &response),
+      context);
 
   return response;
 }
@@ -8739,7 +9048,8 @@ set_read_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& task
   auto response = SetReadAttributeInt32Response{};
 
   raise_if_error(
-      stub->SetReadAttributeInt32(&context, request, &response));
+      stub->SetReadAttributeInt32(&context, request, &response),
+      context);
 
   return response;
 }
@@ -8764,7 +9074,8 @@ set_read_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& tas
   auto response = SetReadAttributeStringResponse{};
 
   raise_if_error(
-      stub->SetReadAttributeString(&context, request, &response));
+      stub->SetReadAttributeString(&context, request, &response),
+      context);
 
   return response;
 }
@@ -8789,7 +9100,8 @@ set_read_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& tas
   auto response = SetReadAttributeUInt32Response{};
 
   raise_if_error(
-      stub->SetReadAttributeUInt32(&context, request, &response));
+      stub->SetReadAttributeUInt32(&context, request, &response),
+      context);
 
   return response;
 }
@@ -8814,7 +9126,8 @@ set_read_attribute_uint64(const StubPtr& stub, const nidevice_grpc::Session& tas
   auto response = SetReadAttributeUInt64Response{};
 
   raise_if_error(
-      stub->SetReadAttributeUInt64(&context, request, &response));
+      stub->SetReadAttributeUInt64(&context, request, &response),
+      context);
 
   return response;
 }
@@ -8839,7 +9152,8 @@ set_real_time_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& 
   auto response = SetRealTimeAttributeBoolResponse{};
 
   raise_if_error(
-      stub->SetRealTimeAttributeBool(&context, request, &response));
+      stub->SetRealTimeAttributeBool(&context, request, &response),
+      context);
 
   return response;
 }
@@ -8871,7 +9185,8 @@ set_real_time_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session&
   auto response = SetRealTimeAttributeInt32Response{};
 
   raise_if_error(
-      stub->SetRealTimeAttributeInt32(&context, request, &response));
+      stub->SetRealTimeAttributeInt32(&context, request, &response),
+      context);
 
   return response;
 }
@@ -8896,7 +9211,8 @@ set_real_time_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session
   auto response = SetRealTimeAttributeUInt32Response{};
 
   raise_if_error(
-      stub->SetRealTimeAttributeUInt32(&context, request, &response));
+      stub->SetRealTimeAttributeUInt32(&context, request, &response),
+      context);
 
   return response;
 }
@@ -8921,7 +9237,8 @@ set_scale_attribute_double(const StubPtr& stub, const pb::string& scale_name, co
   auto response = SetScaleAttributeDoubleResponse{};
 
   raise_if_error(
-      stub->SetScaleAttributeDouble(&context, request, &response));
+      stub->SetScaleAttributeDouble(&context, request, &response),
+      context);
 
   return response;
 }
@@ -8946,7 +9263,8 @@ set_scale_attribute_double_array(const StubPtr& stub, const pb::string& scale_na
   auto response = SetScaleAttributeDoubleArrayResponse{};
 
   raise_if_error(
-      stub->SetScaleAttributeDoubleArray(&context, request, &response));
+      stub->SetScaleAttributeDoubleArray(&context, request, &response),
+      context);
 
   return response;
 }
@@ -8978,7 +9296,8 @@ set_scale_attribute_int32(const StubPtr& stub, const pb::string& scale_name, con
   auto response = SetScaleAttributeInt32Response{};
 
   raise_if_error(
-      stub->SetScaleAttributeInt32(&context, request, &response));
+      stub->SetScaleAttributeInt32(&context, request, &response),
+      context);
 
   return response;
 }
@@ -9003,7 +9322,8 @@ set_scale_attribute_string(const StubPtr& stub, const pb::string& scale_name, co
   auto response = SetScaleAttributeStringResponse{};
 
   raise_if_error(
-      stub->SetScaleAttributeString(&context, request, &response));
+      stub->SetScaleAttributeString(&context, request, &response),
+      context);
 
   return response;
 }
@@ -9020,7 +9340,8 @@ set_start_trig_trig_when(const StubPtr& stub, const nidevice_grpc::Session& task
   auto response = SetStartTrigTrigWhenResponse{};
 
   raise_if_error(
-      stub->SetStartTrigTrigWhen(&context, request, &response));
+      stub->SetStartTrigTrigWhen(&context, request, &response),
+      context);
 
   return response;
 }
@@ -9037,7 +9358,8 @@ set_sync_pulse_time_when(const StubPtr& stub, const nidevice_grpc::Session& task
   auto response = SetSyncPulseTimeWhenResponse{};
 
   raise_if_error(
-      stub->SetSyncPulseTimeWhen(&context, request, &response));
+      stub->SetSyncPulseTimeWhen(&context, request, &response),
+      context);
 
   return response;
 }
@@ -9062,7 +9384,8 @@ set_timing_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& tas
   auto response = SetTimingAttributeBoolResponse{};
 
   raise_if_error(
-      stub->SetTimingAttributeBool(&context, request, &response));
+      stub->SetTimingAttributeBool(&context, request, &response),
+      context);
 
   return response;
 }
@@ -9087,7 +9410,8 @@ set_timing_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& t
   auto response = SetTimingAttributeDoubleResponse{};
 
   raise_if_error(
-      stub->SetTimingAttributeDouble(&context, request, &response));
+      stub->SetTimingAttributeDouble(&context, request, &response),
+      context);
 
   return response;
 }
@@ -9113,7 +9437,8 @@ set_timing_attribute_ex_bool(const StubPtr& stub, const nidevice_grpc::Session& 
   auto response = SetTimingAttributeExBoolResponse{};
 
   raise_if_error(
-      stub->SetTimingAttributeExBool(&context, request, &response));
+      stub->SetTimingAttributeExBool(&context, request, &response),
+      context);
 
   return response;
 }
@@ -9139,7 +9464,8 @@ set_timing_attribute_ex_double(const StubPtr& stub, const nidevice_grpc::Session
   auto response = SetTimingAttributeExDoubleResponse{};
 
   raise_if_error(
-      stub->SetTimingAttributeExDouble(&context, request, &response));
+      stub->SetTimingAttributeExDouble(&context, request, &response),
+      context);
 
   return response;
 }
@@ -9172,7 +9498,8 @@ set_timing_attribute_ex_int32(const StubPtr& stub, const nidevice_grpc::Session&
   auto response = SetTimingAttributeExInt32Response{};
 
   raise_if_error(
-      stub->SetTimingAttributeExInt32(&context, request, &response));
+      stub->SetTimingAttributeExInt32(&context, request, &response),
+      context);
 
   return response;
 }
@@ -9198,7 +9525,8 @@ set_timing_attribute_ex_string(const StubPtr& stub, const nidevice_grpc::Session
   auto response = SetTimingAttributeExStringResponse{};
 
   raise_if_error(
-      stub->SetTimingAttributeExString(&context, request, &response));
+      stub->SetTimingAttributeExString(&context, request, &response),
+      context);
 
   return response;
 }
@@ -9224,7 +9552,8 @@ set_timing_attribute_ex_timestamp(const StubPtr& stub, const nidevice_grpc::Sess
   auto response = SetTimingAttributeExTimestampResponse{};
 
   raise_if_error(
-      stub->SetTimingAttributeExTimestamp(&context, request, &response));
+      stub->SetTimingAttributeExTimestamp(&context, request, &response),
+      context);
 
   return response;
 }
@@ -9250,7 +9579,8 @@ set_timing_attribute_ex_uint32(const StubPtr& stub, const nidevice_grpc::Session
   auto response = SetTimingAttributeExUInt32Response{};
 
   raise_if_error(
-      stub->SetTimingAttributeExUInt32(&context, request, &response));
+      stub->SetTimingAttributeExUInt32(&context, request, &response),
+      context);
 
   return response;
 }
@@ -9276,7 +9606,8 @@ set_timing_attribute_ex_uint64(const StubPtr& stub, const nidevice_grpc::Session
   auto response = SetTimingAttributeExUInt64Response{};
 
   raise_if_error(
-      stub->SetTimingAttributeExUInt64(&context, request, &response));
+      stub->SetTimingAttributeExUInt64(&context, request, &response),
+      context);
 
   return response;
 }
@@ -9308,7 +9639,8 @@ set_timing_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& ta
   auto response = SetTimingAttributeInt32Response{};
 
   raise_if_error(
-      stub->SetTimingAttributeInt32(&context, request, &response));
+      stub->SetTimingAttributeInt32(&context, request, &response),
+      context);
 
   return response;
 }
@@ -9333,7 +9665,8 @@ set_timing_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& t
   auto response = SetTimingAttributeStringResponse{};
 
   raise_if_error(
-      stub->SetTimingAttributeString(&context, request, &response));
+      stub->SetTimingAttributeString(&context, request, &response),
+      context);
 
   return response;
 }
@@ -9358,7 +9691,8 @@ set_timing_attribute_timestamp(const StubPtr& stub, const nidevice_grpc::Session
   auto response = SetTimingAttributeTimestampResponse{};
 
   raise_if_error(
-      stub->SetTimingAttributeTimestamp(&context, request, &response));
+      stub->SetTimingAttributeTimestamp(&context, request, &response),
+      context);
 
   return response;
 }
@@ -9383,7 +9717,8 @@ set_timing_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& t
   auto response = SetTimingAttributeUInt32Response{};
 
   raise_if_error(
-      stub->SetTimingAttributeUInt32(&context, request, &response));
+      stub->SetTimingAttributeUInt32(&context, request, &response),
+      context);
 
   return response;
 }
@@ -9408,7 +9743,8 @@ set_timing_attribute_uint64(const StubPtr& stub, const nidevice_grpc::Session& t
   auto response = SetTimingAttributeUInt64Response{};
 
   raise_if_error(
-      stub->SetTimingAttributeUInt64(&context, request, &response));
+      stub->SetTimingAttributeUInt64(&context, request, &response),
+      context);
 
   return response;
 }
@@ -9433,7 +9769,8 @@ set_trig_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& task,
   auto response = SetTrigAttributeBoolResponse{};
 
   raise_if_error(
-      stub->SetTrigAttributeBool(&context, request, &response));
+      stub->SetTrigAttributeBool(&context, request, &response),
+      context);
 
   return response;
 }
@@ -9458,7 +9795,8 @@ set_trig_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& tas
   auto response = SetTrigAttributeDoubleResponse{};
 
   raise_if_error(
-      stub->SetTrigAttributeDouble(&context, request, &response));
+      stub->SetTrigAttributeDouble(&context, request, &response),
+      context);
 
   return response;
 }
@@ -9483,7 +9821,8 @@ set_trig_attribute_double_array(const StubPtr& stub, const nidevice_grpc::Sessio
   auto response = SetTrigAttributeDoubleArrayResponse{};
 
   raise_if_error(
-      stub->SetTrigAttributeDoubleArray(&context, request, &response));
+      stub->SetTrigAttributeDoubleArray(&context, request, &response),
+      context);
 
   return response;
 }
@@ -9515,7 +9854,8 @@ set_trig_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& task
   auto response = SetTrigAttributeInt32Response{};
 
   raise_if_error(
-      stub->SetTrigAttributeInt32(&context, request, &response));
+      stub->SetTrigAttributeInt32(&context, request, &response),
+      context);
 
   return response;
 }
@@ -9540,7 +9880,8 @@ set_trig_attribute_int32_array(const StubPtr& stub, const nidevice_grpc::Session
   auto response = SetTrigAttributeInt32ArrayResponse{};
 
   raise_if_error(
-      stub->SetTrigAttributeInt32Array(&context, request, &response));
+      stub->SetTrigAttributeInt32Array(&context, request, &response),
+      context);
 
   return response;
 }
@@ -9565,7 +9906,8 @@ set_trig_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& tas
   auto response = SetTrigAttributeStringResponse{};
 
   raise_if_error(
-      stub->SetTrigAttributeString(&context, request, &response));
+      stub->SetTrigAttributeString(&context, request, &response),
+      context);
 
   return response;
 }
@@ -9590,7 +9932,8 @@ set_trig_attribute_timestamp(const StubPtr& stub, const nidevice_grpc::Session& 
   auto response = SetTrigAttributeTimestampResponse{};
 
   raise_if_error(
-      stub->SetTrigAttributeTimestamp(&context, request, &response));
+      stub->SetTrigAttributeTimestamp(&context, request, &response),
+      context);
 
   return response;
 }
@@ -9615,7 +9958,8 @@ set_trig_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& tas
   auto response = SetTrigAttributeUInt32Response{};
 
   raise_if_error(
-      stub->SetTrigAttributeUInt32(&context, request, &response));
+      stub->SetTrigAttributeUInt32(&context, request, &response),
+      context);
 
   return response;
 }
@@ -9641,7 +9985,8 @@ set_watchdog_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& t
   auto response = SetWatchdogAttributeBoolResponse{};
 
   raise_if_error(
-      stub->SetWatchdogAttributeBool(&context, request, &response));
+      stub->SetWatchdogAttributeBool(&context, request, &response),
+      context);
 
   return response;
 }
@@ -9667,7 +10012,8 @@ set_watchdog_attribute_double(const StubPtr& stub, const nidevice_grpc::Session&
   auto response = SetWatchdogAttributeDoubleResponse{};
 
   raise_if_error(
-      stub->SetWatchdogAttributeDouble(&context, request, &response));
+      stub->SetWatchdogAttributeDouble(&context, request, &response),
+      context);
 
   return response;
 }
@@ -9700,7 +10046,8 @@ set_watchdog_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& 
   auto response = SetWatchdogAttributeInt32Response{};
 
   raise_if_error(
-      stub->SetWatchdogAttributeInt32(&context, request, &response));
+      stub->SetWatchdogAttributeInt32(&context, request, &response),
+      context);
 
   return response;
 }
@@ -9726,7 +10073,8 @@ set_watchdog_attribute_string(const StubPtr& stub, const nidevice_grpc::Session&
   auto response = SetWatchdogAttributeStringResponse{};
 
   raise_if_error(
-      stub->SetWatchdogAttributeString(&context, request, &response));
+      stub->SetWatchdogAttributeString(&context, request, &response),
+      context);
 
   return response;
 }
@@ -9751,7 +10099,8 @@ set_write_attribute_bool(const StubPtr& stub, const nidevice_grpc::Session& task
   auto response = SetWriteAttributeBoolResponse{};
 
   raise_if_error(
-      stub->SetWriteAttributeBool(&context, request, &response));
+      stub->SetWriteAttributeBool(&context, request, &response),
+      context);
 
   return response;
 }
@@ -9776,7 +10125,8 @@ set_write_attribute_double(const StubPtr& stub, const nidevice_grpc::Session& ta
   auto response = SetWriteAttributeDoubleResponse{};
 
   raise_if_error(
-      stub->SetWriteAttributeDouble(&context, request, &response));
+      stub->SetWriteAttributeDouble(&context, request, &response),
+      context);
 
   return response;
 }
@@ -9808,7 +10158,8 @@ set_write_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& tas
   auto response = SetWriteAttributeInt32Response{};
 
   raise_if_error(
-      stub->SetWriteAttributeInt32(&context, request, &response));
+      stub->SetWriteAttributeInt32(&context, request, &response),
+      context);
 
   return response;
 }
@@ -9833,7 +10184,8 @@ set_write_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& ta
   auto response = SetWriteAttributeStringResponse{};
 
   raise_if_error(
-      stub->SetWriteAttributeString(&context, request, &response));
+      stub->SetWriteAttributeString(&context, request, &response),
+      context);
 
   return response;
 }
@@ -9858,7 +10210,8 @@ set_write_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& ta
   auto response = SetWriteAttributeUInt32Response{};
 
   raise_if_error(
-      stub->SetWriteAttributeUInt32(&context, request, &response));
+      stub->SetWriteAttributeUInt32(&context, request, &response),
+      context);
 
   return response;
 }
@@ -9883,7 +10236,8 @@ set_write_attribute_uint64(const StubPtr& stub, const nidevice_grpc::Session& ta
   auto response = SetWriteAttributeUInt64Response{};
 
   raise_if_error(
-      stub->SetWriteAttributeUInt64(&context, request, &response));
+      stub->SetWriteAttributeUInt64(&context, request, &response),
+      context);
 
   return response;
 }
@@ -9900,7 +10254,8 @@ start_new_file(const StubPtr& stub, const nidevice_grpc::Session& task, const pb
   auto response = StartNewFileResponse{};
 
   raise_if_error(
-      stub->StartNewFile(&context, request, &response));
+      stub->StartNewFile(&context, request, &response),
+      context);
 
   return response;
 }
@@ -9916,7 +10271,8 @@ start_task(const StubPtr& stub, const nidevice_grpc::Session& task)
   auto response = StartTaskResponse{};
 
   raise_if_error(
-      stub->StartTask(&context, request, &response));
+      stub->StartTask(&context, request, &response),
+      context);
 
   return response;
 }
@@ -9932,7 +10288,8 @@ stop_task(const StubPtr& stub, const nidevice_grpc::Session& task)
   auto response = StopTaskResponse{};
 
   raise_if_error(
-      stub->StopTask(&context, request, &response));
+      stub->StopTask(&context, request, &response),
+      context);
 
   return response;
 }
@@ -9956,7 +10313,8 @@ task_control(const StubPtr& stub, const nidevice_grpc::Session& task, const simp
   auto response = TaskControlResponse{};
 
   raise_if_error(
-      stub->TaskControl(&context, request, &response));
+      stub->TaskControl(&context, request, &response),
+      context);
 
   return response;
 }
@@ -9972,7 +10330,8 @@ tristate_output_term(const StubPtr& stub, const pb::string& output_terminal)
   auto response = TristateOutputTermResponse{};
 
   raise_if_error(
-      stub->TristateOutputTerm(&context, request, &response));
+      stub->TristateOutputTerm(&context, request, &response),
+      context);
 
   return response;
 }
@@ -9988,7 +10347,8 @@ unreserve_network_device(const StubPtr& stub, const pb::string& device_name)
   auto response = UnreserveNetworkDeviceResponse{};
 
   raise_if_error(
-      stub->UnreserveNetworkDevice(&context, request, &response));
+      stub->UnreserveNetworkDevice(&context, request, &response),
+      context);
 
   return response;
 }
@@ -10005,7 +10365,8 @@ wait_for_next_sample_clock(const StubPtr& stub, const nidevice_grpc::Session& ta
   auto response = WaitForNextSampleClockResponse{};
 
   raise_if_error(
-      stub->WaitForNextSampleClock(&context, request, &response));
+      stub->WaitForNextSampleClock(&context, request, &response),
+      context);
 
   return response;
 }
@@ -10030,7 +10391,8 @@ wait_for_valid_timestamp(const StubPtr& stub, const nidevice_grpc::Session& task
   auto response = WaitForValidTimestampResponse{};
 
   raise_if_error(
-      stub->WaitForValidTimestamp(&context, request, &response));
+      stub->WaitForValidTimestamp(&context, request, &response),
+      context);
 
   return response;
 }
@@ -10047,7 +10409,8 @@ wait_until_task_done(const StubPtr& stub, const nidevice_grpc::Session& task, co
   auto response = WaitUntilTaskDoneResponse{};
 
   raise_if_error(
-      stub->WaitUntilTaskDone(&context, request, &response));
+      stub->WaitUntilTaskDone(&context, request, &response),
+      context);
 
   return response;
 }
@@ -10075,7 +10438,8 @@ write_analog_f64(const StubPtr& stub, const nidevice_grpc::Session& task, const 
   auto response = WriteAnalogF64Response{};
 
   raise_if_error(
-      stub->WriteAnalogF64(&context, request, &response));
+      stub->WriteAnalogF64(&context, request, &response),
+      context);
 
   return response;
 }
@@ -10094,7 +10458,8 @@ write_analog_scalar_f64(const StubPtr& stub, const nidevice_grpc::Session& task,
   auto response = WriteAnalogScalarF64Response{};
 
   raise_if_error(
-      stub->WriteAnalogScalarF64(&context, request, &response));
+      stub->WriteAnalogScalarF64(&context, request, &response),
+      context);
 
   return response;
 }
@@ -10122,7 +10487,8 @@ write_binary_i16(const StubPtr& stub, const nidevice_grpc::Session& task, const 
   auto response = WriteBinaryI16Response{};
 
   raise_if_error(
-      stub->WriteBinaryI16(&context, request, &response));
+      stub->WriteBinaryI16(&context, request, &response),
+      context);
 
   return response;
 }
@@ -10150,7 +10516,8 @@ write_binary_i32(const StubPtr& stub, const nidevice_grpc::Session& task, const 
   auto response = WriteBinaryI32Response{};
 
   raise_if_error(
-      stub->WriteBinaryI32(&context, request, &response));
+      stub->WriteBinaryI32(&context, request, &response),
+      context);
 
   return response;
 }
@@ -10178,7 +10545,8 @@ write_binary_u16(const StubPtr& stub, const nidevice_grpc::Session& task, const 
   auto response = WriteBinaryU16Response{};
 
   raise_if_error(
-      stub->WriteBinaryU16(&context, request, &response));
+      stub->WriteBinaryU16(&context, request, &response),
+      context);
 
   return response;
 }
@@ -10206,7 +10574,8 @@ write_binary_u32(const StubPtr& stub, const nidevice_grpc::Session& task, const 
   auto response = WriteBinaryU32Response{};
 
   raise_if_error(
-      stub->WriteBinaryU32(&context, request, &response));
+      stub->WriteBinaryU32(&context, request, &response),
+      context);
 
   return response;
 }
@@ -10235,7 +10604,8 @@ write_ctr_freq(const StubPtr& stub, const nidevice_grpc::Session& task, const pb
   auto response = WriteCtrFreqResponse{};
 
   raise_if_error(
-      stub->WriteCtrFreq(&context, request, &response));
+      stub->WriteCtrFreq(&context, request, &response),
+      context);
 
   return response;
 }
@@ -10255,7 +10625,8 @@ write_ctr_freq_scalar(const StubPtr& stub, const nidevice_grpc::Session& task, c
   auto response = WriteCtrFreqScalarResponse{};
 
   raise_if_error(
-      stub->WriteCtrFreqScalar(&context, request, &response));
+      stub->WriteCtrFreqScalar(&context, request, &response),
+      context);
 
   return response;
 }
@@ -10284,7 +10655,8 @@ write_ctr_ticks(const StubPtr& stub, const nidevice_grpc::Session& task, const p
   auto response = WriteCtrTicksResponse{};
 
   raise_if_error(
-      stub->WriteCtrTicks(&context, request, &response));
+      stub->WriteCtrTicks(&context, request, &response),
+      context);
 
   return response;
 }
@@ -10304,7 +10676,8 @@ write_ctr_ticks_scalar(const StubPtr& stub, const nidevice_grpc::Session& task, 
   auto response = WriteCtrTicksScalarResponse{};
 
   raise_if_error(
-      stub->WriteCtrTicksScalar(&context, request, &response));
+      stub->WriteCtrTicksScalar(&context, request, &response),
+      context);
 
   return response;
 }
@@ -10333,7 +10706,8 @@ write_ctr_time(const StubPtr& stub, const nidevice_grpc::Session& task, const pb
   auto response = WriteCtrTimeResponse{};
 
   raise_if_error(
-      stub->WriteCtrTime(&context, request, &response));
+      stub->WriteCtrTime(&context, request, &response),
+      context);
 
   return response;
 }
@@ -10353,7 +10727,8 @@ write_ctr_time_scalar(const StubPtr& stub, const nidevice_grpc::Session& task, c
   auto response = WriteCtrTimeScalarResponse{};
 
   raise_if_error(
-      stub->WriteCtrTimeScalar(&context, request, &response));
+      stub->WriteCtrTimeScalar(&context, request, &response),
+      context);
 
   return response;
 }
@@ -10381,7 +10756,8 @@ write_digital_lines(const StubPtr& stub, const nidevice_grpc::Session& task, con
   auto response = WriteDigitalLinesResponse{};
 
   raise_if_error(
-      stub->WriteDigitalLines(&context, request, &response));
+      stub->WriteDigitalLines(&context, request, &response),
+      context);
 
   return response;
 }
@@ -10400,7 +10776,8 @@ write_digital_scalar_u32(const StubPtr& stub, const nidevice_grpc::Session& task
   auto response = WriteDigitalScalarU32Response{};
 
   raise_if_error(
-      stub->WriteDigitalScalarU32(&context, request, &response));
+      stub->WriteDigitalScalarU32(&context, request, &response),
+      context);
 
   return response;
 }
@@ -10428,7 +10805,8 @@ write_digital_u16(const StubPtr& stub, const nidevice_grpc::Session& task, const
   auto response = WriteDigitalU16Response{};
 
   raise_if_error(
-      stub->WriteDigitalU16(&context, request, &response));
+      stub->WriteDigitalU16(&context, request, &response),
+      context);
 
   return response;
 }
@@ -10456,7 +10834,8 @@ write_digital_u32(const StubPtr& stub, const nidevice_grpc::Session& task, const
   auto response = WriteDigitalU32Response{};
 
   raise_if_error(
-      stub->WriteDigitalU32(&context, request, &response));
+      stub->WriteDigitalU32(&context, request, &response),
+      context);
 
   return response;
 }
@@ -10484,7 +10863,8 @@ write_digital_u8(const StubPtr& stub, const nidevice_grpc::Session& task, const 
   auto response = WriteDigitalU8Response{};
 
   raise_if_error(
-      stub->WriteDigitalU8(&context, request, &response));
+      stub->WriteDigitalU8(&context, request, &response),
+      context);
 
   return response;
 }
@@ -10504,7 +10884,8 @@ write_raw(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::int
   auto response = WriteRawResponse{};
 
   raise_if_error(
-      stub->WriteRaw(&context, request, &response));
+      stub->WriteRaw(&context, request, &response),
+      context);
 
   return response;
 }
@@ -10529,7 +10910,8 @@ write_to_teds_from_array(const StubPtr& stub, const pb::string& physical_channel
   auto response = WriteToTEDSFromArrayResponse{};
 
   raise_if_error(
-      stub->WriteToTEDSFromArray(&context, request, &response));
+      stub->WriteToTEDSFromArray(&context, request, &response),
+      context);
 
   return response;
 }
@@ -10554,7 +10936,8 @@ write_to_teds_from_file(const StubPtr& stub, const pb::string& physical_channel,
   auto response = WriteToTEDSFromFileResponse{};
 
   raise_if_error(
-      stub->WriteToTEDSFromFile(&context, request, &response));
+      stub->WriteToTEDSFromFile(&context, request, &response),
+      context);
 
   return response;
 }

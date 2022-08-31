@@ -69,7 +69,8 @@ ${mako_helper.build_request(client_params)}\
   auto response = ${response_type}{};
 
   raise_if_error(
-      stub->${stub_method_name}(&context, request, &response));
+      stub->${stub_method_name}(&context, request, &response),
+      context);
 
   return response;
 }

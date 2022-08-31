@@ -33,7 +33,8 @@ convert_for_power_units_utility(const StubPtr& stub, const nidevice_grpc::Sessio
   auto response = ConvertForPowerUnitsUtilityResponse{};
 
   raise_if_error(
-      stub->ConvertForPowerUnitsUtility(&context, request, &response));
+      stub->ConvertForPowerUnitsUtility(&context, request, &response),
+      context);
 
   return response;
 }
@@ -51,7 +52,8 @@ delete_snapshot(const StubPtr& stub, const nidevice_grpc::Session& instrument, c
   auto response = DeleteSnapshotResponse{};
 
   raise_if_error(
-      stub->DeleteSnapshot(&context, request, &response));
+      stub->DeleteSnapshot(&context, request, &response),
+      context);
 
   return response;
 }
@@ -69,7 +71,8 @@ get_active_result_name(const StubPtr& stub, const nidevice_grpc::Session& instru
   auto response = GetActiveResultNameResponse{};
 
   raise_if_error(
-      stub->GetActiveResultName(&context, request, &response));
+      stub->GetActiveResultName(&context, request, &response),
+      context);
 
   return response;
 }
@@ -86,7 +89,8 @@ get_active_table_name(const StubPtr& stub, const nidevice_grpc::Session& instrum
   auto response = GetActiveTableNameResponse{};
 
   raise_if_error(
-      stub->GetActiveTableName(&context, request, &response));
+      stub->GetActiveTableName(&context, request, &response),
+      context);
 
   return response;
 }
@@ -104,7 +108,8 @@ get_attribute_author(const StubPtr& stub, const nidevice_grpc::Session& instrume
   auto response = GetAttributeAuthorResponse{};
 
   raise_if_error(
-      stub->GetAttributeAuthor(&context, request, &response));
+      stub->GetAttributeAuthor(&context, request, &response),
+      context);
 
   return response;
 }
@@ -122,7 +127,8 @@ get_attribute_desired_f32(const StubPtr& stub, const nidevice_grpc::Session& ins
   auto response = GetAttributeDesiredF32Response{};
 
   raise_if_error(
-      stub->GetAttributeDesiredF32(&context, request, &response));
+      stub->GetAttributeDesiredF32(&context, request, &response),
+      context);
 
   return response;
 }
@@ -140,7 +146,8 @@ get_attribute_desired_f32_array(const StubPtr& stub, const nidevice_grpc::Sessio
   auto response = GetAttributeDesiredF32ArrayResponse{};
 
   raise_if_error(
-      stub->GetAttributeDesiredF32Array(&context, request, &response));
+      stub->GetAttributeDesiredF32Array(&context, request, &response),
+      context);
 
   return response;
 }
@@ -158,7 +165,8 @@ get_attribute_desired_f64(const StubPtr& stub, const nidevice_grpc::Session& ins
   auto response = GetAttributeDesiredF64Response{};
 
   raise_if_error(
-      stub->GetAttributeDesiredF64(&context, request, &response));
+      stub->GetAttributeDesiredF64(&context, request, &response),
+      context);
 
   return response;
 }
@@ -176,7 +184,8 @@ get_attribute_desired_f64_array(const StubPtr& stub, const nidevice_grpc::Sessio
   auto response = GetAttributeDesiredF64ArrayResponse{};
 
   raise_if_error(
-      stub->GetAttributeDesiredF64Array(&context, request, &response));
+      stub->GetAttributeDesiredF64Array(&context, request, &response),
+      context);
 
   return response;
 }
@@ -194,7 +203,8 @@ get_attribute_desired_i32(const StubPtr& stub, const nidevice_grpc::Session& ins
   auto response = GetAttributeDesiredI32Response{};
 
   raise_if_error(
-      stub->GetAttributeDesiredI32(&context, request, &response));
+      stub->GetAttributeDesiredI32(&context, request, &response),
+      context);
 
   return response;
 }
@@ -212,7 +222,8 @@ get_attribute_desired_i64(const StubPtr& stub, const nidevice_grpc::Session& ins
   auto response = GetAttributeDesiredI64Response{};
 
   raise_if_error(
-      stub->GetAttributeDesiredI64(&context, request, &response));
+      stub->GetAttributeDesiredI64(&context, request, &response),
+      context);
 
   return response;
 }
@@ -230,7 +241,8 @@ get_attribute_desired_string(const StubPtr& stub, const nidevice_grpc::Session& 
   auto response = GetAttributeDesiredStringResponse{};
 
   raise_if_error(
-      stub->GetAttributeDesiredString(&context, request, &response));
+      stub->GetAttributeDesiredString(&context, request, &response),
+      context);
 
   return response;
 }
@@ -247,7 +259,8 @@ get_calibration_plane_enabled(const StubPtr& stub, const nidevice_grpc::Session&
   auto response = GetCalibrationPlaneEnabledResponse{};
 
   raise_if_error(
-      stub->GetCalibrationPlaneEnabled(&context, request, &response));
+      stub->GetCalibrationPlaneEnabled(&context, request, &response),
+      context);
 
   return response;
 }
@@ -264,7 +277,8 @@ get_calibration_plane_names(const StubPtr& stub, const nidevice_grpc::Session& i
   auto response = GetCalibrationPlaneNamesResponse{};
 
   raise_if_error(
-      stub->GetCalibrationPlaneNames(&context, request, &response));
+      stub->GetCalibrationPlaneNames(&context, request, &response),
+      context);
 
   return response;
 }
@@ -281,7 +295,8 @@ get_external_attenuation_table_names(const StubPtr& stub, const nidevice_grpc::S
   auto response = GetExternalAttenuationTableNamesResponse{};
 
   raise_if_error(
-      stub->GetExternalAttenuationTableNames(&context, request, &response));
+      stub->GetExternalAttenuationTableNames(&context, request, &response),
+      context);
 
   return response;
 }
@@ -298,7 +313,8 @@ get_force_all_traces_enabled(const StubPtr& stub, const nidevice_grpc::Session& 
   auto response = GetForceAllTracesEnabledResponse{};
 
   raise_if_error(
-      stub->GetForceAllTracesEnabled(&context, request, &response));
+      stub->GetForceAllTracesEnabled(&context, request, &response),
+      context);
 
   return response;
 }
@@ -314,7 +330,8 @@ get_initiaited_snapshot_strings(const StubPtr& stub, const nidevice_grpc::Sessio
   auto response = GetInitiaitedSnapshotStringsResponse{};
 
   raise_if_error(
-      stub->GetInitiaitedSnapshotStrings(&context, request, &response));
+      stub->GetInitiaitedSnapshotStrings(&context, request, &response),
+      context);
 
   return response;
 }
@@ -330,7 +347,8 @@ get_latest_configuration_snapshot(const StubPtr& stub, const nidevice_grpc::Sess
   auto response = GetLatestConfigurationSnapshotResponse{};
 
   raise_if_error(
-      stub->GetLatestConfigurationSnapshot(&context, request, &response));
+      stub->GetLatestConfigurationSnapshot(&context, request, &response),
+      context);
 
   return response;
 }
@@ -346,7 +364,8 @@ get_open_sessions_information(const StubPtr& stub, const pb::string& resource_na
   auto response = GetOpenSessionsInformationResponse{};
 
   raise_if_error(
-      stub->GetOpenSessionsInformation(&context, request, &response));
+      stub->GetOpenSessionsInformation(&context, request, &response),
+      context);
 
   return response;
 }
@@ -362,7 +381,8 @@ get_privilege_level(const StubPtr& stub, const nidevice_grpc::Session& instrumen
   auto response = GetPrivilegeLevelResponse{};
 
   raise_if_error(
-      stub->GetPrivilegeLevel(&context, request, &response));
+      stub->GetPrivilegeLevel(&context, request, &response),
+      context);
 
   return response;
 }
@@ -378,7 +398,8 @@ get_r_fmx_version(const StubPtr& stub, const nidevice_grpc::Session& instrument)
   auto response = GetRFmxVersionResponse{};
 
   raise_if_error(
-      stub->GetRFmxVersion(&context, request, &response));
+      stub->GetRFmxVersion(&context, request, &response),
+      context);
 
   return response;
 }
@@ -396,7 +417,8 @@ get_signal_configuration_state64(const StubPtr& stub, const nidevice_grpc::Sessi
   auto response = GetSignalConfigurationState64Response{};
 
   raise_if_error(
-      stub->GetSignalConfigurationState64(&context, request, &response));
+      stub->GetSignalConfigurationState64(&context, request, &response),
+      context);
 
   return response;
 }
@@ -414,7 +436,8 @@ get_snapshot_state(const StubPtr& stub, const nidevice_grpc::Session& instrument
   auto response = GetSnapshotStateResponse{};
 
   raise_if_error(
-      stub->GetSnapshotState(&context, request, &response));
+      stub->GetSnapshotState(&context, request, &response),
+      context);
 
   return response;
 }
@@ -431,7 +454,8 @@ get_traces_info_for_monitor_snapshot(const StubPtr& stub, const nidevice_grpc::S
   auto response = GetTracesInfoForMonitorSnapshotResponse{};
 
   raise_if_error(
-      stub->GetTracesInfoForMonitorSnapshot(&context, request, &response));
+      stub->GetTracesInfoForMonitorSnapshot(&context, request, &response),
+      context);
 
   return response;
 }
@@ -448,7 +472,8 @@ load_all_for_revert(const StubPtr& stub, const nidevice_grpc::Session& instrumen
   auto response = LoadAllForRevertResponse{};
 
   raise_if_error(
-      stub->LoadAllForRevert(&context, request, &response));
+      stub->LoadAllForRevert(&context, request, &response),
+      context);
 
   return response;
 }
@@ -465,7 +490,8 @@ load_configurations_from_json(const StubPtr& stub, const nidevice_grpc::Session&
   auto response = LoadConfigurationsFromJSONResponse{};
 
   raise_if_error(
-      stub->LoadConfigurationsFromJSON(&context, request, &response));
+      stub->LoadConfigurationsFromJSON(&context, request, &response),
+      context);
 
   return response;
 }
@@ -481,7 +507,8 @@ register_special_client_snapshot_interest(const StubPtr& stub, const pb::string&
   auto response = RegisterSpecialClientSnapshotInterestResponse{};
 
   raise_if_error(
-      stub->RegisterSpecialClientSnapshotInterest(&context, request, &response));
+      stub->RegisterSpecialClientSnapshotInterest(&context, request, &response),
+      context);
 
   return response;
 }
@@ -498,7 +525,8 @@ request_privilege(const StubPtr& stub, const nidevice_grpc::Session& instrument,
   auto response = RequestPrivilegeResponse{};
 
   raise_if_error(
-      stub->RequestPrivilege(&context, request, &response));
+      stub->RequestPrivilege(&context, request, &response),
+      context);
 
   return response;
 }
@@ -515,7 +543,8 @@ save_all_for_revert(const StubPtr& stub, const nidevice_grpc::Session& instrumen
   auto response = SaveAllForRevertResponse{};
 
   raise_if_error(
-      stub->SaveAllForRevert(&context, request, &response));
+      stub->SaveAllForRevert(&context, request, &response),
+      context);
 
   return response;
 }
@@ -532,7 +561,8 @@ save_configurations_to_json(const StubPtr& stub, const nidevice_grpc::Session& i
   auto response = SaveConfigurationsToJSONResponse{};
 
   raise_if_error(
-      stub->SaveConfigurationsToJSON(&context, request, &response));
+      stub->SaveConfigurationsToJSON(&context, request, &response),
+      context);
 
   return response;
 }
@@ -550,7 +580,8 @@ set_force_all_traces_enabled(const StubPtr& stub, const nidevice_grpc::Session& 
   auto response = SetForceAllTracesEnabledResponse{};
 
   raise_if_error(
-      stub->SetForceAllTracesEnabled(&context, request, &response));
+      stub->SetForceAllTracesEnabled(&context, request, &response),
+      context);
 
   return response;
 }
@@ -567,7 +598,8 @@ set_io_trace_status(const StubPtr& stub, const nidevice_grpc::Session& instrumen
   auto response = SetIOTraceStatusResponse{};
 
   raise_if_error(
-      stub->SetIOTraceStatus(&context, request, &response));
+      stub->SetIOTraceStatus(&context, request, &response),
+      context);
 
   return response;
 }
@@ -583,7 +615,8 @@ unregister_special_client_snapshot_interest(const StubPtr& stub, const pb::strin
   auto response = UnregisterSpecialClientSnapshotInterestResponse{};
 
   raise_if_error(
-      stub->UnregisterSpecialClientSnapshotInterest(&context, request, &response));
+      stub->UnregisterSpecialClientSnapshotInterest(&context, request, &response),
+      context);
 
   return response;
 }
