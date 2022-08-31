@@ -44,7 +44,6 @@ If they are not passed in as command line arguments, then by default the server 
 
 import json
 import sys
-from typing import List, Tuple
 
 import grpc
 import nirfmxlte_pb2 as nirfmxlte_types
@@ -273,7 +272,6 @@ try:
     absolute_power = acp_fetch_component_carrier_measurement_response.absolute_power
     relative_power = acp_fetch_component_carrier_measurement_response.relative_power
 
-    absolute_powers_trace_results = []  # type: List[Tuple[float, float, float]]
     for i in range(NUMBER_OF_OFFSETS):
         acp_fetch_absolute_powers_trace_response = client.ACPFetchAbsolutePowersTrace(
             nirfmxlte_types.ACPFetchAbsolutePowersTraceRequest(
@@ -284,15 +282,7 @@ try:
             )
         )
         check_for_warning(acp_fetch_absolute_powers_trace_response, instr)
-        absolute_powers_trace_results.append(
-            (
-                acp_fetch_absolute_powers_trace_response.x0,
-                acp_fetch_absolute_powers_trace_response.dx,
-                acp_fetch_absolute_powers_trace_response.absolute_powers_trace,
-            )
-        )
 
-    relative_powers_trace_results = []  # type: List[Tuple[float, float, float]]
     for i in range(NUMBER_OF_OFFSETS):
         acp_fetch_relative_powers_trace_response = client.ACPFetchRelativePowersTrace(
             nirfmxlte_types.ACPFetchRelativePowersTraceRequest(
@@ -303,14 +293,6 @@ try:
             )
         )
         check_for_warning(acp_fetch_relative_powers_trace_response, instr)
-
-        relative_powers_trace_results.append(
-            (
-                acp_fetch_relative_powers_trace_response.x0,
-                acp_fetch_relative_powers_trace_response.dx,
-                acp_fetch_relative_powers_trace_response.relative_powers_trace,
-            )
-        )
 
     acp_fetch_spectrum_response = client.ACPFetchSpectrum(
         nirfmxlte_types.ACPFetchSpectrumRequest(
