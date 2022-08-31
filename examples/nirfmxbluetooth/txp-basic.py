@@ -41,6 +41,7 @@ If they are not passed in as command line arguments, then by default the server 
 "localhost:31763", with "SimulatedDevice" as the resource name.
 """
 
+import json
 import sys
 
 import grpc
@@ -70,208 +71,200 @@ client = grpc_nirfmxbluetooth.NiRFmxBluetoothStub(channel)
 instr = None
 
 
-def raise_if_initialization_error(response):
-    """Raise an exception if an error was returned from Initialize."""
-    if response.status < 0:
-        raise RuntimeError(f"Error: {response.error_message or response.status}")
+def check_for_warning(response, instrument):
+    """Print to console if the status indicates a warning."""
     if response.status > 0:
-        sys.stderr.write(f"Warning: {response.error_message or response.status}\n")
-    return response
-
-
-def raise_if_error(response):
-    """Raise an exception if an error was returned."""
-    if response.status != 0:
-        error_response = client.GetError(
-            nirfmxbluetooth_types.GetErrorRequest(
-                instrument=instr,
+        warning_message = client.GetErrorString(
+            nirfmxbluetooth_types.GetErrorStringRequest(
+                instrument=instrument,
+                error_code=response.status,
             )
         )
-        if response.status < 0:
-            raise RuntimeError(f"Error: {error_response.error_description or response.status}")
-        else:
-            sys.stderr.write(f"Warning: {error_response.error_description or response.status}\n")
-
-    return response
+        sys.stderr.write(
+            f"{warning_message.error_description}\nWarning status: {response.status}\n"
+        )
 
 
 try:
     auto_level = True
     basic_rate_packets = True
 
-    initialize_response = raise_if_initialization_error(
-        client.Initialize(
-            nirfmxbluetooth_types.InitializeRequest(
-                session_name=SESSION_NAME, resource_name=RESOURCE, option_string=OPTIONS
-            )
+    initialize_response = client.Initialize(
+        nirfmxbluetooth_types.InitializeRequest(
+            session_name=SESSION_NAME,
+            resource_name=RESOURCE,
+            option_string=OPTIONS,
         )
     )
     instr = initialize_response.instrument
-    raise_if_error(
-        client.CfgFrequencyReference(
-            nirfmxbluetooth_types.CfgFrequencyReferenceRequest(
-                instrument=instr,
-                channel_name="",
-                frequency_reference_source_mapped=nirfmxbluetooth_types.FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK,
-                frequency_reference_frequency=10e6,
-            )
+
+    client.CfgFrequencyReference(
+        nirfmxbluetooth_types.CfgFrequencyReferenceRequest(
+            instrument=instr,
+            channel_name="",
+            frequency_reference_source_mapped=nirfmxbluetooth_types.FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK,
+            frequency_reference_frequency=10e6,
         )
     )
-    raise_if_error(
-        client.CfgFrequency(
-            nirfmxbluetooth_types.CfgFrequencyRequest(
-                instrument=instr, selector_string="", center_frequency=2.402000e9
-            )
+
+    client.CfgFrequency(
+        nirfmxbluetooth_types.CfgFrequencyRequest(
+            instrument=instr,
+            selector_string="",
+            center_frequency=2.402000e9,
         )
     )
-    raise_if_error(
-        client.CfgExternalAttenuation(
-            nirfmxbluetooth_types.CfgExternalAttenuationRequest(
-                instrument=instr, selector_string="", external_attenuation=0.0
-            )
+
+    client.CfgExternalAttenuation(
+        nirfmxbluetooth_types.CfgExternalAttenuationRequest(
+            instrument=instr,
+            selector_string="",
+            external_attenuation=0.0,
         )
     )
-    raise_if_error(
-        client.CfgIQPowerEdgeTrigger(
-            nirfmxbluetooth_types.CfgIQPowerEdgeTriggerRequest(
-                instrument=instr,
-                selector_string="",
-                iq_power_edge_source="0",
-                iq_power_edge_slope=nirfmxbluetooth_types.IQ_POWER_EDGE_TRIGGER_SLOPE_RISING,
-                iq_power_edge_level=-20.0,
-                trigger_delay=0.0,
-                trigger_min_quiet_time_mode=nirfmxbluetooth_types.TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO,
-                trigger_min_quiet_time_duration=100e-6,
-                iq_power_edge_level_type=nirfmxbluetooth_types.IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE,
-                enable_trigger=False,
-            )
+
+    client.CfgIQPowerEdgeTrigger(
+        nirfmxbluetooth_types.CfgIQPowerEdgeTriggerRequest(
+            instrument=instr,
+            selector_string="",
+            iq_power_edge_source="0",
+            iq_power_edge_slope=nirfmxbluetooth_types.IQ_POWER_EDGE_TRIGGER_SLOPE_RISING,
+            iq_power_edge_level=-20.0,
+            trigger_delay=0.0,
+            trigger_min_quiet_time_mode=nirfmxbluetooth_types.TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO,
+            trigger_min_quiet_time_duration=100e-6,
+            iq_power_edge_level_type=nirfmxbluetooth_types.IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE,
+            enable_trigger=False,
         )
     )
-    raise_if_error(
-        client.CfgPacketType(
-            nirfmxbluetooth_types.CfgPacketTypeRequest(
-                instrument=instr,
-                selector_string="",
-                packet_type=nirfmxbluetooth_types.PACKET_TYPE_DH1,
-            )
+
+    client.CfgPacketType(
+        nirfmxbluetooth_types.CfgPacketTypeRequest(
+            instrument=instr,
+            selector_string="",
+            packet_type=nirfmxbluetooth_types.PACKET_TYPE_DH1,
         )
     )
-    raise_if_error(
-        client.CfgDataRate(
-            nirfmxbluetooth_types.CfgDataRateRequest(
-                instrument=instr, selector_string="", data_rate=1000000
-            )
+
+    client.CfgDataRate(
+        nirfmxbluetooth_types.CfgDataRateRequest(
+            instrument=instr,
+            selector_string="",
+            data_rate=1000000,
         )
     )
-    raise_if_error(
-        client.CfgPayloadLength(
-            nirfmxbluetooth_types.CfgPayloadLengthRequest(
-                instrument=instr,
-                selector_string="",
-                payload_length_mode=nirfmxbluetooth_types.PAYLOAD_LENGTH_MODE_AUTO,
-                payload_length=10,
-            )
+
+    client.CfgPayloadLength(
+        nirfmxbluetooth_types.CfgPayloadLengthRequest(
+            instrument=instr,
+            selector_string="",
+            payload_length_mode=nirfmxbluetooth_types.PAYLOAD_LENGTH_MODE_AUTO,
+            payload_length=10,
         )
     )
-    raise_if_error(
-        client.CfgLEDirectionFinding(
-            nirfmxbluetooth_types.CfgLEDirectionFindingRequest(
-                instrument=instr,
-                selector_string="",
-                direction_finding_mode=nirfmxbluetooth_types.DIRECTION_FINDING_MODE_DISABLED,
-                cte_length=160e-6,
-                cte_slot_duration=1e-6,
-            )
+
+    client.CfgLEDirectionFinding(
+        nirfmxbluetooth_types.CfgLEDirectionFindingRequest(
+            instrument=instr,
+            selector_string="",
+            direction_finding_mode=nirfmxbluetooth_types.DIRECTION_FINDING_MODE_DISABLED,
+            cte_length=160e-6,
+            cte_slot_duration=1e-6,
         )
     )
+
     if auto_level:
-        auto_level_response = raise_if_error(
-            client.AutoLevel(
-                nirfmxbluetooth_types.AutoLevelRequest(
-                    instrument=instr, selector_string="", measurement_interval=10e-3
-                )
+        auto_level_response = client.AutoLevel(
+            nirfmxbluetooth_types.AutoLevelRequest(
+                instrument=instr,
+                selector_string="",
+                measurement_interval=10e-3,
             )
         )
         reference_level = auto_level_response.reference_level
     else:
-        raise_if_error(
-            client.CfgReferenceLevel(
-                nirfmxbluetooth_types.CfgReferenceLevelRequest(
-                    instrument=instr, selector_string="", reference_level=0.0
-                )
-            )
-        )
-    raise_if_error(
-        client.SelectMeasurements(
-            nirfmxbluetooth_types.SelectMeasurementsRequest(
+        client.CfgReferenceLevel(
+            nirfmxbluetooth_types.CfgReferenceLevelRequest(
                 instrument=instr,
                 selector_string="",
-                measurements=nirfmxbluetooth_types.MEASUREMENT_TYPES_TXP,
-                enable_all_traces=True,
+                reference_level=0.0,
             )
         )
-    )
-    raise_if_error(
-        client.TXPCfgBurstSynchronizationType(
-            nirfmxbluetooth_types.TXPCfgBurstSynchronizationTypeRequest(
-                instrument=instr,
-                selector_string="",
-                burst_synchronization_type=nirfmxbluetooth_types.TXP_BURST_SYNCHRONIZATION_TYPE_NONE,
-            )
+
+    client.SelectMeasurements(
+        nirfmxbluetooth_types.SelectMeasurementsRequest(
+            instrument=instr,
+            selector_string="",
+            measurements=nirfmxbluetooth_types.MEASUREMENT_TYPES_TXP,
+            enable_all_traces=True,
         )
     )
-    raise_if_error(
-        client.TXPCfgAveraging(
-            nirfmxbluetooth_types.TXPCfgAveragingRequest(
-                instrument=instr,
-                selector_string="",
-                averaging_enabled=nirfmxbluetooth_types.TXP_AVERAGING_ENABLED_FALSE,
-                averaging_count=10,
-            )
+
+    client.TXPCfgBurstSynchronizationType(
+        nirfmxbluetooth_types.TXPCfgBurstSynchronizationTypeRequest(
+            instrument=instr,
+            selector_string="",
+            burst_synchronization_type=nirfmxbluetooth_types.TXP_BURST_SYNCHRONIZATION_TYPE_NONE,
         )
     )
-    raise_if_error(
-        client.Initiate(
-            nirfmxbluetooth_types.InitiateRequest(
-                instrument=instr, selector_string="", result_name=""
-            )
+
+    client.TXPCfgAveraging(
+        nirfmxbluetooth_types.TXPCfgAveragingRequest(
+            instrument=instr,
+            selector_string="",
+            averaging_enabled=nirfmxbluetooth_types.TXP_AVERAGING_ENABLED_FALSE,
+            averaging_count=10,
         )
     )
+
+    initiate_response = client.Initiate(
+        nirfmxbluetooth_types.InitiateRequest(
+            instrument=instr,
+            selector_string="",
+            result_name="",
+        )
+    )
+    check_for_warning(initiate_response, instr)
 
     ### Fetch Results ###
 
-    txp_fetch_powers_response = raise_if_error(
-        client.TXPFetchPowers(
-            nirfmxbluetooth_types.TXPFetchPowersRequest(
-                instrument=instr, selector_string="", timeout=10.0
-            )
+    txp_fetch_powers_response = client.TXPFetchPowers(
+        nirfmxbluetooth_types.TXPFetchPowersRequest(
+            instrument=instr,
+            selector_string="",
+            timeout=10.0,
         )
     )
+    check_for_warning(txp_fetch_powers_response, instr)
     average_power_mean = txp_fetch_powers_response.average_power_mean
     average_power_maximum = txp_fetch_powers_response.average_power_maximum
     average_power_minimum = txp_fetch_powers_response.average_power_minimum
     peak_to_average_power_ratio_maximum = (
         txp_fetch_powers_response.peak_to_average_power_ratio_maximum
     )
-    txp_fetch_edr_powers_response = raise_if_error(
-        client.TXPFetchEDRPowers(
-            nirfmxbluetooth_types.TXPFetchEDRPowersRequest(
-                instrument=instr, selector_string="", timeout=10.0
-            )
+
+    txp_fetch_edr_powers_response = client.TXPFetchEDRPowers(
+        nirfmxbluetooth_types.TXPFetchEDRPowersRequest(
+            instrument=instr,
+            selector_string="",
+            timeout=10.0,
         )
     )
+    check_for_warning(txp_fetch_edr_powers_response, instr)
     edrgfsk_average_power_mean = txp_fetch_edr_powers_response.edr_gfsk_average_power_mean
     edrdpsk_average_power_mean = txp_fetch_edr_powers_response.edr_dpsk_average_power_mean
     edr_dpsk_gfsk_average_power_ratio_mean = (
         txp_fetch_edr_powers_response.edr_dpsk_gfsk_average_power_ratio_mean
     )
-    txp_fetch_lecte_reference_period_powers_response = raise_if_error(
-        client.TXPFetchLECTEReferencePeriodPowers(
-            nirfmxbluetooth_types.TXPFetchLECTEReferencePeriodPowersRequest(
-                instrument=instr, selector_string="", timeout=10.0
-            )
+
+    txp_fetch_lecte_reference_period_powers_response = client.TXPFetchLECTEReferencePeriodPowers(
+        nirfmxbluetooth_types.TXPFetchLECTEReferencePeriodPowersRequest(
+            instrument=instr,
+            selector_string="",
+            timeout=10.0,
         )
     )
+    check_for_warning(txp_fetch_lecte_reference_period_powers_response, instr)
     reference_period_average_power_mean = (
         txp_fetch_lecte_reference_period_powers_response.reference_period_average_power_mean
     )
@@ -279,13 +272,16 @@ try:
         txp_fetch_lecte_reference_period_powers_response.reference_period_peak_absolute_power_deviation_maximum
     )
 
-    txp_fetch_lecte_transmit_slot_powers_array_response = raise_if_error(
+    txp_fetch_lecte_transmit_slot_powers_array_response = (
         client.TXPFetchLECTETransmitSlotPowersArray(
             nirfmxbluetooth_types.TXPFetchLECTETransmitSlotPowersArrayRequest(
-                instrument=instr, selector_string="", timeout=10.0
+                instrument=instr,
+                selector_string="",
+                timeout=10.0,
             )
         )
     )
+    check_for_warning(txp_fetch_lecte_transmit_slot_powers_array_response, instr)
     transmit_slot_average_power_mean = (
         txp_fetch_lecte_transmit_slot_powers_array_response.transmit_slot_average_power_mean
     )
@@ -293,13 +289,14 @@ try:
         txp_fetch_lecte_transmit_slot_powers_array_response.transmit_slot_peak_absolute_power_deviation_maximum
     )
 
-    txp_fetch_power_trace_response = raise_if_error(
-        client.TXPFetchPowerTrace(
-            nirfmxbluetooth_types.TXPFetchPowerTraceRequest(
-                instrument=instr, selector_string="", timeout=10.0
-            )
+    txp_fetch_power_trace_response = client.TXPFetchPowerTrace(
+        nirfmxbluetooth_types.TXPFetchPowerTraceRequest(
+            instrument=instr,
+            selector_string="",
+            timeout=10.0,
         )
     )
+    check_for_warning(txp_fetch_power_trace_response, instr)
     x0 = txp_fetch_power_trace_response.x0
     dx = txp_fetch_power_trace_response.dx
     power = txp_fetch_power_trace_response.power
@@ -348,6 +345,12 @@ except grpc.RpcError as rpc_error:
         error_message = (
             "The operation is not implemented or is not supported/enabled in this service"
         )
+    elif rpc_error.code() == grpc.StatusCode.UNKNOWN:
+        try:
+            error_details = json.loads(error_message)
+            error_message = f"{error_details['message']}\nError status: {error_details['code']}"
+        except (json.JSONDecodeError, KeyError):
+            pass
     sys.stderr.write(f"{error_message}\n")
 finally:
     if instr:
