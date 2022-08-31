@@ -592,7 +592,9 @@ class NiDAQmxDriverApiTests : public Test {
     time += duration;
     request.mutable_when()->CopyFrom(time);
     request.set_timescale(Timescale2::TIMESCALE2_IO_DEVICE_TIME);
-    return stub()->CfgTimeStartTrig(&context, request, &response);
+    auto status = stub()->CfgTimeStartTrig(&context, request, &response);
+    nidevice_grpc::experimental::client::raise_if_error(status, context);
+    return status;
   }
 
   ::grpc::Status save_task(SaveTaskResponse& response)
@@ -632,7 +634,9 @@ class NiDAQmxDriverApiTests : public Test {
     ::grpc::ClientContext context;
     AddNetworkDeviceRequest request;
     request.set_ip_address(ip_address);
-    return stub()->AddNetworkDevice(&context, request, &response);
+    auto status = stub()->AddNetworkDevice(&context, request, &response);
+    nidevice_grpc::experimental::client::raise_if_error(status, context);
+    return status;
   }
 
   ::grpc::Status wait_for_next_sample_clock(WaitForNextSampleClockResponse& response)
@@ -641,7 +645,9 @@ class NiDAQmxDriverApiTests : public Test {
     WaitForNextSampleClockRequest request;
     set_request_session_id(request);
     request.set_timeout(10.0);
-    return stub()->WaitForNextSampleClock(&context, request, &response);
+    auto status = stub()->WaitForNextSampleClock(&context, request, &response);
+    nidevice_grpc::experimental::client::raise_if_error(status, context);
+    return status;
   }
 
   ::grpc::Status connect_terms(const std::string& source, const std::string& destination, ConnectTermsResponse& response)
