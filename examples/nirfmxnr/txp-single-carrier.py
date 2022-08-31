@@ -38,6 +38,7 @@ If they are not passed in as command line arguments, then by default the server 
 "localhost:31763", with "SimulatedDevice" as the resource name.
 """
 
+import json
 import sys
 
 import grpc
@@ -67,203 +68,179 @@ client = grpc_nirfmxnr.NiRFmxNRStub(channel)
 instr = None
 
 
-def raise_if_initialization_error(response):
-    """Raise an exception if an error was returned from Initialize."""
-    if response.status < 0:
-        raise RuntimeError(f"Error: {response.error_message or response.status}")
+def check_for_warning(response, instrument):
+    """Print to console if the status indicates a warning."""
     if response.status > 0:
-        sys.stderr.write(f"Warning: {response.error_message or response.status}\n")
-    return response
-
-
-def raise_if_error(response):
-    """Raise an exception if an error was returned."""
-    if response.status != 0:
-        error_response = client.GetError(
-            nirfmxnr_types.GetErrorRequest(
-                instrument=instr,
+        warning_message = client.GetErrorString(
+            nirfmxnr_types.GetErrorStringRequest(
+                instrument=instrument,
+                error_code=response.status,
             )
         )
-        if response.status < 0:
-            raise RuntimeError(f"Error: {error_response.error_description or response.status}")
-        else:
-            sys.stderr.write(f"Warning: {error_response.error_description or response.status}\n")
-
-    return response
+        sys.stderr.write(
+            f"{warning_message.error_description}\nWarning status: {response.status}\n"
+        )
 
 
 try:
-    initialize_response = raise_if_initialization_error(
-        client.Initialize(
-            nirfmxnr_types.InitializeRequest(
-                session_name=SESSION_NAME, resource_name=RESOURCE, option_string=OPTIONS
-            )
+    initialize_response = client.Initialize(
+        nirfmxnr_types.InitializeRequest(
+            session_name=SESSION_NAME,
+            resource_name=RESOURCE,
+            option_string=OPTIONS,
         )
     )
     instr = initialize_response.instrument
-    raise_if_error(
-        client.CfgFrequencyReference(
-            nirfmxnr_types.CfgFrequencyReferenceRequest(
-                instrument=instr,
-                channel_name="",
-                frequency_reference_source_mapped=nirfmxnr_types.FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK,
-                frequency_reference_frequency=10e6,
-            )
-        )
-    )
-    raise_if_error(
-        client.SetAttributeString(
-            nirfmxnr_types.SetAttributeStringRequest(
-                instrument=instr,
-                selector_string="",
-                attribute_id=nirfmxnr_types.NIRFMXNR_ATTRIBUTE_SELECTED_PORTS,
-                attr_val_raw="",
-            )
-        )
-    )
-    raise_if_error(
-        client.CfgRF(
-            nirfmxnr_types.CfgRFRequest(
-                instrument=instr,
-                selector_string="",
-                center_frequency=3.5e9,
-                reference_level=0.0,
-                external_attenuation=0.0,
-            )
-        )
-    )
-    raise_if_error(
-        client.CfgDigitalEdgeTrigger(
-            nirfmxnr_types.CfgDigitalEdgeTriggerRequest(
-                instrument=instr,
-                selector_string="",
-                digital_edge_source_mapped=nirfmxnr_types.DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG0,
-                digital_edge=nirfmxnr_types.DIGITAL_EDGE_TRIGGER_EDGE_RISING,
-                trigger_delay=0.0,
-                enable_trigger=False,
-            )
+
+    client.CfgFrequencyReference(
+        nirfmxnr_types.CfgFrequencyReferenceRequest(
+            instrument=instr,
+            channel_name="",
+            frequency_reference_source_mapped=nirfmxnr_types.FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK,
+            frequency_reference_frequency=10e6,
         )
     )
 
-    raise_if_error(
-        client.SetAttributeI32(
-            nirfmxnr_types.SetAttributeI32Request(
-                instrument=instr,
-                selector_string="",
-                attribute_id=nirfmxnr_types.NIRFMXNR_ATTRIBUTE_LINK_DIRECTION,
-                attr_val_raw=nirfmxnr_types.NIRFMXNR_INT32_LINK_DIRECTION_UPLINK,
-            )
-        )
-    )
-    raise_if_error(
-        client.SetAttributeI32(
-            nirfmxnr_types.SetAttributeI32Request(
-                instrument=instr,
-                selector_string="",
-                attribute_id=nirfmxnr_types.NIRFMXNR_ATTRIBUTE_FREQUENCY_RANGE,
-                attr_val_raw=nirfmxnr_types.NIRFMXNR_INT32_FREQUENCY_RANGE_RANGE1,
-            )
-        )
-    )
-    raise_if_error(
-        client.SetAttributeF64(
-            nirfmxnr_types.SetAttributeF64Request(
-                instrument=instr,
-                selector_string="",
-                attribute_id=nirfmxnr_types.NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_BANDWIDTH,
-                attr_val=20e6,
-            )
-        )
-    )
-    raise_if_error(
-        client.SetAttributeF64(
-            nirfmxnr_types.SetAttributeF64Request(
-                instrument=instr,
-                selector_string="",
-                attribute_id=nirfmxnr_types.NIRFMXNR_ATTRIBUTE_BANDWIDTH_PART_SUBCARRIER_SPACING,
-                attr_val=30e3,
-            )
+    client.SetAttributeString(
+        nirfmxnr_types.SetAttributeStringRequest(
+            instrument=instr,
+            selector_string="",
+            attribute_id=nirfmxnr_types.NIRFMXNR_ATTRIBUTE_SELECTED_PORTS,
+            attr_val_raw="",
         )
     )
 
-    raise_if_error(
-        client.SelectMeasurements(
-            nirfmxnr_types.SelectMeasurementsRequest(
-                instrument=instr,
-                selector_string="",
-                measurements=nirfmxnr_types.MEASUREMENT_TYPES_TXP,
-                enable_all_traces=True,
-            )
+    client.CfgRF(
+        nirfmxnr_types.CfgRFRequest(
+            instrument=instr,
+            selector_string="",
+            center_frequency=3.5e9,
+            reference_level=0.0,
+            external_attenuation=0.0,
         )
     )
 
-    raise_if_error(
-        client.SetAttributeF64(
-            nirfmxnr_types.SetAttributeF64Request(
-                instrument=instr,
-                selector_string="",
-                attribute_id=nirfmxnr_types.NIRFMXNR_ATTRIBUTE_TXP_MEASUREMENT_INTERVAL,
-                attr_val=1.0e-3,
-            )
-        )
-    )
-    raise_if_error(
-        client.SetAttributeF64(
-            nirfmxnr_types.SetAttributeF64Request(
-                instrument=instr,
-                selector_string="",
-                attribute_id=nirfmxnr_types.NIRFMXNR_ATTRIBUTE_TXP_MEASUREMENT_OFFSET,
-                attr_val=0.0,
-            )
+    client.CfgDigitalEdgeTrigger(
+        nirfmxnr_types.CfgDigitalEdgeTriggerRequest(
+            instrument=instr,
+            selector_string="",
+            digital_edge_source_mapped=nirfmxnr_types.DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG0,
+            digital_edge=nirfmxnr_types.DIGITAL_EDGE_TRIGGER_EDGE_RISING,
+            trigger_delay=0.0,
+            enable_trigger=False,
         )
     )
 
-    raise_if_error(
-        client.SetAttributeI32(
-            nirfmxnr_types.SetAttributeI32Request(
-                instrument=instr,
-                selector_string="",
-                attribute_id=nirfmxnr_types.NIRFMXNR_ATTRIBUTE_TXP_AVERAGING_ENABLED,
-                attr_val_raw=nirfmxnr_types.NIRFMXNR_INT32_TXP_AVERAGING_ENABLED_TRUE,
-            )
-        )
-    )
-    raise_if_error(
-        client.SetAttributeI32(
-            nirfmxnr_types.SetAttributeI32Request(
-                instrument=instr,
-                selector_string="",
-                attribute_id=nirfmxnr_types.NIRFMXNR_ATTRIBUTE_TXP_AVERAGING_COUNT,
-                attr_val_raw=10,
-            )
+    client.SetAttributeI32(
+        nirfmxnr_types.SetAttributeI32Request(
+            instrument=instr,
+            selector_string="",
+            attribute_id=nirfmxnr_types.NIRFMXNR_ATTRIBUTE_LINK_DIRECTION,
+            attr_val_raw=nirfmxnr_types.NIRFMXNR_INT32_LINK_DIRECTION_UPLINK,
         )
     )
 
-    raise_if_error(
-        client.Initiate(
-            nirfmxnr_types.InitiateRequest(instrument=instr, selector_string="", result_name="")
+    client.SetAttributeI32(
+        nirfmxnr_types.SetAttributeI32Request(
+            instrument=instr,
+            selector_string="",
+            attribute_id=nirfmxnr_types.NIRFMXNR_ATTRIBUTE_FREQUENCY_RANGE,
+            attr_val_raw=nirfmxnr_types.NIRFMXNR_INT32_FREQUENCY_RANGE_RANGE1,
         )
     )
 
+    client.SetAttributeF64(
+        nirfmxnr_types.SetAttributeF64Request(
+            instrument=instr,
+            selector_string="",
+            attribute_id=nirfmxnr_types.NIRFMXNR_ATTRIBUTE_COMPONENT_CARRIER_BANDWIDTH,
+            attr_val=20e6,
+        )
+    )
+
+    client.SetAttributeF64(
+        nirfmxnr_types.SetAttributeF64Request(
+            instrument=instr,
+            selector_string="",
+            attribute_id=nirfmxnr_types.NIRFMXNR_ATTRIBUTE_BANDWIDTH_PART_SUBCARRIER_SPACING,
+            attr_val=30e3,
+        )
+    )
+
+    client.SelectMeasurements(
+        nirfmxnr_types.SelectMeasurementsRequest(
+            instrument=instr,
+            selector_string="",
+            measurements=nirfmxnr_types.MEASUREMENT_TYPES_TXP,
+            enable_all_traces=True,
+        )
+    )
+
+    client.SetAttributeF64(
+        nirfmxnr_types.SetAttributeF64Request(
+            instrument=instr,
+            selector_string="",
+            attribute_id=nirfmxnr_types.NIRFMXNR_ATTRIBUTE_TXP_MEASUREMENT_INTERVAL,
+            attr_val=1.0e-3,
+        )
+    )
+
+    client.SetAttributeF64(
+        nirfmxnr_types.SetAttributeF64Request(
+            instrument=instr,
+            selector_string="",
+            attribute_id=nirfmxnr_types.NIRFMXNR_ATTRIBUTE_TXP_MEASUREMENT_OFFSET,
+            attr_val=0.0,
+        )
+    )
+
+    client.SetAttributeI32(
+        nirfmxnr_types.SetAttributeI32Request(
+            instrument=instr,
+            selector_string="",
+            attribute_id=nirfmxnr_types.NIRFMXNR_ATTRIBUTE_TXP_AVERAGING_ENABLED,
+            attr_val_raw=nirfmxnr_types.NIRFMXNR_INT32_TXP_AVERAGING_ENABLED_TRUE,
+        )
+    )
+
+    client.SetAttributeI32(
+        nirfmxnr_types.SetAttributeI32Request(
+            instrument=instr,
+            selector_string="",
+            attribute_id=nirfmxnr_types.NIRFMXNR_ATTRIBUTE_TXP_AVERAGING_COUNT,
+            attr_val_raw=10,
+        )
+    )
+
+    initiate_response = client.Initiate(
+        nirfmxnr_types.InitiateRequest(
+            instrument=instr,
+            selector_string="",
+            result_name="",
+        )
+    )
+    check_for_warning(initiate_response, instr)
     ### Fetch results ###
 
-    txp_fetch_measurement_response = raise_if_error(
-        client.TXPFetchMeasurement(
-            nirfmxnr_types.TXPFetchMeasurementRequest(
-                instrument=instr, selector_string="", timeout=10.0
-            )
+    txp_fetch_measurement_response = client.TXPFetchMeasurement(
+        nirfmxnr_types.TXPFetchMeasurementRequest(
+            instrument=instr,
+            selector_string="",
+            timeout=10.0,
         )
     )
+    check_for_warning(txp_fetch_measurement_response, instr)
     avearge_power_mean = txp_fetch_measurement_response.average_power_mean
     peak_power_maximum = txp_fetch_measurement_response.peak_power_maximum
 
-    txp_fetch_power_trace_response = raise_if_error(
-        client.TXPFetchPowerTrace(
-            nirfmxnr_types.TXPFetchPowerTraceRequest(
-                instrument=instr, selector_string="", timeout=10.0
-            )
+    txp_fetch_power_trace_response = client.TXPFetchPowerTrace(
+        nirfmxnr_types.TXPFetchPowerTraceRequest(
+            instrument=instr,
+            selector_string="",
+            timeout=10.0,
         )
     )
+    check_for_warning(txp_fetch_power_trace_response, instr)
     x0 = txp_fetch_power_trace_response.x0
     dx = txp_fetch_power_trace_response.dx
     power = txp_fetch_power_trace_response.power
@@ -279,6 +256,12 @@ except grpc.RpcError as rpc_error:
         error_message = (
             "The operation is not implemented or is not supported/enabled in this service"
         )
+    elif rpc_error.code() == grpc.StatusCode.UNKNOWN:
+        try:
+            error_details = json.loads(error_message)
+            error_message = f"{error_details['message']}\nError status: {error_details['code']}"
+        except (json.JSONDecodeError, KeyError):
+            pass
     sys.stderr.write(f"{error_message}\n")
 finally:
     if instr:
