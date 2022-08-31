@@ -90,6 +90,18 @@ mac = "AA:BB:CC:DD:EE:FF"  # MAC Address filter is not enabled. Use random strin
 channel = grpc.insecure_channel(f"{SERVER_ADDRESS}:{SERVER_PORT}")
 client = grpc_nixnet.NiXnetStub(channel)
 
+
+def check_for_warning(response):
+    """Print to console if the status indicates a warning."""
+    if response.status > 0:
+        warning_message = client.StatusToString(
+            nixnet_types.StatusToStringRequest(status_id=response.status)
+        )
+        sys.stderr.write(
+            f"{warning_message.status_description}\nWarning status: {response.status}\n"
+        )
+
+
 print(CHOOSE_MONITOR_OR_ENDPOINT_TEXT)
 if sys.stdin.read(1) == "m":
     INTERFACE += "/monitor"
@@ -108,8 +120,6 @@ try:
             mode=nixnet_types.CREATE_SESSION_MODE_FRAME_IN_STREAM,
         )
     )
-    check_for_error(create_session_response.status)
-
     session = create_session_response.session
     print("Session created successfully.\n")
 
@@ -127,7 +137,6 @@ try:
             ept_rx_filter_array=ept_rxfilter_array,
         )
     )
-    check_for_error(set_property_response.status)
 
     print("Reading all received frames.\n")
     print("Local Timestamp", "Network Timestamp", "Data")
@@ -143,8 +152,7 @@ try:
                 timeout=nixnet_types.TIME_OUT_INFINITE,
             )
         )
-        check_for_error(read_frame_response.status)
-
+        check_for_warning(read_frame_response)
         frame_buffer = read_frame_response.buffer
 
         for i in range(0, len(frame_buffer)):
@@ -166,6 +174,9 @@ try:
 
 except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
+    for key, value in rpc_error.trailing_metadata() or []:
+        if key == "ni-error":
+            error_message += f"\nError status: {value}"
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
         error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"
     elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
@@ -175,7 +186,6 @@ except grpc.RpcError as rpc_error:
     print(f"{error_message}")
 
 finally:
+    # Clear the XNET session.
     if session:
-        # clear the XNET session.
-        check_for_error(client.Clear(nixnet_types.ClearRequest(session=session)).status)
-        print("Session cleared successfully!\n")
+        client.Clear(nixnet_types.ClearRequest(session=session))

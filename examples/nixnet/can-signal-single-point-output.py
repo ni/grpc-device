@@ -54,15 +54,6 @@ SIGNAL_LIST = "CANEventSignal1,CANEventSignal2"
 NUM_SIGNALS = 2
 
 
-def check_for_error(status):
-    """Raise an exception if the status indicates an error."""
-    if status != 0:
-        error_message_response = client.StatusToString(
-            nixnet_types.StatusToStringRequest(status_id=status)
-        )
-        raise Exception(error_message_response.status_description)
-
-
 i = 0
 value_buffer = [0.0] * NUM_SIGNALS
 session = None
@@ -71,6 +62,18 @@ session = None
 # session services.
 channel = grpc.insecure_channel(f"{SERVER_ADDRESS}:{SERVER_PORT}")
 client = grpc_nixnet.NiXnetStub(channel)
+
+
+def check_for_warning(response):
+    """Print to console if the status indicates a warning."""
+    if response.status > 0:
+        warning_message = client.StatusToString(
+            nixnet_types.StatusToStringRequest(status_id=response.status)
+        )
+        sys.stderr.write(
+            f"{warning_message.status_description}\nWarning status: {response.status}\n"
+        )
+
 
 # Display parameters that will be used for the example.
 print("Interface: " + INTERFACE, "Database: " + DATABASE, "Signal List: " + SIGNAL_LIST, sep="\n")
@@ -86,8 +89,6 @@ try:
             mode=nixnet_types.CREATE_SESSION_MODE_SIGNAL_OUT_SINGLE_POINT,
         )
     )
-    check_for_error(create_session_response.status)
-
     session = create_session_response.session
     print("Session Created Successfully.\n")
 
@@ -101,7 +102,7 @@ try:
         write_signal_response = client.WriteSignalSinglePoint(
             nixnet_types.WriteSignalSinglePointRequest(session=session, value_buffer=value_buffer)
         )
-        check_for_error(write_signal_response.status)
+        check_for_warning(write_signal_response)
 
         print("Signals sent:")
         print(f"Signal 1: {value_buffer[0]}")
@@ -110,6 +111,9 @@ try:
 
 except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
+    for key, value in rpc_error.trailing_metadata() or []:
+        if key == "ni-error":
+            error_message += f"\nError status: {value}"
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
         error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"
     elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
@@ -119,7 +123,6 @@ except grpc.RpcError as rpc_error:
     print(f"{error_message}")
 
 finally:
+    # Clear the XNET session.
     if session:
-        # clear the XNET session.
-        check_for_error(client.Clear(nixnet_types.ClearRequest(session=session)).status)
-        print("Session cleared successfully!\n")
+        client.Clear(nixnet_types.ClearRequest(session=session))
