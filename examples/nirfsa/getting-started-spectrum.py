@@ -32,6 +32,7 @@ If they are not passed in as command line arguments, then by default the server 
 "localhost:31763", with "SimulatedRFSA" as the physical channel name.
 """
 
+import json
 import math
 import sys
 
@@ -64,86 +65,61 @@ client = grpc_nirfsa.NiRFSAStub(channel)
 vi = None
 
 
-def raise_if_error(response):
-    """Raise an exception if an error was returned."""
-    if response.status != 0:
-        error_response = client.ErrorMessage(
-            nirfsa_types.ErrorMessageRequest(status_code=response.status)
-        )
-        raise Exception(f"Error: {error_response.error_message}")
-
-    return response
-
-
-def raise_if_initialization_error(response):
-    """Raise an exception if an error was returned from Initialize."""
-    if response.status < 0:
-        raise RuntimeError(f"Error: {response.error_message or response.status}")
+def check_for_warning(response, vi):
+    """Print to console if the status indicates a warning."""
     if response.status > 0:
-        sys.stderr.write(f"Warning: {response.error_message or response.status}\n")
-    return response
+        warning_message = client.ErrorMessage(
+            nirfsa_types.ErrorMessageRequest(vi=vi, error_code=response.status)
+        )
+        sys.stderr.write(f"{warning_message.error_message}\nWarning status: {response.status}\n")
 
 
 try:
-    init_response = raise_if_initialization_error(
-        client.InitWithOptions(
-            nirfsa_types.InitWithOptionsRequest(
-                session_name=SESSION_NAME, resource_name=RESOURCE, option_string=OPTIONS
-            )
+    init_response = client.InitWithOptions(
+        nirfsa_types.InitWithOptionsRequest(
+            session_name=SESSION_NAME, resource_name=RESOURCE, option_string=OPTIONS
         )
     )
     vi = init_response.vi
 
-    raise_if_error(
-        client.ConfigureRefClock(
-            nirfsa_types.ConfigureRefClockRequest(
-                vi=vi,
-                clock_source_mapped=nirfsa_types.RefClockSource.REF_CLOCK_SOURCE_ONBOARD_CLOCK,
-                ref_clock_rate=10e6,
-            )
+    client.ConfigureRefClock(
+        nirfsa_types.ConfigureRefClockRequest(
+            vi=vi,
+            clock_source_mapped=nirfsa_types.RefClockSource.REF_CLOCK_SOURCE_ONBOARD_CLOCK,
+            ref_clock_rate=10e6,
         )
     )
-    raise_if_error(
-        client.ConfigureReferenceLevel(
-            nirfsa_types.ConfigureReferenceLevelRequest(vi=vi, reference_level=0)
+    client.ConfigureReferenceLevel(
+        nirfsa_types.ConfigureReferenceLevelRequest(vi=vi, reference_level=0)
+    )
+    client.ConfigureAcquisitionType(
+        nirfsa_types.ConfigureAcquisitionTypeRequest(
+            vi=vi, acquisition_type=nirfsa_types.AcquisitionType.ACQUISITION_TYPE_SPECTRUM
         )
     )
-    raise_if_error(
-        client.ConfigureAcquisitionType(
-            nirfsa_types.ConfigureAcquisitionTypeRequest(
-                vi=vi, acquisition_type=nirfsa_types.AcquisitionType.ACQUISITION_TYPE_SPECTRUM
-            )
+    client.ConfigureSpectrumFrequencyStartStop(
+        nirfsa_types.ConfigureSpectrumFrequencyStartStopRequest(
+            vi=vi, start_frequency=990e6, stop_frequency=1010e6
         )
     )
-    raise_if_error(
-        client.ConfigureSpectrumFrequencyStartStop(
-            nirfsa_types.ConfigureSpectrumFrequencyStartStopRequest(
-                vi=vi, start_frequency=990e6, stop_frequency=1010e6
-            )
+    client.ConfigureResolutionBandwidth(
+        nirfsa_types.ConfigureResolutionBandwidthRequest(vi=vi, resolution_bandwidth=10e3)
+    )
+    spectral_lines_response = client.GetNumberOfSpectralLines(
+        nirfsa_types.GetNumberOfSpectralLinesRequest(vi=vi)
+    )
+    read_response = client.ReadPowerSpectrumF64(
+        nirfsa_types.ReadPowerSpectrumF64Request(
+            vi=vi,
+            timeout=10.0,
+            data_array_size=spectral_lines_response.number_of_spectral_lines,
         )
     )
-    raise_if_error(
-        client.ConfigureResolutionBandwidth(
-            nirfsa_types.ConfigureResolutionBandwidthRequest(vi=vi, resolution_bandwidth=10e3)
-        )
-    )
-    spectral_lines_response = raise_if_error(
-        client.GetNumberOfSpectralLines(nirfsa_types.GetNumberOfSpectralLinesRequest(vi=vi))
-    )
-
-    read_response = raise_if_error(
-        client.ReadPowerSpectrumF64(
-            nirfsa_types.ReadPowerSpectrumF64Request(
-                vi=vi,
-                timeout=10.0,
-                data_array_size=spectral_lines_response.number_of_spectral_lines,
-            )
-        )
-    )
+    check_for_warning(read_response, vi)
 
     # We will find the highest peak in a bin, which is not the actual highest
-    # peak and frequency we could find in the acquisition. For an accurate
-    # peak search, we can analyze the data with the Spectral Measurements Toolset.
+    # peak and frequency we could find in the acquisition.
+    # For an accurate peak search, we can analyze the data with the Spectral Measurements Toolset.
     spectrum_data = read_response.power_spectrum_data
     spectrum_info = read_response.spectrum_info
 
@@ -169,6 +145,12 @@ except grpc.RpcError as rpc_error:
         error_message = (
             "The operation is not implemented or is not supported/enabled in this service"
         )
+    elif rpc_error.code() == grpc.StatusCode.UNKNOWN:
+        try:
+            error_details = json.loads(error_message)
+            error_message = f"{error_details['message']}\nError status: {error_details['code']}"
+        except (json.JSONDecodeError, KeyError):
+            pass
     print(f"{error_message}")
 finally:
     if vi:
