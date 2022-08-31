@@ -24,6 +24,7 @@ If they are not passed in as command line arguments, then by default the server 
 "localhost:31763", with "SimulatedRFSG" as the physical channel name.
 """
 
+import json
 import sys
 import time
 
@@ -54,20 +55,13 @@ client = grpc_nirfsg.NiRFSGStub(channel)
 vi = None
 
 
-def raise_if_error(response):
-    """Raise an exception if an error was returned."""
-    if response.status != 0:
-        response = client.ErrorMessage(nirfsg_types.ErrorMessageRequest(error_code=response.status))
-        raise Exception(f"Error: {response.error_string}")
-
-
-def raise_if_initialization_error(response):
-    """Raise an exception if an error was returned from Initialize."""
-    if response.status < 0:
-        raise RuntimeError(f"Error: {response.error_message or response.status}")
+def check_for_warning(response, vi):
+    """Print to console if the status indicates a warning."""
     if response.status > 0:
-        sys.stderr.write(f"Warning: {response.error_message or response.status}\n")
-    return response
+        warning_message = client.ErrorMessage(
+            nirfsg_types.ErrorMessageRequest(vi=vi, error_code=response.status)
+        )
+        sys.stderr.write(f"{warning_message.error_message}\nWarning status: {response.status}\n")
 
 
 try:
@@ -76,32 +70,26 @@ try:
             session_name=SESSION_NAME, resource_name=RESOURCE, option_string=OPTIONS
         )
     )
-    raise_if_initialization_error(response)
     vi = response.vi
-    raise_if_error(
-        client.ConfigureRF(nirfsg_types.ConfigureRFRequest(vi=vi, frequency=1e9, power_level=-5))
-    )
-    raise_if_error(
-        client.ConfigureGenerationMode(
-            nirfsg_types.ConfigureGenerationModeRequest(
-                vi=vi, generation_mode=nirfsg_types.GENERATION_MODE_CW
-            )
+    client.ConfigureRF(nirfsg_types.ConfigureRFRequest(vi=vi, frequency=1e9, power_level=-5))
+    client.ConfigureGenerationMode(
+        nirfsg_types.ConfigureGenerationModeRequest(
+            vi=vi, generation_mode=nirfsg_types.GENERATION_MODE_CW
         )
     )
-    raise_if_error(
-        client.ConfigureRefClock(
-            nirfsg_types.ConfigureRefClockRequest(
-                vi=vi,
-                ref_clock_source_mapped=nirfsg_types.REF_CLOCK_SOURCE_ONBOARD_CLOCK,
-                ref_clock_rate=10e6,
-            )
+    client.ConfigureRefClock(
+        nirfsg_types.ConfigureRefClockRequest(
+            vi=vi,
+            ref_clock_source_mapped=nirfsg_types.REF_CLOCK_SOURCE_ONBOARD_CLOCK,
+            ref_clock_rate=10e6,
         )
     )
     print("Generating...")
-    raise_if_error(client.Initiate(nirfsg_types.InitiateRequest(vi=vi)))
+    initiate_response = client.Initiate(nirfsg_types.InitiateRequest(vi=vi))
+    check_for_warning(initiate_response, vi)
     time.sleep(2)
     # Check the generation status
-    raise_if_error(client.CheckGenerationStatus(nirfsg_types.CheckGenerationStatusRequest(vi=vi)))
+    client.CheckGenerationStatus(nirfsg_types.CheckGenerationStatusRequest(vi=vi))
 except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
@@ -110,10 +98,16 @@ except grpc.RpcError as rpc_error:
         error_message = (
             "The operation is not implemented or is not supported/enabled in this service"
         )
+    elif rpc_error.code() == grpc.StatusCode.UNKNOWN:
+        try:
+            error_details = json.loads(error_message)
+            error_message = f"{error_details['message']}\nError status: {error_details['code']}"
+        except (json.JSONDecodeError, KeyError):
+            pass
     print(f"{error_message}")
 finally:
     if vi:
         client.ConfigureOutputEnabled(
-            nirfsg_types.ConfigureOutputEnabledRequest(output_enabled=False)
+            nirfsg_types.ConfigureOutputEnabledRequest(vi=vi, output_enabled=False)
         )
         client.Close(nirfsg_types.CloseRequest(vi=vi))
