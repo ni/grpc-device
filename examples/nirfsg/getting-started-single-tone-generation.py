@@ -63,7 +63,7 @@ def check_for_warning(response, vi):
         warning_message = client.ErrorMessage(
             nirfsg_types.ErrorMessageRequest(vi=vi, error_code=response.status)
         )
-        sys.stderr.write(f"{warning_message}\nWarning status: {response.status}\n")
+        sys.stderr.write(f"{warning_message.error_message}\nWarning status: {response.status}\n")
 
 
 try:
@@ -85,6 +85,7 @@ try:
     client.ConfigureRF(nirfsg_types.ConfigureRFRequest(vi=vi, frequency=1.5e9, power_level=-5))
     initiate_response = client.Initiate(nirfsg_types.InitiateRequest(vi=vi))
     check_for_warning(initiate_response, vi)
+    
     print("Generating tone...")
     time.sleep(2)
 except grpc.RpcError as rpc_error:
