@@ -42,6 +42,8 @@ If they are not passed in as command line arguments, then by default the server 
 "localhost:31763", with "SimulatedDevice" as the resource name.
 """
 
+from distutils.command import check
+import json
 import sys
 
 import grpc
@@ -71,168 +73,157 @@ client = grpc_nirfmxlte.NiRFmxLTEStub(channel)
 instr = None
 
 
-def raise_if_initialization_error(response):
-    """Raise an exception if an error was returned from Initialize."""
-    if response.status < 0:
-        raise RuntimeError(f"Error: {response.error_message or response.status}")
+def check_for_warning(response, instrument):
+    """Print to console if the status indicates a warning."""
     if response.status > 0:
-        sys.stderr.write(f"Warning: {response.error_message or response.status}\n")
-    return response
-
-
-def raise_if_error(response):
-    """Raise an exception if an error was returned."""
-    if response.status != 0:
-        error_response = client.GetError(
-            nirfmxlte_types.GetErrorRequest(
-                instrument=instr,
+        warning_message = client.GetErrorString(
+            nirfmxlte_types.GetErrorStringRequest(
+                instrument=instrument,
+                error_code=response.status,
             )
         )
-        if response.status < 0:
-            raise RuntimeError(f"Error: {error_response.error_description or response.status}")
-        else:
-            sys.stderr.write(f"Warning: {error_response.error_description or response.status}\n")
-
-    return response
+        sys.stderr.write(
+            f"{warning_message.error_description}\nWarning status: {response.status}\n"
+        )
 
 
 try:
-    initialize_response = raise_if_initialization_error(
-        client.Initialize(
-            nirfmxlte_types.InitializeRequest(
-                session_name=SESSION_NAME, resource_name=RESOURCE, option_string=OPTIONS
-            )
+    initialize_response = client.Initialize(
+        nirfmxlte_types.InitializeRequest(
+            session_name=SESSION_NAME,
+            resource_name=RESOURCE,
+            option_string=OPTIONS,
         )
     )
     instr = initialize_response.instrument
-    raise_if_error(
-        client.CfgFrequencyReference(
-            nirfmxlte_types.CfgFrequencyReferenceRequest(
-                instrument=instr,
-                channel_name="",
-                frequency_reference_source_mapped=nirfmxlte_types.FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK,
-                frequency_reference_frequency=10e6,
-            )
-        )
-    )
-    raise_if_error(
-        client.CfgRF(
-            nirfmxlte_types.CfgRFRequest(
-                instrument=instr,
-                selector_string="",
-                center_frequency=1.95e9,
-                reference_level=0.0,
-                external_attenuation=0.0,
-            )
-        )
-    )
-    raise_if_error(
-        client.CfgDigitalEdgeTrigger(
-            nirfmxlte_types.CfgDigitalEdgeTriggerRequest(
-                instrument=instr,
-                selector_string="",
-                digital_edge_source_mapped=nirfmxlte_types.DIGITAL_EDGE_TRIGGER_SOURCE_PFI0,
-                digital_edge=nirfmxlte_types.DIGITAL_EDGE_TRIGGER_EDGE_RISING,
-                trigger_delay=0.0,
-                enable_trigger=False,
-            )
-        )
-    )
-    raise_if_error(
-        client.CfgComponentCarrier(
-            nirfmxlte_types.CfgComponentCarrierRequest(
-                instrument=instr,
-                selector_string="",
-                component_carrier_bandwidth=10e6,
-                component_carrier_frequency=0.0,
-                cell_id=0,
-            )
-        )
-    )
-    raise_if_error(
-        client.CfgBand(nirfmxlte_types.CfgBandRequest(instrument=instr, selector_string="", band=1))
-    )
-    raise_if_error(
-        client.CfgDuplexScheme(
-            nirfmxlte_types.CfgDuplexSchemeRequest(
-                instrument=instr,
-                selector_string="",
-                duplex_scheme=nirfmxlte_types.DUPLEX_SCHEME_FDD,
-                uplink_downlink_configuration=nirfmxlte_types.UPLINK_DOWNLINK_CONFIGURATION_0,
-            )
-        )
-    )
-    raise_if_error(
-        client.CfgAutoDMRSDetectionEnabled(
-            nirfmxlte_types.CfgAutoDMRSDetectionEnabledRequest(
-                instrument=instr,
-                selector_string="",
-                auto_dmrs_detection_enabled=nirfmxlte_types.AUTO_DMRS_DETECTION_ENABLED_TRUE,
-            )
-        )
-    )
-    raise_if_error(
-        client.SelectMeasurements(
-            nirfmxlte_types.SelectMeasurementsRequest(
-                instrument=instr,
-                selector_string="",
-                measurements=nirfmxlte_types.MEASUREMENT_TYPES_MODACC,
-                enable_all_traces=True,
-            )
-        )
-    )
-    raise_if_error(
-        client.ModAccCfgSynchronizationModeAndInterval(
-            nirfmxlte_types.ModAccCfgSynchronizationModeAndIntervalRequest(
-                instrument=instr,
-                selector_string="",
-                synchronization_mode=nirfmxlte_types.MODACC_SYNCHRONIZATION_MODE_SLOT,
-                measurement_offset=0,
-                measurement_length=1,
-            )
-        )
-    )
-    raise_if_error(
-        client.ModAccCfgEVMUnit(
-            nirfmxlte_types.ModAccCfgEVMUnitRequest(
-                instrument=instr,
-                selector_string="",
-                evm_unit=nirfmxlte_types.MODACC_EVM_UNIT_PERCENTAGE,
-            )
-        )
-    )
-    raise_if_error(
-        client.ModAccCfgInBandEmissionMaskType(
-            nirfmxlte_types.ModAccCfgInBandEmissionMaskTypeRequest(
-                instrument=instr,
-                selector_string="",
-                in_band_emission_mask_type=nirfmxlte_types.MODACC_IN_BAND_EMISSION_MASK_TYPE_RELEASE_11_ONWARDS,
-            )
-        )
-    )
-    raise_if_error(
-        client.ModAccCfgAveraging(
-            nirfmxlte_types.ModAccCfgAveragingRequest(
-                instrument=instr,
-                selector_string="",
-                averaging_enabled=nirfmxlte_types.MODACC_AVERAGING_ENABLED_FALSE,
-                averaging_count=10,
-            )
-        )
-    )
-    raise_if_error(
-        client.Initiate(
-            nirfmxlte_types.InitiateRequest(instrument=instr, selector_string="", result_name="")
+
+    client.CfgFrequencyReference(
+        nirfmxlte_types.CfgFrequencyReferenceRequest(
+            instrument=instr,
+            channel_name="",
+            frequency_reference_source_mapped=nirfmxlte_types.FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK,
+            frequency_reference_frequency=10e6,
         )
     )
 
-    modacc_fetch_composite_evm_response = raise_if_error(
-        client.ModAccFetchCompositeEVM(
-            nirfmxlte_types.ModAccFetchCompositeEVMRequest(
-                instrument=instr, selector_string="", timeout=10.0
-            )
+    client.CfgRF(
+        nirfmxlte_types.CfgRFRequest(
+            instrument=instr,
+            selector_string="",
+            center_frequency=1.95e9,
+            reference_level=0.0,
+            external_attenuation=0.0,
         )
     )
+
+    client.CfgDigitalEdgeTrigger(
+        nirfmxlte_types.CfgDigitalEdgeTriggerRequest(
+            instrument=instr,
+            selector_string="",
+            digital_edge_source_mapped=nirfmxlte_types.DIGITAL_EDGE_TRIGGER_SOURCE_PFI0,
+            digital_edge=nirfmxlte_types.DIGITAL_EDGE_TRIGGER_EDGE_RISING,
+            trigger_delay=0.0,
+            enable_trigger=False,
+        )
+    )
+
+    client.CfgComponentCarrier(
+        nirfmxlte_types.CfgComponentCarrierRequest(
+            instrument=instr,
+            selector_string="",
+            component_carrier_bandwidth=10e6,
+            component_carrier_frequency=0.0,
+            cell_id=0,
+        )
+    )
+
+    client.CfgBand(
+        nirfmxlte_types.CfgBandRequest(
+            instrument=instr,
+            selector_string="",
+            band=1,
+        )
+    )
+
+    client.CfgDuplexScheme(
+        nirfmxlte_types.CfgDuplexSchemeRequest(
+            instrument=instr,
+            selector_string="",
+            duplex_scheme=nirfmxlte_types.DUPLEX_SCHEME_FDD,
+            uplink_downlink_configuration=nirfmxlte_types.UPLINK_DOWNLINK_CONFIGURATION_0,
+        )
+    )
+
+    client.CfgAutoDMRSDetectionEnabled(
+        nirfmxlte_types.CfgAutoDMRSDetectionEnabledRequest(
+            instrument=instr,
+            selector_string="",
+            auto_dmrs_detection_enabled=nirfmxlte_types.AUTO_DMRS_DETECTION_ENABLED_TRUE,
+        )
+    )
+
+    client.SelectMeasurements(
+        nirfmxlte_types.SelectMeasurementsRequest(
+            instrument=instr,
+            selector_string="",
+            measurements=nirfmxlte_types.MEASUREMENT_TYPES_MODACC,
+            enable_all_traces=True,
+        )
+    )
+
+    client.ModAccCfgSynchronizationModeAndInterval(
+        nirfmxlte_types.ModAccCfgSynchronizationModeAndIntervalRequest(
+            instrument=instr,
+            selector_string="",
+            synchronization_mode=nirfmxlte_types.MODACC_SYNCHRONIZATION_MODE_SLOT,
+            measurement_offset=0,
+            measurement_length=1,
+        )
+    )
+
+    client.ModAccCfgEVMUnit(
+        nirfmxlte_types.ModAccCfgEVMUnitRequest(
+            instrument=instr,
+            selector_string="",
+            evm_unit=nirfmxlte_types.MODACC_EVM_UNIT_PERCENTAGE,
+        )
+    )
+
+    client.ModAccCfgInBandEmissionMaskType(
+        nirfmxlte_types.ModAccCfgInBandEmissionMaskTypeRequest(
+            instrument=instr,
+            selector_string="",
+            in_band_emission_mask_type=nirfmxlte_types.MODACC_IN_BAND_EMISSION_MASK_TYPE_RELEASE_11_ONWARDS,
+        )
+    )
+
+    client.ModAccCfgAveraging(
+        nirfmxlte_types.ModAccCfgAveragingRequest(
+            instrument=instr,
+            selector_string="",
+            averaging_enabled=nirfmxlte_types.MODACC_AVERAGING_ENABLED_FALSE,
+            averaging_count=10,
+        )
+    )
+
+    initiate_response = client.Initiate(
+        nirfmxlte_types.InitiateRequest(
+            instrument=instr,
+            selector_string="",
+            result_name="",
+        )
+    )
+    check_for_warning(initiate_response, instr)
+
+    modacc_fetch_composite_evm_response = client.ModAccFetchCompositeEVM(
+        nirfmxlte_types.ModAccFetchCompositeEVMRequest(
+            instrument=instr,
+            selector_string="",
+            timeout=10.0,
+        )
+    )
+    check_for_warning(modacc_fetch_composite_evm_response, instr)
+
     mean_rms_composite_evm = modacc_fetch_composite_evm_response.mean_rms_composite_evm
     max_peak_composite_evm = modacc_fetch_composite_evm_response.maximum_peak_composite_evm
     mean_frequency_error = modacc_fetch_composite_evm_response.mean_frequency_error
@@ -245,13 +236,14 @@ try:
     peak_composite_evm_slot_index = (
         modacc_fetch_composite_evm_response.peak_composite_evm_slot_index
     )
-    modacc_fetch_iq_impairments_response = raise_if_error(
-        client.ModAccFetchIQImpairments(
-            nirfmxlte_types.ModAccFetchIQImpairmentsRequest(
-                instrument=instr, selector_string="", timeout=10.0
-            )
+    modacc_fetch_iq_impairments_response = client.ModAccFetchIQImpairments(
+        nirfmxlte_types.ModAccFetchIQImpairmentsRequest(
+            instrument=instr,
+            selector_string="",
+            timeout=10.0,
         )
     )
+    check_for_warning(modacc_fetch_iq_impairments_response, instr)
     mean_iq_origin_offset = modacc_fetch_iq_impairments_response.mean_iq_origin_offset
     mean_iq_gain_imbalance = modacc_fetch_iq_impairments_response.mean_iq_gain_imbalance
     mean_iq_quadrature_error = modacc_fetch_iq_impairments_response.mean_iq_quadrature_error
@@ -264,23 +256,21 @@ try:
     )
     in_band_emission_margin = modacc_fetch_in_band_emission_margin_response.in_band_emission_margin
 
-    modacc_fetch_pusch_constellation_trace_response = raise_if_error(
-        client.ModAccFetchPUSCHConstellationTrace(
-            nirfmxlte_types.ModAccFetchPUSCHConstellationTraceRequest(
-                instrument=instr, selector_string="", timeout=10.0
-            )
+    modacc_fetch_pusch_constellation_trace_response = client.ModAccFetchPUSCHConstellationTrace(
+        nirfmxlte_types.ModAccFetchPUSCHConstellationTraceRequest(
+            instrument=instr, selector_string="", timeout=10.0
         )
     )
+    check_for_warning(modacc_fetch_pusch_constellation_trace_response, instr)
     data_constellation = modacc_fetch_pusch_constellation_trace_response.data_constellation
     dmrs_constellation = modacc_fetch_pusch_constellation_trace_response.dmrs_constellation
 
-    modacc_fetch_evm_per_subcarrier_trace_response = raise_if_error(
-        client.ModAccFetchEVMPerSubcarrierTrace(
-            nirfmxlte_types.ModAccFetchEVMPerSubcarrierTraceRequest(
-                instrument=instr, selector_string="", timeout=10.0
-            )
+    modacc_fetch_evm_per_subcarrier_trace_response = client.ModAccFetchEVMPerSubcarrierTrace(
+        nirfmxlte_types.ModAccFetchEVMPerSubcarrierTraceRequest(
+            instrument=instr, selector_string="", timeout=10.0
         )
     )
+    check_for_warning(modacc_fetch_evm_per_subcarrier_trace_response, instr)
     x0 = modacc_fetch_evm_per_subcarrier_trace_response.x0
     dx = modacc_fetch_evm_per_subcarrier_trace_response.dx
     mean_rmsevm_per_subcarrier = (
@@ -306,6 +296,12 @@ except grpc.RpcError as rpc_error:
         error_message = (
             "The operation is not implemented or is not supported/enabled in this service"
         )
+    elif rpc_error.code() == grpc.StatusCode.UNKNOWN:
+        try:
+            error_details = json.loads(error_message)
+            error_message = f"{error_details['message']}\nError status: {error_details['code']}"
+        except (json.JSONDecodeError, KeyError):
+            pass
     sys.stderr.write(f"{error_message}\n")
 finally:
     if instr:
