@@ -21,6 +21,7 @@ If they are not passed in as command line arguments, then by default the server 
 "localhost:31763", with "SimulatedFGEN" as the resource name.
 """
 
+import json
 import math
 import sys
 
@@ -62,55 +63,48 @@ channel = grpc.insecure_channel(f"{SERVER_ADDRESS}:{SERVER_PORT}")
 nifgen_client = grpc_nifgen.NiFgenStub(channel)
 
 
-def check_for_error(vi, status):
-    """Raise an exception if the status indicates an error."""
-    if status != 0:
-        error_message_response = nifgen_client.ErrorMessage(
-            nifgen_types.ErrorMessageRequest(vi=vi, error_code=status)
-        )
-        raise Exception(error_message_response.error_message)
-
-
-def check_for_initialization_error(response):
-    """Raise an exception if an error was returned from Initialize."""
-    if response.status < 0:
-        raise RuntimeError(f"Error: {response.error_message or response.status}")
+def check_for_warning(response, vi):
+    """Print to console if the status indicates a warning."""
     if response.status > 0:
-        sys.stderr.write(f"Warning: {response.error_message or response.status}\n")
+        warning_message = nifgen_client.ErrorMessage(
+            nifgen_types.ErrorMessageRequest(vi=vi, error_code=response.status)
+        )
+        sys.stderr.write(f"{warning_message.error_message}\nWarning status: {response.status}\n")
 
 
 try:
     # Initalize NI-FGEN session
     init_with_options_resp = nifgen_client.InitWithOptions(
         nifgen_types.InitWithOptionsRequest(
-            session_name=SESSION_NAME, resource_name=RESOURCE, option_string=OPTIONS
+            session_name=SESSION_NAME,
+            resource_name=RESOURCE,
+            option_string=OPTIONS,
         )
     )
     vi = init_with_options_resp.vi
-    check_for_initialization_error(init_with_options_resp)
 
     # Configure channels
     config_channels_resp = nifgen_client.ConfigureChannels(
         nifgen_types.ConfigureChannelsRequest(vi=vi, channels=CHANNEL_NAME)
     )
-    check_for_error(vi, config_channels_resp.status)
 
     # Configure output mode
     config_out_resp = nifgen_client.ConfigureOutputMode(
         nifgen_types.ConfigureOutputModeRequest(
-            vi=vi, output_mode=nifgen_types.OutputMode.OUTPUT_MODE_NIFGEN_VAL_OUTPUT_ARB
+            vi=vi,
+            output_mode=nifgen_types.OutputMode.OUTPUT_MODE_NIFGEN_VAL_OUTPUT_ARB,
         )
     )
-    check_for_error(vi, config_out_resp.status)
 
     # Create waveform
     create_waveform_resp = nifgen_client.CreateWaveformF64(
         nifgen_types.CreateWaveformF64Request(
-            vi=vi, channel_name=CHANNEL_NAME, waveform_data_array=SINE
+            vi=vi,
+            channel_name=CHANNEL_NAME,
+            waveform_data_array=SINE,
         )
     )
     waveform_handle = create_waveform_resp.waveform_handle
-    check_for_error(vi, create_waveform_resp.status)
 
     # Configure arbitrary waveform
     config_waveform_resp = nifgen_client.ConfigureArbWaveform(
@@ -122,31 +116,28 @@ try:
             offset=DC_OFFSET,
         )
     )
-    check_for_error(vi, config_waveform_resp.status)
 
     # Configure clockmode to VAL_HIGH_RESOLUTION
     config_clckmode_resp = nifgen_client.ConfigureClockMode(
         nifgen_types.ConfigureClockModeRequest(
-            vi=vi, clock_mode=nifgen_types.ClockMode.CLOCK_MODE_NIFGEN_VAL_HIGH_RESOLUTION
+            vi=vi,
+            clock_mode=nifgen_types.ClockMode.CLOCK_MODE_NIFGEN_VAL_HIGH_RESOLUTION,
         )
     )
-    check_for_error(vi, config_clckmode_resp.status)
 
     # Configure sample rate
     config_sample_rate_resp = nifgen_client.ConfigureSampleRate(
         nifgen_types.ConfigureSampleRateRequest(vi=vi, sample_rate=SAMPLE_RATE)
     )
-    check_for_error(vi, config_sample_rate_resp.status)
 
     # Configure output enabled
     config_outenbl_resp = nifgen_client.ConfigureOutputEnabled(
         nifgen_types.ConfigureOutputEnabledRequest(vi=vi, channel_name=CHANNEL_NAME, enabled=True)
     )
-    check_for_error(vi, config_outenbl_resp.status)
 
     # Initiate generation
     init_gen_resp = nifgen_client.InitiateGeneration(nifgen_types.InitiateGenerationRequest(vi=vi))
-    check_for_error(vi, init_gen_resp.status)
+    check_for_warning(init_gen_resp, vi)
 
     print(f"Generating sine wave at {SAMPLE_RATE} Hz...")
     print("Close the window or press Ctrl+C to stop generation")
@@ -172,9 +163,14 @@ except grpc.RpcError as rpc_error:
         error_message = (
             "The operation is not implemented or is not supported/enabled in this service"
         )
+    elif rpc_error.code() == grpc.StatusCode.UNKNOWN:
+        try:
+            error_details = json.loads(error_message)
+            error_message = f"{error_details['message']}\nError status: {error_details['code']}"
+        except (json.JSONDecodeError, KeyError):
+            pass
     print(f"{error_message}")
 finally:
     if "vi" in vars() and vi.id != 0:
         # Close NI-FGEN session
-        close_session_response = nifgen_client.Close(nifgen_types.CloseRequest(vi=vi))
-        check_for_error(vi, close_session_response.status)
+        nifgen_client.Close(nifgen_types.CloseRequest(vi=vi))
