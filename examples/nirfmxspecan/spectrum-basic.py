@@ -34,7 +34,6 @@ If they are not passed in as command line arguments, then by default the server 
 "localhost:31763", with "SimulatedRFSA" as the resource name.
 """
 
-import json
 import sys
 from math import floor
 
@@ -158,18 +157,15 @@ try:
     )
 except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
+    for key, value in rpc_error.trailing_metadata() or []:
+        if key == "ni-error":
+            error_message += f"\nError status: {value}"
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
         error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"
     elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
         error_message = (
             "The operation is not implemented or is not supported/enabled in this service"
         )
-    elif rpc_error.code() == grpc.StatusCode.UNKNOWN:
-        try:
-            error_details = json.loads(error_message)
-            error_message = f"{error_details['message']}\nError status: {error_details['code']}"
-        except (json.JSONDecodeError, KeyError):
-            pass
     sys.stderr.write(f"{error_message}\n")
 finally:
     if instr:
