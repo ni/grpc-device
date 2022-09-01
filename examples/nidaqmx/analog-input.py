@@ -51,46 +51,32 @@ client = grpc_nidaqmx.NiDAQmxStub(channel)
 task = None
 
 
-def raise_if_error(response):
-    """Raise an exception if an error was returned."""
-    if response.status != 0:
-        response = client.GetErrorString(
-            nidaqmx_types.GetErrorStringRequest(error_code=response.status)
-        )
-        raise Exception(f"Error: {response.error_string}")
-
-
 try:
     response = client.CreateTask(nidaqmx_types.CreateTaskRequest(session_name="my task"))
-    raise_if_error(response)
     task = response.task
 
-    raise_if_error(
-        client.CreateAIVoltageChan(
-            nidaqmx_types.CreateAIVoltageChanRequest(
-                task=task,
-                physical_channel=PHYSICAL_CHANNEL,
-                terminal_config=nidaqmx_types.INPUT_TERM_CFG_WITH_DEFAULT_CFG_DEFAULT,
-                min_val=-10.0,
-                max_val=10.0,
-                units=nidaqmx_types.VOLTAGE_UNITS2_VOLTS,
-            )
+    client.CreateAIVoltageChan(
+        nidaqmx_types.CreateAIVoltageChanRequest(
+            task=task,
+            physical_channel=PHYSICAL_CHANNEL,
+            terminal_config=nidaqmx_types.INPUT_TERM_CFG_WITH_DEFAULT_CFG_DEFAULT,
+            min_val=-10.0,
+            max_val=10.0,
+            units=nidaqmx_types.VOLTAGE_UNITS2_VOLTS,
         )
     )
 
-    raise_if_error(
-        client.CfgSampClkTiming(
-            nidaqmx_types.CfgSampClkTimingRequest(
-                task=task,
-                rate=10000.0,
-                active_edge=nidaqmx_types.EDGE1_RISING,
-                sample_mode=nidaqmx_types.ACQUISITION_TYPE_FINITE_SAMPS,
-                samps_per_chan=1000,
-            )
+    client.CfgSampClkTiming(
+        nidaqmx_types.CfgSampClkTimingRequest(
+            task=task,
+            rate=10000.0,
+            active_edge=nidaqmx_types.EDGE1_RISING,
+            sample_mode=nidaqmx_types.ACQUISITION_TYPE_FINITE_SAMPS,
+            samps_per_chan=1000,
         )
     )
 
-    raise_if_error(client.StartTask(nidaqmx_types.StartTaskRequest(task=task)))
+    client.StartTask(nidaqmx_types.StartTaskRequest(task=task))
 
     # Get the number of channels. This may be greater than 1 if the physical_channel
     # parameter is a list or range of channels.
@@ -99,7 +85,6 @@ try:
             task=task, attribute=nidaqmx_types.TASK_ATTRIBUTE_NUM_CHANS
         )
     )
-    raise_if_error(response)
     number_of_channels = response.value
 
     response = client.ReadAnalogF64(
@@ -111,13 +96,15 @@ try:
             timeout=10.0,
         )
     )
-    raise_if_error(response)
     print(
         f"Acquired {len(response.read_array)} samples",
         f"({response.samps_per_chan_read} samples per channel)",
     )
 except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
+    for key, value in rpc_error.trailing_metadata() or []:
+        if key == "ni-error":
+            error_message += f"\nError status: {value}"
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
         error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"
     elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:

@@ -50,45 +50,35 @@ client = grpc_nidaqmx.NiDAQmxStub(channel)
 task = None
 
 
-def raise_if_error(response):
-    """Raise an exception if an error was returned."""
-    if response.status != 0:
-        response = client.GetErrorString(
-            nidaqmx_types.GetErrorStringRequest(error_code=response.status)
-        )
-        raise Exception(f"Error: {response.error_string}")
-
-
 try:
     response = client.CreateTask(nidaqmx_types.CreateTaskRequest(session_name="my task"))
-    raise_if_error(response)
     task = response.task
 
-    raise_if_error(
-        client.CreateCIFreqChan(
-            nidaqmx_types.CreateCIFreqChanRequest(
-                task=task,
-                counter=COUNTER_NAME,
-                min_val=1.192093,
-                max_val=10000000,
-                units=nidaqmx_types.FREQUENCY_UNITS3_HZ,
-                edge=nidaqmx_types.EDGE1_RISING,
-                meas_method=nidaqmx_types.COUNTER_FREQUENCY_METHOD_LOW_FREQ_1_CTR,
-                meas_time=0.001,
-                divisor=4,
-            )
+    client.CreateCIFreqChan(
+        nidaqmx_types.CreateCIFreqChanRequest(
+            task=task,
+            counter=COUNTER_NAME,
+            min_val=1.192093,
+            max_val=10000000,
+            units=nidaqmx_types.FREQUENCY_UNITS3_HZ,
+            edge=nidaqmx_types.EDGE1_RISING,
+            meas_method=nidaqmx_types.COUNTER_FREQUENCY_METHOD_LOW_FREQ_1_CTR,
+            meas_time=0.001,
+            divisor=4,
         )
     )
 
-    raise_if_error(client.StartTask(nidaqmx_types.StartTaskRequest(task=task)))
+    client.StartTask(nidaqmx_types.StartTaskRequest(task=task))
 
     response = client.ReadCounterScalarF64(
         nidaqmx_types.ReadCounterScalarF64Request(task=task, timeout=10.0)
     )
-    raise_if_error(response)
     print(f"Frequency: {response.value} Hz")
 except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
+    for key, value in rpc_error.trailing_metadata() or []:
+        if key == "ni-error":
+            error_message += f"\nError status: {value}"
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
         error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"
     elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:

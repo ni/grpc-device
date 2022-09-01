@@ -50,49 +50,38 @@ client = grpc_nidaqmx.NiDAQmxStub(channel)
 task = None
 
 
-def raise_if_error(response):
-    """Raise an exception if an error was returned."""
-    if response.status != 0:
-        response = client.GetErrorString(
-            nidaqmx_types.GetErrorStringRequest(error_code=response.status)
-        )
-        raise Exception(f"Error: {response.error_string}")
-
-
 try:
     response = client.CreateTask(nidaqmx_types.CreateTaskRequest(session_name="my task"))
-    raise_if_error(response)
     task = response.task
 
-    raise_if_error(
-        client.CreateAOVoltageChan(
-            nidaqmx_types.CreateAOVoltageChanRequest(
-                task=task,
-                physical_channel=PHYSICAL_CHANNEL,
-                min_val=-10.0,
-                max_val=10.0,
-                units=nidaqmx_types.VOLTAGE_UNITS2_VOLTS,
-            )
+    client.CreateAOVoltageChan(
+        nidaqmx_types.CreateAOVoltageChanRequest(
+            task=task,
+            physical_channel=PHYSICAL_CHANNEL,
+            min_val=-10.0,
+            max_val=10.0,
+            units=nidaqmx_types.VOLTAGE_UNITS2_VOLTS,
         )
     )
 
-    raise_if_error(client.StartTask(nidaqmx_types.StartTaskRequest(task=task)))
+    client.StartTask(nidaqmx_types.StartTaskRequest(task=task))
 
-    raise_if_error(
-        client.WriteAnalogF64(
-            nidaqmx_types.WriteAnalogF64Request(
-                task=task,
-                num_samps_per_chan=1,
-                data_layout=nidaqmx_types.GROUP_BY_GROUP_BY_CHANNEL,
-                write_array=[1.0],
-                timeout=10.0,
-            )
+    client.WriteAnalogF64(
+        nidaqmx_types.WriteAnalogF64Request(
+            task=task,
+            num_samps_per_chan=1,
+            data_layout=nidaqmx_types.GROUP_BY_GROUP_BY_CHANNEL,
+            write_array=[1.0],
+            timeout=10.0,
         )
     )
 
     print(f"Output was successfully written to {PHYSICAL_CHANNEL}.")
 except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
+    for key, value in rpc_error.trailing_metadata() or []:
+        if key == "ni-error":
+            error_message += f"\nError status: {value}"
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
         error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"
     elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:

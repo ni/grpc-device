@@ -50,46 +50,35 @@ client = grpc_nidaqmx.NiDAQmxStub(channel)
 task = None
 
 
-def raise_if_error(response):
-    """Raise an exception if an error was returned."""
-    if response.status != 0:
-        response = client.GetErrorString(
-            nidaqmx_types.GetErrorStringRequest(error_code=response.status)
-        )
-        raise Exception(f"Error: {response.error_string}")
-
-
 try:
     response = client.CreateTask(nidaqmx_types.CreateTaskRequest(session_name="my task"))
-    raise_if_error(response)
     task = response.task
 
-    raise_if_error(
-        client.CreateDOChan(
-            nidaqmx_types.CreateDOChanRequest(
-                task=task, lines=LINES, line_grouping=nidaqmx_types.LINE_GROUPING_CHAN_FOR_ALL_LINES
-            )
+    client.CreateDOChan(
+        nidaqmx_types.CreateDOChanRequest(
+            task=task, lines=LINES, line_grouping=nidaqmx_types.LINE_GROUPING_CHAN_FOR_ALL_LINES
         )
     )
 
-    raise_if_error(client.StartTask(nidaqmx_types.StartTaskRequest(task=task)))
+    client.StartTask(nidaqmx_types.StartTaskRequest(task=task))
 
-    raise_if_error(
-        client.WriteDigitalU32(
-            nidaqmx_types.WriteDigitalU32Request(
-                task=task,
-                num_samps_per_chan=1,
-                auto_start=True,
-                timeout=10.0,
-                data_layout=nidaqmx_types.GROUP_BY_GROUP_BY_CHANNEL,
-                write_array=[0xFFFF],
-            )
+    client.WriteDigitalU32(
+        nidaqmx_types.WriteDigitalU32Request(
+            task=task,
+            num_samps_per_chan=1,
+            auto_start=True,
+            timeout=10.0,
+            data_layout=nidaqmx_types.GROUP_BY_GROUP_BY_CHANNEL,
+            write_array=[0xFFFF],
         )
     )
 
     print(f"Output was successfully written to {LINES}.")
 except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
+    for key, value in rpc_error.trailing_metadata() or []:
+        if key == "ni-error":
+            error_message += f"\nError status: {value}"
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
         error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"
     elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
