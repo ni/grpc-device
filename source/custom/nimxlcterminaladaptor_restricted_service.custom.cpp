@@ -1,3 +1,4 @@
+#include <iostream>
 #include <vector>
 #include <server/converters.h>
 #include <nierr_Status.h>
@@ -6,7 +7,11 @@
 #include <custom/nimxlcterminaladaptor_restricted_converters.h>
 
 namespace nimxlcterminaladaptor_restricted_grpc {
-
+  
+  using nidevice_grpc::converters::allocate_output_storage;
+  using nidevice_grpc::converters::convert_to_grpc;
+  using nimxlcterminaladaptor_restricted_grpc::NIErrStatus;
+  
 ::grpc::Status NimxlcTerminalAdaptorRestrictedService::GetDeviceContainer(::grpc::ServerContext* context, const GetDeviceContainerRequest* request, GetDeviceContainerResponse* response)
 {
     if (context->IsCancelled()) {
@@ -17,6 +22,9 @@ namespace nimxlcterminaladaptor_restricted_grpc {
         nimxlc_Session session = session_repository_->access_session(grpc_session.id(), grpc_session.name());
 
         nierr_Status status;
+        status.code = 0;
+        status.capacity = 0;
+        status.json = "";
         nimxlc_DeviceContainer deviceContainer = library_->getDeviceContainer(session, &status);
         if (nierr_Status_isNotFatal(&status))
         {
@@ -47,7 +55,7 @@ namespace nimxlcterminaladaptor_restricted_grpc {
         }
         library_->DeviceContainer_destroy(deviceContainer);
 
-        response->set_status(status.code);
+        response->set_status((&status)->code);
 
         ::grpc::Status grpcStatus;
         if (nierr_Status_isFatal(&status)){

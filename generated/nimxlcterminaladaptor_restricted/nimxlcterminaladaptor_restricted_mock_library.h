@@ -17,12 +17,12 @@ namespace unit {
 
 class NimxlcTerminalAdaptorRestrictedMockLibrary : public nimxlcterminaladaptor_restricted_grpc::NimxlcTerminalAdaptorRestrictedLibraryInterface {
  public:
-  MOCK_METHOD(nimxlc_Session, createSession, (const char hostname[], nierr_Status* cStatus), (override));
+  MOCK_METHOD(nimxlc_Session, createSession, (const char hostname[], nierr_Status* c_status), (override));
   MOCK_METHOD(void, destroySession, (nimxlc_Session session), (override));
-  MOCK_METHOD(void, refreshTerminalCache, (nimxlc_Session session, nierr_Status* cStatus), (override));
-  MOCK_METHOD(bool, hasTerminalInformationChanged, (nimxlc_Session session, uint32_t systemChangeNumber, nierr_Status* cStatus), (override));
-  MOCK_METHOD(uint32_t, getSystemChangeNumber, (nimxlc_Session session, nierr_Status* cStatus), (override));
-  MOCK_METHOD(nimxlc_DeviceContainer, getDeviceContainer, (nimxlc_Session session, nierr_Status* cStatus), (override));
+  MOCK_METHOD(void, refreshTerminalCache, (nimxlc_Session session, nierr_Status* c_status), (override));
+  MOCK_METHOD(bool, hasTerminalInformationChanged, (nimxlc_Session session, uint32_t systemChangeNumber, nierr_Status* c_status), (override));
+  MOCK_METHOD(uint32_t, getSystemChangeNumber, (nimxlc_Session session, nierr_Status* c_status), (override));
+  MOCK_METHOD(nimxlc_DeviceContainer, getDeviceContainer, (nimxlc_Session session, nierr_Status* c_status), (override));
   MOCK_METHOD(nimxlc_DeviceIterator, DeviceContainer_begin, (nimxlc_DeviceContainer container), (override));
   MOCK_METHOD(void, DeviceIterator_next, (nimxlc_DeviceIterator* iterator), (override));
   MOCK_METHOD(nimxlc_TerminalContainer, DeviceIterator_getTerminalContainer, (nimxlc_DeviceContainer container, nimxlc_DeviceIterator iterator, nierr_Status* cStatus), (override));

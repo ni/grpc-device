@@ -1,7 +1,7 @@
 functions = {
     'createSession': {
-        'init_method' : True,
-        'status_expression': 'handle ? -1 : 0',
+        'init_method': True,
+        'status_expression': '(&c_status)->code',
         'parameters': [
             {
                 'direction': 'in',
@@ -13,7 +13,7 @@ functions = {
                 'grpc_type': 'NIErrStatus',
                 'supports_standard_output_allocation': True,
                 'supports_standard_copy_convert': True,
-                'name': 'cStatus',
+                'name': 'c_status',
                 'type': 'nierr_Status'
             },
             {
@@ -38,7 +38,7 @@ functions = {
         'returns': 'void',
     },
     'refreshTerminalCache': {
-        'status_expression' : 'c_status.code',
+        'status_expression': '(&c_status)->code',
         'parameters': [
             {
                 'direction': 'in',
@@ -50,14 +50,14 @@ functions = {
                 'grpc_type': 'NIErrStatus',
                 'supports_standard_output_allocation': True,
                 'supports_standard_copy_convert': True,
-                'name': 'cStatus',
+                'name': 'c_status',
                 'type': 'nierr_Status',
             },
         ],
         'returns': 'void',
     },
     'hasTerminalInformationChanged': {
-        'status_expression': 'c_status.code',
+        'status_expression': '(&c_status)->code',
         'parameters': [
             {
                 'direction': 'in',
@@ -74,12 +74,12 @@ functions = {
                 'grpc_type': 'NIErrStatus',
                 'supports_standard_output_allocation': True,
                 'supports_standard_copy_convert': True,
-                'name': 'cStatus',
+                'name': 'c_status',
                 'type': 'nierr_Status'
             },
             {
                 'direction': 'out',
-                'name': 'bool_out',
+                'name': 'terminal_information_changed',
                 'return_value': True,
                 'type': 'bool'
             }
@@ -87,7 +87,7 @@ functions = {
         'returns': 'bool'
     },
     'getSystemChangeNumber': {
-        'status_expression': 'c_status.code',
+        'status_expression': '(&c_status)->code',
         'parameters': [
             {
                 'direction': 'in',
@@ -99,12 +99,12 @@ functions = {
                 'grpc_type': 'NIErrStatus',
                 'supports_standard_output_allocation': True,
                 'supports_standard_copy_convert': True,
-                'name': 'cStatus',
+                'name': 'c_status',
                 'type': 'nierr_Status'
             },
             {
                 'direction': 'out',
-                'name': 'uint32_out',
+                'name': 'system_change_number',
                 'return_value': True,
                 'type': 'uint32_t'
             }
@@ -112,7 +112,6 @@ functions = {
         'returns': 'uint32_t'
     },
     'getDeviceContainer': {
-        'status_expression': 'c_status.code',
         'codegen_method': 'CustomCode',
         'parameters': [
             {
@@ -125,7 +124,7 @@ functions = {
                 'grpc_type': 'NIErrStatus',
                 'supports_standard_output_allocation': True,
                 'supports_standard_copy_convert': True,
-                'name': 'cStatus',
+                'name': 'c_status',
                 'type': 'nierr_Status'
             },
             {
@@ -140,7 +139,7 @@ functions = {
         'returns': 'nimxlc_DeviceContainer'
     },
     'DeviceContainer_begin': {
-        'status_expression': 'c_status.code',
+        'status_expression': '(&c_status)->code',
         'codegen_method': 'private',
         'parameters': [
             {
@@ -170,7 +169,7 @@ functions = {
         'returns': 'void'
     },
     'DeviceIterator_getTerminalContainer': {
-        'status_expression': 'c_status.code',
+        'status_expression': '(&c_status)->code',
         'codegen_method': 'private',
         'parameters': [
             {
@@ -201,7 +200,7 @@ functions = {
         'returns': 'nimxlc_TerminalContainer'
     },
     'DeviceIterator_getDeviceName': {
-        'status_expression': 'c_status.code',
+        'status_expression': '(&c_status)->code',
         'codegen_method': 'private',
         'parameters': [
             {
@@ -232,7 +231,7 @@ functions = {
         'returns': 'const char*'
     },
     'DeviceIterator_supportsOnBoardClock': {
-        'status_expression': 'c_status.code',
+        'status_expression': '(&c_status)->code',
         'codegen_method': 'private',
         'parameters': [
             {
@@ -363,7 +362,7 @@ functions = {
         'returns': 'void'
     },
     'TerminalIterator_getTerminalName': {
-        'status_expression': 'c_status.code',
+        'status_expression': '(&c_status)->code',
         'codegen_method': 'private',
         'parameters': [
             {
@@ -394,7 +393,7 @@ functions = {
         'returns': 'const char*'
     },
     'TerminalIterator_getVisibility': {
-        'status_expression': 'c_status.code',
+        'status_expression': '(&c_status)->code',
         'codegen_method': 'private',
         'parameters': [
             {

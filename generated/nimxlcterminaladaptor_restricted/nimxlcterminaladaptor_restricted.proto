@@ -76,7 +76,7 @@ message HasTerminalInformationChangedRequest {
 message HasTerminalInformationChangedResponse {
   int32 status = 1;
   NIErrStatus c_status = 2;
-  bool bool_out = 3;
+  bool terminal_information_changed = 3;
 }
 
 message GetSystemChangeNumberRequest {
@@ -86,7 +86,7 @@ message GetSystemChangeNumberRequest {
 message GetSystemChangeNumberResponse {
   int32 status = 1;
   NIErrStatus c_status = 2;
-  uint32 uint32_out = 3;
+  uint32 system_change_number = 3;
 }
 
 message GetDeviceContainerRequest {

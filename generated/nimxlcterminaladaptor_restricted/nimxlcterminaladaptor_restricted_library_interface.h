@@ -15,12 +15,12 @@ class NimxlcTerminalAdaptorRestrictedLibraryInterface {
  public:
   virtual ~NimxlcTerminalAdaptorRestrictedLibraryInterface() {}
 
-  virtual nimxlc_Session createSession(const char hostname[], nierr_Status* cStatus) = 0;
+  virtual nimxlc_Session createSession(const char hostname[], nierr_Status* c_status) = 0;
   virtual void destroySession(nimxlc_Session session) = 0;
-  virtual void refreshTerminalCache(nimxlc_Session session, nierr_Status* cStatus) = 0;
-  virtual bool hasTerminalInformationChanged(nimxlc_Session session, uint32_t systemChangeNumber, nierr_Status* cStatus) = 0;
-  virtual uint32_t getSystemChangeNumber(nimxlc_Session session, nierr_Status* cStatus) = 0;
-  virtual nimxlc_DeviceContainer getDeviceContainer(nimxlc_Session session, nierr_Status* cStatus) = 0;
+  virtual void refreshTerminalCache(nimxlc_Session session, nierr_Status* c_status) = 0;
+  virtual bool hasTerminalInformationChanged(nimxlc_Session session, uint32_t systemChangeNumber, nierr_Status* c_status) = 0;
+  virtual uint32_t getSystemChangeNumber(nimxlc_Session session, nierr_Status* c_status) = 0;
+  virtual nimxlc_DeviceContainer getDeviceContainer(nimxlc_Session session, nierr_Status* c_status) = 0;
   virtual nimxlc_DeviceIterator DeviceContainer_begin(nimxlc_DeviceContainer container) = 0;
   virtual void DeviceIterator_next(nimxlc_DeviceIterator* iterator) = 0;
   virtual nimxlc_TerminalContainer DeviceIterator_getTerminalContainer(nimxlc_DeviceContainer container, nimxlc_DeviceIterator iterator, nierr_Status* cStatus) = 0;

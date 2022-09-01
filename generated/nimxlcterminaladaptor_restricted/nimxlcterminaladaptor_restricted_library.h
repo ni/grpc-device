@@ -18,12 +18,12 @@ class NimxlcTerminalAdaptorRestrictedLibrary : public nimxlcterminaladaptor_rest
   virtual ~NimxlcTerminalAdaptorRestrictedLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);
-  nimxlc_Session createSession(const char hostname[], nierr_Status* cStatus);
+  nimxlc_Session createSession(const char hostname[], nierr_Status* c_status);
   void destroySession(nimxlc_Session session);
-  void refreshTerminalCache(nimxlc_Session session, nierr_Status* cStatus);
-  bool hasTerminalInformationChanged(nimxlc_Session session, uint32_t systemChangeNumber, nierr_Status* cStatus);
-  uint32_t getSystemChangeNumber(nimxlc_Session session, nierr_Status* cStatus);
-  nimxlc_DeviceContainer getDeviceContainer(nimxlc_Session session, nierr_Status* cStatus);
+  void refreshTerminalCache(nimxlc_Session session, nierr_Status* c_status);
+  bool hasTerminalInformationChanged(nimxlc_Session session, uint32_t systemChangeNumber, nierr_Status* c_status);
+  uint32_t getSystemChangeNumber(nimxlc_Session session, nierr_Status* c_status);
+  nimxlc_DeviceContainer getDeviceContainer(nimxlc_Session session, nierr_Status* c_status);
   nimxlc_DeviceIterator DeviceContainer_begin(nimxlc_DeviceContainer container);
   void DeviceIterator_next(nimxlc_DeviceIterator* iterator);
   nimxlc_TerminalContainer DeviceIterator_getTerminalContainer(nimxlc_DeviceContainer container, nimxlc_DeviceIterator iterator, nierr_Status* cStatus);
@@ -39,12 +39,12 @@ class NimxlcTerminalAdaptorRestrictedLibrary : public nimxlcterminaladaptor_rest
   const char* TerminalIterator_getVisibility(nimxlc_TerminalContainer container, nimxlc_TerminalIterator iterator, nierr_Status* cStatus);
 
  private:
-  using createSessionPtr = nimxlc_Session (*)(const char hostname[], nierr_Status* cStatus);
+  using createSessionPtr = nimxlc_Session (*)(const char hostname[], nierr_Status* c_status);
   using destroySessionPtr = void (*)(nimxlc_Session session);
-  using refreshTerminalCachePtr = void (*)(nimxlc_Session session, nierr_Status* cStatus);
-  using hasTerminalInformationChangedPtr = bool (*)(nimxlc_Session session, uint32_t systemChangeNumber, nierr_Status* cStatus);
-  using getSystemChangeNumberPtr = uint32_t (*)(nimxlc_Session session, nierr_Status* cStatus);
-  using getDeviceContainerPtr = nimxlc_DeviceContainer (*)(nimxlc_Session session, nierr_Status* cStatus);
+  using refreshTerminalCachePtr = void (*)(nimxlc_Session session, nierr_Status* c_status);
+  using hasTerminalInformationChangedPtr = bool (*)(nimxlc_Session session, uint32_t systemChangeNumber, nierr_Status* c_status);
+  using getSystemChangeNumberPtr = uint32_t (*)(nimxlc_Session session, nierr_Status* c_status);
+  using getDeviceContainerPtr = nimxlc_DeviceContainer (*)(nimxlc_Session session, nierr_Status* c_status);
   using DeviceContainer_beginPtr = nimxlc_DeviceIterator (*)(nimxlc_DeviceContainer container);
   using DeviceIterator_nextPtr = void (*)(nimxlc_DeviceIterator* iterator);
   using DeviceIterator_getTerminalContainerPtr = nimxlc_TerminalContainer (*)(nimxlc_DeviceContainer container, nimxlc_DeviceIterator iterator, nierr_Status* cStatus);

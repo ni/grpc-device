@@ -39,6 +39,35 @@ inline NiErrStatusInputConverter convert_from_grpc(const NIErrStatus& input)
 {
   return NiErrStatusInputConverter(input);
 }
+
+struct NIErrStatusOutputConverter {
+  NIErrStatusOutputConverter()
+  {
+    status.code = 0;
+    status.capacity = 0;
+    status.json = "";
+  }
+
+  nierr_Status* operator&()
+  {
+    return &status;
+  }
+
+  void to_grpc(nimxlcterminaladaptor_restricted_grpc::NIErrStatus& output) const
+  {
+    output.set_code(status.code);
+    output.set_capacity(status.capacity);
+    output.set_json("");
+  }
+
+  nierr_Status status{};
+};
+
+inline void convert_to_grpc(const NIErrStatusOutputConverter& storage, nimxlcterminaladaptor_restricted_grpc::NIErrStatus* output)
+{
+  storage.to_grpc(*output);
+}
+
 }  // namespace nimxlcterminaladaptor_restricted_grpc
 
 // Template specializations go in nidevice_grpc::converters.
@@ -49,9 +78,20 @@ inline void convert_to_grpc(nierr_Status& input, nimxlcterminaladaptor_restricte
 {
   output->set_code(input.code);
   output->set_capacity(input.capacity);
-  output->set_json(input.json);
+  if (input.capacity > 0) {
+    output->set_json(input.json);
+  }
+  else {
+    output->set_json("");
+  }
 }
-}
-}
+
+template <>
+struct TypeToStorageType<nierr_Status, nimxlcterminaladaptor_restricted_grpc::NIErrStatus> {
+  using StorageType = nimxlcterminaladaptor_restricted_grpc::NIErrStatusOutputConverter;
+};
+
+}  // namespace converters
+}  // namespace nidevice_grpc
 
 #endif /* NIDEVICE_GRPC_DEVICE_NIMXLCTERMINALADAPTOR_RESTRICTED_CONVERTERS_H */

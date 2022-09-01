@@ -1,6 +1,4 @@
 #include <iostream>
-#include <string>
-
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
@@ -53,9 +51,7 @@ class NiMxLcTerminalAdaptorRestrictedDriverApiTests : public Test {
 
 nidevice_grpc::Session init_session(const client::StubPtr& stub, const std::string& hostname)
 {
-  std::cout << "inside init_session" << std::endl;
   auto response = client::create_session(stub, hostname.c_str());
-  std::cout << "after client::create_session call" << std::endl;
   EXPECT_EQ(0, response.status());
   EXPECT_EQ(0, response.c_status().code());
   auto session = response.handle();
@@ -67,15 +63,18 @@ nidevice_grpc::Session init_session(const client::StubPtr& stub)
   return init_session(stub, DEFAULT_HOSTNAME);
 }
 
-TEST_F(NiMxLcTerminalAdaptorRestrictedDriverApiTests, RefreshTerminalCache)
+TEST_F(NiMxLcTerminalAdaptorRestrictedDriverApiTests, RefreshedTerminalCache_GetDeviceContainer_StatusOK)
 {
-  std::cout << "start test" << std::endl;
   const auto session = init_session(stub());
-  std::cout << "init_session" << std::endl;
   auto refresh_terminal_cache_response = client::refresh_terminal_cache(stub(), session);
   std::cout << "refresh_terminal_cache" << std::endl;
   EXPECT_EQ(0, refresh_terminal_cache_response.status());
   EXPECT_EQ(0, refresh_terminal_cache_response.c_status().code());
+
+  auto get_device_container_response = client::get_device_container(stub(), session);
+  std::cout << "get_device_container" << std::endl;
+  EXPECT_EQ(0, get_device_container_response.status());
+  EXPECT_EQ(0, get_device_container_response.c_status().code());
 }
 
 }  // namespace

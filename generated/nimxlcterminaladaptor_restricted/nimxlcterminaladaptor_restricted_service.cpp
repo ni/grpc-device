@@ -55,7 +55,7 @@ namespace nimxlcterminaladaptor_restricted_grpc {
       auto c_status = allocate_output_storage<nierr_Status, NIErrStatus>();
       auto init_lambda = [&] () {
         auto handle = library_->createSession(hostname, &c_status);
-        auto status = handle ? -1 : 0;
+        auto status = (&c_status)->code;
         return std::make_tuple(status, handle);
       };
       uint32_t session_id = 0;
@@ -114,7 +114,7 @@ namespace nimxlcterminaladaptor_restricted_grpc {
       nimxlc_Session session = session_repository_->access_session(session_grpc_session.id(), session_grpc_session.name());
       auto c_status = allocate_output_storage<nierr_Status, NIErrStatus>();
       library_->refreshTerminalCache(session, &c_status);
-      auto status = c_status.code;
+      auto status = (&c_status)->code;
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNimxlc_Session(status, session);
       }
@@ -139,14 +139,14 @@ namespace nimxlcterminaladaptor_restricted_grpc {
       nimxlc_Session session = session_repository_->access_session(session_grpc_session.id(), session_grpc_session.name());
       uint32_t system_change_number = request->system_change_number();
       auto c_status = allocate_output_storage<nierr_Status, NIErrStatus>();
-      auto bool_out = library_->hasTerminalInformationChanged(session, system_change_number, &c_status);
-      auto status = c_status.code;
+      auto terminal_information_changed = library_->hasTerminalInformationChanged(session, system_change_number, &c_status);
+      auto status = (&c_status)->code;
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNimxlc_Session(status, session);
       }
       response->set_status(status);
       convert_to_grpc(c_status, response->mutable_c_status());
-      response->set_bool_out(bool_out);
+      response->set_terminal_information_changed(terminal_information_changed);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -165,14 +165,14 @@ namespace nimxlcterminaladaptor_restricted_grpc {
       auto session_grpc_session = request->session();
       nimxlc_Session session = session_repository_->access_session(session_grpc_session.id(), session_grpc_session.name());
       auto c_status = allocate_output_storage<nierr_Status, NIErrStatus>();
-      auto uint32_out = library_->getSystemChangeNumber(session, &c_status);
-      auto status = c_status.code;
+      auto system_change_number = library_->getSystemChangeNumber(session, &c_status);
+      auto status = (&c_status)->code;
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNimxlc_Session(status, session);
       }
       response->set_status(status);
       convert_to_grpc(c_status, response->mutable_c_status());
-      response->set_uint32_out(uint32_out);
+      response->set_system_change_number(system_change_number);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
