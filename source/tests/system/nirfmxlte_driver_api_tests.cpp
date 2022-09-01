@@ -1,13 +1,10 @@
 #include <gtest/gtest.h>
 
-#include <nlohmann/json.hpp>
-
 #include "device_server.h"
 #include "nirfmxlte/nirfmxlte_client.h"
 #include "nirfsa/nirfsa_client.h"
 #include "rfmx_macros.h"
 
-using namespace ::nlohmann;
 using namespace ::testing;
 using namespace nirfmxlte_grpc;
 namespace client = nirfmxlte_grpc::experimental::client;
@@ -367,8 +364,8 @@ TEST_F(NiRFmxLTEDriverApiTests, NBIoTModAccFromExample_FetchData_DataLooksReason
       actualStatus = mod_acc_fetch_composite_evm_response.status();
     }
     catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-      auto error = json::parse(ex.what());
-      actualStatus = error.value("code", -1);
+      const auto& error = ex.Trailers().find("ni-error")->second;
+      actualStatus = std::stoi(error);
     }
     if (actualStatus == MODACC_NB_IOT_AUTODETECT_CHECK && attempts < 5) {
       TearDown();
@@ -447,8 +444,8 @@ TEST_F(NiRFmxLTEDriverApiTests, NBIoTModAccAcpChpObwSemCompositeSingleCarrierFro
       actualStatus = mod_acc_fetch_composite_evm_response.status();
     }
     catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-      auto error = json::parse(ex.what());
-      actualStatus = error.value("code", -1);
+      const auto& error = ex.Trailers().find("ni-error")->second;
+      actualStatus = std::stoi(error);
     }
     if (actualStatus == MODACC_NB_IOT_AUTODETECT_CHECK && attempts < 5) {
       TearDown();
