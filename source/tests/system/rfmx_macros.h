@@ -47,7 +47,7 @@
     FAIL() << "We shouldn't get here.";                                             \
   }                                                                                 \
   catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {        \
-    expect_driver_error(ex, expected_error);                                        \
+    expect_driver_error(ex, expected_error_);                                       \
     EXPECT_THAT(ex.what(), HasSubstr(message_substring_));                          \
   }
 
