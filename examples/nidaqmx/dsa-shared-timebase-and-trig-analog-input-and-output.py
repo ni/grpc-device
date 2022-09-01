@@ -128,17 +128,17 @@ async def _main():
                 for i in range(num_devices):
                     # devices are 1-indexed, so use i + 1 here
                     device = (
-                            client.GetNthTaskDevice(
-                                nidaqmx_types.GetNthTaskDeviceRequest(task=task, index=i + 1)
-                            )
+                        client.GetNthTaskDevice(
+                            nidaqmx_types.GetNthTaskDeviceRequest(task=task, index=i + 1)
+                        )
                     ).buffer
                     device_category = (
-                            client.GetDeviceAttributeInt32(
-                                nidaqmx_types.GetDeviceAttributeInt32Request(
-                                    device_name=device,
-                                    attribute=nidaqmx_types.DEVICE_ATTRIBUTE_PRODUCT_CATEGORY,
-                                )
+                        client.GetDeviceAttributeInt32(
+                            nidaqmx_types.GetDeviceAttributeInt32Request(
+                                device_name=device,
+                                attribute=nidaqmx_types.DEVICE_ATTRIBUTE_PRODUCT_CATEGORY,
                             )
+                        )
                     ).value
                     if (
                         device_category
@@ -182,7 +182,7 @@ async def _main():
                 )
             )
 
-            response = aclient.CreateTask(
+            response = client.CreateTask(
                 nidaqmx_types.CreateTaskRequest(session_name="Leader output task")
             )
             leader_output_task = response.task
