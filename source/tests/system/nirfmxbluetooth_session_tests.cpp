@@ -1,7 +1,6 @@
-#include <gtest/gtest.h>
-
 #include "device_server.h"
 #include "nirfmxbluetooth/nirfmxbluetooth_client.h"
+#include "tests/utilities/test_helpers.h"
 
 namespace ni {
 namespace tests {
@@ -89,12 +88,10 @@ TEST_F(NiRFmxBluetoothSessionTest, InitializeSessionWithoutDevice_ReturnsDriverE
   try {
     rfmxbluetooth::InitializeResponse response;
     auto status = call_initialize(kRFmxBTTestInvalidRsrc, "", "", &response);
-    EXPECT_FALSE(true);
+    FAIL() << "We shouldn't get here.";
   }
   catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-    EXPECT_EQ(::grpc::StatusCode::UNKNOWN, ex.StatusCode());
-    const auto& error = ex.Trailers().find("ni-error")->second;
-    EXPECT_EQ(kInvalidRsrc, std::stoi(error));
+    expect_driver_error(ex, kInvalidRsrc);
   }
 }
 
@@ -160,12 +157,10 @@ TEST_F(NiRFmxBluetoothSessionTest, CallInitializeTwiceWithSameSessionNameOnSameD
     // Initialize was only called once in the driver since the second init call to the service found the Session by the same name and returned it.
     // Therefore if we try to close the session again the driver will respond that it's not a valid session (it's already been closed).
     call_close(session_two, false, &close_response_two);
-    EXPECT_FALSE(true);
+    FAIL() << "We shouldn't get here.";
   }
   catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-    EXPECT_EQ(::grpc::StatusCode::UNKNOWN, ex.StatusCode());
-    const auto& error = ex.Trailers().find("ni-error")->second;
-    EXPECT_EQ(kInvalidRFmxBTSession, std::stoi(error));
+    expect_driver_error(ex, kInvalidRFmxBTSession);
   }
 }
 
@@ -177,12 +172,10 @@ TEST_F(NiRFmxBluetoothSessionTest, InvalidSession_CloseSession_ReturnsInvalidSes
   try {
     rfmxbluetooth::CloseResponse response;
     call_close(session, false, &response);
-    EXPECT_FALSE(true);
+    FAIL() << "We shouldn't get here.";
   }
   catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-    EXPECT_EQ(::grpc::StatusCode::UNKNOWN, ex.StatusCode());
-    const auto& error = ex.Trailers().find("ni-error")->second;
-    EXPECT_EQ(kInvalidRFmxBTSession, std::stoi(error));
+    expect_driver_error(ex, kInvalidRFmxBTSession);
   }
 }
 

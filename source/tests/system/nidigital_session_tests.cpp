@@ -1,7 +1,6 @@
-#include <gtest/gtest.h>
-
 #include "device_server.h"
 #include "nidigitalpattern/nidigitalpattern_client.h"
+#include "tests/utilities/test_helpers.h"
 
 namespace ni {
 namespace tests {
@@ -102,12 +101,10 @@ TEST_F(NiDigitalSessionTest, InitWithErrorFromDriver_ReturnsDriverErrorWithUserE
   try {
     digital::InitWithOptionsResponse init_response;
     auto status = call_init_with_options(kDigitalInvalidResourceName, "", "", &init_response);
-    EXPECT_FALSE(true);
+    FAIL() << "We shouldn't get here.";
   }
   catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-    EXPECT_EQ(::grpc::StatusCode::UNKNOWN, ex.StatusCode());
-    const auto& error = ex.Trailers().find("ni-error")->second;
-    EXPECT_EQ(kDigitalRsrcNotFound, std::stoi(error));
+    expect_driver_error(ex, kDigitalRsrcNotFound);
     EXPECT_STREQ(kDigitalRsrcNotFoundMessage, ex.what());
   }
 }

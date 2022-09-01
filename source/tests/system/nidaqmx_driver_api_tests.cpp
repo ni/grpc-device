@@ -1,6 +1,5 @@
 #include <gmock/gmock.h>
 #include <google/protobuf/util/time_util.h>
-#include <gtest/gtest.h>  // For EXPECT matchers.
 
 #include <algorithm>
 #include <cstring>
@@ -12,6 +11,7 @@
 #include "device_server.h"
 #include "enumerate_devices.h"
 #include "nidaqmx/nidaqmx_client.h"
+#include "tests/utilities/test_helpers.h"
 
 using namespace ::testing;
 using namespace nidaqmx_grpc;
@@ -725,13 +725,6 @@ class NiDAQmxDriverApiTests : public Test {
     EXPECT_EQ(::grpc::Status::OK.error_code(), status.error_code());
   }
 
-  void EXPECT_DAQ_ERROR(int32_t expected_error, const nidevice_grpc::experimental::client::grpc_driver_error& ex)
-  {
-    EXPECT_EQ(::grpc::StatusCode::UNKNOWN, ex.StatusCode());
-    const auto& error = ex.Trailers().find("ni-error")->second;
-    EXPECT_EQ(expected_error, std::stoi(error));
-  }
-
   template <typename T>
   void EXPECT_DATA_IN_RANGE(const ::google::protobuf::RepeatedField<T>& data, T min_val, T max_val)
   {
@@ -1005,10 +998,10 @@ TEST_F(NiDAQmxDriverApiTests, GetScaledUnitsAsDouble_Fails)
         stub(),
         SCALE_NAME,
         (ScaleDoubleAttribute)ScaleStringAttribute::SCALE_ATTRIBUTE_SCALED_UNITS);
-    EXPECT_FALSE(true);
+    FAIL() << "We shouldn't get here.";
   }
   catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-    EXPECT_DAQ_ERROR(SPECIFIED_ATTRIBUTE_NOT_VALID_ERROR, ex);
+    expect_driver_error(ex, SPECIFIED_ATTRIBUTE_NOT_VALID_ERROR);
   }
 }
 
@@ -1084,10 +1077,10 @@ TEST_F(NiDAQmxDriverApiTests, AOVoltageChannel_WriteAODataWithOutOfRangeValue_Re
     write_data[80] += AO_MAX;
     WriteAnalogF64Response write_response;
     write_analog_f64(write_data, write_response);
-    EXPECT_FALSE(true);
+    FAIL() << "We shouldn't get here.";
   }
   catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-    EXPECT_DAQ_ERROR(INVALID_AO_DATA_WRITE_ERROR, ex);
+    expect_driver_error(ex, INVALID_AO_DATA_WRITE_ERROR);
   }
   stop_task();
 }
@@ -1372,26 +1365,28 @@ TEST_F(NiDAQmxDriverApiTests, CalculateReversePolyCoefficientsWithPositiveRevers
 TEST_F(NiDAQmxDriverApiTests, AIVoltageChannel_WaitForValidTimestamp_ReturnsError)
 {
   create_ai_voltage_chan(0.0, 1.0);
+
   try {
     auto response = WaitForValidTimestampResponse{};
     auto status = wait_for_valid_timestamp(response);
-    EXPECT_FALSE(true);
+    FAIL() << "We shouldn't get here.";
   }
   catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-    EXPECT_DAQ_ERROR(WAIT_FOR_VALID_TIMESTAMP_NOT_SUPPORTED_ERROR, ex);
+    expect_driver_error(ex, WAIT_FOR_VALID_TIMESTAMP_NOT_SUPPORTED_ERROR);
   }
 }
 
 TEST_F(NiDAQmxDriverApiTests, AIVoltageChannel_CfgTimeStartTrig_ReturnsError)
 {
   create_ai_voltage_chan(0.0, 1.0);
+
   try {
     auto response = CfgTimeStartTrigResponse{};
     cfg_time_start_trig(response);
-    EXPECT_FALSE(true);
+    FAIL() << "We shouldn't get here.";
   }
   catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-    EXPECT_DAQ_ERROR(INVALID_ATTRIBUTE_VALUE_ERROR, ex);
+    expect_driver_error(ex, INVALID_ATTRIBUTE_VALUE_ERROR);
   }
 }
 
@@ -1429,10 +1424,10 @@ TEST_F(NiDAQmxDriverApiTests, AddNetworkDeviceWithInvalidIP_ErrorRetrievingNetwo
   try {
     auto response = AddNetworkDeviceResponse{};
     add_network_device("0.0.0.0", response);
-    EXPECT_FALSE(true);
+    FAIL() << "We shouldn't get here.";
   }
   catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-    EXPECT_DAQ_ERROR(RETRIEVING_NETWORK_DEVICE_PROPERTIES_ERROR, ex);
+    expect_driver_error(ex, RETRIEVING_NETWORK_DEVICE_PROPERTIES_ERROR);
   }
 }
 
@@ -1440,10 +1435,10 @@ TEST_F(NiDAQmxDriverApiTests, ConfigureTEDSOnNonTEDSChannel_ErrorTEDSSensorNotDe
 {
   try {
     client::configure_teds(stub(), AI_CHANNEL, "");
-    EXPECT_FALSE(true);
+    FAIL() << "We shouldn't get here.";
   }
   catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-    EXPECT_DAQ_ERROR(TEDS_SENSOR_NOT_DETECTED_ERROR, ex);
+    expect_driver_error(ex, TEDS_SENSOR_NOT_DETECTED_ERROR);
   }
 }
 
@@ -1473,10 +1468,10 @@ TEST_F(NiDAQmxDriverApiTests, ConnectBogusTerms_FailsWithInvalidRoutingError)
   try {
     auto response = ConnectTermsResponse{};
     connect_terms("ABC", "123", response);
-    EXPECT_FALSE(true);
+    FAIL() << "We shouldn't get here.";
   }
   catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-    EXPECT_DAQ_ERROR(INVALID_TERM_ROUTING_ERROR, ex);
+    expect_driver_error(ex, INVALID_TERM_ROUTING_ERROR);
   }
 }
 
@@ -1507,10 +1502,10 @@ TEST_F(NiDAQmxDriverApiTests, AutoConfigureCDAQSyncConnections_ReturnsNotSupport
 {
   try {
     client::auto_configure_cdaq_sync_connections(stub(), DEVICE_NAME, 1.0);
-    EXPECT_FALSE(true);
+    FAIL() << "We shouldn't get here.";
   }
   catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-    EXPECT_DAQ_ERROR(DEVICE_DOES_NOT_SUPPORT_CDAQ_SYNC_CONNECTIONS_ERROR, ex);
+    expect_driver_error(ex, DEVICE_DOES_NOT_SUPPORT_CDAQ_SYNC_CONNECTIONS_ERROR);
   }
 }
 
@@ -1730,10 +1725,10 @@ TEST_F(NiDAQmxDriverApiTests, SetWrongCategoryAttribute_ReturnsNotValidError)
 {
   try {
     client::get_device_attribute_bool(stub(), DEVICE_NAME, ScaleDoubleAttribute::SCALE_ATTRIBUTE_LIN_SLOPE);
-    EXPECT_FALSE(true);
+    FAIL() << "We shouldn't get here.";
   }
   catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-    EXPECT_DAQ_ERROR(SPECIFIED_ATTRIBUTE_NOT_VALID_ERROR, ex);
+    expect_driver_error(ex, SPECIFIED_ATTRIBUTE_NOT_VALID_ERROR);
   }
 }
 
@@ -1741,10 +1736,10 @@ TEST_F(NiDAQmxDriverApiTests, SetWrongDataTypeAttribute_ReturnsNotValidError)
 {
   try {
     client::get_device_attribute_bool(stub(), DEVICE_NAME, DeviceStringAttribute::DEVICE_ATTRIBUTE_AO_PHYSICAL_CHANS);
-    EXPECT_FALSE(true);
+    FAIL() << "We shouldn't get here.";
   }
   catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-    EXPECT_DAQ_ERROR(SPECIFIED_ATTRIBUTE_NOT_VALID_ERROR, ex);
+    expect_driver_error(ex, SPECIFIED_ATTRIBUTE_NOT_VALID_ERROR);
   }
 }
 

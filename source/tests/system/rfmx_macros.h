@@ -2,9 +2,10 @@
 #define NIDEVICE_GRPC_TESTS_RFMX_EXPECT_MACROS
 
 #include <gmock/gmock.h>
-#include <gtest/gtest.h>
 
 #include <nlohmann/json.hpp>
+
+#include "tests/utilities/test_helpers.h"
 
 #define EXPECT_NO_ERROR_MESSAGE(session, response)                                                  \
   if (1) {                                                                                          \
@@ -33,11 +34,6 @@
     EXPECT_EQ(expected_warning, (response).status());       \
   }
 
-#define EXPECT_STATUS_ERROR(expected_error, exception)               \
-  EXPECT_LT(expected_error, 0);                                      \
-  const auto& error = exception.Trailers().find("ni-error")->second; \
-  EXPECT_EQ(expected_error, std::stoi(error));
-
 #define EXPECT_SUCCESS(session_, response_)     \
   ([this](auto& session, auto& response) {      \
     EXPECT_RESPONSE_SUCCESS(response);          \
@@ -48,10 +44,10 @@
 #define EXPECT_ERROR(expected_error_, message_substring_, session_, response_call_) \
   try {                                                                             \
     response_call_;                                                                 \
-    EXPECT_FALSE(true);                                                             \
+    FAIL() << "We shouldn't get here.";                                             \
   }                                                                                 \
   catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {        \
-    EXPECT_STATUS_ERROR(expected_error_, ex);                                       \
+    expect_driver_error(ex, expected_error);                                        \
     EXPECT_THAT(ex.what(), HasSubstr(message_substring_));                          \
   }
 

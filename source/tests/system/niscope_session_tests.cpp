@@ -1,7 +1,6 @@
-#include <gtest/gtest.h>
-
 #include "device_server.h"
 #include "niscope/niscope_client.h"
+#include "tests/utilities/test_helpers.h"
 
 namespace ni {
 namespace tests {
@@ -121,12 +120,10 @@ TEST_F(NiScopeSessionTest, InvalidSession_CloseSession_ReturnsInvalidSesssionErr
     scope::CloseResponse response;
     ::grpc::Status status = GetStub()->Close(&context, request, &response);
     nidevice_grpc::experimental::client::raise_if_error(status, context);
-    EXPECT_FALSE(true);
+    FAIL() << "We shouldn't get here.";
   }
   catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-    EXPECT_EQ(::grpc::StatusCode::UNKNOWN, ex.StatusCode());
-    const auto& error = ex.Trailers().find("ni-error")->second;
-    EXPECT_EQ(kInvalidScopeSession, std::stoi(error));
+    expect_driver_error(ex, kInvalidScopeSession);
     EXPECT_STREQ(kInvalidScopeSessionMessage, ex.what());
   }
 }
@@ -136,12 +133,10 @@ TEST_F(NiScopeSessionTest, InitWithErrorFromDriver_ReturnsDriverErrorWithUserErr
   try {
     scope::InitWithOptionsResponse init_response;
     call_init_with_options(kInvalidResourceName, "", "", &init_response);
-    EXPECT_FALSE(true);
+    FAIL() << "We shouldn't get here.";
   }
   catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-    EXPECT_EQ(::grpc::StatusCode::UNKNOWN, ex.StatusCode());
-    const auto& error = ex.Trailers().find("ni-error")->second;
-    EXPECT_EQ(kViErrorRsrcNFound, std::stoi(error));
+    expect_driver_error(ex, kViErrorRsrcNFound);
     EXPECT_STREQ(kViErrorRsrcNFoundMessage, ex.what());
   }
 }

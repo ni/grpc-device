@@ -9,7 +9,7 @@ namespace nixnetsocket_grpc {
   library_->GetLastErrorStr(&description[0], nidevice_grpc::kMaxGrpcErrorDescriptionSize);
   // XNET sockets have special behavior that returns both the API error code and the sockets error number.
   int errorNumber = library_->GetLastErrorNum();
-  context->AddTrailingMetadata("socket-error", std::to_string(errorNumber));
+  context->AddTrailingMetadata("ni-socket-error", std::to_string(errorNumber));
   return nidevice_grpc::ApiErrorAndDescriptionToStatus(context, status, description);
 }
 
@@ -20,7 +20,7 @@ namespace nixnetsocket_grpc {
   library_->GetLastErrorStr(&description[0], nidevice_grpc::kMaxGrpcErrorDescriptionSize);
   // XNET sockets have special behavior that returns both the API error code and the sockets error number.
   int errorNumber = library_->GetLastErrorNum();
-  context->AddTrailingMetadata("socket-error", std::to_string(errorNumber));
+  context->AddTrailingMetadata("ni-socket-error", std::to_string(errorNumber));
   return nidevice_grpc::ApiErrorAndDescriptionToStatus(context, status, description);
 }
 

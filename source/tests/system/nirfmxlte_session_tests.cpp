@@ -1,7 +1,6 @@
-#include <gtest/gtest.h>
-
 #include "device_server.h"
 #include "nirfmxlte/nirfmxlte_client.h"
+#include "tests/utilities/test_helpers.h"
 
 namespace ni {
 namespace tests {
@@ -89,12 +88,10 @@ TEST_F(NiRFmxLTESessionTest, InitializeSessionWithoutDevice_ReturnsDriverError)
   try {
     rfmxlte::InitializeResponse response;
     call_initialize(kRFmxLTETestInvalidRsrc, "", "", &response);
-    EXPECT_FALSE(true);
+    FAIL() << "We shouldn't get here.";
   }
   catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-    EXPECT_EQ(::grpc::StatusCode::UNKNOWN, ex.StatusCode());
-    const auto& error = ex.Trailers().find("ni-error")->second;
-    EXPECT_EQ(kInvalidRsrc, std::stoi(error));
+    expect_driver_error(ex, kInvalidRsrc);
   }
 }
 
@@ -160,12 +157,10 @@ TEST_F(NiRFmxLTESessionTest, CallInitializeTwiceWithSameSessionNameOnSameDevice_
     // Initialize was only called once in the driver since the second init call to the service found the Session by the same name and returned it.
     // Therefore if we try to close the session again the driver will respond that it's not a valid session (it's already been closed).
     call_close(session_two, false, &close_response_two);
-    EXPECT_FALSE(true);
+    FAIL() << "We shouldn't get here.";
   }
   catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-    EXPECT_EQ(::grpc::StatusCode::UNKNOWN, ex.StatusCode());
-    const auto& error = ex.Trailers().find("ni-error")->second;
-    EXPECT_EQ(kInvalidRFmxLTESession, std::stoi(error));
+    expect_driver_error(ex, kInvalidRFmxLTESession);
   }
 }
 
@@ -177,12 +172,10 @@ TEST_F(NiRFmxLTESessionTest, InvalidSession_CloseSession_ReturnsInvalidSessionEr
   try {
     rfmxlte::CloseResponse response;
     call_close(session, false, &response);
-    EXPECT_FALSE(true);
+    FAIL() << "We shouldn't get here.";
   }
   catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-    EXPECT_EQ(::grpc::StatusCode::UNKNOWN, ex.StatusCode());
-    const auto& error = ex.Trailers().find("ni-error")->second;
-    EXPECT_EQ(kInvalidRFmxLTESession, std::stoi(error));
+    expect_driver_error(ex, kInvalidRFmxLTESession);
   }
 }
 

@@ -1,8 +1,8 @@
 #include <gmock/gmock.h>
-#include <gtest/gtest.h>
 
 #include "device_server.h"
 #include "niswitch/niswitch_client.h"
+#include "tests/utilities/test_helpers.h"
 
 namespace ni {
 namespace tests {
@@ -122,12 +122,10 @@ TEST_F(NiSwitchSessionTest, InvalidSession_CloseSession_ReturnsInvalidSessionErr
     niswitch::CloseResponse response;
     auto status = GetStub()->Close(&context, request, &response);
     nidevice_grpc::experimental::client::raise_if_error(status, context);
-    EXPECT_FALSE(true);
+    FAIL() << "We shouldn't get here.";
   }
   catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-    EXPECT_EQ(::grpc::StatusCode::UNKNOWN, ex.StatusCode());
-    const auto& error = ex.Trailers().find("ni-error")->second;
-    EXPECT_EQ(kInvalidSwitchSession, std::stoi(error));
+    expect_driver_error(ex, kInvalidSwitchSession);
     EXPECT_THAT(ex.what(), ::testing::HasSubstr(kInvalidSwitchSessionMessage));
   }
 }
@@ -137,12 +135,10 @@ TEST_F(NiSwitchSessionTest, InitWithErrorFromDriver_ReturnsDriverErrorWithUserEr
   try {
     niswitch::InitWithTopologyResponse init_response;
     call_init_with_topology(kInvalidRsrcName, "", "", &init_response);
-    EXPECT_FALSE(true);
+    FAIL() << "We shouldn't get here.";
   }
   catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-    EXPECT_EQ(::grpc::StatusCode::UNKNOWN, ex.StatusCode());
-    const auto& error = ex.Trailers().find("ni-error")->second;
-    EXPECT_EQ(kViErrorRsrcNotFound, std::stoi(error));
+    expect_driver_error(ex, kViErrorRsrcNotFound);
     EXPECT_STREQ(kViErrorRsrcNotFoundMessage, ex.what());
   }
 }

@@ -1,8 +1,8 @@
 #include <gmock/gmock.h>
-#include <gtest/gtest.h>
 
 #include "device_server.h"
 #include "nidcpower/nidcpower_client.h"
+#include "tests/utilities/test_helpers.h"
 
 namespace ni {
 namespace tests {
@@ -121,12 +121,10 @@ TEST_F(NiDCPowerSessionTest, InitializeSessionWithoutDevice_ReturnsDriverError)
   try {
     dcpower::InitializeWithChannelsResponse response;
     call_initialize_with_channels(kTestInvalidRsrc, "", "", &response);
-    EXPECT_FALSE(true);
+    FAIL() << "We shouldn't get here.";
   }
   catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-    EXPECT_EQ(::grpc::StatusCode::UNKNOWN, ex.StatusCode());
-    const auto& error = ex.Trailers().find("ni-error")->second;
-    EXPECT_EQ(kInvalidRsrc, std::stoi(error));
+    expect_driver_error(ex, kInvalidRsrc);
     EXPECT_STRNE("", ex.what());
   }
 }
@@ -161,12 +159,10 @@ TEST_F(NiDCPowerSessionTest, InvalidSession_CloseSession_ReturnsInvalidSessionEr
     dcpower::CloseResponse response;
     auto status = GetStub()->Close(&context, request, &response);
     nidevice_grpc::experimental::client::raise_if_error(status, context);
-    EXPECT_FALSE(true);
+    FAIL() << "We shouldn't get here.";
   }
   catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-    EXPECT_EQ(::grpc::StatusCode::UNKNOWN, ex.StatusCode());
-    const auto& error = ex.Trailers().find("ni-error")->second;
-    EXPECT_EQ(kInvalidDCPowerSession, std::stoi(error));
+    expect_driver_error(ex, kInvalidDCPowerSession);
     EXPECT_THAT(ex.what(), HasSubstr(kInvalidDCPowerSessionMessage));
   }
 }
@@ -176,12 +172,10 @@ TEST_F(NiDCPowerSessionTest, InitWithErrorFromDriver_ReturnsDriverErrorWithUserE
   try {
     dcpower::InitializeWithChannelsResponse initialize_response;
     call_initialize_with_channels(kTestInvalidRsrc, "", "", &initialize_response);
-    EXPECT_FALSE(true);
+    FAIL() << "We shouldn't get here.";
   }
   catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-    EXPECT_EQ(::grpc::StatusCode::UNKNOWN, ex.StatusCode());
-    const auto& error = ex.Trailers().find("ni-error")->second;
-    EXPECT_EQ(kInvalidRsrc, std::stoi(error));
+    expect_driver_error(ex, kInvalidRsrc);
     EXPECT_STREQ(kViErrorResourceNotFoundMessage, ex.what());
   }
 }

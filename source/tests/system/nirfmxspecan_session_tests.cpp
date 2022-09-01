@@ -1,8 +1,8 @@
 #include <gmock/gmock.h>
-#include <gtest/gtest.h>
 
 #include "device_server.h"
 #include "nirfmxspecan/nirfmxspecan_client.h"
+#include "tests/utilities/test_helpers.h"
 
 namespace ni {
 namespace tests {
@@ -98,12 +98,10 @@ TEST_F(NiRFmxSpecAnSessionTest, InitWithErrorFromDriver_ReturnsDriverErrorWithUs
   try {
     rfmxspecan::InitializeResponse init_response;
     call_initialize(kRFmxSpecAnTestInvalidRsrc, "", "", &init_response);
-    EXPECT_FALSE(true);
+    FAIL() << "We shouldn't get here.";
   }
   catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-    EXPECT_EQ(::grpc::StatusCode::UNKNOWN, ex.StatusCode());
-    const auto& error = ex.Trailers().find("ni-error")->second;
-    EXPECT_EQ(kInvalidRsrc, std::stoi(error));
+    expect_driver_error(ex, kInvalidRsrc);
     EXPECT_STREQ(kRFmxSpecAnErrorResourceNotFoundMessage, ex.what());
   }
 }
@@ -113,7 +111,7 @@ TEST_F(NiRFmxSpecAnSessionTest, InitWithErrorFromDriver_ReinitSuccessfully_Error
   try {
     rfmxspecan::InitializeResponse failed_init_response;
     call_initialize(kRFmxSpecAnTestInvalidRsrc, "", "", &failed_init_response);
-    EXPECT_FALSE(true);
+    FAIL() << "We shouldn't get here.";
   }
   catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
     EXPECT_EQ(::grpc::StatusCode::UNKNOWN, ex.StatusCode());
@@ -141,12 +139,10 @@ TEST_F(NiRFmxSpecAnSessionTest, InvalidSession_CloseSession_ReturnsInvalidSessio
     rfmxspecan::CloseResponse response;
     ::grpc::Status status = GetStub()->Close(&context, request, &response);
     nidevice_grpc::experimental::client::raise_if_error(status, context);
-    EXPECT_FALSE(true);
+    FAIL() << "We shouldn't get here.";
   }
   catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-    EXPECT_EQ(::grpc::StatusCode::UNKNOWN, ex.StatusCode());
-    const auto& error = ex.Trailers().find("ni-error")->second;
-    EXPECT_EQ(kInvalidRFmxSpecAnSession, std::stoi(error));
+    expect_driver_error(ex, kInvalidRFmxSpecAnSession);
   }
 }
 

@@ -1,9 +1,9 @@
 #include <gmock/gmock.h>
-#include <gtest/gtest.h>
 
 #include "device_server.h"
 #include "nidmm/nidmm_client.h"
 #include "nidmm/nidmm_library.h"
+#include "tests/utilities/test_helpers.h"
 
 namespace ni {
 namespace tests {
@@ -130,12 +130,10 @@ TEST_F(NiDmmSessionTest, InvalidSession_CloseSession_ReturnsInvalidSesssionError
     dmm::CloseResponse response;
     ::grpc::Status status = GetStub()->Close(&context, request, &response);
     nidevice_grpc::experimental::client::raise_if_error(status, context);
-    EXPECT_FALSE(true);
+    FAIL() << "We shouldn't get here.";
   }
   catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-    EXPECT_EQ(::grpc::StatusCode::UNKNOWN, ex.StatusCode());
-    const auto& error = ex.Trailers().find("ni-error")->second;
-    EXPECT_EQ(kInvalidDmmSession, std::stoi(error));
+    expect_driver_error(ex, kInvalidDmmSession);
     EXPECT_THAT(ex.what(), HasSubstr(kInvalidDmmSessionMessage));
   }
 }
@@ -145,12 +143,10 @@ TEST_F(NiDmmSessionTest, InitWithErrorFromDriver_ReturnsDriverErrorWithUserError
   try {
     dmm::InitWithOptionsResponse init_response;
     call_init_with_options(kInvalidRsrc, "", "", &init_response);
-    EXPECT_FALSE(true);
+    FAIL() << "We shouldn't get here.";
   }
   catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-    EXPECT_EQ(::grpc::StatusCode::UNKNOWN, ex.StatusCode());
-    const auto& error = ex.Trailers().find("ni-error")->second;
-    EXPECT_EQ(kViErrorDmmRsrcNFound, std::stoi(error));
+    expect_driver_error(ex, kViErrorDmmRsrcNFound);
     EXPECT_STREQ(kViErrorDmmRsrcNFoundMessage, ex.what());
   }
 }

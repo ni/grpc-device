@@ -1,7 +1,6 @@
-#include <gtest/gtest.h>
-
 #include "device_server.h"
 #include "nirfsg/nirfsg_client.h"
+#include "tests/utilities/test_helpers.h"
 
 namespace ni {
 namespace tests {
@@ -108,12 +107,10 @@ TEST_F(NiRFSGSessionTest, InitWithErrorFromDriver_ReturnsDriverErrorWithUserErro
   try {
     rfsg::InitWithOptionsResponse init_response;
     call_init_with_options(kRFSGTestInvalidRsrc, "", "", &init_response);
-    EXPECT_FALSE(true);
+    FAIL() << "We shouldn't get here.";
   }
   catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-    EXPECT_EQ(::grpc::StatusCode::UNKNOWN, ex.StatusCode());
-    const auto& error = ex.Trailers().find("ni-error")->second;
-    EXPECT_EQ(kInvalidRsrc, std::stoi(error));
+    expect_driver_error(ex, kInvalidRsrc);
     EXPECT_STREQ(kRFSGErrorResourceNotFoundMessage, ex.what());
   }
 }
@@ -130,12 +127,10 @@ TEST_F(NiRFSGSessionTest, InvalidSession_CloseSession_ReturnsInvalidSessionError
     rfsg::CloseResponse response;
     auto status = GetStub()->Close(&context, request, &response);
     nidevice_grpc::experimental::client::raise_if_error(status, context);
-    EXPECT_FALSE(true);
+    FAIL() << "We shouldn't get here.";
   }
   catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-    EXPECT_EQ(::grpc::StatusCode::UNKNOWN, ex.StatusCode());
-    const auto& error = ex.Trailers().find("ni-error")->second;
-    EXPECT_EQ(kInvalidRFSGSession, std::stoi(error));
+    expect_driver_error(ex, kInvalidRFSGSession);
   }
 }
 

@@ -1,8 +1,8 @@
 #include <gmock/gmock.h>
-#include <gtest/gtest.h>
 
 #include "device_server.h"
 #include "nifgen/nifgen_client.h"
+#include "tests/utilities/test_helpers.h"
 
 using namespace ::testing;
 
@@ -131,12 +131,10 @@ TEST_F(NiFgenSessionTest, InvalidSession_CloseSession_ReturnsInvalidSessionError
     fgen::CloseResponse response;
     auto status = GetStub()->Close(&context, request, &response);
     nidevice_grpc::experimental::client::raise_if_error(status, context);
-    EXPECT_FALSE(true);
+    FAIL() << "We shouldn't get here.";
   }
   catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-    EXPECT_EQ(::grpc::StatusCode::UNKNOWN, ex.StatusCode());
-    const auto& error = ex.Trailers().find("ni-error")->second;
-    EXPECT_EQ(kInvalidFgenSession, std::stoi(error));
+    expect_driver_error(ex, kInvalidFgenSession);
     EXPECT_STREQ(kInvalidFgenSessionMessage, ex.what());
   }
 }
@@ -146,12 +144,10 @@ TEST_F(NiFgenSessionTest, InitWithErrorFromDriver_ReturnsDriverErrorWithUserErro
   try {
     fgen::InitWithOptionsResponse initialize_response;
     call_init_with_options(kTestInvalidFgenRsrc, "", "", &initialize_response);
-    EXPECT_FALSE(true);
+    FAIL() << "We shouldn't get here.";
   }
   catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
-    EXPECT_EQ(::grpc::StatusCode::UNKNOWN, ex.StatusCode());
-    const auto& error = ex.Trailers().find("ni-error")->second;
-    EXPECT_EQ(kInvalidFgenRsrc, std::stoi(error));
+    expect_driver_error(ex, kInvalidFgenRsrc);
     EXPECT_THAT(ex.what(), HasSubstr(kViErrorFgenResourceNotFoundMessage));
   }
 }
