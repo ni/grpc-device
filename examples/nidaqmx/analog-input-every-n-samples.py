@@ -55,7 +55,7 @@ async def _main():
         try:
             client = grpc_nidaqmx.NiDAQmxStub(channel)
 
-            client.CreateTask(nidaqmx_types.CreateTaskRequest())
+            nidaqmx_types.CreateTaskResponse = client.CreateTask(nidaqmx_types.CreateTaskRequest())
             task = create_response.task
 
             client.CreateAIVoltageChan(
@@ -101,7 +101,7 @@ async def _main():
 
             client.StartTask(nidaqmx_types.StartTaskRequest(task=task))
 
-            client.GetTaskAttributeUInt32(
+            response = client.GetTaskAttributeUInt32(
                 nidaqmx_types.GetTaskAttributeUInt32Request(
                     task=task, attribute=nidaqmx_types.TASK_ATTRIBUTE_NUM_CHANS
                 )
