@@ -1,4 +1,3 @@
-#include <iostream>
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
@@ -67,12 +66,11 @@ TEST_F(NiMxLcTerminalAdaptorRestrictedDriverApiTests, RefreshedTerminalCache_Get
 {
   const auto session = init_session(stub());
   auto refresh_terminal_cache_response = client::refresh_terminal_cache(stub(), session);
-  std::cout << "refresh_terminal_cache" << std::endl;
   EXPECT_EQ(0, refresh_terminal_cache_response.status());
   EXPECT_EQ(0, refresh_terminal_cache_response.c_status().code());
 
   auto get_device_container_response = client::get_device_container(stub(), session);
-  std::cout << "get_device_container" << std::endl;
+
   EXPECT_EQ(0, get_device_container_response.status());
   EXPECT_EQ(0, get_device_container_response.c_status().code());
 }

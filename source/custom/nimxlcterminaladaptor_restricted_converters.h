@@ -16,30 +16,6 @@ namespace nimxlcterminaladaptor_restricted_grpc {
 // Add underscore to usings so they don't conflict with including files in the same namespace.
 namespace pb_ = ::google::protobuf;
 
-struct NiErrStatusInputConverter {
-  NiErrStatusInputConverter(const NIErrStatus& input)
-  {
-    status.code = input.code();
-    status.capacity = input.capacity();
-    status.reallocJson = &nierr_defaultReallocJson;
-    status.json = (char*)malloc(status.capacity);
-    std::memcpy(status.json, input.json().c_str(), status.capacity);
-  }
-
-  operator nierr_Status*()
-  {
-    return &status;
-  }
-
-  nierr_Status status{};
-};
-
-template <typename TniErrStatus>
-inline NiErrStatusInputConverter convert_from_grpc(const NIErrStatus& input)
-{
-  return NiErrStatusInputConverter(input);
-}
-
 struct NIErrStatusOutputConverter {
   NIErrStatusOutputConverter()
   {
@@ -57,7 +33,7 @@ struct NIErrStatusOutputConverter {
   {
     output.set_code(status.code);
     output.set_capacity(status.capacity);
-    output.set_json("");
+    output.set_json(status.json);
   }
 
   nierr_Status status{};
