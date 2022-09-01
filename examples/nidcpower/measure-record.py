@@ -203,9 +203,10 @@ try:
 
 except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
-    for metadatum in rpc_error.trailing_metadata() or []:
-        if metadatum.key == "ni-error":
-            error_message += f"\nError status: {metadatum.value.decode('utf-8')}"
+    for entry in rpc_error.trailing_metadata() or []:
+        if entry.key == "ni-error":
+            value = entry.value if isinstance(entry.value, str) else entry.value.decode("utf-8")
+            error_message += f"\nError status: {value}"
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
         error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"
     elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
