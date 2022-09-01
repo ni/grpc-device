@@ -62,7 +62,7 @@ static void CheckStatus(int status)
   }
 }
 
-::grpc::Status NiDCPowerService::ConvertApiErrorStatusForViSession(::grpc::ServerContext* context, google::protobuf::int32 status, ViSession vi)
+::grpc::Status NiDCPowerService::ConvertApiErrorStatusForViSession(::grpc::ServerContext* context, int32_t status, ViSession vi)
 {
   static_assert(nidevice_grpc::kMaxGrpcErrorDescriptionSize >= 256, "ErrorMessage expects a minimum buffer size.");
   ViStatus error_code{};

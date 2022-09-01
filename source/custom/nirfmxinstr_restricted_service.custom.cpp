@@ -2,7 +2,7 @@
 
 namespace nirfmxinstr_restricted_grpc {
 
-::grpc::Status NiRFmxInstrRestrictedService::ConvertApiErrorStatusForNiRFmxInstrHandle(::grpc::ServerContext* context, google::protobuf::int32 status, niRFmxInstrHandle instrumentHandle)
+::grpc::Status NiRFmxInstrRestrictedService::ConvertApiErrorStatusForNiRFmxInstrHandle(::grpc::ServerContext* context, int32_t status, niRFmxInstrHandle instrumentHandle)
 {
   int32 error_code{};
   std::string description(nidevice_grpc::kMaxGrpcErrorDescriptionSize, '\0');

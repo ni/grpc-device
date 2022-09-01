@@ -544,7 +544,7 @@ void CheckStatus(int status)
   }
 }
 
-::grpc::Status NiScopeService::ConvertApiErrorStatusForViSession(::grpc::ServerContext* context, google::protobuf::int32 status, ViSession vi)
+::grpc::Status NiScopeService::ConvertApiErrorStatusForViSession(::grpc::ServerContext* context, int32_t status, ViSession vi)
 {
   ViStatus error_code{};
   std::string description(nidevice_grpc::kMaxGrpcErrorDescriptionSize, '\0');

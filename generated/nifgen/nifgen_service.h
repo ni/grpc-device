@@ -175,7 +175,7 @@ public:
 private:
   NiFgenLibraryInterface* library_;
   ResourceRepositorySharedPtr session_repository_;
-  ::grpc::Status ConvertApiErrorStatusForViSession(::grpc::ServerContext* context, google::protobuf::int32 status, ViSession vi);
+  ::grpc::Status ConvertApiErrorStatusForViSession(::grpc::ServerContext* context, int32_t status, ViSession vi);
 
   NiFgenFeatureToggles feature_toggles_;
 };
