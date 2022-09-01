@@ -4,11 +4,11 @@
 #include <nifake/nifake_service.h>
 #include <nifake_extension/nifake_extension_mock_library.h>
 #include <nifake_extension/nifake_extension_service.h>
-#include <nlohmann/json.hpp>
 #include <server/session_repository.h>
 
 #include <array>
 #include <iostream>
+#include <nlohmann/json.hpp>
 #include <string>
 
 using namespace ::nlohmann;
@@ -428,9 +428,6 @@ TEST(NiFakeServiceTests, NiFakeService_FunctionCallErrors_ResponseValuesNotSet)
 
   EXPECT_FALSE(status.ok());
   EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status.error_code());
-  auto error = json::parse(status.error_message());
-  EXPECT_EQ(kDriverFailure, error.value("code", 0));
-  EXPECT_TRUE(error.contains("message"));
   EXPECT_NE(kDriverFailure, response.status());
   EXPECT_NE(a_boolean, response.a_boolean());
 }

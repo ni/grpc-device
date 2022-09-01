@@ -93,7 +93,7 @@ namespace nirfmxnr_grpc {
 
       auto status = library_->ACPCfgAveraging(instrument, selector_string, averaging_enabled, averaging_count, averaging_type);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -132,7 +132,7 @@ namespace nirfmxnr_grpc {
 
       auto status = library_->ACPCfgMeasurementMethod(instrument, selector_string, measurement_method);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -171,7 +171,7 @@ namespace nirfmxnr_grpc {
 
       auto status = library_->ACPCfgNoiseCompensationEnabled(instrument, selector_string, noise_compensation_enabled);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -195,7 +195,7 @@ namespace nirfmxnr_grpc {
       int32 number_of_endc_offsets = request->number_of_endc_offsets();
       auto status = library_->ACPCfgNumberOfENDCOffsets(instrument, selector_string, number_of_endc_offsets);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -219,7 +219,7 @@ namespace nirfmxnr_grpc {
       int32 number_of_eutra_offsets = request->number_of_eutra_offsets();
       auto status = library_->ACPCfgNumberOfEUTRAOffsets(instrument, selector_string, number_of_eutra_offsets);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -243,7 +243,7 @@ namespace nirfmxnr_grpc {
       int32 number_of_nr_offsets = request->number_of_nr_offsets();
       auto status = library_->ACPCfgNumberOfNROffsets(instrument, selector_string, number_of_nr_offsets);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -267,7 +267,7 @@ namespace nirfmxnr_grpc {
       int32 number_of_utra_offsets = request->number_of_utra_offsets();
       auto status = library_->ACPCfgNumberOfUTRAOffsets(instrument, selector_string, number_of_utra_offsets);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -306,7 +306,7 @@ namespace nirfmxnr_grpc {
 
       auto status = library_->ACPCfgPowerUnits(instrument, selector_string, power_units);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -362,7 +362,7 @@ namespace nirfmxnr_grpc {
 
       auto status = library_->ACPCfgRBWFilter(instrument, selector_string, rbw_auto, rbw, rbw_filter_type);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -402,7 +402,7 @@ namespace nirfmxnr_grpc {
       float64 sweep_time_interval = request->sweep_time_interval();
       auto status = library_->ACPCfgSweepTime(instrument, selector_string, sweep_time_auto, sweep_time_interval);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -431,7 +431,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->ACPFetchAbsolutePowersTrace(instrument, selector_string, timeout, trace_index, &x0, &dx, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->mutable_absolute_powers_trace()->Resize(actual_array_size, 0);
         float32* absolute_powers_trace = response->mutable_absolute_powers_trace()->mutable_data();
@@ -442,7 +442,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->set_x0(x0);
@@ -473,7 +473,7 @@ namespace nirfmxnr_grpc {
       float64 relative_power {};
       auto status = library_->ACPFetchComponentCarrierMeasurement(instrument, selector_string, timeout, &absolute_power, &relative_power);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       response->set_absolute_power(absolute_power);
@@ -501,7 +501,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->ACPFetchComponentCarrierMeasurementArray(instrument, selector_string, timeout, nullptr, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->mutable_absolute_power()->Resize(actual_array_size, 0);
         float64* absolute_power = response->mutable_absolute_power()->mutable_data();
@@ -514,7 +514,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->mutable_absolute_power()->Resize(actual_array_size, 0);
@@ -546,7 +546,7 @@ namespace nirfmxnr_grpc {
       float64 upper_absolute_power {};
       auto status = library_->ACPFetchOffsetMeasurement(instrument, selector_string, timeout, &lower_relative_power, &upper_relative_power, &lower_absolute_power, &upper_absolute_power);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       response->set_lower_relative_power(lower_relative_power);
@@ -576,7 +576,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->ACPFetchOffsetMeasurementArray(instrument, selector_string, timeout, nullptr, nullptr, nullptr, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->mutable_lower_relative_power()->Resize(actual_array_size, 0);
         float64* lower_relative_power = response->mutable_lower_relative_power()->mutable_data();
@@ -593,7 +593,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->mutable_lower_relative_power()->Resize(actual_array_size, 0);
@@ -628,7 +628,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->ACPFetchRelativePowersTrace(instrument, selector_string, timeout, trace_index, &x0, &dx, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->mutable_relative_powers_trace()->Resize(actual_array_size, 0);
         float32* relative_powers_trace = response->mutable_relative_powers_trace()->mutable_data();
@@ -639,7 +639,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->set_x0(x0);
@@ -672,7 +672,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->ACPFetchSpectrum(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->mutable_spectrum()->Resize(actual_array_size, 0);
         float32* spectrum = response->mutable_spectrum()->mutable_data();
@@ -683,7 +683,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->set_x0(x0);
@@ -715,7 +715,7 @@ namespace nirfmxnr_grpc {
       float64 frequency {};
       auto status = library_->ACPFetchSubblockMeasurement(instrument, selector_string, timeout, &subblock_power, &integration_bandwidth, &frequency);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       response->set_subblock_power(subblock_power);
@@ -743,7 +743,7 @@ namespace nirfmxnr_grpc {
       float64 total_aggregated_power {};
       auto status = library_->ACPFetchTotalAggregatedPower(instrument, selector_string, timeout, &total_aggregated_power);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       response->set_total_aggregated_power(total_aggregated_power);
@@ -768,7 +768,7 @@ namespace nirfmxnr_grpc {
       int32 noise_calibration_data_valid {};
       auto status = library_->ACPValidateNoiseCalibrationData(instrument, selector_string, &noise_calibration_data_valid);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       response->set_noise_calibration_data_valid(static_cast<nirfmxnr_grpc::AcpNoiseCalibrationDataValid>(noise_calibration_data_valid));
@@ -793,7 +793,7 @@ namespace nirfmxnr_grpc {
       char* selector_string = (char*)request->selector_string().c_str();
       auto status = library_->AbortMeasurements(instrument, selector_string);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -823,7 +823,7 @@ namespace nirfmxnr_grpc {
       auto reserved = 0;
       auto status = library_->AnalyzeIQ1Waveform(instrument, selector_string, result_name, x0, dx, iq.data(), array_size, reset, reserved);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -853,7 +853,7 @@ namespace nirfmxnr_grpc {
       auto reserved = 0;
       auto status = library_->AnalyzeSpectrum1Waveform(instrument, selector_string, result_name, x0, dx, spectrum, array_size, reset, reserved);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -878,7 +878,7 @@ namespace nirfmxnr_grpc {
       float64 reference_level {};
       auto status = library_->AutoLevel(instrument, selector_string, measurement_interval, &reference_level);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       response->set_reference_level(reference_level);
@@ -903,7 +903,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->BuildBandwidthPartString(selector_string, bandwidth_part_number, 0, nullptr);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, 0);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
         }
         int32 selector_string_out_length = status;
 
@@ -917,7 +917,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, 0);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
         }
         response->set_status(status);
         response->set_selector_string_out(selector_string_out);
@@ -944,7 +944,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->BuildCORESETClusterString(selector_string, coreset_cluster_number, 0, nullptr);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, 0);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
         }
         int32 selector_string_out_length = status;
 
@@ -958,7 +958,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, 0);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
         }
         response->set_status(status);
         response->set_selector_string_out(selector_string_out);
@@ -985,7 +985,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->BuildCORESETString(selector_string, coreset_number, 0, nullptr);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, 0);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
         }
         int32 selector_string_out_length = status;
 
@@ -999,7 +999,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, 0);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
         }
         response->set_status(status);
         response->set_selector_string_out(selector_string_out);
@@ -1026,7 +1026,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->BuildCarrierString(selector_string, carrier_number, 0, nullptr);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, 0);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
         }
         int32 selector_string_out_length = status;
 
@@ -1040,7 +1040,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, 0);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
         }
         response->set_status(status);
         response->set_selector_string_out(selector_string_out);
@@ -1068,7 +1068,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->BuildListStepString(list_name, result_name, step_number, 0, nullptr);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, 0);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
         }
         int32 selector_string_length = status;
 
@@ -1082,7 +1082,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, 0);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
         }
         response->set_status(status);
         response->set_selector_string(selector_string);
@@ -1109,7 +1109,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->BuildListString(list_name, result_name, 0, nullptr);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, 0);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
         }
         int32 selector_string_length = status;
 
@@ -1123,7 +1123,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, 0);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
         }
         response->set_status(status);
         response->set_selector_string(selector_string);
@@ -1150,7 +1150,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->BuildOffsetString(selector_string, offset_number, 0, nullptr);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, 0);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
         }
         int32 selector_string_out_length = status;
 
@@ -1164,7 +1164,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, 0);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
         }
         response->set_status(status);
         response->set_selector_string_out(selector_string_out);
@@ -1191,7 +1191,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->BuildPDCCHString(selector_string, pdcch_number, 0, nullptr);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, 0);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
         }
         int32 selector_string_out_length = status;
 
@@ -1205,7 +1205,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, 0);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
         }
         response->set_status(status);
         response->set_selector_string_out(selector_string_out);
@@ -1232,7 +1232,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->BuildPDSCHClusterString(selector_string, pdsch_cluster_number, 0, nullptr);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, 0);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
         }
         int32 selector_string_out_length = status;
 
@@ -1246,7 +1246,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, 0);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
         }
         response->set_status(status);
         response->set_selector_string_out(selector_string_out);
@@ -1273,7 +1273,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->BuildPDSCHString(selector_string, pdsch_number, 0, nullptr);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, 0);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
         }
         int32 selector_string_out_length = status;
 
@@ -1287,7 +1287,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, 0);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
         }
         response->set_status(status);
         response->set_selector_string_out(selector_string_out);
@@ -1314,7 +1314,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->BuildPUSCHClusterString(selector_string, pusch_cluster_number, 0, nullptr);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, 0);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
         }
         int32 selector_string_out_length = status;
 
@@ -1328,7 +1328,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, 0);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
         }
         response->set_status(status);
         response->set_selector_string_out(selector_string_out);
@@ -1355,7 +1355,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->BuildPUSCHString(selector_string, pusch_number, 0, nullptr);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, 0);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
         }
         int32 selector_string_out_length = status;
 
@@ -1369,7 +1369,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, 0);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
         }
         response->set_status(status);
         response->set_selector_string_out(selector_string_out);
@@ -1396,7 +1396,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->BuildSignalString(signal_name, result_name, 0, nullptr);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, 0);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
         }
         int32 selector_string_length = status;
 
@@ -1410,7 +1410,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, 0);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
         }
         response->set_status(status);
         response->set_selector_string(selector_string);
@@ -1437,7 +1437,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->BuildSubblockString(selector_string, subblock_number, 0, nullptr);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, 0);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
         }
         int32 selector_string_out_length = status;
 
@@ -1451,7 +1451,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, 0);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
         }
         response->set_status(status);
         response->set_selector_string_out(selector_string_out);
@@ -1478,7 +1478,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->BuildUserString(selector_string, user_number, 0, nullptr);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, 0);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
         }
         int32 selector_string_out_length = status;
 
@@ -1492,7 +1492,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, 0);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
         }
         response->set_status(status);
         response->set_selector_string_out(selector_string_out);
@@ -1551,7 +1551,7 @@ namespace nirfmxnr_grpc {
 
       auto status = library_->CHPCfgAveraging(instrument, selector_string, averaging_enabled, averaging_count, averaging_type);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1607,7 +1607,7 @@ namespace nirfmxnr_grpc {
 
       auto status = library_->CHPCfgRBWFilter(instrument, selector_string, rbw_auto, rbw, rbw_filter_type);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1647,7 +1647,7 @@ namespace nirfmxnr_grpc {
       float64 sweep_time_interval = request->sweep_time_interval();
       auto status = library_->CHPCfgSweepTime(instrument, selector_string, sweep_time_auto, sweep_time_interval);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1673,7 +1673,7 @@ namespace nirfmxnr_grpc {
       float64 relative_power {};
       auto status = library_->CHPFetchComponentCarrierMeasurement(instrument, selector_string, timeout, &absolute_power, &relative_power);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       response->set_absolute_power(absolute_power);
@@ -1701,7 +1701,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->CHPFetchComponentCarrierMeasurementArray(instrument, selector_string, timeout, nullptr, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->mutable_absolute_power()->Resize(actual_array_size, 0);
         float64* absolute_power = response->mutable_absolute_power()->mutable_data();
@@ -1714,7 +1714,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->mutable_absolute_power()->Resize(actual_array_size, 0);
@@ -1746,7 +1746,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->CHPFetchSpectrum(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->mutable_spectrum()->Resize(actual_array_size, 0);
         float32* spectrum = response->mutable_spectrum()->mutable_data();
@@ -1757,7 +1757,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->set_x0(x0);
@@ -1787,7 +1787,7 @@ namespace nirfmxnr_grpc {
       float64 subblock_power {};
       auto status = library_->CHPFetchSubblockPower(instrument, selector_string, timeout, &subblock_power);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       response->set_subblock_power(subblock_power);
@@ -1813,7 +1813,7 @@ namespace nirfmxnr_grpc {
       float64 total_aggregated_power {};
       auto status = library_->CHPFetchTotalAggregatedPower(instrument, selector_string, timeout, &total_aggregated_power);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       response->set_total_aggregated_power(total_aggregated_power);
@@ -1838,7 +1838,7 @@ namespace nirfmxnr_grpc {
       int32 noise_calibration_data_valid {};
       auto status = library_->CHPValidateNoiseCalibrationData(instrument, selector_string, &noise_calibration_data_valid);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       response->set_noise_calibration_data_valid(static_cast<nirfmxnr_grpc::ChpNoiseCalibrationDataValid>(noise_calibration_data_valid));
@@ -1901,7 +1901,7 @@ namespace nirfmxnr_grpc {
       int32 enable_trigger = request->enable_trigger();
       auto status = library_->CfgDigitalEdgeTrigger(instrument, selector_string, digital_edge_source, digital_edge, trigger_delay, enable_trigger);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1925,7 +1925,7 @@ namespace nirfmxnr_grpc {
       float64 external_attenuation = request->external_attenuation();
       auto status = library_->CfgExternalAttenuation(instrument, selector_string, external_attenuation);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1949,7 +1949,7 @@ namespace nirfmxnr_grpc {
       float64 center_frequency = request->center_frequency();
       auto status = library_->CfgFrequency(instrument, selector_string, center_frequency);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1993,7 +1993,7 @@ namespace nirfmxnr_grpc {
       float64 frequency_reference_frequency = request->frequency_reference_frequency();
       auto status = library_->CfgFrequencyReference(instrument, channel_name, frequency_reference_source, frequency_reference_frequency);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -2069,7 +2069,7 @@ namespace nirfmxnr_grpc {
       int32 enable_trigger = request->enable_trigger();
       auto status = library_->CfgIQPowerEdgeTrigger(instrument, selector_string, iq_power_edge_source, iq_power_edge_slope, iq_power_edge_level, trigger_delay, trigger_min_quiet_time_mode, trigger_min_quiet_time_duration, iq_power_edge_level_type, enable_trigger);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -2109,7 +2109,7 @@ namespace nirfmxnr_grpc {
       float64 mechanical_attenuation_value = request->mechanical_attenuation_value();
       auto status = library_->CfgMechanicalAttenuation(instrument, channel_name, mechanical_attenuation_auto, mechanical_attenuation_value);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -2135,7 +2135,7 @@ namespace nirfmxnr_grpc {
       float64 external_attenuation = request->external_attenuation();
       auto status = library_->CfgRF(instrument, selector_string, center_frequency, reference_level, external_attenuation);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -2175,7 +2175,7 @@ namespace nirfmxnr_grpc {
       float64 rf_attenuation_value = request->rf_attenuation_value();
       auto status = library_->CfgRFAttenuation(instrument, channel_name, rf_attenuation_auto, rf_attenuation_value);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -2199,7 +2199,7 @@ namespace nirfmxnr_grpc {
       float64 reference_level = request->reference_level();
       auto status = library_->CfgReferenceLevel(instrument, selector_string, reference_level);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -2224,7 +2224,7 @@ namespace nirfmxnr_grpc {
       int32 enable_trigger = request->enable_trigger();
       auto status = library_->CfgSoftwareEdgeTrigger(instrument, selector_string, trigger_delay, enable_trigger);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -2263,7 +2263,7 @@ namespace nirfmxnr_grpc {
 
       auto status = library_->CfggNodeBCategory(instrument, selector_string, gnodeb_category);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -2287,7 +2287,7 @@ namespace nirfmxnr_grpc {
       int32 is_done {};
       auto status = library_->CheckMeasurementStatus(instrument, selector_string, &is_done);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       response->set_is_done(is_done);
@@ -2311,7 +2311,7 @@ namespace nirfmxnr_grpc {
       char* selector_string = (char*)request->selector_string().c_str();
       auto status = library_->ClearAllNamedResults(instrument, selector_string);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -2334,7 +2334,7 @@ namespace nirfmxnr_grpc {
       char* selector_string = (char*)request->selector_string().c_str();
       auto status = library_->ClearNamedResult(instrument, selector_string);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -2357,7 +2357,7 @@ namespace nirfmxnr_grpc {
       char* selector_string = (char*)request->selector_string().c_str();
       auto status = library_->ClearNoiseCalibrationDatabase(instrument, selector_string);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -2381,7 +2381,7 @@ namespace nirfmxnr_grpc {
       char* new_signal_name = (char*)request->new_signal_name().c_str();
       auto status = library_->CloneSignalConfiguration(instrument, old_signal_name, new_signal_name);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -2405,7 +2405,7 @@ namespace nirfmxnr_grpc {
       session_repository_->remove_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       auto status = library_->Close(instrument, force_destroy);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -2428,7 +2428,7 @@ namespace nirfmxnr_grpc {
       char* selector_string = (char*)request->selector_string().c_str();
       auto status = library_->Commit(instrument, selector_string);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -2451,7 +2451,7 @@ namespace nirfmxnr_grpc {
       char* list_name = (char*)request->list_name().c_str();
       auto status = library_->CreateList(instrument, list_name);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -2475,7 +2475,7 @@ namespace nirfmxnr_grpc {
       int32 created_step_index {};
       auto status = library_->CreateListStep(instrument, selector_string, &created_step_index);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       response->set_created_step_index(created_step_index);
@@ -2499,7 +2499,7 @@ namespace nirfmxnr_grpc {
       char* signal_name = (char*)request->signal_name().c_str();
       auto status = library_->CreateSignalConfiguration(instrument, signal_name);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -2522,7 +2522,7 @@ namespace nirfmxnr_grpc {
       char* list_name = (char*)request->list_name().c_str();
       auto status = library_->DeleteList(instrument, list_name);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -2545,7 +2545,7 @@ namespace nirfmxnr_grpc {
       char* signal_name = (char*)request->signal_name().c_str();
       auto status = library_->DeleteSignalConfiguration(instrument, signal_name);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -2568,7 +2568,7 @@ namespace nirfmxnr_grpc {
       char* selector_string = (char*)request->selector_string().c_str();
       auto status = library_->DisableTrigger(instrument, selector_string);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -2594,7 +2594,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->GetAllNamedResultNames(instrument, selector_string, nullptr, 0, &actual_result_names_size, &default_result_exists);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         std::string result_names;
         if (actual_result_names_size > 0) {
@@ -2607,7 +2607,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->set_result_names(result_names);
@@ -2637,7 +2637,7 @@ namespace nirfmxnr_grpc {
       float32 attr_val {};
       auto status = library_->GetAttributeF32(instrument, selector_string, attribute_id, &attr_val);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       response->set_attr_val(attr_val);
@@ -2664,7 +2664,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->GetAttributeF32Array(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->mutable_attr_val()->Resize(actual_array_size, 0);
         float32* attr_val = response->mutable_attr_val()->mutable_data();
@@ -2675,7 +2675,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->mutable_attr_val()->Resize(actual_array_size, 0);
@@ -2703,7 +2703,7 @@ namespace nirfmxnr_grpc {
       float64 attr_val {};
       auto status = library_->GetAttributeF64(instrument, selector_string, attribute_id, &attr_val);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       response->set_attr_val(attr_val);
@@ -2730,7 +2730,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->GetAttributeF64Array(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->mutable_attr_val()->Resize(actual_array_size, 0);
         float64* attr_val = response->mutable_attr_val()->mutable_data();
@@ -2741,7 +2741,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->mutable_attr_val()->Resize(actual_array_size, 0);
@@ -2769,7 +2769,7 @@ namespace nirfmxnr_grpc {
       int16 attr_val {};
       auto status = library_->GetAttributeI16(instrument, selector_string, attribute_id, &attr_val);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       response->set_attr_val(attr_val);
@@ -2795,7 +2795,7 @@ namespace nirfmxnr_grpc {
       int32 attr_val {};
       auto status = library_->GetAttributeI32(instrument, selector_string, attribute_id, &attr_val);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       auto checked_convert_attr_val = [](auto raw_value) {
@@ -2828,7 +2828,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->GetAttributeI32Array(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->mutable_attr_val_raw()->Resize(actual_array_size, 0);
         int32* attr_val = reinterpret_cast<int32*>(response->mutable_attr_val_raw()->mutable_data());
@@ -2839,7 +2839,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         auto checked_convert_attr_val = [](auto raw_value) {
@@ -2881,7 +2881,7 @@ namespace nirfmxnr_grpc {
       int64 attr_val {};
       auto status = library_->GetAttributeI64(instrument, selector_string, attribute_id, &attr_val);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       response->set_attr_val(attr_val);
@@ -2908,7 +2908,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->GetAttributeI64Array(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->mutable_attr_val()->Resize(actual_array_size, 0);
         int64* attr_val = reinterpret_cast<int64*>(response->mutable_attr_val()->mutable_data());
@@ -2919,7 +2919,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->mutable_attr_val()->Resize(actual_array_size, 0);
@@ -2947,7 +2947,7 @@ namespace nirfmxnr_grpc {
       int8 attr_val {};
       auto status = library_->GetAttributeI8(instrument, selector_string, attribute_id, &attr_val);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       response->set_attr_val(attr_val);
@@ -2974,7 +2974,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->GetAttributeI8Array(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         std::vector<int8> attr_val(actual_array_size);
         auto array_size = actual_array_size;
@@ -2984,7 +2984,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
           response->mutable_attr_val()->Clear();
@@ -3022,7 +3022,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->GetAttributeNIComplexDoubleArray(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         std::vector<NIComplexDouble> attr_val(actual_array_size, NIComplexDouble());
         auto array_size = actual_array_size;
@@ -3032,7 +3032,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         convert_to_grpc(attr_val, response->mutable_attr_val());
@@ -3068,7 +3068,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->GetAttributeNIComplexSingleArray(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         std::vector<NIComplexSingle> attr_val(actual_array_size, NIComplexSingle());
         auto array_size = actual_array_size;
@@ -3078,7 +3078,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         convert_to_grpc(attr_val, response->mutable_attr_val());
@@ -3114,7 +3114,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->GetAttributeString(instrument, selector_string, attribute_id, 0, nullptr);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         int32 array_size = status;
 
@@ -3128,7 +3128,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->set_attr_val(attr_val);
@@ -3156,7 +3156,7 @@ namespace nirfmxnr_grpc {
       uInt16 attr_val {};
       auto status = library_->GetAttributeU16(instrument, selector_string, attribute_id, &attr_val);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       response->set_attr_val(attr_val);
@@ -3182,7 +3182,7 @@ namespace nirfmxnr_grpc {
       uInt32 attr_val {};
       auto status = library_->GetAttributeU32(instrument, selector_string, attribute_id, &attr_val);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       response->set_attr_val(attr_val);
@@ -3209,7 +3209,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->GetAttributeU32Array(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->mutable_attr_val()->Resize(actual_array_size, 0);
         uInt32* attr_val = reinterpret_cast<uInt32*>(response->mutable_attr_val()->mutable_data());
@@ -3220,7 +3220,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->mutable_attr_val()->Resize(actual_array_size, 0);
@@ -3249,7 +3249,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->GetAttributeU64Array(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->mutable_attr_val()->Resize(actual_array_size, 0);
         uInt64* attr_val = reinterpret_cast<uInt64*>(response->mutable_attr_val()->mutable_data());
@@ -3260,7 +3260,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->mutable_attr_val()->Resize(actual_array_size, 0);
@@ -3288,7 +3288,7 @@ namespace nirfmxnr_grpc {
       uInt8 attr_val {};
       auto status = library_->GetAttributeU8(instrument, selector_string, attribute_id, &attr_val);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       response->set_attr_val(attr_val);
@@ -3315,7 +3315,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->GetAttributeU8Array(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         std::string attr_val(actual_array_size, '\0');
         auto array_size = actual_array_size;
@@ -3325,7 +3325,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->set_attr_val(attr_val);
@@ -3353,7 +3353,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->GetError(instrument, nullptr, 0, nullptr);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         int32 error_description_buffer_size = status;
 
@@ -3368,7 +3368,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->set_error_code(error_code);
@@ -3397,7 +3397,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->GetErrorString(instrument, error_code, 0, nullptr);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         int32 error_description_buffer_size = status;
 
@@ -3411,7 +3411,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->set_error_description(error_description);
@@ -3446,7 +3446,7 @@ namespace nirfmxnr_grpc {
       auto cleanup_lambda = [&] (niRFmxInstrHandle id) { library_->Close(id, RFMXNR_VAL_FALSE); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, 0);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
       }
       response->set_status(status);
       response->mutable_instrument()->set_id(session_id);
@@ -3482,7 +3482,7 @@ namespace nirfmxnr_grpc {
       auto cleanup_lambda = [&] (niRFmxInstrHandle id) { library_->Close(id, RFMXNR_VAL_FALSE); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, 0);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
       }
       response->set_status(status);
       response->mutable_instrument()->set_id(session_id);
@@ -3510,7 +3510,7 @@ namespace nirfmxnr_grpc {
       char* result_name = (char*)request->result_name().c_str();
       auto status = library_->Initiate(instrument, selector_string, result_name);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -3534,7 +3534,7 @@ namespace nirfmxnr_grpc {
       float64 timeout = request->timeout();
       auto status = library_->ModAccAutoLevel(instrument, selector_string, timeout);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -3573,7 +3573,7 @@ namespace nirfmxnr_grpc {
 
       auto status = library_->ModAccCfgMeasurementMode(instrument, selector_string, measurement_mode);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -3612,7 +3612,7 @@ namespace nirfmxnr_grpc {
 
       auto status = library_->ModAccCfgNoiseCompensationEnabled(instrument, selector_string, noise_compensation_enabled);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -3639,7 +3639,7 @@ namespace nirfmxnr_grpc {
       int32 array_size = static_cast<int32>(request->reference_waveform().size());
       auto status = library_->ModAccCfgReferenceWaveform(instrument, selector_string, x0, dx, reference_waveform.data(), array_size);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -3661,7 +3661,7 @@ namespace nirfmxnr_grpc {
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       auto status = library_->ModAccClearNoiseCalibrationDatabase(instrument);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -3687,7 +3687,7 @@ namespace nirfmxnr_grpc {
       float64 composite_peak_evm_maximum {};
       auto status = library_->ModAccFetchCompositeEVM(instrument, selector_string, timeout, &composite_rms_evm_mean, &composite_peak_evm_maximum);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       response->set_composite_rms_evm_mean(composite_rms_evm_mean);
@@ -3714,7 +3714,7 @@ namespace nirfmxnr_grpc {
       float64 frequency_error_mean {};
       auto status = library_->ModAccFetchFrequencyErrorMean(instrument, selector_string, timeout, &frequency_error_mean);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       response->set_frequency_error_mean(frequency_error_mean);
@@ -3743,7 +3743,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->ModAccFetchFrequencyErrorPerSlotMaximumTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->mutable_frequency_error_per_slot_maximum()->Resize(actual_array_size, 0);
         float32* frequency_error_per_slot_maximum = response->mutable_frequency_error_per_slot_maximum()->mutable_data();
@@ -3754,7 +3754,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->set_x0(x0);
@@ -3787,7 +3787,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->ModAccFetchIQGainImbalancePerSubcarrierMeanTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->mutable_iq_gain_imbalance_per_subcarrier_mean()->Resize(actual_array_size, 0);
         float32* iq_gain_imbalance_per_subcarrier_mean = response->mutable_iq_gain_imbalance_per_subcarrier_mean()->mutable_data();
@@ -3798,7 +3798,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->set_x0(x0);
@@ -3831,7 +3831,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->ModAccFetchIQQuadratureErrorPerSubcarrierMeanTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->mutable_iq_quadrature_error_per_subcarrier_mean()->Resize(actual_array_size, 0);
         float32* iq_quadrature_error_per_subcarrier_mean = response->mutable_iq_quadrature_error_per_subcarrier_mean()->mutable_data();
@@ -3842,7 +3842,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->set_x0(x0);
@@ -3875,7 +3875,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->ModAccFetchInBandEmissionTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->mutable_in_band_emission()->Resize(actual_array_size, 0);
         float32* in_band_emission = response->mutable_in_band_emission()->mutable_data();
@@ -3888,7 +3888,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->set_x0(x0);
@@ -3920,7 +3920,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->ModAccFetchPBCHDMRSConstellationTrace(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         std::vector<NIComplexSingle> pbch_dmrs_constellation(actual_array_size, NIComplexSingle());
         auto array_size = actual_array_size;
@@ -3930,7 +3930,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         convert_to_grpc(pbch_dmrs_constellation, response->mutable_pbch_dmrs_constellation());
@@ -3968,7 +3968,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->ModAccFetchPBCHDMRSRMSEVMPerSubcarrierMeanTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->mutable_pbch_dmrs_rms_evm_per_subcarrier_mean()->Resize(actual_array_size, 0);
         float32* pbch_dmrs_rms_evm_per_subcarrier_mean = response->mutable_pbch_dmrs_rms_evm_per_subcarrier_mean()->mutable_data();
@@ -3979,7 +3979,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->set_x0(x0);
@@ -4012,7 +4012,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->ModAccFetchPBCHDMRSRMSEVMPerSymbolMeanTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->mutable_pbch_dmrs_rms_evm_per_symbol_mean()->Resize(actual_array_size, 0);
         float32* pbch_dmrs_rms_evm_per_symbol_mean = response->mutable_pbch_dmrs_rms_evm_per_symbol_mean()->mutable_data();
@@ -4023,7 +4023,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->set_x0(x0);
@@ -4054,7 +4054,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->ModAccFetchPBCHDataConstellationTrace(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         std::vector<NIComplexSingle> pbch_data_constellation(actual_array_size, NIComplexSingle());
         auto array_size = actual_array_size;
@@ -4064,7 +4064,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         convert_to_grpc(pbch_data_constellation, response->mutable_pbch_data_constellation());
@@ -4102,7 +4102,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->ModAccFetchPBCHDataRMSEVMPerSubcarrierMeanTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->mutable_pbch_data_rms_evm_per_subcarrier_mean()->Resize(actual_array_size, 0);
         float32* pbch_data_rms_evm_per_subcarrier_mean = response->mutable_pbch_data_rms_evm_per_subcarrier_mean()->mutable_data();
@@ -4113,7 +4113,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->set_x0(x0);
@@ -4146,7 +4146,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->ModAccFetchPBCHDataRMSEVMPerSymbolMeanTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->mutable_pbch_data_rms_evm_per_symbol_mean()->Resize(actual_array_size, 0);
         float32* pbch_data_rms_evm_per_symbol_mean = response->mutable_pbch_data_rms_evm_per_symbol_mean()->mutable_data();
@@ -4157,7 +4157,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->set_x0(x0);
@@ -4188,7 +4188,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->ModAccFetchPDSCH1024QAMConstellationTrace(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         std::vector<NIComplexSingle> qam1024_constellation(actual_array_size, NIComplexSingle());
         auto array_size = actual_array_size;
@@ -4198,7 +4198,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         convert_to_grpc(qam1024_constellation, response->mutable_qam1024_constellation());
@@ -4234,7 +4234,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->ModAccFetchPDSCH16QAMConstellationTrace(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         std::vector<NIComplexSingle> qam16_constellation(actual_array_size, NIComplexSingle());
         auto array_size = actual_array_size;
@@ -4244,7 +4244,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         convert_to_grpc(qam16_constellation, response->mutable_qam16_constellation());
@@ -4280,7 +4280,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->ModAccFetchPDSCH256QAMConstellationTrace(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         std::vector<NIComplexSingle> qam256_constellation(actual_array_size, NIComplexSingle());
         auto array_size = actual_array_size;
@@ -4290,7 +4290,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         convert_to_grpc(qam256_constellation, response->mutable_qam256_constellation());
@@ -4326,7 +4326,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->ModAccFetchPDSCH64QAMConstellationTrace(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         std::vector<NIComplexSingle> qam64_constellation(actual_array_size, NIComplexSingle());
         auto array_size = actual_array_size;
@@ -4336,7 +4336,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         convert_to_grpc(qam64_constellation, response->mutable_qam64_constellation());
@@ -4372,7 +4372,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->ModAccFetchPDSCH8PSKConstellationTrace(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         std::vector<NIComplexSingle> psk8_constellation(actual_array_size, NIComplexSingle());
         auto array_size = actual_array_size;
@@ -4382,7 +4382,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         convert_to_grpc(psk8_constellation, response->mutable_psk8_constellation());
@@ -4418,7 +4418,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->ModAccFetchPDSCHDMRSConstellationTrace(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         std::vector<NIComplexSingle> pdsch_dmrs_constellation(actual_array_size, NIComplexSingle());
         auto array_size = actual_array_size;
@@ -4428,7 +4428,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         convert_to_grpc(pdsch_dmrs_constellation, response->mutable_pdsch_dmrs_constellation());
@@ -4464,7 +4464,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->ModAccFetchPDSCHDataConstellationTrace(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         std::vector<NIComplexSingle> pdsch_data_constellation(actual_array_size, NIComplexSingle());
         auto array_size = actual_array_size;
@@ -4474,7 +4474,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         convert_to_grpc(pdsch_data_constellation, response->mutable_pdsch_data_constellation());
@@ -4510,7 +4510,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->ModAccFetchPDSCHDemodulatedBits(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         std::vector<int8> bits(actual_array_size);
         auto array_size = actual_array_size;
@@ -4520,7 +4520,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
           response->mutable_bits()->Clear();
@@ -4558,7 +4558,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->ModAccFetchPDSCHPTRSConstellationTrace(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         std::vector<NIComplexSingle> pdsch_ptrs_constellation(actual_array_size, NIComplexSingle());
         auto array_size = actual_array_size;
@@ -4568,7 +4568,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         convert_to_grpc(pdsch_ptrs_constellation, response->mutable_pdsch_ptrs_constellation());
@@ -4604,7 +4604,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->ModAccFetchPDSCHQPSKConstellationTrace(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         std::vector<NIComplexSingle> qpsk_constellation(actual_array_size, NIComplexSingle());
         auto array_size = actual_array_size;
@@ -4614,7 +4614,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         convert_to_grpc(qpsk_constellation, response->mutable_qpsk_constellation());
@@ -4650,7 +4650,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->ModAccFetchPSSConstellationTrace(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         std::vector<NIComplexSingle> pss_constellation(actual_array_size, NIComplexSingle());
         auto array_size = actual_array_size;
@@ -4660,7 +4660,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         convert_to_grpc(pss_constellation, response->mutable_pss_constellation());
@@ -4698,7 +4698,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->ModAccFetchPSSRMSEVMPerSubcarrierMeanTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->mutable_pss_rms_evm_per_subcarrier_mean()->Resize(actual_array_size, 0);
         float32* pss_rms_evm_per_subcarrier_mean = response->mutable_pss_rms_evm_per_subcarrier_mean()->mutable_data();
@@ -4709,7 +4709,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->set_x0(x0);
@@ -4742,7 +4742,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->ModAccFetchPSSRMSEVMPerSymbolMeanTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->mutable_pss_rms_evm_per_symbol_mean()->Resize(actual_array_size, 0);
         float32* pss_rms_evm_per_symbol_mean = response->mutable_pss_rms_evm_per_symbol_mean()->mutable_data();
@@ -4753,7 +4753,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->set_x0(x0);
@@ -4784,7 +4784,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->ModAccFetchPUSCHDMRSConstellationTrace(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         std::vector<NIComplexSingle> pusch_dmrs_constellation(actual_array_size, NIComplexSingle());
         auto array_size = actual_array_size;
@@ -4794,7 +4794,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         convert_to_grpc(pusch_dmrs_constellation, response->mutable_pusch_dmrs_constellation());
@@ -4830,7 +4830,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->ModAccFetchPUSCHDataConstellationTrace(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         std::vector<NIComplexSingle> pusch_data_constellation(actual_array_size, NIComplexSingle());
         auto array_size = actual_array_size;
@@ -4840,7 +4840,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         convert_to_grpc(pusch_data_constellation, response->mutable_pusch_data_constellation());
@@ -4876,7 +4876,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->ModAccFetchPUSCHDemodulatedBits(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         std::vector<int8> bits(actual_array_size);
         auto array_size = actual_array_size;
@@ -4886,7 +4886,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
           response->mutable_bits()->Clear();
@@ -4924,7 +4924,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->ModAccFetchPUSCHPTRSConstellationTrace(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         std::vector<NIComplexSingle> pusch_ptrs_constellation(actual_array_size, NIComplexSingle());
         auto array_size = actual_array_size;
@@ -4934,7 +4934,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         convert_to_grpc(pusch_ptrs_constellation, response->mutable_pusch_ptrs_constellation());
@@ -4972,7 +4972,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->ModAccFetchPeakEVMPerSlotMaximumTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->mutable_peak_evm_per_slot_maximum()->Resize(actual_array_size, 0);
         float32* peak_evm_per_slot_maximum = response->mutable_peak_evm_per_slot_maximum()->mutable_data();
@@ -4983,7 +4983,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->set_x0(x0);
@@ -5016,7 +5016,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->ModAccFetchPeakEVMPerSubcarrierMaximumTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->mutable_peak_evm_per_subcarrier_maximum()->Resize(actual_array_size, 0);
         float32* peak_evm_per_subcarrier_maximum = response->mutable_peak_evm_per_subcarrier_maximum()->mutable_data();
@@ -5027,7 +5027,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->set_x0(x0);
@@ -5060,7 +5060,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->ModAccFetchPeakEVMPerSymbolMaximumTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->mutable_peak_evm_per_symbol_maximum()->Resize(actual_array_size, 0);
         float32* peak_evm_per_symbol_maximum = response->mutable_peak_evm_per_symbol_maximum()->mutable_data();
@@ -5071,7 +5071,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->set_x0(x0);
@@ -5104,7 +5104,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->ModAccFetchRMSEVMHighPerSymbolMeanTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->mutable_rms_evm_high_per_symbol_mean()->Resize(actual_array_size, 0);
         float32* rms_evm_high_per_symbol_mean = response->mutable_rms_evm_high_per_symbol_mean()->mutable_data();
@@ -5115,7 +5115,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->set_x0(x0);
@@ -5148,7 +5148,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->ModAccFetchRMSEVMLowPerSymbolMeanTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->mutable_rms_evm_low_per_symbol_mean()->Resize(actual_array_size, 0);
         float32* rms_evm_low_per_symbol_mean = response->mutable_rms_evm_low_per_symbol_mean()->mutable_data();
@@ -5159,7 +5159,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->set_x0(x0);
@@ -5192,7 +5192,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->ModAccFetchRMSEVMPerSlotMeanTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->mutable_rms_evm_per_slot_mean()->Resize(actual_array_size, 0);
         float32* rms_evm_per_slot_mean = response->mutable_rms_evm_per_slot_mean()->mutable_data();
@@ -5203,7 +5203,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->set_x0(x0);
@@ -5236,7 +5236,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->ModAccFetchRMSEVMPerSubcarrierMeanTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->mutable_rms_evm_per_subcarrier_mean()->Resize(actual_array_size, 0);
         float32* rms_evm_per_subcarrier_mean = response->mutable_rms_evm_per_subcarrier_mean()->mutable_data();
@@ -5247,7 +5247,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->set_x0(x0);
@@ -5280,7 +5280,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->ModAccFetchRMSEVMPerSymbolMeanTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->mutable_rms_evm_per_symbol_mean()->Resize(actual_array_size, 0);
         float32* rms_evm_per_symbol_mean = response->mutable_rms_evm_per_symbol_mean()->mutable_data();
@@ -5291,7 +5291,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->set_x0(x0);
@@ -5322,7 +5322,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->ModAccFetchSSSConstellationTrace(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         std::vector<NIComplexSingle> sss_constellation(actual_array_size, NIComplexSingle());
         auto array_size = actual_array_size;
@@ -5332,7 +5332,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         convert_to_grpc(sss_constellation, response->mutable_sss_constellation());
@@ -5370,7 +5370,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->ModAccFetchSSSRMSEVMPerSubcarrierMeanTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->mutable_sss_rms_evm_per_subcarrier_mean()->Resize(actual_array_size, 0);
         float32* sss_rms_evm_per_subcarrier_mean = response->mutable_sss_rms_evm_per_subcarrier_mean()->mutable_data();
@@ -5381,7 +5381,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->set_x0(x0);
@@ -5414,7 +5414,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->ModAccFetchSSSRMSEVMPerSymbolMeanTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->mutable_sss_rms_evm_per_symbol_mean()->Resize(actual_array_size, 0);
         float32* sss_rms_evm_per_symbol_mean = response->mutable_sss_rms_evm_per_symbol_mean()->mutable_data();
@@ -5425,7 +5425,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->set_x0(x0);
@@ -5458,7 +5458,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->ModAccFetchSpectralFlatnessTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, nullptr, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->mutable_spectral_flatness()->Resize(actual_array_size, 0);
         float32* spectral_flatness = response->mutable_spectral_flatness()->mutable_data();
@@ -5473,7 +5473,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->set_x0(x0);
@@ -5506,7 +5506,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->ModAccFetchSubblockInBandEmissionTrace(instrument, selector_string, timeout, nullptr, nullptr, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->mutable_subblock_in_band_emission()->Resize(actual_array_size, 0);
         float64* subblock_in_band_emission = response->mutable_subblock_in_band_emission()->mutable_data();
@@ -5521,7 +5521,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->mutable_subblock_in_band_emission()->Resize(actual_array_size, 0);
@@ -5550,7 +5550,7 @@ namespace nirfmxnr_grpc {
       int32 calibration_data_valid {};
       auto status = library_->ModAccValidateCalibrationData(instrument, selector_string, &calibration_data_valid);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       response->set_calibration_data_valid(static_cast<nirfmxnr_grpc::ModAccCalibrationDataValid>(calibration_data_valid));
@@ -5608,7 +5608,7 @@ namespace nirfmxnr_grpc {
 
       auto status = library_->OBWCfgAveraging(instrument, selector_string, averaging_enabled, averaging_count, averaging_type);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -5664,7 +5664,7 @@ namespace nirfmxnr_grpc {
 
       auto status = library_->OBWCfgRBWFilter(instrument, selector_string, rbw_auto, rbw, rbw_filter_type);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -5704,7 +5704,7 @@ namespace nirfmxnr_grpc {
       float64 sweep_time_interval = request->sweep_time_interval();
       auto status = library_->OBWCfgSweepTime(instrument, selector_string, sweep_time_auto, sweep_time_interval);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -5732,7 +5732,7 @@ namespace nirfmxnr_grpc {
       float64 stop_frequency {};
       auto status = library_->OBWFetchMeasurement(instrument, selector_string, timeout, &occupied_bandwidth, &absolute_power, &start_frequency, &stop_frequency);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       response->set_occupied_bandwidth(occupied_bandwidth);
@@ -5764,7 +5764,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->OBWFetchSpectrum(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->mutable_spectrum()->Resize(actual_array_size, 0);
         float32* spectrum = response->mutable_spectrum()->mutable_data();
@@ -5775,7 +5775,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->set_x0(x0);
@@ -5836,7 +5836,7 @@ namespace nirfmxnr_grpc {
 
       auto status = library_->PVTCfgAveraging(instrument, selector_string, averaging_enabled, averaging_count, averaging_type);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -5875,7 +5875,7 @@ namespace nirfmxnr_grpc {
 
       auto status = library_->PVTCfgMeasurementMethod(instrument, selector_string, measurement_method);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -5900,7 +5900,7 @@ namespace nirfmxnr_grpc {
       float64 off_power_exclusion_after = request->off_power_exclusion_after();
       auto status = library_->PVTCfgOFFPowerExclusionPeriods(instrument, selector_string, off_power_exclusion_before, off_power_exclusion_after);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -5929,7 +5929,7 @@ namespace nirfmxnr_grpc {
       float64 burst_width {};
       auto status = library_->PVTFetchMeasurement(instrument, selector_string, timeout, &measurement_status, &absolute_off_power_before, &absolute_off_power_after, &absolute_on_power, &burst_width);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       response->set_measurement_status(static_cast<nirfmxnr_grpc::PvtMeasurementStatus>(measurement_status));
@@ -5961,7 +5961,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->PVTFetchMeasurementArray(instrument, selector_string, timeout, nullptr, nullptr, nullptr, nullptr, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->mutable_measurement_status_raw()->Resize(actual_array_size, 0);
         int32* measurement_status = reinterpret_cast<int32*>(response->mutable_measurement_status_raw()->mutable_data());
@@ -5980,7 +5980,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
           response->mutable_measurement_status()->Clear();
@@ -6024,7 +6024,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->PVTFetchSignalPowerTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->mutable_signal_power()->Resize(actual_array_size, 0);
         float32* signal_power = response->mutable_signal_power()->mutable_data();
@@ -6037,7 +6037,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->set_x0(x0);
@@ -6071,7 +6071,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->PVTFetchWindowedSignalPowerTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->mutable_windowed_signal_power()->Resize(actual_array_size, 0);
         float32* windowed_signal_power = response->mutable_windowed_signal_power()->mutable_data();
@@ -6082,7 +6082,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->set_x0(x0);
@@ -6111,7 +6111,7 @@ namespace nirfmxnr_grpc {
       int32 attribute_id = request->attribute_id();
       auto status = library_->ResetAttribute(instrument, selector_string, attribute_id);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -6134,7 +6134,7 @@ namespace nirfmxnr_grpc {
       char* selector_string = (char*)request->selector_string().c_str();
       auto status = library_->ResetToDefault(instrument, selector_string);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -6190,7 +6190,7 @@ namespace nirfmxnr_grpc {
 
       auto status = library_->SEMCfgAveraging(instrument, selector_string, averaging_enabled, averaging_count, averaging_type);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -6214,7 +6214,7 @@ namespace nirfmxnr_grpc {
       float64 component_carrier_rated_output_power = request->component_carrier_rated_output_power();
       auto status = library_->SEMCfgComponentCarrierRatedOutputPower(instrument, selector_string, component_carrier_rated_output_power);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -6239,7 +6239,7 @@ namespace nirfmxnr_grpc {
       int32 number_of_elements = static_cast<int32>(request->component_carrier_rated_output_power().size());
       auto status = library_->SEMCfgComponentCarrierRatedOutputPowerArray(instrument, selector_string, component_carrier_rated_output_power, number_of_elements);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -6263,7 +6263,7 @@ namespace nirfmxnr_grpc {
       int32 number_of_offsets = request->number_of_offsets();
       auto status = library_->SEMCfgNumberOfOffsets(instrument, selector_string, number_of_offsets);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -6288,7 +6288,7 @@ namespace nirfmxnr_grpc {
       float64 absolute_limit_stop = request->absolute_limit_stop();
       auto status = library_->SEMCfgOffsetAbsoluteLimit(instrument, selector_string, absolute_limit_start, absolute_limit_stop);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -6330,7 +6330,7 @@ namespace nirfmxnr_grpc {
 
       auto status = library_->SEMCfgOffsetAbsoluteLimitArray(instrument, selector_string, absolute_limit_start, absolute_limit_stop, number_of_elements);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -6354,7 +6354,7 @@ namespace nirfmxnr_grpc {
       int32 bandwidth_integral = request->bandwidth_integral();
       auto status = library_->SEMCfgOffsetBandwidthIntegral(instrument, selector_string, bandwidth_integral);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -6379,7 +6379,7 @@ namespace nirfmxnr_grpc {
       int32 number_of_elements = static_cast<int32>(request->bandwidth_integral().size());
       auto status = library_->SEMCfgOffsetBandwidthIntegralArray(instrument, selector_string, bandwidth_integral, number_of_elements);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -6420,7 +6420,7 @@ namespace nirfmxnr_grpc {
 
       auto status = library_->SEMCfgOffsetFrequency(instrument, selector_string, offset_start_frequency, offset_stop_frequency, offset_sideband);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -6473,7 +6473,7 @@ namespace nirfmxnr_grpc {
 
       auto status = library_->SEMCfgOffsetFrequencyArray(instrument, selector_string, offset_start_frequency, offset_stop_frequency, offset_sideband, number_of_elements);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -6512,7 +6512,7 @@ namespace nirfmxnr_grpc {
 
       auto status = library_->SEMCfgOffsetLimitFailMask(instrument, selector_string, limit_fail_mask);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -6545,7 +6545,7 @@ namespace nirfmxnr_grpc {
       int32 number_of_elements = static_cast<int32>(request->limit_fail_mask().size());
       auto status = library_->SEMCfgOffsetLimitFailMaskArray(instrument, selector_string, limit_fail_mask, number_of_elements);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -6585,7 +6585,7 @@ namespace nirfmxnr_grpc {
 
       auto status = library_->SEMCfgOffsetRBWFilter(instrument, selector_string, offset_rbw, offset_rbw_filter_type);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -6635,7 +6635,7 @@ namespace nirfmxnr_grpc {
 
       auto status = library_->SEMCfgOffsetRBWFilterArray(instrument, selector_string, offset_rbw, offset_rbw_filter_type, number_of_elements);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -6660,7 +6660,7 @@ namespace nirfmxnr_grpc {
       float64 relative_limit_stop = request->relative_limit_stop();
       auto status = library_->SEMCfgOffsetRelativeLimit(instrument, selector_string, relative_limit_start, relative_limit_stop);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -6702,7 +6702,7 @@ namespace nirfmxnr_grpc {
 
       auto status = library_->SEMCfgOffsetRelativeLimitArray(instrument, selector_string, relative_limit_start, relative_limit_stop, number_of_elements);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -6742,7 +6742,7 @@ namespace nirfmxnr_grpc {
       float64 sweep_time_interval = request->sweep_time_interval();
       auto status = library_->SEMCfgSweepTime(instrument, selector_string, sweep_time_auto, sweep_time_interval);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -6781,7 +6781,7 @@ namespace nirfmxnr_grpc {
 
       auto status = library_->SEMCfgUplinkMaskType(instrument, selector_string, uplink_mask_type);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -6809,7 +6809,7 @@ namespace nirfmxnr_grpc {
       float64 relative_power {};
       auto status = library_->SEMFetchComponentCarrierMeasurement(instrument, selector_string, timeout, &absolute_power, &peak_absolute_power, &peak_frequency, &relative_power);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       response->set_absolute_power(absolute_power);
@@ -6839,7 +6839,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->SEMFetchComponentCarrierMeasurementArray(instrument, selector_string, timeout, nullptr, nullptr, nullptr, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->mutable_absolute_power()->Resize(actual_array_size, 0);
         float64* absolute_power = response->mutable_absolute_power()->mutable_data();
@@ -6856,7 +6856,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->mutable_absolute_power()->Resize(actual_array_size, 0);
@@ -6891,7 +6891,7 @@ namespace nirfmxnr_grpc {
       float64 margin_relative_power {};
       auto status = library_->SEMFetchLowerOffsetMargin(instrument, selector_string, timeout, &measurement_status, &margin, &margin_frequency, &margin_absolute_power, &margin_relative_power);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       response->set_measurement_status(static_cast<nirfmxnr_grpc::SemLowerOffsetMeasurementStatus>(measurement_status));
@@ -6923,7 +6923,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->SEMFetchLowerOffsetMarginArray(instrument, selector_string, timeout, nullptr, nullptr, nullptr, nullptr, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->mutable_measurement_status_raw()->Resize(actual_array_size, 0);
         int32* measurement_status = reinterpret_cast<int32*>(response->mutable_measurement_status_raw()->mutable_data());
@@ -6942,7 +6942,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
           response->mutable_measurement_status()->Clear();
@@ -6987,7 +6987,7 @@ namespace nirfmxnr_grpc {
       float64 peak_relative_power {};
       auto status = library_->SEMFetchLowerOffsetPower(instrument, selector_string, timeout, &total_absolute_power, &total_relative_power, &peak_absolute_power, &peak_frequency, &peak_relative_power);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       response->set_total_absolute_power(total_absolute_power);
@@ -7018,7 +7018,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->SEMFetchLowerOffsetPowerArray(instrument, selector_string, timeout, nullptr, nullptr, nullptr, nullptr, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->mutable_total_absolute_power()->Resize(actual_array_size, 0);
         float64* total_absolute_power = response->mutable_total_absolute_power()->mutable_data();
@@ -7037,7 +7037,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->mutable_total_absolute_power()->Resize(actual_array_size, 0);
@@ -7069,7 +7069,7 @@ namespace nirfmxnr_grpc {
       int32 measurement_status {};
       auto status = library_->SEMFetchMeasurementStatus(instrument, selector_string, timeout, &measurement_status);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       response->set_measurement_status(static_cast<nirfmxnr_grpc::SemMeasurementStatus>(measurement_status));
@@ -7099,7 +7099,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->SEMFetchSpectrum(instrument, selector_string, timeout, &x0, &dx, nullptr, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->mutable_spectrum()->Resize(actual_array_size, 0);
         float32* spectrum = response->mutable_spectrum()->mutable_data();
@@ -7112,7 +7112,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->set_x0(x0);
@@ -7145,7 +7145,7 @@ namespace nirfmxnr_grpc {
       float64 frequency {};
       auto status = library_->SEMFetchSubblockMeasurement(instrument, selector_string, timeout, &subblock_power, &integration_bandwidth, &frequency);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       response->set_subblock_power(subblock_power);
@@ -7173,7 +7173,7 @@ namespace nirfmxnr_grpc {
       float64 total_aggregated_power {};
       auto status = library_->SEMFetchTotalAggregatedPower(instrument, selector_string, timeout, &total_aggregated_power);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       response->set_total_aggregated_power(total_aggregated_power);
@@ -7203,7 +7203,7 @@ namespace nirfmxnr_grpc {
       float64 margin_relative_power {};
       auto status = library_->SEMFetchUpperOffsetMargin(instrument, selector_string, timeout, &measurement_status, &margin, &margin_frequency, &margin_absolute_power, &margin_relative_power);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       response->set_measurement_status(static_cast<nirfmxnr_grpc::SemUpperOffsetMeasurementStatus>(measurement_status));
@@ -7235,7 +7235,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->SEMFetchUpperOffsetMarginArray(instrument, selector_string, timeout, nullptr, nullptr, nullptr, nullptr, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->mutable_measurement_status_raw()->Resize(actual_array_size, 0);
         int32* measurement_status = reinterpret_cast<int32*>(response->mutable_measurement_status_raw()->mutable_data());
@@ -7254,7 +7254,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
           response->mutable_measurement_status()->Clear();
@@ -7299,7 +7299,7 @@ namespace nirfmxnr_grpc {
       float64 peak_relative_power {};
       auto status = library_->SEMFetchUpperOffsetPower(instrument, selector_string, timeout, &total_absolute_power, &total_relative_power, &peak_absolute_power, &peak_frequency, &peak_relative_power);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       response->set_total_absolute_power(total_absolute_power);
@@ -7330,7 +7330,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->SEMFetchUpperOffsetPowerArray(instrument, selector_string, timeout, nullptr, nullptr, nullptr, nullptr, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->mutable_total_absolute_power()->Resize(actual_array_size, 0);
         float64* total_absolute_power = response->mutable_total_absolute_power()->mutable_data();
@@ -7349,7 +7349,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->mutable_total_absolute_power()->Resize(actual_array_size, 0);
@@ -7396,7 +7396,7 @@ namespace nirfmxnr_grpc {
       int32 enable_all_traces = request->enable_all_traces();
       auto status = library_->SelectMeasurements(instrument, selector_string, measurements, enable_all_traces);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -7418,7 +7418,7 @@ namespace nirfmxnr_grpc {
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       auto status = library_->SendSoftwareEdgeTrigger(instrument);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -7443,7 +7443,7 @@ namespace nirfmxnr_grpc {
       float32 attr_val = request->attr_val();
       auto status = library_->SetAttributeF32(instrument, selector_string, attribute_id, attr_val);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -7469,7 +7469,7 @@ namespace nirfmxnr_grpc {
       int32 array_size = static_cast<int32>(request->attr_val().size());
       auto status = library_->SetAttributeF32Array(instrument, selector_string, attribute_id, attr_val, array_size);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -7494,7 +7494,7 @@ namespace nirfmxnr_grpc {
       float64 attr_val = request->attr_val();
       auto status = library_->SetAttributeF64(instrument, selector_string, attribute_id, attr_val);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -7520,7 +7520,7 @@ namespace nirfmxnr_grpc {
       int32 array_size = static_cast<int32>(request->attr_val().size());
       auto status = library_->SetAttributeF64Array(instrument, selector_string, attribute_id, attr_val, array_size);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -7554,7 +7554,7 @@ namespace nirfmxnr_grpc {
 
       auto status = library_->SetAttributeI16(instrument, selector_string, attribute_id, attr_val);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -7597,7 +7597,7 @@ namespace nirfmxnr_grpc {
 
       auto status = library_->SetAttributeI32(instrument, selector_string, attribute_id, attr_val);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -7631,7 +7631,7 @@ namespace nirfmxnr_grpc {
       int32 array_size = static_cast<int32>(request->attr_val().size());
       auto status = library_->SetAttributeI32Array(instrument, selector_string, attribute_id, attr_val, array_size);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -7656,7 +7656,7 @@ namespace nirfmxnr_grpc {
       int64 attr_val = request->attr_val();
       auto status = library_->SetAttributeI64(instrument, selector_string, attribute_id, attr_val);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -7682,7 +7682,7 @@ namespace nirfmxnr_grpc {
       int32 array_size = static_cast<int32>(request->attr_val().size());
       auto status = library_->SetAttributeI64Array(instrument, selector_string, attribute_id, attr_val, array_size);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -7716,7 +7716,7 @@ namespace nirfmxnr_grpc {
 
       auto status = library_->SetAttributeI8(instrument, selector_string, attribute_id, attr_val);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -7762,7 +7762,7 @@ namespace nirfmxnr_grpc {
       int32 array_size = static_cast<int32>(request->attr_val().size());
       auto status = library_->SetAttributeI8Array(instrument, selector_string, attribute_id, attr_val.data(), array_size);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -7791,7 +7791,7 @@ namespace nirfmxnr_grpc {
       int32 array_size = static_cast<int32>(request->attr_val().size());
       auto status = library_->SetAttributeNIComplexDoubleArray(instrument, selector_string, attribute_id, attr_val.data(), array_size);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -7817,7 +7817,7 @@ namespace nirfmxnr_grpc {
       int32 array_size = static_cast<int32>(request->attr_val().size());
       auto status = library_->SetAttributeNIComplexSingleArray(instrument, selector_string, attribute_id, attr_val.data(), array_size);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -7861,7 +7861,7 @@ namespace nirfmxnr_grpc {
 
       auto status = library_->SetAttributeString(instrument, selector_string, attribute_id, attr_val);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -7895,7 +7895,7 @@ namespace nirfmxnr_grpc {
 
       auto status = library_->SetAttributeU16(instrument, selector_string, attribute_id, attr_val);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -7923,7 +7923,7 @@ namespace nirfmxnr_grpc {
       uInt32 attr_val = request->attr_val();
       auto status = library_->SetAttributeU32(instrument, selector_string, attribute_id, attr_val);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -7949,7 +7949,7 @@ namespace nirfmxnr_grpc {
       int32 array_size = static_cast<int32>(request->attr_val().size());
       auto status = library_->SetAttributeU32Array(instrument, selector_string, attribute_id, attr_val, array_size);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -7975,7 +7975,7 @@ namespace nirfmxnr_grpc {
       int32 array_size = static_cast<int32>(request->attr_val().size());
       auto status = library_->SetAttributeU64Array(instrument, selector_string, attribute_id, attr_val, array_size);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -8000,7 +8000,7 @@ namespace nirfmxnr_grpc {
       uInt8 attr_val = request->attr_val();
       auto status = library_->SetAttributeU8(instrument, selector_string, attribute_id, attr_val);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -8026,7 +8026,7 @@ namespace nirfmxnr_grpc {
       int32 array_size = static_cast<int32>(request->attr_val().size());
       auto status = library_->SetAttributeU8Array(instrument, selector_string, attribute_id, attr_val, array_size);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -8052,7 +8052,7 @@ namespace nirfmxnr_grpc {
       float64 peak_power_maximum {};
       auto status = library_->TXPFetchMeasurement(instrument, selector_string, timeout, &average_power_mean, &peak_power_maximum);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       response->set_average_power_mean(average_power_mean);
@@ -8082,7 +8082,7 @@ namespace nirfmxnr_grpc {
       while (true) {
         auto status = library_->TXPFetchPowerTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->mutable_power()->Resize(actual_array_size, 0);
         float32* power = response->mutable_power()->mutable_data();
@@ -8093,7 +8093,7 @@ namespace nirfmxnr_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->set_x0(x0);
@@ -8121,7 +8121,7 @@ namespace nirfmxnr_grpc {
       float64 timeout = request->timeout();
       auto status = library_->WaitForAcquisitionComplete(instrument, timeout);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -8145,7 +8145,7 @@ namespace nirfmxnr_grpc {
       float64 timeout = request->timeout();
       auto status = library_->WaitForMeasurementComplete(instrument, selector_string, timeout);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;

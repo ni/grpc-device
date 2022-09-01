@@ -66,7 +66,7 @@ namespace nifake_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Abort(vi);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(status, vi);
+        return ConvertApiErrorStatusForViSession(context, status, vi);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -90,7 +90,7 @@ namespace nifake_grpc {
       auto delays = const_cast<ViReal64*>(request->delays().data());
       auto status = library_->AcceptListOfDurationsInSeconds(vi, count, delays);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(status, vi);
+        return ConvertApiErrorStatusForViSession(context, status, vi);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -118,7 +118,7 @@ namespace nifake_grpc {
         [&](auto session) { return session_repository_->access_session(session.id(), session.name()); }); 
       auto status = library_->AcceptViSessionArray(session_count, session_array.data());
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(status, 0);
+        return ConvertApiErrorStatusForViSession(context, status, 0);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -142,7 +142,7 @@ namespace nifake_grpc {
       auto u_int32_array = const_cast<ViUInt32*>(reinterpret_cast<const ViUInt32*>(request->u_int32_array().data()));
       auto status = library_->AcceptViUInt32Array(vi, array_len, u_int32_array);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(status, vi);
+        return ConvertApiErrorStatusForViSession(context, status, vi);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -166,7 +166,7 @@ namespace nifake_grpc {
       auto an_array = convert_from_grpc<ViBoolean>(request->an_array());
       auto status = library_->BoolArrayInputFunction(vi, number_of_elements, an_array.data());
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(status, vi);
+        return ConvertApiErrorStatusForViSession(context, status, vi);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -190,7 +190,7 @@ namespace nifake_grpc {
       std::vector<ViBoolean> an_array(number_of_elements, ViBoolean());
       auto status = library_->BoolArrayOutputFunction(vi, number_of_elements, an_array.data());
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(status, vi);
+        return ConvertApiErrorStatusForViSession(context, status, vi);
       }
       response->set_status(status);
       convert_to_grpc(an_array, response->mutable_an_array());
@@ -215,7 +215,7 @@ namespace nifake_grpc {
       session_repository_->remove_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->CloseExtCal(vi, action);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(status, vi);
+        return ConvertApiErrorStatusForViSession(context, status, vi);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -238,7 +238,7 @@ namespace nifake_grpc {
       auto reserved = nullptr;
       auto status = library_->CommandWithReservedParam(vi, reserved);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(status, vi);
+        return ConvertApiErrorStatusForViSession(context, status, vi);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -260,7 +260,7 @@ namespace nifake_grpc {
       auto list_attribute_ids = const_cast<ViAttr*>(reinterpret_cast<const ViAttr*>(request->list_attribute_ids().data()));
       auto status = library_->CreateConfigurationList(number_of_list_attributes, list_attribute_ids);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(status, 0);
+        return ConvertApiErrorStatusForViSession(context, status, 0);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -284,7 +284,7 @@ namespace nifake_grpc {
       auto numbers = const_cast<ViReal64*>(request->numbers().data());
       auto status = library_->DoubleAllTheNums(vi, number_count, numbers);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(status, vi);
+        return ConvertApiErrorStatusForViSession(context, status, vi);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -337,7 +337,7 @@ namespace nifake_grpc {
 
       auto status = library_->EnumInputFunctionWithDefaults(vi, a_turtle);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(status, vi);
+        return ConvertApiErrorStatusForViSession(context, status, vi);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -361,7 +361,7 @@ namespace nifake_grpc {
       while (true) {
         auto status = library_->ExportAttributeConfigurationBuffer(vi, 0, nullptr);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForViSession(status, vi);
+          return ConvertApiErrorStatusForViSession(context, status, vi);
         }
         ViInt32 size_in_bytes = status;
 
@@ -372,7 +372,7 @@ namespace nifake_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForViSession(status, vi);
+          return ConvertApiErrorStatusForViSession(context, status, vi);
         }
         response->set_status(status);
         response->set_configuration(configuration);
@@ -400,7 +400,7 @@ namespace nifake_grpc {
       ViInt32 actual_number_of_samples {};
       auto status = library_->FetchWaveform(vi, number_of_samples, waveform_data, &actual_number_of_samples);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(status, vi);
+        return ConvertApiErrorStatusForViSession(context, status, vi);
       }
       response->set_status(status);
       response->set_actual_number_of_samples(actual_number_of_samples);
@@ -424,7 +424,7 @@ namespace nifake_grpc {
       ViBoolean a_boolean {};
       auto status = library_->GetABoolean(vi, &a_boolean);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(status, vi);
+        return ConvertApiErrorStatusForViSession(context, status, vi);
       }
       response->set_status(status);
       response->set_a_boolean(a_boolean);
@@ -448,7 +448,7 @@ namespace nifake_grpc {
       ViInt16 a_number {};
       auto status = library_->GetANumber(vi, &a_number);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(status, vi);
+        return ConvertApiErrorStatusForViSession(context, status, vi);
       }
       response->set_status(status);
       response->set_a_number(a_number);
@@ -472,7 +472,7 @@ namespace nifake_grpc {
       std::string a_string(256 - 1, '\0');
       auto status = library_->GetAStringOfFixedMaximumSize(vi, (ViChar*)a_string.data());
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(status, vi);
+        return ConvertApiErrorStatusForViSession(context, status, vi);
       }
       response->set_status(status);
       response->set_a_string(a_string);
@@ -498,7 +498,7 @@ namespace nifake_grpc {
       while (true) {
         auto status = library_->GetAnIviDanceString(vi, 0, nullptr);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForViSession(status, vi);
+          return ConvertApiErrorStatusForViSession(context, status, vi);
         }
         ViInt32 buffer_size = status;
 
@@ -512,7 +512,7 @@ namespace nifake_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForViSession(status, vi);
+          return ConvertApiErrorStatusForViSession(context, status, vi);
         }
         response->set_status(status);
         response->set_a_string(a_string);
@@ -540,7 +540,7 @@ namespace nifake_grpc {
       while (true) {
         auto status = library_->GetAnIviDanceWithATwistArray(vi, a_string, 0, nullptr, &actual_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForViSession(status, vi);
+          return ConvertApiErrorStatusForViSession(context, status, vi);
         }
         response->mutable_array_out()->Resize(actual_size, 0);
         ViInt32* array_out = reinterpret_cast<ViInt32*>(response->mutable_array_out()->mutable_data());
@@ -551,7 +551,7 @@ namespace nifake_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForViSession(status, vi);
+          return ConvertApiErrorStatusForViSession(context, status, vi);
         }
         response->set_status(status);
         response->mutable_array_out()->Resize(actual_size, 0);
@@ -578,7 +578,7 @@ namespace nifake_grpc {
       while (true) {
         auto status = library_->GetAnIviDanceWithATwistArrayOfCustomType(vi, 0, nullptr, &actual_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForViSession(status, vi);
+          return ConvertApiErrorStatusForViSession(context, status, vi);
         }
         std::vector<CustomStruct> array_out(actual_size, CustomStruct());
         auto buffer_size = actual_size;
@@ -588,7 +588,7 @@ namespace nifake_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForViSession(status, vi);
+          return ConvertApiErrorStatusForViSession(context, status, vi);
         }
         response->set_status(status);
         convert_to_grpc(array_out, response->mutable_array_out());
@@ -622,7 +622,7 @@ namespace nifake_grpc {
       while (true) {
         auto status = library_->GetAnIviDanceWithATwistArrayWithInputArray(data_in, array_size_in, 0, nullptr, &actual_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForViSession(status, 0);
+          return ConvertApiErrorStatusForViSession(context, status, 0);
         }
         response->mutable_array_out()->Resize(actual_size, 0);
         ViInt32* array_out = reinterpret_cast<ViInt32*>(response->mutable_array_out()->mutable_data());
@@ -633,7 +633,7 @@ namespace nifake_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForViSession(status, 0);
+          return ConvertApiErrorStatusForViSession(context, status, 0);
         }
         response->set_status(status);
         response->mutable_array_out()->Resize(actual_size, 0);
@@ -658,7 +658,7 @@ namespace nifake_grpc {
       while (true) {
         auto status = library_->GetAnIviDanceWithATwistByteArray(0, nullptr, &actual_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForViSession(status, 0);
+          return ConvertApiErrorStatusForViSession(context, status, 0);
         }
         std::string array_out(actual_size, '\0');
         auto buffer_size = actual_size;
@@ -668,7 +668,7 @@ namespace nifake_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForViSession(status, 0);
+          return ConvertApiErrorStatusForViSession(context, status, 0);
         }
         response->set_status(status);
         response->set_array_out(array_out);
@@ -694,7 +694,7 @@ namespace nifake_grpc {
       while (true) {
         auto status = library_->GetAnIviDanceWithATwistString(0, nullptr, &actual_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForViSession(status, 0);
+          return ConvertApiErrorStatusForViSession(context, status, 0);
         }
         std::string array_out;
         if (actual_size > 0) {
@@ -707,7 +707,7 @@ namespace nifake_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForViSession(status, 0);
+          return ConvertApiErrorStatusForViSession(context, status, 0);
         }
         response->set_status(status);
         response->set_array_out(array_out);
@@ -733,7 +733,7 @@ namespace nifake_grpc {
       while (true) {
         auto status = library_->GetAnIviDanceWithATwistStringStrlenBug(0, nullptr, &actual_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForViSession(status, 0);
+          return ConvertApiErrorStatusForViSession(context, status, 0);
         }
         std::string string_out;
         if (actual_size > 0) {
@@ -746,7 +746,7 @@ namespace nifake_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForViSession(status, 0);
+          return ConvertApiErrorStatusForViSession(context, status, 0);
         }
         response->set_status(status);
         response->set_string_out(string_out);
@@ -773,7 +773,7 @@ namespace nifake_grpc {
       ViInt32 size_out {};
       auto status = library_->GetArraySizeForCustomCode(vi, &size_out);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(status, vi);
+        return ConvertApiErrorStatusForViSession(context, status, vi);
       }
       response->set_status(status);
       response->set_size_out(size_out);
@@ -798,7 +798,7 @@ namespace nifake_grpc {
       while (true) {
         auto status = library_->GetArrayUsingIviDance(vi, 0, nullptr);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForViSession(status, vi);
+          return ConvertApiErrorStatusForViSession(context, status, vi);
         }
         ViInt32 array_size = status;
 
@@ -810,7 +810,7 @@ namespace nifake_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForViSession(status, vi);
+          return ConvertApiErrorStatusForViSession(context, status, vi);
         }
         response->set_status(status);
         return ::grpc::Status::OK;
@@ -835,7 +835,7 @@ namespace nifake_grpc {
       std::string u_int8_enum_array(array_len, '\0');
       auto status = library_->GetArrayViUInt8WithEnum(vi, array_len, (ViUInt8*)u_int8_enum_array.data());
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(status, vi);
+        return ConvertApiErrorStatusForViSession(context, status, vi);
       }
       response->set_status(status);
       CopyBytesToEnums(u_int8_enum_array, response->mutable_u_int8_enum_array());
@@ -862,7 +862,7 @@ namespace nifake_grpc {
       ViBoolean attribute_value {};
       auto status = library_->GetAttributeViBoolean(vi, channel_name, attribute_id, &attribute_value);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(status, vi);
+        return ConvertApiErrorStatusForViSession(context, status, vi);
       }
       response->set_status(status);
       response->set_attribute_value(attribute_value);
@@ -888,7 +888,7 @@ namespace nifake_grpc {
       ViInt32 attribute_value {};
       auto status = library_->GetAttributeViInt32(vi, channel_name, attribute_id, &attribute_value);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(status, vi);
+        return ConvertApiErrorStatusForViSession(context, status, vi);
       }
       response->set_status(status);
       response->set_attribute_value(attribute_value);
@@ -914,7 +914,7 @@ namespace nifake_grpc {
       ViInt64 attribute_value {};
       auto status = library_->GetAttributeViInt64(vi, channel_name, attribute_id, &attribute_value);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(status, vi);
+        return ConvertApiErrorStatusForViSession(context, status, vi);
       }
       response->set_status(status);
       response->set_attribute_value(attribute_value);
@@ -940,7 +940,7 @@ namespace nifake_grpc {
       ViReal64 attribute_value {};
       auto status = library_->GetAttributeViReal64(vi, channel_name, attribute_id, &attribute_value);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(status, vi);
+        return ConvertApiErrorStatusForViSession(context, status, vi);
       }
       response->set_status(status);
       response->set_attribute_value(attribute_value);
@@ -965,7 +965,7 @@ namespace nifake_grpc {
       ViSession session_out {};
       auto status = library_->GetAttributeViSession(vi, attribute_id, &session_out);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(status, vi);
+        return ConvertApiErrorStatusForViSession(context, status, vi);
       }
       response->set_status(status);
       auto session_id = session_repository_->resolve_session_id(session_out);
@@ -993,7 +993,7 @@ namespace nifake_grpc {
       while (true) {
         auto status = library_->GetAttributeViString(vi, channel_name, attribute_id, 0, nullptr);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForViSession(status, vi);
+          return ConvertApiErrorStatusForViSession(context, status, vi);
         }
         ViInt32 buffer_size = status;
 
@@ -1007,7 +1007,7 @@ namespace nifake_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForViSession(status, vi);
+          return ConvertApiErrorStatusForViSession(context, status, vi);
         }
         response->set_status(status);
         response->set_attribute_value(attribute_value);
@@ -1031,7 +1031,7 @@ namespace nifake_grpc {
       ViInt64 flags {};
       auto status = library_->GetBitfieldAsEnumArray(&flags);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(status, 0);
+        return ConvertApiErrorStatusForViSession(context, status, 0);
       }
       response->set_status(status);
       if (flags & 0x1)
@@ -1068,7 +1068,7 @@ namespace nifake_grpc {
       ViInt32 minute {};
       auto status = library_->GetCalDateAndTime(vi, cal_type, &month, &day, &year, &hour, &minute);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(status, vi);
+        return ConvertApiErrorStatusForViSession(context, status, vi);
       }
       response->set_status(status);
       response->set_month(month);
@@ -1096,7 +1096,7 @@ namespace nifake_grpc {
       ViInt32 months {};
       auto status = library_->GetCalInterval(vi, &months);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(status, vi);
+        return ConvertApiErrorStatusForViSession(context, status, vi);
       }
       response->set_status(status);
       response->set_months(months);
@@ -1120,7 +1120,7 @@ namespace nifake_grpc {
       CustomStruct cs {};
       auto status = library_->GetCustomType(vi, &cs);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(status, vi);
+        return ConvertApiErrorStatusForViSession(context, status, vi);
       }
       response->set_status(status);
       convert_to_grpc(cs, response->mutable_cs());
@@ -1145,7 +1145,7 @@ namespace nifake_grpc {
       std::vector<CustomStruct> cs(number_of_elements, CustomStruct());
       auto status = library_->GetCustomTypeArray(vi, number_of_elements, cs.data());
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(status, vi);
+        return ConvertApiErrorStatusForViSession(context, status, vi);
       }
       response->set_status(status);
       convert_to_grpc(cs, response->mutable_cs());
@@ -1170,7 +1170,7 @@ namespace nifake_grpc {
       ViInt16 a_turtle {};
       auto status = library_->GetEnumValue(vi, &a_quantity, &a_turtle);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(status, vi);
+        return ConvertApiErrorStatusForViSession(context, status, vi);
       }
       response->set_status(status);
       response->set_a_quantity(a_quantity);
@@ -1198,7 +1198,7 @@ namespace nifake_grpc {
       ViInt32* int32_array = reinterpret_cast<ViInt32*>(response->mutable_int32_array()->mutable_data());
       auto status = library_->GetViInt32Array(vi, array_len, int32_array);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(status, vi);
+        return ConvertApiErrorStatusForViSession(context, status, vi);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1223,7 +1223,7 @@ namespace nifake_grpc {
       ViUInt32* u_int32_array = reinterpret_cast<ViUInt32*>(response->mutable_u_int32_array()->mutable_data());
       auto status = library_->GetViUInt32Array(vi, array_len, u_int32_array);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(status, vi);
+        return ConvertApiErrorStatusForViSession(context, status, vi);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1246,7 +1246,7 @@ namespace nifake_grpc {
       ViUInt8 a_uint8_number {};
       auto status = library_->GetViUInt8(vi, &a_uint8_number);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(status, vi);
+        return ConvertApiErrorStatusForViSession(context, status, vi);
       }
       response->set_status(status);
       response->set_a_uint8_number(a_uint8_number);
@@ -1271,7 +1271,7 @@ namespace nifake_grpc {
       ViInt8* configuration = (ViInt8*)request->configuration().c_str();
       auto status = library_->ImportAttributeConfigurationBuffer(vi, size_in_bytes, configuration);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(status, vi);
+        return ConvertApiErrorStatusForViSession(context, status, vi);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1302,7 +1302,7 @@ namespace nifake_grpc {
       auto cleanup_lambda = [&] (ViSession id) { library_->CloseExtCal(id, 0); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(status, 0);
+        return ConvertApiErrorStatusForViSession(context, status, 0);
       }
       response->set_status(status);
       response->mutable_vi()->set_id(session_id);
@@ -1339,7 +1339,7 @@ namespace nifake_grpc {
       auto cleanup_lambda = [&] (ViSession id) { library_->close(id); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(status, 0);
+        return ConvertApiErrorStatusForViSession(context, status, 0);
       }
       response->set_status(status);
       response->mutable_vi()->set_id(session_id);
@@ -1393,7 +1393,7 @@ namespace nifake_grpc {
       auto cleanup_lambda = [&] (ViSession id) { library_->close(id); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(status, 0);
+        return ConvertApiErrorStatusForViSession(context, status, 0);
       }
       response->set_status(status);
       response->mutable_vi()->set_id(session_id);
@@ -1444,7 +1444,7 @@ namespace nifake_grpc {
       ViReal64* output_array_of_fixed_length = response->mutable_output_array_of_fixed_length()->mutable_data();
       auto status = library_->MultipleArrayTypes(vi, output_array_size, output_array, output_array_of_fixed_length, input_array_sizes, input_array_of_floats, input_array_of_integers.data());
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(status, vi);
+        return ConvertApiErrorStatusForViSession(context, status, vi);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1484,7 +1484,7 @@ namespace nifake_grpc {
 
       auto status = library_->MultipleArraysSameSize(vi, values1, values2, values3, values4, size);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(status, vi);
+        return ConvertApiErrorStatusForViSession(context, status, vi);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1534,7 +1534,7 @@ namespace nifake_grpc {
 
       auto status = library_->MultipleArraysSameSizeWithOptional(vi, values1, values2, values3, values4, values5.data(), size);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(status, vi);
+        return ConvertApiErrorStatusForViSession(context, status, vi);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1557,7 +1557,7 @@ namespace nifake_grpc {
       ViInt32 a_number = request->a_number();
       auto status = library_->OneInputFunction(vi, a_number);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(status, vi);
+        return ConvertApiErrorStatusForViSession(context, status, vi);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1621,7 +1621,7 @@ namespace nifake_grpc {
       auto a_string = request->a_string().c_str();
       auto status = library_->ParametersAreMultipleTypes(vi, a_boolean, an_int32, an_int64, an_int_enum, a_float, a_float_enum, string_size, a_string);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(status, vi);
+        return ConvertApiErrorStatusForViSession(context, status, vi);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1643,7 +1643,7 @@ namespace nifake_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->PoorlyNamedSimpleFunction(vi);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(status, vi);
+        return ConvertApiErrorStatusForViSession(context, status, vi);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1667,7 +1667,7 @@ namespace nifake_grpc {
       ViReal64 reading {};
       auto status = library_->Read(vi, maximum_time, &reading);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(status, vi);
+        return ConvertApiErrorStatusForViSession(context, status, vi);
       }
       response->set_status(status);
       response->set_reading(reading);
@@ -1690,7 +1690,7 @@ namespace nifake_grpc {
       while (true) {
         auto status = library_->ReadDataWithInOutIviTwist(nullptr, &buffer_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForViSession(status, 0);
+          return ConvertApiErrorStatusForViSession(context, status, 0);
         }
         response->mutable_data()->Resize(buffer_size, 0);
         ViInt32* data = reinterpret_cast<ViInt32*>(response->mutable_data()->mutable_data());
@@ -1700,7 +1700,7 @@ namespace nifake_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForViSession(status, 0);
+          return ConvertApiErrorStatusForViSession(context, status, 0);
         }
         response->set_status(status);
         response->mutable_data()->Resize(buffer_size, 0);
@@ -1726,7 +1726,7 @@ namespace nifake_grpc {
       while (true) {
         auto status = library_->ReadDataWithMultipleIviTwistParamSets(0, nullptr, &actual_size, 0, nullptr, &other_actual_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForViSession(status, 0);
+          return ConvertApiErrorStatusForViSession(context, status, 0);
         }
         response->mutable_array_out()->Resize(actual_size, 0);
         ViInt32* array_out = reinterpret_cast<ViInt32*>(response->mutable_array_out()->mutable_data());
@@ -1740,7 +1740,7 @@ namespace nifake_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForViSession(status, 0);
+          return ConvertApiErrorStatusForViSession(context, status, 0);
         }
         response->set_status(status);
         response->mutable_array_out()->Resize(actual_size, 0);
@@ -1770,7 +1770,7 @@ namespace nifake_grpc {
       ViReal64 reading {};
       auto status = library_->ReadFromChannel(vi, channel_name, maximum_time, &reading);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(status, vi);
+        return ConvertApiErrorStatusForViSession(context, status, vi);
       }
       response->set_status(status);
       response->set_reading(reading);
@@ -1795,7 +1795,7 @@ namespace nifake_grpc {
       std::string a_string(256 - 1, '\0');
       auto status = library_->ReturnANumberAndAString(vi, &a_number, (ViChar*)a_string.data());
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(status, vi);
+        return ConvertApiErrorStatusForViSession(context, status, vi);
       }
       response->set_status(status);
       response->set_a_number(a_number);
@@ -1821,7 +1821,7 @@ namespace nifake_grpc {
       ViReal64 timedelta {};
       auto status = library_->ReturnDurationInSeconds(vi, &timedelta);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(status, vi);
+        return ConvertApiErrorStatusForViSession(context, status, vi);
       }
       response->set_status(status);
       response->set_timedelta(timedelta);
@@ -1847,7 +1847,7 @@ namespace nifake_grpc {
       ViReal64* timedeltas = response->mutable_timedeltas()->mutable_data();
       auto status = library_->ReturnListOfDurationsInSeconds(vi, number_of_elements, timedeltas);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(status, vi);
+        return ConvertApiErrorStatusForViSession(context, status, vi);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1872,7 +1872,7 @@ namespace nifake_grpc {
       while (true) {
         auto status = library_->ReturnMultipleTypes(vi, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, 0, nullptr, 0, nullptr);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForViSession(status, vi);
+          return ConvertApiErrorStatusForViSession(context, status, vi);
         }
         ViInt32 string_size = status;
 
@@ -1894,7 +1894,7 @@ namespace nifake_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForViSession(status, vi);
+          return ConvertApiErrorStatusForViSession(context, status, vi);
         }
         response->set_status(status);
         response->set_a_boolean(a_boolean);
@@ -1931,7 +1931,7 @@ namespace nifake_grpc {
       auto cs = convert_from_grpc<CustomStruct>(request->cs());
       auto status = library_->SetCustomType(vi, cs);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(status, vi);
+        return ConvertApiErrorStatusForViSession(context, status, vi);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1955,7 +1955,7 @@ namespace nifake_grpc {
       auto cs = convert_from_grpc<CustomStruct>(request->cs());
       auto status = library_->SetCustomTypeArray(vi, number_of_elements, cs.data());
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(status, vi);
+        return ConvertApiErrorStatusForViSession(context, status, vi);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1997,7 +1997,7 @@ namespace nifake_grpc {
 
       auto status = library_->StringValuedEnumInputFunctionWithDefaults(vi, a_mobile_os_name);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(status, vi);
+        return ConvertApiErrorStatusForViSession(context, status, vi);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -2021,7 +2021,7 @@ namespace nifake_grpc {
       ViString a_string = (ViString)request->a_string().c_str();
       auto status = library_->TwoInputFunction(vi, a_number, a_string);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(status, vi);
+        return ConvertApiErrorStatusForViSession(context, status, vi);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -2045,7 +2045,7 @@ namespace nifake_grpc {
       ViInt64 output {};
       auto status = library_->Use64BitNumber(vi, input, &output);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(status, vi);
+        return ConvertApiErrorStatusForViSession(context, status, vi);
       }
       response->set_status(status);
       response->set_output(output);
@@ -2077,7 +2077,7 @@ namespace nifake_grpc {
       ViInt32 array_size = static_cast<ViInt32>(request->array_lengths().size());
       auto status = library_->UseATwoDimensionParameter(vi, array, array_lengths, array_size);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(status, vi);
+        return ConvertApiErrorStatusForViSession(context, status, vi);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -2107,7 +2107,7 @@ namespace nifake_grpc {
         [](auto x) { return (ViInt16)x; }); 
       auto status = library_->ViInt16ArrayInputFunction(vi, number_of_elements, an_array.data());
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(status, vi);
+        return ConvertApiErrorStatusForViSession(context, status, vi);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -2131,7 +2131,7 @@ namespace nifake_grpc {
       ViUInt8* an_array = (ViUInt8*)request->an_array().c_str();
       auto status = library_->ViUInt8ArrayInputFunction(vi, number_of_elements, an_array);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(status, vi);
+        return ConvertApiErrorStatusForViSession(context, status, vi);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -2155,7 +2155,7 @@ namespace nifake_grpc {
       std::string an_array(number_of_elements, '\0');
       auto status = library_->ViUInt8ArrayOutputFunction(vi, number_of_elements, (ViUInt8*)an_array.data());
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(status, vi);
+        return ConvertApiErrorStatusForViSession(context, status, vi);
       }
       response->set_status(status);
       response->set_an_array(an_array);
@@ -2180,7 +2180,7 @@ namespace nifake_grpc {
       auto waveform = const_cast<ViReal64*>(request->waveform().data());
       auto status = library_->WriteWaveform(vi, number_of_samples, waveform);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(status, vi);
+        return ConvertApiErrorStatusForViSession(context, status, vi);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -2203,7 +2203,7 @@ namespace nifake_grpc {
       session_repository_->remove_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->close(vi);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(status, vi);
+        return ConvertApiErrorStatusForViSession(context, status, vi);
       }
       response->set_status(status);
       return ::grpc::Status::OK;

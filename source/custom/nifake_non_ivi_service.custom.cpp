@@ -51,18 +51,18 @@ namespace nifake_non_ivi_grpc {
       request->stop());
 }
 
-::grpc::Status NiFakeNonIviService::ConvertApiErrorStatusForFakeHandle(google::protobuf::int32 status, FakeHandle handle)
+::grpc::Status NiFakeNonIviService::ConvertApiErrorStatusForFakeHandle(::grpc::ServerContext* context, int32_t status, FakeHandle handle)
 {
   std::string description(nidevice_grpc::kMaxGrpcErrorDescriptionSize, '\0');
   library_->GetLatestErrorMessage(&description[0], nidevice_grpc::kMaxGrpcErrorDescriptionSize);
-  return nidevice_grpc::ApiErrorAndDescriptionToStatus(status, description);
+  return nidevice_grpc::ApiErrorAndDescriptionToStatus(context, status, description);
 }
 
-::grpc::Status NiFakeNonIviService::ConvertApiErrorStatusForSecondarySessionHandle(google::protobuf::int32 status, SecondarySessionHandle handle)
+::grpc::Status NiFakeNonIviService::ConvertApiErrorStatusForSecondarySessionHandle(::grpc::ServerContext* context, int32_t status, SecondarySessionHandle handle)
 {
   std::string description(nidevice_grpc::kMaxGrpcErrorDescriptionSize, '\0');
   library_->GetLatestErrorMessage(&description[0], nidevice_grpc::kMaxGrpcErrorDescriptionSize);
-  return nidevice_grpc::ApiErrorAndDescriptionToStatus(status, description);
+  return nidevice_grpc::ApiErrorAndDescriptionToStatus(context, status, description);
 }
 
 }  // namespace nifake_non_ivi_grpc

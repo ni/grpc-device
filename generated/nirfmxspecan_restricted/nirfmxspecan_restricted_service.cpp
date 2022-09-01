@@ -62,7 +62,7 @@ namespace nirfmxspecan_restricted_grpc {
       }
       auto status = library_->CacheResult(instrument, selector_string, selector_string_out_size, (char*)selector_string_out.data());
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       response->set_selector_string_out(selector_string_out);
@@ -95,7 +95,7 @@ namespace nirfmxspecan_restricted_grpc {
       while (true) {
         auto status = library_->IQFetchDataOverrideBehavior(instrument, selector_string, timeout, record_to_fetch, samples_to_read, delete_on_fetch, &t0, &dt, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         std::vector<NIComplexSingle> data(actual_array_size, NIComplexSingle());
         auto array_size = actual_array_size;
@@ -105,7 +105,7 @@ namespace nirfmxspecan_restricted_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->set_t0(t0);
