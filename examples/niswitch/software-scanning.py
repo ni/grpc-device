@@ -110,7 +110,8 @@ try:
     )
 
     # Initiate scanning
-    niswitch_client.InitiateScan(niswitch_types.InitiateScanRequest(vi=vi))
+    initiate_scan_response = niswitch_client.InitiateScan(niswitch_types.InitiateScanRequest(vi=vi))
+    check_for_warning(initiate_scan_response, vi)
     print("Scanning initiated...")
 
     # Send software trigger to module in a loop
@@ -139,6 +140,6 @@ except grpc.RpcError as rpc_error:
     print(f"{error_message}")
 
 finally:
+    # Close the session.
     if "vi" in vars() and vi.id != 0:
-        # close the session.
         niswitch_client.Close(niswitch_types.CloseRequest(vi=vi))

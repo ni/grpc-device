@@ -58,15 +58,6 @@ nitclk_client = grpc_nitclk.NiTClkStub(channel)
 sessions = []
 
 
-def check_for_fgen_warning(response, vi):
-    """Print to console if the status indicates a warning."""
-    if response.status > 0:
-        warning_message = nifgen_client.ErrorHandler(
-            nifgen_types.ErrorHandlerRequest(vi=vi, error_code=response.status)
-        )
-        sys.stderr.write(f"{warning_message.error_message}\nWarning status: {response.status}\n")
-
-
 def check_for_tclk_warning(response):
     """Print to console if the status indicates a warning."""
     if response.status > 0:

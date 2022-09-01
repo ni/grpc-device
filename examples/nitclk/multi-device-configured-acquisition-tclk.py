@@ -99,7 +99,7 @@ def check_for_tclk_warning(response):
 
 
 try:
-    # Initialize the session
+    # Initialize the sessions
     for i, resource in enumerate(RESOURCES, start=1):
         init_result = niscope_client.InitWithOptions(
             niscope_types.InitWithOptionsRequest(

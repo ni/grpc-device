@@ -61,15 +61,6 @@ channel = grpc.insecure_channel(f"{SERVER_ADDRESS}:{SERVER_PORT}")
 niswitch_client = grpc_niswitch.NiSwitchStub(channel)
 
 
-def check_for_warning(response, vi):
-    """Print to console if the status indicates a warning."""
-    if response.status > 0:
-        warning_message = niswitch_client.ErrorMessage(
-            niswitch_types.ErrorMessageRequest(vi=vi, error_code=response.status)
-        )
-        sys.stderr.write(f"{warning_message.error_message}\nWarning status: {response.status}\n")
-
-
 try:
     # Open session to NI-SWITCH and set topology.
     init_with_topology_response = niswitch_client.InitWithTopology(
@@ -115,6 +106,6 @@ except grpc.RpcError as rpc_error:
     print(f"{error_message}")
 
 finally:
+    # Close the session.
     if "vi" in vars() and vi.id != 0:
-        # close the session.
         niswitch_client.Close(niswitch_types.CloseRequest(vi=vi))
