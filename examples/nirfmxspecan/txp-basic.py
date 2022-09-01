@@ -64,99 +64,88 @@ client = grpc_nirfmxspecan.NiRFmxSpecAnStub(channel)
 instr = None
 
 
-def raise_if_initialization_error(response):
-    """Raise an exception if an error was returned from Initialize."""
-    if response.status < 0:
-        raise RuntimeError(f"Error: {response.error_message or response.status}")
+def check_for_warning(response, instrument):
+    """Print to console if the status indicates a warning."""
     if response.status > 0:
-        sys.stderr.write(f"Warning: {response.error_message or response.status}\n")
-    return response
-
-
-def raise_if_error(response):
-    """Raise an exception if an error was returned."""
-    if response.status != 0:
-        error_response = client.GetError(
-            nirfmxspecan_types.GetErrorRequest(
-                instrument=instr,
+        warning_message = client.GetErrorString(
+            nirfmxspecan_types.GetErrorStringRequest(
+                instrument=instrument,
+                error_code=response.status,
             )
         )
-        if response.status < 0:
-            raise RuntimeError(f"Error: {error_response.error_description or response.status}")
-        else:
-            sys.stderr.write(f"Warning: {error_response.error_description or response.status}\n")
-
-    return response
+        sys.stderr.write(
+            f"{warning_message.error_description}\nWarning status: {response.status}\n"
+        )
 
 
 try:
-    initialize_response = raise_if_initialization_error(
-        client.Initialize(
-            nirfmxspecan_types.InitializeRequest(
-                session_name=SESSION_NAME, resource_name=RESOURCE, option_string=OPTIONS
-            )
+    initialize_response = client.Initialize(
+        nirfmxspecan_types.InitializeRequest(
+            session_name=SESSION_NAME,
+            resource_name=RESOURCE,
+            option_string=OPTIONS,
         )
     )
     instr = initialize_response.instrument
 
-    raise_if_error(
-        client.SetAttributeString(
-            nirfmxspecan_types.SetAttributeStringRequest(
-                instrument=instr,
-                selector_string="",
-                attribute_id=nirfmxspecan_types.NIRFMXSPECAN_ATTRIBUTE_SELECTED_PORTS,
-                attr_val_raw="",
-            )
+    client.SetAttributeString(
+        nirfmxspecan_types.SetAttributeStringRequest(
+            instrument=instr,
+            selector_string="",
+            attribute_id=nirfmxspecan_types.NIRFMXSPECAN_ATTRIBUTE_SELECTED_PORTS,
+            attr_val_raw="",
         )
     )
-    raise_if_error(
-        client.CfgRF(
-            nirfmxspecan_types.CfgRFRequest(
-                instrument=instr,
-                selector_string="",
-                center_frequency=1e9,
-                reference_level=0.00,
-                external_attenuation=0.00,
-            )
+
+    client.CfgRF(
+        nirfmxspecan_types.CfgRFRequest(
+            instrument=instr,
+            selector_string="",
+            center_frequency=1e9,
+            reference_level=0.00,
+            external_attenuation=0.00,
         )
     )
-    raise_if_error(
-        client.TXPCfgMeasurementInterval(
-            nirfmxspecan_types.TXPCfgMeasurementIntervalRequest(
-                instrument=instr, selector_string="", measurement_interval=1e-3
-            )
+
+    client.TXPCfgMeasurementInterval(
+        nirfmxspecan_types.TXPCfgMeasurementIntervalRequest(
+            instrument=instr,
+            selector_string="",
+            measurement_interval=1e-3,
         )
     )
-    raise_if_error(
-        client.TXPCfgRBWFilter(
-            nirfmxspecan_types.TXPCfgRBWFilterRequest(
-                instrument=instr,
-                selector_string="",
-                rbw=100e3,
-                rbw_filter_type=nirfmxspecan_types.TXP_RBW_FILTER_TYPE_GAUSSIAN,
-                rrc_alpha=0.1,
-            )
+
+    client.TXPCfgRBWFilter(
+        nirfmxspecan_types.TXPCfgRBWFilterRequest(
+            instrument=instr,
+            selector_string="",
+            rbw=100e3,
+            rbw_filter_type=nirfmxspecan_types.TXP_RBW_FILTER_TYPE_GAUSSIAN,
+            rrc_alpha=0.1,
         )
     )
-    raise_if_error(
-        client.TXPCfgAveraging(
-            nirfmxspecan_types.TXPCfgAveragingRequest(
-                instrument=instr,
-                selector_string="",
-                averaging_enabled=nirfmxspecan_types.TXP_AVERAGING_ENABLED_FALSE,
-                averaging_count=10,
-                averaging_type=nirfmxspecan_types.TXP_AVERAGING_TYPE_RMS,
-            )
+
+    client.TXPCfgAveraging(
+        nirfmxspecan_types.TXPCfgAveragingRequest(
+            instrument=instr,
+            selector_string="",
+            averaging_enabled=nirfmxspecan_types.TXP_AVERAGING_ENABLED_FALSE,
+            averaging_count=10,
+            averaging_type=nirfmxspecan_types.TXP_AVERAGING_TYPE_RMS,
         )
     )
 
     ### Fetch measurement data ###
 
-    txp_read_response = raise_if_error(
-        client.TXPRead(
-            nirfmxspecan_types.TXPReadRequest(instrument=instr, selector_string="", timeout=10.0)
+    txp_read_response = client.TXPRead(
+        nirfmxspecan_types.TXPReadRequest(
+            instrument=instr,
+            selector_string="",
+            timeout=10.0,
         )
     )
+    check_for_warning(txp_read_response, instr)
+
     minimum_power = txp_read_response.minimum_power
     maximum_power = txp_read_response.maximum_power
     peak_to_average_ratio = txp_read_response.peak_to_average_ratio
@@ -168,6 +157,9 @@ try:
     print(f"Minimum Power(dBm)         {minimum_power}")
 except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
+    for metadatum in rpc_error.trailing_metadata() or []:
+        if metadatum.key == "ni-error":
+            error_message += f"\nError status: {metadatum.value.decode('utf-8')}"
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
         error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"
     elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
