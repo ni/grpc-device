@@ -180,8 +180,12 @@ FeatureToggles::CodeReadiness ServerConfigurationParser::parse_code_readiness() 
       using ReadinessMap = std::unordered_map<std::string, FeatureToggles::CodeReadiness>;
       const auto READINESS_MAP = ReadinessMap{
           {"release", FeatureToggles::CodeReadiness::kRelease},
+          {"restrictedrelease", FeatureToggles::CodeReadiness::kRestrictedRelease},
+          {"restricted_release", FeatureToggles::CodeReadiness::kRestrictedRelease},
           {"nextrelease", FeatureToggles::CodeReadiness::kNextRelease},
           {"next_release", FeatureToggles::CodeReadiness::kNextRelease},
+          {"restrictednextrelease", FeatureToggles::CodeReadiness::kRestrictedNextRelease},
+          {"restricted_next_release", FeatureToggles::CodeReadiness::kRestrictedNextRelease},
           {"incomplete", FeatureToggles::CodeReadiness::kIncomplete},
           {"prototype", FeatureToggles::CodeReadiness::kPrototype}};
 
