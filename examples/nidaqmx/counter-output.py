@@ -51,6 +51,14 @@ task = None
 
 
 try:
+    def check_for_warning(response):
+        """Print to console if the status indicates a warning."""
+        if response.status > 0:
+            warning_message = client.GetErrorStringResponse(
+                nidaqmx_types.ErrorMessageRequest(error_code=response.status)
+            )
+            sys.stderr.write(f"{warning_message.error_message}\nWarning status: {response.status}\n")
+
     response = client.CreateTask(nidaqmx_types.CreateTaskRequest(session_name="my task"))
     task = response.task
 
@@ -66,7 +74,8 @@ try:
         )
     )
 
-    client.StartTask(nidaqmx_types.StartTaskRequest(task=task))
+    start_task_response = client.StartTask(nidaqmx_types.StartTaskRequest(task=task))
+    check_for_warning(start_task_response)
 
     client.WaitUntilTaskDone(
         nidaqmx_types.WaitUntilTaskDoneRequest(task=task, time_to_wait=10.0)

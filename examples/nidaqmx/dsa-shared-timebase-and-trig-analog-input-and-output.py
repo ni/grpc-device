@@ -116,6 +116,14 @@ async def _main():
     num_follower_samples_written = 0
     async with grpc.aio.insecure_channel(f"{SERVER_ADDRESS}:{SERVER_PORT}") as channel:
         try:
+            def check_for_warning(response):
+                """Print to console if the status indicates a warning."""
+                if response.status > 0:
+                    warning_message = client.GetErrorStringResponse(
+                        nidaqmx_types.ErrorMessageRequest(error_code=response.status)
+                    )
+                    sys.stderr.write(f"{warning_message.error_message}\nWarning status: {response.status}\n")
+
             client = grpc_nidaqmx.NiDAQmxStub(channel)
 
             async def get_terminal_name_with_dev_prefix(task, terminal_name):
@@ -369,7 +377,7 @@ async def _main():
 
             # DAQmx Write code
             num_leader_samples_written = (
-                await client.WriteAnalogF64(
+                write_response: await client.WriteAnalogF64(
                     nidaqmx_types.WriteAnalogF64Request(
                         task=leader_output_task,
                         num_samps_per_chan=250,
@@ -380,8 +388,9 @@ async def _main():
                     )
                 )
             ).samps_per_chan_written
+            check_for_warning(write_response)
             num_follower_samples_written = (
-                await client.WriteAnalogF64(
+                write_response: await client.WriteAnalogF64(
                     nidaqmx_types.WriteAnalogF64Request(
                         task=follower_output_task,
                         num_samps_per_chan=250,
@@ -392,6 +401,7 @@ async def _main():
                     )
                 )
             ).samps_per_chan_written
+            check_for_warning(write_response)
 
             every_n_samples_stream = client.RegisterEveryNSamplesEvent(
                 nidaqmx_types.RegisterEveryNSamplesEventRequest(
@@ -430,11 +440,15 @@ async def _main():
                 await done_event_stream.initial_metadata()
 
             # DAQmx Start code
-            await client.StartTask(nidaqmx_types.StartTaskRequest(task=leader_output_task))
-            await client.StartTask(nidaqmx_types.StartTaskRequest(task=follower_input_task))
-            await client.StartTask(nidaqmx_types.StartTaskRequest(task=follower_output_task))
+            start_task_response = await client.StartTask(nidaqmx_types.StartTaskRequest(task=leader_output_task))
+            check_for_warning(start_task_response)
+            start_task_response = await client.StartTask(nidaqmx_types.StartTaskRequest(task=follower_input_task))
+            check_for_warning(start_task_response)
+            start_task_response = await client.StartTask(nidaqmx_types.StartTaskRequest(task=follower_output_task))
+            check_for_warning(start_task_response)
             # trigger task must be started last
-            await client.StartTask(nidaqmx_types.StartTaskRequest(task=leader_input_task))
+            start_task_response = await client.StartTask(nidaqmx_types.StartTaskRequest(task=leader_input_task))
+            check_for_warning(start_task_response)
 
             async def read_data():
                 nonlocal num_leader_samples_written, num_follower_samples_written
@@ -450,6 +464,7 @@ async def _main():
                             )
                         )
                     )
+                    check_for_warning(leader_response)
                     num_leader_samples_written += leader_response.samps_per_chan_read
                     follower_response: nidaqmx_types.ReadAnalogF64Response = (
                         await client.ReadAnalogF64(
@@ -463,6 +478,7 @@ async def _main():
                         )
                     )
                     num_follower_samples_written += follower_response.samps_per_chan_read
+                    check_for_warning(follower_response)
 
                     print(
                         f"\t{leader_response.samps_per_chan_read}\t{follower_response.samps_per_chan_read}\t\t{num_leader_samples_written}\t{num_follower_samples_written}"

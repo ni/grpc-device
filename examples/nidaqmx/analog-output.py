@@ -51,6 +51,14 @@ task = None
 
 
 try:
+    def check_for_warning(response):
+        """Print to console if the status indicates a warning."""
+        if response.status > 0:
+            warning_message = client.GetErrorStringResponse(
+                nidaqmx_types.ErrorMessageRequest(error_code=response.status)
+            )
+            sys.stderr.write(f"{warning_message.error_message}\nWarning status: {response.status}\n")
+
     response = client.CreateTask(nidaqmx_types.CreateTaskRequest(session_name="my task"))
     task = response.task
 
@@ -64,9 +72,10 @@ try:
         )
     )
 
-    client.StartTask(nidaqmx_types.StartTaskRequest(task=task))
+    start_task_response = client.StartTask(nidaqmx_types.StartTaskRequest(task=task))
+    check_for_warning(start_task_response)
 
-    client.WriteAnalogF64(
+    write_response: client.WriteAnalogF64(
         nidaqmx_types.WriteAnalogF64Request(
             task=task,
             num_samps_per_chan=1,
@@ -75,6 +84,7 @@ try:
             timeout=10.0,
         )
     )
+    check_for_warning(write_response)
 
     print(f"Output was successfully written to {PHYSICAL_CHANNEL}.")
 except grpc.RpcError as rpc_error:

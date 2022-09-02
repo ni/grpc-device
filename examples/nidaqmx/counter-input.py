@@ -51,6 +51,14 @@ task = None
 
 
 try:
+    def check_for_warning(response):
+        """Print to console if the status indicates a warning."""
+        if response.status > 0:
+            warning_message = client.GetErrorStringResponse(
+                nidaqmx_types.ErrorMessageRequest(error_code=response.status)
+            )
+            sys.stderr.write(f"{warning_message.error_message}\nWarning status: {response.status}\n")
+
     response = client.CreateTask(nidaqmx_types.CreateTaskRequest(session_name="my task"))
     task = response.task
 
@@ -68,11 +76,13 @@ try:
         )
     )
 
-    client.StartTask(nidaqmx_types.StartTaskRequest(task=task))
+    start_task_response = client.StartTask(nidaqmx_types.StartTaskRequest(task=task))
+    check_for_warning(start_task_response)
 
     response = client.ReadCounterScalarF64(
         nidaqmx_types.ReadCounterScalarF64Request(task=task, timeout=10.0)
     )
+    check_for_warning(response)
     print(f"Frequency: {response.value} Hz")
 except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()

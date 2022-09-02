@@ -55,6 +55,14 @@ async def _main():
         try:
             client = grpc_nidaqmx.NiDAQmxStub(channel)
 
+            def check_for_warning(response):
+                """Print to console if the status indicates a warning."""
+                if response.status > 0:
+                    warning_message = client.GetErrorStringResponse(
+                        nidaqmx_types.ErrorMessageRequest(error_code=response.status)
+                    )
+                    sys.stderr.write(f"{warning_message.error_message}\nWarning status: {response.status}\n")
+
             create_response: nidaqmx_types.CreateTaskResponse = client.CreateTask(nidaqmx_types.CreateTaskRequest())
             task = create_response.task
 
@@ -99,7 +107,8 @@ async def _main():
 
             await done_event_stream.initial_metadata()
 
-            await client.StartTask(nidaqmx_types.StartTaskRequest(task=task))
+            start_task_response = await client.StartTask(nidaqmx_types.StartTaskRequest(task=task))
+            check_for_warning(start_task_response)
 
             response = await client.GetTaskAttributeUInt32(
                 nidaqmx_types.GetTaskAttributeUInt32Request(
@@ -124,6 +133,7 @@ async def _main():
                                     * samples_per_channel_per_read,
                                 )
                             )
+                        check_for_warning(read_response)
 
                         print(
                             f"Acquired {len(read_response.read_array)} samples",

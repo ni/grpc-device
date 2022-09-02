@@ -51,6 +51,14 @@ task = None
 
 
 try:
+    def check_for_warning(response):
+        """Print to console if the status indicates a warning."""
+        if response.status > 0:
+            warning_message = client.GetErrorStringResponse(
+                nidaqmx_types.ErrorMessageRequest(error_code=response.status)
+            )
+            sys.stderr.write(f"{warning_message.error_message}\nWarning status: {response.status}\n")
+
     response = client.CreateTask(nidaqmx_types.CreateTaskRequest(session_name="my task"))
     task = response.task
 
@@ -60,9 +68,10 @@ try:
         )
     )
 
-    client.StartTask(nidaqmx_types.StartTaskRequest(task=task))
+    start_task_response = client.StartTask(nidaqmx_types.StartTaskRequest(task=task))
+    check_for_warning(start_task_response)
 
-    client.WriteDigitalU32(
+    response = client.WriteDigitalU32(
         nidaqmx_types.WriteDigitalU32Request(
             task=task,
             num_samps_per_chan=1,
@@ -72,6 +81,7 @@ try:
             write_array=[0xFFFF],
         )
     )
+    check_for_warning(response)
 
     print(f"Output was successfully written to {LINES}.")
 except grpc.RpcError as rpc_error:
