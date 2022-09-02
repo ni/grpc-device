@@ -63,32 +63,26 @@ channel = grpc.insecure_channel(f"{SERVER_ADDRESS}:{SERVER_PORT}")
 nidmm_client = grpc_nidmm.NiDmmStub(channel)
 
 
-def check_for_error(vi, status):
-    """Raise an exception if the status indicates an error."""
-    if status != 0:
-        error_message_response = nidmm_client.ErrorMessage(
-            nidmm_types.ErrorMessageRequest(vi=vi, error_code=status)
-        )
-        raise Exception(error_message_response.error_message)
-
-
-def check_for_initialization_error(response):
-    """Raise an exception if an error was returned from Initialize."""
-    if response.status < 0:
-        raise RuntimeError(f"Error: {response.error_message or response.status}")
+def check_for_warning(response, vi):
+    """Print to console if the status indicates a warning."""
     if response.status > 0:
-        sys.stderr.write(f"Warning: {response.error_message or response.status}\n")
+        warning_message = nidmm_client.GetErrorMessage(
+            nidmm_types.GetErrorMessageRequest(vi=vi, error_code=response.status)
+        )
+        sys.stderr.write(f"{warning_message.error_message}\nWarning status: {response.status}\n")
 
 
 try:
     # Open session to NI-DMM with options
     init_with_options_response = nidmm_client.InitWithOptions(
         nidmm_types.InitWithOptionsRequest(
-            session_name=SESSION_NAME, resource_name=RESOURCE, id_query=False, option_string=OPTIONS
+            session_name=SESSION_NAME,
+            resource_name=RESOURCE,
+            id_query=False,
+            option_string=OPTIONS,
         )
     )
     vi = init_with_options_response.vi
-    check_for_initialization_error(init_with_options_response)
 
     # Configure measurement
     config_measurement_response = nidmm_client.ConfigureMeasurementDigits(
@@ -99,7 +93,6 @@ try:
             resolution_digits=RESOLUTION,
         )
     )
-    check_for_error(vi, config_measurement_response.status)
 
     # Configure a multipoint acquisition
     config_multipoint_response = nidmm_client.ConfigureMultiPoint(
@@ -111,19 +104,18 @@ try:
             sample_interval_raw=0.0,
         )
     )
-    check_for_error(vi, config_multipoint_response.status)
 
     # Configure powerline frequency
     config_powlinefreq_response = nidmm_client.ConfigurePowerLineFrequency(
         nidmm_types.ConfigurePowerLineFrequencyRequest(
-            vi=vi, power_line_frequency_hz=POWERLINE_FREQ
+            vi=vi,
+            power_line_frequency_hz=POWERLINE_FREQ,
         )
     )
-    check_for_error(vi, config_powlinefreq_response.status)
 
     # Initiate Acquisition
     initiate_acquisition_response = nidmm_client.Initiate(nidmm_types.InitiateRequest(vi=vi))
-    check_for_error(vi, initiate_acquisition_response.status)
+    check_for_warning(initiate_acquisition_response, vi)
 
     # Set while loop control
     stop_measurement = False
@@ -154,7 +146,6 @@ try:
             pts_available = 0
             # Check available data
             read_status_response = nidmm_client.ReadStatus(nidmm_types.ReadStatusRequest(vi=vi))
-            check_for_error(vi, read_status_response.status)
             pts_available = read_status_response.acquisition_backlog
 
             # if there are more than MAX_PTS_TO_READ measurements available, set pts_available to
@@ -170,10 +161,12 @@ try:
                 # Fetch data
                 fetch_multipoints_response = nidmm_client.FetchMultiPoint(
                     nidmm_types.FetchMultiPointRequest(
-                        vi=vi, maximum_time=-1, array_size=pts_available
+                        vi=vi,
+                        maximum_time=-1,
+                        array_size=pts_available,
                     )
                 )
-                check_for_error(vi, fetch_multipoints_response.status)
+                check_for_warning(fetch_multipoints_response, vi)
                 num_pts_read = fetch_multipoints_response.actual_number_of_points
                 measurements = np.array(fetch_multipoints_response.reading_array)
 
@@ -204,6 +197,10 @@ try:
 # If NI-DMM API throws an exception, print the error message
 except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
+    for entry in rpc_error.trailing_metadata() or []:
+        if entry.key == "ni-error":
+            value = entry.value if isinstance(entry.value, str) else entry.value.decode("utf-8")
+            error_message += f"\nError status: {value}"
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
         error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"
     elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
@@ -214,5 +211,4 @@ except grpc.RpcError as rpc_error:
 finally:
     if "vi" in vars() and vi.id != 0:
         # Close NI-DMM session
-        close_session_response = nidmm_client.Close(nidmm_types.CloseRequest(vi=vi))
-        check_for_error(vi, close_session_response.status)
+        nidmm_client.Close(nidmm_types.CloseRequest(vi=vi))

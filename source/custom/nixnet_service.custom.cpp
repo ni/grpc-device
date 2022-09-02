@@ -169,7 +169,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
 
     auto status = library_->ReadState(session, state_id, state_size, const_cast<char*>(response->mutable_state_value()->mutable_state_value_raw()->data()), &fault);
     if (!status_ok(status)) {
-      return ConvertApiErrorStatusForNxSessionRef_t(status, session);
+      return ConvertApiErrorStatusForNxSessionRef_t(context, status, session);
     }
     response->set_status(status);
     void* state_value_raw = (void*)response->state_value().state_value_raw().data();
@@ -308,7 +308,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
     }
     auto status = library_->WriteState(session, state_id, state_size, &state_value);
     if (!status_ok(status)) {
-      return ConvertApiErrorStatusForNxSessionRef_t(status, session);
+      return ConvertApiErrorStatusForNxSessionRef_t(context, status, session);
     }
     response->set_status(status);
     return ::grpc::Status::OK;
@@ -371,7 +371,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
     u32 property_size{};
     auto status = library_->GetPropertySize(session, property_id, &property_size);
     if (!status_ok(status)) {
-      return ConvertApiErrorStatusForNxSessionRef_t(status, session);
+      return ConvertApiErrorStatusForNxSessionRef_t(context, status, session);
     }
 
     switch (property_type_map_[property_id]) {
@@ -379,7 +379,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
         u32 property_value{};
         status = library_->GetProperty(session, property_id, property_size, &property_value);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNxSessionRef_t(status, session);
+          return ConvertApiErrorStatusForNxSessionRef_t(context, status, session);
         }
         response->set_u32_scalar(property_value);
         break;
@@ -388,7 +388,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
         bool property_value{};
         status = library_->GetProperty(session, property_id, property_size, &property_value);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNxSessionRef_t(status, session);
+          return ConvertApiErrorStatusForNxSessionRef_t(context, status, session);
         }
         response->set_bool_scalar(property_value);
         break;
@@ -397,7 +397,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
         u64 property_value{};
         status = library_->GetProperty(session, property_id, property_size, &property_value);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNxSessionRef_t(status, session);
+          return ConvertApiErrorStatusForNxSessionRef_t(context, status, session);
         }
         response->set_u64_scalar(property_value);
         break;
@@ -406,7 +406,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
         i32 property_value{};
         status = library_->GetProperty(session, property_id, property_size, &property_value);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNxSessionRef_t(status, session);
+          return ConvertApiErrorStatusForNxSessionRef_t(context, status, session);
         }
         response->set_i32_scalar(property_value);
         break;
@@ -415,7 +415,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
         f64 property_value{};
         status = library_->GetProperty(session, property_id, property_size, &property_value);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNxSessionRef_t(status, session);
+          return ConvertApiErrorStatusForNxSessionRef_t(context, status, session);
         }
         response->set_f64_scalar(property_value);
         break;
@@ -424,7 +424,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
         std::string property_value(property_size, '\0');
         status = library_->GetProperty(session, property_id, property_size, const_cast<char*>(property_value.c_str()));
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNxSessionRef_t(status, session);
+          return ConvertApiErrorStatusForNxSessionRef_t(context, status, session);
         }
         response->set_str(property_value.c_str());
         break;
@@ -436,7 +436,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
         u32* property_value = reinterpret_cast<u32*>(response->mutable_u32_array()->mutable_u32_array()->mutable_data());
         status = library_->GetProperty(session, property_id, property_size, property_value);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNxSessionRef_t(status, session);
+          return ConvertApiErrorStatusForNxSessionRef_t(context, status, session);
         }
         break;
       }
@@ -450,7 +450,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
         uint32_t session_id = 0;
         status = nx_database_ref_t_resource_repository_->add_dependent_session("", init_lambda, initiating_session_id, session_id);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNxSessionRef_t(status, session);
+          return ConvertApiErrorStatusForNxSessionRef_t(context, status, session);
         }
         response->mutable_db_ref()->set_id(session_id);
         break;
@@ -462,7 +462,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
         nxDatabaseRef_t* property_value = static_cast<nxDatabaseRef_t*>(property_value_vector.data());
         status = library_->GetProperty(session, property_id, property_size, property_value);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNxSessionRef_t(status, session);
+          return ConvertApiErrorStatusForNxSessionRef_t(context, status, session);
         }
         response->mutable_db_ref_array()->mutable_db_ref()->Clear();
         response->mutable_db_ref_array()->mutable_db_ref()->Reserve(number_of_elements);
@@ -494,7 +494,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
         // so it makes sense to tie their lifetime with session's lifetime.
         status = session_repository_->add_dependent_session("", init_lambda, initiating_session_id, session_id);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNxSessionRef_t(status, session);
+          return ConvertApiErrorStatusForNxSessionRef_t(context, status, session);
         }
         response->mutable_dev_ref()->set_id(session_id);
         break;
@@ -506,7 +506,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
         nxSessionRef_t* property_value = property_value_vector.data();
         status = library_->GetProperty(session, property_id, property_size, property_value);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNxSessionRef_t(status, session);
+          return ConvertApiErrorStatusForNxSessionRef_t(context, status, session);
         }
         response->mutable_dev_ref_array()->mutable_dev_ref()->Clear();
         response->mutable_dev_ref_array()->mutable_dev_ref()->Reserve(number_of_elements);
@@ -535,7 +535,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
         nxSessionRef_t* property_value = property_value_vector.data();
         status = library_->GetProperty(session, property_id, property_size, property_value);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNxSessionRef_t(status, session);
+          return ConvertApiErrorStatusForNxSessionRef_t(context, status, session);
         }
         response->mutable_intf_ref_array()->mutable_intf_ref()->Clear();
         response->mutable_intf_ref_array()->mutable_intf_ref()->Reserve(number_of_elements);
@@ -563,7 +563,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
         nxEptRxFilter_Element_t* property_value = static_cast<nxEptRxFilter_Element_t*>(property_value_vector.data());
         status = library_->GetProperty(session, property_id, property_size, &property_value);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNxSessionRef_t(status, session);
+          return ConvertApiErrorStatusForNxSessionRef_t(context, status, session);
         }
         convert_to_grpc(property_value_vector, response->mutable_ept_rx_filter_array()->mutable_ept_rx_filter());
         break;
@@ -612,7 +612,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
     u32 property_size{};
     auto status = library_->GetSubPropertySize(session, active_index, property_id, &property_size);
     if (!status_ok(status)) {
-      return ConvertApiErrorStatusForNxSessionRef_t(status, session);
+      return ConvertApiErrorStatusForNxSessionRef_t(context, status, session);
     }
 
     switch (subproperty_type_map_[property_id]) {
@@ -620,7 +620,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
         u32 property_value{};
         status = library_->GetSubProperty(session, active_index, property_id, property_size, &property_value);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNxSessionRef_t(status, session);
+          return ConvertApiErrorStatusForNxSessionRef_t(context, status, session);
         }
         response->set_u32_scalar(property_value);
         break;
@@ -629,7 +629,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
         f64 property_value{};
         status = library_->GetSubProperty(session, active_index, property_id, property_size, &property_value);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNxSessionRef_t(status, session);
+          return ConvertApiErrorStatusForNxSessionRef_t(context, status, session);
         }
         response->set_f64_scalar(property_value);
         break;
@@ -638,7 +638,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
         std::string property_value(property_size, '\0');
         status = library_->GetSubProperty(session, active_index, property_id, property_size, const_cast<char*>(property_value.c_str()));
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNxSessionRef_t(status, session);
+          return ConvertApiErrorStatusForNxSessionRef_t(context, status, session);
         }
         response->set_str(property_value.c_str());
         break;
@@ -686,7 +686,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
     u32 property_size{};
     auto status = library_->DbGetPropertySize(dbobject, property_id, &property_size);
     if (!status_ok(status)) {
-      return ConvertApiErrorStatusForNxDatabaseRef_t(status, dbobject);
+      return ConvertApiErrorStatusForNxDatabaseRef_t(context, status, dbobject);
     }
 
     switch (dbproperty_type_map_[property_id]) {
@@ -694,7 +694,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
         u32 property_value{};
         status = library_->DbGetProperty(dbobject, property_id, property_size, &property_value);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNxDatabaseRef_t(status, dbobject);
+          return ConvertApiErrorStatusForNxDatabaseRef_t(context, status, dbobject);
         }
         response->set_u32_scalar(property_value);
         break;
@@ -703,7 +703,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
         bool property_value{};
         status = library_->DbGetProperty(dbobject, property_id, property_size, &property_value);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNxDatabaseRef_t(status, dbobject);
+          return ConvertApiErrorStatusForNxDatabaseRef_t(context, status, dbobject);
         }
         response->set_bool_scalar(property_value);
         break;
@@ -712,7 +712,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
         u64 property_value{};
         status = library_->DbGetProperty(dbobject, property_id, property_size, &property_value);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNxDatabaseRef_t(status, dbobject);
+          return ConvertApiErrorStatusForNxDatabaseRef_t(context, status, dbobject);
         }
         response->set_u64_scalar(property_value);
         break;
@@ -721,7 +721,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
         f64 property_value{};
         status = library_->DbGetProperty(dbobject, property_id, property_size, &property_value);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNxDatabaseRef_t(status, dbobject);
+          return ConvertApiErrorStatusForNxDatabaseRef_t(context, status, dbobject);
         }
         response->set_f64_scalar(property_value);
         break;
@@ -730,7 +730,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
         std::string property_value(property_size, '\0');
         status = library_->DbGetProperty(dbobject, property_id, property_size, const_cast<char*>(property_value.c_str()));
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNxDatabaseRef_t(status, dbobject);
+          return ConvertApiErrorStatusForNxDatabaseRef_t(context, status, dbobject);
         }
         response->set_str(property_value.c_str());
         break;
@@ -742,7 +742,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
         u32* property_value = reinterpret_cast<u32*>(response->mutable_u32_array()->mutable_u32_array()->mutable_data());
         status = library_->DbGetProperty(dbobject, property_id, property_size, property_value);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNxDatabaseRef_t(status, dbobject);
+          return ConvertApiErrorStatusForNxDatabaseRef_t(context, status, dbobject);
         }
         break;
       }
@@ -751,7 +751,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
         std::string property_value(number_of_elements, '\0');
         status = library_->DbGetProperty(dbobject, property_id, property_size, (u8*)property_value.data());
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNxDatabaseRef_t(status, dbobject);
+          return ConvertApiErrorStatusForNxDatabaseRef_t(context, status, dbobject);
         }
         response->set_u8_array(property_value);
       }
@@ -765,7 +765,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
         uint32_t session_id = 0;
         status = nx_database_ref_t_resource_repository_->add_dependent_session("", init_lambda, initiating_session_id, session_id);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNxDatabaseRef_t(status, dbobject);
+          return ConvertApiErrorStatusForNxDatabaseRef_t(context, status, dbobject);
         }
         response->mutable_db_ref()->set_id(session_id);
         break;
@@ -777,7 +777,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
         nxDatabaseRef_t* property_value = static_cast<nxDatabaseRef_t*>(property_value_vector.data());
         status = library_->DbGetProperty(dbobject, property_id, property_size, property_value);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNxDatabaseRef_t(status, dbobject);
+          return ConvertApiErrorStatusForNxDatabaseRef_t(context, status, dbobject);
         }
         response->mutable_db_ref_array()->mutable_db_ref()->Clear();
         response->mutable_db_ref_array()->mutable_db_ref()->Reserve(number_of_elements);
@@ -918,7 +918,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
       }
     }
     if (!status_ok(status)) {
-      return ConvertApiErrorStatusForNxSessionRef_t(status, session);
+      return ConvertApiErrorStatusForNxSessionRef_t(context, status, session);
     }
     response->set_status(status);
     return ::grpc::Status::OK;
@@ -982,7 +982,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
       }
     }
     if (!status_ok(status)) {
-      return ConvertApiErrorStatusForNxSessionRef_t(status, session);
+      return ConvertApiErrorStatusForNxSessionRef_t(context, status, session);
     }
     response->set_status(status);
     return ::grpc::Status::OK;
@@ -1086,7 +1086,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
       }
     }
     if (!status_ok(status)) {
-      return ConvertApiErrorStatusForNxDatabaseRef_t(status, dbobject);
+      return ConvertApiErrorStatusForNxDatabaseRef_t(context, status, dbobject);
     }
     response->set_status(status);
     return ::grpc::Status::OK;
@@ -1112,7 +1112,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
     u32 size_of_file_path_buffer{};
     auto status = library_->DbGetDatabaseListSizes(ip_address, &size_of_alias_buffer, &size_of_file_path_buffer);
     if (!status_ok(status)) {
-      return ConvertApiErrorStatusForNxDatabaseRef_t(status, 0);
+      return ConvertApiErrorStatusForNxDatabaseRef_t(context, status, 0);
     }
 
     std::string alias_buffer(size_of_alias_buffer, '\0');
@@ -1121,7 +1121,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
 
     status = library_->DbGetDatabaseList(ip_address, size_of_alias_buffer, const_cast<char*>(alias_buffer.c_str()), size_of_file_path_buffer, const_cast<char*>(file_path_buffer.c_str()), &number_of_databases);
     if (!status_ok(status)) {
-      return ConvertApiErrorStatusForNxDatabaseRef_t(status, 0);
+      return ConvertApiErrorStatusForNxDatabaseRef_t(context, status, 0);
     }
     response->set_status(status);
     response->set_alias_buffer(alias_buffer.c_str());
@@ -1165,7 +1165,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
     u32 attribute_text_size{};
     auto status = library_->DbGetDBCAttributeSize(dbobject, mode, attribute_name, &attribute_text_size);
     if (!status_ok(status)) {
-      return ConvertApiErrorStatusForNxDatabaseRef_t(status, dbobject);
+      return ConvertApiErrorStatusForNxDatabaseRef_t(context, status, dbobject);
     }
 
     std::string attribute_text(attribute_text_size, '\0');
@@ -1173,7 +1173,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
 
     status = library_->DbGetDBCAttribute(dbobject, mode, attribute_name, attribute_text_size, const_cast<char*>(attribute_text.c_str()), &is_default);
     if (!status_ok(status)) {
-      return ConvertApiErrorStatusForNxDatabaseRef_t(status, dbobject);
+      return ConvertApiErrorStatusForNxDatabaseRef_t(context, status, dbobject);
     }
     response->set_status(status);
     response->set_is_default(is_default);
@@ -1185,20 +1185,20 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
   }
 }
 
-::grpc::Status NiXnetService::ConvertApiErrorStatusForNxSessionRef_t(google::protobuf::int32 status, nxSessionRef_t session)
+::grpc::Status NiXnetService::ConvertApiErrorStatusForNxSessionRef_t(::grpc::ServerContext* context, int32_t status, nxSessionRef_t session)
 {
-    static_assert(nidevice_grpc::kMaxGrpcErrorDescriptionSize >= 2048, "StatusToString expects a minimum buffer size.");
-    std::string description(nidevice_grpc::kMaxGrpcErrorDescriptionSize, '\0');
-    library_->StatusToString(status, nidevice_grpc::kMaxGrpcErrorDescriptionSize, &description[0]);
-    return nidevice_grpc::ApiErrorAndDescriptionToStatus(status, description);
+  static_assert(nidevice_grpc::kMaxGrpcErrorDescriptionSize >= 2048, "StatusToString expects a minimum buffer size.");
+  std::string description(nidevice_grpc::kMaxGrpcErrorDescriptionSize, '\0');
+  library_->StatusToString(status, nidevice_grpc::kMaxGrpcErrorDescriptionSize, &description[0]);
+  return nidevice_grpc::ApiErrorAndDescriptionToStatus(context, status, description);
 }
 
-::grpc::Status NiXnetService::ConvertApiErrorStatusForNxDatabaseRef_t(google::protobuf::int32 status, nxDatabaseRef_t session)
+::grpc::Status NiXnetService::ConvertApiErrorStatusForNxDatabaseRef_t(::grpc::ServerContext* context, int32_t status, nxDatabaseRef_t session)
 {
-    static_assert(nidevice_grpc::kMaxGrpcErrorDescriptionSize >= 2048, "StatusToString expects a minimum buffer size.");
-    std::string description(nidevice_grpc::kMaxGrpcErrorDescriptionSize, '\0');
-    library_->StatusToString(status, nidevice_grpc::kMaxGrpcErrorDescriptionSize, &description[0]);
-    return nidevice_grpc::ApiErrorAndDescriptionToStatus(status, description);
+  static_assert(nidevice_grpc::kMaxGrpcErrorDescriptionSize >= 2048, "StatusToString expects a minimum buffer size.");
+  std::string description(nidevice_grpc::kMaxGrpcErrorDescriptionSize, '\0');
+  library_->StatusToString(status, nidevice_grpc::kMaxGrpcErrorDescriptionSize, &description[0]);
+  return nidevice_grpc::ApiErrorAndDescriptionToStatus(context, status, description);
 }
 
 void convert_to_grpc(std::vector<u8>& input, google::protobuf::RepeatedPtrField<nixnet_grpc::FrameBufferResponse>* output, u32 number_of_bytes, u32 protocol, std::map<std::int32_t, std::int32_t> enetflags_output_map)

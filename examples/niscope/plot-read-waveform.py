@@ -54,21 +54,13 @@ if len(sys.argv) >= 4:
     OPTIONS = ""
 
 
-def check_for_error(vi, status):
-    """Raise an exception if the status indicates an error."""
-    if status != 0:
-        error_message_response = niscope_client.GetErrorMessage(
-            niscope_types.GetErrorMessageRequest(vi=vi, error_code=status)
-        )
-        raise Exception(error_message_response.error_message)
-
-
-def check_for_initialization_error(response):
-    """Raise an exception if an error was returned from Initialize."""
-    if response.status < 0:
-        raise RuntimeError(f"Error: {response.error_message or response.status}")
+def check_for_warning(response, vi):
+    """Print to console if the status indicates a warning."""
     if response.status > 0:
-        sys.stderr.write(f"Warning: {response.error_message or response.status}\n")
+        warning_message = niscope_client.GetErrorMessage(
+            niscope_types.GetErrorMessageRequest(vi=vi, error_code=response.status)
+        )
+        sys.stderr.write(f"{warning_message.error_message}\nWarning status: {response.status}\n")
 
 
 # Create the communcation channel for the remote host (in this case we are connecting to a local
@@ -80,11 +72,13 @@ try:
     # Initialize the scope
     init_result = niscope_client.InitWithOptions(
         niscope_types.InitWithOptionsRequest(
-            session_name="demo", resource_name=RESOURCE, id_query=False, option_string=OPTIONS
+            session_name="demo",
+            resource_name=RESOURCE,
+            id_query=False,
+            option_string=OPTIONS,
         )
     )
     vi = init_result.vi
-    check_for_initialization_error(init_result)
 
     # Configure horizontal timing
     config_result = niscope_client.ConfigureHorizontalTiming(
@@ -97,7 +91,6 @@ try:
             enforce_realtime=True,
         )
     )
-    check_for_error(vi, config_result.status)
 
     # Configure vertical timing
     vertical_result = niscope_client.ConfigureVertical(
@@ -111,7 +104,6 @@ try:
             probe_attenuation=1,
         )
     )
-    check_for_error(vi, vertical_result.status)
 
     conf_trigger_edge_result = niscope_client.ConfigureTriggerEdge(
         niscope_types.ConfigureTriggerEdgeRequest(
@@ -122,7 +114,6 @@ try:
             slope=niscope_types.TriggerSlope.TRIGGER_SLOPE_NISCOPE_VAL_POSITIVE,
         )
     )
-    check_for_error(vi, conf_trigger_edge_result.status)
 
     result = niscope_client.SetAttributeViInt32(
         niscope_types.SetAttributeViInt32Request(
@@ -132,18 +123,21 @@ try:
             value=niscope_types.NiScopeInt32AttributeValues.NISCOPE_INT32_MEAS_REF_LEVEL_UNITS_VAL_MEAS_VOLTAGE,
         )
     )
-    check_for_error(vi, result.status)
 
     # Read a waveform from the scope
     read_result = niscope_client.Read(
         niscope_types.ReadRequest(vi=vi, channel_list=CHANNELS, timeout=10000, num_samples=100000)
     )
-    check_for_error(vi, read_result.status)
+    check_for_warning(read_result, vi)
     values = read_result.waveform[0:10]
     print(values)
 
 except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
+    for entry in rpc_error.trailing_metadata() or []:
+        if entry.key == "ni-error":
+            value = entry.value if isinstance(entry.value, str) else entry.value.decode("utf-8")
+            error_message += f"\nError status: {value}"
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
         error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"
     elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
@@ -155,4 +149,4 @@ except grpc.RpcError as rpc_error:
 finally:
     if "vi" in vars() and vi.id != 0:
         # close the session.
-        check_for_error(vi, (niscope_client.Close(niscope_types.CloseRequest(vi=vi))).status)
+        niscope_client.Close(niscope_types.CloseRequest(vi=vi))

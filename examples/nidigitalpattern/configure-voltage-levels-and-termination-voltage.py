@@ -98,21 +98,13 @@ channel = grpc.insecure_channel(f"{SERVER_ADDRESS}:{SERVER_PORT}")
 nidigital_client = grpc_nidigital.NiDigitalStub(channel)
 
 
-def check_for_error(vi, status):
-    """Raise an exception if the status indicates an error."""
-    if status != 0:
-        error_message_response = nidigital_client.ErrorMessage(
-            nidigital_types.ErrorMessageRequest(vi=vi, error_code=status)
-        )
-        raise Exception(error_message_response.error_message)
-
-
-def check_for_initialization_error(response):
-    """Raise an exception if an error was returned from Initialize."""
-    if response.status < 0:
-        raise RuntimeError(f"Error: {response.error_message or response.status}")
+def check_for_warning(response, vi):
+    """Print to console if the status indicates a warning."""
     if response.status > 0:
-        sys.stderr.write(f"Warning: {response.error_message or response.status}\n")
+        warning_message = nidigital_client.ErrorMessage(
+            nidigital_types.ErrorMessageRequest(vi=vi, error_code=response.status)
+        )
+        sys.stderr.write(f"{warning_message.error_message}\nWarning status: {response.status}\n")
 
 
 try:
@@ -127,28 +119,27 @@ try:
         )
     )
     vi = init_with_options_response.vi
-    check_for_initialization_error(init_with_options_response)
 
     load_pin_map_response = nidigital_client.LoadPinMap(
         nidigital_types.LoadPinMapRequest(
-            vi=vi, file_path=os.path.join(DIRECTORY_PATH, "PinMap.pinmap")
+            vi=vi,
+            file_path=os.path.join(DIRECTORY_PATH, "PinMap.pinmap"),
         )
     )
-    check_for_error(vi, load_pin_map_response.status)
 
     load_specification_response = nidigital_client.LoadSpecifications(
         nidigital_types.LoadSpecificationsRequest(
-            vi=vi, file_path=os.path.join(DIRECTORY_PATH, "Specifications.specs")
+            vi=vi,
+            file_path=os.path.join(DIRECTORY_PATH, "Specifications.specs"),
         )
     )
-    check_for_error(vi, load_specification_response.status)
 
     load_timing_response = nidigital_client.LoadTiming(
         nidigital_types.LoadTimingRequest(
-            vi=vi, file_path=os.path.join(DIRECTORY_PATH, "Timing.digitiming")
+            vi=vi,
+            file_path=os.path.join(DIRECTORY_PATH, "Timing.digitiming"),
         )
     )
-    check_for_error(vi, load_timing_response.status)
 
     load_apply_levels_and_timing_response = nidigital_client.ApplyLevelsAndTiming(
         nidigital_types.ApplyLevelsAndTimingRequest(
@@ -161,21 +152,25 @@ try:
             initial_state_tristate_pins="",
         )
     )
-    check_for_error(vi, load_apply_levels_and_timing_response.status)
 
     load_pattern_response = nidigital_client.LoadPattern(
         nidigital_types.LoadPatternRequest(
-            vi=vi, file_path=os.path.join(DIRECTORY_PATH, "Pattern.digipat")
+            vi=vi,
+            file_path=os.path.join(DIRECTORY_PATH, "Pattern.digipat"),
         )
     )
-    check_for_error(vi, load_pattern_response.status)
 
     configure_voltage_response = nidigital_client.ConfigureVoltageLevels(
         nidigital_types.ConfigureVoltageLevelsRequest(
-            vi=vi, channel_list=CHANNEL_LIST, vil=VIL, vih=VIH, vol=VOL, voh=VOH, vterm=VTERM
+            vi=vi,
+            channel_list=CHANNEL_LIST,
+            vil=VIL,
+            vih=VIH,
+            vol=VOL,
+            voh=VOH,
+            vterm=VTERM,
         )
     )
-    check_for_error(vi, configure_voltage_response.status)
 
     if TERM_SELECT == "h":
         configure_termination_mode_response = nidigital_client.ConfigureTerminationMode(
@@ -185,7 +180,6 @@ try:
                 mode=nidigital_types.TerminationMode.TERMINATION_MODE_NIDIGITAL_VAL_HIGH_Z,
             )
         )
-        check_for_error(vi, configure_termination_mode_response.status)
 
     if TERM_SELECT == "a":
         configure_termination_mode_response = nidigital_client.ConfigureTerminationMode(
@@ -195,14 +189,16 @@ try:
                 mode=nidigital_types.TerminationMode.TERMINATION_MODE_NIDIGITAL_VAL_ACTIVE_LOAD,
             )
         )
-        check_for_error(vi, configure_termination_mode_response.status)
 
         configure_active_load_levels_response = nidigital_client.ConfigureActiveLoadLevels(
             nidigital_types.ConfigureActiveLoadLevelsRequest(
-                vi=vi, channel_list=CHANNEL_LIST, iol=IOL, ioh=IOH, vcom=VCOM
+                vi=vi,
+                channel_list=CHANNEL_LIST,
+                iol=IOL,
+                ioh=IOH,
+                vcom=VCOM,
             )
         )
-        check_for_error(vi, configure_active_load_levels_response.status)
 
     if TERM_SELECT == "t":
         configure_termination_mode_response = nidigital_client.ConfigureTerminationMode(
@@ -212,7 +208,6 @@ try:
                 mode=nidigital_types.TerminationMode.TERMINATION_MODE_NIDIGITAL_VAL_VTERM,
             )
         )
-        check_for_error(vi, configure_termination_mode_response.status)
 
     if TERM_SELECT != "h" and TERM_SELECT != "a" and TERM_SELECT != "t":
         print(
@@ -230,7 +225,7 @@ try:
             timeout=10,
         )
     )
-    check_for_error(vi, burst_pattern_response.status)
+    check_for_warning(burst_pattern_response, vi)
 
     select_function_response = nidigital_client.SelectFunction(
         nidigital_types.SelectFunctionRequest(
@@ -239,13 +234,17 @@ try:
             function_raw=nidigital_types.SelectedFunction.SELECTED_FUNCTION_NIDIGITAL_VAL_DISCONNECT,
         )
     )
-    check_for_error(vi, select_function_response.status)
+    check_for_warning(select_function_response, vi)
 
     print("The NI-Digital Pattern device was configured successfully.\n")
 
 # If NI-Digital Pattern Driver API throws an exception, print the error message
 except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
+    for entry in rpc_error.trailing_metadata() or []:
+        if entry.key == "ni-error":
+            value = entry.value if isinstance(entry.value, str) else entry.value.decode("utf-8")
+            error_message += f"\nError status: {value}"
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
         error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"
     elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
@@ -256,5 +255,4 @@ except grpc.RpcError as rpc_error:
 finally:
     if "vi" in vars() and vi.id != 0:
         # Close NI-Digital Pattern Driver session
-        close_session_response = nidigital_client.Close(nidigital_types.CloseRequest(vi=vi))
-        check_for_error(vi, close_session_response.status)
+        nidigital_client.Close(nidigital_types.CloseRequest(vi=vi))

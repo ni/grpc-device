@@ -3,7 +3,6 @@
 #include <gtest/gtest.h>
 #include <nifake_non_ivi/nifake_non_ivi_mock_library.h>
 #include <nifake_non_ivi/nifake_non_ivi_service.h>
-#include <nlohmann/json.hpp>
 #include <server/feature_toggles.h>
 #include <server/session_resource_repository.h>
 
@@ -12,7 +11,6 @@
 #include <string>
 
 using namespace nifake_non_ivi_grpc;
-using namespace ::nlohmann;
 using namespace ::testing;
 
 bool operator==(const StructWithCoercion_struct& left, const StructWithCoercion& right)
@@ -1695,7 +1693,7 @@ TEST_F(NiFakeNonIviServiceTests, InitWithReturnedSession_AccessSession_ReturnsIn
   EXPECT_EQ(SESSION_HANDLE, accessed_handle);
 }
 
-TEST_F(NiFakeNonIviServiceTests, InitWithReturnedSessionFailsInit_AccessSession_SessionIsNotInMapAndStatusValueIsReturned)
+TEST_F(NiFakeNonIviServiceTests, InitWithReturnedSessionFailsInit_AccessSession_SessionIsNotInMap)
 {
   constexpr auto SESSION_NAME = "session";
   constexpr auto BAD_SESSION_HANDLE = 0xDEADBEEF;  // Fake non-ivi uses 0xDEADBEEF as failed/null session (See functions.py).
@@ -1712,8 +1710,6 @@ TEST_F(NiFakeNonIviServiceTests, InitWithReturnedSessionFailsInit_AccessSession_
 
   EXPECT_FALSE(status.ok());
   EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status.error_code());
-  auto error = json::parse(status.error_message());
-  EXPECT_EQ(FAILED_INIT, error.value("code", 0));
   EXPECT_NE(FAILED_INIT, response.status());
   EXPECT_EQ(0, accessed_handle);
 }
@@ -1744,8 +1740,6 @@ TEST_F(NiFakeNonIviServiceTests, GetStringAsReturnedValueReturnsNull_ReturnsErro
 
   EXPECT_FALSE(status.ok());
   EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status.error_code());
-  auto error = json::parse(status.error_message());
-  EXPECT_EQ(FAILED_GET, error.value("code", 0));
   EXPECT_NE(FAILED_GET, response.status());
 }
 
@@ -1768,9 +1762,7 @@ TEST_F(NiFakeNonIviServiceTests, InitWithError_CallsGetLatestErrorAndReturnsMess
 
   EXPECT_FALSE(status.ok());
   EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status.error_code());
-  auto error = json::parse(status.error_message());
-  EXPECT_EQ(SOME_ERROR, error.value("code", 0));
-  EXPECT_EQ(ERROR_MESSAGE, error.value("message", ""));
+  EXPECT_EQ(ERROR_MESSAGE, status.error_message());
   EXPECT_NE(SOME_ERROR, response.status());
 }
 

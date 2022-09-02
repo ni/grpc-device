@@ -1,16 +1,14 @@
 #include <gmock/gmock.h>
-#include <gtest/gtest.h>
-#include <nlohmann/json.hpp>
 
 #include "device_server.h"
 #include "nidcpower/nidcpower_client.h"
+#include "tests/utilities/test_helpers.h"
 
 namespace ni {
 namespace tests {
 namespace system {
 
 namespace dcpower = nidcpower_grpc;
-using namespace ::nlohmann;
 using namespace ::testing;
 
 const int kInvalidRsrc = -1074118656;
@@ -61,7 +59,8 @@ class NiDCPowerSessionTest : public ::testing::Test {
     request.set_reset(false);
     request.set_channels("");
 
-    ::grpc::Status status = GetStub()->InitializeWithChannels(&context, request, response);
+    auto status = GetStub()->InitializeWithChannels(&context, request, response);
+    nidevice_grpc::experimental::client::raise_if_error(status, context);
     return status;
   }
 
@@ -119,13 +118,15 @@ TEST_F(NiDCPowerSessionTest, InitializeSessionWithDeviceAndNoSessionName_Creates
 
 TEST_F(NiDCPowerSessionTest, InitializeSessionWithoutDevice_ReturnsDriverError)
 {
-  dcpower::InitializeWithChannelsResponse response;
-  ::grpc::Status status = call_initialize_with_channels(kTestInvalidRsrc, "", "", &response);
-
-  EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status.error_code());
-  auto error = json::parse(status.error_message());
-  EXPECT_EQ(kInvalidRsrc, error.value("code", 0));
-  EXPECT_NE("", error.value("message", ""));
+  try {
+    dcpower::InitializeWithChannelsResponse response;
+    call_initialize_with_channels(kTestInvalidRsrc, "", "", &response);
+    FAIL() << "We shouldn't get here.";
+  }
+  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
+    expect_driver_error(ex, kInvalidRsrc);
+    EXPECT_STRNE("", ex.what());
+  }
 }
 
 TEST_F(NiDCPowerSessionTest, InitializedSession_CloseSession_ClosesDriverSession)
@@ -151,27 +152,32 @@ TEST_F(NiDCPowerSessionTest, InvalidSession_CloseSession_ReturnsInvalidSessionEr
   nidevice_grpc::Session session;
   session.set_id(0UL);
 
-  ::grpc::ClientContext context;
-  dcpower::CloseRequest request;
-  request.mutable_vi()->set_id(session.id());
-  dcpower::CloseResponse response;
-  ::grpc::Status status = GetStub()->Close(&context, request, &response);
-
-  EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status.error_code());
-  auto error = json::parse(status.error_message());
-  EXPECT_EQ(kInvalidDCPowerSession, error.value("code", 0));
-  EXPECT_THAT(error.value("message", "").c_str(), HasSubstr(kInvalidDCPowerSessionMessage));
+  try {
+    ::grpc::ClientContext context;
+    dcpower::CloseRequest request;
+    request.mutable_vi()->set_id(session.id());
+    dcpower::CloseResponse response;
+    auto status = GetStub()->Close(&context, request, &response);
+    nidevice_grpc::experimental::client::raise_if_error(status, context);
+    FAIL() << "We shouldn't get here.";
+  }
+  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
+    expect_driver_error(ex, kInvalidDCPowerSession);
+    EXPECT_THAT(ex.what(), HasSubstr(kInvalidDCPowerSessionMessage));
+  }
 }
 
-TEST_F(NiDCPowerSessionTest, InitWithErrorFromDriver_ReturnsUserErrorMessage)
+TEST_F(NiDCPowerSessionTest, InitWithErrorFromDriver_ReturnsDriverErrorWithUserErrorMessage)
 {
-  dcpower::InitializeWithChannelsResponse initialize_response;
-  auto status = call_initialize_with_channels(kTestInvalidRsrc, "", "", &initialize_response);
-
-  EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status.error_code());
-  auto error = json::parse(status.error_message());
-  EXPECT_EQ(kInvalidRsrc, error.value("code", 0));
-  EXPECT_STREQ(kViErrorResourceNotFoundMessage, error.value("message", "").c_str());
+  try {
+    dcpower::InitializeWithChannelsResponse initialize_response;
+    call_initialize_with_channels(kTestInvalidRsrc, "", "", &initialize_response);
+    FAIL() << "We shouldn't get here.";
+  }
+  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
+    expect_driver_error(ex, kInvalidRsrc);
+    EXPECT_STREQ(kViErrorResourceNotFoundMessage, ex.what());
+  }
 }
 
 }  // namespace system
