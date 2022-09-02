@@ -12,6 +12,20 @@ namespace nimxlcterminaladaptor_restricted_grpc {
   using nidevice_grpc::converters::convert_to_grpc;
   using nimxlcterminaladaptor_restricted_grpc::NIErrStatus;
   
+// Provide a callback that only returns false because we initialize json to nullptr on initialization.
+bool nierr_noOpReallocJson(struct nierr_Status * s, uint32_t size)
+{
+   return false;
+}
+
+void nierr_Status_initialize(struct nierr_Status * status)
+{
+   status->code = 0;
+   status->capacity = 0;
+   status->reallocJson = &nierr_noOpReallocJson;
+   status->json = nullptr;
+}
+
 ::grpc::Status NimxlcTerminalAdaptorRestrictedService::GetDeviceContainer(::grpc::ServerContext* context, const GetDeviceContainerRequest* request, GetDeviceContainerResponse* response)
 {
     if (context->IsCancelled()) {
@@ -22,9 +36,7 @@ namespace nimxlcterminaladaptor_restricted_grpc {
         nimxlc_Session session = session_repository_->access_session(grpc_session.id(), grpc_session.name());
 
         nierr_Status status;
-        status.code = 0;
-        status.capacity = 0;
-        status.json = "";
+        nimxlcterminaladaptor_restricted_grpc::nierr_Status_initialize(&status);
         nimxlc_DeviceContainer deviceContainer = library_->getDeviceContainer(session, &status);
         if (nierr_Status_isNotFatal(&status))
         {

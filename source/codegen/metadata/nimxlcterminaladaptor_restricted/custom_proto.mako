@@ -7,7 +7,7 @@ message NIErrStatus {
 message NIMXLCDevice {
   string name = 1;
   bool supportsOnboardClock = 2;
-  repeated NIMXLCTerminal terminals= 3;
+  repeated NIMXLCTerminal terminals = 3;
 }
 
 message NIMXLCTerminal {

@@ -16,12 +16,14 @@ namespace nimxlcterminaladaptor_restricted_grpc {
 // Add underscore to usings so they don't conflict with including files in the same namespace.
 namespace pb_ = ::google::protobuf;
 
+bool nierr_noOpReallocJson(struct nierr_Status * s, uint32_t size);
+
+void nierr_Status_initialize(struct nierr_Status * status);
+
 struct NIErrStatusOutputConverter {
   NIErrStatusOutputConverter()
   {
-    status.code = 0;
-    status.capacity = 0;
-    status.json = "";
+    nierr_Status_initialize(&status);
   }
 
   nierr_Status* operator&()
@@ -33,7 +35,10 @@ struct NIErrStatusOutputConverter {
   {
     output.set_code(status.code);
     output.set_capacity(status.capacity);
-    output.set_json(status.json);
+    if (status.json != nullptr)
+    {
+      output.set_json(status.json);
+    }
   }
 
   nierr_Status status{};
