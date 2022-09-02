@@ -1,5 +1,5 @@
 enums = {
-    'MXIQDeleteOnFetch': {
+    'IQDeleteOnFetch': {
         'values': [
             {
                 'name': 'DEFAULT',
