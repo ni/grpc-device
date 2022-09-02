@@ -823,7 +823,7 @@ namespace nirfmxinstr_restricted_grpc {
       while (true) {
         auto status = library_->GetSessionUniqueIdentifier(resource_names, option_string, 0, nullptr);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, 0);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
         }
         int32 session_unique_identifier_size = status;
 
@@ -837,7 +837,7 @@ namespace nirfmxinstr_restricted_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, 0);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
         }
         response->set_status(status);
         response->set_session_unique_identifier(session_unique_identifier);
