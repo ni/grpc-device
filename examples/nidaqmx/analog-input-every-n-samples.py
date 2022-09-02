@@ -63,7 +63,7 @@ async def _main():
                     )
                     sys.stderr.write(f"{warning_message.error_message}\nWarning status: {response.status}\n")
 
-            create_response: nidaqmx_types.CreateTaskResponse = client.CreateTask(nidaqmx_types.CreateTaskRequest())
+            create_response: nidaqmx_types.CreateTaskResponse = await client.CreateTask(nidaqmx_types.CreateTaskRequest())
             task = create_response.task
 
             await client.CreateAIVoltageChan(
@@ -123,7 +123,7 @@ async def _main():
 
                 try:
                     async for every_n_samples_response in every_n_samples_stream:
-                        read_response: nidaqmx_types.ReadAnalogF64Response =
+                        read_response: nidaqmx_types.ReadAnalogF64Response = (
                             await client.ReadAnalogF64(
                                 nidaqmx_types.ReadAnalogF64Request(
                                     task=task,
@@ -133,6 +133,7 @@ async def _main():
                                     * samples_per_channel_per_read,
                                 )
                             )
+                        )
                         check_for_warning(read_response)
 
                         print(

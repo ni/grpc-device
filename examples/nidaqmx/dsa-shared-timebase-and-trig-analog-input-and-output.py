@@ -376,32 +376,30 @@ async def _main():
             (follower_write_data, phase) = generate_sinewave(250, 1.0, 0.02, phase)
 
             # DAQmx Write code
-            num_leader_samples_written = (
-                write_response: await client.WriteAnalogF64(
-                    nidaqmx_types.WriteAnalogF64Request(
-                        task=leader_output_task,
-                        num_samps_per_chan=250,
-                        auto_start=False,
-                        timeout=10.0,
-                        data_layout=nidaqmx_types.GROUP_BY_GROUP_BY_CHANNEL,
-                        write_array=leader_write_data,
-                    )
+            write_response: await client.WriteAnalogF64(
+                nidaqmx_types.WriteAnalogF64Request(
+                    task=leader_output_task,
+                    num_samps_per_chan=250,
+                    auto_start=False,
+                    timeout=10.0,
+                    data_layout=nidaqmx_types.GROUP_BY_GROUP_BY_CHANNEL,
+                    write_array=leader_write_data,
                 )
-            ).samps_per_chan_written
+            )
             check_for_warning(write_response)
-            num_follower_samples_written = (
-                write_response: await client.WriteAnalogF64(
-                    nidaqmx_types.WriteAnalogF64Request(
-                        task=follower_output_task,
-                        num_samps_per_chan=250,
-                        auto_start=False,
-                        timeout=10.0,
-                        data_layout=nidaqmx_types.GROUP_BY_GROUP_BY_CHANNEL,
-                        write_array=follower_write_data,
-                    )
+            num_leader_samples_written = write_response.samps_per_chan_written
+            write_response: await client.WriteAnalogF64(
+                nidaqmx_types.WriteAnalogF64Request(
+                    task=follower_output_task,
+                    num_samps_per_chan=250,
+                    auto_start=False,
+                    timeout=10.0,
+                    data_layout=nidaqmx_types.GROUP_BY_GROUP_BY_CHANNEL,
+                    write_array=follower_write_data,
                 )
-            ).samps_per_chan_written
+            )
             check_for_warning(write_response)
+            num_follower_samples_written = write_response.samps_per_chan_written
 
             every_n_samples_stream = client.RegisterEveryNSamplesEvent(
                 nidaqmx_types.RegisterEveryNSamplesEventRequest(
