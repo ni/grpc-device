@@ -32,7 +32,6 @@ If they are not passed in as command line arguments, then by default the server 
 "localhost:31763", with "SimulatedRFSA" as the physical channel name.
 """
 
-import json
 import math
 import sys
 
@@ -139,18 +138,16 @@ try:
 
 except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
+    for entry in rpc_error.trailing_metadata() or []:
+        if entry.key == "ni-error":
+            value = entry.value if isinstance(entry.value, str) else entry.value.decode("utf-8")
+            error_message += f"\nError status: {value}"
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
         error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"
     elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
         error_message = (
             "The operation is not implemented or is not supported/enabled in this service"
         )
-    elif rpc_error.code() == grpc.StatusCode.UNKNOWN:
-        try:
-            error_details = json.loads(error_message)
-            error_message = f"{error_details['message']}\nError status: {error_details['code']}"
-        except (json.JSONDecodeError, KeyError):
-            pass
     print(f"{error_message}")
 finally:
     if vi:
