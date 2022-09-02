@@ -121,6 +121,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'enum': 'MXIQDeleteOnFetch',
                 'name': 'deleteOnFetch',
                 'type': 'int32'
             },

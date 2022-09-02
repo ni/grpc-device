@@ -37,7 +37,7 @@ cache_result(const StubPtr& stub, const nidevice_grpc::Session& instrument, cons
 }
 
 IQFetchDataOverrideBehaviorResponse
-iq_fetch_data_override_behavior(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout, const pb::int32& record_to_fetch, const pb::int64& samples_to_read, const pb::int32& delete_on_fetch)
+iq_fetch_data_override_behavior(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout, const pb::int32& record_to_fetch, const pb::int64& samples_to_read, const simple_variant<MXIQDeleteOnFetch, pb::int32>& delete_on_fetch)
 {
   ::grpc::ClientContext context;
 
@@ -47,7 +47,14 @@ iq_fetch_data_override_behavior(const StubPtr& stub, const nidevice_grpc::Sessio
   request.set_timeout(timeout);
   request.set_record_to_fetch(record_to_fetch);
   request.set_samples_to_read(samples_to_read);
-  request.set_delete_on_fetch(delete_on_fetch);
+  const auto delete_on_fetch_ptr = delete_on_fetch.get_if<MXIQDeleteOnFetch>();
+  const auto delete_on_fetch_raw_ptr = delete_on_fetch.get_if<pb::int32>();
+  if (delete_on_fetch_ptr) {
+    request.set_delete_on_fetch(*delete_on_fetch_ptr);
+  }
+  else if (delete_on_fetch_raw_ptr) {
+    request.set_delete_on_fetch_raw(*delete_on_fetch_raw_ptr);
+  }
 
   auto response = IQFetchDataOverrideBehaviorResponse{};
 
