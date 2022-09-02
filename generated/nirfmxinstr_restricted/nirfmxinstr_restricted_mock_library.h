@@ -40,6 +40,7 @@ class NiRFmxInstrRestrictedMockLibrary : public nirfmxinstr_restricted_grpc::NiR
   MOCK_METHOD(int32, GetOpenSessionsInformation, (char resourceName[], int32 infoJsonSize, char infoJson[]), (override));
   MOCK_METHOD(int32, GetPrivilegeLevel, (niRFmxInstrHandle instrumentHandle, int32* isConnectionAlive, int32* privilegeLevel), (override));
   MOCK_METHOD(int32, GetRFmxVersion, (niRFmxInstrHandle instrumentHandle, int32 arraySize, char RFmxVersion[]), (override));
+  MOCK_METHOD(int32, GetSessionUniqueIdentifier, (char resourceNames[], char optionString[], int32 sessionUniqueIdentifierSize, char sessionUniqueIdentifier[]), (override));
   MOCK_METHOD(int32, GetSignalConfigurationState64, (niRFmxInstrHandle instrumentHandle, char signalName[], uInt32 signalType, int32* signalState, uInt64* timeStamp), (override));
   MOCK_METHOD(int32, GetSnapshotState, (niRFmxInstrHandle instrumentHandle, int32 personality, char selectorString[], int32* snapshotState), (override));
   MOCK_METHOD(int32, GetTracesInfoForMonitorSnapshot, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32* allTracesEnabled), (override));

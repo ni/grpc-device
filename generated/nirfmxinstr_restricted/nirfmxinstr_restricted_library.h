@@ -41,6 +41,7 @@ class NiRFmxInstrRestrictedLibrary : public nirfmxinstr_restricted_grpc::NiRFmxI
   int32 GetOpenSessionsInformation(char resourceName[], int32 infoJsonSize, char infoJson[]);
   int32 GetPrivilegeLevel(niRFmxInstrHandle instrumentHandle, int32* isConnectionAlive, int32* privilegeLevel);
   int32 GetRFmxVersion(niRFmxInstrHandle instrumentHandle, int32 arraySize, char RFmxVersion[]);
+  int32 GetSessionUniqueIdentifier(char resourceNames[], char optionString[], int32 sessionUniqueIdentifierSize, char sessionUniqueIdentifier[]);
   int32 GetSignalConfigurationState64(niRFmxInstrHandle instrumentHandle, char signalName[], uInt32 signalType, int32* signalState, uInt64* timeStamp);
   int32 GetSnapshotState(niRFmxInstrHandle instrumentHandle, int32 personality, char selectorString[], int32* snapshotState);
   int32 GetTracesInfoForMonitorSnapshot(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* allTracesEnabled);
@@ -78,6 +79,7 @@ class NiRFmxInstrRestrictedLibrary : public nirfmxinstr_restricted_grpc::NiRFmxI
   using GetOpenSessionsInformationPtr = int32 (*)(char resourceName[], int32 infoJsonSize, char infoJson[]);
   using GetPrivilegeLevelPtr = int32 (*)(niRFmxInstrHandle instrumentHandle, int32* isConnectionAlive, int32* privilegeLevel);
   using GetRFmxVersionPtr = int32 (*)(niRFmxInstrHandle instrumentHandle, int32 arraySize, char RFmxVersion[]);
+  using GetSessionUniqueIdentifierPtr = int32 (*)(char resourceNames[], char optionString[], int32 sessionUniqueIdentifierSize, char sessionUniqueIdentifier[]);
   using GetSignalConfigurationState64Ptr = int32 (*)(niRFmxInstrHandle instrumentHandle, char signalName[], uInt32 signalType, int32* signalState, uInt64* timeStamp);
   using GetSnapshotStatePtr = int32 (*)(niRFmxInstrHandle instrumentHandle, int32 personality, char selectorString[], int32* snapshotState);
   using GetTracesInfoForMonitorSnapshotPtr = int32 (*)(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* allTracesEnabled);
@@ -115,6 +117,7 @@ class NiRFmxInstrRestrictedLibrary : public nirfmxinstr_restricted_grpc::NiRFmxI
     GetOpenSessionsInformationPtr GetOpenSessionsInformation;
     GetPrivilegeLevelPtr GetPrivilegeLevel;
     GetRFmxVersionPtr GetRFmxVersion;
+    GetSessionUniqueIdentifierPtr GetSessionUniqueIdentifier;
     GetSignalConfigurationState64Ptr GetSignalConfigurationState64;
     GetSnapshotStatePtr GetSnapshotState;
     GetTracesInfoForMonitorSnapshotPtr GetTracesInfoForMonitorSnapshot;

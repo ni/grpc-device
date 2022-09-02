@@ -44,6 +44,7 @@ NiRFmxInstrRestrictedLibrary::NiRFmxInstrRestrictedLibrary() : shared_library_(k
   function_pointers_.GetOpenSessionsInformation = reinterpret_cast<GetOpenSessionsInformationPtr>(shared_library_.get_function_pointer("RFmxInstr_GetOpenSessionsInformation"));
   function_pointers_.GetPrivilegeLevel = reinterpret_cast<GetPrivilegeLevelPtr>(shared_library_.get_function_pointer("RFmxInstr_GetPrivilegeLevel"));
   function_pointers_.GetRFmxVersion = reinterpret_cast<GetRFmxVersionPtr>(shared_library_.get_function_pointer("RFmxInstr_GetRFmxVersion"));
+  function_pointers_.GetSessionUniqueIdentifier = reinterpret_cast<GetSessionUniqueIdentifierPtr>(shared_library_.get_function_pointer("RFmxInstr_GetSessionUniqueIdentifier"));
   function_pointers_.GetSignalConfigurationState64 = reinterpret_cast<GetSignalConfigurationState64Ptr>(shared_library_.get_function_pointer("RFmxInstr_GetSignalConfigurationState64"));
   function_pointers_.GetSnapshotState = reinterpret_cast<GetSnapshotStatePtr>(shared_library_.get_function_pointer("RFmxInstr_GetSnapshotState"));
   function_pointers_.GetTracesInfoForMonitorSnapshot = reinterpret_cast<GetTracesInfoForMonitorSnapshotPtr>(shared_library_.get_function_pointer("RFmxInstr_GetTracesInfoForMonitorSnapshot"));
@@ -251,6 +252,14 @@ int32 NiRFmxInstrRestrictedLibrary::GetRFmxVersion(niRFmxInstrHandle instrumentH
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetRFmxVersion.");
   }
   return function_pointers_.GetRFmxVersion(instrumentHandle, arraySize, RFmxVersion);
+}
+
+int32 NiRFmxInstrRestrictedLibrary::GetSessionUniqueIdentifier(char resourceNames[], char optionString[], int32 sessionUniqueIdentifierSize, char sessionUniqueIdentifier[])
+{
+  if (!function_pointers_.GetSessionUniqueIdentifier) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetSessionUniqueIdentifier.");
+  }
+  return function_pointers_.GetSessionUniqueIdentifier(resourceNames, optionString, sessionUniqueIdentifierSize, sessionUniqueIdentifier);
 }
 
 int32 NiRFmxInstrRestrictedLibrary::GetSignalConfigurationState64(niRFmxInstrHandle instrumentHandle, char signalName[], uInt32 signalType, int32* signalState, uInt64* timeStamp)
