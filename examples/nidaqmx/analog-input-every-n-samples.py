@@ -55,10 +55,10 @@ async def _main():
         try:
             client = grpc_nidaqmx.NiDAQmxStub(channel)
 
-            nidaqmx_types.CreateTaskResponse = client.CreateTask(nidaqmx_types.CreateTaskRequest())
+            create_response: nidaqmx_types.CreateTaskResponse = client.CreateTask(nidaqmx_types.CreateTaskRequest())
             task = create_response.task
 
-            client.CreateAIVoltageChan(
+            await client.CreateAIVoltageChan(
                 nidaqmx_types.CreateAIVoltageChanRequest(
                     task=task,
                     physical_channel=PHYSICAL_CHANNEL,
@@ -71,7 +71,7 @@ async def _main():
 
             total_samples_per_channel = 1000
             samples_per_channel_per_read = 100
-            client.CfgSampClkTiming(
+            await client.CfgSampClkTiming(
                 nidaqmx_types.CfgSampClkTimingRequest(
                     task=task,
                     sample_mode=nidaqmx_types.AcquisitionType.ACQUISITION_TYPE_FINITE_SAMPS,
@@ -99,9 +99,9 @@ async def _main():
 
             await done_event_stream.initial_metadata()
 
-            client.StartTask(nidaqmx_types.StartTaskRequest(task=task))
+            await client.StartTask(nidaqmx_types.StartTaskRequest(task=task))
 
-            response = client.GetTaskAttributeUInt32(
+            response = await client.GetTaskAttributeUInt32(
                 nidaqmx_types.GetTaskAttributeUInt32Request(
                     task=task, attribute=nidaqmx_types.TASK_ATTRIBUTE_NUM_CHANS
                 )
@@ -115,7 +115,7 @@ async def _main():
                 try:
                     async for every_n_samples_response in every_n_samples_stream:
                         read_response: nidaqmx_types.ReadAnalogF64Response =
-                            client.ReadAnalogF64(
+                            await client.ReadAnalogF64(
                                 nidaqmx_types.ReadAnalogF64Request(
                                     task=task,
                                     num_samps_per_chan=samples_per_channel_per_read,
@@ -153,8 +153,9 @@ async def _main():
 
         except grpc.RpcError as rpc_error:
             error_message = rpc_error.details()
-            for key, value in rpc_error.trailing_metadata() or []:
-                if key == "ni-error":
+            for entry in rpc_error.trailing_metadata() or []:
+                if entry.key == "ni-error":
+                    value = entry.value if isinstance(entry.value, str) else entry.value.decode("utf-8")
                     error_message += f"\nError status: {value}"
             if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
                 error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"

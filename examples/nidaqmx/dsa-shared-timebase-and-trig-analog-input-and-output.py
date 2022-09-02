@@ -119,7 +119,7 @@ async def _main():
             client = grpc_nidaqmx.NiDAQmxStub(channel)
 
             async def get_terminal_name_with_dev_prefix(task, terminal_name):
-                num_devices_response = client.GetTaskAttributeUInt32(
+                num_devices_response = await client.GetTaskAttributeUInt32(
                     nidaqmx_types.GetTaskAttributeUInt32Request(
                         task=task, attribute=nidaqmx_types.TASK_ATTRIBUTE_NUM_DEVICES
                     )
@@ -128,12 +128,12 @@ async def _main():
                 for i in range(num_devices):
                     # devices are 1-indexed, so use i + 1 here
                     device = (
-                        client.GetNthTaskDevice(
+                        await client.GetNthTaskDevice(
                             nidaqmx_types.GetNthTaskDeviceRequest(task=task, index=i + 1)
                         )
                     ).buffer
                     device_category = (
-                        client.GetDeviceAttributeInt32(
+                        await client.GetDeviceAttributeInt32(
                             nidaqmx_types.GetDeviceAttributeInt32Request(
                                 device_name=device,
                                 attribute=nidaqmx_types.DEVICE_ATTRIBUTE_PRODUCT_CATEGORY,
@@ -159,10 +159,10 @@ async def _main():
 
             # DAQmx Configure Tasks code
             response: nidaqmx_types.CreateTaskResponse = (
-                client.CreateTask(nidaqmx_types.CreateTaskRequest(session_name="Leader input task"))
+                await client.CreateTask(nidaqmx_types.CreateTaskRequest(session_name="Leader input task"))
             )
             leader_input_task = response.task
-            client.CreateAIVoltageChan(
+            await client.CreateAIVoltageChan(
                 nidaqmx_types.CreateAIVoltageChanRequest(
                     task=leader_input_task,
                     physical_channel=LEADER_INPUT_CHANNEL,
@@ -172,7 +172,7 @@ async def _main():
                     terminal_config=nidaqmx_types.INPUT_TERM_CFG_WITH_DEFAULT_CFG_DEFAULT,
                 )
             )
-            client.CfgSampClkTiming(
+            await client.CfgSampClkTiming(
                 nidaqmx_types.CfgSampClkTimingRequest(
                     task=leader_input_task,
                     rate=10000,
@@ -182,11 +182,11 @@ async def _main():
                 )
             )
 
-            response = client.CreateTask(
+            response = await client.CreateTask(
                 nidaqmx_types.CreateTaskRequest(session_name="Leader output task")
             )
             leader_output_task = response.task
-            client.CreateAOVoltageChan(
+            await client.CreateAOVoltageChan(
                 nidaqmx_types.CreateAOVoltageChanRequest(
                     task=leader_output_task,
                     physical_channel=LEADER_OUTPUT_CHANNEL,
@@ -195,7 +195,7 @@ async def _main():
                     units=nidaqmx_types.VOLTAGE_UNITS2_VOLTS,
                 )
             )
-            client.CfgSampClkTiming(
+            await client.CfgSampClkTiming(
                 nidaqmx_types.CfgSampClkTimingRequest(
                     task=leader_output_task,
                     rate=10000,
@@ -205,11 +205,11 @@ async def _main():
                 )
             )
 
-            response = client.CreateTask(
+            response = await client.CreateTask(
                 nidaqmx_types.CreateTaskRequest(session_name="Follower input task")
             )
             follower_input_task = response.task
-            client.CreateAIVoltageChan(
+            await client.CreateAIVoltageChan(
                 nidaqmx_types.CreateAIVoltageChanRequest(
                     task=follower_input_task,
                     physical_channel=FOLLOWER_INPUT_CHANNEL,
@@ -219,7 +219,7 @@ async def _main():
                     terminal_config=nidaqmx_types.INPUT_TERM_CFG_WITH_DEFAULT_CFG_DEFAULT,
                 )
             )
-            client.CfgSampClkTiming(
+            await client.CfgSampClkTiming(
                 nidaqmx_types.CfgSampClkTimingRequest(
                     task=follower_input_task,
                     rate=10000,
@@ -229,11 +229,11 @@ async def _main():
                 )
             )
 
-            response = client.CreateTask(
+            response = await client.CreateTask(
                 nidaqmx_types.CreateTaskRequest(session_name="Follower output task")
             )
             follower_output_task = response.task
-            client.CreateAOVoltageChan(
+            await client.CreateAOVoltageChan(
                 nidaqmx_types.CreateAOVoltageChanRequest(
                     task=follower_output_task,
                     physical_channel=FOLLOWER_OUTPUT_CHANNEL,
@@ -242,7 +242,7 @@ async def _main():
                     units=nidaqmx_types.VOLTAGE_UNITS2_VOLTS,
                 )
             )
-            client.CfgSampClkTiming(
+            await client.CfgSampClkTiming(
                 nidaqmx_types.CfgSampClkTimingRequest(
                     task=follower_output_task,
                     rate=10000,
@@ -257,28 +257,28 @@ async def _main():
                 # Note: Not all DSA devices support reference clock synchronization. Refer to
                 # your hardware device manual for further information on whether this method
                 # of synchronization is supported for your particular device.
-                client.SetTimingAttributeString(
+                await client.SetTimingAttributeString(
                     nidaqmx_types.SetTimingAttributeStringRequest(
                         task=leader_input_task,
                         attribute=nidaqmx_types.TimingStringAttribute.TIMING_ATTRIBUTE_REF_CLK_SRC,
                         value="PXI_Clk10",
                     )
                 )
-                client.SetTimingAttributeString(
+                await client.SetTimingAttributeString(
                     nidaqmx_types.SetTimingAttributeStringRequest(
                         task=leader_output_task,
                         attribute=nidaqmx_types.TimingStringAttribute.TIMING_ATTRIBUTE_REF_CLK_SRC,
                         value="PXI_Clk10",
                     )
                 )
-                client.SetTimingAttributeString(
+                await client.SetTimingAttributeString(
                     nidaqmx_types.SetTimingAttributeStringRequest(
                         task=follower_input_task,
                         attribute=nidaqmx_types.TimingStringAttribute.TIMING_ATTRIBUTE_REF_CLK_SRC,
                         value="PXI_Clk10",
                     )
                 )
-                client.SetTimingAttributeString(
+                await client.SetTimingAttributeString(
                     nidaqmx_types.SetTimingAttributeStringRequest(
                         task=follower_output_task,
                         attribute=nidaqmx_types.TimingStringAttribute.TIMING_ATTRIBUTE_REF_CLK_SRC,
@@ -291,21 +291,21 @@ async def _main():
                 timebase_source = await get_terminal_name_with_dev_prefix(
                     task=leader_input_task, terminal_name="SampleClockTimebase"
                 )
-                client.SetTimingAttributeString(
+                await client.SetTimingAttributeString(
                     nidaqmx_types.SetTimingAttributeStringRequest(
                         task=leader_output_task,
                         attribute=nidaqmx_types.TimingStringAttribute.TIMING_ATTRIBUTE_SAMP_CLK_TIMEBASE_SRC,
                         value=timebase_source,
                     )
                 )
-                client.SetTimingAttributeString(
+                await client.SetTimingAttributeString(
                     nidaqmx_types.SetTimingAttributeStringRequest(
                         task=follower_input_task,
                         attribute=nidaqmx_types.TimingStringAttribute.TIMING_ATTRIBUTE_SAMP_CLK_TIMEBASE_SRC,
                         value=timebase_source,
                     )
                 )
-                client.SetTimingAttributeString(
+                await client.SetTimingAttributeString(
                     nidaqmx_types.SetTimingAttributeStringRequest(
                         task=follower_output_task,
                         attribute=nidaqmx_types.TimingStringAttribute.TIMING_ATTRIBUTE_SAMP_CLK_TIMEBASE_SRC,
@@ -316,21 +316,21 @@ async def _main():
             sync_pulse_source = await get_terminal_name_with_dev_prefix(
                 task=leader_input_task, terminal_name="SyncPulse"
             )
-            client.SetTimingAttributeString(
+            await client.SetTimingAttributeString(
                 nidaqmx_types.SetTimingAttributeStringRequest(
                     task=leader_output_task,
                     attribute=nidaqmx_types.TimingStringAttribute.TIMING_ATTRIBUTE_SYNC_PULSE_SRC,
                     value=sync_pulse_source,
                 )
             )
-            client.SetTimingAttributeString(
+            await client.SetTimingAttributeString(
                 nidaqmx_types.SetTimingAttributeStringRequest(
                     task=follower_input_task,
                     attribute=nidaqmx_types.TimingStringAttribute.TIMING_ATTRIBUTE_SYNC_PULSE_SRC,
                     value=sync_pulse_source,
                 )
             )
-            client.SetTimingAttributeString(
+            await client.SetTimingAttributeString(
                 nidaqmx_types.SetTimingAttributeStringRequest(
                     task=follower_output_task,
                     attribute=nidaqmx_types.TimingStringAttribute.TIMING_ATTRIBUTE_SYNC_PULSE_SRC,
@@ -342,21 +342,21 @@ async def _main():
             start_trigger = await get_terminal_name_with_dev_prefix(
                 task=leader_input_task, terminal_name="ai/StartTrigger"
             )
-            client.CfgDigEdgeStartTrig(
+            await client.CfgDigEdgeStartTrig(
                 nidaqmx_types.CfgDigEdgeStartTrigRequest(
                     task=leader_output_task,
                     trigger_source=start_trigger,
                     trigger_edge=nidaqmx_types.EDGE1_RISING,
                 )
             )
-            client.CfgDigEdgeStartTrig(
+            await client.CfgDigEdgeStartTrig(
                 nidaqmx_types.CfgDigEdgeStartTrigRequest(
                     task=follower_input_task,
                     trigger_source=start_trigger,
                     trigger_edge=nidaqmx_types.EDGE1_RISING,
                 )
             )
-            client.CfgDigEdgeStartTrig(
+            await client.CfgDigEdgeStartTrig(
                 nidaqmx_types.CfgDigEdgeStartTrigRequest(
                     task=follower_output_task,
                     trigger_source=start_trigger,
@@ -369,7 +369,7 @@ async def _main():
 
             # DAQmx Write code
             num_leader_samples_written = (
-                client.WriteAnalogF64(
+                await client.WriteAnalogF64(
                     nidaqmx_types.WriteAnalogF64Request(
                         task=leader_output_task,
                         num_samps_per_chan=250,
@@ -381,7 +381,7 @@ async def _main():
                 )
             ).samps_per_chan_written
             num_follower_samples_written = (
-                client.WriteAnalogF64(
+                await client.WriteAnalogF64(
                     nidaqmx_types.WriteAnalogF64Request(
                         task=follower_output_task,
                         num_samps_per_chan=250,
@@ -430,17 +430,17 @@ async def _main():
                 await done_event_stream.initial_metadata()
 
             # DAQmx Start code
-            client.StartTask(nidaqmx_types.StartTaskRequest(task=leader_output_task))
-            client.StartTask(nidaqmx_types.StartTaskRequest(task=follower_input_task))
-            client.StartTask(nidaqmx_types.StartTaskRequest(task=follower_output_task))
+            await client.StartTask(nidaqmx_types.StartTaskRequest(task=leader_output_task))
+            await client.StartTask(nidaqmx_types.StartTaskRequest(task=follower_input_task))
+            await client.StartTask(nidaqmx_types.StartTaskRequest(task=follower_output_task))
             # trigger task must be started last
-            client.StartTask(nidaqmx_types.StartTaskRequest(task=leader_input_task))
+            await client.StartTask(nidaqmx_types.StartTaskRequest(task=leader_input_task))
 
             async def read_data():
                 nonlocal num_leader_samples_written, num_follower_samples_written
                 async for every_n_samples_response in every_n_samples_stream:
                     leader_response: nidaqmx_types.ReadAnalogF64Response = (
-                        client.ReadAnalogF64(
+                        await client.ReadAnalogF64(
                             nidaqmx_types.ReadAnalogF64Request(
                                 task=leader_input_task,
                                 num_samps_per_chan=2000,
@@ -452,7 +452,7 @@ async def _main():
                     )
                     num_leader_samples_written += leader_response.samps_per_chan_read
                     follower_response: nidaqmx_types.ReadAnalogF64Response = (
-                        client.ReadAnalogF64(
+                        await client.ReadAnalogF64(
                             nidaqmx_types.ReadAnalogF64Request(
                                 task=follower_input_task,
                                 num_samps_per_chan=2000,
@@ -488,8 +488,9 @@ async def _main():
 
         except grpc.RpcError as rpc_error:
             error_message = rpc_error.details()
-            for key, value in rpc_error.trailing_metadata() or []:
-                if key == "ni-error":
+            for entry in rpc_error.trailing_metadata() or []:
+                if entry.key == "ni-error":
+                    value = entry.value if isinstance(entry.value, str) else entry.value.decode("utf-8")
                     error_message += f"\nError status: {value}"
             if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
                 error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"
