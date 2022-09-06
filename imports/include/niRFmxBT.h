@@ -75,6 +75,7 @@
 #define RFMXBT_ATTR_MODACC_RESULTS_EDR_PEAK_FREQUENCY_ERROR_WI_PLUS_W0_MAXIMUM                     0x00b04018
 #define RFMXBT_ATTR_MODACC_RESULTS_EDR_PEAK_FREQUENCY_ERROR_W0_MAXIMUM                             0x00b04019
 #define RFMXBT_ATTR_MODACC_RESULTS_LE_PEAK_FREQUENCY_ERROR_MAXIMUM                                 0x00b0401a
+#define RFMXBT_ATTR_MODACC_RESULTS_LE_INITIAL_FREQUENCY_ERROR_MAXIMUM                              0x00b04031
 #define RFMXBT_ATTR_MODACC_RESULTS_LE_INITIAL_FREQUENCY_DRIFT_MAXIMUM                              0x00b0401b
 #define RFMXBT_ATTR_MODACC_RESULTS_LE_PEAK_FREQUENCY_DRIFT_MAXIMUM                                 0x00b0401c
 #define RFMXBT_ATTR_MODACC_RESULTS_LE_PEAK_FREQUENCY_DRIFT_RATE_MAXIMUM                            0x00b0401d
@@ -182,6 +183,7 @@
 #define RFMXBT_VAL_TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO                                           1
 
 // Values for RFMXBT_ATTR_PACKET_TYPE
+#define RFMXBT_VAL_PACKET_TYPE_UNKNOWN                                                            -1
 #define RFMXBT_VAL_PACKET_TYPE_DH1                                                                0
 #define RFMXBT_VAL_PACKET_TYPE_DH3                                                                1
 #define RFMXBT_VAL_PACKET_TYPE_DH5                                                                2
@@ -199,7 +201,6 @@
 #define RFMXBT_VAL_PACKET_TYPE_3_EV3                                                              14
 #define RFMXBT_VAL_PACKET_TYPE_3_EV5                                                              15
 #define RFMXBT_VAL_PACKET_TYPE_LE                                                                 16
-#define RFMXBT_VAL_PACKET_TYPE_UNKNOWN                                                            -1
 
 // Values for RFMXBT_ATTR_PAYLOAD_BIT_PATTERN
 #define RFMXBT_VAL_PAYLOAD_BIT_PATTERN_STANDARD_DEFINED                                           0
@@ -1907,6 +1908,12 @@ int32 __stdcall RFmxBT_ModAccGetResultsEDRPeakFrequencyErrorW0Maximum(
 );
 
 int32 __stdcall RFmxBT_ModAccGetResultsLEPeakFrequencyErrorMaximum(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxBT_ModAccGetResultsLEInitialFrequencyErrorMaximum(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
