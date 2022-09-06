@@ -112,7 +112,7 @@ follower_output_task = None
 def check_for_warning(response):
     """Print to console if the status indicates a warning."""
     if response.status > 0:
-        warning_message = client.GetErrorStringResponse(
+        warning_message = client.GetErrorString(
             nidaqmx_types.ErrorMessageRequest(error_code=response.status)
         )
         sys.stderr.write(f"{warning_message.error_message}\nWarning status: {response.status}\n")

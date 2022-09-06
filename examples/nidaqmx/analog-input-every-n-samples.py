@@ -46,6 +46,14 @@ if len(sys.argv) >= 3:
 if len(sys.argv) >= 4:
     PHYSICAL_CHANNEL = sys.argv[3]
 
+def check_for_warning(response):
+    """Print to console if the status indicates a warning."""
+    if response.status > 0:
+        warning_message = client.GetErrorString(
+            nidaqmx_types.ErrorMessageRequest(error_code=response.status)
+        )
+        sys.stderr.write(f"{warning_message.error_message}\nWarning status: {response.status}\n")
+
 
 async def _main():
     client = None
@@ -54,14 +62,6 @@ async def _main():
     async with grpc.aio.insecure_channel(f"{SERVER_ADDRESS}:{SERVER_PORT}") as channel:
         try:
             client = grpc_nidaqmx.NiDAQmxStub(channel)
-
-            def check_for_warning(response):
-                """Print to console if the status indicates a warning."""
-                if response.status > 0:
-                    warning_message = client.GetErrorStringResponse(
-                        nidaqmx_types.ErrorMessageRequest(error_code=response.status)
-                    )
-                    sys.stderr.write(f"{warning_message.error_message}\nWarning status: {response.status}\n")
 
             create_response: nidaqmx_types.CreateTaskResponse = await client.CreateTask(nidaqmx_types.CreateTaskRequest())
             task = create_response.task

@@ -49,16 +49,16 @@ channel = grpc.insecure_channel(f"{SERVER_ADDRESS}:{SERVER_PORT}")
 client = grpc_nidaqmx.NiDAQmxStub(channel)
 task = None
 
+def check_for_warning(response):
+    """Print to console if the status indicates a warning."""
+    if response.status > 0:
+        warning_message = client.GetErrorString(
+            nidaqmx_types.ErrorMessageRequest(error_code=response.status)
+        )
+        sys.stderr.write(f"{warning_message.error_message}\nWarning status: {response.status}\n")
+
 
 try:
-    def check_for_warning(response):
-        """Print to console if the status indicates a warning."""
-        if response.status > 0:
-            warning_message = client.GetErrorStringResponse(
-                nidaqmx_types.ErrorMessageRequest(error_code=response.status)
-            )
-            sys.stderr.write(f"{warning_message.error_message}\nWarning status: {response.status}\n")
-
     response = client.CreateTask(nidaqmx_types.CreateTaskRequest(session_name="my task"))
     task = response.task
 
