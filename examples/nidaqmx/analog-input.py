@@ -124,5 +124,5 @@ except grpc.RpcError as rpc_error:
     print(f"{error_message}")
 finally:
     if task:
-        client.StopTask(nidaqmx_types.StopTaskRequest(task=task))
-        client.ClearTask(nidaqmx_types.ClearTaskRequest(task=task))
+        clear_task_response = client.ClearTask(nidaqmx_types.ClearTaskRequest(task=task))
+        check_for_warning(clear_task_response)

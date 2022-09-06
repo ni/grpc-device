@@ -77,9 +77,10 @@ try:
     start_task_response = client.StartTask(nidaqmx_types.StartTaskRequest(task=task))
     check_for_warning(start_task_response)
 
-    client.WaitUntilTaskDone(
+    wait_until_task_done_response = client.WaitUntilTaskDone(
         nidaqmx_types.WaitUntilTaskDoneRequest(task=task, time_to_wait=10.0)
     )
+    check_for_warning(wait_until_task_done_response)
 
     print(f"Output was successfully written to {COUNTER_NAME}.")
 except grpc.RpcError as rpc_error:
@@ -97,5 +98,5 @@ except grpc.RpcError as rpc_error:
     print(f"{error_message}")
 finally:
     if task:
-        client.StopTask(nidaqmx_types.StopTaskRequest(task=task))
-        client.ClearTask(nidaqmx_types.ClearTaskRequest(task=task))
+        clear_task_response = client.ClearTask(nidaqmx_types.ClearTaskRequest(task=task))
+        check_for_warning(clear_task_response)

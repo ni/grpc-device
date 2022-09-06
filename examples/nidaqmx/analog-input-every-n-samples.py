@@ -177,8 +177,8 @@ async def _main():
             print(f"{error_message}")
         finally:
             if client and task:
-                await client.StopTask(nidaqmx_types.StopTaskRequest(task=task))
-                await client.ClearTask(nidaqmx_types.ClearTaskRequest(task=task))
+                clear_task_response = await client.ClearTask(nidaqmx_types.ClearTaskRequest(task=task))
+                check_for_warning(clear_task_response)
 
 
 ## Run main
