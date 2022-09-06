@@ -26,6 +26,54 @@ void nierr_Status_initialize(struct nierr_Status * status)
    status->json = nullptr;
 }
 
+class DeviceContainerPtr
+{
+    public:
+    DeviceContainerPtr(NimxlcTerminalAdaptorRestrictedLibraryInterface* library, nimxlc_DeviceContainer container) {
+        library_ = library;
+        container_ = container;
+    }
+
+    ~DeviceContainerPtr() {
+        library_->DeviceContainer_destroy(container_);
+        container_ = nullptr;
+        library_ = nullptr;
+    }
+
+    operator nimxlc_DeviceContainer*()
+    {
+        return &container_;
+    }
+
+    private:
+    nimxlc_DeviceContainer container_;
+    NimxlcTerminalAdaptorRestrictedLibraryInterface* library_;
+};
+
+class TerminalContainerPtr
+{
+    public:
+    TerminalContainerPtr(NimxlcTerminalAdaptorRestrictedLibraryInterface* library, nimxlc_TerminalContainer container) {
+        library_ = library;
+        container_ = container;
+    }
+
+    ~TerminalContainerPtr() {
+        library_->TerminalContainer_destroy(container_);
+        container_ = nullptr;
+        library_ = nullptr;
+    }
+
+    operator nimxlc_TerminalContainer*()
+    {
+        return &container_;
+    }
+
+    private:
+    nimxlc_TerminalContainer container_;
+    NimxlcTerminalAdaptorRestrictedLibraryInterface* library_;
+};
+
 ::grpc::Status NimxlcTerminalAdaptorRestrictedService::GetDeviceContainer(::grpc::ServerContext* context, const GetDeviceContainerRequest* request, GetDeviceContainerResponse* response)
 {
     if (context->IsCancelled()) {
@@ -37,35 +85,34 @@ void nierr_Status_initialize(struct nierr_Status * status)
 
         nierr_Status status;
         nimxlcterminaladaptor_restricted_grpc::nierr_Status_initialize(&status);
-        nimxlc_DeviceContainer deviceContainer = library_->getDeviceContainer(session, &status);
+       
+        DeviceContainerPtr deviceContainerPtr(library_, library_->getDeviceContainer(session, &status));
         if (nierr_Status_isNotFatal(&status))
         {
-            nimxlc_DeviceIterator deviceIterator = library_->DeviceContainer_begin(deviceContainer);
-            while (!library_->DeviceIterator_isEnd(deviceContainer, deviceIterator) && nierr_Status_isNotFatal(&status))
+            nimxlc_DeviceIterator deviceIterator = library_->DeviceContainer_begin(*deviceContainerPtr);
+            while (!library_->DeviceIterator_isEnd(*deviceContainerPtr, deviceIterator) && nierr_Status_isNotFatal(&status))
             {
                 auto device = response->add_container_out();
-                device->set_name(library_->DeviceIterator_getDeviceName(deviceContainer, deviceIterator, &status));
-                device->set_supportsonboardclock(library_->DeviceIterator_supportsOnBoardClock(deviceContainer, deviceIterator, &status));
+                device->set_name(library_->DeviceIterator_getDeviceName(*deviceContainerPtr, deviceIterator, &status));
+                device->set_supportsonboardclock(library_->DeviceIterator_supportsOnBoardClock(*deviceContainerPtr, deviceIterator, &status));
 
-                nimxlc_TerminalContainer terminalContainer = library_->DeviceIterator_getTerminalContainer(deviceContainer, deviceIterator, &status);
+                TerminalContainerPtr terminalContainerPtr(library_, library_->DeviceIterator_getTerminalContainer(*deviceContainerPtr, deviceIterator, &status));
                 if (nierr_Status_isNotFatal(&status))
                 {
-                    nimxlc_TerminalIterator terminalIterator = library_->TerminalContainer_begin(terminalContainer);
-                    while (!library_->TerminalIterator_isEnd(terminalContainer, terminalIterator) && nierr_Status_isNotFatal(&status))
+                    nimxlc_TerminalIterator terminalIterator = library_->TerminalContainer_begin(*terminalContainerPtr);
+                    while (!library_->TerminalIterator_isEnd(*terminalContainerPtr, terminalIterator) && nierr_Status_isNotFatal(&status))
                     {
                         auto terminal = device->add_terminals();
-                        terminal->set_name(library_->TerminalIterator_getTerminalName(terminalContainer, terminalIterator, &status));
-                        terminal->set_visibility(library_->TerminalIterator_getVisibility(terminalContainer, terminalIterator, &status));
+                        terminal->set_name(library_->TerminalIterator_getTerminalName(*terminalContainerPtr, terminalIterator, &status));
+                        terminal->set_visibility(library_->TerminalIterator_getVisibility(*terminalContainerPtr, terminalIterator, &status));
 
                         library_->TerminalIterator_next(&terminalIterator);
                     }
-                    library_->TerminalContainer_destroy(terminalContainer);
                 }
                 
                 library_->DeviceIterator_next(&deviceIterator);
             }
         }
-        library_->DeviceContainer_destroy(deviceContainer);
 
         response->set_status((&status)->code);
 
