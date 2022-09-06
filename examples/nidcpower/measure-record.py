@@ -59,21 +59,13 @@ if len(sys.argv) >= 4:
     OPTIONS = ""
 
 
-def check_for_error(vi, status):
-    """Raise an exception if the status indicates an error."""
-    if status != 0:
-        error_message_response = client.ErrorMessage(
-            nidcpower_types.ErrorMessageRequest(vi=vi, error_code=status)
-        )
-        raise Exception(error_message_response.error_message)
-
-
-def check_for_initialization_error(response):
-    """Raise an exception if an error was returned from Initialize."""
-    if response.status < 0:
-        raise RuntimeError(f"Error: {response.error_message or response.status}")
+def check_for_warning(response, vi):
+    """Print to console if the status indicates a warning."""
     if response.status > 0:
-        sys.stderr.write(f"Warning: {response.error_message or response.status}\n")
+        warning_message = client.ErrorMessage(
+            nidcpower_types.ErrorMessageRequest(vi=vi, error_code=response.status)
+        )
+        sys.stderr.write(f"{warning_message}\nWarning status: {response.status}\n")
 
 
 # Create the communication channel for the remote host and create connections to the NI-DCPower and
@@ -93,7 +85,6 @@ try:
         )
     )
     vi = initialize_with_channels_response.vi
-    check_for_initialization_error(initialize_with_channels_response)
 
     # Specify when the measure unit should acquire measurements.
     configure_measure_when = client.SetAttributeViInt32(
@@ -103,15 +94,13 @@ try:
             attribute_value=nidcpower_types.NiDCPowerInt32AttributeValues.NIDCPOWER_INT32_MEASURE_WHEN_VAL_AUTOMATICALLY_AFTER_SOURCE_COMPLETE,
         )
     )
-    check_for_error(vi, configure_measure_when.status)
 
-    # set the voltage level.
+    # Set the voltage level.
     configure_voltage_level = client.ConfigureVoltageLevel(
         nidcpower_types.ConfigureVoltageLevelRequest(vi=vi, level=VOLTAGE_LEVEL)
     )
-    check_for_error(vi, configure_voltage_level.status)
 
-    # Sspecify how many measurements compose a measure record.
+    # Specify how many measurements compose a measure record.
     configure_measure_record_length = client.SetAttributeViInt32(
         nidcpower_types.SetAttributeViInt32Request(
             vi=vi,
@@ -119,7 +108,6 @@ try:
             attribute_value=RECORD_LENGTH,
         )
     )
-    check_for_error(vi, configure_measure_record_length.status)
 
     # Specify whether to take continuous measurements. Set it to False for continuous measurement.
     configure_measure_record_length_is_finite = client.SetAttributeViBoolean(
@@ -129,32 +117,29 @@ try:
             attribute_value=False,
         )
     )
-    check_for_error(vi, configure_measure_record_length_is_finite.status)
 
-    # commit the session.
+    # Commit the session.
     commit_response = client.Commit(
         nidcpower_types.CommitRequest(
             vi=vi,
         )
     )
-    check_for_error(vi, commit_response.status)
 
-    # get measure_record_delta_time.
+    # Get measure_record_delta_time.
     get_measure_record_delta_time = client.GetAttributeViReal64(
         nidcpower_types.GetAttributeViReal64Request(
             vi=vi,
             attribute_id=nidcpower_types.NiDCPowerAttribute.NIDCPOWER_ATTRIBUTE_MEASURE_RECORD_DELTA_TIME,
         )
     )
-    check_for_error(vi, get_measure_record_delta_time.status)
 
-    # initiate the session.
+    # Initiate the session.
     initiate_response = client.Initiate(
         nidcpower_types.InitiateRequest(
             vi=vi,
         )
     )
-    check_for_error(vi, initiate_response.status)
+    check_for_warning(initiate_response, vi)
 
     # Setup a plot to draw the captured waveform.
     fig = plt.figure("Waveform Graph")
@@ -187,7 +172,7 @@ try:
             fetch_multiple_response = client.FetchMultiple(
                 nidcpower_types.FetchMultipleRequest(vi=vi, timeout=10, count=RECORD_LENGTH)
             )
-            check_for_error(vi, fetch_multiple_response.status)
+            check_for_warning(fetch_multiple_response, vi)
 
             # Append the fetched values in the buffer.
             y_axis.extend(fetch_multiple_response.voltage_measurements)
@@ -218,6 +203,10 @@ try:
 
 except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
+    for entry in rpc_error.trailing_metadata() or []:
+        if entry.key == "ni-error":
+            value = entry.value if isinstance(entry.value, str) else entry.value.decode("utf-8")
+            error_message += f"\nError status: {value}"
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
         error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"
     elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
@@ -228,5 +217,5 @@ except grpc.RpcError as rpc_error:
 
 finally:
     if "vi" in vars() and vi.id != 0:
-        # close the session.
-        check_for_error(vi, (client.Close(nidcpower_types.CloseRequest(vi=vi))).status)
+        # Close the session.
+        client.Close(nidcpower_types.CloseRequest(vi=vi))

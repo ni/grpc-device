@@ -18,7 +18,7 @@ static const char* kFileNotFoundMessage = "The following certificate file was no
 static const char* kInvalidExePathMessage = "The server was unable to resolve the current executable path.";
 static const char* kInvalidMaxMessageSizeMessage = "The max message size must be an integer.";
 static const char* kInvalidFeatureToggleMessage = "Feature Toggles must be specified as boolean fields in the form \"feature_toggles\": { \"feature1\": true, \"feature2\": false }. \n\n";
-static const char* kInvalidCodeReadinessMessage = "code_readiness must be a string in [Release, NextRelease, Incomplete, Prototype].\n\n";
+static const char* kInvalidCodeReadinessMessage = "code_readiness must be a string in [Release, RestrictedRelease, NextRelease, RestrictedNextRelease, Incomplete, Prototype].\n\n";
 static const char* kDefaultAddressPrefix = "[::]:";
 constexpr int UNLIMITED_MAX_MESSAGE_SIZE = -1;
 

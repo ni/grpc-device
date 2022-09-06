@@ -66,15 +66,6 @@ niscope_client = grpc_niscope.NiScopeStub(channel)
 session_client = grpc_session.SessionUtilitiesStub(channel)
 
 
-def check_for_error(vi, status):
-    """Raise an exception if the status indicates an error."""
-    if status != 0:
-        error_message_response = niscope_client.ErrorMessage(
-            niscope_types.ErrorMessageRequest(vi=vi, error_code=status)
-        )
-        raise Exception(error_message_response.error_message)
-
-
 try:
     # Reset server to start in a fresh state.
     reset_server_response = session_client.ResetServer(session_types.ResetServerRequest())
@@ -89,7 +80,6 @@ try:
         )
     )
     vi = init_with_options_response.vi
-    check_for_error(vi, init_with_options_response.status)
     print(f"Session initialized with name {session_name} and id {vi.id}.\n")
 
     # Check if session is reserved by client 1.
@@ -160,6 +150,10 @@ try:
 # If NI-SCOPE API or Session API throws an exception, print the error message.
 except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
+    for entry in rpc_error.trailing_metadata() or []:
+        if entry.key == "ni-error":
+            value = entry.value if isinstance(entry.value, str) else entry.value.decode("utf-8")
+            error_message += f"\nError status: {value}"
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
         error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"
     elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:

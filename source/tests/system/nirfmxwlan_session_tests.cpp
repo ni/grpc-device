@@ -1,8 +1,6 @@
-#include <gtest/gtest.h>
-#include <nlohmann/json.hpp>
-
 #include "device_server.h"
 #include "nirfmxwlan/nirfmxwlan_client.h"
+#include "tests/utilities/test_helpers.h"
 
 namespace ni {
 namespace tests {
@@ -10,7 +8,6 @@ namespace system {
 namespace {
 
 namespace rfmxwlan = nirfmxwlan_grpc;
-using namespace ::nlohmann;
 
 const int kInvalidRsrc = -200220;
 const int kInvalidRFmxWLANSession = -380598;
@@ -45,6 +42,7 @@ class NiRFmxWLANSessionTest : public ::testing::Test {
     request.set_session_name(session_name);
 
     ::grpc::Status status = GetStub()->Initialize(&context, request, response);
+    nidevice_grpc::experimental::client::raise_if_error(status, context);
     return status;
   }
 
@@ -56,6 +54,7 @@ class NiRFmxWLANSessionTest : public ::testing::Test {
     request.set_force_destroy(force_destroy);
 
     ::grpc::Status status = GetStub()->Close(&context, request, response);
+    nidevice_grpc::experimental::client::raise_if_error(status, context);
     return status;
   }
 
@@ -86,12 +85,14 @@ TEST_F(NiRFmxWLANSessionTest, InitializeSessionWithDeviceAndNoSessionName_Create
 
 TEST_F(NiRFmxWLANSessionTest, InitializeSessionWithoutDevice_ReturnsDriverError)
 {
-  rfmxwlan::InitializeResponse response;
-  ::grpc::Status status = call_initialize(kRFmxWLANTestInvalidRsrc, "", "", &response);
-
-  EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status.error_code());
-  auto error = json::parse(status.error_message());
-  EXPECT_EQ(kInvalidRsrc, error.value("code", 0));
+  try {
+    rfmxwlan::InitializeResponse response;
+    call_initialize(kRFmxWLANTestInvalidRsrc, "", "", &response);
+    FAIL() << "We shouldn't get here.";
+  }
+  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
+    expect_driver_error(ex, kInvalidRsrc);
+  }
 }
 
 TEST_F(NiRFmxWLANSessionTest, InitializedSession_CloseSession_ClosesDriverSession)
@@ -139,16 +140,14 @@ TEST_F(NiRFmxWLANSessionTest, InvalidSession_CloseSession_ReturnsInvalidSessionE
   nidevice_grpc::Session session;
   session.set_id(0UL);
 
-  ::grpc::ClientContext context;
-  rfmxwlan::CloseRequest request;
-  request.mutable_instrument()->set_id(session.id());
-  request.set_force_destroy(false);
-  rfmxwlan::CloseResponse response;
-  ::grpc::Status status = GetStub()->Close(&context, request, &response);
-
-  EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status.error_code());
-  auto error = json::parse(status.error_message());
-  EXPECT_EQ(kInvalidRFmxWLANSession, error.value("code", 0));
+  try {
+    rfmxwlan::CloseResponse response;
+    call_close(session, false, &response);
+    FAIL() << "We shouldn't get here.";
+  }
+  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
+    expect_driver_error(ex, kInvalidRFmxWLANSession);
+  }
 }
 
 TEST_F(NiRFmxWLANSessionTest, CallInitializeTwiceWithSameSessionNameOnSameDevice_CloseSessionTwice_SecondCloseReturnsInvalidSessionError)
@@ -166,15 +165,18 @@ TEST_F(NiRFmxWLANSessionTest, CallInitializeTwiceWithSameSessionNameOnSameDevice
   nidevice_grpc::Session session_two = init_response_two.instrument();
   rfmxwlan::CloseResponse close_response_one, close_response_two;
   status_one = call_close(session_one, false, &close_response_one);
-  status_two = call_close(session_two, false, &close_response_two);
-
   EXPECT_TRUE(status_one.ok());
   EXPECT_EQ(0, close_response_one.status());
-  // Initialize was only called once in the driver since the second init call to the service found the Session by the same name and returned it.
-  // Therefore if we try to close the session again the driver will respond that it's not a valid session (it's already been closed).
-  EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status_two.error_code());
-  auto error = json::parse(status_two.error_message());
-  EXPECT_EQ(kInvalidRFmxWLANSession, error.value("code", 0));
+
+  try {
+    // Initialize was only called once in the driver since the second init call to the service found the Session by the same name and returned it.
+    // Therefore if we try to close the session again the driver will respond that it's not a valid session (it's already been closed).
+    call_close(session_two, false, &close_response_two);
+    FAIL() << "We shouldn't get here.";
+  }
+  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
+    expect_driver_error(ex, kInvalidRFmxWLANSession);
+  }
 }
 
 }  // namespace

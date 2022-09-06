@@ -28,7 +28,8 @@ configure_for_homogeneous_triggers(const StubPtr& stub, const std::vector<nidevi
   auto response = ConfigureForHomogeneousTriggersResponse{};
 
   raise_if_error(
-      stub->ConfigureForHomogeneousTriggers(&context, request, &response));
+      stub->ConfigureForHomogeneousTriggers(&context, request, &response),
+      context);
 
   return response;
 }
@@ -45,7 +46,8 @@ finish_sync_pulse_sender_synchronize(const StubPtr& stub, const std::vector<nide
   auto response = FinishSyncPulseSenderSynchronizeResponse{};
 
   raise_if_error(
-      stub->FinishSyncPulseSenderSynchronize(&context, request, &response));
+      stub->FinishSyncPulseSenderSynchronize(&context, request, &response),
+      context);
 
   return response;
 }
@@ -63,7 +65,8 @@ get_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& sessi
   auto response = GetAttributeViReal64Response{};
 
   raise_if_error(
-      stub->GetAttributeViReal64(&context, request, &response));
+      stub->GetAttributeViReal64(&context, request, &response),
+      context);
 
   return response;
 }
@@ -81,7 +84,8 @@ get_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& sess
   auto response = GetAttributeViSessionResponse{};
 
   raise_if_error(
-      stub->GetAttributeViSession(&context, request, &response));
+      stub->GetAttributeViSession(&context, request, &response),
+      context);
 
   return response;
 }
@@ -99,7 +103,8 @@ get_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& sessi
   auto response = GetAttributeViStringResponse{};
 
   raise_if_error(
-      stub->GetAttributeViString(&context, request, &response));
+      stub->GetAttributeViString(&context, request, &response),
+      context);
 
   return response;
 }
@@ -114,7 +119,8 @@ get_extended_error_info(const StubPtr& stub)
   auto response = GetExtendedErrorInfoResponse{};
 
   raise_if_error(
-      stub->GetExtendedErrorInfo(&context, request, &response));
+      stub->GetExtendedErrorInfo(&context, request, &response),
+      context);
 
   return response;
 }
@@ -130,7 +136,8 @@ initiate(const StubPtr& stub, const std::vector<nidevice_grpc::Session>& session
   auto response = InitiateResponse{};
 
   raise_if_error(
-      stub->Initiate(&context, request, &response));
+      stub->Initiate(&context, request, &response),
+      context);
 
   return response;
 }
@@ -146,7 +153,8 @@ is_done(const StubPtr& stub, const std::vector<nidevice_grpc::Session>& sessions
   auto response = IsDoneResponse{};
 
   raise_if_error(
-      stub->IsDone(&context, request, &response));
+      stub->IsDone(&context, request, &response),
+      context);
 
   return response;
 }
@@ -165,7 +173,8 @@ set_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& sessi
   auto response = SetAttributeViReal64Response{};
 
   raise_if_error(
-      stub->SetAttributeViReal64(&context, request, &response));
+      stub->SetAttributeViReal64(&context, request, &response),
+      context);
 
   return response;
 }
@@ -184,7 +193,8 @@ set_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& sess
   auto response = SetAttributeViSessionResponse{};
 
   raise_if_error(
-      stub->SetAttributeViSession(&context, request, &response));
+      stub->SetAttributeViSession(&context, request, &response),
+      context);
 
   return response;
 }
@@ -203,7 +213,8 @@ set_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& sessi
   auto response = SetAttributeViStringResponse{};
 
   raise_if_error(
-      stub->SetAttributeViString(&context, request, &response));
+      stub->SetAttributeViString(&context, request, &response),
+      context);
 
   return response;
 }
@@ -220,7 +231,8 @@ setup_for_sync_pulse_sender_synchronize(const StubPtr& stub, const std::vector<n
   auto response = SetupForSyncPulseSenderSynchronizeResponse{};
 
   raise_if_error(
-      stub->SetupForSyncPulseSenderSynchronize(&context, request, &response));
+      stub->SetupForSyncPulseSenderSynchronize(&context, request, &response),
+      context);
 
   return response;
 }
@@ -237,7 +249,8 @@ synchronize(const StubPtr& stub, const std::vector<nidevice_grpc::Session>& sess
   auto response = SynchronizeResponse{};
 
   raise_if_error(
-      stub->Synchronize(&context, request, &response));
+      stub->Synchronize(&context, request, &response),
+      context);
 
   return response;
 }
@@ -254,7 +267,8 @@ synchronize_to_sync_pulse_sender(const StubPtr& stub, const std::vector<nidevice
   auto response = SynchronizeToSyncPulseSenderResponse{};
 
   raise_if_error(
-      stub->SynchronizeToSyncPulseSender(&context, request, &response));
+      stub->SynchronizeToSyncPulseSender(&context, request, &response),
+      context);
 
   return response;
 }
@@ -271,7 +285,8 @@ wait_until_done(const StubPtr& stub, const std::vector<nidevice_grpc::Session>& 
   auto response = WaitUntilDoneResponse{};
 
   raise_if_error(
-      stub->WaitUntilDone(&context, request, &response));
+      stub->WaitUntilDone(&context, request, &response),
+      context);
 
   return response;
 }

@@ -1396,6 +1396,12 @@ attributes = {
         'name': 'MODACC_IQ_TIMING_SKEW_CORRECTION_ENABLED',
         'type': 'int32'
     },
+    3162238: {
+        'access': 'read-write',
+        'enum': 'ModAccMulticarrierTimeSynchronizationMode',
+        'name': 'MODACC_MULTICARRIER_TIME_SYNCHRONIZATION_MODE',
+        'type': 'int32'
+    },
     3170304: {
         'access': 'read-write',
         'name': 'OBW_MEASUREMENT_ENABLED',

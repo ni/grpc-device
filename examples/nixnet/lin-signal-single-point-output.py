@@ -54,15 +54,6 @@ SIGNAL_LIST = "MasterSignal1_U16,MasterSignal2_U16"
 NUM_SIGNALS = 2
 
 
-def check_for_error(status):
-    """Raise an exception if the status indicates an error."""
-    if status != 0:
-        error_message_response = client.StatusToString(
-            nixnet_types.StatusToStringRequest(status_id=status)
-        )
-        raise Exception(error_message_response.status_description)
-
-
 i = 0
 session = None
 value_buffer = [0.0] * NUM_SIGNALS
@@ -71,6 +62,18 @@ value_buffer = [0.0] * NUM_SIGNALS
 # session services.
 channel = grpc.insecure_channel(f"{SERVER_ADDRESS}:{SERVER_PORT}")
 client = grpc_nixnet.NiXnetStub(channel)
+
+
+def check_for_warning(response):
+    """Print to console if the status indicates a warning."""
+    if response.status > 0:
+        warning_message = client.StatusToString(
+            nixnet_types.StatusToStringRequest(status_id=response.status)
+        )
+        sys.stderr.write(
+            f"{warning_message.status_description}\nWarning status: {response.status}\n"
+        )
+
 
 # Change this to set the interface to slave mode
 IS_MASTER = 1
@@ -99,22 +102,19 @@ try:
             mode=nixnet_types.CREATE_SESSION_MODE_SIGNAL_OUT_SINGLE_POINT,
         )
     )
-    check_for_error(create_session_response.status)
-
     session = create_session_response.session
     print("Session Created Successfully. \n")
 
     if IS_MASTER != 0:
         # Set the schedule - this will also automatically enable master mode
         write_state_value = nixnet_types.WriteStateValue(lin_schedule_change=SCHEDULE_INDEX)
-        write_state_response = client.WriteState(
+        client.WriteState(
             nixnet_types.WriteStateRequest(
                 session=session,
                 state_id=nixnet_types.WRITE_STATE_LIN_SCHEDULE_CHANGE,
                 state_value=write_state_value,
             )
         )
-        check_for_error(write_state_response.status)
 
     print("Writing 10 values to LIN Interface.\n")
 
@@ -126,7 +126,7 @@ try:
         write_signal_response = client.WriteSignalSinglePoint(
             nixnet_types.WriteSignalSinglePointRequest(session=session, value_buffer=value_buffer)
         )
-        check_for_error(write_signal_response.status)
+        check_for_warning(write_signal_response)
 
         print("Signals sent:")
         print(f"Signal 1: {value_buffer[0]}")
@@ -135,6 +135,10 @@ try:
 
 except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
+    for entry in rpc_error.trailing_metadata() or []:
+        if entry.key == "ni-error":
+            value = entry.value if isinstance(entry.value, str) else entry.value.decode("utf-8")
+            error_message += f"\nError status: {value}"
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
         error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"
     elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
@@ -144,7 +148,6 @@ except grpc.RpcError as rpc_error:
     print(f"{error_message}")
 
 finally:
+    # Clear the XNET session.
     if session:
-        # clear the XNET session.
-        check_for_error(client.Clear(nixnet_types.ClearRequest(session=session)).status)
-        print("Session cleared successfully!\n")
+        client.Clear(nixnet_types.ClearRequest(session=session))

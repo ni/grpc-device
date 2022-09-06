@@ -154,6 +154,7 @@ class NiRFmxWLANLibraryInterface {
   virtual int32 OFDMModAccFetchPPDUPeakPower(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* ppduPeakPowerMaximum) = 0;
   virtual int32 OFDMModAccFetchPPDUType(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* ppduType) = 0;
   virtual int32 OFDMModAccFetchPSDUCRCStatus(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* psducrcStatus) = 0;
+  virtual int32 OFDMModAccFetchPhaseNoisePSDMeanTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 phaseNoisePSDMean[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 OFDMModAccFetchPilotConstellationTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle pilotConstellation[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 OFDMModAccFetchPreambleAveragePowers80211ac(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* vhtsigaAveragePowerMean, float64* vhtstfAveragePowerMean, float64* vhtltfAveragePowerMean, float64* vhtsigbAveragePowerMean) = 0;
   virtual int32 OFDMModAccFetchPreambleAveragePowers80211ax(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* rlsigAveragePowerMean, float64* hesigaAveragePowerMean, float64* hesigbAveragePowerMean, float64* hestfAveragePowerMean, float64* heltfAveragePowerMean) = 0;

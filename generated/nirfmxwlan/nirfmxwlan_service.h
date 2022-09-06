@@ -182,6 +182,7 @@ public:
   ::grpc::Status OFDMModAccFetchPPDUPeakPower(::grpc::ServerContext* context, const OFDMModAccFetchPPDUPeakPowerRequest* request, OFDMModAccFetchPPDUPeakPowerResponse* response) override;
   ::grpc::Status OFDMModAccFetchPPDUType(::grpc::ServerContext* context, const OFDMModAccFetchPPDUTypeRequest* request, OFDMModAccFetchPPDUTypeResponse* response) override;
   ::grpc::Status OFDMModAccFetchPSDUCRCStatus(::grpc::ServerContext* context, const OFDMModAccFetchPSDUCRCStatusRequest* request, OFDMModAccFetchPSDUCRCStatusResponse* response) override;
+  ::grpc::Status OFDMModAccFetchPhaseNoisePSDMeanTrace(::grpc::ServerContext* context, const OFDMModAccFetchPhaseNoisePSDMeanTraceRequest* request, OFDMModAccFetchPhaseNoisePSDMeanTraceResponse* response) override;
   ::grpc::Status OFDMModAccFetchPilotConstellationTrace(::grpc::ServerContext* context, const OFDMModAccFetchPilotConstellationTraceRequest* request, OFDMModAccFetchPilotConstellationTraceResponse* response) override;
   ::grpc::Status OFDMModAccFetchPreambleAveragePowers80211ac(::grpc::ServerContext* context, const OFDMModAccFetchPreambleAveragePowers80211acRequest* request, OFDMModAccFetchPreambleAveragePowers80211acResponse* response) override;
   ::grpc::Status OFDMModAccFetchPreambleAveragePowers80211ax(::grpc::ServerContext* context, const OFDMModAccFetchPreambleAveragePowers80211axRequest* request, OFDMModAccFetchPreambleAveragePowers80211axResponse* response) override;
@@ -277,7 +278,7 @@ private:
   NiRFmxWLANLibraryInterface* library_;
   ResourceRepositorySharedPtr session_repository_;
   ViSessionResourceRepositorySharedPtr vi_session_resource_repository_;
-  ::grpc::Status ConvertApiErrorStatusForNiRFmxInstrHandle(google::protobuf::int32 status, niRFmxInstrHandle instrumentHandle);
+  ::grpc::Status ConvertApiErrorStatusForNiRFmxInstrHandle(::grpc::ServerContext* context, int32_t status, niRFmxInstrHandle instrumentHandle);
   std::map<std::int32_t, std::string> frequencyreferencesource_input_map_ { {1, "OnboardClock"},{2, "RefIn"},{3, "PXI_Clk"},{4, "ClkIn"}, };
   std::map<std::string, std::int32_t> frequencyreferencesource_output_map_ { {"OnboardClock", 1},{"RefIn", 2},{"PXI_Clk", 3},{"ClkIn", 4}, };
   std::map<std::int32_t, std::string> nirfmxwlanstringattributevaluesmapped_input_map_ { {1, "PFI0"},{2, "PFI1"},{3, "PXI_Trig0"},{4, "PXI_Trig1"},{5, "PXI_Trig2"},{6, "PXI_Trig3"},{7, "PXI_Trig4"},{8, "PXI_Trig5"},{9, "PXI_Trig6"},{10, "PXI_Trig7"},{11, "PXI_STAR"},{12, "PXIe_DStarB"},{13, "TimerEvent"}, };

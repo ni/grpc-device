@@ -55,15 +55,6 @@ SIGNAL_LIST = "FlexRayEventSignal1,FlexRayEventSignal2"
 NUM_SIGNALS = 2
 
 
-def check_for_error(status):
-    """Raise an exception if the status indicates an error."""
-    if status != 0:
-        error_message_response = client.StatusToString(
-            nixnet_types.StatusToStringRequest(status_id=status)
-        )
-        raise Exception(error_message_response.status_description)
-
-
 i = 0
 keyslot_id = 1
 session = None
@@ -72,6 +63,18 @@ session = None
 # session services.
 channel = grpc.insecure_channel(f"{SERVER_ADDRESS}:{SERVER_PORT}")
 client = grpc_nixnet.NiXnetStub(channel)
+
+
+def check_for_warning(response):
+    """Print to console if the status indicates a warning."""
+    if response.status > 0:
+        warning_message = client.StatusToString(
+            nixnet_types.StatusToStringRequest(status_id=response.status)
+        )
+        sys.stderr.write(
+            f"{warning_message.status_description}\nWarning status: {response.status}\n"
+        )
+
 
 # Display parameters that will be used for the example.
 print("Interface: " + INTERFACE, "Database: " + DATABASE, "Signal List: " + SIGNAL_LIST, sep="\n")
@@ -88,20 +91,17 @@ try:
             mode=nixnet_types.CREATE_SESSION_MODE_SIGNAL_IN_SINGLE_POINT,
         )
     )
-    check_for_error(create_session_response.status)
-
     session = create_session_response.session
     print("Session Created Successfully.\n")
 
     # Set the Key Slot
-    set_property_response = client.SetProperty(
+    client.SetProperty(
         nixnet_types.SetPropertyRequest(
             session=session,
             property_id=nixnet_types.PROPERTY_SESSION_INTF_FLEX_RAY_KEY_SLOT_ID,
             u32_scalar=keyslot_id,
         )
     )
-    check_for_error(set_property_response.status)
 
     # If no values are being written on the FlexRay port, the signals read would contain the
     # default value of 0.0
@@ -113,8 +113,7 @@ try:
                 number_of_signals=NUM_SIGNALS,
             )
         )
-        check_for_error(read_signal_response.status)
-
+        check_for_warning(read_signal_response)
         value_buffer = read_signal_response.value_buffer
 
         print("Signals received:")
@@ -124,6 +123,10 @@ try:
 
 except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
+    for entry in rpc_error.trailing_metadata() or []:
+        if entry.key == "ni-error":
+            value = entry.value if isinstance(entry.value, str) else entry.value.decode("utf-8")
+            error_message += f"\nError status: {value}"
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
         error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"
     elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
@@ -133,7 +136,6 @@ except grpc.RpcError as rpc_error:
     print(f"{error_message}")
 
 finally:
+    # Clear the XNET session.
     if session:
-        # clear the XNET session.
-        check_for_error(client.Clear(nixnet_types.ClearRequest(session=session)).status)
-        print("Session cleared successfully!\n")
+        client.Clear(nixnet_types.ClearRequest(session=session))

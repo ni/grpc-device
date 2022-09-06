@@ -63,7 +63,8 @@ inline GetPropertyResponse get_property(const client::StubPtr& stub, const nidev
   auto response = GetPropertyResponse{};
 
   client::raise_if_error(
-      stub->GetProperty(&context, request, &response));
+      stub->GetProperty(&context, request, &response),
+      context);
 
   return response;
 }
@@ -151,7 +152,8 @@ inline SetPropertyResponse set_property(
   auto response = SetPropertyResponse{};
 
   client::raise_if_error(
-      stub->SetProperty(&context, request, &response));
+      stub->SetProperty(&context, request, &response),
+      context);
 
   return response;
 }
@@ -174,7 +176,8 @@ inline DbGetPropertyResponse db_get_property(const client::StubPtr& stub, const 
   auto response = DbGetPropertyResponse{};
 
   client::raise_if_error(
-      stub->DbGetProperty(&context, request, &response));
+      stub->DbGetProperty(&context, request, &response),
+      context);
 
   return response;
 }

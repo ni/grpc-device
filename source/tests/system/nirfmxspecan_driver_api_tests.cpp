@@ -1,7 +1,6 @@
 #include <gmock/gmock.h>
-#include <gtest/gtest.h>
-#include <nlohmann/json.hpp>
 
+#include <nlohmann/json.hpp>
 #include <thread>
 #include <tuple>
 
@@ -9,13 +8,13 @@
 #include "nirfmxinstr/nirfmxinstr_client.h"
 #include "nirfmxspecan/nirfmxspecan_client.h"
 #include "rfmx_macros.h"
+#include "tests/utilities/test_helpers.h"
 #include "waveform_helpers.h"
 
 using namespace nirfmxspecan_grpc;
 namespace client = nirfmxspecan_grpc::experimental::client;
 namespace instr_client = nirfmxinstr_grpc::experimental::client;
 namespace pb = google::protobuf;
-using nlohmann::json;
 using namespace ::testing;
 
 namespace ni {
@@ -68,9 +67,9 @@ class NiRFmxSpecAnDriverApiTests : public ::testing::Test {
       EXPECT_EQ(0, response.status());
       return true;
     }
-    catch (const std::runtime_error& ex) {
-      auto error = json::parse(ex.what());
-      return error.value("code", 0) != INVALID_SESSION_HANDLE_ERROR;
+    catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
+      const auto& error = ex.Trailers().find("ni-error")->second;
+      return std::stoi(error) != INVALID_SESSION_HANDLE_ERROR;
     }
   }
 
@@ -650,10 +649,10 @@ TEST_P(NiRFmxSpecAnDriverApiConflictingResourceInitTests, InitializeResource_Ini
 
   try {
     init(stub(), PXI_5663, std::get<1>(GetParam()));
-    EXPECT_FALSE(true);
+    FAIL() << "We shouldn't get here.";
   }
-  catch (const std::runtime_error& ex) {
-    EXPECT_STATUS_ERROR(DEVICE_IN_USE_ERROR, ex.what());
+  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
+    expect_driver_error(ex, DEVICE_IN_USE_ERROR);
   }
 }
 

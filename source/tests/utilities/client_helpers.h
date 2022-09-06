@@ -55,10 +55,36 @@ class simple_variant {
   int8_t slot_{-1};
 };
 
-inline void raise_if_error(const ::grpc::Status& status)
+class grpc_driver_error : public std::runtime_error {
+ private:
+  ::grpc::StatusCode code_;
+  std::multimap<std::string, std::string> trailers_;
+
+ public:
+  grpc_driver_error(const std::string& message, ::grpc::StatusCode code, const std::multimap<grpc::string_ref, grpc::string_ref>& trailers)
+      : std::runtime_error(message), code_(code)
+  {
+    for (const auto& trailer : trailers) {
+      trailers_.emplace(
+          std::string(trailer.first.data(), trailer.first.length()),
+          std::string(trailer.second.data(), trailer.second.length()));
+    }
+  }
+  ::grpc::StatusCode StatusCode() const
+  {
+    return code_;
+  }
+  const std::multimap<std::string, std::string>& Trailers() const
+  {
+    return trailers_;
+  }
+};
+
+inline void
+raise_if_error(const ::grpc::Status& status, const ::grpc::ClientContext& context)
 {
   if (!status.ok()) {
-    throw std::runtime_error(status.error_message());
+    throw grpc_driver_error(status.error_message(), status.error_code(), context.GetServerTrailingMetadata());
   }
 }
 

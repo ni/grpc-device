@@ -148,6 +148,7 @@ public:
   ::grpc::Status ModAccClearNoiseCalibrationDatabase(::grpc::ServerContext* context, const ModAccClearNoiseCalibrationDatabaseRequest* request, ModAccClearNoiseCalibrationDatabaseResponse* response) override;
   ::grpc::Status ModAccFetchCompositeEVM(::grpc::ServerContext* context, const ModAccFetchCompositeEVMRequest* request, ModAccFetchCompositeEVMResponse* response) override;
   ::grpc::Status ModAccFetchFrequencyErrorMean(::grpc::ServerContext* context, const ModAccFetchFrequencyErrorMeanRequest* request, ModAccFetchFrequencyErrorMeanResponse* response) override;
+  ::grpc::Status ModAccFetchFrequencyErrorPerSlotMaximumTrace(::grpc::ServerContext* context, const ModAccFetchFrequencyErrorPerSlotMaximumTraceRequest* request, ModAccFetchFrequencyErrorPerSlotMaximumTraceResponse* response) override;
   ::grpc::Status ModAccFetchIQGainImbalancePerSubcarrierMeanTrace(::grpc::ServerContext* context, const ModAccFetchIQGainImbalancePerSubcarrierMeanTraceRequest* request, ModAccFetchIQGainImbalancePerSubcarrierMeanTraceResponse* response) override;
   ::grpc::Status ModAccFetchIQQuadratureErrorPerSubcarrierMeanTrace(::grpc::ServerContext* context, const ModAccFetchIQQuadratureErrorPerSubcarrierMeanTraceRequest* request, ModAccFetchIQQuadratureErrorPerSubcarrierMeanTraceResponse* response) override;
   ::grpc::Status ModAccFetchInBandEmissionTrace(::grpc::ServerContext* context, const ModAccFetchInBandEmissionTraceRequest* request, ModAccFetchInBandEmissionTraceResponse* response) override;
@@ -264,7 +265,7 @@ private:
   NiRFmxNRLibraryInterface* library_;
   ResourceRepositorySharedPtr session_repository_;
   ViSessionResourceRepositorySharedPtr vi_session_resource_repository_;
-  ::grpc::Status ConvertApiErrorStatusForNiRFmxInstrHandle(google::protobuf::int32 status, niRFmxInstrHandle instrumentHandle);
+  ::grpc::Status ConvertApiErrorStatusForNiRFmxInstrHandle(::grpc::ServerContext* context, int32_t status, niRFmxInstrHandle instrumentHandle);
   std::map<std::int32_t, std::string> digitaledgetriggersource_input_map_ { {1, "PFI0"},{2, "PFI1"},{3, "PXI_Trig0"},{4, "PXI_Trig1"},{5, "PXI_Trig2"},{6, "PXI_Trig3"},{7, "PXI_Trig4"},{8, "PXI_Trig5"},{9, "PXI_Trig6"},{10, "PXI_Trig7"},{11, "PXI_STAR"},{12, "PXIe_DStarB"},{13, "TimerEvent"}, };
   std::map<std::string, std::int32_t> digitaledgetriggersource_output_map_ { {"PFI0", 1},{"PFI1", 2},{"PXI_Trig0", 3},{"PXI_Trig1", 4},{"PXI_Trig2", 5},{"PXI_Trig3", 6},{"PXI_Trig4", 7},{"PXI_Trig5", 8},{"PXI_Trig6", 9},{"PXI_Trig7", 10},{"PXI_STAR", 11},{"PXIe_DStarB", 12},{"TimerEvent", 13}, };
   std::map<std::int32_t, std::string> frequencyreferencesource_input_map_ { {1, "OnboardClock"},{2, "RefIn"},{3, "PXI_Clk"},{4, "ClkIn"},{5, "RefIn2"},{6, "PXI_Clk_Master"}, };

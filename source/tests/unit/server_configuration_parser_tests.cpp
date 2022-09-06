@@ -361,7 +361,13 @@ TEST(ServerConfigurationParserTests, JsonConfigWithMissingRootCertFile_ParseRoot
   }
 }
 
-const auto ALL_READINESS = {CodeReadiness::kRelease, CodeReadiness::kNextRelease, CodeReadiness::kIncomplete, CodeReadiness::kPrototype};
+const auto ALL_READINESS = {
+    CodeReadiness::kRelease,
+    CodeReadiness::kRestrictedRelease,
+    CodeReadiness::kNextRelease,
+    CodeReadiness::kRestrictedNextRelease,
+    CodeReadiness::kIncomplete,
+    CodeReadiness::kPrototype};
 
 TEST(ServerConfigurationParserTests, JsonConfigWithEnabledFeature_ParseFeatureToggles_FeatureIsEnabled)
 {
@@ -551,6 +557,10 @@ INSTANTIATE_TEST_SUITE_P(
         {R"({"code_readiness": "Prototype"})", Readiness::kPrototype},
         {R"({"code_readiness": "prototype"})", Readiness::kPrototype},
         {R"({"code_readiness": "iNcOmPlete"})", Readiness::kIncomplete},
+        {R"({"code_readiness": "RestrictedRelease"})", Readiness::kRestrictedRelease},
+        {R"({"code_readiness": "restricted_Release"})", Readiness::kRestrictedRelease},
+        {R"({"code_readiness": "restricted_next_release"})", Readiness::kRestrictedNextRelease},
+        {R"({"code_readiness": "RestrictedNextRelease"})", Readiness::kRestrictedNextRelease},
     }));
 
 TEST_P(ServerConfigurationParserCodeReadinessTests, CodeReadinessConfiguration_ParseCodeReadiness_ReturnsExpectedReadiness)

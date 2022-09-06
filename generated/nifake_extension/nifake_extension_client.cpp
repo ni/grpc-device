@@ -29,7 +29,8 @@ add_cool_functionality(const StubPtr& stub, const nidevice_grpc::Session& vi, co
   auto response = AddCoolFunctionalityResponse{};
 
   raise_if_error(
-      stub->AddCoolFunctionality(&context, request, &response));
+      stub->AddCoolFunctionality(&context, request, &response),
+      context);
 
   return response;
 }

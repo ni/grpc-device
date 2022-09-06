@@ -160,6 +160,7 @@ NiRFmxWLANLibrary::NiRFmxWLANLibrary() : shared_library_(kLibraryName)
   function_pointers_.OFDMModAccFetchPPDUPeakPower = reinterpret_cast<OFDMModAccFetchPPDUPeakPowerPtr>(shared_library_.get_function_pointer("RFmxWLAN_OFDMModAccFetchPPDUPeakPower"));
   function_pointers_.OFDMModAccFetchPPDUType = reinterpret_cast<OFDMModAccFetchPPDUTypePtr>(shared_library_.get_function_pointer("RFmxWLAN_OFDMModAccFetchPPDUType"));
   function_pointers_.OFDMModAccFetchPSDUCRCStatus = reinterpret_cast<OFDMModAccFetchPSDUCRCStatusPtr>(shared_library_.get_function_pointer("RFmxWLAN_OFDMModAccFetchPSDUCRCStatus"));
+  function_pointers_.OFDMModAccFetchPhaseNoisePSDMeanTrace = reinterpret_cast<OFDMModAccFetchPhaseNoisePSDMeanTracePtr>(shared_library_.get_function_pointer("RFmxWLAN_OFDMModAccFetchPhaseNoisePSDMeanTrace"));
   function_pointers_.OFDMModAccFetchPilotConstellationTrace = reinterpret_cast<OFDMModAccFetchPilotConstellationTracePtr>(shared_library_.get_function_pointer("RFmxWLAN_OFDMModAccFetchPilotConstellationTrace"));
   function_pointers_.OFDMModAccFetchPreambleAveragePowers80211ac = reinterpret_cast<OFDMModAccFetchPreambleAveragePowers80211acPtr>(shared_library_.get_function_pointer("RFmxWLAN_OFDMModAccFetchPreambleAveragePowers802_11ac"));
   function_pointers_.OFDMModAccFetchPreambleAveragePowers80211ax = reinterpret_cast<OFDMModAccFetchPreambleAveragePowers80211axPtr>(shared_library_.get_function_pointer("RFmxWLAN_OFDMModAccFetchPreambleAveragePowers802_11ax"));
@@ -1929,6 +1930,18 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchPSDUCRCStatus(niRFmxInstrHandle instrume
   return RFmxWLAN_OFDMModAccFetchPSDUCRCStatus(instrumentHandle, selectorString, timeout, psducrcStatus);
 #else
   return function_pointers_.OFDMModAccFetchPSDUCRCStatus(instrumentHandle, selectorString, timeout, psducrcStatus);
+#endif
+}
+
+int32 NiRFmxWLANLibrary::OFDMModAccFetchPhaseNoisePSDMeanTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 phaseNoisePSDMean[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.OFDMModAccFetchPhaseNoisePSDMeanTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchPhaseNoisePSDMeanTrace.");
+  }
+#if defined(_MSC_VER)
+  return RFmxWLAN_OFDMModAccFetchPhaseNoisePSDMeanTrace(instrumentHandle, selectorString, timeout, x0, dx, phaseNoisePSDMean, arraySize, actualArraySize);
+#else
+  return function_pointers_.OFDMModAccFetchPhaseNoisePSDMeanTrace(instrumentHandle, selectorString, timeout, x0, dx, phaseNoisePSDMean, arraySize, actualArraySize);
 #endif
 }
 
