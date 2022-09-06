@@ -76,7 +76,7 @@ try:
     start_task_response = client.StartTask(nidaqmx_types.StartTaskRequest(task=task))
     check_for_warning(start_task_response)
 
-    write_response: client.WriteAnalogF64(
+    write_response = client.WriteAnalogF64(
         nidaqmx_types.WriteAnalogF64Request(
             task=task,
             num_samps_per_chan=1,
