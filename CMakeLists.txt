@@ -354,7 +354,6 @@ add_executable(IntegrationTestsRunner
     "${proto_srcs_dir}/nifake.grpc.pb.cc"
     "${proto_srcs_dir}/nifake_non_ivi.pb.cc"
     "${proto_srcs_dir}/nifake_non_ivi.grpc.pb.cc"
-    "${proto_srcs_dir}/nimxlcterminaladaptor_restricted.pb.cc"
     "${service_output_dir}/nifake/nifake_client.cpp"
     "${service_output_dir}/nifake/nifake_service.cpp"
     "${service_output_dir}/nifake_non_ivi/nifake_non_ivi_client.cpp"
