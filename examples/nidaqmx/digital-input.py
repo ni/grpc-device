@@ -49,6 +49,7 @@ channel = grpc.insecure_channel(f"{SERVER_ADDRESS}:{SERVER_PORT}")
 client = grpc_nidaqmx.NiDAQmxStub(channel)
 task = None
 
+
 def check_for_warning(response):
     """Print to console if the status indicates a warning."""
     if response.status > 0:

@@ -58,6 +58,7 @@ def check_for_warning(response):
         )
         sys.stderr.write(f"{warning_message.error_message}\nWarning status: {response.status}\n")
 
+
 try:
     response = client.CreateTask(nidaqmx_types.CreateTaskRequest(session_name="my task"))
     task = response.task

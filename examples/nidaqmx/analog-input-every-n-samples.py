@@ -46,6 +46,7 @@ if len(sys.argv) >= 3:
 if len(sys.argv) >= 4:
     PHYSICAL_CHANNEL = sys.argv[3]
 
+
 def check_for_warning(response):
     """Print to console if the status indicates a warning."""
     if response.status > 0:
@@ -63,7 +64,9 @@ async def _main():
         try:
             client = grpc_nidaqmx.NiDAQmxStub(channel)
 
-            create_response: nidaqmx_types.CreateTaskResponse = await client.CreateTask(nidaqmx_types.CreateTaskRequest())
+            create_response: nidaqmx_types.CreateTaskResponse = await client.CreateTask(
+                nidaqmx_types.CreateTaskRequest()
+            )
             task = create_response.task
 
             await client.CreateAIVoltageChan(
@@ -166,7 +169,9 @@ async def _main():
             error_message = rpc_error.details()
             for entry in rpc_error.trailing_metadata() or []:
                 if entry.key == "ni-error":
-                    value = entry.value if isinstance(entry.value, str) else entry.value.decode("utf-8")
+                    value = (
+                        entry.value if isinstance(entry.value, str) else entry.value.decode("utf-8")
+                    )
                     error_message += f"\nError status: {value}"
             if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
                 error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"
@@ -177,7 +182,9 @@ async def _main():
             print(f"{error_message}")
         finally:
             if client and task:
-                clear_task_response = await client.ClearTask(nidaqmx_types.ClearTaskRequest(task=task))
+                clear_task_response = await client.ClearTask(
+                    nidaqmx_types.ClearTaskRequest(task=task)
+                )
                 check_for_warning(clear_task_response)
 
 

@@ -109,6 +109,7 @@ leader_output_task = None
 follower_input_task = None
 follower_output_task = None
 
+
 def check_for_warning(response):
     """Print to console if the status indicates a warning."""
     if response.status > 0:
@@ -166,8 +167,8 @@ async def _main():
                 return (sinewave, new_phase)
 
             # DAQmx Configure Tasks code
-            response: nidaqmx_types.CreateTaskResponse = (
-                await client.CreateTask(nidaqmx_types.CreateTaskRequest(session_name="Leader input task"))
+            response: nidaqmx_types.CreateTaskResponse = await client.CreateTask(
+                nidaqmx_types.CreateTaskRequest(session_name="Leader input task")
             )
             leader_input_task = response.task
             await client.CreateAIVoltageChan(
@@ -438,14 +439,22 @@ async def _main():
                 await done_event_stream.initial_metadata()
 
             # DAQmx Start code
-            start_task_response = await client.StartTask(nidaqmx_types.StartTaskRequest(task=leader_output_task))
+            start_task_response = await client.StartTask(
+                nidaqmx_types.StartTaskRequest(task=leader_output_task)
+            )
             check_for_warning(start_task_response)
-            start_task_response = await client.StartTask(nidaqmx_types.StartTaskRequest(task=follower_input_task))
+            start_task_response = await client.StartTask(
+                nidaqmx_types.StartTaskRequest(task=follower_input_task)
+            )
             check_for_warning(start_task_response)
-            start_task_response = await client.StartTask(nidaqmx_types.StartTaskRequest(task=follower_output_task))
+            start_task_response = await client.StartTask(
+                nidaqmx_types.StartTaskRequest(task=follower_output_task)
+            )
             check_for_warning(start_task_response)
             # trigger task must be started last
-            start_task_response = await client.StartTask(nidaqmx_types.StartTaskRequest(task=leader_input_task))
+            start_task_response = await client.StartTask(
+                nidaqmx_types.StartTaskRequest(task=leader_input_task)
+            )
             check_for_warning(start_task_response)
 
             async def read_data():
@@ -504,7 +513,9 @@ async def _main():
             error_message = rpc_error.details()
             for entry in rpc_error.trailing_metadata() or []:
                 if entry.key == "ni-error":
-                    value = entry.value if isinstance(entry.value, str) else entry.value.decode("utf-8")
+                    value = (
+                        entry.value if isinstance(entry.value, str) else entry.value.decode("utf-8")
+                    )
                     error_message += f"\nError status: {value}"
             if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
                 error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"
@@ -522,19 +533,27 @@ async def _cleanup():
     global leader_input_task, leader_output_task, follower_input_task, follower_output_task
     if client:
         if leader_input_task:
-            clear_task_response = await client.ClearTask(nidaqmx_types.ClearTaskRequest(task=leader_input_task))
+            clear_task_response = await client.ClearTask(
+                nidaqmx_types.ClearTaskRequest(task=leader_input_task)
+            )
             check_for_warning(clear_task_response)
             leader_input_task = None
         if leader_output_task:
-            clear_task_response = await client.ClearTask(nidaqmx_types.ClearTaskRequest(task=leader_output_task))
+            clear_task_response = await client.ClearTask(
+                nidaqmx_types.ClearTaskRequest(task=leader_output_task)
+            )
             check_for_warning(clear_task_response)
             leader_output_task = None
         if follower_input_task:
-            clear_task_response = await client.ClearTask(nidaqmx_types.ClearTaskRequest(task=follower_input_task))
+            clear_task_response = await client.ClearTask(
+                nidaqmx_types.ClearTaskRequest(task=follower_input_task)
+            )
             check_for_warning(clear_task_response)
             follower_input_task = None
         if follower_output_task:
-            clear_task_response = await client.ClearTask(nidaqmx_types.ClearTaskRequest(task=follower_output_task))
+            clear_task_response = await client.ClearTask(
+                nidaqmx_types.ClearTaskRequest(task=follower_output_task)
+            )
             check_for_warning(clear_task_response)
             follower_output_task = None
 
