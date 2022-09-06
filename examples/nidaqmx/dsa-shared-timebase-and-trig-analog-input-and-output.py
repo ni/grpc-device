@@ -376,7 +376,7 @@ async def _main():
             (follower_write_data, phase) = generate_sinewave(250, 1.0, 0.02, phase)
 
             # DAQmx Write code
-            write_response: await client.WriteAnalogF64(
+            write_response = await client.WriteAnalogF64(
                 nidaqmx_types.WriteAnalogF64Request(
                     task=leader_output_task,
                     num_samps_per_chan=250,
@@ -388,7 +388,7 @@ async def _main():
             )
             check_for_warning(write_response)
             num_leader_samples_written = write_response.samps_per_chan_written
-            write_response: await client.WriteAnalogF64(
+            write_response = await client.WriteAnalogF64(
                 nidaqmx_types.WriteAnalogF64Request(
                     task=follower_output_task,
                     num_samps_per_chan=250,
