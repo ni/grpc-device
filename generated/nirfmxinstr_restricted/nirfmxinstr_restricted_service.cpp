@@ -811,6 +811,47 @@ namespace nirfmxinstr_restricted_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxInstrRestrictedService::GetSessionUniqueIdentifier(::grpc::ServerContext* context, const GetSessionUniqueIdentifierRequest* request, GetSessionUniqueIdentifierResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      char* resource_names = (char*)request->resource_names().c_str();
+      char* option_string = (char*)request->option_string().c_str();
+
+      while (true) {
+        auto status = library_->GetSessionUniqueIdentifier(resource_names, option_string, 0, nullptr);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
+        }
+        int32 session_unique_identifier_size = status;
+
+        std::string session_unique_identifier;
+        if (session_unique_identifier_size > 0) {
+            session_unique_identifier.resize(session_unique_identifier_size - 1);
+        }
+        status = library_->GetSessionUniqueIdentifier(resource_names, option_string, session_unique_identifier_size, (char*)session_unique_identifier.data());
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(session_unique_identifier_size)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
+        }
+        response->set_status(status);
+        response->set_session_unique_identifier(session_unique_identifier);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_session_unique_identifier()));
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxInstrRestrictedService::GetSignalConfigurationState64(::grpc::ServerContext* context, const GetSignalConfigurationState64Request* request, GetSignalConfigurationState64Response* response)
   {
     if (context->IsCancelled()) {

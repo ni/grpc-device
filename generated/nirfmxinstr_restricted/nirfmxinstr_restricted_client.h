@@ -43,6 +43,7 @@ GetLatestConfigurationSnapshotResponse get_latest_configuration_snapshot(const S
 GetOpenSessionsInformationResponse get_open_sessions_information(const StubPtr& stub, const pb::string& resource_name);
 GetPrivilegeLevelResponse get_privilege_level(const StubPtr& stub, const nidevice_grpc::Session& instrument);
 GetRFmxVersionResponse get_r_fmx_version(const StubPtr& stub, const nidevice_grpc::Session& instrument);
+GetSessionUniqueIdentifierResponse get_session_unique_identifier(const StubPtr& stub, const pb::string& resource_names, const pb::string& option_string);
 GetSignalConfigurationState64Response get_signal_configuration_state64(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& signal_name, const pb::uint32& signal_type);
 GetSnapshotStateResponse get_snapshot_state(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::int32& personality, const pb::string& selector_string);
 GetTracesInfoForMonitorSnapshotResponse get_traces_info_for_monitor_snapshot(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string);

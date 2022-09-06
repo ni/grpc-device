@@ -404,6 +404,24 @@ get_r_fmx_version(const StubPtr& stub, const nidevice_grpc::Session& instrument)
   return response;
 }
 
+GetSessionUniqueIdentifierResponse
+get_session_unique_identifier(const StubPtr& stub, const pb::string& resource_names, const pb::string& option_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetSessionUniqueIdentifierRequest{};
+  request.set_resource_names(resource_names);
+  request.set_option_string(option_string);
+
+  auto response = GetSessionUniqueIdentifierResponse{};
+
+  raise_if_error(
+      stub->GetSessionUniqueIdentifier(&context, request, &response),
+      context);
+
+  return response;
+}
+
 GetSignalConfigurationState64Response
 get_signal_configuration_state64(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& signal_name, const pb::uint32& signal_type)
 {

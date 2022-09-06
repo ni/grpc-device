@@ -806,6 +806,35 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'GetSessionUniqueIdentifier': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'resourceNames',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'optionString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'sessionUniqueIdentifierSize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'sessionUniqueIdentifier',
+                'size': {
+                    'mechanism': 'ivi-dance',
+                    'value': 'sessionUniqueIdentifierSize'
+                },
+                'type': 'char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
     'GetSignalConfigurationState64': {
         'parameters': [
             {

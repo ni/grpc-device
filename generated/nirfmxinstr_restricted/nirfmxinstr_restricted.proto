@@ -37,6 +37,7 @@ service NiRFmxInstrRestricted {
   rpc GetOpenSessionsInformation(GetOpenSessionsInformationRequest) returns (GetOpenSessionsInformationResponse);
   rpc GetPrivilegeLevel(GetPrivilegeLevelRequest) returns (GetPrivilegeLevelResponse);
   rpc GetRFmxVersion(GetRFmxVersionRequest) returns (GetRFmxVersionResponse);
+  rpc GetSessionUniqueIdentifier(GetSessionUniqueIdentifierRequest) returns (GetSessionUniqueIdentifierResponse);
   rpc GetSignalConfigurationState64(GetSignalConfigurationState64Request) returns (GetSignalConfigurationState64Response);
   rpc GetSnapshotState(GetSnapshotStateRequest) returns (GetSnapshotStateResponse);
   rpc GetTracesInfoForMonitorSnapshot(GetTracesInfoForMonitorSnapshotRequest) returns (GetTracesInfoForMonitorSnapshotResponse);
@@ -289,6 +290,16 @@ message GetRFmxVersionRequest {
 message GetRFmxVersionResponse {
   int32 status = 1;
   string version = 2;
+}
+
+message GetSessionUniqueIdentifierRequest {
+  string resource_names = 1;
+  string option_string = 2;
+}
+
+message GetSessionUniqueIdentifierResponse {
+  int32 status = 1;
+  string session_unique_identifier = 2;
 }
 
 message GetSignalConfigurationState64Request {

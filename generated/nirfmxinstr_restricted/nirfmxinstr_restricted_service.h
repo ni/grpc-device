@@ -62,6 +62,7 @@ public:
   ::grpc::Status GetOpenSessionsInformation(::grpc::ServerContext* context, const GetOpenSessionsInformationRequest* request, GetOpenSessionsInformationResponse* response) override;
   ::grpc::Status GetPrivilegeLevel(::grpc::ServerContext* context, const GetPrivilegeLevelRequest* request, GetPrivilegeLevelResponse* response) override;
   ::grpc::Status GetRFmxVersion(::grpc::ServerContext* context, const GetRFmxVersionRequest* request, GetRFmxVersionResponse* response) override;
+  ::grpc::Status GetSessionUniqueIdentifier(::grpc::ServerContext* context, const GetSessionUniqueIdentifierRequest* request, GetSessionUniqueIdentifierResponse* response) override;
   ::grpc::Status GetSignalConfigurationState64(::grpc::ServerContext* context, const GetSignalConfigurationState64Request* request, GetSignalConfigurationState64Response* response) override;
   ::grpc::Status GetSnapshotState(::grpc::ServerContext* context, const GetSnapshotStateRequest* request, GetSnapshotStateResponse* response) override;
   ::grpc::Status GetTracesInfoForMonitorSnapshot(::grpc::ServerContext* context, const GetTracesInfoForMonitorSnapshotRequest* request, GetTracesInfoForMonitorSnapshotResponse* response) override;
