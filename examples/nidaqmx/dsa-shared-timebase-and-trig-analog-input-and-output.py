@@ -109,6 +109,14 @@ leader_output_task = None
 follower_input_task = None
 follower_output_task = None
 
+def check_for_warning(response):
+    """Print to console if the status indicates a warning."""
+    if response.status > 0:
+        warning_message = client.GetErrorStringResponse(
+            nidaqmx_types.ErrorMessageRequest(error_code=response.status)
+        )
+        sys.stderr.write(f"{warning_message.error_message}\nWarning status: {response.status}\n")
+
 
 async def _main():
     global client, leader_input_task, leader_output_task, follower_input_task, follower_output_task
@@ -116,14 +124,6 @@ async def _main():
     num_follower_samples_written = 0
     async with grpc.aio.insecure_channel(f"{SERVER_ADDRESS}:{SERVER_PORT}") as channel:
         try:
-            def check_for_warning(response):
-                """Print to console if the status indicates a warning."""
-                if response.status > 0:
-                    warning_message = client.GetErrorStringResponse(
-                        nidaqmx_types.ErrorMessageRequest(error_code=response.status)
-                    )
-                    sys.stderr.write(f"{warning_message.error_message}\nWarning status: {response.status}\n")
-
             client = grpc_nidaqmx.NiDAQmxStub(channel)
 
             async def get_terminal_name_with_dev_prefix(task, terminal_name):
