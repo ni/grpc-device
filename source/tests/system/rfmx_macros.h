@@ -2,8 +2,10 @@
 #define NIDEVICE_GRPC_TESTS_RFMX_EXPECT_MACROS
 
 #include <gmock/gmock.h>
-#include <gtest/gtest.h>
+
 #include <nlohmann/json.hpp>
+
+#include "tests/utilities/test_helpers.h"
 
 #define EXPECT_NO_ERROR_MESSAGE(session, response)                                                  \
   if (1) {                                                                                          \
@@ -32,11 +34,6 @@
     EXPECT_EQ(expected_warning, (response).status());       \
   }
 
-#define EXPECT_STATUS_ERROR(expected_error, error_message) \
-  EXPECT_LT(expected_error, 0);                            \
-  auto error = nlohmann::json::parse(error_message);       \
-  EXPECT_EQ(expected_error, error.value("code", 0));
-
 #define EXPECT_SUCCESS(session_, response_)     \
   ([this](auto& session, auto& response) {      \
     EXPECT_RESPONSE_SUCCESS(response);          \
@@ -47,11 +44,11 @@
 #define EXPECT_ERROR(expected_error_, message_substring_, session_, response_call_) \
   try {                                                                             \
     response_call_;                                                                 \
-    EXPECT_FALSE(true);                                                             \
+    FAIL() << "We shouldn't get here.";                                             \
   }                                                                                 \
-  catch (const std::runtime_error& ex) {                                            \
-    EXPECT_STATUS_ERROR(expected_error_, ex.what());                                \
-    EXPECT_THAT(error.value("message", ""), HasSubstr(message_substring_));         \
+  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {        \
+    expect_driver_error(ex, expected_error_);                                       \
+    EXPECT_THAT(ex.what(), HasSubstr(message_substring_));                          \
   }
 
 #define EXPECT_WARNING(expected_warning_, message_substring_, session_, response_)               \

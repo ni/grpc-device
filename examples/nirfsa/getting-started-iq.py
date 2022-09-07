@@ -60,78 +60,53 @@ client = grpc_nirfsa.NiRFSAStub(channel)
 vi = None
 
 
-def raise_if_error(response):
-    """Raise an exception if an error was returned."""
-    if response.status != 0:
-        error_response = client.ErrorMessage(
-            nirfsa_types.ErrorMessageRequest(status_code=response.status)
-        )
-        raise Exception(f"Error: {error_response.error_message}")
-
-    return response
-
-
-def raise_if_initialization_error(response):
-    """Raise an exception if an error was returned from Initialize."""
-    if response.status < 0:
-        raise RuntimeError(f"Error: {response.error_message or response.status}")
+def check_for_warning(response, vi):
+    """Print to console if the status indicates a warning."""
     if response.status > 0:
-        sys.stderr.write(f"Warning: {response.error_message or response.status}\n")
-    return response
+        warning_message = client.ErrorMessage(
+            nirfsa_types.ErrorMessageRequest(vi=vi, error_code=response.status)
+        )
+        sys.stderr.write(f"{warning_message.error_message}\nWarning status: {response.status}\n")
 
 
 try:
-    init_response = raise_if_initialization_error(
-        client.InitWithOptions(
-            nirfsa_types.InitWithOptionsRequest(
-                session_name=SESSION_NAME, resource_name=RESOURCE, option_string=OPTIONS
-            )
+    init_response = client.InitWithOptions(
+        nirfsa_types.InitWithOptionsRequest(
+            session_name=SESSION_NAME, resource_name=RESOURCE, option_string=OPTIONS
         )
     )
     vi = init_response.vi
 
-    raise_if_error(
-        client.ConfigureRefClock(
-            nirfsa_types.ConfigureRefClockRequest(
-                vi=vi,
-                clock_source_mapped=nirfsa_types.RefClockSource.REF_CLOCK_SOURCE_ONBOARD_CLOCK,
-                ref_clock_rate=10e6,
-            )
+    client.ConfigureRefClock(
+        nirfsa_types.ConfigureRefClockRequest(
+            vi=vi,
+            clock_source_mapped=nirfsa_types.RefClockSource.REF_CLOCK_SOURCE_ONBOARD_CLOCK,
+            ref_clock_rate=10e6,
         )
     )
-    raise_if_error(
-        client.ConfigureReferenceLevel(
-            nirfsa_types.ConfigureReferenceLevelRequest(vi=vi, reference_level=0)
-        )
+    client.ConfigureReferenceLevel(
+        nirfsa_types.ConfigureReferenceLevelRequest(vi=vi, reference_level=0)
     )
-    raise_if_error(
-        client.ConfigureAcquisitionType(
-            nirfsa_types.ConfigureAcquisitionTypeRequest(
-                vi=vi, acquisition_type=nirfsa_types.AcquisitionType.ACQUISITION_TYPE_IQ
-            )
-        )
-    )
-    raise_if_error(
-        client.ConfigureIQCarrierFrequency(
-            nirfsa_types.ConfigureIQCarrierFrequencyRequest(vi=vi, carrier_frequency=1e9)
-        )
-    )
-    raise_if_error(
-        client.ConfigureNumberOfSamples(
-            nirfsa_types.ConfigureNumberOfSamplesRequest(
-                vi=vi, number_of_samples_is_finite=True, samples_per_record=NUMBER_OF_SAMPLES
-            )
-        )
-    )
-    raise_if_error(client.ConfigureIQRate(nirfsa_types.ConfigureIQRateRequest(vi=vi, iq_rate=1e6)))
 
-    read_response = raise_if_error(
-        client.ReadIQSingleRecordComplexF64(
-            nirfsa_types.ReadIQSingleRecordComplexF64Request(
-                vi=vi, timeout=10.0, data_array_size=NUMBER_OF_SAMPLES
-            )
+    client.ConfigureAcquisitionType(
+        nirfsa_types.ConfigureAcquisitionTypeRequest(
+            vi=vi, acquisition_type=nirfsa_types.AcquisitionType.ACQUISITION_TYPE_IQ
         )
     )
+    client.ConfigureIQCarrierFrequency(
+        nirfsa_types.ConfigureIQCarrierFrequencyRequest(vi=vi, carrier_frequency=1e9)
+    )
+    client.ConfigureNumberOfSamples(
+        nirfsa_types.ConfigureNumberOfSamplesRequest(
+            vi=vi, number_of_samples_is_finite=True, samples_per_record=NUMBER_OF_SAMPLES
+        )
+    )
+    read_response = client.ReadIQSingleRecordComplexF64(
+        nirfsa_types.ReadIQSingleRecordComplexF64Request(
+            vi=vi, timeout=10.0, data_array_size=NUMBER_OF_SAMPLES
+        )
+    )
+    check_for_warning(read_response, vi)
 
     accumulator = 0.0
     for sample in read_response.data:
@@ -146,6 +121,10 @@ try:
 
 except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
+    for entry in rpc_error.trailing_metadata() or []:
+        if entry.key == "ni-error":
+            value = entry.value if isinstance(entry.value, str) else entry.value.decode("utf-8")
+            error_message += f"\nError status: {value}"
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
         error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"
     elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:

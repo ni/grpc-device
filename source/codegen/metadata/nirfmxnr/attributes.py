@@ -801,6 +801,11 @@ attributes = {
         'name': 'SUBBLOCK_FREQUENCY',
         'type': 'float64'
     },
+    9437472: {
+        'access': 'read-write',
+        'name': 'SSB_HRF_INDEX',
+        'type': 'int32'
+    },
     9438267: {
         'access': 'read-write',
         'enum': 'TransmitterArchitecture',
@@ -1498,14 +1503,14 @@ attributes = {
     },
     9453649: {
         'access': 'read-write',
-        'enum': 'ModAccPhaseTrackingEnabled',
-        'name': 'MODACC_PHASE_TRACKING_ENABLED',
+        'enum': 'ModAccPhaseTrackingMode',
+        'name': 'MODACC_PHASE_TRACKING_MODE',
         'type': 'int32'
     },
     9453650: {
         'access': 'read-write',
-        'enum': 'ModAccTimingTrackingEnabled',
-        'name': 'MODACC_TIMING_TRACKING_ENABLED',
+        'enum': 'ModAccTimingTrackingMode',
+        'name': 'MODACC_TIMING_TRACKING_MODE',
         'type': 'int32'
     },
     9453652: {
@@ -1796,6 +1801,22 @@ attributes = {
         'enum': 'ModAccShortFrameLengthUnit',
         'name': 'MODACC_SHORT_FRAME_LENGTH_UNIT',
         'type': 'int32'
+    },
+    9453728: {
+        'access': 'read-write',
+        'enum': 'ModAccPreFftErrorEstimationInterval',
+        'name': 'MODACC_PRE_FFT_ERROR_ESTIMATION_INTERVAL',
+        'type': 'int32'
+    },
+    9453729: {
+        'access': 'read-write',
+        'name': 'MODACC_RESULTS_COMPONENT_CARRIER_SLOT_FREQUENCY_ERROR_MAXIMUM',
+        'type': 'float64'
+    },
+    9453730: {
+        'access': 'read-write',
+        'name': 'MODACC_RESULTS_COMPONENT_CARRIER_SLOT_IQ_ORIGIN_OFFSET_MAXIMUM',
+        'type': 'float64'
     },
     9461760: {
         'access': 'read-write',

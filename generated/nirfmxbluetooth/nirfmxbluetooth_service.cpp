@@ -77,7 +77,7 @@ namespace nirfmxbluetooth_grpc {
       int32 averaging_count = request->averaging_count();
       auto status = library_->ACPCfgAveraging(instrument, selector_string, averaging_enabled, averaging_count);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -116,7 +116,7 @@ namespace nirfmxbluetooth_grpc {
 
       auto status = library_->ACPCfgBurstSynchronizationType(instrument, selector_string, burst_synchronization_type);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -140,7 +140,7 @@ namespace nirfmxbluetooth_grpc {
       int32 number_of_offsets = request->number_of_offsets();
       auto status = library_->ACPCfgNumberOfOffsets(instrument, selector_string, number_of_offsets);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -179,7 +179,7 @@ namespace nirfmxbluetooth_grpc {
 
       auto status = library_->ACPCfgOffsetChannelMode(instrument, selector_string, offset_channel_mode);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -207,7 +207,7 @@ namespace nirfmxbluetooth_grpc {
       while (true) {
         auto status = library_->ACPFetchAbsolutePowerTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->mutable_absolute_power()->Resize(actual_array_size, 0);
         float32* absolute_power = response->mutable_absolute_power()->mutable_data();
@@ -218,7 +218,7 @@ namespace nirfmxbluetooth_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->set_x0(x0);
@@ -251,7 +251,7 @@ namespace nirfmxbluetooth_grpc {
       while (true) {
         auto status = library_->ACPFetchMaskTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->mutable_limit_with_exception_mask()->Resize(actual_array_size, 0);
         float32* limit_with_exception_mask = response->mutable_limit_with_exception_mask()->mutable_data();
@@ -264,7 +264,7 @@ namespace nirfmxbluetooth_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->set_x0(x0);
@@ -295,7 +295,7 @@ namespace nirfmxbluetooth_grpc {
       int32 measurement_status {};
       auto status = library_->ACPFetchMeasurementStatus(instrument, selector_string, timeout, &measurement_status);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       response->set_measurement_status(static_cast<nirfmxbluetooth_grpc::AcpResultsMeasurementStatus>(measurement_status));
@@ -327,7 +327,7 @@ namespace nirfmxbluetooth_grpc {
       float64 upper_margin {};
       auto status = library_->ACPFetchOffsetMeasurement(instrument, selector_string, timeout, &lower_absolute_power, &upper_absolute_power, &lower_relative_power, &upper_relative_power, &lower_margin, &upper_margin);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       response->set_lower_absolute_power(lower_absolute_power);
@@ -359,7 +359,7 @@ namespace nirfmxbluetooth_grpc {
       while (true) {
         auto status = library_->ACPFetchOffsetMeasurementArray(instrument, selector_string, timeout, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->mutable_lower_absolute_power()->Resize(actual_array_size, 0);
         float64* lower_absolute_power = response->mutable_lower_absolute_power()->mutable_data();
@@ -380,7 +380,7 @@ namespace nirfmxbluetooth_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->mutable_lower_absolute_power()->Resize(actual_array_size, 0);
@@ -413,7 +413,7 @@ namespace nirfmxbluetooth_grpc {
       float64 reference_channel_power {};
       auto status = library_->ACPFetchReferenceChannelPower(instrument, selector_string, timeout, &reference_channel_power);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       response->set_reference_channel_power(reference_channel_power);
@@ -442,7 +442,7 @@ namespace nirfmxbluetooth_grpc {
       while (true) {
         auto status = library_->ACPFetchSpectrum(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->mutable_spectrum()->Resize(actual_array_size, 0);
         float32* spectrum = response->mutable_spectrum()->mutable_data();
@@ -453,7 +453,7 @@ namespace nirfmxbluetooth_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->set_x0(x0);
@@ -481,7 +481,7 @@ namespace nirfmxbluetooth_grpc {
       char* selector_string = (char*)request->selector_string().c_str();
       auto status = library_->AbortMeasurements(instrument, selector_string);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -511,7 +511,7 @@ namespace nirfmxbluetooth_grpc {
       auto reserved = 0;
       auto status = library_->AnalyzeIQ1Waveform(instrument, selector_string, result_name, x0, dx, iq.data(), array_size, reset, reserved);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -535,7 +535,7 @@ namespace nirfmxbluetooth_grpc {
       float64 timeout = request->timeout();
       auto status = library_->AutoDetectSignal(instrument, selector_string, timeout);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -560,7 +560,7 @@ namespace nirfmxbluetooth_grpc {
       float64 reference_level {};
       auto status = library_->AutoLevel(instrument, selector_string, measurement_interval, &reference_level);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       response->set_reference_level(reference_level);
@@ -585,7 +585,7 @@ namespace nirfmxbluetooth_grpc {
       while (true) {
         auto status = library_->BuildOffsetString(selector_string, offset_number, 0, nullptr);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, 0);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
         }
         int32 selector_string_out_length = status;
 
@@ -599,7 +599,7 @@ namespace nirfmxbluetooth_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, 0);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
         }
         response->set_status(status);
         response->set_selector_string_out(selector_string_out);
@@ -626,7 +626,7 @@ namespace nirfmxbluetooth_grpc {
       while (true) {
         auto status = library_->BuildSignalString(signal_name, result_name, 0, nullptr);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, 0);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
         }
         int32 selector_string_length = status;
 
@@ -640,7 +640,7 @@ namespace nirfmxbluetooth_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, 0);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
         }
         response->set_status(status);
         response->set_selector_string(selector_string);
@@ -667,7 +667,7 @@ namespace nirfmxbluetooth_grpc {
       while (true) {
         auto status = library_->BuildSlotString(selector_string, slot_number, 0, nullptr);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, 0);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
         }
         int32 selector_string_out_length = status;
 
@@ -681,7 +681,7 @@ namespace nirfmxbluetooth_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, 0);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
         }
         response->set_status(status);
         response->set_selector_string_out(selector_string_out);
@@ -708,7 +708,7 @@ namespace nirfmxbluetooth_grpc {
       int32 channel_number = request->channel_number();
       auto status = library_->CfgChannelNumber(instrument, selector_string, channel_number);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -732,7 +732,7 @@ namespace nirfmxbluetooth_grpc {
       int32 data_rate = request->data_rate();
       auto status = library_->CfgDataRate(instrument, selector_string, data_rate);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -774,7 +774,7 @@ namespace nirfmxbluetooth_grpc {
       int32 enable_trigger = request->enable_trigger();
       auto status = library_->CfgDigitalEdgeTrigger(instrument, selector_string, digital_edge_source, digital_edge, trigger_delay, enable_trigger);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -798,7 +798,7 @@ namespace nirfmxbluetooth_grpc {
       float64 external_attenuation = request->external_attenuation();
       auto status = library_->CfgExternalAttenuation(instrument, selector_string, external_attenuation);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -822,7 +822,7 @@ namespace nirfmxbluetooth_grpc {
       float64 center_frequency = request->center_frequency();
       auto status = library_->CfgFrequency(instrument, selector_string, center_frequency);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -862,7 +862,7 @@ namespace nirfmxbluetooth_grpc {
       int32 channel_number = request->channel_number();
       auto status = library_->CfgFrequencyChannelNumber(instrument, selector_string, standard, channel_number);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -906,7 +906,7 @@ namespace nirfmxbluetooth_grpc {
       float64 frequency_reference_frequency = request->frequency_reference_frequency();
       auto status = library_->CfgFrequencyReference(instrument, channel_name, frequency_reference_source, frequency_reference_frequency);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -982,7 +982,7 @@ namespace nirfmxbluetooth_grpc {
       int32 enable_trigger = request->enable_trigger();
       auto status = library_->CfgIQPowerEdgeTrigger(instrument, selector_string, iq_power_edge_source, iq_power_edge_slope, iq_power_edge_level, trigger_delay, trigger_min_quiet_time_mode, trigger_min_quiet_time_duration, iq_power_edge_level_type, enable_trigger);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1023,7 +1023,7 @@ namespace nirfmxbluetooth_grpc {
       float64 cte_slot_duration = request->cte_slot_duration();
       auto status = library_->CfgLEDirectionFinding(instrument, selector_string, direction_finding_mode, cte_length, cte_slot_duration);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1063,7 +1063,7 @@ namespace nirfmxbluetooth_grpc {
       float64 mechanical_attenuation_value = request->mechanical_attenuation_value();
       auto status = library_->CfgMechanicalAttenuation(instrument, channel_name, mechanical_attenuation_auto, mechanical_attenuation_value);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1102,7 +1102,7 @@ namespace nirfmxbluetooth_grpc {
 
       auto status = library_->CfgPacketType(instrument, selector_string, packet_type);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1141,7 +1141,7 @@ namespace nirfmxbluetooth_grpc {
 
       auto status = library_->CfgPayloadBitPattern(instrument, selector_string, payload_bit_pattern);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1181,7 +1181,7 @@ namespace nirfmxbluetooth_grpc {
       int32 payload_length = request->payload_length();
       auto status = library_->CfgPayloadLength(instrument, selector_string, payload_length_mode, payload_length);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1207,7 +1207,7 @@ namespace nirfmxbluetooth_grpc {
       float64 external_attenuation = request->external_attenuation();
       auto status = library_->CfgRF(instrument, selector_string, center_frequency, reference_level, external_attenuation);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1247,7 +1247,7 @@ namespace nirfmxbluetooth_grpc {
       float64 rf_attenuation_value = request->rf_attenuation_value();
       auto status = library_->CfgRFAttenuation(instrument, channel_name, rf_attenuation_auto, rf_attenuation_value);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1271,7 +1271,7 @@ namespace nirfmxbluetooth_grpc {
       float64 reference_level = request->reference_level();
       auto status = library_->CfgReferenceLevel(instrument, selector_string, reference_level);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1296,7 +1296,7 @@ namespace nirfmxbluetooth_grpc {
       int32 enable_trigger = request->enable_trigger();
       auto status = library_->CfgSoftwareEdgeTrigger(instrument, selector_string, trigger_delay, enable_trigger);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1320,7 +1320,7 @@ namespace nirfmxbluetooth_grpc {
       int32 is_done {};
       auto status = library_->CheckMeasurementStatus(instrument, selector_string, &is_done);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       response->set_is_done(is_done);
@@ -1344,7 +1344,7 @@ namespace nirfmxbluetooth_grpc {
       char* selector_string = (char*)request->selector_string().c_str();
       auto status = library_->ClearAllNamedResults(instrument, selector_string);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1367,7 +1367,7 @@ namespace nirfmxbluetooth_grpc {
       char* selector_string = (char*)request->selector_string().c_str();
       auto status = library_->ClearNamedResult(instrument, selector_string);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1391,7 +1391,7 @@ namespace nirfmxbluetooth_grpc {
       char* new_signal_name = (char*)request->new_signal_name().c_str();
       auto status = library_->CloneSignalConfiguration(instrument, old_signal_name, new_signal_name);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1415,7 +1415,7 @@ namespace nirfmxbluetooth_grpc {
       session_repository_->remove_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       auto status = library_->Close(instrument, force_destroy);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1438,7 +1438,7 @@ namespace nirfmxbluetooth_grpc {
       char* selector_string = (char*)request->selector_string().c_str();
       auto status = library_->Commit(instrument, selector_string);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1461,7 +1461,7 @@ namespace nirfmxbluetooth_grpc {
       char* signal_name = (char*)request->signal_name().c_str();
       auto status = library_->CreateSignalConfiguration(instrument, signal_name);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1484,7 +1484,7 @@ namespace nirfmxbluetooth_grpc {
       char* signal_name = (char*)request->signal_name().c_str();
       auto status = library_->DeleteSignalConfiguration(instrument, signal_name);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1507,7 +1507,7 @@ namespace nirfmxbluetooth_grpc {
       char* selector_string = (char*)request->selector_string().c_str();
       auto status = library_->DisableTrigger(instrument, selector_string);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1547,7 +1547,7 @@ namespace nirfmxbluetooth_grpc {
       int32 averaging_count = request->averaging_count();
       auto status = library_->FrequencyRangeCfgAveraging(instrument, selector_string, averaging_enabled, averaging_count);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1571,7 +1571,7 @@ namespace nirfmxbluetooth_grpc {
       float64 span = request->span();
       auto status = library_->FrequencyRangeCfgSpan(instrument, selector_string, span);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1597,7 +1597,7 @@ namespace nirfmxbluetooth_grpc {
       float64 low_frequency {};
       auto status = library_->FrequencyRangeFetchMeasurement(instrument, selector_string, timeout, &high_frequency, &low_frequency);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       response->set_high_frequency(high_frequency);
@@ -1627,7 +1627,7 @@ namespace nirfmxbluetooth_grpc {
       while (true) {
         auto status = library_->FrequencyRangeFetchSpectrum(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->mutable_spectrum()->Resize(actual_array_size, 0);
         float32* spectrum = response->mutable_spectrum()->mutable_data();
@@ -1638,7 +1638,7 @@ namespace nirfmxbluetooth_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->set_x0(x0);
@@ -1669,7 +1669,7 @@ namespace nirfmxbluetooth_grpc {
       while (true) {
         auto status = library_->GetAllNamedResultNames(instrument, selector_string, nullptr, 0, &actual_result_names_size, &default_result_exists);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         std::string result_names;
         if (actual_result_names_size > 0) {
@@ -1682,7 +1682,7 @@ namespace nirfmxbluetooth_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->set_result_names(result_names);
@@ -1712,7 +1712,7 @@ namespace nirfmxbluetooth_grpc {
       float32 attr_val {};
       auto status = library_->GetAttributeF32(instrument, selector_string, attribute_id, &attr_val);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       response->set_attr_val(attr_val);
@@ -1739,7 +1739,7 @@ namespace nirfmxbluetooth_grpc {
       while (true) {
         auto status = library_->GetAttributeF32Array(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->mutable_attr_val()->Resize(actual_array_size, 0);
         float32* attr_val = response->mutable_attr_val()->mutable_data();
@@ -1750,7 +1750,7 @@ namespace nirfmxbluetooth_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->mutable_attr_val()->Resize(actual_array_size, 0);
@@ -1778,7 +1778,7 @@ namespace nirfmxbluetooth_grpc {
       float64 attr_val {};
       auto status = library_->GetAttributeF64(instrument, selector_string, attribute_id, &attr_val);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       response->set_attr_val(attr_val);
@@ -1805,7 +1805,7 @@ namespace nirfmxbluetooth_grpc {
       while (true) {
         auto status = library_->GetAttributeF64Array(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->mutable_attr_val()->Resize(actual_array_size, 0);
         float64* attr_val = response->mutable_attr_val()->mutable_data();
@@ -1816,7 +1816,7 @@ namespace nirfmxbluetooth_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->mutable_attr_val()->Resize(actual_array_size, 0);
@@ -1844,7 +1844,7 @@ namespace nirfmxbluetooth_grpc {
       int16 attr_val {};
       auto status = library_->GetAttributeI16(instrument, selector_string, attribute_id, &attr_val);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       response->set_attr_val(attr_val);
@@ -1870,7 +1870,7 @@ namespace nirfmxbluetooth_grpc {
       int32 attr_val {};
       auto status = library_->GetAttributeI32(instrument, selector_string, attribute_id, &attr_val);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       auto checked_convert_attr_val = [](auto raw_value) {
@@ -1903,7 +1903,7 @@ namespace nirfmxbluetooth_grpc {
       while (true) {
         auto status = library_->GetAttributeI32Array(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->mutable_attr_val_raw()->Resize(actual_array_size, 0);
         int32* attr_val = reinterpret_cast<int32*>(response->mutable_attr_val_raw()->mutable_data());
@@ -1914,7 +1914,7 @@ namespace nirfmxbluetooth_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         auto checked_convert_attr_val = [](auto raw_value) {
@@ -1956,7 +1956,7 @@ namespace nirfmxbluetooth_grpc {
       int64 attr_val {};
       auto status = library_->GetAttributeI64(instrument, selector_string, attribute_id, &attr_val);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       response->set_attr_val(attr_val);
@@ -1983,7 +1983,7 @@ namespace nirfmxbluetooth_grpc {
       while (true) {
         auto status = library_->GetAttributeI64Array(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->mutable_attr_val()->Resize(actual_array_size, 0);
         int64* attr_val = reinterpret_cast<int64*>(response->mutable_attr_val()->mutable_data());
@@ -1994,7 +1994,7 @@ namespace nirfmxbluetooth_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->mutable_attr_val()->Resize(actual_array_size, 0);
@@ -2022,7 +2022,7 @@ namespace nirfmxbluetooth_grpc {
       int8 attr_val {};
       auto status = library_->GetAttributeI8(instrument, selector_string, attribute_id, &attr_val);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       response->set_attr_val(attr_val);
@@ -2049,7 +2049,7 @@ namespace nirfmxbluetooth_grpc {
       while (true) {
         auto status = library_->GetAttributeI8Array(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         std::vector<int8> attr_val(actual_array_size);
         auto array_size = actual_array_size;
@@ -2059,7 +2059,7 @@ namespace nirfmxbluetooth_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
           response->mutable_attr_val()->Clear();
@@ -2097,7 +2097,7 @@ namespace nirfmxbluetooth_grpc {
       while (true) {
         auto status = library_->GetAttributeNIComplexDoubleArray(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         std::vector<NIComplexDouble> attr_val(actual_array_size, NIComplexDouble());
         auto array_size = actual_array_size;
@@ -2107,7 +2107,7 @@ namespace nirfmxbluetooth_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         convert_to_grpc(attr_val, response->mutable_attr_val());
@@ -2143,7 +2143,7 @@ namespace nirfmxbluetooth_grpc {
       while (true) {
         auto status = library_->GetAttributeNIComplexSingleArray(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         std::vector<NIComplexSingle> attr_val(actual_array_size, NIComplexSingle());
         auto array_size = actual_array_size;
@@ -2153,7 +2153,7 @@ namespace nirfmxbluetooth_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         convert_to_grpc(attr_val, response->mutable_attr_val());
@@ -2189,7 +2189,7 @@ namespace nirfmxbluetooth_grpc {
       while (true) {
         auto status = library_->GetAttributeString(instrument, selector_string, attribute_id, 0, nullptr);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         int32 array_size = status;
 
@@ -2203,7 +2203,7 @@ namespace nirfmxbluetooth_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->set_attr_val(attr_val);
@@ -2231,7 +2231,7 @@ namespace nirfmxbluetooth_grpc {
       uInt16 attr_val {};
       auto status = library_->GetAttributeU16(instrument, selector_string, attribute_id, &attr_val);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       response->set_attr_val(attr_val);
@@ -2257,7 +2257,7 @@ namespace nirfmxbluetooth_grpc {
       uInt32 attr_val {};
       auto status = library_->GetAttributeU32(instrument, selector_string, attribute_id, &attr_val);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       response->set_attr_val(attr_val);
@@ -2284,7 +2284,7 @@ namespace nirfmxbluetooth_grpc {
       while (true) {
         auto status = library_->GetAttributeU32Array(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->mutable_attr_val()->Resize(actual_array_size, 0);
         uInt32* attr_val = reinterpret_cast<uInt32*>(response->mutable_attr_val()->mutable_data());
@@ -2295,7 +2295,7 @@ namespace nirfmxbluetooth_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->mutable_attr_val()->Resize(actual_array_size, 0);
@@ -2324,7 +2324,7 @@ namespace nirfmxbluetooth_grpc {
       while (true) {
         auto status = library_->GetAttributeU64Array(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->mutable_attr_val()->Resize(actual_array_size, 0);
         uInt64* attr_val = reinterpret_cast<uInt64*>(response->mutable_attr_val()->mutable_data());
@@ -2335,7 +2335,7 @@ namespace nirfmxbluetooth_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->mutable_attr_val()->Resize(actual_array_size, 0);
@@ -2363,7 +2363,7 @@ namespace nirfmxbluetooth_grpc {
       uInt8 attr_val {};
       auto status = library_->GetAttributeU8(instrument, selector_string, attribute_id, &attr_val);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       response->set_attr_val(attr_val);
@@ -2390,7 +2390,7 @@ namespace nirfmxbluetooth_grpc {
       while (true) {
         auto status = library_->GetAttributeU8Array(instrument, selector_string, attribute_id, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         std::string attr_val(actual_array_size, '\0');
         auto array_size = actual_array_size;
@@ -2400,7 +2400,7 @@ namespace nirfmxbluetooth_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->set_attr_val(attr_val);
@@ -2428,7 +2428,7 @@ namespace nirfmxbluetooth_grpc {
       while (true) {
         auto status = library_->GetError(instrument, nullptr, 0, nullptr);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         int32 error_description_buffer_size = status;
 
@@ -2443,7 +2443,7 @@ namespace nirfmxbluetooth_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->set_error_code(error_code);
@@ -2472,7 +2472,7 @@ namespace nirfmxbluetooth_grpc {
       while (true) {
         auto status = library_->GetErrorString(instrument, error_code, 0, nullptr);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         int32 error_description_buffer_size = status;
 
@@ -2486,7 +2486,7 @@ namespace nirfmxbluetooth_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->set_error_description(error_description);
@@ -2521,7 +2521,7 @@ namespace nirfmxbluetooth_grpc {
       auto cleanup_lambda = [&] (niRFmxInstrHandle id) { library_->Close(id, RFMXBT_VAL_FALSE); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, 0);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
       }
       response->set_status(status);
       response->mutable_instrument()->set_id(session_id);
@@ -2557,7 +2557,7 @@ namespace nirfmxbluetooth_grpc {
       auto cleanup_lambda = [&] (niRFmxInstrHandle id) { library_->Close(id, RFMXBT_VAL_FALSE); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, 0);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
       }
       response->set_status(status);
       response->mutable_instrument()->set_id(session_id);
@@ -2585,7 +2585,7 @@ namespace nirfmxbluetooth_grpc {
       char* result_name = (char*)request->result_name().c_str();
       auto status = library_->Initiate(instrument, selector_string, result_name);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -2625,7 +2625,7 @@ namespace nirfmxbluetooth_grpc {
       int32 averaging_count = request->averaging_count();
       auto status = library_->ModAccCfgAveraging(instrument, selector_string, averaging_enabled, averaging_count);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -2664,7 +2664,7 @@ namespace nirfmxbluetooth_grpc {
 
       auto status = library_->ModAccCfgBurstSynchronizationType(instrument, selector_string, burst_synchronization_type);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -2690,7 +2690,7 @@ namespace nirfmxbluetooth_grpc {
       while (true) {
         auto status = library_->ModAccFetchConstellationTrace(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         std::vector<NIComplexSingle> constellation(actual_array_size, NIComplexSingle());
         auto array_size = actual_array_size;
@@ -2700,7 +2700,7 @@ namespace nirfmxbluetooth_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         convert_to_grpc(constellation, response->mutable_constellation());
@@ -2737,7 +2737,7 @@ namespace nirfmxbluetooth_grpc {
       float64 ninetynine_percent_devm {};
       auto status = library_->ModAccFetchDEVM(instrument, selector_string, timeout, &peak_rms_devm_maximum, &peak_devm_maximum, &ninetynine_percent_devm);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       response->set_peak_rms_devm_maximum(peak_rms_devm_maximum);
@@ -2766,7 +2766,7 @@ namespace nirfmxbluetooth_grpc {
       float64 peak_rms_magnitude_error_maximum {};
       auto status = library_->ModAccFetchDEVMMagnitudeError(instrument, selector_string, timeout, &average_rms_magnitude_error_mean, &peak_rms_magnitude_error_maximum);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       response->set_average_rms_magnitude_error_mean(average_rms_magnitude_error_mean);
@@ -2794,7 +2794,7 @@ namespace nirfmxbluetooth_grpc {
       while (true) {
         auto status = library_->ModAccFetchDEVMPerSymbolTrace(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->mutable_devm_per_symbol()->Resize(actual_array_size, 0);
         float32* devm_per_symbol = response->mutable_devm_per_symbol()->mutable_data();
@@ -2805,7 +2805,7 @@ namespace nirfmxbluetooth_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->mutable_devm_per_symbol()->Resize(actual_array_size, 0);
@@ -2834,7 +2834,7 @@ namespace nirfmxbluetooth_grpc {
       float64 peak_rms_phase_error_maximum {};
       auto status = library_->ModAccFetchDEVMPhaseError(instrument, selector_string, timeout, &average_rms_phase_error_mean, &peak_rms_phase_error_maximum);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       response->set_average_rms_phase_error_mean(average_rms_phase_error_mean);
@@ -2862,7 +2862,7 @@ namespace nirfmxbluetooth_grpc {
       while (true) {
         auto status = library_->ModAccFetchDemodulatedBitTrace(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         std::vector<int8> demodulated_bits(actual_array_size);
         auto array_size = actual_array_size;
@@ -2872,7 +2872,7 @@ namespace nirfmxbluetooth_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
           response->mutable_demodulated_bits()->Clear();
@@ -2910,7 +2910,7 @@ namespace nirfmxbluetooth_grpc {
       float64 df1avg_minimum {};
       auto status = library_->ModAccFetchDf1(instrument, selector_string, timeout, &df1avg_maximum, &df1avg_minimum);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       response->set_df1avg_maximum(df1avg_maximum);
@@ -2938,7 +2938,7 @@ namespace nirfmxbluetooth_grpc {
       while (true) {
         auto status = library_->ModAccFetchDf1maxTrace(instrument, selector_string, timeout, nullptr, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->mutable_time()->Resize(actual_array_size, 0);
         float32* time = response->mutable_time()->mutable_data();
@@ -2951,7 +2951,7 @@ namespace nirfmxbluetooth_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->mutable_time()->Resize(actual_array_size, 0);
@@ -2981,7 +2981,7 @@ namespace nirfmxbluetooth_grpc {
       float64 percentage_of_symbols_above_df2max_threshold {};
       auto status = library_->ModAccFetchDf2(instrument, selector_string, timeout, &df2avg_minimum, &percentage_of_symbols_above_df2max_threshold);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       response->set_df2avg_minimum(df2avg_minimum);
@@ -3009,7 +3009,7 @@ namespace nirfmxbluetooth_grpc {
       while (true) {
         auto status = library_->ModAccFetchDf2maxTrace(instrument, selector_string, timeout, nullptr, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->mutable_time()->Resize(actual_array_size, 0);
         float32* time = response->mutable_time()->mutable_data();
@@ -3022,7 +3022,7 @@ namespace nirfmxbluetooth_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->mutable_time()->Resize(actual_array_size, 0);
@@ -3053,7 +3053,7 @@ namespace nirfmxbluetooth_grpc {
       float64 peak_frequency_drift_rate_maximum {};
       auto status = library_->ModAccFetchFrequencyErrorBR(instrument, selector_string, timeout, &initial_frequency_error_maximum, &peak_frequency_drift_maximum, &peak_frequency_drift_rate_maximum);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       response->set_initial_frequency_error_maximum(initial_frequency_error_maximum);
@@ -3083,7 +3083,7 @@ namespace nirfmxbluetooth_grpc {
       float64 peak_frequency_error_w0_maximum {};
       auto status = library_->ModAccFetchFrequencyErrorEDR(instrument, selector_string, timeout, &header_frequency_error_wi_maximum, &peak_frequency_error_wi_plus_w0_maximum, &peak_frequency_error_w0_maximum);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       response->set_header_frequency_error_wi_maximum(header_frequency_error_wi_maximum);
@@ -3114,7 +3114,7 @@ namespace nirfmxbluetooth_grpc {
       float64 peak_frequency_drift_rate_maximum {};
       auto status = library_->ModAccFetchFrequencyErrorLE(instrument, selector_string, timeout, &peak_frequency_error_maximum, &initial_frequency_drift_maximum, &peak_frequency_drift_maximum, &peak_frequency_drift_rate_maximum);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       response->set_peak_frequency_error_maximum(peak_frequency_error_maximum);
@@ -3144,7 +3144,7 @@ namespace nirfmxbluetooth_grpc {
       while (true) {
         auto status = library_->ModAccFetchFrequencyErrorTraceBR(instrument, selector_string, timeout, nullptr, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->mutable_time()->Resize(actual_array_size, 0);
         float32* time = response->mutable_time()->mutable_data();
@@ -3157,7 +3157,7 @@ namespace nirfmxbluetooth_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->mutable_time()->Resize(actual_array_size, 0);
@@ -3187,7 +3187,7 @@ namespace nirfmxbluetooth_grpc {
       while (true) {
         auto status = library_->ModAccFetchFrequencyErrorTraceLE(instrument, selector_string, timeout, nullptr, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->mutable_time()->Resize(actual_array_size, 0);
         float32* time = response->mutable_time()->mutable_data();
@@ -3200,7 +3200,7 @@ namespace nirfmxbluetooth_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->mutable_time()->Resize(actual_array_size, 0);
@@ -3230,7 +3230,7 @@ namespace nirfmxbluetooth_grpc {
       while (true) {
         auto status = library_->ModAccFetchFrequencyErrorWiPlusW0TraceEDR(instrument, selector_string, timeout, nullptr, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->mutable_time()->Resize(actual_array_size, 0);
         float32* time = response->mutable_time()->mutable_data();
@@ -3243,7 +3243,7 @@ namespace nirfmxbluetooth_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->mutable_time()->Resize(actual_array_size, 0);
@@ -3275,7 +3275,7 @@ namespace nirfmxbluetooth_grpc {
       while (true) {
         auto status = library_->ModAccFetchFrequencyTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->mutable_frequency()->Resize(actual_array_size, 0);
         float32* frequency = response->mutable_frequency()->mutable_data();
@@ -3286,7 +3286,7 @@ namespace nirfmxbluetooth_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->set_x0(x0);
@@ -3317,7 +3317,7 @@ namespace nirfmxbluetooth_grpc {
       while (true) {
         auto status = library_->ModAccFetchRMSDEVMTrace(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->mutable_rms_devm()->Resize(actual_array_size, 0);
         float32* rms_devm = response->mutable_rms_devm()->mutable_data();
@@ -3328,7 +3328,7 @@ namespace nirfmxbluetooth_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->mutable_rms_devm()->Resize(actual_array_size, 0);
@@ -3355,7 +3355,7 @@ namespace nirfmxbluetooth_grpc {
       int32 attribute_id = request->attribute_id();
       auto status = library_->ResetAttribute(instrument, selector_string, attribute_id);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -3378,7 +3378,7 @@ namespace nirfmxbluetooth_grpc {
       char* selector_string = (char*)request->selector_string().c_str();
       auto status = library_->ResetToDefault(instrument, selector_string);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -3418,7 +3418,7 @@ namespace nirfmxbluetooth_grpc {
       int32 enable_all_traces = request->enable_all_traces();
       auto status = library_->SelectMeasurements(instrument, selector_string, measurements, enable_all_traces);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -3440,7 +3440,7 @@ namespace nirfmxbluetooth_grpc {
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
       auto status = library_->SendSoftwareEdgeTrigger(instrument);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -3465,7 +3465,7 @@ namespace nirfmxbluetooth_grpc {
       float32 attr_val = request->attr_val();
       auto status = library_->SetAttributeF32(instrument, selector_string, attribute_id, attr_val);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -3491,7 +3491,7 @@ namespace nirfmxbluetooth_grpc {
       int32 array_size = static_cast<int32>(request->attr_val().size());
       auto status = library_->SetAttributeF32Array(instrument, selector_string, attribute_id, attr_val, array_size);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -3516,7 +3516,7 @@ namespace nirfmxbluetooth_grpc {
       float64 attr_val = request->attr_val();
       auto status = library_->SetAttributeF64(instrument, selector_string, attribute_id, attr_val);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -3542,7 +3542,7 @@ namespace nirfmxbluetooth_grpc {
       int32 array_size = static_cast<int32>(request->attr_val().size());
       auto status = library_->SetAttributeF64Array(instrument, selector_string, attribute_id, attr_val, array_size);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -3576,7 +3576,7 @@ namespace nirfmxbluetooth_grpc {
 
       auto status = library_->SetAttributeI16(instrument, selector_string, attribute_id, attr_val);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -3619,7 +3619,7 @@ namespace nirfmxbluetooth_grpc {
 
       auto status = library_->SetAttributeI32(instrument, selector_string, attribute_id, attr_val);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -3653,7 +3653,7 @@ namespace nirfmxbluetooth_grpc {
       int32 array_size = static_cast<int32>(request->attr_val().size());
       auto status = library_->SetAttributeI32Array(instrument, selector_string, attribute_id, attr_val, array_size);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -3678,7 +3678,7 @@ namespace nirfmxbluetooth_grpc {
       int64 attr_val = request->attr_val();
       auto status = library_->SetAttributeI64(instrument, selector_string, attribute_id, attr_val);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -3704,7 +3704,7 @@ namespace nirfmxbluetooth_grpc {
       int32 array_size = static_cast<int32>(request->attr_val().size());
       auto status = library_->SetAttributeI64Array(instrument, selector_string, attribute_id, attr_val, array_size);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -3738,7 +3738,7 @@ namespace nirfmxbluetooth_grpc {
 
       auto status = library_->SetAttributeI8(instrument, selector_string, attribute_id, attr_val);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -3784,7 +3784,7 @@ namespace nirfmxbluetooth_grpc {
       int32 array_size = static_cast<int32>(request->attr_val().size());
       auto status = library_->SetAttributeI8Array(instrument, selector_string, attribute_id, attr_val.data(), array_size);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -3813,7 +3813,7 @@ namespace nirfmxbluetooth_grpc {
       int32 array_size = static_cast<int32>(request->attr_val().size());
       auto status = library_->SetAttributeNIComplexDoubleArray(instrument, selector_string, attribute_id, attr_val.data(), array_size);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -3839,7 +3839,7 @@ namespace nirfmxbluetooth_grpc {
       int32 array_size = static_cast<int32>(request->attr_val().size());
       auto status = library_->SetAttributeNIComplexSingleArray(instrument, selector_string, attribute_id, attr_val.data(), array_size);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -3883,7 +3883,7 @@ namespace nirfmxbluetooth_grpc {
 
       auto status = library_->SetAttributeString(instrument, selector_string, attribute_id, attr_val);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -3917,7 +3917,7 @@ namespace nirfmxbluetooth_grpc {
 
       auto status = library_->SetAttributeU16(instrument, selector_string, attribute_id, attr_val);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -3945,7 +3945,7 @@ namespace nirfmxbluetooth_grpc {
       uInt32 attr_val = request->attr_val();
       auto status = library_->SetAttributeU32(instrument, selector_string, attribute_id, attr_val);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -3971,7 +3971,7 @@ namespace nirfmxbluetooth_grpc {
       int32 array_size = static_cast<int32>(request->attr_val().size());
       auto status = library_->SetAttributeU32Array(instrument, selector_string, attribute_id, attr_val, array_size);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -3997,7 +3997,7 @@ namespace nirfmxbluetooth_grpc {
       int32 array_size = static_cast<int32>(request->attr_val().size());
       auto status = library_->SetAttributeU64Array(instrument, selector_string, attribute_id, attr_val, array_size);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -4022,7 +4022,7 @@ namespace nirfmxbluetooth_grpc {
       uInt8 attr_val = request->attr_val();
       auto status = library_->SetAttributeU8(instrument, selector_string, attribute_id, attr_val);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -4048,7 +4048,7 @@ namespace nirfmxbluetooth_grpc {
       int32 array_size = static_cast<int32>(request->attr_val().size());
       auto status = library_->SetAttributeU8Array(instrument, selector_string, attribute_id, attr_val, array_size);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -4088,7 +4088,7 @@ namespace nirfmxbluetooth_grpc {
       int32 averaging_count = request->averaging_count();
       auto status = library_->TXPCfgAveraging(instrument, selector_string, averaging_enabled, averaging_count);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -4127,7 +4127,7 @@ namespace nirfmxbluetooth_grpc {
 
       auto status = library_->TXPCfgBurstSynchronizationType(instrument, selector_string, burst_synchronization_type);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -4154,7 +4154,7 @@ namespace nirfmxbluetooth_grpc {
       float64 edr_dpsk_gfsk_average_power_ratio_mean {};
       auto status = library_->TXPFetchEDRPowers(instrument, selector_string, timeout, &edr_gfsk_average_power_mean, &edr_dpsk_average_power_mean, &edr_dpsk_gfsk_average_power_ratio_mean);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       response->set_edr_gfsk_average_power_mean(edr_gfsk_average_power_mean);
@@ -4183,7 +4183,7 @@ namespace nirfmxbluetooth_grpc {
       float64 reference_period_peak_absolute_power_deviation_maximum {};
       auto status = library_->TXPFetchLECTEReferencePeriodPowers(instrument, selector_string, timeout, &reference_period_average_power_mean, &reference_period_peak_absolute_power_deviation_maximum);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       response->set_reference_period_average_power_mean(reference_period_average_power_mean);
@@ -4211,7 +4211,7 @@ namespace nirfmxbluetooth_grpc {
       float64 transmit_slot_peak_absolute_power_deviation_maximum {};
       auto status = library_->TXPFetchLECTETransmitSlotPowers(instrument, selector_string, timeout, &transmit_slot_average_power_mean, &transmit_slot_peak_absolute_power_deviation_maximum);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       response->set_transmit_slot_average_power_mean(transmit_slot_average_power_mean);
@@ -4239,7 +4239,7 @@ namespace nirfmxbluetooth_grpc {
       while (true) {
         auto status = library_->TXPFetchLECTETransmitSlotPowersArray(instrument, selector_string, timeout, nullptr, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->mutable_transmit_slot_average_power_mean()->Resize(actual_array_size, 0);
         float64* transmit_slot_average_power_mean = response->mutable_transmit_slot_average_power_mean()->mutable_data();
@@ -4252,7 +4252,7 @@ namespace nirfmxbluetooth_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->mutable_transmit_slot_average_power_mean()->Resize(actual_array_size, 0);
@@ -4284,7 +4284,7 @@ namespace nirfmxbluetooth_grpc {
       while (true) {
         auto status = library_->TXPFetchPowerTrace(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->mutable_power()->Resize(actual_array_size, 0);
         float32* power = response->mutable_power()->mutable_data();
@@ -4295,7 +4295,7 @@ namespace nirfmxbluetooth_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->set_x0(x0);
@@ -4328,7 +4328,7 @@ namespace nirfmxbluetooth_grpc {
       float64 peak_to_average_power_ratio_maximum {};
       auto status = library_->TXPFetchPowers(instrument, selector_string, timeout, &average_power_mean, &average_power_maximum, &average_power_minimum, &peak_to_average_power_ratio_maximum);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       response->set_average_power_mean(average_power_mean);
@@ -4372,7 +4372,7 @@ namespace nirfmxbluetooth_grpc {
       int32 averaging_count = request->averaging_count();
       auto status = library_->TwentydBBandwidthCfgAveraging(instrument, selector_string, averaging_enabled, averaging_count);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -4400,7 +4400,7 @@ namespace nirfmxbluetooth_grpc {
       float64 low_frequency {};
       auto status = library_->TwentydBBandwidthFetchMeasurement(instrument, selector_string, timeout, &peak_power, &bandwidth, &high_frequency, &low_frequency);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       response->set_peak_power(peak_power);
@@ -4432,7 +4432,7 @@ namespace nirfmxbluetooth_grpc {
       while (true) {
         auto status = library_->TwentydBBandwidthFetchSpectrum(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->mutable_spectrum()->Resize(actual_array_size, 0);
         float32* spectrum = response->mutable_spectrum()->mutable_data();
@@ -4443,7 +4443,7 @@ namespace nirfmxbluetooth_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->set_x0(x0);
@@ -4471,7 +4471,7 @@ namespace nirfmxbluetooth_grpc {
       float64 timeout = request->timeout();
       auto status = library_->WaitForAcquisitionComplete(instrument, timeout);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -4495,7 +4495,7 @@ namespace nirfmxbluetooth_grpc {
       float64 timeout = request->timeout();
       auto status = library_->WaitForMeasurementComplete(instrument, selector_string, timeout);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;

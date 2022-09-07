@@ -1,17 +1,14 @@
 #include <gmock/gmock.h>
-#include <gtest/gtest.h>
-
-#include <nlohmann/json.hpp>
 
 #include "device_server.h"
 #include "niswitch/niswitch_client.h"
+#include "tests/utilities/test_helpers.h"
 
 namespace ni {
 namespace tests {
 namespace system {
 
 namespace niswitch = niswitch_grpc;
-using namespace ::nlohmann;
 
 const int kViErrorRsrcNotFound = -1074118654;
 const int kInvalidSwitchSession = -1074130544;
@@ -49,6 +46,7 @@ class NiSwitchSessionTest : public ::testing::Test {
     request.set_simulate(true);
 
     ::grpc::Status status = GetStub()->InitWithTopology(&context, request, response);
+    nidevice_grpc::experimental::client::raise_if_error(status, context);
     return status;
   }
 
@@ -96,17 +94,6 @@ TEST_F(NiSwitchSessionTest, InitializeSessionWithDeviceAndNoSessionName_CreatesD
   EXPECT_EQ("", response.error_message());
 }
 
-TEST_F(NiSwitchSessionTest, InitializeSessionWithoutDevice_ReturnsDriverError)
-{
-  niswitch::InitWithTopologyResponse response;
-  ::grpc::Status status = call_init_with_topology(kInvalidRsrcName, "", "", &response);
-
-  EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status.error_code());
-  auto error = json::parse(status.error_message());
-  EXPECT_EQ(kViErrorRsrcNotFound, error.value("code", 0));
-  EXPECT_NE("", error.value("message", ""));
-}
-
 TEST_F(NiSwitchSessionTest, InitializedSession_CloseSession_ClosesDriverSession)
 {
   niswitch::InitWithTopologyResponse init_response;
@@ -128,27 +115,32 @@ TEST_F(NiSwitchSessionTest, InvalidSession_CloseSession_ReturnsInvalidSessionErr
   nidevice_grpc::Session session;
   session.set_id(NULL);
 
-  ::grpc::ClientContext context;
-  niswitch::CloseRequest request;
-  request.mutable_vi()->set_id(session.id());
-  niswitch::CloseResponse response;
-  ::grpc::Status status = GetStub()->Close(&context, request, &response);
-
-  EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status.error_code());
-  auto error = json::parse(status.error_message());
-  EXPECT_EQ(kInvalidSwitchSession, error.value("code", 0));
-  EXPECT_THAT(error.value("message", ""), ::testing::HasSubstr(kInvalidSwitchSessionMessage));
+  try {
+    ::grpc::ClientContext context;
+    niswitch::CloseRequest request;
+    request.mutable_vi()->set_id(session.id());
+    niswitch::CloseResponse response;
+    auto status = GetStub()->Close(&context, request, &response);
+    nidevice_grpc::experimental::client::raise_if_error(status, context);
+    FAIL() << "We shouldn't get here.";
+  }
+  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
+    expect_driver_error(ex, kInvalidSwitchSession);
+    EXPECT_THAT(ex.what(), ::testing::HasSubstr(kInvalidSwitchSessionMessage));
+  }
 }
 
-TEST_F(NiSwitchSessionTest, InitWithErrorFromDriver_ReturnsUserErrorMessage)
+TEST_F(NiSwitchSessionTest, InitWithErrorFromDriver_ReturnsDriverErrorWithUserErrorMessage)
 {
-  niswitch::InitWithTopologyResponse init_response;
-  auto status = call_init_with_topology(kInvalidRsrcName, "", "", &init_response);
-
-  EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status.error_code());
-  auto error = json::parse(status.error_message());
-  EXPECT_EQ(kViErrorRsrcNotFound, error.value("code", 0));
-  EXPECT_STREQ(kViErrorRsrcNotFoundMessage, error.value("message", "").c_str());
+  try {
+    niswitch::InitWithTopologyResponse init_response;
+    call_init_with_topology(kInvalidRsrcName, "", "", &init_response);
+    FAIL() << "We shouldn't get here.";
+  }
+  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
+    expect_driver_error(ex, kViErrorRsrcNotFound);
+    EXPECT_STREQ(kViErrorRsrcNotFoundMessage, ex.what());
+  }
 }
 
 }  // namespace system

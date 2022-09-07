@@ -258,8 +258,8 @@ message AcceptResponse {
   int32 status = 1;
   SockAddr addr = 2;
   nidevice_grpc.Session socket = 3;
-  string error_message = 4;
-  int32 error_num = 5;
+  string error_message = 4 [deprecated = true];
+  int32 error_num = 5 [deprecated = true];
 }
 
 message BindRequest {
@@ -269,8 +269,8 @@ message BindRequest {
 
 message BindResponse {
   int32 status = 1;
-  string error_message = 2;
-  int32 error_num = 3;
+  string error_message = 2 [deprecated = true];
+  int32 error_num = 3 [deprecated = true];
 }
 
 message CloseRequest {
@@ -279,8 +279,8 @@ message CloseRequest {
 
 message CloseResponse {
   int32 status = 1;
-  string error_message = 2;
-  int32 error_num = 3;
+  string error_message = 2 [deprecated = true];
+  int32 error_num = 3 [deprecated = true];
 }
 
 message ConnectRequest {
@@ -290,8 +290,8 @@ message ConnectRequest {
 
 message ConnectResponse {
   int32 status = 1;
-  string error_message = 2;
-  int32 error_num = 3;
+  string error_message = 2 [deprecated = true];
+  int32 error_num = 3 [deprecated = true];
 }
 
 message FdIsSetRequest {
@@ -302,8 +302,8 @@ message FdIsSetRequest {
 message FdIsSetResponse {
   int32 status = 1;
   int32 is_set = 2;
-  string error_message = 3;
-  int32 error_num = 4;
+  string error_message = 3 [deprecated = true];
+  int32 error_num = 4 [deprecated = true];
 }
 
 message GetAddrInfoRequest {
@@ -316,8 +316,8 @@ message GetAddrInfoRequest {
 message GetAddrInfoResponse {
   int32 status = 1;
   repeated AddrInfo res = 2;
-  string error_message = 3;
-  int32 error_num = 4;
+  string error_message = 3 [deprecated = true];
+  int32 error_num = 4 [deprecated = true];
 }
 
 message GetNameInfoRequest {
@@ -333,8 +333,8 @@ message GetNameInfoResponse {
   int32 status = 1;
   string host = 2;
   string serv = 3;
-  string error_message = 4;
-  int32 error_num = 5;
+  string error_message = 4 [deprecated = true];
+  int32 error_num = 5 [deprecated = true];
 }
 
 message GetPeerNameRequest {
@@ -344,8 +344,8 @@ message GetPeerNameRequest {
 message GetPeerNameResponse {
   int32 status = 1;
   SockAddr addr = 2;
-  string error_message = 3;
-  int32 error_num = 4;
+  string error_message = 3 [deprecated = true];
+  int32 error_num = 4 [deprecated = true];
 }
 
 message GetSockNameRequest {
@@ -355,8 +355,8 @@ message GetSockNameRequest {
 message GetSockNameResponse {
   int32 status = 1;
   SockAddr addr = 2;
-  string error_message = 3;
-  int32 error_num = 4;
+  string error_message = 3 [deprecated = true];
+  int32 error_num = 4 [deprecated = true];
 }
 
 message GetSockOptRequest {
@@ -374,8 +374,8 @@ message GetSockOptRequest {
 message GetSockOptResponse {
   int32 status = 1;
   SockOptData optval = 2;
-  string error_message = 3;
-  int32 error_num = 4;
+  string error_message = 3 [deprecated = true];
+  int32 error_num = 4 [deprecated = true];
 }
 
 message InetAddrRequest {
@@ -386,8 +386,8 @@ message InetAddrRequest {
 message InetAddrResponse {
   int32 status = 1;
   uint32 addr = 2;
-  string error_message = 3;
-  int32 error_num = 4;
+  string error_message = 3 [deprecated = true];
+  int32 error_num = 4 [deprecated = true];
 }
 
 message InetAToNRequest {
@@ -398,8 +398,8 @@ message InetAToNRequest {
 message InetAToNResponse {
   int32 status = 1;
   InAddr name = 2;
-  string error_message = 3;
-  int32 error_num = 4;
+  string error_message = 3 [deprecated = true];
+  int32 error_num = 4 [deprecated = true];
 }
 
 message InetNToARequest {
@@ -410,8 +410,8 @@ message InetNToARequest {
 message InetNToAResponse {
   int32 status = 1;
   string address = 2;
-  string error_message = 3;
-  int32 error_num = 4;
+  string error_message = 3 [deprecated = true];
+  int32 error_num = 4 [deprecated = true];
 }
 
 message InetNToPRequest {
@@ -422,8 +422,8 @@ message InetNToPRequest {
 message InetNToPResponse {
   int32 status = 1;
   string address = 2;
-  string error_message = 3;
-  int32 error_num = 4;
+  string error_message = 3 [deprecated = true];
+  int32 error_num = 4 [deprecated = true];
 }
 
 message InetPToNRequest {
@@ -438,8 +438,8 @@ message InetPToNRequest {
 message InetPToNResponse {
   int32 status = 1;
   Addr addr = 2;
-  string error_message = 3;
-  int32 error_num = 4;
+  string error_message = 3 [deprecated = true];
+  int32 error_num = 4 [deprecated = true];
 }
 
 message IpStackClearRequest {
@@ -448,8 +448,8 @@ message IpStackClearRequest {
 
 message IpStackClearResponse {
   int32 status = 1;
-  string error_message = 2;
-  int32 error_num = 3;
+  string error_message = 2 [deprecated = true];
+  int32 error_num = 3 [deprecated = true];
 }
 
 message IpStackCreateRequest {
@@ -461,8 +461,8 @@ message IpStackCreateRequest {
 message IpStackCreateResponse {
   int32 status = 1;
   nidevice_grpc.Session stack_ref = 2;
-  string error_message = 3;
-  int32 error_num = 4;
+  string error_message = 3 [deprecated = true];
+  int32 error_num = 4 [deprecated = true];
 }
 
 message IpStackGetAllStacksInfoStrRequest {
@@ -475,8 +475,8 @@ message IpStackGetAllStacksInfoStrRequest {
 message IpStackGetAllStacksInfoStrResponse {
   int32 status = 1;
   string info = 2;
-  string error_message = 3;
-  int32 error_num = 4;
+  string error_message = 3 [deprecated = true];
+  int32 error_num = 4 [deprecated = true];
 }
 
 message IpStackGetInfoRequest {
@@ -486,8 +486,8 @@ message IpStackGetInfoRequest {
 message IpStackGetInfoResponse {
   int32 status = 1;
   repeated VirtualInterface virtual_interfaces = 2;
-  string error_message = 3;
-  int32 error_num = 4;
+  string error_message = 3 [deprecated = true];
+  int32 error_num = 4 [deprecated = true];
 }
 
 message IpStackOpenRequest {
@@ -498,8 +498,8 @@ message IpStackOpenRequest {
 message IpStackOpenResponse {
   int32 status = 1;
   nidevice_grpc.Session stack_ref = 2;
-  string error_message = 3;
-  int32 error_num = 4;
+  string error_message = 3 [deprecated = true];
+  int32 error_num = 4 [deprecated = true];
 }
 
 message IpStackWaitForInterfaceRequest {
@@ -510,8 +510,8 @@ message IpStackWaitForInterfaceRequest {
 
 message IpStackWaitForInterfaceResponse {
   int32 status = 1;
-  string error_message = 2;
-  int32 error_num = 3;
+  string error_message = 2 [deprecated = true];
+  int32 error_num = 3 [deprecated = true];
 }
 
 message ListenRequest {
@@ -521,8 +521,8 @@ message ListenRequest {
 
 message ListenResponse {
   int32 status = 1;
-  string error_message = 2;
-  int32 error_num = 3;
+  string error_message = 2 [deprecated = true];
+  int32 error_num = 3 [deprecated = true];
 }
 
 message RecvRequest {
@@ -535,8 +535,8 @@ message RecvRequest {
 message RecvResponse {
   int32 status = 1;
   bytes data = 2;
-  string error_message = 3;
-  int32 error_num = 4;
+  string error_message = 3 [deprecated = true];
+  int32 error_num = 4 [deprecated = true];
 }
 
 message RecvFromRequest {
@@ -550,8 +550,8 @@ message RecvFromResponse {
   int32 status = 1;
   bytes data = 2;
   SockAddr from_addr = 3;
-  string error_message = 4;
-  int32 error_num = 5;
+  string error_message = 4 [deprecated = true];
+  int32 error_num = 5 [deprecated = true];
 }
 
 message SelectRequest {
@@ -563,8 +563,8 @@ message SelectRequest {
 
 message SelectResponse {
   int32 status = 1;
-  string error_message = 2;
-  int32 error_num = 3;
+  string error_message = 2 [deprecated = true];
+  int32 error_num = 3 [deprecated = true];
 }
 
 message SendRequest {
@@ -575,8 +575,8 @@ message SendRequest {
 
 message SendResponse {
   int32 status = 1;
-  string error_message = 2;
-  int32 error_num = 3;
+  string error_message = 2 [deprecated = true];
+  int32 error_num = 3 [deprecated = true];
 }
 
 message SendToRequest {
@@ -588,8 +588,8 @@ message SendToRequest {
 
 message SendToResponse {
   int32 status = 1;
-  string error_message = 2;
-  int32 error_num = 3;
+  string error_message = 2 [deprecated = true];
+  int32 error_num = 3 [deprecated = true];
 }
 
 message SetSockOptRequest {
@@ -607,8 +607,8 @@ message SetSockOptRequest {
 
 message SetSockOptResponse {
   int32 status = 1;
-  string error_message = 2;
-  int32 error_num = 3;
+  string error_message = 2 [deprecated = true];
+  int32 error_num = 3 [deprecated = true];
 }
 
 message ShutdownRequest {
@@ -621,8 +621,8 @@ message ShutdownRequest {
 
 message ShutdownResponse {
   int32 status = 1;
-  string error_message = 2;
-  int32 error_num = 3;
+  string error_message = 2 [deprecated = true];
+  int32 error_num = 3 [deprecated = true];
 }
 
 message SocketRequest {
@@ -645,8 +645,8 @@ message SocketRequest {
 message SocketResponse {
   int32 status = 1;
   nidevice_grpc.Session socket = 2;
-  string error_message = 3;
-  int32 error_num = 4;
+  string error_message = 3 [deprecated = true];
+  int32 error_num = 4 [deprecated = true];
 }
 
 message StrErrRRequest {

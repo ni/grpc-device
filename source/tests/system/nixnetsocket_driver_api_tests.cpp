@@ -1,6 +1,5 @@
 #include <gmock/gmock.h>
 #include <google/protobuf/util/time_util.h>
-#include <gtest/gtest.h>
 #include <nixnetsocket/nixnetsocket_client.h>
 
 #include <fstream>
@@ -9,6 +8,7 @@
 
 #include "device_server.h"
 #include "enumerate_devices.h"
+#include "tests/utilities/test_helpers.h"
 #if defined(__linux__)
   #include <netinet/in.h>
 #endif
@@ -235,11 +235,9 @@ class NiXnetSocketNoHardwareTests : public NiXnetSocketDriverApiTests {
     EXPECT_EQ(error, (response).status());  \
   }
 
-#define EXPECT_XNET_ERROR_CODE(expected, error) \
-  EXPECT_EQ(expected, error.value("code", 0));
-
-#define EXPECT_XNET_ERROR_NUMBER(expected, error) \
-  EXPECT_EQ(expected, error.value("errorNumber", 0));
+#define EXPECT_XNET_ERROR_NUMBER(expected, ex)                            \
+  const auto& socket_err = ex.Trailers().find("ni-socket-error")->second; \
+  EXPECT_EQ(expected, std::stoi(socket_err));
 
 #define EXPECT_XNET_ERROR(expected_status, error, message, response) \
   if (1) {                                                           \
@@ -291,13 +289,12 @@ TEST_F(NiXnetSocketNoHardwareTests, InitWithInvalidIpStack_Close_ReturnsAndSetsE
 
   try {
     client::close(stub(), invalid_socket.socket());
-    EXPECT_FALSE(true);
+    FAIL() << "We shouldn't get here.";
   }
-  catch (const std::runtime_error& ex) {
-    auto error = json::parse(ex.what());
-    EXPECT_XNET_ERROR_CODE(GENERIC_NXSOCKET_ERROR, error);
-    EXPECT_XNET_ERROR_NUMBER(INVALID_SOCKET_ERROR, error);
-    EXPECT_THAT(error.value("message", ""), HasSubstr(INVALID_SOCKET_MESSAGE));
+  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
+    expect_driver_error(ex, GENERIC_NXSOCKET_ERROR);
+    EXPECT_XNET_ERROR_NUMBER(INVALID_SOCKET_ERROR, ex);
+    EXPECT_THAT(ex.what(), HasSubstr(INVALID_SOCKET_MESSAGE));
   }
 }
 
@@ -311,13 +308,12 @@ TEST_F(NiXnetSocketNoHardwareTests, InitWithInvalidIpStack_Bind_ReturnsAndSetsEx
 
   try {
     client::bind(stub(), invalid_socket.socket(), sock_addr);
-    EXPECT_FALSE(true);
+    FAIL() << "We shouldn't get here.";
   }
-  catch (const std::runtime_error& ex) {
-    auto error = json::parse(ex.what());
-    EXPECT_XNET_ERROR_CODE(GENERIC_NXSOCKET_ERROR, error);
-    EXPECT_XNET_ERROR_NUMBER(INVALID_SOCKET_ERROR, error);
-    EXPECT_THAT(error.value("message", ""), HasSubstr(INVALID_SOCKET_MESSAGE));
+  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
+    expect_driver_error(ex, GENERIC_NXSOCKET_ERROR);
+    EXPECT_XNET_ERROR_NUMBER(INVALID_SOCKET_ERROR, ex);
+    EXPECT_THAT(ex.what(), HasSubstr(INVALID_SOCKET_MESSAGE));
   }
 }
 
@@ -353,13 +349,12 @@ TEST_F(NiXnetSocketNoHardwareTests, InvalidSocket_Select_ReturnsAndSetsExpectedE
 
   try {
     client::select(stub(), {invalid_socket.socket()}, {invalid_socket.socket()}, {}, duration);
-    EXPECT_FALSE(true);
+    FAIL() << "We shouldn't get here.";
   }
-  catch (const std::runtime_error& ex) {
-    auto error = json::parse(ex.what());
-    EXPECT_XNET_ERROR_CODE(GENERIC_NXSOCKET_ERROR, error);
-    EXPECT_XNET_ERROR_NUMBER(INVALID_SOCKET_ERROR, error);
-    EXPECT_THAT(error.value("message", ""), HasSubstr(INVALID_SOCKET_MESSAGE));
+  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
+    expect_driver_error(ex, GENERIC_NXSOCKET_ERROR);
+    EXPECT_XNET_ERROR_NUMBER(INVALID_SOCKET_ERROR, ex);
+    EXPECT_THAT(ex.what(), HasSubstr(INVALID_SOCKET_MESSAGE));
   }
 }
 
@@ -370,11 +365,10 @@ TEST_F(NiXnetSocketNoHardwareTests, InvalidEmptyConfigJson_IpStackCreate_Returns
 
   try {
     client::ip_stack_create(stub(), "", "{}");
-    EXPECT_FALSE(true);
+    FAIL() << "We shouldn't get here.";
   }
-  catch (const std::runtime_error& ex) {
-    auto error = json::parse(ex.what());
-    EXPECT_XNET_ERROR_CODE(JSON_OBJECT_MISSING_VALUE, error);
+  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
+    expect_driver_error(ex, JSON_OBJECT_MISSING_VALUE);
   }
 }
 
@@ -385,11 +379,10 @@ TEST_F(NiXnetSocketNoHardwareTests, ValidConfigJsonForMissingDevice_IpStackCreat
 
   try {
     client::ip_stack_create(stub(), "", TEST_CONFIG);
-    EXPECT_FALSE(true);
+    FAIL() << "We shouldn't get here.";
   }
-  catch (const std::runtime_error& ex) {
-    auto error = json::parse(ex.what());
-    EXPECT_XNET_ERROR_CODE(INVALID_INTERFACE_NAME, error);
+  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
+    expect_driver_error(ex, INVALID_INTERFACE_NAME);
   }
 }
 
@@ -409,12 +402,11 @@ TEST_F(NiXnetSocketNoHardwareTests, StackAlreadyExistsError_StrErrRWithZeroBuffe
 
   try {
     client::str_err_r(stub(), STACK_ALREADY_EXISTS, 0);
-    EXPECT_FALSE(true);
+    FAIL() << "We shouldn't get here.";
   }
-  catch (const std::runtime_error& ex) {
-    auto error = json::parse(ex.what());
-    EXPECT_XNET_ERROR_CODE(GENERIC_NXSOCKET_ERROR, error);
-    EXPECT_EQ(std::string("Unknown"), error.value("message", "default"));
+  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
+    expect_driver_error(ex, GENERIC_NXSOCKET_ERROR);
+    EXPECT_STREQ("Unknown", ex.what());
   }
 }
 

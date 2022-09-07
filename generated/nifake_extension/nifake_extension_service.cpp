@@ -54,7 +54,7 @@ namespace nifake_extension_grpc {
       ViInt32 param = request->param();
       auto status = library_->AddCoolFunctionality(vi, param);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(status, vi);
+        return ConvertApiErrorStatusForViSession(context, status, vi);
       }
       response->set_status(status);
       return ::grpc::Status::OK;

@@ -68,164 +68,161 @@ client = grpc_nirfmxwlan.NiRFmxWLANStub(channel)
 instr = None
 
 
-def raise_if_initialization_error(response):
-    """Raise an exception if an error was returned from Initialize."""
-    if response.status < 0:
-        raise RuntimeError(f"Error: {response.error_message or response.status}")
+def check_for_warning(response, instrument):
+    """Print to console if the status indicates a warning."""
     if response.status > 0:
-        sys.stderr.write(f"Warning: {response.error_message or response.status}\n")
-    return response
-
-
-def raise_if_error(response):
-    """Raise an exception if an error was returned."""
-    if response.status != 0:
-        error_response = client.GetError(
-            nirfmxwlan_types.GetErrorRequest(
-                instrument=instr,
+        warning_message = client.GetErrorString(
+            nirfmxwlan_types.GetErrorStringRequest(
+                instrument=instrument,
+                error_code=response.status,
             )
         )
-        if response.status < 0:
-            raise RuntimeError(f"Error: {error_response.error_description or response.status}")
-        else:
-            sys.stderr.write(f"Warning: {error_response.error_description or response.status}\n")
-
-    return response
+        sys.stderr.write(
+            f"{warning_message.error_description}\nWarning status: {response.status}\n"
+        )
 
 
 try:
     auto_level = True
 
-    initialize_response = raise_if_initialization_error(
-        client.Initialize(
-            nirfmxwlan_types.InitializeRequest(
-                session_name=SESSION_NAME, resource_name=RESOURCE, option_string=OPTIONS
-            )
+    initialize_response = client.Initialize(
+        nirfmxwlan_types.InitializeRequest(
+            session_name=SESSION_NAME,
+            resource_name=RESOURCE,
+            option_string=OPTIONS,
         )
     )
     instr = initialize_response.instrument
-    raise_if_error(
-        client.CfgFrequencyReference(
-            nirfmxwlan_types.CfgFrequencyReferenceRequest(
-                instrument=instr,
-                channel_name="",
-                frequency_reference_source_mapped=nirfmxwlan_types.FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK,
-                frequency_reference_frequency=10e6,
-            )
+    client.CfgFrequencyReference(
+        nirfmxwlan_types.CfgFrequencyReferenceRequest(
+            instrument=instr,
+            channel_name="",
+            frequency_reference_source_mapped=nirfmxwlan_types.FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK,
+            frequency_reference_frequency=10e6,
         )
     )
-    raise_if_error(
-        client.CfgFrequency(
-            nirfmxwlan_types.CfgFrequencyRequest(
-                instrument=instr, selector_string="", center_frequency=2.412e9
-            )
+
+    client.CfgFrequency(
+        nirfmxwlan_types.CfgFrequencyRequest(
+            instrument=instr,
+            selector_string="",
+            center_frequency=2.412e9,
         )
     )
-    raise_if_error(
-        client.CfgExternalAttenuation(
-            nirfmxwlan_types.CfgExternalAttenuationRequest(
-                instrument=instr, selector_string="", external_attenuation=0.0
-            )
+
+    client.CfgExternalAttenuation(
+        nirfmxwlan_types.CfgExternalAttenuationRequest(
+            instrument=instr,
+            selector_string="",
+            external_attenuation=0.0,
         )
     )
-    raise_if_error(
-        client.CfgIQPowerEdgeTrigger(
-            nirfmxwlan_types.CfgIQPowerEdgeTriggerRequest(
-                instrument=instr,
-                selector_string="",
-                iq_power_edge_source="0",
-                iq_power_edge_slope=nirfmxwlan_types.IQ_POWER_EDGE_TRIGGER_SLOPE_RISING,
-                iq_power_edge_level=-20.0,
-                trigger_delay=0.0,
-                trigger_min_quiet_time_mode=nirfmxwlan_types.TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO,
-                trigger_min_quiet_time_duration=5.0e-6,
-                iq_power_edge_level_type=nirfmxwlan_types.IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE,
-                enable_trigger=True,
-            )
+
+    client.CfgIQPowerEdgeTrigger(
+        nirfmxwlan_types.CfgIQPowerEdgeTriggerRequest(
+            instrument=instr,
+            selector_string="",
+            iq_power_edge_source="0",
+            iq_power_edge_slope=nirfmxwlan_types.IQ_POWER_EDGE_TRIGGER_SLOPE_RISING,
+            iq_power_edge_level=-20.0,
+            trigger_delay=0.0,
+            trigger_min_quiet_time_mode=nirfmxwlan_types.TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO,
+            trigger_min_quiet_time_duration=5.0e-6,
+            iq_power_edge_level_type=nirfmxwlan_types.IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE,
+            enable_trigger=True,
         )
     )
-    raise_if_error(
-        client.CfgStandard(
-            nirfmxwlan_types.CfgStandardRequest(
-                instrument=instr, selector_string="", standard=nirfmxwlan_types.STANDARD_802_11_AG
-            )
+
+    client.CfgStandard(
+        nirfmxwlan_types.CfgStandardRequest(
+            instrument=instr,
+            selector_string="",
+            standard=nirfmxwlan_types.STANDARD_802_11_AG,
         )
     )
-    raise_if_error(
-        client.CfgChannelBandwidth(
-            nirfmxwlan_types.CfgChannelBandwidthRequest(
-                instrument=instr, selector_string="", channel_bandwidth=20e6
-            )
+
+    client.CfgChannelBandwidth(
+        nirfmxwlan_types.CfgChannelBandwidthRequest(
+            instrument=instr,
+            selector_string="",
+            channel_bandwidth=20e6,
         )
     )
+
     if auto_level:
-        raise_if_error(
-            client.AutoLevel(
-                nirfmxwlan_types.AutoLevelRequest(
-                    instrument=instr, selector_string="", measurement_interval=10e-3
-                )
+        client.AutoLevel(
+            nirfmxwlan_types.AutoLevelRequest(
+                instrument=instr,
+                selector_string="",
+                measurement_interval=10e-3,
             )
         )
+
     else:
-        raise_if_error(
-            client.CfgReferenceLevel(
-                nirfmxwlan_types.CfgReferenceLevelRequest(
-                    instrument=instr, selector_string="", reference_level=0.0
-                )
-            )
-        )
-    raise_if_error(
-        client.SelectMeasurements(
-            nirfmxwlan_types.SelectMeasurementsRequest(
+        client.CfgReferenceLevel(
+            nirfmxwlan_types.CfgReferenceLevelRequest(
                 instrument=instr,
                 selector_string="",
-                measurements=nirfmxwlan_types.MEASUREMENT_TYPES_TXP,
-                enable_all_traces=True,
+                reference_level=0.0,
             )
         )
-    )
-    raise_if_error(
-        client.TXPCfgMaximumMeasurementInterval(
-            nirfmxwlan_types.TXPCfgMaximumMeasurementIntervalRequest(
-                instrument=instr, selector_string="", maximum_measurement_interval=1e-3
-            )
+
+    client.SelectMeasurements(
+        nirfmxwlan_types.SelectMeasurementsRequest(
+            instrument=instr,
+            selector_string="",
+            measurements=nirfmxwlan_types.MEASUREMENT_TYPES_TXP,
+            enable_all_traces=True,
         )
     )
-    raise_if_error(
-        client.TXPCfgAveraging(
-            nirfmxwlan_types.TXPCfgAveragingRequest(
-                instrument=instr,
-                selector_string="",
-                averaging_enabled=nirfmxwlan_types.TXP_AVERAGING_ENABLED_FALSE,
-                averaging_count=10,
-            )
+
+    client.TXPCfgMaximumMeasurementInterval(
+        nirfmxwlan_types.TXPCfgMaximumMeasurementIntervalRequest(
+            instrument=instr,
+            selector_string="",
+            maximum_measurement_interval=1e-3,
         )
     )
-    raise_if_error(
-        client.Initiate(
-            nirfmxwlan_types.InitiateRequest(instrument=instr, selector_string="", result_name="")
+
+    client.TXPCfgAveraging(
+        nirfmxwlan_types.TXPCfgAveragingRequest(
+            instrument=instr,
+            selector_string="",
+            averaging_enabled=nirfmxwlan_types.TXP_AVERAGING_ENABLED_FALSE,
+            averaging_count=10,
         )
     )
+
+    initiate_response = client.Initiate(
+        nirfmxwlan_types.InitiateRequest(
+            instrument=instr,
+            selector_string="",
+            result_name="",
+        )
+    )
+    check_for_warning(initiate_response, instr)
 
     ### Fetch results ###
 
-    txp_fetch_power_trace_response = raise_if_error(
-        client.TXPFetchPowerTrace(
-            nirfmxwlan_types.TXPFetchPowerTraceRequest(
-                instrument=instr, selector_string="", timeout=10.0
-            )
+    txp_fetch_power_trace_response = client.TXPFetchPowerTrace(
+        nirfmxwlan_types.TXPFetchPowerTraceRequest(
+            instrument=instr,
+            selector_string="",
+            timeout=10.0,
         )
     )
+    check_for_warning(txp_fetch_power_trace_response, instr)
     x0 = txp_fetch_power_trace_response.x0
     dx = txp_fetch_power_trace_response.dx
     power = txp_fetch_power_trace_response.power
-    txp_fetch_measurement_response = raise_if_error(
-        client.TXPFetchMeasurement(
-            nirfmxwlan_types.TXPFetchMeasurementRequest(
-                instrument=instr, selector_string="", timeout=10.0
-            )
+    txp_fetch_measurement_response = client.TXPFetchMeasurement(
+        nirfmxwlan_types.TXPFetchMeasurementRequest(
+            instrument=instr,
+            selector_string="",
+            timeout=10.0,
         )
     )
+    check_for_warning(txp_fetch_measurement_response, instr)
     average_power_mean = txp_fetch_measurement_response.average_power_mean
     peak_power_maximum = txp_fetch_measurement_response.peak_power_maximum
 
@@ -234,6 +231,10 @@ try:
     print(f"Peak Power Maximum (dBm)          : {peak_power_maximum}")
 except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
+    for entry in rpc_error.trailing_metadata() or []:
+        if entry.key == "ni-error":
+            value = entry.value if isinstance(entry.value, str) else entry.value.decode("utf-8")
+            error_message += f"\nError status: {value}"
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
         error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"
     elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:

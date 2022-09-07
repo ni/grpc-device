@@ -36,7 +36,8 @@ blink(const StubPtr& stub, const nidevice_grpc::Session& interface_ref, const si
   auto response = BlinkResponse{};
 
   raise_if_error(
-      stub->Blink(&context, request, &response));
+      stub->Blink(&context, request, &response),
+      context);
 
   return response;
 }
@@ -52,7 +53,8 @@ clear(const StubPtr& stub, const nidevice_grpc::Session& session)
   auto response = ClearResponse{};
 
   raise_if_error(
-      stub->Clear(&context, request, &response));
+      stub->Clear(&context, request, &response),
+      context);
 
   return response;
 }
@@ -84,7 +86,8 @@ connect_terminals(const StubPtr& stub, const nidevice_grpc::Session& session, co
   auto response = ConnectTerminalsResponse{};
 
   raise_if_error(
-      stub->ConnectTerminals(&context, request, &response));
+      stub->ConnectTerminals(&context, request, &response),
+      context);
 
   return response;
 }
@@ -111,7 +114,8 @@ convert_byte_array_to_frames_single_point(const StubPtr& stub, const nidevice_gr
   auto response = ConvertByteArrayToFramesSinglePointResponse{};
 
   raise_if_error(
-      stub->ConvertByteArrayToFramesSinglePoint(&context, request, &response));
+      stub->ConvertByteArrayToFramesSinglePoint(&context, request, &response),
+      context);
 
   return response;
 }
@@ -129,7 +133,8 @@ convert_frames_to_byte_array_single_point(const StubPtr& stub, const nidevice_gr
   auto response = ConvertFramesToByteArraySinglePointResponse{};
 
   raise_if_error(
-      stub->ConvertFramesToByteArraySinglePoint(&context, request, &response));
+      stub->ConvertFramesToByteArraySinglePoint(&context, request, &response),
+      context);
 
   return response;
 }
@@ -147,7 +152,8 @@ convert_frames_to_signals_single_point(const StubPtr& stub, const nidevice_grpc:
   auto response = ConvertFramesToSignalsSinglePointResponse{};
 
   raise_if_error(
-      stub->ConvertFramesToSignalsSinglePoint(&context, request, &response));
+      stub->ConvertFramesToSignalsSinglePoint(&context, request, &response),
+      context);
 
   return response;
 }
@@ -174,7 +180,8 @@ convert_signals_to_frames_single_point(const StubPtr& stub, const nidevice_grpc:
   auto response = ConvertSignalsToFramesSinglePointResponse{};
 
   raise_if_error(
-      stub->ConvertSignalsToFramesSinglePoint(&context, request, &response));
+      stub->ConvertSignalsToFramesSinglePoint(&context, request, &response),
+      context);
 
   return response;
 }
@@ -190,7 +197,8 @@ convert_timestamp100ns_to1ns(const StubPtr& stub, const pb::uint64& from_timesta
   auto response = ConvertTimestamp100nsTo1nsResponse{};
 
   raise_if_error(
-      stub->ConvertTimestamp100nsTo1ns(&context, request, &response));
+      stub->ConvertTimestamp100nsTo1ns(&context, request, &response),
+      context);
 
   return response;
 }
@@ -206,7 +214,8 @@ convert_timestamp1ns_to100ns(const StubPtr& stub, const pb::uint64& from_timesta
   auto response = ConvertTimestamp1nsTo100nsResponse{};
 
   raise_if_error(
-      stub->ConvertTimestamp1nsTo100ns(&context, request, &response));
+      stub->ConvertTimestamp1nsTo100ns(&context, request, &response),
+      context);
 
   return response;
 }
@@ -233,7 +242,8 @@ create_session(const StubPtr& stub, const pb::string& database_name, const pb::s
   auto response = CreateSessionResponse{};
 
   raise_if_error(
-      stub->CreateSession(&context, request, &response));
+      stub->CreateSession(&context, request, &response),
+      context);
 
   return response;
 }
@@ -258,7 +268,8 @@ create_session_by_ref(const StubPtr& stub, const std::vector<nidevice_grpc::Sess
   auto response = CreateSessionByRefResponse{};
 
   raise_if_error(
-      stub->CreateSessionByRef(&context, request, &response));
+      stub->CreateSessionByRef(&context, request, &response),
+      context);
 
   return response;
 }
@@ -276,7 +287,8 @@ db_add_alias(const StubPtr& stub, const pb::string& database_alias, const pb::st
   auto response = DbAddAliasResponse{};
 
   raise_if_error(
-      stub->DbAddAlias(&context, request, &response));
+      stub->DbAddAlias(&context, request, &response),
+      context);
 
   return response;
 }
@@ -294,7 +306,8 @@ db_add_alias64(const StubPtr& stub, const pb::string& database_alias, const pb::
   auto response = DbAddAlias64Response{};
 
   raise_if_error(
-      stub->DbAddAlias64(&context, request, &response));
+      stub->DbAddAlias64(&context, request, &response),
+      context);
 
   return response;
 }
@@ -311,7 +324,8 @@ db_close_database(const StubPtr& stub, const nidevice_grpc::Session& database, c
   auto response = DbCloseDatabaseResponse{};
 
   raise_if_error(
-      stub->DbCloseDatabase(&context, request, &response));
+      stub->DbCloseDatabase(&context, request, &response),
+      context);
 
   return response;
 }
@@ -329,7 +343,8 @@ db_create_object(const StubPtr& stub, const nidevice_grpc::Session& parent_objec
   auto response = DbCreateObjectResponse{};
 
   raise_if_error(
-      stub->DbCreateObject(&context, request, &response));
+      stub->DbCreateObject(&context, request, &response),
+      context);
 
   return response;
 }
@@ -345,7 +360,8 @@ db_delete_object(const StubPtr& stub, const nidevice_grpc::Session& db_object)
   auto response = DbDeleteObjectResponse{};
 
   raise_if_error(
-      stub->DbDeleteObject(&context, request, &response));
+      stub->DbDeleteObject(&context, request, &response),
+      context);
 
   return response;
 }
@@ -363,7 +379,8 @@ db_deploy(const StubPtr& stub, const pb::string& ip_address, const pb::string& d
   auto response = DbDeployResponse{};
 
   raise_if_error(
-      stub->DbDeploy(&context, request, &response));
+      stub->DbDeploy(&context, request, &response),
+      context);
 
   return response;
 }
@@ -381,7 +398,8 @@ db_find_object(const StubPtr& stub, const nidevice_grpc::Session& parent_object,
   auto response = DbFindObjectResponse{};
 
   raise_if_error(
-      stub->DbFindObject(&context, request, &response));
+      stub->DbFindObject(&context, request, &response),
+      context);
 
   return response;
 }
@@ -406,7 +424,8 @@ db_get_dbc_attribute(const StubPtr& stub, const nidevice_grpc::Session& db_objec
   auto response = DbGetDBCAttributeResponse{};
 
   raise_if_error(
-      stub->DbGetDBCAttribute(&context, request, &response));
+      stub->DbGetDBCAttribute(&context, request, &response),
+      context);
 
   return response;
 }
@@ -431,7 +450,8 @@ db_get_dbc_attribute_size(const StubPtr& stub, const nidevice_grpc::Session& db_
   auto response = DbGetDBCAttributeSizeResponse{};
 
   raise_if_error(
-      stub->DbGetDBCAttributeSize(&context, request, &response));
+      stub->DbGetDBCAttributeSize(&context, request, &response),
+      context);
 
   return response;
 }
@@ -447,7 +467,8 @@ db_get_database_list_sizes(const StubPtr& stub, const pb::string& ip_address)
   auto response = DbGetDatabaseListSizesResponse{};
 
   raise_if_error(
-      stub->DbGetDatabaseListSizes(&context, request, &response));
+      stub->DbGetDatabaseListSizes(&context, request, &response),
+      context);
 
   return response;
 }
@@ -471,7 +492,8 @@ db_get_property_size(const StubPtr& stub, const nidevice_grpc::Session& db_objec
   auto response = DbGetPropertySizeResponse{};
 
   raise_if_error(
-      stub->DbGetPropertySize(&context, request, &response));
+      stub->DbGetPropertySize(&context, request, &response),
+      context);
 
   return response;
 }
@@ -498,7 +520,8 @@ db_merge(const StubPtr& stub, const nidevice_grpc::Session& target_cluster, cons
   auto response = DbMergeResponse{};
 
   raise_if_error(
-      stub->DbMerge(&context, request, &response));
+      stub->DbMerge(&context, request, &response),
+      context);
 
   return response;
 }
@@ -514,7 +537,8 @@ db_open_database(const StubPtr& stub, const pb::string& database_name)
   auto response = DbOpenDatabaseResponse{};
 
   raise_if_error(
-      stub->DbOpenDatabase(&context, request, &response));
+      stub->DbOpenDatabase(&context, request, &response),
+      context);
 
   return response;
 }
@@ -530,7 +554,8 @@ db_remove_alias(const StubPtr& stub, const pb::string& database_alias)
   auto response = DbRemoveAliasResponse{};
 
   raise_if_error(
-      stub->DbRemoveAlias(&context, request, &response));
+      stub->DbRemoveAlias(&context, request, &response),
+      context);
 
   return response;
 }
@@ -547,7 +572,8 @@ db_save_database(const StubPtr& stub, const nidevice_grpc::Session& database, co
   auto response = DbSaveDatabaseResponse{};
 
   raise_if_error(
-      stub->DbSaveDatabase(&context, request, &response));
+      stub->DbSaveDatabase(&context, request, &response),
+      context);
 
   return response;
 }
@@ -564,7 +590,8 @@ db_undeploy(const StubPtr& stub, const pb::string& ip_address, const pb::string&
   auto response = DbUndeployResponse{};
 
   raise_if_error(
-      stub->DbUndeploy(&context, request, &response));
+      stub->DbUndeploy(&context, request, &response),
+      context);
 
   return response;
 }
@@ -596,7 +623,8 @@ disconnect_terminals(const StubPtr& stub, const nidevice_grpc::Session& session,
   auto response = DisconnectTerminalsResponse{};
 
   raise_if_error(
-      stub->DisconnectTerminals(&context, request, &response));
+      stub->DisconnectTerminals(&context, request, &response),
+      context);
 
   return response;
 }
@@ -612,7 +640,8 @@ flush(const StubPtr& stub, const nidevice_grpc::Session& session)
   auto response = FlushResponse{};
 
   raise_if_error(
-      stub->Flush(&context, request, &response));
+      stub->Flush(&context, request, &response),
+      context);
 
   return response;
 }
@@ -637,7 +666,8 @@ future_time_trigger(const StubPtr& stub, const nidevice_grpc::Session& session, 
   auto response = FutureTimeTriggerResponse{};
 
   raise_if_error(
-      stub->FutureTimeTrigger(&context, request, &response));
+      stub->FutureTimeTrigger(&context, request, &response),
+      context);
 
   return response;
 }
@@ -661,7 +691,8 @@ get_property_size(const StubPtr& stub, const nidevice_grpc::Session& session, co
   auto response = GetPropertySizeResponse{};
 
   raise_if_error(
-      stub->GetPropertySize(&context, request, &response));
+      stub->GetPropertySize(&context, request, &response),
+      context);
 
   return response;
 }
@@ -686,7 +717,8 @@ get_sub_property_size(const StubPtr& stub, const nidevice_grpc::Session& session
   auto response = GetSubPropertySizeResponse{};
 
   raise_if_error(
-      stub->GetSubPropertySize(&context, request, &response));
+      stub->GetSubPropertySize(&context, request, &response),
+      context);
 
   return response;
 }
@@ -720,7 +752,8 @@ read_frame(const StubPtr& stub, const nidevice_grpc::Session& session, const pb:
   auto response = ReadFrameResponse{};
 
   raise_if_error(
-      stub->ReadFrame(&context, request, &response));
+      stub->ReadFrame(&context, request, &response),
+      context);
 
   return response;
 }
@@ -737,7 +770,8 @@ read_signal_single_point(const StubPtr& stub, const nidevice_grpc::Session& sess
   auto response = ReadSignalSinglePointResponse{};
 
   raise_if_error(
-      stub->ReadSignalSinglePoint(&context, request, &response));
+      stub->ReadSignalSinglePoint(&context, request, &response),
+      context);
 
   return response;
 }
@@ -763,7 +797,8 @@ read_signal_waveform(const StubPtr& stub, const nidevice_grpc::Session& session,
   auto response = ReadSignalWaveformResponse{};
 
   raise_if_error(
-      stub->ReadSignalWaveform(&context, request, &response));
+      stub->ReadSignalWaveform(&context, request, &response),
+      context);
 
   return response;
 }
@@ -782,7 +817,8 @@ read_signal_xy(const StubPtr& stub, const nidevice_grpc::Session& session, const
   auto response = ReadSignalXYResponse{};
 
   raise_if_error(
-      stub->ReadSignalXY(&context, request, &response));
+      stub->ReadSignalXY(&context, request, &response),
+      context);
 
   return response;
 }
@@ -806,7 +842,8 @@ read_state(const StubPtr& stub, const nidevice_grpc::Session& session, const sim
   auto response = ReadStateResponse{};
 
   raise_if_error(
-      stub->ReadState(&context, request, &response));
+      stub->ReadState(&context, request, &response),
+      context);
 
   return response;
 }
@@ -830,7 +867,8 @@ read_state_time_trigger(const StubPtr& stub, const nidevice_grpc::Session& sessi
   auto response = ReadStateTimeTriggerResponse{};
 
   raise_if_error(
-      stub->ReadStateTimeTrigger(&context, request, &response));
+      stub->ReadStateTimeTrigger(&context, request, &response),
+      context);
 
   return response;
 }
@@ -854,7 +892,8 @@ start(const StubPtr& stub, const nidevice_grpc::Session& session, const simple_v
   auto response = StartResponse{};
 
   raise_if_error(
-      stub->Start(&context, request, &response));
+      stub->Start(&context, request, &response),
+      context);
 
   return response;
 }
@@ -870,7 +909,8 @@ status_to_string(const StubPtr& stub, const pb::int32& status_id)
   auto response = StatusToStringResponse{};
 
   raise_if_error(
-      stub->StatusToString(&context, request, &response));
+      stub->StatusToString(&context, request, &response),
+      context);
 
   return response;
 }
@@ -894,7 +934,8 @@ stop(const StubPtr& stub, const nidevice_grpc::Session& session, const simple_va
   auto response = StopResponse{};
 
   raise_if_error(
-      stub->Stop(&context, request, &response));
+      stub->Stop(&context, request, &response),
+      context);
 
   return response;
 }
@@ -910,7 +951,8 @@ system_close(const StubPtr& stub, const nidevice_grpc::Session& system)
   auto response = SystemCloseResponse{};
 
   raise_if_error(
-      stub->SystemClose(&context, request, &response));
+      stub->SystemClose(&context, request, &response),
+      context);
 
   return response;
 }
@@ -925,7 +967,8 @@ system_open(const StubPtr& stub)
   auto response = SystemOpenResponse{};
 
   raise_if_error(
-      stub->SystemOpen(&context, request, &response));
+      stub->SystemOpen(&context, request, &response),
+      context);
 
   return response;
 }
@@ -951,7 +994,8 @@ wait(const StubPtr& stub, const nidevice_grpc::Session& session, const simple_va
   auto response = WaitResponse{};
 
   raise_if_error(
-      stub->Wait(&context, request, &response));
+      stub->Wait(&context, request, &response),
+      context);
 
   return response;
 }
@@ -976,7 +1020,8 @@ write_frame(const StubPtr& stub, const nidevice_grpc::Session& session, const st
   auto response = WriteFrameResponse{};
 
   raise_if_error(
-      stub->WriteFrame(&context, request, &response));
+      stub->WriteFrame(&context, request, &response),
+      context);
 
   return response;
 }
@@ -993,7 +1038,8 @@ write_signal_single_point(const StubPtr& stub, const nidevice_grpc::Session& ses
   auto response = WriteSignalSinglePointResponse{};
 
   raise_if_error(
-      stub->WriteSignalSinglePoint(&context, request, &response));
+      stub->WriteSignalSinglePoint(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1018,7 +1064,8 @@ write_signal_waveform(const StubPtr& stub, const nidevice_grpc::Session& session
   auto response = WriteSignalWaveformResponse{};
 
   raise_if_error(
-      stub->WriteSignalWaveform(&context, request, &response));
+      stub->WriteSignalWaveform(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1045,7 +1092,8 @@ write_signal_xy(const StubPtr& stub, const nidevice_grpc::Session& session, cons
   auto response = WriteSignalXYResponse{};
 
   raise_if_error(
-      stub->WriteSignalXY(&context, request, &response));
+      stub->WriteSignalXY(&context, request, &response),
+      context);
 
   return response;
 }
@@ -1070,7 +1118,8 @@ write_state(const StubPtr& stub, const nidevice_grpc::Session& session, const si
   auto response = WriteStateResponse{};
 
   raise_if_error(
-      stub->WriteState(&context, request, &response));
+      stub->WriteState(&context, request, &response),
+      context);
 
   return response;
 }

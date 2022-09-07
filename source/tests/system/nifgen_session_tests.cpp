@@ -1,9 +1,8 @@
 #include <gmock/gmock.h>
-#include <gtest/gtest.h>
-#include <nlohmann/json.hpp>
 
 #include "device_server.h"
 #include "nifgen/nifgen_client.h"
+#include "tests/utilities/test_helpers.h"
 
 using namespace ::testing;
 
@@ -12,7 +11,6 @@ namespace tests {
 namespace system {
 
 namespace fgen = nifgen_grpc;
-using namespace ::nlohmann;
 
 const int kInvalidFgenRsrc = -1074134944;
 const int kInvalidFgenSession = -1074130544;
@@ -57,6 +55,7 @@ class NiFgenSessionTest : public ::testing::Test {
     request.set_id_query(false);
 
     ::grpc::Status status = GetStub()->InitWithOptions(&context, request, response);
+    nidevice_grpc::experimental::client::raise_if_error(status, context);
     return status;
   }
 
@@ -104,17 +103,6 @@ TEST_F(NiFgenSessionTest, InitializeSessionWithDeviceAndNoSessionName_CreatesDri
   EXPECT_EQ("", response.error_message());
 }
 
-TEST_F(NiFgenSessionTest, InitializeSessionWithoutDevice_ReturnsDriverError)
-{
-  fgen::InitWithOptionsResponse response;
-  ::grpc::Status status = call_init_with_options(kTestInvalidFgenRsrc, "", "", &response);
-
-  EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status.error_code());
-  auto error = json::parse(status.error_message());
-  EXPECT_EQ(kInvalidFgenRsrc, error.value("code", 0));
-  EXPECT_NE("", error.value("message", ""));
-}
-
 TEST_F(NiFgenSessionTest, InitializedSession_CloseSession_ClosesDriverSession)
 {
   fgen::InitWithOptionsResponse initialize_response;
@@ -136,27 +124,32 @@ TEST_F(NiFgenSessionTest, InvalidSession_CloseSession_ReturnsInvalidSessionError
   nidevice_grpc::Session session;
   session.set_id(NULL);
 
-  ::grpc::ClientContext context;
-  fgen::CloseRequest request;
-  request.mutable_vi()->set_id(session.id());
-  fgen::CloseResponse response;
-  ::grpc::Status status = GetStub()->Close(&context, request, &response);
-
-  EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status.error_code());
-  auto error = json::parse(status.error_message());
-  EXPECT_EQ(kInvalidFgenSession, error.value("code", 0));
-  EXPECT_STREQ(kInvalidFgenSessionMessage, error.value("message", "").c_str());
+  try {
+    ::grpc::ClientContext context;
+    fgen::CloseRequest request;
+    request.mutable_vi()->set_id(session.id());
+    fgen::CloseResponse response;
+    auto status = GetStub()->Close(&context, request, &response);
+    nidevice_grpc::experimental::client::raise_if_error(status, context);
+    FAIL() << "We shouldn't get here.";
+  }
+  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
+    expect_driver_error(ex, kInvalidFgenSession);
+    EXPECT_STREQ(kInvalidFgenSessionMessage, ex.what());
+  }
 }
 
-TEST_F(NiFgenSessionTest, InitWithErrorFromDriver_ReturnsUserErrorMessage)
+TEST_F(NiFgenSessionTest, InitWithErrorFromDriver_ReturnsDriverErrorWithUserErrorMessage)
 {
-  fgen::InitWithOptionsResponse initialize_response;
-  auto status = call_init_with_options(kTestInvalidFgenRsrc, "", "", &initialize_response);
-
-  EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status.error_code());
-  auto error = json::parse(status.error_message());
-  EXPECT_EQ(kInvalidFgenRsrc, error.value("code", 0));
-  EXPECT_THAT(error.value("message", "").c_str(), HasSubstr(kViErrorFgenResourceNotFoundMessage));
+  try {
+    fgen::InitWithOptionsResponse initialize_response;
+    call_init_with_options(kTestInvalidFgenRsrc, "", "", &initialize_response);
+    FAIL() << "We shouldn't get here.";
+  }
+  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
+    expect_driver_error(ex, kInvalidFgenRsrc);
+    EXPECT_THAT(ex.what(), HasSubstr(kViErrorFgenResourceNotFoundMessage));
+  }
 }
 
 }  // namespace system

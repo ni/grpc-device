@@ -121,6 +121,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'enum': 'IQDeleteOnFetch',
                 'name': 'deleteOnFetch',
                 'type': 'int32'
             },
