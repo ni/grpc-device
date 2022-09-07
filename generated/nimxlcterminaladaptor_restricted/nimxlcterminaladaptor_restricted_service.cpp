@@ -63,7 +63,7 @@ namespace nimxlcterminaladaptor_restricted_grpc {
       auto cleanup_lambda = [&] (nimxlc_Session id) { library_->destroySession(id); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNimxlc_Session(status, 0);
+        return ConvertApiErrorStatusForNimxlc_Session(context, status, 0);
       }
       response->set_status(status);
       convert_to_grpc(c_status, response->mutable_c_status());
@@ -92,7 +92,7 @@ namespace nimxlcterminaladaptor_restricted_grpc {
       library_->destroySession(session);
       auto status = 0;
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNimxlc_Session(status, session);
+        return ConvertApiErrorStatusForNimxlc_Session(context, status, session);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -116,7 +116,7 @@ namespace nimxlcterminaladaptor_restricted_grpc {
       library_->refreshTerminalCache(session, &c_status);
       auto status = (&c_status)->code;
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNimxlc_Session(status, session);
+        return ConvertApiErrorStatusForNimxlc_Session(context, status, session);
       }
       response->set_status(status);
       convert_to_grpc(c_status, response->mutable_c_status());
@@ -142,7 +142,7 @@ namespace nimxlcterminaladaptor_restricted_grpc {
       auto terminal_information_changed = library_->hasTerminalInformationChanged(session, system_change_number, &c_status);
       auto status = (&c_status)->code;
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNimxlc_Session(status, session);
+        return ConvertApiErrorStatusForNimxlc_Session(context, status, session);
       }
       response->set_status(status);
       convert_to_grpc(c_status, response->mutable_c_status());
@@ -168,7 +168,7 @@ namespace nimxlcterminaladaptor_restricted_grpc {
       auto system_change_number = library_->getSystemChangeNumber(session, &c_status);
       auto status = (&c_status)->code;
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNimxlc_Session(status, session);
+        return ConvertApiErrorStatusForNimxlc_Session(context, status, session);
       }
       response->set_status(status);
       convert_to_grpc(c_status, response->mutable_c_status());

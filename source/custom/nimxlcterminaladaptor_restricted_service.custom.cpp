@@ -130,10 +130,10 @@ class TerminalContainerPtr
     }
 }
 
-::grpc::Status NimxlcTerminalAdaptorRestrictedService::ConvertApiErrorStatusForNimxlc_Session(int status,struct undefined_nimxlc_Session *session)
+::grpc::Status NimxlcTerminalAdaptorRestrictedService::ConvertApiErrorStatusForNimxlc_Session(::grpc::ServerContext* context, int32_t status, nimxlc_Session session)
 {
     std::string description;
-    return nidevice_grpc::ApiErrorAndDescriptionToStatus(status, description);
+    return nidevice_grpc::ApiErrorAndDescriptionToStatus(context, status, description);
 }
 
 }  // namespace nimxlcterminaladaptor_restricted_grpc

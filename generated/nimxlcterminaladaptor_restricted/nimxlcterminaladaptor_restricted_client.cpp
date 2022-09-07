@@ -28,7 +28,8 @@ create_session(const StubPtr& stub, const pb::string& hostname)
   auto response = CreateSessionResponse{};
 
   raise_if_error(
-      stub->CreateSession(&context, request, &response));
+      stub->CreateSession(&context, request, &response),
+      context);
 
   return response;
 }
@@ -44,7 +45,8 @@ destroy_session(const StubPtr& stub, const nidevice_grpc::Session& session)
   auto response = DestroySessionResponse{};
 
   raise_if_error(
-      stub->DestroySession(&context, request, &response));
+      stub->DestroySession(&context, request, &response),
+      context);
 
   return response;
 }
@@ -60,7 +62,8 @@ refresh_terminal_cache(const StubPtr& stub, const nidevice_grpc::Session& sessio
   auto response = RefreshTerminalCacheResponse{};
 
   raise_if_error(
-      stub->RefreshTerminalCache(&context, request, &response));
+      stub->RefreshTerminalCache(&context, request, &response),
+      context);
 
   return response;
 }
@@ -77,7 +80,8 @@ has_terminal_information_changed(const StubPtr& stub, const nidevice_grpc::Sessi
   auto response = HasTerminalInformationChangedResponse{};
 
   raise_if_error(
-      stub->HasTerminalInformationChanged(&context, request, &response));
+      stub->HasTerminalInformationChanged(&context, request, &response),
+      context);
 
   return response;
 }
@@ -93,7 +97,8 @@ get_system_change_number(const StubPtr& stub, const nidevice_grpc::Session& sess
   auto response = GetSystemChangeNumberResponse{};
 
   raise_if_error(
-      stub->GetSystemChangeNumber(&context, request, &response));
+      stub->GetSystemChangeNumber(&context, request, &response),
+      context);
 
   return response;
 }
@@ -109,7 +114,8 @@ get_device_container(const StubPtr& stub, const nidevice_grpc::Session& session)
   auto response = GetDeviceContainerResponse{};
 
   raise_if_error(
-      stub->GetDeviceContainer(&context, request, &response));
+      stub->GetDeviceContainer(&context, request, &response),
+      context);
 
   return response;
 }
