@@ -50,45 +50,46 @@ client = grpc_nidaqmx.NiDAQmxStub(channel)
 task = None
 
 
-def raise_if_error(response):
-    """Raise an exception if an error was returned."""
-    if response.status != 0:
-        response = client.GetErrorString(
+def check_for_warning(response):
+    """Print to console if the status indicates a warning."""
+    if response.status > 0:
+        warning_message = client.GetErrorString(
             nidaqmx_types.GetErrorStringRequest(error_code=response.status)
         )
-        raise Exception(f"Error: {response.error_string}")
+        sys.stderr.write(f"{warning_message.error_message}\nWarning status: {response.status}\n")
 
 
 try:
     response = client.CreateTask(nidaqmx_types.CreateTaskRequest(session_name="my task"))
-    raise_if_error(response)
     task = response.task
 
-    raise_if_error(
-        client.CreateCOPulseChanTime(
-            nidaqmx_types.CreateCOPulseChanTimeRequest(
-                task=task,
-                counter=COUNTER_NAME,
-                units=nidaqmx_types.DIGITAL_WIDTH_UNITS3_SECONDS,
-                idle_state=nidaqmx_types.LEVEL1_LOW,
-                initial_delay=1.0,
-                low_time=0.5,
-                high_time=1.0,
-            )
+    client.CreateCOPulseChanTime(
+        nidaqmx_types.CreateCOPulseChanTimeRequest(
+            task=task,
+            counter=COUNTER_NAME,
+            units=nidaqmx_types.DIGITAL_WIDTH_UNITS3_SECONDS,
+            idle_state=nidaqmx_types.LEVEL1_LOW,
+            initial_delay=1.0,
+            low_time=0.5,
+            high_time=1.0,
         )
     )
 
-    raise_if_error(client.StartTask(nidaqmx_types.StartTaskRequest(task=task)))
+    start_task_response = client.StartTask(nidaqmx_types.StartTaskRequest(task=task))
+    check_for_warning(start_task_response)
 
-    raise_if_error(
-        client.WaitUntilTaskDone(
-            nidaqmx_types.WaitUntilTaskDoneRequest(task=task, time_to_wait=10.0)
-        )
+    wait_until_task_done_response = client.WaitUntilTaskDone(
+        nidaqmx_types.WaitUntilTaskDoneRequest(task=task, time_to_wait=10.0)
     )
+    check_for_warning(wait_until_task_done_response)
 
     print(f"Output was successfully written to {COUNTER_NAME}.")
 except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
+    for entry in rpc_error.trailing_metadata() or []:
+        if entry.key == "ni-error":
+            value = entry.value if isinstance(entry.value, str) else entry.value.decode("utf-8")
+            error_message += f"\nError status: {value}"
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
         error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"
     elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
@@ -98,5 +99,5 @@ except grpc.RpcError as rpc_error:
     print(f"{error_message}")
 finally:
     if task:
-        client.StopTask(nidaqmx_types.StopTaskRequest(task=task))
-        client.ClearTask(nidaqmx_types.ClearTaskRequest(task=task))
+        clear_task_response = client.ClearTask(nidaqmx_types.ClearTaskRequest(task=task))
+        check_for_warning(clear_task_response)

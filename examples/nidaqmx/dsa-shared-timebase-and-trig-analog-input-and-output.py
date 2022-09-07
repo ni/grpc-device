@@ -110,6 +110,15 @@ follower_input_task = None
 follower_output_task = None
 
 
+def check_for_warning(response):
+    """Print to console if the status indicates a warning."""
+    if response.status > 0:
+        warning_message = client.GetErrorString(
+            nidaqmx_types.GetErrorStringRequest(error_code=response.status)
+        )
+        sys.stderr.write(f"{warning_message.error_message}\nWarning status: {response.status}\n")
+
+
 async def _main():
     global client, leader_input_task, leader_output_task, follower_input_task, follower_output_task
     num_leader_samples_written = 0
@@ -119,30 +128,24 @@ async def _main():
             client = grpc_nidaqmx.NiDAQmxStub(channel)
 
             async def get_terminal_name_with_dev_prefix(task, terminal_name):
-                num_devices_response = await raise_if_error_async(
-                    client.GetTaskAttributeUInt32(
-                        nidaqmx_types.GetTaskAttributeUInt32Request(
-                            task=task, attribute=nidaqmx_types.TASK_ATTRIBUTE_NUM_DEVICES
-                        )
+                num_devices_response = await client.GetTaskAttributeUInt32(
+                    nidaqmx_types.GetTaskAttributeUInt32Request(
+                        task=task, attribute=nidaqmx_types.TASK_ATTRIBUTE_NUM_DEVICES
                     )
                 )
                 num_devices = num_devices_response.value
                 for i in range(num_devices):
                     # devices are 1-indexed, so use i + 1 here
                     device = (
-                        await raise_if_error_async(
-                            client.GetNthTaskDevice(
-                                nidaqmx_types.GetNthTaskDeviceRequest(task=task, index=i + 1)
-                            )
+                        await client.GetNthTaskDevice(
+                            nidaqmx_types.GetNthTaskDeviceRequest(task=task, index=i + 1)
                         )
                     ).buffer
                     device_category = (
-                        await raise_if_error_async(
-                            client.GetDeviceAttributeInt32(
-                                nidaqmx_types.GetDeviceAttributeInt32Request(
-                                    device_name=device,
-                                    attribute=nidaqmx_types.DEVICE_ATTRIBUTE_PRODUCT_CATEGORY,
-                                )
+                        await client.GetDeviceAttributeInt32(
+                            nidaqmx_types.GetDeviceAttributeInt32Request(
+                                device_name=device,
+                                attribute=nidaqmx_types.DEVICE_ATTRIBUTE_PRODUCT_CATEGORY,
                             )
                         )
                     ).value
@@ -163,134 +166,98 @@ async def _main():
                 new_phase = (phase + frequency * 360.0 * elements) % 360.0
                 return (sinewave, new_phase)
 
-            async def raise_if_error(response):
-                """Raise an exception if an error was returned."""
-                if response.status:
-                    response = await client.GetErrorString(
-                        nidaqmx_types.GetErrorStringRequest(error_code=response.status)
-                    )
-                    raise Exception(f"Error: {response.error_string}")
-
-            async def raise_if_error_async(awaitable_call):
-                """Await response, then raise an exception if an error was returned."""
-                response = await awaitable_call
-                await raise_if_error(response)
-                return response
-
             # DAQmx Configure Tasks code
-            response: nidaqmx_types.CreateTaskResponse = await raise_if_error_async(
-                client.CreateTask(nidaqmx_types.CreateTaskRequest(session_name="Leader input task"))
+            response: nidaqmx_types.CreateTaskResponse = await client.CreateTask(
+                nidaqmx_types.CreateTaskRequest(session_name="Leader input task")
             )
             leader_input_task = response.task
-            await raise_if_error_async(
-                client.CreateAIVoltageChan(
-                    nidaqmx_types.CreateAIVoltageChanRequest(
-                        task=leader_input_task,
-                        physical_channel=LEADER_INPUT_CHANNEL,
-                        min_val=-10.0,
-                        max_val=10.0,
-                        units=nidaqmx_types.VOLTAGE_UNITS2_VOLTS,
-                        terminal_config=nidaqmx_types.INPUT_TERM_CFG_WITH_DEFAULT_CFG_DEFAULT,
-                    )
+            await client.CreateAIVoltageChan(
+                nidaqmx_types.CreateAIVoltageChanRequest(
+                    task=leader_input_task,
+                    physical_channel=LEADER_INPUT_CHANNEL,
+                    min_val=-10.0,
+                    max_val=10.0,
+                    units=nidaqmx_types.VOLTAGE_UNITS2_VOLTS,
+                    terminal_config=nidaqmx_types.INPUT_TERM_CFG_WITH_DEFAULT_CFG_DEFAULT,
                 )
             )
-            await raise_if_error_async(
-                client.CfgSampClkTiming(
-                    nidaqmx_types.CfgSampClkTimingRequest(
-                        task=leader_input_task,
-                        rate=10000,
-                        active_edge=nidaqmx_types.EDGE1_RISING,
-                        sample_mode=nidaqmx_types.ACQUISITION_TYPE_CONT_SAMPS,
-                        samps_per_chan=1000,
-                    )
+            await client.CfgSampClkTiming(
+                nidaqmx_types.CfgSampClkTimingRequest(
+                    task=leader_input_task,
+                    rate=10000,
+                    active_edge=nidaqmx_types.EDGE1_RISING,
+                    sample_mode=nidaqmx_types.ACQUISITION_TYPE_CONT_SAMPS,
+                    samps_per_chan=1000,
                 )
             )
 
-            response = await raise_if_error_async(
-                client.CreateTask(
-                    nidaqmx_types.CreateTaskRequest(session_name="Leader output task")
-                )
+            response = await client.CreateTask(
+                nidaqmx_types.CreateTaskRequest(session_name="Leader output task")
             )
             leader_output_task = response.task
-            await raise_if_error_async(
-                client.CreateAOVoltageChan(
-                    nidaqmx_types.CreateAOVoltageChanRequest(
-                        task=leader_output_task,
-                        physical_channel=LEADER_OUTPUT_CHANNEL,
-                        min_val=-10.0,
-                        max_val=10.0,
-                        units=nidaqmx_types.VOLTAGE_UNITS2_VOLTS,
-                    )
+            await client.CreateAOVoltageChan(
+                nidaqmx_types.CreateAOVoltageChanRequest(
+                    task=leader_output_task,
+                    physical_channel=LEADER_OUTPUT_CHANNEL,
+                    min_val=-10.0,
+                    max_val=10.0,
+                    units=nidaqmx_types.VOLTAGE_UNITS2_VOLTS,
                 )
             )
-            await raise_if_error_async(
-                client.CfgSampClkTiming(
-                    nidaqmx_types.CfgSampClkTimingRequest(
-                        task=leader_output_task,
-                        rate=10000,
-                        active_edge=nidaqmx_types.EDGE1_RISING,
-                        sample_mode=nidaqmx_types.ACQUISITION_TYPE_CONT_SAMPS,
-                        samps_per_chan=1000,
-                    )
+            await client.CfgSampClkTiming(
+                nidaqmx_types.CfgSampClkTimingRequest(
+                    task=leader_output_task,
+                    rate=10000,
+                    active_edge=nidaqmx_types.EDGE1_RISING,
+                    sample_mode=nidaqmx_types.ACQUISITION_TYPE_CONT_SAMPS,
+                    samps_per_chan=1000,
                 )
             )
 
-            response = await raise_if_error_async(
-                client.CreateTask(
-                    nidaqmx_types.CreateTaskRequest(session_name="Follower input task")
-                )
+            response = await client.CreateTask(
+                nidaqmx_types.CreateTaskRequest(session_name="Follower input task")
             )
             follower_input_task = response.task
-            await raise_if_error_async(
-                client.CreateAIVoltageChan(
-                    nidaqmx_types.CreateAIVoltageChanRequest(
-                        task=follower_input_task,
-                        physical_channel=FOLLOWER_INPUT_CHANNEL,
-                        min_val=-10.0,
-                        max_val=10.0,
-                        units=nidaqmx_types.VOLTAGE_UNITS2_VOLTS,
-                        terminal_config=nidaqmx_types.INPUT_TERM_CFG_WITH_DEFAULT_CFG_DEFAULT,
-                    )
+            await client.CreateAIVoltageChan(
+                nidaqmx_types.CreateAIVoltageChanRequest(
+                    task=follower_input_task,
+                    physical_channel=FOLLOWER_INPUT_CHANNEL,
+                    min_val=-10.0,
+                    max_val=10.0,
+                    units=nidaqmx_types.VOLTAGE_UNITS2_VOLTS,
+                    terminal_config=nidaqmx_types.INPUT_TERM_CFG_WITH_DEFAULT_CFG_DEFAULT,
                 )
             )
-            await raise_if_error_async(
-                client.CfgSampClkTiming(
-                    nidaqmx_types.CfgSampClkTimingRequest(
-                        task=follower_input_task,
-                        rate=10000,
-                        active_edge=nidaqmx_types.EDGE1_RISING,
-                        sample_mode=nidaqmx_types.ACQUISITION_TYPE_CONT_SAMPS,
-                        samps_per_chan=1000,
-                    )
+            await client.CfgSampClkTiming(
+                nidaqmx_types.CfgSampClkTimingRequest(
+                    task=follower_input_task,
+                    rate=10000,
+                    active_edge=nidaqmx_types.EDGE1_RISING,
+                    sample_mode=nidaqmx_types.ACQUISITION_TYPE_CONT_SAMPS,
+                    samps_per_chan=1000,
                 )
             )
 
-            response = await raise_if_error_async(
-                client.CreateTask(
-                    nidaqmx_types.CreateTaskRequest(session_name="Follower output task")
-                )
+            response = await client.CreateTask(
+                nidaqmx_types.CreateTaskRequest(session_name="Follower output task")
             )
             follower_output_task = response.task
-            await raise_if_error_async(
-                client.CreateAOVoltageChan(
-                    nidaqmx_types.CreateAOVoltageChanRequest(
-                        task=follower_output_task,
-                        physical_channel=FOLLOWER_OUTPUT_CHANNEL,
-                        min_val=-10.0,
-                        max_val=10.0,
-                        units=nidaqmx_types.VOLTAGE_UNITS2_VOLTS,
-                    )
+            await client.CreateAOVoltageChan(
+                nidaqmx_types.CreateAOVoltageChanRequest(
+                    task=follower_output_task,
+                    physical_channel=FOLLOWER_OUTPUT_CHANNEL,
+                    min_val=-10.0,
+                    max_val=10.0,
+                    units=nidaqmx_types.VOLTAGE_UNITS2_VOLTS,
                 )
             )
-            await raise_if_error_async(
-                client.CfgSampClkTiming(
-                    nidaqmx_types.CfgSampClkTimingRequest(
-                        task=follower_output_task,
-                        rate=10000,
-                        active_edge=nidaqmx_types.EDGE1_RISING,
-                        sample_mode=nidaqmx_types.ACQUISITION_TYPE_CONT_SAMPS,
-                        samps_per_chan=1000,
-                    )
+            await client.CfgSampClkTiming(
+                nidaqmx_types.CfgSampClkTimingRequest(
+                    task=follower_output_task,
+                    rate=10000,
+                    active_edge=nidaqmx_types.EDGE1_RISING,
+                    sample_mode=nidaqmx_types.ACQUISITION_TYPE_CONT_SAMPS,
+                    samps_per_chan=1000,
                 )
             )
 
@@ -299,40 +266,32 @@ async def _main():
                 # Note: Not all DSA devices support reference clock synchronization. Refer to
                 # your hardware device manual for further information on whether this method
                 # of synchronization is supported for your particular device.
-                await raise_if_error_async(
-                    client.SetTimingAttributeString(
-                        nidaqmx_types.SetTimingAttributeStringRequest(
-                            task=leader_input_task,
-                            attribute=nidaqmx_types.TimingStringAttribute.TIMING_ATTRIBUTE_REF_CLK_SRC,
-                            value="PXI_Clk10",
-                        )
+                await client.SetTimingAttributeString(
+                    nidaqmx_types.SetTimingAttributeStringRequest(
+                        task=leader_input_task,
+                        attribute=nidaqmx_types.TimingStringAttribute.TIMING_ATTRIBUTE_REF_CLK_SRC,
+                        value="PXI_Clk10",
                     )
                 )
-                await raise_if_error_async(
-                    client.SetTimingAttributeString(
-                        nidaqmx_types.SetTimingAttributeStringRequest(
-                            task=leader_output_task,
-                            attribute=nidaqmx_types.TimingStringAttribute.TIMING_ATTRIBUTE_REF_CLK_SRC,
-                            value="PXI_Clk10",
-                        )
+                await client.SetTimingAttributeString(
+                    nidaqmx_types.SetTimingAttributeStringRequest(
+                        task=leader_output_task,
+                        attribute=nidaqmx_types.TimingStringAttribute.TIMING_ATTRIBUTE_REF_CLK_SRC,
+                        value="PXI_Clk10",
                     )
                 )
-                await raise_if_error_async(
-                    client.SetTimingAttributeString(
-                        nidaqmx_types.SetTimingAttributeStringRequest(
-                            task=follower_input_task,
-                            attribute=nidaqmx_types.TimingStringAttribute.TIMING_ATTRIBUTE_REF_CLK_SRC,
-                            value="PXI_Clk10",
-                        )
+                await client.SetTimingAttributeString(
+                    nidaqmx_types.SetTimingAttributeStringRequest(
+                        task=follower_input_task,
+                        attribute=nidaqmx_types.TimingStringAttribute.TIMING_ATTRIBUTE_REF_CLK_SRC,
+                        value="PXI_Clk10",
                     )
                 )
-                await raise_if_error_async(
-                    client.SetTimingAttributeString(
-                        nidaqmx_types.SetTimingAttributeStringRequest(
-                            task=follower_output_task,
-                            attribute=nidaqmx_types.TimingStringAttribute.TIMING_ATTRIBUTE_REF_CLK_SRC,
-                            value="PXI_Clk10",
-                        )
+                await client.SetTimingAttributeString(
+                    nidaqmx_types.SetTimingAttributeStringRequest(
+                        task=follower_output_task,
+                        attribute=nidaqmx_types.TimingStringAttribute.TIMING_ATTRIBUTE_REF_CLK_SRC,
+                        value="PXI_Clk10",
                     )
                 )
             else:
@@ -341,62 +300,50 @@ async def _main():
                 timebase_source = await get_terminal_name_with_dev_prefix(
                     task=leader_input_task, terminal_name="SampleClockTimebase"
                 )
-                await raise_if_error_async(
-                    client.SetTimingAttributeString(
-                        nidaqmx_types.SetTimingAttributeStringRequest(
-                            task=leader_output_task,
-                            attribute=nidaqmx_types.TimingStringAttribute.TIMING_ATTRIBUTE_SAMP_CLK_TIMEBASE_SRC,
-                            value=timebase_source,
-                        )
+                await client.SetTimingAttributeString(
+                    nidaqmx_types.SetTimingAttributeStringRequest(
+                        task=leader_output_task,
+                        attribute=nidaqmx_types.TimingStringAttribute.TIMING_ATTRIBUTE_SAMP_CLK_TIMEBASE_SRC,
+                        value=timebase_source,
                     )
                 )
-                await raise_if_error_async(
-                    client.SetTimingAttributeString(
-                        nidaqmx_types.SetTimingAttributeStringRequest(
-                            task=follower_input_task,
-                            attribute=nidaqmx_types.TimingStringAttribute.TIMING_ATTRIBUTE_SAMP_CLK_TIMEBASE_SRC,
-                            value=timebase_source,
-                        )
+                await client.SetTimingAttributeString(
+                    nidaqmx_types.SetTimingAttributeStringRequest(
+                        task=follower_input_task,
+                        attribute=nidaqmx_types.TimingStringAttribute.TIMING_ATTRIBUTE_SAMP_CLK_TIMEBASE_SRC,
+                        value=timebase_source,
                     )
                 )
-                await raise_if_error_async(
-                    client.SetTimingAttributeString(
-                        nidaqmx_types.SetTimingAttributeStringRequest(
-                            task=follower_output_task,
-                            attribute=nidaqmx_types.TimingStringAttribute.TIMING_ATTRIBUTE_SAMP_CLK_TIMEBASE_SRC,
-                            value=timebase_source,
-                        )
+                await client.SetTimingAttributeString(
+                    nidaqmx_types.SetTimingAttributeStringRequest(
+                        task=follower_output_task,
+                        attribute=nidaqmx_types.TimingStringAttribute.TIMING_ATTRIBUTE_SAMP_CLK_TIMEBASE_SRC,
+                        value=timebase_source,
                     )
                 )
 
             sync_pulse_source = await get_terminal_name_with_dev_prefix(
                 task=leader_input_task, terminal_name="SyncPulse"
             )
-            await raise_if_error_async(
-                client.SetTimingAttributeString(
-                    nidaqmx_types.SetTimingAttributeStringRequest(
-                        task=leader_output_task,
-                        attribute=nidaqmx_types.TimingStringAttribute.TIMING_ATTRIBUTE_SYNC_PULSE_SRC,
-                        value=sync_pulse_source,
-                    )
+            await client.SetTimingAttributeString(
+                nidaqmx_types.SetTimingAttributeStringRequest(
+                    task=leader_output_task,
+                    attribute=nidaqmx_types.TimingStringAttribute.TIMING_ATTRIBUTE_SYNC_PULSE_SRC,
+                    value=sync_pulse_source,
                 )
             )
-            await raise_if_error_async(
-                client.SetTimingAttributeString(
-                    nidaqmx_types.SetTimingAttributeStringRequest(
-                        task=follower_input_task,
-                        attribute=nidaqmx_types.TimingStringAttribute.TIMING_ATTRIBUTE_SYNC_PULSE_SRC,
-                        value=sync_pulse_source,
-                    )
+            await client.SetTimingAttributeString(
+                nidaqmx_types.SetTimingAttributeStringRequest(
+                    task=follower_input_task,
+                    attribute=nidaqmx_types.TimingStringAttribute.TIMING_ATTRIBUTE_SYNC_PULSE_SRC,
+                    value=sync_pulse_source,
                 )
             )
-            await raise_if_error_async(
-                client.SetTimingAttributeString(
-                    nidaqmx_types.SetTimingAttributeStringRequest(
-                        task=follower_output_task,
-                        attribute=nidaqmx_types.TimingStringAttribute.TIMING_ATTRIBUTE_SYNC_PULSE_SRC,
-                        value=sync_pulse_source,
-                    )
+            await client.SetTimingAttributeString(
+                nidaqmx_types.SetTimingAttributeStringRequest(
+                    task=follower_output_task,
+                    attribute=nidaqmx_types.TimingStringAttribute.TIMING_ATTRIBUTE_SYNC_PULSE_SRC,
+                    value=sync_pulse_source,
                 )
             )
 
@@ -404,31 +351,25 @@ async def _main():
             start_trigger = await get_terminal_name_with_dev_prefix(
                 task=leader_input_task, terminal_name="ai/StartTrigger"
             )
-            await raise_if_error_async(
-                client.CfgDigEdgeStartTrig(
-                    nidaqmx_types.CfgDigEdgeStartTrigRequest(
-                        task=leader_output_task,
-                        trigger_source=start_trigger,
-                        trigger_edge=nidaqmx_types.EDGE1_RISING,
-                    )
+            await client.CfgDigEdgeStartTrig(
+                nidaqmx_types.CfgDigEdgeStartTrigRequest(
+                    task=leader_output_task,
+                    trigger_source=start_trigger,
+                    trigger_edge=nidaqmx_types.EDGE1_RISING,
                 )
             )
-            await raise_if_error_async(
-                client.CfgDigEdgeStartTrig(
-                    nidaqmx_types.CfgDigEdgeStartTrigRequest(
-                        task=follower_input_task,
-                        trigger_source=start_trigger,
-                        trigger_edge=nidaqmx_types.EDGE1_RISING,
-                    )
+            await client.CfgDigEdgeStartTrig(
+                nidaqmx_types.CfgDigEdgeStartTrigRequest(
+                    task=follower_input_task,
+                    trigger_source=start_trigger,
+                    trigger_edge=nidaqmx_types.EDGE1_RISING,
                 )
             )
-            await raise_if_error_async(
-                client.CfgDigEdgeStartTrig(
-                    nidaqmx_types.CfgDigEdgeStartTrigRequest(
-                        task=follower_output_task,
-                        trigger_source=start_trigger,
-                        trigger_edge=nidaqmx_types.EDGE1_RISING,
-                    )
+            await client.CfgDigEdgeStartTrig(
+                nidaqmx_types.CfgDigEdgeStartTrigRequest(
+                    task=follower_output_task,
+                    trigger_source=start_trigger,
+                    trigger_edge=nidaqmx_types.EDGE1_RISING,
                 )
             )
 
@@ -436,34 +377,30 @@ async def _main():
             (follower_write_data, phase) = generate_sinewave(250, 1.0, 0.02, phase)
 
             # DAQmx Write code
-            num_leader_samples_written = (
-                await raise_if_error_async(
-                    client.WriteAnalogF64(
-                        nidaqmx_types.WriteAnalogF64Request(
-                            task=leader_output_task,
-                            num_samps_per_chan=250,
-                            auto_start=False,
-                            timeout=10.0,
-                            data_layout=nidaqmx_types.GROUP_BY_GROUP_BY_CHANNEL,
-                            write_array=leader_write_data,
-                        )
-                    )
+            write_response = await client.WriteAnalogF64(
+                nidaqmx_types.WriteAnalogF64Request(
+                    task=leader_output_task,
+                    num_samps_per_chan=250,
+                    auto_start=False,
+                    timeout=10.0,
+                    data_layout=nidaqmx_types.GROUP_BY_GROUP_BY_CHANNEL,
+                    write_array=leader_write_data,
                 )
-            ).samps_per_chan_written
-            num_follower_samples_written = (
-                await raise_if_error_async(
-                    client.WriteAnalogF64(
-                        nidaqmx_types.WriteAnalogF64Request(
-                            task=follower_output_task,
-                            num_samps_per_chan=250,
-                            auto_start=False,
-                            timeout=10.0,
-                            data_layout=nidaqmx_types.GROUP_BY_GROUP_BY_CHANNEL,
-                            write_array=follower_write_data,
-                        )
-                    )
+            )
+            check_for_warning(write_response)
+            num_leader_samples_written = write_response.samps_per_chan_written
+            write_response = await client.WriteAnalogF64(
+                nidaqmx_types.WriteAnalogF64Request(
+                    task=follower_output_task,
+                    num_samps_per_chan=250,
+                    auto_start=False,
+                    timeout=10.0,
+                    data_layout=nidaqmx_types.GROUP_BY_GROUP_BY_CHANNEL,
+                    write_array=follower_write_data,
                 )
-            ).samps_per_chan_written
+            )
+            check_for_warning(write_response)
+            num_follower_samples_written = write_response.samps_per_chan_written
 
             every_n_samples_stream = client.RegisterEveryNSamplesEvent(
                 nidaqmx_types.RegisterEveryNSamplesEventRequest(
@@ -502,52 +439,53 @@ async def _main():
                 await done_event_stream.initial_metadata()
 
             # DAQmx Start code
-            await raise_if_error_async(
-                client.StartTask(nidaqmx_types.StartTaskRequest(task=leader_output_task))
+            start_task_response = await client.StartTask(
+                nidaqmx_types.StartTaskRequest(task=leader_output_task)
             )
-            await raise_if_error_async(
-                client.StartTask(nidaqmx_types.StartTaskRequest(task=follower_input_task))
+            check_for_warning(start_task_response)
+            start_task_response = await client.StartTask(
+                nidaqmx_types.StartTaskRequest(task=follower_input_task)
             )
-            await raise_if_error_async(
-                client.StartTask(nidaqmx_types.StartTaskRequest(task=follower_output_task))
+            check_for_warning(start_task_response)
+            start_task_response = await client.StartTask(
+                nidaqmx_types.StartTaskRequest(task=follower_output_task)
             )
+            check_for_warning(start_task_response)
             # trigger task must be started last
-            await raise_if_error_async(
-                client.StartTask(nidaqmx_types.StartTaskRequest(task=leader_input_task))
+            start_task_response = await client.StartTask(
+                nidaqmx_types.StartTaskRequest(task=leader_input_task)
             )
+            check_for_warning(start_task_response)
 
             async def read_data():
                 nonlocal num_leader_samples_written, num_follower_samples_written
                 async for every_n_samples_response in every_n_samples_stream:
-                    await raise_if_error(every_n_samples_response)
                     leader_response: nidaqmx_types.ReadAnalogF64Response = (
-                        await raise_if_error_async(
-                            client.ReadAnalogF64(
-                                nidaqmx_types.ReadAnalogF64Request(
-                                    task=leader_input_task,
-                                    num_samps_per_chan=2000,
-                                    timeout=10.0,
-                                    fill_mode=nidaqmx_types.GroupBy.GROUP_BY_GROUP_BY_CHANNEL,
-                                    array_size_in_samps=2000,
-                                )
+                        await client.ReadAnalogF64(
+                            nidaqmx_types.ReadAnalogF64Request(
+                                task=leader_input_task,
+                                num_samps_per_chan=2000,
+                                timeout=10.0,
+                                fill_mode=nidaqmx_types.GroupBy.GROUP_BY_GROUP_BY_CHANNEL,
+                                array_size_in_samps=2000,
                             )
                         )
                     )
+                    check_for_warning(leader_response)
                     num_leader_samples_written += leader_response.samps_per_chan_read
                     follower_response: nidaqmx_types.ReadAnalogF64Response = (
-                        await raise_if_error_async(
-                            client.ReadAnalogF64(
-                                nidaqmx_types.ReadAnalogF64Request(
-                                    task=follower_input_task,
-                                    num_samps_per_chan=2000,
-                                    timeout=10.0,
-                                    fill_mode=nidaqmx_types.GroupBy.GROUP_BY_GROUP_BY_CHANNEL,
-                                    array_size_in_samps=2000,
-                                )
+                        await client.ReadAnalogF64(
+                            nidaqmx_types.ReadAnalogF64Request(
+                                task=follower_input_task,
+                                num_samps_per_chan=2000,
+                                timeout=10.0,
+                                fill_mode=nidaqmx_types.GroupBy.GROUP_BY_GROUP_BY_CHANNEL,
+                                array_size_in_samps=2000,
                             )
                         )
                     )
                     num_follower_samples_written += follower_response.samps_per_chan_read
+                    check_for_warning(follower_response)
 
                     print(
                         f"\t{leader_response.samps_per_chan_read}\t{follower_response.samps_per_chan_read}\t\t{num_leader_samples_written}\t{num_follower_samples_written}"
@@ -558,7 +496,6 @@ async def _main():
                     every_n_samples_stream.cancel()
                     for stream in done_event_stream_list:
                         stream.cancel()
-                    await raise_if_error(done_response)
 
             async def wait_for_input():
                 loop = asyncio.get_event_loop()
@@ -574,6 +511,12 @@ async def _main():
 
         except grpc.RpcError as rpc_error:
             error_message = rpc_error.details()
+            for entry in rpc_error.trailing_metadata() or []:
+                if entry.key == "ni-error":
+                    value = (
+                        entry.value if isinstance(entry.value, str) else entry.value.decode("utf-8")
+                    )
+                    error_message += f"\nError status: {value}"
             if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
                 error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"
             elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
@@ -590,20 +533,28 @@ async def _cleanup():
     global leader_input_task, leader_output_task, follower_input_task, follower_output_task
     if client:
         if leader_input_task:
-            await client.StopTask(nidaqmx_types.StopTaskRequest(task=leader_input_task))
-            await client.ClearTask(nidaqmx_types.ClearTaskRequest(task=leader_input_task))
+            clear_task_response = await client.ClearTask(
+                nidaqmx_types.ClearTaskRequest(task=leader_input_task)
+            )
+            check_for_warning(clear_task_response)
             leader_input_task = None
         if leader_output_task:
-            await client.StopTask(nidaqmx_types.StopTaskRequest(task=leader_output_task))
-            await client.ClearTask(nidaqmx_types.ClearTaskRequest(task=leader_output_task))
+            clear_task_response = await client.ClearTask(
+                nidaqmx_types.ClearTaskRequest(task=leader_output_task)
+            )
+            check_for_warning(clear_task_response)
             leader_output_task = None
         if follower_input_task:
-            await client.StopTask(nidaqmx_types.StopTaskRequest(task=follower_input_task))
-            await client.ClearTask(nidaqmx_types.ClearTaskRequest(task=follower_input_task))
+            clear_task_response = await client.ClearTask(
+                nidaqmx_types.ClearTaskRequest(task=follower_input_task)
+            )
+            check_for_warning(clear_task_response)
             follower_input_task = None
         if follower_output_task:
-            await client.StopTask(nidaqmx_types.StopTaskRequest(task=follower_output_task))
-            await client.ClearTask(nidaqmx_types.ClearTaskRequest(task=follower_output_task))
+            clear_task_response = await client.ClearTask(
+                nidaqmx_types.ClearTaskRequest(task=follower_output_task)
+            )
+            check_for_warning(clear_task_response)
             follower_output_task = None
 
 

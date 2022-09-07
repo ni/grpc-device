@@ -55,49 +55,41 @@ async def _main():
         try:
             client = grpc_nidaqmx.NiDAQmxStub(channel)
 
-            async def raise_if_error(response):
-                """Raise an exception if an error was returned."""
-                if response.status:
-                    response = await client.GetErrorString(
+            def check_for_warning(response):
+                """Print to console if the status indicates a warning."""
+                if response.status > 0:
+                    warning_message = client.GetErrorString(
                         nidaqmx_types.GetErrorStringRequest(error_code=response.status)
                     )
-                    raise Exception(f"Error: {response.error_string}")
+                    sys.stderr.write(
+                        f"{warning_message.error_message}\nWarning status: {response.status}\n"
+                    )
 
-            async def raise_if_error_async(awaitable_call):
-                """Await response, then raise an exception if an error was returned."""
-                response = await awaitable_call
-                await raise_if_error(response)
-                return response
-
-            create_response: nidaqmx_types.CreateTaskResponse = await raise_if_error_async(
-                client.CreateTask(nidaqmx_types.CreateTaskRequest())
+            create_response: nidaqmx_types.CreateTaskResponse = await client.CreateTask(
+                nidaqmx_types.CreateTaskRequest()
             )
             task = create_response.task
 
-            await raise_if_error_async(
-                client.CreateAIVoltageChan(
-                    nidaqmx_types.CreateAIVoltageChanRequest(
-                        task=task,
-                        physical_channel=PHYSICAL_CHANNEL,
-                        min_val=-10.0,
-                        max_val=10.0,
-                        terminal_config=nidaqmx_types.InputTermCfgWithDefault.INPUT_TERM_CFG_WITH_DEFAULT_CFG_DEFAULT,
-                        units=nidaqmx_types.VoltageUnits2.VOLTAGE_UNITS2_VOLTS,
-                    )
+            await client.CreateAIVoltageChan(
+                nidaqmx_types.CreateAIVoltageChanRequest(
+                    task=task,
+                    physical_channel=PHYSICAL_CHANNEL,
+                    min_val=-10.0,
+                    max_val=10.0,
+                    terminal_config=nidaqmx_types.InputTermCfgWithDefault.INPUT_TERM_CFG_WITH_DEFAULT_CFG_DEFAULT,
+                    units=nidaqmx_types.VoltageUnits2.VOLTAGE_UNITS2_VOLTS,
                 )
             )
 
             total_samples_per_channel = 1000
             samples_per_channel_per_read = 100
-            await raise_if_error_async(
-                client.CfgSampClkTiming(
-                    nidaqmx_types.CfgSampClkTimingRequest(
-                        task=task,
-                        sample_mode=nidaqmx_types.AcquisitionType.ACQUISITION_TYPE_FINITE_SAMPS,
-                        samps_per_chan=total_samples_per_channel,
-                        active_edge=nidaqmx_types.Edge1.EDGE1_RISING,
-                        rate=100,
-                    )
+            await client.CfgSampClkTiming(
+                nidaqmx_types.CfgSampClkTimingRequest(
+                    task=task,
+                    sample_mode=nidaqmx_types.AcquisitionType.ACQUISITION_TYPE_FINITE_SAMPS,
+                    samps_per_chan=total_samples_per_channel,
+                    active_edge=nidaqmx_types.Edge1.EDGE1_RISING,
+                    rate=100,
                 )
             )
 
@@ -119,13 +111,12 @@ async def _main():
 
             await done_event_stream.initial_metadata()
 
-            await raise_if_error_async(client.StartTask(nidaqmx_types.StartTaskRequest(task=task)))
+            start_task_response = await client.StartTask(nidaqmx_types.StartTaskRequest(task=task))
+            check_for_warning(start_task_response)
 
-            response = await raise_if_error_async(
-                client.GetTaskAttributeUInt32(
-                    nidaqmx_types.GetTaskAttributeUInt32Request(
-                        task=task, attribute=nidaqmx_types.TASK_ATTRIBUTE_NUM_CHANS
-                    )
+            response = await client.GetTaskAttributeUInt32(
+                nidaqmx_types.GetTaskAttributeUInt32Request(
+                    task=task, attribute=nidaqmx_types.TASK_ATTRIBUTE_NUM_CHANS
                 )
             )
 
@@ -136,20 +127,18 @@ async def _main():
 
                 try:
                     async for every_n_samples_response in every_n_samples_stream:
-                        await raise_if_error(every_n_samples_response)
                         read_response: nidaqmx_types.ReadAnalogF64Response = (
-                            await raise_if_error_async(
-                                client.ReadAnalogF64(
-                                    nidaqmx_types.ReadAnalogF64Request(
-                                        task=task,
-                                        num_samps_per_chan=samples_per_channel_per_read,
-                                        fill_mode=nidaqmx_types.GroupBy.GROUP_BY_GROUP_BY_CHANNEL,
-                                        array_size_in_samps=number_of_channels
-                                        * samples_per_channel_per_read,
-                                    )
+                            await client.ReadAnalogF64(
+                                nidaqmx_types.ReadAnalogF64Request(
+                                    task=task,
+                                    num_samps_per_chan=samples_per_channel_per_read,
+                                    fill_mode=nidaqmx_types.GroupBy.GROUP_BY_GROUP_BY_CHANNEL,
+                                    array_size_in_samps=number_of_channels
+                                    * samples_per_channel_per_read,
                                 )
                             )
                         )
+                        check_for_warning(read_response)
 
                         print(
                             f"Acquired {len(read_response.read_array)} samples",
@@ -172,7 +161,6 @@ async def _main():
                         # until all samples are read.
                         if done_response.status:
                             every_n_samples_stream.cancel()
-                        await raise_if_error(done_response)
                 except asyncio.CancelledError:
                     pass
 
@@ -180,6 +168,12 @@ async def _main():
 
         except grpc.RpcError as rpc_error:
             error_message = rpc_error.details()
+            for entry in rpc_error.trailing_metadata() or []:
+                if entry.key == "ni-error":
+                    value = (
+                        entry.value if isinstance(entry.value, str) else entry.value.decode("utf-8")
+                    )
+                    error_message += f"\nError status: {value}"
             if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
                 error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"
             elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
@@ -189,8 +183,10 @@ async def _main():
             print(f"{error_message}")
         finally:
             if client and task:
-                await client.StopTask(nidaqmx_types.StopTaskRequest(task=task))
-                await client.ClearTask(nidaqmx_types.ClearTaskRequest(task=task))
+                clear_task_response = await client.ClearTask(
+                    nidaqmx_types.ClearTaskRequest(task=task)
+                )
+                check_for_warning(clear_task_response)
 
 
 ## Run main
