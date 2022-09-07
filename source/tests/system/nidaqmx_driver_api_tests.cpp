@@ -1,10 +1,9 @@
 #include <gmock/gmock.h>
 #include <google/protobuf/util/time_util.h>
-#include <gtest/gtest.h>  // For EXPECT matchers.
-#include <nlohmann/json.hpp>
 
 #include <algorithm>
 #include <cstring>
+#include <nlohmann/json.hpp>
 #include <random>
 #include <stdexcept>
 #include <vector>
@@ -12,8 +11,8 @@
 #include "device_server.h"
 #include "enumerate_devices.h"
 #include "nidaqmx/nidaqmx_client.h"
+#include "tests/utilities/test_helpers.h"
 
-using namespace ::nlohmann;
 using namespace ::testing;
 using namespace nidaqmx_grpc;
 using google::protobuf::uint32;
@@ -275,7 +274,9 @@ class NiDAQmxDriverApiTests : public Test {
     request.set_auto_start(false);
     request.mutable_write_array()->Add(data.cbegin(), data.cend());
     request.set_data_layout(GroupBy::GROUP_BY_GROUP_BY_CHANNEL);
-    return stub()->WriteAnalogF64(&context, request, &response);
+    auto status = stub()->WriteAnalogF64(&context, request, &response);
+    nidevice_grpc::experimental::client::raise_if_error(status, context);
+    return status;
   }
 
   ::grpc::Status write_u32_digital_data(WriteDigitalU32Response& response)
@@ -575,7 +576,9 @@ class NiDAQmxDriverApiTests : public Test {
     set_request_session_id(request);
     request.set_timestamp_event(TimestampEvent::TIMESTAMP_EVENT_FIRST_SAMPLE_TIMESTAMP);
     request.set_timeout(1.000);
-    return stub()->WaitForValidTimestamp(&context, request, &response);
+    auto status = stub()->WaitForValidTimestamp(&context, request, &response);
+    nidevice_grpc::experimental::client::raise_if_error(status, context);
+    return status;
   }
 
   ::grpc::Status cfg_time_start_trig(CfgTimeStartTrigResponse& response)
@@ -589,7 +592,9 @@ class NiDAQmxDriverApiTests : public Test {
     time += duration;
     request.mutable_when()->CopyFrom(time);
     request.set_timescale(Timescale2::TIMESCALE2_IO_DEVICE_TIME);
-    return stub()->CfgTimeStartTrig(&context, request, &response);
+    auto status = stub()->CfgTimeStartTrig(&context, request, &response);
+    nidevice_grpc::experimental::client::raise_if_error(status, context);
+    return status;
   }
 
   ::grpc::Status save_task(SaveTaskResponse& response)
@@ -629,7 +634,9 @@ class NiDAQmxDriverApiTests : public Test {
     ::grpc::ClientContext context;
     AddNetworkDeviceRequest request;
     request.set_ip_address(ip_address);
-    return stub()->AddNetworkDevice(&context, request, &response);
+    auto status = stub()->AddNetworkDevice(&context, request, &response);
+    nidevice_grpc::experimental::client::raise_if_error(status, context);
+    return status;
   }
 
   ::grpc::Status wait_for_next_sample_clock(WaitForNextSampleClockResponse& response)
@@ -638,7 +645,9 @@ class NiDAQmxDriverApiTests : public Test {
     WaitForNextSampleClockRequest request;
     set_request_session_id(request);
     request.set_timeout(10.0);
-    return stub()->WaitForNextSampleClock(&context, request, &response);
+    auto status = stub()->WaitForNextSampleClock(&context, request, &response);
+    nidevice_grpc::experimental::client::raise_if_error(status, context);
+    return status;
   }
 
   ::grpc::Status connect_terms(const std::string& source, const std::string& destination, ConnectTermsResponse& response)
@@ -648,7 +657,9 @@ class NiDAQmxDriverApiTests : public Test {
     request.set_source_terminal(source);
     request.set_destination_terminal(destination);
     request.set_signal_modifiers(InvertPolarity::INVERT_POLARITY_DO_NOT_INVERT_POLARITY);
-    return stub()->ConnectTerms(&context, request, &response);
+    auto status = stub()->ConnectTerms(&context, request, &response);
+    nidevice_grpc::experimental::client::raise_if_error(status, context);
+    return status;
   }
 
   ::grpc::Status create_watchdog_timer_task_ex(double timeout, CreateWatchdogTimerTaskExResponse& response)
@@ -673,13 +684,6 @@ class NiDAQmxDriverApiTests : public Test {
         DigitalLineState::DIGITAL_LINE_STATE_HIGH};
     request.mutable_expir_state_array()->CopyFrom({expir_states.cbegin(), expir_states.cend()});
     return stub()->CfgWatchdogDOExpirStates(&context, request, &response);
-  }
-
-  void raise_if_error(::grpc::Status status)
-  {
-    if (!status.ok()) {
-      throw new std::runtime_error(status.error_message());
-    }
   }
 
   std::unique_ptr<NiDAQmx::Stub>& stub()
@@ -719,18 +723,6 @@ class NiDAQmxDriverApiTests : public Test {
   {
     EXPECT_SUCCESS(response);
     EXPECT_EQ(::grpc::Status::OK.error_code(), status.error_code());
-  }
-
-  void EXPECT_DAQ_ERROR(int32_t expected_error, const std::string& error_message)
-  {
-    auto error = json::parse(error_message);
-    EXPECT_EQ(expected_error, error.value("code", 0));
-  }
-
-  void EXPECT_DAQ_ERROR(int32_t expected_error, const ::grpc::Status& status)
-  {
-    EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status.error_code());
-    EXPECT_DAQ_ERROR(expected_error, status.error_message());
   }
 
   template <typename T>
@@ -1003,13 +995,13 @@ TEST_F(NiDAQmxDriverApiTests, GetScaledUnitsAsDouble_Fails)
 
   try {
     client::get_scale_attribute_double(
-      stub(),
-      SCALE_NAME,
-      (ScaleDoubleAttribute)ScaleStringAttribute::SCALE_ATTRIBUTE_SCALED_UNITS);
-    EXPECT_FALSE(true);
+        stub(),
+        SCALE_NAME,
+        (ScaleDoubleAttribute)ScaleStringAttribute::SCALE_ATTRIBUTE_SCALED_UNITS);
+    FAIL() << "We shouldn't get here.";
   }
-  catch (const std::runtime_error& ex) {
-    EXPECT_DAQ_ERROR(SPECIFIED_ATTRIBUTE_NOT_VALID_ERROR, ex.what());
+  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
+    expect_driver_error(ex, SPECIFIED_ATTRIBUTE_NOT_VALID_ERROR);
   }
 }
 
@@ -1080,13 +1072,17 @@ TEST_F(NiDAQmxDriverApiTests, AOVoltageChannel_WriteAODataWithOutOfRangeValue_Re
   create_ao_voltage_chan(AO_MIN, AO_MAX);
 
   start_task();
-  auto write_data = generate_random_data(AO_MIN, AO_MAX, 100);
-  write_data[80] += AO_MAX;
-  WriteAnalogF64Response write_response;
-  auto status = write_analog_f64(write_data, write_response);
+  try {
+    auto write_data = generate_random_data(AO_MIN, AO_MAX, 100);
+    write_data[80] += AO_MAX;
+    WriteAnalogF64Response write_response;
+    write_analog_f64(write_data, write_response);
+    FAIL() << "We shouldn't get here.";
+  }
+  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
+    expect_driver_error(ex, INVALID_AO_DATA_WRITE_ERROR);
+  }
   stop_task();
-
-  EXPECT_DAQ_ERROR(INVALID_AO_DATA_WRITE_ERROR, status);
 }
 
 TEST_F(NiDAQmxDriverApiTests, TaskWithAOChannel_GetNthTaskDevice_ReturnsDeviceForChannel)
@@ -1370,20 +1366,28 @@ TEST_F(NiDAQmxDriverApiTests, AIVoltageChannel_WaitForValidTimestamp_ReturnsErro
 {
   create_ai_voltage_chan(0.0, 1.0);
 
-  auto response = WaitForValidTimestampResponse{};
-  auto status = wait_for_valid_timestamp(response);
-
-  EXPECT_DAQ_ERROR(WAIT_FOR_VALID_TIMESTAMP_NOT_SUPPORTED_ERROR, status);
+  try {
+    auto response = WaitForValidTimestampResponse{};
+    auto status = wait_for_valid_timestamp(response);
+    FAIL() << "We shouldn't get here.";
+  }
+  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
+    expect_driver_error(ex, WAIT_FOR_VALID_TIMESTAMP_NOT_SUPPORTED_ERROR);
+  }
 }
 
 TEST_F(NiDAQmxDriverApiTests, AIVoltageChannel_CfgTimeStartTrig_ReturnsError)
 {
   create_ai_voltage_chan(0.0, 1.0);
 
-  auto response = CfgTimeStartTrigResponse{};
-  auto status = cfg_time_start_trig(response);
-
-  EXPECT_DAQ_ERROR(INVALID_ATTRIBUTE_VALUE_ERROR, status);
+  try {
+    auto response = CfgTimeStartTrigResponse{};
+    cfg_time_start_trig(response);
+    FAIL() << "We shouldn't get here.";
+  }
+  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
+    expect_driver_error(ex, INVALID_ATTRIBUTE_VALUE_ERROR);
+  }
 }
 
 TEST_F(NiDAQmxDriverApiTests, LoadedVoltageTask_ReadAIData_ReturnsDataInExpectedRange)
@@ -1417,20 +1421,24 @@ TEST_F(NiDAQmxDriverApiTests, SelfCal_Succeeds)
 
 TEST_F(NiDAQmxDriverApiTests, AddNetworkDeviceWithInvalidIP_ErrorRetrievingNetworkDeviceProperties)
 {
-  auto response = AddNetworkDeviceResponse{};
-  auto status = add_network_device("0.0.0.0", response);
-
-  EXPECT_DAQ_ERROR(RETRIEVING_NETWORK_DEVICE_PROPERTIES_ERROR, status);
+  try {
+    auto response = AddNetworkDeviceResponse{};
+    add_network_device("0.0.0.0", response);
+    FAIL() << "We shouldn't get here.";
+  }
+  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
+    expect_driver_error(ex, RETRIEVING_NETWORK_DEVICE_PROPERTIES_ERROR);
+  }
 }
 
 TEST_F(NiDAQmxDriverApiTests, ConfigureTEDSOnNonTEDSChannel_ErrorTEDSSensorNotDetected)
 {
   try {
     client::configure_teds(stub(), AI_CHANNEL, "");
-    EXPECT_FALSE(true);
+    FAIL() << "We shouldn't get here.";
   }
-  catch (const std::runtime_error& ex) {
-    EXPECT_DAQ_ERROR(TEDS_SENSOR_NOT_DETECTED_ERROR, ex.what());
+  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
+    expect_driver_error(ex, TEDS_SENSOR_NOT_DETECTED_ERROR);
   }
 }
 
@@ -1457,10 +1465,14 @@ TEST_F(NiDAQmxDriverApiTests, HardwareTimedTask_WaitForNextSampleClock_Succeeds)
 
 TEST_F(NiDAQmxDriverApiTests, ConnectBogusTerms_FailsWithInvalidRoutingError)
 {
-  auto response = ConnectTermsResponse{};
-  auto status = connect_terms("ABC", "123", response);
-
-  EXPECT_DAQ_ERROR(INVALID_TERM_ROUTING_ERROR, status);
+  try {
+    auto response = ConnectTermsResponse{};
+    connect_terms("ABC", "123", response);
+    FAIL() << "We shouldn't get here.";
+  }
+  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
+    expect_driver_error(ex, INVALID_TERM_ROUTING_ERROR);
+  }
 }
 
 TEST_F(NiDAQmxDriverApiTests, DOWatchdogTask_StartTaskAndWatchdogTask_Succeeds)
@@ -1490,10 +1502,10 @@ TEST_F(NiDAQmxDriverApiTests, AutoConfigureCDAQSyncConnections_ReturnsNotSupport
 {
   try {
     client::auto_configure_cdaq_sync_connections(stub(), DEVICE_NAME, 1.0);
-    EXPECT_FALSE(true);
+    FAIL() << "We shouldn't get here.";
   }
-  catch (const std::runtime_error& ex) {
-    EXPECT_DAQ_ERROR(DEVICE_DOES_NOT_SUPPORT_CDAQ_SYNC_CONNECTIONS_ERROR, ex.what());
+  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
+    expect_driver_error(ex, DEVICE_DOES_NOT_SUPPORT_CDAQ_SYNC_CONNECTIONS_ERROR);
   }
 }
 
@@ -1713,10 +1725,10 @@ TEST_F(NiDAQmxDriverApiTests, SetWrongCategoryAttribute_ReturnsNotValidError)
 {
   try {
     client::get_device_attribute_bool(stub(), DEVICE_NAME, ScaleDoubleAttribute::SCALE_ATTRIBUTE_LIN_SLOPE);
-    EXPECT_FALSE(true);
+    FAIL() << "We shouldn't get here.";
   }
-  catch (const std::runtime_error& ex) {
-    EXPECT_DAQ_ERROR(SPECIFIED_ATTRIBUTE_NOT_VALID_ERROR, ex.what());
+  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
+    expect_driver_error(ex, SPECIFIED_ATTRIBUTE_NOT_VALID_ERROR);
   }
 }
 
@@ -1724,10 +1736,10 @@ TEST_F(NiDAQmxDriverApiTests, SetWrongDataTypeAttribute_ReturnsNotValidError)
 {
   try {
     client::get_device_attribute_bool(stub(), DEVICE_NAME, DeviceStringAttribute::DEVICE_ATTRIBUTE_AO_PHYSICAL_CHANS);
-    EXPECT_FALSE(true);
+    FAIL() << "We shouldn't get here.";
   }
-  catch (const std::runtime_error& ex) {
-    EXPECT_DAQ_ERROR(SPECIFIED_ATTRIBUTE_NOT_VALID_ERROR, ex.what());
+  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
+    expect_driver_error(ex, SPECIFIED_ATTRIBUTE_NOT_VALID_ERROR);
   }
 }
 

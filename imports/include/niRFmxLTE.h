@@ -237,7 +237,7 @@
 #define RFMXLTE_ATTR_UPLINK_DOWNLINK_CONFIGURATION                                          0x0030000e
 #define RFMXLTE_ATTR_LINK_DIRECTION                                                         0x00300029
 #define RFMXLTE_ATTR_NUMBER_OF_SUBBLOCKS                                                    0x00300023
-#define RFMXLTE_ATTR_SUBBLOCK_FREQUENCY_DEFINITION                                          0x00300024
+#define RFMXLTE_ATTR_SUBBLOCK_FREQUENCY                                                     0x00300059
 #define RFMXLTE_ATTR_BAND                                                                   0x00300017
 #define RFMXLTE_ATTR_COMPONENT_CARRIER_SPACING_TYPE                                         0x00300013
 #define RFMXLTE_ATTR_COMPONENT_CARRIER_AT_CENTER_FREQUENCY                                  0x00300014
@@ -330,6 +330,7 @@
 #define RFMXLTE_ATTR_MODACC_RESULTS_MEAN_RMS_PHICH_EVM                                      0x0030404f
 #define RFMXLTE_ATTR_MODACC_RESULTS_DOWNLINK_OFDM_SYMBOL_TRANSMIT_POWER                     0x00304052
 #define RFMXLTE_ATTR_ENODEB_CATEGORY                                                        0x00300050
+#define RFMXLTE_ATTR_MODACC_MULTICARRIER_TIME_SYNCHRONIZATION_MODE                          0x0030407e
 #define RFMXLTE_ATTR_SEM_UPLINK_MASK_TYPE                                                   0x0030804c
 #define RFMXLTE_ATTR_SEM_DOWNLINK_MASK_TYPE                                                 0x00308053
 #define RFMXLTE_ATTR_SEM_DELTA_F_MAXIMUM                                                    0x00308054
@@ -444,10 +445,6 @@
 #define RFMXLTE_VAL_UPLINK_DOWNLINK_CONFIGURATION_5                                                5
 #define RFMXLTE_VAL_UPLINK_DOWNLINK_CONFIGURATION_6                                                6
 
-// Values for RFMXLTE_ATTR_SUBBLOCK_FREQUENCY_DEFINITION
-#define RFMXLTE_VAL_SUBBLOCK_FREQUENCY_DEFINITION_RELATIVE                                         0
-#define RFMXLTE_VAL_SUBBLOCK_FREQUENCY_DEFINITION_ABSOLUTE                                         1
-
 // Values for RFMXLTE_ATTR_COMPONENT_CARRIER_SPACING_TYPE
 #define RFMXLTE_VAL_COMPONENT_CARRIER_SPACING_TYPE_NOMINAL                                         0
 #define RFMXLTE_VAL_COMPONENT_CARRIER_SPACING_TYPE_MINIMUM                                         1
@@ -486,8 +483,8 @@
 #define RFMXLTE_VAL_MODACC_SYNCHRONIZATION_MODE_MARKER                                             2
 
 // Values for RFMXLTE_ATTR_MODACC_MULTICARRIER_FILTER_ENABLED
-#define RFMXLTE_VAL_MODACC_MULTICARRIER_FILTER_ENABLED_TRUE                                        1
 #define RFMXLTE_VAL_MODACC_MULTICARRIER_FILTER_ENABLED_FALSE                                       0
+#define RFMXLTE_VAL_MODACC_MULTICARRIER_FILTER_ENABLED_TRUE                                        1
 
 // Values for RFMXLTE_ATTR_MODACC_IQ_ORIGIN_OFFSET_ESTIMATION_ENABLED
 #define RFMXLTE_VAL_MODACC_IQ_ORIGIN_OFFSET_ESTIMATION_ENABLED_FALSE                               0
@@ -854,6 +851,10 @@
 #define RFMXLTE_VAL_ENODEB_LOCAL_AREA_BASE_STATION                                                 3
 #define RFMXLTE_VAL_ENODEB_HOME_BASE_STATION                                                       4
 #define RFMXLTE_VAL_ENODEB_MEDIUM_RANGE_BASE_STATION                                               5
+
+// Values for RFMXLTE_ATTR_MODACC_MULTICARRIER_TIME_SYNCHRONIZATION_MODE
+#define RFMXLTE_VAL_MODACC_MULTICARRIER_TIME_SYNCHRONIZATION_MODE_COMMON                           0
+#define RFMXLTE_VAL_MODACC_MULTICARRIER_TIME_SYNCHRONIZATION_MODE_PER_CARRIER                      1
 
 // Values for RFMXLTE_ATTR_SRS_ENABLED
 #define RFMXLTE_VAL_SRS_ENABLED_FALSE                                                              0
@@ -1645,12 +1646,6 @@ int32 __stdcall RFmxLTE_CfgBand(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 band
-);
-
-int32 __stdcall RFmxLTE_CfgSubblockFrequencyDefinition(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 subblockFrequencyDefinition
 );
 
 int32 __stdcall RFmxLTE_CfgDuplexScheme(
@@ -4074,6 +4069,18 @@ int32 __stdcall RFmxLTE_ModAccGetResultsDownlinkOFDMSymbolTransmitPower(
    float64 *attrVal
 );
 
+int32 __stdcall RFmxLTE_ModAccGetMulticarrierTimeSynchronizationMode(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxLTE_ModAccSetMulticarrierTimeSynchronizationMode(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
 int32 __stdcall RFmxLTE_ModAccGetResultsDownlinkRSTransmitPower(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -5960,16 +5967,16 @@ int32 __stdcall RFmxLTE_SetNumberOfSubblocks(
    int32 attrVal
 );
 
-int32 __stdcall RFmxLTE_GetSubblockFrequencyDefinition(
+int32 __stdcall RFmxLTE_GetSubblockFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   int32 *attrVal
+   float64 *attrVal
 );
 
-int32 __stdcall RFmxLTE_SetSubblockFrequencyDefinition(
+int32 __stdcall RFmxLTE_SetSubblockFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   int32 attrVal
+   float64 attrVal
 );
 
 int32 __stdcall RFmxLTE_GetBand(
@@ -7248,6 +7255,7 @@ int32 __stdcall RFmxLTE_SlotPowerSetAllTracesEnabled(
 
 #define RFMXLTE_ATTR_SEM_STANDARD_MASK_TYPE                                                 0x0030804c
 #define RFMXLTE_ATTR_MODACC_MULTI_CARRIER_FILTER_ENABLED                                    0x00304002
+#define RFMXLTE_ATTR_SUBBLOCK_FREQUENCY_DEFINITION                                          0x00300024
 
 // Values for RFMXLTE_ATTR_IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE
 #define RFMXLTE_VAL_IQ_POWER_EDGE_LEVEL_TYPE_RELATIVE                                              0
@@ -7263,6 +7271,11 @@ int32 __stdcall RFmxLTE_SlotPowerSetAllTracesEnabled(
 
 // Values for RFMXLTE_ATTR_SEM_UPLINK_MASK_TYPE
 #define RFMXLTE_VAL_SEM_UPLINK_MASK_TYPE_NS03_OR_NS11_OR_NS20                                      1
+
+// Values for RFMXLTE_ATTR_SUBBLOCK_FREQUENCY_DEFINITION
+#define RFMXLTE_VAL_SUBBLOCK_FREQUENCY_DEFINITION_RELATIVE                                         0
+#define RFMXLTE_VAL_SUBBLOCK_FREQUENCY_DEFINITION_ABSOLUTE                                         1
+
 
 #ifdef __cplusplus
 extern "C"
@@ -7304,6 +7317,24 @@ int32 __stdcall RFmxLTE_ModAccSetMultiCarrierFilterEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
+);
+
+int32 __stdcall RFmxLTE_GetSubblockFrequencyDefinition(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxLTE_SetSubblockFrequencyDefinition(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxLTE_CfgSubblockFrequencyDefinition(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 subblockFrequencyDefinition
 );
 
 int32 __stdcall RFmxLTE_AnalyzeIQ(

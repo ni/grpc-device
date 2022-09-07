@@ -1,17 +1,15 @@
 #include <gmock/gmock.h>
-#include <gtest/gtest.h>
-#include <nlohmann/json.hpp>
 
 #include "device_server.h"
 #include "nidmm/nidmm_client.h"
 #include "nidmm/nidmm_library.h"
+#include "tests/utilities/test_helpers.h"
 
 namespace ni {
 namespace tests {
 namespace system {
 
 namespace dmm = nidmm_grpc;
-using namespace ::nlohmann;
 using namespace ::testing;
 
 const int kViErrorDmmRsrcNFound = -1074118656;
@@ -55,6 +53,7 @@ class NiDmmSessionTest : public ::testing::Test {
     request.set_id_query(false);
 
     ::grpc::Status status = GetStub()->InitWithOptions(&context, request, response);
+    nidevice_grpc::experimental::client::raise_if_error(status, context);
     return status;
   }
 
@@ -103,17 +102,6 @@ TEST_F(NiDmmSessionTest, InitializeSessionWithDeviceAndNoSessionName_CreatesDriv
   EXPECT_EQ("", response.error_message());
 }
 
-TEST_F(NiDmmSessionTest, InitializeSessionWithoutDevice_ReturnsDriverError)
-{
-  dmm::InitWithOptionsResponse response;
-  ::grpc::Status status = call_init_with_options(kInvalidRsrc, "", "", &response);
-
-  EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status.error_code());
-  auto error = json::parse(status.error_message());
-  EXPECT_EQ(kViErrorDmmRsrcNFound, error.value("code", 0));
-  EXPECT_NE("", error.value("message", ""));
-}
-
 TEST_F(NiDmmSessionTest, InitializedSession_CloseSession_ClosesDriverSession)
 {
   dmm::InitWithOptionsResponse init_response;
@@ -135,27 +123,32 @@ TEST_F(NiDmmSessionTest, InvalidSession_CloseSession_ReturnsInvalidSesssionError
   nidevice_grpc::Session session;
   session.set_id(NULL);
 
-  ::grpc::ClientContext context;
-  dmm::CloseRequest request;
-  request.mutable_vi()->set_id(session.id());
-  dmm::CloseResponse response;
-  ::grpc::Status status = GetStub()->Close(&context, request, &response);
-
-  EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status.error_code());
-  auto error = json::parse(status.error_message());
-  EXPECT_EQ(kInvalidDmmSession, error.value("code", 0));
-  EXPECT_THAT(error.value("message", "").c_str(), HasSubstr(kInvalidDmmSessionMessage));
+  try {
+    ::grpc::ClientContext context;
+    dmm::CloseRequest request;
+    request.mutable_vi()->set_id(session.id());
+    dmm::CloseResponse response;
+    ::grpc::Status status = GetStub()->Close(&context, request, &response);
+    nidevice_grpc::experimental::client::raise_if_error(status, context);
+    FAIL() << "We shouldn't get here.";
+  }
+  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
+    expect_driver_error(ex, kInvalidDmmSession);
+    EXPECT_THAT(ex.what(), HasSubstr(kInvalidDmmSessionMessage));
+  }
 }
 
-TEST_F(NiDmmSessionTest, InitWithErrorFromDriver_ReturnsUserErrorMessage)
+TEST_F(NiDmmSessionTest, InitWithErrorFromDriver_ReturnsDriverErrorWithUserErrorMessage)
 {
-  dmm::InitWithOptionsResponse init_response;
-  auto status = call_init_with_options(kInvalidRsrc, "", "", &init_response);
-
-  EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status.error_code());
-  auto error = json::parse(status.error_message());
-  EXPECT_EQ(kViErrorDmmRsrcNFound, error.value("code", 0));
-  EXPECT_STREQ(kViErrorDmmRsrcNFoundMessage, error.value("message", "").c_str());
+  try {
+    dmm::InitWithOptionsResponse init_response;
+    call_init_with_options(kInvalidRsrc, "", "", &init_response);
+    FAIL() << "We shouldn't get here.";
+  }
+  catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
+    expect_driver_error(ex, kViErrorDmmRsrcNFound);
+    EXPECT_STREQ(kViErrorDmmRsrcNFoundMessage, ex.what());
+  }
 }
 
 }  // namespace system

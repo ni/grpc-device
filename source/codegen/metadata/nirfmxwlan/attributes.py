@@ -1196,8 +1196,8 @@ attributes = {
     },
     10502250: {
         'access': 'read-write',
-        'enum': 'OfdmModAccChannelEstimationSmoothingEnabled',
-        'name': 'OFDMMODACC_CHANNEL_ESTIMATION_SMOOTHING_ENABLED',
+        'enum': 'OfdmModAccChannelEstimationInterpolationType',
+        'name': 'OFDMMODACC_CHANNEL_ESTIMATION_INTERPOLATION_TYPE',
         'type': 'int32'
     },
     10502251: {
@@ -1527,10 +1527,38 @@ attributes = {
         'name': 'OFDMMODACC_VECTOR_AVERAGING_PHASE_ALIGNMENT_ENABLED',
         'type': 'int32'
     },
+    10502320: {
+        'access': 'read-write',
+        'name': 'OFDMMODACC_RESULTS_BURST_START_TIME_MEAN',
+        'type': 'float64'
+    },
     10502321: {
         'access': 'read-write',
         'enum': 'OfdmModAccAutoLevelAllowOverflow',
         'name': 'OFDMMODACC_AUTO_LEVEL_ALLOW_OVERFLOW',
+        'type': 'int32'
+    },
+    10502327: {
+        'access': 'read-write',
+        'name': 'OFDMMODACC_CHANNEL_ESTIMATION_RELATIVE_DELAY_SPREAD',
+        'type': 'float64'
+    },
+    10502328: {
+        'access': 'read-write',
+        'enum': 'OfdmModAccPhaseRotationCoefficient1',
+        'name': 'OFDMMODACC_RESULTS_PHASE_ROTATION_COEFFICIENT_1',
+        'type': 'int32'
+    },
+    10502329: {
+        'access': 'read-write',
+        'enum': 'OfdmModAccPhaseRotationCoefficient2',
+        'name': 'OFDMMODACC_RESULTS_PHASE_ROTATION_COEFFICIENT_2',
+        'type': 'int32'
+    },
+    10502330: {
+        'access': 'read-write',
+        'enum': 'OfdmModAccPhaseRotationCoefficient3',
+        'name': 'OFDMMODACC_RESULTS_PHASE_ROTATION_COEFFICIENT_3',
         'type': 'int32'
     },
     10506240: {

@@ -62,7 +62,7 @@ namespace nirfmxspecan_restricted_grpc {
       }
       auto status = library_->CacheResult(instrument, selector_string, selector_string_out_size, (char*)selector_string_out.data());
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       response->set_selector_string_out(selector_string_out);
@@ -88,14 +88,29 @@ namespace nirfmxspecan_restricted_grpc {
       float64 timeout = request->timeout();
       int32 record_to_fetch = request->record_to_fetch();
       int64 samples_to_read = request->samples_to_read();
-      int32 delete_on_fetch = request->delete_on_fetch();
+      int32 delete_on_fetch;
+      switch (request->delete_on_fetch_enum_case()) {
+        case nirfmxspecan_restricted_grpc::IQFetchDataOverrideBehaviorRequest::DeleteOnFetchEnumCase::kDeleteOnFetch: {
+          delete_on_fetch = static_cast<int32>(request->delete_on_fetch());
+          break;
+        }
+        case nirfmxspecan_restricted_grpc::IQFetchDataOverrideBehaviorRequest::DeleteOnFetchEnumCase::kDeleteOnFetchRaw: {
+          delete_on_fetch = static_cast<int32>(request->delete_on_fetch_raw());
+          break;
+        }
+        case nirfmxspecan_restricted_grpc::IQFetchDataOverrideBehaviorRequest::DeleteOnFetchEnumCase::DELETE_ON_FETCH_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for delete_on_fetch was not specified or out of range");
+          break;
+        }
+      }
+
       float64 t0 {};
       float64 dt {};
       int32 actual_array_size {};
       while (true) {
         auto status = library_->IQFetchDataOverrideBehavior(instrument, selector_string, timeout, record_to_fetch, samples_to_read, delete_on_fetch, &t0, &dt, nullptr, 0, &actual_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         std::vector<NIComplexSingle> data(actual_array_size, NIComplexSingle());
         auto array_size = actual_array_size;
@@ -105,7 +120,7 @@ namespace nirfmxspecan_restricted_grpc {
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(status, instrument);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->set_t0(t0);

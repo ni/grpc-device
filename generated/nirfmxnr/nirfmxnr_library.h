@@ -123,6 +123,7 @@ class NiRFmxNRLibrary : public nirfmxnr_grpc::NiRFmxNRLibraryInterface {
   int32 ModAccClearNoiseCalibrationDatabase(niRFmxInstrHandle instrumentHandle);
   int32 ModAccFetchCompositeEVM(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* compositeRMSEVMMean, float64* compositePeakEVMMaximum);
   int32 ModAccFetchFrequencyErrorMean(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* frequencyErrorMean);
+  int32 ModAccFetchFrequencyErrorPerSlotMaximumTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 frequencyErrorPerSlotMaximum[], int32 arraySize, int32* actualArraySize);
   int32 ModAccFetchIQGainImbalancePerSubcarrierMeanTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 iqGainImbalancePerSubcarrierMean[], int32 arraySize, int32* actualArraySize);
   int32 ModAccFetchIQQuadratureErrorPerSubcarrierMeanTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 iqQuadratureErrorPerSubcarrierMean[], int32 arraySize, int32* actualArraySize);
   int32 ModAccFetchInBandEmissionTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 inBandEmission[], float32 inBandEmissionMask[], int32 arraySize, int32* actualArraySize);
@@ -342,6 +343,7 @@ class NiRFmxNRLibrary : public nirfmxnr_grpc::NiRFmxNRLibraryInterface {
   using ModAccClearNoiseCalibrationDatabasePtr = decltype(&RFmxNR_ModAccClearNoiseCalibrationDatabase);
   using ModAccFetchCompositeEVMPtr = decltype(&RFmxNR_ModAccFetchCompositeEVM);
   using ModAccFetchFrequencyErrorMeanPtr = decltype(&RFmxNR_ModAccFetchFrequencyErrorMean);
+  using ModAccFetchFrequencyErrorPerSlotMaximumTracePtr = decltype(&RFmxNR_ModAccFetchFrequencyErrorPerSlotMaximumTrace);
   using ModAccFetchIQGainImbalancePerSubcarrierMeanTracePtr = decltype(&RFmxNR_ModAccFetchIQGainImbalancePerSubcarrierMeanTrace);
   using ModAccFetchIQQuadratureErrorPerSubcarrierMeanTracePtr = decltype(&RFmxNR_ModAccFetchIQQuadratureErrorPerSubcarrierMeanTrace);
   using ModAccFetchInBandEmissionTracePtr = decltype(&RFmxNR_ModAccFetchInBandEmissionTrace);
@@ -561,6 +563,7 @@ class NiRFmxNRLibrary : public nirfmxnr_grpc::NiRFmxNRLibraryInterface {
     ModAccClearNoiseCalibrationDatabasePtr ModAccClearNoiseCalibrationDatabase;
     ModAccFetchCompositeEVMPtr ModAccFetchCompositeEVM;
     ModAccFetchFrequencyErrorMeanPtr ModAccFetchFrequencyErrorMean;
+    ModAccFetchFrequencyErrorPerSlotMaximumTracePtr ModAccFetchFrequencyErrorPerSlotMaximumTrace;
     ModAccFetchIQGainImbalancePerSubcarrierMeanTracePtr ModAccFetchIQGainImbalancePerSubcarrierMeanTrace;
     ModAccFetchIQQuadratureErrorPerSubcarrierMeanTracePtr ModAccFetchIQQuadratureErrorPerSubcarrierMeanTrace;
     ModAccFetchInBandEmissionTracePtr ModAccFetchInBandEmissionTrace;

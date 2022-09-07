@@ -172,51 +172,34 @@ TEST(ConvertersTests, ArrayAndRawValue_ConvertBitfieldAsEnumArrayInput_ReturnsOr
   EXPECT_EQ(0x2 | 0x4 | 0x8, converted);
 }
 
-TEST(ConvertersTests, ApiErrorToStatus_Parse_IncludesCodeAndUnknownMessage)
+class MockServerContext {
+ public:
+  MOCK_METHOD2(AddTrailingMetadata, void(const std::string& key, const std::string& value));
+};
+
+TEST(ConvertersTests, ApiErrorToStatus_ContextIncludesCodeAndStatusIncludesUnknownMessage)
 {
   const auto TEST_STATUS = -12345;
   const auto EXPECTED_MESSAGE = std::string("Unknown");
 
-  auto error_message = nidevice_grpc::ApiErrorToStatus(TEST_STATUS).error_message();
-  auto parsed = json::parse(error_message);
+  MockServerContext serverContext;
+  EXPECT_CALL(serverContext, AddTrailingMetadata("ni-error", std::to_string(TEST_STATUS)));
+  auto status = nidevice_grpc::ApiErrorToStatus(&serverContext, TEST_STATUS);
 
-  EXPECT_EQ(TEST_STATUS, parsed.value("code", 0));
-  EXPECT_EQ(EXPECTED_MESSAGE, parsed.value("message", ""));
+  EXPECT_EQ(EXPECTED_MESSAGE, status.error_message());
 }
 
-TEST(ConvertersTests, ApiErrorAndDescriptionToStatus_Parse_IncludesCodeAndMessage)
+TEST(ConvertersTests, ApiErrorAndDescriptionToStatus_ContextIncludesCodeAndStatusIncludesMessage)
 {
   const auto TEST_STATUS = -12345;
   const auto TEST_MESSAGE = std::string("regular_string");
   std::string description(TEST_MESSAGE);
 
-  auto error_message = nidevice_grpc::ApiErrorAndDescriptionToStatus(TEST_STATUS, description).error_message();
-  auto parsed = json::parse(error_message);
+  MockServerContext serverContext;
+  EXPECT_CALL(serverContext, AddTrailingMetadata("ni-error", std::to_string(TEST_STATUS)));
+  auto status = nidevice_grpc::ApiErrorAndDescriptionToStatus(&serverContext, TEST_STATUS, description);
 
-  EXPECT_EQ(TEST_STATUS, parsed.value("code", 0));
-  EXPECT_EQ(TEST_MESSAGE, parsed.value("message", ""));
-}
-
-TEST(ConvertersTests, CustomField_ApiErrorAndDescriptionToStatus_IncludesCustomField)
-{
-  std::string empty_description;
-  nlohmann::json jsonError{{"custom", 1}};
-
-  auto error_message = nidevice_grpc::ApiErrorAndDescriptionToStatus(0, empty_description, jsonError).error_message();
-
-  EXPECT_THAT(error_message, HasSubstr("\"custom\":1"));
-}
-
-TEST(ConvertersTests, QuotedLocalizedDescription_ApiErrorAndDescriptionToStatus_MessageIsEncoded)
-{
-  const auto TEST_MESSAGE = std::string("\"chaîne 😀 localisée\"");
-  std::string description(TEST_MESSAGE);
-
-  auto error_message = nidevice_grpc::ApiErrorAndDescriptionToStatus(0, description).error_message();
-  auto parsed = json::parse(error_message);
-
-  EXPECT_THAT(error_message, Not(HasSubstr(TEST_MESSAGE)));
-  EXPECT_EQ(TEST_MESSAGE, parsed.value("message", ""));
+  EXPECT_EQ(TEST_MESSAGE, status.error_message());
 }
 
 }  // namespace
