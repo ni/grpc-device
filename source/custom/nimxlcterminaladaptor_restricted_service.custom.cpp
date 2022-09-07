@@ -115,6 +115,10 @@ class TerminalContainerPtr
         }
 
         response->set_status((&status)->code);
+        
+        NIErrStatus* responseCStatus = new NIErrStatus();
+        nidevice_grpc::converters::convert_to_grpc(status, responseCStatus);
+        response->set_allocated_c_status(responseCStatus);
 
         ::grpc::Status grpcStatus;
         if (nierr_Status_isFatal(&status)){
