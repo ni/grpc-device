@@ -24,6 +24,7 @@ This example is not supported in simulation mode, hence these arguments are mand
 """
 
 import sys
+import typing
 
 import grpc
 import matplotlib.pyplot as plt
@@ -128,9 +129,8 @@ try:
 except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
     for key, value in rpc_error.trailing_metadata() or []:  # type: ignore
-        if key == "ni-error":
-            details = value if isinstance(value, str) else value.decode("utf-8")
-            error_message += f"\nError status: {details}"
+        if typing.cast(str, key) == "ni-error" and isinstance(value, str):
+            error_message += f"\nError status: {value}"
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
         error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"
     elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
