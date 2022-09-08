@@ -36,7 +36,6 @@ If they are not passed in as command line arguments, then by default the server 
 
 import sys
 import typing
-
 from math import floor
 
 import grpc
