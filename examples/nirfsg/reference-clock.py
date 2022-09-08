@@ -91,7 +91,7 @@ try:
     client.CheckGenerationStatus(nirfsg_types.CheckGenerationStatusRequest(vi=vi))
 except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
-    trailing_metadata = rpc_error.trailing_metadata() or [] # type: ignore
+    trailing_metadata = rpc_error.trailing_metadata() or []  # type: ignore
     for key, value in trailing_metadata:
         if key == "ni-error":
             details = value if isinstance(value, str) else value.decode("utf-8")
