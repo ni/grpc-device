@@ -249,8 +249,7 @@ try:
     print(f"Peak Power Maximum (dBm) : {peak_power_maximum}")
 except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
-    trailing_metadata = rpc_error.trailing_metadata() or []  # type: ignore
-    for key, value in trailing_metadata:
+    for key, value in rpc_error.trailing_metadata() or []:  # type: ignore
         if key == "ni-error":
             details = value if isinstance(value, str) else value.decode("utf-8")
             error_message += f"\nError status: {details}"
