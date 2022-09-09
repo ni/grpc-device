@@ -28,7 +28,6 @@ in this file.
 """
 
 import sys
-import typing
 
 import grpc
 import niswitch_pb2 as niswitch_types
@@ -95,8 +94,9 @@ try:
 # If NI-SWITCH API throws an exception, print the error message
 except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
-    for key, value in rpc_error.trailing_metadata() or []:  # type: ignore
-        if typing.cast(str, key) == "ni-error" and isinstance(value, str):
+    for entry in rpc_error.trailing_metadata() or []:
+        if entry.key == "ni-error":
+            value = entry.value if isinstance(entry.value, str) else entry.value.decode("utf-8")
             error_message += f"\nError status: {value}"
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
         error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"

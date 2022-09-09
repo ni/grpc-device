@@ -24,7 +24,6 @@ This example is not supported in simulation mode, hence these arguments are mand
 """
 
 import sys
-import typing
 
 import grpc
 import matplotlib.pyplot as plt
@@ -128,8 +127,9 @@ try:
 # If NI-FGEN API throws an exception, print the error message.
 except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
-    for key, value in rpc_error.trailing_metadata() or []:  # type: ignore
-        if typing.cast(str, key) == "ni-error" and isinstance(value, str):
+    for entry in rpc_error.trailing_metadata() or []:
+        if entry.key == "ni-error":
+            value = entry.value if isinstance(entry.value, str) else entry.value.decode("utf-8")
             error_message += f"\nError status: {value}"
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
         error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"

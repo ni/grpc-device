@@ -43,7 +43,6 @@ If they are not passed in as command line arguments, then by default the server 
 """
 
 import sys
-import typing
 
 import grpc
 import nirfmxlte_pb2 as nirfmxlte_types
@@ -296,8 +295,9 @@ try:
     print(f"In Band Emission Margin (dB)         : {in_band_emission_margin}")
 except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
-    for key, value in rpc_error.trailing_metadata() or []:  # type: ignore
-        if typing.cast(str, key) == "ni-error" and isinstance(value, str):
+    for entry in rpc_error.trailing_metadata() or []:
+        if entry.key == "ni-error":
+            value = entry.value if isinstance(entry.value, str) else entry.value.decode("utf-8")
             error_message += f"\nError status: {value}"
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
         error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"
