@@ -8,7 +8,7 @@ For more detailed information on the server and API design refer to the [wiki](h
 
 ## Supported NI drivers
 
-|NI Driver|Minimum Version Tested (Windows)|Minimum Version Tested (Linux) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|Minimum Version Tested (Linux RT)|
+|NI Driver|Version Tested (Windows)|Version Tested (Linux) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|Version Tested (Linux RT)|
 | :------------------------ | :------| :------------ | :------------ |
 | NI-DAQmx                  | 21.0.0 | 21.0.0        | 21.0.0        |
 | NI-DCPower                | 20.6.0 | 20.1.0        | 20.7.0        |
