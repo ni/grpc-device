@@ -17,6 +17,9 @@
 #include "nidmm/nidmm_service_registrar.h"
 #include "nifgen/nifgen_service_registrar.h"
 #if defined(_MSC_VER)
+#include "nimxlcterminaladaptor_restricted/nimxlcterminaladaptor_restricted_service_registrar.h"
+#endif // defined(_MSC_VER)
+#if defined(_MSC_VER)
 #include "nirfmxbluetooth/nirfmxbluetooth_service_registrar.h"
 #endif // defined(_MSC_VER)
 #if defined(_MSC_VER)
@@ -66,6 +69,9 @@ std::shared_ptr<void> register_all_services(
   auto task_handle_repository = std::make_shared<nidevice_grpc::SessionResourceRepository<TaskHandle>>(session_repository.get());
   auto vi_session_repository = std::make_shared<nidevice_grpc::SessionResourceRepository<ViSession>>(session_repository.get());
 #if defined(_MSC_VER)
+  auto nimxlc_session_repository = std::make_shared<nidevice_grpc::SessionResourceRepository<nimxlc_Session>>(session_repository.get());
+#endif // defined(_MSC_VER)
+#if defined(_MSC_VER)
   auto ni_r_fmx_instr_handle_repository = std::make_shared<nidevice_grpc::SessionResourceRepository<niRFmxInstrHandle>>(session_repository.get());
 #endif // defined(_MSC_VER)
   auto nx_session_ref_t_repository = std::make_shared<nidevice_grpc::SessionResourceRepository<nxSessionRef_t>>(session_repository.get());
@@ -98,6 +104,13 @@ std::shared_ptr<void> register_all_services(
       server_builder, 
       vi_session_repository,
       feature_toggles));
+#if defined(_MSC_VER)
+  service_vector->push_back(
+    nimxlcterminaladaptor_restricted_grpc::register_service(
+      server_builder, 
+      nimxlc_session_repository,
+      feature_toggles));
+#endif // defined(_MSC_VER)
 #if defined(_MSC_VER)
   service_vector->push_back(
     nirfmxbluetooth_grpc::register_service(

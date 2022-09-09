@@ -76,7 +76,7 @@ set(metadata_dir ${CMAKE_SOURCE_DIR}/source/codegen/metadata)
 set(service_output_dir ${CMAKE_SOURCE_DIR}/generated)
 set(codegen_dir ${CMAKE_SOURCE_DIR}/source/codegen)
 set(custom_dir ${CMAKE_SOURCE_DIR}/source/custom)
-set(nidrivers "nidaqmx" "nidcpower" "nidigitalpattern" "nidmm" "nifake" "nifake_extension" "nifake_non_ivi" "nifgen" "nirfmxbluetooth" "nirfmxinstr" "nirfmxinstr_restricted" "nirfmxlte" "nirfmxnr" "nirfmxspecan" "nirfmxspecan_restricted" "nirfmxwlan" "nirfsa" "nirfsg" "niscope" "niswitch" "nisync" "nitclk" "nixnet" "nixnetsocket")
+set(nidrivers "nidaqmx" "nidcpower" "nidigitalpattern" "nidmm" "nifake" "nifake_extension" "nifake_non_ivi" "nifgen" "nimxlcterminaladaptor_restricted" "nirfmxbluetooth" "nirfmxinstr" "nirfmxinstr_restricted" "nirfmxlte" "nirfmxnr" "nirfmxspecan" "nirfmxspecan_restricted" "nirfmxwlan" "nirfsa" "nirfsg" "niscope" "niswitch" "nisync" "nitclk" "nixnet" "nixnetsocket")
 
 #----------------------------------------------------------------------
 # Create NI Driver APIs proto and server files
@@ -307,9 +307,9 @@ target_link_libraries(ni_grpc_device_server
 set_target_properties(ni_grpc_device_server PROPERTIES BUILD_WITH_INSTALL_RPATH TRUE)
 
 if(WIN32)
-  target_link_libraries(ni_grpc_device_server Delayimp nidaqmx nidcpower niDigital nidmm niFgen niScope niRFmxBT niRFmxInstr niRFmxLTE niRFmxNR niRFmxSpecAn niRFmxWLAN niRFSA niRFSG niswitch nisync niTClk nixnet nixntipstack)
-  set_target_properties(ni_grpc_device_server PROPERTIES LINK_FLAGS "/DELAYLOAD:nicaiu.dll /DELAYLOAD:nidcpower_64.dll /DELAYLOAD:niDigital_64.dll /DELAYLOAD:nidmm_64.dll /DELAYLOAD:niFgen_64.dll /DELAYLOAD:niRFmxBT.dll /DELAYLOAD:niRFmxInstr.dll /DELAYLOAD:niRFmxLTE.dll /DELAYLOAD:niRFmxNR.dll /DELAYLOAD:niRFmxSpecAn.dll /DELAYLOAD:niRFmxWLAN.dll /DELAYLOAD:niRFSA_64.dll /DELAYLOAD:niRFSG_64.dll /DELAYLOAD:niScope_64.dll /DELAYLOAD:niswitch_64.dll /DELAYLOAD:nisync.dll /DELAYLOAD:niTClk_64.dll /DELAYLOAD:nixnet.dll /DELAYLOAD:nixntipstack.dll")
-  set(ni_grpc_device_server CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /DELAYLOAD:nicaiu.dll /DELAYLOAD:nidcpower_64.dll /DELAYLOAD:niDigital_64.dll /DELAYLOAD:nidmm_64.dll /DELAYLOAD:niFgen_64.dll /DELAYLOAD:niScope_64.dll /DELAYLOAD:niRFmxBT.dll /DELAYLOAD:niRFmxInstr.dll /DELAYLOAD:niRFmxLTE.dll /DELAYLOAD:niRFmxNR.dll /DELAYLOAD:niRFmxSpecAn.dll /DELAYLOAD:niRFmxWLAN.dll /DELAYLOAD:niRFSA_64.dll /DELAYLOAD:niRFSG_64.dll /DELAYLOAD:niswitch_64.dll /DELAYLOAD:nisync.dll /DELAYLOAD:niTClk_64.dll /DELAYLOAD:nixnet.dll /DELAYLOAD:nixntipstack.dll")
+  target_link_libraries(ni_grpc_device_server Delayimp nidaqmx nidcpower niDigital nidmm niFgen nimxlcTerminalAdaptor niScope niRFmxBT niRFmxInstr niRFmxLTE niRFmxNR niRFmxSpecAn niRFmxWLAN niRFSA niRFSG niswitch nisync niTClk nixnet nixntipstack)
+  set_target_properties(ni_grpc_device_server PROPERTIES LINK_FLAGS "/DELAYLOAD:nicaiu.dll /DELAYLOAD:nidcpower_64.dll /DELAYLOAD:niDigital_64.dll /DELAYLOAD:nidmm_64.dll /DELAYLOAD:niFgen_64.dll /DELAYLOAD:nimxlcTerminalAdaptor.dll /DELAYLOAD:niRFmxBT.dll /DELAYLOAD:niRFmxInstr.dll /DELAYLOAD:niRFmxLTE.dll /DELAYLOAD:niRFmxNR.dll /DELAYLOAD:niRFmxSpecAn.dll /DELAYLOAD:niRFmxWLAN.dll /DELAYLOAD:niRFSA_64.dll /DELAYLOAD:niRFSG_64.dll /DELAYLOAD:niScope_64.dll /DELAYLOAD:niswitch_64.dll /DELAYLOAD:nisync.dll /DELAYLOAD:niTClk_64.dll /DELAYLOAD:nixnet.dll /DELAYLOAD:nixntipstack.dll")
+  set(ni_grpc_device_server CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /DELAYLOAD:nicaiu.dll /DELAYLOAD:nidcpower_64.dll /DELAYLOAD:niDigital_64.dll /DELAYLOAD:nidmm_64.dll /DELAYLOAD:niFgen_64.dll /DELAYLOAD:niScope_64.dll /DELAYLOAD:nimxlcTerminalAdaptor.dll /DELAYLOAD:niRFmxBT.dll /DELAYLOAD:niRFmxInstr.dll /DELAYLOAD:niRFmxLTE.dll /DELAYLOAD:niRFmxNR.dll /DELAYLOAD:niRFmxSpecAn.dll /DELAYLOAD:niRFmxWLAN.dll /DELAYLOAD:niRFSA_64.dll /DELAYLOAD:niRFSG_64.dll /DELAYLOAD:niswitch_64.dll /DELAYLOAD:nisync.dll /DELAYLOAD:niTClk_64.dll /DELAYLOAD:nixnet.dll /DELAYLOAD:nixntipstack.dll")
 endif()
 
 #----------------------------------------------------------------------
@@ -389,6 +389,7 @@ add_executable(UnitTestsRunner
     "source/tests/unit/server_security_configuration_tests.cpp"
     "source/tests/unit/ni_fake_non_ivi_service_tests.cpp"
     "source/tests/unit/ni_fake_service_tests.cpp"
+    "source/tests/unit/nimxlc_terminal_adaptor_converters_tests.cpp"
     "source/tests/unit/shared_library_tests.cpp"
     "source/tests/unit/syscfg_library_tests.cpp"
     "source/tests/unit/xnet_converters_tests.cpp"
@@ -410,6 +411,7 @@ add_executable(UnitTestsRunner
     "${proto_srcs_dir}/nifake_extension.grpc.pb.cc"
     "${proto_srcs_dir}/nifake_non_ivi.pb.cc"
     "${proto_srcs_dir}/nifake_non_ivi.grpc.pb.cc"
+    "${proto_srcs_dir}/nimxlcterminaladaptor_restricted.pb.cc"
     "${proto_srcs_dir}/nixnet.grpc.pb.cc"
     "${proto_srcs_dir}/nixnet.pb.cc"
     "${proto_srcs_dir}/nixnetsocket.pb.cc"
@@ -420,6 +422,7 @@ add_executable(UnitTestsRunner
     "${custom_dir}/nifake_service.custom.cpp"
     "${custom_dir}/nifake_extension_service.custom.cpp"
     "${custom_dir}/nifake_non_ivi_service.custom.cpp"
+    "${custom_dir}/nimxlcterminaladaptor_restricted_service.custom.cpp"
     "${custom_dir}/nixnet_service.custom.cpp"
 )
 
@@ -499,6 +502,7 @@ if(WIN32)
   list(
     APPEND 
       system_test_runner_sources
+        "source/tests/system/nimxlcterminaladaptor_restricted_driver_api_tests.cpp"
         "source/tests/system/nirfmxbluetooth_driver_api_tests.cpp"
         "source/tests/system/nirfmxbluetooth_session_tests.cpp"
         "source/tests/system/nirfmxinstr_driver_api_tests.cpp"
@@ -532,9 +536,9 @@ add_custom_command(
             $<TARGET_FILE_DIR:SystemTestsRunner>/)
 
 if(WIN32)
-    target_link_libraries(SystemTestsRunner Delayimp nidaqmx nidcpower niDigital nidmm niFgen niRFmxBT niRFmxInstr niRFmxLTE niRFmxNR niRFmxSpecAn niRFmxWLAN niRFSA niRFSG niScope niswitch nisync niTClk nixnet nixntipstack)
-    set_target_properties(SystemTestsRunner PROPERTIES LINK_FLAGS "/DELAYLOAD:nicaiu.dll /DELAYLOAD:nidcpower_64.dll /DELAYLOAD:niDigital_64.dll /DELAYLOAD:nidmm_64.dll /DELAYLOAD:niFgen_64.dll /DELAYLOAD:niRFmxBT.dll /DELAYLOAD:niRFmxInstr.dll /DELAYLOAD:niRFmxLTE.dll /DELAYLOAD:niRFmxNR.dll /DELAYLOAD:niRFmxSpecAn.dll /DELAYLOAD:niRFmxWLAN.dll /DELAYLOAD:niRFSA_64.dll /DELAYLOAD:niRFSG_64.dll /DELAYLOAD:niScope_64.dll /DELAYLOAD:niswitch_64.dll /DELAYLOAD:nisync.dll /DELAYLOAD:niTClk_64.dll /DELAYLOAD:nixnet.dll /DELAYLOAD:nixntipstack.dll")
-    set(SystemTestsRunner CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /DELAYLOAD:nicaiu.dll /DELAYLOAD:nidcpower_64.dll /DELAYLOAD:niDigital_64.dll /DELAYLOAD:nidmm_64.dll /DELAYLOAD:niFgen_64.dll /DELAYLOAD:niRFmxBT.dll /DELAYLOAD:niRFmxInstr.dll /DELAYLOAD:niRFmxLTE.dll /DELAYLOAD:niRFmxNR.dll /DELAYLOAD:niRFmxSpecAn.dll /DELAYLOAD:niRFmxWLAN.dll /DELAYLOAD:niRFSA_64.dll /DELAYLOAD:niRFSG_64.dll /DELAYLOAD:niScope_64.dll /DELAYLOAD:niswitch_64.dll /DELAYLOAD:nisync.dll /DELAYLOAD:niTClk_64.dll /DELAYLOAD:nixnet.dll /DELAYLOAD:nixntipstack.dll")
+    target_link_libraries(SystemTestsRunner Delayimp nidaqmx nidcpower niDigital nidmm niFgen nimxlcTerminalAdaptor niRFmxBT niRFmxInstr niRFmxLTE niRFmxNR niRFmxSpecAn niRFmxWLAN niRFSA niRFSG niScope niswitch nisync niTClk nixnet nixntipstack)
+    set_target_properties(SystemTestsRunner PROPERTIES LINK_FLAGS "/DELAYLOAD:nicaiu.dll /DELAYLOAD:nidcpower_64.dll /DELAYLOAD:niDigital_64.dll /DELAYLOAD:nidmm_64.dll /DELAYLOAD:niFgen_64.dll /DELAYLOAD:nimxlcTerminalAdaptor.dll /DELAYLOAD:niRFmxBT.dll /DELAYLOAD:niRFmxInstr.dll /DELAYLOAD:niRFmxLTE.dll /DELAYLOAD:niRFmxNR.dll /DELAYLOAD:niRFmxSpecAn.dll /DELAYLOAD:niRFmxWLAN.dll /DELAYLOAD:niRFSA_64.dll /DELAYLOAD:niRFSG_64.dll /DELAYLOAD:niScope_64.dll /DELAYLOAD:niswitch_64.dll /DELAYLOAD:nisync.dll /DELAYLOAD:niTClk_64.dll /DELAYLOAD:nixnet.dll /DELAYLOAD:nixntipstack.dll")
+    set(SystemTestsRunner CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /DELAYLOAD:nicaiu.dll /DELAYLOAD:nidcpower_64.dll /DELAYLOAD:niDigital_64.dll /DELAYLOAD:nidmm_64.dll /DELAYLOAD:niFgen_64.dll /DELAYLOAD:nimxlcTerminalAdaptor.dll /DELAYLOAD:niRFmxBT.dll /DELAYLOAD:niRFmxInstr.dll /DELAYLOAD:niRFmxLTE.dll /DELAYLOAD:niRFmxNR.dll /DELAYLOAD:niRFmxSpecAn.dll /DELAYLOAD:niRFmxWLAN.dll /DELAYLOAD:niRFSA_64.dll /DELAYLOAD:niRFSG_64.dll /DELAYLOAD:niScope_64.dll /DELAYLOAD:niswitch_64.dll /DELAYLOAD:nisync.dll /DELAYLOAD:niTClk_64.dll /DELAYLOAD:nixnet.dll /DELAYLOAD:nixntipstack.dll")
 endif()
 
 # Hook up different google test runners to CTest
