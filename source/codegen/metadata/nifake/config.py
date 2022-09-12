@@ -1,4 +1,6 @@
-﻿config = {
+﻿# -*- coding: utf-8 -*-
+# This file is generated from NI-FAKE API metadata version 1.2.0d9
+config = {
     'api_version': '1.2.0d9',
     'c_function_prefix': 'niFake_',
     'c_header': 'niFake.h',

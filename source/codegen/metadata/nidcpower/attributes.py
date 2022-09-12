@@ -1,4 +1,6 @@
-﻿attributes = {
+﻿# -*- coding: utf-8 -*-
+# This file is generated from NI-DCPower API metadata version 20.7.0d8
+attributes = {
     1050002: {
         'access': 'read-write',
         'channel_based': False,

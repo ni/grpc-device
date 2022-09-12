@@ -1,4 +1,6 @@
-﻿enums = {
+﻿# -*- coding: utf-8 -*-
+# This file is generated from NI-SWITCH API metadata version 19.6.0d7
+enums = {
     'HandshakingInitiation': {
         'values': [
             {

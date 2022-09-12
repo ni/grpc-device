@@ -1,4 +1,6 @@
-﻿config = {
+﻿# -*- coding: utf-8 -*-
+# This file is generated from NI-DMM API metadata version 19.6.0d7
+config = {
     'additional_headers': {
         'custom/ivi_errors.h': [
             'service.cpp'

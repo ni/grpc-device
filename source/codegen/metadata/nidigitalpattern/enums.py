@@ -1,4 +1,6 @@
-﻿enums = {
+﻿# -*- coding: utf-8 -*-
+# This file is generated from NI-Digital Pattern Driver API metadata version 19.5.0d7
+enums = {
     'BitOrder': {
         'values': [
             {

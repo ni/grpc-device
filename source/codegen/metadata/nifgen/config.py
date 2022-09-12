@@ -1,4 +1,6 @@
-﻿config = {
+﻿# -*- coding: utf-8 -*-
+# This file is generated from NI-FGEN API metadata version 20.0.0d5
+config = {
     'additional_headers': {
         'custom/ivi_errors.h': [
             'service.cpp'

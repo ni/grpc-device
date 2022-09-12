@@ -1,4 +1,6 @@
-﻿functions = {
+﻿# -*- coding: utf-8 -*-
+# This file is generated from NI-FGEN API metadata version 20.0.0d5
+functions = {
     'AbortGeneration': {
         'parameters': [
             {

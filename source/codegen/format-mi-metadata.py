@@ -92,9 +92,17 @@ def _format_mi_metadata(metadata_dir: str):
         metadata_names = ["attributes", "config", "enums", "functions"]
         path = f"{metadata_dir}/{mi_driver}/"
         metadata = load_metadata(path)
+        api_name = metadata["config"]["driver_name"]
+        api_version = metadata["config"]["api_version"]
         for metadata_name in metadata_names:
             actual_metadata = metadata[metadata_name]
-            pretty_metadata = f"{metadata_name} = {pretty(actual_metadata)}"
+            pretty_metadata = "# -*- coding: utf-8 -*-"
+            pretty_metadata += "\r\n"
+            pretty_metadata += (
+                f"# This file is generated from {api_name} API metadata version {api_version}"
+            )
+            pretty_metadata += "\r\n"
+            pretty_metadata += f"{metadata_name} = {pretty(actual_metadata)}"
             with codecs.open(f"{path}{metadata_name}.py", "w", "utf-8-sig") as temp:
                 temp.write(pretty_metadata)
 
