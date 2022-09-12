@@ -41,9 +41,9 @@ NiDigitalLibrary::NiDigitalLibrary() : shared_library_(kLibraryName)
   function_pointers_.ConfigureHistoryRAMCyclesToAcquire = reinterpret_cast<ConfigureHistoryRAMCyclesToAcquirePtr>(shared_library_.get_function_pointer("niDigital_ConfigureHistoryRAMCyclesToAcquire"));
   function_pointers_.ConfigurePatternBurstSites = reinterpret_cast<ConfigurePatternBurstSitesPtr>(shared_library_.get_function_pointer("niDigital_ConfigurePatternBurstSites"));
   function_pointers_.ConfigurePatternLabelHistoryRAMTrigger = reinterpret_cast<ConfigurePatternLabelHistoryRAMTriggerPtr>(shared_library_.get_function_pointer("niDigital_ConfigurePatternLabelHistoryRAMTrigger"));
-  function_pointers_.ConfigureStartLabel = reinterpret_cast<ConfigureStartLabelPtr>(shared_library_.get_function_pointer("niDigital_ConfigureStartLabel"));
   function_pointers_.ConfigureSoftwareEdgeConditionalJumpTrigger = reinterpret_cast<ConfigureSoftwareEdgeConditionalJumpTriggerPtr>(shared_library_.get_function_pointer("niDigital_ConfigureSoftwareEdgeConditionalJumpTrigger"));
   function_pointers_.ConfigureSoftwareEdgeStartTrigger = reinterpret_cast<ConfigureSoftwareEdgeStartTriggerPtr>(shared_library_.get_function_pointer("niDigital_ConfigureSoftwareEdgeStartTrigger"));
+  function_pointers_.ConfigureStartLabel = reinterpret_cast<ConfigureStartLabelPtr>(shared_library_.get_function_pointer("niDigital_ConfigureStartLabel"));
   function_pointers_.ConfigureTerminationMode = reinterpret_cast<ConfigureTerminationModePtr>(shared_library_.get_function_pointer("niDigital_ConfigureTerminationMode"));
   function_pointers_.ConfigureTimeSetCompareEdgesStrobe = reinterpret_cast<ConfigureTimeSetCompareEdgesStrobePtr>(shared_library_.get_function_pointer("niDigital_ConfigureTimeSetCompareEdgesStrobe"));
   function_pointers_.ConfigureTimeSetCompareEdgesStrobe2x = reinterpret_cast<ConfigureTimeSetCompareEdgesStrobe2xPtr>(shared_library_.get_function_pointer("niDigital_ConfigureTimeSetCompareEdgesStrobe2x"));
@@ -58,9 +58,9 @@ NiDigitalLibrary::NiDigitalLibrary() : shared_library_(kLibraryName)
   function_pointers_.CreateCaptureWaveformParallel = reinterpret_cast<CreateCaptureWaveformParallelPtr>(shared_library_.get_function_pointer("niDigital_CreateCaptureWaveformParallel"));
   function_pointers_.CreateCaptureWaveformSerial = reinterpret_cast<CreateCaptureWaveformSerialPtr>(shared_library_.get_function_pointer("niDigital_CreateCaptureWaveformSerial"));
   function_pointers_.CreateChannelMap = reinterpret_cast<CreateChannelMapPtr>(shared_library_.get_function_pointer("niDigital_CreateChannelMap"));
-  function_pointers_.CreateSourceWaveformFromFileTDMS = reinterpret_cast<CreateSourceWaveformFromFileTDMSPtr>(shared_library_.get_function_pointer("niDigital_CreateSourceWaveformFromFileTDMS"));
-  function_pointers_.CreatePinMap = reinterpret_cast<CreatePinMapPtr>(shared_library_.get_function_pointer("niDigital_CreatePinMap"));
   function_pointers_.CreatePinGroup = reinterpret_cast<CreatePinGroupPtr>(shared_library_.get_function_pointer("niDigital_CreatePinGroup"));
+  function_pointers_.CreatePinMap = reinterpret_cast<CreatePinMapPtr>(shared_library_.get_function_pointer("niDigital_CreatePinMap"));
+  function_pointers_.CreateSourceWaveformFromFileTDMS = reinterpret_cast<CreateSourceWaveformFromFileTDMSPtr>(shared_library_.get_function_pointer("niDigital_CreateSourceWaveformFromFileTDMS"));
   function_pointers_.CreateSourceWaveformParallel = reinterpret_cast<CreateSourceWaveformParallelPtr>(shared_library_.get_function_pointer("niDigital_CreateSourceWaveformParallel"));
   function_pointers_.CreateSourceWaveformSerial = reinterpret_cast<CreateSourceWaveformSerialPtr>(shared_library_.get_function_pointer("niDigital_CreateSourceWaveformSerial"));
   function_pointers_.CreateTimeSet = reinterpret_cast<CreateTimeSetPtr>(shared_library_.get_function_pointer("niDigital_CreateTimeSet"));
@@ -91,8 +91,8 @@ NiDigitalLibrary::NiDigitalLibrary() : shared_library_(kLibraryName)
   function_pointers_.GetError = reinterpret_cast<GetErrorPtr>(shared_library_.get_function_pointer("niDigital_GetError"));
   function_pointers_.GetFailCount = reinterpret_cast<GetFailCountPtr>(shared_library_.get_function_pointer("niDigital_GetFailCount"));
   function_pointers_.GetHistoryRAMSampleCount = reinterpret_cast<GetHistoryRAMSampleCountPtr>(shared_library_.get_function_pointer("niDigital_GetHistoryRAMSampleCount"));
-  function_pointers_.GetPatternPinIndexes = reinterpret_cast<GetPatternPinIndexesPtr>(shared_library_.get_function_pointer("niDigital_GetPatternPinIndexes"));
   function_pointers_.GetPatternName = reinterpret_cast<GetPatternNamePtr>(shared_library_.get_function_pointer("niDigital_GetPatternName"));
+  function_pointers_.GetPatternPinIndexes = reinterpret_cast<GetPatternPinIndexesPtr>(shared_library_.get_function_pointer("niDigital_GetPatternPinIndexes"));
   function_pointers_.GetPatternPinList = reinterpret_cast<GetPatternPinListPtr>(shared_library_.get_function_pointer("niDigital_GetPatternPinList"));
   function_pointers_.GetPinName = reinterpret_cast<GetPinNamePtr>(shared_library_.get_function_pointer("niDigital_GetPinName"));
   function_pointers_.GetPinResultsPinInformation = reinterpret_cast<GetPinResultsPinInformationPtr>(shared_library_.get_function_pointer("niDigital_GetPinResultsPinInformation"));
@@ -151,8 +151,8 @@ NiDigitalLibrary::NiDigitalLibrary() : shared_library_(kLibraryName)
   function_pointers_.WriteSequencerRegister = reinterpret_cast<WriteSequencerRegisterPtr>(shared_library_.get_function_pointer("niDigital_WriteSequencerRegister"));
   function_pointers_.WriteSourceWaveformBroadcastU32 = reinterpret_cast<WriteSourceWaveformBroadcastU32Ptr>(shared_library_.get_function_pointer("niDigital_WriteSourceWaveformBroadcastU32"));
   function_pointers_.WriteSourceWaveformDataFromFileTDMS = reinterpret_cast<WriteSourceWaveformDataFromFileTDMSPtr>(shared_library_.get_function_pointer("niDigital_WriteSourceWaveformDataFromFileTDMS"));
-  function_pointers_.WriteStatic = reinterpret_cast<WriteStaticPtr>(shared_library_.get_function_pointer("niDigital_WriteStatic"));
   function_pointers_.WriteSourceWaveformSiteUniqueU32 = reinterpret_cast<WriteSourceWaveformSiteUniqueU32Ptr>(shared_library_.get_function_pointer("niDigital_WriteSourceWaveformSiteUniqueU32"));
+  function_pointers_.WriteStatic = reinterpret_cast<WriteStaticPtr>(shared_library_.get_function_pointer("niDigital_WriteStatic"));
 }
 
 NiDigitalLibrary::~NiDigitalLibrary()
@@ -406,18 +406,6 @@ ViStatus NiDigitalLibrary::ConfigurePatternLabelHistoryRAMTrigger(ViSession vi, 
 #endif
 }
 
-ViStatus NiDigitalLibrary::ConfigureStartLabel(ViSession vi, ViConstString label)
-{
-  if (!function_pointers_.ConfigureStartLabel) {
-    throw nidevice_grpc::LibraryLoadException("Could not find niDigital_ConfigureStartLabel.");
-  }
-#if defined(_MSC_VER)
-  return niDigital_ConfigureStartLabel(vi, label);
-#else
-  return function_pointers_.ConfigureStartLabel(vi, label);
-#endif
-}
-
 ViStatus NiDigitalLibrary::ConfigureSoftwareEdgeConditionalJumpTrigger(ViSession vi, ViConstString triggerIdentifier)
 {
   if (!function_pointers_.ConfigureSoftwareEdgeConditionalJumpTrigger) {
@@ -439,6 +427,18 @@ ViStatus NiDigitalLibrary::ConfigureSoftwareEdgeStartTrigger(ViSession vi)
   return niDigital_ConfigureSoftwareEdgeStartTrigger(vi);
 #else
   return function_pointers_.ConfigureSoftwareEdgeStartTrigger(vi);
+#endif
+}
+
+ViStatus NiDigitalLibrary::ConfigureStartLabel(ViSession vi, ViConstString label)
+{
+  if (!function_pointers_.ConfigureStartLabel) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niDigital_ConfigureStartLabel.");
+  }
+#if defined(_MSC_VER)
+  return niDigital_ConfigureStartLabel(vi, label);
+#else
+  return function_pointers_.ConfigureStartLabel(vi, label);
 #endif
 }
 
@@ -610,15 +610,15 @@ ViStatus NiDigitalLibrary::CreateChannelMap(ViSession vi, ViInt32 numSites)
 #endif
 }
 
-ViStatus NiDigitalLibrary::CreateSourceWaveformFromFileTDMS(ViSession vi, ViConstString waveformName, ViConstString waveformFilePath, ViBoolean writeWaveformData)
+ViStatus NiDigitalLibrary::CreatePinGroup(ViSession vi, ViConstString pinGroupName, ViConstString pinList)
 {
-  if (!function_pointers_.CreateSourceWaveformFromFileTDMS) {
-    throw nidevice_grpc::LibraryLoadException("Could not find niDigital_CreateSourceWaveformFromFileTDMS.");
+  if (!function_pointers_.CreatePinGroup) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niDigital_CreatePinGroup.");
   }
 #if defined(_MSC_VER)
-  return niDigital_CreateSourceWaveformFromFileTDMS(vi, waveformName, waveformFilePath, writeWaveformData);
+  return niDigital_CreatePinGroup(vi, pinGroupName, pinList);
 #else
-  return function_pointers_.CreateSourceWaveformFromFileTDMS(vi, waveformName, waveformFilePath, writeWaveformData);
+  return function_pointers_.CreatePinGroup(vi, pinGroupName, pinList);
 #endif
 }
 
@@ -634,15 +634,15 @@ ViStatus NiDigitalLibrary::CreatePinMap(ViSession vi, ViConstString dutPinList, 
 #endif
 }
 
-ViStatus NiDigitalLibrary::CreatePinGroup(ViSession vi, ViConstString pinGroupName, ViConstString pinList)
+ViStatus NiDigitalLibrary::CreateSourceWaveformFromFileTDMS(ViSession vi, ViConstString waveformName, ViConstString waveformFilePath, ViBoolean writeWaveformData)
 {
-  if (!function_pointers_.CreatePinGroup) {
-    throw nidevice_grpc::LibraryLoadException("Could not find niDigital_CreatePinGroup.");
+  if (!function_pointers_.CreateSourceWaveformFromFileTDMS) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niDigital_CreateSourceWaveformFromFileTDMS.");
   }
 #if defined(_MSC_VER)
-  return niDigital_CreatePinGroup(vi, pinGroupName, pinList);
+  return niDigital_CreateSourceWaveformFromFileTDMS(vi, waveformName, waveformFilePath, writeWaveformData);
 #else
-  return function_pointers_.CreatePinGroup(vi, pinGroupName, pinList);
+  return function_pointers_.CreateSourceWaveformFromFileTDMS(vi, waveformName, waveformFilePath, writeWaveformData);
 #endif
 }
 
@@ -1006,18 +1006,6 @@ ViStatus NiDigitalLibrary::GetHistoryRAMSampleCount(ViSession vi, ViConstString 
 #endif
 }
 
-ViStatus NiDigitalLibrary::GetPatternPinIndexes(ViSession vi, ViConstString startLabel, ViInt32 pinIndexesBufferSize, ViInt32 pinIndexes[], ViInt32* actualNumPins)
-{
-  if (!function_pointers_.GetPatternPinIndexes) {
-    throw nidevice_grpc::LibraryLoadException("Could not find niDigital_GetPatternPinIndexes.");
-  }
-#if defined(_MSC_VER)
-  return niDigital_GetPatternPinIndexes(vi, startLabel, pinIndexesBufferSize, pinIndexes, actualNumPins);
-#else
-  return function_pointers_.GetPatternPinIndexes(vi, startLabel, pinIndexesBufferSize, pinIndexes, actualNumPins);
-#endif
-}
-
 ViStatus NiDigitalLibrary::GetPatternName(ViSession vi, ViInt32 patternIndex, ViInt32 nameBufferSize, ViChar name[])
 {
   if (!function_pointers_.GetPatternName) {
@@ -1027,6 +1015,18 @@ ViStatus NiDigitalLibrary::GetPatternName(ViSession vi, ViInt32 patternIndex, Vi
   return niDigital_GetPatternName(vi, patternIndex, nameBufferSize, name);
 #else
   return function_pointers_.GetPatternName(vi, patternIndex, nameBufferSize, name);
+#endif
+}
+
+ViStatus NiDigitalLibrary::GetPatternPinIndexes(ViSession vi, ViConstString startLabel, ViInt32 pinIndexesBufferSize, ViInt32 pinIndexes[], ViInt32* actualNumPins)
+{
+  if (!function_pointers_.GetPatternPinIndexes) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niDigital_GetPatternPinIndexes.");
+  }
+#if defined(_MSC_VER)
+  return niDigital_GetPatternPinIndexes(vi, startLabel, pinIndexesBufferSize, pinIndexes, actualNumPins);
+#else
+  return function_pointers_.GetPatternPinIndexes(vi, startLabel, pinIndexesBufferSize, pinIndexes, actualNumPins);
 #endif
 }
 
@@ -1718,18 +1718,6 @@ ViStatus NiDigitalLibrary::WriteSourceWaveformDataFromFileTDMS(ViSession vi, ViC
 #endif
 }
 
-ViStatus NiDigitalLibrary::WriteStatic(ViSession vi, ViConstString channelList, ViUInt8 state)
-{
-  if (!function_pointers_.WriteStatic) {
-    throw nidevice_grpc::LibraryLoadException("Could not find niDigital_WriteStatic.");
-  }
-#if defined(_MSC_VER)
-  return niDigital_WriteStatic(vi, channelList, state);
-#else
-  return function_pointers_.WriteStatic(vi, channelList, state);
-#endif
-}
-
 ViStatus NiDigitalLibrary::WriteSourceWaveformSiteUniqueU32(ViSession vi, ViConstString siteList, ViConstString waveformName, ViInt32 numWaveforms, ViInt32 samplesPerWaveform, ViUInt32 waveformData[1])
 {
   if (!function_pointers_.WriteSourceWaveformSiteUniqueU32) {
@@ -1739,6 +1727,18 @@ ViStatus NiDigitalLibrary::WriteSourceWaveformSiteUniqueU32(ViSession vi, ViCons
   return niDigital_WriteSourceWaveformSiteUniqueU32(vi, siteList, waveformName, numWaveforms, samplesPerWaveform, waveformData);
 #else
   return function_pointers_.WriteSourceWaveformSiteUniqueU32(vi, siteList, waveformName, numWaveforms, samplesPerWaveform, waveformData);
+#endif
+}
+
+ViStatus NiDigitalLibrary::WriteStatic(ViSession vi, ViConstString channelList, ViUInt8 state)
+{
+  if (!function_pointers_.WriteStatic) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niDigital_WriteStatic.");
+  }
+#if defined(_MSC_VER)
+  return niDigital_WriteStatic(vi, channelList, state);
+#else
+  return function_pointers_.WriteStatic(vi, channelList, state);
 #endif
 }
 

@@ -1,24 +1,24 @@
-# -*- coding: utf-8 -*-
+﻿# -*- coding: utf-8 -*-
 # This file is generated from NI-FAKE API metadata version 1.2.0d9
 enums = {
     'Bitfield': {
         'values': [
             {
                 'name': 'FLAG_A',
-                'value': 1,
+                'value': 1
             },
             {
                 'name': 'FLAG_B',
-                'value': 2,
+                'value': 2
             },
             {
                 'name': 'FLAG_C',
-                'value': 4,
+                'value': 4
             },
             {
                 'name': 'FLAG_D',
-                'value': 8,
-            },
+                'value': 8
+            }
         ]
     },
     'Color': {

@@ -1,28 +1,30 @@
-# -*- coding: utf-8 -*-
+﻿# -*- coding: utf-8 -*-
 # This file is generated from NI-FGEN API metadata version 20.0.0d5
 config = {
+    'additional_headers': {
+        'custom/ivi_errors.h': [
+            'service.cpp'
+        ]
+    },
     'api_version': '20.0.0d5',
-    'c_header': 'niFgen.h',
     'c_function_prefix': 'niFgen_',
-    'service_class_prefix': 'NiFgen',
-    'java_package': 'com.ni.grpc.fgen',
-    'csharp_namespace': 'NationalInstruments.Grpc.Fgen',
-    'namespace_component': 'nifgen',
+    'c_header': 'niFgen.h',
     'close_function': 'Close',
     'context_manager_name': {
         'abort_function': 'AbortGeneration',
         'initiate_function': 'InitiateGeneration',
         'task': 'generation'
     },
-    'custom_types': [],
-    'additional_headers': {'custom/ivi_errors.h': ['service.cpp']},
+    'csharp_namespace': 'NationalInstruments.Grpc.Fgen',
+    'custom_types': [
+    ],
     'driver_name': 'NI-FGEN',
     'extra_errors_used': [
         'InvalidRepeatedCapabilityError',
         'SelfTestError'
     ],
     'init_function': 'InitializeWithChannels',
-    'status_ok': 'status >= 0',
+    'java_package': 'com.ni.grpc.fgen',
     'library_info': {
         'Linux': {
             '64bit': {
@@ -44,6 +46,7 @@ config = {
     'linux_rt_support': False,
     'metadata_version': '2.0',
     'module_name': 'nifgen',
+    'namespace_component': 'nifgen',
     'repeated_capabilities': [
         {
             'prefix': '',
@@ -58,7 +61,9 @@ config = {
             'python_name': 'markers'
         }
     ],
+    'service_class_prefix': 'NiFgen',
     'session_class_description': 'An NI-FGEN session to a National Instruments Signal Generator.',
     'session_handle_parameter_name': 'vi',
-    'uses_nitclk': True,
+    'status_ok': 'status >= 0',
+    'uses_nitclk': True
 }

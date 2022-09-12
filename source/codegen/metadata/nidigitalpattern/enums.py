@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+﻿# -*- coding: utf-8 -*-
 # This file is generated from NI-Digital Pattern Driver API metadata version 19.5.0d7
 enums = {
     'BitOrder': {
@@ -65,6 +65,18 @@ enums = {
             }
         ]
     },
+    'FrequencyMeasurementMode': {
+        'values': [
+            {
+                'name': 'NIDIGITAL_VAL_BANKED',
+                'value': 3700
+            },
+            {
+                'name': 'NIDIGITAL_VAL_PARALLEL',
+                'value': 3701
+            }
+        ]
+    },
     'HistoryRamCyclesToAcquire': {
         'values': [
             {
@@ -98,58 +110,6 @@ enums = {
             {
                 'name': 'NIDIGITAL_VAL_PATTERN_LABEL',
                 'value': 2202
-            }
-        ]
-    },
-    'FrequencyMeasurementMode': {
-        'values': [
-            {
-                'name': 'NIDIGITAL_VAL_BANKED',
-                'value': 3700
-            },
-            {
-                'name': 'NIDIGITAL_VAL_PARALLEL',
-                'value': 3701
-            }
-        ]
-    },
-    'PpmuApertureTimeUnits': {
-        'values': [
-            {
-                'name': 'NIDIGITAL_VAL_SECONDS',
-                'value': 2100
-            }
-        ]
-    },
-    'PpmuCurrentLimitBehavior': {
-        'values': [
-            {
-                'name': 'NIDIGITAL_VAL_CURRENT_REGULATE',
-                'value': 3100
-            }
-        ]
-    },
-    'PpmuMeasurementType': {
-        'values': [
-            {
-                'name': 'NIDIGITAL_VAL_MEASURE_CURRENT',
-                'value': 2400
-            },
-            {
-                'name': 'NIDIGITAL_VAL_MEASURE_VOLTAGE',
-                'value': 2401
-            }
-        ]
-    },
-    'PpmuOutputFunction': {
-        'values': [
-            {
-                'name': 'NIDIGITAL_VAL_DC_VOLTAGE',
-                'value': 1300
-            },
-            {
-                'name': 'NIDIGITAL_VAL_DC_CURRENT',
-                'value': 1301
             }
         ]
     },
@@ -198,6 +158,46 @@ enums = {
             {
                 'name': 'NIDIGITAL_VAL_PIN_STATE_NOT_ACQUIRED',
                 'value': 255
+            }
+        ]
+    },
+    'PpmuApertureTimeUnits': {
+        'values': [
+            {
+                'name': 'NIDIGITAL_VAL_SECONDS',
+                'value': 2100
+            }
+        ]
+    },
+    'PpmuCurrentLimitBehavior': {
+        'values': [
+            {
+                'name': 'NIDIGITAL_VAL_CURRENT_REGULATE',
+                'value': 3100
+            }
+        ]
+    },
+    'PpmuMeasurementType': {
+        'values': [
+            {
+                'name': 'NIDIGITAL_VAL_MEASURE_CURRENT',
+                'value': 2400
+            },
+            {
+                'name': 'NIDIGITAL_VAL_MEASURE_VOLTAGE',
+                'value': 2401
+            }
+        ]
+    },
+    'PpmuOutputFunction': {
+        'values': [
+            {
+                'name': 'NIDIGITAL_VAL_DC_VOLTAGE',
+                'value': 1300
+            },
+            {
+                'name': 'NIDIGITAL_VAL_DC_CURRENT',
+                'value': 1301
             }
         ]
     },

@@ -1,22 +1,6 @@
-# -*- coding: utf-8 -*-
+﻿# -*- coding: utf-8 -*-
 # This file is generated from NI-DMM API metadata version 19.6.0d7
 enums = {
-    'AdcCalibration': {
-        'values': [
-            {
-                'name': 'NIDMM_VAL_ADC_CALIBRATION_AUTO',
-                'value': -1
-            },
-            {
-                'name': 'NIDMM_VAL_ADC_CALIBRATION_OFF',
-                'value': 0
-            },
-            {
-                'name': 'NIDMM_VAL_ADC_CALIBRATION_ON',
-                'value': 1
-            }
-        ]
-    },
     'AcquisitionStatus': {
         'values': [
             {
@@ -38,6 +22,22 @@ enums = {
             {
                 'name': 'NIDMM_VAL_NO_ACQUISITION_IN_PROGRESS',
                 'value': 4
+            }
+        ]
+    },
+    'AdcCalibration': {
+        'values': [
+            {
+                'name': 'NIDMM_VAL_ADC_CALIBRATION_AUTO',
+                'value': -1
+            },
+            {
+                'name': 'NIDMM_VAL_ADC_CALIBRATION_OFF',
+                'value': 0
+            },
+            {
+                'name': 'NIDMM_VAL_ADC_CALIBRATION_ON',
+                'value': 1
             }
         ]
     },

@@ -67,8 +67,8 @@ service NiFgen {
   rpc CreateWaveformF64(CreateWaveformF64Request) returns (CreateWaveformF64Response);
   rpc CreateWaveformFromFileF64(CreateWaveformFromFileF64Request) returns (CreateWaveformFromFileF64Response);
   rpc CreateWaveformFromFileHWS(CreateWaveformFromFileHWSRequest) returns (CreateWaveformFromFileHWSResponse);
-  rpc CreateWaveformI16(CreateWaveformI16Request) returns (CreateWaveformI16Response);
   rpc CreateWaveformFromFileI16(CreateWaveformFromFileI16Request) returns (CreateWaveformFromFileI16Response);
+  rpc CreateWaveformI16(CreateWaveformI16Request) returns (CreateWaveformI16Response);
   rpc DefineUserStandardWaveform(DefineUserStandardWaveformRequest) returns (DefineUserStandardWaveformResponse);
   rpc DeleteNamedWaveform(DeleteNamedWaveformRequest) returns (DeleteNamedWaveformResponse);
   rpc DeleteScript(DeleteScriptRequest) returns (DeleteScriptResponse);
@@ -140,14 +140,14 @@ service NiFgen {
   rpc WaitUntilDone(WaitUntilDoneRequest) returns (WaitUntilDoneResponse);
   rpc WriteBinary16Waveform(WriteBinary16WaveformRequest) returns (WriteBinary16WaveformResponse);
   rpc WriteComplexBinary16Waveform(WriteComplexBinary16WaveformRequest) returns (WriteComplexBinary16WaveformResponse);
+  rpc WriteNamedWaveformComplexF64(WriteNamedWaveformComplexF64Request) returns (WriteNamedWaveformComplexF64Response);
+  rpc WriteNamedWaveformComplexI16(WriteNamedWaveformComplexI16Request) returns (WriteNamedWaveformComplexI16Response);
   rpc WriteNamedWaveformF64(WriteNamedWaveformF64Request) returns (WriteNamedWaveformF64Response);
   rpc WriteNamedWaveformI16(WriteNamedWaveformI16Request) returns (WriteNamedWaveformI16Response);
   rpc WriteP2PEndpointI16(WriteP2PEndpointI16Request) returns (WriteP2PEndpointI16Response);
   rpc WriteScript(WriteScriptRequest) returns (WriteScriptResponse);
   rpc WriteWaveform(WriteWaveformRequest) returns (WriteWaveformResponse);
   rpc WriteWaveformComplexF64(WriteWaveformComplexF64Request) returns (WriteWaveformComplexF64Response);
-  rpc WriteNamedWaveformComplexF64(WriteNamedWaveformComplexF64Request) returns (WriteNamedWaveformComplexF64Response);
-  rpc WriteNamedWaveformComplexI16(WriteNamedWaveformComplexI16Request) returns (WriteNamedWaveformComplexI16Response);
 }
 
 enum NiFgenAttribute {
@@ -366,21 +366,6 @@ enum NiFgenAttribute {
   NIFGEN_ATTRIBUTE_BURST_COUNT = 1250350;
 }
 
-enum FrequencyListOptions {
-  FREQUENCY_LIST_OPTIONS_UNSPECIFIED = 0;
-  FREQUENCY_LIST_OPTIONS_NIFGEN_VAL_ALL_FLISTS = -1;
-}
-
-enum SequenceHandle {
-  SEQUENCE_HANDLE_UNSPECIFIED = 0;
-  SEQUENCE_HANDLE_NIFGEN_VAL_ALL_SEQUENCES = -1;
-}
-
-enum WaveformHandle {
-  WAVEFORM_HANDLE_UNSPECIFIED = 0;
-  WAVEFORM_HANDLE_NIFGEN_VAL_ALL_WAVEFORMS = -1;
-}
-
 enum ByteOrder {
   BYTE_ORDER_NIFGEN_VAL_LITTLE_ENDIAN = 0;
   BYTE_ORDER_NIFGEN_VAL_BIG_ENDIAN = 1;
@@ -390,6 +375,11 @@ enum ClockMode {
   CLOCK_MODE_NIFGEN_VAL_HIGH_RESOLUTION = 0;
   CLOCK_MODE_NIFGEN_VAL_DIVIDE_DOWN = 1;
   CLOCK_MODE_NIFGEN_VAL_AUTOMATIC = 2;
+}
+
+enum FrequencyListOptions {
+  FREQUENCY_LIST_OPTIONS_UNSPECIFIED = 0;
+  FREQUENCY_LIST_OPTIONS_NIFGEN_VAL_ALL_FLISTS = -1;
 }
 
 enum HardwareState {
@@ -411,23 +401,6 @@ enum OutputMode {
 enum RelativeTo {
   RELATIVE_TO_NIFGEN_VAL_WAVEFORM_POSITION_START = 0;
   RELATIVE_TO_NIFGEN_VAL_WAVEFORM_POSITION_CURRENT = 1;
-}
-
-enum Signal {
-  SIGNAL_UNSPECIFIED = 0;
-  SIGNAL_NIFGEN_VAL_MARKER_EVENT = 1001;
-  SIGNAL_NIFGEN_VAL_SYNC_OUT = 1002;
-  SIGNAL_NIFGEN_VAL_ONBOARD_REFERENCE_CLOCK = 1019;
-  SIGNAL_NIFGEN_VAL_START_TRIGGER = 1004;
-  SIGNAL_NIFGEN_VAL_SAMPLE_CLOCK_TIMEBASE = 1006;
-  SIGNAL_NIFGEN_VAL_SYNCHRONIZATION = 1007;
-  SIGNAL_NIFGEN_VAL_SAMPLE_CLOCK = 101;
-  SIGNAL_NIFGEN_VAL_REFERENCE_CLOCK = 102;
-  SIGNAL_NIFGEN_VAL_SCRIPT_TRIGGER = 103;
-  SIGNAL_NIFGEN_VAL_READY_FOR_START_EVENT = 105;
-  SIGNAL_NIFGEN_VAL_STARTED_EVENT = 106;
-  SIGNAL_NIFGEN_VAL_DONE_EVENT = 107;
-  SIGNAL_NIFGEN_VAL_DATA_MARKER_EVENT = 108;
 }
 
 enum RouteSignalFrom {
@@ -469,6 +442,28 @@ enum RouteSignalTo {
   ROUTE_SIGNAL_TO_NIFGEN_VAL_PXI_STAR = 131;
 }
 
+enum SequenceHandle {
+  SEQUENCE_HANDLE_UNSPECIFIED = 0;
+  SEQUENCE_HANDLE_NIFGEN_VAL_ALL_SEQUENCES = -1;
+}
+
+enum Signal {
+  SIGNAL_UNSPECIFIED = 0;
+  SIGNAL_NIFGEN_VAL_MARKER_EVENT = 1001;
+  SIGNAL_NIFGEN_VAL_SYNC_OUT = 1002;
+  SIGNAL_NIFGEN_VAL_ONBOARD_REFERENCE_CLOCK = 1019;
+  SIGNAL_NIFGEN_VAL_START_TRIGGER = 1004;
+  SIGNAL_NIFGEN_VAL_SAMPLE_CLOCK_TIMEBASE = 1006;
+  SIGNAL_NIFGEN_VAL_SYNCHRONIZATION = 1007;
+  SIGNAL_NIFGEN_VAL_SAMPLE_CLOCK = 101;
+  SIGNAL_NIFGEN_VAL_REFERENCE_CLOCK = 102;
+  SIGNAL_NIFGEN_VAL_SCRIPT_TRIGGER = 103;
+  SIGNAL_NIFGEN_VAL_READY_FOR_START_EVENT = 105;
+  SIGNAL_NIFGEN_VAL_STARTED_EVENT = 106;
+  SIGNAL_NIFGEN_VAL_DONE_EVENT = 107;
+  SIGNAL_NIFGEN_VAL_DATA_MARKER_EVENT = 108;
+}
+
 enum Trigger {
   TRIGGER_UNSPECIFIED = 0;
   TRIGGER_NIFGEN_VAL_START_TRIGGER = 1004;
@@ -499,6 +494,11 @@ enum Waveform {
   WAVEFORM_NIFGEN_VAL_WFM_DC = 6;
   WAVEFORM_NIFGEN_VAL_WFM_NOISE = 101;
   WAVEFORM_NIFGEN_VAL_WFM_USER = 102;
+}
+
+enum WaveformHandle {
+  WAVEFORM_HANDLE_UNSPECIFIED = 0;
+  WAVEFORM_HANDLE_NIFGEN_VAL_ALL_WAVEFORMS = -1;
 }
 
 enum NiFgenInt32AttributeValues {
@@ -1231,17 +1231,6 @@ message CreateWaveformFromFileHWSResponse {
   sint32 waveform_handle = 2;
 }
 
-message CreateWaveformI16Request {
-  nidevice_grpc.Session vi = 1;
-  string channel_name = 2;
-  repeated sint32 waveform_data_array = 3;
-}
-
-message CreateWaveformI16Response {
-  int32 status = 1;
-  sint32 waveform_handle = 2;
-}
-
 message CreateWaveformFromFileI16Request {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
@@ -1253,6 +1242,17 @@ message CreateWaveformFromFileI16Request {
 }
 
 message CreateWaveformFromFileI16Response {
+  int32 status = 1;
+  sint32 waveform_handle = 2;
+}
+
+message CreateWaveformI16Request {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+  repeated sint32 waveform_data_array = 3;
+}
+
+message CreateWaveformI16Response {
   int32 status = 1;
   sint32 waveform_handle = 2;
 }
@@ -1999,6 +1999,28 @@ message WriteComplexBinary16WaveformResponse {
   int32 status = 1;
 }
 
+message WriteNamedWaveformComplexF64Request {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+  string waveform_name = 3;
+  repeated nidevice_grpc.NIComplexNumber data = 4;
+}
+
+message WriteNamedWaveformComplexF64Response {
+  int32 status = 1;
+}
+
+message WriteNamedWaveformComplexI16Request {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+  string waveform_name = 3;
+  repeated nidevice_grpc.NIComplexI16 data = 4;
+}
+
+message WriteNamedWaveformComplexI16Response {
+  int32 status = 1;
+}
+
 message WriteNamedWaveformF64Request {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
@@ -2060,28 +2082,6 @@ message WriteWaveformComplexF64Request {
 }
 
 message WriteWaveformComplexF64Response {
-  int32 status = 1;
-}
-
-message WriteNamedWaveformComplexF64Request {
-  nidevice_grpc.Session vi = 1;
-  string channel_name = 2;
-  string waveform_name = 3;
-  repeated nidevice_grpc.NIComplexNumber data = 4;
-}
-
-message WriteNamedWaveformComplexF64Response {
-  int32 status = 1;
-}
-
-message WriteNamedWaveformComplexI16Request {
-  nidevice_grpc.Session vi = 1;
-  string channel_name = 2;
-  string waveform_name = 3;
-  repeated nidevice_grpc.NIComplexI16 data = 4;
-}
-
-message WriteNamedWaveformComplexI16Response {
   int32 status = 1;
 }
 

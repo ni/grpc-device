@@ -17,31 +17,6 @@
 
 namespace nidmm_grpc::experimental::client {
 
-Control4022Response
-control4022(const StubPtr& stub, const pb::string& resource_name, const simple_variant<Configuration4022, pb::int32>& configuration)
-{
-  ::grpc::ClientContext context;
-
-  auto request = Control4022Request{};
-  request.set_resource_name(resource_name);
-  const auto configuration_ptr = configuration.get_if<Configuration4022>();
-  const auto configuration_raw_ptr = configuration.get_if<pb::int32>();
-  if (configuration_ptr) {
-    request.set_configuration(*configuration_ptr);
-  }
-  else if (configuration_raw_ptr) {
-    request.set_configuration_raw(*configuration_raw_ptr);
-  }
-
-  auto response = Control4022Response{};
-
-  raise_if_error(
-      stub->Control4022(&context, request, &response),
-      context);
-
-  return response;
-}
-
 AbortResponse
 abort(const StubPtr& stub, const nidevice_grpc::Session& vi)
 {
@@ -376,6 +351,24 @@ configure_meas_complete_dest(const StubPtr& stub, const nidevice_grpc::Session& 
   return response;
 }
 
+ConfigureMeasCompleteSlopeResponse
+configure_meas_complete_slope(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& meas_complete_slope)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ConfigureMeasCompleteSlopeRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_meas_complete_slope(meas_complete_slope);
+
+  auto response = ConfigureMeasCompleteSlopeResponse{};
+
+  raise_if_error(
+      stub->ConfigureMeasCompleteSlope(&context, request, &response),
+      context);
+
+  return response;
+}
+
 ConfigureMeasurementAbsoluteResponse
 configure_measurement_absolute(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<Function, pb::int32>& measurement_function, const double& range, const double& resolution_absolute)
 {
@@ -398,24 +391,6 @@ configure_measurement_absolute(const StubPtr& stub, const nidevice_grpc::Session
 
   raise_if_error(
       stub->ConfigureMeasurementAbsolute(&context, request, &response),
-      context);
-
-  return response;
-}
-
-ConfigureMeasCompleteSlopeResponse
-configure_meas_complete_slope(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& meas_complete_slope)
-{
-  ::grpc::ClientContext context;
-
-  auto request = ConfigureMeasCompleteSlopeRequest{};
-  request.mutable_vi()->CopyFrom(vi);
-  request.set_meas_complete_slope(meas_complete_slope);
-
-  auto response = ConfigureMeasCompleteSlopeResponse{};
-
-  raise_if_error(
-      stub->ConfigureMeasCompleteSlope(&context, request, &response),
       context);
 
   return response;
@@ -566,25 +541,6 @@ configure_power_line_frequency(const StubPtr& stub, const nidevice_grpc::Session
   return response;
 }
 
-ConfigureShortCableCompValuesResponse
-configure_short_cable_comp_values(const StubPtr& stub, const nidevice_grpc::Session& vi, const double& resistance, const double& reactance)
-{
-  ::grpc::ClientContext context;
-
-  auto request = ConfigureShortCableCompValuesRequest{};
-  request.mutable_vi()->CopyFrom(vi);
-  request.set_resistance(resistance);
-  request.set_reactance(reactance);
-
-  auto response = ConfigureShortCableCompValuesResponse{};
-
-  raise_if_error(
-      stub->ConfigureShortCableCompValues(&context, request, &response),
-      context);
-
-  return response;
-}
-
 ConfigureRTDCustomResponse
 configure_rtd_custom(const StubPtr& stub, const nidevice_grpc::Session& vi, const double& rtd_a, const double& rtd_b, const double& rtd_c)
 {
@@ -656,6 +612,25 @@ configure_sample_trigger_slope(const StubPtr& stub, const nidevice_grpc::Session
   return response;
 }
 
+ConfigureShortCableCompValuesResponse
+configure_short_cable_comp_values(const StubPtr& stub, const nidevice_grpc::Session& vi, const double& resistance, const double& reactance)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ConfigureShortCableCompValuesRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_resistance(resistance);
+  request.set_reactance(reactance);
+
+  auto response = ConfigureShortCableCompValuesResponse{};
+
+  raise_if_error(
+      stub->ConfigureShortCableCompValues(&context, request, &response),
+      context);
+
+  return response;
+}
+
 ConfigureThermistorCustomResponse
 configure_thermistor_custom(const StubPtr& stub, const nidevice_grpc::Session& vi, const double& thermistor_a, const double& thermistor_b, const double& thermistor_c)
 {
@@ -671,6 +646,24 @@ configure_thermistor_custom(const StubPtr& stub, const nidevice_grpc::Session& v
 
   raise_if_error(
       stub->ConfigureThermistorCustom(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ConfigureThermistorTypeResponse
+configure_thermistor_type(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& thermistor_type)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ConfigureThermistorTypeRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_thermistor_type(thermistor_type);
+
+  auto response = ConfigureThermistorTypeResponse{};
+
+  raise_if_error(
+      stub->ConfigureThermistorType(&context, request, &response),
       context);
 
   return response;
@@ -704,24 +697,6 @@ configure_thermocouple(const StubPtr& stub, const nidevice_grpc::Session& vi, co
 
   raise_if_error(
       stub->ConfigureThermocouple(&context, request, &response),
-      context);
-
-  return response;
-}
-
-ConfigureThermistorTypeResponse
-configure_thermistor_type(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& thermistor_type)
-{
-  ::grpc::ClientContext context;
-
-  auto request = ConfigureThermistorTypeRequest{};
-  request.mutable_vi()->CopyFrom(vi);
-  request.set_thermistor_type(thermistor_type);
-
-  auto response = ConfigureThermistorTypeResponse{};
-
-  raise_if_error(
-      stub->ConfigureThermistorType(&context, request, &response),
       context);
 
   return response;
@@ -869,6 +844,31 @@ control(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_vari
 
   raise_if_error(
       stub->Control(&context, request, &response),
+      context);
+
+  return response;
+}
+
+Control4022Response
+control4022(const StubPtr& stub, const pb::string& resource_name, const simple_variant<Configuration4022, pb::int32>& configuration)
+{
+  ::grpc::ClientContext context;
+
+  auto request = Control4022Request{};
+  request.set_resource_name(resource_name);
+  const auto configuration_ptr = configuration.get_if<Configuration4022>();
+  const auto configuration_raw_ptr = configuration.get_if<pb::int32>();
+  if (configuration_ptr) {
+    request.set_configuration(*configuration_ptr);
+  }
+  else if (configuration_raw_ptr) {
+    request.set_configuration_raw(*configuration_raw_ptr);
+  }
+
+  auto response = Control4022Response{};
+
+  raise_if_error(
+      stub->Control4022(&context, request, &response),
       context);
 
   return response;

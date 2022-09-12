@@ -1,4 +1,18 @@
+﻿# -*- coding: utf-8 -*-
+# This file is generated from NI-FGEN API metadata version 20.0.0d5
 enums = {
+    'AddressType': {
+        'values': [
+            {
+                'name': 'NIFGEN_VAL_ADDR_PHYSICAL',
+                'value': 0
+            },
+            {
+                'name': 'NIFGEN_VAL_ADDR_VIRTUAL',
+                'value': 1
+            }
+        ]
+    },
     'AnalogPath': {
         'values': [
             {
@@ -19,26 +33,18 @@ enums = {
             }
         ]
     },
-    'FrequencyListOptions': {
+    'ArbitrarySequenceHandle': {
         'values': [
             {
-                'name': 'NIFGEN_VAL_ALL_FLISTS',
-                'value': -1
-            }
-        ]
-    },
-    'SequenceHandle': {
-        'values': [
+                'name': 'NIFGEN_VAL_FIRST_SEQUENCE_HANDLE',
+                'value': 100000
+            },
             {
-                'name': 'NIFGEN_VAL_ALL_SEQUENCES',
-                'value': -1
-            }
-        ]
-    },
-    'WaveformHandle': {
-        'values': [
+                'name': 'NIFGEN_VAL_LAST_SEQUENCE_HANDLE',
+                'value': 109999
+            },
             {
-                'name': 'NIFGEN_VAL_ALL_WAVEFORMS',
+                'name': 'NIFGEN_VAL_NO_SEQUENCE',
                 'value': -1
             }
         ]
@@ -55,22 +61,6 @@ enums = {
             },
             {
                 'name': 'NIFGEN_VAL_NO_WAVEFORM',
-                'value': -1
-            }
-        ]
-    },
-    'ArbitrarySequenceHandle': {
-        'values': [
-            {
-                'name': 'NIFGEN_VAL_FIRST_SEQUENCE_HANDLE',
-                'value': 100000
-            },
-            {
-                'name': 'NIFGEN_VAL_LAST_SEQUENCE_HANDLE',
-                'value': 109999
-            },
-            {
-                'name': 'NIFGEN_VAL_NO_SEQUENCE',
                 'value': -1
             }
         ]
@@ -267,6 +257,14 @@ enums = {
             }
         ]
     },
+    'FrequencyListOptions': {
+        'values': [
+            {
+                'name': 'NIFGEN_VAL_ALL_FLISTS',
+                'value': -1
+            }
+        ]
+    },
     'HardwareState': {
         'values': [
             {
@@ -456,11 +454,11 @@ enums = {
             {
                 'name': 'NIFGEN_VAL_OSP_OVERFLOW_CFIR_FILTER_Q',
                 'value': 1024
-            }, 
+            },
             {
                 'name': 'NIFGEN_VAL_OSP_OVERFLOW_EQUALIZER',
                 'value': 2048
-            }           
+            }
         ]
     },
     'OutputImpedance': {
@@ -499,18 +497,6 @@ enums = {
             }
         ]
     },
-    'AddressType': {
-        'values': [
-            {
-                'name': 'NIFGEN_VAL_ADDR_PHYSICAL',
-                'value': 0
-            },
-            {
-                'name': 'NIFGEN_VAL_ADDR_VIRTUAL',
-                'value': 1
-            }
-        ]
-    },
     'ReadyForStartEventActiveLevel': {
         'values': [
             {
@@ -532,114 +518,6 @@ enums = {
             {
                 'name': 'NIFGEN_VAL_WAVEFORM_POSITION_CURRENT',
                 'value': 1
-            }
-        ]
-    },
-    'SampleRate': {
-        'values': [
-            {
-                'name': 'NIFGEN_VAL_EXTERNAL_SAMPLE_RATE',
-                'value': -1
-            }
-        ]
-    },
-    'ScriptTriggerDigitalEdgeEdge': {
-        'values': [
-            {
-                'name': 'NIFGEN_VAL_RISING_EDGE',
-                'value': 101
-            },
-            {
-                'name': 'NIFGEN_VAL_FALLING_EDGE',
-                'value': 102
-            }
-        ]
-    },
-    'ScriptTriggerDigitalLevelActiveLevel': {
-        'values': [
-            {
-                'name': 'NIFGEN_VAL_ACTIVE_HIGH',
-                'value': 101
-            },
-            {
-                'name': 'NIFGEN_VAL_ACTIVE_LOW',
-                'value': 102
-            }
-        ]
-    },
-    'ScriptTriggerType': {
-        'values': [
-            {
-                'name': 'NIFGEN_VAL_TRIG_NONE',
-                'value': 101
-            },
-            {
-                'name': 'NIFGEN_VAL_DIGITAL_EDGE',
-                'value': 102
-            },
-            {
-                'name': 'NIFGEN_VAL_DIGITAL_LEVEL',
-                'value': 103
-            },
-            {
-                'name': 'NIFGEN_VAL_SOFTWARE_EDGE',
-                'value': 104
-            }
-        ]
-    },
-    'Signal': {
-        'values': [
-            {
-                'name': 'NIFGEN_VAL_MARKER_EVENT',
-                'value': 1001
-            },
-            {
-                'name': 'NIFGEN_VAL_SYNC_OUT',
-                'value': 1002
-            },
-            {
-                'name': 'NIFGEN_VAL_ONBOARD_REFERENCE_CLOCK',
-                'value': 1019
-            },
-            {
-                'name': 'NIFGEN_VAL_START_TRIGGER',
-                'value': 1004
-            },
-            {
-                'name': 'NIFGEN_VAL_SAMPLE_CLOCK_TIMEBASE',
-                'value': 1006
-            },
-            {
-                'name': 'NIFGEN_VAL_SYNCHRONIZATION',
-                'value': 1007
-            },
-            {
-                'name': 'NIFGEN_VAL_SAMPLE_CLOCK',
-                'value': 101
-            },
-            {
-                'name': 'NIFGEN_VAL_REFERENCE_CLOCK',
-                'value': 102
-            },
-            {
-                'name': 'NIFGEN_VAL_SCRIPT_TRIGGER',
-                'value': 103
-            },
-            {
-                'name': 'NIFGEN_VAL_READY_FOR_START_EVENT',
-                'value': 105
-            },
-            {
-                'name': 'NIFGEN_VAL_STARTED_EVENT',
-                'value': 106
-            },
-            {
-                'name': 'NIFGEN_VAL_DONE_EVENT',
-                'value': 107
-            },
-            {
-                'name': 'NIFGEN_VAL_DATA_MARKER_EVENT',
-                'value': 108
             }
         ]
     },
@@ -772,6 +650,122 @@ enums = {
             {
                 'name': 'NIFGEN_VAL_PXI_STAR',
                 'value': 131
+            }
+        ]
+    },
+    'SampleRate': {
+        'values': [
+            {
+                'name': 'NIFGEN_VAL_EXTERNAL_SAMPLE_RATE',
+                'value': -1
+            }
+        ]
+    },
+    'ScriptTriggerDigitalEdgeEdge': {
+        'values': [
+            {
+                'name': 'NIFGEN_VAL_RISING_EDGE',
+                'value': 101
+            },
+            {
+                'name': 'NIFGEN_VAL_FALLING_EDGE',
+                'value': 102
+            }
+        ]
+    },
+    'ScriptTriggerDigitalLevelActiveLevel': {
+        'values': [
+            {
+                'name': 'NIFGEN_VAL_ACTIVE_HIGH',
+                'value': 101
+            },
+            {
+                'name': 'NIFGEN_VAL_ACTIVE_LOW',
+                'value': 102
+            }
+        ]
+    },
+    'ScriptTriggerType': {
+        'values': [
+            {
+                'name': 'NIFGEN_VAL_TRIG_NONE',
+                'value': 101
+            },
+            {
+                'name': 'NIFGEN_VAL_DIGITAL_EDGE',
+                'value': 102
+            },
+            {
+                'name': 'NIFGEN_VAL_DIGITAL_LEVEL',
+                'value': 103
+            },
+            {
+                'name': 'NIFGEN_VAL_SOFTWARE_EDGE',
+                'value': 104
+            }
+        ]
+    },
+    'SequenceHandle': {
+        'values': [
+            {
+                'name': 'NIFGEN_VAL_ALL_SEQUENCES',
+                'value': -1
+            }
+        ]
+    },
+    'Signal': {
+        'values': [
+            {
+                'name': 'NIFGEN_VAL_MARKER_EVENT',
+                'value': 1001
+            },
+            {
+                'name': 'NIFGEN_VAL_SYNC_OUT',
+                'value': 1002
+            },
+            {
+                'name': 'NIFGEN_VAL_ONBOARD_REFERENCE_CLOCK',
+                'value': 1019
+            },
+            {
+                'name': 'NIFGEN_VAL_START_TRIGGER',
+                'value': 1004
+            },
+            {
+                'name': 'NIFGEN_VAL_SAMPLE_CLOCK_TIMEBASE',
+                'value': 1006
+            },
+            {
+                'name': 'NIFGEN_VAL_SYNCHRONIZATION',
+                'value': 1007
+            },
+            {
+                'name': 'NIFGEN_VAL_SAMPLE_CLOCK',
+                'value': 101
+            },
+            {
+                'name': 'NIFGEN_VAL_REFERENCE_CLOCK',
+                'value': 102
+            },
+            {
+                'name': 'NIFGEN_VAL_SCRIPT_TRIGGER',
+                'value': 103
+            },
+            {
+                'name': 'NIFGEN_VAL_READY_FOR_START_EVENT',
+                'value': 105
+            },
+            {
+                'name': 'NIFGEN_VAL_STARTED_EVENT',
+                'value': 106
+            },
+            {
+                'name': 'NIFGEN_VAL_DONE_EVENT',
+                'value': 107
+            },
+            {
+                'name': 'NIFGEN_VAL_DATA_MARKER_EVENT',
+                'value': 108
             }
         ]
     },
@@ -1168,6 +1162,14 @@ enums = {
             {
                 'name': 'NIFGEN_VAL_WFM_USER',
                 'value': 102
+            }
+        ]
+    },
+    'WaveformHandle': {
+        'values': [
+            {
+                'name': 'NIFGEN_VAL_ALL_WAVEFORMS',
+                'value': -1
             }
         ]
     }

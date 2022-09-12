@@ -17,7 +17,6 @@ namespace unit {
 
 class NiDmmMockLibrary : public nidmm_grpc::NiDmmLibraryInterface {
  public:
-  MOCK_METHOD(ViStatus, Control4022, (ViRsrc resourceName, ViInt32 configuration), (override));
   MOCK_METHOD(ViStatus, Abort, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, CheckAttributeViBoolean, (ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean attributeValue), (override));
   MOCK_METHOD(ViStatus, CheckAttributeViInt32, (ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 attributeValue), (override));
@@ -35,26 +34,27 @@ class NiDmmMockLibrary : public nidmm_grpc::NiDmmLibraryInterface {
   MOCK_METHOD(ViStatus, ConfigureFixedRefJunction, (ViSession vi, ViReal64 fixedReferenceJunction), (override));
   MOCK_METHOD(ViStatus, ConfigureFrequencyVoltageRange, (ViSession vi, ViReal64 voltageRange), (override));
   MOCK_METHOD(ViStatus, ConfigureMeasCompleteDest, (ViSession vi, ViInt32 measCompleteDestination), (override));
-  MOCK_METHOD(ViStatus, ConfigureMeasurementAbsolute, (ViSession vi, ViInt32 measurementFunction, ViReal64 range, ViReal64 resolutionAbsolute), (override));
   MOCK_METHOD(ViStatus, ConfigureMeasCompleteSlope, (ViSession vi, ViInt32 measCompleteSlope), (override));
+  MOCK_METHOD(ViStatus, ConfigureMeasurementAbsolute, (ViSession vi, ViInt32 measurementFunction, ViReal64 range, ViReal64 resolutionAbsolute), (override));
   MOCK_METHOD(ViStatus, ConfigureMeasurementDigits, (ViSession vi, ViInt32 measurementFunction, ViReal64 range, ViReal64 resolutionDigits), (override));
   MOCK_METHOD(ViStatus, ConfigureMultiPoint, (ViSession vi, ViInt32 triggerCount, ViInt32 sampleCount, ViInt32 sampleTrigger, ViReal64 sampleInterval), (override));
   MOCK_METHOD(ViStatus, ConfigureOffsetCompOhms, (ViSession vi, ViInt32 offsetCompOhms), (override));
   MOCK_METHOD(ViStatus, ConfigureOpenCableCompValues, (ViSession vi, ViReal64 conductance, ViReal64 susceptance), (override));
   MOCK_METHOD(ViStatus, ConfigurePowerLineFrequency, (ViSession vi, ViReal64 powerLineFrequencyHz), (override));
-  MOCK_METHOD(ViStatus, ConfigureShortCableCompValues, (ViSession vi, ViReal64 resistance, ViReal64 reactance), (override));
   MOCK_METHOD(ViStatus, ConfigureRTDCustom, (ViSession vi, ViReal64 rtdA, ViReal64 rtdB, ViReal64 rtdC), (override));
   MOCK_METHOD(ViStatus, ConfigureRTDType, (ViSession vi, ViInt32 rtdType, ViReal64 rtdResistance), (override));
   MOCK_METHOD(ViStatus, ConfigureSampleTriggerSlope, (ViSession vi, ViInt32 sampleTriggerSlope), (override));
+  MOCK_METHOD(ViStatus, ConfigureShortCableCompValues, (ViSession vi, ViReal64 resistance, ViReal64 reactance), (override));
   MOCK_METHOD(ViStatus, ConfigureThermistorCustom, (ViSession vi, ViReal64 thermistorA, ViReal64 thermistorB, ViReal64 thermistorC), (override));
-  MOCK_METHOD(ViStatus, ConfigureThermocouple, (ViSession vi, ViInt32 thermocoupleType, ViInt32 referenceJunctionType), (override));
   MOCK_METHOD(ViStatus, ConfigureThermistorType, (ViSession vi, ViInt32 thermistorType), (override));
+  MOCK_METHOD(ViStatus, ConfigureThermocouple, (ViSession vi, ViInt32 thermocoupleType, ViInt32 referenceJunctionType), (override));
   MOCK_METHOD(ViStatus, ConfigureTransducerType, (ViSession vi, ViInt32 transducerType), (override));
   MOCK_METHOD(ViStatus, ConfigureTrigger, (ViSession vi, ViInt32 triggerSource, ViReal64 triggerDelay), (override));
   MOCK_METHOD(ViStatus, ConfigureTriggerSlope, (ViSession vi, ViInt32 triggerSlope), (override));
   MOCK_METHOD(ViStatus, ConfigureWaveformAcquisition, (ViSession vi, ViInt32 measurementFunction, ViReal64 range, ViReal64 rate, ViInt32 waveformPoints), (override));
   MOCK_METHOD(ViStatus, ConfigureWaveformCoupling, (ViSession vi, ViInt32 waveformCoupling), (override));
   MOCK_METHOD(ViStatus, Control, (ViSession vi, ViInt32 controlAction), (override));
+  MOCK_METHOD(ViStatus, Control4022, (ViRsrc resourceName, ViInt32 configuration), (override));
   MOCK_METHOD(ViStatus, Disable, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, ExportAttributeConfigurationBuffer, (ViSession vi, ViInt32 size, ViInt8 configuration[]), (override));
   MOCK_METHOD(ViStatus, ExportAttributeConfigurationFile, (ViSession vi, ViConstString filePath), (override));

@@ -35,9 +35,9 @@ class NiDigitalLibraryInterface {
   virtual ViStatus ConfigureHistoryRAMCyclesToAcquire(ViSession vi, ViInt32 cyclesToAcquire) = 0;
   virtual ViStatus ConfigurePatternBurstSites(ViSession vi, ViConstString siteList) = 0;
   virtual ViStatus ConfigurePatternLabelHistoryRAMTrigger(ViSession vi, ViConstString label, ViInt64 vectorOffset, ViInt64 cycleOffset, ViInt32 pretriggerSamples) = 0;
-  virtual ViStatus ConfigureStartLabel(ViSession vi, ViConstString label) = 0;
   virtual ViStatus ConfigureSoftwareEdgeConditionalJumpTrigger(ViSession vi, ViConstString triggerIdentifier) = 0;
   virtual ViStatus ConfigureSoftwareEdgeStartTrigger(ViSession vi) = 0;
+  virtual ViStatus ConfigureStartLabel(ViSession vi, ViConstString label) = 0;
   virtual ViStatus ConfigureTerminationMode(ViSession vi, ViConstString channelList, ViInt32 mode) = 0;
   virtual ViStatus ConfigureTimeSetCompareEdgesStrobe(ViSession vi, ViConstString pinList, ViConstString timeSetName, ViReal64 strobeEdge) = 0;
   virtual ViStatus ConfigureTimeSetCompareEdgesStrobe2x(ViSession vi, ViConstString pinList, ViConstString timeSetName, ViReal64 strobeEdge, ViReal64 strobe2Edge) = 0;
@@ -52,9 +52,9 @@ class NiDigitalLibraryInterface {
   virtual ViStatus CreateCaptureWaveformParallel(ViSession vi, ViConstString pinList, ViConstString waveformName) = 0;
   virtual ViStatus CreateCaptureWaveformSerial(ViSession vi, ViConstString pinList, ViConstString waveformName, ViUInt32 sampleWidth, ViInt32 bitOrder) = 0;
   virtual ViStatus CreateChannelMap(ViSession vi, ViInt32 numSites) = 0;
-  virtual ViStatus CreateSourceWaveformFromFileTDMS(ViSession vi, ViConstString waveformName, ViConstString waveformFilePath, ViBoolean writeWaveformData) = 0;
-  virtual ViStatus CreatePinMap(ViSession vi, ViConstString dutPinList, ViConstString systemPinList) = 0;
   virtual ViStatus CreatePinGroup(ViSession vi, ViConstString pinGroupName, ViConstString pinList) = 0;
+  virtual ViStatus CreatePinMap(ViSession vi, ViConstString dutPinList, ViConstString systemPinList) = 0;
+  virtual ViStatus CreateSourceWaveformFromFileTDMS(ViSession vi, ViConstString waveformName, ViConstString waveformFilePath, ViBoolean writeWaveformData) = 0;
   virtual ViStatus CreateSourceWaveformParallel(ViSession vi, ViConstString pinList, ViConstString waveformName, ViInt32 dataMapping) = 0;
   virtual ViStatus CreateSourceWaveformSerial(ViSession vi, ViConstString pinList, ViConstString waveformName, ViInt32 dataMapping, ViUInt32 sampleWidth, ViInt32 bitOrder) = 0;
   virtual ViStatus CreateTimeSet(ViSession vi, ViConstString name) = 0;
@@ -85,8 +85,8 @@ class NiDigitalLibraryInterface {
   virtual ViStatus GetError(ViSession vi, ViStatus* errorCode, ViInt32 errorDescriptionBufferSize, ViChar errorDescription[]) = 0;
   virtual ViStatus GetFailCount(ViSession vi, ViConstString channelList, ViInt32 bufferSize, ViInt64 failureCount[], ViInt32* actualNumRead) = 0;
   virtual ViStatus GetHistoryRAMSampleCount(ViSession vi, ViConstString site, ViInt64* sampleCount) = 0;
-  virtual ViStatus GetPatternPinIndexes(ViSession vi, ViConstString startLabel, ViInt32 pinIndexesBufferSize, ViInt32 pinIndexes[], ViInt32* actualNumPins) = 0;
   virtual ViStatus GetPatternName(ViSession vi, ViInt32 patternIndex, ViInt32 nameBufferSize, ViChar name[]) = 0;
+  virtual ViStatus GetPatternPinIndexes(ViSession vi, ViConstString startLabel, ViInt32 pinIndexesBufferSize, ViInt32 pinIndexes[], ViInt32* actualNumPins) = 0;
   virtual ViStatus GetPatternPinList(ViSession vi, ViConstString startLabel, ViInt32 pinListBufferSize, ViChar pinList[]) = 0;
   virtual ViStatus GetPinName(ViSession vi, ViInt32 pinIndex, ViInt32 nameBufferSize, ViChar name[]) = 0;
   virtual ViStatus GetPinResultsPinInformation(ViSession vi, ViConstString channelList, ViInt32 bufferSize, ViInt32 pinIndexes[], ViInt32 siteNumbers[], ViInt32 channelIndexes[], ViInt32* actualNumValues) = 0;
@@ -145,8 +145,8 @@ class NiDigitalLibraryInterface {
   virtual ViStatus WriteSequencerRegister(ViSession vi, ViConstString reg, ViInt32 value) = 0;
   virtual ViStatus WriteSourceWaveformBroadcastU32(ViSession vi, ViConstString waveformName, ViInt32 waveformSize, ViUInt32 waveformData[]) = 0;
   virtual ViStatus WriteSourceWaveformDataFromFileTDMS(ViSession vi, ViConstString waveformName, ViConstString waveformFilePath) = 0;
-  virtual ViStatus WriteStatic(ViSession vi, ViConstString channelList, ViUInt8 state) = 0;
   virtual ViStatus WriteSourceWaveformSiteUniqueU32(ViSession vi, ViConstString siteList, ViConstString waveformName, ViInt32 numWaveforms, ViInt32 samplesPerWaveform, ViUInt32 waveformData[1]) = 0;
+  virtual ViStatus WriteStatic(ViSession vi, ViConstString channelList, ViUInt8 state) = 0;
 };
 
 }  // namespace nidigitalpattern_grpc

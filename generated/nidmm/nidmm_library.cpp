@@ -21,7 +21,6 @@ NiDmmLibrary::NiDmmLibrary() : shared_library_(kLibraryName)
   if (!loaded) {
     return;
   }
-  function_pointers_.Control4022 = reinterpret_cast<Control4022Ptr>(shared_library_.get_function_pointer("niDMM_4022Control"));
   function_pointers_.Abort = reinterpret_cast<AbortPtr>(shared_library_.get_function_pointer("niDMM_Abort"));
   function_pointers_.CheckAttributeViBoolean = reinterpret_cast<CheckAttributeViBooleanPtr>(shared_library_.get_function_pointer("niDMM_CheckAttributeViBoolean"));
   function_pointers_.CheckAttributeViInt32 = reinterpret_cast<CheckAttributeViInt32Ptr>(shared_library_.get_function_pointer("niDMM_CheckAttributeViInt32"));
@@ -39,26 +38,27 @@ NiDmmLibrary::NiDmmLibrary() : shared_library_(kLibraryName)
   function_pointers_.ConfigureFixedRefJunction = reinterpret_cast<ConfigureFixedRefJunctionPtr>(shared_library_.get_function_pointer("niDMM_ConfigureFixedRefJunction"));
   function_pointers_.ConfigureFrequencyVoltageRange = reinterpret_cast<ConfigureFrequencyVoltageRangePtr>(shared_library_.get_function_pointer("niDMM_ConfigureFrequencyVoltageRange"));
   function_pointers_.ConfigureMeasCompleteDest = reinterpret_cast<ConfigureMeasCompleteDestPtr>(shared_library_.get_function_pointer("niDMM_ConfigureMeasCompleteDest"));
-  function_pointers_.ConfigureMeasurementAbsolute = reinterpret_cast<ConfigureMeasurementAbsolutePtr>(shared_library_.get_function_pointer("niDMM_ConfigureMeasurementAbsolute"));
   function_pointers_.ConfigureMeasCompleteSlope = reinterpret_cast<ConfigureMeasCompleteSlopePtr>(shared_library_.get_function_pointer("niDMM_ConfigureMeasCompleteSlope"));
+  function_pointers_.ConfigureMeasurementAbsolute = reinterpret_cast<ConfigureMeasurementAbsolutePtr>(shared_library_.get_function_pointer("niDMM_ConfigureMeasurementAbsolute"));
   function_pointers_.ConfigureMeasurementDigits = reinterpret_cast<ConfigureMeasurementDigitsPtr>(shared_library_.get_function_pointer("niDMM_ConfigureMeasurementDigits"));
   function_pointers_.ConfigureMultiPoint = reinterpret_cast<ConfigureMultiPointPtr>(shared_library_.get_function_pointer("niDMM_ConfigureMultiPoint"));
   function_pointers_.ConfigureOffsetCompOhms = reinterpret_cast<ConfigureOffsetCompOhmsPtr>(shared_library_.get_function_pointer("niDMM_ConfigureOffsetCompOhms"));
   function_pointers_.ConfigureOpenCableCompValues = reinterpret_cast<ConfigureOpenCableCompValuesPtr>(shared_library_.get_function_pointer("niDMM_ConfigureOpenCableCompValues"));
   function_pointers_.ConfigurePowerLineFrequency = reinterpret_cast<ConfigurePowerLineFrequencyPtr>(shared_library_.get_function_pointer("niDMM_ConfigurePowerLineFrequency"));
-  function_pointers_.ConfigureShortCableCompValues = reinterpret_cast<ConfigureShortCableCompValuesPtr>(shared_library_.get_function_pointer("niDMM_ConfigureShortCableCompValues"));
   function_pointers_.ConfigureRTDCustom = reinterpret_cast<ConfigureRTDCustomPtr>(shared_library_.get_function_pointer("niDMM_ConfigureRTDCustom"));
   function_pointers_.ConfigureRTDType = reinterpret_cast<ConfigureRTDTypePtr>(shared_library_.get_function_pointer("niDMM_ConfigureRTDType"));
   function_pointers_.ConfigureSampleTriggerSlope = reinterpret_cast<ConfigureSampleTriggerSlopePtr>(shared_library_.get_function_pointer("niDMM_ConfigureSampleTriggerSlope"));
+  function_pointers_.ConfigureShortCableCompValues = reinterpret_cast<ConfigureShortCableCompValuesPtr>(shared_library_.get_function_pointer("niDMM_ConfigureShortCableCompValues"));
   function_pointers_.ConfigureThermistorCustom = reinterpret_cast<ConfigureThermistorCustomPtr>(shared_library_.get_function_pointer("niDMM_ConfigureThermistorCustom"));
-  function_pointers_.ConfigureThermocouple = reinterpret_cast<ConfigureThermocouplePtr>(shared_library_.get_function_pointer("niDMM_ConfigureThermocouple"));
   function_pointers_.ConfigureThermistorType = reinterpret_cast<ConfigureThermistorTypePtr>(shared_library_.get_function_pointer("niDMM_ConfigureThermistorType"));
+  function_pointers_.ConfigureThermocouple = reinterpret_cast<ConfigureThermocouplePtr>(shared_library_.get_function_pointer("niDMM_ConfigureThermocouple"));
   function_pointers_.ConfigureTransducerType = reinterpret_cast<ConfigureTransducerTypePtr>(shared_library_.get_function_pointer("niDMM_ConfigureTransducerType"));
   function_pointers_.ConfigureTrigger = reinterpret_cast<ConfigureTriggerPtr>(shared_library_.get_function_pointer("niDMM_ConfigureTrigger"));
   function_pointers_.ConfigureTriggerSlope = reinterpret_cast<ConfigureTriggerSlopePtr>(shared_library_.get_function_pointer("niDMM_ConfigureTriggerSlope"));
   function_pointers_.ConfigureWaveformAcquisition = reinterpret_cast<ConfigureWaveformAcquisitionPtr>(shared_library_.get_function_pointer("niDMM_ConfigureWaveformAcquisition"));
   function_pointers_.ConfigureWaveformCoupling = reinterpret_cast<ConfigureWaveformCouplingPtr>(shared_library_.get_function_pointer("niDMM_ConfigureWaveformCoupling"));
   function_pointers_.Control = reinterpret_cast<ControlPtr>(shared_library_.get_function_pointer("niDMM_Control"));
+  function_pointers_.Control4022 = reinterpret_cast<Control4022Ptr>(shared_library_.get_function_pointer("niDMM_4022Control"));
   function_pointers_.Disable = reinterpret_cast<DisablePtr>(shared_library_.get_function_pointer("niDMM_Disable"));
   function_pointers_.ExportAttributeConfigurationBuffer = reinterpret_cast<ExportAttributeConfigurationBufferPtr>(shared_library_.get_function_pointer("niDMM_ExportAttributeConfigurationBuffer"));
   function_pointers_.ExportAttributeConfigurationFile = reinterpret_cast<ExportAttributeConfigurationFilePtr>(shared_library_.get_function_pointer("niDMM_ExportAttributeConfigurationFile"));
@@ -122,18 +122,6 @@ NiDmmLibrary::~NiDmmLibrary()
   return shared_library_.function_exists(functionName.c_str())
     ? ::grpc::Status::OK
     : ::grpc::Status(::grpc::NOT_FOUND, "Could not find the function " + functionName);
-}
-
-ViStatus NiDmmLibrary::Control4022(ViRsrc resourceName, ViInt32 configuration)
-{
-  if (!function_pointers_.Control4022) {
-    throw nidevice_grpc::LibraryLoadException("Could not find niDMM_4022Control.");
-  }
-#if defined(_MSC_VER)
-  return niDMM_4022Control(resourceName, configuration);
-#else
-  return function_pointers_.Control4022(resourceName, configuration);
-#endif
 }
 
 ViStatus NiDmmLibrary::Abort(ViSession vi)
@@ -340,18 +328,6 @@ ViStatus NiDmmLibrary::ConfigureMeasCompleteDest(ViSession vi, ViInt32 measCompl
 #endif
 }
 
-ViStatus NiDmmLibrary::ConfigureMeasurementAbsolute(ViSession vi, ViInt32 measurementFunction, ViReal64 range, ViReal64 resolutionAbsolute)
-{
-  if (!function_pointers_.ConfigureMeasurementAbsolute) {
-    throw nidevice_grpc::LibraryLoadException("Could not find niDMM_ConfigureMeasurementAbsolute.");
-  }
-#if defined(_MSC_VER)
-  return niDMM_ConfigureMeasurementAbsolute(vi, measurementFunction, range, resolutionAbsolute);
-#else
-  return function_pointers_.ConfigureMeasurementAbsolute(vi, measurementFunction, range, resolutionAbsolute);
-#endif
-}
-
 ViStatus NiDmmLibrary::ConfigureMeasCompleteSlope(ViSession vi, ViInt32 measCompleteSlope)
 {
   if (!function_pointers_.ConfigureMeasCompleteSlope) {
@@ -361,6 +337,18 @@ ViStatus NiDmmLibrary::ConfigureMeasCompleteSlope(ViSession vi, ViInt32 measComp
   return niDMM_ConfigureMeasCompleteSlope(vi, measCompleteSlope);
 #else
   return function_pointers_.ConfigureMeasCompleteSlope(vi, measCompleteSlope);
+#endif
+}
+
+ViStatus NiDmmLibrary::ConfigureMeasurementAbsolute(ViSession vi, ViInt32 measurementFunction, ViReal64 range, ViReal64 resolutionAbsolute)
+{
+  if (!function_pointers_.ConfigureMeasurementAbsolute) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niDMM_ConfigureMeasurementAbsolute.");
+  }
+#if defined(_MSC_VER)
+  return niDMM_ConfigureMeasurementAbsolute(vi, measurementFunction, range, resolutionAbsolute);
+#else
+  return function_pointers_.ConfigureMeasurementAbsolute(vi, measurementFunction, range, resolutionAbsolute);
 #endif
 }
 
@@ -424,18 +412,6 @@ ViStatus NiDmmLibrary::ConfigurePowerLineFrequency(ViSession vi, ViReal64 powerL
 #endif
 }
 
-ViStatus NiDmmLibrary::ConfigureShortCableCompValues(ViSession vi, ViReal64 resistance, ViReal64 reactance)
-{
-  if (!function_pointers_.ConfigureShortCableCompValues) {
-    throw nidevice_grpc::LibraryLoadException("Could not find niDMM_ConfigureShortCableCompValues.");
-  }
-#if defined(_MSC_VER)
-  return niDMM_ConfigureShortCableCompValues(vi, resistance, reactance);
-#else
-  return function_pointers_.ConfigureShortCableCompValues(vi, resistance, reactance);
-#endif
-}
-
 ViStatus NiDmmLibrary::ConfigureRTDCustom(ViSession vi, ViReal64 rtdA, ViReal64 rtdB, ViReal64 rtdC)
 {
   if (!function_pointers_.ConfigureRTDCustom) {
@@ -472,6 +448,18 @@ ViStatus NiDmmLibrary::ConfigureSampleTriggerSlope(ViSession vi, ViInt32 sampleT
 #endif
 }
 
+ViStatus NiDmmLibrary::ConfigureShortCableCompValues(ViSession vi, ViReal64 resistance, ViReal64 reactance)
+{
+  if (!function_pointers_.ConfigureShortCableCompValues) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niDMM_ConfigureShortCableCompValues.");
+  }
+#if defined(_MSC_VER)
+  return niDMM_ConfigureShortCableCompValues(vi, resistance, reactance);
+#else
+  return function_pointers_.ConfigureShortCableCompValues(vi, resistance, reactance);
+#endif
+}
+
 ViStatus NiDmmLibrary::ConfigureThermistorCustom(ViSession vi, ViReal64 thermistorA, ViReal64 thermistorB, ViReal64 thermistorC)
 {
   if (!function_pointers_.ConfigureThermistorCustom) {
@@ -484,18 +472,6 @@ ViStatus NiDmmLibrary::ConfigureThermistorCustom(ViSession vi, ViReal64 thermist
 #endif
 }
 
-ViStatus NiDmmLibrary::ConfigureThermocouple(ViSession vi, ViInt32 thermocoupleType, ViInt32 referenceJunctionType)
-{
-  if (!function_pointers_.ConfigureThermocouple) {
-    throw nidevice_grpc::LibraryLoadException("Could not find niDMM_ConfigureThermocouple.");
-  }
-#if defined(_MSC_VER)
-  return niDMM_ConfigureThermocouple(vi, thermocoupleType, referenceJunctionType);
-#else
-  return function_pointers_.ConfigureThermocouple(vi, thermocoupleType, referenceJunctionType);
-#endif
-}
-
 ViStatus NiDmmLibrary::ConfigureThermistorType(ViSession vi, ViInt32 thermistorType)
 {
   if (!function_pointers_.ConfigureThermistorType) {
@@ -505,6 +481,18 @@ ViStatus NiDmmLibrary::ConfigureThermistorType(ViSession vi, ViInt32 thermistorT
   return niDMM_ConfigureThermistorType(vi, thermistorType);
 #else
   return function_pointers_.ConfigureThermistorType(vi, thermistorType);
+#endif
+}
+
+ViStatus NiDmmLibrary::ConfigureThermocouple(ViSession vi, ViInt32 thermocoupleType, ViInt32 referenceJunctionType)
+{
+  if (!function_pointers_.ConfigureThermocouple) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niDMM_ConfigureThermocouple.");
+  }
+#if defined(_MSC_VER)
+  return niDMM_ConfigureThermocouple(vi, thermocoupleType, referenceJunctionType);
+#else
+  return function_pointers_.ConfigureThermocouple(vi, thermocoupleType, referenceJunctionType);
 #endif
 }
 
@@ -577,6 +565,18 @@ ViStatus NiDmmLibrary::Control(ViSession vi, ViInt32 controlAction)
   return niDMM_Control(vi, controlAction);
 #else
   return function_pointers_.Control(vi, controlAction);
+#endif
+}
+
+ViStatus NiDmmLibrary::Control4022(ViRsrc resourceName, ViInt32 configuration)
+{
+  if (!function_pointers_.Control4022) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niDMM_4022Control.");
+  }
+#if defined(_MSC_VER)
+  return niDMM_4022Control(resourceName, configuration);
+#else
+  return function_pointers_.Control4022(resourceName, configuration);
 #endif
 }
 

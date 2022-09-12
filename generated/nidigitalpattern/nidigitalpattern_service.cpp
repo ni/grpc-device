@@ -590,29 +590,6 @@ namespace nidigitalpattern_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiDigitalService::ConfigureStartLabel(::grpc::ServerContext* context, const ConfigureStartLabelRequest* request, ConfigureStartLabelResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      auto label = request->label().c_str();
-      auto status = library_->ConfigureStartLabel(vi, label);
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(context, status, vi);
-      }
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
   ::grpc::Status NiDigitalService::ConfigureSoftwareEdgeConditionalJumpTrigger(::grpc::ServerContext* context, const ConfigureSoftwareEdgeConditionalJumpTriggerRequest* request, ConfigureSoftwareEdgeConditionalJumpTriggerResponse* response)
   {
     if (context->IsCancelled()) {
@@ -645,6 +622,29 @@ namespace nidigitalpattern_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->ConfigureSoftwareEdgeStartTrigger(vi);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(context, status, vi);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDigitalService::ConfigureStartLabel(::grpc::ServerContext* context, const ConfigureStartLabelRequest* request, ConfigureStartLabelResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto label = request->label().c_str();
+      auto status = library_->ConfigureStartLabel(vi, label);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
       }
@@ -1108,7 +1108,7 @@ namespace nidigitalpattern_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiDigitalService::CreateSourceWaveformFromFileTDMS(::grpc::ServerContext* context, const CreateSourceWaveformFromFileTDMSRequest* request, CreateSourceWaveformFromFileTDMSResponse* response)
+  ::grpc::Status NiDigitalService::CreatePinGroup(::grpc::ServerContext* context, const CreatePinGroupRequest* request, CreatePinGroupResponse* response)
   {
     if (context->IsCancelled()) {
       return ::grpc::Status::CANCELLED;
@@ -1116,10 +1116,9 @@ namespace nidigitalpattern_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      auto waveform_name = request->waveform_name().c_str();
-      auto waveform_file_path = request->waveform_file_path().c_str();
-      ViBoolean write_waveform_data = request->write_waveform_data();
-      auto status = library_->CreateSourceWaveformFromFileTDMS(vi, waveform_name, waveform_file_path, write_waveform_data);
+      auto pin_group_name = request->pin_group_name().c_str();
+      auto pin_list = request->pin_list().c_str();
+      auto status = library_->CreatePinGroup(vi, pin_group_name, pin_list);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
       }
@@ -1157,7 +1156,7 @@ namespace nidigitalpattern_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiDigitalService::CreatePinGroup(::grpc::ServerContext* context, const CreatePinGroupRequest* request, CreatePinGroupResponse* response)
+  ::grpc::Status NiDigitalService::CreateSourceWaveformFromFileTDMS(::grpc::ServerContext* context, const CreateSourceWaveformFromFileTDMSRequest* request, CreateSourceWaveformFromFileTDMSResponse* response)
   {
     if (context->IsCancelled()) {
       return ::grpc::Status::CANCELLED;
@@ -1165,9 +1164,10 @@ namespace nidigitalpattern_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      auto pin_group_name = request->pin_group_name().c_str();
-      auto pin_list = request->pin_list().c_str();
-      auto status = library_->CreatePinGroup(vi, pin_group_name, pin_list);
+      auto waveform_name = request->waveform_name().c_str();
+      auto waveform_file_path = request->waveform_file_path().c_str();
+      ViBoolean write_waveform_data = request->write_waveform_data();
+      auto status = library_->CreateSourceWaveformFromFileTDMS(vi, waveform_name, waveform_file_path, write_waveform_data);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
       }
@@ -2152,45 +2152,6 @@ namespace nidigitalpattern_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiDigitalService::GetPatternPinIndexes(::grpc::ServerContext* context, const GetPatternPinIndexesRequest* request, GetPatternPinIndexesResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      auto start_label = request->start_label().c_str();
-      ViInt32 actual_num_pins {};
-      while (true) {
-        auto status = library_->GetPatternPinIndexes(vi, start_label, 0, nullptr, &actual_num_pins);
-        if (!status_ok(status)) {
-          return ConvertApiErrorStatusForViSession(context, status, vi);
-        }
-        response->mutable_pin_indexes()->Resize(actual_num_pins, 0);
-        ViInt32* pin_indexes = reinterpret_cast<ViInt32*>(response->mutable_pin_indexes()->mutable_data());
-        auto pin_indexes_buffer_size = actual_num_pins;
-        status = library_->GetPatternPinIndexes(vi, start_label, pin_indexes_buffer_size, pin_indexes, &actual_num_pins);
-        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
-          // buffer is now too small, try again
-          continue;
-        }
-        if (!status_ok(status)) {
-          return ConvertApiErrorStatusForViSession(context, status, vi);
-        }
-        response->set_status(status);
-        response->mutable_pin_indexes()->Resize(actual_num_pins, 0);
-        response->set_actual_num_pins(actual_num_pins);
-        return ::grpc::Status::OK;
-      }
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
   ::grpc::Status NiDigitalService::GetPatternName(::grpc::ServerContext* context, const GetPatternNameRequest* request, GetPatternNameResponse* response)
   {
     if (context->IsCancelled()) {
@@ -2223,6 +2184,45 @@ namespace nidigitalpattern_grpc {
         response->set_status(status);
         response->set_name(name);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_name()));
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDigitalService::GetPatternPinIndexes(::grpc::ServerContext* context, const GetPatternPinIndexesRequest* request, GetPatternPinIndexesResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto start_label = request->start_label().c_str();
+      ViInt32 actual_num_pins {};
+      while (true) {
+        auto status = library_->GetPatternPinIndexes(vi, start_label, 0, nullptr, &actual_num_pins);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(context, status, vi);
+        }
+        response->mutable_pin_indexes()->Resize(actual_num_pins, 0);
+        ViInt32* pin_indexes = reinterpret_cast<ViInt32*>(response->mutable_pin_indexes()->mutable_data());
+        auto pin_indexes_buffer_size = actual_num_pins;
+        status = library_->GetPatternPinIndexes(vi, start_label, pin_indexes_buffer_size, pin_indexes, &actual_num_pins);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(context, status, vi);
+        }
+        response->set_status(status);
+        response->mutable_pin_indexes()->Resize(actual_num_pins, 0);
+        response->set_actual_num_pins(actual_num_pins);
         return ::grpc::Status::OK;
       }
     }
@@ -3907,6 +3907,33 @@ namespace nidigitalpattern_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiDigitalService::WriteSourceWaveformSiteUniqueU32(::grpc::ServerContext* context, const WriteSourceWaveformSiteUniqueU32Request* request, WriteSourceWaveformSiteUniqueU32Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto site_list = request->site_list().c_str();
+      auto waveform_name = request->waveform_name().c_str();
+      ViInt32 num_waveforms = request->num_waveforms();
+      ViInt32 samples_per_waveform = request->samples_per_waveform();
+      auto waveform_data = const_cast<ViUInt32*>(reinterpret_cast<const ViUInt32*>(request->waveform_data().data()));
+      auto status = library_->WriteSourceWaveformSiteUniqueU32(vi, site_list, waveform_name, num_waveforms, samples_per_waveform, waveform_data);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(context, status, vi);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiDigitalService::WriteStatic(::grpc::ServerContext* context, const WriteStaticRequest* request, WriteStaticResponse* response)
   {
     if (context->IsCancelled()) {
@@ -3933,33 +3960,6 @@ namespace nidigitalpattern_grpc {
       }
 
       auto status = library_->WriteStatic(vi, channel_list, state);
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(context, status, vi);
-      }
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiDigitalService::WriteSourceWaveformSiteUniqueU32(::grpc::ServerContext* context, const WriteSourceWaveformSiteUniqueU32Request* request, WriteSourceWaveformSiteUniqueU32Response* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      auto site_list = request->site_list().c_str();
-      auto waveform_name = request->waveform_name().c_str();
-      ViInt32 num_waveforms = request->num_waveforms();
-      ViInt32 samples_per_waveform = request->samples_per_waveform();
-      auto waveform_data = const_cast<ViUInt32*>(reinterpret_cast<const ViUInt32*>(request->waveform_data().data()));
-      auto status = library_->WriteSourceWaveformSiteUniqueU32(vi, site_list, waveform_name, num_waveforms, samples_per_waveform, waveform_data);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
       }

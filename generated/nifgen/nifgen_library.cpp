@@ -71,8 +71,8 @@ NiFgenLibrary::NiFgenLibrary() : shared_library_(kLibraryName)
   function_pointers_.CreateWaveformF64 = reinterpret_cast<CreateWaveformF64Ptr>(shared_library_.get_function_pointer("niFgen_CreateWaveformF64"));
   function_pointers_.CreateWaveformFromFileF64 = reinterpret_cast<CreateWaveformFromFileF64Ptr>(shared_library_.get_function_pointer("niFgen_CreateWaveformFromFileF64"));
   function_pointers_.CreateWaveformFromFileHWS = reinterpret_cast<CreateWaveformFromFileHWSPtr>(shared_library_.get_function_pointer("niFgen_CreateWaveformFromFileHWS"));
-  function_pointers_.CreateWaveformI16 = reinterpret_cast<CreateWaveformI16Ptr>(shared_library_.get_function_pointer("niFgen_CreateWaveformI16"));
   function_pointers_.CreateWaveformFromFileI16 = reinterpret_cast<CreateWaveformFromFileI16Ptr>(shared_library_.get_function_pointer("niFgen_CreateWaveformFromFileI16"));
+  function_pointers_.CreateWaveformI16 = reinterpret_cast<CreateWaveformI16Ptr>(shared_library_.get_function_pointer("niFgen_CreateWaveformI16"));
   function_pointers_.DefineUserStandardWaveform = reinterpret_cast<DefineUserStandardWaveformPtr>(shared_library_.get_function_pointer("niFgen_DefineUserStandardWaveform"));
   function_pointers_.DeleteNamedWaveform = reinterpret_cast<DeleteNamedWaveformPtr>(shared_library_.get_function_pointer("niFgen_DeleteNamedWaveform"));
   function_pointers_.DeleteScript = reinterpret_cast<DeleteScriptPtr>(shared_library_.get_function_pointer("niFgen_DeleteScript"));
@@ -146,14 +146,14 @@ NiFgenLibrary::NiFgenLibrary() : shared_library_(kLibraryName)
   function_pointers_.WaitUntilDone = reinterpret_cast<WaitUntilDonePtr>(shared_library_.get_function_pointer("niFgen_WaitUntilDone"));
   function_pointers_.WriteBinary16Waveform = reinterpret_cast<WriteBinary16WaveformPtr>(shared_library_.get_function_pointer("niFgen_WriteBinary16Waveform"));
   function_pointers_.WriteComplexBinary16Waveform = reinterpret_cast<WriteComplexBinary16WaveformPtr>(shared_library_.get_function_pointer("niFgen_WriteComplexBinary16Waveform"));
+  function_pointers_.WriteNamedWaveformComplexF64 = reinterpret_cast<WriteNamedWaveformComplexF64Ptr>(shared_library_.get_function_pointer("niFgen_WriteNamedWaveformComplexF64"));
+  function_pointers_.WriteNamedWaveformComplexI16 = reinterpret_cast<WriteNamedWaveformComplexI16Ptr>(shared_library_.get_function_pointer("niFgen_WriteNamedWaveformComplexI16"));
   function_pointers_.WriteNamedWaveformF64 = reinterpret_cast<WriteNamedWaveformF64Ptr>(shared_library_.get_function_pointer("niFgen_WriteNamedWaveformF64"));
   function_pointers_.WriteNamedWaveformI16 = reinterpret_cast<WriteNamedWaveformI16Ptr>(shared_library_.get_function_pointer("niFgen_WriteNamedWaveformI16"));
   function_pointers_.WriteP2PEndpointI16 = reinterpret_cast<WriteP2PEndpointI16Ptr>(shared_library_.get_function_pointer("niFgen_WriteP2PEndpointI16"));
   function_pointers_.WriteScript = reinterpret_cast<WriteScriptPtr>(shared_library_.get_function_pointer("niFgen_WriteScript"));
   function_pointers_.WriteWaveform = reinterpret_cast<WriteWaveformPtr>(shared_library_.get_function_pointer("niFgen_WriteWaveform"));
   function_pointers_.WriteWaveformComplexF64 = reinterpret_cast<WriteWaveformComplexF64Ptr>(shared_library_.get_function_pointer("niFgen_WriteWaveformComplexF64"));
-  function_pointers_.WriteNamedWaveformComplexF64 = reinterpret_cast<WriteNamedWaveformComplexF64Ptr>(shared_library_.get_function_pointer("niFgen_WriteNamedWaveformComplexF64"));
-  function_pointers_.WriteNamedWaveformComplexI16 = reinterpret_cast<WriteNamedWaveformComplexI16Ptr>(shared_library_.get_function_pointer("niFgen_WriteNamedWaveformComplexI16"));
 }
 
 NiFgenLibrary::~NiFgenLibrary()
@@ -767,18 +767,6 @@ ViStatus NiFgenLibrary::CreateWaveformFromFileHWS(ViSession vi, ViConstString ch
 #endif
 }
 
-ViStatus NiFgenLibrary::CreateWaveformI16(ViSession vi, ViConstString channelName, ViInt32 waveformSize, ViInt16 waveformDataArray[], ViInt32* waveformHandle)
-{
-  if (!function_pointers_.CreateWaveformI16) {
-    throw nidevice_grpc::LibraryLoadException("Could not find niFgen_CreateWaveformI16.");
-  }
-#if defined(_MSC_VER)
-  return niFgen_CreateWaveformI16(vi, channelName, waveformSize, waveformDataArray, waveformHandle);
-#else
-  return function_pointers_.CreateWaveformI16(vi, channelName, waveformSize, waveformDataArray, waveformHandle);
-#endif
-}
-
 ViStatus NiFgenLibrary::CreateWaveformFromFileI16(ViSession vi, ViConstString channelName, ViConstString fileName, ViInt32 byteOrder, ViInt32* waveformHandle)
 {
   if (!function_pointers_.CreateWaveformFromFileI16) {
@@ -788,6 +776,18 @@ ViStatus NiFgenLibrary::CreateWaveformFromFileI16(ViSession vi, ViConstString ch
   return niFgen_CreateWaveformFromFileI16(vi, channelName, fileName, byteOrder, waveformHandle);
 #else
   return function_pointers_.CreateWaveformFromFileI16(vi, channelName, fileName, byteOrder, waveformHandle);
+#endif
+}
+
+ViStatus NiFgenLibrary::CreateWaveformI16(ViSession vi, ViConstString channelName, ViInt32 waveformSize, ViInt16 waveformDataArray[], ViInt32* waveformHandle)
+{
+  if (!function_pointers_.CreateWaveformI16) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niFgen_CreateWaveformI16.");
+  }
+#if defined(_MSC_VER)
+  return niFgen_CreateWaveformI16(vi, channelName, waveformSize, waveformDataArray, waveformHandle);
+#else
+  return function_pointers_.CreateWaveformI16(vi, channelName, waveformSize, waveformDataArray, waveformHandle);
 #endif
 }
 
@@ -1659,6 +1659,30 @@ ViStatus NiFgenLibrary::WriteComplexBinary16Waveform(ViSession vi, ViConstString
 #endif
 }
 
+ViStatus NiFgenLibrary::WriteNamedWaveformComplexF64(ViSession vi, ViConstString channelName, ViConstString waveformName, ViInt32 size, NIComplexNumber_struct data[])
+{
+  if (!function_pointers_.WriteNamedWaveformComplexF64) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niFgen_WriteNamedWaveformComplexF64.");
+  }
+#if defined(_MSC_VER)
+  return niFgen_WriteNamedWaveformComplexF64(vi, channelName, waveformName, size, data);
+#else
+  return function_pointers_.WriteNamedWaveformComplexF64(vi, channelName, waveformName, size, data);
+#endif
+}
+
+ViStatus NiFgenLibrary::WriteNamedWaveformComplexI16(ViSession vi, ViConstString channelName, ViConstString waveformName, ViInt32 size, NIComplexI16_struct data[])
+{
+  if (!function_pointers_.WriteNamedWaveformComplexI16) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niFgen_WriteNamedWaveformComplexI16.");
+  }
+#if defined(_MSC_VER)
+  return niFgen_WriteNamedWaveformComplexI16(vi, channelName, waveformName, size, data);
+#else
+  return function_pointers_.WriteNamedWaveformComplexI16(vi, channelName, waveformName, size, data);
+#endif
+}
+
 ViStatus NiFgenLibrary::WriteNamedWaveformF64(ViSession vi, ViConstString channelName, ViConstString waveformName, ViInt32 size, ViReal64 data[])
 {
   if (!function_pointers_.WriteNamedWaveformF64) {
@@ -1728,30 +1752,6 @@ ViStatus NiFgenLibrary::WriteWaveformComplexF64(ViSession vi, ViConstString chan
   return niFgen_WriteWaveformComplexF64(vi, channelName, numberOfSamples, data, waveformHandle);
 #else
   return function_pointers_.WriteWaveformComplexF64(vi, channelName, numberOfSamples, data, waveformHandle);
-#endif
-}
-
-ViStatus NiFgenLibrary::WriteNamedWaveformComplexF64(ViSession vi, ViConstString channelName, ViConstString waveformName, ViInt32 size, NIComplexNumber_struct data[])
-{
-  if (!function_pointers_.WriteNamedWaveformComplexF64) {
-    throw nidevice_grpc::LibraryLoadException("Could not find niFgen_WriteNamedWaveformComplexF64.");
-  }
-#if defined(_MSC_VER)
-  return niFgen_WriteNamedWaveformComplexF64(vi, channelName, waveformName, size, data);
-#else
-  return function_pointers_.WriteNamedWaveformComplexF64(vi, channelName, waveformName, size, data);
-#endif
-}
-
-ViStatus NiFgenLibrary::WriteNamedWaveformComplexI16(ViSession vi, ViConstString channelName, ViConstString waveformName, ViInt32 size, NIComplexI16_struct data[])
-{
-  if (!function_pointers_.WriteNamedWaveformComplexI16) {
-    throw nidevice_grpc::LibraryLoadException("Could not find niFgen_WriteNamedWaveformComplexI16.");
-  }
-#if defined(_MSC_VER)
-  return niFgen_WriteNamedWaveformComplexI16(vi, channelName, waveformName, size, data);
-#else
-  return function_pointers_.WriteNamedWaveformComplexI16(vi, channelName, waveformName, size, data);
 #endif
 }
 

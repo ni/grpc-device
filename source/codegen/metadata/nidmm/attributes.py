@@ -1,3 +1,5 @@
+﻿# -*- coding: utf-8 -*-
+# This file is generated from NI-DMM API metadata version 19.6.0d7
 attributes = {
     1050002: {
         'access': 'read-write',
@@ -184,8 +186,8 @@ attributes = {
     1150002: {
         'access': 'read-write',
         'channel_based': False,
+        'enum': 'MeasurementDestinationSlope',
         'name': 'MEAS_DEST_SLOPE',
-        "enum": "MeasurementDestinationSlope",
         'resettable': False,
         'type': 'ViInt32'
     },
@@ -199,8 +201,8 @@ attributes = {
     1150010: {
         'access': 'read-write',
         'channel_based': False,
-        'name': 'SAMPLE_TRIGGER_SLOPE',
         'enum': 'SampleTrigSlope',
+        'name': 'SAMPLE_TRIGGER_SLOPE',
         'resettable': False,
         'type': 'ViInt32'
     },
@@ -269,8 +271,8 @@ attributes = {
         'access': 'read-write',
         'attribute_class': 'AttributeViReal64TimeDeltaSeconds',
         'channel_based': False,
-        'name': 'SETTLE_TIME',
         'enum': 'SettleTime',
+        'name': 'SETTLE_TIME',
         'resettable': False,
         'type': 'ViReal64',
         'type_in_documentation': 'hightime.timedelta, datetime.timedelta, or float in seconds'
@@ -292,16 +294,16 @@ attributes = {
     1150034: {
         'access': 'read-write',
         'channel_based': False,
-        'name': 'LATENCY',
         'enum': 'Latency',
+        'name': 'LATENCY',
         'resettable': False,
         'type': 'ViInt32'
     },
     1150037: {
         'access': 'read-write',
         'channel_based': False,
-        'name': 'BUFFER_SIZE',
         'enum': 'BufferSize',
+        'name': 'BUFFER_SIZE',
         'resettable': False,
         'type': 'ViInt32'
     },
@@ -478,8 +480,8 @@ attributes = {
         'access': 'read-write',
         'attribute_class': 'AttributeViReal64TimeDeltaSeconds',
         'channel_based': False,
-        'name': 'TRIGGER_DELAY',
         'enum': 'TriggerDelays',
+        'name': 'TRIGGER_DELAY',
         'resettable': False,
         'type': 'ViReal64',
         'type_in_documentation': 'hightime.timedelta, datetime.timedelta, or float in seconds'
@@ -508,8 +510,8 @@ attributes = {
     1250101: {
         'access': 'read-write',
         'channel_based': False,
-        'name': 'FREQ_VOLTAGE_RANGE',
         'enum': 'FrequencyVoltageRange',
+        'name': 'FREQ_VOLTAGE_RANGE',
         'resettable': False,
         'type': 'ViReal64'
     },
@@ -554,8 +556,8 @@ attributes = {
     1250301: {
         'access': 'read-write',
         'channel_based': False,
-        'name': 'SAMPLE_COUNT',
         'enum': 'SampleCount',
+        'name': 'SAMPLE_COUNT',
         'resettable': False,
         'type': 'ViInt32'
     },
@@ -571,8 +573,8 @@ attributes = {
         'access': 'read-write',
         'attribute_class': 'AttributeViReal64TimeDeltaSeconds',
         'channel_based': False,
-        'name': 'SAMPLE_INTERVAL',
         'enum': 'SampleInterval',
+        'name': 'SAMPLE_INTERVAL',
         'resettable': False,
         'type': 'ViReal64',
         'type_in_documentation': 'hightime.timedelta, datetime.timedelta, or float in seconds'
@@ -580,8 +582,8 @@ attributes = {
     1250304: {
         'access': 'read-write',
         'channel_based': False,
-        'name': 'TRIGGER_COUNT',
         'enum': 'TriggerCount',
+        'name': 'TRIGGER_COUNT',
         'resettable': False,
         'type': 'ViInt32'
     },
@@ -596,8 +598,8 @@ attributes = {
     1250321: {
         'access': 'read-write',
         'channel_based': False,
-        'name': 'APERTURE_TIME',
         'enum': 'ApertureTime',
+        'name': 'APERTURE_TIME',
         'resettable': False,
         'type': 'ViReal64'
     },
@@ -627,16 +629,16 @@ attributes = {
     1250333: {
         'access': 'read-write',
         'channel_based': False,
-        'name': 'POWERLINE_FREQ',
         'enum': 'PowerLineFrequencies',
+        'name': 'POWERLINE_FREQ',
         'resettable': False,
         'type': 'ViReal64'
     },
     1250334: {
         'access': 'read-write',
         'channel_based': False,
-        'name': 'TRIGGER_SLOPE',
         'enum': 'TriggerSlope',
+        'name': 'TRIGGER_SLOPE',
         'resettable': False,
         'type': 'ViInt32'
     }
