@@ -69,7 +69,7 @@ class _Formatter(object):
         items = [
             self.lfchar
             + self.htchar * (indent + 1)
-            + (self._get_formater(item))(self, item, indent + 1)
+            + (self._get_formatter(item))(self, item, indent + 1)
             for item in sorted(value)
         ]
         return "(%s)" % (",".join(items) + self.lfchar + self.htchar * indent)
