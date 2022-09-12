@@ -1,7 +1,6 @@
 message NIErrStatus {
   int32 code = 1;
-  uint32 capacity = 2;
-  string json = 3;
+  string description = 2;
 }
 
 message NIMXLCDevice {

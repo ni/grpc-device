@@ -1,7 +1,7 @@
 #ifndef NIMXLC_TERMINALADAPTORTYPES_H_
 #define NIMXLC_TERMINALADAPTORTYPES_H_
 
-#include <nierr_Status.h>
+#include "server/nierr_Status.h"
 
 /*
   This macro defines opaque handle types that have a little more type-safety

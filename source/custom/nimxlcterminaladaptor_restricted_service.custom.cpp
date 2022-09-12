@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <server/converters.h>
-#include <nierr_Status.h>
+#include <server/nierr_Status.h>
 #include <nimxlcterminaladaptor_restricted.pb.h>
 #include <nimxlcterminaladaptor_restricted/nimxlcterminaladaptor_restricted_service.h>
 #include <custom/nimxlcterminaladaptor_restricted_converters.h>
@@ -12,20 +12,6 @@ namespace nimxlcterminaladaptor_restricted_grpc {
   using nidevice_grpc::converters::convert_to_grpc;
   using nimxlcterminaladaptor_restricted_grpc::NIErrStatus;
   
-// Provide a callback that only returns false because we initialize json to nullptr on initialization.
-bool nierr_noOpReallocJson(struct nierr_Status * s, uint32_t size)
-{
-   return false;
-}
-
-void nierr_Status_initialize(struct nierr_Status * status)
-{
-   status->code = 0;
-   status->capacity = 0;
-   status->reallocJson = &nierr_noOpReallocJson;
-   status->json = nullptr;
-}
-
 class DeviceContainerPtr
 {
     public:
@@ -83,9 +69,7 @@ class TerminalContainerPtr
         auto grpc_session = request->session();
         nimxlc_Session session = session_repository_->access_session(grpc_session.id(), grpc_session.name());
 
-        nierr_Status status;
-        nimxlcterminaladaptor_restricted_grpc::nierr_Status_initialize(&status);
-       
+        auto status = allocate_output_storage<nierr_Status, NIErrStatus>(context);
         DeviceContainerPtr deviceContainerPtr(library_, library_->getDeviceContainer(session, &status));
         if (nierr_Status_isNotFatal(&status))
         {
@@ -115,19 +99,8 @@ class TerminalContainerPtr
         }
 
         response->set_status((&status)->code);
-
-        NIErrStatus* responseCStatus = new NIErrStatus();
-        nidevice_grpc::converters::convert_to_grpc(status, responseCStatus);
-        response->set_allocated_c_status(responseCStatus);
-
-        ::grpc::Status grpcStatus;
-        if (nierr_Status_isFatal(&status)){
-            grpcStatus = ::grpc::Status(::grpc::INTERNAL, status.json);
-        }
-        else {
-            grpcStatus = ::grpc::Status::OK;
-        }
-        return grpcStatus;
+        convert_to_grpc(status, response->mutable_c_status());
+        return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
         return ::grpc::Status(::grpc::NOT_FOUND, ex.what());

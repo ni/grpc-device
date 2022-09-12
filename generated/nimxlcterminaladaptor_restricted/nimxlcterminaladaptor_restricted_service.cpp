@@ -52,7 +52,7 @@ namespace nimxlcterminaladaptor_restricted_grpc {
     try {
       auto hostname = request->hostname().c_str();
 
-      auto c_status = allocate_output_storage<nierr_Status, NIErrStatus>();
+      auto c_status = allocate_output_storage<nierr_Status, NIErrStatus>(context);
       auto init_lambda = [&] () {
         auto handle = library_->createSession(hostname, &c_status);
         auto status = (&c_status)->code;
@@ -112,7 +112,7 @@ namespace nimxlcterminaladaptor_restricted_grpc {
     try {
       auto session_grpc_session = request->session();
       nimxlc_Session session = session_repository_->access_session(session_grpc_session.id(), session_grpc_session.name());
-      auto c_status = allocate_output_storage<nierr_Status, NIErrStatus>();
+      auto c_status = allocate_output_storage<nierr_Status, NIErrStatus>(context);
       library_->refreshTerminalCache(session, &c_status);
       auto status = (&c_status)->code;
       if (!status_ok(status)) {
@@ -138,7 +138,7 @@ namespace nimxlcterminaladaptor_restricted_grpc {
       auto session_grpc_session = request->session();
       nimxlc_Session session = session_repository_->access_session(session_grpc_session.id(), session_grpc_session.name());
       uint32_t system_change_number = request->system_change_number();
-      auto c_status = allocate_output_storage<nierr_Status, NIErrStatus>();
+      auto c_status = allocate_output_storage<nierr_Status, NIErrStatus>(context);
       auto terminal_information_changed = library_->hasTerminalInformationChanged(session, system_change_number, &c_status);
       auto status = (&c_status)->code;
       if (!status_ok(status)) {
@@ -164,7 +164,7 @@ namespace nimxlcterminaladaptor_restricted_grpc {
     try {
       auto session_grpc_session = request->session();
       nimxlc_Session session = session_repository_->access_session(session_grpc_session.id(), session_grpc_session.name());
-      auto c_status = allocate_output_storage<nierr_Status, NIErrStatus>();
+      auto c_status = allocate_output_storage<nierr_Status, NIErrStatus>(context);
       auto system_change_number = library_->getSystemChangeNumber(session, &c_status);
       auto status = (&c_status)->code;
       if (!status_ok(status)) {

@@ -10,6 +10,8 @@
 #ifndef NIERR_NIERR_STATUS_H_
 #define NIERR_NIERR_STATUS_H_
 
+#include <string>
+
 extern "C" {
 #define kNICCall
 
@@ -60,7 +62,9 @@ typedef struct nierr_Status
                           */
 } nierr_Status;
 
-/*! the default function to be used for nierr_Status::reallocJson field.
+void nierr_Status_initialize(struct nierr_Status * status);
+
+/*! the function to be used for nierr_Status::reallocJson field.
  *  This function is responsible to allocate/free json buffer and put the
  * buffer size into the capacity field for a given nierr_Status.
  * \return true if successful, else false. If size is 0, success is guaranteed.
