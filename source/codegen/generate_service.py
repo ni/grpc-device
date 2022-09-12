@@ -22,6 +22,8 @@ def _generate_service_file(metadata, template_file_name, generated_file_suffix, 
 
 def _mutate_metadata(metadata: dict):
     config = metadata["config"]
+    if config["driver_name"] in ["NI-FGEN"]:
+        return
 
     metadata_mutation.move_zero_enums_to_front(metadata["enums"])
 
