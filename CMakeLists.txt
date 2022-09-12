@@ -390,6 +390,7 @@ add_executable(UnitTestsRunner
     "source/tests/unit/server_security_configuration_tests.cpp"
     "source/tests/unit/ni_fake_non_ivi_service_tests.cpp"
     "source/tests/unit/ni_fake_service_tests.cpp"
+    "source/tests/unit/nimxlc_terminal_adaptor_converters_tests.cpp"
     "source/tests/unit/shared_library_tests.cpp"
     "source/tests/unit/syscfg_library_tests.cpp"
     "source/tests/unit/xnet_converters_tests.cpp"

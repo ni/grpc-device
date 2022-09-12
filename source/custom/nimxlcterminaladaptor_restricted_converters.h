@@ -16,8 +16,9 @@ namespace nimxlcterminaladaptor_restricted_grpc {
 // Add underscore to usings so they don't conflict with including files in the same namespace.
 namespace pb_ = ::google::protobuf;
 
+template <typename TServerContext>
 struct NIErrStatusOutputConverter {
-  NIErrStatusOutputConverter(grpc::ServerContext *serverContext)
+  NIErrStatusOutputConverter(TServerContext *serverContext)
   {
     context = serverContext;
     nierr_Status_initialize(&status);
@@ -56,11 +57,11 @@ struct NIErrStatusOutputConverter {
     }
   }
 
-  grpc::ServerContext *context;
+  TServerContext *context;
   nierr_Status status{};
 };
 
-inline void convert_to_grpc(const NIErrStatusOutputConverter& storage, nimxlcterminaladaptor_restricted_grpc::NIErrStatus* output)
+inline void convert_to_grpc(const NIErrStatusOutputConverter<grpc::ServerContext> storage, nimxlcterminaladaptor_restricted_grpc::NIErrStatus* output)
 {
   storage.to_grpc(*output);
 }
@@ -73,7 +74,7 @@ namespace converters {
 
 template <>
 struct TypeToStorageType<nierr_Status, nimxlcterminaladaptor_restricted_grpc::NIErrStatus> {
-  using StorageType = nimxlcterminaladaptor_restricted_grpc::NIErrStatusOutputConverter;
+  using StorageType = nimxlcterminaladaptor_restricted_grpc::NIErrStatusOutputConverter<grpc::ServerContext>;
 };
 
 }  // namespace converters
