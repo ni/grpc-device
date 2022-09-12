@@ -1,17 +1,13 @@
+"""Script for formatting mi-driver metadata in same style as hapigen output."""
 import argparse
 import codecs
-import fnmatch
 import os
-import sys
 from enum import Enum
-from pprint import pprint
-from typing import Set
-from unittest import FunctionTestCase
 
 from template_helpers import load_metadata
 
 
-class Formatter(object):
+class _Formatter(object):
     # From https://stackoverflow.com/questions/3229419/how-to-pretty-print-nested-dictionaries
     # Changes
     #  - sort keys in tuple and dictionary for reproducability
@@ -21,13 +17,13 @@ class Formatter(object):
         self.htchar = "    "
         self.lfchar = "\n"
         self.indent = 0
-        self.set_formatter(object, self.__class__.format_object)
-        self.set_formatter(dict, self.__class__.format_dict)
-        self.set_formatter(list, self.__class__.format_list)
-        self.set_formatter(tuple, self.__class__.format_tuple)
-        self.set_formatter(Enum, self.__class__.format_enum)
+        self._set_formatter(object, self.__class__._format_object)
+        self._set_formatter(dict, self.__class__._format_dict)
+        self._set_formatter(list, self.__class__._format_list)
+        self._set_formatter(tuple, self.__class__._format_tuple)
+        self._set_formatter(Enum, self.__class__._format_enum)
 
-    def set_formatter(self, obj, callback):
+    def _set_formatter(self, obj, callback):
         self.types[obj] = callback
 
     def _get_formatter(self, value):
@@ -43,13 +39,13 @@ class Formatter(object):
         formater = self._get_formatter(value)
         return formater(self, value, self.indent)
 
-    def format_object(self, value, indent):
+    def _format_object(self, value, indent):
         return repr(value)
 
-    def format_enum(self, value, indent):
+    def _format_enum(self, value, indent):
         return repr(value.value)
 
-    def format_dict(self, value, indent):
+    def _format_dict(self, value, indent):
         items = [
             self.lfchar
             + self.htchar * (indent + 1)
@@ -60,7 +56,7 @@ class Formatter(object):
         ]
         return "{%s}" % (",".join(items) + self.lfchar + self.htchar * indent)
 
-    def format_list(self, value, indent):
+    def _format_list(self, value, indent):
         items = [
             self.lfchar
             + self.htchar * (indent + 1)
@@ -69,7 +65,7 @@ class Formatter(object):
         ]
         return "[%s]" % (",".join(items) + self.lfchar + self.htchar * indent)
 
-    def format_tuple(self, value, indent):
+    def _format_tuple(self, value, indent):
         items = [
             self.lfchar
             + self.htchar * (indent + 1)
@@ -91,7 +87,7 @@ def _format_mi_metadata(metadata_dir: str):
         "nitclk",
     ]
     mi_drivers = [driver for driver in os.listdir(metadata_dir) if driver in mi_drivers_to_update]
-    pretty = Formatter()
+    pretty = _Formatter()
     for mi_driver in mi_drivers:
         metadata_names = ["attributes", "config", "enums", "functions"]
         path = f"{metadata_dir}/{mi_driver}/"
