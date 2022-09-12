@@ -22,7 +22,6 @@ using StubPtr = std::unique_ptr<NiDmm::Stub>;
 using namespace nidevice_grpc::experimental::client;
 
 
-Control4022Response control4022(const StubPtr& stub, const pb::string& resource_name, const simple_variant<Configuration4022, pb::int32>& configuration);
 AbortResponse abort(const StubPtr& stub, const nidevice_grpc::Session& vi);
 CheckAttributeViBooleanResponse check_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDmmAttribute& attribute_id, const bool& attribute_value);
 CheckAttributeViInt32Response check_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDmmAttribute& attribute_id, const simple_variant<NiDmmInt32AttributeValues, pb::int32>& attribute_value);
@@ -40,26 +39,27 @@ ConfigureCurrentSourceResponse configure_current_source(const StubPtr& stub, con
 ConfigureFixedRefJunctionResponse configure_fixed_ref_junction(const StubPtr& stub, const nidevice_grpc::Session& vi, const double& fixed_reference_junction);
 ConfigureFrequencyVoltageRangeResponse configure_frequency_voltage_range(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<FrequencyVoltageRange, double>& voltage_range);
 ConfigureMeasCompleteDestResponse configure_meas_complete_dest(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& meas_complete_destination);
-ConfigureMeasurementAbsoluteResponse configure_measurement_absolute(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<Function, pb::int32>& measurement_function, const double& range, const double& resolution_absolute);
 ConfigureMeasCompleteSlopeResponse configure_meas_complete_slope(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& meas_complete_slope);
+ConfigureMeasurementAbsoluteResponse configure_measurement_absolute(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<Function, pb::int32>& measurement_function, const double& range, const double& resolution_absolute);
 ConfigureMeasurementDigitsResponse configure_measurement_digits(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<Function, pb::int32>& measurement_function, const double& range, const double& resolution_digits);
 ConfigureMultiPointResponse configure_multi_point(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<TriggerCount, pb::int32>& trigger_count, const simple_variant<SampleCount, pb::int32>& sample_count, const simple_variant<SampleTrigger, pb::int32>& sample_trigger, const simple_variant<SampleInterval, double>& sample_interval);
 ConfigureOffsetCompOhmsResponse configure_offset_comp_ohms(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<CompensatedOhms, pb::int32>& offset_comp_ohms);
 ConfigureOpenCableCompValuesResponse configure_open_cable_comp_values(const StubPtr& stub, const nidevice_grpc::Session& vi, const double& conductance, const double& susceptance);
 ConfigurePowerLineFrequencyResponse configure_power_line_frequency(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<PowerLineFrequencies, double>& power_line_frequency_hz);
-ConfigureShortCableCompValuesResponse configure_short_cable_comp_values(const StubPtr& stub, const nidevice_grpc::Session& vi, const double& resistance, const double& reactance);
 ConfigureRTDCustomResponse configure_rtd_custom(const StubPtr& stub, const nidevice_grpc::Session& vi, const double& rtd_a, const double& rtd_b, const double& rtd_c);
 ConfigureRTDTypeResponse configure_rtd_type(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<RtdType, pb::int32>& rtd_type, const double& rtd_resistance);
 ConfigureSampleTriggerSlopeResponse configure_sample_trigger_slope(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<SampleTrigSlope, pb::int32>& sample_trigger_slope);
+ConfigureShortCableCompValuesResponse configure_short_cable_comp_values(const StubPtr& stub, const nidevice_grpc::Session& vi, const double& resistance, const double& reactance);
 ConfigureThermistorCustomResponse configure_thermistor_custom(const StubPtr& stub, const nidevice_grpc::Session& vi, const double& thermistor_a, const double& thermistor_b, const double& thermistor_c);
-ConfigureThermocoupleResponse configure_thermocouple(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<ThermocoupleType, pb::int32>& thermocouple_type, const simple_variant<ThermocoupleReferenceJunctionType, pb::int32>& reference_junction_type);
 ConfigureThermistorTypeResponse configure_thermistor_type(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& thermistor_type);
+ConfigureThermocoupleResponse configure_thermocouple(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<ThermocoupleType, pb::int32>& thermocouple_type, const simple_variant<ThermocoupleReferenceJunctionType, pb::int32>& reference_junction_type);
 ConfigureTransducerTypeResponse configure_transducer_type(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& transducer_type);
 ConfigureTriggerResponse configure_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<TriggerSource, pb::int32>& trigger_source, const simple_variant<TriggerDelays, double>& trigger_delay);
 ConfigureTriggerSlopeResponse configure_trigger_slope(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<TriggerSlope, pb::int32>& trigger_slope);
 ConfigureWaveformAcquisitionResponse configure_waveform_acquisition(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<Function, pb::int32>& measurement_function, const double& range, const double& rate, const pb::int32& waveform_points);
 ConfigureWaveformCouplingResponse configure_waveform_coupling(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& waveform_coupling);
 ControlResponse control(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<ControlCommit, pb::int32>& control_action);
+Control4022Response control4022(const StubPtr& stub, const pb::string& resource_name, const simple_variant<Configuration4022, pb::int32>& configuration);
 DisableResponse disable(const StubPtr& stub, const nidevice_grpc::Session& vi);
 ExportAttributeConfigurationBufferResponse export_attribute_configuration_buffer(const StubPtr& stub, const nidevice_grpc::Session& vi);
 ExportAttributeConfigurationFileResponse export_attribute_configuration_file(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& file_path);

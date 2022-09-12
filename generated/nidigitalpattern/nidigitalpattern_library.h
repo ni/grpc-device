@@ -38,9 +38,9 @@ class NiDigitalLibrary : public nidigitalpattern_grpc::NiDigitalLibraryInterface
   ViStatus ConfigureHistoryRAMCyclesToAcquire(ViSession vi, ViInt32 cyclesToAcquire);
   ViStatus ConfigurePatternBurstSites(ViSession vi, ViConstString siteList);
   ViStatus ConfigurePatternLabelHistoryRAMTrigger(ViSession vi, ViConstString label, ViInt64 vectorOffset, ViInt64 cycleOffset, ViInt32 pretriggerSamples);
-  ViStatus ConfigureStartLabel(ViSession vi, ViConstString label);
   ViStatus ConfigureSoftwareEdgeConditionalJumpTrigger(ViSession vi, ViConstString triggerIdentifier);
   ViStatus ConfigureSoftwareEdgeStartTrigger(ViSession vi);
+  ViStatus ConfigureStartLabel(ViSession vi, ViConstString label);
   ViStatus ConfigureTerminationMode(ViSession vi, ViConstString channelList, ViInt32 mode);
   ViStatus ConfigureTimeSetCompareEdgesStrobe(ViSession vi, ViConstString pinList, ViConstString timeSetName, ViReal64 strobeEdge);
   ViStatus ConfigureTimeSetCompareEdgesStrobe2x(ViSession vi, ViConstString pinList, ViConstString timeSetName, ViReal64 strobeEdge, ViReal64 strobe2Edge);
@@ -55,9 +55,9 @@ class NiDigitalLibrary : public nidigitalpattern_grpc::NiDigitalLibraryInterface
   ViStatus CreateCaptureWaveformParallel(ViSession vi, ViConstString pinList, ViConstString waveformName);
   ViStatus CreateCaptureWaveformSerial(ViSession vi, ViConstString pinList, ViConstString waveformName, ViUInt32 sampleWidth, ViInt32 bitOrder);
   ViStatus CreateChannelMap(ViSession vi, ViInt32 numSites);
-  ViStatus CreateSourceWaveformFromFileTDMS(ViSession vi, ViConstString waveformName, ViConstString waveformFilePath, ViBoolean writeWaveformData);
-  ViStatus CreatePinMap(ViSession vi, ViConstString dutPinList, ViConstString systemPinList);
   ViStatus CreatePinGroup(ViSession vi, ViConstString pinGroupName, ViConstString pinList);
+  ViStatus CreatePinMap(ViSession vi, ViConstString dutPinList, ViConstString systemPinList);
+  ViStatus CreateSourceWaveformFromFileTDMS(ViSession vi, ViConstString waveformName, ViConstString waveformFilePath, ViBoolean writeWaveformData);
   ViStatus CreateSourceWaveformParallel(ViSession vi, ViConstString pinList, ViConstString waveformName, ViInt32 dataMapping);
   ViStatus CreateSourceWaveformSerial(ViSession vi, ViConstString pinList, ViConstString waveformName, ViInt32 dataMapping, ViUInt32 sampleWidth, ViInt32 bitOrder);
   ViStatus CreateTimeSet(ViSession vi, ViConstString name);
@@ -88,8 +88,8 @@ class NiDigitalLibrary : public nidigitalpattern_grpc::NiDigitalLibraryInterface
   ViStatus GetError(ViSession vi, ViStatus* errorCode, ViInt32 errorDescriptionBufferSize, ViChar errorDescription[]);
   ViStatus GetFailCount(ViSession vi, ViConstString channelList, ViInt32 bufferSize, ViInt64 failureCount[], ViInt32* actualNumRead);
   ViStatus GetHistoryRAMSampleCount(ViSession vi, ViConstString site, ViInt64* sampleCount);
-  ViStatus GetPatternPinIndexes(ViSession vi, ViConstString startLabel, ViInt32 pinIndexesBufferSize, ViInt32 pinIndexes[], ViInt32* actualNumPins);
   ViStatus GetPatternName(ViSession vi, ViInt32 patternIndex, ViInt32 nameBufferSize, ViChar name[]);
+  ViStatus GetPatternPinIndexes(ViSession vi, ViConstString startLabel, ViInt32 pinIndexesBufferSize, ViInt32 pinIndexes[], ViInt32* actualNumPins);
   ViStatus GetPatternPinList(ViSession vi, ViConstString startLabel, ViInt32 pinListBufferSize, ViChar pinList[]);
   ViStatus GetPinName(ViSession vi, ViInt32 pinIndex, ViInt32 nameBufferSize, ViChar name[]);
   ViStatus GetPinResultsPinInformation(ViSession vi, ViConstString channelList, ViInt32 bufferSize, ViInt32 pinIndexes[], ViInt32 siteNumbers[], ViInt32 channelIndexes[], ViInt32* actualNumValues);
@@ -148,8 +148,8 @@ class NiDigitalLibrary : public nidigitalpattern_grpc::NiDigitalLibraryInterface
   ViStatus WriteSequencerRegister(ViSession vi, ViConstString reg, ViInt32 value);
   ViStatus WriteSourceWaveformBroadcastU32(ViSession vi, ViConstString waveformName, ViInt32 waveformSize, ViUInt32 waveformData[]);
   ViStatus WriteSourceWaveformDataFromFileTDMS(ViSession vi, ViConstString waveformName, ViConstString waveformFilePath);
-  ViStatus WriteStatic(ViSession vi, ViConstString channelList, ViUInt8 state);
   ViStatus WriteSourceWaveformSiteUniqueU32(ViSession vi, ViConstString siteList, ViConstString waveformName, ViInt32 numWaveforms, ViInt32 samplesPerWaveform, ViUInt32 waveformData[1]);
+  ViStatus WriteStatic(ViSession vi, ViConstString channelList, ViUInt8 state);
 
  private:
   using AbortPtr = decltype(&niDigital_Abort);
@@ -172,9 +172,9 @@ class NiDigitalLibrary : public nidigitalpattern_grpc::NiDigitalLibraryInterface
   using ConfigureHistoryRAMCyclesToAcquirePtr = decltype(&niDigital_ConfigureHistoryRAMCyclesToAcquire);
   using ConfigurePatternBurstSitesPtr = decltype(&niDigital_ConfigurePatternBurstSites);
   using ConfigurePatternLabelHistoryRAMTriggerPtr = decltype(&niDigital_ConfigurePatternLabelHistoryRAMTrigger);
-  using ConfigureStartLabelPtr = decltype(&niDigital_ConfigureStartLabel);
   using ConfigureSoftwareEdgeConditionalJumpTriggerPtr = decltype(&niDigital_ConfigureSoftwareEdgeConditionalJumpTrigger);
   using ConfigureSoftwareEdgeStartTriggerPtr = decltype(&niDigital_ConfigureSoftwareEdgeStartTrigger);
+  using ConfigureStartLabelPtr = decltype(&niDigital_ConfigureStartLabel);
   using ConfigureTerminationModePtr = decltype(&niDigital_ConfigureTerminationMode);
   using ConfigureTimeSetCompareEdgesStrobePtr = decltype(&niDigital_ConfigureTimeSetCompareEdgesStrobe);
   using ConfigureTimeSetCompareEdgesStrobe2xPtr = decltype(&niDigital_ConfigureTimeSetCompareEdgesStrobe2x);
@@ -189,9 +189,9 @@ class NiDigitalLibrary : public nidigitalpattern_grpc::NiDigitalLibraryInterface
   using CreateCaptureWaveformParallelPtr = decltype(&niDigital_CreateCaptureWaveformParallel);
   using CreateCaptureWaveformSerialPtr = decltype(&niDigital_CreateCaptureWaveformSerial);
   using CreateChannelMapPtr = decltype(&niDigital_CreateChannelMap);
-  using CreateSourceWaveformFromFileTDMSPtr = decltype(&niDigital_CreateSourceWaveformFromFileTDMS);
-  using CreatePinMapPtr = decltype(&niDigital_CreatePinMap);
   using CreatePinGroupPtr = decltype(&niDigital_CreatePinGroup);
+  using CreatePinMapPtr = decltype(&niDigital_CreatePinMap);
+  using CreateSourceWaveformFromFileTDMSPtr = decltype(&niDigital_CreateSourceWaveformFromFileTDMS);
   using CreateSourceWaveformParallelPtr = decltype(&niDigital_CreateSourceWaveformParallel);
   using CreateSourceWaveformSerialPtr = decltype(&niDigital_CreateSourceWaveformSerial);
   using CreateTimeSetPtr = decltype(&niDigital_CreateTimeSet);
@@ -222,8 +222,8 @@ class NiDigitalLibrary : public nidigitalpattern_grpc::NiDigitalLibraryInterface
   using GetErrorPtr = decltype(&niDigital_GetError);
   using GetFailCountPtr = decltype(&niDigital_GetFailCount);
   using GetHistoryRAMSampleCountPtr = decltype(&niDigital_GetHistoryRAMSampleCount);
-  using GetPatternPinIndexesPtr = decltype(&niDigital_GetPatternPinIndexes);
   using GetPatternNamePtr = decltype(&niDigital_GetPatternName);
+  using GetPatternPinIndexesPtr = decltype(&niDigital_GetPatternPinIndexes);
   using GetPatternPinListPtr = decltype(&niDigital_GetPatternPinList);
   using GetPinNamePtr = decltype(&niDigital_GetPinName);
   using GetPinResultsPinInformationPtr = decltype(&niDigital_GetPinResultsPinInformation);
@@ -282,8 +282,8 @@ class NiDigitalLibrary : public nidigitalpattern_grpc::NiDigitalLibraryInterface
   using WriteSequencerRegisterPtr = decltype(&niDigital_WriteSequencerRegister);
   using WriteSourceWaveformBroadcastU32Ptr = decltype(&niDigital_WriteSourceWaveformBroadcastU32);
   using WriteSourceWaveformDataFromFileTDMSPtr = decltype(&niDigital_WriteSourceWaveformDataFromFileTDMS);
-  using WriteStaticPtr = decltype(&niDigital_WriteStatic);
   using WriteSourceWaveformSiteUniqueU32Ptr = decltype(&niDigital_WriteSourceWaveformSiteUniqueU32);
+  using WriteStaticPtr = decltype(&niDigital_WriteStatic);
 
   typedef struct FunctionPointers {
     AbortPtr Abort;
@@ -306,9 +306,9 @@ class NiDigitalLibrary : public nidigitalpattern_grpc::NiDigitalLibraryInterface
     ConfigureHistoryRAMCyclesToAcquirePtr ConfigureHistoryRAMCyclesToAcquire;
     ConfigurePatternBurstSitesPtr ConfigurePatternBurstSites;
     ConfigurePatternLabelHistoryRAMTriggerPtr ConfigurePatternLabelHistoryRAMTrigger;
-    ConfigureStartLabelPtr ConfigureStartLabel;
     ConfigureSoftwareEdgeConditionalJumpTriggerPtr ConfigureSoftwareEdgeConditionalJumpTrigger;
     ConfigureSoftwareEdgeStartTriggerPtr ConfigureSoftwareEdgeStartTrigger;
+    ConfigureStartLabelPtr ConfigureStartLabel;
     ConfigureTerminationModePtr ConfigureTerminationMode;
     ConfigureTimeSetCompareEdgesStrobePtr ConfigureTimeSetCompareEdgesStrobe;
     ConfigureTimeSetCompareEdgesStrobe2xPtr ConfigureTimeSetCompareEdgesStrobe2x;
@@ -323,9 +323,9 @@ class NiDigitalLibrary : public nidigitalpattern_grpc::NiDigitalLibraryInterface
     CreateCaptureWaveformParallelPtr CreateCaptureWaveformParallel;
     CreateCaptureWaveformSerialPtr CreateCaptureWaveformSerial;
     CreateChannelMapPtr CreateChannelMap;
-    CreateSourceWaveformFromFileTDMSPtr CreateSourceWaveformFromFileTDMS;
-    CreatePinMapPtr CreatePinMap;
     CreatePinGroupPtr CreatePinGroup;
+    CreatePinMapPtr CreatePinMap;
+    CreateSourceWaveformFromFileTDMSPtr CreateSourceWaveformFromFileTDMS;
     CreateSourceWaveformParallelPtr CreateSourceWaveformParallel;
     CreateSourceWaveformSerialPtr CreateSourceWaveformSerial;
     CreateTimeSetPtr CreateTimeSet;
@@ -356,8 +356,8 @@ class NiDigitalLibrary : public nidigitalpattern_grpc::NiDigitalLibraryInterface
     GetErrorPtr GetError;
     GetFailCountPtr GetFailCount;
     GetHistoryRAMSampleCountPtr GetHistoryRAMSampleCount;
-    GetPatternPinIndexesPtr GetPatternPinIndexes;
     GetPatternNamePtr GetPatternName;
+    GetPatternPinIndexesPtr GetPatternPinIndexes;
     GetPatternPinListPtr GetPatternPinList;
     GetPinNamePtr GetPinName;
     GetPinResultsPinInformationPtr GetPinResultsPinInformation;
@@ -416,8 +416,8 @@ class NiDigitalLibrary : public nidigitalpattern_grpc::NiDigitalLibraryInterface
     WriteSequencerRegisterPtr WriteSequencerRegister;
     WriteSourceWaveformBroadcastU32Ptr WriteSourceWaveformBroadcastU32;
     WriteSourceWaveformDataFromFileTDMSPtr WriteSourceWaveformDataFromFileTDMS;
-    WriteStaticPtr WriteStatic;
     WriteSourceWaveformSiteUniqueU32Ptr WriteSourceWaveformSiteUniqueU32;
+    WriteStaticPtr WriteStatic;
   } FunctionLoadStatus;
 
   nidevice_grpc::SharedLibrary shared_library_;

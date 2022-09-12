@@ -37,9 +37,9 @@ class NiDigitalMockLibrary : public nidigitalpattern_grpc::NiDigitalLibraryInter
   MOCK_METHOD(ViStatus, ConfigureHistoryRAMCyclesToAcquire, (ViSession vi, ViInt32 cyclesToAcquire), (override));
   MOCK_METHOD(ViStatus, ConfigurePatternBurstSites, (ViSession vi, ViConstString siteList), (override));
   MOCK_METHOD(ViStatus, ConfigurePatternLabelHistoryRAMTrigger, (ViSession vi, ViConstString label, ViInt64 vectorOffset, ViInt64 cycleOffset, ViInt32 pretriggerSamples), (override));
-  MOCK_METHOD(ViStatus, ConfigureStartLabel, (ViSession vi, ViConstString label), (override));
   MOCK_METHOD(ViStatus, ConfigureSoftwareEdgeConditionalJumpTrigger, (ViSession vi, ViConstString triggerIdentifier), (override));
   MOCK_METHOD(ViStatus, ConfigureSoftwareEdgeStartTrigger, (ViSession vi), (override));
+  MOCK_METHOD(ViStatus, ConfigureStartLabel, (ViSession vi, ViConstString label), (override));
   MOCK_METHOD(ViStatus, ConfigureTerminationMode, (ViSession vi, ViConstString channelList, ViInt32 mode), (override));
   MOCK_METHOD(ViStatus, ConfigureTimeSetCompareEdgesStrobe, (ViSession vi, ViConstString pinList, ViConstString timeSetName, ViReal64 strobeEdge), (override));
   MOCK_METHOD(ViStatus, ConfigureTimeSetCompareEdgesStrobe2x, (ViSession vi, ViConstString pinList, ViConstString timeSetName, ViReal64 strobeEdge, ViReal64 strobe2Edge), (override));
@@ -54,9 +54,9 @@ class NiDigitalMockLibrary : public nidigitalpattern_grpc::NiDigitalLibraryInter
   MOCK_METHOD(ViStatus, CreateCaptureWaveformParallel, (ViSession vi, ViConstString pinList, ViConstString waveformName), (override));
   MOCK_METHOD(ViStatus, CreateCaptureWaveformSerial, (ViSession vi, ViConstString pinList, ViConstString waveformName, ViUInt32 sampleWidth, ViInt32 bitOrder), (override));
   MOCK_METHOD(ViStatus, CreateChannelMap, (ViSession vi, ViInt32 numSites), (override));
-  MOCK_METHOD(ViStatus, CreateSourceWaveformFromFileTDMS, (ViSession vi, ViConstString waveformName, ViConstString waveformFilePath, ViBoolean writeWaveformData), (override));
-  MOCK_METHOD(ViStatus, CreatePinMap, (ViSession vi, ViConstString dutPinList, ViConstString systemPinList), (override));
   MOCK_METHOD(ViStatus, CreatePinGroup, (ViSession vi, ViConstString pinGroupName, ViConstString pinList), (override));
+  MOCK_METHOD(ViStatus, CreatePinMap, (ViSession vi, ViConstString dutPinList, ViConstString systemPinList), (override));
+  MOCK_METHOD(ViStatus, CreateSourceWaveformFromFileTDMS, (ViSession vi, ViConstString waveformName, ViConstString waveformFilePath, ViBoolean writeWaveformData), (override));
   MOCK_METHOD(ViStatus, CreateSourceWaveformParallel, (ViSession vi, ViConstString pinList, ViConstString waveformName, ViInt32 dataMapping), (override));
   MOCK_METHOD(ViStatus, CreateSourceWaveformSerial, (ViSession vi, ViConstString pinList, ViConstString waveformName, ViInt32 dataMapping, ViUInt32 sampleWidth, ViInt32 bitOrder), (override));
   MOCK_METHOD(ViStatus, CreateTimeSet, (ViSession vi, ViConstString name), (override));
@@ -87,8 +87,8 @@ class NiDigitalMockLibrary : public nidigitalpattern_grpc::NiDigitalLibraryInter
   MOCK_METHOD(ViStatus, GetError, (ViSession vi, ViStatus* errorCode, ViInt32 errorDescriptionBufferSize, ViChar errorDescription[]), (override));
   MOCK_METHOD(ViStatus, GetFailCount, (ViSession vi, ViConstString channelList, ViInt32 bufferSize, ViInt64 failureCount[], ViInt32* actualNumRead), (override));
   MOCK_METHOD(ViStatus, GetHistoryRAMSampleCount, (ViSession vi, ViConstString site, ViInt64* sampleCount), (override));
-  MOCK_METHOD(ViStatus, GetPatternPinIndexes, (ViSession vi, ViConstString startLabel, ViInt32 pinIndexesBufferSize, ViInt32 pinIndexes[], ViInt32* actualNumPins), (override));
   MOCK_METHOD(ViStatus, GetPatternName, (ViSession vi, ViInt32 patternIndex, ViInt32 nameBufferSize, ViChar name[]), (override));
+  MOCK_METHOD(ViStatus, GetPatternPinIndexes, (ViSession vi, ViConstString startLabel, ViInt32 pinIndexesBufferSize, ViInt32 pinIndexes[], ViInt32* actualNumPins), (override));
   MOCK_METHOD(ViStatus, GetPatternPinList, (ViSession vi, ViConstString startLabel, ViInt32 pinListBufferSize, ViChar pinList[]), (override));
   MOCK_METHOD(ViStatus, GetPinName, (ViSession vi, ViInt32 pinIndex, ViInt32 nameBufferSize, ViChar name[]), (override));
   MOCK_METHOD(ViStatus, GetPinResultsPinInformation, (ViSession vi, ViConstString channelList, ViInt32 bufferSize, ViInt32 pinIndexes[], ViInt32 siteNumbers[], ViInt32 channelIndexes[], ViInt32* actualNumValues), (override));
@@ -147,8 +147,8 @@ class NiDigitalMockLibrary : public nidigitalpattern_grpc::NiDigitalLibraryInter
   MOCK_METHOD(ViStatus, WriteSequencerRegister, (ViSession vi, ViConstString reg, ViInt32 value), (override));
   MOCK_METHOD(ViStatus, WriteSourceWaveformBroadcastU32, (ViSession vi, ViConstString waveformName, ViInt32 waveformSize, ViUInt32 waveformData[]), (override));
   MOCK_METHOD(ViStatus, WriteSourceWaveformDataFromFileTDMS, (ViSession vi, ViConstString waveformName, ViConstString waveformFilePath), (override));
-  MOCK_METHOD(ViStatus, WriteStatic, (ViSession vi, ViConstString channelList, ViUInt8 state), (override));
   MOCK_METHOD(ViStatus, WriteSourceWaveformSiteUniqueU32, (ViSession vi, ViConstString siteList, ViConstString waveformName, ViInt32 numWaveforms, ViInt32 samplesPerWaveform, ViUInt32 waveformData[1]), (override));
+  MOCK_METHOD(ViStatus, WriteStatic, (ViSession vi, ViConstString channelList, ViUInt8 state), (override));
 };
 
 }  // namespace unit

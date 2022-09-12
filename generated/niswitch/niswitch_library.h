@@ -23,8 +23,8 @@ class NiSwitchLibrary : public niswitch_grpc::NiSwitchLibraryInterface {
   ViStatus CheckAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean attributeValue);
   ViStatus CheckAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 attributeValue);
   ViStatus CheckAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64 attributeValue);
-  ViStatus CheckAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViString attributeValue);
   ViStatus CheckAttributeViSession(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession attributeValue);
+  ViStatus CheckAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViString attributeValue);
   ViStatus ClearError(ViSession vi);
   ViStatus ClearInterchangeWarnings(ViSession vi);
   ViStatus Close(ViSession vi);
@@ -42,8 +42,8 @@ class NiSwitchLibrary : public niswitch_grpc::NiSwitchLibraryInterface {
   ViStatus GetAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean* attributeValue);
   ViStatus GetAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32* attributeValue);
   ViStatus GetAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64* attributeValue);
-  ViStatus GetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 arraySize, ViChar attributeValue[]);
   ViStatus GetAttributeViSession(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession* attributeValue);
+  ViStatus GetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 arraySize, ViChar attributeValue[]);
   ViStatus GetChannelName(ViSession vi, ViInt32 index, ViInt32 bufferSize, ViChar channelNameBuffer[]);
   ViStatus GetError(ViSession vi, ViStatus* code, ViInt32 bufferSize, ViChar description[]);
   ViStatus GetNextCoercionRecord(ViSession vi, ViInt32 bufferSize, ViChar coercionRecord[]);
@@ -73,8 +73,8 @@ class NiSwitchLibrary : public niswitch_grpc::NiSwitchLibraryInterface {
   ViStatus SetAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean attributeValue);
   ViStatus SetAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 attributeValue);
   ViStatus SetAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64 attributeValue);
-  ViStatus SetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViString attributeValue);
   ViStatus SetAttributeViSession(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession attributeValue);
+  ViStatus SetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViString attributeValue);
   ViStatus SetContinuousScan(ViSession vi, ViBoolean continuousScan);
   ViStatus SetPath(ViSession vi, ViConstString pathList);
   ViStatus UnlockSession(ViSession vi, ViBoolean* callerHasLock);
@@ -87,8 +87,8 @@ class NiSwitchLibrary : public niswitch_grpc::NiSwitchLibraryInterface {
   using CheckAttributeViBooleanPtr = decltype(&niSwitch_CheckAttributeViBoolean);
   using CheckAttributeViInt32Ptr = decltype(&niSwitch_CheckAttributeViInt32);
   using CheckAttributeViReal64Ptr = decltype(&niSwitch_CheckAttributeViReal64);
-  using CheckAttributeViStringPtr = decltype(&niSwitch_CheckAttributeViString);
   using CheckAttributeViSessionPtr = decltype(&niSwitch_CheckAttributeViSession);
+  using CheckAttributeViStringPtr = decltype(&niSwitch_CheckAttributeViString);
   using ClearErrorPtr = decltype(&niSwitch_ClearError);
   using ClearInterchangeWarningsPtr = decltype(&niSwitch_ClearInterchangeWarnings);
   using ClosePtr = decltype(&niSwitch_close);
@@ -106,8 +106,8 @@ class NiSwitchLibrary : public niswitch_grpc::NiSwitchLibraryInterface {
   using GetAttributeViBooleanPtr = decltype(&niSwitch_GetAttributeViBoolean);
   using GetAttributeViInt32Ptr = decltype(&niSwitch_GetAttributeViInt32);
   using GetAttributeViReal64Ptr = decltype(&niSwitch_GetAttributeViReal64);
-  using GetAttributeViStringPtr = decltype(&niSwitch_GetAttributeViString);
   using GetAttributeViSessionPtr = decltype(&niSwitch_GetAttributeViSession);
+  using GetAttributeViStringPtr = decltype(&niSwitch_GetAttributeViString);
   using GetChannelNamePtr = decltype(&niSwitch_GetChannelName);
   using GetErrorPtr = decltype(&niSwitch_GetError);
   using GetNextCoercionRecordPtr = decltype(&niSwitch_GetNextCoercionRecord);
@@ -137,8 +137,8 @@ class NiSwitchLibrary : public niswitch_grpc::NiSwitchLibraryInterface {
   using SetAttributeViBooleanPtr = decltype(&niSwitch_SetAttributeViBoolean);
   using SetAttributeViInt32Ptr = decltype(&niSwitch_SetAttributeViInt32);
   using SetAttributeViReal64Ptr = decltype(&niSwitch_SetAttributeViReal64);
-  using SetAttributeViStringPtr = decltype(&niSwitch_SetAttributeViString);
   using SetAttributeViSessionPtr = decltype(&niSwitch_SetAttributeViSession);
+  using SetAttributeViStringPtr = decltype(&niSwitch_SetAttributeViString);
   using SetContinuousScanPtr = decltype(&niSwitch_SetContinuousScan);
   using SetPathPtr = decltype(&niSwitch_SetPath);
   using UnlockSessionPtr = ViStatus (*)(ViSession vi, ViBoolean* callerHasLock);
@@ -151,8 +151,8 @@ class NiSwitchLibrary : public niswitch_grpc::NiSwitchLibraryInterface {
     CheckAttributeViBooleanPtr CheckAttributeViBoolean;
     CheckAttributeViInt32Ptr CheckAttributeViInt32;
     CheckAttributeViReal64Ptr CheckAttributeViReal64;
-    CheckAttributeViStringPtr CheckAttributeViString;
     CheckAttributeViSessionPtr CheckAttributeViSession;
+    CheckAttributeViStringPtr CheckAttributeViString;
     ClearErrorPtr ClearError;
     ClearInterchangeWarningsPtr ClearInterchangeWarnings;
     ClosePtr Close;
@@ -170,8 +170,8 @@ class NiSwitchLibrary : public niswitch_grpc::NiSwitchLibraryInterface {
     GetAttributeViBooleanPtr GetAttributeViBoolean;
     GetAttributeViInt32Ptr GetAttributeViInt32;
     GetAttributeViReal64Ptr GetAttributeViReal64;
-    GetAttributeViStringPtr GetAttributeViString;
     GetAttributeViSessionPtr GetAttributeViSession;
+    GetAttributeViStringPtr GetAttributeViString;
     GetChannelNamePtr GetChannelName;
     GetErrorPtr GetError;
     GetNextCoercionRecordPtr GetNextCoercionRecord;
@@ -201,8 +201,8 @@ class NiSwitchLibrary : public niswitch_grpc::NiSwitchLibraryInterface {
     SetAttributeViBooleanPtr SetAttributeViBoolean;
     SetAttributeViInt32Ptr SetAttributeViInt32;
     SetAttributeViReal64Ptr SetAttributeViReal64;
-    SetAttributeViStringPtr SetAttributeViString;
     SetAttributeViSessionPtr SetAttributeViSession;
+    SetAttributeViStringPtr SetAttributeViString;
     SetContinuousScanPtr SetContinuousScan;
     SetPathPtr SetPath;
     UnlockSessionPtr UnlockSession;

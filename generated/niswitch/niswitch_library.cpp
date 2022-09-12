@@ -26,8 +26,8 @@ NiSwitchLibrary::NiSwitchLibrary() : shared_library_(kLibraryName)
   function_pointers_.CheckAttributeViBoolean = reinterpret_cast<CheckAttributeViBooleanPtr>(shared_library_.get_function_pointer("niSwitch_CheckAttributeViBoolean"));
   function_pointers_.CheckAttributeViInt32 = reinterpret_cast<CheckAttributeViInt32Ptr>(shared_library_.get_function_pointer("niSwitch_CheckAttributeViInt32"));
   function_pointers_.CheckAttributeViReal64 = reinterpret_cast<CheckAttributeViReal64Ptr>(shared_library_.get_function_pointer("niSwitch_CheckAttributeViReal64"));
-  function_pointers_.CheckAttributeViString = reinterpret_cast<CheckAttributeViStringPtr>(shared_library_.get_function_pointer("niSwitch_CheckAttributeViString"));
   function_pointers_.CheckAttributeViSession = reinterpret_cast<CheckAttributeViSessionPtr>(shared_library_.get_function_pointer("niSwitch_CheckAttributeViSession"));
+  function_pointers_.CheckAttributeViString = reinterpret_cast<CheckAttributeViStringPtr>(shared_library_.get_function_pointer("niSwitch_CheckAttributeViString"));
   function_pointers_.ClearError = reinterpret_cast<ClearErrorPtr>(shared_library_.get_function_pointer("niSwitch_ClearError"));
   function_pointers_.ClearInterchangeWarnings = reinterpret_cast<ClearInterchangeWarningsPtr>(shared_library_.get_function_pointer("niSwitch_ClearInterchangeWarnings"));
   function_pointers_.Close = reinterpret_cast<ClosePtr>(shared_library_.get_function_pointer("niSwitch_close"));
@@ -45,8 +45,8 @@ NiSwitchLibrary::NiSwitchLibrary() : shared_library_(kLibraryName)
   function_pointers_.GetAttributeViBoolean = reinterpret_cast<GetAttributeViBooleanPtr>(shared_library_.get_function_pointer("niSwitch_GetAttributeViBoolean"));
   function_pointers_.GetAttributeViInt32 = reinterpret_cast<GetAttributeViInt32Ptr>(shared_library_.get_function_pointer("niSwitch_GetAttributeViInt32"));
   function_pointers_.GetAttributeViReal64 = reinterpret_cast<GetAttributeViReal64Ptr>(shared_library_.get_function_pointer("niSwitch_GetAttributeViReal64"));
-  function_pointers_.GetAttributeViString = reinterpret_cast<GetAttributeViStringPtr>(shared_library_.get_function_pointer("niSwitch_GetAttributeViString"));
   function_pointers_.GetAttributeViSession = reinterpret_cast<GetAttributeViSessionPtr>(shared_library_.get_function_pointer("niSwitch_GetAttributeViSession"));
+  function_pointers_.GetAttributeViString = reinterpret_cast<GetAttributeViStringPtr>(shared_library_.get_function_pointer("niSwitch_GetAttributeViString"));
   function_pointers_.GetChannelName = reinterpret_cast<GetChannelNamePtr>(shared_library_.get_function_pointer("niSwitch_GetChannelName"));
   function_pointers_.GetError = reinterpret_cast<GetErrorPtr>(shared_library_.get_function_pointer("niSwitch_GetError"));
   function_pointers_.GetNextCoercionRecord = reinterpret_cast<GetNextCoercionRecordPtr>(shared_library_.get_function_pointer("niSwitch_GetNextCoercionRecord"));
@@ -76,8 +76,8 @@ NiSwitchLibrary::NiSwitchLibrary() : shared_library_(kLibraryName)
   function_pointers_.SetAttributeViBoolean = reinterpret_cast<SetAttributeViBooleanPtr>(shared_library_.get_function_pointer("niSwitch_SetAttributeViBoolean"));
   function_pointers_.SetAttributeViInt32 = reinterpret_cast<SetAttributeViInt32Ptr>(shared_library_.get_function_pointer("niSwitch_SetAttributeViInt32"));
   function_pointers_.SetAttributeViReal64 = reinterpret_cast<SetAttributeViReal64Ptr>(shared_library_.get_function_pointer("niSwitch_SetAttributeViReal64"));
-  function_pointers_.SetAttributeViString = reinterpret_cast<SetAttributeViStringPtr>(shared_library_.get_function_pointer("niSwitch_SetAttributeViString"));
   function_pointers_.SetAttributeViSession = reinterpret_cast<SetAttributeViSessionPtr>(shared_library_.get_function_pointer("niSwitch_SetAttributeViSession"));
+  function_pointers_.SetAttributeViString = reinterpret_cast<SetAttributeViStringPtr>(shared_library_.get_function_pointer("niSwitch_SetAttributeViString"));
   function_pointers_.SetContinuousScan = reinterpret_cast<SetContinuousScanPtr>(shared_library_.get_function_pointer("niSwitch_SetContinuousScan"));
   function_pointers_.SetPath = reinterpret_cast<SetPathPtr>(shared_library_.get_function_pointer("niSwitch_SetPath"));
   function_pointers_.UnlockSession = reinterpret_cast<UnlockSessionPtr>(shared_library_.get_function_pointer("niSwitch_UnlockSession"));
@@ -156,18 +156,6 @@ ViStatus NiSwitchLibrary::CheckAttributeViReal64(ViSession vi, ViConstString cha
 #endif
 }
 
-ViStatus NiSwitchLibrary::CheckAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViString attributeValue)
-{
-  if (!function_pointers_.CheckAttributeViString) {
-    throw nidevice_grpc::LibraryLoadException("Could not find niSwitch_CheckAttributeViString.");
-  }
-#if defined(_MSC_VER)
-  return niSwitch_CheckAttributeViString(vi, channelName, attributeId, attributeValue);
-#else
-  return function_pointers_.CheckAttributeViString(vi, channelName, attributeId, attributeValue);
-#endif
-}
-
 ViStatus NiSwitchLibrary::CheckAttributeViSession(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession attributeValue)
 {
   if (!function_pointers_.CheckAttributeViSession) {
@@ -177,6 +165,18 @@ ViStatus NiSwitchLibrary::CheckAttributeViSession(ViSession vi, ViConstString ch
   return niSwitch_CheckAttributeViSession(vi, channelName, attributeId, attributeValue);
 #else
   return function_pointers_.CheckAttributeViSession(vi, channelName, attributeId, attributeValue);
+#endif
+}
+
+ViStatus NiSwitchLibrary::CheckAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViString attributeValue)
+{
+  if (!function_pointers_.CheckAttributeViString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niSwitch_CheckAttributeViString.");
+  }
+#if defined(_MSC_VER)
+  return niSwitch_CheckAttributeViString(vi, channelName, attributeId, attributeValue);
+#else
+  return function_pointers_.CheckAttributeViString(vi, channelName, attributeId, attributeValue);
 #endif
 }
 
@@ -384,18 +384,6 @@ ViStatus NiSwitchLibrary::GetAttributeViReal64(ViSession vi, ViConstString chann
 #endif
 }
 
-ViStatus NiSwitchLibrary::GetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 arraySize, ViChar attributeValue[])
-{
-  if (!function_pointers_.GetAttributeViString) {
-    throw nidevice_grpc::LibraryLoadException("Could not find niSwitch_GetAttributeViString.");
-  }
-#if defined(_MSC_VER)
-  return niSwitch_GetAttributeViString(vi, channelName, attributeId, arraySize, attributeValue);
-#else
-  return function_pointers_.GetAttributeViString(vi, channelName, attributeId, arraySize, attributeValue);
-#endif
-}
-
 ViStatus NiSwitchLibrary::GetAttributeViSession(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession* attributeValue)
 {
   if (!function_pointers_.GetAttributeViSession) {
@@ -405,6 +393,18 @@ ViStatus NiSwitchLibrary::GetAttributeViSession(ViSession vi, ViConstString chan
   return niSwitch_GetAttributeViSession(vi, channelName, attributeId, attributeValue);
 #else
   return function_pointers_.GetAttributeViSession(vi, channelName, attributeId, attributeValue);
+#endif
+}
+
+ViStatus NiSwitchLibrary::GetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 arraySize, ViChar attributeValue[])
+{
+  if (!function_pointers_.GetAttributeViString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niSwitch_GetAttributeViString.");
+  }
+#if defined(_MSC_VER)
+  return niSwitch_GetAttributeViString(vi, channelName, attributeId, arraySize, attributeValue);
+#else
+  return function_pointers_.GetAttributeViString(vi, channelName, attributeId, arraySize, attributeValue);
 #endif
 }
 
@@ -752,18 +752,6 @@ ViStatus NiSwitchLibrary::SetAttributeViReal64(ViSession vi, ViConstString chann
 #endif
 }
 
-ViStatus NiSwitchLibrary::SetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViString attributeValue)
-{
-  if (!function_pointers_.SetAttributeViString) {
-    throw nidevice_grpc::LibraryLoadException("Could not find niSwitch_SetAttributeViString.");
-  }
-#if defined(_MSC_VER)
-  return niSwitch_SetAttributeViString(vi, channelName, attributeId, attributeValue);
-#else
-  return function_pointers_.SetAttributeViString(vi, channelName, attributeId, attributeValue);
-#endif
-}
-
 ViStatus NiSwitchLibrary::SetAttributeViSession(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession attributeValue)
 {
   if (!function_pointers_.SetAttributeViSession) {
@@ -773,6 +761,18 @@ ViStatus NiSwitchLibrary::SetAttributeViSession(ViSession vi, ViConstString chan
   return niSwitch_SetAttributeViSession(vi, channelName, attributeId, attributeValue);
 #else
   return function_pointers_.SetAttributeViSession(vi, channelName, attributeId, attributeValue);
+#endif
+}
+
+ViStatus NiSwitchLibrary::SetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViString attributeValue)
+{
+  if (!function_pointers_.SetAttributeViString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niSwitch_SetAttributeViString.");
+  }
+#if defined(_MSC_VER)
+  return niSwitch_SetAttributeViString(vi, channelName, attributeId, attributeValue);
+#else
+  return function_pointers_.SetAttributeViString(vi, channelName, attributeId, attributeValue);
 #endif
 }
 

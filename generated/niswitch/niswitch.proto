@@ -21,8 +21,8 @@ service NiSwitch {
   rpc CheckAttributeViBoolean(CheckAttributeViBooleanRequest) returns (CheckAttributeViBooleanResponse);
   rpc CheckAttributeViInt32(CheckAttributeViInt32Request) returns (CheckAttributeViInt32Response);
   rpc CheckAttributeViReal64(CheckAttributeViReal64Request) returns (CheckAttributeViReal64Response);
-  rpc CheckAttributeViString(CheckAttributeViStringRequest) returns (CheckAttributeViStringResponse);
   rpc CheckAttributeViSession(CheckAttributeViSessionRequest) returns (CheckAttributeViSessionResponse);
+  rpc CheckAttributeViString(CheckAttributeViStringRequest) returns (CheckAttributeViStringResponse);
   rpc ClearError(ClearErrorRequest) returns (ClearErrorResponse);
   rpc ClearInterchangeWarnings(ClearInterchangeWarningsRequest) returns (ClearInterchangeWarningsResponse);
   rpc Close(CloseRequest) returns (CloseResponse);
@@ -40,8 +40,8 @@ service NiSwitch {
   rpc GetAttributeViBoolean(GetAttributeViBooleanRequest) returns (GetAttributeViBooleanResponse);
   rpc GetAttributeViInt32(GetAttributeViInt32Request) returns (GetAttributeViInt32Response);
   rpc GetAttributeViReal64(GetAttributeViReal64Request) returns (GetAttributeViReal64Response);
-  rpc GetAttributeViString(GetAttributeViStringRequest) returns (GetAttributeViStringResponse);
   rpc GetAttributeViSession(GetAttributeViSessionRequest) returns (GetAttributeViSessionResponse);
+  rpc GetAttributeViString(GetAttributeViStringRequest) returns (GetAttributeViStringResponse);
   rpc GetChannelName(GetChannelNameRequest) returns (GetChannelNameResponse);
   rpc GetError(GetErrorRequest) returns (GetErrorResponse);
   rpc GetNextCoercionRecord(GetNextCoercionRecordRequest) returns (GetNextCoercionRecordResponse);
@@ -70,8 +70,8 @@ service NiSwitch {
   rpc SetAttributeViBoolean(SetAttributeViBooleanRequest) returns (SetAttributeViBooleanResponse);
   rpc SetAttributeViInt32(SetAttributeViInt32Request) returns (SetAttributeViInt32Response);
   rpc SetAttributeViReal64(SetAttributeViReal64Request) returns (SetAttributeViReal64Response);
-  rpc SetAttributeViString(SetAttributeViStringRequest) returns (SetAttributeViStringResponse);
   rpc SetAttributeViSession(SetAttributeViSessionRequest) returns (SetAttributeViSessionResponse);
+  rpc SetAttributeViString(SetAttributeViStringRequest) returns (SetAttributeViStringResponse);
   rpc SetContinuousScan(SetContinuousScanRequest) returns (SetContinuousScanResponse);
   rpc SetPath(SetPathRequest) returns (SetPathResponse);
   rpc WaitForDebounce(WaitForDebounceRequest) returns (WaitForDebounceResponse);
@@ -402,17 +402,6 @@ message CheckAttributeViReal64Response {
   int32 status = 1;
 }
 
-message CheckAttributeViStringRequest {
-  nidevice_grpc.Session vi = 1;
-  string channel_name = 2;
-  NiSwitchAttribute attribute_id = 3;
-  string attribute_value_raw = 4;
-}
-
-message CheckAttributeViStringResponse {
-  int32 status = 1;
-}
-
 message CheckAttributeViSessionRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
@@ -421,6 +410,17 @@ message CheckAttributeViSessionRequest {
 }
 
 message CheckAttributeViSessionResponse {
+  int32 status = 1;
+}
+
+message CheckAttributeViStringRequest {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+  NiSwitchAttribute attribute_id = 3;
+  string attribute_value_raw = 4;
+}
+
+message CheckAttributeViStringResponse {
   int32 status = 1;
 }
 
@@ -593,17 +593,6 @@ message GetAttributeViReal64Response {
   double attribute_value = 2;
 }
 
-message GetAttributeViStringRequest {
-  nidevice_grpc.Session vi = 1;
-  string channel_name = 2;
-  NiSwitchAttribute attribute_id = 3;
-}
-
-message GetAttributeViStringResponse {
-  int32 status = 1;
-  string attribute_value = 2;
-}
-
 message GetAttributeViSessionRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
@@ -613,6 +602,17 @@ message GetAttributeViSessionRequest {
 message GetAttributeViSessionResponse {
   int32 status = 1;
   nidevice_grpc.Session attribute_value = 2;
+}
+
+message GetAttributeViStringRequest {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+  NiSwitchAttribute attribute_id = 3;
+}
+
+message GetAttributeViStringResponse {
+  int32 status = 1;
+  string attribute_value = 2;
 }
 
 message GetChannelNameRequest {
@@ -918,17 +918,6 @@ message SetAttributeViReal64Response {
   int32 status = 1;
 }
 
-message SetAttributeViStringRequest {
-  nidevice_grpc.Session vi = 1;
-  string channel_name = 2;
-  NiSwitchAttribute attribute_id = 3;
-  string attribute_value_raw = 4;
-}
-
-message SetAttributeViStringResponse {
-  int32 status = 1;
-}
-
 message SetAttributeViSessionRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
@@ -937,6 +926,17 @@ message SetAttributeViSessionRequest {
 }
 
 message SetAttributeViSessionResponse {
+  int32 status = 1;
+}
+
+message SetAttributeViStringRequest {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+  NiSwitchAttribute attribute_id = 3;
+  string attribute_value_raw = 4;
+}
+
+message SetAttributeViStringResponse {
   int32 status = 1;
 }
 

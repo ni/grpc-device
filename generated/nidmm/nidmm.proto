@@ -16,7 +16,6 @@ package nidmm_grpc;
 import "session.proto";
 
 service NiDmm {
-  rpc Control4022(Control4022Request) returns (Control4022Response);
   rpc Abort(AbortRequest) returns (AbortResponse);
   rpc CheckAttributeViBoolean(CheckAttributeViBooleanRequest) returns (CheckAttributeViBooleanResponse);
   rpc CheckAttributeViInt32(CheckAttributeViInt32Request) returns (CheckAttributeViInt32Response);
@@ -34,26 +33,27 @@ service NiDmm {
   rpc ConfigureFixedRefJunction(ConfigureFixedRefJunctionRequest) returns (ConfigureFixedRefJunctionResponse);
   rpc ConfigureFrequencyVoltageRange(ConfigureFrequencyVoltageRangeRequest) returns (ConfigureFrequencyVoltageRangeResponse);
   rpc ConfigureMeasCompleteDest(ConfigureMeasCompleteDestRequest) returns (ConfigureMeasCompleteDestResponse);
-  rpc ConfigureMeasurementAbsolute(ConfigureMeasurementAbsoluteRequest) returns (ConfigureMeasurementAbsoluteResponse);
   rpc ConfigureMeasCompleteSlope(ConfigureMeasCompleteSlopeRequest) returns (ConfigureMeasCompleteSlopeResponse);
+  rpc ConfigureMeasurementAbsolute(ConfigureMeasurementAbsoluteRequest) returns (ConfigureMeasurementAbsoluteResponse);
   rpc ConfigureMeasurementDigits(ConfigureMeasurementDigitsRequest) returns (ConfigureMeasurementDigitsResponse);
   rpc ConfigureMultiPoint(ConfigureMultiPointRequest) returns (ConfigureMultiPointResponse);
   rpc ConfigureOffsetCompOhms(ConfigureOffsetCompOhmsRequest) returns (ConfigureOffsetCompOhmsResponse);
   rpc ConfigureOpenCableCompValues(ConfigureOpenCableCompValuesRequest) returns (ConfigureOpenCableCompValuesResponse);
   rpc ConfigurePowerLineFrequency(ConfigurePowerLineFrequencyRequest) returns (ConfigurePowerLineFrequencyResponse);
-  rpc ConfigureShortCableCompValues(ConfigureShortCableCompValuesRequest) returns (ConfigureShortCableCompValuesResponse);
   rpc ConfigureRTDCustom(ConfigureRTDCustomRequest) returns (ConfigureRTDCustomResponse);
   rpc ConfigureRTDType(ConfigureRTDTypeRequest) returns (ConfigureRTDTypeResponse);
   rpc ConfigureSampleTriggerSlope(ConfigureSampleTriggerSlopeRequest) returns (ConfigureSampleTriggerSlopeResponse);
+  rpc ConfigureShortCableCompValues(ConfigureShortCableCompValuesRequest) returns (ConfigureShortCableCompValuesResponse);
   rpc ConfigureThermistorCustom(ConfigureThermistorCustomRequest) returns (ConfigureThermistorCustomResponse);
-  rpc ConfigureThermocouple(ConfigureThermocoupleRequest) returns (ConfigureThermocoupleResponse);
   rpc ConfigureThermistorType(ConfigureThermistorTypeRequest) returns (ConfigureThermistorTypeResponse);
+  rpc ConfigureThermocouple(ConfigureThermocoupleRequest) returns (ConfigureThermocoupleResponse);
   rpc ConfigureTransducerType(ConfigureTransducerTypeRequest) returns (ConfigureTransducerTypeResponse);
   rpc ConfigureTrigger(ConfigureTriggerRequest) returns (ConfigureTriggerResponse);
   rpc ConfigureTriggerSlope(ConfigureTriggerSlopeRequest) returns (ConfigureTriggerSlopeResponse);
   rpc ConfigureWaveformAcquisition(ConfigureWaveformAcquisitionRequest) returns (ConfigureWaveformAcquisitionResponse);
   rpc ConfigureWaveformCoupling(ConfigureWaveformCouplingRequest) returns (ConfigureWaveformCouplingResponse);
   rpc Control(ControlRequest) returns (ControlResponse);
+  rpc Control4022(Control4022Request) returns (Control4022Response);
   rpc Disable(DisableRequest) returns (DisableResponse);
   rpc ExportAttributeConfigurationBuffer(ExportAttributeConfigurationBufferRequest) returns (ExportAttributeConfigurationBufferResponse);
   rpc ExportAttributeConfigurationFile(ExportAttributeConfigurationFileRequest) returns (ExportAttributeConfigurationFileResponse);
@@ -518,18 +518,6 @@ enum NiDmmReal64AttributeValues {
   NIDMM_REAL64_TRIGGER_DELAYS_VAL_AUTO_DELAY_OFF = -2;
 }
 
-message Control4022Request {
-  string resource_name = 1;
-  oneof configuration_enum {
-    Configuration4022 configuration = 2;
-    sint32 configuration_raw = 3;
-  }
-}
-
-message Control4022Response {
-  int32 status = 1;
-}
-
 message AbortRequest {
   nidevice_grpc.Session vi = 1;
 }
@@ -699,6 +687,15 @@ message ConfigureMeasCompleteDestResponse {
   int32 status = 1;
 }
 
+message ConfigureMeasCompleteSlopeRequest {
+  nidevice_grpc.Session vi = 1;
+  sint32 meas_complete_slope = 2;
+}
+
+message ConfigureMeasCompleteSlopeResponse {
+  int32 status = 1;
+}
+
 message ConfigureMeasurementAbsoluteRequest {
   nidevice_grpc.Session vi = 1;
   oneof measurement_function_enum {
@@ -710,15 +707,6 @@ message ConfigureMeasurementAbsoluteRequest {
 }
 
 message ConfigureMeasurementAbsoluteResponse {
-  int32 status = 1;
-}
-
-message ConfigureMeasCompleteSlopeRequest {
-  nidevice_grpc.Session vi = 1;
-  sint32 meas_complete_slope = 2;
-}
-
-message ConfigureMeasCompleteSlopeResponse {
   int32 status = 1;
 }
 
@@ -794,16 +782,6 @@ message ConfigurePowerLineFrequencyResponse {
   int32 status = 1;
 }
 
-message ConfigureShortCableCompValuesRequest {
-  nidevice_grpc.Session vi = 1;
-  double resistance = 2;
-  double reactance = 3;
-}
-
-message ConfigureShortCableCompValuesResponse {
-  int32 status = 1;
-}
-
 message ConfigureRTDCustomRequest {
   nidevice_grpc.Session vi = 1;
   double rtd_a = 2;
@@ -840,6 +818,16 @@ message ConfigureSampleTriggerSlopeResponse {
   int32 status = 1;
 }
 
+message ConfigureShortCableCompValuesRequest {
+  nidevice_grpc.Session vi = 1;
+  double resistance = 2;
+  double reactance = 3;
+}
+
+message ConfigureShortCableCompValuesResponse {
+  int32 status = 1;
+}
+
 message ConfigureThermistorCustomRequest {
   nidevice_grpc.Session vi = 1;
   double thermistor_a = 2;
@@ -848,6 +836,15 @@ message ConfigureThermistorCustomRequest {
 }
 
 message ConfigureThermistorCustomResponse {
+  int32 status = 1;
+}
+
+message ConfigureThermistorTypeRequest {
+  nidevice_grpc.Session vi = 1;
+  sint32 thermistor_type = 2;
+}
+
+message ConfigureThermistorTypeResponse {
   int32 status = 1;
 }
 
@@ -864,15 +861,6 @@ message ConfigureThermocoupleRequest {
 }
 
 message ConfigureThermocoupleResponse {
-  int32 status = 1;
-}
-
-message ConfigureThermistorTypeRequest {
-  nidevice_grpc.Session vi = 1;
-  sint32 thermistor_type = 2;
-}
-
-message ConfigureThermistorTypeResponse {
   int32 status = 1;
 }
 
@@ -946,6 +934,18 @@ message ControlRequest {
 }
 
 message ControlResponse {
+  int32 status = 1;
+}
+
+message Control4022Request {
+  string resource_name = 1;
+  oneof configuration_enum {
+    Configuration4022 configuration = 2;
+    sint32 configuration_raw = 3;
+  }
+}
+
+message Control4022Response {
   int32 status = 1;
 }
 

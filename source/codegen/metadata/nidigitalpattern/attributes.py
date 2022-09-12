@@ -1,6 +1,4 @@
-# -*- coding: utf-8 -*-
-# This file is generated from NI-Digital Pattern Driver API metadata version 19.5.0d7
-attributes = {
+﻿attributes = {
     1050002: {
         'access': 'read-write',
         'channel_based': False,
@@ -438,7 +436,7 @@ attributes = {
         'channel_based': True,
         'name': 'TDR_OFFSET',
         'resettable': True,
-        'type': 'ViReal64',
+        'type': 'ViReal64'
     },
     1150052: {
         'access': 'read-write',
@@ -501,7 +499,7 @@ attributes = {
         'access': 'read-write',
         'name': 'FREQUENCY_COUNTER_MEASUREMENT_TIME',
         'resettable': True,
-        'type': 'ViReal64',
+        'type': 'ViReal64'
     },
     1150071: {
         'access': 'read-write',
@@ -516,7 +514,7 @@ attributes = {
         'name': 'TIMING_ABSOLUTE_DELAY',
         'repeated_capability_type': 'instruments',
         'resettable': True,
-        'type': 'ViReal64',
+        'type': 'ViReal64'
     },
     1150073: {
         'access': 'read-write',
@@ -542,8 +540,8 @@ attributes = {
     1150077: {
         'access': 'read-write',
         'channel_based': False,
-        'name': 'HISTORY_RAM_MAX_SAMPLES_TO_ACQUIRE_PER_SITE',
         'enum': 'HistoryRamMaxSamplesToAcquirePerSite',
+        'name': 'HISTORY_RAM_MAX_SAMPLES_TO_ACQUIRE_PER_SITE',
         'resettable': True,
         'type': 'ViInt32'
     },

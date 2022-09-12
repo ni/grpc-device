@@ -1,21 +1,4 @@
-functions = {
-    "Control4022":{
-        "cname":"niDMM_4022Control",
-        "parameters":[
-            {
-                "name":"resourceName",
-                "direction":"in",
-                "type":"ViRsrc"
-            },
-            {
-                "name":"configuration",
-                "direction":"in",
-                "type":"ViInt32",
-                "enum": "Configuration4022"
-            }
-        ],
-        "returns":"ViStatus"
-    },
+﻿functions = {
     'Abort': {
         'parameters': [
             {
@@ -26,150 +9,150 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
-    "CheckAttributeViBoolean": {      
-        "parameters": [
-        {
-            "name": "vi",
-            "direction": "in",
-            "type": "ViSession"
-        },
-        {
-            "name": "channelName",
-            "direction": "in",
-            "type": "ViConstString"
-        },
-        {
-            "name": "attributeId",
-            "direction": "in",
-            "type": "ViAttr"
-        },
-        {
-            "name": "attributeValue",
-            "direction": "in",
-            "type": "ViBoolean"
-        }
+    'CheckAttributeViBoolean': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'attributeId',
+                'type': 'ViAttr'
+            },
+            {
+                'direction': 'in',
+                'name': 'attributeValue',
+                'type': 'ViBoolean'
+            }
         ],
-        "returns": "ViStatus"
+        'returns': 'ViStatus'
     },
-    "CheckAttributeViInt32": {       
-        "parameters": [
-        {
-            "name": "vi",
-            "direction": "in",
-            "type": "ViSession"
-        },
-        {
-            "name": "channelName",
-            "direction": "in",
-            "type": "ViConstString"
-        },
-        {
-            "name": "attributeId",
-            "direction": "in",
-            "type": "ViAttr"
-        },
-        {
-            "name": "attributeValue",
-            "direction": "in",
-            "type": "ViInt32"
-        }
+    'CheckAttributeViInt32': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'attributeId',
+                'type': 'ViAttr'
+            },
+            {
+                'direction': 'in',
+                'name': 'attributeValue',
+                'type': 'ViInt32'
+            }
         ],
-        "returns": "ViStatus"
+        'returns': 'ViStatus'
     },
-    "CheckAttributeViReal64": {        
-        "parameters": [
-        {
-            "name": "vi",
-            "direction": "in",
-            "type": "ViSession"
-        },
-        {
-            "name": "channelName",
-            "direction": "in",
-            "type": "ViConstString"
-        },
-        {
-            "name": "attributeId",
-            "direction": "in",
-            "type": "ViAttr"
-        },
-        {
-            "name": "attributeValue",
-            "direction": "in",
-            "type": "ViReal64"
-        }
+    'CheckAttributeViReal64': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'attributeId',
+                'type': 'ViAttr'
+            },
+            {
+                'direction': 'in',
+                'name': 'attributeValue',
+                'type': 'ViReal64'
+            }
         ],
-        "returns": "ViStatus"
+        'returns': 'ViStatus'
     },
-    "CheckAttributeViSession": {        
-        "parameters": [
-        {
-            "name": "vi",
-            "direction": "in",
-            "type": "ViSession"
-        },
-        {
-            "name": "channelName",
-            "direction": "in",
-            "type": "ViConstString"
-        },
-        {
-            "name": "attributeId",
-            "direction": "in",
-            "type": "ViAttr"
-        },
-        {
-            "name": "attributeValue",
-            "direction": "in",
-            "type": "ViSession"
-        }
+    'CheckAttributeViSession': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'attributeId',
+                'type': 'ViAttr'
+            },
+            {
+                'direction': 'in',
+                'name': 'attributeValue',
+                'type': 'ViSession'
+            }
         ],
-        "returns": "ViStatus"
+        'returns': 'ViStatus'
     },
-    "CheckAttributeViString": {
-         "parameters": [
-         {
-             "name": "vi",
-             "direction": "in",
-             "type": "ViSession"
-         },
-         {
-             "name": "channelName",
-             "direction": "in",
-             "type": "ViConstString"
-         },
-         {
-             "name": "attributeId",
-             "direction": "in",
-             "type": "ViAttr"
-         },
-         {
-             "name": "attributeValue",
-             "direction": "in",
-             "type": "ViString"
-         }
-         ],
-         "returns": "ViStatus"
-     },
-    "ClearError": {   
-        "parameters": [
-        {
-            "name": "vi",
-            "direction": "in",
-            "type": "ViSession"
-        }
+    'CheckAttributeViString': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'attributeId',
+                'type': 'ViAttr'
+            },
+            {
+                'direction': 'in',
+                'name': 'attributeValue',
+                'type': 'ViString'
+            }
         ],
-        "returns": "ViStatus"
+        'returns': 'ViStatus'
     },
-    "ClearInterchangeWarnings": {        
-        "parameters": [
-        {
-            "name": "vi",
-            "direction": "in",
-            "type": "ViSession"
-        }
+    'ClearError': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            }
         ],
-        "returns": "ViStatus"
+        'returns': 'ViStatus'
+    },
+    'ClearInterchangeWarnings': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            }
+        ],
+        'returns': 'ViStatus'
     },
     'Close': {
         'cname': 'niDMM_close',
@@ -180,133 +163,148 @@ functions = {
                 'type': 'ViSession'
             }
         ],
-        'returns': 'ViStatus',
+        'returns': 'ViStatus'
     },
-    "ConfigureACBandwidth": {        
-        "parameters": [
-        {
-            "name": "vi",
-            "direction": "in",
-            "type": "ViSession"
-        },
-        {
-            "name": "acMinimumFrequencyHz",
-            "direction": "in",
-            "type": "ViReal64"
-        },
-        {
-            "name": "acMaximumFrequencyHz",
-            "direction": "in",
-            "type": "ViReal64"
-        }
+    'ConfigureACBandwidth': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'acMinimumFrequencyHz',
+                'type': 'ViReal64'
+            },
+            {
+                'direction': 'in',
+                'name': 'acMaximumFrequencyHz',
+                'type': 'ViReal64'
+            }
         ],
-        "returns": "ViStatus"
+        'returns': 'ViStatus'
     },
-    "ConfigureADCCalibration": {       
-        "parameters": [
-        {
-            "name": "vi",
-            "direction": "in",
-            "type": "ViSession"
-        },
-        {
-            "name": "adcCalibration",
-            "direction": "in",
-            "type": "ViInt32"
-        }
+    'ConfigureADCCalibration': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'adcCalibration',
+                'type': 'ViInt32'
+            }
         ],
-        "returns": "ViStatus"
+        'returns': 'ViStatus'
     },
-    "ConfigureAutoZeroMode": {        
-        "parameters": [
-        {
-            "name": "vi",
-            "direction": "in",
-            "type": "ViSession"
-        },
-        {
-            "name": "autoZeroMode",
-            "direction": "in",
-            "type": "ViInt32"
-        }
+    'ConfigureAutoZeroMode': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'autoZeroMode',
+                'type': 'ViInt32'
+            }
         ],
-        "returns": "ViStatus"
+        'returns': 'ViStatus'
     },
-    "ConfigureCableCompType": {
-        "parameters": [
-        {
-            "name": "vi",
-            "direction": "in",
-            "type": "ViSession"
-        },
-        {
-            "name": "cableCompType",
-            "direction": "in",
-            "type": "ViInt32"
-        }
+    'ConfigureCableCompType': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'cableCompType',
+                'type': 'ViInt32'
+            }
         ],
-        "returns": "ViStatus"
+        'returns': 'ViStatus'
     },
-    "ConfigureCurrentSource": {
-        "parameters": [
-        {
-            "name": "vi",
-            "direction": "in",
-            "type": "ViSession"
-        },
-        {
-            "name": "currentSource",
-            "direction": "in",
-            "type": "ViReal64"
-        }
+    'ConfigureCurrentSource': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'currentSource',
+                'type': 'ViReal64'
+            }
         ],
-        "returns": "ViStatus"
+        'returns': 'ViStatus'
     },
-    "ConfigureFixedRefJunction": {
-        "parameters": [
-        {
-            "name": "vi",
-            "direction": "in",
-            "type": "ViSession"
-        },
-        {
-            "name": "fixedReferenceJunction",
-            "direction": "in",
-            "type": "ViReal64"
-        }
+    'ConfigureFixedRefJunction': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'fixedReferenceJunction',
+                'type': 'ViReal64'
+            }
         ],
-        "returns": "ViStatus"
+        'returns': 'ViStatus'
     },
-    "ConfigureFrequencyVoltageRange": {
-        "parameters": [
-        {
-            "name": "vi",
-            "direction": "in",
-            "type": "ViSession"
-        },
-        {
-            "name": "voltageRange",
-            "direction": "in",
-            "type": "ViReal64",
-            "enum": "FrequencyVoltageRange"
-        }
+    'ConfigureFrequencyVoltageRange': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'enum': 'FrequencyVoltageRange',
+                'name': 'voltageRange',
+                'type': 'ViReal64'
+            }
         ],
-        "returns": "ViStatus"
+        'returns': 'ViStatus'
     },
-    "ConfigureMeasCompleteDest": {
-        "parameters": [
-        {
-            "name": "vi",
-            "direction": "in",
-            "type": "ViSession"
-        },
-        {
-            "name": "measCompleteDestination",
-            "direction": "in",
-            "type": "ViInt32"
-        }
+    'ConfigureMeasCompleteDest': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'measCompleteDestination',
+                'type': 'ViInt32'
+            }
         ],
-        "returns": "ViStatus"
+        'returns': 'ViStatus'
+    },
+    'ConfigureMeasCompleteSlope': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'measCompleteSlope',
+                'type': 'ViInt32'
+            }
+        ],
+        'returns': 'ViStatus'
     },
     'ConfigureMeasurementAbsolute': {
         'parameters': [
@@ -333,21 +331,6 @@ functions = {
             }
         ],
         'returns': 'ViStatus'
-    },
-    "ConfigureMeasCompleteSlope": {
-        "parameters": [
-        {
-            "name": "vi",
-            "direction": "in",
-            "type": "ViSession"
-        },
-        {
-            "name": "measCompleteSlope",
-            "direction": "in",
-            "type": "ViInt32"
-        }
-        ],
-        "returns": "ViStatus"
     },
     'ConfigureMeasurementDigits': {
         'parameters': [
@@ -384,15 +367,15 @@ functions = {
             },
             {
                 'direction': 'in',
+                'enum': 'TriggerCount',
                 'name': 'triggerCount',
-                'type': 'ViInt32',
-                'enum': 'TriggerCount'
+                'type': 'ViInt32'
             },
             {
                 'direction': 'in',
+                'enum': 'SampleCount',
                 'name': 'sampleCount',
-                'type': 'ViInt32',
-                'enum': 'SampleCount'
+                'type': 'ViInt32'
             },
             {
                 'default_value': 'SampleTrigger.IMMEDIATE',
@@ -403,84 +386,64 @@ functions = {
             },
             {
                 'direction': 'in',
+                'enum': 'SampleInterval',
                 'name': 'sampleInterval',
-                'type': 'ViReal64',
-                'enum': 'SampleInterval'
+                'type': 'ViReal64'
             }
         ],
         'returns': 'ViStatus'
     },
-    "ConfigureOffsetCompOhms": {
-        "parameters": [
-        {
-            "name": "vi",
-            "direction": "in",
-            "type": "ViSession"
-        },
-        {
-            "name": "offsetCompOhms",
-            "direction": "in",
-            "type": "ViInt32",
-            "enum": "CompensatedOhms"
-        }
+    'ConfigureOffsetCompOhms': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'enum': 'CompensatedOhms',
+                'name': 'offsetCompOhms',
+                'type': 'ViInt32'
+            }
         ],
-        "returns": "ViStatus"
+        'returns': 'ViStatus'
     },
-    "ConfigureOpenCableCompValues": {
-        "parameters": [
-        {
-            "name": "vi",
-            "direction": "in",
-            "type": "ViSession"
-        },
-        {
-            "name": "conductance",
-            "direction": "in",
-            "type": "ViReal64"
-        },
-        {
-            "name": "susceptance",
-            "direction": "in",
-            "type": "ViReal64"
-        }
+    'ConfigureOpenCableCompValues': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'conductance',
+                'type': 'ViReal64'
+            },
+            {
+                'direction': 'in',
+                'name': 'susceptance',
+                'type': 'ViReal64'
+            }
         ],
-        "returns": "ViStatus"
+        'returns': 'ViStatus'
     },
-    "ConfigurePowerLineFrequency": {
-        "parameters": [
-        {
-            "name": "vi",
-            "direction": "in",
-            "type": "ViSession"
-        },
-        {
-            "name": "powerLineFrequencyHz",
-            "direction": "in",
-            "type": "ViReal64",
-            "enum": "PowerLineFrequencies"
-        }
+    'ConfigurePowerLineFrequency': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'enum': 'PowerLineFrequencies',
+                'name': 'powerLineFrequencyHz',
+                'type': 'ViReal64'
+            }
         ],
-        "returns": "ViStatus"
-    },
-    "ConfigureShortCableCompValues": {
-        "parameters": [
-        {
-            "name": "vi",
-            "direction": "in",
-            "type": "ViSession"
-        },
-        {
-            "name": "resistance",
-            "direction": "in",
-            "type": "ViReal64"
-        },
-        {
-            "name": "reactance",
-            "direction": "in",
-            "type": "ViReal64"
-        }
-        ],
-        "returns": "ViStatus"
+        'returns': 'ViStatus'
     },
     'ConfigureRTDCustom': {
         'parameters': [
@@ -528,21 +491,41 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
-    "ConfigureSampleTriggerSlope": {
-        "parameters": [
-        {
-            "name": "vi",
-            "direction": "in",
-            "type": "ViSession"
-        },
-        {
-            "name": "sampleTriggerSlope",
-            "direction": "in",
-            "type": "ViInt32",
-            "enum": "SampleTrigSlope"
-        }
+    'ConfigureSampleTriggerSlope': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'enum': 'SampleTrigSlope',
+                'name': 'sampleTriggerSlope',
+                'type': 'ViInt32'
+            }
         ],
-        "returns": "ViStatus"
+        'returns': 'ViStatus'
+    },
+    'ConfigureShortCableCompValues': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'resistance',
+                'type': 'ViReal64'
+            },
+            {
+                'direction': 'in',
+                'name': 'reactance',
+                'type': 'ViReal64'
+            }
+        ],
+        'returns': 'ViStatus'
     },
     'ConfigureThermistorCustom': {
         'parameters': [
@@ -565,6 +548,21 @@ functions = {
                 'direction': 'in',
                 'name': 'thermistorC',
                 'type': 'ViReal64'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'ConfigureThermistorType': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'thermistorType',
+                'type': 'ViInt32'
             }
         ],
         'returns': 'ViStatus'
@@ -592,35 +590,20 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
-    "ConfigureThermistorType": {
-        "parameters": [
-        {
-            "name": "vi",
-            "direction": "in",
-            "type": "ViSession"
-        },
-        {
-            "name": "thermistorType",
-            "direction": "in",
-            "type": "ViInt32"
-        }
+    'ConfigureTransducerType': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'transducerType',
+                'type': 'ViInt32'
+            }
         ],
-        "returns": "ViStatus"
-    },
-    "ConfigureTransducerType": {
-        "parameters": [
-        {
-            "name": "vi",
-            "direction": "in",
-            "type": "ViSession"
-        },
-        {
-            "name": "transducerType",
-            "direction": "in",
-            "type": "ViInt32"
-        }
-        ],
-        "returns": "ViStatus"
+        'returns': 'ViStatus'
     },
     'ConfigureTrigger': {
         'parameters': [
@@ -637,28 +620,28 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'triggerDelay',
                 'enum': 'TriggerDelays',
-                'type': 'ViReal64',
+                'name': 'triggerDelay',
+                'type': 'ViReal64'
             }
         ],
         'returns': 'ViStatus'
     },
-    "ConfigureTriggerSlope": {
-        "parameters": [
-        {
-            "name": "vi",
-            "direction": "in",
-            "type": "ViSession"
-        },
-        {
-            "name": "triggerSlope",
-            "direction": "in",
-            "type": "ViInt32",
-            "enum": "TriggerSlope"
-        }
+    'ConfigureTriggerSlope': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'enum': 'TriggerSlope',
+                'name': 'triggerSlope',
+                'type': 'ViInt32'
+            }
         ],
-        "returns": "ViStatus"
+        'returns': 'ViStatus'
     },
     'ConfigureWaveformAcquisition': {
         'parameters': [
@@ -691,36 +674,53 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
-    "ConfigureWaveformCoupling": {
-        "parameters": [
-        {
-            "name": "vi",
-            "direction": "in",
-            "type": "ViSession"
-        },
-        {
-            "name": "waveformCoupling",
-            "direction": "in",
-            "type": "ViInt32"
-        }
+    'ConfigureWaveformCoupling': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'waveformCoupling',
+                'type': 'ViInt32'
+            }
         ],
-        "returns": "ViStatus"
+        'returns': 'ViStatus'
     },
-    "Control": {
-        "parameters": [
-        {
-            "name": "vi",
-            "direction": "in",
-            "type": "ViSession"
-        },
-        {
-            "name": "controlAction",
-            "direction": "in",
-            "type": "ViInt32",
-            "enum": "ControlCommit"
-        }
+    'Control': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'enum': 'ControlCommit',
+                'name': 'controlAction',
+                'type': 'ViInt32'
+            }
         ],
-        "returns": "ViStatus"
+        'returns': 'ViStatus'
+    },
+    'Control4022': {
+        'cname': 'niDMM_4022Control',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'resourceName',
+                'type': 'ViRsrc'
+            },
+            {
+                'direction': 'in',
+                'enum': 'Configuration4022',
+                'name': 'configuration',
+                'type': 'ViInt32'
+            }
+        ],
+        'returns': 'ViStatus'
     },
     'Disable': {
         'parameters': [
@@ -751,7 +751,7 @@ functions = {
                     'mechanism': 'ivi-dance',
                     'value': 'size'
                 },
-                'type': 'ViInt8[]',
+                'type': 'ViInt8[]'
             }
         ],
         'returns': 'ViStatus'
@@ -780,9 +780,9 @@ functions = {
             },
             {
                 'direction': 'in',
+                'enum': 'TimeLimit',
                 'name': 'maximumTime',
-                'type': 'ViInt32',
-                'enum': 'TimeLimit'
+                'type': 'ViInt32'
             },
             {
                 'direction': 'out',
@@ -801,9 +801,9 @@ functions = {
             },
             {
                 'direction': 'in',
+                'enum': 'TimeLimit',
                 'name': 'maximumTime',
-                'type': 'ViInt32',
-                'enum': 'TimeLimit'
+                'type': 'ViInt32'
             },
             {
                 'direction': 'in',
@@ -823,7 +823,7 @@ functions = {
             {
                 'direction': 'out',
                 'name': 'actualNumberOfPoints',
-                'type': 'ViInt32',
+                'type': 'ViInt32'
             }
         ],
         'returns': 'ViStatus'
@@ -837,9 +837,9 @@ functions = {
             },
             {
                 'direction': 'in',
+                'enum': 'TimeLimit',
                 'name': 'maximumTime',
-                'type': 'ViInt32',
-                'enum': 'TimeLimit'
+                'type': 'ViInt32'
             },
             {
                 'direction': 'in',
@@ -860,32 +860,32 @@ functions = {
             {
                 'direction': 'out',
                 'name': 'actualNumberOfPoints',
-                'type': 'ViInt32',
+                'type': 'ViInt32'
             }
         ],
         'returns': 'ViStatus'
     },
-    "GetApertureTimeInfo": {
-        "parameters": [
-        {
-            "name": "vi",
-            "direction": "in",
-            "type": "ViSession"
-        },
-        {
-            "name": "apertureTime",
-            "direction": "out",
-            "type": "ViReal64",
-            "enum": "ApertureTime"
-        },
-        {
-            "name": "apertureTimeUnits",
-            "direction": "out",
-            "type": "ViInt32",
-            "enum": "ApertureTimeUnits"
-        }
+    'GetApertureTimeInfo': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'out',
+                'enum': 'ApertureTime',
+                'name': 'apertureTime',
+                'type': 'ViReal64'
+            },
+            {
+                'direction': 'out',
+                'enum': 'ApertureTimeUnits',
+                'name': 'apertureTimeUnits',
+                'type': 'ViInt32'
+            }
         ],
-        "returns": "ViStatus"
+        'returns': 'ViStatus'
     },
     'GetAttributeViBoolean': {
         'parameters': [
@@ -962,30 +962,30 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
-    "GetAttributeViSession": {
-        "parameters": [
-        {
-            "name": "vi",
-            "direction": "in",
-            "type": "ViSession"
-        },
-        {
-            "name": "channelName",
-            "direction": "in",
-            "type": "ViConstString"
-        },
-        {
-            "name": "attributeId",
-            "direction": "in",
-            "type": "ViAttr"
-        },
-        {
-            "name": "attributeValue",
-            "direction": "out",
-            "type": "ViSession"
-        }
+    'GetAttributeViSession': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'attributeId',
+                'type': 'ViAttr'
+            },
+            {
+                'direction': 'out',
+                'name': 'attributeValue',
+                'type': 'ViSession'
+            }
         ],
-        "returns": "ViStatus"
+        'returns': 'ViStatus'
     },
     'GetAttributeViString': {
         'parameters': [
@@ -1021,20 +1021,20 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
-    "GetAutoRangeValue": {
-        "parameters": [
-        {
-            "name": "vi",
-            "direction": "in",
-            "type": "ViSession"
-        },
-        {
-            "name": "actualRange",
-            "direction": "out",
-            "type": "ViReal64"
-        }
+    'GetAutoRangeValue': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualRange',
+                'type': 'ViReal64'
+            }
         ],
-        "returns": "ViStatus"
+        'returns': 'ViStatus'
     },
     'GetCalDateAndTime': {
         'parameters': [
@@ -1045,8 +1045,8 @@ functions = {
             },
             {
                 'direction': 'in',
+                'enum': 'CalibrationType',
                 'name': 'calType',
-                "enum": "CalibrationType",
                 'type': 'ViInt32'
             },
             {
@@ -1077,35 +1077,35 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
-    "GetChannelName": {
-         "codegen_method":"public",
-         "parameters": [
-         {
-             "name": "vi",
-             "direction": "in",
-             "type": "ViSession"
-         },
-         {
-             "name": "index",
-             "direction": "in",
-             "type": "ViInt32"
-         },
-         {
-             "name": "bufferSize",
-             "direction": "in",
-             "type": "ViInt32"
-         },
-         {
-             "name": "channelString",
-             "direction": "out",
-             "type": "ViChar[]",
-             "size": {
-                    "mechanism": "ivi-dance",
-                    "value": "bufferSize"
+    'GetChannelName': {
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'index',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'channelString',
+                'size': {
+                    'mechanism': 'ivi-dance',
+                    'value': 'bufferSize'
                 },
-        }
+                'type': 'ViChar[]'
+            }
         ],
-        "returns": "ViStatus"
+        'returns': 'ViStatus'
     },
     'GetDevTemp': {
         'parameters': [
@@ -1155,36 +1155,36 @@ functions = {
                 'type': 'ViChar[]'
             }
         ],
-        'returns': 'ViStatus',
+        'returns': 'ViStatus'
     },
-    "GetErrorMessage": {
-        "parameters": [
-        {
-            "name": "vi",
-            "direction": "in",
-            "type": "ViSession"
-        },
-        {
-            "name": "errorCode",
-            "direction": "in",
-            "type": "ViStatus"
-        },
-        {
-            "name": "bufferSize",
-            "direction": "in",
-            "type": "ViInt32"
-        },
-        {
-            "name": "errorMessage",
-            "direction": "out",
-            "type": "ViChar[]",
-            'size':{
-                'mechanism':'ivi-dance',
-                'value':'bufferSize'
+    'GetErrorMessage': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'errorCode',
+                'type': 'ViStatus'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'errorMessage',
+                'size': {
+                    'mechanism': 'ivi-dance',
+                    'value': 'bufferSize'
+                },
+                'type': 'ViChar[]'
             }
-        }
         ],
-        "returns": "ViStatus"
+        'returns': 'ViStatus'
     },
     'GetExtCalRecommendedInterval': {
         'parameters': [
@@ -1196,7 +1196,7 @@ functions = {
             {
                 'direction': 'out',
                 'name': 'months',
-                'type': 'ViInt32',
+                'type': 'ViInt32'
             }
         ],
         'returns': 'ViStatus'
@@ -1210,8 +1210,8 @@ functions = {
             },
             {
                 'direction': 'in',
+                'enum': 'CalibrationType',
                 'name': 'calType',
-                "enum": "CalibrationType",
                 'type': 'ViInt32'
             },
             {
@@ -1222,71 +1222,71 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
-    "GetMeasurementPeriod": {
-        "parameters": [
-        {
-            "name": "vi",
-            "direction": "in",
-            "type": "ViSession"
-        },
-        {
-            "name": "period",
-            "direction": "out",
-            "type": "ViReal64"
-        }
+    'GetMeasurementPeriod': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'out',
+                'name': 'period',
+                'type': 'ViReal64'
+            }
         ],
-        "returns": "ViStatus"
+        'returns': 'ViStatus'
     },
-    "GetNextCoercionRecord": {
-         "codegen_method":"public",
-         "parameters": [
-         {
-             "name": "vi",
-             "direction": "in",
-             "type": "ViSession"
-         },
-         {
-             "name": "bufferSize",
-             "direction": "in",
-             "type": "ViInt32"
-         },
-         {
-             "name": "coercionRecord",
-             "direction": "out",
-             "type": "ViChar[]",
-             "size": {
-                    "mechanism": "ivi-dance",
-                    "value": "bufferSize"
-                }
-         }
-         ],
-         "returns": "ViStatus"
-     },
-     "GetNextInterchangeWarning": {
-         "codegen_method":"public",
-         "parameters": [
-         {
-             "name": "vi",
-             "direction": "in",
-             "type": "ViSession"
-         },
-         {
-             "name": "bufferSize",
-             "direction": "in",
-             "type": "ViInt32"
-         },
-         {
-             "name": "interchangeWarning",
-             "direction": "out",
-             "type": "ViChar[]",
-             "size": {
-                    "mechanism": "ivi-dance",
-                    "value": "bufferSize"
+    'GetNextCoercionRecord': {
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'coercionRecord',
+                'size': {
+                    'mechanism': 'ivi-dance',
+                    'value': 'bufferSize'
                 },
-         }
-         ],
-         "returns": "ViStatus"
-     },
+                'type': 'ViChar[]'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'GetNextInterchangeWarning': {
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'interchangeWarning',
+                'size': {
+                    'mechanism': 'ivi-dance',
+                    'value': 'bufferSize'
+                },
+                'type': 'ViChar[]'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
     'GetSelfCalSupported': {
         'parameters': [
             {
@@ -1321,7 +1321,7 @@ functions = {
                     'mechanism': 'len',
                     'value': 'size'
                 },
-                'type': 'ViInt8[]',
+                'type': 'ViInt8[]'
             }
         ],
         'returns': 'ViStatus'
@@ -1341,29 +1341,29 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
-    'Init':{
-        'init_method': True,
+    'Init': {
         'cname': 'niDMM_init',
-        'parameters':[
+        'init_method': True,
+        'parameters': [
             {
                 'direction': 'in',
                 'name': 'resourceName',
                 'type': 'ViRsrc'
             },
             {
-                'name':'idQuery',
-                'direction':'in',
-                'type':'ViBoolean'
+                'direction': 'in',
+                'name': 'idQuery',
+                'type': 'ViBoolean'
             },
             {
-                'name':'resetDevice',
-                'direction':'in',
-                'type':'ViBoolean'
+                'direction': 'in',
+                'name': 'resetDevice',
+                'type': 'ViBoolean'
             },
             {
-                'name':'vi',
-                'direction':'out',
-                'type':'ViSession'
+                'direction': 'out',
+                'name': 'vi',
+                'type': 'ViSession'
             },
             {
                 'direction': 'out',
@@ -1372,7 +1372,7 @@ functions = {
                 'type': 'ViChar[]'
             }
         ],
-        'returns':'ViStatus'
+        'returns': 'ViStatus'
     },
     'InitWithOptions': {
         'init_method': True,
@@ -1386,7 +1386,7 @@ functions = {
                 'default_value': False,
                 'direction': 'in',
                 'name': 'idQuery',
-                'type': 'ViBoolean',
+                'type': 'ViBoolean'
             },
             {
                 'default_value': False,
@@ -1398,7 +1398,7 @@ functions = {
                 'default_value': '""',
                 'direction': 'in',
                 'name': 'optionString',
-                'type': 'ViString',
+                'type': 'ViString'
             },
             {
                 'direction': 'out',
@@ -1412,7 +1412,7 @@ functions = {
                 'type': 'ViChar[]'
             }
         ],
-        'returns': 'ViStatus',
+        'returns': 'ViStatus'
     },
     'Initiate': {
         'parameters': [
@@ -1424,55 +1424,55 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
-    "InvalidateAllAttributes": {
-        "parameters": [
-        {
-            "name": "vi",
-            "direction": "in",
-            "type": "ViSession"
-        }
+    'InvalidateAllAttributes': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            }
         ],
-        "returns": "ViStatus"
+        'returns': 'ViStatus'
     },
-    "IsOverRange": {
-        "parameters": [
-        {
-            "name": "vi",
-            "direction": "in",
-            "type": "ViSession"
-        },
-        {
-            "name": "measurementValue",
-            "direction": "in",
-            "type": "ViReal64"
-        },
-        {
-            "name": "isOverRange",
-            "direction": "out",
-            "type": "ViBoolean"
-        }
+    'IsOverRange': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'measurementValue',
+                'type': 'ViReal64'
+            },
+            {
+                'direction': 'out',
+                'name': 'isOverRange',
+                'type': 'ViBoolean'
+            }
         ],
-        "returns": "ViStatus"
+        'returns': 'ViStatus'
     },
-    "IsUnderRange": {
-        "parameters": [
-        {
-            "name": "vi",
-            "direction": "in",
-            "type": "ViSession"
-        },
-        {
-            "name": "measurementValue",
-            "direction": "in",
-            "type": "ViReal64"
-        },
-        {
-            "name": "isUnderRange",
-            "direction": "out",
-            "type": "ViBoolean"
-        }
+    'IsUnderRange': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'measurementValue',
+                'type': 'ViReal64'
+            },
+            {
+                'direction': 'out',
+                'name': 'isUnderRange',
+                'type': 'ViBoolean'
+            }
         ],
-        "returns": "ViStatus"
+        'returns': 'ViStatus'
     },
     'LockSession': {
         'codegen_method': 'private',
@@ -1488,7 +1488,7 @@ functions = {
                 'type': 'ViBoolean'
             }
         ],
-        'returns': 'ViStatus',
+        'returns': 'ViStatus'
     },
     'PerformOpenCableComp': {
         'parameters': [
@@ -1540,9 +1540,9 @@ functions = {
             {
                 'default_value': 'hightime.timedelta(milliseconds=-1)',
                 'direction': 'in',
+                'enum': 'TimeLimit',
                 'name': 'maximumTime',
-                'type': 'ViInt32',
-                'enum': 'TimeLimit'
+                'type': 'ViInt32'
             },
             {
                 'direction': 'out',
@@ -1561,9 +1561,9 @@ functions = {
             },
             {
                 'direction': 'in',
+                'enum': 'TimeLimit',
                 'name': 'maximumTime',
-                'type': 'ViInt32',
-                'enum': 'TimeLimit'
+                'type': 'ViInt32'
             },
             {
                 'direction': 'in',
@@ -1583,7 +1583,7 @@ functions = {
             {
                 'direction': 'out',
                 'name': 'actualNumberOfPoints',
-                'type': 'ViInt32',
+                'type': 'ViInt32'
             }
         ],
         'returns': 'ViStatus'
@@ -1618,9 +1618,9 @@ functions = {
             },
             {
                 'direction': 'in',
+                'enum': 'TimeLimit',
                 'name': 'maximumTime',
-                'type': 'ViInt32',
-                'enum': 'TimeLimit'
+                'type': 'ViInt32'
             },
             {
                 'direction': 'in',
@@ -1640,7 +1640,7 @@ functions = {
             {
                 'direction': 'out',
                 'name': 'actualNumberOfPoints',
-                'type': 'ViInt32',
+                'type': 'ViInt32'
             }
         ],
         'returns': 'ViStatus'
@@ -1656,15 +1656,15 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
-    "ResetInterchangeCheck": {
-        "parameters": [
-        {
-            "name": "vi",
-            "direction": "in",
-            "type": "ViSession"
-        }
+    'ResetInterchangeCheck': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            }
         ],
-        "returns": "ViStatus"
+        'returns': 'ViStatus'
     },
     'ResetWithDefaults': {
         'parameters': [
@@ -1676,34 +1676,34 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
-    "RevisionQuery": {
-         "cname":"niDMM_revision_query",
-         "parameters": [
-         {
-             "name": "vi",
-             "direction": "in",
-             "type": "ViSession"
-         },
-         {
-             "name": "instrumentDriverRevision",
-             "direction": "out",
-             "type": "ViChar[]",
-             "size": {
-                    "mechanism": "fixed",
-                    "value": 256
-                }
-         },
-         {
-             "name": "firmwareRevision",
-             "direction": "out",
-             "type": "ViChar[]",
-             "size": {
-                    "mechanism": "fixed",
-                    "value": 256
-        }
-         }
+    'RevisionQuery': {
+        'cname': 'niDMM_revision_query',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'out',
+                'name': 'instrumentDriverRevision',
+                'size': {
+                    'mechanism': 'fixed',
+                    'value': 256
+                },
+                'type': 'ViChar[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'firmwareRevision',
+                'size': {
+                    'mechanism': 'fixed',
+                    'value': 256
+                },
+                'type': 'ViChar[]'
+            }
         ],
-        "returns": "ViStatus"
+        'returns': 'ViStatus'
     },
     'SelfCal': {
         'parameters': [
@@ -1825,30 +1825,30 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
-    "SetAttributeViSession": {
-        "parameters": [
-        {
-            "name": "vi",
-            "direction": "in",
-            "type": "ViSession"
-        },
-        {
-            "name": "channelName",
-            "direction": "in",
-            "type": "ViConstString"
-        },
-        {
-            "name": "attributeId",
-            "direction": "in",
-            "type": "ViAttr"
-        },
-        {
-            "name": "attributeValue",
-            "direction": "in",
-            "type": "ViSession"
-        }
+    'SetAttributeViSession': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'attributeId',
+                'type': 'ViAttr'
+            },
+            {
+                'direction': 'in',
+                'name': 'attributeValue',
+                'type': 'ViSession'
+            }
         ],
-        "returns": "ViStatus"
+        'returns': 'ViStatus'
     },
     'SetAttributeViString': {
         'parameters': [
@@ -1889,6 +1889,6 @@ functions = {
                 'type': 'ViBoolean'
             }
         ],
-        'returns': 'ViStatus',
+        'returns': 'ViStatus'
     }
 }

@@ -1,6 +1,4 @@
-# -*- coding: utf-8 -*-
-# This file is generated from NI-TClk API metadata version 255.0.0d0
-attributes = {
+﻿attributes = {
     1: {
         'access': 'read-write',
         'channel_based': False,
@@ -22,7 +20,7 @@ attributes = {
         'name': 'START_TRIGGER_MASTER_SESSION',
         'resettable': False,
         'type': 'ViSession',
-        'type_in_documentation': 'Driver Session or nitclk.SessionReference',
+        'type_in_documentation': 'Driver Session or nitclk.SessionReference'
     },
     4: {
         'access': 'read-write',
@@ -31,7 +29,7 @@ attributes = {
         'name': 'REF_TRIGGER_MASTER_SESSION',
         'resettable': False,
         'type': 'ViSession',
-        'type_in_documentation': 'Driver Session or nitclk.SessionReference',
+        'type_in_documentation': 'Driver Session or nitclk.SessionReference'
     },
     5: {
         'access': 'read-write',
@@ -41,7 +39,7 @@ attributes = {
         'name': 'SCRIPT_TRIGGER_MASTER_SESSION',
         'resettable': False,
         'type': 'ViSession',
-        'type_in_documentation': 'Driver Session or nitclk.SessionReference',
+        'type_in_documentation': 'Driver Session or nitclk.SessionReference'
     },
     6: {
         'access': 'read-write',
@@ -50,21 +48,21 @@ attributes = {
         'name': 'PAUSE_TRIGGER_MASTER_SESSION',
         'resettable': False,
         'type': 'ViSession',
-        'type_in_documentation': 'Driver Session or nitclk.SessionReference',
+        'type_in_documentation': 'Driver Session or nitclk.SessionReference'
     },
     8: {
         'access': 'read only',
         'channel_based': False,
         'name': 'TCLK_ACTUAL_PERIOD',
         'resettable': False,
-        'type': 'ViReal64',
+        'type': 'ViReal64'
     },
     9: {
         'access': 'read-write',
         'channel_based': False,
         'name': 'EXPORTED_TCLK_OUTPUT_TERMINAL',
         'resettable': False,
-        'type': 'ViString',
+        'type': 'ViString'
     },
     10: {
         'access': 'read-write',
@@ -80,7 +78,7 @@ attributes = {
         'name': 'SAMPLE_CLOCK_DELAY',
         'resettable': False,
         'type': 'ViReal64',
-        'type_in_documentation': 'hightime.timedelta, datetime.timedelta, or float in seconds',
+        'type_in_documentation': 'hightime.timedelta, datetime.timedelta, or float in seconds'
     },
     13: {
         'access': 'read-write',
@@ -96,6 +94,6 @@ attributes = {
         'name': 'SEQUENCER_FLAG_MASTER_SESSION',
         'resettable': False,
         'type': 'ViSession',
-        'type_in_documentation': 'Driver Session or nitclk.SessionReference',
+        'type_in_documentation': 'Driver Session or nitclk.SessionReference'
     }
 }

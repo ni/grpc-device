@@ -36,9 +36,9 @@ service NiDigital {
   rpc ConfigureHistoryRAMCyclesToAcquire(ConfigureHistoryRAMCyclesToAcquireRequest) returns (ConfigureHistoryRAMCyclesToAcquireResponse);
   rpc ConfigurePatternBurstSites(ConfigurePatternBurstSitesRequest) returns (ConfigurePatternBurstSitesResponse);
   rpc ConfigurePatternLabelHistoryRAMTrigger(ConfigurePatternLabelHistoryRAMTriggerRequest) returns (ConfigurePatternLabelHistoryRAMTriggerResponse);
-  rpc ConfigureStartLabel(ConfigureStartLabelRequest) returns (ConfigureStartLabelResponse);
   rpc ConfigureSoftwareEdgeConditionalJumpTrigger(ConfigureSoftwareEdgeConditionalJumpTriggerRequest) returns (ConfigureSoftwareEdgeConditionalJumpTriggerResponse);
   rpc ConfigureSoftwareEdgeStartTrigger(ConfigureSoftwareEdgeStartTriggerRequest) returns (ConfigureSoftwareEdgeStartTriggerResponse);
+  rpc ConfigureStartLabel(ConfigureStartLabelRequest) returns (ConfigureStartLabelResponse);
   rpc ConfigureTerminationMode(ConfigureTerminationModeRequest) returns (ConfigureTerminationModeResponse);
   rpc ConfigureTimeSetCompareEdgesStrobe(ConfigureTimeSetCompareEdgesStrobeRequest) returns (ConfigureTimeSetCompareEdgesStrobeResponse);
   rpc ConfigureTimeSetCompareEdgesStrobe2x(ConfigureTimeSetCompareEdgesStrobe2xRequest) returns (ConfigureTimeSetCompareEdgesStrobe2xResponse);
@@ -53,9 +53,9 @@ service NiDigital {
   rpc CreateCaptureWaveformParallel(CreateCaptureWaveformParallelRequest) returns (CreateCaptureWaveformParallelResponse);
   rpc CreateCaptureWaveformSerial(CreateCaptureWaveformSerialRequest) returns (CreateCaptureWaveformSerialResponse);
   rpc CreateChannelMap(CreateChannelMapRequest) returns (CreateChannelMapResponse);
-  rpc CreateSourceWaveformFromFileTDMS(CreateSourceWaveformFromFileTDMSRequest) returns (CreateSourceWaveformFromFileTDMSResponse);
-  rpc CreatePinMap(CreatePinMapRequest) returns (CreatePinMapResponse);
   rpc CreatePinGroup(CreatePinGroupRequest) returns (CreatePinGroupResponse);
+  rpc CreatePinMap(CreatePinMapRequest) returns (CreatePinMapResponse);
+  rpc CreateSourceWaveformFromFileTDMS(CreateSourceWaveformFromFileTDMSRequest) returns (CreateSourceWaveformFromFileTDMSResponse);
   rpc CreateSourceWaveformParallel(CreateSourceWaveformParallelRequest) returns (CreateSourceWaveformParallelResponse);
   rpc CreateSourceWaveformSerial(CreateSourceWaveformSerialRequest) returns (CreateSourceWaveformSerialResponse);
   rpc CreateTimeSet(CreateTimeSetRequest) returns (CreateTimeSetResponse);
@@ -86,8 +86,8 @@ service NiDigital {
   rpc GetError(GetErrorRequest) returns (GetErrorResponse);
   rpc GetFailCount(GetFailCountRequest) returns (GetFailCountResponse);
   rpc GetHistoryRAMSampleCount(GetHistoryRAMSampleCountRequest) returns (GetHistoryRAMSampleCountResponse);
-  rpc GetPatternPinIndexes(GetPatternPinIndexesRequest) returns (GetPatternPinIndexesResponse);
   rpc GetPatternName(GetPatternNameRequest) returns (GetPatternNameResponse);
+  rpc GetPatternPinIndexes(GetPatternPinIndexesRequest) returns (GetPatternPinIndexesResponse);
   rpc GetPatternPinList(GetPatternPinListRequest) returns (GetPatternPinListResponse);
   rpc GetPinName(GetPinNameRequest) returns (GetPinNameResponse);
   rpc GetPinResultsPinInformation(GetPinResultsPinInformationRequest) returns (GetPinResultsPinInformationResponse);
@@ -144,8 +144,8 @@ service NiDigital {
   rpc WriteSequencerRegister(WriteSequencerRegisterRequest) returns (WriteSequencerRegisterResponse);
   rpc WriteSourceWaveformBroadcastU32(WriteSourceWaveformBroadcastU32Request) returns (WriteSourceWaveformBroadcastU32Response);
   rpc WriteSourceWaveformDataFromFileTDMS(WriteSourceWaveformDataFromFileTDMSRequest) returns (WriteSourceWaveformDataFromFileTDMSResponse);
-  rpc WriteStatic(WriteStaticRequest) returns (WriteStaticResponse);
   rpc WriteSourceWaveformSiteUniqueU32(WriteSourceWaveformSiteUniqueU32Request) returns (WriteSourceWaveformSiteUniqueU32Response);
+  rpc WriteStatic(WriteStaticRequest) returns (WriteStaticResponse);
 }
 
 enum NiDigitalAttribute {
@@ -261,16 +261,30 @@ enum ExportSignal {
   EXPORT_SIGNAL_NIDIGITAL_VAL_REF_CLOCK = 2003;
 }
 
+enum FrequencyMeasurementMode {
+  FREQUENCY_MEASUREMENT_MODE_UNSPECIFIED = 0;
+  FREQUENCY_MEASUREMENT_MODE_NIDIGITAL_VAL_BANKED = 3700;
+  FREQUENCY_MEASUREMENT_MODE_NIDIGITAL_VAL_PARALLEL = 3701;
+}
+
 enum HistoryRamCyclesToAcquire {
   HISTORY_RAM_CYCLES_TO_ACQUIRE_UNSPECIFIED = 0;
   HISTORY_RAM_CYCLES_TO_ACQUIRE_NIDIGITAL_VAL_FAILED_CYCLES = 2303;
   HISTORY_RAM_CYCLES_TO_ACQUIRE_NIDIGITAL_VAL_ALL_CYCLES = 2304;
 }
 
-enum FrequencyMeasurementMode {
-  FREQUENCY_MEASUREMENT_MODE_UNSPECIFIED = 0;
-  FREQUENCY_MEASUREMENT_MODE_NIDIGITAL_VAL_BANKED = 3700;
-  FREQUENCY_MEASUREMENT_MODE_NIDIGITAL_VAL_PARALLEL = 3701;
+enum PinState {
+  PIN_STATE_NIDIGITAL_VAL_0 = 0;
+  PIN_STATE_NIDIGITAL_VAL_1 = 1;
+  PIN_STATE_NIDIGITAL_VAL_L = 3;
+  PIN_STATE_NIDIGITAL_VAL_H = 4;
+  PIN_STATE_NIDIGITAL_VAL_X = 5;
+  PIN_STATE_NIDIGITAL_VAL_M = 6;
+  PIN_STATE_NIDIGITAL_VAL_V = 7;
+  PIN_STATE_NIDIGITAL_VAL_D = 8;
+  PIN_STATE_NIDIGITAL_VAL_E = 9;
+  PIN_STATE_NIDIGITAL_VAL_NOT_A_PIN_STATE = 254;
+  PIN_STATE_NIDIGITAL_VAL_PIN_STATE_NOT_ACQUIRED = 255;
 }
 
 enum PpmuApertureTimeUnits {
@@ -293,20 +307,6 @@ enum PpmuOutputFunction {
   PPMU_OUTPUT_FUNCTION_UNSPECIFIED = 0;
   PPMU_OUTPUT_FUNCTION_NIDIGITAL_VAL_DC_VOLTAGE = 1300;
   PPMU_OUTPUT_FUNCTION_NIDIGITAL_VAL_DC_CURRENT = 1301;
-}
-
-enum PinState {
-  PIN_STATE_NIDIGITAL_VAL_0 = 0;
-  PIN_STATE_NIDIGITAL_VAL_1 = 1;
-  PIN_STATE_NIDIGITAL_VAL_L = 3;
-  PIN_STATE_NIDIGITAL_VAL_H = 4;
-  PIN_STATE_NIDIGITAL_VAL_X = 5;
-  PIN_STATE_NIDIGITAL_VAL_M = 6;
-  PIN_STATE_NIDIGITAL_VAL_V = 7;
-  PIN_STATE_NIDIGITAL_VAL_D = 8;
-  PIN_STATE_NIDIGITAL_VAL_E = 9;
-  PIN_STATE_NIDIGITAL_VAL_NOT_A_PIN_STATE = 254;
-  PIN_STATE_NIDIGITAL_VAL_PIN_STATE_NOT_ACQUIRED = 255;
 }
 
 enum SelectedFunction {
@@ -601,15 +601,6 @@ message ConfigurePatternLabelHistoryRAMTriggerResponse {
   int32 status = 1;
 }
 
-message ConfigureStartLabelRequest {
-  nidevice_grpc.Session vi = 1;
-  string label = 2;
-}
-
-message ConfigureStartLabelResponse {
-  int32 status = 1;
-}
-
 message ConfigureSoftwareEdgeConditionalJumpTriggerRequest {
   nidevice_grpc.Session vi = 1;
   string trigger_identifier = 2;
@@ -624,6 +615,15 @@ message ConfigureSoftwareEdgeStartTriggerRequest {
 }
 
 message ConfigureSoftwareEdgeStartTriggerResponse {
+  int32 status = 1;
+}
+
+message ConfigureStartLabelRequest {
+  nidevice_grpc.Session vi = 1;
+  string label = 2;
+}
+
+message ConfigureStartLabelResponse {
   int32 status = 1;
 }
 
@@ -809,14 +809,13 @@ message CreateChannelMapResponse {
   int32 status = 1;
 }
 
-message CreateSourceWaveformFromFileTDMSRequest {
+message CreatePinGroupRequest {
   nidevice_grpc.Session vi = 1;
-  string waveform_name = 2;
-  string waveform_file_path = 3;
-  bool write_waveform_data = 4;
+  string pin_group_name = 2;
+  string pin_list = 3;
 }
 
-message CreateSourceWaveformFromFileTDMSResponse {
+message CreatePinGroupResponse {
   int32 status = 1;
 }
 
@@ -830,13 +829,14 @@ message CreatePinMapResponse {
   int32 status = 1;
 }
 
-message CreatePinGroupRequest {
+message CreateSourceWaveformFromFileTDMSRequest {
   nidevice_grpc.Session vi = 1;
-  string pin_group_name = 2;
-  string pin_list = 3;
+  string waveform_name = 2;
+  string waveform_file_path = 3;
+  bool write_waveform_data = 4;
 }
 
-message CreatePinGroupResponse {
+message CreateSourceWaveformFromFileTDMSResponse {
   int32 status = 1;
 }
 
@@ -1176,6 +1176,16 @@ message GetHistoryRAMSampleCountResponse {
   int64 sample_count = 2;
 }
 
+message GetPatternNameRequest {
+  nidevice_grpc.Session vi = 1;
+  sint32 pattern_index = 2;
+}
+
+message GetPatternNameResponse {
+  int32 status = 1;
+  string name = 2;
+}
+
 message GetPatternPinIndexesRequest {
   nidevice_grpc.Session vi = 1;
   string start_label = 2;
@@ -1185,16 +1195,6 @@ message GetPatternPinIndexesResponse {
   int32 status = 1;
   repeated sint32 pin_indexes = 2;
   sint32 actual_num_pins = 3;
-}
-
-message GetPatternNameRequest {
-  nidevice_grpc.Session vi = 1;
-  sint32 pattern_index = 2;
-}
-
-message GetPatternNameResponse {
-  int32 status = 1;
-  string name = 2;
 }
 
 message GetPatternPinListRequest {
@@ -1801,19 +1801,6 @@ message WriteSourceWaveformDataFromFileTDMSResponse {
   int32 status = 1;
 }
 
-message WriteStaticRequest {
-  nidevice_grpc.Session vi = 1;
-  string channel_list = 2;
-  oneof state_enum {
-    WriteStaticPinState state = 3;
-    uint32 state_raw = 4;
-  }
-}
-
-message WriteStaticResponse {
-  int32 status = 1;
-}
-
 message WriteSourceWaveformSiteUniqueU32Request {
   nidevice_grpc.Session vi = 1;
   string site_list = 2;
@@ -1824,6 +1811,19 @@ message WriteSourceWaveformSiteUniqueU32Request {
 }
 
 message WriteSourceWaveformSiteUniqueU32Response {
+  int32 status = 1;
+}
+
+message WriteStaticRequest {
+  nidevice_grpc.Session vi = 1;
+  string channel_list = 2;
+  oneof state_enum {
+    WriteStaticPinState state = 3;
+    uint32 state_raw = 4;
+  }
+}
+
+message WriteStaticResponse {
   int32 status = 1;
 }
 

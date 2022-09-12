@@ -42,9 +42,9 @@ ConfigureFirstFailureHistoryRAMTriggerResponse configure_first_failure_history_r
 ConfigureHistoryRAMCyclesToAcquireResponse configure_history_ram_cycles_to_acquire(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<HistoryRamCyclesToAcquire, pb::int32>& cycles_to_acquire);
 ConfigurePatternBurstSitesResponse configure_pattern_burst_sites(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& site_list);
 ConfigurePatternLabelHistoryRAMTriggerResponse configure_pattern_label_history_ram_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& label, const pb::int64& vector_offset, const pb::int64& cycle_offset, const pb::int32& pretrigger_samples);
-ConfigureStartLabelResponse configure_start_label(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& label);
 ConfigureSoftwareEdgeConditionalJumpTriggerResponse configure_software_edge_conditional_jump_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& trigger_identifier);
 ConfigureSoftwareEdgeStartTriggerResponse configure_software_edge_start_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi);
+ConfigureStartLabelResponse configure_start_label(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& label);
 ConfigureTerminationModeResponse configure_termination_mode(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const simple_variant<TerminationMode, pb::int32>& mode);
 ConfigureTimeSetCompareEdgesStrobeResponse configure_time_set_compare_edges_strobe(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& pin_list, const pb::string& time_set_name, const double& strobe_edge);
 ConfigureTimeSetCompareEdgesStrobe2xResponse configure_time_set_compare_edges_strobe2x(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& pin_list, const pb::string& time_set_name, const double& strobe_edge, const double& strobe2_edge);
@@ -59,9 +59,9 @@ CreateCaptureWaveformFromFileDigicaptureResponse create_capture_waveform_from_fi
 CreateCaptureWaveformParallelResponse create_capture_waveform_parallel(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& pin_list, const pb::string& waveform_name);
 CreateCaptureWaveformSerialResponse create_capture_waveform_serial(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& pin_list, const pb::string& waveform_name, const pb::uint32& sample_width, const simple_variant<BitOrder, pb::int32>& bit_order);
 CreateChannelMapResponse create_channel_map(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& num_sites);
-CreateSourceWaveformFromFileTDMSResponse create_source_waveform_from_file_tdms(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& waveform_name, const pb::string& waveform_file_path, const bool& write_waveform_data);
-CreatePinMapResponse create_pin_map(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& dut_pin_list, const pb::string& system_pin_list);
 CreatePinGroupResponse create_pin_group(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& pin_group_name, const pb::string& pin_list);
+CreatePinMapResponse create_pin_map(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& dut_pin_list, const pb::string& system_pin_list);
+CreateSourceWaveformFromFileTDMSResponse create_source_waveform_from_file_tdms(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& waveform_name, const pb::string& waveform_file_path, const bool& write_waveform_data);
 CreateSourceWaveformParallelResponse create_source_waveform_parallel(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& pin_list, const pb::string& waveform_name, const simple_variant<SourceDataMapping, pb::int32>& data_mapping);
 CreateSourceWaveformSerialResponse create_source_waveform_serial(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& pin_list, const pb::string& waveform_name, const simple_variant<SourceDataMapping, pb::int32>& data_mapping, const pb::uint32& sample_width, const simple_variant<BitOrder, pb::int32>& bit_order);
 CreateTimeSetResponse create_time_set(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& name);
@@ -92,8 +92,8 @@ GetChannelNameFromStringResponse get_channel_name_from_string(const StubPtr& stu
 GetErrorResponse get_error(const StubPtr& stub, const nidevice_grpc::Session& vi);
 GetFailCountResponse get_fail_count(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list);
 GetHistoryRAMSampleCountResponse get_history_ram_sample_count(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& site);
-GetPatternPinIndexesResponse get_pattern_pin_indexes(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& start_label);
 GetPatternNameResponse get_pattern_name(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& pattern_index);
+GetPatternPinIndexesResponse get_pattern_pin_indexes(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& start_label);
 GetPatternPinListResponse get_pattern_pin_list(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& start_label);
 GetPinNameResponse get_pin_name(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& pin_index);
 GetPinResultsPinInformationResponse get_pin_results_pin_information(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list);
@@ -150,8 +150,8 @@ WriteSequencerFlagSynchronizedResponse write_sequencer_flag_synchronized(const S
 WriteSequencerRegisterResponse write_sequencer_register(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& reg, const pb::int32& value);
 WriteSourceWaveformBroadcastU32Response write_source_waveform_broadcast_u32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& waveform_name, const std::vector<pb::uint32>& waveform_data);
 WriteSourceWaveformDataFromFileTDMSResponse write_source_waveform_data_from_file_tdms(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& waveform_name, const pb::string& waveform_file_path);
-WriteStaticResponse write_static(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const simple_variant<WriteStaticPinState, pb::uint32>& state);
 WriteSourceWaveformSiteUniqueU32Response write_source_waveform_site_unique_u32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& site_list, const pb::string& waveform_name, const pb::int32& num_waveforms, const pb::int32& samples_per_waveform, const std::vector<pb::uint32>& waveform_data);
+WriteStaticResponse write_static(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const simple_variant<WriteStaticPinState, pb::uint32>& state);
 
 } // namespace nidigitalpattern_grpc::experimental::client
 

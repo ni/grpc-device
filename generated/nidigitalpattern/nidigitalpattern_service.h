@@ -61,9 +61,9 @@ public:
   ::grpc::Status ConfigureHistoryRAMCyclesToAcquire(::grpc::ServerContext* context, const ConfigureHistoryRAMCyclesToAcquireRequest* request, ConfigureHistoryRAMCyclesToAcquireResponse* response) override;
   ::grpc::Status ConfigurePatternBurstSites(::grpc::ServerContext* context, const ConfigurePatternBurstSitesRequest* request, ConfigurePatternBurstSitesResponse* response) override;
   ::grpc::Status ConfigurePatternLabelHistoryRAMTrigger(::grpc::ServerContext* context, const ConfigurePatternLabelHistoryRAMTriggerRequest* request, ConfigurePatternLabelHistoryRAMTriggerResponse* response) override;
-  ::grpc::Status ConfigureStartLabel(::grpc::ServerContext* context, const ConfigureStartLabelRequest* request, ConfigureStartLabelResponse* response) override;
   ::grpc::Status ConfigureSoftwareEdgeConditionalJumpTrigger(::grpc::ServerContext* context, const ConfigureSoftwareEdgeConditionalJumpTriggerRequest* request, ConfigureSoftwareEdgeConditionalJumpTriggerResponse* response) override;
   ::grpc::Status ConfigureSoftwareEdgeStartTrigger(::grpc::ServerContext* context, const ConfigureSoftwareEdgeStartTriggerRequest* request, ConfigureSoftwareEdgeStartTriggerResponse* response) override;
+  ::grpc::Status ConfigureStartLabel(::grpc::ServerContext* context, const ConfigureStartLabelRequest* request, ConfigureStartLabelResponse* response) override;
   ::grpc::Status ConfigureTerminationMode(::grpc::ServerContext* context, const ConfigureTerminationModeRequest* request, ConfigureTerminationModeResponse* response) override;
   ::grpc::Status ConfigureTimeSetCompareEdgesStrobe(::grpc::ServerContext* context, const ConfigureTimeSetCompareEdgesStrobeRequest* request, ConfigureTimeSetCompareEdgesStrobeResponse* response) override;
   ::grpc::Status ConfigureTimeSetCompareEdgesStrobe2x(::grpc::ServerContext* context, const ConfigureTimeSetCompareEdgesStrobe2xRequest* request, ConfigureTimeSetCompareEdgesStrobe2xResponse* response) override;
@@ -78,9 +78,9 @@ public:
   ::grpc::Status CreateCaptureWaveformParallel(::grpc::ServerContext* context, const CreateCaptureWaveformParallelRequest* request, CreateCaptureWaveformParallelResponse* response) override;
   ::grpc::Status CreateCaptureWaveformSerial(::grpc::ServerContext* context, const CreateCaptureWaveformSerialRequest* request, CreateCaptureWaveformSerialResponse* response) override;
   ::grpc::Status CreateChannelMap(::grpc::ServerContext* context, const CreateChannelMapRequest* request, CreateChannelMapResponse* response) override;
-  ::grpc::Status CreateSourceWaveformFromFileTDMS(::grpc::ServerContext* context, const CreateSourceWaveformFromFileTDMSRequest* request, CreateSourceWaveformFromFileTDMSResponse* response) override;
-  ::grpc::Status CreatePinMap(::grpc::ServerContext* context, const CreatePinMapRequest* request, CreatePinMapResponse* response) override;
   ::grpc::Status CreatePinGroup(::grpc::ServerContext* context, const CreatePinGroupRequest* request, CreatePinGroupResponse* response) override;
+  ::grpc::Status CreatePinMap(::grpc::ServerContext* context, const CreatePinMapRequest* request, CreatePinMapResponse* response) override;
+  ::grpc::Status CreateSourceWaveformFromFileTDMS(::grpc::ServerContext* context, const CreateSourceWaveformFromFileTDMSRequest* request, CreateSourceWaveformFromFileTDMSResponse* response) override;
   ::grpc::Status CreateSourceWaveformParallel(::grpc::ServerContext* context, const CreateSourceWaveformParallelRequest* request, CreateSourceWaveformParallelResponse* response) override;
   ::grpc::Status CreateSourceWaveformSerial(::grpc::ServerContext* context, const CreateSourceWaveformSerialRequest* request, CreateSourceWaveformSerialResponse* response) override;
   ::grpc::Status CreateTimeSet(::grpc::ServerContext* context, const CreateTimeSetRequest* request, CreateTimeSetResponse* response) override;
@@ -111,8 +111,8 @@ public:
   ::grpc::Status GetError(::grpc::ServerContext* context, const GetErrorRequest* request, GetErrorResponse* response) override;
   ::grpc::Status GetFailCount(::grpc::ServerContext* context, const GetFailCountRequest* request, GetFailCountResponse* response) override;
   ::grpc::Status GetHistoryRAMSampleCount(::grpc::ServerContext* context, const GetHistoryRAMSampleCountRequest* request, GetHistoryRAMSampleCountResponse* response) override;
-  ::grpc::Status GetPatternPinIndexes(::grpc::ServerContext* context, const GetPatternPinIndexesRequest* request, GetPatternPinIndexesResponse* response) override;
   ::grpc::Status GetPatternName(::grpc::ServerContext* context, const GetPatternNameRequest* request, GetPatternNameResponse* response) override;
+  ::grpc::Status GetPatternPinIndexes(::grpc::ServerContext* context, const GetPatternPinIndexesRequest* request, GetPatternPinIndexesResponse* response) override;
   ::grpc::Status GetPatternPinList(::grpc::ServerContext* context, const GetPatternPinListRequest* request, GetPatternPinListResponse* response) override;
   ::grpc::Status GetPinName(::grpc::ServerContext* context, const GetPinNameRequest* request, GetPinNameResponse* response) override;
   ::grpc::Status GetPinResultsPinInformation(::grpc::ServerContext* context, const GetPinResultsPinInformationRequest* request, GetPinResultsPinInformationResponse* response) override;
@@ -169,8 +169,8 @@ public:
   ::grpc::Status WriteSequencerRegister(::grpc::ServerContext* context, const WriteSequencerRegisterRequest* request, WriteSequencerRegisterResponse* response) override;
   ::grpc::Status WriteSourceWaveformBroadcastU32(::grpc::ServerContext* context, const WriteSourceWaveformBroadcastU32Request* request, WriteSourceWaveformBroadcastU32Response* response) override;
   ::grpc::Status WriteSourceWaveformDataFromFileTDMS(::grpc::ServerContext* context, const WriteSourceWaveformDataFromFileTDMSRequest* request, WriteSourceWaveformDataFromFileTDMSResponse* response) override;
-  ::grpc::Status WriteStatic(::grpc::ServerContext* context, const WriteStaticRequest* request, WriteStaticResponse* response) override;
   ::grpc::Status WriteSourceWaveformSiteUniqueU32(::grpc::ServerContext* context, const WriteSourceWaveformSiteUniqueU32Request* request, WriteSourceWaveformSiteUniqueU32Response* response) override;
+  ::grpc::Status WriteStatic(::grpc::ServerContext* context, const WriteStaticRequest* request, WriteStaticResponse* response) override;
 private:
   NiDigitalLibraryInterface* library_;
   ResourceRepositorySharedPtr session_repository_;
