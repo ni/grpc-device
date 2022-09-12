@@ -1,4 +1,6 @@
-{
+# -*- coding: utf-8 -*-
+# This file is generated from NI-DCPower API metadata version 20.7.0d8
+enums = {
     'ApertureTimeUnits': {
         'values': [
             {
@@ -133,6 +135,18 @@
             {
                 'name': 'NIDCPOWER_VAL_ASYMMETRIC',
                 'value': 1
+            }
+        ]
+    },
+    'PowerLineFrequencies': {
+        'values': [
+            {
+                'name': 'NIDCPOWER_VAL_50_HERTZ',
+                'value': 50
+            },
+            {
+                'name': 'NIDCPOWER_VAL_60_HERTZ',
+                'value': 60
             }
         ]
     },
@@ -469,18 +483,6 @@
                 },
                 'name': 'NIDCPOWER_VAL_MANUAL',
                 'value': 1060
-            }
-        ]
-    },
-    'PowerLineFrequencies': {
-        'values': [
-            {
-                'name': 'NIDCPOWER_VAL_50_HERTZ',
-                'value': 50
-            },
-            {
-                'name': 'NIDCPOWER_VAL_60_HERTZ',
-                'value': 60
             }
         ]
     },

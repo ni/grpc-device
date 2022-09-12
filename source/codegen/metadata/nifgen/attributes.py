@@ -1,4 +1,4 @@
-{
+attributes = {
     1050002: {
         'access': 'read-write',
         'name': 'RANGE_CHECK',
@@ -201,8 +201,8 @@
     },
     1150208: {
         'access': 'read-write',
-        'enum': 'FrequencyListHandle',
         'name': 'FREQ_LIST_HANDLE',
+        'enum': 'FrequencyListHandle',
         'resettable': False,
         'type': 'ViInt32'
     },
@@ -521,10 +521,10 @@
     },
     1150269: {
         'access': 'read-write',
-        'enum': 'OspOverflowStatus',
         'name': 'OSP_OVERFLOW_STATUS',
         'resettable': True,
-        'type': 'ViInt32'
+        'type': 'ViInt32',
+        'enum': 'OspOverflowStatus'
     },
     1150270: {
         'access': 'read-write',
@@ -1226,8 +1226,8 @@
     },
     1250201: {
         'access': 'read-write',
-        'enum': 'ArbitraryWaveformHandle',
         'name': 'ARB_WAVEFORM_HANDLE',
+        'enum': 'ArbitraryWaveformHandle',
         'resettable': False,
         'type': 'ViInt32'
     },
@@ -1276,8 +1276,8 @@
     },
     1250211: {
         'access': 'read-write',
-        'enum': 'ArbitrarySequenceHandle',
         'name': 'ARB_SEQUENCE_HANDLE',
+        'enum': 'ArbitrarySequenceHandle',
         'resettable': False,
         'type': 'ViInt32'
     },
@@ -1313,8 +1313,8 @@
         'type': 'ViInt32'
     },
     1250350: {
-        'enum': 'BurstCount',
         'name': 'BURST_COUNT',
-        'type': 'ViInt32'
+        'type': 'ViInt32',
+        'enum': 'BurstCount'
     }
 }

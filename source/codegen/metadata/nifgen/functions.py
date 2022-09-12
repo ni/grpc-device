@@ -1,1170 +1,1139 @@
-{
-    'AbortGeneration': {
-        'parameters': [
+functions = {
+    'AbortGeneration':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'AdjustSampleClockRelativeDelay': {
-        'parameters': [
+    'AdjustSampleClockRelativeDelay':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'adjustmentTime',
-                'type': 'ViReal64'
+                'name':'adjustmentTime',
+                'direction':'in',
+                'type':'ViReal64'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'AllocateNamedWaveform': {
-        'parameters': [
+    'AllocateNamedWaveform':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'channelName',
-                'type': 'ViConstString'
+                'name':'channelName',
+                'direction':'in',
+                'type':'ViConstString'
             },
             {
-                'direction': 'in',
-                'name': 'waveformName',
-                'type': 'ViConstString'
+                'name':'waveformName',
+                'direction':'in',
+                'type':'ViConstString'
             },
             {
-                'direction': 'in',
-                'name': 'waveformSize',
-                'type': 'ViInt32'
+                'name':'waveformSize',
+                'direction':'in',
+                'type':'ViInt32'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'AllocateWaveform': {
-        'parameters': [
+    'AllocateWaveform':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'channelName',
-                'type': 'ViConstString'
+                'name':'channelName',
+                'direction':'in',
+                'type':'ViConstString'
             },
             {
-                'direction': 'in',
-                'name': 'waveformSize',
-                'type': 'ViInt32'
+                'name':'waveformSize',
+                'direction':'in',
+                'type':'ViInt32'
             },
             {
-                'direction': 'out',
-                'name': 'waveformHandle',
-                'type': 'ViInt32'
+                'name':'waveformHandle',
+                'direction':'out',
+                'type':'ViInt32'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'CheckAttributeViBoolean': {
-        'parameters': [
+    'CheckAttributeViBoolean':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'channelName',
-                'type': 'ViConstString'
+                'name':'channelName',
+                'direction':'in',
+                'type':'ViConstString'
             },
             {
-                'direction': 'in',
-                'name': 'attributeId',
-                'type': 'ViAttr'
+                'name':'attributeId',
+                'direction':'in',
+                'type':'ViAttr'
             },
             {
-                'direction': 'in',
-                'name': 'attributeValue',
-                'type': 'ViBoolean'
+                'name':'attributeValue',
+                'direction':'in',
+                'type':'ViBoolean'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'CheckAttributeViInt32': {
-        'parameters': [
+    'CheckAttributeViInt32':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'channelName',
-                'type': 'ViConstString'
+                'name':'channelName',
+                'direction':'in',
+                'type':'ViConstString'
             },
             {
-                'direction': 'in',
-                'name': 'attributeId',
-                'type': 'ViAttr'
+                'name':'attributeId',
+                'direction':'in',
+                'type':'ViAttr'
             },
             {
-                'direction': 'in',
-                'name': 'attributeValue',
-                'type': 'ViInt32'
+                'name':'attributeValue',
+                'direction':'in',
+                'type':'ViInt32'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'CheckAttributeViInt64': {
-        'parameters': [
+    'CheckAttributeViInt64':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'channelName',
-                'type': 'ViConstString'
+                'name':'channelName',
+                'direction':'in',
+                'type':'ViConstString'
             },
             {
-                'direction': 'in',
-                'name': 'attributeId',
-                'type': 'ViAttr'
+                'name':'attributeId',
+                'direction':'in',
+                'type':'ViAttr'
             },
             {
-                'direction': 'in',
-                'name': 'attributeValue',
-                'type': 'ViInt64'
+                'name':'attributeValue',
+                'direction':'in',
+                'type':'ViInt64'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'CheckAttributeViReal64': {
-        'parameters': [
+    'CheckAttributeViReal64':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'channelName',
-                'type': 'ViConstString'
+                'name':'channelName',
+                'direction':'in',
+                'type':'ViConstString'
             },
             {
-                'direction': 'in',
-                'name': 'attributeId',
-                'type': 'ViAttr'
+                'name':'attributeId',
+                'direction':'in',
+                'type':'ViAttr'
             },
             {
-                'direction': 'in',
-                'name': 'attributeValue',
-                'type': 'ViReal64'
+                'name':'attributeValue',
+                'direction':'in',
+                'type':'ViReal64'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'CheckAttributeViSession': {
-        'parameters': [
+    'CheckAttributeViSession':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'channelName',
-                'type': 'ViConstString'
+                'name':'channelName',
+                'direction':'in',
+                'type':'ViConstString'
             },
             {
-                'direction': 'in',
-                'name': 'attributeId',
-                'type': 'ViAttr'
+                'name':'attributeId',
+                'direction':'in',
+                'type':'ViAttr'
             },
             {
-                'direction': 'in',
-                'name': 'attributeValue',
-                'type': 'ViSession'
+                'name':'attributeValue',
+                'direction':'in',
+                'type':'ViSession'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'CheckAttributeViString': {
-        'parameters': [
+    'CheckAttributeViString':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'channelName',
-                'type': 'ViConstString'
+                'name':'channelName',
+                'direction':'in',
+                'type':'ViConstString'
             },
             {
-                'direction': 'in',
-                'name': 'attributeId',
-                'type': 'ViAttr'
+                'name':'attributeId',
+                'direction':'in',
+                'type':'ViAttr'
             },
             {
-                'direction': 'in',
-                'name': 'attributeValue',
-                'type': 'ViConstString'
+                'name':'attributeValue',
+                'direction':'in',
+                'type':'ViConstString'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'ClearArbMemory': {
-        'parameters': [
+    'ClearArbMemory':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'ClearArbSequence': {
-        'parameters': [
+    'ClearArbSequence':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'enum': 'SequenceHandle',
-                'name': 'sequenceHandle',
-                'type': 'ViInt32'
+                'name':'sequenceHandle',
+                'direction':'in',
+                'type':'ViInt32',
+                'enum':'SequenceHandle'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'ClearArbWaveform': {
-        'parameters': [
+    'ClearArbWaveform':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'enum': 'WaveformHandle',
-                'name': 'waveformHandle',
-                'type': 'ViInt32'
+                'name':'waveformHandle',
+                'direction':'in',
+                'type':'ViInt32',
+                'enum':'WaveformHandle'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'ClearError': {
-        'parameters': [
+    'ClearError':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'ClearFreqList': {
-        'parameters': [
+    'ClearFreqList':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'enum': 'FrequencyListOptions',
-                'name': 'frequencyListHandle',
-                'type': 'ViInt32'
+                'name':'frequencyListHandle',
+                'direction':'in',
+                'type':'ViInt32',
+                'enum':'FrequencyListOptions'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'ClearInterchangeWarnings': {
-        'parameters': [
+    'ClearInterchangeWarnings':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'ClearUserStandardWaveform': {
-        'parameters': [
+    'ClearUserStandardWaveform':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'channelName',
-                'type': 'ViConstString'
+                'name':'channelName',
+                'direction':'in',
+                'type':'ViConstString'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'Close': {
-        'cname': 'niFgen_close',
-        'parameters': [
+    'Close':{
+        'cname' : 'niFgen_close',
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'Commit': {
-        'parameters': [
+    'Commit':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'ConfigureAmplitude': {
-        'parameters': [
+    'ConfigureAmplitude':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'channelName',
-                'type': 'ViConstString'
+                'name':'channelName',
+                'direction':'in',
+                'type':'ViConstString'
             },
             {
-                'direction': 'in',
-                'name': 'amplitude',
-                'type': 'ViReal64'
+                'name':'amplitude',
+                'direction':'in',
+                'type':'ViReal64'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'ConfigureArbSequence': {
-        'parameters': [
+    'ConfigureArbSequence':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'channelName',
-                'type': 'ViConstString'
+                'name':'channelName',
+                'direction':'in',
+                'type':'ViConstString'
             },
             {
-                'direction': 'in',
-                'name': 'sequenceHandle',
-                'type': 'ViInt32'
+                'name':'sequenceHandle',
+                'direction':'in',
+                'type':'ViInt32'
             },
             {
-                'direction': 'in',
-                'name': 'gain',
-                'type': 'ViReal64'
+                'name':'gain',
+                'direction':'in',
+                'type':'ViReal64'
             },
             {
-                'direction': 'in',
-                'name': 'offset',
-                'type': 'ViReal64'
+                'name':'offset',
+                'direction':'in',
+                'type':'ViReal64'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'ConfigureArbWaveform': {
-        'parameters': [
+    'ConfigureArbWaveform':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'channelName',
-                'type': 'ViConstString'
+                'name':'channelName',
+                'direction':'in',
+                'type':'ViConstString'
             },
             {
-                'direction': 'in',
-                'name': 'waveformHandle',
-                'type': 'ViInt32'
+                'name':'waveformHandle',
+                'direction':'in',
+                'type':'ViInt32'
             },
             {
-                'direction': 'in',
-                'name': 'gain',
-                'type': 'ViReal64'
+                'name':'gain',
+                'direction':'in',
+                'type':'ViReal64'
             },
             {
-                'direction': 'in',
-                'name': 'offset',
-                'type': 'ViReal64'
+                'name':'offset',
+                'direction':'in',
+                'type':'ViReal64'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'ConfigureChannels': {
-        'parameters': [
+    'ConfigureChannels':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'channels',
-                'type': 'ViConstString'
+                'name':'channels',
+                'direction':'in',
+                'type':'ViConstString'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'ConfigureClockMode': {
-        'parameters': [
+    'ConfigureClockMode':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'enum': 'ClockMode',
-                'name': 'clockMode',
-                'type': 'ViInt32'
+                'name':'clockMode',
+                'direction':'in',
+                'type':'ViInt32',
+                'enum':'ClockMode'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'ConfigureCustomFIRFilterCoefficients': {
-        'parameters': [
+    'ConfigureCustomFIRFilterCoefficients':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'channelName',
-                'type': 'ViConstString'
+                'name':'channelName',
+                'direction':'in',
+                'type':'ViConstString'
             },
             {
-                'direction': 'in',
-                'name': 'numberOfCoefficients',
-                'type': 'ViInt32'
+                'name':'numberOfCoefficients',
+                'direction':'in',
+                'type':'ViInt32'
             },
             {
-                'direction': 'in',
-                'name': 'coefficientsArray',
-                'size': {
-                    'mechanism': 'len',
-                    'value': 'numberOfCoefficients'
-                },
-                'type': 'ViReal64[]'
+                'name':'coefficientsArray',
+                'direction':'in',
+                'type':'ViReal64[]',
+                'size':{
+                    'mechanism':'len',
+                    'value':'numberOfCoefficients'
+                }
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'ConfigureDigitalEdgeScriptTrigger': {
-        'parameters': [
+    'ConfigureDigitalEdgeScriptTrigger':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'triggerId',
-                'type': 'ViConstString'
+                'name':'triggerId',
+                'direction':'in',
+                'type':'ViConstString'
             },
             {
-                'direction': 'in',
-                'name': 'source',
-                'type': 'ViConstString'
+                'name':'source',
+                'direction':'in',
+                'type':'ViConstString'
             },
             {
-                'direction': 'in',
-                'name': 'edge',
-                'type': 'ViInt32'
+                'name':'edge',
+                'direction':'in',
+                'type':'ViInt32'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'ConfigureDigitalEdgeStartTrigger': {
-        'parameters': [
+    'ConfigureDigitalEdgeStartTrigger':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'source',
-                'type': 'ViConstString'
+                'name':'source',
+                'direction':'in',
+                'type':'ViConstString'
             },
             {
-                'direction': 'in',
-                'name': 'edge',
-                'type': 'ViInt32'
+                'name':'edge',
+                'direction':'in',
+                'type':'ViInt32'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'ConfigureDigitalLevelScriptTrigger': {
-        'parameters': [
+    'ConfigureDigitalLevelScriptTrigger':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'triggerId',
-                'type': 'ViConstString'
+                'name':'triggerId',
+                'direction':'in',
+                'type':'ViConstString'
             },
             {
-                'direction': 'in',
-                'name': 'source',
-                'type': 'ViConstString'
+                'name':'source',
+                'direction':'in',
+                'type':'ViConstString'
             },
             {
-                'direction': 'in',
-                'enum': 'TriggerWhen',
-                'name': 'triggerWhen',
-                'type': 'ViInt32'
+                'name':'triggerWhen',
+                'direction':'in',
+                'type':'ViInt32',
+                'enum':'TriggerWhen'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'ConfigureFreqList': {
-        'parameters': [
+    'ConfigureFreqList':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'channelName',
-                'type': 'ViConstString'
+                'name':'channelName',
+                'direction':'in',
+                'type':'ViConstString'
             },
             {
-                'direction': 'in',
-                'name': 'frequencyListHandle',
-                'type': 'ViInt32'
+                'name':'frequencyListHandle',
+                'direction':'in',
+                'type':'ViInt32'
             },
             {
-                'direction': 'in',
-                'name': 'amplitude',
-                'type': 'ViReal64'
+                'name':'amplitude',
+                'direction':'in',
+                'type':'ViReal64'
             },
             {
-                'direction': 'in',
-                'name': 'dcOffset',
-                'type': 'ViReal64'
+                'name':'dcOffset',
+                'direction':'in',
+                'type':'ViReal64'
             },
             {
-                'direction': 'in',
-                'name': 'startPhase',
-                'type': 'ViReal64'
+                'name':'startPhase',
+                'direction':'in',
+                'type':'ViReal64'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'ConfigureFrequency': {
-        'parameters': [
+    'ConfigureFrequency':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'channelName',
-                'type': 'ViConstString'
+                'name':'channelName',
+                'direction':'in',
+                'type':'ViConstString'
             },
             {
-                'direction': 'in',
-                'name': 'frequency',
-                'type': 'ViReal64'
+                'name':'frequency',
+                'direction':'in',
+                'type':'ViReal64'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'ConfigureOperationMode': {
-        'parameters': [
+    'ConfigureOperationMode':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'channelName',
-                'type': 'ViConstString'
+                'name':'channelName',
+                'direction':'in',
+                'type':'ViConstString'
             },
             {
-                'direction': 'in',
-                'name': 'operationMode',
-                'type': 'ViInt32'
+                'name':'operationMode',
+                'direction':'in',
+                'type':'ViInt32'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'ConfigureOutputEnabled': {
-        'parameters': [
+    'ConfigureOutputEnabled':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'channelName',
-                'type': 'ViConstString'
+                'name':'channelName',
+                'direction':'in',
+                'type':'ViConstString'
             },
             {
-                'direction': 'in',
-                'name': 'enabled',
-                'type': 'ViBoolean'
+                'name':'enabled',
+                'direction':'in',
+                'type':'ViBoolean'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'ConfigureOutputImpedance': {
-        'parameters': [
+    'ConfigureOutputImpedance':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'channelName',
-                'type': 'ViConstString'
+                'name':'channelName',
+                'direction':'in',
+                'type':'ViConstString'
             },
             {
-                'direction': 'in',
-                'name': 'impedance',
-                'type': 'ViReal64'
+                'name':'impedance',
+                'direction':'in',
+                'type':'ViReal64'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'ConfigureOutputMode': {
-        'parameters': [
+    'ConfigureOutputMode':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'enum': 'OutputMode',
-                'name': 'outputMode',
-                'type': 'ViInt32'
+                'name':'outputMode',
+                'direction':'in',
+                'type':'ViInt32',
+                'enum':'OutputMode'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'ConfigureP2PEndpointFullnessStartTrigger': {
-        'parameters': [
+    'ConfigureP2PEndpointFullnessStartTrigger':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'p2pEndpointFullnessLevel',
-                'type': 'ViInt32'
+                'name':'p2pEndpointFullnessLevel',
+                'direction':'in',
+                'type':'ViInt32'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'ConfigureReferenceClock': {
-        'parameters': [
+    'ConfigureReferenceClock':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'referenceClockSource',
-                'type': 'ViConstString'
+                'name':'referenceClockSource',
+                'direction':'in',
+                'type':'ViConstString'
             },
             {
-                'direction': 'in',
-                'name': 'referenceClockFrequency',
-                'type': 'ViReal64'
+                'name':'referenceClockFrequency',
+                'direction':'in',
+                'type':'ViReal64'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'ConfigureSampleClockSource': {
-        'parameters': [
+    'ConfigureSampleClockSource':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'sampleClockSource',
-                'type': 'ViConstString'
+                'name':'sampleClockSource',
+                'direction':'in',
+                'type':'ViConstString'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'ConfigureSampleRate': {
-        'parameters': [
+    'ConfigureSampleRate':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'sampleRate',
-                'type': 'ViReal64'
+                'name':'sampleRate',
+                'direction':'in',
+                'type':'ViReal64'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'ConfigureSoftwareEdgeScriptTrigger': {
-        'parameters': [
+    'ConfigureSoftwareEdgeScriptTrigger':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'triggerId',
-                'type': 'ViConstString'
+                'name':'triggerId',
+                'direction':'in',
+                'type':'ViConstString'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'ConfigureSoftwareEdgeStartTrigger': {
-        'parameters': [
+    'ConfigureSoftwareEdgeStartTrigger':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'ConfigureStandardWaveform': {
-        'parameters': [
+    'ConfigureStandardWaveform':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'channelName',
-                'type': 'ViConstString'
+                'name':'channelName',
+                'direction':'in',
+                'type':'ViConstString'
             },
             {
-                'direction': 'in',
-                'enum': 'Waveform',
-                'name': 'waveform',
-                'type': 'ViInt32'
+                'name':'waveform',
+                'direction':'in',
+                'type':'ViInt32',
+                'enum':'Waveform'
             },
             {
-                'direction': 'in',
-                'name': 'amplitude',
-                'type': 'ViReal64'
+                'name':'amplitude',
+                'direction':'in',
+                'type':'ViReal64'
             },
             {
-                'direction': 'in',
-                'name': 'dcOffset',
-                'type': 'ViReal64'
+                'name':'dcOffset',
+                'direction':'in',
+                'type':'ViReal64'
             },
             {
-                'direction': 'in',
-                'name': 'frequency',
-                'type': 'ViReal64'
+                'name':'frequency',
+                'direction':'in',
+                'type':'ViReal64'
             },
             {
-                'direction': 'in',
-                'name': 'startPhase',
-                'type': 'ViReal64'
+                'name':'startPhase',
+                'direction':'in',
+                'type':'ViReal64'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'ConfigureSynchronization': {
-        'parameters': [
+    'ConfigureSynchronization':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'channelName',
-                'type': 'ViConstString'
+                'name':'channelName',
+                'direction':'in',
+                'type':'ViConstString'
             },
             {
-                'direction': 'in',
-                'name': 'synchronizationSource',
-                'type': 'ViInt32'
+                'name':'synchronizationSource',
+                'direction':'in',
+                'type':'ViInt32'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'ConfigureTriggerMode': {
-        'parameters': [
+    'ConfigureTriggerMode':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'channelName',
-                'type': 'ViConstString'
+                'name':'channelName',
+                'direction':'in',
+                'type':'ViConstString'
             },
             {
-                'direction': 'in',
-                'enum': 'TriggerMode',
-                'name': 'triggerMode',
-                'type': 'ViInt32'
+                'name':'triggerMode',
+                'direction':'in',
+                'type':'ViInt32',
+                'enum':'TriggerMode'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'CreateAdvancedArbSequence': {
+    'CreateAdvancedArbSequence':{
         'codegen_method': 'CustomCode',
-        'parameters': [
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'sequenceLength',
-                'type': 'ViInt32'
+                'name':'sequenceLength',
+                'direction':'in',
+                'type':'ViInt32'
             },
             {
-                'direction': 'in',
-                'name': 'waveformHandlesArray',
-                'size': {
-                    'mechanism': 'len',
-                    'value': 'sequenceLength'
-                },
-                'type': 'ViInt32[]'
+                'name':'waveformHandlesArray',
+                'direction':'in',
+                'type':'ViInt32[]',
+                'size':{
+                    'mechanism':'len',
+                    'value':'sequenceLength'
+                }
             },
             {
-                'direction': 'in',
-                'name': 'loopCountsArray',
-                'size': {
-                    'mechanism': 'len',
-                    'value': 'sequenceLength'
-                },
-                'type': 'ViInt32[]'
+                'name':'loopCountsArray',
+                'direction':'in',
+                'type':'ViInt32[]',
+                'size':{
+                    'mechanism':'len',
+                    'value':'sequenceLength'
+                }
             },
             {
-                'direction': 'in',
-                'name': 'sampleCountsArray',
-                'size': {
-                    'mechanism': 'len',
-                    'value': 'sequenceLength'
-                },
-                'type': 'ViInt32[]'
+                'name':'sampleCountsArray',
+                'direction':'in',
+                'type':'ViInt32[]',
+                'size':{
+                    'mechanism':'len',
+                    'value':'sequenceLength'
+                }
             },
             {
-                'direction': 'in',
-                'name': 'markerLocationArray',
-                'size': {
-                    'mechanism': 'len',
-                    'value': 'sequenceLength'
-                },
-                'type': 'ViInt32[]'
+                'name':'markerLocationArray',
+                'direction':'in',
+                'type':'ViInt32[]',
+                'size':{
+                    'mechanism':'len',
+                    'value':'sequenceLength'
+                }
             },
             {
-                'direction': 'out',
-                'name': 'coercedMarkersArray',
-                'size': {
-                    'mechanism': 'custom-code',
-                    'value': 'sequenceLength'
-                },
-                'type': 'ViInt32[]'
+                'name':'coercedMarkersArray',
+                'direction':'out',
+                'type':'ViInt32[]',
+                'size':{
+                    'mechanism':'custom-code',
+                    'value':'sequenceLength'
+                }
             },
             {
-                'direction': 'out',
-                'name': 'sequenceHandle',
-                'type': 'ViInt32'
+                'name':'sequenceHandle',
+                'direction':'out',
+                'type':'ViInt32'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'CreateArbSequence': {
-        'parameters': [
+    'CreateArbSequence':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'sequenceLength',
-                'type': 'ViInt32'
+                'name':'sequenceLength',
+                'direction':'in',
+                'type':'ViInt32'
             },
             {
-                'direction': 'in',
-                'name': 'waveformHandlesArray',
-                'size': {
-                    'mechanism': 'len',
-                    'value': 'sequenceLength'
-                },
-                'type': 'ViInt32[]'
+                'name':'waveformHandlesArray',
+                'direction':'in',
+                'type':'ViInt32[]',
+                'size':{
+                    'mechanism':'len',
+                    'value':'sequenceLength'
+                }
             },
             {
-                'direction': 'in',
-                'name': 'loopCountsArray',
-                'size': {
-                    'mechanism': 'len',
-                    'value': 'sequenceLength'
-                },
-                'type': 'ViInt32[]'
+                'name':'loopCountsArray',
+                'direction':'in',
+                'type':'ViInt32[]',
+                'size':{
+                    'mechanism':'len',
+                    'value':'sequenceLength'
+                }
             },
             {
-                'direction': 'out',
-                'name': 'sequenceHandle',
-                'type': 'ViInt32'
+                'name':'sequenceHandle',
+                'direction':'out',
+                'type':'ViInt32'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'CreateFreqList': {
-        'parameters': [
+    'CreateFreqList':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'enum': 'Waveform',
-                'name': 'waveform',
-                'type': 'ViInt32'
+                'name':'waveform',
+                'direction':'in',
+                'type':'ViInt32',
+                'enum':'Waveform'
             },
             {
-                'direction': 'in',
-                'name': 'frequencyListLength',
-                'type': 'ViInt32'
+                'name':'frequencyListLength',
+                'direction':'in',
+                'type':'ViInt32'
             },
             {
-                'direction': 'in',
-                'name': 'frequencyArray',
-                'size': {
-                    'mechanism': 'len',
-                    'value': 'frequencyListLength'
-                },
-                'type': 'ViReal64[]'
+                'name':'frequencyArray',
+                'direction':'in',
+                'type':'ViReal64[]',
+                'size':{
+                    'mechanism':'len',
+                    'value':'frequencyListLength'
+                }
             },
             {
-                'direction': 'in',
-                'name': 'durationArray',
-                'size': {
-                    'mechanism': 'len',
-                    'value': 'frequencyListLength'
-                },
-                'type': 'ViReal64[]'
+                'name':'durationArray',
+                'direction':'in',
+                'type':'ViReal64[]',
+                'size':{
+                    'mechanism':'len',
+                    'value':'frequencyListLength'
+                }
             },
             {
-                'direction': 'out',
-                'name': 'frequencyListHandle',
-                'type': 'ViInt32'
+                'name':'frequencyListHandle',
+                'direction':'out',
+                'type':'ViInt32'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'CreateWaveformComplexF64': {
-        'parameters': [
+    'CreateWaveformComplexF64':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'channelName',
-                'type': 'ViConstString'
+                'name':'channelName',
+                'direction':'in',
+                'type':'ViConstString'
             },
             {
-                'direction': 'in',
-                'name': 'numberOfSamples',
-                'type': 'ViInt32'
+                'name':'numberOfSamples',
+                'direction':'in',
+                'type':'ViInt32'
             },
             {
-                'direction': 'in',
+                'name':'waveformDataArray',
+                'direction':'in',
+                'type': 'NIComplexNumber_struct[]',
                 'grpc_type': 'repeated nidevice_grpc.NIComplexNumber',
-                'name': 'waveformDataArray',
                 'size': {
                     'mechanism': 'len',
                     'value': 'numberOfSamples'
-                },
-                'type': 'NIComplexNumber_struct[]'
+                }
             },
             {
-                'direction': 'out',
-                'name': 'waveformHandle',
-                'type': 'ViInt32'
+                'name':'waveformHandle',
+                'direction':'out',
+                'type':'ViInt32'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'CreateWaveformF64': {
-        'parameters': [
+    'CreateWaveformF64':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'channelName',
-                'type': 'ViConstString'
+                'name':'channelName',
+                'direction':'in',
+                'type':'ViConstString'
             },
             {
-                'direction': 'in',
-                'name': 'waveformSize',
-                'type': 'ViInt32'
+                'name':'waveformSize',
+                'direction':'in',
+                'type':'ViInt32'
             },
             {
-                'direction': 'in',
-                'name': 'waveformDataArray',
-                'size': {
-                    'mechanism': 'len',
-                    'value': 'waveformSize'
-                },
-                'type': 'ViReal64[]'
+                'name':'waveformDataArray',
+                'direction':'in',
+                'type':'ViReal64[]',
+                'size':{
+                    'mechanism':'len',
+                    'value':'waveformSize'
+                }
             },
             {
-                'direction': 'out',
-                'name': 'waveformHandle',
-                'type': 'ViInt32'
+                'name':'waveformHandle',
+                'direction':'out',
+                'type':'ViInt32'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'CreateWaveformFromFileF64': {
-        'parameters': [
+    'CreateWaveformFromFileF64':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'channelName',
-                'type': 'ViConstString'
+                'name':'channelName',
+                'direction':'in',
+                'type':'ViConstString'
             },
             {
-                'direction': 'in',
-                'name': 'fileName',
-                'type': 'ViConstString'
+                'name':'fileName',
+                'direction':'in',
+                'type':'ViConstString'
             },
             {
-                'direction': 'in',
-                'enum': 'ByteOrder',
-                'name': 'byteOrder',
-                'type': 'ViInt32'
+                'name':'byteOrder',
+                'direction':'in',
+                'type':'ViInt32',
+                'enum':'ByteOrder'
             },
             {
-                'direction': 'out',
-                'name': 'waveformHandle',
-                'type': 'ViInt32'
+                'name':'waveformHandle',
+                'direction':'out',
+                'type':'ViInt32'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'CreateWaveformFromFileHWS': {
-        'parameters': [
+    'CreateWaveformFromFileHWS':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'channelName',
-                'type': 'ViConstString'
+                'name':'channelName',
+                'direction':'in',
+                'type':'ViConstString'
             },
             {
-                'direction': 'in',
-                'name': 'fileName',
-                'type': 'ViConstString'
+                'name':'fileName',
+                'direction':'in',
+                'type':'ViConstString'
             },
             {
-                'direction': 'in',
-                'name': 'useRateFromWaveform',
-                'type': 'ViBoolean'
+                'name':'useRateFromWaveform',
+                'direction':'in',
+                'type':'ViBoolean'
             },
             {
-                'direction': 'in',
-                'name': 'useGainAndOffsetFromWaveform',
-                'type': 'ViBoolean'
+                'name':'useGainAndOffsetFromWaveform',
+                'direction':'in',
+                'type':'ViBoolean'
             },
             {
-                'direction': 'out',
-                'name': 'waveformHandle',
-                'type': 'ViInt32'
+                'name':'waveformHandle',
+                'direction':'out',
+                'type':'ViInt32'
             }
         ],
-        'returns': 'ViStatus'
-    },
-    'CreateWaveformFromFileI16': {
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
-            },
-            {
-                'direction': 'in',
-                'name': 'channelName',
-                'type': 'ViConstString'
-            },
-            {
-                'direction': 'in',
-                'name': 'fileName',
-                'type': 'ViConstString'
-            },
-            {
-                'direction': 'in',
-                'enum': 'ByteOrder',
-                'name': 'byteOrder',
-                'type': 'ViInt32'
-            },
-            {
-                'direction': 'out',
-                'name': 'waveformHandle',
-                'type': 'ViInt32'
-            }
-        ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
     'CreateWaveformI16': {
         'parameters': [
@@ -1201,256 +1170,287 @@
         ],
         'returns': 'ViStatus'
     },
-    'DefineUserStandardWaveform': {
-        'parameters': [
+    'CreateWaveformFromFileI16':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'channelName',
-                'type': 'ViConstString'
+                'name':'channelName',
+                'direction':'in',
+                'type':'ViConstString'
             },
             {
-                'direction': 'in',
-                'name': 'waveformSize',
-                'type': 'ViInt32'
+                'name':'fileName',
+                'direction':'in',
+                'type':'ViConstString'
             },
             {
-                'direction': 'in',
-                'name': 'waveformDataArray',
-                'size': {
-                    'mechanism': 'len',
-                    'value': 'waveformSize'
-                },
-                'type': 'ViReal64[]'
+                'name':'byteOrder',
+                'direction':'in',
+                'type':'ViInt32',
+                'enum':'ByteOrder'
+            },
+            {
+                'name':'waveformHandle',
+                'direction':'out',
+                'type':'ViInt32'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'DeleteNamedWaveform': {
-        'parameters': [
+    'DefineUserStandardWaveform':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'channelName',
-                'type': 'ViConstString'
+                'name':'channelName',
+                'direction':'in',
+                'type':'ViConstString'
             },
             {
-                'direction': 'in',
-                'name': 'waveformName',
-                'type': 'ViConstString'
+                'name':'waveformSize',
+                'direction':'in',
+                'type':'ViInt32'
+            },
+            {
+                'name':'waveformDataArray',
+                'direction':'in',
+                'type':'ViReal64[]',
+                'size':{
+                    'mechanism':'len',
+                    'value':'waveformSize'
+                }
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'DeleteScript': {
-        'parameters': [
+    'DeleteNamedWaveform':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'channelName',
-                'type': 'ViConstString'
+                'name':'channelName',
+                'direction':'in',
+                'type':'ViConstString'
             },
             {
-                'direction': 'in',
-                'name': 'scriptName',
-                'type': 'ViConstString'
+                'name':'waveformName',
+                'direction':'in',
+                'type':'ViConstString'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'Disable': {
-        'parameters': [
+    'DeleteScript':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
+            },
+            {
+                'name':'channelName',
+                'direction':'in',
+                'type':'ViConstString'
+            },
+            {
+                'name':'scriptName',
+                'direction':'in',
+                'type':'ViConstString'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'DisableAnalogFilter': {
-        'parameters': [
+    'Disable':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
-            },
-            {
-                'direction': 'in',
-                'name': 'channelName',
-                'type': 'ViConstString'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'DisableDigitalFilter': {
-        'parameters': [
+    'DisableAnalogFilter':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'channelName',
-                'type': 'ViConstString'
+                'name':'channelName',
+                'direction':'in',
+                'type':'ViConstString'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'DisableDigitalPatterning': {
-        'parameters': [
+    'DisableDigitalFilter':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'channelName',
-                'type': 'ViConstString'
+                'name':'channelName',
+                'direction':'in',
+                'type':'ViConstString'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'DisableScriptTrigger': {
-        'parameters': [
+    'DisableDigitalPatterning':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'triggerId',
-                'type': 'ViConstString'
+                'name':'channelName',
+                'direction':'in',
+                'type':'ViConstString'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'DisableStartTrigger': {
-        'parameters': [
+    'DisableScriptTrigger':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
+            },
+            {
+                'name':'triggerId',
+                'direction':'in',
+                'type':'ViConstString'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'EnableAnalogFilter': {
-        'parameters': [
+    'DisableStartTrigger':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
-            },
-            {
-                'direction': 'in',
-                'name': 'channelName',
-                'type': 'ViConstString'
-            },
-            {
-                'direction': 'in',
-                'name': 'filterCorrectionFrequency',
-                'type': 'ViReal64'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'EnableDigitalFilter': {
-        'parameters': [
+    'EnableAnalogFilter':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'channelName',
-                'type': 'ViConstString'
+                'name':'channelName',
+                'direction':'in',
+                'type':'ViConstString'
+            },
+            {
+                'name':'filterCorrectionFrequency',
+                'direction':'in',
+                'type':'ViReal64'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'EnableDigitalPatterning': {
-        'parameters': [
+    'EnableDigitalFilter':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'channelName',
-                'type': 'ViConstString'
+                'name':'channelName',
+                'direction':'in',
+                'type':'ViConstString'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'ErrorHandler': {
-        'parameters': [
+    'EnableDigitalPatterning':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'errorCode',
-                'type': 'ViStatus'
-            },
-            {
-                'direction': 'out',
-                'name': 'errorMessage',
-                'size': {
-                    'mechanism': 'fixed',
-                    'value': 256
-                },
-                'type': 'ViChar[]'
+                'name':'channelName',
+                'direction':'in',
+                'type':'ViConstString'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'ErrorMessage': {
-        'cname': 'niFgen_error_message',
-        'parameters': [
+    'ErrorHandler':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'errorCode',
-                'type': 'ViStatus'
+                'name':'errorCode',
+                'direction':'in',
+                'type':'ViStatus'
             },
             {
-                'direction': 'out',
-                'name': 'errorMessage',
-                'size': {
-                    'mechanism': 'fixed',
-                    'value': 256
-                },
-                'type': 'ViChar[]'
+                'name':'errorMessage',
+                'direction':'out',
+                'type':'ViChar[]',
+                'size':{
+                    'mechanism':'fixed',
+                    'value':256
+                }
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
+     },
+    'ErrorMessage':{
+        'cname' : 'niFgen_error_message',
+        'parameters':[
+            {
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
+            },
+            {
+                'name':'errorCode',
+                'direction':'in',
+                'type':'ViStatus'
+            },
+            {
+                'name':'errorMessage',
+                'direction':'out',
+                'type':'ViChar[]',
+                'size':{
+                    'mechanism':'fixed',
+                    'value':256
+                }
+            }
+        ],
+        'returns':'ViStatus'
     },
     'ErrorQuery': {
-        'cname': 'niFgen_error_query',
+        'cname' : 'niFgen_error_query',
         'parameters': [
             {
                 'direction': 'in',
@@ -1474,579 +1474,579 @@
         ],
         'returns': 'ViStatus'
     },
-    'ExportAttributeConfigurationBuffer': {
-        'parameters': [
+    'ExportAttributeConfigurationBuffer':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'sizeInBytes',
-                'type': 'ViInt32'
+                'name':'sizeInBytes',
+                'direction':'in',
+                'type':'ViInt32'
             },
             {
-                'direction': 'out',
-                'name': 'configuration',
-                'size': {
-                    'mechanism': 'ivi-dance',
-                    'value': 'sizeInBytes'
-                },
-                'type': 'ViAddr[]'
+                'name':'configuration',
+                'direction':'out',
+                'type':'ViAddr[]',
+                'size':{
+                    'mechanism':'ivi-dance',
+                    'value':'sizeInBytes'
+                }
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'ExportAttributeConfigurationFile': {
-        'parameters': [
+    'ExportAttributeConfigurationFile':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'filePath',
-                'type': 'ViConstString'
+                'name':'filePath',
+                'direction':'in',
+                'type':'ViConstString'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'ExportSignal': {
-        'parameters': [
+    'ExportSignal':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'enum': 'Signal',
-                'name': 'signal',
-                'type': 'ViInt32'
+                'name':'signal',
+                'direction':'in',
+                'enum':'Signal',
+                'type':'ViInt32'
             },
             {
-                'direction': 'in',
-                'name': 'signalIdentifier',
-                'type': 'ViConstString'
+                'name':'signalIdentifier',
+                'direction':'in',
+                'type':'ViConstString'
             },
             {
-                'direction': 'in',
-                'name': 'outputTerminal',
-                'type': 'ViConstString'
+                'name':'outputTerminal',
+                'direction':'in',
+                'type':'ViConstString'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'GetAttributeViBoolean': {
-        'parameters': [
+    'GetAttributeViBoolean':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'channelName',
-                'type': 'ViConstString'
+                'name':'channelName',
+                'direction':'in',
+                'type':'ViConstString'
             },
             {
-                'direction': 'in',
-                'name': 'attributeId',
-                'type': 'ViAttr'
+                'name':'attributeId',
+                'direction':'in',
+                'type':'ViAttr'
             },
             {
-                'direction': 'out',
-                'name': 'attributeValue',
-                'type': 'ViBoolean'
+                'name':'attributeValue',
+                'direction':'out',
+                'type':'ViBoolean'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'GetAttributeViInt32': {
-        'parameters': [
+    'GetAttributeViInt32':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'channelName',
-                'type': 'ViConstString'
+                'name':'channelName',
+                'direction':'in',
+                'type':'ViConstString'
             },
             {
-                'direction': 'in',
-                'name': 'attributeId',
-                'type': 'ViAttr'
+                'name':'attributeId',
+                'direction':'in',
+                'type':'ViAttr'
             },
             {
-                'direction': 'out',
-                'name': 'attributeValue',
-                'type': 'ViInt32'
+                'name':'attributeValue',
+                'direction':'out',
+                'type':'ViInt32'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'GetAttributeViInt64': {
-        'parameters': [
+    'GetAttributeViInt64':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'channelName',
-                'type': 'ViConstString'
+                'name':'channelName',
+                'direction':'in',
+                'type':'ViConstString'
             },
             {
-                'direction': 'in',
-                'name': 'attributeId',
-                'type': 'ViAttr'
+                'name':'attributeId',
+                'direction':'in',
+                'type':'ViAttr'
             },
             {
-                'direction': 'out',
-                'name': 'attributeValue',
-                'type': 'ViInt64'
+                'name':'attributeValue',
+                'direction':'out',
+                'type':'ViInt64'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'GetAttributeViReal64': {
-        'parameters': [
+    'GetAttributeViReal64':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'channelName',
-                'type': 'ViConstString'
+                'name':'channelName',
+                'direction':'in',
+                'type':'ViConstString'
             },
             {
-                'direction': 'in',
-                'name': 'attributeId',
-                'type': 'ViAttr'
+                'name':'attributeId',
+                'direction':'in',
+                'type':'ViAttr'
             },
             {
-                'direction': 'out',
-                'name': 'attributeValue',
-                'type': 'ViReal64'
+                'name':'attributeValue',
+                'direction':'out',
+                'type':'ViReal64'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'GetAttributeViSession': {
-        'parameters': [
+    'GetAttributeViSession':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'channelName',
-                'type': 'ViConstString'
+                'name':'channelName',
+                'direction':'in',
+                'type':'ViConstString'
             },
             {
-                'direction': 'in',
-                'name': 'attributeId',
-                'type': 'ViAttr'
+                'name':'attributeId',
+                'direction':'in',
+                'type':'ViAttr'
             },
             {
-                'direction': 'out',
-                'name': 'attributeValue',
-                'type': 'ViSession'
+                'name':'attributeValue',
+                'direction':'out',
+                'type':'ViSession'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'GetAttributeViString': {
-        'parameters': [
+    'GetAttributeViString':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'channelName',
-                'type': 'ViConstString'
+                'name':'channelName',
+                'direction':'in',
+                'type':'ViConstString'
             },
             {
-                'direction': 'in',
-                'name': 'attributeId',
-                'type': 'ViAttr'
+                'name':'attributeId',
+                'direction':'in',
+                'type':'ViAttr'
             },
             {
-                'direction': 'in',
-                'name': 'arraySize',
-                'type': 'ViInt32'
+                'name':'arraySize',
+                'direction':'in',
+                'type':'ViInt32'
             },
             {
-                'direction': 'out',
-                'name': 'attributeValue',
-                'size': {
-                    'mechanism': 'ivi-dance',
-                    'value': 'arraySize'
-                },
-                'type': 'ViChar[]'
+                'name':'attributeValue',
+                'direction':'out',
+                'type':'ViChar[]',
+                'size':{
+                    'mechanism':'ivi-dance',
+                    'value':'arraySize'
+                }
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'GetChannelName': {
-        'parameters': [
+    'GetChannelName':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'index',
-                'type': 'ViInt32'
+                'name':'index',
+                'direction':'in',
+                'type':'ViInt32'
             },
             {
-                'direction': 'in',
-                'name': 'bufferSize',
-                'type': 'ViInt32'
+                'name':'bufferSize',
+                'direction':'in',
+                'type':'ViInt32'
             },
             {
-                'direction': 'out',
-                'name': 'channelString',
-                'size': {
-                    'mechanism': 'ivi-dance',
-                    'value': 'bufferSize'
-                },
-                'type': 'ViChar[]'
+                'name':'channelString',
+                'direction':'out',
+                'type':'ViChar[]',
+                'size':{
+                    'mechanism':'ivi-dance',
+                    'value':'bufferSize'
+                }
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'GetError': {
-        'parameters': [
+    'GetError':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'out',
-                'name': 'errorCode',
-                'type': 'ViStatus'
+                'name':'errorCode',
+                'direction':'out',
+                'type':'ViStatus'
             },
             {
-                'direction': 'in',
-                'name': 'errorDescriptionBufferSize',
-                'type': 'ViInt32'
+                'name':'errorDescriptionBufferSize',
+                'direction':'in',
+                'type':'ViInt32'
             },
             {
-                'direction': 'out',
-                'name': 'errorDescription',
-                'size': {
-                    'mechanism': 'ivi-dance',
-                    'value': 'errorDescriptionBufferSize'
-                },
-                'type': 'ViChar[]'
+                'name':'errorDescription',
+                'direction':'out',
+                'type':'ViChar[]',
+                'size':{
+                    'mechanism':'ivi-dance',
+                    'value':'errorDescriptionBufferSize'
+                }
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'GetExtCalLastDateAndTime': {
-        'parameters': [
+    'GetExtCalLastDateAndTime':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'out',
-                'name': 'year',
-                'type': 'ViInt32'
+                'name':'year',
+                'direction':'out',
+                'type':'ViInt32'
             },
             {
-                'direction': 'out',
-                'name': 'month',
-                'type': 'ViInt32'
+                'name':'month',
+                'direction':'out',
+                'type':'ViInt32'
             },
             {
-                'direction': 'out',
-                'name': 'day',
-                'type': 'ViInt32'
+                'name':'day',
+                'direction':'out',
+                'type':'ViInt32'
             },
             {
-                'direction': 'out',
-                'name': 'hour',
-                'type': 'ViInt32'
+                'name':'hour',
+                'direction':'out',
+                'type':'ViInt32'
             },
             {
-                'direction': 'out',
-                'name': 'minute',
-                'type': 'ViInt32'
+                'name':'minute',
+                'direction':'out',
+                'type':'ViInt32'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'GetExtCalLastTemp': {
-        'parameters': [
+    'GetExtCalLastTemp':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'out',
-                'name': 'temperature',
-                'type': 'ViReal64'
+                'name':'temperature',
+                'direction':'out',
+                'type':'ViReal64'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'GetExtCalRecommendedInterval': {
-        'parameters': [
+    'GetExtCalRecommendedInterval':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'out',
-                'name': 'months',
-                'type': 'ViInt32'
+                'name':'months',
+                'direction':'out',
+                'type':'ViInt32'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'GetFIRFilterCoefficients': {
-        'parameters': [
+    'GetFIRFilterCoefficients':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'channelName',
-                'type': 'ViConstString'
+                'name':'channelName',
+                'direction':'in',
+                'type':'ViConstString'
             },
             {
-                'direction': 'in',
-                'name': 'arraySize',
-                'type': 'ViInt32'
+                'name':'arraySize',
+                'direction':'in',
+                'type':'ViInt32'
             },
             {
-                'direction': 'out',
-                'name': 'coefficientsArray',
-                'size': {
-                    'mechanism': 'ivi-dance-with-a-twist',
-                    'value': 'arraySize',
-                    'value_twist': 'numberOfCoefficientsRead'
-                },
-                'type': 'ViReal64[]'
+                'name':'coefficientsArray',
+                'direction':'out',
+                'type':'ViReal64[]',
+                'size':{
+                    'mechanism':'ivi-dance-with-a-twist',
+                    'value':'arraySize',
+                    'value_twist':'numberOfCoefficientsRead',
+                }
             },
             {
-                'direction': 'out',
-                'name': 'numberOfCoefficientsRead',
-                'type': 'ViInt32'
+                'name':'numberOfCoefficientsRead',
+                'direction':'out',
+                'type':'ViInt32'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'GetHardwareState': {
-        'parameters': [
+    'GetHardwareState':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'out',
-                'enum': 'HardwareState',
-                'name': 'state',
-                'type': 'ViInt32'
+                'name':'state',
+                'direction':'out',
+                'type':'ViInt32',
+                'enum':'HardwareState'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'GetNextCoercionRecord': {
-        'parameters': [
+    'GetNextCoercionRecord':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'bufferSize',
-                'type': 'ViInt32'
+                'name':'bufferSize',
+                'direction':'in',
+                'type':'ViInt32'
             },
             {
-                'direction': 'out',
-                'name': 'coercionRecord',
-                'size': {
-                    'mechanism': 'ivi-dance',
-                    'value': 'bufferSize'
-                },
-                'type': 'ViChar[]'
-            }
-        ],
-        'returns': 'ViStatus'
-    },
-    'GetNextInterchangeWarning': {
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
-            },
-            {
-                'direction': 'in',
-                'name': 'bufferSize',
-                'type': 'ViInt32'
-            },
-            {
-                'direction': 'out',
-                'name': 'interchangeWarning',
+                'name':'coercionRecord',
+                'direction':'out',
+                'type':'ViChar[]',
                 'size': {
                     'mechanism': 'ivi-dance',
                     'value': 'bufferSize'
-                },
-                'type': 'ViChar[]'
+                }
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'GetSelfCalLastDateAndTime': {
-        'parameters': [
+    'GetNextInterchangeWarning':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'out',
-                'name': 'year',
-                'type': 'ViInt32'
+                'name':'bufferSize',
+                'direction':'in',
+                'type':'ViInt32'
             },
             {
-                'direction': 'out',
-                'name': 'month',
-                'type': 'ViInt32'
-            },
-            {
-                'direction': 'out',
-                'name': 'day',
-                'type': 'ViInt32'
-            },
-            {
-                'direction': 'out',
-                'name': 'hour',
-                'type': 'ViInt32'
-            },
-            {
-                'direction': 'out',
-                'name': 'minute',
-                'type': 'ViInt32'
-            }
-        ],
-        'returns': 'ViStatus'
-    },
-    'GetSelfCalLastTemp': {
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
-            },
-            {
-                'direction': 'out',
-                'name': 'temperature',
-                'type': 'ViReal64'
-            }
-        ],
-        'returns': 'ViStatus'
-    },
-    'GetSelfCalSupported': {
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
-            },
-            {
-                'direction': 'out',
-                'name': 'selfCalSupported',
-                'type': 'ViBoolean'
-            }
-        ],
-        'returns': 'ViStatus'
-    },
-    'GetStreamEndpointHandle': {
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
-            },
-            {
-                'direction': 'in',
-                'name': 'streamEndpoint',
-                'type': 'ViConstString'
-            },
-            {
-                'direction': 'out',
-                'name': 'readerHandle',
-                'type': 'ViUInt32'
-            }
-        ],
-        'returns': 'ViStatus'
-    },
-    'ImportAttributeConfigurationBuffer': {
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
-            },
-            {
-                'direction': 'in',
-                'name': 'sizeInBytes',
-                'type': 'ViInt32'
-            },
-            {
-                'direction': 'in',
-                'name': 'configuration',
+                'name':'interchangeWarning',
+                'direction':'out',
+                'type':'ViChar[]',
                 'size': {
-                    'mechanism': 'len',
-                    'value': 'sizeInBytes'
-                },
-                'type': 'ViAddr[]'
+                    'mechanism': 'ivi-dance',
+                    'value': 'bufferSize'
+                }
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'ImportAttributeConfigurationFile': {
-        'parameters': [
+    'GetSelfCalLastDateAndTime':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'filePath',
-                'type': 'ViConstString'
+                'name':'year',
+                'direction':'out',
+                'type':'ViInt32'
+            },
+            {
+                'name':'month',
+                'direction':'out',
+                'type':'ViInt32'
+            },
+            {
+                'name':'day',
+                'direction':'out',
+                'type':'ViInt32'
+            },
+            {
+                'name':'hour',
+                'direction':'out',
+                'type':'ViInt32'
+            },
+            {
+                'name':'minute',
+                'direction':'out',
+                'type':'ViInt32'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
+    },
+    'GetSelfCalLastTemp':{
+        'parameters':[
+            {
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
+            },
+            {
+                'name':'temperature',
+                'direction':'out',
+                'type':'ViReal64'
+            }
+        ],
+        'returns':'ViStatus'
+    },
+    'GetSelfCalSupported':{
+        'parameters':[
+            {
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
+            },
+            {
+                'name':'selfCalSupported',
+                'direction':'out',
+                'type':'ViBoolean'
+            }
+        ],
+        'returns':'ViStatus'
+    },
+    'GetStreamEndpointHandle':{
+        'parameters':[
+            {
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
+            },
+            {
+                'name':'streamEndpoint',
+                'direction':'in',
+                'type':'ViConstString'
+            },
+            {
+                'name':'readerHandle',
+                'direction':'out',
+                'type':'ViUInt32'
+            }
+        ],
+        'returns':'ViStatus'
+    },
+    'ImportAttributeConfigurationBuffer':{
+        'parameters':[
+            {
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
+            },
+            {
+                'name':'sizeInBytes',
+                'direction':'in',
+                'type':'ViInt32'
+            },
+            {
+                'name':'configuration',
+                'direction':'in',
+                'type':'ViAddr[]',
+                'size':{
+                    'mechanism':'len',
+                    'value':'sizeInBytes'
+                }
+            }
+        ],
+        'returns':'ViStatus'
+    },
+    'ImportAttributeConfigurationFile':{
+        'parameters':[
+            {
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
+            },
+            {
+                'name':'filePath',
+                'direction':'in',
+                'type':'ViConstString'
+            }
+        ],
+        'returns':'ViStatus'
     },
     'Init': {
+        'init_method': True,
         'cname': 'niFgen_init ',
-        'init_method': True,
         'parameters': [
             {
                 'direction': 'in',
@@ -2075,72 +2075,35 @@
                 'type': 'ViChar[]'
             }
         ],
-        'returns': 'ViStatus'
+        'returns': 'ViStatus',
     },
-    'InitWithOptions': {
-        'init_method': True,
-        'parameters': [
+    'InitWithOptions':{
+        'init_method' : True,
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'resourceName',
-                'type': 'ViRsrc'
+                'name':'resourceName',
+                'direction':'in',
+                'type':'ViRsrc'
             },
             {
-                'direction': 'in',
-                'name': 'idQuery',
-                'type': 'ViBoolean'
+                'name':'idQuery',
+                'direction':'in',
+                'type':'ViBoolean'
             },
             {
-                'direction': 'in',
-                'name': 'resetDevice',
-                'type': 'ViBoolean'
+                'name':'resetDevice',
+                'direction':'in',
+                'type':'ViBoolean'
             },
             {
-                'direction': 'in',
-                'name': 'optionString',
-                'type': 'ViConstString'
+                'name':'optionString',
+                'direction':'in',
+                'type':'ViConstString'
             },
             {
-                'direction': 'out',
-                'name': 'vi',
-                'type': 'ViSession'
-            },
-            {
-                'direction': 'out',
-                'get_last_error': 'get_last_error_message',
-                'name': 'errorMessage',
-                'type': 'ViChar[]'
-            }
-        ],
-        'returns': 'ViStatus'
-    },
-    'InitializeWithChannels': {
-        'init_method': True,
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'resourceName',
-                'type': 'ViRsrc'
-            },
-            {
-                'direction': 'in',
-                'name': 'channelName',
-                'type': 'ViConstString'
-            },
-            {
-                'direction': 'in',
-                'name': 'resetDevice',
-                'type': 'ViBoolean'
-            },
-            {
-                'direction': 'in',
-                'name': 'optionString',
-                'type': 'ViConstString'
-            },
-            {
-                'direction': 'out',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'out',
+                'type':'ViSession'
             },
             {
                 'direction': 'out',
@@ -2149,252 +2112,289 @@
                 'type': 'ViChar[]'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'InitiateGeneration': {
-        'parameters': [
+    'InitializeWithChannels':{
+        'init_method' : True,    
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
-            }
-        ],
-        'returns': 'ViStatus'
-    },
-    'InvalidateAllAttributes': {
-        'parameters': [
+                'name':'resourceName',
+                'direction':'in',
+                'type':'ViRsrc'
+            },
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
-            }
-        ],
-        'returns': 'ViStatus'
-    },
-    'IsDone': {
-        'parameters': [
+                'name':'channelName',
+                'direction':'in',
+                'type':'ViConstString'
+            },
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'resetDevice',
+                'direction':'in',
+                'type':'ViBoolean'
+            },
+            {
+                'name':'optionString',
+                'direction':'in',
+                'type':'ViConstString'
+            },
+            {
+                'name':'vi',
+                'direction':'out',
+                'type':'ViSession'
             },
             {
                 'direction': 'out',
-                'name': 'done',
-                'type': 'ViBoolean'
+                'get_last_error': 'get_last_error_message',
+                'name': 'errorMessage',
+                'type': 'ViChar[]'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'LockSession': {
+    'InitiateGeneration':{
+        'parameters':[
+            {
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
+            }
+        ],
+        'returns':'ViStatus'
+    },
+    'InvalidateAllAttributes':{
+        'parameters':[
+            {
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
+            }
+        ],
+        'returns':'ViStatus'
+    },
+    'IsDone':{
+        'parameters':[
+            {
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
+            },
+            {
+                'name':'done',
+                'direction':'out',
+                'type':'ViBoolean'
+            }
+        ],
+        'returns':'ViStatus'
+    },
+    'LockSession':{
         'codegen_method': 'private',
-        'parameters': [
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'out',
-                'name': 'callerHasLock',
-                'type': 'ViBoolean'
+                'name':'callerHasLock',
+                'direction':'out',
+                'type':'ViBoolean'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'ManualEnableP2PStream': {
-        'parameters': [
+    'ManualEnableP2PStream':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'endpointName',
-                'type': 'ViConstString'
+                'name':'endpointName',
+                'direction':'in',
+                'type':'ViConstString'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'QueryArbSeqCapabilities': {
-        'parameters': [
+    'QueryArbSeqCapabilities':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'out',
-                'name': 'maximumNumberOfSequences',
-                'type': 'ViInt32'
+                'name':'maximumNumberOfSequences',
+                'direction':'out',
+                'type':'ViInt32'
             },
             {
-                'direction': 'out',
-                'name': 'minimumSequenceLength',
-                'type': 'ViInt32'
+                'name':'minimumSequenceLength',
+                'direction':'out',
+                'type':'ViInt32'
             },
             {
-                'direction': 'out',
-                'name': 'maximumSequenceLength',
-                'type': 'ViInt32'
+                'name':'maximumSequenceLength',
+                'direction':'out',
+                'type':'ViInt32'
             },
             {
-                'direction': 'out',
-                'name': 'maximumLoopCount',
-                'type': 'ViInt32'
+                'name':'maximumLoopCount',
+                'direction':'out',
+                'type':'ViInt32'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'QueryArbWfmCapabilities': {
-        'parameters': [
+    'QueryArbWfmCapabilities':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'out',
-                'name': 'maximumNumberOfWaveforms',
-                'type': 'ViInt32'
+                'name':'maximumNumberOfWaveforms',
+                'direction':'out',
+                'type':'ViInt32'
             },
             {
-                'direction': 'out',
-                'name': 'waveformQuantum',
-                'type': 'ViInt32'
+                'name':'waveformQuantum',
+                'direction':'out',
+                'type':'ViInt32'
             },
             {
-                'direction': 'out',
-                'name': 'minimumWaveformSize',
-                'type': 'ViInt32'
+                'name':'minimumWaveformSize',
+                'direction':'out',
+                'type':'ViInt32'
             },
             {
-                'direction': 'out',
-                'name': 'maximumWaveformSize',
-                'type': 'ViInt32'
+                'name':'maximumWaveformSize',
+                'direction':'out',
+                'type':'ViInt32'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'QueryFreqListCapabilities': {
-        'parameters': [
+    'QueryFreqListCapabilities':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'out',
-                'name': 'maximumNumberOfFreqLists',
-                'type': 'ViInt32'
+                'name':'maximumNumberOfFreqLists',
+                'direction':'out',
+                'type':'ViInt32'
             },
             {
-                'direction': 'out',
-                'name': 'minimumFrequencyListLength',
-                'type': 'ViInt32'
+                'name':'minimumFrequencyListLength',
+                'direction':'out',
+                'type':'ViInt32'
             },
             {
-                'direction': 'out',
-                'name': 'maximumFrequencyListLength',
-                'type': 'ViInt32'
+                'name':'maximumFrequencyListLength',
+                'direction':'out',
+                'type':'ViInt32'
             },
             {
-                'direction': 'out',
-                'name': 'minimumFrequencyListDuration',
-                'type': 'ViReal64'
+                'name':'minimumFrequencyListDuration',
+                'direction':'out',
+                'type':'ViReal64'
             },
             {
-                'direction': 'out',
-                'name': 'maximumFrequencyListDuration',
-                'type': 'ViReal64'
+                'name':'maximumFrequencyListDuration',
+                'direction':'out',
+                'type':'ViReal64'
             },
             {
-                'direction': 'out',
-                'name': 'frequencyListDurationQuantum',
-                'type': 'ViReal64'
+                'name':'frequencyListDurationQuantum',
+                'direction':'out',
+                'type':'ViReal64'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'ReadCurrentTemperature': {
-        'parameters': [
+    'ReadCurrentTemperature':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'out',
-                'name': 'temperature',
-                'type': 'ViReal64'
+                'name':'temperature',
+                'direction':'out',
+                'type':'ViReal64'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'Reset': {
-        'cname': 'niFgen_reset',
-        'parameters': [
+    'Reset':{
+        'cname' : 'niFgen_reset',
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'ResetAttribute': {
-        'parameters': [
+    'ResetAttribute':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'channelName',
-                'type': 'ViConstString'
+                'name':'channelName',
+                'direction':'in',
+                'type':'ViConstString'
             },
             {
-                'direction': 'in',
-                'name': 'attributeId',
-                'type': 'ViAttr'
+                'name':'attributeId',
+                'direction':'in',
+                'type':'ViAttr'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'ResetDevice': {
-        'parameters': [
+    'ResetDevice':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'ResetInterchangeCheck': {
-        'parameters': [
+    'ResetInterchangeCheck':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'ResetWithDefaults': {
-        'parameters': [
+    'ResetWithDefaults':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
     'RevisionQuery': {
-        'cname': 'niFgen_revision_query',
+        'cname' : 'niFgen_revision_query',
         'parameters': [
             {
                 'direction': 'in',
@@ -2422,67 +2422,67 @@
         ],
         'returns': 'ViStatus'
     },
-    'RouteSignalOut': {
-        'parameters': [
+    'RouteSignalOut':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'channelName',
-                'type': 'ViConstString'
+                'name':'channelName',
+                'direction':'in',
+                'type':'ViConstString'
             },
             {
-                'direction': 'in',
-                'enum': 'RouteSignalFrom',
-                'name': 'routeSignalFrom',
-                'type': 'ViInt32'
+                'name':'routeSignalFrom',
+                'direction':'in',
+                'type':'ViInt32',
+                'enum':'RouteSignalFrom'
             },
             {
-                'direction': 'in',
-                'enum': 'RouteSignalTo',
-                'name': 'routeSignalTo',
-                'type': 'ViInt32'
+                'name':'routeSignalTo',
+                'direction':'in',
+                'type':'ViInt32',
+                'enum':'RouteSignalTo'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'SelfCal': {
-        'parameters': [
+    'SelfCal':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'SelfTest': {
-        'cname': 'niFgen_self_test',
-        'parameters': [
+    'SelfTest':{
+        'cname' : 'niFgen_self_test',
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'out',
-                'name': 'selfTestResult',
-                'type': 'ViInt16'
+                'name':'selfTestResult',
+                'direction':'out',
+                'type':'ViInt16'
             },
             {
-                'direction': 'out',
-                'name': 'selfTestMessage',
-                'size': {
-                    'mechanism': 'fixed',
-                    'value': 256
-                },
-                'type': 'ViChar[]'
+                'name':'selfTestMessage',
+                'direction':'out',
+                'type':'ViChar[]',
+                'size':{
+                    'mechanism':'fixed',
+                    'value':256
+                }
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
     'SendSoftwareEdgeTrigger': {
         'parameters': [
@@ -2495,7 +2495,7 @@
                 'direction': 'in',
                 'enum': 'Trigger',
                 'name': 'trigger',
-                'type': 'ViInt32'
+                'type': 'ViInt32',
             },
             {
                 'direction': 'in',
@@ -2505,248 +2505,248 @@
         ],
         'returns': 'ViStatus'
     },
-    'SetAttributeViBoolean': {
-        'parameters': [
+    'SetAttributeViBoolean':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'channelName',
-                'type': 'ViConstString'
+                'name':'channelName',
+                'direction':'in',
+                'type':'ViConstString'
             },
             {
-                'direction': 'in',
-                'name': 'attributeId',
-                'type': 'ViAttr'
+                'name':'attributeId',
+                'direction':'in',
+                'type':'ViAttr'
             },
             {
-                'direction': 'in',
-                'name': 'attributeValue',
-                'type': 'ViBoolean'
+                'name':'attributeValue',
+                'direction':'in',
+                'type':'ViBoolean'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'SetAttributeViInt32': {
-        'parameters': [
+    'SetAttributeViInt32':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'channelName',
-                'type': 'ViConstString'
+                'name':'channelName',
+                'direction':'in',
+                'type':'ViConstString'
             },
             {
-                'direction': 'in',
-                'name': 'attributeId',
-                'type': 'ViAttr'
+                'name':'attributeId',
+                'direction':'in',
+                'type':'ViAttr'
             },
             {
-                'direction': 'in',
-                'name': 'attributeValue',
-                'type': 'ViInt32'
+                'name':'attributeValue',
+                'direction':'in',
+                'type':'ViInt32'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'SetAttributeViInt64': {
-        'parameters': [
+    'SetAttributeViInt64':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'channelName',
-                'type': 'ViConstString'
+                'name':'channelName',
+                'direction':'in',
+                'type':'ViConstString'
             },
             {
-                'direction': 'in',
-                'name': 'attributeId',
-                'type': 'ViAttr'
+                'name':'attributeId',
+                'direction':'in',
+                'type':'ViAttr'
             },
             {
-                'direction': 'in',
-                'name': 'attributeValue',
-                'type': 'ViInt64'
+                'name':'attributeValue',
+                'direction':'in',
+                'type':'ViInt64'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'SetAttributeViReal64': {
-        'parameters': [
+    'SetAttributeViReal64':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'channelName',
-                'type': 'ViConstString'
+                'name':'channelName',
+                'direction':'in',
+                'type':'ViConstString'
             },
             {
-                'direction': 'in',
-                'name': 'attributeId',
-                'type': 'ViAttr'
+                'name':'attributeId',
+                'direction':'in',
+                'type':'ViAttr'
             },
             {
-                'direction': 'in',
-                'name': 'attributeValue',
-                'type': 'ViReal64'
+                'name':'attributeValue',
+                'direction':'in',
+                'type':'ViReal64'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'SetAttributeViSession': {
-        'parameters': [
+    'SetAttributeViSession':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'channelName',
-                'type': 'ViConstString'
+                'name':'channelName',
+                'direction':'in',
+                'type':'ViConstString'
             },
             {
-                'direction': 'in',
-                'name': 'attributeId',
-                'type': 'ViAttr'
+                'name':'attributeId',
+                'direction':'in',
+                'type':'ViAttr'
             },
             {
-                'direction': 'in',
-                'name': 'attributeValue',
-                'type': 'ViSession'
+                'name':'attributeValue',
+                'direction':'in',
+                'type':'ViSession'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'SetAttributeViString': {
-        'parameters': [
+    'SetAttributeViString':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'channelName',
-                'type': 'ViConstString'
+                'name':'channelName',
+                'direction':'in',
+                'type':'ViConstString'
             },
             {
-                'direction': 'in',
-                'name': 'attributeId',
-                'type': 'ViAttr'
+                'name':'attributeId',
+                'direction':'in',
+                'type':'ViAttr'
             },
             {
-                'direction': 'in',
-                'name': 'attributeValue',
-                'type': 'ViConstString'
+                'name':'attributeValue',
+                'direction':'in',
+                'type':'ViConstString'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'SetNamedWaveformNextWritePosition': {
-        'parameters': [
+    'SetNamedWaveformNextWritePosition':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'channelName',
-                'type': 'ViConstString'
+                'name':'channelName',
+                'direction':'in',
+                'type':'ViConstString'
             },
             {
-                'direction': 'in',
-                'name': 'waveformName',
-                'type': 'ViConstString'
+                'name':'waveformName',
+                'direction':'in',
+                'type':'ViConstString'
             },
             {
-                'direction': 'in',
-                'enum': 'RelativeTo',
-                'name': 'relativeTo',
-                'type': 'ViInt32'
+                'name':'relativeTo',
+                'direction':'in',
+                'type':'ViInt32',
+                'enum':'RelativeTo'
             },
             {
-                'direction': 'in',
-                'name': 'offset',
-                'type': 'ViInt32'
+                'name':'offset',
+                'direction':'in',
+                'type':'ViInt32'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'SetWaveformNextWritePosition': {
-        'parameters': [
+    'SetWaveformNextWritePosition':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'channelName',
-                'type': 'ViConstString'
+                'name':'channelName',
+                'direction':'in',
+                'type':'ViConstString'
             },
             {
-                'direction': 'in',
-                'name': 'waveformHandle',
-                'type': 'ViInt32'
+                'name':'waveformHandle',
+                'direction':'in',
+                'type':'ViInt32'
             },
             {
-                'direction': 'in',
-                'enum': 'RelativeTo',
-                'name': 'relativeTo',
-                'type': 'ViInt32'
+                'name':'relativeTo',
+                'direction':'in',
+                'type':'ViInt32',
+                'enum':'RelativeTo'
             },
             {
-                'direction': 'in',
-                'name': 'offset',
-                'type': 'ViInt32'
+                'name':'offset',
+                'direction':'in',
+                'type':'ViInt32'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'UnlockSession': {
+    'UnlockSession':{
         'codegen_method': 'private',
-        'parameters': [
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'out',
-                'name': 'callerHasLock',
-                'type': 'ViBoolean'
+                'name':'callerHasLock',
+                'direction':'out',
+                'type':'ViBoolean'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'WaitUntilDone': {
-        'parameters': [
+    'WaitUntilDone':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'maxTime',
-                'type': 'ViInt32'
+                'name':'maxTime',
+                'direction':'in',
+                'type':'ViInt32'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
     'WriteBinary16Waveform': {
         'parameters': [
@@ -2783,144 +2783,74 @@
         ],
         'returns': 'ViStatus'
     },
-    'WriteComplexBinary16Waveform': {
-        'parameters': [
+    'WriteComplexBinary16Waveform':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'channelName',
-                'type': 'ViConstString'
+                'name':'channelName',
+                'direction':'in',
+                'type':'ViConstString'
             },
             {
-                'direction': 'in',
-                'name': 'waveformHandle',
-                'type': 'ViInt32'
+                'name':'waveformHandle',
+                'direction':'in',
+                'type':'ViInt32'
             },
             {
-                'direction': 'in',
-                'name': 'size',
-                'type': 'ViInt32'
+                'name':'size',
+                'direction':'in',
+                'type':'ViInt32'
             },
             {
-                'direction': 'in',
-                'grpc_type': 'repeated nidevice_grpc.NIComplexI16',
-                'name': 'data',
-                'size': {
-                    'mechanism': 'len',
-                    'value': 'size'
-                },
-                'type': 'NIComplexI16_struct[]'
+                'name':'data',
+                'direction':'in',
+                'type':'NIComplexI16_struct[]',
+                'grpc_type':'repeated nidevice_grpc.NIComplexI16',
+                'size':{
+                    'mechanism':'len',
+                    'value':'size'
+                }
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'WriteNamedWaveformComplexF64': {
-        'parameters': [
+    'WriteNamedWaveformF64':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'channelName',
-                'type': 'ViConstString'
+                'name':'channelName',
+                'direction':'in',
+                'type':'ViConstString'
             },
             {
-                'direction': 'in',
-                'name': 'waveformName',
-                'type': 'ViConstString'
+                'name':'waveformName',
+                'direction':'in',
+                'type':'ViConstString'
             },
             {
-                'direction': 'in',
-                'name': 'size',
-                'type': 'ViInt32'
+                'name':'size',
+                'direction':'in',
+                'type':'ViInt32'
             },
             {
-                'direction': 'in',
-                'grpc_type': 'repeated nidevice_grpc.NIComplexNumber',
-                'name': 'data',
-                'size': {
-                    'mechanism': 'len',
-                    'value': 'size'
-                },
-                'type': 'NIComplexNumber_struct[]'
+                'name':'data',
+                'direction':'in',
+                'type':'ViReal64[]',
+                'size':{
+                    'mechanism':'len',
+                    'value':'size'
+                }
             }
         ],
-        'returns': 'ViStatus'
-    },
-    'WriteNamedWaveformComplexI16': {
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
-            },
-            {
-                'direction': 'in',
-                'name': 'channelName',
-                'type': 'ViConstString'
-            },
-            {
-                'direction': 'in',
-                'name': 'waveformName',
-                'type': 'ViConstString'
-            },
-            {
-                'direction': 'in',
-                'name': 'size',
-                'type': 'ViInt32'
-            },
-            {
-                'direction': 'in',
-                'grpc_type': 'repeated nidevice_grpc.NIComplexI16',
-                'name': 'data',
-                'size': {
-                    'mechanism': 'len',
-                    'value': 'size'
-                },
-                'type': 'NIComplexI16_struct[]'
-            }
-        ],
-        'returns': 'ViStatus'
-    },
-    'WriteNamedWaveformF64': {
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
-            },
-            {
-                'direction': 'in',
-                'name': 'channelName',
-                'type': 'ViConstString'
-            },
-            {
-                'direction': 'in',
-                'name': 'waveformName',
-                'type': 'ViConstString'
-            },
-            {
-                'direction': 'in',
-                'name': 'size',
-                'type': 'ViInt32'
-            },
-            {
-                'direction': 'in',
-                'name': 'data',
-                'size': {
-                    'mechanism': 'len',
-                    'value': 'size'
-                },
-                'type': 'ViReal64[]'
-            }
-        ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
     'WriteNamedWaveformI16': {
         'parameters': [
@@ -2957,122 +2887,192 @@
         ],
         'returns': 'ViStatus'
     },
-    'WriteP2PEndpointI16': {
-        'parameters': [
+    'WriteP2PEndpointI16':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'endpointName',
-                'type': 'ViConstString'
+                'name':'endpointName',
+                'direction':'in',
+                'type':'ViConstString'
             },
             {
-                'direction': 'in',
-                'name': 'numberOfSamples',
-                'type': 'ViInt32'
+                'name':'numberOfSamples',
+                'direction':'in',
+                'type':'ViInt32'
             },
             {
-                'direction': 'in',
-                'name': 'endpointData',
+                'name':'endpointData',
+                'direction':'in',
+                'type':'ViInt16[]',
                 'size': {
                     'mechanism': 'len',
                     'value': 'numberOfSamples'
-                },
-                'type': 'ViInt16[]'
+                }
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'WriteScript': {
-        'parameters': [
+    'WriteScript':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'channelName',
-                'type': 'ViConstString'
+                'name':'channelName',
+                'direction':'in',
+                'type':'ViConstString'
             },
             {
-                'direction': 'in',
-                'name': 'script',
-                'type': 'ViConstString'
+                'name':'script',
+                'direction':'in',
+                'type':'ViConstString'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'WriteWaveform': {
-        'parameters': [
+    'WriteWaveform':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'channelName',
-                'type': 'ViConstString'
+                'name':'channelName',
+                'direction':'in',
+                'type':'ViConstString'
             },
             {
-                'direction': 'in',
-                'name': 'waveformHandle',
-                'type': 'ViInt32'
+                'name':'waveformHandle',
+                'direction':'in',
+                'type':'ViInt32'
             },
             {
-                'direction': 'in',
-                'name': 'size',
-                'type': 'ViInt32'
+                'name':'size',
+                'direction':'in',
+                'type':'ViInt32'
             },
             {
-                'direction': 'in',
-                'name': 'data',
-                'size': {
-                    'mechanism': 'len',
-                    'value': 'size'
-                },
-                'type': 'ViReal64[]'
+                'name':'data',
+                'direction':'in',
+                'type':'ViReal64[]',
+                'size':{
+                    'mechanism':'len',
+                    'value':'size'
+                }
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
     },
-    'WriteWaveformComplexF64': {
-        'parameters': [
+    'WriteWaveformComplexF64':{
+        'parameters':[
             {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
             },
             {
-                'direction': 'in',
-                'name': 'channelName',
-                'type': 'ViConstString'
+                'name':'channelName',
+                'direction':'in',
+                'type':'ViConstString'
             },
             {
-                'direction': 'in',
-                'name': 'numberOfSamples',
-                'type': 'ViInt32'
+                'name':'numberOfSamples',
+                'direction':'in',
+                'type':'ViInt32'
             },
             {
-                'direction': 'in',
-                'grpc_type': 'repeated nidevice_grpc.NIComplexNumber',
-                'name': 'data',
-                'size': {
-                    'mechanism': 'len',
-                    'value': 'numberOfSamples'
-                },
-                'type': 'NIComplexNumber_struct[]'
+                'name':'data',
+                'direction':'in',
+                'type':'NIComplexNumber_struct[]',
+                'grpc_type':'repeated nidevice_grpc.NIComplexNumber',
+                'size':{
+                    'mechanism':'len',
+                    'value':'numberOfSamples'
+                }
             },
             {
-                'direction': 'in',
-                'name': 'waveformHandle',
-                'type': 'ViInt32'
+                'name':'waveformHandle',
+                'direction':'in',
+                'type':'ViInt32'
             }
         ],
-        'returns': 'ViStatus'
+        'returns':'ViStatus'
+    },
+    'WriteNamedWaveformComplexF64':{
+        'parameters':[
+            {
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
+            },
+            {
+                'name':'channelName',
+                'direction':'in',
+                'type':'ViConstString'
+            },
+            {
+                'name':'waveformName',
+                'direction':'in',
+                'type':'ViConstString'
+            },
+            {
+                'name':'size',
+                'direction':'in',
+                'type':'ViInt32'
+            },
+            {
+                'name':'data',
+                'direction':'in',
+                'type':'NIComplexNumber_struct[]',
+                'grpc_type':'repeated nidevice_grpc.NIComplexNumber',
+                'size':{
+                    'mechanism':'len',
+                    'value':'size'
+                }
+            }
+        ],
+        'returns':'ViStatus'
+    },
+    'WriteNamedWaveformComplexI16':{
+        'parameters':[
+            {
+                'name':'vi',
+                'direction':'in',
+                'type':'ViSession'
+            },
+            {
+                'name':'channelName',
+                'direction':'in',
+                'type':'ViConstString'
+            },
+            {
+                'name':'waveformName',
+                'direction':'in',
+                'type':'ViConstString'
+            },
+            {
+                'name':'size',
+                'direction':'in',
+                'type':'ViInt32'
+            },
+            {
+                'name':'data',
+                'direction':'in',
+                'type':'NIComplexI16_struct[]',
+                'grpc_type':'repeated nidevice_grpc.NIComplexI16',
+                'size':{
+                    'mechanism':'len',
+                    'value':'size'
+                }
+            }
+        ],
+        'returns':'ViStatus'
     }
 }

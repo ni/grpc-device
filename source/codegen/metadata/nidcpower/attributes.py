@@ -1,4 +1,6 @@
-{
+# -*- coding: utf-8 -*-
+# This file is generated from NI-DCPower API metadata version 20.7.0d8
+attributes = {
     1050002: {
         'access': 'read-write',
         'channel_based': False,
@@ -136,7 +138,7 @@
         'channel_based': False,
         'name': 'SPECIFIC_DRIVER_CLASS_SPEC_MINOR_VERSION',
         'resettable': False,
-        'type': 'ViInt32'
+        'type': 'ViInt32'        
     },
     1050551: {
         'access': 'read only',
@@ -294,8 +296,8 @@
     1150020: {
         'access': 'read-write',
         'channel_based': True,
-        'enum': 'PowerLineFrequencies',
         'name': 'POWER_LINE_FREQUENCY',
+        'enum': 'PowerLineFrequencies',
         'resettable': False,
         'type': 'ViReal64'
     },

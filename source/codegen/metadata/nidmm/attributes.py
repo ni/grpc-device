@@ -1,4 +1,4 @@
-{
+attributes = {
     1050002: {
         'access': 'read-write',
         'channel_based': False,
@@ -184,8 +184,8 @@
     1150002: {
         'access': 'read-write',
         'channel_based': False,
-        'enum': 'MeasurementDestinationSlope',
         'name': 'MEAS_DEST_SLOPE',
+        "enum": "MeasurementDestinationSlope",
         'resettable': False,
         'type': 'ViInt32'
     },
@@ -199,8 +199,8 @@
     1150010: {
         'access': 'read-write',
         'channel_based': False,
-        'enum': 'SampleTrigSlope',
         'name': 'SAMPLE_TRIGGER_SLOPE',
+        'enum': 'SampleTrigSlope',
         'resettable': False,
         'type': 'ViInt32'
     },
@@ -269,8 +269,8 @@
         'access': 'read-write',
         'attribute_class': 'AttributeViReal64TimeDeltaSeconds',
         'channel_based': False,
-        'enum': 'SettleTime',
         'name': 'SETTLE_TIME',
+        'enum': 'SettleTime',
         'resettable': False,
         'type': 'ViReal64',
         'type_in_documentation': 'hightime.timedelta, datetime.timedelta, or float in seconds'
@@ -292,16 +292,16 @@
     1150034: {
         'access': 'read-write',
         'channel_based': False,
-        'enum': 'Latency',
         'name': 'LATENCY',
+        'enum': 'Latency',
         'resettable': False,
         'type': 'ViInt32'
     },
     1150037: {
         'access': 'read-write',
         'channel_based': False,
-        'enum': 'BufferSize',
         'name': 'BUFFER_SIZE',
+        'enum': 'BufferSize',
         'resettable': False,
         'type': 'ViInt32'
     },
@@ -478,8 +478,8 @@
         'access': 'read-write',
         'attribute_class': 'AttributeViReal64TimeDeltaSeconds',
         'channel_based': False,
-        'enum': 'TriggerDelays',
         'name': 'TRIGGER_DELAY',
+        'enum': 'TriggerDelays',
         'resettable': False,
         'type': 'ViReal64',
         'type_in_documentation': 'hightime.timedelta, datetime.timedelta, or float in seconds'
@@ -508,8 +508,8 @@
     1250101: {
         'access': 'read-write',
         'channel_based': False,
-        'enum': 'FrequencyVoltageRange',
         'name': 'FREQ_VOLTAGE_RANGE',
+        'enum': 'FrequencyVoltageRange',
         'resettable': False,
         'type': 'ViReal64'
     },
@@ -554,8 +554,8 @@
     1250301: {
         'access': 'read-write',
         'channel_based': False,
-        'enum': 'SampleCount',
         'name': 'SAMPLE_COUNT',
+        'enum': 'SampleCount',
         'resettable': False,
         'type': 'ViInt32'
     },
@@ -571,8 +571,8 @@
         'access': 'read-write',
         'attribute_class': 'AttributeViReal64TimeDeltaSeconds',
         'channel_based': False,
-        'enum': 'SampleInterval',
         'name': 'SAMPLE_INTERVAL',
+        'enum': 'SampleInterval',
         'resettable': False,
         'type': 'ViReal64',
         'type_in_documentation': 'hightime.timedelta, datetime.timedelta, or float in seconds'
@@ -580,8 +580,8 @@
     1250304: {
         'access': 'read-write',
         'channel_based': False,
-        'enum': 'TriggerCount',
         'name': 'TRIGGER_COUNT',
+        'enum': 'TriggerCount',
         'resettable': False,
         'type': 'ViInt32'
     },
@@ -596,8 +596,8 @@
     1250321: {
         'access': 'read-write',
         'channel_based': False,
-        'enum': 'ApertureTime',
         'name': 'APERTURE_TIME',
+        'enum': 'ApertureTime',
         'resettable': False,
         'type': 'ViReal64'
     },
@@ -627,16 +627,16 @@
     1250333: {
         'access': 'read-write',
         'channel_based': False,
-        'enum': 'PowerLineFrequencies',
         'name': 'POWERLINE_FREQ',
+        'enum': 'PowerLineFrequencies',
         'resettable': False,
         'type': 'ViReal64'
     },
     1250334: {
         'access': 'read-write',
         'channel_based': False,
-        'enum': 'TriggerSlope',
         'name': 'TRIGGER_SLOPE',
+        'enum': 'TriggerSlope',
         'resettable': False,
         'type': 'ViInt32'
     }

@@ -1,4 +1,6 @@
-{
+# -*- coding: utf-8 -*-
+# This file is generated from NI-TClk API metadata version 255.0.0d0
+functions = {
     'AdjustSyncPulseSenderTClkDivisors': {
         'codegen_method': 'no',
         'documentation': {
@@ -17,8 +19,8 @@
                     'mechanism': 'TBD',
                     'value': 'TBD'
                 },
-                'type': 'ViSession[]',
-                'type_in_documentation': 'list of (Driver Session or nitclk.SessionReference)'
+                'type_in_documentation': 'list of (Driver Session or nitclk.SessionReference)',
+                'type': 'ViSession[]'
             },
             {
                 'direction': 'in',
@@ -46,8 +48,8 @@
                     'mechanism': 'TBD',
                     'value': 'TBD'
                 },
-                'type': 'ViSession[]',
-                'type_in_documentation': 'list of (Driver Session or nitclk.SessionReference)'
+                'type_in_documentation': 'list of (Driver Session or nitclk.SessionReference)',
+                'type': 'ViSession[]'
             },
             {
                 'direction': 'in',
@@ -75,15 +77,15 @@
                 'documentation': {
                     'description': 'sessions is an array of sessions that are being synchronized.'
                 },
-                'is_session_handle': False,
-                'name': 'sessions',
                 'python_api_converter_name': 'convert_to_nitclk_session_number_list',
+                'name': 'sessions',
+                'is_session_handle': False,
                 'size': {
                     'mechanism': 'len',
                     'value': 'sessionCount'
                 },
-                'type': 'ViSession[]',
-                'type_in_documentation': 'list of (Driver Session or nitclk.SessionReference)'
+                'type_in_documentation': 'list of (Driver Session or nitclk.SessionReference)',
+                'type': 'ViSession[]'
             }
         ],
         'returns': 'ViStatus'
@@ -123,23 +125,24 @@
                 'is_session_handle': False,
                 'name': 'sessions',
                 'python_api_converter_name': 'convert_to_nitclk_session_number_list',
+                'type_in_documentation': 'list of (Driver Session or nitclk.SessionReference)',
                 'size': {
                     'mechanism': 'len',
                     'value': 'sessionCount'
                 },
-                'type': 'ViSession[]',
-                'type_in_documentation': 'list of (nimi-python Session class or nitclk.SessionReference)'
+                'type_in_documentation': 'list of (nimi-python Session class or nitclk.SessionReference)',
+                'type': 'ViSession[]'
             },
             {
-                'default_value': 'hightime.timedelta(seconds=0.0)',
                 'direction': 'in',
+                'default_value': 'hightime.timedelta(seconds=0.0)',
+                'python_api_converter_name': 'convert_timedelta_to_seconds_real64',
+                'type_in_documentation': 'hightime.timedelta, datetime.timedelta, or float in seconds',
+                'type': 'ViReal64',
                 'documentation': {
                     'description': '\nMinimal period of TClk, expressed in seconds. Supported values are\nbetween 0.0 s and 0.050 s (50 ms). Minimal period for a single\nchassis/PC is 200 ns. If the specified value is less than 200 ns,\nNI-TClk automatically coerces minTime to 200 ns. For multichassis\nsynchronization, adjust this value to account for propagation delays\nthrough the various devices and cables.\n'
                 },
                 'name': 'minTime',
-                'python_api_converter_name': 'convert_timedelta_to_seconds_real64',
-                'type': 'ViReal64',
-                'type_in_documentation': 'hightime.timedelta, datetime.timedelta, or float in seconds'
             }
         ],
         'returns': 'ViStatus'
@@ -162,8 +165,8 @@
                     'mechanism': 'TBD',
                     'value': 'TBD'
                 },
-                'type': 'ViSession[]',
-                'type_in_documentation': 'list of (Driver Session or nitclk.SessionReference)'
+                'type_in_documentation': 'list of (Driver Session or nitclk.SessionReference)',
+                'type': 'ViSession[]'
             },
             {
                 'direction': 'in',
@@ -332,14 +335,12 @@
                 'documentation': {
                     'description': 'The value that you are getting'
                 },
-                'name': 'value',
                 'size': {
                     'mechanism': 'ivi-dance',
-                    'tags': [
-                        'strlen-bug'
-                    ],
-                    'value': 'bufSize'
+                    'value': 'bufSize',
+                    'tags': ['strlen-bug']
                 },
+                'name': 'value',
                 'type': 'ViChar[]'
             }
         ],
@@ -440,8 +441,8 @@
                     'mechanism': 'TBD',
                     'value': 'TBD'
                 },
-                'type': 'ViSession[]',
-                'type_in_documentation': 'list of (nimi-python Session class or nitclk.SessionReference)'
+                'type_in_documentation': 'list of (nimi-python Session class or nitclk.SessionReference)',
+                'type': 'ViSession[]'
             },
             {
                 'direction': 'in',
@@ -500,8 +501,8 @@
                     'mechanism': 'len',
                     'value': 'sessionCount'
                 },
-                'type': 'ViSession[]',
-                'type_in_documentation': 'list of (Driver Session or nitclk.SessionReference)'
+                'type_in_documentation': 'list of (Driver Session or nitclk.SessionReference)',
+                'type': 'ViSession[]'
             }
         ],
         'returns': 'ViStatus'
@@ -566,8 +567,8 @@
                     'mechanism': 'TBD',
                     'value': 'TBD'
                 },
-                'type': 'ViSession[]',
-                'type_in_documentation': 'list of (nimi-python Session class or nitclk.SessionReference)'
+                'type_in_documentation': 'list of (nimi-python Session class or nitclk.SessionReference)',
+                'type': 'ViSession[]'
             },
             {
                 'direction': 'in',
@@ -791,8 +792,8 @@
                     'mechanism': 'len',
                     'value': 'sessionCount'
                 },
-                'type': 'ViSession[]',
-                'type_in_documentation': 'list of (Driver Session or nitclk.SessionReference)'
+                'type_in_documentation': 'list of (Driver Session or nitclk.SessionReference)',
+                'type': 'ViSession[]'
             },
             {
                 'direction': 'out',
@@ -983,19 +984,19 @@
                     'mechanism': 'len',
                     'value': 'sessionCount'
                 },
-                'type': 'ViSession[]',
-                'type_in_documentation': 'list of (Driver Session or nitclk.SessionReference)'
+                'type_in_documentation': 'list of (Driver Session or nitclk.SessionReference)',
+                'type': 'ViSession[]'
             },
             {
-                'default_value': 'hightime.timedelta(seconds=0.0)',
                 'direction': 'in',
+                'default_value': 'hightime.timedelta(seconds=0.0)',
+                'python_api_converter_name': 'convert_timedelta_to_seconds_real64',
+                'type_in_documentation': 'hightime.timedelta, datetime.timedelta, or float in seconds',
                 'documentation': {
                     'description': '\nMinimal period of TClk, expressed in seconds. Supported values are\nbetween 0.0 s and 0.050 s (50 ms). Minimal period for a single\nchassis/PC is 200 ns. If the specified value is less than 200 ns,\nNI-TClk automatically coerces minTime to 200 ns. For multichassis\nsynchronization, adjust this value to account for propagation delays\nthrough the various devices and cables.\n'
                 },
                 'name': 'minTime',
-                'python_api_converter_name': 'convert_timedelta_to_seconds_real64',
-                'type': 'ViReal64',
-                'type_in_documentation': 'hightime.timedelta, datetime.timedelta, or float in seconds'
+                'type': 'ViReal64'
             }
         ],
         'returns': 'ViStatus'
@@ -1025,19 +1026,82 @@
                     'mechanism': 'len',
                     'value': 'sessionCount'
                 },
-                'type': 'ViSession[]',
-                'type_in_documentation': 'list of (Driver Session or nitclk.SessionReference)'
+                'type_in_documentation': 'list of (Driver Session or nitclk.SessionReference)',
+                'type': 'ViSession[]'
             },
             {
-                'default_value': 'hightime.timedelta(seconds=0.0)',
                 'direction': 'in',
                 'documentation': {
                     'description': '\nMinimal period of TClk, expressed in seconds. Supported values are\nbetween 0.0 s and 0.050 s (50 ms). Minimal period for a single\nchassis/PC is 200 ns. If the specified value is less than 200 ns,\nNI-TClk automatically coerces minTime to 200 ns. For multichassis\nsynchronization, adjust this value to account for propagation delays\nthrough the various devices and cables.\n'
                 },
-                'name': 'minTclkPeriod',
+                'default_value': 'hightime.timedelta(seconds=0.0)',
                 'python_api_converter_name': 'convert_timedelta_to_seconds_real64',
-                'type': 'ViReal64',
-                'type_in_documentation': 'hightime.timedelta, datetime.timedelta, or float in seconds'
+                'type_in_documentation': 'hightime.timedelta, datetime.timedelta, or float in seconds',
+                'name': 'minTclkPeriod',
+                'type': 'ViReal64'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'SynchronizeToSyncPulseSender': {
+        'codegen_method': 'no',
+        'documentation': {
+            'description': 'TBD'
+        },
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'sessionCount',
+                'type': 'ViUInt32'
+            },
+            {
+                'direction': 'in',
+                'name': 'sessions',
+                'size': {
+                    'mechanism': 'TBD',
+                    'value': 'TBD'
+                },
+                'type_in_documentation': 'list of (Driver Session or nitclk.SessionReference)',
+                'type': 'ViSession[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'minTime',
+                'type': 'ViReal64'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'SynchronizeWithOptions': {
+        'codegen_method': 'no',
+        'documentation': {
+            'description': 'TBD'
+        },
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'sessionCount',
+                'type': 'ViUInt32'
+            },
+            {
+                'direction': 'in',
+                'name': 'sessions',
+                'size': {
+                    'mechanism': 'TBD',
+                    'value': 'TBD'
+                },
+                'type_in_documentation': 'list of (Driver Session or nitclk.SessionReference)',
+                'type': 'ViSession[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'minTime',
+                'type': 'ViReal64'
+            },
+            {
+                'direction': 'in',
+                'name': 'options',
+                'type': 'ViUInt32'
             }
         ],
         'returns': 'ViStatus'
@@ -1067,53 +1131,19 @@
                     'mechanism': 'len',
                     'value': 'sessionCount'
                 },
-                'type': 'ViSession[]',
-                'type_in_documentation': 'list of (Driver Session or nitclk.SessionReference)'
+                'type_in_documentation': 'list of (Driver Session or nitclk.SessionReference)',
+                'type': 'ViSession[]'
             },
             {
-                'default_value': 'hightime.timedelta(seconds=0.0)',
                 'direction': 'in',
+                'default_value': 'hightime.timedelta(seconds=0.0)',
+                'python_api_converter_name': 'convert_timedelta_to_seconds_real64',
+                'type_in_documentation': 'hightime.timedelta, datetime.timedelta, or float in seconds',
                 'documentation': {
                     'description': '\nMinimal period of TClk, expressed in seconds. Supported values are\nbetween 0.0 s and 0.050 s (50 ms). Minimal period for a single\nchassis/PC is 200 ns. If the specified value is less than 200 ns,\nNI-TClk automatically coerces minTime to 200 ns. For multichassis\nsynchronization, adjust this value to account for propagation delays\nthrough the various devices and cables.\n'
                 },
                 'name': 'minTime',
-                'python_api_converter_name': 'convert_timedelta_to_seconds_real64',
-                'type': 'ViReal64',
-                'type_in_documentation': 'hightime.timedelta, datetime.timedelta, or float in seconds'
-            }
-        ],
-        'returns': 'ViStatus'
-    },
-    'SynchronizeWithOptions': {
-        'codegen_method': 'no',
-        'documentation': {
-            'description': 'TBD'
-        },
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'sessionCount',
-                'type': 'ViUInt32'
-            },
-            {
-                'direction': 'in',
-                'name': 'sessions',
-                'size': {
-                    'mechanism': 'TBD',
-                    'value': 'TBD'
-                },
-                'type': 'ViSession[]',
-                'type_in_documentation': 'list of (Driver Session or nitclk.SessionReference)'
-            },
-            {
-                'direction': 'in',
-                'name': 'minTime',
                 'type': 'ViReal64'
-            },
-            {
-                'direction': 'in',
-                'name': 'options',
-                'type': 'ViUInt32'
             }
         ],
         'returns': 'ViStatus'
@@ -1143,19 +1173,19 @@
                     'mechanism': 'len',
                     'value': 'sessionCount'
                 },
-                'type': 'ViSession[]',
-                'type_in_documentation': 'list of (Driver Session or nitclk.SessionReference)'
+                'type_in_documentation': 'list of (Driver Session or nitclk.SessionReference)',
+                'type': 'ViSession[]'
             },
             {
-                'default_value': 'hightime.timedelta(seconds=0.0)',
                 'direction': 'in',
+                'default_value': 'hightime.timedelta(seconds=0.0)',
+                'python_api_converter_name': 'convert_timedelta_to_seconds_real64',
+                'type_in_documentation': 'hightime.timedelta, datetime.timedelta, or float in seconds',
                 'documentation': {
                     'description': '\nThe amount of time in seconds that niTClk_WaitUntilDone waits for the\nsessions to complete. If timeout is exceeded, niTClk_WaitUntilDone\nreturns an error.\n'
                 },
                 'name': 'timeout',
-                'python_api_converter_name': 'convert_timedelta_to_seconds_real64',
-                'type': 'ViReal64',
-                'type_in_documentation': 'hightime.timedelta, datetime.timedelta, or float in seconds'
+                'type': 'ViReal64'
             }
         ],
         'returns': 'ViStatus'

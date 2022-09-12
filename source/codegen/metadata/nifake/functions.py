@@ -1,4 +1,6 @@
-{
+# -*- coding: utf-8 -*-
+# This file is generated from NI-FAKE API metadata version 1.2.0d9
+functions = {
     'Abort': {
         'codegen_method': 'public',
         'documentation': {
@@ -66,11 +68,11 @@
             {
                 'direction': 'in',
                 'name': 'sessionArray',
+                'type': 'ViSession[]',
                 'size': {
                     'mechanism': 'passed-in',
                     'value': 'sessionCount'
-                },
-                'type': 'ViSession[]'
+                }
             }
         ],
         'returns': 'ViStatus'
@@ -90,11 +92,11 @@
             {
                 'direction': 'in',
                 'name': 'uInt32Array',
+                'type': 'ViUInt32[]',
                 'size': {
                     'mechanism': 'len',
                     'value': 'arrayLen'
-                },
-                'type': 'ViUInt32[]'
+                }
             }
         ],
         'returns': 'ViStatus'
@@ -177,16 +179,16 @@
         'codegen_method': 'public',
         'custom_close_method': True,
         'parameters': [
-            {
-                'direction': 'in',
+           {
                 'name': 'vi',
-                'type': 'ViSession'
-            },
-            {
                 'direction': 'in',
+                'type': 'ViSession'
+           },
+           {
                 'name': 'action',
+                'direction': 'in',
                 'type': 'ViInt32'
-            }
+           }
         ],
         'returns': 'ViStatus'
     },
@@ -199,10 +201,10 @@
             },
             {
                 'direction': 'in',
-                'hardcoded_value': 'nullptr',
                 'include_in_proto': False,
                 'name': 'reserved',
                 'pointer': True,
+                'hardcoded_value': "nullptr",
                 'type': 'ViBoolean'
             }
         ],
@@ -558,33 +560,33 @@
     'GetAnIviDanceWithATwistArray': {
         'parameters': [
             {
-                'direction': 'in',
                 'name': 'vi',
+                'direction': 'in',
                 'type': 'ViSession'
             },
             {
-                'direction': 'in',
                 'name': 'aString',
+                'direction': 'in',
                 'type': 'ViConstString'
             },
             {
-                'direction': 'in',
                 'name': 'bufferSize',
+                'direction': 'in',
                 'type': 'ViInt32'
             },
             {
-                'direction': 'out',
                 'name': 'arrayOut',
+                'direction': 'out',
+                'type': 'ViInt32[]',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',
                     'value': 'bufferSize',
                     'value_twist': 'actualSize'
-                },
-                'type': 'ViInt32[]'
+                }
             },
             {
-                'direction': 'out',
                 'name': 'actualSize',
+                'direction': 'out',
                 'type': 'ViInt32'
             }
         ],
@@ -593,29 +595,29 @@
     'GetAnIviDanceWithATwistArrayOfCustomType': {
         'parameters': [
             {
-                'direction': 'in',
                 'name': 'vi',
+                'direction': 'in',
                 'type': 'ViSession'
             },
             {
-                'direction': 'in',
                 'name': 'bufferSize',
+                'direction': 'in',
                 'type': 'ViInt32'
             },
             {
-                'direction': 'out',
-                'grpc_type': 'repeated FakeCustomStruct',
                 'name': 'arrayOut',
+                'direction': 'out',
+                'type': 'struct CustomStruct[]',
+                'grpc_type': 'repeated FakeCustomStruct',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',
                     'value': 'bufferSize',
                     'value_twist': 'actualSize'
-                },
-                'type': 'struct CustomStruct[]'
+                }
             },
             {
-                'direction': 'out',
                 'name': 'actualSize',
+                'direction': 'out',
                 'type': 'ViInt32'
             }
         ],
@@ -638,23 +640,23 @@
                 'type': 'ViInt32'
             },
             {
-                'direction': 'in',
                 'name': 'bufferSize',
+                'direction': 'in',
                 'type': 'ViInt32'
             },
             {
-                'direction': 'out',
                 'name': 'arrayOut',
+                'direction': 'out',
+                'type': 'ViInt32[]',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',
                     'value': 'bufferSize',
                     'value_twist': 'actualSize'
-                },
-                'type': 'ViInt32[]'
+                }
             },
             {
-                'direction': 'out',
                 'name': 'actualSize',
+                'direction': 'out',
                 'type': 'ViInt32'
             }
         ],
@@ -663,13 +665,13 @@
     'GetAnIviDanceWithATwistByteArray': {
         'parameters': [
             {
-                'direction': 'in',
                 'name': 'bufferSize',
+                'direction': 'in',
                 'type': 'ViInt32'
             },
             {
-                'direction': 'out',
                 'name': 'arrayOut',
+                'direction': 'out',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',
                     'value': 'bufferSize',
@@ -678,8 +680,8 @@
                 'type': 'ViInt8[]'
             },
             {
-                'direction': 'out',
                 'name': 'actualSize',
+                'direction': 'out',
                 'type': 'ViInt32'
             }
         ],
@@ -688,13 +690,13 @@
     'GetAnIviDanceWithATwistString': {
         'parameters': [
             {
-                'direction': 'in',
                 'name': 'bufferSize',
+                'direction': 'in',
                 'type': 'ViInt32'
             },
             {
-                'direction': 'out',
                 'name': 'arrayOut',
+                'direction': 'out',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',
                     'value': 'bufferSize',
@@ -703,8 +705,8 @@
                 'type': 'ViChar[]'
             },
             {
-                'direction': 'out',
                 'name': 'actualSize',
+                'direction': 'out',
                 'type': 'ViInt32'
             }
         ],
@@ -713,26 +715,24 @@
     'GetAnIviDanceWithATwistStringStrlenBug': {
         'parameters': [
             {
-                'direction': 'in',
                 'name': 'bufferSize',
+                'direction': 'in',
                 'type': 'ViInt32'
             },
             {
-                'direction': 'out',
                 'name': 'stringOut',
+                'direction': 'out',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',
-                    'tags': [
-                        'strlen-bug'
-                    ],
                     'value': 'bufferSize',
-                    'value_twist': 'actualSize'
+                    'value_twist': 'actualSize',
+                    'tags': ['strlen-bug']
                 },
                 'type': 'ViChar[]'
             },
             {
-                'direction': 'out',
                 'name': 'actualSize',
+                'direction': 'out',
                 'type': 'ViInt32'
             }
         ],
@@ -814,13 +814,13 @@
             },
             {
                 'direction': 'out',
-                'enum': 'Color',
                 'name': 'uInt8EnumArray',
+                'enum': 'Color',
+                'type': 'ViUInt8[]',
                 'size': {
                     'mechanism': 'passed-in',
                     'value': 'arrayLen'
-                },
-                'type': 'ViUInt8[]'
+                }
             }
         ],
         'returns': 'ViStatus'
@@ -1068,7 +1068,7 @@
                 'bitfield_as_enum_array': 'Bitfield',
                 'direction': 'out',
                 'name': 'flags',
-                'type': 'ViInt64'
+                'type': 'ViInt64',
             }
         ],
         'returns': 'ViStatus'
@@ -1182,9 +1182,9 @@
                 'documentation': {
                     'description': 'Set using custom type'
                 },
-                'grpc_type': 'FakeCustomStruct',
                 'name': 'cs',
-                'type': 'struct CustomStruct'
+                'type': 'struct CustomStruct',
+                'grpc_type': 'FakeCustomStruct'
             }
         ],
         'returns': 'ViStatus'
@@ -1216,13 +1216,13 @@
                 'documentation': {
                     'description': 'Get using custom type'
                 },
-                'grpc_type': 'repeated FakeCustomStruct',
                 'name': 'cs',
                 'size': {
                     'mechanism': 'passed-in',
                     'value': 'numberOfElements'
                 },
-                'type': 'struct CustomStruct[]'
+                'type': 'struct CustomStruct[]',
+                'grpc_type': 'repeated FakeCustomStruct'
             }
         ],
         'returns': 'ViStatus'
@@ -1343,11 +1343,11 @@
             {
                 'direction': 'out',
                 'name': 'int32Array',
+                'type': 'ViInt32[]',
                 'size': {
                     'mechanism': 'passed-in',
                     'value': 'arrayLen'
-                },
-                'type': 'ViInt32[]'
+                }
             }
         ],
         'returns': 'ViStatus'
@@ -1367,11 +1367,11 @@
             {
                 'direction': 'out',
                 'name': 'uInt32Array',
+                'type': 'ViUInt32[]',
                 'size': {
                     'mechanism': 'passed-in',
                     'value': 'arrayLen'
-                },
-                'type': 'ViUInt32[]'
+                }
             }
         ],
         'returns': 'ViStatus'
@@ -1423,33 +1423,33 @@
     },
     'InitExtCal': {
         'codegen_method': 'public',
-        'custom_close': 'CloseExtCal(id, 0)',
-        'init_method': True,
-        'parameters': [
+        'init_method' : True,
+        'custom_close' : 'CloseExtCal(id, 0)',
+         'parameters': [
             {
-                'direction': 'in',
                 'name': 'resourceName',
+                'direction': 'in',
                 'type': 'ViRsrc'
             },
             {
-                'direction': 'in',
                 'name': 'calibrationPassword',
+                'direction': 'in',
                 'type': 'ViString'
             },
             {
-                'direction': 'out',
                 'name': 'vi',
+                'direction': 'out',
                 'type': 'ViSession'
             }
         ],
         'returns': 'ViStatus'
-    },
+     },
     'InitWithOptions': {
         'codegen_method': 'public',
+        'init_method': True,
         'documentation': {
             'description': 'Creates a new IVI instrument driver session.'
         },
-        'init_method': True,
         'parameters': [
             {
                 'direction': 'in',
@@ -1530,26 +1530,26 @@
         'init_method': True,
         'parameters': [
             {
-                'direction': 'in',
                 'name': 'resourceName',
+                'direction': 'in',
                 'type': 'ViRsrc'
             },
             {
-                'direction': 'out',
                 'name': 'vi',
+                'direction': 'out',
                 'type': 'ViSession'
             },
             {
                 'direction': 'in',
-                'include_in_proto': False,
                 'name': 'stringArg',
+                'type': 'ViConstString',
+                'include_in_proto': False,
                 'repeating_argument': True,
-                'type': 'ViConstString'
             },
             {
                 'direction': 'in',
-                'enum': 'Turtle',
                 'include_in_proto': False,
+                'enum': 'Turtle',
                 'name': 'turtle',
                 'repeating_argument': True,
                 'type': 'ViInt16'
@@ -1561,9 +1561,9 @@
                 'max_length': 3,
                 'name': 'nameAndTurtle',
                 'repeated_var_args': True
-            }
+            },
         ],
-        'returns': 'ViStatus'
+        'returns': 'ViStatus',
     },
     'Initiate': {
         'codegen_method': 'private',
@@ -1815,6 +1815,7 @@
                 'documentation': {
                     'description': 'Array 5 of same size.'
                 },
+                'type': 'struct CustomStruct[]',
                 'grpc_type': 'repeated FakeCustomStruct',
                 'name': 'values5',
                 'size': {
@@ -1824,7 +1825,6 @@
                     ],
                     'value': 'size'
                 },
-                'type': 'struct CustomStruct[]'
             },
             {
                 'direction': 'in',
@@ -2033,8 +2033,8 @@
                 'type': 'ViInt32[]'
             },
             {
-                'direction': 'out',
                 'name': 'bufferSize',
+                'direction': 'out',
                 'type': 'ViInt32'
             }
         ],
@@ -2043,43 +2043,43 @@
     'ReadDataWithMultipleIviTwistParamSets': {
         'parameters': [
             {
-                'direction': 'in',
                 'name': 'bufferSize',
+                'direction': 'in',
                 'type': 'ViInt32'
             },
             {
-                'direction': 'out',
                 'name': 'arrayOut',
+                'direction': 'out',
+                'type': 'ViInt32[]',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',
                     'value': 'bufferSize',
                     'value_twist': 'actualSize'
-                },
-                'type': 'ViInt32[]'
+                }
             },
             {
-                'direction': 'out',
                 'name': 'actualSize',
-                'type': 'ViInt32'
-            },
-            {
-                'direction': 'in',
-                'name': 'otherBufferSize',
-                'type': 'ViInt32'
-            },
-            {
                 'direction': 'out',
+                'type': 'ViInt32'
+            },
+            {
+                'name': 'otherBufferSize',
+                'direction': 'in',
+                'type': 'ViInt32'
+            },
+            {
                 'name': 'otherArrayOut',
+                'direction': 'out',
+                'type': 'ViInt32[]',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',
                     'value': 'otherBufferSize',
                     'value_twist': 'otherActualSize'
-                },
-                'type': 'ViInt32[]'
+                }
             },
             {
-                'direction': 'out',
                 'name': 'otherActualSize',
+                'direction': 'out',
                 'type': 'ViInt32'
             }
         ],
@@ -2581,9 +2581,9 @@
                 'documentation': {
                     'description': 'Set using custom type'
                 },
-                'grpc_type': 'FakeCustomStruct',
                 'name': 'cs',
-                'type': 'struct CustomStruct'
+                'type': 'struct CustomStruct',
+                'grpc_type': 'FakeCustomStruct'
             }
         ],
         'returns': 'ViStatus'
@@ -2614,13 +2614,13 @@
                 'documentation': {
                     'description': 'Set using custom type'
                 },
-                'grpc_type': 'repeated FakeCustomStruct',
                 'name': 'cs',
                 'size': {
                     'mechanism': 'len',
                     'value': 'numberOfElements'
                 },
-                'type': 'struct CustomStruct[]'
+                'type': 'struct CustomStruct[]',
+                'grpc_type': 'repeated FakeCustomStruct'
             }
         ],
         'returns': 'ViStatus'
@@ -2736,8 +2736,8 @@
     'UseATwoDimensionParameter': {
         'parameters': [
             {
-                'direction': 'in',
                 'name': 'vi',
+                'direction': 'in',
                 'type': 'ViSession'
             },
             {
@@ -2762,7 +2762,7 @@
                 'direction': 'in',
                 'name': 'arraySize',
                 'type': 'ViInt32'
-            }
+            },
         ],
         'returns': 'ViStatus'
     },
@@ -2986,5 +2986,5 @@
             }
         ],
         'returns': 'ViStatus'
-    }
+    },
 }

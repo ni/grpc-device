@@ -1,4 +1,6 @@
-{
+# -*- coding: utf-8 -*-
+# This file is generated from NI-SWITCH API metadata version 19.6.0d7
+functions = {
     'AbortScan': {
         'parameters': [
             {
@@ -79,10 +81,10 @@
             },
             {
                 'direction': 'in',
-                'grpc_field_number': '5',
-                'grpc_raw_field_number': '4',
                 'name': 'attributeValue',
-                'type': 'ViInt32'
+                'type': 'ViInt32',
+                'grpc_raw_field_number':'4',
+                'grpc_field_number':'5'
             }
         ],
         'returns': 'ViStatus'
@@ -112,31 +114,6 @@
         ],
         'returns': 'ViStatus'
     },
-    'CheckAttributeViSession': {
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
-            },
-            {
-                'direction': 'in',
-                'name': 'channelName',
-                'type': 'ViConstString'
-            },
-            {
-                'direction': 'in',
-                'name': 'attributeId',
-                'type': 'ViAttr'
-            },
-            {
-                'direction': 'in',
-                'name': 'attributeValue',
-                'type': 'ViSession'
-            }
-        ],
-        'returns': 'ViStatus'
-    },
     'CheckAttributeViString': {
         'parameters': [
             {
@@ -162,6 +139,31 @@
         ],
         'returns': 'ViStatus'
     },
+    'CheckAttributeViSession': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'attributeId',
+                'type': 'ViAttr'
+            },
+            {
+                'direction': 'in',
+                'name': 'attributeValue',
+                'type': 'ViSession'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
     'ClearError': {
         'parameters': [
             {
@@ -183,7 +185,7 @@
         'returns': 'ViStatus'
     },
     'Close': {
-        'cname': 'niSwitch_close',
+        'cname' : 'niSwitch_close',
         'parameters': [
             {
                 'direction': 'in',
@@ -191,7 +193,7 @@
                 'type': 'ViSession'
             }
         ],
-        'returns': 'ViStatus'
+        'returns': 'ViStatus',
     },
     'Commit': {
         'parameters': [
@@ -232,8 +234,8 @@
                 'type': 'ViSession'
             },
             {
-                'attribute': 'SCAN_DELAY',
                 'direction': 'in',
+                'attribute': 'SCAN_DELAY',
                 'name': 'scanDelay',
                 'type': 'ViReal64'
             },
@@ -343,7 +345,7 @@
         'returns': 'ViStatus'
     },
     'ErrorMessage': {
-        'cname': 'niSwitch_error_message',
+        'cname' : 'niSwitch_error_message',
         'parameters': [
             {
                 'direction': 'in',
@@ -365,10 +367,10 @@
                 'type': 'ViChar[]'
             }
         ],
-        'returns': 'ViStatus'
+        'returns': 'ViStatus',
     },
     'ErrorQuery': {
-        'cname': 'niSwitch_error_query',
+        'cname' : 'niSwitch_error_query',
         'parameters': [
             {
                 'direction': 'in',
@@ -467,31 +469,6 @@
         ],
         'returns': 'ViStatus'
     },
-    'GetAttributeViSession': {
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
-            },
-            {
-                'direction': 'in',
-                'name': 'channelName',
-                'type': 'ViConstString'
-            },
-            {
-                'direction': 'in',
-                'name': 'attributeId',
-                'type': 'ViAttr'
-            },
-            {
-                'direction': 'out',
-                'name': 'attributeValue',
-                'type': 'ViSession'
-            }
-        ],
-        'returns': 'ViStatus'
-    },
     'GetAttributeViString': {
         'parameters': [
             {
@@ -522,6 +499,31 @@
                     'value': 'arraySize'
                 },
                 'type': 'ViChar[]'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'GetAttributeViSession': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'attributeId',
+                'type': 'ViAttr'
+            },
+            {
+                'direction': 'out',
+                'name': 'attributeValue',
+                'type': 'ViSession'
             }
         ],
         'returns': 'ViStatus'
@@ -582,7 +584,7 @@
                 'type': 'ViChar[]'
             }
         ],
-        'returns': 'ViStatus'
+        'returns': 'ViStatus',
     },
     'GetNextCoercionRecord': {
         'parameters': [
@@ -606,7 +608,7 @@
                 'type': 'ViChar[]'
             }
         ],
-        'returns': 'ViStatus'
+        'returns': 'ViStatus',
     },
     'GetNextInterchangeWarning': {
         'parameters': [
@@ -630,7 +632,7 @@
                 'type': 'ViChar[]'
             }
         ],
-        'returns': 'ViStatus'
+        'returns': 'ViStatus',
     },
     'GetPath': {
         'parameters': [
@@ -737,8 +739,8 @@
         'returns': 'ViStatus'
     },
     'Init': {
-        'cname': 'niSwitch_init ',
         'init_method': True,
+        'cname': 'niSwitch_init ',
         'parameters': [
             {
                 'direction': 'in',
@@ -767,7 +769,7 @@
                 'type': 'ViChar[]'
             }
         ],
-        'returns': 'ViStatus'
+        'returns': 'ViStatus',
     },
     'InitWithOptions': {
         'init_method': True,
@@ -804,7 +806,7 @@
                 'type': 'ViChar[]'
             }
         ],
-        'returns': 'ViStatus'
+        'returns': 'ViStatus',
     },
     'InitWithTopology': {
         'init_method': True,
@@ -841,7 +843,7 @@
                 'type': 'ViChar[]'
             }
         ],
-        'returns': 'ViStatus'
+        'returns': 'ViStatus',
     },
     'InitiateScan': {
         'parameters': [
@@ -908,7 +910,7 @@
             }
         ],
         'render_in_session_base': True,
-        'returns': 'ViStatus'
+        'returns': 'ViStatus',
     },
     'RelayControl': {
         'parameters': [
@@ -932,7 +934,7 @@
         'returns': 'ViStatus'
     },
     'Reset': {
-        'cname': 'niSwitch_reset',
+        'cname' : 'niSwitch_reset',
         'parameters': [
             {
                 'direction': 'in',
@@ -963,7 +965,7 @@
         'returns': 'ViStatus'
     },
     'RevisionQuery': {
-        'cname': 'niSwitch_revision_query',
+        'cname' : 'niSwitch_revision_query',
         'parameters': [
             {
                 'direction': 'in',
@@ -1067,7 +1069,7 @@
         'returns': 'ViStatus'
     },
     'SelfTest': {
-        'cname': 'niSwitch_self_test',
+        'cname' : 'niSwitch_self_test',
         'parameters': [
             {
                 'direction': 'in',
@@ -1145,10 +1147,10 @@
             },
             {
                 'direction': 'in',
-                'grpc_field_number': '5',
-                'grpc_raw_field_number': '4',
                 'name': 'attributeValue',
-                'type': 'ViInt32'
+                'type': 'ViInt32',
+                'grpc_raw_field_number':'4',
+                'grpc_field_number':'5'
             }
         ],
         'returns': 'ViStatus'
@@ -1178,31 +1180,6 @@
         ],
         'returns': 'ViStatus'
     },
-    'SetAttributeViSession': {
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
-            },
-            {
-                'direction': 'in',
-                'name': 'channelName',
-                'type': 'ViConstString'
-            },
-            {
-                'direction': 'in',
-                'name': 'attributeId',
-                'type': 'ViAttr'
-            },
-            {
-                'direction': 'in',
-                'name': 'attributeValue',
-                'type': 'ViSession'
-            }
-        ],
-        'returns': 'ViStatus'
-    },
     'SetAttributeViString': {
         'parameters': [
             {
@@ -1224,6 +1201,31 @@
                 'direction': 'in',
                 'name': 'attributeValue',
                 'type': 'ViString'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'SetAttributeViSession': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'attributeId',
+                'type': 'ViAttr'
+            },
+            {
+                'direction': 'in',
+                'name': 'attributeValue',
+                'type': 'ViSession'
             }
         ],
         'returns': 'ViStatus'
@@ -1273,7 +1275,7 @@
             }
         ],
         'render_in_session_base': True,
-        'returns': 'ViStatus'
+        'returns': 'ViStatus',
     },
     'WaitForDebounce': {
         'parameters': [

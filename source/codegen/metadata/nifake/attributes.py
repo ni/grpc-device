@@ -1,4 +1,6 @@
-{
+# -*- coding: utf-8 -*-
+# This file is generated from NI-FAKE API metadata version 1.2.0d9
+attributes = {
     1000000: {
         'access': 'read-write',
         'channel_based': False,
@@ -122,6 +124,11 @@
         'name': 'READ_WRITE_STRING_REPEATED_CAPABILITY',
         'resettable': False,
         'type': 'ViString',
-        'type_in_documentation': "Any repeated capability type, as defined in nimi-python:\n        - str\n        - str - Comma delimited list\n        - str - Range (using '-' or ':')\n        - int\n        - Basic sequence types (list, tuple, range, slice) of other supported types"
+        'type_in_documentation': '''Any repeated capability type, as defined in nimi-python:
+        - str
+        - str - Comma delimited list
+        - str - Range (using '-' or ':')
+        - int
+        - Basic sequence types (list, tuple, range, slice) of other supported types'''
     }
 }
