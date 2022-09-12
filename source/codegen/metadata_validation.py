@@ -165,13 +165,14 @@ ENUM_SCHEMA = Schema(
                 Optional("python_name"): str,
                 Optional("documentation"): DOCUMENTATION_SCHEMA,
                 Optional("type"): str,
+                Optional("grpc_name"): str, 
             }
         ],
         Optional("generate-mappings"): bool,
         Optional("enum-value-prefix"): str,
         Optional("generate-mapping-type"): bool,
         Optional("force-include"): bool,
-        Optional("codegen_method"): str,
+        Optional("codegen_method"): str,       
     }
 )
 

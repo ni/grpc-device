@@ -1309,63 +1309,6 @@ enums = {
             }
         ]
     },
-    'Signal': {
-        'codegen_method': 'public',
-        'values': [
-            {
-                'name': 'ONBOARD_REFERENCE_CLOCK',
-                'value': 1019
-            },
-            {
-                'name': 'SYNC_OUT',
-                'value': 1002
-            },
-            {
-                'name': 'START_TRIGGER',
-                'value': 1004
-            },
-            {
-                'name': 'MARKER_EVENT',
-                'value': 1001
-            },
-            {
-                'name': 'SAMPLE_CLOCK_TIMEBASE',
-                'value': 1006
-            },
-            {
-                'name': 'SYNCHRONIZATION',
-                'value': 1007
-            },
-            {
-                'name': 'SAMPLE_CLOCK',
-                'value': 101
-            },
-            {
-                'name': 'REFERENCE_CLOCK',
-                'value': 102
-            },
-            {
-                'name': 'SCRIPT_TRIGGER',
-                'value': 103
-            },
-            {
-                'name': 'READY_FOR_START_EVENT',
-                'value': 105
-            },
-            {
-                'name': 'STARTED_EVENT',
-                'value': 106
-            },
-            {
-                'name': 'DONE_EVENT',
-                'value': 107
-            },
-            {
-                'name': 'DATA_MARKER_EVENT',
-                'value': 108
-            }
-        ]
-    },
     'StartTriggerDigitalEdgeEdge': {
         'codegen_method': 'public',
         'values': [
