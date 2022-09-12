@@ -1,22 +1,21 @@
-# -*- coding: utf-8 -*-
-# This file is generated from NI-Digital Pattern Driver API metadata version 19.5.0d7
-config = {
+{
+    'additional_headers': {
+        'custom/ivi_errors.h': [
+            'service.cpp'
+        ]
+    },
     'api_version': '19.5.0d7',
-    'c_header': 'niDigital.h',
     'c_function_prefix': 'niDigital_',
-    'service_class_prefix': 'NiDigital',
-    'java_package': 'com.ni.grpc.nidigital',
-    'csharp_namespace': 'NationalInstruments.Grpc.Digital',
-    'namespace_component': 'nidigitalpattern',
+    'c_header': 'niDigital.h',
     'close_function': 'Close',
     'context_manager_name': {
         'abort_function': 'Abort',
         'initiate_function': 'Initiate',
         'task': 'burst'
     },
+    'csharp_namespace': 'NationalInstruments.Grpc.Digital',
     'custom_types': [
     ],
-    'additional_headers': {'custom/ivi_errors.h': ['service.cpp']},
     'driver_name': 'NI-Digital Pattern Driver',
     'enum_whitelist_suffix': [
     ],
@@ -25,7 +24,7 @@ config = {
         'SelfTestError'
     ],
     'init_function': 'InitWithOptions',
-    'status_ok': 'status >= 0',
+    'java_package': 'com.ni.grpc.nidigital',
     'library_info': {
         'Linux': {
             '64bit': {
@@ -47,6 +46,7 @@ config = {
     'linux_rt_support': False,
     'metadata_version': '2.0',
     'module_name': 'nidigitalpattern',
+    'namespace_component': 'nidigitalpattern',
     'repeated_capabilities': [
         {
             'prefix': '',
@@ -71,9 +71,11 @@ config = {
         {
             'prefix': 'site',
             'python_name': 'sites'
-        },
+        }
     ],
+    'service_class_prefix': 'NiDigital',
     'session_class_description': 'An NI-Digital Pattern Driver session',
     'session_handle_parameter_name': 'vi',
-    'uses_nitclk': True,
+    'status_ok': 'status >= 0',
+    'uses_nitclk': True
 }

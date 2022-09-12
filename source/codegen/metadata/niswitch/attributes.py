@@ -1,6 +1,4 @@
-# -*- coding: utf-8 -*-
-# This file is generated from NI-SWITCH API metadata version 19.6.0d7
-attributes = {
+{
     1050002: {
         'access': 'read-write',
         'channel_based': False,
@@ -299,7 +297,7 @@ attributes = {
         'access': 'read-write',
         'channel_based': False,
         'documentation': {
-            'description': '\nThis property specifies whether to apply the pulse width filter to the  Trigger Input. Enabling the Digital Filter (VI_TRUE) prevents the switch  module from being triggered by pulses that are less than 150 ns on PXI  trigger lines 0â€“7.\nWhen Digital Filter is disabled (VI_FALSE), it is possible for the switch  module to be triggered by noise on the PXI trigger lines. If the device  triggering the switch is capable of sending pulses greater than 150 ns, you should not disable the Digital Filter.\n'
+            'description': '\nThis property specifies whether to apply the pulse width filter to the  Trigger Input. Enabling the Digital Filter (VI_TRUE) prevents the switch  module from being triggered by pulses that are less than 150 ns on PXI  trigger lines 0–7.\nWhen Digital Filter is disabled (VI_FALSE), it is possible for the switch  module to be triggered by noise on the PXI trigger lines. If the device  triggering the switch is capable of sending pulses greater than 150 ns, you should not disable the Digital Filter.\n'
         },
         'lv_property': 'Scanning Configuration:Digital Filter Enable',
         'name': 'DIGITAL_FILTER_ENABLE',
