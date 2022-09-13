@@ -6,6 +6,18 @@ import service_helpers
 from schema import And, Optional, Or, Schema, Use  # type: ignore
 
 
+_ALREADY_MUTATED = (
+    "NI-DCPower",
+    "NI-Digital Pattern Driver",
+    "NI-DMM",
+    "NI-FAKE",
+    "NI-FGEN",
+    "NI-SCOPE",
+    "NI-SWITCH",
+    "NI-TClk",
+)
+
+
 class RULES:
     """Rules that can be suppressed."""
 
@@ -86,6 +98,11 @@ PARAM_SCHEMA = Schema(
         Optional("additional_arguments_to_output_allocation"): [str],
         Optional("proto_only"): bool,
         Optional("input_passed_by_ptr"): bool,
+        Optional("cppName"): str,
+        Optional("determine_size_from"): [str],
+        Optional("is_size_param"): bool,
+        Optional("linked_params_are_optional"): bool,
+        Optional("mapped-enum"): str,
     }
 )
 
@@ -141,6 +158,7 @@ ATTRIBUTE_SCHEMA = Schema(
         Optional("python_type"): str,
         Optional("python_name"): str,
         Optional("codegen_method"): str,
+        Optional("grpc_type"): str,
     }
 )
 
@@ -165,6 +183,7 @@ ENUM_SCHEMA = Schema(
         Optional("enum-value-prefix"): str,
         Optional("generate-mapping-type"): bool,
         Optional("force-include"): bool,
+        Optional("codegen_method"): str,
     }
 )
 
@@ -317,6 +336,8 @@ def _validate_enum(enum_name: str, used_enums: Set[str], metadata: dict):
                     raise Exception(
                         f"generate-mappings is False, but values have non-int types: {value_types}"
                     )
+            if metadata["config"]["driver_name"] in _ALREADY_MUTATED:
+                return
             values = [value["value"] for value in enum["values"]]
             values_set = set(values)
             if len(values) != len(values_set):

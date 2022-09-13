@@ -8,6 +8,17 @@ import metadata_validation
 from mako.lookup import TemplateLookup  # type: ignore
 from template_helpers import instantiate_mako_template, load_metadata, write_if_changed
 
+_ALREADY_MUTATED = (
+    "NI-DCPower",
+    "NI-Digital Pattern Driver",
+    "NI-DMM",
+    "NI-FAKE",
+    "NI-FGEN",
+    "NI-SCOPE",
+    "NI-SWITCH",
+    "NI-TClk",
+)
+
 
 def _generate_service_file(metadata, template_file_name, generated_file_suffix, gen_dir):
     module_name = metadata["config"]["module_name"]
@@ -22,6 +33,8 @@ def _generate_service_file(metadata, template_file_name, generated_file_suffix, 
 
 def _mutate_metadata(metadata: dict):
     config = metadata["config"]
+    if config["driver_name"] in _ALREADY_MUTATED:
+        return
 
     metadata_mutation.move_zero_enums_to_front(metadata["enums"])
 

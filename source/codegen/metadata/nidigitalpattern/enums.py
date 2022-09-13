@@ -113,6 +113,116 @@ enums = {
             }
         ]
     },
+    'NiDigitalInt32AttributeValues': {
+        'enum-value-prefix': 'NIDIGITAL_INT32',
+        'generate-mappings': False,
+        'values': [
+            {
+                'name': 'DIGITAL_EDGE_VAL_RISING_EDGE',
+                'value': 1800
+            },
+            {
+                'name': 'DIGITAL_EDGE_VAL_FALLING_EDGE',
+                'value': 1801
+            },
+            {
+                'name': 'FREQUENCY_MEASUREMENT_MODE_VAL_BANKED',
+                'value': 3700
+            },
+            {
+                'name': 'FREQUENCY_MEASUREMENT_MODE_VAL_PARALLEL',
+                'value': 3701
+            },
+            {
+                'name': 'HISTORY_RAM_CYCLES_TO_ACQUIRE_VAL_FAILED_CYCLES',
+                'value': 2303
+            },
+            {
+                'name': 'HISTORY_RAM_CYCLES_TO_ACQUIRE_VAL_ALL_CYCLES',
+                'value': 2304
+            },
+            {
+                'name': 'HISTORY_RAM_MAX_SAMPLES_TO_ACQUIRE_PER_SITE_VAL_ACQUIRE_ALL_SAMPLES',
+                'value': -1
+            },
+            {
+                'name': 'HISTORY_RAM_TRIGGER_TYPE_VAL_FIRST_FAILURE',
+                'value': 2200
+            },
+            {
+                'name': 'HISTORY_RAM_TRIGGER_TYPE_VAL_CYCLE_NUMBER',
+                'value': 2201
+            },
+            {
+                'name': 'HISTORY_RAM_TRIGGER_TYPE_VAL_PATTERN_LABEL',
+                'value': 2202
+            },
+            {
+                'name': 'PPMU_APERTURE_TIME_UNITS_VAL_SECONDS',
+                'value': 2100
+            },
+            {
+                'name': 'PPMU_CURRENT_LIMIT_BEHAVIOR_VAL_CURRENT_REGULATE',
+                'value': 3100
+            },
+            {
+                'name': 'PPMU_OUTPUT_FUNCTION_VAL_DC_VOLTAGE',
+                'value': 1300
+            },
+            {
+                'name': 'PPMU_OUTPUT_FUNCTION_VAL_DC_CURRENT',
+                'value': 1301
+            },
+            {
+                'name': 'SELECTED_FUNCTION_VAL_DIGITAL',
+                'value': 1100
+            },
+            {
+                'name': 'SELECTED_FUNCTION_VAL_PPMU',
+                'value': 1101
+            },
+            {
+                'name': 'SELECTED_FUNCTION_VAL_OFF',
+                'value': 1102
+            },
+            {
+                'name': 'SELECTED_FUNCTION_VAL_DISCONNECT',
+                'value': 1103
+            },
+            {
+                'name': 'TDR_ENDPOINT_TERMINATION_VAL_TDR_TO_OPEN',
+                'value': 3600
+            },
+            {
+                'name': 'TDR_ENDPOINT_TERMINATION_VAL_TDR_TO_SHORT_TO_GROUND',
+                'value': 3601
+            },
+            {
+                'name': 'TERMINATION_MODE_VAL_ACTIVE_LOAD',
+                'value': 1200
+            },
+            {
+                'name': 'TERMINATION_MODE_VAL_VTERM',
+                'value': 1201
+            },
+            {
+                'name': 'TERMINATION_MODE_VAL_HIGH_Z',
+                'value': 1202
+            },
+            {
+                'name': 'TRIGGER_TYPE_VAL_NONE',
+                'value': 1700
+            },
+            {
+                'name': 'TRIGGER_TYPE_VAL_DIGITAL_EDGE',
+                'value': 1701
+            },
+            {
+                'name': 'TRIGGER_TYPE_VAL_SOFTWARE',
+                'value': 1702
+            }
+        ]
+    },
     'PinState': {
         'values': [
             {
