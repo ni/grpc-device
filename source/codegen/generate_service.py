@@ -8,17 +8,6 @@ import metadata_validation
 from mako.lookup import TemplateLookup  # type: ignore
 from template_helpers import instantiate_mako_template, load_metadata, write_if_changed
 
-_ALREADY_MUTATED = (
-    "NI-DCPower",
-    "NI-Digital Pattern Driver",
-    "NI-DMM",
-    "NI-FAKE",
-    "NI-FGEN",
-    "NI-SCOPE",
-    "NI-SWITCH",
-    "NI-TClk",
-)
-
 
 def _generate_service_file(metadata, template_file_name, generated_file_suffix, gen_dir):
     module_name = metadata["config"]["module_name"]
@@ -31,29 +20,6 @@ def _generate_service_file(metadata, template_file_name, generated_file_suffix, 
     write_if_changed(output_file_path, template.render(data=metadata))
 
 
-def _mutate_metadata(metadata: dict):
-    config = metadata["config"]
-    if config["driver_name"] in _ALREADY_MUTATED:
-        return
-
-    metadata_mutation.move_zero_enums_to_front(metadata["enums"])
-
-    attribute_expander = metadata_mutation.AttributeAccessorExpander(metadata)
-    for function_name in metadata["functions"]:
-        function = metadata["functions"][function_name]
-        parameters = function["parameters"]
-        metadata_mutation.add_get_last_error_params_if_needed(function, config)
-        metadata_mutation.sanitize_names(parameters)
-        metadata_mutation.set_var_args_types(parameters, config)
-        metadata_mutation.mark_size_params(parameters)
-        metadata_mutation.mark_non_proto_params(parameters)
-        metadata_mutation.mark_mapped_enum_params(parameters, metadata["enums"])
-        metadata_mutation.populate_grpc_types(parameters, config)
-        metadata_mutation.mark_coerced_narrow_numeric_parameters(parameters)
-        attribute_expander.expand_attribute_value_params(function)
-        attribute_expander.patch_attribute_enum_type(function_name, function)
-
-
 def _generate_all(metadata_dir: str, gen_dir: str, validate_only: bool):
     metadata = load_metadata(metadata_dir)
     metadata_validation.validate_metadata(metadata)
@@ -62,7 +28,7 @@ def _generate_all(metadata_dir: str, gen_dir: str, validate_only: bool):
 
     lookup = TemplateLookup(directories=metadata_dir)
     metadata["lookup"] = lookup
-    _mutate_metadata(metadata)
+    metadata_mutation.mutate(metadata)
     _generate_service_file(metadata, "proto.mako", ".proto", gen_dir)
     _generate_service_file(metadata, "service.h.mako", "_service.h", gen_dir)
     _generate_service_file(metadata, "service.cpp.mako", "_service.cpp", gen_dir)

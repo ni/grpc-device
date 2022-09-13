@@ -1,10 +1,10 @@
 """Script for formatting mi-driver metadata in same style as hapigen output."""
 import argparse
 import codecs
-import metadata_mutation
 import os
 from enum import Enum
 
+import metadata_mutation
 from template_helpers import load_metadata
 
 
@@ -76,27 +76,6 @@ class _Formatter(object):
         return "(%s)" % (",".join(items) + self.lfchar + self.htchar * indent)
 
 
-def _mutate_metadata(metadata: dict):
-    config = metadata["config"]
-
-    metadata_mutation.move_zero_enums_to_front(metadata["enums"])
-
-    attribute_expander = metadata_mutation.AttributeAccessorExpander(metadata)
-    for function_name in metadata["functions"]:
-        function = metadata["functions"][function_name]
-        parameters = function["parameters"]
-        metadata_mutation.add_get_last_error_params_if_needed(function, config)
-        metadata_mutation.sanitize_names(parameters)
-        metadata_mutation.set_var_args_types(parameters, config)
-        metadata_mutation.mark_size_params(parameters)
-        metadata_mutation.mark_non_proto_params(parameters)
-        metadata_mutation.mark_mapped_enum_params(parameters, metadata["enums"])
-        metadata_mutation.populate_grpc_types(parameters, config)
-        metadata_mutation.mark_coerced_narrow_numeric_parameters(parameters)
-        attribute_expander.expand_attribute_value_params(function)
-        attribute_expander.patch_attribute_enum_type(function_name, function)
-
-
 def _format_mi_metadata(metadata_dir: str):
     mi_drivers_to_update = [
         "nidcpower",
@@ -114,7 +93,7 @@ def _format_mi_metadata(metadata_dir: str):
         metadata_names = ["attributes", "config", "enums", "functions"]
         path = f"{metadata_dir}/{mi_driver}/"
         metadata = load_metadata(path)
-        _mutate_metadata(metadata)
+        metadata_mutation.mutate(metadata)
         api_name = metadata["config"]["driver_name"]
         api_version = metadata["config"]["api_version"]
         for metadata_name in metadata_names:

@@ -91,6 +91,41 @@ RESERVED_WORDS = [
 # uint8 is not included because it can be represented as a byte.
 KNOWN_COERCED_NARROW_NUMERIC_TYPES = ["int16", "uInt16", "int8"]
 
+_ALREADY_MUTATED = (
+    "NI-DCPower",
+    "NI-Digital Pattern Driver",
+    "NI-DMM",
+    "NI-FAKE",
+    "NI-FGEN",
+    "NI-SCOPE",
+    "NI-SWITCH",
+    "NI-TClk",
+)
+
+
+def mutate(metadata: dict):
+    """Mutate the given metadata."""
+    config = metadata["config"]
+    if config["driver_name"] in _ALREADY_MUTATED:
+        return
+
+    move_zero_enums_to_front(metadata["enums"])
+
+    attribute_expander = AttributeAccessorExpander(metadata)
+    for function_name in metadata["functions"]:
+        function = metadata["functions"][function_name]
+        parameters = function["parameters"]
+        add_get_last_error_params_if_needed(function, config)
+        sanitize_names(parameters)
+        set_var_args_types(parameters, config)
+        mark_size_params(parameters)
+        mark_non_proto_params(parameters)
+        mark_mapped_enum_params(parameters, metadata["enums"])
+        populate_grpc_types(parameters, config)
+        mark_coerced_narrow_numeric_parameters(parameters)
+        attribute_expander.expand_attribute_value_params(function)
+        attribute_expander.patch_attribute_enum_type(function_name, function)
+
 
 def sanitize_names(parameters):
     """Sanitize name fields on a list of parameter objects.
