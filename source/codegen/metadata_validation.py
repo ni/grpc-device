@@ -6,6 +6,8 @@ import service_helpers
 from schema import And, Optional, Or, Schema, Use  # type: ignore
 
 
+# grpc device metadata mutations have been applied to MI drivers in
+# source to minimize transformations that happen outside of hapigen
 _ALREADY_MUTATED = (
     "NI-DCPower",
     "NI-Digital Pattern Driver",
@@ -336,6 +338,8 @@ def _validate_enum(enum_name: str, used_enums: Set[str], metadata: dict):
                     raise Exception(
                         f"generate-mappings is False, but values have non-int types: {value_types}"
                     )
+            # This is to avoid the duplicate enum value rule running on Attribute enums
+            # that will be present in the pre-mutated drivers.
             if metadata["config"]["driver_name"] in _ALREADY_MUTATED:
                 return
             values = [value["value"] for value in enum["values"]]
