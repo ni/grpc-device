@@ -83,6 +83,54 @@ enums = {
             }
         ]
     },
+    'NiFakeInt32AttributeValues': {
+        'enum-value-prefix': 'NIFAKE_INT32',
+        'generate-mappings': False,
+        'values': [
+            {
+                'name': 'COLOR_RED',
+                'value': 1
+            },
+            {
+                'name': 'COLOR_BLUE',
+                'value': 2
+            },
+            {
+                'name': 'COLOR_YELLOW',
+                'value': 5
+            },
+            {
+                'name': 'COLOR_BLACK',
+                'value': 42
+            }
+        ]
+    },
+    'NiFakeReal64AttributeValuesMapped': {
+        'enum-value-prefix': 'NIFAKE_REAL64',
+        'generate-mappings': True,
+        'values': [
+            {
+                'name': 'FLOAT_ENUM_THREE_POINT_FIVE',
+                'value': 3.5
+            },
+            {
+                'name': 'FLOAT_ENUM_FOUR_POINT_FIVE',
+                'value': 4.5
+            },
+            {
+                'name': 'FLOAT_ENUM_FIVE_POINT_FIVE',
+                'value': 5.5
+            },
+            {
+                'name': 'FLOAT_ENUM_SIX_POINT_FIVE',
+                'value': 6.5
+            },
+            {
+                'name': 'FLOAT_ENUM_SEVEN_POINT_FIVE',
+                'value': 7.5
+            }
+        ]
+    },
     'Turtle': {
         'values': [
             {

@@ -373,6 +373,718 @@ enums = {
             }
         ]
     },
+    'NiFgenInt32AttributeValues': {
+        'enum-value-prefix': 'NIFGEN_INT32',
+        'generate-mappings': False,
+        'values': [
+            {
+                'name': 'ADDRESS_TYPE_VAL_ADDR_PHYSICAL',
+                'value': 0
+            },
+            {
+                'name': 'ADDRESS_TYPE_VAL_ADDR_VIRTUAL',
+                'value': 1
+            },
+            {
+                'name': 'ANALOG_PATH_VAL_MAIN_ANALOG_PATH',
+                'value': 0
+            },
+            {
+                'name': 'ANALOG_PATH_VAL_DIRECT_ANALOG_PATH',
+                'value': 1
+            },
+            {
+                'name': 'ANALOG_PATH_VAL_FIXED_LOW_GAIN_ANALOG_PATH',
+                'value': 2
+            },
+            {
+                'name': 'ANALOG_PATH_VAL_FIXED_HIGH_GAIN_ANALOG_PATH',
+                'value': 3
+            },
+            {
+                'name': 'ARBITRARY_SEQUENCE_HANDLE_VAL_FIRST_SEQUENCE_HANDLE',
+                'value': 100000
+            },
+            {
+                'name': 'ARBITRARY_SEQUENCE_HANDLE_VAL_LAST_SEQUENCE_HANDLE',
+                'value': 109999
+            },
+            {
+                'name': 'ARBITRARY_SEQUENCE_HANDLE_VAL_NO_SEQUENCE',
+                'value': -1
+            },
+            {
+                'name': 'ARBITRARY_WAVEFORM_HANDLE_VAL_FIRST_WAVEFORM_HANDLE',
+                'value': 10000
+            },
+            {
+                'name': 'ARBITRARY_WAVEFORM_HANDLE_VAL_LAST_WAVEFORM_HANDLE',
+                'value': 10999
+            },
+            {
+                'name': 'ARBITRARY_WAVEFORM_HANDLE_VAL_NO_WAVEFORM',
+                'value': -1
+            },
+            {
+                'name': 'BURST_COUNT_VAL_GENERATE_CONTINUOUS',
+                'value': -1
+            },
+            {
+                'name': 'BUS_TYPE_VAL_BUS_INVALID',
+                'value': 0
+            },
+            {
+                'name': 'BUS_TYPE_VAL_BUS_AT',
+                'value': 1
+            },
+            {
+                'name': 'BUS_TYPE_VAL_BUS_PCI',
+                'value': 2
+            },
+            {
+                'name': 'BUS_TYPE_VAL_BUS_PXI',
+                'value': 3
+            },
+            {
+                'name': 'BUS_TYPE_VAL_BUS_VXI',
+                'value': 4
+            },
+            {
+                'name': 'BUS_TYPE_VAL_BUS_PCMCIA',
+                'value': 5
+            },
+            {
+                'name': 'BUS_TYPE_VAL_BUS_PXIE',
+                'value': 6
+            },
+            {
+                'name': 'CLOCK_MODE_VAL_HIGH_RESOLUTION',
+                'value': 0
+            },
+            {
+                'name': 'CLOCK_MODE_VAL_DIVIDE_DOWN',
+                'value': 1
+            },
+            {
+                'name': 'CLOCK_MODE_VAL_AUTOMATIC',
+                'value': 2
+            },
+            {
+                'name': 'DATA_MARKER_EVENT_LEVEL_POLARITY_VAL_ACTIVE_HIGH',
+                'value': 101
+            },
+            {
+                'name': 'DATA_MARKER_EVENT_LEVEL_POLARITY_VAL_ACTIVE_LOW',
+                'value': 102
+            },
+            {
+                'name': 'DATA_PROCESSING_MODE_VAL_OSP_REAL',
+                'value': 0
+            },
+            {
+                'name': 'DATA_PROCESSING_MODE_VAL_OSP_COMPLEX',
+                'value': 1
+            },
+            {
+                'name': 'DONE_EVENT_ACTIVE_LEVEL_VAL_ACTIVE_HIGH',
+                'value': 101
+            },
+            {
+                'name': 'DONE_EVENT_ACTIVE_LEVEL_VAL_ACTIVE_LOW',
+                'value': 102
+            },
+            {
+                'name': 'DONE_EVENT_DELAY_UNITS_VAL_SAMPLE_CLOCK_PERIODS',
+                'value': 101
+            },
+            {
+                'name': 'DONE_EVENT_DELAY_UNITS_VAL_SECONDS',
+                'value': 102
+            },
+            {
+                'name': 'DONE_EVENT_OUTPUT_BEHAVIOR_VAL_PULSE',
+                'value': 101
+            },
+            {
+                'name': 'DONE_EVENT_OUTPUT_BEHAVIOR_VAL_LEVEL',
+                'value': 102
+            },
+            {
+                'name': 'DONE_EVENT_PULSE_POLARITY_VAL_ACTIVE_HIGH',
+                'value': 101
+            },
+            {
+                'name': 'DONE_EVENT_PULSE_POLARITY_VAL_ACTIVE_LOW',
+                'value': 102
+            },
+            {
+                'name': 'DONE_EVENT_PULSE_WIDTH_UNITS_VAL_SAMPLE_CLOCK_PERIODS',
+                'value': 101
+            },
+            {
+                'name': 'DONE_EVENT_PULSE_WIDTH_UNITS_VAL_SECONDS',
+                'value': 102
+            },
+            {
+                'name': 'FILTER_TYPE_VAL_OSP_FLAT',
+                'value': 0
+            },
+            {
+                'name': 'FILTER_TYPE_VAL_OSP_RAISED_COSINE',
+                'value': 1
+            },
+            {
+                'name': 'FILTER_TYPE_VAL_OSP_ROOT_RAISED_COSINE',
+                'value': 2
+            },
+            {
+                'name': 'FILTER_TYPE_VAL_OSP_GAUSSIAN',
+                'value': 3
+            },
+            {
+                'name': 'FILTER_TYPE_VAL_OSP_CUSTOM',
+                'value': 4
+            },
+            {
+                'name': 'FREQUENCY_LIST_HANDLE_VAL_FIRST_FREQ_LIST_HANDLE',
+                'value': 200000
+            },
+            {
+                'name': 'FREQUENCY_LIST_HANDLE_VAL_LAST_FREQ_LIST_HANDLE',
+                'value': 209999
+            },
+            {
+                'name': 'FREQUENCY_LIST_HANDLE_VAL_NO_FREQ_LIST',
+                'value': -1
+            },
+            {
+                'name': 'IDLE_BEHAVIOR_VAL_HOLD_LAST_VALUE',
+                'value': 400
+            },
+            {
+                'name': 'IDLE_BEHAVIOR_VAL_JUMP_TO_VALUE',
+                'value': 401
+            },
+            {
+                'name': 'MARKER_EVENT_DELAY_UNITS_VAL_SAMPLE_CLOCK_PERIODS',
+                'value': 101
+            },
+            {
+                'name': 'MARKER_EVENT_DELAY_UNITS_VAL_SECONDS',
+                'value': 102
+            },
+            {
+                'name': 'MARKER_EVENT_OUTPUT_BEHAVIOR_VAL_PULSE',
+                'value': 101
+            },
+            {
+                'name': 'MARKER_EVENT_OUTPUT_BEHAVIOR_VAL_LEVEL',
+                'value': 102
+            },
+            {
+                'name': 'MARKER_EVENT_OUTPUT_BEHAVIOR_VAL_TOGGLE',
+                'value': 103
+            },
+            {
+                'name': 'MARKER_EVENT_PULSE_POLARITY_VAL_ACTIVE_HIGH',
+                'value': 101
+            },
+            {
+                'name': 'MARKER_EVENT_PULSE_POLARITY_VAL_ACTIVE_LOW',
+                'value': 102
+            },
+            {
+                'name': 'MARKER_EVENT_PULSE_WIDTH_UNITS_VAL_SAMPLE_CLOCK_PERIODS',
+                'value': 101
+            },
+            {
+                'name': 'MARKER_EVENT_PULSE_WIDTH_UNITS_VAL_SECONDS',
+                'value': 102
+            },
+            {
+                'name': 'MARKER_EVENT_TOGGLE_INITIAL_STATE_VAL_HIGH',
+                'value': 101
+            },
+            {
+                'name': 'MARKER_EVENT_TOGGLE_INITIAL_STATE_VAL_LOW',
+                'value': 102
+            },
+            {
+                'name': 'OSP_MODE_VAL_OSP_IF',
+                'value': 0
+            },
+            {
+                'name': 'OSP_MODE_VAL_OSP_BASEBAND',
+                'value': 1
+            },
+            {
+                'name': 'OSP_OVERFLOW_ERROR_REPORTING_VAL_ERROR_REPORTING_ERROR',
+                'value': 0
+            },
+            {
+                'name': 'OSP_OVERFLOW_ERROR_REPORTING_VAL_ERROR_REPORTING_DISABLED',
+                'value': 2
+            },
+            {
+                'name': 'OSP_OVERFLOW_STATUS_VAL_OSP_OVERFLOW_NONE',
+                'value': 0
+            },
+            {
+                'name': 'OSP_OVERFLOW_STATUS_VAL_OSP_OVERFLOW_PRE_FILTER_GAIN_I',
+                'value': 1
+            },
+            {
+                'name': 'OSP_OVERFLOW_STATUS_VAL_OSP_OVERFLOW_PRE_FILTER_GAIN_Q',
+                'value': 2
+            },
+            {
+                'name': 'OSP_OVERFLOW_STATUS_VAL_OSP_OVERFLOW_PRE_FILTER_OFFSET_I',
+                'value': 4
+            },
+            {
+                'name': 'OSP_OVERFLOW_STATUS_VAL_OSP_OVERFLOW_PRE_FILTER_OFFSET_Q',
+                'value': 8
+            },
+            {
+                'name': 'OSP_OVERFLOW_STATUS_VAL_OSP_OVERFLOW_FIR_FILTER_I',
+                'value': 16
+            },
+            {
+                'name': 'OSP_OVERFLOW_STATUS_VAL_OSP_OVERFLOW_PFIR_FILTER_I',
+                'value': 16
+            },
+            {
+                'name': 'OSP_OVERFLOW_STATUS_VAL_OSP_OVERFLOW_FIR_FILTER_Q',
+                'value': 32
+            },
+            {
+                'name': 'OSP_OVERFLOW_STATUS_VAL_OSP_OVERFLOW_PFIR_FILTER_Q',
+                'value': 32
+            },
+            {
+                'name': 'OSP_OVERFLOW_STATUS_VAL_OSP_OVERFLOW_CIC_FILTER_I',
+                'value': 64
+            },
+            {
+                'name': 'OSP_OVERFLOW_STATUS_VAL_OSP_OVERFLOW_CIC_FILTER_Q',
+                'value': 128
+            },
+            {
+                'name': 'OSP_OVERFLOW_STATUS_VAL_OSP_OVERFLOW_COMPLEX_DATA',
+                'value': 256
+            },
+            {
+                'name': 'OSP_OVERFLOW_STATUS_VAL_OSP_OVERFLOW_CFIR_FILTER_I',
+                'value': 512
+            },
+            {
+                'name': 'OSP_OVERFLOW_STATUS_VAL_OSP_OVERFLOW_CFIR_FILTER_Q',
+                'value': 1024
+            },
+            {
+                'name': 'OSP_OVERFLOW_STATUS_VAL_OSP_OVERFLOW_EQUALIZER',
+                'value': 2048
+            },
+            {
+                'name': 'OUTPUT_MODE_VAL_OUTPUT_FUNC',
+                'value': 0
+            },
+            {
+                'name': 'OUTPUT_MODE_VAL_OUTPUT_ARB',
+                'value': 1
+            },
+            {
+                'name': 'OUTPUT_MODE_VAL_OUTPUT_SEQ',
+                'value': 2
+            },
+            {
+                'name': 'OUTPUT_MODE_VAL_OUTPUT_FREQ_LIST',
+                'value': 101
+            },
+            {
+                'name': 'OUTPUT_MODE_VAL_OUTPUT_SCRIPT',
+                'value': 102
+            },
+            {
+                'name': 'READY_FOR_START_EVENT_ACTIVE_LEVEL_VAL_ACTIVE_HIGH',
+                'value': 101
+            },
+            {
+                'name': 'READY_FOR_START_EVENT_ACTIVE_LEVEL_VAL_ACTIVE_LOW',
+                'value': 102
+            },
+            {
+                'name': 'SCRIPT_TRIGGER_DIGITAL_EDGE_EDGE_VAL_RISING_EDGE',
+                'value': 101
+            },
+            {
+                'name': 'SCRIPT_TRIGGER_DIGITAL_EDGE_EDGE_VAL_FALLING_EDGE',
+                'value': 102
+            },
+            {
+                'name': 'SCRIPT_TRIGGER_DIGITAL_LEVEL_ACTIVE_LEVEL_VAL_ACTIVE_HIGH',
+                'value': 101
+            },
+            {
+                'name': 'SCRIPT_TRIGGER_DIGITAL_LEVEL_ACTIVE_LEVEL_VAL_ACTIVE_LOW',
+                'value': 102
+            },
+            {
+                'name': 'SCRIPT_TRIGGER_TYPE_VAL_TRIG_NONE',
+                'value': 101
+            },
+            {
+                'name': 'SCRIPT_TRIGGER_TYPE_VAL_DIGITAL_EDGE',
+                'value': 102
+            },
+            {
+                'name': 'SCRIPT_TRIGGER_TYPE_VAL_DIGITAL_LEVEL',
+                'value': 103
+            },
+            {
+                'name': 'SCRIPT_TRIGGER_TYPE_VAL_SOFTWARE_EDGE',
+                'value': 104
+            },
+            {
+                'name': 'START_TRIGGER_DIGITAL_EDGE_EDGE_VAL_RISING_EDGE',
+                'value': 101
+            },
+            {
+                'name': 'START_TRIGGER_DIGITAL_EDGE_EDGE_VAL_FALLING_EDGE',
+                'value': 102
+            },
+            {
+                'name': 'START_TRIGGER_TYPE_VAL_TRIG_NONE',
+                'value': 101
+            },
+            {
+                'name': 'START_TRIGGER_TYPE_VAL_DIGITAL_EDGE',
+                'value': 102
+            },
+            {
+                'name': 'START_TRIGGER_TYPE_VAL_SOFTWARE_EDGE',
+                'value': 104
+            },
+            {
+                'name': 'START_TRIGGER_TYPE_VAL_P2P_ENDPOINT_FULLNESS',
+                'value': 106
+            },
+            {
+                'name': 'STARTED_EVENT_ACTIVE_LEVEL_VAL_ACTIVE_HIGH',
+                'value': 101
+            },
+            {
+                'name': 'STARTED_EVENT_ACTIVE_LEVEL_VAL_ACTIVE_LOW',
+                'value': 102
+            },
+            {
+                'name': 'STARTED_EVENT_DELAY_UNITS_VAL_SAMPLE_CLOCK_PERIODS',
+                'value': 101
+            },
+            {
+                'name': 'STARTED_EVENT_DELAY_UNITS_VAL_SECONDS',
+                'value': 102
+            },
+            {
+                'name': 'STARTED_EVENT_OUTPUT_BEHAVIOR_VAL_PULSE',
+                'value': 101
+            },
+            {
+                'name': 'STARTED_EVENT_OUTPUT_BEHAVIOR_VAL_LEVEL',
+                'value': 102
+            },
+            {
+                'name': 'STARTED_EVENT_PULSE_POLARITY_VAL_ACTIVE_HIGH',
+                'value': 101
+            },
+            {
+                'name': 'STARTED_EVENT_PULSE_POLARITY_VAL_ACTIVE_LOW',
+                'value': 102
+            },
+            {
+                'name': 'STARTED_EVENT_PULSE_WIDTH_UNITS_VAL_SAMPLE_CLOCK_PERIODS',
+                'value': 101
+            },
+            {
+                'name': 'STARTED_EVENT_PULSE_WIDTH_UNITS_VAL_SECONDS',
+                'value': 102
+            },
+            {
+                'name': 'SYNCHRONIZATION_SOURCE_VAL_TTL0',
+                'value': 111
+            },
+            {
+                'name': 'SYNCHRONIZATION_SOURCE_VAL_TTL1',
+                'value': 112
+            },
+            {
+                'name': 'SYNCHRONIZATION_SOURCE_VAL_TTL2',
+                'value': 113
+            },
+            {
+                'name': 'SYNCHRONIZATION_SOURCE_VAL_TTL3',
+                'value': 114
+            },
+            {
+                'name': 'SYNCHRONIZATION_SOURCE_VAL_TTL4',
+                'value': 115
+            },
+            {
+                'name': 'SYNCHRONIZATION_SOURCE_VAL_TTL5',
+                'value': 116
+            },
+            {
+                'name': 'SYNCHRONIZATION_SOURCE_VAL_TTL6',
+                'value': 117
+            },
+            {
+                'name': 'SYNCHRONIZATION_SOURCE_VAL_RTSI_0',
+                'value': 141
+            },
+            {
+                'name': 'SYNCHRONIZATION_SOURCE_VAL_RTSI_1',
+                'value': 142
+            },
+            {
+                'name': 'SYNCHRONIZATION_SOURCE_VAL_RTSI_2',
+                'value': 143
+            },
+            {
+                'name': 'SYNCHRONIZATION_SOURCE_VAL_RTSI_3',
+                'value': 144
+            },
+            {
+                'name': 'SYNCHRONIZATION_SOURCE_VAL_RTSI_4',
+                'value': 145
+            },
+            {
+                'name': 'SYNCHRONIZATION_SOURCE_VAL_RTSI_5',
+                'value': 146
+            },
+            {
+                'name': 'SYNCHRONIZATION_SOURCE_VAL_RTSI_6',
+                'value': 147
+            },
+            {
+                'name': 'SYNCHRONIZATION_SOURCE_VAL_NONE',
+                'value': 1000
+            },
+            {
+                'name': 'TERMINAL_CONFIGURATION_VAL_SINGLE_ENDED',
+                'value': 300
+            },
+            {
+                'name': 'TERMINAL_CONFIGURATION_VAL_DIFFERENTIAL',
+                'value': 301
+            },
+            {
+                'name': 'TRIGGER_MODE_VAL_SINGLE',
+                'value': 1
+            },
+            {
+                'name': 'TRIGGER_MODE_VAL_CONTINUOUS',
+                'value': 2
+            },
+            {
+                'name': 'TRIGGER_MODE_VAL_STEPPED',
+                'value': 3
+            },
+            {
+                'name': 'TRIGGER_MODE_VAL_BURST',
+                'value': 4
+            },
+            {
+                'name': 'TRIGGER_SOURCE_VAL_IMMEDIATE',
+                'value': 0
+            },
+            {
+                'name': 'TRIGGER_SOURCE_VAL_EXTERNAL',
+                'value': 1
+            },
+            {
+                'name': 'TRIGGER_SOURCE_VAL_SOFTWARE_TRIG',
+                'value': 2
+            },
+            {
+                'name': 'TRIGGER_SOURCE_VAL_TTL0',
+                'value': 111
+            },
+            {
+                'name': 'TRIGGER_SOURCE_VAL_TTL1',
+                'value': 112
+            },
+            {
+                'name': 'TRIGGER_SOURCE_VAL_TTL2',
+                'value': 113
+            },
+            {
+                'name': 'TRIGGER_SOURCE_VAL_TTL3',
+                'value': 114
+            },
+            {
+                'name': 'TRIGGER_SOURCE_VAL_TTL4',
+                'value': 115
+            },
+            {
+                'name': 'TRIGGER_SOURCE_VAL_TTL5',
+                'value': 116
+            },
+            {
+                'name': 'TRIGGER_SOURCE_VAL_TTL6',
+                'value': 117
+            },
+            {
+                'name': 'TRIGGER_SOURCE_VAL_PXI_STAR',
+                'value': 131
+            },
+            {
+                'name': 'TRIGGER_SOURCE_VAL_RTSI_0',
+                'value': 141
+            },
+            {
+                'name': 'TRIGGER_SOURCE_VAL_RTSI_1',
+                'value': 142
+            },
+            {
+                'name': 'TRIGGER_SOURCE_VAL_RTSI_2',
+                'value': 143
+            },
+            {
+                'name': 'TRIGGER_SOURCE_VAL_RTSI_3',
+                'value': 144
+            },
+            {
+                'name': 'TRIGGER_SOURCE_VAL_RTSI_4',
+                'value': 145
+            },
+            {
+                'name': 'TRIGGER_SOURCE_VAL_RTSI_5',
+                'value': 146
+            },
+            {
+                'name': 'TRIGGER_SOURCE_VAL_RTSI_6',
+                'value': 147
+            },
+            {
+                'name': 'TRIGGER_SOURCE_VAL_RTSI_7',
+                'value': 1010
+            },
+            {
+                'name': 'TRIGGER_SOURCE_VAL_PFI_0',
+                'value': 1011
+            },
+            {
+                'name': 'TRIGGER_SOURCE_VAL_PFI_1',
+                'value': 1012
+            },
+            {
+                'name': 'TRIGGER_SOURCE_VAL_PFI_2',
+                'value': 1013
+            },
+            {
+                'name': 'TRIGGER_SOURCE_VAL_PFI_3',
+                'value': 1014
+            },
+            {
+                'name': 'TRIGGER_SOURCE_VAL_OTHER_TERMINAL',
+                'value': 1018
+            },
+            {
+                'name': 'VIDEO_WAVEFORM_TYPE_VAL_PAL_B',
+                'value': 0
+            },
+            {
+                'name': 'VIDEO_WAVEFORM_TYPE_VAL_PAL_D',
+                'value': 1
+            },
+            {
+                'name': 'VIDEO_WAVEFORM_TYPE_VAL_PAL_G',
+                'value': 2
+            },
+            {
+                'name': 'VIDEO_WAVEFORM_TYPE_VAL_PAL_H',
+                'value': 3
+            },
+            {
+                'name': 'VIDEO_WAVEFORM_TYPE_VAL_PAL_I',
+                'value': 4
+            },
+            {
+                'name': 'VIDEO_WAVEFORM_TYPE_VAL_PAL_M',
+                'value': 5
+            },
+            {
+                'name': 'VIDEO_WAVEFORM_TYPE_VAL_PAL_N',
+                'value': 6
+            },
+            {
+                'name': 'VIDEO_WAVEFORM_TYPE_VAL_NTSC_M',
+                'value': 7
+            },
+            {
+                'name': 'WAIT_BEHAVIOR_VAL_HOLD_LAST_VALUE',
+                'value': 400
+            },
+            {
+                'name': 'WAIT_BEHAVIOR_VAL_JUMP_TO_VALUE',
+                'value': 401
+            },
+            {
+                'name': 'WAVEFORM_VAL_WFM_SINE',
+                'value': 1
+            },
+            {
+                'name': 'WAVEFORM_VAL_WFM_SQUARE',
+                'value': 2
+            },
+            {
+                'name': 'WAVEFORM_VAL_WFM_TRIANGLE',
+                'value': 3
+            },
+            {
+                'name': 'WAVEFORM_VAL_WFM_RAMP_UP',
+                'value': 4
+            },
+            {
+                'name': 'WAVEFORM_VAL_WFM_RAMP_DOWN',
+                'value': 5
+            },
+            {
+                'name': 'WAVEFORM_VAL_WFM_DC',
+                'value': 6
+            },
+            {
+                'name': 'WAVEFORM_VAL_WFM_NOISE',
+                'value': 101
+            },
+            {
+                'name': 'WAVEFORM_VAL_WFM_USER',
+                'value': 102
+            }
+        ]
+    },
+    'NiFgenReal64AttributeValues': {
+        'enum-value-prefix': 'NIFGEN_REAL64',
+        'generate-mappings': False,
+        'values': [
+            {
+                'name': 'LOAD_IMPEDANCE_VAL_MATCHED_LOAD_IMPEDANCE',
+                'value': -1
+            },
+            {
+                'name': 'OUTPUT_IMPEDANCE_VAL_50_OHMS',
+                'value': 50
+            },
+            {
+                'name': 'OUTPUT_IMPEDANCE_VAL_75_OHMS',
+                'value': 75
+            },
+            {
+                'name': 'SAMPLE_RATE_VAL_EXTERNAL_SAMPLE_RATE',
+                'value': -1
+            }
+        ]
+    },
     'OspMode': {
         'values': [
             {

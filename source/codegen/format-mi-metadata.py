@@ -4,6 +4,7 @@ import codecs
 import os
 from enum import Enum
 
+import metadata_mutation
 from template_helpers import load_metadata
 
 
@@ -92,6 +93,7 @@ def _format_mi_metadata(metadata_dir: str):
         metadata_names = ["attributes", "config", "enums", "functions"]
         path = f"{metadata_dir}/{mi_driver}/"
         metadata = load_metadata(path)
+        metadata_mutation.mutate(metadata)
         api_name = metadata["config"]["driver_name"]
         api_version = metadata["config"]["api_version"]
         for metadata_name in metadata_names:

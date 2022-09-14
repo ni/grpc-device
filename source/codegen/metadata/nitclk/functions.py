@@ -8,12 +8,16 @@ functions = {
         },
         'parameters': [
             {
+                'cppName': 'sessionCount',
                 'direction': 'in',
+                'grpc_type': 'uint32',
                 'name': 'sessionCount',
                 'type': 'ViUInt32'
             },
             {
+                'cppName': 'sessions',
                 'direction': 'in',
+                'grpc_type': 'repeated nidevice_grpc.Session',
                 'name': 'sessions',
                 'size': {
                     'mechanism': 'TBD',
@@ -23,7 +27,9 @@ functions = {
                 'type_in_documentation': 'list of (Driver Session or nitclk.SessionReference)'
             },
             {
+                'cppName': 'tclkAdjustment',
                 'direction': 'in',
+                'grpc_type': 'double',
                 'name': 'tclkAdjustment',
                 'type': 'ViReal64'
             }
@@ -37,12 +43,16 @@ functions = {
         },
         'parameters': [
             {
+                'cppName': 'sessionCount',
                 'direction': 'in',
+                'grpc_type': 'uint32',
                 'name': 'sessionCount',
                 'type': 'ViUInt32'
             },
             {
+                'cppName': 'sessions',
                 'direction': 'in',
+                'grpc_type': 'repeated nidevice_grpc.Session',
                 'name': 'sessions',
                 'size': {
                     'mechanism': 'TBD',
@@ -52,7 +62,9 @@ functions = {
                 'type_in_documentation': 'list of (Driver Session or nitclk.SessionReference)'
             },
             {
+                'cppName': 'tclkAdjustment',
                 'direction': 'in',
+                'grpc_type': 'double',
                 'name': 'tclkAdjustment',
                 'type': 'ViReal64'
             }
@@ -65,18 +77,28 @@ functions = {
         },
         'parameters': [
             {
+                'cppName': 'sessionCount',
+                'determine_size_from': [
+                    'sessions'
+                ],
                 'direction': 'in',
                 'documentation': {
                     'description': 'Number of elements in the sessions array'
                 },
+                'grpc_type': 'uint32',
+                'include_in_proto': False,
+                'is_size_param': True,
+                'linked_params_are_optional': False,
                 'name': 'sessionCount',
                 'type': 'ViUInt32'
             },
             {
+                'cppName': 'sessions',
                 'direction': 'in',
                 'documentation': {
                     'description': 'sessions is an array of sessions that are being synchronized.'
                 },
+                'grpc_type': 'repeated nidevice_grpc.Session',
                 'is_session_handle': False,
                 'name': 'sessions',
                 'python_api_converter_name': 'convert_to_nitclk_session_number_list',
@@ -97,7 +119,9 @@ functions = {
         },
         'parameters': [
             {
+                'cppName': 'labviewAttrId',
                 'direction': 'in',
+                'grpc_type': 'uint32',
                 'name': 'labviewAttrId',
                 'type': 'ViUInt32'
             }
@@ -110,18 +134,28 @@ functions = {
         },
         'parameters': [
             {
+                'cppName': 'sessionCount',
+                'determine_size_from': [
+                    'sessions'
+                ],
                 'direction': 'in',
                 'documentation': {
                     'description': 'Number of elements in the sessions array'
                 },
+                'grpc_type': 'uint32',
+                'include_in_proto': False,
+                'is_size_param': True,
+                'linked_params_are_optional': False,
                 'name': 'sessionCount',
                 'type': 'ViUInt32'
             },
             {
+                'cppName': 'sessions',
                 'direction': 'in',
                 'documentation': {
                     'description': 'sessions is an array of sessions that are being synchronized.'
                 },
+                'grpc_type': 'repeated nidevice_grpc.Session',
                 'is_session_handle': False,
                 'name': 'sessions',
                 'python_api_converter_name': 'convert_to_nitclk_session_number_list',
@@ -133,11 +167,13 @@ functions = {
                 'type_in_documentation': 'list of (nimi-python Session class or nitclk.SessionReference)'
             },
             {
+                'cppName': 'minTime',
                 'default_value': 'hightime.timedelta(seconds=0.0)',
                 'direction': 'in',
                 'documentation': {
                     'description': '\nMinimal period of TClk, expressed in seconds. Supported values are\nbetween 0.0 s and 0.050 s (50 ms). Minimal period for a single\nchassis/PC is 200 ns. If the specified value is less than 200 ns,\nNI-TClk automatically coerces minTime to 200 ns. For multichassis\nsynchronization, adjust this value to account for propagation delays\nthrough the various devices and cables.\n'
                 },
+                'grpc_type': 'double',
                 'name': 'minTime',
                 'python_api_converter_name': 'convert_timedelta_to_seconds_real64',
                 'type': 'ViReal64',
@@ -153,12 +189,16 @@ functions = {
         },
         'parameters': [
             {
+                'cppName': 'sessionCount',
                 'direction': 'in',
+                'grpc_type': 'uint32',
                 'name': 'sessionCount',
                 'type': 'ViUInt32'
             },
             {
+                'cppName': 'sessions',
                 'direction': 'in',
+                'grpc_type': 'repeated nidevice_grpc.Session',
                 'name': 'sessions',
                 'size': {
                     'mechanism': 'TBD',
@@ -168,12 +208,16 @@ functions = {
                 'type_in_documentation': 'list of (Driver Session or nitclk.SessionReference)'
             },
             {
+                'cppName': 'minTime',
                 'direction': 'in',
+                'grpc_type': 'double',
                 'name': 'minTime',
                 'type': 'ViReal64'
             },
             {
+                'cppName': 'adjustmentType',
                 'direction': 'in',
+                'grpc_type': 'uint32',
                 'name': 'adjustmentType',
                 'type': 'ViUInt32'
             }
@@ -187,22 +231,30 @@ functions = {
         },
         'parameters': [
             {
+                'cppName': 'session',
                 'direction': 'in',
+                'grpc_type': 'nidevice_grpc.Session',
                 'name': 'session',
                 'type': 'ViSession'
             },
             {
+                'cppName': 'channelName',
                 'direction': 'in',
+                'grpc_type': 'string',
                 'name': 'channelName',
                 'type': 'ViConstString'
             },
             {
+                'cppName': 'attributeId',
                 'direction': 'in',
+                'grpc_type': 'NiTClkAttribute',
                 'name': 'attributeId',
                 'type': 'ViAttr'
             },
             {
+                'cppName': 'value',
                 'direction': 'out',
+                'grpc_type': 'bool',
                 'name': 'value',
                 'type': 'ViBoolean'
             }
@@ -216,34 +268,42 @@ functions = {
         },
         'parameters': [
             {
+                'cppName': 'session',
                 'direction': 'in',
                 'documentation': {
                     'description': 'session references the sessions being synchronized.'
                 },
+                'grpc_type': 'nidevice_grpc.Session',
                 'name': 'session',
                 'type': 'ViSession'
             },
             {
+                'cppName': 'channelName',
                 'direction': 'in',
                 'documentation': {
                     'description': 'Pass VI_NULL or an empty string'
                 },
+                'grpc_type': 'string',
                 'name': 'channelName',
                 'type': 'ViConstString'
             },
             {
+                'cppName': 'attributeId',
                 'direction': 'in',
                 'documentation': {
                     'description': '\nThe ID of the attribute that you want to get Supported Attribute\nNITCLK_ATTR_SAMPLE_CLOCK_DELAY\n'
                 },
+                'grpc_type': 'NiTClkAttribute',
                 'name': 'attributeId',
                 'type': 'ViAttr'
             },
             {
+                'cppName': 'value',
                 'direction': 'out',
                 'documentation': {
                     'description': 'The value that you are getting'
                 },
+                'grpc_type': 'double',
                 'name': 'value',
                 'type': 'ViReal64'
             }
@@ -257,34 +317,42 @@ functions = {
         },
         'parameters': [
             {
+                'cppName': 'session',
                 'direction': 'in',
                 'documentation': {
                     'description': 'session references the sessions being synchronized.'
                 },
+                'grpc_type': 'nidevice_grpc.Session',
                 'name': 'session',
                 'type': 'ViSession'
             },
             {
+                'cppName': 'channelName',
                 'direction': 'in',
                 'documentation': {
                     'description': '\nPass VI_NULL or an empty string, except for\nNITCLK_ATTR_SCRIPT_TRIGGER_MASTER_SESSION, for which you should\nspecify scriptTrigger0, scriptTrigger1, scriptTrigger2, or\nscriptTrigger3. VI_NULL and the empty string are treated as\nscriptTrigger0 for NITCLK_ATTR_SCRIPT_TRIGGER_MASTER_SESSION.\n'
                 },
+                'grpc_type': 'string',
                 'name': 'channelName',
                 'type': 'ViConstString'
             },
             {
+                'cppName': 'attributeId',
                 'direction': 'in',
                 'documentation': {
                     'description': '\nThe ID of the attribute that you want to set Supported Attributes\nNITCLK_ATTR_START_TRIGGER_MASTER_SESSION\nNITCLK_ATTR_REF_TRIGGER_MASTER_SESSION\nNITCLK_ATTR_SCRIPT_TRIGGER_MASTER_SESSION\nNITCLK_ATTR_PAUSE_TRIGGER_MASTER_SESSION\n'
                 },
+                'grpc_type': 'NiTClkAttribute',
                 'name': 'attributeId',
                 'type': 'ViAttr'
             },
             {
+                'cppName': 'value',
                 'direction': 'out',
                 'documentation': {
                     'description': 'The value that you are getting'
                 },
+                'grpc_type': 'nidevice_grpc.Session',
                 'is_session_handle': False,
                 'name': 'value',
                 'type': 'ViSession'
@@ -298,42 +366,54 @@ functions = {
         },
         'parameters': [
             {
+                'cppName': 'session',
                 'direction': 'in',
                 'documentation': {
                     'description': 'session references the sessions being synchronized.'
                 },
+                'grpc_type': 'nidevice_grpc.Session',
                 'name': 'session',
                 'type': 'ViSession'
             },
             {
+                'cppName': 'channelName',
                 'direction': 'in',
                 'documentation': {
                     'description': 'Pass VI_NULL or an empty string'
                 },
+                'grpc_type': 'string',
                 'name': 'channelName',
                 'type': 'ViConstString'
             },
             {
+                'cppName': 'attributeId',
                 'direction': 'in',
                 'documentation': {
                     'description': '\nThe ID of the attribute that you want to get Supported Attributes\nNITCLK_ATTR_SYNC_PULSE_SOURCE\nNITCLK_ATTR_SYNC_PULSE_CLOCK_SOURCE\nNITCLK_ATTR_EXPORTED_SYNC_PULSE_OUTPUT_TERMINAL\n'
                 },
+                'grpc_type': 'NiTClkAttribute',
                 'name': 'attributeId',
                 'type': 'ViAttr'
             },
             {
+                'cppName': 'bufSize',
                 'direction': 'in',
                 'documentation': {
                     'description': '\nThe number of bytes in the ViChar array that you specify for the value\nparameter\n'
                 },
+                'grpc_type': 'sint32',
+                'include_in_proto': False,
+                'is_size_param': True,
                 'name': 'bufSize',
                 'type': 'ViInt32'
             },
             {
+                'cppName': 'value',
                 'direction': 'out',
                 'documentation': {
                     'description': 'The value that you are getting'
                 },
+                'grpc_type': 'string',
                 'name': 'value',
                 'size': {
                     'mechanism': 'ivi-dance',
@@ -355,10 +435,12 @@ functions = {
         'is_error_handling': True,
         'parameters': [
             {
+                'cppName': 'errorString',
                 'direction': 'out',
                 'documentation': {
                     'description': '\nExtended error description. If errorString is NULL, then it is not large\nenough to hold the entire error description. In this case, the return\nvalue of niTClk_GetExtendedErrorInfo is the size that you should use\nfor niTClk_GetExtendedErrorInfo to return the full error string.\n'
                 },
+                'grpc_type': 'string',
                 'name': 'errorString',
                 'size': {
                     'mechanism': 'ivi-dance',
@@ -367,10 +449,14 @@ functions = {
                 'type': 'ViChar[]'
             },
             {
+                'cppName': 'errorStringSize',
                 'direction': 'in',
                 'documentation': {
                     'description': '\nSize of the errorString. If errorStringSize is 0, then it is not large\nenough to hold the entire error description. In this case, the return\nvalue of niTClk_GetExtendedErrorInfo is the size that you should use\nfor niTClk_GetExtendedErrorInfo to return the full error string.\n'
                 },
+                'grpc_type': 'uint32',
+                'include_in_proto': False,
+                'is_size_param': True,
                 'name': 'errorStringSize',
                 'type': 'ViUInt32'
             }
@@ -384,17 +470,23 @@ functions = {
         },
         'parameters': [
             {
+                'cppName': 'tclkPeriod',
                 'direction': 'in',
+                'grpc_type': 'double',
                 'name': 'tclkPeriod',
                 'type': 'ViReal64'
             },
             {
+                'cppName': 'measurementsForSenderSize',
                 'direction': 'in',
+                'grpc_type': 'uint32',
                 'name': 'measurementsForSenderSize',
                 'type': 'ViUInt32'
             },
             {
+                'cppName': 'measurementsForSender',
                 'direction': 'in',
+                'grpc_type': 'repeated double',
                 'name': 'measurementsForSender',
                 'size': {
                     'mechanism': 'TBD',
@@ -403,12 +495,16 @@ functions = {
                 'type': 'ViReal64[]'
             },
             {
+                'cppName': 'measurementsForReceiverSize',
                 'direction': 'in',
+                'grpc_type': 'uint32',
                 'name': 'measurementsForReceiverSize',
                 'type': 'ViUInt32'
             },
             {
+                'cppName': 'measurementsForReceiver',
                 'direction': 'in',
+                'grpc_type': 'repeated double',
                 'name': 'measurementsForReceiver',
                 'size': {
                     'mechanism': 'TBD',
@@ -417,7 +513,9 @@ functions = {
                 'type': 'ViReal64[]'
             },
             {
+                'cppName': 'tclkAdjustment',
                 'direction': 'out',
+                'grpc_type': 'double',
                 'name': 'tclkAdjustment',
                 'type': 'ViReal64'
             }
@@ -431,12 +529,16 @@ functions = {
         },
         'parameters': [
             {
+                'cppName': 'sessionCount',
                 'direction': 'in',
+                'grpc_type': 'uint32',
                 'name': 'sessionCount',
                 'type': 'ViUInt32'
             },
             {
+                'cppName': 'sessions',
                 'direction': 'in',
+                'grpc_type': 'repeated nidevice_grpc.Session',
                 'name': 'sessions',
                 'size': {
                     'mechanism': 'TBD',
@@ -446,12 +548,16 @@ functions = {
                 'type_in_documentation': 'list of (nimi-python Session class or nitclk.SessionReference)'
             },
             {
+                'cppName': 'minTime',
                 'direction': 'in',
+                'grpc_type': 'double',
                 'name': 'minTime',
                 'type': 'ViReal64'
             },
             {
+                'cppName': 'maxTClkDriftInPpm',
                 'direction': 'out',
+                'grpc_type': 'double',
                 'name': 'maxTClkDriftInPpm',
                 'type': 'ViReal64'
             }
@@ -465,12 +571,16 @@ functions = {
         },
         'parameters': [
             {
+                'cppName': 'session',
                 'direction': 'in',
+                'grpc_type': 'nidevice_grpc.Session',
                 'name': 'session',
                 'type': 'ViSession'
             },
             {
+                'cppName': 'measurement',
                 'direction': 'out',
+                'grpc_type': 'double',
                 'name': 'measurement',
                 'type': 'ViReal64'
             }
@@ -483,18 +593,28 @@ functions = {
         },
         'parameters': [
             {
+                'cppName': 'sessionCount',
+                'determine_size_from': [
+                    'sessions'
+                ],
                 'direction': 'in',
                 'documentation': {
                     'description': 'Number of elements in the sessions array'
                 },
+                'grpc_type': 'uint32',
+                'include_in_proto': False,
+                'is_size_param': True,
+                'linked_params_are_optional': False,
                 'name': 'sessionCount',
                 'type': 'ViUInt32'
             },
             {
+                'cppName': 'sessions',
                 'direction': 'in',
                 'documentation': {
                     'description': 'sessions is an array of sessions that are being synchronized.'
                 },
+                'grpc_type': 'repeated nidevice_grpc.Session',
                 'is_session_handle': False,
                 'name': 'sessions',
                 'python_api_converter_name': 'convert_to_nitclk_session_number_list',
@@ -515,7 +635,9 @@ functions = {
         },
         'parameters': [
             {
+                'cppName': 'session',
                 'direction': 'in',
+                'grpc_type': 'uint32',
                 'name': 'session',
                 'type': 'ViUInt32'
             }
@@ -529,7 +651,9 @@ functions = {
         },
         'parameters': [
             {
+                'cppName': 'session',
                 'direction': 'in',
+                'grpc_type': 'uint32',
                 'name': 'session',
                 'type': 'ViUInt32'
             }
@@ -543,7 +667,9 @@ functions = {
         },
         'parameters': [
             {
+                'cppName': 'session',
                 'direction': 'in',
+                'grpc_type': 'uint32',
                 'name': 'session',
                 'type': 'ViUInt32'
             }
@@ -557,12 +683,16 @@ functions = {
         },
         'parameters': [
             {
+                'cppName': 'sessionCount',
                 'direction': 'in',
+                'grpc_type': 'uint32',
                 'name': 'sessionCount',
                 'type': 'ViUInt32'
             },
             {
+                'cppName': 'sessions',
                 'direction': 'in',
+                'grpc_type': 'repeated nidevice_grpc.Session',
                 'name': 'sessions',
                 'size': {
                     'mechanism': 'TBD',
@@ -572,17 +702,23 @@ functions = {
                 'type_in_documentation': 'list of (nimi-python Session class or nitclk.SessionReference)'
             },
             {
+                'cppName': 'minTime',
                 'direction': 'in',
+                'grpc_type': 'double',
                 'name': 'minTime',
                 'type': 'ViReal64'
             },
             {
+                'cppName': 'adjustment',
                 'direction': 'in',
+                'grpc_type': 'uint32',
                 'name': 'adjustment',
                 'type': 'ViUInt32'
             },
             {
+                'cppName': 'measuredSyncPulseClkRefEdgeToTClkDelay',
                 'direction': 'out',
+                'grpc_type': 'double',
                 'name': 'measuredSyncPulseClkRefEdgeToTClkDelay',
                 'type': 'ViReal64'
             }
@@ -596,22 +732,30 @@ functions = {
         },
         'parameters': [
             {
+                'cppName': 'session',
                 'direction': 'in',
+                'grpc_type': 'uint32',
                 'name': 'session',
                 'type': 'ViUInt32'
             },
             {
+                'cppName': 'calPulseWidthInPicoSec',
                 'direction': 'in',
+                'grpc_type': 'uint32',
                 'name': 'calPulseWidthInPicoSec',
                 'type': 'ViUInt32'
             },
             {
+                'cppName': 'numReadings',
                 'direction': 'in',
+                'grpc_type': 'uint32',
                 'name': 'numReadings',
                 'type': 'ViUInt32'
             },
             {
+                'cppName': 'rawReadings',
                 'direction': 'in',
+                'grpc_type': 'repeated uint32',
                 'name': 'rawReadings',
                 'size': {
                     'mechanism': 'TBD',
@@ -629,12 +773,16 @@ functions = {
         },
         'parameters': [
             {
+                'cppName': 'sessionCount',
                 'direction': 'in',
+                'grpc_type': 'uint32',
                 'name': 'sessionCount',
                 'type': 'ViUInt32'
             },
             {
+                'cppName': 'sessions',
                 'direction': 'in',
+                'grpc_type': 'repeated uint32',
                 'name': 'sessions',
                 'size': {
                     'mechanism': 'TBD',
@@ -643,12 +791,16 @@ functions = {
                 'type': 'ViUInt32[]'
             },
             {
+                'cppName': 'numberOfMeasurements',
                 'direction': 'in',
+                'grpc_type': 'uint32',
                 'name': 'numberOfMeasurements',
                 'type': 'ViUInt32'
             },
             {
+                'cppName': 'measurements',
                 'direction': 'out',
+                'grpc_type': 'double',
                 'name': 'measurements',
                 'type': 'ViReal64'
             }
@@ -662,17 +814,23 @@ functions = {
         },
         'parameters': [
             {
+                'cppName': 'session',
                 'direction': 'in',
+                'grpc_type': 'uint32',
                 'name': 'session',
                 'type': 'ViUInt32'
             },
             {
+                'cppName': 'clk10Count',
                 'direction': 'out',
+                'grpc_type': 'uint32',
                 'name': 'clk10Count',
                 'type': 'ViUInt32'
             },
             {
+                'cppName': 'tClkTdcReading',
                 'direction': 'out',
+                'grpc_type': 'uint32',
                 'name': 'tClkTdcReading',
                 'type': 'ViUInt32'
             }
@@ -686,12 +844,16 @@ functions = {
         },
         'parameters': [
             {
+                'cppName': 'session',
                 'direction': 'in',
+                'grpc_type': 'uint32',
                 'name': 'session',
                 'type': 'ViUInt32'
             },
             {
+                'cppName': 'measurement',
                 'direction': 'out',
+                'grpc_type': 'double',
                 'name': 'measurement',
                 'type': 'ViReal64'
             }
@@ -705,12 +867,16 @@ functions = {
         },
         'parameters': [
             {
+                'cppName': 'sessionCount',
                 'direction': 'in',
+                'grpc_type': 'uint32',
                 'name': 'sessionCount',
                 'type': 'ViUInt32'
             },
             {
+                'cppName': 'sessions',
                 'direction': 'in',
+                'grpc_type': 'repeated uint32',
                 'name': 'sessions',
                 'size': {
                     'mechanism': 'TBD',
@@ -719,12 +885,16 @@ functions = {
                 'type': 'ViUInt32[]'
             },
             {
+                'cppName': 'averagingFactor',
                 'direction': 'in',
+                'grpc_type': 'uint32',
                 'name': 'averagingFactor',
                 'type': 'ViUInt32'
             },
             {
+                'cppName': 'tClkDeltas',
                 'direction': 'in',
+                'grpc_type': 'repeated double',
                 'name': 'tClkDeltas',
                 'size': {
                     'mechanism': 'TBD',
@@ -742,12 +912,16 @@ functions = {
         },
         'parameters': [
             {
+                'cppName': 'session',
                 'direction': 'in',
+                'grpc_type': 'uint32',
                 'name': 'session',
                 'type': 'ViUInt32'
             },
             {
+                'cppName': 'tClkDivisor',
                 'direction': 'in',
+                'grpc_type': 'uint32',
                 'name': 'tClkDivisor',
                 'type': 'ViUInt32'
             }
@@ -761,7 +935,9 @@ functions = {
         },
         'parameters': [
             {
+                'cppName': 'session',
                 'direction': 'in',
+                'grpc_type': 'uint32',
                 'name': 'session',
                 'type': 'ViUInt32'
             }
@@ -774,18 +950,28 @@ functions = {
         },
         'parameters': [
             {
+                'cppName': 'sessionCount',
+                'determine_size_from': [
+                    'sessions'
+                ],
                 'direction': 'in',
                 'documentation': {
                     'description': 'Number of elements in the sessions array'
                 },
+                'grpc_type': 'uint32',
+                'include_in_proto': False,
+                'is_size_param': True,
+                'linked_params_are_optional': False,
                 'name': 'sessionCount',
                 'type': 'ViUInt32'
             },
             {
+                'cppName': 'sessions',
                 'direction': 'in',
                 'documentation': {
                     'description': 'sessions is an array of sessions that are being synchronized.'
                 },
+                'grpc_type': 'repeated nidevice_grpc.Session',
                 'is_session_handle': False,
                 'name': 'sessions',
                 'python_api_converter_name': 'convert_to_nitclk_session_number_list',
@@ -797,10 +983,12 @@ functions = {
                 'type_in_documentation': 'list of (Driver Session or nitclk.SessionReference)'
             },
             {
+                'cppName': 'done',
                 'direction': 'out',
                 'documentation': {
                     'description': '\nIndicates that the operation is done. The operation is done when each\nsession has completed without any errors or when any one of the sessions\nreports an error.\n'
                 },
+                'grpc_type': 'bool',
                 'name': 'done',
                 'type': 'ViBoolean'
             }
@@ -814,22 +1002,30 @@ functions = {
         },
         'parameters': [
             {
+                'cppName': 'session',
                 'direction': 'in',
+                'grpc_type': 'nidevice_grpc.Session',
                 'name': 'session',
                 'type': 'ViSession'
             },
             {
+                'cppName': 'channelName',
                 'direction': 'in',
+                'grpc_type': 'string',
                 'name': 'channelName',
                 'type': 'ViConstString'
             },
             {
+                'cppName': 'attributeId',
                 'direction': 'in',
+                'grpc_type': 'NiTClkAttribute',
                 'name': 'attributeId',
                 'type': 'ViAttr'
             },
             {
+                'cppName': 'value',
                 'direction': 'in',
+                'grpc_type': 'bool',
                 'name': 'value',
                 'type': 'ViBoolean'
             }
@@ -843,35 +1039,43 @@ functions = {
         },
         'parameters': [
             {
+                'cppName': 'session',
                 'direction': 'in',
                 'documentation': {
                     'description': 'session references the sessions being synchronized.'
                 },
+                'grpc_type': 'nidevice_grpc.Session',
                 'name': 'session',
                 'type': 'ViSession'
             },
             {
+                'cppName': 'channelName',
                 'direction': 'in',
                 'documentation': {
                     'description': 'Pass VI_NULL or an empty string'
                 },
+                'grpc_type': 'string',
                 'name': 'channelName',
                 'type': 'ViConstString'
             },
             {
+                'cppName': 'attributeId',
                 'direction': 'in',
                 'documentation': {
                     'description': '\nThe ID of the attribute that you want to set Supported Attribute\nNITCLK_ATTR_SAMPLE_CLOCK_DELAY\n'
                 },
+                'grpc_type': 'NiTClkAttribute',
                 'name': 'attributeId',
                 'type': 'ViAttr'
             },
             {
+                'cppName': 'value',
                 'direction': 'in',
                 'documentation': {
                     'description': 'The value for the attribute'
                 },
-                'name': 'value',
+                'grpc_type': 'double',
+                'name': 'value_raw',
                 'type': 'ViReal64'
             }
         ],
@@ -884,34 +1088,42 @@ functions = {
         },
         'parameters': [
             {
+                'cppName': 'session',
                 'direction': 'in',
                 'documentation': {
                     'description': 'session references the sessions being synchronized.'
                 },
+                'grpc_type': 'nidevice_grpc.Session',
                 'name': 'session',
                 'type': 'ViSession'
             },
             {
+                'cppName': 'channelName',
                 'direction': 'in',
                 'documentation': {
                     'description': '\nPass VI_NULL or an empty string, except for\nNITCLK_ATTR_SCRIPT_TRIGGER_MASTER_SESSION, for which you should\nspecify scriptTrigger0, scriptTrigger1, scriptTrigger2, or\nscriptTrigger3. VI_NULL and the empty string are treated as\nscriptTrigger0 for NITCLK_ATTR_SCRIPT_TRIGGER_MASTER_SESSION.\n'
                 },
+                'grpc_type': 'string',
                 'name': 'channelName',
                 'type': 'ViConstString'
             },
             {
+                'cppName': 'attributeId',
                 'direction': 'in',
                 'documentation': {
                     'description': '\nThe ID of the attribute that you want to set Supported Attributes\nNITCLK_ATTR_START_TRIGGER_MASTER_SESSION\nNITCLK_ATTR_REF_TRIGGER_MASTER_SESSION\nNITCLK_ATTR_SCRIPT_TRIGGER_MASTER_SESSION\nNITCLK_ATTR_PAUSE_TRIGGER_MASTER_SESSION\n'
                 },
+                'grpc_type': 'NiTClkAttribute',
                 'name': 'attributeId',
                 'type': 'ViAttr'
             },
             {
+                'cppName': 'value',
                 'direction': 'in',
                 'documentation': {
                     'description': 'The value for the attribute'
                 },
+                'grpc_type': 'nidevice_grpc.Session',
                 'is_session_handle': False,
                 'name': 'value',
                 'type': 'ViSession'
@@ -926,35 +1138,43 @@ functions = {
         },
         'parameters': [
             {
+                'cppName': 'session',
                 'direction': 'in',
                 'documentation': {
                     'description': 'session references the sessions being synchronized.'
                 },
+                'grpc_type': 'nidevice_grpc.Session',
                 'name': 'session',
                 'type': 'ViSession'
             },
             {
+                'cppName': 'channelName',
                 'direction': 'in',
                 'documentation': {
                     'description': 'Pass VI_NULL or an empty string'
                 },
+                'grpc_type': 'string',
                 'name': 'channelName',
                 'type': 'ViConstString'
             },
             {
+                'cppName': 'attributeId',
                 'direction': 'in',
                 'documentation': {
                     'description': '\nPass the ID of the attribute that you want to set Supported Attributes\nNITCLK_ATTR_SYNC_PULSE_SOURCE\nNITCLK_ATTR_SYNC_PULSE_CLOCK_SOURCE\nNITCLK_ATTR_EXPORTED_SYNC_PULSE_OUTPUT_TERMINAL\n'
                 },
+                'grpc_type': 'NiTClkAttribute',
                 'name': 'attributeId',
                 'type': 'ViAttr'
             },
             {
+                'cppName': 'value',
                 'direction': 'in',
                 'documentation': {
                     'description': 'Pass the value for the attribute'
                 },
-                'name': 'value',
+                'grpc_type': 'string',
+                'name': 'value_raw',
                 'type': 'ViConstString'
             }
         ],
@@ -966,18 +1186,28 @@ functions = {
         },
         'parameters': [
             {
+                'cppName': 'sessionCount',
+                'determine_size_from': [
+                    'sessions'
+                ],
                 'direction': 'in',
                 'documentation': {
                     'description': 'Number of elements in the sessions array'
                 },
+                'grpc_type': 'uint32',
+                'include_in_proto': False,
+                'is_size_param': True,
+                'linked_params_are_optional': False,
                 'name': 'sessionCount',
                 'type': 'ViUInt32'
             },
             {
+                'cppName': 'sessions',
                 'direction': 'in',
                 'documentation': {
                     'description': 'sessions is an array of sessions that are being synchronized.'
                 },
+                'grpc_type': 'repeated nidevice_grpc.Session',
                 'is_session_handle': False,
                 'name': 'sessions',
                 'python_api_converter_name': 'convert_to_nitclk_session_number_list',
@@ -989,11 +1219,13 @@ functions = {
                 'type_in_documentation': 'list of (Driver Session or nitclk.SessionReference)'
             },
             {
+                'cppName': 'minTime',
                 'default_value': 'hightime.timedelta(seconds=0.0)',
                 'direction': 'in',
                 'documentation': {
                     'description': '\nMinimal period of TClk, expressed in seconds. Supported values are\nbetween 0.0 s and 0.050 s (50 ms). Minimal period for a single\nchassis/PC is 200 ns. If the specified value is less than 200 ns,\nNI-TClk automatically coerces minTime to 200 ns. For multichassis\nsynchronization, adjust this value to account for propagation delays\nthrough the various devices and cables.\n'
                 },
+                'grpc_type': 'double',
                 'name': 'minTime',
                 'python_api_converter_name': 'convert_timedelta_to_seconds_real64',
                 'type': 'ViReal64',
@@ -1008,18 +1240,28 @@ functions = {
         },
         'parameters': [
             {
+                'cppName': 'sessionCount',
+                'determine_size_from': [
+                    'sessions'
+                ],
                 'direction': 'in',
                 'documentation': {
                     'description': 'Number of elements in the sessions array'
                 },
+                'grpc_type': 'uint32',
+                'include_in_proto': False,
+                'is_size_param': True,
+                'linked_params_are_optional': False,
                 'name': 'sessionCount',
                 'type': 'ViUInt32'
             },
             {
+                'cppName': 'sessions',
                 'direction': 'in',
                 'documentation': {
                     'description': 'sessions is an array of sessions that are being synchronized.'
                 },
+                'grpc_type': 'repeated nidevice_grpc.Session',
                 'is_session_handle': False,
                 'name': 'sessions',
                 'python_api_converter_name': 'convert_to_nitclk_session_number_list',
@@ -1031,11 +1273,13 @@ functions = {
                 'type_in_documentation': 'list of (Driver Session or nitclk.SessionReference)'
             },
             {
+                'cppName': 'minTclkPeriod',
                 'default_value': 'hightime.timedelta(seconds=0.0)',
                 'direction': 'in',
                 'documentation': {
                     'description': '\nMinimal period of TClk, expressed in seconds. Supported values are\nbetween 0.0 s and 0.050 s (50 ms). Minimal period for a single\nchassis/PC is 200 ns. If the specified value is less than 200 ns,\nNI-TClk automatically coerces minTime to 200 ns. For multichassis\nsynchronization, adjust this value to account for propagation delays\nthrough the various devices and cables.\n'
                 },
+                'grpc_type': 'double',
                 'name': 'minTclkPeriod',
                 'python_api_converter_name': 'convert_timedelta_to_seconds_real64',
                 'type': 'ViReal64',
@@ -1050,18 +1294,28 @@ functions = {
         },
         'parameters': [
             {
+                'cppName': 'sessionCount',
+                'determine_size_from': [
+                    'sessions'
+                ],
                 'direction': 'in',
                 'documentation': {
                     'description': 'Number of elements in the sessions array'
                 },
+                'grpc_type': 'uint32',
+                'include_in_proto': False,
+                'is_size_param': True,
+                'linked_params_are_optional': False,
                 'name': 'sessionCount',
                 'type': 'ViUInt32'
             },
             {
+                'cppName': 'sessions',
                 'direction': 'in',
                 'documentation': {
                     'description': 'sessions is an array of sessions that are being synchronized.'
                 },
+                'grpc_type': 'repeated nidevice_grpc.Session',
                 'is_session_handle': False,
                 'name': 'sessions',
                 'python_api_converter_name': 'convert_to_nitclk_session_number_list',
@@ -1073,11 +1327,13 @@ functions = {
                 'type_in_documentation': 'list of (Driver Session or nitclk.SessionReference)'
             },
             {
+                'cppName': 'minTime',
                 'default_value': 'hightime.timedelta(seconds=0.0)',
                 'direction': 'in',
                 'documentation': {
                     'description': '\nMinimal period of TClk, expressed in seconds. Supported values are\nbetween 0.0 s and 0.050 s (50 ms). Minimal period for a single\nchassis/PC is 200 ns. If the specified value is less than 200 ns,\nNI-TClk automatically coerces minTime to 200 ns. For multichassis\nsynchronization, adjust this value to account for propagation delays\nthrough the various devices and cables.\n'
                 },
+                'grpc_type': 'double',
                 'name': 'minTime',
                 'python_api_converter_name': 'convert_timedelta_to_seconds_real64',
                 'type': 'ViReal64',
@@ -1093,12 +1349,16 @@ functions = {
         },
         'parameters': [
             {
+                'cppName': 'sessionCount',
                 'direction': 'in',
+                'grpc_type': 'uint32',
                 'name': 'sessionCount',
                 'type': 'ViUInt32'
             },
             {
+                'cppName': 'sessions',
                 'direction': 'in',
+                'grpc_type': 'repeated nidevice_grpc.Session',
                 'name': 'sessions',
                 'size': {
                     'mechanism': 'TBD',
@@ -1108,12 +1368,16 @@ functions = {
                 'type_in_documentation': 'list of (Driver Session or nitclk.SessionReference)'
             },
             {
+                'cppName': 'minTime',
                 'direction': 'in',
+                'grpc_type': 'double',
                 'name': 'minTime',
                 'type': 'ViReal64'
             },
             {
+                'cppName': 'options',
                 'direction': 'in',
+                'grpc_type': 'uint32',
                 'name': 'options',
                 'type': 'ViUInt32'
             }
@@ -1126,18 +1390,28 @@ functions = {
         },
         'parameters': [
             {
+                'cppName': 'sessionCount',
+                'determine_size_from': [
+                    'sessions'
+                ],
                 'direction': 'in',
                 'documentation': {
                     'description': 'Number of elements in the sessions array'
                 },
+                'grpc_type': 'uint32',
+                'include_in_proto': False,
+                'is_size_param': True,
+                'linked_params_are_optional': False,
                 'name': 'sessionCount',
                 'type': 'ViUInt32'
             },
             {
+                'cppName': 'sessions',
                 'direction': 'in',
                 'documentation': {
                     'description': 'sessions is an array of sessions that are being synchronized.'
                 },
+                'grpc_type': 'repeated nidevice_grpc.Session',
                 'is_session_handle': False,
                 'name': 'sessions',
                 'python_api_converter_name': 'convert_to_nitclk_session_number_list',
@@ -1149,11 +1423,13 @@ functions = {
                 'type_in_documentation': 'list of (Driver Session or nitclk.SessionReference)'
             },
             {
+                'cppName': 'timeout',
                 'default_value': 'hightime.timedelta(seconds=0.0)',
                 'direction': 'in',
                 'documentation': {
                     'description': '\nThe amount of time in seconds that niTClk_WaitUntilDone waits for the\nsessions to complete. If timeout is exceeded, niTClk_WaitUntilDone\nreturns an error.\n'
                 },
+                'grpc_type': 'double',
                 'name': 'timeout',
                 'python_api_converter_name': 'convert_timedelta_to_seconds_real64',
                 'type': 'ViReal64',
