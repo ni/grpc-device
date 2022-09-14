@@ -81,13 +81,12 @@ class NiDmmMockLibrary : public nidmm_grpc::NiDmmLibraryInterface {
   MOCK_METHOD(ViStatus, GetSelfCalSupported, (ViSession vi, ViBoolean* selfCalSupported), (override));
   MOCK_METHOD(ViStatus, ImportAttributeConfigurationBuffer, (ViSession vi, ViInt32 size, ViInt8 configuration[]), (override));
   MOCK_METHOD(ViStatus, ImportAttributeConfigurationFile, (ViSession vi, ViConstString filePath), (override));
-  MOCK_METHOD(ViStatus, Init, (ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* vi), (override));
+  MOCK_METHOD(ViStatus, Init, (ViString resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* vi), (override));
   MOCK_METHOD(ViStatus, InitWithOptions, (ViString resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViString optionString, ViSession* vi), (override));
   MOCK_METHOD(ViStatus, Initiate, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, InvalidateAllAttributes, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, IsOverRange, (ViSession vi, ViReal64 measurementValue, ViBoolean* isOverRange), (override));
   MOCK_METHOD(ViStatus, IsUnderRange, (ViSession vi, ViReal64 measurementValue, ViBoolean* isUnderRange), (override));
-  MOCK_METHOD(ViStatus, LockSession, (ViSession vi, ViBoolean* callerHasLock), (override));
   MOCK_METHOD(ViStatus, PerformOpenCableComp, (ViSession vi, ViReal64* conductance, ViReal64* susceptance), (override));
   MOCK_METHOD(ViStatus, PerformShortCableComp, (ViSession vi, ViReal64* resistance, ViReal64* reactance), (override));
   MOCK_METHOD(ViStatus, Read, (ViSession vi, ViInt32 maximumTime, ViReal64* reading), (override));
@@ -106,7 +105,6 @@ class NiDmmMockLibrary : public nidmm_grpc::NiDmmLibraryInterface {
   MOCK_METHOD(ViStatus, SetAttributeViReal64, (ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64 attributeValue), (override));
   MOCK_METHOD(ViStatus, SetAttributeViSession, (ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession attributeValue), (override));
   MOCK_METHOD(ViStatus, SetAttributeViString, (ViSession vi, ViConstString channelName, ViAttr attributeId, ViString attributeValue), (override));
-  MOCK_METHOD(ViStatus, UnlockSession, (ViSession vi, ViBoolean* callerHasLock), (override));
 };
 
 }  // namespace unit

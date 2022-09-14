@@ -25,7 +25,7 @@ using namespace nidevice_grpc::experimental::client;
 AbortResponse abort(const StubPtr& stub, const nidevice_grpc::Session& vi);
 CheckAttributeViBooleanResponse check_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDmmAttribute& attribute_id, const bool& attribute_value);
 CheckAttributeViInt32Response check_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDmmAttribute& attribute_id, const simple_variant<NiDmmInt32AttributeValues, pb::int32>& attribute_value);
-CheckAttributeViReal64Response check_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDmmAttribute& attribute_id, const simple_variant<NiDmmReal64AttributeValues, double>& attribute_value);
+CheckAttributeViReal64Response check_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDmmAttribute& attribute_id, const simple_variant<NiDmmReal64AttributeValuesMapped, double>& attribute_value);
 CheckAttributeViSessionResponse check_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDmmAttribute& attribute_id, const nidevice_grpc::Session& attribute_value);
 CheckAttributeViStringResponse check_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDmmAttribute& attribute_id, const pb::string& attribute_value);
 ClearErrorResponse clear_error(const StubPtr& stub, const nidevice_grpc::Session& vi);
@@ -43,11 +43,11 @@ ConfigureMeasCompleteSlopeResponse configure_meas_complete_slope(const StubPtr& 
 ConfigureMeasurementAbsoluteResponse configure_measurement_absolute(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<Function, pb::int32>& measurement_function, const double& range, const double& resolution_absolute);
 ConfigureMeasurementDigitsResponse configure_measurement_digits(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<Function, pb::int32>& measurement_function, const double& range, const double& resolution_digits);
 ConfigureMultiPointResponse configure_multi_point(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<TriggerCount, pb::int32>& trigger_count, const simple_variant<SampleCount, pb::int32>& sample_count, const simple_variant<SampleTrigger, pb::int32>& sample_trigger, const simple_variant<SampleInterval, double>& sample_interval);
-ConfigureOffsetCompOhmsResponse configure_offset_comp_ohms(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<CompensatedOhms, pb::int32>& offset_comp_ohms);
+ConfigureOffsetCompOhmsResponse configure_offset_comp_ohms(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<OffsetCompensatedOhms, pb::int32>& offset_comp_ohms);
 ConfigureOpenCableCompValuesResponse configure_open_cable_comp_values(const StubPtr& stub, const nidevice_grpc::Session& vi, const double& conductance, const double& susceptance);
 ConfigurePowerLineFrequencyResponse configure_power_line_frequency(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<PowerLineFrequencies, double>& power_line_frequency_hz);
 ConfigureRTDCustomResponse configure_rtd_custom(const StubPtr& stub, const nidevice_grpc::Session& vi, const double& rtd_a, const double& rtd_b, const double& rtd_c);
-ConfigureRTDTypeResponse configure_rtd_type(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<RtdType, pb::int32>& rtd_type, const double& rtd_resistance);
+ConfigureRTDTypeResponse configure_rtd_type(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<RTDType, pb::int32>& rtd_type, const double& rtd_resistance);
 ConfigureSampleTriggerSlopeResponse configure_sample_trigger_slope(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<SampleTrigSlope, pb::int32>& sample_trigger_slope);
 ConfigureShortCableCompValuesResponse configure_short_cable_comp_values(const StubPtr& stub, const nidevice_grpc::Session& vi, const double& resistance, const double& reactance);
 ConfigureThermistorCustomResponse configure_thermistor_custom(const StubPtr& stub, const nidevice_grpc::Session& vi, const double& thermistor_a, const double& thermistor_b, const double& thermistor_c);
@@ -107,7 +107,7 @@ SelfTestResponse self_test(const StubPtr& stub, const nidevice_grpc::Session& vi
 SendSoftwareTriggerResponse send_software_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi);
 SetAttributeViBooleanResponse set_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDmmAttribute& attribute_id, const bool& attribute_value);
 SetAttributeViInt32Response set_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDmmAttribute& attribute_id, const simple_variant<NiDmmInt32AttributeValues, pb::int32>& attribute_value);
-SetAttributeViReal64Response set_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDmmAttribute& attribute_id, const simple_variant<NiDmmReal64AttributeValues, double>& attribute_value);
+SetAttributeViReal64Response set_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDmmAttribute& attribute_id, const simple_variant<NiDmmReal64AttributeValuesMapped, double>& attribute_value);
 SetAttributeViSessionResponse set_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDmmAttribute& attribute_id, const nidevice_grpc::Session& attribute_value);
 SetAttributeViStringResponse set_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDmmAttribute& attribute_id, const pb::string& attribute_value);
 

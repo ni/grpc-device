@@ -79,13 +79,12 @@ class NiDmmLibraryInterface {
   virtual ViStatus GetSelfCalSupported(ViSession vi, ViBoolean* selfCalSupported) = 0;
   virtual ViStatus ImportAttributeConfigurationBuffer(ViSession vi, ViInt32 size, ViInt8 configuration[]) = 0;
   virtual ViStatus ImportAttributeConfigurationFile(ViSession vi, ViConstString filePath) = 0;
-  virtual ViStatus Init(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* vi) = 0;
+  virtual ViStatus Init(ViString resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* vi) = 0;
   virtual ViStatus InitWithOptions(ViString resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViString optionString, ViSession* vi) = 0;
   virtual ViStatus Initiate(ViSession vi) = 0;
   virtual ViStatus InvalidateAllAttributes(ViSession vi) = 0;
   virtual ViStatus IsOverRange(ViSession vi, ViReal64 measurementValue, ViBoolean* isOverRange) = 0;
   virtual ViStatus IsUnderRange(ViSession vi, ViReal64 measurementValue, ViBoolean* isUnderRange) = 0;
-  virtual ViStatus LockSession(ViSession vi, ViBoolean* callerHasLock) = 0;
   virtual ViStatus PerformOpenCableComp(ViSession vi, ViReal64* conductance, ViReal64* susceptance) = 0;
   virtual ViStatus PerformShortCableComp(ViSession vi, ViReal64* resistance, ViReal64* reactance) = 0;
   virtual ViStatus Read(ViSession vi, ViInt32 maximumTime, ViReal64* reading) = 0;
@@ -104,7 +103,6 @@ class NiDmmLibraryInterface {
   virtual ViStatus SetAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64 attributeValue) = 0;
   virtual ViStatus SetAttributeViSession(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession attributeValue) = 0;
   virtual ViStatus SetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViString attributeValue) = 0;
-  virtual ViStatus UnlockSession(ViSession vi, ViBoolean* callerHasLock) = 0;
 };
 
 }  // namespace nidmm_grpc

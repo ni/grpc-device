@@ -82,13 +82,12 @@ class NiDmmLibrary : public nidmm_grpc::NiDmmLibraryInterface {
   ViStatus GetSelfCalSupported(ViSession vi, ViBoolean* selfCalSupported);
   ViStatus ImportAttributeConfigurationBuffer(ViSession vi, ViInt32 size, ViInt8 configuration[]);
   ViStatus ImportAttributeConfigurationFile(ViSession vi, ViConstString filePath);
-  ViStatus Init(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* vi);
+  ViStatus Init(ViString resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* vi);
   ViStatus InitWithOptions(ViString resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViString optionString, ViSession* vi);
   ViStatus Initiate(ViSession vi);
   ViStatus InvalidateAllAttributes(ViSession vi);
   ViStatus IsOverRange(ViSession vi, ViReal64 measurementValue, ViBoolean* isOverRange);
   ViStatus IsUnderRange(ViSession vi, ViReal64 measurementValue, ViBoolean* isUnderRange);
-  ViStatus LockSession(ViSession vi, ViBoolean* callerHasLock);
   ViStatus PerformOpenCableComp(ViSession vi, ViReal64* conductance, ViReal64* susceptance);
   ViStatus PerformShortCableComp(ViSession vi, ViReal64* resistance, ViReal64* reactance);
   ViStatus Read(ViSession vi, ViInt32 maximumTime, ViReal64* reading);
@@ -107,7 +106,6 @@ class NiDmmLibrary : public nidmm_grpc::NiDmmLibraryInterface {
   ViStatus SetAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64 attributeValue);
   ViStatus SetAttributeViSession(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession attributeValue);
   ViStatus SetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViString attributeValue);
-  ViStatus UnlockSession(ViSession vi, ViBoolean* callerHasLock);
 
  private:
   using AbortPtr = decltype(&niDMM_Abort);
@@ -180,7 +178,6 @@ class NiDmmLibrary : public nidmm_grpc::NiDmmLibraryInterface {
   using InvalidateAllAttributesPtr = decltype(&niDMM_InvalidateAllAttributes);
   using IsOverRangePtr = decltype(&niDMM_IsOverRange);
   using IsUnderRangePtr = decltype(&niDMM_IsUnderRange);
-  using LockSessionPtr = ViStatus (*)(ViSession vi, ViBoolean* callerHasLock);
   using PerformOpenCableCompPtr = decltype(&niDMM_PerformOpenCableComp);
   using PerformShortCableCompPtr = decltype(&niDMM_PerformShortCableComp);
   using ReadPtr = decltype(&niDMM_Read);
@@ -199,7 +196,6 @@ class NiDmmLibrary : public nidmm_grpc::NiDmmLibraryInterface {
   using SetAttributeViReal64Ptr = decltype(&niDMM_SetAttributeViReal64);
   using SetAttributeViSessionPtr = decltype(&niDMM_SetAttributeViSession);
   using SetAttributeViStringPtr = decltype(&niDMM_SetAttributeViString);
-  using UnlockSessionPtr = ViStatus (*)(ViSession vi, ViBoolean* callerHasLock);
 
   typedef struct FunctionPointers {
     AbortPtr Abort;
@@ -272,7 +268,6 @@ class NiDmmLibrary : public nidmm_grpc::NiDmmLibraryInterface {
     InvalidateAllAttributesPtr InvalidateAllAttributes;
     IsOverRangePtr IsOverRange;
     IsUnderRangePtr IsUnderRange;
-    LockSessionPtr LockSession;
     PerformOpenCableCompPtr PerformOpenCableComp;
     PerformShortCableCompPtr PerformShortCableComp;
     ReadPtr Read;
@@ -291,7 +286,6 @@ class NiDmmLibrary : public nidmm_grpc::NiDmmLibraryInterface {
     SetAttributeViReal64Ptr SetAttributeViReal64;
     SetAttributeViSessionPtr SetAttributeViSession;
     SetAttributeViStringPtr SetAttributeViString;
-    UnlockSessionPtr UnlockSession;
   } FunctionLoadStatus;
 
   nidevice_grpc::SharedLibrary shared_library_;
