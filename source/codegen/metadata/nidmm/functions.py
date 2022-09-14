@@ -1975,6 +1975,26 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
+    'LockSession': {
+        'codegen_method': 'private',
+        'parameters': [
+            {
+                'cppName': 'vi',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.Session',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'cppName': 'callerHasLock',
+                'direction': 'out',
+                'grpc_type': 'bool',
+                'name': 'callerHasLock',
+                'type': 'ViBoolean'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
     'PerformOpenCableComp': {
         'codegen_method': 'public',
         'parameters': [
@@ -2481,6 +2501,26 @@ functions = {
                 'grpc_type': 'string',
                 'name': 'attributeValue_raw',
                 'type': 'ViString'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'UnlockSession': {
+        'codegen_method': 'private',
+        'parameters': [
+            {
+                'cppName': 'vi',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.Session',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'cppName': 'callerHasLock',
+                'direction': 'out',
+                'grpc_type': 'bool',
+                'name': 'callerHasLock',
+                'type': 'ViBoolean'
             }
         ],
         'returns': 'ViStatus'

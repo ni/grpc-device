@@ -85,6 +85,7 @@ class NiDmmLibraryInterface {
   virtual ViStatus InvalidateAllAttributes(ViSession vi) = 0;
   virtual ViStatus IsOverRange(ViSession vi, ViReal64 measurementValue, ViBoolean* isOverRange) = 0;
   virtual ViStatus IsUnderRange(ViSession vi, ViReal64 measurementValue, ViBoolean* isUnderRange) = 0;
+  virtual ViStatus LockSession(ViSession vi, ViBoolean* callerHasLock) = 0;
   virtual ViStatus PerformOpenCableComp(ViSession vi, ViReal64* conductance, ViReal64* susceptance) = 0;
   virtual ViStatus PerformShortCableComp(ViSession vi, ViReal64* resistance, ViReal64* reactance) = 0;
   virtual ViStatus Read(ViSession vi, ViInt32 maximumTime, ViReal64* reading) = 0;
@@ -103,6 +104,7 @@ class NiDmmLibraryInterface {
   virtual ViStatus SetAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64 attributeValue) = 0;
   virtual ViStatus SetAttributeViSession(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession attributeValue) = 0;
   virtual ViStatus SetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViString attributeValue) = 0;
+  virtual ViStatus UnlockSession(ViSession vi, ViBoolean* callerHasLock) = 0;
 };
 
 }  // namespace nidmm_grpc
