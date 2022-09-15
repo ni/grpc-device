@@ -82,7 +82,7 @@ check_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, 
 }
 
 CheckAttributeViReal64Response
-check_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDmmAttribute& attribute_id, const simple_variant<NiDmmReal64AttributeValuesMapped, double>& attribute_value)
+check_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDmmAttribute& attribute_id, const simple_variant<NiDmmReal64AttributeValues, double>& attribute_value)
 {
   ::grpc::ClientContext context;
 
@@ -90,10 +90,10 @@ check_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi,
   request.mutable_vi()->CopyFrom(vi);
   request.set_channel_name(channel_name);
   request.set_attribute_id(attribute_id);
-  const auto attribute_value_ptr = attribute_value.get_if<NiDmmReal64AttributeValuesMapped>();
+  const auto attribute_value_ptr = attribute_value.get_if<NiDmmReal64AttributeValues>();
   const auto attribute_value_raw_ptr = attribute_value.get_if<double>();
   if (attribute_value_ptr) {
-    request.set_attribute_value_mapped(*attribute_value_ptr);
+    request.set_attribute_value(*attribute_value_ptr);
   }
   else if (attribute_value_raw_ptr) {
     request.set_attribute_value_raw(*attribute_value_raw_ptr);
@@ -318,7 +318,7 @@ configure_frequency_voltage_range(const StubPtr& stub, const nidevice_grpc::Sess
   const auto voltage_range_ptr = voltage_range.get_if<FrequencyVoltageRange>();
   const auto voltage_range_raw_ptr = voltage_range.get_if<double>();
   if (voltage_range_ptr) {
-    request.set_voltage_range_mapped(*voltage_range_ptr);
+    request.set_voltage_range(*voltage_range_ptr);
   }
   else if (voltage_range_raw_ptr) {
     request.set_voltage_range_raw(*voltage_range_raw_ptr);
@@ -457,7 +457,7 @@ configure_multi_point(const StubPtr& stub, const nidevice_grpc::Session& vi, con
   const auto sample_interval_ptr = sample_interval.get_if<SampleInterval>();
   const auto sample_interval_raw_ptr = sample_interval.get_if<double>();
   if (sample_interval_ptr) {
-    request.set_sample_interval_mapped(*sample_interval_ptr);
+    request.set_sample_interval(*sample_interval_ptr);
   }
   else if (sample_interval_raw_ptr) {
     request.set_sample_interval_raw(*sample_interval_raw_ptr);
@@ -526,7 +526,7 @@ configure_power_line_frequency(const StubPtr& stub, const nidevice_grpc::Session
   const auto power_line_frequency_hz_ptr = power_line_frequency_hz.get_if<PowerLineFrequencies>();
   const auto power_line_frequency_hz_raw_ptr = power_line_frequency_hz.get_if<double>();
   if (power_line_frequency_hz_ptr) {
-    request.set_power_line_frequency_hz_mapped(*power_line_frequency_hz_ptr);
+    request.set_power_line_frequency_hz(*power_line_frequency_hz_ptr);
   }
   else if (power_line_frequency_hz_raw_ptr) {
     request.set_power_line_frequency_hz_raw(*power_line_frequency_hz_raw_ptr);
@@ -738,7 +738,7 @@ configure_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const s
   const auto trigger_delay_ptr = trigger_delay.get_if<TriggerDelays>();
   const auto trigger_delay_raw_ptr = trigger_delay.get_if<double>();
   if (trigger_delay_ptr) {
-    request.set_trigger_delay_mapped(*trigger_delay_ptr);
+    request.set_trigger_delay(*trigger_delay_ptr);
   }
   else if (trigger_delay_raw_ptr) {
     request.set_trigger_delay_raw(*trigger_delay_raw_ptr);
@@ -1778,7 +1778,7 @@ set_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, co
 }
 
 SetAttributeViReal64Response
-set_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDmmAttribute& attribute_id, const simple_variant<NiDmmReal64AttributeValuesMapped, double>& attribute_value)
+set_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDmmAttribute& attribute_id, const simple_variant<NiDmmReal64AttributeValues, double>& attribute_value)
 {
   ::grpc::ClientContext context;
 
@@ -1786,10 +1786,10 @@ set_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, c
   request.mutable_vi()->CopyFrom(vi);
   request.set_channel_name(channel_name);
   request.set_attribute_id(attribute_id);
-  const auto attribute_value_ptr = attribute_value.get_if<NiDmmReal64AttributeValuesMapped>();
+  const auto attribute_value_ptr = attribute_value.get_if<NiDmmReal64AttributeValues>();
   const auto attribute_value_raw_ptr = attribute_value.get_if<double>();
   if (attribute_value_ptr) {
-    request.set_attribute_value_mapped(*attribute_value_ptr);
+    request.set_attribute_value(*attribute_value_ptr);
   }
   else if (attribute_value_raw_ptr) {
     request.set_attribute_value_raw(*attribute_value_raw_ptr);

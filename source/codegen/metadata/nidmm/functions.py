@@ -110,6 +110,7 @@ functions = {
             {
                 'cppName': 'attributeValue',
                 'direction': 'in',
+                'enum': 'NiDmmReal64AttributeValues',
                 'grpc_type': 'double',
                 'mapped-enum': 'NiDmmReal64AttributeValuesMapped',
                 'name': 'attributeValue',
@@ -366,8 +367,8 @@ functions = {
             {
                 'cppName': 'voltageRange',
                 'direction': 'in',
+                'enum': 'FrequencyVoltageRange',
                 'grpc_type': 'double',
-                'mapped-enum': 'FrequencyVoltageRange',
                 'name': 'voltageRange',
                 'type': 'ViReal64'
             }
@@ -521,8 +522,8 @@ functions = {
             {
                 'cppName': 'sampleInterval',
                 'direction': 'in',
+                'enum': 'SampleInterval',
                 'grpc_type': 'double',
-                'mapped-enum': 'SampleInterval',
                 'name': 'sampleInterval',
                 'type': 'ViReal64'
             }
@@ -590,8 +591,8 @@ functions = {
             {
                 'cppName': 'powerLineFrequencyHz',
                 'direction': 'in',
+                'enum': 'PowerLineFrequencies',
                 'grpc_type': 'double',
-                'mapped-enum': 'PowerLineFrequencies',
                 'name': 'powerLineFrequencyHz',
                 'type': 'ViReal64'
             }
@@ -832,8 +833,8 @@ functions = {
             {
                 'cppName': 'triggerDelay',
                 'direction': 'in',
+                'enum': 'TriggerDelays',
                 'grpc_type': 'double',
-                'mapped-enum': 'TriggerDelays',
                 'name': 'triggerDelay',
                 'type': 'ViReal64'
             }
@@ -1167,8 +1168,8 @@ functions = {
             {
                 'cppName': 'apertureTime',
                 'direction': 'out',
+                'enum': 'ApertureTime',
                 'grpc_type': 'double',
-                'mapped-enum': 'ApertureTime',
                 'name': 'apertureTime',
                 'type': 'ViReal64'
             },
@@ -2429,6 +2430,7 @@ functions = {
             {
                 'cppName': 'attributeValue',
                 'direction': 'in',
+                'enum': 'NiDmmReal64AttributeValues',
                 'grpc_type': 'double',
                 'mapped-enum': 'NiDmmReal64AttributeValuesMapped',
                 'name': 'attributeValue',

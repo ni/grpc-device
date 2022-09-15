@@ -45,39 +45,38 @@ enums = {
     },
     'ApertureTime': {
         'codegen_method': 'public',
-        'generate-mappings': True,
         'values': [
             {
                 'name': 'NIDMM_VAL_APERTURE_TIME_AUTO',
-                'value': -1.0
+                'value': -1
             },
             {
                 'name': 'NIDMM_VAL_1_PLC',
-                'value': 1.0
+                'value': 1
             },
             {
                 'name': 'NIDMM_VAL_5_PLC',
-                'value': 5.0
+                'value': 5
             },
             {
                 'name': 'NIDMM_VAL_6_PLC',
-                'value': 6.0
+                'value': 6
             },
             {
                 'name': 'NIDMM_VAL_10_PLC',
-                'value': 10.0
+                'value': 10
             },
             {
                 'name': 'NIDMM_VAL_12_PLC',
-                'value': 12.0
+                'value': 12
             },
             {
                 'name': 'NIDMM_VAL_100_PLC',
-                'value': 100.0
+                'value': 100
             },
             {
                 'name': 'NIDMM_VAL_120_PLC',
-                'value': 120.0
+                'value': 120
             }
         ]
     },
@@ -250,15 +249,14 @@ enums = {
     },
     'FrequencyVoltageRange': {
         'codegen_method': 'public',
-        'generate-mappings': True,
         'values': [
             {
                 'name': 'NIDMM_VAL_AUTO_RANGE_ON',
-                'value': -1.0
+                'value': -1
             },
             {
                 'name': 'NIDMM_VAL_AUTO_RANGE_OFF',
-                'value': -2.0
+                'value': -2
             }
         ]
     },
@@ -333,11 +331,11 @@ enums = {
         'values': [
             {
                 'name': 'NIDMM_VAL_1_MEGAOHM',
-                'value': 1000000.0
+                'value': 1000000
             },
             {
                 'name': 'NIDMM_VAL_10_MEGAOHM',
-                'value': 10000000.0
+                'value': 10000000
             },
             {
                 'name': 'NIDMM_VAL_GREATER_THAN_10_GIGAOHM',
@@ -907,42 +905,92 @@ enums = {
             }
         ]
     },
+    'NiDmmReal64AttributeValues': {
+        'enum-value-prefix': 'NIDMM_REAL64',
+        'generate-mappings': False,
+        'values': [
+            {
+                'name': 'APERTURE_TIME_VAL_APERTURE_TIME_AUTO',
+                'value': -1
+            },
+            {
+                'name': 'APERTURE_TIME_VAL_1_PLC',
+                'value': 1
+            },
+            {
+                'name': 'APERTURE_TIME_VAL_5_PLC',
+                'value': 5
+            },
+            {
+                'name': 'APERTURE_TIME_VAL_6_PLC',
+                'value': 6
+            },
+            {
+                'name': 'APERTURE_TIME_VAL_10_PLC',
+                'value': 10
+            },
+            {
+                'name': 'APERTURE_TIME_VAL_12_PLC',
+                'value': 12
+            },
+            {
+                'name': 'APERTURE_TIME_VAL_100_PLC',
+                'value': 100
+            },
+            {
+                'name': 'APERTURE_TIME_VAL_120_PLC',
+                'value': 120
+            },
+            {
+                'name': 'FREQUENCY_VOLTAGE_RANGE_VAL_AUTO_RANGE_ON',
+                'value': -1
+            },
+            {
+                'name': 'FREQUENCY_VOLTAGE_RANGE_VAL_AUTO_RANGE_OFF',
+                'value': -2
+            },
+            {
+                'name': 'POWERLINE_FREQUENCY_VAL_50_HERTZ',
+                'value': 50
+            },
+            {
+                'name': 'POWERLINE_FREQUENCY_VAL_60_HERTZ',
+                'value': 60
+            },
+            {
+                'name': 'RANGE_VAL_AUTO_RANGE_ON',
+                'value': -1
+            },
+            {
+                'name': 'RANGE_VAL_AUTO_RANGE_OFF',
+                'value': -2
+            },
+            {
+                'name': 'RANGE_VAL_AUTO_RANGE_ONCE',
+                'value': -3
+            },
+            {
+                'name': 'SAMPLE_INTERVAL_VAL_AUTO_DELAY',
+                'value': -1
+            },
+            {
+                'name': 'SETTLE_TIME_VAL_SETTLE_TIME_AUTO',
+                'value': -1
+            },
+            {
+                'name': 'TRIGGER_DELAYS_VAL_AUTO_DELAY_ON',
+                'value': -1
+            },
+            {
+                'name': 'TRIGGER_DELAYS_VAL_AUTO_DELAY_OFF',
+                'value': -2
+            }
+        ]
+    },
     'NiDmmReal64AttributeValuesMapped': {
         'enum-value-prefix': 'NIDMM_REAL64',
         'generate-mappings': True,
         'values': [
-            {
-                'name': 'APERTURE_TIME_VAL_APERTURE_TIME_AUTO',
-                'value': -1.0
-            },
-            {
-                'name': 'APERTURE_TIME_VAL_1_PLC',
-                'value': 1.0
-            },
-            {
-                'name': 'APERTURE_TIME_VAL_5_PLC',
-                'value': 5.0
-            },
-            {
-                'name': 'APERTURE_TIME_VAL_6_PLC',
-                'value': 6.0
-            },
-            {
-                'name': 'APERTURE_TIME_VAL_10_PLC',
-                'value': 10.0
-            },
-            {
-                'name': 'APERTURE_TIME_VAL_12_PLC',
-                'value': 12.0
-            },
-            {
-                'name': 'APERTURE_TIME_VAL_100_PLC',
-                'value': 100.0
-            },
-            {
-                'name': 'APERTURE_TIME_VAL_120_PLC',
-                'value': 120.0
-            },
             {
                 'name': 'CURRENT_SOURCE_VAL_1_MICROAMP',
                 'value': 1e-06
@@ -960,61 +1008,17 @@ enums = {
                 'value': 0.001
             },
             {
-                'name': 'FREQUENCY_VOLTAGE_RANGE_VAL_AUTO_RANGE_ON',
-                'value': -1.0
-            },
-            {
-                'name': 'FREQUENCY_VOLTAGE_RANGE_VAL_AUTO_RANGE_OFF',
-                'value': -2.0
-            },
-            {
                 'name': 'INPUT_RESISTANCE_VAL_1_MEGAOHM',
-                'value': 1000000.0
+                'value': 1000000
             },
             {
                 'name': 'INPUT_RESISTANCE_VAL_10_MEGAOHM',
-                'value': 10000000.0
+                'value': 10000000
             },
             {
                 'name': 'INPUT_RESISTANCE_VAL_GREATER_THAN_10_GIGAOHM',
                 'value': 10000000000.0
             },
-            {
-                'name': 'POWERLINE_FREQUENCY_VAL_50_HERTZ',
-                'value': 50.0
-            },
-            {
-                'name': 'POWERLINE_FREQUENCY_VAL_60_HERTZ',
-                'value': 60.0
-            },
-            {
-                'name': 'RANGE_VAL_AUTO_RANGE_ON',
-                'value': -1.0
-            },
-            {
-                'name': 'RANGE_VAL_AUTO_RANGE_OFF',
-                'value': -2.0
-            },
-            {
-                'name': 'RANGE_VAL_AUTO_RANGE_ONCE',
-                'value': -3.0
-            },
-            {
-                'name': 'SAMPLE_INTERVAL_VAL_AUTO_DELAY',
-                'value': -1.0
-            },
-            {
-                'name': 'SETTLE_TIME_VAL_SETTLE_TIME_AUTO',
-                'value': -1.0
-            },
-            {
-                'name': 'TRIGGER_DELAYS_VAL_AUTO_DELAY_ON',
-                'value': -1.0
-            },
-            {
-                'name': 'TRIGGER_DELAYS_VAL_AUTO_DELAY_OFF',
-                'value': -2.0
-            }
         ]
     },
     'OffsetCompensatedOhms': {
@@ -1045,29 +1049,27 @@ enums = {
     },
     'PowerLineFrequencies': {
         'codegen_method': 'public',
-        'generate-mappings': True,
         'values': [
             {
                 'name': 'NIDMM_VAL_50_HERTZ',
-                'value': 50.0
+                'value': 50
             },
             {
                 'name': 'NIDMM_VAL_60_HERTZ',
-                'value': 60.0
+                'value': 60
             }
         ]
     },
     'PowerlineFrequency': {
         'codegen_method': 'public',
-        'generate-mappings': True,
         'values': [
             {
                 'name': 'NIDMM_VAL_50_HERTZ',
-                'value': 50.0
+                'value': 50
             },
             {
                 'name': 'NIDMM_VAL_60_HERTZ',
-                'value': 60.0
+                'value': 60
             }
         ]
     },
@@ -1106,19 +1108,18 @@ enums = {
     },
     'Range': {
         'codegen_method': 'public',
-        'generate-mappings': True,
         'values': [
             {
                 'name': 'NIDMM_VAL_AUTO_RANGE_ON',
-                'value': -1.0
+                'value': -1
             },
             {
                 'name': 'NIDMM_VAL_AUTO_RANGE_OFF',
-                'value': -2.0
+                'value': -2
             },
             {
                 'name': 'NIDMM_VAL_AUTO_RANGE_ONCE',
-                'value': -3.0
+                'value': -3
             }
         ]
     },
@@ -1133,11 +1134,10 @@ enums = {
     },
     'SampleInterval': {
         'codegen_method': 'public',
-        'generate-mappings': True,
         'values': [
             {
                 'name': 'NIDMM_VAL_AUTO_DELAY',
-                'value': -1.0
+                'value': -1
             }
         ]
     },
@@ -1221,11 +1221,10 @@ enums = {
     },
     'SettleTime': {
         'codegen_method': 'public',
-        'generate-mappings': True,
         'values': [
             {
                 'name': 'NIDMM_VAL_SETTLE_TIME_AUTO',
-                'value': -1.0
+                'value': -1
             }
         ]
     },
@@ -1337,15 +1336,14 @@ enums = {
     },
     'TriggerDelays': {
         'codegen_method': 'public',
-        'generate-mappings': True,
         'values': [
             {
                 'name': 'NIDMM_VAL_AUTO_DELAY_ON',
-                'value': -1.0
+                'value': -1
             },
             {
                 'name': 'NIDMM_VAL_AUTO_DELAY_OFF',
-                'value': -2.0
+                'value': -2
             }
         ]
     },

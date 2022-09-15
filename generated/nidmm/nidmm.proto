@@ -203,14 +203,14 @@ enum AcquisitionStatus {
 
 enum ApertureTime {
   APERTURE_TIME_UNSPECIFIED = 0;
-  APERTURE_TIME_NIDMM_VAL_APERTURE_TIME_AUTO = 1;
-  APERTURE_TIME_NIDMM_VAL_1_PLC = 2;
-  APERTURE_TIME_NIDMM_VAL_5_PLC = 3;
-  APERTURE_TIME_NIDMM_VAL_6_PLC = 4;
-  APERTURE_TIME_NIDMM_VAL_10_PLC = 5;
-  APERTURE_TIME_NIDMM_VAL_12_PLC = 6;
-  APERTURE_TIME_NIDMM_VAL_100_PLC = 7;
-  APERTURE_TIME_NIDMM_VAL_120_PLC = 8;
+  APERTURE_TIME_NIDMM_VAL_APERTURE_TIME_AUTO = -1;
+  APERTURE_TIME_NIDMM_VAL_1_PLC = 1;
+  APERTURE_TIME_NIDMM_VAL_5_PLC = 5;
+  APERTURE_TIME_NIDMM_VAL_6_PLC = 6;
+  APERTURE_TIME_NIDMM_VAL_10_PLC = 10;
+  APERTURE_TIME_NIDMM_VAL_12_PLC = 12;
+  APERTURE_TIME_NIDMM_VAL_100_PLC = 100;
+  APERTURE_TIME_NIDMM_VAL_120_PLC = 120;
 }
 
 enum ApertureTimeUnits {
@@ -237,8 +237,8 @@ enum ControlCommit {
 
 enum FrequencyVoltageRange {
   FREQUENCY_VOLTAGE_RANGE_UNSPECIFIED = 0;
-  FREQUENCY_VOLTAGE_RANGE_NIDMM_VAL_AUTO_RANGE_ON = 1;
-  FREQUENCY_VOLTAGE_RANGE_NIDMM_VAL_AUTO_RANGE_OFF = 2;
+  FREQUENCY_VOLTAGE_RANGE_NIDMM_VAL_AUTO_RANGE_ON = -1;
+  FREQUENCY_VOLTAGE_RANGE_NIDMM_VAL_AUTO_RANGE_OFF = -2;
 }
 
 enum Function {
@@ -382,34 +382,39 @@ enum NiDmmInt32AttributeValues {
   NIDMM_INT32_WAVEFORM_COUPLING_VAL_WAVEFORM_COUPLING_DC = 1;
 }
 
+enum NiDmmReal64AttributeValues {
+  option allow_alias = true;
+  NIDMM_REAL64_UNSPECIFIED = 0;
+  NIDMM_REAL64_APERTURE_TIME_VAL_APERTURE_TIME_AUTO = -1;
+  NIDMM_REAL64_APERTURE_TIME_VAL_1_PLC = 1;
+  NIDMM_REAL64_APERTURE_TIME_VAL_5_PLC = 5;
+  NIDMM_REAL64_APERTURE_TIME_VAL_6_PLC = 6;
+  NIDMM_REAL64_APERTURE_TIME_VAL_10_PLC = 10;
+  NIDMM_REAL64_APERTURE_TIME_VAL_12_PLC = 12;
+  NIDMM_REAL64_APERTURE_TIME_VAL_100_PLC = 100;
+  NIDMM_REAL64_APERTURE_TIME_VAL_120_PLC = 120;
+  NIDMM_REAL64_FREQUENCY_VOLTAGE_RANGE_VAL_AUTO_RANGE_ON = -1;
+  NIDMM_REAL64_FREQUENCY_VOLTAGE_RANGE_VAL_AUTO_RANGE_OFF = -2;
+  NIDMM_REAL64_POWERLINE_FREQUENCY_VAL_50_HERTZ = 50;
+  NIDMM_REAL64_POWERLINE_FREQUENCY_VAL_60_HERTZ = 60;
+  NIDMM_REAL64_RANGE_VAL_AUTO_RANGE_ON = -1;
+  NIDMM_REAL64_RANGE_VAL_AUTO_RANGE_OFF = -2;
+  NIDMM_REAL64_RANGE_VAL_AUTO_RANGE_ONCE = -3;
+  NIDMM_REAL64_SAMPLE_INTERVAL_VAL_AUTO_DELAY = -1;
+  NIDMM_REAL64_SETTLE_TIME_VAL_SETTLE_TIME_AUTO = -1;
+  NIDMM_REAL64_TRIGGER_DELAYS_VAL_AUTO_DELAY_ON = -1;
+  NIDMM_REAL64_TRIGGER_DELAYS_VAL_AUTO_DELAY_OFF = -2;
+}
+
 enum NiDmmReal64AttributeValuesMapped {
   NIDMM_REAL64_MAPPED_UNSPECIFIED = 0;
-  NIDMM_REAL64_APERTURE_TIME_VAL_APERTURE_TIME_AUTO = 1;
-  NIDMM_REAL64_APERTURE_TIME_VAL_1_PLC = 2;
-  NIDMM_REAL64_APERTURE_TIME_VAL_5_PLC = 3;
-  NIDMM_REAL64_APERTURE_TIME_VAL_6_PLC = 4;
-  NIDMM_REAL64_APERTURE_TIME_VAL_10_PLC = 5;
-  NIDMM_REAL64_APERTURE_TIME_VAL_12_PLC = 6;
-  NIDMM_REAL64_APERTURE_TIME_VAL_100_PLC = 7;
-  NIDMM_REAL64_APERTURE_TIME_VAL_120_PLC = 8;
-  NIDMM_REAL64_CURRENT_SOURCE_VAL_1_MICROAMP = 9;
-  NIDMM_REAL64_CURRENT_SOURCE_VAL_10_MICROAMP = 10;
-  NIDMM_REAL64_CURRENT_SOURCE_VAL_100_MICROAMP = 11;
-  NIDMM_REAL64_CURRENT_SOURCE_VAL_1_MILLIAMP = 12;
-  NIDMM_REAL64_FREQUENCY_VOLTAGE_RANGE_VAL_AUTO_RANGE_ON = 13;
-  NIDMM_REAL64_FREQUENCY_VOLTAGE_RANGE_VAL_AUTO_RANGE_OFF = 14;
-  NIDMM_REAL64_INPUT_RESISTANCE_VAL_1_MEGAOHM = 15;
-  NIDMM_REAL64_INPUT_RESISTANCE_VAL_10_MEGAOHM = 16;
-  NIDMM_REAL64_INPUT_RESISTANCE_VAL_GREATER_THAN_10_GIGAOHM = 17;
-  NIDMM_REAL64_POWERLINE_FREQUENCY_VAL_50_HERTZ = 18;
-  NIDMM_REAL64_POWERLINE_FREQUENCY_VAL_60_HERTZ = 19;
-  NIDMM_REAL64_RANGE_VAL_AUTO_RANGE_ON = 20;
-  NIDMM_REAL64_RANGE_VAL_AUTO_RANGE_OFF = 21;
-  NIDMM_REAL64_RANGE_VAL_AUTO_RANGE_ONCE = 22;
-  NIDMM_REAL64_SAMPLE_INTERVAL_VAL_AUTO_DELAY = 23;
-  NIDMM_REAL64_SETTLE_TIME_VAL_SETTLE_TIME_AUTO = 24;
-  NIDMM_REAL64_TRIGGER_DELAYS_VAL_AUTO_DELAY_ON = 25;
-  NIDMM_REAL64_TRIGGER_DELAYS_VAL_AUTO_DELAY_OFF = 26;
+  NIDMM_REAL64_CURRENT_SOURCE_VAL_1_MICROAMP = 1;
+  NIDMM_REAL64_CURRENT_SOURCE_VAL_10_MICROAMP = 2;
+  NIDMM_REAL64_CURRENT_SOURCE_VAL_100_MICROAMP = 3;
+  NIDMM_REAL64_CURRENT_SOURCE_VAL_1_MILLIAMP = 4;
+  NIDMM_REAL64_INPUT_RESISTANCE_VAL_1_MEGAOHM = 5;
+  NIDMM_REAL64_INPUT_RESISTANCE_VAL_10_MEGAOHM = 6;
+  NIDMM_REAL64_INPUT_RESISTANCE_VAL_GREATER_THAN_10_GIGAOHM = 7;
 }
 
 enum OffsetCompensatedOhms {
@@ -419,8 +424,8 @@ enum OffsetCompensatedOhms {
 
 enum PowerLineFrequencies {
   POWER_LINE_FREQUENCIES_UNSPECIFIED = 0;
-  POWER_LINE_FREQUENCIES_NIDMM_VAL_50_HERTZ = 1;
-  POWER_LINE_FREQUENCIES_NIDMM_VAL_60_HERTZ = 2;
+  POWER_LINE_FREQUENCIES_NIDMM_VAL_50_HERTZ = 50;
+  POWER_LINE_FREQUENCIES_NIDMM_VAL_60_HERTZ = 60;
 }
 
 enum RTDType {
@@ -439,7 +444,7 @@ enum SampleCount {
 
 enum SampleInterval {
   SAMPLE_INTERVAL_UNSPECIFIED = 0;
-  SAMPLE_INTERVAL_NIDMM_VAL_AUTO_DELAY = 1;
+  SAMPLE_INTERVAL_NIDMM_VAL_AUTO_DELAY = -1;
 }
 
 enum SampleTrigSlope {
@@ -494,8 +499,8 @@ enum TriggerCount {
 
 enum TriggerDelays {
   TRIGGER_DELAYS_UNSPECIFIED = 0;
-  TRIGGER_DELAYS_NIDMM_VAL_AUTO_DELAY_ON = 1;
-  TRIGGER_DELAYS_NIDMM_VAL_AUTO_DELAY_OFF = 2;
+  TRIGGER_DELAYS_NIDMM_VAL_AUTO_DELAY_ON = -1;
+  TRIGGER_DELAYS_NIDMM_VAL_AUTO_DELAY_OFF = -2;
 }
 
 enum TriggerSlope {
@@ -559,8 +564,9 @@ message CheckAttributeViReal64Request {
   string channel_name = 2;
   NiDmmAttribute attribute_id = 3;
   oneof attribute_value_enum {
-    NiDmmReal64AttributeValuesMapped attribute_value_mapped = 4;
-    double attribute_value_raw = 5;
+    NiDmmReal64AttributeValues attribute_value = 4;
+    NiDmmReal64AttributeValuesMapped attribute_value_mapped = 5;
+    double attribute_value_raw = 6;
   }
 }
 
@@ -672,7 +678,7 @@ message ConfigureFixedRefJunctionResponse {
 message ConfigureFrequencyVoltageRangeRequest {
   nidevice_grpc.Session vi = 1;
   oneof voltage_range_enum {
-    FrequencyVoltageRange voltage_range_mapped = 2;
+    FrequencyVoltageRange voltage_range = 2;
     double voltage_range_raw = 3;
   }
 }
@@ -742,7 +748,7 @@ message ConfigureMultiPointRequest {
     sint32 sample_trigger_raw = 7;
   }
   oneof sample_interval_enum {
-    SampleInterval sample_interval_mapped = 8;
+    SampleInterval sample_interval = 8;
     double sample_interval_raw = 9;
   }
 }
@@ -776,7 +782,7 @@ message ConfigureOpenCableCompValuesResponse {
 message ConfigurePowerLineFrequencyRequest {
   nidevice_grpc.Session vi = 1;
   oneof power_line_frequency_hz_enum {
-    PowerLineFrequencies power_line_frequency_hz_mapped = 2;
+    PowerLineFrequencies power_line_frequency_hz = 2;
     double power_line_frequency_hz_raw = 3;
   }
 }
@@ -883,7 +889,7 @@ message ConfigureTriggerRequest {
     sint32 trigger_source_raw = 3;
   }
   oneof trigger_delay_enum {
-    TriggerDelays trigger_delay_mapped = 4;
+    TriggerDelays trigger_delay = 4;
     double trigger_delay_raw = 5;
   }
 }
@@ -1027,7 +1033,7 @@ message GetApertureTimeInfoRequest {
 
 message GetApertureTimeInfoResponse {
   int32 status = 1;
-  ApertureTime aperture_time_mapped = 2;
+  ApertureTime aperture_time = 2;
   double aperture_time_raw = 3;
   ApertureTimeUnits aperture_time_units = 4;
   sint32 aperture_time_units_raw = 5;
@@ -1457,8 +1463,9 @@ message SetAttributeViReal64Request {
   string channel_name = 2;
   NiDmmAttribute attribute_id = 3;
   oneof attribute_value_enum {
-    NiDmmReal64AttributeValuesMapped attribute_value_mapped = 4;
-    double attribute_value_raw = 5;
+    NiDmmReal64AttributeValues attribute_value = 4;
+    NiDmmReal64AttributeValuesMapped attribute_value_mapped = 5;
+    double attribute_value_raw = 6;
   }
 }
 
