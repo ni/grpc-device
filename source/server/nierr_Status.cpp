@@ -7,15 +7,12 @@
    All rights reserved.
 */
 
-
 /* includes... */
+#include "nierr_Status.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <stdint.h>
 #include <stdbool.h>
-
-#include "nierr_Status.h"
 
 #define STATUS_MIN_DESC_SIZE 512
 

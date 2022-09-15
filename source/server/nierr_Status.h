@@ -10,7 +10,7 @@
 #ifndef NIERR_NIERR_STATUS_H_
 #define NIERR_NIERR_STATUS_H_
 
-#include <string>
+#include <stdint.h>
 
 extern "C" {
 #define kNICCall
@@ -76,6 +76,12 @@ void nierr_Status_initialize(struct nierr_Status * status);
  * \post if failed, nothing will be changed
  */
 bool kNICCall nierr_defaultReallocJson(struct nierr_Status * s, uint32_t size);
+
+/*! free the json string
+ * \param[in,out] s status
+ */
+kNIInlineC void nierr_Status_jsonFree(struct nierr_Status *s)
+   { s->reallocJson(s,0); }
 
 /*! whether nierr_Status code is fatal
  * \param s status

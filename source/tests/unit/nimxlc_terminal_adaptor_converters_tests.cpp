@@ -31,7 +31,8 @@ TEST(nimxlcterminaladaptor_restricted_tests, nierr_Status_ConvertToGrpc_StatusVa
   MockServerContext serverContext;
   NIErrStatusOutputConverter<MockServerContext> status(&serverContext);
   (&status)->code = errorCode;
-  (&status)->json = const_cast<char*>(description.c_str());;
+  (&status)->reallocJson(&status, description.length());
+  strcpy((&status)->json, description.c_str());
   (&status)->capacity = description.length();
 
   nimxlcterminaladaptor_restricted_grpc::NIErrStatus output;

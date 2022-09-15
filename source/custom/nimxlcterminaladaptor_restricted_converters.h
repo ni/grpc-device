@@ -24,12 +24,18 @@ struct NIErrStatusOutputConverter {
     nierr_Status_initialize(&status);
   }
 
+  ~NIErrStatusOutputConverter()
+  {
+    context = nullptr;
+    nierr_Status_jsonFree(&status);
+  }
+
   nierr_Status* operator&()
   {
     return &status;
   }
 
-  std::string UrlEncode(char* input) const
+  std::string url_encode(const char* input) const
   {
     std::string encoded(input);
     // Replace the following characters to their equivalent '%xx' hex code
@@ -53,7 +59,7 @@ struct NIErrStatusOutputConverter {
       std::string description = "Error " + std::to_string(status.code) + " has occurred in nimxlcTerminalAdaptor. Refer to the trailing metadata for details.";
       output.set_description(description);
       context->AddTrailingMetadata("ni-error", std::to_string((&status)->code));
-      context->AddTrailingMetadata("ni-error-json", UrlEncode((&status)->json));
+      context->AddTrailingMetadata("ni-error-json", url_encode((&status)->json));
     }
   }
 
@@ -61,7 +67,7 @@ struct NIErrStatusOutputConverter {
   nierr_Status status{};
 };
 
-inline void convert_to_grpc(const NIErrStatusOutputConverter<grpc::ServerContext> storage, nimxlcterminaladaptor_restricted_grpc::NIErrStatus* output)
+inline void convert_to_grpc(const NIErrStatusOutputConverter<grpc::ServerContext>& storage, nimxlcterminaladaptor_restricted_grpc::NIErrStatus* output)
 {
   storage.to_grpc(*output);
 }
