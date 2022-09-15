@@ -55,14 +55,16 @@ struct NIErrStatusOutputConverter {
     output.set_code(status.code);
     if (nierr_Status_isFatal(&status))
     {
-      std::string description = "Error " + std::to_string(status.code) + " has occurred in nimxlcTerminalAdaptor. Refer to the trailing metadata for details.";
-      output.set_description(description);
       context->AddTrailingMetadata("ni-error", std::to_string(status.code));
 
       if (status.json)
       {
         context->AddTrailingMetadata("ni-error-json", url_encode(status.json));
       }
+    }
+    else if (status.json)
+    {
+      output.set_json(url_encode(status.json));
     }
   }
 
