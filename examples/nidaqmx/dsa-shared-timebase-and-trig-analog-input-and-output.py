@@ -508,13 +508,21 @@ async def _main():
                 wait_for_done(stream) for stream in done_event_stream_list
             ]
             await asyncio.gather(*tasks)
-            stop_task_response = await client.StopTask(nidaqmx_types.StopTaskRequest(task=leader_input_task))
+            stop_task_response = await client.StopTask(
+                nidaqmx_types.StopTaskRequest(task=leader_input_task)
+            )
             check_for_warning(stop_task_response)
-            stop_task_response = await client.StopTask(nidaqmx_types.StopTaskRequest(task=leader_output_task))
+            stop_task_response = await client.StopTask(
+                nidaqmx_types.StopTaskRequest(task=leader_output_task)
+            )
             check_for_warning(stop_task_response)
-            stop_task_response = await client.StopTask(nidaqmx_types.StopTaskRequest(task=follower_input_task))
+            stop_task_response = await client.StopTask(
+                nidaqmx_types.StopTaskRequest(task=follower_input_task)
+            )
             check_for_warning(stop_task_response)
-            stop_task_response = await client.StopTask(nidaqmx_types.StopTaskRequest(task=follower_output_task))
+            stop_task_response = await client.StopTask(
+                nidaqmx_types.StopTaskRequest(task=follower_output_task)
+            )
             check_for_warning(stop_task_response)
 
         except grpc.RpcError as rpc_error:
