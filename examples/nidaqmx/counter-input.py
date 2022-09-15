@@ -84,6 +84,9 @@ try:
         nidaqmx_types.ReadCounterScalarF64Request(task=task, timeout=10.0)
     )
     check_for_warning(response)
+
+    stop_task_response = client.StopTask(nidaqmx_types.StopTaskRequest(task=task))
+    check_for_warning(stop_task_response)
     print(f"Frequency: {response.value} Hz")
 except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
@@ -100,5 +103,4 @@ except grpc.RpcError as rpc_error:
     print(f"{error_message}")
 finally:
     if task:
-        clear_task_response = client.ClearTask(nidaqmx_types.ClearTaskRequest(task=task))
-        check_for_warning(clear_task_response)
+        client.ClearTask(nidaqmx_types.ClearTaskRequest(task=task))
