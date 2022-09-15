@@ -26,7 +26,6 @@ struct NIErrStatusOutputConverter {
 
   ~NIErrStatusOutputConverter()
   {
-    context = nullptr;
     nierr_Status_jsonFree(&status);
   }
 
@@ -58,8 +57,12 @@ struct NIErrStatusOutputConverter {
     {
       std::string description = "Error " + std::to_string(status.code) + " has occurred in nimxlcTerminalAdaptor. Refer to the trailing metadata for details.";
       output.set_description(description);
-      context->AddTrailingMetadata("ni-error", std::to_string((&status)->code));
-      context->AddTrailingMetadata("ni-error-json", url_encode((&status)->json));
+      context->AddTrailingMetadata("ni-error", std::to_string(status.code));
+
+      if (status.json)
+      {
+        context->AddTrailingMetadata("ni-error-json", url_encode(status.json));
+      }
     }
   }
 
