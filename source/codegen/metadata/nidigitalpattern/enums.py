@@ -1,7 +1,8 @@
-﻿# -*- coding: utf-8 -*-
-# This file is generated from NI-Digital Pattern Driver API metadata version 19.5.0d7
+# -*- coding: utf-8 -*-
+# This file is generated from NI-Digital Pattern Driver API metadata version 22.8.0d9999
 enums = {
     'BitOrder': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDIGITAL_VAL_MSB_FIRST',
@@ -13,7 +14,30 @@ enums = {
             }
         ]
     },
+    'ConditionalJumpTriggerId': {
+        'codegen_method': 'public',
+        'generate-mappings': True,
+        'values': [
+            {
+                'name': 'NIDIGITAL_VAL_CONDITIONAL_JUMP_TRIGGER0',
+                'value': 'conditionalJumpTrigger0'
+            },
+            {
+                'name': 'NIDIGITAL_VAL_CONDITIONAL_JUMP_TRIGGER1',
+                'value': 'conditionalJumpTrigger1'
+            },
+            {
+                'name': 'NIDIGITAL_VAL_CONDITIONAL_JUMP_TRIGGER2',
+                'value': 'conditionalJumpTrigger2'
+            },
+            {
+                'name': 'NIDIGITAL_VAL_CONDITIONAL_JUMP_TRIGGER3',
+                'value': 'conditionalJumpTrigger3'
+            }
+        ]
+    },
     'DigitalEdge': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDIGITAL_VAL_RISING_EDGE',
@@ -26,6 +50,7 @@ enums = {
         ]
     },
     'DriveFormat': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDIGITAL_VAL_NR',
@@ -46,6 +71,7 @@ enums = {
         ]
     },
     'ExportSignal': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDIGITAL_VAL_START_TRIGGER',
@@ -62,10 +88,15 @@ enums = {
             {
                 'name': 'NIDIGITAL_VAL_REF_CLOCK',
                 'value': 2003
+            },
+            {
+                'name': 'NIDIGITAL_VAL_RIO_EVENT',
+                'value': 2004
             }
         ]
     },
     'FrequencyMeasurementMode': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDIGITAL_VAL_BANKED',
@@ -77,7 +108,8 @@ enums = {
             }
         ]
     },
-    'HistoryRamCyclesToAcquire': {
+    'HistoryRAMCyclesToAcquire': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDIGITAL_VAL_FAILED_CYCLES',
@@ -89,15 +121,8 @@ enums = {
             }
         ]
     },
-    'HistoryRamMaxSamplesToAcquirePerSite': {
-        'values': [
-            {
-                'name': 'NIDIGITAL_VAL_ACQUIRE_ALL_SAMPLES',
-                'value': -1
-            }
-        ]
-    },
-    'HistoryRamTriggerType': {
+    'HistoryRAMTriggerType': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDIGITAL_VAL_FIRST_FAILURE',
@@ -140,10 +165,6 @@ enums = {
             {
                 'name': 'HISTORY_RAM_CYCLES_TO_ACQUIRE_VAL_ALL_CYCLES',
                 'value': 2304
-            },
-            {
-                'name': 'HISTORY_RAM_MAX_SAMPLES_TO_ACQUIRE_PER_SITE_VAL_ACQUIRE_ALL_SAMPLES',
-                'value': -1
             },
             {
                 'name': 'HISTORY_RAM_TRIGGER_TYPE_VAL_FIRST_FAILURE',
@@ -190,6 +211,10 @@ enums = {
                 'value': 1103
             },
             {
+                'name': 'SELECTED_FUNCTION_VAL_RIO',
+                'value': 1104
+            },
+            {
                 'name': 'TDR_ENDPOINT_TERMINATION_VAL_TDR_TO_OPEN',
                 'value': 3600
             },
@@ -223,7 +248,74 @@ enums = {
             }
         ]
     },
+    'PPMUApertureTimeUnits': {
+        'codegen_method': 'public',
+        'values': [
+            {
+                'name': 'NIDIGITAL_VAL_SECONDS',
+                'value': 2100
+            }
+        ]
+    },
+    'PPMUCurrentLimitBehavior': {
+        'codegen_method': 'public',
+        'values': [
+            {
+                'name': 'NIDIGITAL_VAL_CURRENT_REGULATE',
+                'value': 3100
+            }
+        ]
+    },
+    'PPMUMeasurementType': {
+        'codegen_method': 'public',
+        'values': [
+            {
+                'name': 'NIDIGITAL_VAL_MEASURE_CURRENT',
+                'value': 2400
+            },
+            {
+                'name': 'NIDIGITAL_VAL_MEASURE_VOLTAGE',
+                'value': 2401
+            }
+        ]
+    },
+    'PPMUOutputFunction': {
+        'codegen_method': 'public',
+        'values': [
+            {
+                'name': 'NIDIGITAL_VAL_DC_VOLTAGE',
+                'value': 1300
+            },
+            {
+                'name': 'NIDIGITAL_VAL_DC_CURRENT',
+                'value': 1301
+            }
+        ]
+    },
+    'PatternOpcodeEvent': {
+        'codegen_method': 'public',
+        'generate-mappings': True,
+        'values': [
+            {
+                'name': 'NIDIGITAL_VAL_PATTERN_OPCODE_EVENT0',
+                'value': 'patternOpcodeEvent0'
+            },
+            {
+                'name': 'NIDIGITAL_VAL_PATTERN_OPCODE_EVENT1',
+                'value': 'patternOpcodeEvent1'
+            },
+            {
+                'name': 'NIDIGITAL_VAL_PATTERN_OPCODE_EVENT2',
+                'value': 'patternOpcodeEvent2'
+            },
+            {
+                'name': 'NIDIGITAL_VAL_PATTERN_OPCODE_EVENT3',
+                'value': 'patternOpcodeEvent3'
+            }
+        ]
+    },
     'PinState': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDIGITAL_VAL_0',
@@ -271,47 +363,84 @@ enums = {
             }
         ]
     },
-    'PpmuApertureTimeUnits': {
+    'RIOEvent': {
+        'codegen_method': 'public',
+        'generate-mappings': True,
         'values': [
             {
-                'name': 'NIDIGITAL_VAL_SECONDS',
-                'value': 2100
-            }
-        ]
-    },
-    'PpmuCurrentLimitBehavior': {
-        'values': [
-            {
-                'name': 'NIDIGITAL_VAL_CURRENT_REGULATE',
-                'value': 3100
-            }
-        ]
-    },
-    'PpmuMeasurementType': {
-        'values': [
-            {
-                'name': 'NIDIGITAL_VAL_MEASURE_CURRENT',
-                'value': 2400
+                'name': 'NIDIGITAL_VAL_RIO_EVENT0',
+                'value': 'RIOEvent0'
             },
             {
-                'name': 'NIDIGITAL_VAL_MEASURE_VOLTAGE',
-                'value': 2401
+                'name': 'NIDIGITAL_VAL_RIO_EVENT1',
+                'value': 'RIOEvent1'
+            },
+            {
+                'name': 'NIDIGITAL_VAL_RIO_EVENT2',
+                'value': 'RIOEvent2'
+            },
+            {
+                'name': 'NIDIGITAL_VAL_RIO_EVENT3',
+                'value': 'RIOEvent3'
+            },
+            {
+                'name': 'NIDIGITAL_VAL_RIO_EVENT4',
+                'value': 'RIOEvent4'
+            },
+            {
+                'name': 'NIDIGITAL_VAL_RIO_EVENT5',
+                'value': 'RIOEvent5'
+            },
+            {
+                'name': 'NIDIGITAL_VAL_RIO_EVENT6',
+                'value': 'RIOEvent6'
+            },
+            {
+                'name': 'NIDIGITAL_VAL_RIO_EVENT7',
+                'value': 'RIOEvent7'
             }
         ]
     },
-    'PpmuOutputFunction': {
+    'RIOTriggerId': {
+        'codegen_method': 'public',
+        'generate-mappings': True,
         'values': [
             {
-                'name': 'NIDIGITAL_VAL_DC_VOLTAGE',
-                'value': 1300
+                'name': 'NIDIGITAL_VAL_RIO_TRIGGER0',
+                'value': 'RIOTrigger0'
             },
             {
-                'name': 'NIDIGITAL_VAL_DC_CURRENT',
-                'value': 1301
+                'name': 'NIDIGITAL_VAL_RIO_TRIGGER1',
+                'value': 'RIOTrigger1'
+            },
+            {
+                'name': 'NIDIGITAL_VAL_RIO_TRIGGER2',
+                'value': 'RIOTrigger2'
+            },
+            {
+                'name': 'NIDIGITAL_VAL_RIO_TRIGGER3',
+                'value': 'RIOTrigger3'
+            },
+            {
+                'name': 'NIDIGITAL_VAL_RIO_TRIGGER4',
+                'value': 'RIOTrigger4'
+            },
+            {
+                'name': 'NIDIGITAL_VAL_RIO_TRIGGER5',
+                'value': 'RIOTrigger5'
+            },
+            {
+                'name': 'NIDIGITAL_VAL_RIO_TRIGGER6',
+                'value': 'RIOTrigger6'
+            },
+            {
+                'name': 'NIDIGITAL_VAL_RIO_TRIGGER7',
+                'value': 'RIOTrigger7'
             }
         ]
     },
     'SelectedFunction': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDIGITAL_VAL_DIGITAL',
@@ -328,10 +457,107 @@ enums = {
             {
                 'name': 'NIDIGITAL_VAL_DISCONNECT',
                 'value': 1103
+            },
+            {
+                'name': 'NIDIGITAL_VAL_RIO',
+                'value': 1104
+            }
+        ]
+    },
+    'SequencerFlag': {
+        'codegen_method': 'public',
+        'generate-mappings': True,
+        'values': [
+            {
+                'name': 'NIDIGITAL_VAL_SEQUENCER_FLAG0',
+                'value': 'seqflag0'
+            },
+            {
+                'name': 'NIDIGITAL_VAL_SEQUENCER_FLAG1',
+                'value': 'seqflag1'
+            },
+            {
+                'name': 'NIDIGITAL_VAL_SEQUENCER_FLAG2',
+                'value': 'seqflag2'
+            },
+            {
+                'name': 'NIDIGITAL_VAL_SEQUENCER_FLAG3',
+                'value': 'seqflag3'
+            }
+        ]
+    },
+    'SequencerRegister': {
+        'codegen_method': 'public',
+        'generate-mappings': True,
+        'values': [
+            {
+                'name': 'NIDIGITAL_VAL_SEQUENCER_REGISTER0',
+                'value': 'reg0'
+            },
+            {
+                'name': 'NIDIGITAL_VAL_SEQUENCER_REGISTER1',
+                'value': 'reg1'
+            },
+            {
+                'name': 'NIDIGITAL_VAL_SEQUENCER_REGISTER2',
+                'value': 'reg2'
+            },
+            {
+                'name': 'NIDIGITAL_VAL_SEQUENCER_REGISTER3',
+                'value': 'reg3'
+            },
+            {
+                'name': 'NIDIGITAL_VAL_SEQUENCER_REGISTER4',
+                'value': 'reg4'
+            },
+            {
+                'name': 'NIDIGITAL_VAL_SEQUENCER_REGISTER5',
+                'value': 'reg5'
+            },
+            {
+                'name': 'NIDIGITAL_VAL_SEQUENCER_REGISTER6',
+                'value': 'reg6'
+            },
+            {
+                'name': 'NIDIGITAL_VAL_SEQUENCER_REGISTER7',
+                'value': 'reg7'
+            },
+            {
+                'name': 'NIDIGITAL_VAL_SEQUENCER_REGISTER8',
+                'value': 'reg8'
+            },
+            {
+                'name': 'NIDIGITAL_VAL_SEQUENCER_REGISTER9',
+                'value': 'reg9'
+            },
+            {
+                'name': 'NIDIGITAL_VAL_SEQUENCER_REGISTER10',
+                'value': 'reg10'
+            },
+            {
+                'name': 'NIDIGITAL_VAL_SEQUENCER_REGISTER11',
+                'value': 'reg11'
+            },
+            {
+                'name': 'NIDIGITAL_VAL_SEQUENCER_REGISTER12',
+                'value': 'reg12'
+            },
+            {
+                'name': 'NIDIGITAL_VAL_SEQUENCER_REGISTER13',
+                'value': 'reg13'
+            },
+            {
+                'name': 'NIDIGITAL_VAL_SEQUENCER_REGISTER14',
+                'value': 'reg14'
+            },
+            {
+                'name': 'NIDIGITAL_VAL_SEQUENCER_REGISTER15',
+                'value': 'reg15'
             }
         ]
     },
     'SiteResultType': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDIGITAL_VAL_PASS_FAIL',
@@ -344,6 +570,7 @@ enums = {
         ]
     },
     'SoftwareTrigger': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDIGITAL_VAL_START_TRIGGER',
@@ -356,6 +583,7 @@ enums = {
         ]
     },
     'SourceDataMapping': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDIGITAL_VAL_BROADCAST',
@@ -367,7 +595,8 @@ enums = {
             }
         ]
     },
-    'TdrEndpointTermination': {
+    'TDREndpointTermination': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDIGITAL_VAL_TDR_TO_OPEN',
@@ -380,6 +609,7 @@ enums = {
         ]
     },
     'TerminationMode': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDIGITAL_VAL_ACTIVE_LOAD',
@@ -396,6 +626,7 @@ enums = {
         ]
     },
     'TimeSetEdgeType': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDIGITAL_VAL_DRIVE_ON',
@@ -431,7 +662,50 @@ enums = {
             }
         ]
     },
+    'TriggerTerminal': {
+        'codegen_method': 'public',
+        'generate-mappings': True,
+        'values': [
+            {
+                'name': 'NIDIGITAL_VAL_DO_NOT_EXPORT_STR',
+                'value': ''
+            },
+            {
+                'name': 'NIDIGITAL_VAL_PXI_TRIG0_STR',
+                'value': 'PXI_Trig0'
+            },
+            {
+                'name': 'NIDIGITAL_VAL_PXI_TRIG1_STR',
+                'value': 'PXI_Trig1'
+            },
+            {
+                'name': 'NIDIGITAL_VAL_PXI_TRIG2_STR',
+                'value': 'PXI_Trig2'
+            },
+            {
+                'name': 'NIDIGITAL_VAL_PXI_TRIG3_STR',
+                'value': 'PXI_Trig3'
+            },
+            {
+                'name': 'NIDIGITAL_VAL_PXI_TRIG4_STR',
+                'value': 'PXI_Trig4'
+            },
+            {
+                'name': 'NIDIGITAL_VAL_PXI_TRIG5_STR',
+                'value': 'PXI_Trig5'
+            },
+            {
+                'name': 'NIDIGITAL_VAL_PXI_TRIG6_STR',
+                'value': 'PXI_Trig6'
+            },
+            {
+                'name': 'NIDIGITAL_VAL_PXI_TRIG7_STR',
+                'value': 'PXI_Trig7'
+            }
+        ]
+    },
     'TriggerType': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDIGITAL_VAL_NONE',
@@ -448,6 +722,7 @@ enums = {
         ]
     },
     'WriteStaticPinState': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDIGITAL_VAL_0',

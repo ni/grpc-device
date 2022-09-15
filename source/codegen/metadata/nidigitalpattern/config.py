@@ -1,32 +1,17 @@
-﻿# -*- coding: utf-8 -*-
-# This file is generated from NI-Digital Pattern Driver API metadata version 19.5.0d7
+# -*- coding: utf-8 -*-
+# This file is generated from NI-Digital Pattern Driver API metadata version 22.8.0d9999
 config = {
     'additional_headers': {
-        'custom/ivi_errors.h': [
-            'service.cpp'
-        ]
     },
-    'api_version': '19.5.0d7',
+    'api_version': '22.8.0d9999',
     'c_function_prefix': 'niDigital_',
     'c_header': 'niDigital.h',
     'close_function': 'Close',
-    'context_manager_name': {
-        'abort_function': 'Abort',
-        'initiate_function': 'Initiate',
-        'task': 'burst'
-    },
     'csharp_namespace': 'NationalInstruments.Grpc.Digital',
     'custom_types': [
     ],
     'driver_name': 'NI-Digital Pattern Driver',
-    'enum_whitelist_suffix': [
-    ],
-    'extra_errors_used': [
-        'InvalidRepeatedCapabilityError',
-        'SelfTestError'
-    ],
-    'init_function': 'InitWithOptions',
-    'java_package': 'com.ni.grpc.nidigital',
+    'java_package': 'com.ni.grpc.digital',
     'library_info': {
         'Linux': {
             '64bit': {
@@ -46,38 +31,9 @@ config = {
         }
     },
     'linux_rt_support': False,
-    'metadata_version': '2.0',
-    'module_name': 'nidigitalpattern',
-    'namespace_component': 'nidigitalpattern',
-    'repeated_capabilities': [
-        {
-            'prefix': '',
-            'python_name': 'channels'
-        },
-        {
-            'prefix': '',
-            'python_name': 'pins'
-        },
-        {
-            'prefix': '',
-            'python_name': 'instruments'
-        },
-        {
-            'prefix': 'patternOpcodeEvent',
-            'python_name': 'pattern_opcode_events'
-        },
-        {
-            'prefix': 'conditionalJumpTrigger',
-            'python_name': 'conditional_jump_triggers'
-        },
-        {
-            'prefix': 'site',
-            'python_name': 'sites'
-        }
-    ],
+    'module_name': 'nidigital',
+    'namespace_component': 'nidigital',
     'service_class_prefix': 'NiDigital',
-    'session_class_description': 'An NI-Digital Pattern Driver session',
     'session_handle_parameter_name': 'vi',
-    'status_ok': 'status >= 0',
-    'uses_nitclk': True
+    'status_ok': 'status >= 0'
 }
