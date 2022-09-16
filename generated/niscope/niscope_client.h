@@ -35,7 +35,7 @@ CableSenseSignalStopResponse cable_sense_signal_stop(const StubPtr& stub, const 
 CalSelfCalibrateResponse cal_self_calibrate(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const simple_variant<Option, pb::int32>& option);
 CheckAttributeViBooleanResponse check_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttribute& attribute_id, const bool& value);
 CheckAttributeViInt32Response check_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttribute& attribute_id, const simple_variant<NiScopeInt32AttributeValues, pb::int32>& value);
-CheckAttributeViInt64Response check_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttribute& attribute_id, const simple_variant<NiScopeInt64AttributeValues, pb::int64>& value);
+CheckAttributeViInt64Response check_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttribute& attribute_id, const pb::int64& value);
 CheckAttributeViReal64Response check_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttribute& attribute_id, const simple_variant<NiScopeReal64AttributeValues, double>& value);
 CheckAttributeViSessionResponse check_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttribute& attribute_id, const nidevice_grpc::Session& value);
 CheckAttributeViStringResponse check_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttribute& attribute_id, const simple_variant<NiScopeStringAttributeValuesMapped, std::string>& value);
@@ -61,6 +61,7 @@ ConfigureTriggerWindowResponse configure_trigger_window(const StubPtr& stub, con
 ConfigureVerticalResponse configure_vertical(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const double& range, const double& offset, const simple_variant<VerticalCoupling, pb::int32>& coupling, const double& probe_attenuation, const bool& enabled);
 DisableResponse disable(const StubPtr& stub, const nidevice_grpc::Session& vi);
 ErrorHandlerResponse error_handler(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& error_code, const pb::string& error_source);
+ErrorMessageResponse error_message(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& error_code);
 ExportAttributeConfigurationBufferResponse export_attribute_configuration_buffer(const StubPtr& stub, const nidevice_grpc::Session& vi);
 ExportAttributeConfigurationFileResponse export_attribute_configuration_file(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& file_path);
 ExportSignalResponse export_signal(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<ExportableSignals, pb::int32>& signal, const pb::string& signal_identifier, const simple_variant<ClockingTerminalValues, std::string>& output_terminal);
@@ -106,7 +107,7 @@ SelfTestResponse self_test(const StubPtr& stub, const nidevice_grpc::Session& vi
 SendSoftwareTriggerEdgeResponse send_software_trigger_edge(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<WhichTrigger, pb::int32>& which_trigger);
 SetAttributeViBooleanResponse set_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttribute& attribute_id, const bool& value);
 SetAttributeViInt32Response set_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttribute& attribute_id, const simple_variant<NiScopeInt32AttributeValues, pb::int32>& value);
-SetAttributeViInt64Response set_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttribute& attribute_id, const simple_variant<NiScopeInt64AttributeValues, pb::int64>& value);
+SetAttributeViInt64Response set_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttribute& attribute_id, const pb::int64& value);
 SetAttributeViReal64Response set_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttribute& attribute_id, const simple_variant<NiScopeReal64AttributeValues, double>& value);
 SetAttributeViSessionResponse set_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttribute& attribute_id, const nidevice_grpc::Session& value);
 SetAttributeViStringResponse set_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttribute& attribute_id, const simple_variant<NiScopeStringAttributeValuesMapped, std::string>& value);

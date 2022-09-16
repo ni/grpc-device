@@ -425,22 +425,7 @@ namespace niscope_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto channel_list = request->channel_list().c_str();
       ViAttr attribute_id = request->attribute_id();
-      ViInt64 value;
-      switch (request->value_enum_case()) {
-        case niscope_grpc::CheckAttributeViInt64Request::ValueEnumCase::kValue: {
-          value = static_cast<ViInt64>(request->value());
-          break;
-        }
-        case niscope_grpc::CheckAttributeViInt64Request::ValueEnumCase::kValueRaw: {
-          value = static_cast<ViInt64>(request->value_raw());
-          break;
-        }
-        case niscope_grpc::CheckAttributeViInt64Request::ValueEnumCase::VALUE_ENUM_NOT_SET: {
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for value was not specified or out of range");
-          break;
-        }
-      }
-
+      ViInt64 value = request->value_raw();
       auto status = library_->CheckAttributeViInt64(vi, channel_list, attribute_id, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -469,14 +454,6 @@ namespace niscope_grpc {
       switch (request->value_enum_case()) {
         case niscope_grpc::CheckAttributeViReal64Request::ValueEnumCase::kValue: {
           value = static_cast<ViReal64>(request->value());
-          break;
-        }
-        case niscope_grpc::CheckAttributeViReal64Request::ValueEnumCase::kValueMapped: {
-          auto value_imap_it = niscopereal64attributevaluesmapped_input_map_.find(request->value_mapped());
-          if (value_imap_it == niscopereal64attributevaluesmapped_input_map_.end()) {
-            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for value_mapped was not specified or out of range.");
-          }
-          value = static_cast<ViReal64>(value_imap_it->second);
           break;
         }
         case niscope_grpc::CheckAttributeViReal64Request::ValueEnumCase::kValueRaw: {
@@ -1510,6 +1487,32 @@ namespace niscope_grpc {
       response->set_status(status);
       response->set_error_description(error_description);
       nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_description()));
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiScopeService::ErrorMessage(::grpc::ServerContext* context, const ErrorMessageRequest* request, ErrorMessageResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViStatus error_code = request->error_code();
+      std::string error_message(256 - 1, '\0');
+      auto status = library_->ErrorMessage(vi, error_code, (ViChar*)error_message.data());
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(context, status, vi);
+      }
+      response->set_status(status);
+      response->set_error_message(error_message);
+      nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_message()));
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -2600,22 +2603,7 @@ namespace niscope_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto channel_list = request->channel_list().c_str();
       ViAttr attribute_id = request->attribute_id();
-      ViInt64 value;
-      switch (request->value_enum_case()) {
-        case niscope_grpc::SetAttributeViInt64Request::ValueEnumCase::kValue: {
-          value = static_cast<ViInt64>(request->value());
-          break;
-        }
-        case niscope_grpc::SetAttributeViInt64Request::ValueEnumCase::kValueRaw: {
-          value = static_cast<ViInt64>(request->value_raw());
-          break;
-        }
-        case niscope_grpc::SetAttributeViInt64Request::ValueEnumCase::VALUE_ENUM_NOT_SET: {
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for value was not specified or out of range");
-          break;
-        }
-      }
-
+      ViInt64 value = request->value_raw();
       auto status = library_->SetAttributeViInt64(vi, channel_list, attribute_id, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -2644,14 +2632,6 @@ namespace niscope_grpc {
       switch (request->value_enum_case()) {
         case niscope_grpc::SetAttributeViReal64Request::ValueEnumCase::kValue: {
           value = static_cast<ViReal64>(request->value());
-          break;
-        }
-        case niscope_grpc::SetAttributeViReal64Request::ValueEnumCase::kValueMapped: {
-          auto value_imap_it = niscopereal64attributevaluesmapped_input_map_.find(request->value_mapped());
-          if (value_imap_it == niscopereal64attributevaluesmapped_input_map_.end()) {
-            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for value_mapped was not specified or out of range.");
-          }
-          value = static_cast<ViReal64>(value_imap_it->second);
           break;
         }
         case niscope_grpc::SetAttributeViReal64Request::ValueEnumCase::kValueRaw: {
@@ -2758,12 +2738,8 @@ namespace niscope_grpc {
 namespace nidevice_grpc {
 namespace converters {
 template <>
-void convert_to_grpc(const niScope_wfmInfo& input, niscope_grpc::WaveformInfo* output) 
+void convert_to_grpc(const niScope_coefficientInfo& input, niscope_grpc::CoefficientInfo* output) 
 {
-  output->set_absolute_initial_x(input.absoluteInitialX);
-  output->set_relative_initial_x(input.relativeInitialX);
-  output->set_x_increment(input.xIncrement);
-  output->set_actual_samples(input.actualSamples);
   output->set_offset(input.offset);
   output->set_gain(input.gain);
   output->set_reserved1(input.reserved1);
@@ -2771,8 +2747,12 @@ void convert_to_grpc(const niScope_wfmInfo& input, niscope_grpc::WaveformInfo* o
 }
 
 template <>
-void convert_to_grpc(const niScope_coefficientInfo& input, niscope_grpc::CoefficientInfo* output) 
+void convert_to_grpc(const niScope_wfmInfo& input, niscope_grpc::WaveformInfo* output) 
 {
+  output->set_absolute_initial_x(input.absoluteInitialX);
+  output->set_relative_initial_x(input.relativeInitialX);
+  output->set_x_increment(input.xIncrement);
+  output->set_actual_samples(input.actualSamples);
   output->set_offset(input.offset);
   output->set_gain(input.gain);
   output->set_reserved1(input.reserved1);

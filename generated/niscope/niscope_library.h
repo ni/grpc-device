@@ -56,17 +56,18 @@ class NiScopeLibrary : public niscope_grpc::NiScopeLibraryInterface {
   ViStatus ConfigureTriggerWindow(ViSession vi, ViConstString triggerSource, ViReal64 lowLevel, ViReal64 highLevel, ViInt32 windowMode, ViInt32 triggerCoupling, ViReal64 holdoff, ViReal64 delay);
   ViStatus ConfigureVertical(ViSession vi, ViConstString channelList, ViReal64 range, ViReal64 offset, ViInt32 coupling, ViReal64 probeAttenuation, ViBoolean enabled);
   ViStatus Disable(ViSession vi);
-  ViStatus ErrorHandler(ViSession vi, ViStatus errorCode, ViChar errorSource[642], ViChar errorDescription[642]);
+  ViStatus ErrorHandler(ViSession vi, ViStatus errorCode, ViChar errorSource[55], ViChar errorDescription[642]);
+  ViStatus ErrorMessage(ViSession vi, ViStatus errorCode, ViChar errorMessage[256]);
   ViStatus ExportAttributeConfigurationBuffer(ViSession vi, ViInt32 sizeInBytes, ViInt8 configuration[]);
   ViStatus ExportAttributeConfigurationFile(ViSession vi, ViConstString filePath);
   ViStatus ExportSignal(ViSession vi, ViInt32 signal, ViConstString signalIdentifier, ViConstString outputTerminal);
   ViStatus Fetch(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 numSamples, ViReal64 waveform[], niScope_wfmInfo wfmInfo[]);
-  ViStatus FetchArrayMeasurement(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 arrayMeasFunction, ViInt32 measurementWaveformSize, ViReal64 measWfm[], niScope_wfmInfo wfmInfo[]);
+  ViStatus FetchArrayMeasurement(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 arrayMeasFunction, ViInt32 measWfmSize, ViReal64 measWfm[], niScope_wfmInfo wfmInfo[]);
   ViStatus FetchBinary16(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 numSamples, ViInt16 waveform[], niScope_wfmInfo wfmInfo[]);
   ViStatus FetchBinary32(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 numSamples, ViInt32 waveform[], niScope_wfmInfo wfmInfo[]);
   ViStatus FetchBinary8(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 numSamples, ViInt8 waveform[], niScope_wfmInfo wfmInfo[]);
-  ViStatus FetchComplex(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 numSamples, NIComplexNumber_struct wfm[], niScope_wfmInfo wfmInfo[]);
-  ViStatus FetchComplexBinary16(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 numSamples, NIComplexI16_struct wfm[], niScope_wfmInfo wfmInfo[]);
+  ViStatus FetchComplex(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 numSamples, NIComplexNumber wfm[], niScope_wfmInfo wfmInfo[]);
+  ViStatus FetchComplexBinary16(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 numSamples, NIComplexI16 wfm[], niScope_wfmInfo wfmInfo[]);
   ViStatus FetchMeasurement(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 scalarMeasFunction, ViReal64 result[]);
   ViStatus FetchMeasurementStats(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 scalarMeasFunction, ViReal64 result[], ViReal64 mean[], ViReal64 stdev[], ViReal64 min[], ViReal64 max[], ViInt32 numInStats[]);
   ViStatus GetAttributeViBoolean(ViSession vi, ViConstString channelList, ViAttr attributeId, ViBoolean* value);
@@ -149,6 +150,7 @@ class NiScopeLibrary : public niscope_grpc::NiScopeLibraryInterface {
   using ConfigureVerticalPtr = decltype(&niScope_ConfigureVertical);
   using DisablePtr = decltype(&niScope_Disable);
   using ErrorHandlerPtr = decltype(&niScope_errorHandler);
+  using ErrorMessagePtr = decltype(&niScope_error_message);
   using ExportAttributeConfigurationBufferPtr = decltype(&niScope_ExportAttributeConfigurationBuffer);
   using ExportAttributeConfigurationFilePtr = decltype(&niScope_ExportAttributeConfigurationFile);
   using ExportSignalPtr = decltype(&niScope_ExportSignal);
@@ -241,6 +243,7 @@ class NiScopeLibrary : public niscope_grpc::NiScopeLibraryInterface {
     ConfigureVerticalPtr ConfigureVertical;
     DisablePtr Disable;
     ErrorHandlerPtr ErrorHandler;
+    ErrorMessagePtr ErrorMessage;
     ExportAttributeConfigurationBufferPtr ExportAttributeConfigurationBuffer;
     ExportAttributeConfigurationFilePtr ExportAttributeConfigurationFile;
     ExportSignalPtr ExportSignal;
