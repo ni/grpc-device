@@ -52,7 +52,7 @@ class NiSwitchMockLibrary : public niswitch_grpc::NiSwitchLibraryInterface {
   MOCK_METHOD(ViStatus, GetRelayName, (ViSession vi, ViInt32 index, ViInt32 relayNameBufferSize, ViChar relayNameBuffer[]), (override));
   MOCK_METHOD(ViStatus, GetRelayPosition, (ViSession vi, ViConstString relayName, ViInt32* relayPosition), (override));
   MOCK_METHOD(ViStatus, Init, (ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* vi), (override));
-  MOCK_METHOD(ViStatus, InitWithOptions, (ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViConstString optionString, ViSession* vi), (override));
+  MOCK_METHOD(ViStatus, InitWithOptions, (ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViConstString optionsString, ViSession* vi), (override));
   MOCK_METHOD(ViStatus, InitWithTopology, (ViRsrc resourceName, ViConstString topology, ViBoolean simulate, ViBoolean resetDevice, ViSession* vi), (override));
   MOCK_METHOD(ViStatus, InitiateScan, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, InvalidateAllAttributes, (ViSession vi), (override));
