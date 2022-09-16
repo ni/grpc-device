@@ -8,6 +8,7 @@
 #include "server/nierr_Status.h"
 
 #include <algorithm>
+#include <bitset>
 #include <cstring>
 #include <memory>
 
@@ -22,6 +23,7 @@ struct NIErrStatusOutputConverter {
   {
     context = serverContext;
     nierr_Status_initialize(&status);
+    url_table_initialize();
   }
 
   ~NIErrStatusOutputConverter()
@@ -38,16 +40,29 @@ struct NIErrStatusOutputConverter {
   {
     std::string encoded(input);
     // Replace the following characters to their equivalent '%xx' hex code
-    const char* charsToEncode = "!*'();:@&=+$,/?%#[] <>~";
-    for (size_t position = 0;
-          ((position = encoded.find_first_of(charsToEncode, position)) != std::string::npos);
-          // If an unsafe character is found, advance past the replacement hex code
-          position += 3) {
+    for (size_t position = 0; position < encoded.length(); ) {
+      if (urlLookupTable.test(encoded[position])) {
+        position++;
+      }
+      else {
         char character[4];
         ::_snprintf(character, 4, "%%%2x", static_cast<int>(encoded[position]));
         encoded.replace(position, 1, character);
+        position += 3;
+      }
     }
     return encoded;
+  }
+
+  constexpr void url_table_initialize()
+  {
+      for (int i = 'a'; i <= 'z'; i++) urlLookupTable.set(i);
+      for (int i = 'A'; i <= 'Z'; i++) urlLookupTable.set(i);
+      for (int i = '0'; i <= '9'; i++) urlLookupTable.set(i);
+      urlLookupTable.set('-');
+      urlLookupTable.set('_');
+      urlLookupTable.set('.');
+      urlLookupTable.set('~');
   }
 
   void to_grpc(nimxlcterminaladaptor_restricted_grpc::NIErrStatus& output) const
@@ -70,6 +85,7 @@ struct NIErrStatusOutputConverter {
 
   TServerContext *context;
   nierr_Status status{};
+  std::bitset<256> urlLookupTable;
 };
 
 inline void convert_to_grpc(const NIErrStatusOutputConverter<grpc::ServerContext>& storage, nimxlcterminaladaptor_restricted_grpc::NIErrStatus* output)
