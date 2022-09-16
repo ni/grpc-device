@@ -1,9 +1,13 @@
 /*!
    \file nierr_Status.c
-   \brief Status C functions, the low level manipulator for Status
+   \brief Status C functions, the low level manipulator for Status.
+
+   This file is a pared-down version of nierr_Status.c in the nierr component,
+   with required elements defined in ni-build and additional dependencies removed.
+   This file also includes functions defined in jsonz/cgenerate.c
 */
 /*
-   Copyright (c) 2012-2012 National Instruments Corporation.
+   Copyright (c) 2012-2022 National Instruments Corporation.
    All rights reserved.
 */
 

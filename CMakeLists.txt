@@ -273,12 +273,12 @@ foreach(api ${nidrivers})
 endforeach()
 
 add_executable(ni_grpc_device_server
+   "imports/include/nierr_Status.cpp"
    "source/server/core_server.cpp"
    "source/server/core_service_registrar.cpp"
    "source/server/device_enumerator.cpp"
    "source/server/feature_toggles.cpp"
    "source/server/logging.cpp"
-   "source/server/nierr_Status.cpp"
    "source/server/semaphore.cpp"
    "source/server/server_configuration_parser.cpp"
    "source/server/server_security_configuration.cpp"
@@ -380,6 +380,7 @@ add_library(TestApi SHARED
 add_compile_definitions(TestApi TEST_API_BUILDING)
 
 add_executable(UnitTestsRunner
+    "imports/include/nierr_Status.cpp"
     "source/tests/utilities/run_all_tests.cpp"
     "source/tests/unit/callback_router_tests.cpp"
     "source/tests/unit/converters_tests.cpp"
@@ -397,7 +398,6 @@ add_executable(UnitTestsRunner
     "source/tests/unit/xnet_socket_converters_tests.cpp"
     "source/server/device_enumerator.cpp"
     "source/server/feature_toggles.cpp"
-    "source/server/nierr_Status.cpp"
     "source/server/semaphore.cpp"
     "source/server/server_configuration_parser.cpp"
     "source/server/server_security_configuration.cpp"
@@ -457,6 +457,7 @@ add_custom_command(
            $<TARGET_FILE_DIR:UnitTestsRunner>/)
 
 set(system_test_runner_sources
+  "imports/include/nierr_Status.cpp"
   "source/tests/utilities/run_all_tests.cpp"
   "source/server/core_service_registrar.cpp"
   "source/tests/system/device_server.cpp"
@@ -488,7 +489,6 @@ set(system_test_runner_sources
   "source/tests/system/nixnetsocket_driver_api_tests.cpp"
   "source/server/device_enumerator.cpp"
   "source/server/feature_toggles.cpp"
-  "source/server/nierr_Status.cpp"
   "source/server/semaphore.cpp"
   "source/server/session_repository.cpp"
   "source/server/session_utilities_service.cpp"

@@ -5,7 +5,7 @@
 #include "nimxlcterminaladaptor_restricted/nimxlcterminaladaptor_restricted_library_interface.h"
 #include "server/converters.h"
 #include "server/session_resource_repository.h"
-#include "server/nierr_Status.h"
+#include <nierr_Status.h>
 
 #include <algorithm>
 #include <bitset>

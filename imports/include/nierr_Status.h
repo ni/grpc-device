@@ -1,9 +1,12 @@
 /*!
    \file
    \brief Status C definition and helper functions.
+
+   This file is a pared-down version of the one in the nierr component,
+   with required elements defined in ni-build and additional dependencies removed.
 */
 /*
-   Copyright (c) 2012-2012 National Instruments Corporation.
+   Copyright (c) 2012-2022 National Instruments Corporation.
    All rights reserved.
 */
 

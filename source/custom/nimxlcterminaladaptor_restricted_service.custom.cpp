@@ -1,7 +1,7 @@
 #include <iostream>
 #include <map>
 #include <server/converters.h>
-#include <server/nierr_Status.h>
+#include <nierr_Status.h>
 #include <nimxlcterminaladaptor_restricted.pb.h>
 #include <nimxlcterminaladaptor_restricted/nimxlcterminaladaptor_restricted_service.h>
 #include <custom/nimxlcterminaladaptor_restricted_converters.h>
