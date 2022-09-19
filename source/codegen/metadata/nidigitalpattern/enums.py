@@ -245,28 +245,6 @@ enums = {
             }
         ]
     },
-    'PatternOpcodeEvent': {
-        'codegen_method': 'public',
-        'generate-mappings': True,
-        'values': [
-            {
-                'name': 'NIDIGITAL_VAL_PATTERN_OPCODE_EVENT0',
-                'value': 'patternOpcodeEvent0'
-            },
-            {
-                'name': 'NIDIGITAL_VAL_PATTERN_OPCODE_EVENT1',
-                'value': 'patternOpcodeEvent1'
-            },
-            {
-                'name': 'NIDIGITAL_VAL_PATTERN_OPCODE_EVENT2',
-                'value': 'patternOpcodeEvent2'
-            },
-            {
-                'name': 'NIDIGITAL_VAL_PATTERN_OPCODE_EVENT3',
-                'value': 'patternOpcodeEvent3'
-            }
-        ]
-    },
     'PinState': {
         'codegen_method': 'public',
         'values': [
