@@ -353,7 +353,7 @@ enum NiDmmInt32AttributeValues {
   NIDMM_INT32_THERMISTOR_TYPE_VAL_TEMP_THERMISTOR_44004 = 1;
   NIDMM_INT32_THERMISTOR_TYPE_VAL_TEMP_THERMISTOR_44006 = 2;
   NIDMM_INT32_THERMISTOR_TYPE_VAL_TEMP_THERMISTOR_44007 = 3;
-  NIDMM_INT32_THERMOCOUPLE_REFERENCE_JUNCTION_TYPE_VAL_FIXED = 2;
+  NIDMM_INT32_THERMOCOUPLE_REFERENCE_JUNCTION_TYPE_VAL_TEMP_REF_JUNC_FIXED = 2;
   NIDMM_INT32_THERMOCOUPLE_TYPE_VAL_TEMP_TC_B = 1;
   NIDMM_INT32_THERMOCOUPLE_TYPE_VAL_TEMP_TC_E = 4;
   NIDMM_INT32_THERMOCOUPLE_TYPE_VAL_TEMP_TC_J = 6;
@@ -473,7 +473,7 @@ enum SampleTrigger {
 
 enum ThermocoupleReferenceJunctionType {
   THERMOCOUPLE_REFERENCE_JUNCTION_TYPE_UNSPECIFIED = 0;
-  THERMOCOUPLE_REFERENCE_JUNCTION_TYPE_NIDMM_VAL_FIXED = 2;
+  THERMOCOUPLE_REFERENCE_JUNCTION_TYPE_NIDMM_VAL_TEMP_REF_JUNC_FIXED = 2;
 }
 
 enum ThermocoupleType {
@@ -565,8 +565,8 @@ message CheckAttributeViReal64Request {
   NiDmmAttribute attribute_id = 3;
   oneof attribute_value_enum {
     NiDmmReal64AttributeValues attribute_value = 4;
-    NiDmmReal64AttributeValuesMapped attribute_value_mapped = 5;
-    double attribute_value_raw = 6;
+    NiDmmReal64AttributeValuesMapped attribute_value_mapped = 6;
+    double attribute_value_raw = 5;
   }
 }
 
@@ -1464,8 +1464,8 @@ message SetAttributeViReal64Request {
   NiDmmAttribute attribute_id = 3;
   oneof attribute_value_enum {
     NiDmmReal64AttributeValues attribute_value = 4;
-    NiDmmReal64AttributeValuesMapped attribute_value_mapped = 5;
-    double attribute_value_raw = 6;
+    NiDmmReal64AttributeValuesMapped attribute_value_mapped = 6;
+    double attribute_value_raw = 5;
   }
 }
 

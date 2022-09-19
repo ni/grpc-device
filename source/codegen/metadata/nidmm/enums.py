@@ -789,7 +789,7 @@ enums = {
                 'value': 3
             },
             {
-                'name': 'THERMOCOUPLE_REFERENCE_JUNCTION_TYPE_VAL_FIXED',
+                'name': 'THERMOCOUPLE_REFERENCE_JUNCTION_TYPE_VAL_TEMP_REF_JUNC_FIXED',
                 'value': 2
             },
             {
@@ -1240,7 +1240,7 @@ enums = {
         'codegen_method': 'public',
         'values': [
             {
-                'name': 'NIDMM_VAL_FIXED',
+                'name': 'NIDMM_VAL_TEMP_REF_JUNC_FIXED',
                 'value': 2
             }
         ]
