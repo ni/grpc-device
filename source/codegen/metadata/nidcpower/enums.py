@@ -52,19 +52,6 @@ enums = {
             }
         ]
     },
-    'Autorange': {
-        'codegen_method': 'public',
-        'values': [
-            {
-                'name': 'NIDCPOWER_VAL_OFF',
-                'value': 0
-            },
-            {
-                'name': 'NIDCPOWER_VAL_ON',
-                'value': 1
-            }
-        ]
-    },
     'AutorangeApertureTimeMode': {
         'codegen_method': 'public',
         'values': [
@@ -161,28 +148,15 @@ enums = {
             }
         ]
     },
-    'CurrentLevelAutorange': {
+    'ComplianceLimitSymmetry': {
         'codegen_method': 'public',
         'values': [
             {
-                'name': 'NIDCPOWER_VAL_OFF',
+                'name': 'NIDCPOWER_VAL_SYMMETRIC',
                 'value': 0
             },
             {
-                'name': 'NIDCPOWER_VAL_ON',
-                'value': 1
-            }
-        ]
-    },
-    'CurrentLimitAutorange': {
-        'codegen_method': 'public',
-        'values': [
-            {
-                'name': 'NIDCPOWER_VAL_OFF',
-                'value': 0
-            },
-            {
-                'name': 'NIDCPOWER_VAL_ON',
+                'name': 'NIDCPOWER_VAL_ASYMMETRIC',
                 'value': 1
             }
         ]
@@ -521,14 +495,6 @@ enums = {
                 'value': 1024
             },
             {
-                'name': 'AUTORANGE_VAL_OFF',
-                'value': 0
-            },
-            {
-                'name': 'AUTORANGE_VAL_ON',
-                'value': 1
-            },
-            {
                 'name': 'AUTORANGE_APERTURE_TIME_MODE_VAL_APERTURE_TIME_AUTO',
                 'value': 1110
             },
@@ -605,19 +571,19 @@ enums = {
                 'value': 1141
             },
             {
-                'name': 'CURRENT_LEVEL_AUTORANGE_VAL_OFF',
+                'name': 'COMPLIANCE_LIMIT_SYMMETRY_VAL_SYMMETRIC',
                 'value': 0
             },
             {
-                'name': 'CURRENT_LEVEL_AUTORANGE_VAL_ON',
+                'name': 'COMPLIANCE_LIMIT_SYMMETRY_VAL_ASYMMETRIC',
                 'value': 1
             },
             {
-                'name': 'CURRENT_LIMIT_AUTORANGE_VAL_OFF',
+                'name': 'CURRENT_LIMIT_BEHAVIOR_VAL_CURRENT_REGULATE',
                 'value': 0
             },
             {
-                'name': 'CURRENT_LIMIT_AUTORANGE_VAL_ON',
+                'name': 'CURRENT_LIMIT_BEHAVIOR_VAL_CURRENT_TRIP',
                 'value': 1
             },
             {
@@ -855,22 +821,6 @@ enums = {
             {
                 'name': 'TRIGGER_TYPE_VAL_SOFTWARE_EDGE',
                 'value': 1015
-            },
-            {
-                'name': 'VOLTAGE_LEVEL_AUTORANGE_VAL_OFF',
-                'value': 0
-            },
-            {
-                'name': 'VOLTAGE_LEVEL_AUTORANGE_VAL_ON',
-                'value': 1
-            },
-            {
-                'name': 'VOLTAGE_LIMIT_AUTORANGE_VAL_OFF',
-                'value': 0
-            },
-            {
-                'name': 'VOLTAGE_LIMIT_AUTORANGE_VAL_ON',
-                'value': 1
             }
         ]
     },
@@ -1111,32 +1061,6 @@ enums = {
             {
                 'name': 'NIDCPOWER_VAL_SOFTWARE_EDGE',
                 'value': 1015
-            }
-        ]
-    },
-    'VoltageLevelAutorange': {
-        'codegen_method': 'public',
-        'values': [
-            {
-                'name': 'NIDCPOWER_VAL_OFF',
-                'value': 0
-            },
-            {
-                'name': 'NIDCPOWER_VAL_ON',
-                'value': 1
-            }
-        ]
-    },
-    'VoltageLimitAutorange': {
-        'codegen_method': 'public',
-        'values': [
-            {
-                'name': 'NIDCPOWER_VAL_OFF',
-                'value': 0
-            },
-            {
-                'name': 'NIDCPOWER_VAL_ON',
-                'value': 1
             }
         ]
     }

@@ -260,7 +260,7 @@ attributes = {
     },
     1150015: {
         'codegen_method': 'public',
-        'enum': 'VoltageLevelAutorange',
+        'enum': 'AutoZero',
         'grpc_type': 'sint32',
         'name': 'VOLTAGE_LEVEL_AUTORANGE',
         'resettable': False,
@@ -268,7 +268,7 @@ attributes = {
     },
     1150016: {
         'codegen_method': 'public',
-        'enum': 'CurrentLimitAutorange',
+        'enum': 'AutoZero',
         'grpc_type': 'sint32',
         'name': 'CURRENT_LIMIT_AUTORANGE',
         'resettable': False,
@@ -276,7 +276,7 @@ attributes = {
     },
     1150017: {
         'codegen_method': 'public',
-        'enum': 'CurrentLevelAutorange',
+        'enum': 'AutoZero',
         'grpc_type': 'sint32',
         'name': 'CURRENT_LEVEL_AUTORANGE',
         'resettable': False,
@@ -284,7 +284,7 @@ attributes = {
     },
     1150018: {
         'codegen_method': 'public',
-        'enum': 'VoltageLimitAutorange',
+        'enum': 'AutoZero',
         'grpc_type': 'sint32',
         'name': 'VOLTAGE_LIMIT_AUTORANGE',
         'resettable': False,
@@ -918,6 +918,7 @@ attributes = {
     },
     1150184: {
         'codegen_method': 'public',
+        'enum': 'ComplianceLimitSymmetry',
         'grpc_type': 'sint32',
         'name': 'COMPLIANCE_LIMIT_SYMMETRY',
         'resettable': False,
@@ -1205,7 +1206,7 @@ attributes = {
     },
     1150244: {
         'codegen_method': 'public',
-        'enum': 'Autorange',
+        'enum': 'AutoZero',
         'grpc_type': 'sint32',
         'name': 'AUTORANGE',
         'resettable': False,
@@ -1548,6 +1549,7 @@ attributes = {
     },
     1250004: {
         'codegen_method': 'public',
+        'enum': 'CurrentLimitBehavior',
         'grpc_type': 'sint32',
         'name': 'CURRENT_LIMIT_BEHAVIOR',
         'resettable': False,
