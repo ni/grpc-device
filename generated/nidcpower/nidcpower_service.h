@@ -70,6 +70,7 @@ public:
   ::grpc::Status ConfigureOutputFunction(::grpc::ServerContext* context, const ConfigureOutputFunctionRequest* request, ConfigureOutputFunctionResponse* response) override;
   ::grpc::Status ConfigureOutputRange(::grpc::ServerContext* context, const ConfigureOutputRangeRequest* request, ConfigureOutputRangeResponse* response) override;
   ::grpc::Status ConfigureOutputResistance(::grpc::ServerContext* context, const ConfigureOutputResistanceRequest* request, ConfigureOutputResistanceResponse* response) override;
+  ::grpc::Status ConfigureOvp(::grpc::ServerContext* context, const ConfigureOvpRequest* request, ConfigureOvpResponse* response) override;
   ::grpc::Status ConfigurePowerLineFrequency(::grpc::ServerContext* context, const ConfigurePowerLineFrequencyRequest* request, ConfigurePowerLineFrequencyResponse* response) override;
   ::grpc::Status ConfigurePulseBiasCurrentLevel(::grpc::ServerContext* context, const ConfigurePulseBiasCurrentLevelRequest* request, ConfigurePulseBiasCurrentLevelResponse* response) override;
   ::grpc::Status ConfigurePulseBiasCurrentLimit(::grpc::ServerContext* context, const ConfigurePulseBiasCurrentLimitRequest* request, ConfigurePulseBiasCurrentLimitResponse* response) override;
@@ -119,6 +120,7 @@ public:
   ::grpc::Status DisableStartTrigger(::grpc::ServerContext* context, const DisableStartTriggerRequest* request, DisableStartTriggerResponse* response) override;
   ::grpc::Status DisableStartTriggerWithChannels(::grpc::ServerContext* context, const DisableStartTriggerWithChannelsRequest* request, DisableStartTriggerWithChannelsResponse* response) override;
   ::grpc::Status ErrorMessage(::grpc::ServerContext* context, const ErrorMessageRequest* request, ErrorMessageResponse* response) override;
+  ::grpc::Status ErrorQuery(::grpc::ServerContext* context, const ErrorQueryRequest* request, ErrorQueryResponse* response) override;
   ::grpc::Status ExportAttributeConfigurationBuffer(::grpc::ServerContext* context, const ExportAttributeConfigurationBufferRequest* request, ExportAttributeConfigurationBufferResponse* response) override;
   ::grpc::Status ExportAttributeConfigurationFile(::grpc::ServerContext* context, const ExportAttributeConfigurationFileRequest* request, ExportAttributeConfigurationFileResponse* response) override;
   ::grpc::Status ExportSignal(::grpc::ServerContext* context, const ExportSignalRequest* request, ExportSignalResponse* response) override;

@@ -47,6 +47,7 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   ViStatus ConfigureOutputFunction(ViSession vi, ViConstString channelName, ViInt32 function);
   ViStatus ConfigureOutputRange(ViSession vi, ViConstString channelName, ViInt32 rangeType, ViReal64 range);
   ViStatus ConfigureOutputResistance(ViSession vi, ViConstString channelName, ViReal64 resistance);
+  ViStatus ConfigureOvp(ViSession vi, ViConstString channelName, ViBoolean enabled, ViReal64 limit);
   ViStatus ConfigurePowerLineFrequency(ViSession vi, ViReal64 powerlineFrequency);
   ViStatus ConfigurePulseBiasCurrentLevel(ViSession vi, ViConstString channelName, ViReal64 level);
   ViStatus ConfigurePulseBiasCurrentLimit(ViSession vi, ViConstString channelName, ViReal64 limit);
@@ -96,6 +97,7 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   ViStatus DisableStartTrigger(ViSession vi);
   ViStatus DisableStartTriggerWithChannels(ViSession vi, ViConstString channelName);
   ViStatus ErrorMessage(ViSession vi, ViStatus errorCode, ViChar errorMessage[256]);
+  ViStatus ErrorQuery(ViSession vi, ViInt32* errorCode, ViString errorMessage);
   ViStatus ExportAttributeConfigurationBuffer(ViSession vi, ViInt32 size, ViAddr configuration[]);
   ViStatus ExportAttributeConfigurationFile(ViSession vi, ViConstString filePath);
   ViStatus ExportSignal(ViSession vi, ViInt32 signal, ViConstString signalIdentifier, ViConstString outputTerminal);
@@ -184,6 +186,7 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   using ConfigureOutputFunctionPtr = decltype(&niDCPower_ConfigureOutputFunction);
   using ConfigureOutputRangePtr = decltype(&niDCPower_ConfigureOutputRange);
   using ConfigureOutputResistancePtr = decltype(&niDCPower_ConfigureOutputResistance);
+  using ConfigureOvpPtr = decltype(&niDCPower_ConfigureOVP);
   using ConfigurePowerLineFrequencyPtr = decltype(&niDCPower_ConfigurePowerLineFrequency);
   using ConfigurePulseBiasCurrentLevelPtr = decltype(&niDCPower_ConfigurePulseBiasCurrentLevel);
   using ConfigurePulseBiasCurrentLimitPtr = decltype(&niDCPower_ConfigurePulseBiasCurrentLimit);
@@ -233,6 +236,7 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   using DisableStartTriggerPtr = decltype(&niDCPower_DisableStartTrigger);
   using DisableStartTriggerWithChannelsPtr = decltype(&niDCPower_DisableStartTriggerWithChannels);
   using ErrorMessagePtr = decltype(&niDCPower_error_message);
+  using ErrorQueryPtr = decltype(&niDCPower_error_query);
   using ExportAttributeConfigurationBufferPtr = decltype(&niDCPower_ExportAttributeConfigurationBuffer);
   using ExportAttributeConfigurationFilePtr = decltype(&niDCPower_ExportAttributeConfigurationFile);
   using ExportSignalPtr = decltype(&niDCPower_ExportSignal);
@@ -321,6 +325,7 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
     ConfigureOutputFunctionPtr ConfigureOutputFunction;
     ConfigureOutputRangePtr ConfigureOutputRange;
     ConfigureOutputResistancePtr ConfigureOutputResistance;
+    ConfigureOvpPtr ConfigureOvp;
     ConfigurePowerLineFrequencyPtr ConfigurePowerLineFrequency;
     ConfigurePulseBiasCurrentLevelPtr ConfigurePulseBiasCurrentLevel;
     ConfigurePulseBiasCurrentLimitPtr ConfigurePulseBiasCurrentLimit;
@@ -370,6 +375,7 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
     DisableStartTriggerPtr DisableStartTrigger;
     DisableStartTriggerWithChannelsPtr DisableStartTriggerWithChannels;
     ErrorMessagePtr ErrorMessage;
+    ErrorQueryPtr ErrorQuery;
     ExportAttributeConfigurationBufferPtr ExportAttributeConfigurationBuffer;
     ExportAttributeConfigurationFilePtr ExportAttributeConfigurationFile;
     ExportSignalPtr ExportSignal;

@@ -669,6 +669,26 @@ configure_output_resistance(const StubPtr& stub, const nidevice_grpc::Session& v
   return response;
 }
 
+ConfigureOvpResponse
+configure_ovp(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const bool& enabled, const double& limit)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ConfigureOvpRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_channel_name(channel_name);
+  request.set_enabled(enabled);
+  request.set_limit(limit);
+
+  auto response = ConfigureOvpResponse{};
+
+  raise_if_error(
+      stub->ConfigureOvp(&context, request, &response),
+      context);
+
+  return response;
+}
+
 ConfigurePowerLineFrequencyResponse
 configure_power_line_frequency(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<PowerLineFrequencies, double>& powerline_frequency)
 {
@@ -1590,6 +1610,24 @@ error_message(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::i
 
   raise_if_error(
       stub->ErrorMessage(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ErrorQueryResponse
+error_query(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& error_message)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ErrorQueryRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_error_message(error_message);
+
+  auto response = ErrorQueryResponse{};
+
+  raise_if_error(
+      stub->ErrorQuery(&context, request, &response),
       context);
 
   return response;

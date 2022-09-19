@@ -44,6 +44,7 @@ class NiDCPowerLibraryInterface {
   virtual ViStatus ConfigureOutputFunction(ViSession vi, ViConstString channelName, ViInt32 function) = 0;
   virtual ViStatus ConfigureOutputRange(ViSession vi, ViConstString channelName, ViInt32 rangeType, ViReal64 range) = 0;
   virtual ViStatus ConfigureOutputResistance(ViSession vi, ViConstString channelName, ViReal64 resistance) = 0;
+  virtual ViStatus ConfigureOvp(ViSession vi, ViConstString channelName, ViBoolean enabled, ViReal64 limit) = 0;
   virtual ViStatus ConfigurePowerLineFrequency(ViSession vi, ViReal64 powerlineFrequency) = 0;
   virtual ViStatus ConfigurePulseBiasCurrentLevel(ViSession vi, ViConstString channelName, ViReal64 level) = 0;
   virtual ViStatus ConfigurePulseBiasCurrentLimit(ViSession vi, ViConstString channelName, ViReal64 limit) = 0;
@@ -93,6 +94,7 @@ class NiDCPowerLibraryInterface {
   virtual ViStatus DisableStartTrigger(ViSession vi) = 0;
   virtual ViStatus DisableStartTriggerWithChannels(ViSession vi, ViConstString channelName) = 0;
   virtual ViStatus ErrorMessage(ViSession vi, ViStatus errorCode, ViChar errorMessage[256]) = 0;
+  virtual ViStatus ErrorQuery(ViSession vi, ViInt32* errorCode, ViString errorMessage) = 0;
   virtual ViStatus ExportAttributeConfigurationBuffer(ViSession vi, ViInt32 size, ViAddr configuration[]) = 0;
   virtual ViStatus ExportAttributeConfigurationFile(ViSession vi, ViConstString filePath) = 0;
   virtual ViStatus ExportSignal(ViSession vi, ViInt32 signal, ViConstString signalIdentifier, ViConstString outputTerminal) = 0;

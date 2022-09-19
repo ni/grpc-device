@@ -51,6 +51,7 @@ ConfigureOutputEnabledResponse configure_output_enabled(const StubPtr& stub, con
 ConfigureOutputFunctionResponse configure_output_function(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const simple_variant<OutputFunction, pb::int32>& function);
 ConfigureOutputRangeResponse configure_output_range(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::int32& range_type, const double& range);
 ConfigureOutputResistanceResponse configure_output_resistance(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& resistance);
+ConfigureOvpResponse configure_ovp(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const bool& enabled, const double& limit);
 ConfigurePowerLineFrequencyResponse configure_power_line_frequency(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<PowerLineFrequencies, double>& powerline_frequency);
 ConfigurePulseBiasCurrentLevelResponse configure_pulse_bias_current_level(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& level);
 ConfigurePulseBiasCurrentLimitResponse configure_pulse_bias_current_limit(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& limit);
@@ -100,6 +101,7 @@ DisableSourceTriggerWithChannelsResponse disable_source_trigger_with_channels(co
 DisableStartTriggerResponse disable_start_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi);
 DisableStartTriggerWithChannelsResponse disable_start_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name);
 ErrorMessageResponse error_message(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& error_code);
+ErrorQueryResponse error_query(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& error_message);
 ExportAttributeConfigurationBufferResponse export_attribute_configuration_buffer(const StubPtr& stub, const nidevice_grpc::Session& vi);
 ExportAttributeConfigurationFileResponse export_attribute_configuration_file(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& file_path);
 ExportSignalResponse export_signal(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<ExportSignal, pb::int32>& signal, const pb::string& signal_identifier, const pb::string& output_terminal);

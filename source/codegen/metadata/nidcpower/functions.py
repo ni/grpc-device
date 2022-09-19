@@ -772,6 +772,41 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
+    'ConfigureOvp': {
+        'cname': 'niDCPower_ConfigureOVP',
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'cppName': 'vi',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.Session',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'cppName': 'channelName',
+                'direction': 'in',
+                'grpc_type': 'string',
+                'name': 'channelName',
+                'type': 'ViConstString'
+            },
+            {
+                'cppName': 'enabled',
+                'direction': 'in',
+                'grpc_type': 'bool',
+                'name': 'enabled',
+                'type': 'ViBoolean'
+            },
+            {
+                'cppName': 'limit',
+                'direction': 'in',
+                'grpc_type': 'double',
+                'name': 'limit',
+                'type': 'ViReal64'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
     'ConfigurePowerLineFrequency': {
         'codegen_method': 'public',
         'parameters': [
@@ -1911,6 +1946,38 @@ functions = {
                     'value': 256
                 },
                 'type': 'ViChar[]'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'ErrorQuery': {
+        'cname': 'niDCPower_error_query',
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'cppName': 'vi',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.Session',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'cppName': 'errorCode',
+                'direction': 'out',
+                'grpc_type': 'sint32',
+                'name': 'errorCode',
+                'type': 'ViInt32'
+            },
+            {
+                'cppName': 'errorMessage',
+                'direction': 'in',
+                'grpc_type': 'string',
+                'name': 'errorMessage',
+                'size': {
+                    'mechanism': 'fixed',
+                    'value': 256
+                },
+                'type': 'ViString'
             }
         ],
         'returns': 'ViStatus'

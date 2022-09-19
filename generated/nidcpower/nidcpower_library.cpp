@@ -50,6 +50,7 @@ NiDCPowerLibrary::NiDCPowerLibrary() : shared_library_(kLibraryName)
   function_pointers_.ConfigureOutputFunction = reinterpret_cast<ConfigureOutputFunctionPtr>(shared_library_.get_function_pointer("niDCPower_ConfigureOutputFunction"));
   function_pointers_.ConfigureOutputRange = reinterpret_cast<ConfigureOutputRangePtr>(shared_library_.get_function_pointer("niDCPower_ConfigureOutputRange"));
   function_pointers_.ConfigureOutputResistance = reinterpret_cast<ConfigureOutputResistancePtr>(shared_library_.get_function_pointer("niDCPower_ConfigureOutputResistance"));
+  function_pointers_.ConfigureOvp = reinterpret_cast<ConfigureOvpPtr>(shared_library_.get_function_pointer("niDCPower_ConfigureOVP"));
   function_pointers_.ConfigurePowerLineFrequency = reinterpret_cast<ConfigurePowerLineFrequencyPtr>(shared_library_.get_function_pointer("niDCPower_ConfigurePowerLineFrequency"));
   function_pointers_.ConfigurePulseBiasCurrentLevel = reinterpret_cast<ConfigurePulseBiasCurrentLevelPtr>(shared_library_.get_function_pointer("niDCPower_ConfigurePulseBiasCurrentLevel"));
   function_pointers_.ConfigurePulseBiasCurrentLimit = reinterpret_cast<ConfigurePulseBiasCurrentLimitPtr>(shared_library_.get_function_pointer("niDCPower_ConfigurePulseBiasCurrentLimit"));
@@ -99,6 +100,7 @@ NiDCPowerLibrary::NiDCPowerLibrary() : shared_library_(kLibraryName)
   function_pointers_.DisableStartTrigger = reinterpret_cast<DisableStartTriggerPtr>(shared_library_.get_function_pointer("niDCPower_DisableStartTrigger"));
   function_pointers_.DisableStartTriggerWithChannels = reinterpret_cast<DisableStartTriggerWithChannelsPtr>(shared_library_.get_function_pointer("niDCPower_DisableStartTriggerWithChannels"));
   function_pointers_.ErrorMessage = reinterpret_cast<ErrorMessagePtr>(shared_library_.get_function_pointer("niDCPower_error_message"));
+  function_pointers_.ErrorQuery = reinterpret_cast<ErrorQueryPtr>(shared_library_.get_function_pointer("niDCPower_error_query"));
   function_pointers_.ExportAttributeConfigurationBuffer = reinterpret_cast<ExportAttributeConfigurationBufferPtr>(shared_library_.get_function_pointer("niDCPower_ExportAttributeConfigurationBuffer"));
   function_pointers_.ExportAttributeConfigurationFile = reinterpret_cast<ExportAttributeConfigurationFilePtr>(shared_library_.get_function_pointer("niDCPower_ExportAttributeConfigurationFile"));
   function_pointers_.ExportSignal = reinterpret_cast<ExportSignalPtr>(shared_library_.get_function_pointer("niDCPower_ExportSignal"));
@@ -514,6 +516,18 @@ ViStatus NiDCPowerLibrary::ConfigureOutputResistance(ViSession vi, ViConstString
   return niDCPower_ConfigureOutputResistance(vi, channelName, resistance);
 #else
   return function_pointers_.ConfigureOutputResistance(vi, channelName, resistance);
+#endif
+}
+
+ViStatus NiDCPowerLibrary::ConfigureOvp(ViSession vi, ViConstString channelName, ViBoolean enabled, ViReal64 limit)
+{
+  if (!function_pointers_.ConfigureOvp) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ConfigureOVP.");
+  }
+#if defined(_MSC_VER)
+  return niDCPower_ConfigureOVP(vi, channelName, enabled, limit);
+#else
+  return function_pointers_.ConfigureOvp(vi, channelName, enabled, limit);
 #endif
 }
 
@@ -1102,6 +1116,18 @@ ViStatus NiDCPowerLibrary::ErrorMessage(ViSession vi, ViStatus errorCode, ViChar
   return niDCPower_error_message(vi, errorCode, errorMessage);
 #else
   return function_pointers_.ErrorMessage(vi, errorCode, errorMessage);
+#endif
+}
+
+ViStatus NiDCPowerLibrary::ErrorQuery(ViSession vi, ViInt32* errorCode, ViString errorMessage)
+{
+  if (!function_pointers_.ErrorQuery) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_error_query.");
+  }
+#if defined(_MSC_VER)
+  return niDCPower_error_query(vi, errorCode, errorMessage);
+#else
+  return function_pointers_.ErrorQuery(vi, errorCode, errorMessage);
 #endif
 }
 
