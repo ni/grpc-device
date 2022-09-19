@@ -21,9 +21,11 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   ViStatus Abort(ViSession vi);
   ViStatus AbortWithChannels(ViSession vi, ViConstString channelName);
   ViStatus CalSelfCalibrate(ViSession vi, ViConstString channelName);
+  ViStatus ChangeExtCalPassword(ViSession vi, ViConstString oldPassword, ViConstString newPassword);
   ViStatus ClearError(ViSession vi);
   ViStatus ClearInterchangeWarnings(ViSession vi);
   ViStatus Close(ViSession vi);
+  ViStatus CloseExtCal(ViSession vi, ViInt32 action);
   ViStatus Commit(ViSession vi);
   ViStatus CommitWithChannels(ViSession vi, ViConstString channelName);
   ViStatus ConfigureApertureTime(ViSession vi, ViConstString channelName, ViReal64 apertureTime, ViInt32 units);
@@ -45,8 +47,8 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   ViStatus ConfigureDigitalEdgeStartTriggerWithChannels(ViSession vi, ViConstString channelName, ViConstString inputTerminal, ViInt32 edge);
   ViStatus ConfigureOutputEnabled(ViSession vi, ViConstString channelName, ViBoolean enabled);
   ViStatus ConfigureOutputFunction(ViSession vi, ViConstString channelName, ViInt32 function);
+  ViStatus ConfigureOutputRange(ViSession vi, ViConstString channelName, ViInt32 rangeType, ViReal64 range);
   ViStatus ConfigureOutputResistance(ViSession vi, ViConstString channelName, ViReal64 resistance);
-  ViStatus ConfigureOvp(ViSession vi, ViConstString channelName, ViBoolean enabled, ViReal64 limit);
   ViStatus ConfigurePowerLineFrequency(ViSession vi, ViReal64 powerlineFrequency);
   ViStatus ConfigurePulseBiasCurrentLevel(ViSession vi, ViConstString channelName, ViReal64 level);
   ViStatus ConfigurePulseBiasCurrentLimit(ViSession vi, ViConstString channelName, ViReal64 limit);
@@ -78,6 +80,7 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   ViStatus ConfigureVoltageLevelRange(ViSession vi, ViConstString channelName, ViReal64 range);
   ViStatus ConfigureVoltageLimit(ViSession vi, ViConstString channelName, ViReal64 limit);
   ViStatus ConfigureVoltageLimitRange(ViSession vi, ViConstString channelName, ViReal64 range);
+  ViStatus ConnectInternalReference(ViSession vi, ViInt32 internalReference);
   ViStatus CreateAdvancedSequence(ViSession vi, ViConstString sequenceName, ViInt32 attributeIdCount, ViInt32 attributeIds[], ViBoolean setAsActiveSequence);
   ViStatus CreateAdvancedSequenceCommitStepWithChannels(ViSession vi, ViConstString channelName, ViBoolean setAsActiveStep);
   ViStatus CreateAdvancedSequenceStep(ViSession vi, ViBoolean setAsActiveStep);
@@ -96,7 +99,6 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   ViStatus DisableStartTrigger(ViSession vi);
   ViStatus DisableStartTriggerWithChannels(ViSession vi, ViConstString channelName);
   ViStatus ErrorMessage(ViSession vi, ViStatus errorCode, ViChar errorMessage[256]);
-  ViStatus ErrorQuery(ViSession vi, ViInt32* errorCode, ViChar errorMessage[256]);
   ViStatus ExportAttributeConfigurationBuffer(ViSession vi, ViInt32 size, ViAddr configuration[]);
   ViStatus ExportAttributeConfigurationFile(ViSession vi, ViConstString filePath);
   ViStatus ExportSignal(ViSession vi, ViInt32 signal, ViConstString signalIdentifier, ViConstString outputTerminal);
@@ -108,6 +110,8 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   ViStatus GetAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64* attributeValue);
   ViStatus GetAttributeViSession(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession* attributeValue);
   ViStatus GetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 bufferSize, ViChar attributeValue[]);
+  ViStatus GetCalUserDefinedInfo(ViSession vi, ViChar info[256]);
+  ViStatus GetCalUserDefinedInfoMaxSize(ViSession vi, ViInt32* infoSize);
   ViStatus GetChannelName(ViSession vi, ViInt32 index, ViInt32 bufferSize, ViChar channelName[]);
   ViStatus GetChannelNameFromString(ViSession vi, ViConstString index, ViInt32 bufferSize, ViChar channelName[]);
   ViStatus GetError(ViSession vi, ViStatus* code, ViInt32 bufferSize, ViChar description[]);
@@ -120,6 +124,9 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   ViStatus GetSelfCalLastTemp(ViSession vi, ViReal64* temperature);
   ViStatus ImportAttributeConfigurationBuffer(ViSession vi, ViInt32 size, ViAddr configuration[]);
   ViStatus ImportAttributeConfigurationFile(ViSession vi, ViConstString filePath);
+  ViStatus Init(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* vi);
+  ViStatus InitExtCal(ViRsrc resourceName, ViConstString password, ViSession* vi);
+  ViStatus InitWithOptions(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViString optionString, ViSession* vi);
   ViStatus InitializeWithChannels(ViRsrc resourceName, ViConstString channels, ViBoolean reset, ViConstString optionString, ViSession* vi);
   ViStatus InitializeWithIndependentChannels(ViRsrc resourceName, ViBoolean reset, ViConstString optionString, ViSession* vi);
   ViStatus Initiate(ViSession vi);
@@ -150,6 +157,7 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   ViStatus SetAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64 attributeValue);
   ViStatus SetAttributeViSession(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession attributeValue);
   ViStatus SetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViConstString attributeValue);
+  ViStatus SetCalUserDefinedInfo(ViSession vi, ViConstString info);
   ViStatus SetSequence(ViSession vi, ViConstString channelName, ViReal64 values[], ViReal64 sourceDelays[], ViUInt32 size);
   ViStatus UnlockSession(ViSession vi, ViBoolean* callerHasLock);
   ViStatus WaitForEvent(ViSession vi, ViInt32 eventId, ViReal64 timeout);
@@ -159,9 +167,11 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   using AbortPtr = decltype(&niDCPower_Abort);
   using AbortWithChannelsPtr = decltype(&niDCPower_AbortWithChannels);
   using CalSelfCalibratePtr = decltype(&niDCPower_CalSelfCalibrate);
+  using ChangeExtCalPasswordPtr = decltype(&niDCPower_ChangeExtCalPassword);
   using ClearErrorPtr = decltype(&niDCPower_ClearError);
   using ClearInterchangeWarningsPtr = decltype(&niDCPower_ClearInterchangeWarnings);
   using ClosePtr = decltype(&niDCPower_close);
+  using CloseExtCalPtr = decltype(&niDCPower_CloseExtCal);
   using CommitPtr = decltype(&niDCPower_Commit);
   using CommitWithChannelsPtr = decltype(&niDCPower_CommitWithChannels);
   using ConfigureApertureTimePtr = decltype(&niDCPower_ConfigureApertureTime);
@@ -183,8 +193,8 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   using ConfigureDigitalEdgeStartTriggerWithChannelsPtr = decltype(&niDCPower_ConfigureDigitalEdgeStartTriggerWithChannels);
   using ConfigureOutputEnabledPtr = decltype(&niDCPower_ConfigureOutputEnabled);
   using ConfigureOutputFunctionPtr = decltype(&niDCPower_ConfigureOutputFunction);
+  using ConfigureOutputRangePtr = decltype(&niDCPower_ConfigureOutputRange);
   using ConfigureOutputResistancePtr = decltype(&niDCPower_ConfigureOutputResistance);
-  using ConfigureOvpPtr = decltype(&niDCPower_ConfigureOVP);
   using ConfigurePowerLineFrequencyPtr = decltype(&niDCPower_ConfigurePowerLineFrequency);
   using ConfigurePulseBiasCurrentLevelPtr = decltype(&niDCPower_ConfigurePulseBiasCurrentLevel);
   using ConfigurePulseBiasCurrentLimitPtr = decltype(&niDCPower_ConfigurePulseBiasCurrentLimit);
@@ -216,6 +226,7 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   using ConfigureVoltageLevelRangePtr = decltype(&niDCPower_ConfigureVoltageLevelRange);
   using ConfigureVoltageLimitPtr = decltype(&niDCPower_ConfigureVoltageLimit);
   using ConfigureVoltageLimitRangePtr = decltype(&niDCPower_ConfigureVoltageLimitRange);
+  using ConnectInternalReferencePtr = decltype(&niDCPower_ConnectInternalReference);
   using CreateAdvancedSequencePtr = decltype(&niDCPower_CreateAdvancedSequence);
   using CreateAdvancedSequenceCommitStepWithChannelsPtr = decltype(&niDCPower_CreateAdvancedSequenceCommitStepWithChannels);
   using CreateAdvancedSequenceStepPtr = decltype(&niDCPower_CreateAdvancedSequenceStep);
@@ -234,7 +245,6 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   using DisableStartTriggerPtr = decltype(&niDCPower_DisableStartTrigger);
   using DisableStartTriggerWithChannelsPtr = decltype(&niDCPower_DisableStartTriggerWithChannels);
   using ErrorMessagePtr = decltype(&niDCPower_error_message);
-  using ErrorQueryPtr = decltype(&niDCPower_error_query);
   using ExportAttributeConfigurationBufferPtr = decltype(&niDCPower_ExportAttributeConfigurationBuffer);
   using ExportAttributeConfigurationFilePtr = decltype(&niDCPower_ExportAttributeConfigurationFile);
   using ExportSignalPtr = decltype(&niDCPower_ExportSignal);
@@ -246,6 +256,8 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   using GetAttributeViReal64Ptr = decltype(&niDCPower_GetAttributeViReal64);
   using GetAttributeViSessionPtr = decltype(&niDCPower_GetAttributeViSession);
   using GetAttributeViStringPtr = decltype(&niDCPower_GetAttributeViString);
+  using GetCalUserDefinedInfoPtr = decltype(&niDCPower_GetCalUserDefinedInfo);
+  using GetCalUserDefinedInfoMaxSizePtr = decltype(&niDCPower_GetCalUserDefinedInfoMaxSize);
   using GetChannelNamePtr = decltype(&niDCPower_GetChannelName);
   using GetChannelNameFromStringPtr = decltype(&niDCPower_GetChannelNameFromString);
   using GetErrorPtr = decltype(&niDCPower_GetError);
@@ -258,12 +270,15 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   using GetSelfCalLastTempPtr = decltype(&niDCPower_GetSelfCalLastTemp);
   using ImportAttributeConfigurationBufferPtr = decltype(&niDCPower_ImportAttributeConfigurationBuffer);
   using ImportAttributeConfigurationFilePtr = decltype(&niDCPower_ImportAttributeConfigurationFile);
+  using InitPtr = decltype(&niDCPower_init);
+  using InitExtCalPtr = decltype(&niDCPower_InitExtCal);
+  using InitWithOptionsPtr = decltype(&niDCPower_InitWithOptions);
   using InitializeWithChannelsPtr = decltype(&niDCPower_InitializeWithChannels);
   using InitializeWithIndependentChannelsPtr = decltype(&niDCPower_InitializeWithIndependentChannels);
   using InitiatePtr = decltype(&niDCPower_Initiate);
   using InitiateWithChannelsPtr = decltype(&niDCPower_InitiateWithChannels);
   using InvalidateAllAttributesPtr = decltype(&niDCPower_InvalidateAllAttributes);
-  using LockSessionPtr = ViStatus (*)(ViSession vi, ViBoolean* callerHasLock);
+  using LockSessionPtr = decltype(&niDCPower_LockSession);
   using MeasurePtr = decltype(&niDCPower_Measure);
   using MeasureMultiplePtr = decltype(&niDCPower_MeasureMultiple);
   using ParseChannelCountPtr = ViStatus (*)(ViSession vi, ViConstString channelsString, ViUInt32* numberOfChannels);
@@ -288,8 +303,9 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   using SetAttributeViReal64Ptr = decltype(&niDCPower_SetAttributeViReal64);
   using SetAttributeViSessionPtr = decltype(&niDCPower_SetAttributeViSession);
   using SetAttributeViStringPtr = decltype(&niDCPower_SetAttributeViString);
+  using SetCalUserDefinedInfoPtr = decltype(&niDCPower_SetCalUserDefinedInfo);
   using SetSequencePtr = decltype(&niDCPower_SetSequence);
-  using UnlockSessionPtr = ViStatus (*)(ViSession vi, ViBoolean* callerHasLock);
+  using UnlockSessionPtr = decltype(&niDCPower_UnlockSession);
   using WaitForEventPtr = decltype(&niDCPower_WaitForEvent);
   using WaitForEventWithChannelsPtr = decltype(&niDCPower_WaitForEventWithChannels);
 
@@ -297,9 +313,11 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
     AbortPtr Abort;
     AbortWithChannelsPtr AbortWithChannels;
     CalSelfCalibratePtr CalSelfCalibrate;
+    ChangeExtCalPasswordPtr ChangeExtCalPassword;
     ClearErrorPtr ClearError;
     ClearInterchangeWarningsPtr ClearInterchangeWarnings;
     ClosePtr Close;
+    CloseExtCalPtr CloseExtCal;
     CommitPtr Commit;
     CommitWithChannelsPtr CommitWithChannels;
     ConfigureApertureTimePtr ConfigureApertureTime;
@@ -321,8 +339,8 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
     ConfigureDigitalEdgeStartTriggerWithChannelsPtr ConfigureDigitalEdgeStartTriggerWithChannels;
     ConfigureOutputEnabledPtr ConfigureOutputEnabled;
     ConfigureOutputFunctionPtr ConfigureOutputFunction;
+    ConfigureOutputRangePtr ConfigureOutputRange;
     ConfigureOutputResistancePtr ConfigureOutputResistance;
-    ConfigureOvpPtr ConfigureOvp;
     ConfigurePowerLineFrequencyPtr ConfigurePowerLineFrequency;
     ConfigurePulseBiasCurrentLevelPtr ConfigurePulseBiasCurrentLevel;
     ConfigurePulseBiasCurrentLimitPtr ConfigurePulseBiasCurrentLimit;
@@ -354,6 +372,7 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
     ConfigureVoltageLevelRangePtr ConfigureVoltageLevelRange;
     ConfigureVoltageLimitPtr ConfigureVoltageLimit;
     ConfigureVoltageLimitRangePtr ConfigureVoltageLimitRange;
+    ConnectInternalReferencePtr ConnectInternalReference;
     CreateAdvancedSequencePtr CreateAdvancedSequence;
     CreateAdvancedSequenceCommitStepWithChannelsPtr CreateAdvancedSequenceCommitStepWithChannels;
     CreateAdvancedSequenceStepPtr CreateAdvancedSequenceStep;
@@ -372,7 +391,6 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
     DisableStartTriggerPtr DisableStartTrigger;
     DisableStartTriggerWithChannelsPtr DisableStartTriggerWithChannels;
     ErrorMessagePtr ErrorMessage;
-    ErrorQueryPtr ErrorQuery;
     ExportAttributeConfigurationBufferPtr ExportAttributeConfigurationBuffer;
     ExportAttributeConfigurationFilePtr ExportAttributeConfigurationFile;
     ExportSignalPtr ExportSignal;
@@ -384,6 +402,8 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
     GetAttributeViReal64Ptr GetAttributeViReal64;
     GetAttributeViSessionPtr GetAttributeViSession;
     GetAttributeViStringPtr GetAttributeViString;
+    GetCalUserDefinedInfoPtr GetCalUserDefinedInfo;
+    GetCalUserDefinedInfoMaxSizePtr GetCalUserDefinedInfoMaxSize;
     GetChannelNamePtr GetChannelName;
     GetChannelNameFromStringPtr GetChannelNameFromString;
     GetErrorPtr GetError;
@@ -396,6 +416,9 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
     GetSelfCalLastTempPtr GetSelfCalLastTemp;
     ImportAttributeConfigurationBufferPtr ImportAttributeConfigurationBuffer;
     ImportAttributeConfigurationFilePtr ImportAttributeConfigurationFile;
+    InitPtr Init;
+    InitExtCalPtr InitExtCal;
+    InitWithOptionsPtr InitWithOptions;
     InitializeWithChannelsPtr InitializeWithChannels;
     InitializeWithIndependentChannelsPtr InitializeWithIndependentChannels;
     InitiatePtr Initiate;
@@ -426,6 +449,7 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
     SetAttributeViReal64Ptr SetAttributeViReal64;
     SetAttributeViSessionPtr SetAttributeViSession;
     SetAttributeViStringPtr SetAttributeViString;
+    SetCalUserDefinedInfoPtr SetCalUserDefinedInfo;
     SetSequencePtr SetSequence;
     UnlockSessionPtr UnlockSession;
     WaitForEventPtr WaitForEvent;

@@ -115,6 +115,30 @@ namespace nidcpower_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiDCPowerService::ChangeExtCalPassword(::grpc::ServerContext* context, const ChangeExtCalPasswordRequest* request, ChangeExtCalPasswordResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto old_password = request->old_password().c_str();
+      auto new_password = request->new_password().c_str();
+      auto status = library_->ChangeExtCalPassword(vi, old_password, new_password);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(context, status, vi);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiDCPowerService::ClearError(::grpc::ServerContext* context, const ClearErrorRequest* request, ClearErrorResponse* response)
   {
     if (context->IsCancelled()) {
@@ -169,6 +193,29 @@ namespace nidcpower_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       session_repository_->remove_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->Close(vi);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(context, status, vi);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDCPowerService::CloseExtCal(::grpc::ServerContext* context, const CloseExtCalRequest* request, CloseExtCalResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViInt32 action = request->action();
+      auto status = library_->CloseExtCal(vi, action);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
       }
@@ -363,22 +410,7 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
-      ViInt32 behavior;
-      switch (request->behavior_enum_case()) {
-        case nidcpower_grpc::ConfigureCurrentLimitRequest::BehaviorEnumCase::kBehavior: {
-          behavior = static_cast<ViInt32>(request->behavior());
-          break;
-        }
-        case nidcpower_grpc::ConfigureCurrentLimitRequest::BehaviorEnumCase::kBehaviorRaw: {
-          behavior = static_cast<ViInt32>(request->behavior_raw());
-          break;
-        }
-        case nidcpower_grpc::ConfigureCurrentLimitRequest::BehaviorEnumCase::BEHAVIOR_ENUM_NOT_SET: {
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for behavior was not specified or out of range");
-          break;
-        }
-      }
-
+      ViInt32 behavior = request->behavior();
       ViReal64 limit = request->limit();
       auto status = library_->ConfigureCurrentLimit(vi, channel_name, behavior, limit);
       if (!status_ok(status)) {
@@ -427,22 +459,7 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto input_terminal = request->input_terminal().c_str();
-      ViInt32 edge;
-      switch (request->edge_enum_case()) {
-        case nidcpower_grpc::ConfigureDigitalEdgeMeasureTriggerRequest::EdgeEnumCase::kEdge: {
-          edge = static_cast<ViInt32>(request->edge());
-          break;
-        }
-        case nidcpower_grpc::ConfigureDigitalEdgeMeasureTriggerRequest::EdgeEnumCase::kEdgeRaw: {
-          edge = static_cast<ViInt32>(request->edge_raw());
-          break;
-        }
-        case nidcpower_grpc::ConfigureDigitalEdgeMeasureTriggerRequest::EdgeEnumCase::EDGE_ENUM_NOT_SET: {
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for edge was not specified or out of range");
-          break;
-        }
-      }
-
+      ViInt32 edge = request->edge();
       auto status = library_->ConfigureDigitalEdgeMeasureTrigger(vi, input_terminal, edge);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -467,22 +484,7 @@ namespace nidcpower_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
       auto input_terminal = request->input_terminal().c_str();
-      ViInt32 edge;
-      switch (request->edge_enum_case()) {
-        case nidcpower_grpc::ConfigureDigitalEdgeMeasureTriggerWithChannelsRequest::EdgeEnumCase::kEdge: {
-          edge = static_cast<ViInt32>(request->edge());
-          break;
-        }
-        case nidcpower_grpc::ConfigureDigitalEdgeMeasureTriggerWithChannelsRequest::EdgeEnumCase::kEdgeRaw: {
-          edge = static_cast<ViInt32>(request->edge_raw());
-          break;
-        }
-        case nidcpower_grpc::ConfigureDigitalEdgeMeasureTriggerWithChannelsRequest::EdgeEnumCase::EDGE_ENUM_NOT_SET: {
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for edge was not specified or out of range");
-          break;
-        }
-      }
-
+      ViInt32 edge = request->edge();
       auto status = library_->ConfigureDigitalEdgeMeasureTriggerWithChannels(vi, channel_name, input_terminal, edge);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -506,22 +508,7 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto input_terminal = request->input_terminal().c_str();
-      ViInt32 edge;
-      switch (request->edge_enum_case()) {
-        case nidcpower_grpc::ConfigureDigitalEdgePulseTriggerRequest::EdgeEnumCase::kEdge: {
-          edge = static_cast<ViInt32>(request->edge());
-          break;
-        }
-        case nidcpower_grpc::ConfigureDigitalEdgePulseTriggerRequest::EdgeEnumCase::kEdgeRaw: {
-          edge = static_cast<ViInt32>(request->edge_raw());
-          break;
-        }
-        case nidcpower_grpc::ConfigureDigitalEdgePulseTriggerRequest::EdgeEnumCase::EDGE_ENUM_NOT_SET: {
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for edge was not specified or out of range");
-          break;
-        }
-      }
-
+      ViInt32 edge = request->edge();
       auto status = library_->ConfigureDigitalEdgePulseTrigger(vi, input_terminal, edge);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -546,22 +533,7 @@ namespace nidcpower_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
       auto input_terminal = request->input_terminal().c_str();
-      ViInt32 edge;
-      switch (request->edge_enum_case()) {
-        case nidcpower_grpc::ConfigureDigitalEdgePulseTriggerWithChannelsRequest::EdgeEnumCase::kEdge: {
-          edge = static_cast<ViInt32>(request->edge());
-          break;
-        }
-        case nidcpower_grpc::ConfigureDigitalEdgePulseTriggerWithChannelsRequest::EdgeEnumCase::kEdgeRaw: {
-          edge = static_cast<ViInt32>(request->edge_raw());
-          break;
-        }
-        case nidcpower_grpc::ConfigureDigitalEdgePulseTriggerWithChannelsRequest::EdgeEnumCase::EDGE_ENUM_NOT_SET: {
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for edge was not specified or out of range");
-          break;
-        }
-      }
-
+      ViInt32 edge = request->edge();
       auto status = library_->ConfigureDigitalEdgePulseTriggerWithChannels(vi, channel_name, input_terminal, edge);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -585,22 +557,7 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto input_terminal = request->input_terminal().c_str();
-      ViInt32 edge;
-      switch (request->edge_enum_case()) {
-        case nidcpower_grpc::ConfigureDigitalEdgeSequenceAdvanceTriggerRequest::EdgeEnumCase::kEdge: {
-          edge = static_cast<ViInt32>(request->edge());
-          break;
-        }
-        case nidcpower_grpc::ConfigureDigitalEdgeSequenceAdvanceTriggerRequest::EdgeEnumCase::kEdgeRaw: {
-          edge = static_cast<ViInt32>(request->edge_raw());
-          break;
-        }
-        case nidcpower_grpc::ConfigureDigitalEdgeSequenceAdvanceTriggerRequest::EdgeEnumCase::EDGE_ENUM_NOT_SET: {
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for edge was not specified or out of range");
-          break;
-        }
-      }
-
+      ViInt32 edge = request->edge();
       auto status = library_->ConfigureDigitalEdgeSequenceAdvanceTrigger(vi, input_terminal, edge);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -625,22 +582,7 @@ namespace nidcpower_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
       auto input_terminal = request->input_terminal().c_str();
-      ViInt32 edge;
-      switch (request->edge_enum_case()) {
-        case nidcpower_grpc::ConfigureDigitalEdgeSequenceAdvanceTriggerWithChannelsRequest::EdgeEnumCase::kEdge: {
-          edge = static_cast<ViInt32>(request->edge());
-          break;
-        }
-        case nidcpower_grpc::ConfigureDigitalEdgeSequenceAdvanceTriggerWithChannelsRequest::EdgeEnumCase::kEdgeRaw: {
-          edge = static_cast<ViInt32>(request->edge_raw());
-          break;
-        }
-        case nidcpower_grpc::ConfigureDigitalEdgeSequenceAdvanceTriggerWithChannelsRequest::EdgeEnumCase::EDGE_ENUM_NOT_SET: {
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for edge was not specified or out of range");
-          break;
-        }
-      }
-
+      ViInt32 edge = request->edge();
       auto status = library_->ConfigureDigitalEdgeSequenceAdvanceTriggerWithChannels(vi, channel_name, input_terminal, edge);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -665,22 +607,7 @@ namespace nidcpower_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
       auto input_terminal = request->input_terminal().c_str();
-      ViInt32 edge;
-      switch (request->edge_enum_case()) {
-        case nidcpower_grpc::ConfigureDigitalEdgeShutdownTriggerWithChannelsRequest::EdgeEnumCase::kEdge: {
-          edge = static_cast<ViInt32>(request->edge());
-          break;
-        }
-        case nidcpower_grpc::ConfigureDigitalEdgeShutdownTriggerWithChannelsRequest::EdgeEnumCase::kEdgeRaw: {
-          edge = static_cast<ViInt32>(request->edge_raw());
-          break;
-        }
-        case nidcpower_grpc::ConfigureDigitalEdgeShutdownTriggerWithChannelsRequest::EdgeEnumCase::EDGE_ENUM_NOT_SET: {
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for edge was not specified or out of range");
-          break;
-        }
-      }
-
+      ViInt32 edge = request->edge();
       auto status = library_->ConfigureDigitalEdgeShutdownTriggerWithChannels(vi, channel_name, input_terminal, edge);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -704,22 +631,7 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto input_terminal = request->input_terminal().c_str();
-      ViInt32 edge;
-      switch (request->edge_enum_case()) {
-        case nidcpower_grpc::ConfigureDigitalEdgeSourceTriggerRequest::EdgeEnumCase::kEdge: {
-          edge = static_cast<ViInt32>(request->edge());
-          break;
-        }
-        case nidcpower_grpc::ConfigureDigitalEdgeSourceTriggerRequest::EdgeEnumCase::kEdgeRaw: {
-          edge = static_cast<ViInt32>(request->edge_raw());
-          break;
-        }
-        case nidcpower_grpc::ConfigureDigitalEdgeSourceTriggerRequest::EdgeEnumCase::EDGE_ENUM_NOT_SET: {
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for edge was not specified or out of range");
-          break;
-        }
-      }
-
+      ViInt32 edge = request->edge();
       auto status = library_->ConfigureDigitalEdgeSourceTrigger(vi, input_terminal, edge);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -744,22 +656,7 @@ namespace nidcpower_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
       auto input_terminal = request->input_terminal().c_str();
-      ViInt32 edge;
-      switch (request->edge_enum_case()) {
-        case nidcpower_grpc::ConfigureDigitalEdgeSourceTriggerWithChannelsRequest::EdgeEnumCase::kEdge: {
-          edge = static_cast<ViInt32>(request->edge());
-          break;
-        }
-        case nidcpower_grpc::ConfigureDigitalEdgeSourceTriggerWithChannelsRequest::EdgeEnumCase::kEdgeRaw: {
-          edge = static_cast<ViInt32>(request->edge_raw());
-          break;
-        }
-        case nidcpower_grpc::ConfigureDigitalEdgeSourceTriggerWithChannelsRequest::EdgeEnumCase::EDGE_ENUM_NOT_SET: {
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for edge was not specified or out of range");
-          break;
-        }
-      }
-
+      ViInt32 edge = request->edge();
       auto status = library_->ConfigureDigitalEdgeSourceTriggerWithChannels(vi, channel_name, input_terminal, edge);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -783,22 +680,7 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto input_terminal = request->input_terminal().c_str();
-      ViInt32 edge;
-      switch (request->edge_enum_case()) {
-        case nidcpower_grpc::ConfigureDigitalEdgeStartTriggerRequest::EdgeEnumCase::kEdge: {
-          edge = static_cast<ViInt32>(request->edge());
-          break;
-        }
-        case nidcpower_grpc::ConfigureDigitalEdgeStartTriggerRequest::EdgeEnumCase::kEdgeRaw: {
-          edge = static_cast<ViInt32>(request->edge_raw());
-          break;
-        }
-        case nidcpower_grpc::ConfigureDigitalEdgeStartTriggerRequest::EdgeEnumCase::EDGE_ENUM_NOT_SET: {
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for edge was not specified or out of range");
-          break;
-        }
-      }
-
+      ViInt32 edge = request->edge();
       auto status = library_->ConfigureDigitalEdgeStartTrigger(vi, input_terminal, edge);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -823,22 +705,7 @@ namespace nidcpower_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
       auto input_terminal = request->input_terminal().c_str();
-      ViInt32 edge;
-      switch (request->edge_enum_case()) {
-        case nidcpower_grpc::ConfigureDigitalEdgeStartTriggerWithChannelsRequest::EdgeEnumCase::kEdge: {
-          edge = static_cast<ViInt32>(request->edge());
-          break;
-        }
-        case nidcpower_grpc::ConfigureDigitalEdgeStartTriggerWithChannelsRequest::EdgeEnumCase::kEdgeRaw: {
-          edge = static_cast<ViInt32>(request->edge_raw());
-          break;
-        }
-        case nidcpower_grpc::ConfigureDigitalEdgeStartTriggerWithChannelsRequest::EdgeEnumCase::EDGE_ENUM_NOT_SET: {
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for edge was not specified or out of range");
-          break;
-        }
-      }
-
+      ViInt32 edge = request->edge();
       auto status = library_->ConfigureDigitalEdgeStartTriggerWithChannels(vi, channel_name, input_terminal, edge);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -916,6 +783,31 @@ namespace nidcpower_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiDCPowerService::ConfigureOutputRange(::grpc::ServerContext* context, const ConfigureOutputRangeRequest* request, ConfigureOutputRangeResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto channel_name = request->channel_name().c_str();
+      ViInt32 range_type = request->range_type();
+      ViReal64 range = request->range();
+      auto status = library_->ConfigureOutputRange(vi, channel_name, range_type, range);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(context, status, vi);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiDCPowerService::ConfigureOutputResistance(::grpc::ServerContext* context, const ConfigureOutputResistanceRequest* request, ConfigureOutputResistanceResponse* response)
   {
     if (context->IsCancelled()) {
@@ -940,31 +832,6 @@ namespace nidcpower_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiDCPowerService::ConfigureOvp(::grpc::ServerContext* context, const ConfigureOvpRequest* request, ConfigureOvpResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      auto channel_name = request->channel_name().c_str();
-      ViBoolean enabled = request->enabled();
-      ViReal64 limit = request->limit();
-      auto status = library_->ConfigureOvp(vi, channel_name, enabled, limit);
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(context, status, vi);
-      }
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
   ::grpc::Status NiDCPowerService::ConfigurePowerLineFrequency(::grpc::ServerContext* context, const ConfigurePowerLineFrequencyRequest* request, ConfigurePowerLineFrequencyResponse* response)
   {
     if (context->IsCancelled()) {
@@ -973,22 +840,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViReal64 powerline_frequency;
-      switch (request->powerline_frequency_enum_case()) {
-        case nidcpower_grpc::ConfigurePowerLineFrequencyRequest::PowerlineFrequencyEnumCase::kPowerlineFrequency: {
-          powerline_frequency = static_cast<ViReal64>(request->powerline_frequency());
-          break;
-        }
-        case nidcpower_grpc::ConfigurePowerLineFrequencyRequest::PowerlineFrequencyEnumCase::kPowerlineFrequencyRaw: {
-          powerline_frequency = static_cast<ViReal64>(request->powerline_frequency_raw());
-          break;
-        }
-        case nidcpower_grpc::ConfigurePowerLineFrequencyRequest::PowerlineFrequencyEnumCase::POWERLINE_FREQUENCY_ENUM_NOT_SET: {
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for powerline_frequency was not specified or out of range");
-          break;
-        }
-      }
-
+      ViReal64 powerline_frequency = request->powerline_frequency();
       auto status = library_->ConfigurePowerLineFrequency(vi, powerline_frequency);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -1300,22 +1152,7 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
-      ViInt32 sense;
-      switch (request->sense_enum_case()) {
-        case nidcpower_grpc::ConfigureSenseRequest::SenseEnumCase::kSense: {
-          sense = static_cast<ViInt32>(request->sense());
-          break;
-        }
-        case nidcpower_grpc::ConfigureSenseRequest::SenseEnumCase::kSenseRaw: {
-          sense = static_cast<ViInt32>(request->sense_raw());
-          break;
-        }
-        case nidcpower_grpc::ConfigureSenseRequest::SenseEnumCase::SENSE_ENUM_NOT_SET: {
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for sense was not specified or out of range");
-          break;
-        }
-      }
-
+      ViInt32 sense = request->sense();
       auto status = library_->ConfigureSense(vi, channel_name, sense);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -1586,22 +1423,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViInt32 source_mode;
-      switch (request->source_mode_enum_case()) {
-        case nidcpower_grpc::ConfigureSourceModeRequest::SourceModeEnumCase::kSourceMode: {
-          source_mode = static_cast<ViInt32>(request->source_mode());
-          break;
-        }
-        case nidcpower_grpc::ConfigureSourceModeRequest::SourceModeEnumCase::kSourceModeRaw: {
-          source_mode = static_cast<ViInt32>(request->source_mode_raw());
-          break;
-        }
-        case nidcpower_grpc::ConfigureSourceModeRequest::SourceModeEnumCase::SOURCE_MODE_ENUM_NOT_SET: {
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for source_mode was not specified or out of range");
-          break;
-        }
-      }
-
+      ViInt32 source_mode = request->source_mode();
       auto status = library_->ConfigureSourceMode(vi, source_mode);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -1625,22 +1447,7 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
-      ViInt32 source_mode;
-      switch (request->source_mode_enum_case()) {
-        case nidcpower_grpc::ConfigureSourceModeWithChannelsRequest::SourceModeEnumCase::kSourceMode: {
-          source_mode = static_cast<ViInt32>(request->source_mode());
-          break;
-        }
-        case nidcpower_grpc::ConfigureSourceModeWithChannelsRequest::SourceModeEnumCase::kSourceModeRaw: {
-          source_mode = static_cast<ViInt32>(request->source_mode_raw());
-          break;
-        }
-        case nidcpower_grpc::ConfigureSourceModeWithChannelsRequest::SourceModeEnumCase::SOURCE_MODE_ENUM_NOT_SET: {
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for source_mode was not specified or out of range");
-          break;
-        }
-      }
-
+      ViInt32 source_mode = request->source_mode();
       auto status = library_->ConfigureSourceModeWithChannels(vi, channel_name, source_mode);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -1738,6 +1545,29 @@ namespace nidcpower_grpc {
       auto channel_name = request->channel_name().c_str();
       ViReal64 range = request->range();
       auto status = library_->ConfigureVoltageLimitRange(vi, channel_name, range);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(context, status, vi);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDCPowerService::ConnectInternalReference(::grpc::ServerContext* context, const ConnectInternalReferenceRequest* request, ConnectInternalReferenceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViInt32 internal_reference = request->internal_reference();
+      auto status = library_->ConnectInternalReference(vi, internal_reference);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
       }
@@ -2173,31 +2003,6 @@ namespace nidcpower_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiDCPowerService::ErrorQuery(::grpc::ServerContext* context, const ErrorQueryRequest* request, ErrorQueryResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViChar* error_message = (ViChar*)request->error_message().c_str();
-      ViInt32 error_code {};
-      auto status = library_->ErrorQuery(vi, &error_code, error_message);
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(context, status, vi);
-      }
-      response->set_status(status);
-      response->set_error_code(error_code);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
   ::grpc::Status NiDCPowerService::ExportAttributeConfigurationBuffer(::grpc::ServerContext* context, const ExportAttributeConfigurationBufferRequest* request, ExportAttributeConfigurationBufferResponse* response)
   {
     if (context->IsCancelled()) {
@@ -2307,22 +2112,7 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
-      ViInt32 signal;
-      switch (request->signal_enum_case()) {
-        case nidcpower_grpc::ExportSignalWithChannelsRequest::SignalEnumCase::kSignal: {
-          signal = static_cast<ViInt32>(request->signal());
-          break;
-        }
-        case nidcpower_grpc::ExportSignalWithChannelsRequest::SignalEnumCase::kSignalRaw: {
-          signal = static_cast<ViInt32>(request->signal_raw());
-          break;
-        }
-        case nidcpower_grpc::ExportSignalWithChannelsRequest::SignalEnumCase::SIGNAL_ENUM_NOT_SET: {
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for signal was not specified or out of range");
-          break;
-        }
-      }
-
+      ViInt32 signal = request->signal();
       auto signal_identifier = request->signal_identifier().c_str();
       auto output_terminal = request->output_terminal().c_str();
       auto status = library_->ExportSignalWithChannels(vi, channel_name, signal, signal_identifier, output_terminal);
@@ -2538,6 +2328,55 @@ namespace nidcpower_grpc {
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_attribute_value()));
         return ::grpc::Status::OK;
       }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDCPowerService::GetCalUserDefinedInfo(::grpc::ServerContext* context, const GetCalUserDefinedInfoRequest* request, GetCalUserDefinedInfoResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      std::string info(256 - 1, '\0');
+      auto status = library_->GetCalUserDefinedInfo(vi, (ViChar*)info.data());
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(context, status, vi);
+      }
+      response->set_status(status);
+      response->set_info(info);
+      nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_info()));
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDCPowerService::GetCalUserDefinedInfoMaxSize(::grpc::ServerContext* context, const GetCalUserDefinedInfoMaxSizeRequest* request, GetCalUserDefinedInfoMaxSizeResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViInt32 info_size {};
+      auto status = library_->GetCalUserDefinedInfoMaxSize(vi, &info_size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(context, status, vi);
+      }
+      response->set_status(status);
+      response->set_info_size(info_size);
+      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
       return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -2938,6 +2777,84 @@ namespace nidcpower_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiDCPowerService::Init(::grpc::ServerContext* context, const InitRequest* request, InitResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      ViRsrc resource_name = (ViRsrc)request->resource_name().c_str();
+      ViBoolean id_query = request->id_query();
+      ViBoolean reset_device = request->reset_device();
+      ViSession vi {};
+      auto status = library_->Init(resource_name, id_query, reset_device, &vi);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(context, status, 0);
+      }
+      response->set_status(status);
+      auto session_id = session_repository_->resolve_session_id(vi);
+      response->mutable_vi()->set_id(session_id);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDCPowerService::InitExtCal(::grpc::ServerContext* context, const InitExtCalRequest* request, InitExtCalResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      ViRsrc resource_name = (ViRsrc)request->resource_name().c_str();
+      auto password = request->password().c_str();
+      ViSession vi {};
+      auto status = library_->InitExtCal(resource_name, password, &vi);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(context, status, 0);
+      }
+      response->set_status(status);
+      auto session_id = session_repository_->resolve_session_id(vi);
+      response->mutable_vi()->set_id(session_id);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDCPowerService::InitWithOptions(::grpc::ServerContext* context, const InitWithOptionsRequest* request, InitWithOptionsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      ViRsrc resource_name = (ViRsrc)request->resource_name().c_str();
+      ViBoolean id_query = request->id_query();
+      ViBoolean reset_device = request->reset_device();
+      ViString option_string = (ViString)request->option_string().c_str();
+      ViSession vi {};
+      auto status = library_->InitWithOptions(resource_name, id_query, reset_device, option_string, &vi);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(context, status, 0);
+      }
+      response->set_status(status);
+      auto session_id = session_repository_->resolve_session_id(vi);
+      response->mutable_vi()->set_id(session_id);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiDCPowerService::InitializeWithChannels(::grpc::ServerContext* context, const InitializeWithChannelsRequest* request, InitializeWithChannelsResponse* response)
   {
     if (context->IsCancelled()) {
@@ -3069,6 +2986,30 @@ namespace nidcpower_grpc {
         return ConvertApiErrorStatusForViSession(context, status, vi);
       }
       response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDCPowerService::LockSession(::grpc::ServerContext* context, const LockSessionRequest* request, LockSessionResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViBoolean caller_has_lock {};
+      auto status = library_->LockSession(vi, &caller_has_lock);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(context, status, vi);
+      }
+      response->set_status(status);
+      response->set_caller_has_lock(caller_has_lock);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -3461,22 +3402,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViInt32 trigger;
-      switch (request->trigger_enum_case()) {
-        case nidcpower_grpc::SendSoftwareEdgeTriggerRequest::TriggerEnumCase::kTrigger: {
-          trigger = static_cast<ViInt32>(request->trigger());
-          break;
-        }
-        case nidcpower_grpc::SendSoftwareEdgeTriggerRequest::TriggerEnumCase::kTriggerRaw: {
-          trigger = static_cast<ViInt32>(request->trigger_raw());
-          break;
-        }
-        case nidcpower_grpc::SendSoftwareEdgeTriggerRequest::TriggerEnumCase::TRIGGER_ENUM_NOT_SET: {
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for trigger was not specified or out of range");
-          break;
-        }
-      }
-
+      ViInt32 trigger = request->trigger();
       auto status = library_->SendSoftwareEdgeTrigger(vi, trigger);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -3500,22 +3426,7 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
-      ViInt32 trigger;
-      switch (request->trigger_enum_case()) {
-        case nidcpower_grpc::SendSoftwareEdgeTriggerWithChannelsRequest::TriggerEnumCase::kTrigger: {
-          trigger = static_cast<ViInt32>(request->trigger());
-          break;
-        }
-        case nidcpower_grpc::SendSoftwareEdgeTriggerWithChannelsRequest::TriggerEnumCase::kTriggerRaw: {
-          trigger = static_cast<ViInt32>(request->trigger_raw());
-          break;
-        }
-        case nidcpower_grpc::SendSoftwareEdgeTriggerWithChannelsRequest::TriggerEnumCase::TRIGGER_ENUM_NOT_SET: {
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for trigger was not specified or out of range");
-          break;
-        }
-      }
-
+      ViInt32 trigger = request->trigger();
       auto status = library_->SendSoftwareEdgeTriggerWithChannels(vi, channel_name, trigger);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -3711,6 +3622,29 @@ namespace nidcpower_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiDCPowerService::SetCalUserDefinedInfo(::grpc::ServerContext* context, const SetCalUserDefinedInfoRequest* request, SetCalUserDefinedInfoResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto info = request->info().c_str();
+      auto status = library_->SetCalUserDefinedInfo(vi, info);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(context, status, vi);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiDCPowerService::SetSequence(::grpc::ServerContext* context, const SetSequenceRequest* request, SetSequenceResponse* response)
   {
     if (context->IsCancelled()) {
@@ -3748,6 +3682,30 @@ namespace nidcpower_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiDCPowerService::UnlockSession(::grpc::ServerContext* context, const UnlockSessionRequest* request, UnlockSessionResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViBoolean caller_has_lock {};
+      auto status = library_->UnlockSession(vi, &caller_has_lock);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(context, status, vi);
+      }
+      response->set_status(status);
+      response->set_caller_has_lock(caller_has_lock);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiDCPowerService::WaitForEvent(::grpc::ServerContext* context, const WaitForEventRequest* request, WaitForEventResponse* response)
   {
     if (context->IsCancelled()) {
@@ -3756,22 +3714,7 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViInt32 event_id;
-      switch (request->event_id_enum_case()) {
-        case nidcpower_grpc::WaitForEventRequest::EventIdEnumCase::kEventId: {
-          event_id = static_cast<ViInt32>(request->event_id());
-          break;
-        }
-        case nidcpower_grpc::WaitForEventRequest::EventIdEnumCase::kEventIdRaw: {
-          event_id = static_cast<ViInt32>(request->event_id_raw());
-          break;
-        }
-        case nidcpower_grpc::WaitForEventRequest::EventIdEnumCase::EVENT_ID_ENUM_NOT_SET: {
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for event_id was not specified or out of range");
-          break;
-        }
-      }
-
+      ViInt32 event_id = request->event_id();
       ViReal64 timeout = request->timeout();
       auto status = library_->WaitForEvent(vi, event_id, timeout);
       if (!status_ok(status)) {
@@ -3796,22 +3739,7 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
-      ViInt32 event_id;
-      switch (request->event_id_enum_case()) {
-        case nidcpower_grpc::WaitForEventWithChannelsRequest::EventIdEnumCase::kEventId: {
-          event_id = static_cast<ViInt32>(request->event_id());
-          break;
-        }
-        case nidcpower_grpc::WaitForEventWithChannelsRequest::EventIdEnumCase::kEventIdRaw: {
-          event_id = static_cast<ViInt32>(request->event_id_raw());
-          break;
-        }
-        case nidcpower_grpc::WaitForEventWithChannelsRequest::EventIdEnumCase::EVENT_ID_ENUM_NOT_SET: {
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for event_id was not specified or out of range");
-          break;
-        }
-      }
-
+      ViInt32 event_id = request->event_id();
       ViReal64 timeout = request->timeout();
       auto status = library_->WaitForEventWithChannels(vi, channel_name, event_id, timeout);
       if (!status_ok(status)) {
