@@ -294,44 +294,6 @@ enums = {
             }
         ]
     },
-    'RIOEvent': {
-        'codegen_method': 'public',
-        'generate-mappings': True,
-        'values': [
-            {
-                'name': 'NIDIGITAL_VAL_RIO_EVENT0',
-                'value': 'RIOEvent0'
-            },
-            {
-                'name': 'NIDIGITAL_VAL_RIO_EVENT1',
-                'value': 'RIOEvent1'
-            },
-            {
-                'name': 'NIDIGITAL_VAL_RIO_EVENT2',
-                'value': 'RIOEvent2'
-            },
-            {
-                'name': 'NIDIGITAL_VAL_RIO_EVENT3',
-                'value': 'RIOEvent3'
-            },
-            {
-                'name': 'NIDIGITAL_VAL_RIO_EVENT4',
-                'value': 'RIOEvent4'
-            },
-            {
-                'name': 'NIDIGITAL_VAL_RIO_EVENT5',
-                'value': 'RIOEvent5'
-            },
-            {
-                'name': 'NIDIGITAL_VAL_RIO_EVENT6',
-                'value': 'RIOEvent6'
-            },
-            {
-                'name': 'NIDIGITAL_VAL_RIO_EVENT7',
-                'value': 'RIOEvent7'
-            }
-        ]
-    },
     'RIOTriggerId': {
         'codegen_method': 'public',
         'generate-mappings': True,
