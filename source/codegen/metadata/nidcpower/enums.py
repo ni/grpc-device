@@ -739,15 +739,15 @@ enums = {
                 'value': 1019
             },
             {
-                'name': 'POWER_ALLOCATION_MODE_VAL_POWER_ALLOCATION_MODE_DISABLED',
+                'name': 'POWER_ALLOCATION_MODE_VAL_DISABLED',
                 'value': 1058
             },
             {
-                'name': 'POWER_ALLOCATION_MODE_VAL_POWER_ALLOCATION_MODE_AUTOMATIC',
+                'name': 'POWER_ALLOCATION_MODE_VAL_AUTOMATIC',
                 'value': 1059
             },
             {
-                'name': 'POWER_ALLOCATION_MODE_VAL_POWER_ALLOCATION_MODE_MANUAL',
+                'name': 'POWER_ALLOCATION_MODE_VAL_MANUAL',
                 'value': 1060
             },
             {
@@ -914,15 +914,15 @@ enums = {
         'codegen_method': 'public',
         'values': [
             {
-                'name': 'NIDCPOWER_VAL_POWER_ALLOCATION_MODE_DISABLED',
+                'name': 'NIDCPOWER_VAL_DISABLED',
                 'value': 1058
             },
             {
-                'name': 'NIDCPOWER_VAL_POWER_ALLOCATION_MODE_AUTOMATIC',
+                'name': 'NIDCPOWER_VAL_AUTOMATIC',
                 'value': 1059
             },
             {
-                'name': 'NIDCPOWER_VAL_POWER_ALLOCATION_MODE_MANUAL',
+                'name': 'NIDCPOWER_VAL_MANUAL',
                 'value': 1060
             }
         ]
