@@ -70,25 +70,6 @@ cal_self_calibrate(const StubPtr& stub, const nidevice_grpc::Session& vi, const 
   return response;
 }
 
-ChangeExtCalPasswordResponse
-change_ext_cal_password(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& old_password, const pb::string& new_password)
-{
-  ::grpc::ClientContext context;
-
-  auto request = ChangeExtCalPasswordRequest{};
-  request.mutable_vi()->CopyFrom(vi);
-  request.set_old_password(old_password);
-  request.set_new_password(new_password);
-
-  auto response = ChangeExtCalPasswordResponse{};
-
-  raise_if_error(
-      stub->ChangeExtCalPassword(&context, request, &response),
-      context);
-
-  return response;
-}
-
 ClearErrorResponse
 clear_error(const StubPtr& stub, const nidevice_grpc::Session& vi)
 {
@@ -135,24 +116,6 @@ close(const StubPtr& stub, const nidevice_grpc::Session& vi)
 
   raise_if_error(
       stub->Close(&context, request, &response),
-      context);
-
-  return response;
-}
-
-CloseExtCalResponse
-close_ext_cal(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& action)
-{
-  ::grpc::ClientContext context;
-
-  auto request = CloseExtCalRequest{};
-  request.mutable_vi()->CopyFrom(vi);
-  request.set_action(action);
-
-  auto response = CloseExtCalResponse{};
-
-  raise_if_error(
-      stub->CloseExtCal(&context, request, &response),
       context);
 
   return response;
@@ -1193,24 +1156,6 @@ configure_voltage_limit_range(const StubPtr& stub, const nidevice_grpc::Session&
   return response;
 }
 
-ConnectInternalReferenceResponse
-connect_internal_reference(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& internal_reference)
-{
-  ::grpc::ClientContext context;
-
-  auto request = ConnectInternalReferenceRequest{};
-  request.mutable_vi()->CopyFrom(vi);
-  request.set_internal_reference(internal_reference);
-
-  auto response = ConnectInternalReferenceResponse{};
-
-  raise_if_error(
-      stub->ConnectInternalReference(&context, request, &response),
-      context);
-
-  return response;
-}
-
 CreateAdvancedSequenceResponse
 create_advanced_sequence(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& sequence_name, const std::vector<pb::int32>& attribute_ids, const bool& set_as_active_sequence)
 {
@@ -1755,40 +1700,6 @@ get_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, c
   return response;
 }
 
-GetCalUserDefinedInfoResponse
-get_cal_user_defined_info(const StubPtr& stub, const nidevice_grpc::Session& vi)
-{
-  ::grpc::ClientContext context;
-
-  auto request = GetCalUserDefinedInfoRequest{};
-  request.mutable_vi()->CopyFrom(vi);
-
-  auto response = GetCalUserDefinedInfoResponse{};
-
-  raise_if_error(
-      stub->GetCalUserDefinedInfo(&context, request, &response),
-      context);
-
-  return response;
-}
-
-GetCalUserDefinedInfoMaxSizeResponse
-get_cal_user_defined_info_max_size(const StubPtr& stub, const nidevice_grpc::Session& vi)
-{
-  ::grpc::ClientContext context;
-
-  auto request = GetCalUserDefinedInfoMaxSizeRequest{};
-  request.mutable_vi()->CopyFrom(vi);
-
-  auto response = GetCalUserDefinedInfoMaxSizeResponse{};
-
-  raise_if_error(
-      stub->GetCalUserDefinedInfoMaxSize(&context, request, &response),
-      context);
-
-  return response;
-}
-
 GetChannelNameResponse
 get_channel_name(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& index)
 {
@@ -2011,24 +1922,6 @@ init(const StubPtr& stub, const pb::string& resource_name, const bool& id_query,
 
   raise_if_error(
       stub->Init(&context, request, &response),
-      context);
-
-  return response;
-}
-
-InitExtCalResponse
-init_ext_cal(const StubPtr& stub, const pb::string& resource_name, const pb::string& password)
-{
-  ::grpc::ClientContext context;
-
-  auto request = InitExtCalRequest{};
-  request.set_resource_name(resource_name);
-  request.set_password(password);
-
-  auto response = InitExtCalResponse{};
-
-  raise_if_error(
-      stub->InitExtCal(&context, request, &response),
       context);
 
   return response;
@@ -2610,24 +2503,6 @@ set_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, c
 
   raise_if_error(
       stub->SetAttributeViString(&context, request, &response),
-      context);
-
-  return response;
-}
-
-SetCalUserDefinedInfoResponse
-set_cal_user_defined_info(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& info)
-{
-  ::grpc::ClientContext context;
-
-  auto request = SetCalUserDefinedInfoRequest{};
-  request.mutable_vi()->CopyFrom(vi);
-  request.set_info(info);
-
-  auto response = SetCalUserDefinedInfoResponse{};
-
-  raise_if_error(
-      stub->SetCalUserDefinedInfo(&context, request, &response),
       context);
 
   return response;

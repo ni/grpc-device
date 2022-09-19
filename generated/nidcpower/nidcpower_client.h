@@ -25,11 +25,9 @@ using namespace nidevice_grpc::experimental::client;
 AbortResponse abort(const StubPtr& stub, const nidevice_grpc::Session& vi);
 AbortWithChannelsResponse abort_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name);
 CalSelfCalibrateResponse cal_self_calibrate(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name);
-ChangeExtCalPasswordResponse change_ext_cal_password(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& old_password, const pb::string& new_password);
 ClearErrorResponse clear_error(const StubPtr& stub, const nidevice_grpc::Session& vi);
 ClearInterchangeWarningsResponse clear_interchange_warnings(const StubPtr& stub, const nidevice_grpc::Session& vi);
 CloseResponse close(const StubPtr& stub, const nidevice_grpc::Session& vi);
-CloseExtCalResponse close_ext_cal(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& action);
 CommitResponse commit(const StubPtr& stub, const nidevice_grpc::Session& vi);
 CommitWithChannelsResponse commit_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name);
 ConfigureApertureTimeResponse configure_aperture_time(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& aperture_time, const simple_variant<ApertureTimeUnits, pb::int32>& units);
@@ -84,7 +82,6 @@ ConfigureVoltageLevelResponse configure_voltage_level(const StubPtr& stub, const
 ConfigureVoltageLevelRangeResponse configure_voltage_level_range(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& range);
 ConfigureVoltageLimitResponse configure_voltage_limit(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& limit);
 ConfigureVoltageLimitRangeResponse configure_voltage_limit_range(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& range);
-ConnectInternalReferenceResponse connect_internal_reference(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& internal_reference);
 CreateAdvancedSequenceResponse create_advanced_sequence(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& sequence_name, const std::vector<pb::int32>& attribute_ids, const bool& set_as_active_sequence);
 CreateAdvancedSequenceCommitStepWithChannelsResponse create_advanced_sequence_commit_step_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const bool& set_as_active_step);
 CreateAdvancedSequenceStepResponse create_advanced_sequence_step(const StubPtr& stub, const nidevice_grpc::Session& vi, const bool& set_as_active_step);
@@ -114,8 +111,6 @@ GetAttributeViInt64Response get_attribute_vi_int64(const StubPtr& stub, const ni
 GetAttributeViReal64Response get_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttribute& attribute_id);
 GetAttributeViSessionResponse get_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttribute& attribute_id);
 GetAttributeViStringResponse get_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttribute& attribute_id);
-GetCalUserDefinedInfoResponse get_cal_user_defined_info(const StubPtr& stub, const nidevice_grpc::Session& vi);
-GetCalUserDefinedInfoMaxSizeResponse get_cal_user_defined_info_max_size(const StubPtr& stub, const nidevice_grpc::Session& vi);
 GetChannelNameResponse get_channel_name(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& index);
 GetChannelNameFromStringResponse get_channel_name_from_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& index);
 GetErrorResponse get_error(const StubPtr& stub, const nidevice_grpc::Session& vi);
@@ -129,7 +124,6 @@ GetSelfCalLastTempResponse get_self_cal_last_temp(const StubPtr& stub, const nid
 ImportAttributeConfigurationBufferResponse import_attribute_configuration_buffer(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::vector<pb::uint64>& configuration);
 ImportAttributeConfigurationFileResponse import_attribute_configuration_file(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& file_path);
 InitResponse init(const StubPtr& stub, const pb::string& resource_name, const bool& id_query, const bool& reset_device);
-InitExtCalResponse init_ext_cal(const StubPtr& stub, const pb::string& resource_name, const pb::string& password);
 InitWithOptionsResponse init_with_options(const StubPtr& stub, const pb::string& resource_name, const bool& id_query, const bool& reset_device, const pb::string& option_string);
 InitializeWithChannelsResponse initialize_with_channels(const StubPtr& stub, const pb::string& resource_name, const pb::string& channels, const bool& reset, const pb::string& option_string);
 InitializeWithIndependentChannelsResponse initialize_with_independent_channels(const StubPtr& stub, const pb::string& resource_name, const bool& reset, const pb::string& option_string);
@@ -160,7 +154,6 @@ SetAttributeViInt64Response set_attribute_vi_int64(const StubPtr& stub, const ni
 SetAttributeViReal64Response set_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttribute& attribute_id, const simple_variant<NiDCPowerReal64AttributeValues, double>& attribute_value);
 SetAttributeViSessionResponse set_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttribute& attribute_id, const nidevice_grpc::Session& attribute_value);
 SetAttributeViStringResponse set_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttribute& attribute_id, const pb::string& attribute_value);
-SetCalUserDefinedInfoResponse set_cal_user_defined_info(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& info);
 SetSequenceResponse set_sequence(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const std::vector<double>& values, const std::vector<double>& source_delays);
 UnlockSessionResponse unlock_session(const StubPtr& stub, const nidevice_grpc::Session& vi);
 WaitForEventResponse wait_for_event(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& event_id, const double& timeout);

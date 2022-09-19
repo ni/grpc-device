@@ -19,11 +19,9 @@ service NiDCPower {
   rpc Abort(AbortRequest) returns (AbortResponse);
   rpc AbortWithChannels(AbortWithChannelsRequest) returns (AbortWithChannelsResponse);
   rpc CalSelfCalibrate(CalSelfCalibrateRequest) returns (CalSelfCalibrateResponse);
-  rpc ChangeExtCalPassword(ChangeExtCalPasswordRequest) returns (ChangeExtCalPasswordResponse);
   rpc ClearError(ClearErrorRequest) returns (ClearErrorResponse);
   rpc ClearInterchangeWarnings(ClearInterchangeWarningsRequest) returns (ClearInterchangeWarningsResponse);
   rpc Close(CloseRequest) returns (CloseResponse);
-  rpc CloseExtCal(CloseExtCalRequest) returns (CloseExtCalResponse);
   rpc Commit(CommitRequest) returns (CommitResponse);
   rpc CommitWithChannels(CommitWithChannelsRequest) returns (CommitWithChannelsResponse);
   rpc ConfigureApertureTime(ConfigureApertureTimeRequest) returns (ConfigureApertureTimeResponse);
@@ -78,7 +76,6 @@ service NiDCPower {
   rpc ConfigureVoltageLevelRange(ConfigureVoltageLevelRangeRequest) returns (ConfigureVoltageLevelRangeResponse);
   rpc ConfigureVoltageLimit(ConfigureVoltageLimitRequest) returns (ConfigureVoltageLimitResponse);
   rpc ConfigureVoltageLimitRange(ConfigureVoltageLimitRangeRequest) returns (ConfigureVoltageLimitRangeResponse);
-  rpc ConnectInternalReference(ConnectInternalReferenceRequest) returns (ConnectInternalReferenceResponse);
   rpc CreateAdvancedSequence(CreateAdvancedSequenceRequest) returns (CreateAdvancedSequenceResponse);
   rpc CreateAdvancedSequenceCommitStepWithChannels(CreateAdvancedSequenceCommitStepWithChannelsRequest) returns (CreateAdvancedSequenceCommitStepWithChannelsResponse);
   rpc CreateAdvancedSequenceStep(CreateAdvancedSequenceStepRequest) returns (CreateAdvancedSequenceStepResponse);
@@ -108,8 +105,6 @@ service NiDCPower {
   rpc GetAttributeViReal64(GetAttributeViReal64Request) returns (GetAttributeViReal64Response);
   rpc GetAttributeViSession(GetAttributeViSessionRequest) returns (GetAttributeViSessionResponse);
   rpc GetAttributeViString(GetAttributeViStringRequest) returns (GetAttributeViStringResponse);
-  rpc GetCalUserDefinedInfo(GetCalUserDefinedInfoRequest) returns (GetCalUserDefinedInfoResponse);
-  rpc GetCalUserDefinedInfoMaxSize(GetCalUserDefinedInfoMaxSizeRequest) returns (GetCalUserDefinedInfoMaxSizeResponse);
   rpc GetChannelName(GetChannelNameRequest) returns (GetChannelNameResponse);
   rpc GetChannelNameFromString(GetChannelNameFromStringRequest) returns (GetChannelNameFromStringResponse);
   rpc GetError(GetErrorRequest) returns (GetErrorResponse);
@@ -123,7 +118,6 @@ service NiDCPower {
   rpc ImportAttributeConfigurationBuffer(ImportAttributeConfigurationBufferRequest) returns (ImportAttributeConfigurationBufferResponse);
   rpc ImportAttributeConfigurationFile(ImportAttributeConfigurationFileRequest) returns (ImportAttributeConfigurationFileResponse);
   rpc Init(InitRequest) returns (InitResponse);
-  rpc InitExtCal(InitExtCalRequest) returns (InitExtCalResponse);
   rpc InitWithOptions(InitWithOptionsRequest) returns (InitWithOptionsResponse);
   rpc InitializeWithChannels(InitializeWithChannelsRequest) returns (InitializeWithChannelsResponse);
   rpc InitializeWithIndependentChannels(InitializeWithIndependentChannelsRequest) returns (InitializeWithIndependentChannelsResponse);
@@ -154,7 +148,6 @@ service NiDCPower {
   rpc SetAttributeViReal64(SetAttributeViReal64Request) returns (SetAttributeViReal64Response);
   rpc SetAttributeViSession(SetAttributeViSessionRequest) returns (SetAttributeViSessionResponse);
   rpc SetAttributeViString(SetAttributeViStringRequest) returns (SetAttributeViStringResponse);
-  rpc SetCalUserDefinedInfo(SetCalUserDefinedInfoRequest) returns (SetCalUserDefinedInfoResponse);
   rpc SetSequence(SetSequenceRequest) returns (SetSequenceResponse);
   rpc UnlockSession(UnlockSessionRequest) returns (UnlockSessionResponse);
   rpc WaitForEvent(WaitForEventRequest) returns (WaitForEventResponse);
@@ -561,16 +554,6 @@ message CalSelfCalibrateResponse {
   int32 status = 1;
 }
 
-message ChangeExtCalPasswordRequest {
-  nidevice_grpc.Session vi = 1;
-  string old_password = 2;
-  string new_password = 3;
-}
-
-message ChangeExtCalPasswordResponse {
-  int32 status = 1;
-}
-
 message ClearErrorRequest {
   nidevice_grpc.Session vi = 1;
 }
@@ -592,15 +575,6 @@ message CloseRequest {
 }
 
 message CloseResponse {
-  int32 status = 1;
-}
-
-message CloseExtCalRequest {
-  nidevice_grpc.Session vi = 1;
-  sint32 action = 2;
-}
-
-message CloseExtCalResponse {
   int32 status = 1;
 }
 
@@ -1141,15 +1115,6 @@ message ConfigureVoltageLimitRangeResponse {
   int32 status = 1;
 }
 
-message ConnectInternalReferenceRequest {
-  nidevice_grpc.Session vi = 1;
-  sint32 internal_reference = 2;
-}
-
-message ConnectInternalReferenceResponse {
-  int32 status = 1;
-}
-
 message CreateAdvancedSequenceRequest {
   nidevice_grpc.Session vi = 1;
   string sequence_name = 2;
@@ -1441,24 +1406,6 @@ message GetAttributeViStringResponse {
   string attribute_value = 2;
 }
 
-message GetCalUserDefinedInfoRequest {
-  nidevice_grpc.Session vi = 1;
-}
-
-message GetCalUserDefinedInfoResponse {
-  int32 status = 1;
-  string info = 2;
-}
-
-message GetCalUserDefinedInfoMaxSizeRequest {
-  nidevice_grpc.Session vi = 1;
-}
-
-message GetCalUserDefinedInfoMaxSizeResponse {
-  int32 status = 1;
-  sint32 info_size = 2;
-}
-
 message GetChannelNameRequest {
   nidevice_grpc.Session vi = 1;
   sint32 index = 2;
@@ -1585,16 +1532,6 @@ message InitRequest {
 }
 
 message InitResponse {
-  int32 status = 1;
-  nidevice_grpc.Session vi = 2;
-}
-
-message InitExtCalRequest {
-  string resource_name = 1;
-  string password = 2;
-}
-
-message InitExtCalResponse {
   int32 status = 1;
   nidevice_grpc.Session vi = 2;
 }
@@ -1912,15 +1849,6 @@ message SetAttributeViStringRequest {
 }
 
 message SetAttributeViStringResponse {
-  int32 status = 1;
-}
-
-message SetCalUserDefinedInfoRequest {
-  nidevice_grpc.Session vi = 1;
-  string info = 2;
-}
-
-message SetCalUserDefinedInfoResponse {
   int32 status = 1;
 }
 

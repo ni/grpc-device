@@ -24,11 +24,9 @@ NiDCPowerLibrary::NiDCPowerLibrary() : shared_library_(kLibraryName)
   function_pointers_.Abort = reinterpret_cast<AbortPtr>(shared_library_.get_function_pointer("niDCPower_Abort"));
   function_pointers_.AbortWithChannels = reinterpret_cast<AbortWithChannelsPtr>(shared_library_.get_function_pointer("niDCPower_AbortWithChannels"));
   function_pointers_.CalSelfCalibrate = reinterpret_cast<CalSelfCalibratePtr>(shared_library_.get_function_pointer("niDCPower_CalSelfCalibrate"));
-  function_pointers_.ChangeExtCalPassword = reinterpret_cast<ChangeExtCalPasswordPtr>(shared_library_.get_function_pointer("niDCPower_ChangeExtCalPassword"));
   function_pointers_.ClearError = reinterpret_cast<ClearErrorPtr>(shared_library_.get_function_pointer("niDCPower_ClearError"));
   function_pointers_.ClearInterchangeWarnings = reinterpret_cast<ClearInterchangeWarningsPtr>(shared_library_.get_function_pointer("niDCPower_ClearInterchangeWarnings"));
   function_pointers_.Close = reinterpret_cast<ClosePtr>(shared_library_.get_function_pointer("niDCPower_close"));
-  function_pointers_.CloseExtCal = reinterpret_cast<CloseExtCalPtr>(shared_library_.get_function_pointer("niDCPower_CloseExtCal"));
   function_pointers_.Commit = reinterpret_cast<CommitPtr>(shared_library_.get_function_pointer("niDCPower_Commit"));
   function_pointers_.CommitWithChannels = reinterpret_cast<CommitWithChannelsPtr>(shared_library_.get_function_pointer("niDCPower_CommitWithChannels"));
   function_pointers_.ConfigureApertureTime = reinterpret_cast<ConfigureApertureTimePtr>(shared_library_.get_function_pointer("niDCPower_ConfigureApertureTime"));
@@ -83,7 +81,6 @@ NiDCPowerLibrary::NiDCPowerLibrary() : shared_library_(kLibraryName)
   function_pointers_.ConfigureVoltageLevelRange = reinterpret_cast<ConfigureVoltageLevelRangePtr>(shared_library_.get_function_pointer("niDCPower_ConfigureVoltageLevelRange"));
   function_pointers_.ConfigureVoltageLimit = reinterpret_cast<ConfigureVoltageLimitPtr>(shared_library_.get_function_pointer("niDCPower_ConfigureVoltageLimit"));
   function_pointers_.ConfigureVoltageLimitRange = reinterpret_cast<ConfigureVoltageLimitRangePtr>(shared_library_.get_function_pointer("niDCPower_ConfigureVoltageLimitRange"));
-  function_pointers_.ConnectInternalReference = reinterpret_cast<ConnectInternalReferencePtr>(shared_library_.get_function_pointer("niDCPower_ConnectInternalReference"));
   function_pointers_.CreateAdvancedSequence = reinterpret_cast<CreateAdvancedSequencePtr>(shared_library_.get_function_pointer("niDCPower_CreateAdvancedSequence"));
   function_pointers_.CreateAdvancedSequenceCommitStepWithChannels = reinterpret_cast<CreateAdvancedSequenceCommitStepWithChannelsPtr>(shared_library_.get_function_pointer("niDCPower_CreateAdvancedSequenceCommitStepWithChannels"));
   function_pointers_.CreateAdvancedSequenceStep = reinterpret_cast<CreateAdvancedSequenceStepPtr>(shared_library_.get_function_pointer("niDCPower_CreateAdvancedSequenceStep"));
@@ -113,8 +110,6 @@ NiDCPowerLibrary::NiDCPowerLibrary() : shared_library_(kLibraryName)
   function_pointers_.GetAttributeViReal64 = reinterpret_cast<GetAttributeViReal64Ptr>(shared_library_.get_function_pointer("niDCPower_GetAttributeViReal64"));
   function_pointers_.GetAttributeViSession = reinterpret_cast<GetAttributeViSessionPtr>(shared_library_.get_function_pointer("niDCPower_GetAttributeViSession"));
   function_pointers_.GetAttributeViString = reinterpret_cast<GetAttributeViStringPtr>(shared_library_.get_function_pointer("niDCPower_GetAttributeViString"));
-  function_pointers_.GetCalUserDefinedInfo = reinterpret_cast<GetCalUserDefinedInfoPtr>(shared_library_.get_function_pointer("niDCPower_GetCalUserDefinedInfo"));
-  function_pointers_.GetCalUserDefinedInfoMaxSize = reinterpret_cast<GetCalUserDefinedInfoMaxSizePtr>(shared_library_.get_function_pointer("niDCPower_GetCalUserDefinedInfoMaxSize"));
   function_pointers_.GetChannelName = reinterpret_cast<GetChannelNamePtr>(shared_library_.get_function_pointer("niDCPower_GetChannelName"));
   function_pointers_.GetChannelNameFromString = reinterpret_cast<GetChannelNameFromStringPtr>(shared_library_.get_function_pointer("niDCPower_GetChannelNameFromString"));
   function_pointers_.GetError = reinterpret_cast<GetErrorPtr>(shared_library_.get_function_pointer("niDCPower_GetError"));
@@ -128,7 +123,6 @@ NiDCPowerLibrary::NiDCPowerLibrary() : shared_library_(kLibraryName)
   function_pointers_.ImportAttributeConfigurationBuffer = reinterpret_cast<ImportAttributeConfigurationBufferPtr>(shared_library_.get_function_pointer("niDCPower_ImportAttributeConfigurationBuffer"));
   function_pointers_.ImportAttributeConfigurationFile = reinterpret_cast<ImportAttributeConfigurationFilePtr>(shared_library_.get_function_pointer("niDCPower_ImportAttributeConfigurationFile"));
   function_pointers_.Init = reinterpret_cast<InitPtr>(shared_library_.get_function_pointer("niDCPower_init"));
-  function_pointers_.InitExtCal = reinterpret_cast<InitExtCalPtr>(shared_library_.get_function_pointer("niDCPower_InitExtCal"));
   function_pointers_.InitWithOptions = reinterpret_cast<InitWithOptionsPtr>(shared_library_.get_function_pointer("niDCPower_InitWithOptions"));
   function_pointers_.InitializeWithChannels = reinterpret_cast<InitializeWithChannelsPtr>(shared_library_.get_function_pointer("niDCPower_InitializeWithChannels"));
   function_pointers_.InitializeWithIndependentChannels = reinterpret_cast<InitializeWithIndependentChannelsPtr>(shared_library_.get_function_pointer("niDCPower_InitializeWithIndependentChannels"));
@@ -160,7 +154,6 @@ NiDCPowerLibrary::NiDCPowerLibrary() : shared_library_(kLibraryName)
   function_pointers_.SetAttributeViReal64 = reinterpret_cast<SetAttributeViReal64Ptr>(shared_library_.get_function_pointer("niDCPower_SetAttributeViReal64"));
   function_pointers_.SetAttributeViSession = reinterpret_cast<SetAttributeViSessionPtr>(shared_library_.get_function_pointer("niDCPower_SetAttributeViSession"));
   function_pointers_.SetAttributeViString = reinterpret_cast<SetAttributeViStringPtr>(shared_library_.get_function_pointer("niDCPower_SetAttributeViString"));
-  function_pointers_.SetCalUserDefinedInfo = reinterpret_cast<SetCalUserDefinedInfoPtr>(shared_library_.get_function_pointer("niDCPower_SetCalUserDefinedInfo"));
   function_pointers_.SetSequence = reinterpret_cast<SetSequencePtr>(shared_library_.get_function_pointer("niDCPower_SetSequence"));
   function_pointers_.UnlockSession = reinterpret_cast<UnlockSessionPtr>(shared_library_.get_function_pointer("niDCPower_UnlockSession"));
   function_pointers_.WaitForEvent = reinterpret_cast<WaitForEventPtr>(shared_library_.get_function_pointer("niDCPower_WaitForEvent"));
@@ -214,18 +207,6 @@ ViStatus NiDCPowerLibrary::CalSelfCalibrate(ViSession vi, ViConstString channelN
 #endif
 }
 
-ViStatus NiDCPowerLibrary::ChangeExtCalPassword(ViSession vi, ViConstString oldPassword, ViConstString newPassword)
-{
-  if (!function_pointers_.ChangeExtCalPassword) {
-    throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ChangeExtCalPassword.");
-  }
-#if defined(_MSC_VER)
-  return niDCPower_ChangeExtCalPassword(vi, oldPassword, newPassword);
-#else
-  return function_pointers_.ChangeExtCalPassword(vi, oldPassword, newPassword);
-#endif
-}
-
 ViStatus NiDCPowerLibrary::ClearError(ViSession vi)
 {
   if (!function_pointers_.ClearError) {
@@ -259,18 +240,6 @@ ViStatus NiDCPowerLibrary::Close(ViSession vi)
   return niDCPower_close(vi);
 #else
   return function_pointers_.Close(vi);
-#endif
-}
-
-ViStatus NiDCPowerLibrary::CloseExtCal(ViSession vi, ViInt32 action)
-{
-  if (!function_pointers_.CloseExtCal) {
-    throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_CloseExtCal.");
-  }
-#if defined(_MSC_VER)
-  return niDCPower_CloseExtCal(vi, action);
-#else
-  return function_pointers_.CloseExtCal(vi, action);
 #endif
 }
 
@@ -922,18 +891,6 @@ ViStatus NiDCPowerLibrary::ConfigureVoltageLimitRange(ViSession vi, ViConstStrin
 #endif
 }
 
-ViStatus NiDCPowerLibrary::ConnectInternalReference(ViSession vi, ViInt32 internalReference)
-{
-  if (!function_pointers_.ConnectInternalReference) {
-    throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ConnectInternalReference.");
-  }
-#if defined(_MSC_VER)
-  return niDCPower_ConnectInternalReference(vi, internalReference);
-#else
-  return function_pointers_.ConnectInternalReference(vi, internalReference);
-#endif
-}
-
 ViStatus NiDCPowerLibrary::CreateAdvancedSequence(ViSession vi, ViConstString sequenceName, ViInt32 attributeIdCount, ViInt32 attributeIds[], ViBoolean setAsActiveSequence)
 {
   if (!function_pointers_.CreateAdvancedSequence) {
@@ -1282,30 +1239,6 @@ ViStatus NiDCPowerLibrary::GetAttributeViString(ViSession vi, ViConstString chan
 #endif
 }
 
-ViStatus NiDCPowerLibrary::GetCalUserDefinedInfo(ViSession vi, ViChar info[256])
-{
-  if (!function_pointers_.GetCalUserDefinedInfo) {
-    throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_GetCalUserDefinedInfo.");
-  }
-#if defined(_MSC_VER)
-  return niDCPower_GetCalUserDefinedInfo(vi, info);
-#else
-  return function_pointers_.GetCalUserDefinedInfo(vi, info);
-#endif
-}
-
-ViStatus NiDCPowerLibrary::GetCalUserDefinedInfoMaxSize(ViSession vi, ViInt32* infoSize)
-{
-  if (!function_pointers_.GetCalUserDefinedInfoMaxSize) {
-    throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_GetCalUserDefinedInfoMaxSize.");
-  }
-#if defined(_MSC_VER)
-  return niDCPower_GetCalUserDefinedInfoMaxSize(vi, infoSize);
-#else
-  return function_pointers_.GetCalUserDefinedInfoMaxSize(vi, infoSize);
-#endif
-}
-
 ViStatus NiDCPowerLibrary::GetChannelName(ViSession vi, ViInt32 index, ViInt32 bufferSize, ViChar channelName[])
 {
   if (!function_pointers_.GetChannelName) {
@@ -1459,18 +1392,6 @@ ViStatus NiDCPowerLibrary::Init(ViRsrc resourceName, ViBoolean idQuery, ViBoolea
   return niDCPower_init(resourceName, idQuery, resetDevice, vi);
 #else
   return function_pointers_.Init(resourceName, idQuery, resetDevice, vi);
-#endif
-}
-
-ViStatus NiDCPowerLibrary::InitExtCal(ViRsrc resourceName, ViConstString password, ViSession* vi)
-{
-  if (!function_pointers_.InitExtCal) {
-    throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_InitExtCal.");
-  }
-#if defined(_MSC_VER)
-  return niDCPower_InitExtCal(resourceName, password, vi);
-#else
-  return function_pointers_.InitExtCal(resourceName, password, vi);
 #endif
 }
 
@@ -1839,18 +1760,6 @@ ViStatus NiDCPowerLibrary::SetAttributeViString(ViSession vi, ViConstString chan
   return niDCPower_SetAttributeViString(vi, channelName, attributeId, attributeValue);
 #else
   return function_pointers_.SetAttributeViString(vi, channelName, attributeId, attributeValue);
-#endif
-}
-
-ViStatus NiDCPowerLibrary::SetCalUserDefinedInfo(ViSession vi, ViConstString info)
-{
-  if (!function_pointers_.SetCalUserDefinedInfo) {
-    throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_SetCalUserDefinedInfo.");
-  }
-#if defined(_MSC_VER)
-  return niDCPower_SetCalUserDefinedInfo(vi, info);
-#else
-  return function_pointers_.SetCalUserDefinedInfo(vi, info);
 #endif
 }
 

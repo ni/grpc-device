@@ -20,11 +20,9 @@ class NiDCPowerMockLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   MOCK_METHOD(ViStatus, Abort, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, AbortWithChannels, (ViSession vi, ViConstString channelName), (override));
   MOCK_METHOD(ViStatus, CalSelfCalibrate, (ViSession vi, ViConstString channelName), (override));
-  MOCK_METHOD(ViStatus, ChangeExtCalPassword, (ViSession vi, ViConstString oldPassword, ViConstString newPassword), (override));
   MOCK_METHOD(ViStatus, ClearError, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, ClearInterchangeWarnings, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, Close, (ViSession vi), (override));
-  MOCK_METHOD(ViStatus, CloseExtCal, (ViSession vi, ViInt32 action), (override));
   MOCK_METHOD(ViStatus, Commit, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, CommitWithChannels, (ViSession vi, ViConstString channelName), (override));
   MOCK_METHOD(ViStatus, ConfigureApertureTime, (ViSession vi, ViConstString channelName, ViReal64 apertureTime, ViInt32 units), (override));
@@ -79,7 +77,6 @@ class NiDCPowerMockLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   MOCK_METHOD(ViStatus, ConfigureVoltageLevelRange, (ViSession vi, ViConstString channelName, ViReal64 range), (override));
   MOCK_METHOD(ViStatus, ConfigureVoltageLimit, (ViSession vi, ViConstString channelName, ViReal64 limit), (override));
   MOCK_METHOD(ViStatus, ConfigureVoltageLimitRange, (ViSession vi, ViConstString channelName, ViReal64 range), (override));
-  MOCK_METHOD(ViStatus, ConnectInternalReference, (ViSession vi, ViInt32 internalReference), (override));
   MOCK_METHOD(ViStatus, CreateAdvancedSequence, (ViSession vi, ViConstString sequenceName, ViInt32 attributeIdCount, ViInt32 attributeIds[], ViBoolean setAsActiveSequence), (override));
   MOCK_METHOD(ViStatus, CreateAdvancedSequenceCommitStepWithChannels, (ViSession vi, ViConstString channelName, ViBoolean setAsActiveStep), (override));
   MOCK_METHOD(ViStatus, CreateAdvancedSequenceStep, (ViSession vi, ViBoolean setAsActiveStep), (override));
@@ -109,8 +106,6 @@ class NiDCPowerMockLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   MOCK_METHOD(ViStatus, GetAttributeViReal64, (ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64* attributeValue), (override));
   MOCK_METHOD(ViStatus, GetAttributeViSession, (ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession* attributeValue), (override));
   MOCK_METHOD(ViStatus, GetAttributeViString, (ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 bufferSize, ViChar attributeValue[]), (override));
-  MOCK_METHOD(ViStatus, GetCalUserDefinedInfo, (ViSession vi, ViChar info[256]), (override));
-  MOCK_METHOD(ViStatus, GetCalUserDefinedInfoMaxSize, (ViSession vi, ViInt32* infoSize), (override));
   MOCK_METHOD(ViStatus, GetChannelName, (ViSession vi, ViInt32 index, ViInt32 bufferSize, ViChar channelName[]), (override));
   MOCK_METHOD(ViStatus, GetChannelNameFromString, (ViSession vi, ViConstString index, ViInt32 bufferSize, ViChar channelName[]), (override));
   MOCK_METHOD(ViStatus, GetError, (ViSession vi, ViStatus* code, ViInt32 bufferSize, ViChar description[]), (override));
@@ -124,7 +119,6 @@ class NiDCPowerMockLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   MOCK_METHOD(ViStatus, ImportAttributeConfigurationBuffer, (ViSession vi, ViInt32 size, ViAddr configuration[]), (override));
   MOCK_METHOD(ViStatus, ImportAttributeConfigurationFile, (ViSession vi, ViConstString filePath), (override));
   MOCK_METHOD(ViStatus, Init, (ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* vi), (override));
-  MOCK_METHOD(ViStatus, InitExtCal, (ViRsrc resourceName, ViConstString password, ViSession* vi), (override));
   MOCK_METHOD(ViStatus, InitWithOptions, (ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViString optionString, ViSession* vi), (override));
   MOCK_METHOD(ViStatus, InitializeWithChannels, (ViRsrc resourceName, ViConstString channels, ViBoolean reset, ViConstString optionString, ViSession* vi), (override));
   MOCK_METHOD(ViStatus, InitializeWithIndependentChannels, (ViRsrc resourceName, ViBoolean reset, ViConstString optionString, ViSession* vi), (override));
@@ -156,7 +150,6 @@ class NiDCPowerMockLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   MOCK_METHOD(ViStatus, SetAttributeViReal64, (ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64 attributeValue), (override));
   MOCK_METHOD(ViStatus, SetAttributeViSession, (ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession attributeValue), (override));
   MOCK_METHOD(ViStatus, SetAttributeViString, (ViSession vi, ViConstString channelName, ViAttr attributeId, ViConstString attributeValue), (override));
-  MOCK_METHOD(ViStatus, SetCalUserDefinedInfo, (ViSession vi, ViConstString info), (override));
   MOCK_METHOD(ViStatus, SetSequence, (ViSession vi, ViConstString channelName, ViReal64 values[], ViReal64 sourceDelays[], ViUInt32 size), (override));
   MOCK_METHOD(ViStatus, UnlockSession, (ViSession vi, ViBoolean* callerHasLock), (override));
   MOCK_METHOD(ViStatus, WaitForEvent, (ViSession vi, ViInt32 eventId, ViReal64 timeout), (override));

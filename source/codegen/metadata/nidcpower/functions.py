@@ -54,33 +54,6 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
-    'ChangeExtCalPassword': {
-        'codegen_method': 'public',
-        'parameters': [
-            {
-                'cppName': 'vi',
-                'direction': 'in',
-                'grpc_type': 'nidevice_grpc.Session',
-                'name': 'vi',
-                'type': 'ViSession'
-            },
-            {
-                'cppName': 'oldPassword',
-                'direction': 'in',
-                'grpc_type': 'string',
-                'name': 'oldPassword',
-                'type': 'ViConstString'
-            },
-            {
-                'cppName': 'newPassword',
-                'direction': 'in',
-                'grpc_type': 'string',
-                'name': 'newPassword',
-                'type': 'ViConstString'
-            }
-        ],
-        'returns': 'ViStatus'
-    },
     'ClearError': {
         'codegen_method': 'public',
         'parameters': [
@@ -117,26 +90,6 @@ functions = {
                 'grpc_type': 'nidevice_grpc.Session',
                 'name': 'vi',
                 'type': 'ViSession'
-            }
-        ],
-        'returns': 'ViStatus'
-    },
-    'CloseExtCal': {
-        'codegen_method': 'public',
-        'parameters': [
-            {
-                'cppName': 'vi',
-                'direction': 'in',
-                'grpc_type': 'nidevice_grpc.Session',
-                'name': 'vi',
-                'type': 'ViSession'
-            },
-            {
-                'cppName': 'action',
-                'direction': 'in',
-                'grpc_type': 'sint32',
-                'name': 'action',
-                'type': 'ViInt32'
             }
         ],
         'returns': 'ViStatus'
@@ -1518,26 +1471,6 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
-    'ConnectInternalReference': {
-        'codegen_method': 'public',
-        'parameters': [
-            {
-                'cppName': 'vi',
-                'direction': 'in',
-                'grpc_type': 'nidevice_grpc.Session',
-                'name': 'vi',
-                'type': 'ViSession'
-            },
-            {
-                'cppName': 'internalReference',
-                'direction': 'in',
-                'grpc_type': 'sint32',
-                'name': 'internalReference',
-                'type': 'ViInt32'
-            }
-        ],
-        'returns': 'ViStatus'
-    },
     'CreateAdvancedSequence': {
         'codegen_method': 'public',
         'parameters': [
@@ -2387,50 +2320,6 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
-    'GetCalUserDefinedInfo': {
-        'codegen_method': 'public',
-        'parameters': [
-            {
-                'cppName': 'vi',
-                'direction': 'in',
-                'grpc_type': 'nidevice_grpc.Session',
-                'name': 'vi',
-                'type': 'ViSession'
-            },
-            {
-                'cppName': 'info',
-                'direction': 'out',
-                'grpc_type': 'string',
-                'name': 'info',
-                'size': {
-                    'mechanism': 'fixed',
-                    'value': 256
-                },
-                'type': 'ViChar[]'
-            }
-        ],
-        'returns': 'ViStatus'
-    },
-    'GetCalUserDefinedInfoMaxSize': {
-        'codegen_method': 'public',
-        'parameters': [
-            {
-                'cppName': 'vi',
-                'direction': 'in',
-                'grpc_type': 'nidevice_grpc.Session',
-                'name': 'vi',
-                'type': 'ViSession'
-            },
-            {
-                'cppName': 'infoSize',
-                'direction': 'out',
-                'grpc_type': 'sint32',
-                'name': 'infoSize',
-                'type': 'ViInt32'
-            }
-        ],
-        'returns': 'ViStatus'
-    },
     'GetChannelName': {
         'codegen_method': 'public',
         'parameters': [
@@ -2855,33 +2744,6 @@ functions = {
                 'grpc_type': 'bool',
                 'name': 'resetDevice',
                 'type': 'ViBoolean'
-            },
-            {
-                'cppName': 'vi',
-                'direction': 'out',
-                'grpc_type': 'nidevice_grpc.Session',
-                'name': 'vi',
-                'type': 'ViSession'
-            }
-        ],
-        'returns': 'ViStatus'
-    },
-    'InitExtCal': {
-        'codegen_method': 'public',
-        'parameters': [
-            {
-                'cppName': 'resourceName',
-                'direction': 'in',
-                'grpc_type': 'string',
-                'name': 'resourceName',
-                'type': 'ViRsrc'
-            },
-            {
-                'cppName': 'password',
-                'direction': 'in',
-                'grpc_type': 'string',
-                'name': 'password',
-                'type': 'ViConstString'
             },
             {
                 'cppName': 'vi',
@@ -3770,26 +3632,6 @@ functions = {
                 'direction': 'in',
                 'grpc_type': 'string',
                 'name': 'attributeValue_raw',
-                'type': 'ViConstString'
-            }
-        ],
-        'returns': 'ViStatus'
-    },
-    'SetCalUserDefinedInfo': {
-        'codegen_method': 'public',
-        'parameters': [
-            {
-                'cppName': 'vi',
-                'direction': 'in',
-                'grpc_type': 'nidevice_grpc.Session',
-                'name': 'vi',
-                'type': 'ViSession'
-            },
-            {
-                'cppName': 'info',
-                'direction': 'in',
-                'grpc_type': 'string',
-                'name': 'info',
                 'type': 'ViConstString'
             }
         ],
