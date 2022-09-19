@@ -94,7 +94,7 @@ class NiDCPowerLibraryInterface {
   virtual ViStatus DisableStartTrigger(ViSession vi) = 0;
   virtual ViStatus DisableStartTriggerWithChannels(ViSession vi, ViConstString channelName) = 0;
   virtual ViStatus ErrorMessage(ViSession vi, ViStatus errorCode, ViChar errorMessage[256]) = 0;
-  virtual ViStatus ErrorQuery(ViSession vi, ViInt32* errorCode, ViString errorMessage) = 0;
+  virtual ViStatus ErrorQuery(ViSession vi, ViInt32* errorCode, ViChar errorMessage[256]) = 0;
   virtual ViStatus ExportAttributeConfigurationBuffer(ViSession vi, ViInt32 size, ViAddr configuration[]) = 0;
   virtual ViStatus ExportAttributeConfigurationFile(ViSession vi, ViConstString filePath) = 0;
   virtual ViStatus ExportSignal(ViSession vi, ViInt32 signal, ViConstString signalIdentifier, ViConstString outputTerminal) = 0;

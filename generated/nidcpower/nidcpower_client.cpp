@@ -1616,13 +1616,12 @@ error_message(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::i
 }
 
 ErrorQueryResponse
-error_query(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& error_message)
+error_query(const StubPtr& stub, const nidevice_grpc::Session& vi)
 {
   ::grpc::ClientContext context;
 
   auto request = ErrorQueryRequest{};
   request.mutable_vi()->CopyFrom(vi);
-  request.set_error_message(error_message);
 
   auto response = ErrorQueryResponse{};
 

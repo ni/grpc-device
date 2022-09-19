@@ -1970,14 +1970,14 @@ functions = {
             },
             {
                 'cppName': 'errorMessage',
-                'direction': 'in',
+                'direction': 'out',
                 'grpc_type': 'string',
                 'name': 'errorMessage',
                 'size': {
                     'mechanism': 'fixed',
                     'value': 256
                 },
-                'type': 'ViString'
+                'type': 'ViChar[]'
             }
         ],
         'returns': 'ViStatus'
