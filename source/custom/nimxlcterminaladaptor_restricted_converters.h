@@ -54,15 +54,18 @@ struct NIErrStatusOutputConverter {
     return encoded;
   }
 
-  constexpr void url_table_initialize()
+  static const std::bitset<256> url_table_initialize()
   {
-      for (int i = 'a'; i <= 'z'; i++) urlLookupTable.set(i);
-      for (int i = 'A'; i <= 'Z'; i++) urlLookupTable.set(i);
-      for (int i = '0'; i <= '9'; i++) urlLookupTable.set(i);
-      urlLookupTable.set('-');
-      urlLookupTable.set('_');
-      urlLookupTable.set('.');
-      urlLookupTable.set('~');
+    std::bitset<256> table;
+    for (int i = 'a'; i <= 'z'; i++) table.set(i);
+    for (int i = 'A'; i <= 'Z'; i++) table.set(i);
+    for (int i = '0'; i <= '9'; i++) table.set(i);
+    table.set('-');
+    table.set('_');
+    table.set('.');
+    table.set('~');
+
+    return table;
   }
 
   void to_grpc(nimxlcterminaladaptor_restricted_grpc::NIErrStatus& output) const
@@ -85,7 +88,7 @@ struct NIErrStatusOutputConverter {
 
   TServerContext *context;
   nierr_Status status{};
-  std::bitset<256> urlLookupTable;
+  static const inline std::bitset<256> urlLookupTable = url_table_initialize();
 };
 
 inline void convert_to_grpc(const NIErrStatusOutputConverter<grpc::ServerContext>& storage, nimxlcterminaladaptor_restricted_grpc::NIErrStatus* output)
