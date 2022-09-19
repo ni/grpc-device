@@ -517,48 +517,6 @@ enums = {
             }
         ]
     },
-    'TriggerTerminal': {
-        'codegen_method': 'public',
-        'generate-mappings': True,
-        'values': [
-            {
-                'name': 'NIDIGITAL_VAL_DO_NOT_EXPORT_STR',
-                'value': ''
-            },
-            {
-                'name': 'NIDIGITAL_VAL_PXI_TRIG0_STR',
-                'value': 'PXI_Trig0'
-            },
-            {
-                'name': 'NIDIGITAL_VAL_PXI_TRIG1_STR',
-                'value': 'PXI_Trig1'
-            },
-            {
-                'name': 'NIDIGITAL_VAL_PXI_TRIG2_STR',
-                'value': 'PXI_Trig2'
-            },
-            {
-                'name': 'NIDIGITAL_VAL_PXI_TRIG3_STR',
-                'value': 'PXI_Trig3'
-            },
-            {
-                'name': 'NIDIGITAL_VAL_PXI_TRIG4_STR',
-                'value': 'PXI_Trig4'
-            },
-            {
-                'name': 'NIDIGITAL_VAL_PXI_TRIG5_STR',
-                'value': 'PXI_Trig5'
-            },
-            {
-                'name': 'NIDIGITAL_VAL_PXI_TRIG6_STR',
-                'value': 'PXI_Trig6'
-            },
-            {
-                'name': 'NIDIGITAL_VAL_PXI_TRIG7_STR',
-                'value': 'PXI_Trig7'
-            }
-        ]
-    },
     'TriggerType': {
         'codegen_method': 'public',
         'values': [
