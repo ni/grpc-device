@@ -209,7 +209,7 @@ attributes = {
     },
     1150022: {
         'codegen_method': 'public',
-        'enum': 'ADCCalibration',
+        'enum': 'AdcCalibration',
         'grpc_type': 'sint32',
         'name': 'ADC_CALIBRATION',
         'resettable': False,
@@ -233,7 +233,7 @@ attributes = {
     },
     1150026: {
         'codegen_method': 'public',
-        'enum': 'DCNoiseRejection',
+        'enum': 'DcNoiseRejection',
         'grpc_type': 'sint32',
         'name': 'DC_NOISE_REJECTION',
         'resettable': False,
@@ -331,7 +331,7 @@ attributes = {
     },
     1150052: {
         'codegen_method': 'public',
-        'enum': 'LCCalculationModel',
+        'enum': 'LcCalculationModel',
         'grpc_type': 'sint32',
         'name': 'LC_CALCULATION_MODEL',
         'resettable': False,
@@ -339,7 +339,7 @@ attributes = {
     },
     1150053: {
         'codegen_method': 'public',
-        'enum': 'DCBias',
+        'enum': 'DcBias',
         'grpc_type': 'sint32',
         'name': 'DC_BIAS',
         'resettable': False,
@@ -368,7 +368,7 @@ attributes = {
     },
     1150120: {
         'codegen_method': 'public',
-        'enum': 'RTDType',
+        'enum': 'RtdType',
         'grpc_type': 'sint32',
         'name': 'TEMP_RTD_TYPE',
         'resettable': False,
@@ -603,7 +603,7 @@ attributes = {
     },
     1250333: {
         'codegen_method': 'public',
-        'enum': 'PowerlineFrequency',
+        'enum': 'PowerLineFrequencies',
         'grpc_type': 'double',
         'name': 'POWERLINE_FREQ',
         'resettable': False,

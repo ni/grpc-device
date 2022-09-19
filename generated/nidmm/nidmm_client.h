@@ -47,7 +47,7 @@ ConfigureOffsetCompOhmsResponse configure_offset_comp_ohms(const StubPtr& stub, 
 ConfigureOpenCableCompValuesResponse configure_open_cable_comp_values(const StubPtr& stub, const nidevice_grpc::Session& vi, const double& conductance, const double& susceptance);
 ConfigurePowerLineFrequencyResponse configure_power_line_frequency(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<PowerLineFrequencies, double>& power_line_frequency_hz);
 ConfigureRTDCustomResponse configure_rtd_custom(const StubPtr& stub, const nidevice_grpc::Session& vi, const double& rtd_a, const double& rtd_b, const double& rtd_c);
-ConfigureRTDTypeResponse configure_rtd_type(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<RTDType, pb::int32>& rtd_type, const double& rtd_resistance);
+ConfigureRTDTypeResponse configure_rtd_type(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<RtdType, pb::int32>& rtd_type, const double& rtd_resistance);
 ConfigureSampleTriggerSlopeResponse configure_sample_trigger_slope(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<SampleTrigSlope, pb::int32>& sample_trigger_slope);
 ConfigureShortCableCompValuesResponse configure_short_cable_comp_values(const StubPtr& stub, const nidevice_grpc::Session& vi, const double& resistance, const double& reactance);
 ConfigureThermistorCustomResponse configure_thermistor_custom(const StubPtr& stub, const nidevice_grpc::Session& vi, const double& thermistor_a, const double& thermistor_b, const double& thermistor_c);

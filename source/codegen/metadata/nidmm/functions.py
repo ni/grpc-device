@@ -646,7 +646,7 @@ functions = {
             {
                 'cppName': 'rtdType',
                 'direction': 'in',
-                'enum': 'RTDType',
+                'enum': 'RtdType',
                 'grpc_type': 'sint32',
                 'name': 'rtdType',
                 'type': 'ViInt32'

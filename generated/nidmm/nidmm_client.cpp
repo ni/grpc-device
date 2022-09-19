@@ -562,13 +562,13 @@ configure_rtd_custom(const StubPtr& stub, const nidevice_grpc::Session& vi, cons
 }
 
 ConfigureRTDTypeResponse
-configure_rtd_type(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<RTDType, pb::int32>& rtd_type, const double& rtd_resistance)
+configure_rtd_type(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<RtdType, pb::int32>& rtd_type, const double& rtd_resistance)
 {
   ::grpc::ClientContext context;
 
   auto request = ConfigureRTDTypeRequest{};
   request.mutable_vi()->CopyFrom(vi);
-  const auto rtd_type_ptr = rtd_type.get_if<RTDType>();
+  const auto rtd_type_ptr = rtd_type.get_if<RtdType>();
   const auto rtd_type_raw_ptr = rtd_type.get_if<pb::int32>();
   if (rtd_type_ptr) {
     request.set_rtd_type(*rtd_type_ptr);

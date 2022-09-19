@@ -1,7 +1,32 @@
 # -*- coding: utf-8 -*-
 # This file is generated from NI-DMM API metadata version 22.8.0d9999
 enums = {
-    'ADCCalibration': {
+    'AcquisitionStatus': {
+        'codegen_method': 'public',
+        'values': [
+            {
+                'name': 'NIDMM_VAL_RUNNING_ANTICOLLISION',
+                'value': 0
+            },
+            {
+                'name': 'NIDMM_VAL_FINISHED_WITH_BACKLOG',
+                'value': 1
+            },
+            {
+                'name': 'NIDMM_VAL_FINISHED_WITH_NO_BACKLOG',
+                'value': 2
+            },
+            {
+                'name': 'NIDMM_VAL_PAUSED',
+                'value': 3
+            },
+            {
+                'name': 'NIDMM_VAL_NO_ACQUISITION_IN_PROGRESS',
+                'value': 4
+            }
+        ]
+    },
+    'AdcCalibration': {
         'codegen_method': 'public',
         'values': [
             {
@@ -15,31 +40,6 @@ enums = {
             {
                 'name': 'NIDMM_VAL_ADC_CALIBRATION_ON',
                 'value': 1
-            }
-        ]
-    },
-    'AcquisitionStatus': {
-        'codegen_method': 'public',
-        'values': [
-            {
-                'name': 'NIDMM_VAL_RUNNING_ANTICOLLISION',
-                'value': 0
-            },
-            {
-                'name': 'NIDMM_VAL_ACQUISITION_STATUS_FINISHED_WITH_BACKLOG',
-                'value': 1
-            },
-            {
-                'name': 'NIDMM_VAL_FINISHED_WITH_NO_BACKLOG ',
-                'value': 2
-            },
-            {
-                'name': 'NIDMM_VAL_PAUSED ',
-                'value': 3
-            },
-            {
-                'name': 'NIDMM_VAL_NO_ACQUISITION_IN_PROGRESS ',
-                'value': 4
             }
         ]
     },
@@ -226,7 +226,7 @@ enums = {
             }
         ]
     },
-    'DCBias': {
+    'DcBias': {
         'codegen_method': 'public',
         'values': [
             {
@@ -239,7 +239,7 @@ enums = {
             }
         ]
     },
-    'DCNoiseRejection': {
+    'DcNoiseRejection': {
         'codegen_method': 'public',
         'values': [
             {
@@ -356,7 +356,16 @@ enums = {
             }
         ]
     },
-    'LCCalculationModel': {
+    'Latency': {
+        'codegen_method': 'public',
+        'values': [
+            {
+                'name': 'NIDMM_VAL_LATENCY_AUTO',
+                'value': -1
+            }
+        ]
+    },
+    'LcCalculationModel': {
         'codegen_method': 'public',
         'values': [
             {
@@ -370,15 +379,6 @@ enums = {
             {
                 'name': 'NIDMM_VAL_CALC_MODEL_PARALLEL',
                 'value': 1
-            }
-        ]
-    },
-    'Latency': {
-        'codegen_method': 'public',
-        'values': [
-            {
-                'name': 'NIDMM_VAL_LATENCY_AUTO',
-                'value': -1
             }
         ]
     },
@@ -597,6 +597,10 @@ enums = {
                 'value': 1006
             },
             {
+                'name': 'LATENCY_VAL_LATENCY_AUTO',
+                'value': -1
+            },
+            {
                 'name': 'LC_CALCULATION_MODEL_VAL_CALC_MODEL_SERIES',
                 'value': 0
             },
@@ -607,10 +611,6 @@ enums = {
             {
                 'name': 'LC_CALCULATION_MODEL_VAL_CALC_MODEL_PARALLEL',
                 'value': 1
-            },
-            {
-                'name': 'LATENCY_VAL_LATENCY_AUTO',
-                'value': -1
             },
             {
                 'name': 'MEASUREMENT_COMPLETE_DEST_VAL_NONE',
@@ -963,11 +963,11 @@ enums = {
                 'value': -2
             },
             {
-                'name': 'POWERLINE_FREQUENCY_VAL_50_HERTZ',
+                'name': 'POWER_LINE_FREQUENCIES_VAL_50_HERTZ',
                 'value': 50
             },
             {
-                'name': 'POWERLINE_FREQUENCY_VAL_60_HERTZ',
+                'name': 'POWER_LINE_FREQUENCIES_VAL_60_HERTZ',
                 'value': 60
             },
             {
@@ -1060,20 +1060,24 @@ enums = {
             }
         ]
     },
-    'PowerlineFrequency': {
+    'Range': {
         'codegen_method': 'public',
         'values': [
             {
-                'name': 'NIDMM_VAL_50_HERTZ',
-                'value': 50
+                'name': 'NIDMM_VAL_AUTO_RANGE_ON',
+                'value': -1
             },
             {
-                'name': 'NIDMM_VAL_60_HERTZ',
-                'value': 60
+                'name': 'NIDMM_VAL_AUTO_RANGE_OFF',
+                'value': -2
+            },
+            {
+                'name': 'NIDMM_VAL_AUTO_RANGE_ONCE',
+                'value': -3
             }
         ]
     },
-    'RTDType': {
+    'RtdType': {
         'codegen_method': 'public',
         'values': [
             {
@@ -1103,23 +1107,6 @@ enums = {
             {
                 'name': 'NIDMM_VAL_TEMP_RTD_PT3928',
                 'value': 6
-            }
-        ]
-    },
-    'Range': {
-        'codegen_method': 'public',
-        'values': [
-            {
-                'name': 'NIDMM_VAL_AUTO_RANGE_ON',
-                'value': -1
-            },
-            {
-                'name': 'NIDMM_VAL_AUTO_RANGE_OFF',
-                'value': -2
-            },
-            {
-                'name': 'NIDMM_VAL_AUTO_RANGE_ONCE',
-                'value': -3
             }
         ]
     },
