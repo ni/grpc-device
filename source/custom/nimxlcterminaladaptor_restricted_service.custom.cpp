@@ -109,7 +109,9 @@ class TerminalContainerPtr
     auto iterator = metadata.find("ni-error");
     if (iterator != metadata.end())
     {
-        description = "Error " + std::string(iterator->second.data()) + " has occurred in nimxlcTerminalAdaptor. Refer to the trailing metadata for details.";
+        description = "Error " 
+            + std::string(iterator->second.data(), iterator->second.length()) 
+            + " has occurred in nimxlcTerminalAdaptor. Refer to the trailing metadata for details.";
     }
       
     return nidevice_grpc::ApiErrorAndDescriptionToStatus(context, status, description);

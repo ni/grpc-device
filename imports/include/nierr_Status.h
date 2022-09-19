@@ -27,6 +27,8 @@ extern "C" {
    #define  kNIForceInline __attribute__((always_inline))
 #endif
 
+#define JSONZ_TERMINATOR_SIZE 2 /* '\0' + JSONZ_TERM_CHAR */
+
 struct nierr_Status;
 
 /*! This function type is responsible to allocate/free json buffer and put the
