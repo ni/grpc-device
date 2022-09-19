@@ -264,6 +264,7 @@ functions = {
             {
                 'cppName': 'behavior',
                 'direction': 'in',
+                'enum': 'CurrentLimitBehavior',
                 'grpc_type': 'sint32',
                 'name': 'behavior',
                 'type': 'ViInt32'
@@ -325,6 +326,7 @@ functions = {
             {
                 'cppName': 'edge',
                 'direction': 'in',
+                'enum': 'DigitalEdge',
                 'grpc_type': 'sint32',
                 'name': 'edge',
                 'type': 'ViInt32'
@@ -359,6 +361,7 @@ functions = {
             {
                 'cppName': 'edge',
                 'direction': 'in',
+                'enum': 'DigitalEdge',
                 'grpc_type': 'sint32',
                 'name': 'edge',
                 'type': 'ViInt32'
@@ -386,6 +389,7 @@ functions = {
             {
                 'cppName': 'edge',
                 'direction': 'in',
+                'enum': 'DigitalEdge',
                 'grpc_type': 'sint32',
                 'name': 'edge',
                 'type': 'ViInt32'
@@ -420,6 +424,7 @@ functions = {
             {
                 'cppName': 'edge',
                 'direction': 'in',
+                'enum': 'DigitalEdge',
                 'grpc_type': 'sint32',
                 'name': 'edge',
                 'type': 'ViInt32'
@@ -447,6 +452,7 @@ functions = {
             {
                 'cppName': 'edge',
                 'direction': 'in',
+                'enum': 'DigitalEdge',
                 'grpc_type': 'sint32',
                 'name': 'edge',
                 'type': 'ViInt32'
@@ -481,6 +487,7 @@ functions = {
             {
                 'cppName': 'edge',
                 'direction': 'in',
+                'enum': 'DigitalEdge',
                 'grpc_type': 'sint32',
                 'name': 'edge',
                 'type': 'ViInt32'
@@ -515,6 +522,7 @@ functions = {
             {
                 'cppName': 'edge',
                 'direction': 'in',
+                'enum': 'DigitalEdge',
                 'grpc_type': 'sint32',
                 'name': 'edge',
                 'type': 'ViInt32'
@@ -542,6 +550,7 @@ functions = {
             {
                 'cppName': 'edge',
                 'direction': 'in',
+                'enum': 'DigitalEdge',
                 'grpc_type': 'sint32',
                 'name': 'edge',
                 'type': 'ViInt32'
@@ -576,6 +585,7 @@ functions = {
             {
                 'cppName': 'edge',
                 'direction': 'in',
+                'enum': 'DigitalEdge',
                 'grpc_type': 'sint32',
                 'name': 'edge',
                 'type': 'ViInt32'
@@ -603,6 +613,7 @@ functions = {
             {
                 'cppName': 'edge',
                 'direction': 'in',
+                'enum': 'DigitalEdge',
                 'grpc_type': 'sint32',
                 'name': 'edge',
                 'type': 'ViInt32'
@@ -637,6 +648,7 @@ functions = {
             {
                 'cppName': 'edge',
                 'direction': 'in',
+                'enum': 'DigitalEdge',
                 'grpc_type': 'sint32',
                 'name': 'edge',
                 'type': 'ViInt32'
@@ -773,6 +785,7 @@ functions = {
             {
                 'cppName': 'powerlineFrequency',
                 'direction': 'in',
+                'enum': 'PowerLineFrequencies',
                 'grpc_type': 'double',
                 'name': 'powerlineFrequency',
                 'type': 'ViReal64'
@@ -1124,6 +1137,7 @@ functions = {
             {
                 'cppName': 'sense',
                 'direction': 'in',
+                'enum': 'Sense',
                 'grpc_type': 'sint32',
                 'name': 'sense',
                 'type': 'ViInt32'
@@ -1329,6 +1343,7 @@ functions = {
             {
                 'cppName': 'sourceMode',
                 'direction': 'in',
+                'enum': 'SourceMode',
                 'grpc_type': 'sint32',
                 'name': 'sourceMode',
                 'type': 'ViInt32'
@@ -1356,6 +1371,7 @@ functions = {
             {
                 'cppName': 'sourceMode',
                 'direction': 'in',
+                'enum': 'SourceMode',
                 'grpc_type': 'sint32',
                 'name': 'sourceMode',
                 'type': 'ViInt32'
@@ -2007,6 +2023,7 @@ functions = {
             {
                 'cppName': 'signal',
                 'direction': 'in',
+                'enum': 'ExportSignal',
                 'grpc_type': 'sint32',
                 'name': 'signal',
                 'type': 'ViInt32'
@@ -2720,82 +2737,6 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
-    'Init': {
-        'cname': 'niDCPower_init',
-        'codegen_method': 'public',
-        'parameters': [
-            {
-                'cppName': 'resourceName',
-                'direction': 'in',
-                'grpc_type': 'string',
-                'name': 'resourceName',
-                'type': 'ViRsrc'
-            },
-            {
-                'cppName': 'idQuery',
-                'direction': 'in',
-                'grpc_type': 'bool',
-                'name': 'idQuery',
-                'type': 'ViBoolean'
-            },
-            {
-                'cppName': 'resetDevice',
-                'direction': 'in',
-                'grpc_type': 'bool',
-                'name': 'resetDevice',
-                'type': 'ViBoolean'
-            },
-            {
-                'cppName': 'vi',
-                'direction': 'out',
-                'grpc_type': 'nidevice_grpc.Session',
-                'name': 'vi',
-                'type': 'ViSession'
-            }
-        ],
-        'returns': 'ViStatus'
-    },
-    'InitWithOptions': {
-        'codegen_method': 'public',
-        'parameters': [
-            {
-                'cppName': 'resourceName',
-                'direction': 'in',
-                'grpc_type': 'string',
-                'name': 'resourceName',
-                'type': 'ViRsrc'
-            },
-            {
-                'cppName': 'idQuery',
-                'direction': 'in',
-                'grpc_type': 'bool',
-                'name': 'idQuery',
-                'type': 'ViBoolean'
-            },
-            {
-                'cppName': 'resetDevice',
-                'direction': 'in',
-                'grpc_type': 'bool',
-                'name': 'resetDevice',
-                'type': 'ViBoolean'
-            },
-            {
-                'cppName': 'optionString',
-                'direction': 'in',
-                'grpc_type': 'string',
-                'name': 'optionString',
-                'type': 'ViString'
-            },
-            {
-                'cppName': 'vi',
-                'direction': 'out',
-                'grpc_type': 'nidevice_grpc.Session',
-                'name': 'vi',
-                'type': 'ViSession'
-            }
-        ],
-        'returns': 'ViStatus'
-    },
     'InitializeWithChannels': {
         'codegen_method': 'public',
         'init_method': True,
@@ -2936,7 +2877,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'LockSession': {
-        'codegen_method': 'public',
+        'codegen_method': 'private',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -3397,6 +3338,7 @@ functions = {
             {
                 'cppName': 'trigger',
                 'direction': 'in',
+                'enum': 'SendSoftwareEdgeTriggerType',
                 'grpc_type': 'sint32',
                 'name': 'trigger',
                 'type': 'ViInt32'
@@ -3424,6 +3366,7 @@ functions = {
             {
                 'cppName': 'trigger',
                 'direction': 'in',
+                'enum': 'SendSoftwareEdgeTriggerType',
                 'grpc_type': 'sint32',
                 'name': 'trigger',
                 'type': 'ViInt32'
@@ -3694,7 +3637,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'UnlockSession': {
-        'codegen_method': 'public',
+        'codegen_method': 'private',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -3726,6 +3669,7 @@ functions = {
             {
                 'cppName': 'eventId',
                 'direction': 'in',
+                'enum': 'Event',
                 'grpc_type': 'sint32',
                 'name': 'eventId',
                 'type': 'ViInt32'
@@ -3760,6 +3704,7 @@ functions = {
             {
                 'cppName': 'eventId',
                 'direction': 'in',
+                'enum': 'Event',
                 'grpc_type': 'sint32',
                 'name': 'eventId',
                 'type': 'ViInt32'

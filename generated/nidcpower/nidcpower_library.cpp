@@ -122,8 +122,6 @@ NiDCPowerLibrary::NiDCPowerLibrary() : shared_library_(kLibraryName)
   function_pointers_.GetSelfCalLastTemp = reinterpret_cast<GetSelfCalLastTempPtr>(shared_library_.get_function_pointer("niDCPower_GetSelfCalLastTemp"));
   function_pointers_.ImportAttributeConfigurationBuffer = reinterpret_cast<ImportAttributeConfigurationBufferPtr>(shared_library_.get_function_pointer("niDCPower_ImportAttributeConfigurationBuffer"));
   function_pointers_.ImportAttributeConfigurationFile = reinterpret_cast<ImportAttributeConfigurationFilePtr>(shared_library_.get_function_pointer("niDCPower_ImportAttributeConfigurationFile"));
-  function_pointers_.Init = reinterpret_cast<InitPtr>(shared_library_.get_function_pointer("niDCPower_init"));
-  function_pointers_.InitWithOptions = reinterpret_cast<InitWithOptionsPtr>(shared_library_.get_function_pointer("niDCPower_InitWithOptions"));
   function_pointers_.InitializeWithChannels = reinterpret_cast<InitializeWithChannelsPtr>(shared_library_.get_function_pointer("niDCPower_InitializeWithChannels"));
   function_pointers_.InitializeWithIndependentChannels = reinterpret_cast<InitializeWithIndependentChannelsPtr>(shared_library_.get_function_pointer("niDCPower_InitializeWithIndependentChannels"));
   function_pointers_.Initiate = reinterpret_cast<InitiatePtr>(shared_library_.get_function_pointer("niDCPower_Initiate"));
@@ -1383,30 +1381,6 @@ ViStatus NiDCPowerLibrary::ImportAttributeConfigurationFile(ViSession vi, ViCons
 #endif
 }
 
-ViStatus NiDCPowerLibrary::Init(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* vi)
-{
-  if (!function_pointers_.Init) {
-    throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_init.");
-  }
-#if defined(_MSC_VER)
-  return niDCPower_init(resourceName, idQuery, resetDevice, vi);
-#else
-  return function_pointers_.Init(resourceName, idQuery, resetDevice, vi);
-#endif
-}
-
-ViStatus NiDCPowerLibrary::InitWithOptions(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViString optionString, ViSession* vi)
-{
-  if (!function_pointers_.InitWithOptions) {
-    throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_InitWithOptions.");
-  }
-#if defined(_MSC_VER)
-  return niDCPower_InitWithOptions(resourceName, idQuery, resetDevice, optionString, vi);
-#else
-  return function_pointers_.InitWithOptions(resourceName, idQuery, resetDevice, optionString, vi);
-#endif
-}
-
 ViStatus NiDCPowerLibrary::InitializeWithChannels(ViRsrc resourceName, ViConstString channels, ViBoolean reset, ViConstString optionString, ViSession* vi)
 {
   if (!function_pointers_.InitializeWithChannels) {
@@ -1472,11 +1446,7 @@ ViStatus NiDCPowerLibrary::LockSession(ViSession vi, ViBoolean* callerHasLock)
   if (!function_pointers_.LockSession) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_LockSession.");
   }
-#if defined(_MSC_VER)
-  return niDCPower_LockSession(vi, callerHasLock);
-#else
   return function_pointers_.LockSession(vi, callerHasLock);
-#endif
 }
 
 ViStatus NiDCPowerLibrary::Measure(ViSession vi, ViConstString channelName, ViInt32 measurementType, ViReal64* measurement)
@@ -1780,11 +1750,7 @@ ViStatus NiDCPowerLibrary::UnlockSession(ViSession vi, ViBoolean* callerHasLock)
   if (!function_pointers_.UnlockSession) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_UnlockSession.");
   }
-#if defined(_MSC_VER)
-  return niDCPower_UnlockSession(vi, callerHasLock);
-#else
   return function_pointers_.UnlockSession(vi, callerHasLock);
-#endif
 }
 
 ViStatus NiDCPowerLibrary::WaitForEvent(ViSession vi, ViInt32 eventId, ViReal64 timeout)

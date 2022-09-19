@@ -248,14 +248,21 @@ configure_current_level_range(const StubPtr& stub, const nidevice_grpc::Session&
 }
 
 ConfigureCurrentLimitResponse
-configure_current_limit(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::int32& behavior, const double& limit)
+configure_current_limit(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const simple_variant<CurrentLimitBehavior, pb::int32>& behavior, const double& limit)
 {
   ::grpc::ClientContext context;
 
   auto request = ConfigureCurrentLimitRequest{};
   request.mutable_vi()->CopyFrom(vi);
   request.set_channel_name(channel_name);
-  request.set_behavior(behavior);
+  const auto behavior_ptr = behavior.get_if<CurrentLimitBehavior>();
+  const auto behavior_raw_ptr = behavior.get_if<pb::int32>();
+  if (behavior_ptr) {
+    request.set_behavior(*behavior_ptr);
+  }
+  else if (behavior_raw_ptr) {
+    request.set_behavior_raw(*behavior_raw_ptr);
+  }
   request.set_limit(limit);
 
   auto response = ConfigureCurrentLimitResponse{};
@@ -287,14 +294,21 @@ configure_current_limit_range(const StubPtr& stub, const nidevice_grpc::Session&
 }
 
 ConfigureDigitalEdgeMeasureTriggerResponse
-configure_digital_edge_measure_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& input_terminal, const pb::int32& edge)
+configure_digital_edge_measure_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& input_terminal, const simple_variant<DigitalEdge, pb::int32>& edge)
 {
   ::grpc::ClientContext context;
 
   auto request = ConfigureDigitalEdgeMeasureTriggerRequest{};
   request.mutable_vi()->CopyFrom(vi);
   request.set_input_terminal(input_terminal);
-  request.set_edge(edge);
+  const auto edge_ptr = edge.get_if<DigitalEdge>();
+  const auto edge_raw_ptr = edge.get_if<pb::int32>();
+  if (edge_ptr) {
+    request.set_edge(*edge_ptr);
+  }
+  else if (edge_raw_ptr) {
+    request.set_edge_raw(*edge_raw_ptr);
+  }
 
   auto response = ConfigureDigitalEdgeMeasureTriggerResponse{};
 
@@ -306,7 +320,7 @@ configure_digital_edge_measure_trigger(const StubPtr& stub, const nidevice_grpc:
 }
 
 ConfigureDigitalEdgeMeasureTriggerWithChannelsResponse
-configure_digital_edge_measure_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& input_terminal, const pb::int32& edge)
+configure_digital_edge_measure_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& input_terminal, const simple_variant<DigitalEdge, pb::int32>& edge)
 {
   ::grpc::ClientContext context;
 
@@ -314,7 +328,14 @@ configure_digital_edge_measure_trigger_with_channels(const StubPtr& stub, const 
   request.mutable_vi()->CopyFrom(vi);
   request.set_channel_name(channel_name);
   request.set_input_terminal(input_terminal);
-  request.set_edge(edge);
+  const auto edge_ptr = edge.get_if<DigitalEdge>();
+  const auto edge_raw_ptr = edge.get_if<pb::int32>();
+  if (edge_ptr) {
+    request.set_edge(*edge_ptr);
+  }
+  else if (edge_raw_ptr) {
+    request.set_edge_raw(*edge_raw_ptr);
+  }
 
   auto response = ConfigureDigitalEdgeMeasureTriggerWithChannelsResponse{};
 
@@ -326,14 +347,21 @@ configure_digital_edge_measure_trigger_with_channels(const StubPtr& stub, const 
 }
 
 ConfigureDigitalEdgePulseTriggerResponse
-configure_digital_edge_pulse_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& input_terminal, const pb::int32& edge)
+configure_digital_edge_pulse_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& input_terminal, const simple_variant<DigitalEdge, pb::int32>& edge)
 {
   ::grpc::ClientContext context;
 
   auto request = ConfigureDigitalEdgePulseTriggerRequest{};
   request.mutable_vi()->CopyFrom(vi);
   request.set_input_terminal(input_terminal);
-  request.set_edge(edge);
+  const auto edge_ptr = edge.get_if<DigitalEdge>();
+  const auto edge_raw_ptr = edge.get_if<pb::int32>();
+  if (edge_ptr) {
+    request.set_edge(*edge_ptr);
+  }
+  else if (edge_raw_ptr) {
+    request.set_edge_raw(*edge_raw_ptr);
+  }
 
   auto response = ConfigureDigitalEdgePulseTriggerResponse{};
 
@@ -345,7 +373,7 @@ configure_digital_edge_pulse_trigger(const StubPtr& stub, const nidevice_grpc::S
 }
 
 ConfigureDigitalEdgePulseTriggerWithChannelsResponse
-configure_digital_edge_pulse_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& input_terminal, const pb::int32& edge)
+configure_digital_edge_pulse_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& input_terminal, const simple_variant<DigitalEdge, pb::int32>& edge)
 {
   ::grpc::ClientContext context;
 
@@ -353,7 +381,14 @@ configure_digital_edge_pulse_trigger_with_channels(const StubPtr& stub, const ni
   request.mutable_vi()->CopyFrom(vi);
   request.set_channel_name(channel_name);
   request.set_input_terminal(input_terminal);
-  request.set_edge(edge);
+  const auto edge_ptr = edge.get_if<DigitalEdge>();
+  const auto edge_raw_ptr = edge.get_if<pb::int32>();
+  if (edge_ptr) {
+    request.set_edge(*edge_ptr);
+  }
+  else if (edge_raw_ptr) {
+    request.set_edge_raw(*edge_raw_ptr);
+  }
 
   auto response = ConfigureDigitalEdgePulseTriggerWithChannelsResponse{};
 
@@ -365,14 +400,21 @@ configure_digital_edge_pulse_trigger_with_channels(const StubPtr& stub, const ni
 }
 
 ConfigureDigitalEdgeSequenceAdvanceTriggerResponse
-configure_digital_edge_sequence_advance_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& input_terminal, const pb::int32& edge)
+configure_digital_edge_sequence_advance_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& input_terminal, const simple_variant<DigitalEdge, pb::int32>& edge)
 {
   ::grpc::ClientContext context;
 
   auto request = ConfigureDigitalEdgeSequenceAdvanceTriggerRequest{};
   request.mutable_vi()->CopyFrom(vi);
   request.set_input_terminal(input_terminal);
-  request.set_edge(edge);
+  const auto edge_ptr = edge.get_if<DigitalEdge>();
+  const auto edge_raw_ptr = edge.get_if<pb::int32>();
+  if (edge_ptr) {
+    request.set_edge(*edge_ptr);
+  }
+  else if (edge_raw_ptr) {
+    request.set_edge_raw(*edge_raw_ptr);
+  }
 
   auto response = ConfigureDigitalEdgeSequenceAdvanceTriggerResponse{};
 
@@ -384,7 +426,7 @@ configure_digital_edge_sequence_advance_trigger(const StubPtr& stub, const nidev
 }
 
 ConfigureDigitalEdgeSequenceAdvanceTriggerWithChannelsResponse
-configure_digital_edge_sequence_advance_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& input_terminal, const pb::int32& edge)
+configure_digital_edge_sequence_advance_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& input_terminal, const simple_variant<DigitalEdge, pb::int32>& edge)
 {
   ::grpc::ClientContext context;
 
@@ -392,7 +434,14 @@ configure_digital_edge_sequence_advance_trigger_with_channels(const StubPtr& stu
   request.mutable_vi()->CopyFrom(vi);
   request.set_channel_name(channel_name);
   request.set_input_terminal(input_terminal);
-  request.set_edge(edge);
+  const auto edge_ptr = edge.get_if<DigitalEdge>();
+  const auto edge_raw_ptr = edge.get_if<pb::int32>();
+  if (edge_ptr) {
+    request.set_edge(*edge_ptr);
+  }
+  else if (edge_raw_ptr) {
+    request.set_edge_raw(*edge_raw_ptr);
+  }
 
   auto response = ConfigureDigitalEdgeSequenceAdvanceTriggerWithChannelsResponse{};
 
@@ -404,7 +453,7 @@ configure_digital_edge_sequence_advance_trigger_with_channels(const StubPtr& stu
 }
 
 ConfigureDigitalEdgeShutdownTriggerWithChannelsResponse
-configure_digital_edge_shutdown_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& input_terminal, const pb::int32& edge)
+configure_digital_edge_shutdown_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& input_terminal, const simple_variant<DigitalEdge, pb::int32>& edge)
 {
   ::grpc::ClientContext context;
 
@@ -412,7 +461,14 @@ configure_digital_edge_shutdown_trigger_with_channels(const StubPtr& stub, const
   request.mutable_vi()->CopyFrom(vi);
   request.set_channel_name(channel_name);
   request.set_input_terminal(input_terminal);
-  request.set_edge(edge);
+  const auto edge_ptr = edge.get_if<DigitalEdge>();
+  const auto edge_raw_ptr = edge.get_if<pb::int32>();
+  if (edge_ptr) {
+    request.set_edge(*edge_ptr);
+  }
+  else if (edge_raw_ptr) {
+    request.set_edge_raw(*edge_raw_ptr);
+  }
 
   auto response = ConfigureDigitalEdgeShutdownTriggerWithChannelsResponse{};
 
@@ -424,14 +480,21 @@ configure_digital_edge_shutdown_trigger_with_channels(const StubPtr& stub, const
 }
 
 ConfigureDigitalEdgeSourceTriggerResponse
-configure_digital_edge_source_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& input_terminal, const pb::int32& edge)
+configure_digital_edge_source_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& input_terminal, const simple_variant<DigitalEdge, pb::int32>& edge)
 {
   ::grpc::ClientContext context;
 
   auto request = ConfigureDigitalEdgeSourceTriggerRequest{};
   request.mutable_vi()->CopyFrom(vi);
   request.set_input_terminal(input_terminal);
-  request.set_edge(edge);
+  const auto edge_ptr = edge.get_if<DigitalEdge>();
+  const auto edge_raw_ptr = edge.get_if<pb::int32>();
+  if (edge_ptr) {
+    request.set_edge(*edge_ptr);
+  }
+  else if (edge_raw_ptr) {
+    request.set_edge_raw(*edge_raw_ptr);
+  }
 
   auto response = ConfigureDigitalEdgeSourceTriggerResponse{};
 
@@ -443,7 +506,7 @@ configure_digital_edge_source_trigger(const StubPtr& stub, const nidevice_grpc::
 }
 
 ConfigureDigitalEdgeSourceTriggerWithChannelsResponse
-configure_digital_edge_source_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& input_terminal, const pb::int32& edge)
+configure_digital_edge_source_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& input_terminal, const simple_variant<DigitalEdge, pb::int32>& edge)
 {
   ::grpc::ClientContext context;
 
@@ -451,7 +514,14 @@ configure_digital_edge_source_trigger_with_channels(const StubPtr& stub, const n
   request.mutable_vi()->CopyFrom(vi);
   request.set_channel_name(channel_name);
   request.set_input_terminal(input_terminal);
-  request.set_edge(edge);
+  const auto edge_ptr = edge.get_if<DigitalEdge>();
+  const auto edge_raw_ptr = edge.get_if<pb::int32>();
+  if (edge_ptr) {
+    request.set_edge(*edge_ptr);
+  }
+  else if (edge_raw_ptr) {
+    request.set_edge_raw(*edge_raw_ptr);
+  }
 
   auto response = ConfigureDigitalEdgeSourceTriggerWithChannelsResponse{};
 
@@ -463,14 +533,21 @@ configure_digital_edge_source_trigger_with_channels(const StubPtr& stub, const n
 }
 
 ConfigureDigitalEdgeStartTriggerResponse
-configure_digital_edge_start_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& input_terminal, const pb::int32& edge)
+configure_digital_edge_start_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& input_terminal, const simple_variant<DigitalEdge, pb::int32>& edge)
 {
   ::grpc::ClientContext context;
 
   auto request = ConfigureDigitalEdgeStartTriggerRequest{};
   request.mutable_vi()->CopyFrom(vi);
   request.set_input_terminal(input_terminal);
-  request.set_edge(edge);
+  const auto edge_ptr = edge.get_if<DigitalEdge>();
+  const auto edge_raw_ptr = edge.get_if<pb::int32>();
+  if (edge_ptr) {
+    request.set_edge(*edge_ptr);
+  }
+  else if (edge_raw_ptr) {
+    request.set_edge_raw(*edge_raw_ptr);
+  }
 
   auto response = ConfigureDigitalEdgeStartTriggerResponse{};
 
@@ -482,7 +559,7 @@ configure_digital_edge_start_trigger(const StubPtr& stub, const nidevice_grpc::S
 }
 
 ConfigureDigitalEdgeStartTriggerWithChannelsResponse
-configure_digital_edge_start_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& input_terminal, const pb::int32& edge)
+configure_digital_edge_start_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& input_terminal, const simple_variant<DigitalEdge, pb::int32>& edge)
 {
   ::grpc::ClientContext context;
 
@@ -490,7 +567,14 @@ configure_digital_edge_start_trigger_with_channels(const StubPtr& stub, const ni
   request.mutable_vi()->CopyFrom(vi);
   request.set_channel_name(channel_name);
   request.set_input_terminal(input_terminal);
-  request.set_edge(edge);
+  const auto edge_ptr = edge.get_if<DigitalEdge>();
+  const auto edge_raw_ptr = edge.get_if<pb::int32>();
+  if (edge_ptr) {
+    request.set_edge(*edge_ptr);
+  }
+  else if (edge_raw_ptr) {
+    request.set_edge_raw(*edge_raw_ptr);
+  }
 
   auto response = ConfigureDigitalEdgeStartTriggerWithChannelsResponse{};
 
@@ -586,13 +670,20 @@ configure_output_resistance(const StubPtr& stub, const nidevice_grpc::Session& v
 }
 
 ConfigurePowerLineFrequencyResponse
-configure_power_line_frequency(const StubPtr& stub, const nidevice_grpc::Session& vi, const double& powerline_frequency)
+configure_power_line_frequency(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<PowerLineFrequencies, double>& powerline_frequency)
 {
   ::grpc::ClientContext context;
 
   auto request = ConfigurePowerLineFrequencyRequest{};
   request.mutable_vi()->CopyFrom(vi);
-  request.set_powerline_frequency(powerline_frequency);
+  const auto powerline_frequency_ptr = powerline_frequency.get_if<PowerLineFrequencies>();
+  const auto powerline_frequency_raw_ptr = powerline_frequency.get_if<double>();
+  if (powerline_frequency_ptr) {
+    request.set_powerline_frequency(*powerline_frequency_ptr);
+  }
+  else if (powerline_frequency_raw_ptr) {
+    request.set_powerline_frequency_raw(*powerline_frequency_raw_ptr);
+  }
 
   auto response = ConfigurePowerLineFrequencyResponse{};
 
@@ -832,14 +923,21 @@ configure_pulse_voltage_limit_range(const StubPtr& stub, const nidevice_grpc::Se
 }
 
 ConfigureSenseResponse
-configure_sense(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::int32& sense)
+configure_sense(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const simple_variant<Sense, pb::int32>& sense)
 {
   ::grpc::ClientContext context;
 
   auto request = ConfigureSenseRequest{};
   request.mutable_vi()->CopyFrom(vi);
   request.set_channel_name(channel_name);
-  request.set_sense(sense);
+  const auto sense_ptr = sense.get_if<Sense>();
+  const auto sense_raw_ptr = sense.get_if<pb::int32>();
+  if (sense_ptr) {
+    request.set_sense(*sense_ptr);
+  }
+  else if (sense_raw_ptr) {
+    request.set_sense_raw(*sense_raw_ptr);
+  }
 
   auto response = ConfigureSenseResponse{};
 
@@ -1044,13 +1142,20 @@ configure_software_edge_start_trigger_with_channels(const StubPtr& stub, const n
 }
 
 ConfigureSourceModeResponse
-configure_source_mode(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& source_mode)
+configure_source_mode(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<SourceMode, pb::int32>& source_mode)
 {
   ::grpc::ClientContext context;
 
   auto request = ConfigureSourceModeRequest{};
   request.mutable_vi()->CopyFrom(vi);
-  request.set_source_mode(source_mode);
+  const auto source_mode_ptr = source_mode.get_if<SourceMode>();
+  const auto source_mode_raw_ptr = source_mode.get_if<pb::int32>();
+  if (source_mode_ptr) {
+    request.set_source_mode(*source_mode_ptr);
+  }
+  else if (source_mode_raw_ptr) {
+    request.set_source_mode_raw(*source_mode_raw_ptr);
+  }
 
   auto response = ConfigureSourceModeResponse{};
 
@@ -1062,14 +1167,21 @@ configure_source_mode(const StubPtr& stub, const nidevice_grpc::Session& vi, con
 }
 
 ConfigureSourceModeWithChannelsResponse
-configure_source_mode_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::int32& source_mode)
+configure_source_mode_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const simple_variant<SourceMode, pb::int32>& source_mode)
 {
   ::grpc::ClientContext context;
 
   auto request = ConfigureSourceModeWithChannelsRequest{};
   request.mutable_vi()->CopyFrom(vi);
   request.set_channel_name(channel_name);
-  request.set_source_mode(source_mode);
+  const auto source_mode_ptr = source_mode.get_if<SourceMode>();
+  const auto source_mode_raw_ptr = source_mode.get_if<pb::int32>();
+  if (source_mode_ptr) {
+    request.set_source_mode(*source_mode_ptr);
+  }
+  else if (source_mode_raw_ptr) {
+    request.set_source_mode_raw(*source_mode_raw_ptr);
+  }
 
   auto response = ConfigureSourceModeWithChannelsResponse{};
 
@@ -1546,14 +1658,21 @@ export_signal(const StubPtr& stub, const nidevice_grpc::Session& vi, const simpl
 }
 
 ExportSignalWithChannelsResponse
-export_signal_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::int32& signal, const pb::string& signal_identifier, const pb::string& output_terminal)
+export_signal_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const simple_variant<ExportSignal, pb::int32>& signal, const pb::string& signal_identifier, const pb::string& output_terminal)
 {
   ::grpc::ClientContext context;
 
   auto request = ExportSignalWithChannelsRequest{};
   request.mutable_vi()->CopyFrom(vi);
   request.set_channel_name(channel_name);
-  request.set_signal(signal);
+  const auto signal_ptr = signal.get_if<ExportSignal>();
+  const auto signal_raw_ptr = signal.get_if<pb::int32>();
+  if (signal_ptr) {
+    request.set_signal(*signal_ptr);
+  }
+  else if (signal_raw_ptr) {
+    request.set_signal_raw(*signal_raw_ptr);
+  }
   request.set_signal_identifier(signal_identifier);
   request.set_output_terminal(output_terminal);
 
@@ -1908,45 +2027,6 @@ import_attribute_configuration_file(const StubPtr& stub, const nidevice_grpc::Se
   return response;
 }
 
-InitResponse
-init(const StubPtr& stub, const pb::string& resource_name, const bool& id_query, const bool& reset_device)
-{
-  ::grpc::ClientContext context;
-
-  auto request = InitRequest{};
-  request.set_resource_name(resource_name);
-  request.set_id_query(id_query);
-  request.set_reset_device(reset_device);
-
-  auto response = InitResponse{};
-
-  raise_if_error(
-      stub->Init(&context, request, &response),
-      context);
-
-  return response;
-}
-
-InitWithOptionsResponse
-init_with_options(const StubPtr& stub, const pb::string& resource_name, const bool& id_query, const bool& reset_device, const pb::string& option_string)
-{
-  ::grpc::ClientContext context;
-
-  auto request = InitWithOptionsRequest{};
-  request.set_resource_name(resource_name);
-  request.set_id_query(id_query);
-  request.set_reset_device(reset_device);
-  request.set_option_string(option_string);
-
-  auto response = InitWithOptionsResponse{};
-
-  raise_if_error(
-      stub->InitWithOptions(&context, request, &response),
-      context);
-
-  return response;
-}
-
 InitializeWithChannelsResponse
 initialize_with_channels(const StubPtr& stub, const pb::string& resource_name, const pb::string& channels, const bool& reset, const pb::string& option_string)
 {
@@ -2033,23 +2113,6 @@ invalidate_all_attributes(const StubPtr& stub, const nidevice_grpc::Session& vi)
 
   raise_if_error(
       stub->InvalidateAllAttributes(&context, request, &response),
-      context);
-
-  return response;
-}
-
-LockSessionResponse
-lock_session(const StubPtr& stub, const nidevice_grpc::Session& vi)
-{
-  ::grpc::ClientContext context;
-
-  auto request = LockSessionRequest{};
-  request.mutable_vi()->CopyFrom(vi);
-
-  auto response = LockSessionResponse{};
-
-  raise_if_error(
-      stub->LockSession(&context, request, &response),
       context);
 
   return response;
@@ -2338,13 +2401,20 @@ self_test(const StubPtr& stub, const nidevice_grpc::Session& vi)
 }
 
 SendSoftwareEdgeTriggerResponse
-send_software_edge_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& trigger)
+send_software_edge_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<SendSoftwareEdgeTriggerType, pb::int32>& trigger)
 {
   ::grpc::ClientContext context;
 
   auto request = SendSoftwareEdgeTriggerRequest{};
   request.mutable_vi()->CopyFrom(vi);
-  request.set_trigger(trigger);
+  const auto trigger_ptr = trigger.get_if<SendSoftwareEdgeTriggerType>();
+  const auto trigger_raw_ptr = trigger.get_if<pb::int32>();
+  if (trigger_ptr) {
+    request.set_trigger(*trigger_ptr);
+  }
+  else if (trigger_raw_ptr) {
+    request.set_trigger_raw(*trigger_raw_ptr);
+  }
 
   auto response = SendSoftwareEdgeTriggerResponse{};
 
@@ -2356,14 +2426,21 @@ send_software_edge_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi
 }
 
 SendSoftwareEdgeTriggerWithChannelsResponse
-send_software_edge_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::int32& trigger)
+send_software_edge_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const simple_variant<SendSoftwareEdgeTriggerType, pb::int32>& trigger)
 {
   ::grpc::ClientContext context;
 
   auto request = SendSoftwareEdgeTriggerWithChannelsRequest{};
   request.mutable_vi()->CopyFrom(vi);
   request.set_channel_name(channel_name);
-  request.set_trigger(trigger);
+  const auto trigger_ptr = trigger.get_if<SendSoftwareEdgeTriggerType>();
+  const auto trigger_raw_ptr = trigger.get_if<pb::int32>();
+  if (trigger_ptr) {
+    request.set_trigger(*trigger_ptr);
+  }
+  else if (trigger_raw_ptr) {
+    request.set_trigger_raw(*trigger_raw_ptr);
+  }
 
   auto response = SendSoftwareEdgeTriggerWithChannelsResponse{};
 
@@ -2528,31 +2605,21 @@ set_sequence(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::st
   return response;
 }
 
-UnlockSessionResponse
-unlock_session(const StubPtr& stub, const nidevice_grpc::Session& vi)
-{
-  ::grpc::ClientContext context;
-
-  auto request = UnlockSessionRequest{};
-  request.mutable_vi()->CopyFrom(vi);
-
-  auto response = UnlockSessionResponse{};
-
-  raise_if_error(
-      stub->UnlockSession(&context, request, &response),
-      context);
-
-  return response;
-}
-
 WaitForEventResponse
-wait_for_event(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& event_id, const double& timeout)
+wait_for_event(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<Event, pb::int32>& event_id, const double& timeout)
 {
   ::grpc::ClientContext context;
 
   auto request = WaitForEventRequest{};
   request.mutable_vi()->CopyFrom(vi);
-  request.set_event_id(event_id);
+  const auto event_id_ptr = event_id.get_if<Event>();
+  const auto event_id_raw_ptr = event_id.get_if<pb::int32>();
+  if (event_id_ptr) {
+    request.set_event_id(*event_id_ptr);
+  }
+  else if (event_id_raw_ptr) {
+    request.set_event_id_raw(*event_id_raw_ptr);
+  }
   request.set_timeout(timeout);
 
   auto response = WaitForEventResponse{};
@@ -2565,14 +2632,21 @@ wait_for_event(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::
 }
 
 WaitForEventWithChannelsResponse
-wait_for_event_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::int32& event_id, const double& timeout)
+wait_for_event_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const simple_variant<Event, pb::int32>& event_id, const double& timeout)
 {
   ::grpc::ClientContext context;
 
   auto request = WaitForEventWithChannelsRequest{};
   request.mutable_vi()->CopyFrom(vi);
   request.set_channel_name(channel_name);
-  request.set_event_id(event_id);
+  const auto event_id_ptr = event_id.get_if<Event>();
+  const auto event_id_raw_ptr = event_id.get_if<pb::int32>();
+  if (event_id_ptr) {
+    request.set_event_id(*event_id_ptr);
+  }
+  else if (event_id_raw_ptr) {
+    request.set_event_id_raw(*event_id_raw_ptr);
+  }
   request.set_timeout(timeout);
 
   auto response = WaitForEventWithChannelsResponse{};

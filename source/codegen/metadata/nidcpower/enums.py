@@ -187,6 +187,19 @@ enums = {
             }
         ]
     },
+    'CurrentLimitBehavior': {
+        'codegen_method': 'public',
+        'values': [
+            {
+                'name': 'NIDCPOWER_VAL_CURRENT_REGULATE',
+                'value': 0
+            },
+            {
+                'name': 'NIDCPOWER_VAL_CURRENT_TRIP',
+                'value': 1
+            }
+        ]
+    },
     'DCNoiseRejection': {
         'codegen_method': 'public',
         'values': [
@@ -210,6 +223,35 @@ enums = {
             {
                 'name': 'NIDCPOWER_VAL_FALLING',
                 'value': 1017
+            }
+        ]
+    },
+    'Event': {
+        'codegen_method': 'public',
+        'values': [
+            {
+                'name': 'NIDCPOWER_VAL_SOURCE_COMPLETE',
+                'value': 1030
+            },
+            {
+                'name': 'NIDCPOWER_VAL_MEASURE_COMPLETE',
+                'value': 1031
+            },
+            {
+                'name': 'NIDCPOWER_VAL_ITERATION_COMPLETE',
+                'value': 1032
+            },
+            {
+                'name': 'NIDCPOWER_VAL_SEQUENCE_ENGINE_DONE',
+                'value': 1033
+            },
+            {
+                'name': 'NIDCPOWER_VAL_PULSE_COMPLETE',
+                'value': 1051
+            },
+            {
+                'name': 'NIDCPOWER_VAL_READY_FOR_PULSE_TRIGGER',
+                'value': 1052
             }
         ]
     },
@@ -837,11 +879,11 @@ enums = {
         'generate-mappings': False,
         'values': [
             {
-                'name': 'POWER_LINE_FREQUENCY_VAL_50_HERTZ',
+                'name': 'POWER_LINE_FREQUENCIES_VAL_50_HERTZ',
                 'value': 50
             },
             {
-                'name': 'POWER_LINE_FREQUENCY_VAL_60_HERTZ',
+                'name': 'POWER_LINE_FREQUENCIES_VAL_60_HERTZ',
                 'value': 60
             }
         ]
@@ -923,7 +965,7 @@ enums = {
             }
         ]
     },
-    'PowerLineFrequency': {
+    'PowerLineFrequencies': {
         'codegen_method': 'public',
         'values': [
             {
@@ -976,6 +1018,35 @@ enums = {
             {
                 'name': 'NIDCPOWER_VAL_WRITE_TO_EEPROM',
                 'value': 1046
+            }
+        ]
+    },
+    'SendSoftwareEdgeTriggerType': {
+        'codegen_method': 'public',
+        'values': [
+            {
+                'name': 'NIDCPOWER_VAL_START',
+                'value': 1034
+            },
+            {
+                'name': 'NIDCPOWER_VAL_SOURCE',
+                'value': 1035
+            },
+            {
+                'name': 'NIDCPOWER_VAL_MEASURE',
+                'value': 1036
+            },
+            {
+                'name': 'NIDCPOWER_VAL_SEQUENCE_ADVANCE',
+                'value': 1037
+            },
+            {
+                'name': 'NIDCPOWER_VAL_PULSE',
+                'value': 1053
+            },
+            {
+                'name': 'NIDCPOWER_VAL_SHUTDOWN',
+                'value': 1118
             }
         ]
     },

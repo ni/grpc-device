@@ -119,8 +119,6 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   ViStatus GetSelfCalLastTemp(ViSession vi, ViReal64* temperature);
   ViStatus ImportAttributeConfigurationBuffer(ViSession vi, ViInt32 size, ViAddr configuration[]);
   ViStatus ImportAttributeConfigurationFile(ViSession vi, ViConstString filePath);
-  ViStatus Init(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* vi);
-  ViStatus InitWithOptions(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViString optionString, ViSession* vi);
   ViStatus InitializeWithChannels(ViRsrc resourceName, ViConstString channels, ViBoolean reset, ViConstString optionString, ViSession* vi);
   ViStatus InitializeWithIndependentChannels(ViRsrc resourceName, ViBoolean reset, ViConstString optionString, ViSession* vi);
   ViStatus Initiate(ViSession vi);
@@ -258,14 +256,12 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   using GetSelfCalLastTempPtr = decltype(&niDCPower_GetSelfCalLastTemp);
   using ImportAttributeConfigurationBufferPtr = decltype(&niDCPower_ImportAttributeConfigurationBuffer);
   using ImportAttributeConfigurationFilePtr = decltype(&niDCPower_ImportAttributeConfigurationFile);
-  using InitPtr = decltype(&niDCPower_init);
-  using InitWithOptionsPtr = decltype(&niDCPower_InitWithOptions);
   using InitializeWithChannelsPtr = decltype(&niDCPower_InitializeWithChannels);
   using InitializeWithIndependentChannelsPtr = decltype(&niDCPower_InitializeWithIndependentChannels);
   using InitiatePtr = decltype(&niDCPower_Initiate);
   using InitiateWithChannelsPtr = decltype(&niDCPower_InitiateWithChannels);
   using InvalidateAllAttributesPtr = decltype(&niDCPower_InvalidateAllAttributes);
-  using LockSessionPtr = decltype(&niDCPower_LockSession);
+  using LockSessionPtr = ViStatus (*)(ViSession vi, ViBoolean* callerHasLock);
   using MeasurePtr = decltype(&niDCPower_Measure);
   using MeasureMultiplePtr = decltype(&niDCPower_MeasureMultiple);
   using ParseChannelCountPtr = ViStatus (*)(ViSession vi, ViConstString channelsString, ViUInt32* numberOfChannels);
@@ -291,7 +287,7 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   using SetAttributeViSessionPtr = decltype(&niDCPower_SetAttributeViSession);
   using SetAttributeViStringPtr = decltype(&niDCPower_SetAttributeViString);
   using SetSequencePtr = decltype(&niDCPower_SetSequence);
-  using UnlockSessionPtr = decltype(&niDCPower_UnlockSession);
+  using UnlockSessionPtr = ViStatus (*)(ViSession vi, ViBoolean* callerHasLock);
   using WaitForEventPtr = decltype(&niDCPower_WaitForEvent);
   using WaitForEventWithChannelsPtr = decltype(&niDCPower_WaitForEventWithChannels);
 
@@ -397,8 +393,6 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
     GetSelfCalLastTempPtr GetSelfCalLastTemp;
     ImportAttributeConfigurationBufferPtr ImportAttributeConfigurationBuffer;
     ImportAttributeConfigurationFilePtr ImportAttributeConfigurationFile;
-    InitPtr Init;
-    InitWithOptionsPtr InitWithOptions;
     InitializeWithChannelsPtr InitializeWithChannels;
     InitializeWithIndependentChannelsPtr InitializeWithIndependentChannels;
     InitiatePtr Initiate;

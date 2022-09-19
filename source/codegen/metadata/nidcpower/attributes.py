@@ -292,7 +292,7 @@ attributes = {
     },
     1150020: {
         'codegen_method': 'public',
-        'enum': 'PowerLineFrequency',
+        'enum': 'PowerLineFrequencies',
         'grpc_type': 'double',
         'name': 'POWER_LINE_FREQUENCY',
         'resettable': False,
