@@ -212,7 +212,7 @@ enums = {
                 'value': 1031
             },
             {
-                'name': 'NIDCPOWER_VAL_ITERATION_COMPLETE',
+                'name': 'NIDCPOWER_VAL_SEQUENCE_ITERATION_COMPLETE',
                 'value': 1032
             },
             {
@@ -882,6 +882,18 @@ enums = {
             {
                 'name': 'NIDCPOWER_VAL_OUTPUT_CONSTANT_CURRENT',
                 'value': 1
+            },
+            {
+                'name': 'NIDCPOWER_VAL_OUTPUT_OVER_VOLTAGE',
+                'value': 2
+            },
+            {
+                'name': 'NIDCPOWER_VAL_OUTPUT_OVER_CURRENT',
+                'value': 3
+            },
+            {
+                'name': 'NIDCPOWER_VAL_OUTPUT_UNREGULATED',
+                'value': 4
             }
         ]
     },
