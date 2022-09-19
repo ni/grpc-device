@@ -1018,7 +1018,7 @@ enums = {
             {
                 'name': 'INPUT_RESISTANCE_VAL_GREATER_THAN_10_GIGAOHM',
                 'value': 10000000000.0
-            },
+            }
         ]
     },
     'OffsetCompensatedOhms': {
