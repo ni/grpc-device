@@ -48,31 +48,6 @@ enums = {
             }
         ]
     },
-    'ExportSignal': {
-        'codegen_method': 'public',
-        'values': [
-            {
-                'name': 'NIDIGITAL_VAL_START_TRIGGER',
-                'value': 2000
-            },
-            {
-                'name': 'NIDIGITAL_VAL_CONDITIONAL_JUMP_TRIGGER',
-                'value': 2001
-            },
-            {
-                'name': 'NIDIGITAL_VAL_PATTERN_OPCODE_EVENT',
-                'value': 2002
-            },
-            {
-                'name': 'NIDIGITAL_VAL_REF_CLOCK',
-                'value': 2003
-            },
-            {
-                'name': 'NIDIGITAL_VAL_RIO_EVENT',
-                'value': 2004
-            }
-        ]
-    },
     'FrequencyMeasurementMode': {
         'codegen_method': 'public',
         'values': [
