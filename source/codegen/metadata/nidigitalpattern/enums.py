@@ -14,28 +14,6 @@ enums = {
             }
         ]
     },
-    'ConditionalJumpTriggerId': {
-        'codegen_method': 'public',
-        'generate-mappings': True,
-        'values': [
-            {
-                'name': 'NIDIGITAL_VAL_CONDITIONAL_JUMP_TRIGGER0',
-                'value': 'conditionalJumpTrigger0'
-            },
-            {
-                'name': 'NIDIGITAL_VAL_CONDITIONAL_JUMP_TRIGGER1',
-                'value': 'conditionalJumpTrigger1'
-            },
-            {
-                'name': 'NIDIGITAL_VAL_CONDITIONAL_JUMP_TRIGGER2',
-                'value': 'conditionalJumpTrigger2'
-            },
-            {
-                'name': 'NIDIGITAL_VAL_CONDITIONAL_JUMP_TRIGGER3',
-                'value': 'conditionalJumpTrigger3'
-            }
-        ]
-    },
     'DigitalEdge': {
         'codegen_method': 'public',
         'values': [

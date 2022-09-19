@@ -1086,7 +1086,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'FetchCaptureWaveformU32': {
-        'codegen_method': 'library-only',
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
