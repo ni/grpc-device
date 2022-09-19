@@ -22,7 +22,7 @@ enums = {
         'codegen_method': 'public',
         'values': [
             {
-                'name': 'NIDMM_VAL_ACQUISITION_STATUS_RUNNING',
+                'name': 'NIDMM_VAL_RUNNING_ANTICOLLISION',
                 'value': 0
             },
             {
@@ -30,15 +30,15 @@ enums = {
                 'value': 1
             },
             {
-                'name': 'NIDMM_VAL_ACQUISITION_STATUS_FINISHED_WITH_NO_BACKLOG',
+                'name': 'NIDMM_VAL_FINISHED_WITH_NO_BACKLOG ',
                 'value': 2
             },
             {
-                'name': 'NIDMM_VAL_ACQUISITION_STATUS_PAUSED',
+                'name': 'NIDMM_VAL_PAUSED ',
                 'value': 3
             },
             {
-                'name': 'NIDMM_VAL_ACQUISITION_STATUS_NO_ACQUISITION_IN_PROGRESS',
+                'name': 'NIDMM_VAL_NO_ACQUISITION_IN_PROGRESS ',
                 'value': 4
             }
         ]
@@ -157,27 +157,40 @@ enums = {
             }
         ]
     },
+    'CompensatedOhms': {
+        'codegen_method': 'public',
+        'values': [
+            {
+                'name': 'NIDMM_VAL_OFFSET_COMP_OHMS_OFF',
+                'value': 0
+            },
+            {
+                'name': 'NIDMM_VAL_OFFSET_COMP_OHMS_ON',
+                'value': 1
+            }
+        ]
+    },
     'Configuration4022': {
         'codegen_method': 'public',
         'values': [
             {
-                'name': 'NIDMM_VAL_4022_CONFIG_GUARD',
+                'name': 'NIDMM_4022_CONFIG_GUARD',
                 'value': 0
             },
             {
-                'name': 'NIDMM_VAL_4022_CONFIG_CURRENT_100_NANOAMP',
+                'name': 'NIDMM_4022_CONFIG_CURRENT_100_NANOAMP',
                 'value': 2
             },
             {
-                'name': 'NIDMM_VAL_4022_CONFIG_CURRENT_10_MICROAMP',
+                'name': 'NIDMM_4022_CONFIG_CURRENT_10_MICROAMP',
                 'value': 3
             },
             {
-                'name': 'NIDMM_VAL_4022_CONFIG_CURRENT_1_MILLIAMP',
+                'name': 'NIDMM_4022_CONFIG_CURRENT_1_MILLIAMP',
                 'value': 7
             },
             {
-                'name': 'NIDMM_VAL_4022_CONFIG_CURRENT_DISCONNECT_AGND',
+                'name': 'NIDMM_4022_CONFIG_DISCONNECT_AGND',
                 'value': 8
             }
         ]
@@ -492,6 +505,14 @@ enums = {
                 'value': 3
             },
             {
+                'name': 'COMPENSATED_OHMS_VAL_OFFSET_COMP_OHMS_OFF',
+                'value': 0
+            },
+            {
+                'name': 'COMPENSATED_OHMS_VAL_OFFSET_COMP_OHMS_ON',
+                'value': 1
+            },
+            {
                 'name': 'DC_BIAS_VAL_DC_BIAS_OFF',
                 'value': 0
             },
@@ -641,14 +662,6 @@ enums = {
             },
             {
                 'name': 'MEASUREMENT_DESTINATION_SLOPE_VAL_NEGATIVE',
-                'value': 1
-            },
-            {
-                'name': 'OFFSET_COMPENSATED_OHMS_VAL_OFFSET_COMP_OHMS_OFF',
-                'value': 0
-            },
-            {
-                'name': 'OFFSET_COMPENSATED_OHMS_VAL_OFFSET_COMP_OHMS_ON',
                 'value': 1
             },
             {
@@ -1018,19 +1031,6 @@ enums = {
             {
                 'name': 'INPUT_RESISTANCE_VAL_GREATER_THAN_10_GIGAOHM',
                 'value': 10000000000.0
-            }
-        ]
-    },
-    'OffsetCompensatedOhms': {
-        'codegen_method': 'public',
-        'values': [
-            {
-                'name': 'NIDMM_VAL_OFFSET_COMP_OHMS_OFF',
-                'value': 0
-            },
-            {
-                'name': 'NIDMM_VAL_OFFSET_COMP_OHMS_ON',
-                'value': 1
             }
         ]
     },

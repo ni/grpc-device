@@ -473,13 +473,13 @@ configure_multi_point(const StubPtr& stub, const nidevice_grpc::Session& vi, con
 }
 
 ConfigureOffsetCompOhmsResponse
-configure_offset_comp_ohms(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<OffsetCompensatedOhms, pb::int32>& offset_comp_ohms)
+configure_offset_comp_ohms(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<CompensatedOhms, pb::int32>& offset_comp_ohms)
 {
   ::grpc::ClientContext context;
 
   auto request = ConfigureOffsetCompOhmsRequest{};
   request.mutable_vi()->CopyFrom(vi);
-  const auto offset_comp_ohms_ptr = offset_comp_ohms.get_if<OffsetCompensatedOhms>();
+  const auto offset_comp_ohms_ptr = offset_comp_ohms.get_if<CompensatedOhms>();
   const auto offset_comp_ohms_raw_ptr = offset_comp_ohms.get_if<pb::int32>();
   if (offset_comp_ohms_ptr) {
     request.set_offset_comp_ohms(*offset_comp_ohms_ptr);

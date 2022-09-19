@@ -217,7 +217,7 @@ attributes = {
     },
     1150023: {
         'codegen_method': 'public',
-        'enum': 'OffsetCompensatedOhms',
+        'enum': 'CompensatedOhms',
         'grpc_type': 'sint32',
         'name': 'OFFSET_COMP_OHMS',
         'resettable': False,
@@ -289,7 +289,7 @@ attributes = {
     1150044: {
         'codegen_method': 'public',
         'grpc_type': 'double',
-        'name': 'FREQ_VOLTAGE_AUTO_RANGE',
+        'name': 'FREQ_VOLTAGE_AUTO_RANGE_VALUE',
         'resettable': False,
         'type': 'ViReal64'
     },
@@ -362,7 +362,7 @@ attributes = {
     1150061: {
         'codegen_method': 'public',
         'grpc_type': 'sint32',
-        'name': 'INSTRUMENT_PRODUCT_ID',
+        'name': 'CONFIG_PRODUCT_NUMBER',
         'resettable': False,
         'type': 'ViInt32'
     },
