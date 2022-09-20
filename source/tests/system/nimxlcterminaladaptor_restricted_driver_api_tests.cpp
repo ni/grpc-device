@@ -68,7 +68,7 @@ TEST_F(NiMxLcTerminalAdaptorRestrictedDriverApiTests, RefreshedTerminalCache_Get
   auto refresh_terminal_cache_response = client::refresh_terminal_cache(stub(), session);
   EXPECT_EQ(0, refresh_terminal_cache_response.status());
   EXPECT_EQ(0, refresh_terminal_cache_response.c_status().code());
-
+  
   auto get_device_container_response = client::get_device_container(stub(), session);
 
   EXPECT_EQ(0, get_device_container_response.status());
