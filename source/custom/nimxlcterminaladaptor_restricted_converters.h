@@ -46,7 +46,7 @@ struct NIErrStatusOutputConverter {
       }
       else {
         char character[4];
-        ::_snprintf(character, 4, "%%%2x", static_cast<int>(encoded[position]));
+        snprintf(character, 4, "%%%2x", static_cast<int>(encoded[position]));
         encoded.replace(position, 1, character);
         position += 3;
       }
