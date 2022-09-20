@@ -566,12 +566,12 @@ enums = {
                 'value': 10
             },
             {
-                'name': 'NISCOPE_VAL_5V_OUT',
-                'value': 13
-            },
-            {
                 'name': 'NISCOPE_VAL_REF_CLOCK',
                 'value': 100
+            },
+            {
+                'name': 'NISCOPE_VAL_5V_OUT',
+                'value': 13
             },
             {
                 'name': 'NISCOPE_VAL_SAMPLE_CLOCK',
