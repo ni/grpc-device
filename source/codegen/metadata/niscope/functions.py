@@ -1384,39 +1384,6 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
-    'ErrorMessage': {
-        'cname': 'niScope_error_message',
-        'codegen_method': 'public',
-        'is_error_handling': True,
-        'parameters': [
-            {
-                'cppName': 'vi',
-                'direction': 'in',
-                'grpc_type': 'nidevice_grpc.Session',
-                'name': 'vi',
-                'type': 'ViSession'
-            },
-            {
-                'cppName': 'errorCode',
-                'direction': 'in',
-                'grpc_type': 'sint32',
-                'name': 'errorCode',
-                'type': 'ViStatus'
-            },
-            {
-                'cppName': 'errorMessage',
-                'direction': 'out',
-                'grpc_type': 'string',
-                'name': 'errorMessage',
-                'size': {
-                    'mechanism': 'fixed',
-                    'value': 256
-                },
-                'type': 'ViChar[]'
-            }
-        ],
-        'returns': 'ViStatus'
-    },
     'ExportAttributeConfigurationBuffer': {
         'codegen_method': 'public',
         'parameters': [

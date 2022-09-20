@@ -56,7 +56,6 @@ class NiScopeMockLibrary : public niscope_grpc::NiScopeLibraryInterface {
   MOCK_METHOD(ViStatus, ConfigureVertical, (ViSession vi, ViConstString channelList, ViReal64 range, ViReal64 offset, ViInt32 coupling, ViReal64 probeAttenuation, ViBoolean enabled), (override));
   MOCK_METHOD(ViStatus, Disable, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, ErrorHandler, (ViSession vi, ViStatus errorCode, ViChar errorSource[55], ViChar errorDescription[642]), (override));
-  MOCK_METHOD(ViStatus, ErrorMessage, (ViSession vi, ViStatus errorCode, ViChar errorMessage[256]), (override));
   MOCK_METHOD(ViStatus, ExportAttributeConfigurationBuffer, (ViSession vi, ViInt32 sizeInBytes, ViInt8 configuration[]), (override));
   MOCK_METHOD(ViStatus, ExportAttributeConfigurationFile, (ViSession vi, ViConstString filePath), (override));
   MOCK_METHOD(ViStatus, ExportSignal, (ViSession vi, ViInt32 signal, ViConstString signalIdentifier, ViConstString outputTerminal), (override));

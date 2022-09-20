@@ -60,7 +60,6 @@ NiScopeLibrary::NiScopeLibrary() : shared_library_(kLibraryName)
   function_pointers_.ConfigureVertical = reinterpret_cast<ConfigureVerticalPtr>(shared_library_.get_function_pointer("niScope_ConfigureVertical"));
   function_pointers_.Disable = reinterpret_cast<DisablePtr>(shared_library_.get_function_pointer("niScope_Disable"));
   function_pointers_.ErrorHandler = reinterpret_cast<ErrorHandlerPtr>(shared_library_.get_function_pointer("niScope_errorHandler"));
-  function_pointers_.ErrorMessage = reinterpret_cast<ErrorMessagePtr>(shared_library_.get_function_pointer("niScope_error_message"));
   function_pointers_.ExportAttributeConfigurationBuffer = reinterpret_cast<ExportAttributeConfigurationBufferPtr>(shared_library_.get_function_pointer("niScope_ExportAttributeConfigurationBuffer"));
   function_pointers_.ExportAttributeConfigurationFile = reinterpret_cast<ExportAttributeConfigurationFilePtr>(shared_library_.get_function_pointer("niScope_ExportAttributeConfigurationFile"));
   function_pointers_.ExportSignal = reinterpret_cast<ExportSignalPtr>(shared_library_.get_function_pointer("niScope_ExportSignal"));
@@ -590,18 +589,6 @@ ViStatus NiScopeLibrary::ErrorHandler(ViSession vi, ViStatus errorCode, ViChar e
   return niScope_errorHandler(vi, errorCode, errorSource, errorDescription);
 #else
   return function_pointers_.ErrorHandler(vi, errorCode, errorSource, errorDescription);
-#endif
-}
-
-ViStatus NiScopeLibrary::ErrorMessage(ViSession vi, ViStatus errorCode, ViChar errorMessage[256])
-{
-  if (!function_pointers_.ErrorMessage) {
-    throw nidevice_grpc::LibraryLoadException("Could not find niScope_error_message.");
-  }
-#if defined(_MSC_VER)
-  return niScope_error_message(vi, errorCode, errorMessage);
-#else
-  return function_pointers_.ErrorMessage(vi, errorCode, errorMessage);
 #endif
 }
 

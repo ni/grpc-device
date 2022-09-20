@@ -412,6 +412,7 @@ attributes = {
     },
     1150042: {
         'codegen_method': 'public',
+        'enum': 'FIRFilterWindow',
         'grpc_type': 'sint32',
         'name': 'MEAS_FIR_FILTER_WINDOW',
         'resettable': True,
@@ -1211,6 +1212,7 @@ attributes = {
     },
     1150373: {
         'codegen_method': 'public',
+        'enum': 'P2PStreamRelativeTo',
         'grpc_type': 'sint32',
         'name': 'P2P_STREAM_RELATIVE_TO',
         'resettable': True,
@@ -1431,6 +1433,7 @@ attributes = {
     },
     1250201: {
         'codegen_method': 'public',
+        'enum': 'VideoSignalFormat',
         'grpc_type': 'sint32',
         'name': 'TV_TRIGGER_SIGNAL_FORMAT',
         'resettable': True,

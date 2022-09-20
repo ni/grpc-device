@@ -61,7 +61,6 @@ ConfigureTriggerWindowResponse configure_trigger_window(const StubPtr& stub, con
 ConfigureVerticalResponse configure_vertical(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const double& range, const double& offset, const simple_variant<VerticalCoupling, pb::int32>& coupling, const double& probe_attenuation, const bool& enabled);
 DisableResponse disable(const StubPtr& stub, const nidevice_grpc::Session& vi);
 ErrorHandlerResponse error_handler(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& error_code, const pb::string& error_source);
-ErrorMessageResponse error_message(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& error_code);
 ExportAttributeConfigurationBufferResponse export_attribute_configuration_buffer(const StubPtr& stub, const nidevice_grpc::Session& vi);
 ExportAttributeConfigurationFileResponse export_attribute_configuration_file(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& file_path);
 ExportSignalResponse export_signal(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<ExportableSignals, pb::int32>& signal, const pb::string& signal_identifier, const simple_variant<ClockingTerminalValues, std::string>& output_terminal);

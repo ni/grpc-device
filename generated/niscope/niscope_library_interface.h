@@ -7,7 +7,7 @@
 #define NISCOPE_GRPC_LIBRARY_WRAPPER_H
 
 #include <grpcpp/grpcpp.h>
-#include <niscope.h>
+#include <niScope.h>
 
 namespace niscope_grpc {
 
@@ -54,7 +54,6 @@ class NiScopeLibraryInterface {
   virtual ViStatus ConfigureVertical(ViSession vi, ViConstString channelList, ViReal64 range, ViReal64 offset, ViInt32 coupling, ViReal64 probeAttenuation, ViBoolean enabled) = 0;
   virtual ViStatus Disable(ViSession vi) = 0;
   virtual ViStatus ErrorHandler(ViSession vi, ViStatus errorCode, ViChar errorSource[55], ViChar errorDescription[642]) = 0;
-  virtual ViStatus ErrorMessage(ViSession vi, ViStatus errorCode, ViChar errorMessage[256]) = 0;
   virtual ViStatus ExportAttributeConfigurationBuffer(ViSession vi, ViInt32 sizeInBytes, ViInt8 configuration[]) = 0;
   virtual ViStatus ExportAttributeConfigurationFile(ViSession vi, ViConstString filePath) = 0;
   virtual ViStatus ExportSignal(ViSession vi, ViInt32 signal, ViConstString signalIdentifier, ViConstString outputTerminal) = 0;

@@ -57,7 +57,6 @@ class NiScopeLibrary : public niscope_grpc::NiScopeLibraryInterface {
   ViStatus ConfigureVertical(ViSession vi, ViConstString channelList, ViReal64 range, ViReal64 offset, ViInt32 coupling, ViReal64 probeAttenuation, ViBoolean enabled);
   ViStatus Disable(ViSession vi);
   ViStatus ErrorHandler(ViSession vi, ViStatus errorCode, ViChar errorSource[55], ViChar errorDescription[642]);
-  ViStatus ErrorMessage(ViSession vi, ViStatus errorCode, ViChar errorMessage[256]);
   ViStatus ExportAttributeConfigurationBuffer(ViSession vi, ViInt32 sizeInBytes, ViInt8 configuration[]);
   ViStatus ExportAttributeConfigurationFile(ViSession vi, ViConstString filePath);
   ViStatus ExportSignal(ViSession vi, ViInt32 signal, ViConstString signalIdentifier, ViConstString outputTerminal);
@@ -150,7 +149,6 @@ class NiScopeLibrary : public niscope_grpc::NiScopeLibraryInterface {
   using ConfigureVerticalPtr = decltype(&niScope_ConfigureVertical);
   using DisablePtr = decltype(&niScope_Disable);
   using ErrorHandlerPtr = decltype(&niScope_errorHandler);
-  using ErrorMessagePtr = decltype(&niScope_error_message);
   using ExportAttributeConfigurationBufferPtr = decltype(&niScope_ExportAttributeConfigurationBuffer);
   using ExportAttributeConfigurationFilePtr = decltype(&niScope_ExportAttributeConfigurationFile);
   using ExportSignalPtr = decltype(&niScope_ExportSignal);
@@ -243,7 +241,6 @@ class NiScopeLibrary : public niscope_grpc::NiScopeLibraryInterface {
     ConfigureVerticalPtr ConfigureVertical;
     DisablePtr Disable;
     ErrorHandlerPtr ErrorHandler;
-    ErrorMessagePtr ErrorMessage;
     ExportAttributeConfigurationBufferPtr ExportAttributeConfigurationBuffer;
     ExportAttributeConfigurationFilePtr ExportAttributeConfigurationFile;
     ExportSignalPtr ExportSignal;

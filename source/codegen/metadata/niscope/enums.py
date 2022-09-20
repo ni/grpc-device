@@ -566,16 +566,45 @@ enums = {
                 'value': 10
             },
             {
-                'name': 'NISCOPE_VAL_REF_CLOCK',
-                'value': 100
-            },
-            {
                 'name': 'NISCOPE_VAL_5V_OUT',
                 'value': 13
             },
             {
+                'name': 'NISCOPE_VAL_REF_CLOCK',
+                'value': 100
+            },
+            {
                 'name': 'NISCOPE_VAL_SAMPLE_CLOCK',
                 'value': 101
+            }
+        ]
+    },
+    'FIRFilterWindow': {
+        'codegen_method': 'public',
+        'values': [
+            {
+                'name': 'NISCOPE_VAL_NONE',
+                'value': 0
+            },
+            {
+                'name': 'NISCOPE_VAL_HANNING',
+                'value': 409
+            },
+            {
+                'name': 'NISCOPE_VAL_FLAT_TOP',
+                'value': 410
+            },
+            {
+                'name': 'NISCOPE_VAL_HAMMING',
+                'value': 420
+            },
+            {
+                'name': 'NISCOPE_VAL_TRIANGLE',
+                'value': 423
+            },
+            {
+                'name': 'NISCOPE_VAL_BLACKMAN',
+                'value': 424
             }
         ]
     },
@@ -785,6 +814,30 @@ enums = {
                 'value': 1
             },
             {
+                'name': 'FIR_FILTER_WINDOW_VAL_NONE',
+                'value': 0
+            },
+            {
+                'name': 'FIR_FILTER_WINDOW_VAL_HANNING',
+                'value': 409
+            },
+            {
+                'name': 'FIR_FILTER_WINDOW_VAL_FLAT_TOP',
+                'value': 410
+            },
+            {
+                'name': 'FIR_FILTER_WINDOW_VAL_HAMMING',
+                'value': 420
+            },
+            {
+                'name': 'FIR_FILTER_WINDOW_VAL_TRIANGLE',
+                'value': 423
+            },
+            {
+                'name': 'FIR_FILTER_WINDOW_VAL_BLACKMAN',
+                'value': 424
+            },
+            {
                 'name': 'FETCH_RELATIVE_TO_VAL_READ_POINTER',
                 'value': 388
             },
@@ -894,6 +947,18 @@ enums = {
             },
             {
                 'name': 'OVERFLOW_ERROR_REPORTING_VAL_ERROR_REPORTING_DISABLED',
+                'value': 2
+            },
+            {
+                'name': 'P2_P_STREAM_RELATIVE_TO_VAL_STREAM_RELATIVE_TO_START_TRIGGER',
+                'value': 0
+            },
+            {
+                'name': 'P2_P_STREAM_RELATIVE_TO_VAL_STREAM_RELATIVE_TO_REFERENCE_TRIGGER',
+                'value': 1
+            },
+            {
+                'name': 'P2_P_STREAM_RELATIVE_TO_VAL_STREAM_RELATIVE_TO_SYNC_TRIGGER',
                 'value': 2
             },
             {
@@ -1079,6 +1144,74 @@ enums = {
             {
                 'name': 'VIDEO_POLARITY_VAL_TV_NEGATIVE',
                 'value': 2
+            },
+            {
+                'name': 'VIDEO_SIGNAL_FORMAT_VAL_NTSC',
+                'value': 1
+            },
+            {
+                'name': 'VIDEO_SIGNAL_FORMAT_VAL_PAL',
+                'value': 2
+            },
+            {
+                'name': 'VIDEO_SIGNAL_FORMAT_VAL_SECAM',
+                'value': 3
+            },
+            {
+                'name': 'VIDEO_SIGNAL_FORMAT_VAL_M_PAL',
+                'value': 1001
+            },
+            {
+                'name': 'VIDEO_SIGNAL_FORMAT_VAL_VIDEO_480I_59_94_FIELDS_PER_SECOND',
+                'value': 1010
+            },
+            {
+                'name': 'VIDEO_SIGNAL_FORMAT_VAL_VIDEO_480I_60_FIELDS_PER_SECOND',
+                'value': 1011
+            },
+            {
+                'name': 'VIDEO_SIGNAL_FORMAT_VAL_VIDEO_480P_59_94_FRAMES_PER_SECOND',
+                'value': 1015
+            },
+            {
+                'name': 'VIDEO_SIGNAL_FORMAT_VAL_VIDEO_480P_60_FRAMES_PER_SECOND',
+                'value': 1016
+            },
+            {
+                'name': 'VIDEO_SIGNAL_FORMAT_VAL_VIDEO_576I_50_FIELDS_PER_SECOND',
+                'value': 1020
+            },
+            {
+                'name': 'VIDEO_SIGNAL_FORMAT_VAL_VIDEO_576P_50_FRAMES_PER_SECOND',
+                'value': 1025
+            },
+            {
+                'name': 'VIDEO_SIGNAL_FORMAT_VAL_VIDEO_720P_50_FRAMES_PER_SECOND',
+                'value': 1031
+            },
+            {
+                'name': 'VIDEO_SIGNAL_FORMAT_VAL_VIDEO_720P_59_94_FRAMES_PER_SECOND',
+                'value': 1032
+            },
+            {
+                'name': 'VIDEO_SIGNAL_FORMAT_VAL_VIDEO_720P_60_FRAMES_PER_SECOND',
+                'value': 1033
+            },
+            {
+                'name': 'VIDEO_SIGNAL_FORMAT_VAL_VIDEO_1080I_50_FIELDS_PER_SECOND',
+                'value': 1040
+            },
+            {
+                'name': 'VIDEO_SIGNAL_FORMAT_VAL_VIDEO_1080I_59_94_FIELDS_PER_SECOND',
+                'value': 1041
+            },
+            {
+                'name': 'VIDEO_SIGNAL_FORMAT_VAL_VIDEO_1080I_60_FIELDS_PER_SECOND',
+                'value': 1042
+            },
+            {
+                'name': 'VIDEO_SIGNAL_FORMAT_VAL_VIDEO_1080P_24_FRAMES_PER_SECOND',
+                'value': 1045
             },
             {
                 'name': 'VIDEO_TRIGGER_EVENT_VAL_TV_EVENT_FIELD1',
@@ -1393,6 +1526,23 @@ enums = {
             },
             {
                 'name': 'NISCOPE_VAL_ERROR_REPORTING_DISABLED',
+                'value': 2
+            }
+        ]
+    },
+    'P2PStreamRelativeTo': {
+        'codegen_method': 'public',
+        'values': [
+            {
+                'name': 'NISCOPE_VAL_STREAM_RELATIVE_TO_START_TRIGGER',
+                'value': 0
+            },
+            {
+                'name': 'NISCOPE_VAL_STREAM_RELATIVE_TO_REFERENCE_TRIGGER',
+                'value': 1
+            },
+            {
+                'name': 'NISCOPE_VAL_STREAM_RELATIVE_TO_SYNC_TRIGGER',
                 'value': 2
             }
         ]

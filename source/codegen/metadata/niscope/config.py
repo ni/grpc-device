@@ -8,7 +8,7 @@ config = {
     },
     'api_version': '22.8.0d9999',
     'c_function_prefix': 'niScope_',
-    'c_header': 'niscope.h',
+    'c_header': 'niScope.h',
     'close_function': 'Close',
     'csharp_namespace': 'NationalInstruments.Grpc.Scope',
     'custom_types': [

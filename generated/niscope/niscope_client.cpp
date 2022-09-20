@@ -1000,24 +1000,6 @@ error_handler(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::i
   return response;
 }
 
-ErrorMessageResponse
-error_message(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& error_code)
-{
-  ::grpc::ClientContext context;
-
-  auto request = ErrorMessageRequest{};
-  request.mutable_vi()->CopyFrom(vi);
-  request.set_error_code(error_code);
-
-  auto response = ErrorMessageResponse{};
-
-  raise_if_error(
-      stub->ErrorMessage(&context, request, &response),
-      context);
-
-  return response;
-}
-
 ExportAttributeConfigurationBufferResponse
 export_attribute_configuration_buffer(const StubPtr& stub, const nidevice_grpc::Session& vi)
 {
