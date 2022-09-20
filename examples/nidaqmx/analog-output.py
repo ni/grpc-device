@@ -56,7 +56,7 @@ def check_for_warning(response):
         warning_message = client.GetErrorString(
             nidaqmx_types.GetErrorStringRequest(error_code=response.status)
         )
-        sys.stderr.write(f"{warning_message.error_message}\nWarning status: {response.status}\n")
+        sys.stderr.write(f"{warning_message.error_string}\nWarning status: {response.status}\n")
 
 
 try:
@@ -87,6 +87,8 @@ try:
     )
     check_for_warning(write_response)
 
+    stop_task_response = client.StopTask(nidaqmx_types.StopTaskRequest(task=task))
+    check_for_warning(stop_task_response)
     print(f"Output was successfully written to {PHYSICAL_CHANNEL}.")
 except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
@@ -103,5 +105,4 @@ except grpc.RpcError as rpc_error:
     print(f"{error_message}")
 finally:
     if task:
-        clear_task_response = client.ClearTask(nidaqmx_types.ClearTaskRequest(task=task))
-        check_for_warning(clear_task_response)
+        client.ClearTask(nidaqmx_types.ClearTaskRequest(task=task))

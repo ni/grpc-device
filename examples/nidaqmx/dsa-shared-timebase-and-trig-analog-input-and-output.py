@@ -116,7 +116,7 @@ def check_for_warning(response):
         warning_message = client.GetErrorString(
             nidaqmx_types.GetErrorStringRequest(error_code=response.status)
         )
-        sys.stderr.write(f"{warning_message.error_message}\nWarning status: {response.status}\n")
+        sys.stderr.write(f"{warning_message.error_string}\nWarning status: {response.status}\n")
 
 
 async def _main():
@@ -508,6 +508,22 @@ async def _main():
                 wait_for_done(stream) for stream in done_event_stream_list
             ]
             await asyncio.gather(*tasks)
+            stop_task_response = await client.StopTask(
+                nidaqmx_types.StopTaskRequest(task=leader_input_task)
+            )
+            check_for_warning(stop_task_response)
+            stop_task_response = await client.StopTask(
+                nidaqmx_types.StopTaskRequest(task=leader_output_task)
+            )
+            check_for_warning(stop_task_response)
+            stop_task_response = await client.StopTask(
+                nidaqmx_types.StopTaskRequest(task=follower_input_task)
+            )
+            check_for_warning(stop_task_response)
+            stop_task_response = await client.StopTask(
+                nidaqmx_types.StopTaskRequest(task=follower_output_task)
+            )
+            check_for_warning(stop_task_response)
 
         except grpc.RpcError as rpc_error:
             error_message = rpc_error.details()
@@ -531,28 +547,16 @@ async def _cleanup():
     global leader_input_task, leader_output_task, follower_input_task, follower_output_task
     if client:
         if leader_input_task:
-            clear_task_response = await client.ClearTask(
-                nidaqmx_types.ClearTaskRequest(task=leader_input_task)
-            )
-            check_for_warning(clear_task_response)
+            await client.ClearTask(nidaqmx_types.ClearTaskRequest(task=leader_input_task))
             leader_input_task = None
         if leader_output_task:
-            clear_task_response = await client.ClearTask(
-                nidaqmx_types.ClearTaskRequest(task=leader_output_task)
-            )
-            check_for_warning(clear_task_response)
+            await client.ClearTask(nidaqmx_types.ClearTaskRequest(task=leader_output_task))
             leader_output_task = None
         if follower_input_task:
-            clear_task_response = await client.ClearTask(
-                nidaqmx_types.ClearTaskRequest(task=follower_input_task)
-            )
-            check_for_warning(clear_task_response)
+            await client.ClearTask(nidaqmx_types.ClearTaskRequest(task=follower_input_task))
             follower_input_task = None
         if follower_output_task:
-            clear_task_response = await client.ClearTask(
-                nidaqmx_types.ClearTaskRequest(task=follower_output_task)
-            )
-            check_for_warning(clear_task_response)
+            await client.ClearTask(nidaqmx_types.ClearTaskRequest(task=follower_output_task))
             follower_output_task = None
 
 
