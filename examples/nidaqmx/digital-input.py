@@ -56,7 +56,7 @@ def check_for_warning(response):
         warning_message = client.GetErrorString(
             nidaqmx_types.GetErrorStringRequest(error_code=response.status)
         )
-        sys.stderr.write(f"{warning_message.error_message}\nWarning status: {response.status}\n")
+        sys.stderr.write(f"{warning_message.error_string}\nWarning status: {response.status}\n")
 
 
 try:

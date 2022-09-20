@@ -62,7 +62,7 @@ async def _main():
                         nidaqmx_types.GetErrorStringRequest(error_code=response.status)
                     )
                     sys.stderr.write(
-                        f"{warning_message.error_message}\nWarning status: {response.status}\n"
+                        f"{warning_message.error_string}\nWarning status: {response.status}\n"
                     )
 
             create_response: nidaqmx_types.CreateTaskResponse = await client.CreateTask(
