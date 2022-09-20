@@ -88,8 +88,10 @@ struct NIErrStatusOutputConverter {
 
   TServerContext *context;
   nierr_Status status{};
-  static const inline std::bitset<256> urlLookupTable = url_table_initialize();
+  static const std::bitset<256> urlLookupTable;
 };
+
+template <typename TServerContext> const std::bitset<256> NIErrStatusOutputConverter<TServerContext>::urlLookupTable = NIErrStatusOutputConverter<TServerContext>::url_table_initialize();
 
 inline void convert_to_grpc(const NIErrStatusOutputConverter<grpc::ServerContext>& storage, nimxlcterminaladaptor_restricted_grpc::NIErrStatus* output)
 {
