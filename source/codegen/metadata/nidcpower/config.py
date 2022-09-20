@@ -10,7 +10,7 @@ config = {
     'c_function_prefix': 'niDCPower_',
     'c_header': 'nidcpower.h',
     'close_function': 'Close',
-    'csharp_namespace': 'NationalInstruments.Grpc.Dcpower',
+    'csharp_namespace': 'NationalInstruments.Grpc.DCPower',
     'custom_types': [
     ],
     'driver_name': 'NI-DCPower',

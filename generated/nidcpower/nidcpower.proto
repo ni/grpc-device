@@ -9,7 +9,7 @@ syntax = "proto3";
 option java_multiple_files = true;
 option java_package = "com.ni.grpc.dcpower";
 option java_outer_classname = "NiDCPower";
-option csharp_namespace = "NationalInstruments.Grpc.Dcpower";
+option csharp_namespace = "NationalInstruments.Grpc.DCPower";
 
 package nidcpower_grpc;
 
