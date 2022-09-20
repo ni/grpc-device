@@ -2241,9 +2241,8 @@ namespace nidcpower_grpc {
         }
         ViInt32 size = status;
 
-        response->mutable_configuration()->Resize(size, 0);
-        ViAddr* configuration = reinterpret_cast<ViAddr*>(response->mutable_configuration()->mutable_data());
-        status = library_->ExportAttributeConfigurationBuffer(vi, size, configuration);
+        std::string configuration(size, '\0');
+        status = library_->ExportAttributeConfigurationBuffer(vi, size, (ViInt8*)configuration.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(size)) {
           // buffer is now too small, try again
           continue;
@@ -2252,6 +2251,7 @@ namespace nidcpower_grpc {
           return ConvertApiErrorStatusForViSession(context, status, vi);
         }
         response->set_status(status);
+        response->set_configuration(configuration);
         return ::grpc::Status::OK;
       }
     }
@@ -2927,7 +2927,7 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViInt32 size = static_cast<ViInt32>(request->configuration().size());
-      auto configuration = const_cast<ViAddr*>(reinterpret_cast<const ViAddr*>(request->configuration().data()));
+      ViInt8* configuration = (ViInt8*)request->configuration().c_str();
       auto status = library_->ImportAttributeConfigurationBuffer(vi, size, configuration);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);

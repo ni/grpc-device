@@ -2029,13 +2029,13 @@ get_self_cal_last_temp(const StubPtr& stub, const nidevice_grpc::Session& vi)
 }
 
 ImportAttributeConfigurationBufferResponse
-import_attribute_configuration_buffer(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::vector<pb::uint64>& configuration)
+import_attribute_configuration_buffer(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& configuration)
 {
   ::grpc::ClientContext context;
 
   auto request = ImportAttributeConfigurationBufferRequest{};
   request.mutable_vi()->CopyFrom(vi);
-  copy_array(configuration, request.mutable_configuration());
+  request.set_configuration(configuration);
 
   auto response = ImportAttributeConfigurationBufferResponse{};
 

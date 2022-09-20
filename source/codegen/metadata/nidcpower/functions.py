@@ -2004,13 +2004,13 @@ functions = {
             {
                 'cppName': 'configuration',
                 'direction': 'out',
-                'grpc_type': 'repeated fixed64',
+                'grpc_type': 'bytes',
                 'name': 'configuration',
                 'size': {
                     'mechanism': 'ivi-dance',
                     'value': 'size'
                 },
-                'type': 'ViAddr[]'
+                'type': 'ViInt8[]'
             }
         ],
         'returns': 'ViStatus'
@@ -2773,13 +2773,13 @@ functions = {
             {
                 'cppName': 'configuration',
                 'direction': 'in',
-                'grpc_type': 'repeated fixed64',
+                'grpc_type': 'bytes',
                 'name': 'configuration',
                 'size': {
                     'mechanism': 'len',
                     'value': 'size'
                 },
-                'type': 'ViAddr[]'
+                'type': 'ViInt8[]'
             }
         ],
         'returns': 'ViStatus'
