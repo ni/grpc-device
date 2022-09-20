@@ -168,6 +168,7 @@ class NiDigitalDriverApiTest : public ::testing::Test {
 
   bool get_bool_attribute(const char* channel_name, digital::NiDigitalAttribute attribute)
   {
+    /*
     ::grpc::ClientContext context;
     digital::GetAttributeViBooleanRequest request;
     request.mutable_vi()->set_id(GetSessionId());
@@ -180,6 +181,7 @@ class NiDigitalDriverApiTest : public ::testing::Test {
     EXPECT_TRUE(status.ok());
     expect_api_success(response.status());
     return response.value();
+    */
   }
 
   int32 get_int32_attribute(const char* channel_name, digital::NiDigitalAttribute attribute)

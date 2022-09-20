@@ -2259,7 +2259,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'InitWithOptions': {
-        'codegen_method': 'private',
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'resourceName',
@@ -2712,6 +2712,34 @@ functions = {
                 'grpc_type': 'nidevice_grpc.Session',
                 'name': 'vi',
                 'type': 'ViSession'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'SelectFunction': {
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'cppName': 'vi',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.Session',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'cppName': 'channelList',
+                'direction': 'in',
+                'grpc_type': 'string',
+                'name': 'channelList',
+                'type': 'ViConstString'
+            },
+            {
+                'cppName': 'function',
+                'direction': 'in',
+                'enum': 'SelectedFunction',
+                'grpc_type': 'sint32',
+                'name': 'function',
+                'type': 'ViInt32'
             }
         ],
         'returns': 'ViStatus'

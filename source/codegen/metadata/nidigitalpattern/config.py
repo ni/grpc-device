@@ -31,8 +31,8 @@ config = {
         }
     },
     'linux_rt_support': False,
-    'module_name': 'nidigital',
-    'namespace_component': 'nidigital',
+    'module_name': 'nidigitalpattern',
+    'namespace_component': 'nidigitalpattern',
     'service_class_prefix': 'NiDigital',
     'session_handle_parameter_name': 'vi',
     'status_ok': 'status >= 0'
