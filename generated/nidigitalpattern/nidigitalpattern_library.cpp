@@ -63,6 +63,7 @@ NiDigitalLibrary::NiDigitalLibrary() : shared_library_(kLibraryName)
   function_pointers_.GetAttributeViInt32 = reinterpret_cast<GetAttributeViInt32Ptr>(shared_library_.get_function_pointer("niDigital_GetAttributeViInt32"));
   function_pointers_.GetAttributeViInt64 = reinterpret_cast<GetAttributeViInt64Ptr>(shared_library_.get_function_pointer("niDigital_GetAttributeViInt64"));
   function_pointers_.GetAttributeViReal64 = reinterpret_cast<GetAttributeViReal64Ptr>(shared_library_.get_function_pointer("niDigital_GetAttributeViReal64"));
+  function_pointers_.GetAttributeViSession = reinterpret_cast<GetAttributeViSessionPtr>(shared_library_.get_function_pointer("niDigital_GetAttributeViSession"));
   function_pointers_.GetAttributeViString = reinterpret_cast<GetAttributeViStringPtr>(shared_library_.get_function_pointer("niDigital_GetAttributeViString"));
   function_pointers_.GetChannelName = reinterpret_cast<GetChannelNamePtr>(shared_library_.get_function_pointer("niDigital_GetChannelName"));
   function_pointers_.GetChannelNameFromString = reinterpret_cast<GetChannelNameFromStringPtr>(shared_library_.get_function_pointer("niDigital_GetChannelNameFromString"));
@@ -572,7 +573,11 @@ ViStatus NiDigitalLibrary::GetAttributeViBoolean(ViSession vi, ViConstString cha
   if (!function_pointers_.GetAttributeViBoolean) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDigital_GetAttributeViBoolean.");
   }
+#if defined(_MSC_VER)
+  return niDigital_GetAttributeViBoolean(vi, channelList, attribute, value);
+#else
   return function_pointers_.GetAttributeViBoolean(vi, channelList, attribute, value);
+#endif
 }
 
 ViStatus NiDigitalLibrary::GetAttributeViInt32(ViSession vi, ViConstString channelList, ViAttr attribute, ViInt32* value)
@@ -580,7 +585,11 @@ ViStatus NiDigitalLibrary::GetAttributeViInt32(ViSession vi, ViConstString chann
   if (!function_pointers_.GetAttributeViInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDigital_GetAttributeViInt32.");
   }
+#if defined(_MSC_VER)
+  return niDigital_GetAttributeViInt32(vi, channelList, attribute, value);
+#else
   return function_pointers_.GetAttributeViInt32(vi, channelList, attribute, value);
+#endif
 }
 
 ViStatus NiDigitalLibrary::GetAttributeViInt64(ViSession vi, ViConstString channelList, ViAttr attribute, ViInt64* value)
@@ -588,7 +597,11 @@ ViStatus NiDigitalLibrary::GetAttributeViInt64(ViSession vi, ViConstString chann
   if (!function_pointers_.GetAttributeViInt64) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDigital_GetAttributeViInt64.");
   }
+#if defined(_MSC_VER)
+  return niDigital_GetAttributeViInt64(vi, channelList, attribute, value);
+#else
   return function_pointers_.GetAttributeViInt64(vi, channelList, attribute, value);
+#endif
 }
 
 ViStatus NiDigitalLibrary::GetAttributeViReal64(ViSession vi, ViConstString channelList, ViAttr attribute, ViReal64* value)
@@ -596,7 +609,23 @@ ViStatus NiDigitalLibrary::GetAttributeViReal64(ViSession vi, ViConstString chan
   if (!function_pointers_.GetAttributeViReal64) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDigital_GetAttributeViReal64.");
   }
+#if defined(_MSC_VER)
+  return niDigital_GetAttributeViReal64(vi, channelList, attribute, value);
+#else
   return function_pointers_.GetAttributeViReal64(vi, channelList, attribute, value);
+#endif
+}
+
+ViStatus NiDigitalLibrary::GetAttributeViSession(ViSession vi, ViConstString channelList, ViAttr attribute, ViSession* value)
+{
+  if (!function_pointers_.GetAttributeViSession) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niDigital_GetAttributeViSession.");
+  }
+#if defined(_MSC_VER)
+  return niDigital_GetAttributeViSession(vi, channelList, attribute, value);
+#else
+  return function_pointers_.GetAttributeViSession(vi, channelList, attribute, value);
+#endif
 }
 
 ViStatus NiDigitalLibrary::GetAttributeViString(ViSession vi, ViConstString channelList, ViAttr attribute, ViInt32 bufferSize, ViChar value[])
@@ -604,7 +633,11 @@ ViStatus NiDigitalLibrary::GetAttributeViString(ViSession vi, ViConstString chan
   if (!function_pointers_.GetAttributeViString) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDigital_GetAttributeViString.");
   }
+#if defined(_MSC_VER)
+  return niDigital_GetAttributeViString(vi, channelList, attribute, bufferSize, value);
+#else
   return function_pointers_.GetAttributeViString(vi, channelList, attribute, bufferSize, value);
+#endif
 }
 
 ViStatus NiDigitalLibrary::GetChannelName(ViSession vi, ViInt32 index, ViInt32 nameBufferSize, ViChar name[])

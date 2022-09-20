@@ -55,6 +55,12 @@ DisableSitesResponse disable_sites(const StubPtr& stub, const nidevice_grpc::Ses
 EnableSitesResponse enable_sites(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& site_list);
 FetchCaptureWaveformU32Response fetch_capture_waveform_u32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& site_list, const pb::string& waveform_name, const pb::int32& samples_to_read, const double& timeout);
 FrequencyCounterMeasureFrequencyResponse frequency_counter_measure_frequency(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list);
+GetAttributeViBooleanResponse get_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiDigitalAttribute& attribute);
+GetAttributeViInt32Response get_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiDigitalAttribute& attribute);
+GetAttributeViInt64Response get_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiDigitalAttribute& attribute);
+GetAttributeViReal64Response get_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiDigitalAttribute& attribute);
+GetAttributeViSessionResponse get_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiDigitalAttribute& attribute);
+GetAttributeViStringResponse get_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiDigitalAttribute& attribute);
 GetChannelNameResponse get_channel_name(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& index);
 GetChannelNameFromStringResponse get_channel_name_from_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& index);
 GetFailCountResponse get_fail_count(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list);

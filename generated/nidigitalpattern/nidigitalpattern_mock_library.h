@@ -59,6 +59,7 @@ class NiDigitalMockLibrary : public nidigitalpattern_grpc::NiDigitalLibraryInter
   MOCK_METHOD(ViStatus, GetAttributeViInt32, (ViSession vi, ViConstString channelList, ViAttr attribute, ViInt32* value), (override));
   MOCK_METHOD(ViStatus, GetAttributeViInt64, (ViSession vi, ViConstString channelList, ViAttr attribute, ViInt64* value), (override));
   MOCK_METHOD(ViStatus, GetAttributeViReal64, (ViSession vi, ViConstString channelList, ViAttr attribute, ViReal64* value), (override));
+  MOCK_METHOD(ViStatus, GetAttributeViSession, (ViSession vi, ViConstString channelList, ViAttr attribute, ViSession* value), (override));
   MOCK_METHOD(ViStatus, GetAttributeViString, (ViSession vi, ViConstString channelList, ViAttr attribute, ViInt32 bufferSize, ViChar value[]), (override));
   MOCK_METHOD(ViStatus, GetChannelName, (ViSession vi, ViInt32 index, ViInt32 nameBufferSize, ViChar name[]), (override));
   MOCK_METHOD(ViStatus, GetChannelNameFromString, (ViSession vi, ViConstString index, ViInt32 nameBufferSize, ViChar name[]), (override));

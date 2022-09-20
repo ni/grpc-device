@@ -725,6 +725,120 @@ frequency_counter_measure_frequency(const StubPtr& stub, const nidevice_grpc::Se
   return response;
 }
 
+GetAttributeViBooleanResponse
+get_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiDigitalAttribute& attribute)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetAttributeViBooleanRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_channel_list(channel_list);
+  request.set_attribute(attribute);
+
+  auto response = GetAttributeViBooleanResponse{};
+
+  raise_if_error(
+      stub->GetAttributeViBoolean(&context, request, &response),
+      context);
+
+  return response;
+}
+
+GetAttributeViInt32Response
+get_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiDigitalAttribute& attribute)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetAttributeViInt32Request{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_channel_list(channel_list);
+  request.set_attribute(attribute);
+
+  auto response = GetAttributeViInt32Response{};
+
+  raise_if_error(
+      stub->GetAttributeViInt32(&context, request, &response),
+      context);
+
+  return response;
+}
+
+GetAttributeViInt64Response
+get_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiDigitalAttribute& attribute)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetAttributeViInt64Request{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_channel_list(channel_list);
+  request.set_attribute(attribute);
+
+  auto response = GetAttributeViInt64Response{};
+
+  raise_if_error(
+      stub->GetAttributeViInt64(&context, request, &response),
+      context);
+
+  return response;
+}
+
+GetAttributeViReal64Response
+get_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiDigitalAttribute& attribute)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetAttributeViReal64Request{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_channel_list(channel_list);
+  request.set_attribute(attribute);
+
+  auto response = GetAttributeViReal64Response{};
+
+  raise_if_error(
+      stub->GetAttributeViReal64(&context, request, &response),
+      context);
+
+  return response;
+}
+
+GetAttributeViSessionResponse
+get_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiDigitalAttribute& attribute)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetAttributeViSessionRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_channel_list(channel_list);
+  request.set_attribute(attribute);
+
+  auto response = GetAttributeViSessionResponse{};
+
+  raise_if_error(
+      stub->GetAttributeViSession(&context, request, &response),
+      context);
+
+  return response;
+}
+
+GetAttributeViStringResponse
+get_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiDigitalAttribute& attribute)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetAttributeViStringRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_channel_list(channel_list);
+  request.set_attribute(attribute);
+
+  auto response = GetAttributeViStringResponse{};
+
+  raise_if_error(
+      stub->GetAttributeViString(&context, request, &response),
+      context);
+
+  return response;
+}
+
 GetChannelNameResponse
 get_channel_name(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& index)
 {

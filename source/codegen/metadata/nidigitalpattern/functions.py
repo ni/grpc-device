@@ -1405,7 +1405,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'GetAttributeViBoolean': {
-        'codegen_method': 'private',
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -1439,7 +1439,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'GetAttributeViInt32': {
-        'codegen_method': 'private',
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -1473,7 +1473,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'GetAttributeViInt64': {
-        'codegen_method': 'private',
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -1507,7 +1507,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'GetAttributeViReal64': {
-        'codegen_method': 'private',
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -1540,8 +1540,42 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
+    'GetAttributeViSession': {
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'cppName': 'vi',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.Session',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'cppName': 'channelList',
+                'direction': 'in',
+                'grpc_type': 'string',
+                'name': 'channelList',
+                'type': 'ViConstString'
+            },
+            {
+                'cppName': 'attribute',
+                'direction': 'in',
+                'grpc_type': 'NiDigitalAttribute',
+                'name': 'attribute',
+                'type': 'ViAttr'
+            },
+            {
+                'cppName': 'value',
+                'direction': 'out',
+                'grpc_type': 'nidevice_grpc.Session',
+                'name': 'value',
+                'type': 'ViSession'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
     'GetAttributeViString': {
-        'codegen_method': 'private',
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',

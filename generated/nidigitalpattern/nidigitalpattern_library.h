@@ -60,6 +60,7 @@ class NiDigitalLibrary : public nidigitalpattern_grpc::NiDigitalLibraryInterface
   ViStatus GetAttributeViInt32(ViSession vi, ViConstString channelList, ViAttr attribute, ViInt32* value);
   ViStatus GetAttributeViInt64(ViSession vi, ViConstString channelList, ViAttr attribute, ViInt64* value);
   ViStatus GetAttributeViReal64(ViSession vi, ViConstString channelList, ViAttr attribute, ViReal64* value);
+  ViStatus GetAttributeViSession(ViSession vi, ViConstString channelList, ViAttr attribute, ViSession* value);
   ViStatus GetAttributeViString(ViSession vi, ViConstString channelList, ViAttr attribute, ViInt32 bufferSize, ViChar value[]);
   ViStatus GetChannelName(ViSession vi, ViInt32 index, ViInt32 nameBufferSize, ViChar name[]);
   ViStatus GetChannelNameFromString(ViSession vi, ViConstString index, ViInt32 nameBufferSize, ViChar name[]);
@@ -155,11 +156,12 @@ class NiDigitalLibrary : public nidigitalpattern_grpc::NiDigitalLibraryInterface
   using FetchHistoryRAMCyclePinDataPtr = ViStatus (*)(ViSession vi, ViConstString site, ViConstString pinList, ViInt64 sampleIndex, ViInt32 dutCycleIndex, ViInt32 pinDataBufferSize, ViUInt8 expectedPinStates[], ViUInt8 actualPinStates[], ViBoolean perPinPassFail[], ViInt32* actualNumPinData);
   using FetchHistoryRAMScanCycleNumberPtr = ViStatus (*)(ViSession vi, ViConstString site, ViInt64 sampleIndex, ViInt64* scanCycleNumber);
   using FrequencyCounterMeasureFrequencyPtr = decltype(&niDigital_FrequencyCounter_MeasureFrequency);
-  using GetAttributeViBooleanPtr = ViStatus (*)(ViSession vi, ViConstString channelList, ViAttr attribute, ViBoolean* value);
-  using GetAttributeViInt32Ptr = ViStatus (*)(ViSession vi, ViConstString channelList, ViAttr attribute, ViInt32* value);
-  using GetAttributeViInt64Ptr = ViStatus (*)(ViSession vi, ViConstString channelList, ViAttr attribute, ViInt64* value);
-  using GetAttributeViReal64Ptr = ViStatus (*)(ViSession vi, ViConstString channelList, ViAttr attribute, ViReal64* value);
-  using GetAttributeViStringPtr = ViStatus (*)(ViSession vi, ViConstString channelList, ViAttr attribute, ViInt32 bufferSize, ViChar value[]);
+  using GetAttributeViBooleanPtr = decltype(&niDigital_GetAttributeViBoolean);
+  using GetAttributeViInt32Ptr = decltype(&niDigital_GetAttributeViInt32);
+  using GetAttributeViInt64Ptr = decltype(&niDigital_GetAttributeViInt64);
+  using GetAttributeViReal64Ptr = decltype(&niDigital_GetAttributeViReal64);
+  using GetAttributeViSessionPtr = decltype(&niDigital_GetAttributeViSession);
+  using GetAttributeViStringPtr = decltype(&niDigital_GetAttributeViString);
   using GetChannelNamePtr = decltype(&niDigital_GetChannelName);
   using GetChannelNameFromStringPtr = decltype(&niDigital_GetChannelNameFromString);
   using GetErrorPtr = ViStatus (*)(ViSession vi, ViStatus* errorCode, ViInt32 errorDescriptionBufferSize, ViChar errorDescription[]);
@@ -258,6 +260,7 @@ class NiDigitalLibrary : public nidigitalpattern_grpc::NiDigitalLibraryInterface
     GetAttributeViInt32Ptr GetAttributeViInt32;
     GetAttributeViInt64Ptr GetAttributeViInt64;
     GetAttributeViReal64Ptr GetAttributeViReal64;
+    GetAttributeViSessionPtr GetAttributeViSession;
     GetAttributeViStringPtr GetAttributeViString;
     GetChannelNamePtr GetChannelName;
     GetChannelNameFromStringPtr GetChannelNameFromString;

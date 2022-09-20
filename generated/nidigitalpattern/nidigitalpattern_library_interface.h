@@ -57,6 +57,7 @@ class NiDigitalLibraryInterface {
   virtual ViStatus GetAttributeViInt32(ViSession vi, ViConstString channelList, ViAttr attribute, ViInt32* value) = 0;
   virtual ViStatus GetAttributeViInt64(ViSession vi, ViConstString channelList, ViAttr attribute, ViInt64* value) = 0;
   virtual ViStatus GetAttributeViReal64(ViSession vi, ViConstString channelList, ViAttr attribute, ViReal64* value) = 0;
+  virtual ViStatus GetAttributeViSession(ViSession vi, ViConstString channelList, ViAttr attribute, ViSession* value) = 0;
   virtual ViStatus GetAttributeViString(ViSession vi, ViConstString channelList, ViAttr attribute, ViInt32 bufferSize, ViChar value[]) = 0;
   virtual ViStatus GetChannelName(ViSession vi, ViInt32 index, ViInt32 nameBufferSize, ViChar name[]) = 0;
   virtual ViStatus GetChannelNameFromString(ViSession vi, ViConstString index, ViInt32 nameBufferSize, ViChar name[]) = 0;
