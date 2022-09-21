@@ -1326,7 +1326,7 @@ attributes = {
     },
     1150399: {
         'codegen_method': 'public',
-        'enum': 'P2PAddressType',
+        'enum': 'AddressType',
         'grpc_type': 'sint32',
         'name': 'P2P_DATA_TRANSFER_PERMISSION_ADDRESS_TYPE',
         'resettable': False,
@@ -1348,7 +1348,7 @@ attributes = {
     },
     1150402: {
         'codegen_method': 'public',
-        'enum': 'P2PAddressType',
+        'enum': 'AddressType',
         'grpc_type': 'sint32',
         'name': 'P2P_ENDPOINT_WINDOW_ADDRESS_TYPE',
         'resettable': False,
@@ -1370,7 +1370,7 @@ attributes = {
     },
     1150406: {
         'codegen_method': 'public',
-        'enum': 'P2PAddressType',
+        'enum': 'AddressType',
         'grpc_type': 'sint32',
         'name': 'P2P_DONE_NOTIFICATION_ADDRESS_TYPE',
         'resettable': False,

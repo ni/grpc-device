@@ -1,6 +1,19 @@
 # -*- coding: utf-8 -*-
 # This file is generated from NI-FGEN API metadata version 22.8.0d9999
 enums = {
+    'AddressType': {
+        'codegen_method': 'public',
+        'values': [
+            {
+                'name': 'NIFGEN_VAL_ADDR_PHYSICAL',
+                'value': 0
+            },
+            {
+                'name': 'NIFGEN_VAL_ADDR_VIRTUAL',
+                'value': 1
+            }
+        ]
+    },
     'AnalogPath': {
         'codegen_method': 'public',
         'values': [
@@ -382,6 +395,14 @@ enums = {
         'generate-mappings': False,
         'values': [
             {
+                'name': 'ADDRESS_TYPE_VAL_ADDR_PHYSICAL',
+                'value': 0
+            },
+            {
+                'name': 'ADDRESS_TYPE_VAL_ADDR_VIRTUAL',
+                'value': 1
+            },
+            {
                 'name': 'ANALOG_PATH_VAL_MAIN_ANALOG_PATH',
                 'value': 0
             },
@@ -696,14 +717,6 @@ enums = {
             {
                 'name': 'OUTPUT_MODE_VAL_OUTPUT_SCRIPT',
                 'value': 102
-            },
-            {
-                'name': 'P2_P_ADDRESS_TYPE_VAL_ADDR_PHYSICAL',
-                'value': 0
-            },
-            {
-                'name': 'P2_P_ADDRESS_TYPE_VAL_ADDR_VIRTUAL',
-                'value': 1
             },
             {
                 'name': 'READY_FOR_START_EVENT_ACTIVE_LEVEL_VAL_ACTIVE_HIGH',
@@ -1369,19 +1382,6 @@ enums = {
             {
                 'name': 'NIFGEN_VAL_OUTPUT_SCRIPT',
                 'value': 102
-            }
-        ]
-    },
-    'P2PAddressType': {
-        'codegen_method': 'public',
-        'values': [
-            {
-                'name': 'NIFGEN_VAL_ADDR_PHYSICAL',
-                'value': 0
-            },
-            {
-                'name': 'NIFGEN_VAL_ADDR_VIRTUAL',
-                'value': 1
             }
         ]
     },
