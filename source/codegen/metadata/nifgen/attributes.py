@@ -261,6 +261,7 @@ attributes = {
     },
     1150208: {
         'codegen_method': 'public',
+        'enum': 'FrequencyListHandle',
         'grpc_type': 'sint32',
         'name': 'FREQ_LIST_HANDLE',
         'resettable': False,
@@ -340,6 +341,7 @@ attributes = {
     },
     1150220: {
         'codegen_method': 'public',
+        'enum': 'LoadImpedance',
         'grpc_type': 'double',
         'name': 'LOAD_IMPEDANCE',
         'resettable': True,
@@ -673,6 +675,7 @@ attributes = {
     },
     1150269: {
         'codegen_method': 'public',
+        'enum': 'OspOverflowStatus',
         'grpc_type': 'sint32',
         'name': 'OSP_OVERFLOW_STATUS',
         'resettable': True,
@@ -1439,6 +1442,7 @@ attributes = {
     },
     1250004: {
         'codegen_method': 'public',
+        'enum': 'OutputImpedance',
         'grpc_type': 'double',
         'name': 'OUTPUT_IMPEDANCE',
         'resettable': True,
@@ -1489,6 +1493,7 @@ attributes = {
     },
     1250201: {
         'codegen_method': 'public',
+        'enum': 'ArbitraryWaveformHandle',
         'grpc_type': 'sint32',
         'name': 'ARB_WAVEFORM_HANDLE',
         'resettable': False,
@@ -1510,6 +1515,7 @@ attributes = {
     },
     1250204: {
         'codegen_method': 'public',
+        'enum': 'SampleRate',
         'grpc_type': 'double',
         'name': 'ARB_SAMPLE_RATE',
         'resettable': True,
@@ -1545,6 +1551,7 @@ attributes = {
     },
     1250211: {
         'codegen_method': 'public',
+        'enum': 'ArbitrarySequenceHandle',
         'grpc_type': 'sint32',
         'name': 'ARB_SEQUENCE_HANDLE',
         'resettable': False,
@@ -1588,6 +1595,7 @@ attributes = {
     },
     1250350: {
         'codegen_method': 'public',
+        'enum': 'BurstCount',
         'grpc_type': 'sint32',
         'name': 'BURST_COUNT',
         'resettable': True,

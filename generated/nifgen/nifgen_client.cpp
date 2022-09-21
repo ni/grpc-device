@@ -159,7 +159,7 @@ check_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, 
 }
 
 CheckAttributeViReal64Response
-check_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttribute& attribute_id, const double& attribute_value)
+check_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttribute& attribute_id, const simple_variant<NiFgenReal64AttributeValues, double>& attribute_value)
 {
   ::grpc::ClientContext context;
 
@@ -167,7 +167,14 @@ check_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi,
   request.mutable_vi()->CopyFrom(vi);
   request.set_channel_name(channel_name);
   request.set_attribute_id(attribute_id);
-  request.set_attribute_value_raw(attribute_value);
+  const auto attribute_value_ptr = attribute_value.get_if<NiFgenReal64AttributeValues>();
+  const auto attribute_value_raw_ptr = attribute_value.get_if<double>();
+  if (attribute_value_ptr) {
+    request.set_attribute_value(*attribute_value_ptr);
+  }
+  else if (attribute_value_raw_ptr) {
+    request.set_attribute_value_raw(*attribute_value_raw_ptr);
+  }
 
   auto response = CheckAttributeViReal64Response{};
 
@@ -2191,7 +2198,7 @@ set_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, co
 }
 
 SetAttributeViReal64Response
-set_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttribute& attribute_id, const double& attribute_value)
+set_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttribute& attribute_id, const simple_variant<NiFgenReal64AttributeValues, double>& attribute_value)
 {
   ::grpc::ClientContext context;
 
@@ -2199,7 +2206,14 @@ set_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, c
   request.mutable_vi()->CopyFrom(vi);
   request.set_channel_name(channel_name);
   request.set_attribute_id(attribute_id);
-  request.set_attribute_value_raw(attribute_value);
+  const auto attribute_value_ptr = attribute_value.get_if<NiFgenReal64AttributeValues>();
+  const auto attribute_value_raw_ptr = attribute_value.get_if<double>();
+  if (attribute_value_ptr) {
+    request.set_attribute_value(*attribute_value_ptr);
+  }
+  else if (attribute_value_raw_ptr) {
+    request.set_attribute_value_raw(*attribute_value_raw_ptr);
+  }
 
   auto response = SetAttributeViReal64Response{};
 

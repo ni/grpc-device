@@ -242,7 +242,22 @@ namespace nifgen_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
-      ViReal64 attribute_value = request->attribute_value_raw();
+      ViReal64 attribute_value;
+      switch (request->attribute_value_enum_case()) {
+        case nifgen_grpc::CheckAttributeViReal64Request::AttributeValueEnumCase::kAttributeValue: {
+          attribute_value = static_cast<ViReal64>(request->attribute_value());
+          break;
+        }
+        case nifgen_grpc::CheckAttributeViReal64Request::AttributeValueEnumCase::kAttributeValueRaw: {
+          attribute_value = static_cast<ViReal64>(request->attribute_value_raw());
+          break;
+        }
+        case nifgen_grpc::CheckAttributeViReal64Request::AttributeValueEnumCase::ATTRIBUTE_VALUE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for attribute_value was not specified or out of range");
+          break;
+        }
+      }
+
       auto status = library_->CheckAttributeViReal64(vi, channel_name, attribute_id, attribute_value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -3172,7 +3187,22 @@ namespace nifgen_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
-      ViReal64 attribute_value = request->attribute_value_raw();
+      ViReal64 attribute_value;
+      switch (request->attribute_value_enum_case()) {
+        case nifgen_grpc::SetAttributeViReal64Request::AttributeValueEnumCase::kAttributeValue: {
+          attribute_value = static_cast<ViReal64>(request->attribute_value());
+          break;
+        }
+        case nifgen_grpc::SetAttributeViReal64Request::AttributeValueEnumCase::kAttributeValueRaw: {
+          attribute_value = static_cast<ViReal64>(request->attribute_value_raw());
+          break;
+        }
+        case nifgen_grpc::SetAttributeViReal64Request::AttributeValueEnumCase::ATTRIBUTE_VALUE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for attribute_value was not specified or out of range");
+          break;
+        }
+      }
+
       auto status = library_->SetAttributeViReal64(vi, channel_name, attribute_id, attribute_value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);

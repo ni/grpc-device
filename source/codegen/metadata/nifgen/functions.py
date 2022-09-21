@@ -232,8 +232,9 @@ functions = {
             {
                 'cppName': 'attributeValue',
                 'direction': 'in',
+                'enum': 'NiFgenReal64AttributeValues',
                 'grpc_type': 'double',
-                'name': 'attributeValue_raw',
+                'name': 'attributeValue',
                 'type': 'ViReal64'
             }
         ],
@@ -3482,8 +3483,9 @@ functions = {
             {
                 'cppName': 'attributeValue',
                 'direction': 'in',
+                'enum': 'NiFgenReal64AttributeValues',
                 'grpc_type': 'double',
-                'name': 'attributeValue_raw',
+                'name': 'attributeValue',
                 'type': 'ViReal64'
             }
         ],

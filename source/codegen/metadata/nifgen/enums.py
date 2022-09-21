@@ -22,6 +22,49 @@ enums = {
             }
         ]
     },
+    'ArbitrarySequenceHandle': {
+        'codegen_method': 'public',
+        'values': [
+            {
+                'name': 'NIFGEN_VAL_FIRST_SEQUENCE_HANDLE',
+                'value': 100000
+            },
+            {
+                'name': 'NIFGEN_VAL_LAST_SEQUENCE_HANDLE',
+                'value': 109999
+            },
+            {
+                'name': 'NIFGEN_VAL_NO_SEQUENCE',
+                'value': -1
+            }
+        ]
+    },
+    'ArbitraryWaveformHandle': {
+        'codegen_method': 'public',
+        'values': [
+            {
+                'name': 'NIFGEN_VAL_FIRST_WAVEFORM_HANDLE',
+                'value': 10000
+            },
+            {
+                'name': 'NIFGEN_VAL_LAST_WAVEFORM_HANDLE',
+                'value': 10999
+            },
+            {
+                'name': 'NIFGEN_VAL_NO_WAVEFORM',
+                'value': -1
+            }
+        ]
+    },
+    'BurstCount': {
+        'codegen_method': 'public',
+        'values': [
+            {
+                'name': 'NIFGEN_VAL_GENERATE_CONTINUOUS',
+                'value': -1
+            }
+        ]
+    },
     'BusType': {
         'codegen_method': 'public',
         'values': [
@@ -201,6 +244,23 @@ enums = {
             }
         ]
     },
+    'FrequencyListHandle': {
+        'codegen_method': 'public',
+        'values': [
+            {
+                'name': 'NIFGEN_VAL_FIRST_FREQ_LIST_HANDLE',
+                'value': 200000
+            },
+            {
+                'name': 'NIFGEN_VAL_LAST_FREQ_LIST_HANDLE',
+                'value': 209999
+            },
+            {
+                'name': 'NIFGEN_VAL_NO_FREQ_LIST',
+                'value': -1
+            }
+        ]
+    },
     'HardwareState': {
         'codegen_method': 'public',
         'values': [
@@ -236,6 +296,15 @@ enums = {
             {
                 'name': 'NIFGEN_VAL_JUMP_TO_VALUE',
                 'value': 401
+            }
+        ]
+    },
+    'LoadImpedance': {
+        'codegen_method': 'public',
+        'values': [
+            {
+                'name': 'NIFGEN_VAL_MATCHED_LOAD_IMPEDANCE',
+                'value': -1
             }
         ]
     },
@@ -327,6 +396,34 @@ enums = {
             {
                 'name': 'ANALOG_PATH_VAL_FIXED_HIGH_GAIN_ANALOG_PATH',
                 'value': 3
+            },
+            {
+                'name': 'ARBITRARY_SEQUENCE_HANDLE_VAL_FIRST_SEQUENCE_HANDLE',
+                'value': 100000
+            },
+            {
+                'name': 'ARBITRARY_SEQUENCE_HANDLE_VAL_LAST_SEQUENCE_HANDLE',
+                'value': 109999
+            },
+            {
+                'name': 'ARBITRARY_SEQUENCE_HANDLE_VAL_NO_SEQUENCE',
+                'value': -1
+            },
+            {
+                'name': 'ARBITRARY_WAVEFORM_HANDLE_VAL_FIRST_WAVEFORM_HANDLE',
+                'value': 10000
+            },
+            {
+                'name': 'ARBITRARY_WAVEFORM_HANDLE_VAL_LAST_WAVEFORM_HANDLE',
+                'value': 10999
+            },
+            {
+                'name': 'ARBITRARY_WAVEFORM_HANDLE_VAL_NO_WAVEFORM',
+                'value': -1
+            },
+            {
+                'name': 'BURST_COUNT_VAL_GENERATE_CONTINUOUS',
+                'value': -1
             },
             {
                 'name': 'BUS_TYPE_VAL_BUS_INVALID',
@@ -445,6 +542,18 @@ enums = {
                 'value': 4
             },
             {
+                'name': 'FREQUENCY_LIST_HANDLE_VAL_FIRST_FREQ_LIST_HANDLE',
+                'value': 200000
+            },
+            {
+                'name': 'FREQUENCY_LIST_HANDLE_VAL_LAST_FREQ_LIST_HANDLE',
+                'value': 209999
+            },
+            {
+                'name': 'FREQUENCY_LIST_HANDLE_VAL_NO_FREQ_LIST',
+                'value': -1
+            },
+            {
                 'name': 'IDLE_BEHAVIOR_VAL_HOLD_LAST_VALUE',
                 'value': 400
             },
@@ -511,6 +620,62 @@ enums = {
             {
                 'name': 'OSP_OVERFLOW_ERROR_REPORTING_VAL_ERROR_REPORTING_DISABLED',
                 'value': 2
+            },
+            {
+                'name': 'OSP_OVERFLOW_STATUS_VAL_OSP_OVERFLOW_NONE',
+                'value': 0
+            },
+            {
+                'name': 'OSP_OVERFLOW_STATUS_VAL_OSP_OVERFLOW_PRE_FILTER_GAIN_I',
+                'value': 1
+            },
+            {
+                'name': 'OSP_OVERFLOW_STATUS_VAL_OSP_OVERFLOW_PRE_FILTER_GAIN_Q',
+                'value': 2
+            },
+            {
+                'name': 'OSP_OVERFLOW_STATUS_VAL_OSP_OVERFLOW_PRE_FILTER_OFFSET_I',
+                'value': 4
+            },
+            {
+                'name': 'OSP_OVERFLOW_STATUS_VAL_OSP_OVERFLOW_PRE_FILTER_OFFSET_Q',
+                'value': 8
+            },
+            {
+                'name': 'OSP_OVERFLOW_STATUS_VAL_OSP_OVERFLOW_FIR_FILTER_I',
+                'value': 16
+            },
+            {
+                'name': 'OSP_OVERFLOW_STATUS_VAL_OSP_OVERFLOW_PFIR_FILTER_I',
+                'value': 16
+            },
+            {
+                'name': 'OSP_OVERFLOW_STATUS_VAL_OSP_OVERFLOW_FIR_FILTER_Q',
+                'value': 32
+            },
+            {
+                'name': 'OSP_OVERFLOW_STATUS_VAL_OSP_OVERFLOW_CIC_FILTER_I',
+                'value': 64
+            },
+            {
+                'name': 'OSP_OVERFLOW_STATUS_VAL_OSP_OVERFLOW_CIC_FILTER_Q',
+                'value': 128
+            },
+            {
+                'name': 'OSP_OVERFLOW_STATUS_VAL_OSP_OVERFLOW_COMPLEX_DATA',
+                'value': 256
+            },
+            {
+                'name': 'OSP_OVERFLOW_STATUS_VAL_OSP_OVERFLOW_CFIR_FILTER_I',
+                'value': 512
+            },
+            {
+                'name': 'OSP_OVERFLOW_STATUS_VAL_OSP_OVERFLOW_CFIR_FILTER_Q',
+                'value': 1024
+            },
+            {
+                'name': 'OSP_OVERFLOW_STATUS_VAL_OSP_OVERFLOW_EQUALIZER',
+                'value': 2048
             },
             {
                 'name': 'OUTPUT_MODE_VAL_OUTPUT_FUNC',
@@ -978,6 +1143,28 @@ enums = {
             }
         ]
     },
+    'NiFgenReal64AttributeValues': {
+        'enum-value-prefix': 'NIFGEN_REAL64',
+        'generate-mappings': False,
+        'values': [
+            {
+                'name': 'LOAD_IMPEDANCE_VAL_MATCHED_LOAD_IMPEDANCE',
+                'value': -1
+            },
+            {
+                'name': 'OUTPUT_IMPEDANCE_VAL_50_OHMS',
+                'value': 50
+            },
+            {
+                'name': 'OUTPUT_IMPEDANCE_VAL_75_OHMS',
+                'value': 75
+            },
+            {
+                'name': 'SAMPLE_RATE_VAL_EXTERNAL_SAMPLE_RATE',
+                'value': -1
+            }
+        ]
+    },
     'NiFgenStringAttributeValuesMapped': {
         'enum-value-prefix': 'NIFGEN_STRING',
         'generate-mappings': True,
@@ -1083,6 +1270,80 @@ enums = {
             {
                 'name': 'NIFGEN_VAL_ERROR_REPORTING_DISABLED',
                 'value': 2
+            }
+        ]
+    },
+    'OspOverflowStatus': {
+        'codegen_method': 'public',
+        'values': [
+            {
+                'name': 'NIFGEN_VAL_OSP_OVERFLOW_NONE',
+                'value': 0
+            },
+            {
+                'name': 'NIFGEN_VAL_OSP_OVERFLOW_PRE_FILTER_GAIN_I',
+                'value': 1
+            },
+            {
+                'name': 'NIFGEN_VAL_OSP_OVERFLOW_PRE_FILTER_GAIN_Q',
+                'value': 2
+            },
+            {
+                'name': 'NIFGEN_VAL_OSP_OVERFLOW_PRE_FILTER_OFFSET_I',
+                'value': 4
+            },
+            {
+                'name': 'NIFGEN_VAL_OSP_OVERFLOW_PRE_FILTER_OFFSET_Q',
+                'value': 8
+            },
+            {
+                'name': 'NIFGEN_VAL_OSP_OVERFLOW_FIR_FILTER_I',
+                'value': 16
+            },
+            {
+                'name': 'NIFGEN_VAL_OSP_OVERFLOW_PFIR_FILTER_I',
+                'value': 16
+            },
+            {
+                'name': 'NIFGEN_VAL_OSP_OVERFLOW_FIR_FILTER_Q',
+                'value': 32
+            },
+            {
+                'name': 'NIFGEN_VAL_OSP_OVERFLOW_CIC_FILTER_I',
+                'value': 64
+            },
+            {
+                'name': 'NIFGEN_VAL_OSP_OVERFLOW_CIC_FILTER_Q',
+                'value': 128
+            },
+            {
+                'name': 'NIFGEN_VAL_OSP_OVERFLOW_COMPLEX_DATA',
+                'value': 256
+            },
+            {
+                'name': 'NIFGEN_VAL_OSP_OVERFLOW_CFIR_FILTER_I',
+                'value': 512
+            },
+            {
+                'name': 'NIFGEN_VAL_OSP_OVERFLOW_CFIR_FILTER_Q',
+                'value': 1024
+            },
+            {
+                'name': 'NIFGEN_VAL_OSP_OVERFLOW_EQUALIZER',
+                'value': 2048
+            }
+        ]
+    },
+    'OutputImpedance': {
+        'codegen_method': 'public',
+        'values': [
+            {
+                'name': 'NIFGEN_VAL_50_OHMS',
+                'value': 50
+            },
+            {
+                'name': 'NIFGEN_VAL_75_OHMS',
+                'value': 75
             }
         ]
     },
@@ -1241,6 +1502,15 @@ enums = {
             {
                 'name': 'NIFGEN_VAL_ONBOARD_CLOCK',
                 'value': 'OnboardClock'
+            }
+        ]
+    },
+    'SampleRate': {
+        'codegen_method': 'public',
+        'values': [
+            {
+                'name': 'NIFGEN_VAL_EXTERNAL_SAMPLE_RATE',
+                'value': -1
             }
         ]
     },
