@@ -497,10 +497,6 @@ enums = {
                 'value': 102
             },
             {
-                'name': 'OPERATION_MODE_VAL_OPERATE_CONTINUOUS',
-                'value': 0
-            },
-            {
                 'name': 'OSP_MODE_VAL_OSP_IF',
                 'value': 0
             },
@@ -1061,15 +1057,6 @@ enums = {
             {
                 'name': 'SAMPLE_CLOCK_TIMEBASE_SOURCE_VAL_ONBOARD_CLOCK',
                 'value': 'OnboardClock'
-            }
-        ]
-    },
-    'OperationMode': {
-        'codegen_method': 'public',
-        'values': [
-            {
-                'name': 'NIFGEN_VAL_OPERATE_CONTINUOUS',
-                'value': 0
             }
         ]
     },

@@ -50,27 +50,6 @@ attributes = {
         'resettable': False,
         'type': 'ViBoolean'
     },
-    1050101: {
-        'codegen_method': 'public',
-        'grpc_type': 'sint32',
-        'name': 'PRIMARY_ERROR',
-        'resettable': False,
-        'type': 'ViInt32'
-    },
-    1050102: {
-        'codegen_method': 'public',
-        'grpc_type': 'sint32',
-        'name': 'SECONDARY_ERROR',
-        'resettable': False,
-        'type': 'ViInt32'
-    },
-    1050103: {
-        'codegen_method': 'public',
-        'grpc_type': 'string',
-        'name': 'ERROR_ELABORATION',
-        'resettable': False,
-        'type': 'ViString'
-    },
     1050203: {
         'codegen_method': 'public',
         'grpc_type': 'sint32',
@@ -98,13 +77,6 @@ attributes = {
         'name': 'LOGICAL_NAME',
         'resettable': False,
         'type': 'ViString'
-    },
-    1050322: {
-        'codegen_method': 'public',
-        'grpc_type': 'nidevice_grpc.Session',
-        'name': 'IO_SESSION',
-        'resettable': True,
-        'type': 'ViSession'
     },
     1050327: {
         'codegen_method': 'public',
@@ -255,13 +227,6 @@ attributes = {
         'resettable': False,
         'type': 'ViInt32'
     },
-    1150109: {
-        'codegen_method': 'public',
-        'grpc_type': 'double',
-        'name': 'ACTUAL_ARB_SAMPLE_RATE',
-        'resettable': False,
-        'type': 'ViReal64'
-    },
     1150110: {
         'codegen_method': 'public',
         'enum': 'ClockMode',
@@ -379,13 +344,6 @@ attributes = {
         'name': 'LOAD_IMPEDANCE',
         'resettable': True,
         'type': 'ViReal64'
-    },
-    1150221: {
-        'codegen_method': 'public',
-        'grpc_type': 'sint32',
-        'name': 'DAQMX_TASK',
-        'resettable': False,
-        'type': 'ViInt32'
     },
     1150222: {
         'codegen_method': 'public',
@@ -1472,13 +1430,6 @@ attributes = {
         'resettable': False,
         'type': 'ViInt32'
     },
-    1250002: {
-        'codegen_method': 'public',
-        'grpc_type': 'sint32',
-        'name': 'REF_CLOCK_SOURCE',
-        'resettable': True,
-        'type': 'ViInt32'
-    },
     1250003: {
         'codegen_method': 'public',
         'grpc_type': 'bool',
@@ -1492,14 +1443,6 @@ attributes = {
         'name': 'OUTPUT_IMPEDANCE',
         'resettable': True,
         'type': 'ViReal64'
-    },
-    1250005: {
-        'codegen_method': 'public',
-        'enum': 'OperationMode',
-        'grpc_type': 'sint32',
-        'name': 'OPERATION_MODE',
-        'resettable': False,
-        'type': 'ViInt32'
     },
     1250101: {
         'codegen_method': 'public',
@@ -1646,7 +1589,7 @@ attributes = {
     1250350: {
         'codegen_method': 'public',
         'grpc_type': 'sint32',
-        'name': 'CYCLE_COUNT',
+        'name': 'BURST_COUNT',
         'resettable': True,
         'type': 'ViInt32'
     }
