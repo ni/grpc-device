@@ -62,7 +62,7 @@ async def _main():
                         nidaqmx_types.GetErrorStringRequest(error_code=response.status)
                     )
                     sys.stderr.write(
-                        f"{warning_message.error_message}\nWarning status: {response.status}\n"
+                        f"{warning_message.error_string}\nWarning status: {response.status}\n"
                     )
 
             create_response: nidaqmx_types.CreateTaskResponse = await client.CreateTask(
@@ -165,6 +165,8 @@ async def _main():
                     pass
 
             await asyncio.gather(read_data(), wait_for_done())
+            stop_task_response = await client.StopTask(nidaqmx_types.StopTaskRequest(task=task))
+            check_for_warning(stop_task_response)
 
         except grpc.RpcError as rpc_error:
             error_message = rpc_error.details()
@@ -181,10 +183,7 @@ async def _main():
             print(f"{error_message}")
         finally:
             if client and task:
-                clear_task_response = await client.ClearTask(
-                    nidaqmx_types.ClearTaskRequest(task=task)
-                )
-                check_for_warning(clear_task_response)
+                await client.ClearTask(nidaqmx_types.ClearTaskRequest(task=task))
 
 
 ## Run main

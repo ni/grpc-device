@@ -8,6 +8,7 @@
 #include <nierr_Status.h>
 
 #include <algorithm>
+#include <bitset>
 #include <cstring>
 #include <memory>
 
@@ -16,14 +17,18 @@ namespace nimxlcterminaladaptor_restricted_grpc {
 // Add underscore to usings so they don't conflict with including files in the same namespace.
 namespace pb_ = ::google::protobuf;
 
-bool nierr_noOpReallocJson(struct nierr_Status * s, uint32_t size);
-
-void nierr_Status_initialize(struct nierr_Status * status);
-
+template <typename TServerContext>
 struct NIErrStatusOutputConverter {
-  NIErrStatusOutputConverter()
+  NIErrStatusOutputConverter(TServerContext *serverContext)
   {
+    context = serverContext;
     nierr_Status_initialize(&status);
+    url_table_initialize();
+  }
+
+  ~NIErrStatusOutputConverter()
+  {
+    nierr_Status_jsonFree(&status);
   }
 
   nierr_Status* operator&()
@@ -31,20 +36,64 @@ struct NIErrStatusOutputConverter {
     return &status;
   }
 
+  std::string url_encode(const char* input) const
+  {
+    std::string encoded(input);
+    // Replace the following characters to their equivalent '%xx' hex code
+    for (size_t position = 0; position < encoded.length(); ) {
+      if (urlLookupTable.test(encoded[position])) {
+        position++;
+      }
+      else {
+        char character[4];
+        snprintf(character, 4, "%%%2x", static_cast<int>(encoded[position]));
+        encoded.replace(position, 1, character);
+        position += 3;
+      }
+    }
+    return encoded;
+  }
+
+  static const std::bitset<256> url_table_initialize()
+  {
+    std::bitset<256> table;
+    for (int i = 'a'; i <= 'z'; i++) table.set(i);
+    for (int i = 'A'; i <= 'Z'; i++) table.set(i);
+    for (int i = '0'; i <= '9'; i++) table.set(i);
+    table.set('-');
+    table.set('_');
+    table.set('.');
+    table.set('~');
+
+    return table;
+  }
+
   void to_grpc(nimxlcterminaladaptor_restricted_grpc::NIErrStatus& output) const
   {
     output.set_code(status.code);
-    output.set_capacity(status.capacity);
-    if (status.json != nullptr)
+    if (nierr_Status_isFatal(&status))
     {
-      output.set_json(status.json);
+      context->AddTrailingMetadata("ni-error", std::to_string(status.code));
+
+      if (status.json)
+      {
+        context->AddTrailingMetadata("ni-error-json", url_encode(status.json));
+      }
+    }
+    else if (status.json)
+    {
+      output.set_json(url_encode(status.json));
     }
   }
 
+  TServerContext *context;
   nierr_Status status{};
+  static const std::bitset<256> urlLookupTable;
 };
 
-inline void convert_to_grpc(const NIErrStatusOutputConverter& storage, nimxlcterminaladaptor_restricted_grpc::NIErrStatus* output)
+template <typename TServerContext> const std::bitset<256> NIErrStatusOutputConverter<TServerContext>::urlLookupTable = NIErrStatusOutputConverter<TServerContext>::url_table_initialize();
+
+inline void convert_to_grpc(const NIErrStatusOutputConverter<grpc::ServerContext>& storage, nimxlcterminaladaptor_restricted_grpc::NIErrStatus* output)
 {
   storage.to_grpc(*output);
 }
@@ -55,21 +104,9 @@ inline void convert_to_grpc(const NIErrStatusOutputConverter& storage, nimxlcter
 namespace nidevice_grpc {
 namespace converters {
 
-inline void convert_to_grpc(nierr_Status& input, nimxlcterminaladaptor_restricted_grpc::NIErrStatus* output)
-{
-  output->set_code(input.code);
-  output->set_capacity(input.capacity);
-  if (input.capacity > 0) {
-    output->set_json(input.json);
-  }
-  else {
-    output->set_json("");
-  }
-}
-
 template <>
 struct TypeToStorageType<nierr_Status, nimxlcterminaladaptor_restricted_grpc::NIErrStatus> {
-  using StorageType = nimxlcterminaladaptor_restricted_grpc::NIErrStatusOutputConverter;
+  using StorageType = nimxlcterminaladaptor_restricted_grpc::NIErrStatusOutputConverter<grpc::ServerContext>;
 };
 
 }  // namespace converters
