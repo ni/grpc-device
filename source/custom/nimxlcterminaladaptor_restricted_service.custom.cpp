@@ -58,26 +58,26 @@ class TerminalContainerPtr
     NimxlcTerminalAdaptorRestrictedLibraryInterface* library_;
 };
 
-::grpc::Status NimxlcTerminalAdaptorRestrictedService::RefreshTerminalCache(::grpc::ServerContext* context, const RefreshTerminalCacheRequest* request, RefreshTerminalCacheResponse* response)
-{
-    if (context->IsCancelled()) {
-        return ::grpc::Status::CANCELLED;
-    }
-    try {
-        auto grpc_session = request->session();
-        nimxlc_Session session = session_repository_->access_session(grpc_session.id(), grpc_session.name());
+// ::grpc::Status NimxlcTerminalAdaptorRestrictedService::RefreshTerminalCache(::grpc::ServerContext* context, const RefreshTerminalCacheRequest* request, RefreshTerminalCacheResponse* response)
+// {
+//     if (context->IsCancelled()) {
+//         return ::grpc::Status::CANCELLED;
+//     }
+//     try {
+//         auto grpc_session = request->session();
+//         nimxlc_Session session = session_repository_->access_session(grpc_session.id(), grpc_session.name());
 
-        auto status = allocate_output_storage<nierr_Status, NIErrStatus>(context);
-        std::cout << "before refreshTerminalCache library call" << std::endl;
-        library_->refreshTerminalCache(session, &status);
-        std::cout << "after refreshTerminalCache library call" << std::endl;
-        std::cout << "status code: " << (&status)->code <<std::endl;
-        return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-        return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-}
+//         auto status = allocate_output_storage<nierr_Status, NIErrStatus>(context);
+//         std::cout << "before refreshTerminalCache library call" << std::endl;
+//         library_->refreshTerminalCache(session, &status);
+//         std::cout << "after refreshTerminalCache library call" << std::endl;
+//         std::cout << "status code: " << (&status)->code <<std::endl;
+//         return ::grpc::Status::OK;
+//     }
+//     catch (nidevice_grpc::LibraryLoadException& ex) {
+//         return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+//     }
+// }
 
 ::grpc::Status NimxlcTerminalAdaptorRestrictedService::GetDeviceContainer(::grpc::ServerContext* context, const GetDeviceContainerRequest* request, GetDeviceContainerResponse* response)
 {

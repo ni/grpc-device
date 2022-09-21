@@ -39,7 +39,6 @@ functions = {
         'returns': 'void',
     },
     'refreshTerminalCache': {
-        'codegen_method': 'CustomCode',
         'status_expression': '(&c_status)->code',
         'parameters': [
             {

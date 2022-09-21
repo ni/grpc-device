@@ -104,6 +104,31 @@ namespace nimxlcterminaladaptor_restricted_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NimxlcTerminalAdaptorRestrictedService::RefreshTerminalCache(::grpc::ServerContext* context, const RefreshTerminalCacheRequest* request, RefreshTerminalCacheResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      nimxlc_Session session = session_repository_->access_session(session_grpc_session.id(), session_grpc_session.name());
+      auto c_status = allocate_output_storage<nierr_Status, NIErrStatus>(context);
+      library_->refreshTerminalCache(session, &c_status);
+      auto status = (&c_status)->code;
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNimxlc_Session(context, status, session);
+      }
+      response->set_status(status);
+      convert_to_grpc(c_status, response->mutable_c_status());
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NimxlcTerminalAdaptorRestrictedService::HasTerminalInformationChanged(::grpc::ServerContext* context, const HasTerminalInformationChangedRequest* request, HasTerminalInformationChangedResponse* response)
   {
     if (context->IsCancelled()) {
