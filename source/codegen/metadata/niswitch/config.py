@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-SWITCH API metadata version 22.8.0d9999
+# This file is generated from NI-SWITCH API metadata version 22.8.0d130
 config = {
     'additional_headers': {
         'custom/ivi_errors.h': [
             'service.cpp'
         ]
     },
-    'api_version': '22.8.0d9999',
+    'api_version': '22.8.0d130',
     'c_function_prefix': 'niSwitch_',
     'c_header': 'niswitch.h',
     'close_function': 'Close',
@@ -14,7 +14,7 @@ config = {
     'custom_types': [
     ],
     'driver_name': 'NI-SWITCH',
-    'java_package': 'com.ni.grpc.switch',
+    'java_package': 'com.ni.grpc.niswitch',
     'library_info': {
         'Linux': {
             '64bit': {

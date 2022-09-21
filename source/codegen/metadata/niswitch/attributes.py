@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-SWITCH API metadata version 22.8.0d9999
+# This file is generated from NI-SWITCH API metadata version 22.8.0d130
 attributes = {
     1050002: {
         'codegen_method': 'public',
