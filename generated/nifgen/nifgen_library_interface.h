@@ -63,6 +63,7 @@ class NiFgenLibraryInterface {
   virtual ViStatus CreateFreqList(ViSession vi, ViInt32 waveform, ViInt32 frequencyListLength, ViReal64 frequencyArray[], ViReal64 durationArray[], ViInt32* frequencyListHandle) = 0;
   virtual ViStatus CreateWaveformF64(ViSession vi, ViConstString channelName, ViInt32 waveformSize, ViReal64 waveformDataArray[], ViInt32* waveformHandle) = 0;
   virtual ViStatus CreateWaveformFromFileF64(ViSession vi, ViConstString channelName, ViConstString fileName, ViInt32 byteOrder, ViInt32* waveformHandle) = 0;
+  virtual ViStatus CreateWaveformFromFileHWS(ViSession vi, ViConstString channelName, ViConstString fileName, ViBoolean useRateFromWaveform, ViBoolean useGainAndOffsetFromWaveform, ViInt32* waveformHandle) = 0;
   virtual ViStatus CreateWaveformFromFileI16(ViSession vi, ViConstString channelName, ViConstString fileName, ViInt32 byteOrder, ViInt32* waveformHandle) = 0;
   virtual ViStatus CreateWaveformI16(ViSession vi, ViConstString channelName, ViInt32 waveformSize, ViInt16 waveformDataArray[], ViInt32* waveformHandle) = 0;
   virtual ViStatus DefineUserStandardWaveform(ViSession vi, ViConstString channelName, ViInt32 waveformSize, ViReal64 waveformDataArray[]) = 0;
@@ -110,12 +111,14 @@ class NiFgenLibraryInterface {
   virtual ViStatus InvalidateAllAttributes(ViSession vi) = 0;
   virtual ViStatus IsDone(ViSession vi, ViBoolean* done) = 0;
   virtual ViStatus LockSession(ViSession vi, ViBoolean* callerHasLock) = 0;
+  virtual ViStatus ManualEnableP2PStream(ViSession vi, ViConstString endpointName) = 0;
   virtual ViStatus QueryArbSeqCapabilities(ViSession vi, ViInt32* maximumNumberOfSequences, ViInt32* minimumSequenceLength, ViInt32* maximumSequenceLength, ViInt32* maximumLoopCount) = 0;
   virtual ViStatus QueryArbWfmCapabilities(ViSession vi, ViInt32* maximumNumberOfWaveforms, ViInt32* waveformQuantum, ViInt32* minimumWaveformSize, ViInt32* maximumWaveformSize) = 0;
   virtual ViStatus QueryFreqListCapabilities(ViSession vi, ViInt32* maximumNumberOfFreqLists, ViInt32* minimumFrequencyListLength, ViInt32* maximumFrequencyListLength, ViReal64* minimumFrequencyListDuration, ViReal64* maximumFrequencyListDuration, ViReal64* frequencyListDurationQuantum) = 0;
   virtual ViStatus ReadCurrentTemperature(ViSession vi, ViReal64* temperature) = 0;
   virtual ViStatus Reset(ViSession vi) = 0;
   virtual ViStatus ResetDevice(ViSession vi) = 0;
+  virtual ViStatus ResetInterchangeCheck(ViSession vi) = 0;
   virtual ViStatus ResetWithDefaults(ViSession vi) = 0;
   virtual ViStatus RevisionQuery(ViSession vi, ViChar instrumentDriverRevision[256], ViChar firmwareRevision[256]) = 0;
   virtual ViStatus RouteSignalOut(ViSession vi, ViConstString channelName, ViInt32 routeSignalFrom, ViInt32 routeSignalTo) = 0;

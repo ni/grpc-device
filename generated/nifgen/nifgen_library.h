@@ -66,6 +66,7 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
   ViStatus CreateFreqList(ViSession vi, ViInt32 waveform, ViInt32 frequencyListLength, ViReal64 frequencyArray[], ViReal64 durationArray[], ViInt32* frequencyListHandle);
   ViStatus CreateWaveformF64(ViSession vi, ViConstString channelName, ViInt32 waveformSize, ViReal64 waveformDataArray[], ViInt32* waveformHandle);
   ViStatus CreateWaveformFromFileF64(ViSession vi, ViConstString channelName, ViConstString fileName, ViInt32 byteOrder, ViInt32* waveformHandle);
+  ViStatus CreateWaveformFromFileHWS(ViSession vi, ViConstString channelName, ViConstString fileName, ViBoolean useRateFromWaveform, ViBoolean useGainAndOffsetFromWaveform, ViInt32* waveformHandle);
   ViStatus CreateWaveformFromFileI16(ViSession vi, ViConstString channelName, ViConstString fileName, ViInt32 byteOrder, ViInt32* waveformHandle);
   ViStatus CreateWaveformI16(ViSession vi, ViConstString channelName, ViInt32 waveformSize, ViInt16 waveformDataArray[], ViInt32* waveformHandle);
   ViStatus DefineUserStandardWaveform(ViSession vi, ViConstString channelName, ViInt32 waveformSize, ViReal64 waveformDataArray[]);
@@ -113,12 +114,14 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
   ViStatus InvalidateAllAttributes(ViSession vi);
   ViStatus IsDone(ViSession vi, ViBoolean* done);
   ViStatus LockSession(ViSession vi, ViBoolean* callerHasLock);
+  ViStatus ManualEnableP2PStream(ViSession vi, ViConstString endpointName);
   ViStatus QueryArbSeqCapabilities(ViSession vi, ViInt32* maximumNumberOfSequences, ViInt32* minimumSequenceLength, ViInt32* maximumSequenceLength, ViInt32* maximumLoopCount);
   ViStatus QueryArbWfmCapabilities(ViSession vi, ViInt32* maximumNumberOfWaveforms, ViInt32* waveformQuantum, ViInt32* minimumWaveformSize, ViInt32* maximumWaveformSize);
   ViStatus QueryFreqListCapabilities(ViSession vi, ViInt32* maximumNumberOfFreqLists, ViInt32* minimumFrequencyListLength, ViInt32* maximumFrequencyListLength, ViReal64* minimumFrequencyListDuration, ViReal64* maximumFrequencyListDuration, ViReal64* frequencyListDurationQuantum);
   ViStatus ReadCurrentTemperature(ViSession vi, ViReal64* temperature);
   ViStatus Reset(ViSession vi);
   ViStatus ResetDevice(ViSession vi);
+  ViStatus ResetInterchangeCheck(ViSession vi);
   ViStatus ResetWithDefaults(ViSession vi);
   ViStatus RevisionQuery(ViSession vi, ViChar instrumentDriverRevision[256], ViChar firmwareRevision[256]);
   ViStatus RouteSignalOut(ViSession vi, ViConstString channelName, ViInt32 routeSignalFrom, ViInt32 routeSignalTo);
@@ -190,6 +193,7 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
   using CreateFreqListPtr = decltype(&niFgen_CreateFreqList);
   using CreateWaveformF64Ptr = decltype(&niFgen_CreateWaveformF64);
   using CreateWaveformFromFileF64Ptr = decltype(&niFgen_CreateWaveformFromFileF64);
+  using CreateWaveformFromFileHWSPtr = decltype(&niFgen_CreateWaveformFromFileHWS);
   using CreateWaveformFromFileI16Ptr = decltype(&niFgen_CreateWaveformFromFileI16);
   using CreateWaveformI16Ptr = decltype(&niFgen_CreateWaveformI16);
   using DefineUserStandardWaveformPtr = decltype(&niFgen_DefineUserStandardWaveform);
@@ -237,12 +241,14 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
   using InvalidateAllAttributesPtr = decltype(&niFgen_InvalidateAllAttributes);
   using IsDonePtr = decltype(&niFgen_IsDone);
   using LockSessionPtr = ViStatus (*)(ViSession vi, ViBoolean* callerHasLock);
+  using ManualEnableP2PStreamPtr = decltype(&niFgen_ManualEnableP2PStream);
   using QueryArbSeqCapabilitiesPtr = decltype(&niFgen_QueryArbSeqCapabilities);
   using QueryArbWfmCapabilitiesPtr = decltype(&niFgen_QueryArbWfmCapabilities);
   using QueryFreqListCapabilitiesPtr = decltype(&niFgen_QueryFreqListCapabilities);
   using ReadCurrentTemperaturePtr = decltype(&niFgen_ReadCurrentTemperature);
   using ResetPtr = decltype(&niFgen_reset);
   using ResetDevicePtr = decltype(&niFgen_ResetDevice);
+  using ResetInterchangeCheckPtr = decltype(&niFgen_ResetInterchangeCheck);
   using ResetWithDefaultsPtr = decltype(&niFgen_ResetWithDefaults);
   using RevisionQueryPtr = decltype(&niFgen_revision_query);
   using RouteSignalOutPtr = decltype(&niFgen_RouteSignalOut);
@@ -314,6 +320,7 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
     CreateFreqListPtr CreateFreqList;
     CreateWaveformF64Ptr CreateWaveformF64;
     CreateWaveformFromFileF64Ptr CreateWaveformFromFileF64;
+    CreateWaveformFromFileHWSPtr CreateWaveformFromFileHWS;
     CreateWaveformFromFileI16Ptr CreateWaveformFromFileI16;
     CreateWaveformI16Ptr CreateWaveformI16;
     DefineUserStandardWaveformPtr DefineUserStandardWaveform;
@@ -361,12 +368,14 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
     InvalidateAllAttributesPtr InvalidateAllAttributes;
     IsDonePtr IsDone;
     LockSessionPtr LockSession;
+    ManualEnableP2PStreamPtr ManualEnableP2PStream;
     QueryArbSeqCapabilitiesPtr QueryArbSeqCapabilities;
     QueryArbWfmCapabilitiesPtr QueryArbWfmCapabilities;
     QueryFreqListCapabilitiesPtr QueryFreqListCapabilities;
     ReadCurrentTemperaturePtr ReadCurrentTemperature;
     ResetPtr Reset;
     ResetDevicePtr ResetDevice;
+    ResetInterchangeCheckPtr ResetInterchangeCheck;
     ResetWithDefaultsPtr ResetWithDefaults;
     RevisionQueryPtr RevisionQuery;
     RouteSignalOutPtr RouteSignalOut;

@@ -65,6 +65,7 @@ class NiFgenMockLibrary : public nifgen_grpc::NiFgenLibraryInterface {
   MOCK_METHOD(ViStatus, CreateFreqList, (ViSession vi, ViInt32 waveform, ViInt32 frequencyListLength, ViReal64 frequencyArray[], ViReal64 durationArray[], ViInt32* frequencyListHandle), (override));
   MOCK_METHOD(ViStatus, CreateWaveformF64, (ViSession vi, ViConstString channelName, ViInt32 waveformSize, ViReal64 waveformDataArray[], ViInt32* waveformHandle), (override));
   MOCK_METHOD(ViStatus, CreateWaveformFromFileF64, (ViSession vi, ViConstString channelName, ViConstString fileName, ViInt32 byteOrder, ViInt32* waveformHandle), (override));
+  MOCK_METHOD(ViStatus, CreateWaveformFromFileHWS, (ViSession vi, ViConstString channelName, ViConstString fileName, ViBoolean useRateFromWaveform, ViBoolean useGainAndOffsetFromWaveform, ViInt32* waveformHandle), (override));
   MOCK_METHOD(ViStatus, CreateWaveformFromFileI16, (ViSession vi, ViConstString channelName, ViConstString fileName, ViInt32 byteOrder, ViInt32* waveformHandle), (override));
   MOCK_METHOD(ViStatus, CreateWaveformI16, (ViSession vi, ViConstString channelName, ViInt32 waveformSize, ViInt16 waveformDataArray[], ViInt32* waveformHandle), (override));
   MOCK_METHOD(ViStatus, DefineUserStandardWaveform, (ViSession vi, ViConstString channelName, ViInt32 waveformSize, ViReal64 waveformDataArray[]), (override));
@@ -112,12 +113,14 @@ class NiFgenMockLibrary : public nifgen_grpc::NiFgenLibraryInterface {
   MOCK_METHOD(ViStatus, InvalidateAllAttributes, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, IsDone, (ViSession vi, ViBoolean* done), (override));
   MOCK_METHOD(ViStatus, LockSession, (ViSession vi, ViBoolean* callerHasLock), (override));
+  MOCK_METHOD(ViStatus, ManualEnableP2PStream, (ViSession vi, ViConstString endpointName), (override));
   MOCK_METHOD(ViStatus, QueryArbSeqCapabilities, (ViSession vi, ViInt32* maximumNumberOfSequences, ViInt32* minimumSequenceLength, ViInt32* maximumSequenceLength, ViInt32* maximumLoopCount), (override));
   MOCK_METHOD(ViStatus, QueryArbWfmCapabilities, (ViSession vi, ViInt32* maximumNumberOfWaveforms, ViInt32* waveformQuantum, ViInt32* minimumWaveformSize, ViInt32* maximumWaveformSize), (override));
   MOCK_METHOD(ViStatus, QueryFreqListCapabilities, (ViSession vi, ViInt32* maximumNumberOfFreqLists, ViInt32* minimumFrequencyListLength, ViInt32* maximumFrequencyListLength, ViReal64* minimumFrequencyListDuration, ViReal64* maximumFrequencyListDuration, ViReal64* frequencyListDurationQuantum), (override));
   MOCK_METHOD(ViStatus, ReadCurrentTemperature, (ViSession vi, ViReal64* temperature), (override));
   MOCK_METHOD(ViStatus, Reset, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, ResetDevice, (ViSession vi), (override));
+  MOCK_METHOD(ViStatus, ResetInterchangeCheck, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, ResetWithDefaults, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, RevisionQuery, (ViSession vi, ViChar instrumentDriverRevision[256], ViChar firmwareRevision[256]), (override));
   MOCK_METHOD(ViStatus, RouteSignalOut, (ViSession vi, ViConstString channelName, ViInt32 routeSignalFrom, ViInt32 routeSignalTo), (override));

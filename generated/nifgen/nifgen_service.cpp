@@ -1302,6 +1302,34 @@ namespace nifgen_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiFgenService::CreateWaveformFromFileHWS(::grpc::ServerContext* context, const CreateWaveformFromFileHWSRequest* request, CreateWaveformFromFileHWSResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto channel_name = request->channel_name().c_str();
+      auto file_name = request->file_name().c_str();
+      ViBoolean use_rate_from_waveform = request->use_rate_from_waveform();
+      ViBoolean use_gain_and_offset_from_waveform = request->use_gain_and_offset_from_waveform();
+      ViInt32 waveform_handle {};
+      auto status = library_->CreateWaveformFromFileHWS(vi, channel_name, file_name, use_rate_from_waveform, use_gain_and_offset_from_waveform, &waveform_handle);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(context, status, vi);
+      }
+      response->set_status(status);
+      response->set_waveform_handle(waveform_handle);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiFgenService::CreateWaveformFromFileI16(::grpc::ServerContext* context, const CreateWaveformFromFileI16Request* request, CreateWaveformFromFileI16Response* response)
   {
     if (context->IsCancelled()) {
@@ -2625,6 +2653,29 @@ namespace nifgen_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiFgenService::ManualEnableP2PStream(::grpc::ServerContext* context, const ManualEnableP2PStreamRequest* request, ManualEnableP2PStreamResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto endpoint_name = request->endpoint_name().c_str();
+      auto status = library_->ManualEnableP2PStream(vi, endpoint_name);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(context, status, vi);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiFgenService::QueryArbSeqCapabilities(::grpc::ServerContext* context, const QueryArbSeqCapabilitiesRequest* request, QueryArbSeqCapabilitiesResponse* response)
   {
     if (context->IsCancelled()) {
@@ -2774,6 +2825,28 @@ namespace nifgen_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto status = library_->ResetDevice(vi);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(context, status, vi);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFgenService::ResetInterchangeCheck(::grpc::ServerContext* context, const ResetInterchangeCheckRequest* request, ResetInterchangeCheckResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto status = library_->ResetInterchangeCheck(vi);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
       }

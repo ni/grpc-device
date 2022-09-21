@@ -70,6 +70,7 @@ CreateArbSequenceResponse create_arb_sequence(const StubPtr& stub, const nidevic
 CreateFreqListResponse create_freq_list(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<Waveform, pb::int32>& waveform, const std::vector<double>& frequency_array, const std::vector<double>& duration_array);
 CreateWaveformF64Response create_waveform_f64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const std::vector<double>& waveform_data_array);
 CreateWaveformFromFileF64Response create_waveform_from_file_f64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& file_name, const simple_variant<ByteOrder, pb::int32>& byte_order);
+CreateWaveformFromFileHWSResponse create_waveform_from_file_hws(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& file_name, const bool& use_rate_from_waveform, const bool& use_gain_and_offset_from_waveform);
 CreateWaveformFromFileI16Response create_waveform_from_file_i16(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& file_name, const simple_variant<ByteOrder, pb::int32>& byte_order);
 CreateWaveformI16Response create_waveform_i16(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const std::vector<pb::int32>& waveform_data_array);
 DefineUserStandardWaveformResponse define_user_standard_waveform(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const std::vector<double>& waveform_data_array);
@@ -116,12 +117,14 @@ InitializeWithChannelsResponse initialize_with_channels(const StubPtr& stub, con
 InitiateGenerationResponse initiate_generation(const StubPtr& stub, const nidevice_grpc::Session& vi);
 InvalidateAllAttributesResponse invalidate_all_attributes(const StubPtr& stub, const nidevice_grpc::Session& vi);
 IsDoneResponse is_done(const StubPtr& stub, const nidevice_grpc::Session& vi);
+ManualEnableP2PStreamResponse manual_enable_p2p_stream(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& endpoint_name);
 QueryArbSeqCapabilitiesResponse query_arb_seq_capabilities(const StubPtr& stub, const nidevice_grpc::Session& vi);
 QueryArbWfmCapabilitiesResponse query_arb_wfm_capabilities(const StubPtr& stub, const nidevice_grpc::Session& vi);
 QueryFreqListCapabilitiesResponse query_freq_list_capabilities(const StubPtr& stub, const nidevice_grpc::Session& vi);
 ReadCurrentTemperatureResponse read_current_temperature(const StubPtr& stub, const nidevice_grpc::Session& vi);
 ResetResponse reset(const StubPtr& stub, const nidevice_grpc::Session& vi);
 ResetDeviceResponse reset_device(const StubPtr& stub, const nidevice_grpc::Session& vi);
+ResetInterchangeCheckResponse reset_interchange_check(const StubPtr& stub, const nidevice_grpc::Session& vi);
 ResetWithDefaultsResponse reset_with_defaults(const StubPtr& stub, const nidevice_grpc::Session& vi);
 RevisionQueryResponse revision_query(const StubPtr& stub, const nidevice_grpc::Session& vi);
 RouteSignalOutResponse route_signal_out(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::int32& route_signal_from, const pb::int32& route_signal_to);

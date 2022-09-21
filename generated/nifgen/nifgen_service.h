@@ -89,6 +89,7 @@ public:
   ::grpc::Status CreateFreqList(::grpc::ServerContext* context, const CreateFreqListRequest* request, CreateFreqListResponse* response) override;
   ::grpc::Status CreateWaveformF64(::grpc::ServerContext* context, const CreateWaveformF64Request* request, CreateWaveformF64Response* response) override;
   ::grpc::Status CreateWaveformFromFileF64(::grpc::ServerContext* context, const CreateWaveformFromFileF64Request* request, CreateWaveformFromFileF64Response* response) override;
+  ::grpc::Status CreateWaveformFromFileHWS(::grpc::ServerContext* context, const CreateWaveformFromFileHWSRequest* request, CreateWaveformFromFileHWSResponse* response) override;
   ::grpc::Status CreateWaveformFromFileI16(::grpc::ServerContext* context, const CreateWaveformFromFileI16Request* request, CreateWaveformFromFileI16Response* response) override;
   ::grpc::Status CreateWaveformI16(::grpc::ServerContext* context, const CreateWaveformI16Request* request, CreateWaveformI16Response* response) override;
   ::grpc::Status DefineUserStandardWaveform(::grpc::ServerContext* context, const DefineUserStandardWaveformRequest* request, DefineUserStandardWaveformResponse* response) override;
@@ -135,12 +136,14 @@ public:
   ::grpc::Status InitiateGeneration(::grpc::ServerContext* context, const InitiateGenerationRequest* request, InitiateGenerationResponse* response) override;
   ::grpc::Status InvalidateAllAttributes(::grpc::ServerContext* context, const InvalidateAllAttributesRequest* request, InvalidateAllAttributesResponse* response) override;
   ::grpc::Status IsDone(::grpc::ServerContext* context, const IsDoneRequest* request, IsDoneResponse* response) override;
+  ::grpc::Status ManualEnableP2PStream(::grpc::ServerContext* context, const ManualEnableP2PStreamRequest* request, ManualEnableP2PStreamResponse* response) override;
   ::grpc::Status QueryArbSeqCapabilities(::grpc::ServerContext* context, const QueryArbSeqCapabilitiesRequest* request, QueryArbSeqCapabilitiesResponse* response) override;
   ::grpc::Status QueryArbWfmCapabilities(::grpc::ServerContext* context, const QueryArbWfmCapabilitiesRequest* request, QueryArbWfmCapabilitiesResponse* response) override;
   ::grpc::Status QueryFreqListCapabilities(::grpc::ServerContext* context, const QueryFreqListCapabilitiesRequest* request, QueryFreqListCapabilitiesResponse* response) override;
   ::grpc::Status ReadCurrentTemperature(::grpc::ServerContext* context, const ReadCurrentTemperatureRequest* request, ReadCurrentTemperatureResponse* response) override;
   ::grpc::Status Reset(::grpc::ServerContext* context, const ResetRequest* request, ResetResponse* response) override;
   ::grpc::Status ResetDevice(::grpc::ServerContext* context, const ResetDeviceRequest* request, ResetDeviceResponse* response) override;
+  ::grpc::Status ResetInterchangeCheck(::grpc::ServerContext* context, const ResetInterchangeCheckRequest* request, ResetInterchangeCheckResponse* response) override;
   ::grpc::Status ResetWithDefaults(::grpc::ServerContext* context, const ResetWithDefaultsRequest* request, ResetWithDefaultsResponse* response) override;
   ::grpc::Status RevisionQuery(::grpc::ServerContext* context, const RevisionQueryRequest* request, RevisionQueryResponse* response) override;
   ::grpc::Status RouteSignalOut(::grpc::ServerContext* context, const RouteSignalOutRequest* request, RouteSignalOutResponse* response) override;

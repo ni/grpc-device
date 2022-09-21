@@ -1453,6 +1453,54 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
+    'CreateWaveformFromFileHWS': {
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'cppName': 'vi',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.Session',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'cppName': 'channelName',
+                'direction': 'in',
+                'grpc_type': 'string',
+                'name': 'channelName',
+                'type': 'ViConstString'
+            },
+            {
+                'cppName': 'fileName',
+                'direction': 'in',
+                'grpc_type': 'string',
+                'name': 'fileName',
+                'type': 'ViConstString'
+            },
+            {
+                'cppName': 'useRateFromWaveform',
+                'direction': 'in',
+                'grpc_type': 'bool',
+                'name': 'useRateFromWaveform',
+                'type': 'ViBoolean'
+            },
+            {
+                'cppName': 'useGainAndOffsetFromWaveform',
+                'direction': 'in',
+                'grpc_type': 'bool',
+                'name': 'useGainAndOffsetFromWaveform',
+                'type': 'ViBoolean'
+            },
+            {
+                'cppName': 'waveformHandle',
+                'direction': 'out',
+                'grpc_type': 'sint32',
+                'name': 'waveformHandle',
+                'type': 'ViInt32'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
     'CreateWaveformFromFileI16': {
         'codegen_method': 'public',
         'parameters': [
@@ -2877,6 +2925,26 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
+    'ManualEnableP2PStream': {
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'cppName': 'vi',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.Session',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'cppName': 'endpointName',
+                'direction': 'in',
+                'grpc_type': 'string',
+                'name': 'endpointName',
+                'type': 'ViConstString'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
     'QueryArbSeqCapabilities': {
         'codegen_method': 'public',
         'parameters': [
@@ -3049,6 +3117,19 @@ functions = {
         'returns': 'ViStatus'
     },
     'ResetDevice': {
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'cppName': 'vi',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.Session',
+                'name': 'vi',
+                'type': 'ViSession'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'ResetInterchangeCheck': {
         'codegen_method': 'public',
         'parameters': [
             {

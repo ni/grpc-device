@@ -969,6 +969,27 @@ create_waveform_from_file_f64(const StubPtr& stub, const nidevice_grpc::Session&
   return response;
 }
 
+CreateWaveformFromFileHWSResponse
+create_waveform_from_file_hws(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& file_name, const bool& use_rate_from_waveform, const bool& use_gain_and_offset_from_waveform)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CreateWaveformFromFileHWSRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_channel_name(channel_name);
+  request.set_file_name(file_name);
+  request.set_use_rate_from_waveform(use_rate_from_waveform);
+  request.set_use_gain_and_offset_from_waveform(use_gain_and_offset_from_waveform);
+
+  auto response = CreateWaveformFromFileHWSResponse{};
+
+  raise_if_error(
+      stub->CreateWaveformFromFileHWS(&context, request, &response),
+      context);
+
+  return response;
+}
+
 CreateWaveformFromFileI16Response
 create_waveform_from_file_i16(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& file_name, const simple_variant<ByteOrder, pb::int32>& byte_order)
 {
@@ -1814,6 +1835,24 @@ is_done(const StubPtr& stub, const nidevice_grpc::Session& vi)
   return response;
 }
 
+ManualEnableP2PStreamResponse
+manual_enable_p2p_stream(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& endpoint_name)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ManualEnableP2PStreamRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_endpoint_name(endpoint_name);
+
+  auto response = ManualEnableP2PStreamResponse{};
+
+  raise_if_error(
+      stub->ManualEnableP2PStream(&context, request, &response),
+      context);
+
+  return response;
+}
+
 QueryArbSeqCapabilitiesResponse
 query_arb_seq_capabilities(const StubPtr& stub, const nidevice_grpc::Session& vi)
 {
@@ -1911,6 +1950,23 @@ reset_device(const StubPtr& stub, const nidevice_grpc::Session& vi)
 
   raise_if_error(
       stub->ResetDevice(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ResetInterchangeCheckResponse
+reset_interchange_check(const StubPtr& stub, const nidevice_grpc::Session& vi)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ResetInterchangeCheckRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+
+  auto response = ResetInterchangeCheckResponse{};
+
+  raise_if_error(
+      stub->ResetInterchangeCheck(&context, request, &response),
       context);
 
   return response;

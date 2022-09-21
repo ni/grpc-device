@@ -64,6 +64,7 @@ service NiFgen {
   rpc CreateFreqList(CreateFreqListRequest) returns (CreateFreqListResponse);
   rpc CreateWaveformF64(CreateWaveformF64Request) returns (CreateWaveformF64Response);
   rpc CreateWaveformFromFileF64(CreateWaveformFromFileF64Request) returns (CreateWaveformFromFileF64Response);
+  rpc CreateWaveformFromFileHWS(CreateWaveformFromFileHWSRequest) returns (CreateWaveformFromFileHWSResponse);
   rpc CreateWaveformFromFileI16(CreateWaveformFromFileI16Request) returns (CreateWaveformFromFileI16Response);
   rpc CreateWaveformI16(CreateWaveformI16Request) returns (CreateWaveformI16Response);
   rpc DefineUserStandardWaveform(DefineUserStandardWaveformRequest) returns (DefineUserStandardWaveformResponse);
@@ -110,12 +111,14 @@ service NiFgen {
   rpc InitiateGeneration(InitiateGenerationRequest) returns (InitiateGenerationResponse);
   rpc InvalidateAllAttributes(InvalidateAllAttributesRequest) returns (InvalidateAllAttributesResponse);
   rpc IsDone(IsDoneRequest) returns (IsDoneResponse);
+  rpc ManualEnableP2PStream(ManualEnableP2PStreamRequest) returns (ManualEnableP2PStreamResponse);
   rpc QueryArbSeqCapabilities(QueryArbSeqCapabilitiesRequest) returns (QueryArbSeqCapabilitiesResponse);
   rpc QueryArbWfmCapabilities(QueryArbWfmCapabilitiesRequest) returns (QueryArbWfmCapabilitiesResponse);
   rpc QueryFreqListCapabilities(QueryFreqListCapabilitiesRequest) returns (QueryFreqListCapabilitiesResponse);
   rpc ReadCurrentTemperature(ReadCurrentTemperatureRequest) returns (ReadCurrentTemperatureResponse);
   rpc Reset(ResetRequest) returns (ResetResponse);
   rpc ResetDevice(ResetDeviceRequest) returns (ResetDeviceResponse);
+  rpc ResetInterchangeCheck(ResetInterchangeCheckRequest) returns (ResetInterchangeCheckResponse);
   rpc ResetWithDefaults(ResetWithDefaultsRequest) returns (ResetWithDefaultsResponse);
   rpc RevisionQuery(RevisionQueryRequest) returns (RevisionQueryResponse);
   rpc RouteSignalOut(RouteSignalOutRequest) returns (RouteSignalOutResponse);
@@ -1128,6 +1131,19 @@ message CreateWaveformFromFileF64Response {
   sint32 waveform_handle = 2;
 }
 
+message CreateWaveformFromFileHWSRequest {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+  string file_name = 3;
+  bool use_rate_from_waveform = 4;
+  bool use_gain_and_offset_from_waveform = 5;
+}
+
+message CreateWaveformFromFileHWSResponse {
+  int32 status = 1;
+  sint32 waveform_handle = 2;
+}
+
 message CreateWaveformFromFileI16Request {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
@@ -1597,6 +1613,15 @@ message IsDoneResponse {
   bool done = 2;
 }
 
+message ManualEnableP2PStreamRequest {
+  nidevice_grpc.Session vi = 1;
+  string endpoint_name = 2;
+}
+
+message ManualEnableP2PStreamResponse {
+  int32 status = 1;
+}
+
 message QueryArbSeqCapabilitiesRequest {
   nidevice_grpc.Session vi = 1;
 }
@@ -1657,6 +1682,14 @@ message ResetDeviceRequest {
 }
 
 message ResetDeviceResponse {
+  int32 status = 1;
+}
+
+message ResetInterchangeCheckRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message ResetInterchangeCheckResponse {
   int32 status = 1;
 }
 
