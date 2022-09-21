@@ -1,19 +1,8 @@
-﻿# -*- coding: utf-8 -*-
-# This file is generated from NI-FGEN API metadata version 20.0.0d5
+# -*- coding: utf-8 -*-
+# This file is generated from NI-FGEN API metadata version 22.8.0d9999
 enums = {
-    'AddressType': {
-        'values': [
-            {
-                'name': 'NIFGEN_VAL_ADDR_PHYSICAL',
-                'value': 0
-            },
-            {
-                'name': 'NIFGEN_VAL_ADDR_VIRTUAL',
-                'value': 1
-            }
-        ]
-    },
     'AnalogPath': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_MAIN_ANALOG_PATH',
@@ -33,47 +22,8 @@ enums = {
             }
         ]
     },
-    'ArbitrarySequenceHandle': {
-        'values': [
-            {
-                'name': 'NIFGEN_VAL_FIRST_SEQUENCE_HANDLE',
-                'value': 100000
-            },
-            {
-                'name': 'NIFGEN_VAL_LAST_SEQUENCE_HANDLE',
-                'value': 109999
-            },
-            {
-                'name': 'NIFGEN_VAL_NO_SEQUENCE',
-                'value': -1
-            }
-        ]
-    },
-    'ArbitraryWaveformHandle': {
-        'values': [
-            {
-                'name': 'NIFGEN_VAL_FIRST_WAVEFORM_HANDLE',
-                'value': 10000
-            },
-            {
-                'name': 'NIFGEN_VAL_LAST_WAVEFORM_HANDLE',
-                'value': 10999
-            },
-            {
-                'name': 'NIFGEN_VAL_NO_WAVEFORM',
-                'value': -1
-            }
-        ]
-    },
-    'BurstCount': {
-        'values': [
-            {
-                'name': 'NIFGEN_VAL_GENERATE_CONTINUOUS',
-                'value': -1
-            }
-        ]
-    },
     'BusType': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_BUS_INVALID',
@@ -106,6 +56,7 @@ enums = {
         ]
     },
     'ByteOrder': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_LITTLE_ENDIAN',
@@ -118,6 +69,7 @@ enums = {
         ]
     },
     'ClockMode': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_HIGH_RESOLUTION',
@@ -134,6 +86,7 @@ enums = {
         ]
     },
     'DataMarkerEventLevelPolarity': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_ACTIVE_HIGH',
@@ -146,6 +99,7 @@ enums = {
         ]
     },
     'DataProcessingMode': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_OSP_REAL',
@@ -158,6 +112,7 @@ enums = {
         ]
     },
     'DoneEventActiveLevel': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_ACTIVE_HIGH',
@@ -170,6 +125,7 @@ enums = {
         ]
     },
     'DoneEventDelayUnits': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_SAMPLE_CLOCK_PERIODS',
@@ -182,6 +138,7 @@ enums = {
         ]
     },
     'DoneEventOutputBehavior': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_PULSE',
@@ -194,6 +151,7 @@ enums = {
         ]
     },
     'DoneEventPulsePolarity': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_ACTIVE_HIGH',
@@ -206,6 +164,7 @@ enums = {
         ]
     },
     'DoneEventPulseWidthUnits': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_SAMPLE_CLOCK_PERIODS',
@@ -218,6 +177,7 @@ enums = {
         ]
     },
     'FilterType': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_OSP_FLAT',
@@ -241,31 +201,8 @@ enums = {
             }
         ]
     },
-    'FrequencyListHandle': {
-        'values': [
-            {
-                'name': 'NIFGEN_VAL_FIRST_FREQ_LIST_HANDLE',
-                'value': 200000
-            },
-            {
-                'name': 'NIFGEN_VAL_LAST_FREQ_LIST_HANDLE',
-                'value': 209999
-            },
-            {
-                'name': 'NIFGEN_VAL_NO_FREQ_LIST',
-                'value': -1
-            }
-        ]
-    },
-    'FrequencyListOptions': {
-        'values': [
-            {
-                'name': 'NIFGEN_VAL_ALL_FLISTS',
-                'value': -1
-            }
-        ]
-    },
     'HardwareState': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_IDLE',
@@ -290,6 +227,7 @@ enums = {
         ]
     },
     'IdleBehavior': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_HOLD_LAST_VALUE',
@@ -301,15 +239,8 @@ enums = {
             }
         ]
     },
-    'LoadImpedance': {
-        'values': [
-            {
-                'name': 'NIFGEN_VAL_MATCHED_LOAD_IMPEDANCE',
-                'value': -1
-            }
-        ]
-    },
     'MarkerEventDelayUnits': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_SAMPLE_CLOCK_PERIODS',
@@ -322,6 +253,7 @@ enums = {
         ]
     },
     'MarkerEventOutputBehavior': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_PULSE',
@@ -338,6 +270,7 @@ enums = {
         ]
     },
     'MarkerEventPulsePolarity': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_ACTIVE_HIGH',
@@ -350,6 +283,7 @@ enums = {
         ]
     },
     'MarkerEventPulseWidthUnits': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_SAMPLE_CLOCK_PERIODS',
@@ -362,6 +296,7 @@ enums = {
         ]
     },
     'MarkerEventToggleInitialState': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_HIGH',
@@ -378,14 +313,6 @@ enums = {
         'generate-mappings': False,
         'values': [
             {
-                'name': 'ADDRESS_TYPE_VAL_ADDR_PHYSICAL',
-                'value': 0
-            },
-            {
-                'name': 'ADDRESS_TYPE_VAL_ADDR_VIRTUAL',
-                'value': 1
-            },
-            {
                 'name': 'ANALOG_PATH_VAL_MAIN_ANALOG_PATH',
                 'value': 0
             },
@@ -400,34 +327,6 @@ enums = {
             {
                 'name': 'ANALOG_PATH_VAL_FIXED_HIGH_GAIN_ANALOG_PATH',
                 'value': 3
-            },
-            {
-                'name': 'ARBITRARY_SEQUENCE_HANDLE_VAL_FIRST_SEQUENCE_HANDLE',
-                'value': 100000
-            },
-            {
-                'name': 'ARBITRARY_SEQUENCE_HANDLE_VAL_LAST_SEQUENCE_HANDLE',
-                'value': 109999
-            },
-            {
-                'name': 'ARBITRARY_SEQUENCE_HANDLE_VAL_NO_SEQUENCE',
-                'value': -1
-            },
-            {
-                'name': 'ARBITRARY_WAVEFORM_HANDLE_VAL_FIRST_WAVEFORM_HANDLE',
-                'value': 10000
-            },
-            {
-                'name': 'ARBITRARY_WAVEFORM_HANDLE_VAL_LAST_WAVEFORM_HANDLE',
-                'value': 10999
-            },
-            {
-                'name': 'ARBITRARY_WAVEFORM_HANDLE_VAL_NO_WAVEFORM',
-                'value': -1
-            },
-            {
-                'name': 'BURST_COUNT_VAL_GENERATE_CONTINUOUS',
-                'value': -1
             },
             {
                 'name': 'BUS_TYPE_VAL_BUS_INVALID',
@@ -546,18 +445,6 @@ enums = {
                 'value': 4
             },
             {
-                'name': 'FREQUENCY_LIST_HANDLE_VAL_FIRST_FREQ_LIST_HANDLE',
-                'value': 200000
-            },
-            {
-                'name': 'FREQUENCY_LIST_HANDLE_VAL_LAST_FREQ_LIST_HANDLE',
-                'value': 209999
-            },
-            {
-                'name': 'FREQUENCY_LIST_HANDLE_VAL_NO_FREQ_LIST',
-                'value': -1
-            },
-            {
                 'name': 'IDLE_BEHAVIOR_VAL_HOLD_LAST_VALUE',
                 'value': 400
             },
@@ -610,6 +497,10 @@ enums = {
                 'value': 102
             },
             {
+                'name': 'OPERATION_MODE_VAL_OPERATE_CONTINUOUS',
+                'value': 0
+            },
+            {
                 'name': 'OSP_MODE_VAL_OSP_IF',
                 'value': 0
             },
@@ -624,66 +515,6 @@ enums = {
             {
                 'name': 'OSP_OVERFLOW_ERROR_REPORTING_VAL_ERROR_REPORTING_DISABLED',
                 'value': 2
-            },
-            {
-                'name': 'OSP_OVERFLOW_STATUS_VAL_OSP_OVERFLOW_NONE',
-                'value': 0
-            },
-            {
-                'name': 'OSP_OVERFLOW_STATUS_VAL_OSP_OVERFLOW_PRE_FILTER_GAIN_I',
-                'value': 1
-            },
-            {
-                'name': 'OSP_OVERFLOW_STATUS_VAL_OSP_OVERFLOW_PRE_FILTER_GAIN_Q',
-                'value': 2
-            },
-            {
-                'name': 'OSP_OVERFLOW_STATUS_VAL_OSP_OVERFLOW_PRE_FILTER_OFFSET_I',
-                'value': 4
-            },
-            {
-                'name': 'OSP_OVERFLOW_STATUS_VAL_OSP_OVERFLOW_PRE_FILTER_OFFSET_Q',
-                'value': 8
-            },
-            {
-                'name': 'OSP_OVERFLOW_STATUS_VAL_OSP_OVERFLOW_FIR_FILTER_I',
-                'value': 16
-            },
-            {
-                'name': 'OSP_OVERFLOW_STATUS_VAL_OSP_OVERFLOW_PFIR_FILTER_I',
-                'value': 16
-            },
-            {
-                'name': 'OSP_OVERFLOW_STATUS_VAL_OSP_OVERFLOW_FIR_FILTER_Q',
-                'value': 32
-            },
-            {
-                'name': 'OSP_OVERFLOW_STATUS_VAL_OSP_OVERFLOW_PFIR_FILTER_Q',
-                'value': 32
-            },
-            {
-                'name': 'OSP_OVERFLOW_STATUS_VAL_OSP_OVERFLOW_CIC_FILTER_I',
-                'value': 64
-            },
-            {
-                'name': 'OSP_OVERFLOW_STATUS_VAL_OSP_OVERFLOW_CIC_FILTER_Q',
-                'value': 128
-            },
-            {
-                'name': 'OSP_OVERFLOW_STATUS_VAL_OSP_OVERFLOW_COMPLEX_DATA',
-                'value': 256
-            },
-            {
-                'name': 'OSP_OVERFLOW_STATUS_VAL_OSP_OVERFLOW_CFIR_FILTER_I',
-                'value': 512
-            },
-            {
-                'name': 'OSP_OVERFLOW_STATUS_VAL_OSP_OVERFLOW_CFIR_FILTER_Q',
-                'value': 1024
-            },
-            {
-                'name': 'OSP_OVERFLOW_STATUS_VAL_OSP_OVERFLOW_EQUALIZER',
-                'value': 2048
             },
             {
                 'name': 'OUTPUT_MODE_VAL_OUTPUT_FUNC',
@@ -704,6 +535,14 @@ enums = {
             {
                 'name': 'OUTPUT_MODE_VAL_OUTPUT_SCRIPT',
                 'value': 102
+            },
+            {
+                'name': 'P2_P_ADDRESS_TYPE_VAL_ADDR_PHYSICAL',
+                'value': 0
+            },
+            {
+                'name': 'P2_P_ADDRESS_TYPE_VAL_ADDR_VIRTUAL',
+                'value': 1
             },
             {
                 'name': 'READY_FOR_START_EVENT_ACTIVE_LEVEL_VAL_ACTIVE_HIGH',
@@ -990,6 +829,86 @@ enums = {
                 'value': 1018
             },
             {
+                'name': 'UPDATE_CLOCK_SOURCE_VAL_INTERNAL',
+                'value': 0
+            },
+            {
+                'name': 'UPDATE_CLOCK_SOURCE_VAL_EXTERNAL',
+                'value': 1
+            },
+            {
+                'name': 'UPDATE_CLOCK_SOURCE_VAL_TTL1',
+                'value': 112
+            },
+            {
+                'name': 'UPDATE_CLOCK_SOURCE_VAL_TTL2',
+                'value': 113
+            },
+            {
+                'name': 'UPDATE_CLOCK_SOURCE_VAL_TTL3',
+                'value': 114
+            },
+            {
+                'name': 'UPDATE_CLOCK_SOURCE_VAL_TTL4',
+                'value': 115
+            },
+            {
+                'name': 'UPDATE_CLOCK_SOURCE_VAL_TTL5',
+                'value': 116
+            },
+            {
+                'name': 'UPDATE_CLOCK_SOURCE_VAL_TTL6',
+                'value': 117
+            },
+            {
+                'name': 'UPDATE_CLOCK_SOURCE_VAL_PXI_STAR',
+                'value': 131
+            },
+            {
+                'name': 'UPDATE_CLOCK_SOURCE_VAL_RTSI_0',
+                'value': 141
+            },
+            {
+                'name': 'UPDATE_CLOCK_SOURCE_VAL_RTSI_1',
+                'value': 142
+            },
+            {
+                'name': 'UPDATE_CLOCK_SOURCE_VAL_RTSI_2',
+                'value': 143
+            },
+            {
+                'name': 'UPDATE_CLOCK_SOURCE_VAL_RTSI_3',
+                'value': 144
+            },
+            {
+                'name': 'UPDATE_CLOCK_SOURCE_VAL_RTSI_4',
+                'value': 145
+            },
+            {
+                'name': 'UPDATE_CLOCK_SOURCE_VAL_RTSI_5',
+                'value': 146
+            },
+            {
+                'name': 'UPDATE_CLOCK_SOURCE_VAL_RTSI_6',
+                'value': 147
+            },
+            {
+                'name': 'UPDATE_CLOCK_SOURCE_VAL_RTSI_7',
+                'value': 1010
+            },
+            {
+                'name': 'UPDATE_CLOCK_SOURCE_VAL_OTHER_TERMINAL',
+                'value': 1018
+            },
+            {
+                'name': 'UPDATE_CLOCK_SOURCE_VAL_CLK_IN',
+                'value': 1202
+            },
+            {
+                'name': 'UPDATE_CLOCK_SOURCE_VAL_DDC_CLK_IN',
+                'value': 1203
+            },
+            {
                 'name': 'VIDEO_WAVEFORM_TYPE_VAL_PAL_B',
                 'value': 0
             },
@@ -1063,29 +982,99 @@ enums = {
             }
         ]
     },
-    'NiFgenReal64AttributeValues': {
-        'enum-value-prefix': 'NIFGEN_REAL64',
-        'generate-mappings': False,
+    'NiFgenStringAttributeValuesMapped': {
+        'enum-value-prefix': 'NIFGEN_STRING',
+        'generate-mappings': True,
         'values': [
             {
-                'name': 'LOAD_IMPEDANCE_VAL_MATCHED_LOAD_IMPEDANCE',
-                'value': -1
+                'name': 'REFERENCE_CLOCK_SOURCE_CLOCK_IN',
+                'value': 'ClkIn'
             },
             {
-                'name': 'OUTPUT_IMPEDANCE_VAL_50_OHMS',
-                'value': 50
+                'name': 'REFERENCE_CLOCK_SOURCE_NONE',
+                'value': 'None'
             },
             {
-                'name': 'OUTPUT_IMPEDANCE_VAL_75_OHMS',
-                'value': 75
+                'name': 'REFERENCE_CLOCK_SOURCE_ONBOARD_REFERENCE_CLOCK',
+                'value': 'OnboardRefClk'
             },
             {
-                'name': 'SAMPLE_RATE_VAL_EXTERNAL_SAMPLE_RATE',
-                'value': -1
+                'name': 'REFERENCE_CLOCK_SOURCE_PXI_CLOCK',
+                'value': 'PXI_Clk'
+            },
+            {
+                'name': 'REFERENCE_CLOCK_SOURCE_RTSI_7',
+                'value': 'RTSI7'
+            },
+            {
+                'name': 'SAMPLE_CLOCK_SOURCE_VAL_CLOCK_IN',
+                'value': 'ClkIn'
+            },
+            {
+                'name': 'SAMPLE_CLOCK_SOURCE_VAL_DDC_CLOCK_IN',
+                'value': 'DDC_ClkIn'
+            },
+            {
+                'name': 'SAMPLE_CLOCK_SOURCE_VAL_ONBOARD_CLOCK',
+                'value': 'OnboardClock'
+            },
+            {
+                'name': 'SAMPLE_CLOCK_SOURCE_VAL_PXI_STAR_LINE',
+                'value': 'PXI_Star'
+            },
+            {
+                'name': 'SAMPLE_CLOCK_SOURCE_VAL_PXI_TRIGGER_LINE_0_RTSI_0',
+                'value': 'PXI_Trig0'
+            },
+            {
+                'name': 'SAMPLE_CLOCK_SOURCE_VAL_PXI_TRIGGER_LINE_1_RTSI_1',
+                'value': 'PXI_Trig1'
+            },
+            {
+                'name': 'SAMPLE_CLOCK_SOURCE_VAL_PXI_TRIGGER_LINE_2_RTSI_2',
+                'value': 'PXI_Trig2'
+            },
+            {
+                'name': 'SAMPLE_CLOCK_SOURCE_VAL_PXI_TRIGGER_LINE_3_RTSI_3',
+                'value': 'PXI_Trig3'
+            },
+            {
+                'name': 'SAMPLE_CLOCK_SOURCE_VAL_PXI_TRIGGER_LINE_4_RTSI_4',
+                'value': 'PXI_Trig4'
+            },
+            {
+                'name': 'SAMPLE_CLOCK_SOURCE_VAL_PXI_TRIGGER_LINE_5_RTSI_5',
+                'value': 'PXI_Trig5'
+            },
+            {
+                'name': 'SAMPLE_CLOCK_SOURCE_VAL_PXI_TRIGGER_LINE_6_RTSI_6',
+                'value': 'PXI_Trig6'
+            },
+            {
+                'name': 'SAMPLE_CLOCK_SOURCE_VAL_PXI_TRIGGER_LINE_7_RTSI_7',
+                'value': 'PXI_Trig7'
+            },
+            {
+                'name': 'SAMPLE_CLOCK_TIMEBASE_SOURCE_VAL_CLOCK_IN',
+                'value': 'ClkIn'
+            },
+            {
+                'name': 'SAMPLE_CLOCK_TIMEBASE_SOURCE_VAL_ONBOARD_CLOCK',
+                'value': 'OnboardClock'
+            }
+        ]
+    },
+    'OperationMode': {
+        'codegen_method': 'public',
+        'values': [
+            {
+                'name': 'NIFGEN_VAL_OPERATE_CONTINUOUS',
+                'value': 0
             }
         ]
     },
     'OspMode': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_OSP_IF',
@@ -1098,6 +1087,7 @@ enums = {
         ]
     },
     'OspOverflowErrorReporting': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_ERROR_REPORTING_ERROR',
@@ -1109,83 +1099,8 @@ enums = {
             }
         ]
     },
-    'OspOverflowStatus': {
-        'values': [
-            {
-                'name': 'NIFGEN_VAL_OSP_OVERFLOW_NONE',
-                'value': 0
-            },
-            {
-                'name': 'NIFGEN_VAL_OSP_OVERFLOW_PRE_FILTER_GAIN_I',
-                'value': 1
-            },
-            {
-                'name': 'NIFGEN_VAL_OSP_OVERFLOW_PRE_FILTER_GAIN_Q',
-                'value': 2
-            },
-            {
-                'name': 'NIFGEN_VAL_OSP_OVERFLOW_PRE_FILTER_OFFSET_I',
-                'value': 4
-            },
-            {
-                'name': 'NIFGEN_VAL_OSP_OVERFLOW_PRE_FILTER_OFFSET_Q',
-                'value': 8
-            },
-            {
-                'name': 'NIFGEN_VAL_OSP_OVERFLOW_FIR_FILTER_I',
-                'value': 16
-            },
-            {
-                'name': 'NIFGEN_VAL_OSP_OVERFLOW_PFIR_FILTER_I',
-                'value': 16
-            },
-            {
-                'name': 'NIFGEN_VAL_OSP_OVERFLOW_FIR_FILTER_Q',
-                'value': 32
-            },
-            {
-                'name': 'NIFGEN_VAL_OSP_OVERFLOW_PFIR_FILTER_Q',
-                'value': 32
-            },
-            {
-                'name': 'NIFGEN_VAL_OSP_OVERFLOW_CIC_FILTER_I',
-                'value': 64
-            },
-            {
-                'name': 'NIFGEN_VAL_OSP_OVERFLOW_CIC_FILTER_Q',
-                'value': 128
-            },
-            {
-                'name': 'NIFGEN_VAL_OSP_OVERFLOW_COMPLEX_DATA',
-                'value': 256
-            },
-            {
-                'name': 'NIFGEN_VAL_OSP_OVERFLOW_CFIR_FILTER_I',
-                'value': 512
-            },
-            {
-                'name': 'NIFGEN_VAL_OSP_OVERFLOW_CFIR_FILTER_Q',
-                'value': 1024
-            },
-            {
-                'name': 'NIFGEN_VAL_OSP_OVERFLOW_EQUALIZER',
-                'value': 2048
-            }
-        ]
-    },
-    'OutputImpedance': {
-        'values': [
-            {
-                'name': 'NIFGEN_VAL_50_OHMS',
-                'value': 50
-            },
-            {
-                'name': 'NIFGEN_VAL_75_OHMS',
-                'value': 75
-            }
-        ]
-    },
     'OutputMode': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_OUTPUT_FUNC',
@@ -1209,7 +1124,21 @@ enums = {
             }
         ]
     },
+    'P2PAddressType': {
+        'codegen_method': 'public',
+        'values': [
+            {
+                'name': 'NIFGEN_VAL_ADDR_PHYSICAL',
+                'value': 0
+            },
+            {
+                'name': 'NIFGEN_VAL_ADDR_VIRTUAL',
+                'value': 1
+            }
+        ]
+    },
     'ReadyForStartEventActiveLevel': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_ACTIVE_HIGH',
@@ -1221,7 +1150,34 @@ enums = {
             }
         ]
     },
+    'ReferenceClockSource': {
+        'codegen_method': 'public',
+        'generate-mappings': True,
+        'values': [
+            {
+                'name': 'CLOCK_IN',
+                'value': 'ClkIn'
+            },
+            {
+                'name': 'NONE',
+                'value': 'None'
+            },
+            {
+                'name': 'ONBOARD_REFERENCE_CLOCK',
+                'value': 'OnboardRefClk'
+            },
+            {
+                'name': 'PXI_CLOCK',
+                'value': 'PXI_Clk'
+            },
+            {
+                'name': 'RTSI_7',
+                'value': 'RTSI7'
+            }
+        ]
+    },
     'RelativeTo': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_WAVEFORM_POSITION_START',
@@ -1233,147 +1189,76 @@ enums = {
             }
         ]
     },
-    'RouteSignalFrom': {
+    'SampleClockSource': {
+        'codegen_method': 'public',
+        'generate-mappings': True,
         'values': [
             {
-                'name': 'NIFGEN_VAL_MARKER',
-                'value': 1001
+                'name': 'NIFGEN_VAL_CLOCK_IN',
+                'value': 'ClkIn'
             },
             {
-                'name': 'NIFGEN_VAL_SYNC_OUT',
-                'value': 1002
+                'name': 'NIFGEN_VAL_DDC_CLOCK_IN',
+                'value': 'DDC_ClkIn'
             },
             {
-                'name': 'NIFGEN_VAL_OUT_START_TRIGGER',
-                'value': 1004
+                'name': 'NIFGEN_VAL_ONBOARD_CLOCK',
+                'value': 'OnboardClock'
             },
             {
-                'name': 'NIFGEN_VAL_BOARD_CLOCK',
-                'value': 1006
+                'name': 'NIFGEN_VAL_PXI_STAR_LINE',
+                'value': 'PXI_Star'
             },
             {
-                'name': 'NIFGEN_VAL_SYNCHRONIZATION',
-                'value': 1007
+                'name': 'NIFGEN_VAL_PXI_TRIGGER_LINE_0_RTSI_0',
+                'value': 'PXI_Trig0'
             },
             {
-                'name': 'NIFGEN_VAL_SOFTWARE_TRIG',
-                'value': 2
+                'name': 'NIFGEN_VAL_PXI_TRIGGER_LINE_1_RTSI_1',
+                'value': 'PXI_Trig1'
             },
             {
-                'name': 'NIFGEN_VAL_REF_OUT',
-                'value': 1008
+                'name': 'NIFGEN_VAL_PXI_TRIGGER_LINE_2_RTSI_2',
+                'value': 'PXI_Trig2'
             },
             {
-                'name': 'NIFGEN_VAL_CLOCK_OUT',
-                'value': 1009
+                'name': 'NIFGEN_VAL_PXI_TRIGGER_LINE_3_RTSI_3',
+                'value': 'PXI_Trig3'
             },
             {
-                'name': 'NIFGEN_VAL_PXI_STAR',
-                'value': 131
+                'name': 'NIFGEN_VAL_PXI_TRIGGER_LINE_4_RTSI_4',
+                'value': 'PXI_Trig4'
             },
             {
-                'name': 'NIFGEN_VAL_PFI_0',
-                'value': 1011
+                'name': 'NIFGEN_VAL_PXI_TRIGGER_LINE_5_RTSI_5',
+                'value': 'PXI_Trig5'
             },
             {
-                'name': 'NIFGEN_VAL_RTSI_0',
-                'value': 141
+                'name': 'NIFGEN_VAL_PXI_TRIGGER_LINE_6_RTSI_6',
+                'value': 'PXI_Trig6'
             },
             {
-                'name': 'NIFGEN_VAL_RTSI_1',
-                'value': 142
-            },
-            {
-                'name': 'NIFGEN_VAL_RTSI_2',
-                'value': 143
-            },
-            {
-                'name': 'NIFGEN_VAL_RTSI_3',
-                'value': 144
-            },
-            {
-                'name': 'NIFGEN_VAL_RTSI_4',
-                'value': 145
-            },
-            {
-                'name': 'NIFGEN_VAL_RTSI_5',
-                'value': 146
-            },
-            {
-                'name': 'NIFGEN_VAL_RTSI_6',
-                'value': 147
-            },
-            {
-                'name': 'NIFGEN_VAL_RTSI_7',
-                'value': 1010
-            },
-            {
-                'name': 'NIFGEN_VAL_ONBOARD_REFERENCE_CLOCK',
-                'value': 1019
+                'name': 'NIFGEN_VAL_PXI_TRIGGER_LINE_7_RTSI_7',
+                'value': 'PXI_Trig7'
             }
         ]
     },
-    'RouteSignalTo': {
+    'SampleClockTimebaseSource': {
+        'codegen_method': 'public',
+        'generate-mappings': True,
         'values': [
             {
-                'name': 'NIFGEN_VAL_RTSI_0',
-                'value': 141
+                'name': 'NIFGEN_VAL_CLOCK_IN',
+                'value': 'ClkIn'
             },
             {
-                'name': 'NIFGEN_VAL_RTSI_1',
-                'value': 142
-            },
-            {
-                'name': 'NIFGEN_VAL_RTSI_2',
-                'value': 143
-            },
-            {
-                'name': 'NIFGEN_VAL_RTSI_3',
-                'value': 144
-            },
-            {
-                'name': 'NIFGEN_VAL_RTSI_4',
-                'value': 145
-            },
-            {
-                'name': 'NIFGEN_VAL_RTSI_5',
-                'value': 146
-            },
-            {
-                'name': 'NIFGEN_VAL_RTSI_6',
-                'value': 147
-            },
-            {
-                'name': 'NIFGEN_VAL_RTSI_7',
-                'value': 1010
-            },
-            {
-                'name': 'NIFGEN_VAL_REF_OUT',
-                'value': 1008
-            },
-            {
-                'name': 'NIFGEN_VAL_PFI_0',
-                'value': 1011
-            },
-            {
-                'name': 'NIFGEN_VAL_PFI_1',
-                'value': 1012
-            },
-            {
-                'name': 'NIFGEN_VAL_PXI_STAR',
-                'value': 131
-            }
-        ]
-    },
-    'SampleRate': {
-        'values': [
-            {
-                'name': 'NIFGEN_VAL_EXTERNAL_SAMPLE_RATE',
-                'value': -1
+                'name': 'NIFGEN_VAL_ONBOARD_CLOCK',
+                'value': 'OnboardClock'
             }
         ]
     },
     'ScriptTriggerDigitalEdgeEdge': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_RISING_EDGE',
@@ -1386,6 +1271,7 @@ enums = {
         ]
     },
     'ScriptTriggerDigitalLevelActiveLevel': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_ACTIVE_HIGH',
@@ -1398,6 +1284,7 @@ enums = {
         ]
     },
     'ScriptTriggerType': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_TRIG_NONE',
@@ -1417,31 +1304,24 @@ enums = {
             }
         ]
     },
-    'SequenceHandle': {
-        'values': [
-            {
-                'name': 'NIFGEN_VAL_ALL_SEQUENCES',
-                'value': -1
-            }
-        ]
-    },
     'Signal': {
+        'codegen_method': 'public',
         'values': [
             {
-                'name': 'NIFGEN_VAL_MARKER_EVENT',
-                'value': 1001
+                'name': 'NIFGEN_VAL_ONBOARD_REFERENCE_CLOCK',
+                'value': 1019
             },
             {
                 'name': 'NIFGEN_VAL_SYNC_OUT',
                 'value': 1002
             },
             {
-                'name': 'NIFGEN_VAL_ONBOARD_REFERENCE_CLOCK',
-                'value': 1019
-            },
-            {
                 'name': 'NIFGEN_VAL_START_TRIGGER',
                 'value': 1004
+            },
+            {
+                'name': 'NIFGEN_VAL_MARKER_EVENT',
+                'value': 1001
             },
             {
                 'name': 'NIFGEN_VAL_SAMPLE_CLOCK_TIMEBASE',
@@ -1482,6 +1362,7 @@ enums = {
         ]
     },
     'StartTriggerDigitalEdgeEdge': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_RISING_EDGE',
@@ -1494,6 +1375,7 @@ enums = {
         ]
     },
     'StartTriggerType': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_TRIG_NONE',
@@ -1514,6 +1396,7 @@ enums = {
         ]
     },
     'StartedEventActiveLevel': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_ACTIVE_HIGH',
@@ -1526,6 +1409,7 @@ enums = {
         ]
     },
     'StartedEventDelayUnits': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_SAMPLE_CLOCK_PERIODS',
@@ -1538,6 +1422,7 @@ enums = {
         ]
     },
     'StartedEventOutputBehavior': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_PULSE',
@@ -1550,6 +1435,7 @@ enums = {
         ]
     },
     'StartedEventPulsePolarity': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_ACTIVE_HIGH',
@@ -1562,6 +1448,7 @@ enums = {
         ]
     },
     'StartedEventPulseWidthUnits': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_SAMPLE_CLOCK_PERIODS',
@@ -1574,6 +1461,7 @@ enums = {
         ]
     },
     'SynchronizationSource': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_TTL0',
@@ -1638,6 +1526,7 @@ enums = {
         ]
     },
     'TerminalConfiguration': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_SINGLE_ENDED',
@@ -1650,6 +1539,7 @@ enums = {
         ]
     },
     'Trigger': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_START_TRIGGER',
@@ -1662,6 +1552,7 @@ enums = {
         ]
     },
     'TriggerMode': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_SINGLE',
@@ -1682,6 +1573,7 @@ enums = {
         ]
     },
     'TriggerSource': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_IMMEDIATE',
@@ -1782,6 +1674,7 @@ enums = {
         ]
     },
     'TriggerWhen': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_ACTIVE_HIGH',
@@ -1793,7 +1686,93 @@ enums = {
             }
         ]
     },
+    'UpdateClockSource': {
+        'codegen_method': 'public',
+        'values': [
+            {
+                'name': 'NIFGEN_VAL_INTERNAL',
+                'value': 0
+            },
+            {
+                'name': 'NIFGEN_VAL_EXTERNAL',
+                'value': 1
+            },
+            {
+                'name': 'NIFGEN_VAL_TTL1',
+                'value': 112
+            },
+            {
+                'name': 'NIFGEN_VAL_TTL2',
+                'value': 113
+            },
+            {
+                'name': 'NIFGEN_VAL_TTL3',
+                'value': 114
+            },
+            {
+                'name': 'NIFGEN_VAL_TTL4',
+                'value': 115
+            },
+            {
+                'name': 'NIFGEN_VAL_TTL5',
+                'value': 116
+            },
+            {
+                'name': 'NIFGEN_VAL_TTL6',
+                'value': 117
+            },
+            {
+                'name': 'NIFGEN_VAL_PXI_STAR',
+                'value': 131
+            },
+            {
+                'name': 'NIFGEN_VAL_RTSI_0',
+                'value': 141
+            },
+            {
+                'name': 'NIFGEN_VAL_RTSI_1',
+                'value': 142
+            },
+            {
+                'name': 'NIFGEN_VAL_RTSI_2',
+                'value': 143
+            },
+            {
+                'name': 'NIFGEN_VAL_RTSI_3',
+                'value': 144
+            },
+            {
+                'name': 'NIFGEN_VAL_RTSI_4',
+                'value': 145
+            },
+            {
+                'name': 'NIFGEN_VAL_RTSI_5',
+                'value': 146
+            },
+            {
+                'name': 'NIFGEN_VAL_RTSI_6',
+                'value': 147
+            },
+            {
+                'name': 'NIFGEN_VAL_RTSI_7',
+                'value': 1010
+            },
+            {
+                'name': 'NIFGEN_VAL_OTHER_TERMINAL',
+                'value': 1018
+            },
+            {
+                'name': 'NIFGEN_VAL_CLK_IN',
+                'value': 1202
+            },
+            {
+                'name': 'NIFGEN_VAL_DDC_CLK_IN',
+                'value': 1203
+            }
+        ]
+    },
     'VideoWaveformType': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_PAL_B',
@@ -1830,6 +1809,7 @@ enums = {
         ]
     },
     'WaitBehavior': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_HOLD_LAST_VALUE',
@@ -1842,6 +1822,7 @@ enums = {
         ]
     },
     'Waveform': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_WFM_SINE',
@@ -1874,14 +1855,6 @@ enums = {
             {
                 'name': 'NIFGEN_VAL_WFM_USER',
                 'value': 102
-            }
-        ]
-    },
-    'WaveformHandle': {
-        'values': [
-            {
-                'name': 'NIFGEN_VAL_ALL_WAVEFORMS',
-                'value': -1
             }
         ]
     }

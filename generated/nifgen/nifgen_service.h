@@ -87,10 +87,8 @@ public:
   ::grpc::Status CreateAdvancedArbSequence(::grpc::ServerContext* context, const CreateAdvancedArbSequenceRequest* request, CreateAdvancedArbSequenceResponse* response) override;
   ::grpc::Status CreateArbSequence(::grpc::ServerContext* context, const CreateArbSequenceRequest* request, CreateArbSequenceResponse* response) override;
   ::grpc::Status CreateFreqList(::grpc::ServerContext* context, const CreateFreqListRequest* request, CreateFreqListResponse* response) override;
-  ::grpc::Status CreateWaveformComplexF64(::grpc::ServerContext* context, const CreateWaveformComplexF64Request* request, CreateWaveformComplexF64Response* response) override;
   ::grpc::Status CreateWaveformF64(::grpc::ServerContext* context, const CreateWaveformF64Request* request, CreateWaveformF64Response* response) override;
   ::grpc::Status CreateWaveformFromFileF64(::grpc::ServerContext* context, const CreateWaveformFromFileF64Request* request, CreateWaveformFromFileF64Response* response) override;
-  ::grpc::Status CreateWaveformFromFileHWS(::grpc::ServerContext* context, const CreateWaveformFromFileHWSRequest* request, CreateWaveformFromFileHWSResponse* response) override;
   ::grpc::Status CreateWaveformFromFileI16(::grpc::ServerContext* context, const CreateWaveformFromFileI16Request* request, CreateWaveformFromFileI16Response* response) override;
   ::grpc::Status CreateWaveformI16(::grpc::ServerContext* context, const CreateWaveformI16Request* request, CreateWaveformI16Response* response) override;
   ::grpc::Status DefineUserStandardWaveform(::grpc::ServerContext* context, const DefineUserStandardWaveformRequest* request, DefineUserStandardWaveformResponse* response) override;
@@ -129,7 +127,6 @@ public:
   ::grpc::Status GetSelfCalLastDateAndTime(::grpc::ServerContext* context, const GetSelfCalLastDateAndTimeRequest* request, GetSelfCalLastDateAndTimeResponse* response) override;
   ::grpc::Status GetSelfCalLastTemp(::grpc::ServerContext* context, const GetSelfCalLastTempRequest* request, GetSelfCalLastTempResponse* response) override;
   ::grpc::Status GetSelfCalSupported(::grpc::ServerContext* context, const GetSelfCalSupportedRequest* request, GetSelfCalSupportedResponse* response) override;
-  ::grpc::Status GetStreamEndpointHandle(::grpc::ServerContext* context, const GetStreamEndpointHandleRequest* request, GetStreamEndpointHandleResponse* response) override;
   ::grpc::Status ImportAttributeConfigurationBuffer(::grpc::ServerContext* context, const ImportAttributeConfigurationBufferRequest* request, ImportAttributeConfigurationBufferResponse* response) override;
   ::grpc::Status ImportAttributeConfigurationFile(::grpc::ServerContext* context, const ImportAttributeConfigurationFileRequest* request, ImportAttributeConfigurationFileResponse* response) override;
   ::grpc::Status Init(::grpc::ServerContext* context, const InitRequest* request, InitResponse* response) override;
@@ -138,15 +135,12 @@ public:
   ::grpc::Status InitiateGeneration(::grpc::ServerContext* context, const InitiateGenerationRequest* request, InitiateGenerationResponse* response) override;
   ::grpc::Status InvalidateAllAttributes(::grpc::ServerContext* context, const InvalidateAllAttributesRequest* request, InvalidateAllAttributesResponse* response) override;
   ::grpc::Status IsDone(::grpc::ServerContext* context, const IsDoneRequest* request, IsDoneResponse* response) override;
-  ::grpc::Status ManualEnableP2PStream(::grpc::ServerContext* context, const ManualEnableP2PStreamRequest* request, ManualEnableP2PStreamResponse* response) override;
   ::grpc::Status QueryArbSeqCapabilities(::grpc::ServerContext* context, const QueryArbSeqCapabilitiesRequest* request, QueryArbSeqCapabilitiesResponse* response) override;
   ::grpc::Status QueryArbWfmCapabilities(::grpc::ServerContext* context, const QueryArbWfmCapabilitiesRequest* request, QueryArbWfmCapabilitiesResponse* response) override;
   ::grpc::Status QueryFreqListCapabilities(::grpc::ServerContext* context, const QueryFreqListCapabilitiesRequest* request, QueryFreqListCapabilitiesResponse* response) override;
   ::grpc::Status ReadCurrentTemperature(::grpc::ServerContext* context, const ReadCurrentTemperatureRequest* request, ReadCurrentTemperatureResponse* response) override;
   ::grpc::Status Reset(::grpc::ServerContext* context, const ResetRequest* request, ResetResponse* response) override;
-  ::grpc::Status ResetAttribute(::grpc::ServerContext* context, const ResetAttributeRequest* request, ResetAttributeResponse* response) override;
   ::grpc::Status ResetDevice(::grpc::ServerContext* context, const ResetDeviceRequest* request, ResetDeviceResponse* response) override;
-  ::grpc::Status ResetInterchangeCheck(::grpc::ServerContext* context, const ResetInterchangeCheckRequest* request, ResetInterchangeCheckResponse* response) override;
   ::grpc::Status ResetWithDefaults(::grpc::ServerContext* context, const ResetWithDefaultsRequest* request, ResetWithDefaultsResponse* response) override;
   ::grpc::Status RevisionQuery(::grpc::ServerContext* context, const RevisionQueryRequest* request, RevisionQueryResponse* response) override;
   ::grpc::Status RouteSignalOut(::grpc::ServerContext* context, const RouteSignalOutRequest* request, RouteSignalOutResponse* response) override;
@@ -163,19 +157,16 @@ public:
   ::grpc::Status SetWaveformNextWritePosition(::grpc::ServerContext* context, const SetWaveformNextWritePositionRequest* request, SetWaveformNextWritePositionResponse* response) override;
   ::grpc::Status WaitUntilDone(::grpc::ServerContext* context, const WaitUntilDoneRequest* request, WaitUntilDoneResponse* response) override;
   ::grpc::Status WriteBinary16Waveform(::grpc::ServerContext* context, const WriteBinary16WaveformRequest* request, WriteBinary16WaveformResponse* response) override;
-  ::grpc::Status WriteComplexBinary16Waveform(::grpc::ServerContext* context, const WriteComplexBinary16WaveformRequest* request, WriteComplexBinary16WaveformResponse* response) override;
-  ::grpc::Status WriteNamedWaveformComplexF64(::grpc::ServerContext* context, const WriteNamedWaveformComplexF64Request* request, WriteNamedWaveformComplexF64Response* response) override;
-  ::grpc::Status WriteNamedWaveformComplexI16(::grpc::ServerContext* context, const WriteNamedWaveformComplexI16Request* request, WriteNamedWaveformComplexI16Response* response) override;
   ::grpc::Status WriteNamedWaveformF64(::grpc::ServerContext* context, const WriteNamedWaveformF64Request* request, WriteNamedWaveformF64Response* response) override;
   ::grpc::Status WriteNamedWaveformI16(::grpc::ServerContext* context, const WriteNamedWaveformI16Request* request, WriteNamedWaveformI16Response* response) override;
-  ::grpc::Status WriteP2PEndpointI16(::grpc::ServerContext* context, const WriteP2PEndpointI16Request* request, WriteP2PEndpointI16Response* response) override;
   ::grpc::Status WriteScript(::grpc::ServerContext* context, const WriteScriptRequest* request, WriteScriptResponse* response) override;
   ::grpc::Status WriteWaveform(::grpc::ServerContext* context, const WriteWaveformRequest* request, WriteWaveformResponse* response) override;
-  ::grpc::Status WriteWaveformComplexF64(::grpc::ServerContext* context, const WriteWaveformComplexF64Request* request, WriteWaveformComplexF64Response* response) override;
 private:
   NiFgenLibraryInterface* library_;
   ResourceRepositorySharedPtr session_repository_;
   ::grpc::Status ConvertApiErrorStatusForViSession(::grpc::ServerContext* context, int32_t status, ViSession vi);
+  std::map<std::int32_t, std::string> nifgenstringattributevaluesmapped_input_map_ { {1, "ClkIn"},{2, "None"},{3, "OnboardRefClk"},{4, "PXI_Clk"},{5, "RTSI7"},{6, "ClkIn"},{7, "DDC_ClkIn"},{8, "OnboardClock"},{9, "PXI_Star"},{10, "PXI_Trig0"},{11, "PXI_Trig1"},{12, "PXI_Trig2"},{13, "PXI_Trig3"},{14, "PXI_Trig4"},{15, "PXI_Trig5"},{16, "PXI_Trig6"},{17, "PXI_Trig7"},{18, "ClkIn"},{19, "OnboardClock"}, };
+  std::map<std::string, std::int32_t> nifgenstringattributevaluesmapped_output_map_ { {"ClkIn", 1},{"None", 2},{"OnboardRefClk", 3},{"PXI_Clk", 4},{"RTSI7", 5},{"ClkIn", 6},{"DDC_ClkIn", 7},{"OnboardClock", 8},{"PXI_Star", 9},{"PXI_Trig0", 10},{"PXI_Trig1", 11},{"PXI_Trig2", 12},{"PXI_Trig3", 13},{"PXI_Trig4", 14},{"PXI_Trig5", 15},{"PXI_Trig6", 16},{"PXI_Trig7", 17},{"ClkIn", 18},{"OnboardClock", 19}, };
 
   NiFgenFeatureToggles feature_toggles_;
 };
