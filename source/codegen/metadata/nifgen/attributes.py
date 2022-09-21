@@ -53,7 +53,7 @@ attributes = {
     1050203: {
         'codegen_method': 'public',
         'grpc_type': 'sint32',
-        'name': 'NUM_CHANNELS',
+        'name': 'CHANNEL_COUNT',
         'resettable': False,
         'type': 'ViInt32'
     },
