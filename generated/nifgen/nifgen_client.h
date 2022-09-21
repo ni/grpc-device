@@ -33,10 +33,10 @@ CheckAttributeViReal64Response check_attribute_vi_real64(const StubPtr& stub, co
 CheckAttributeViSessionResponse check_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttribute& attribute_id, const nidevice_grpc::Session& attribute_value);
 CheckAttributeViStringResponse check_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttribute& attribute_id, const simple_variant<NiFgenStringAttributeValuesMapped, std::string>& attribute_value);
 ClearArbMemoryResponse clear_arb_memory(const StubPtr& stub, const nidevice_grpc::Session& vi);
-ClearArbSequenceResponse clear_arb_sequence(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& sequence_handle);
-ClearArbWaveformResponse clear_arb_waveform(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& waveform_handle);
+ClearArbSequenceResponse clear_arb_sequence(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<SequenceHandle, pb::int32>& sequence_handle);
+ClearArbWaveformResponse clear_arb_waveform(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<WaveformHandle, pb::int32>& waveform_handle);
 ClearErrorResponse clear_error(const StubPtr& stub, const nidevice_grpc::Session& vi);
-ClearFreqListResponse clear_freq_list(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& frequency_list_handle);
+ClearFreqListResponse clear_freq_list(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<FrequencyListOptions, pb::int32>& frequency_list_handle);
 ClearInterchangeWarningsResponse clear_interchange_warnings(const StubPtr& stub, const nidevice_grpc::Session& vi);
 ClearUserStandardWaveformResponse clear_user_standard_waveform(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name);
 CloseResponse close(const StubPtr& stub, const nidevice_grpc::Session& vi);
@@ -45,7 +45,7 @@ ConfigureAmplitudeResponse configure_amplitude(const StubPtr& stub, const nidevi
 ConfigureArbSequenceResponse configure_arb_sequence(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::int32& sequence_handle, const double& gain, const double& offset);
 ConfigureArbWaveformResponse configure_arb_waveform(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::int32& waveform_handle, const double& gain, const double& offset);
 ConfigureChannelsResponse configure_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channels);
-ConfigureClockModeResponse configure_clock_mode(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& clock_mode);
+ConfigureClockModeResponse configure_clock_mode(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<ClockMode, pb::int32>& clock_mode);
 ConfigureCustomFIRFilterCoefficientsResponse configure_custom_fir_filter_coefficients(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const std::vector<double>& coefficients_array);
 ConfigureDigitalEdgeScriptTriggerResponse configure_digital_edge_script_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& trigger_id, const pb::string& source, const pb::int32& edge);
 ConfigureDigitalEdgeStartTriggerResponse configure_digital_edge_start_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& source, const pb::int32& edge);
@@ -55,7 +55,7 @@ ConfigureFrequencyResponse configure_frequency(const StubPtr& stub, const nidevi
 ConfigureOperationModeResponse configure_operation_mode(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::int32& operation_mode);
 ConfigureOutputEnabledResponse configure_output_enabled(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const bool& enabled);
 ConfigureOutputImpedanceResponse configure_output_impedance(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& impedance);
-ConfigureOutputModeResponse configure_output_mode(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& output_mode);
+ConfigureOutputModeResponse configure_output_mode(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<OutputMode, pb::int32>& output_mode);
 ConfigureP2PEndpointFullnessStartTriggerResponse configure_p2p_endpoint_fullness_start_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& p2p_endpoint_fullness_level);
 ConfigureReferenceClockResponse configure_reference_clock(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& reference_clock_source, const double& reference_clock_frequency);
 ConfigureSampleClockSourceResponse configure_sample_clock_source(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& sample_clock_source);
@@ -64,7 +64,7 @@ ConfigureSoftwareEdgeScriptTriggerResponse configure_software_edge_script_trigge
 ConfigureSoftwareEdgeStartTriggerResponse configure_software_edge_start_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi);
 ConfigureStandardWaveformResponse configure_standard_waveform(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const simple_variant<Waveform, pb::int32>& waveform, const double& amplitude, const double& dc_offset, const double& frequency, const double& start_phase);
 ConfigureSynchronizationResponse configure_synchronization(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::int32& synchronization_source);
-ConfigureTriggerModeResponse configure_trigger_mode(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::int32& trigger_mode);
+ConfigureTriggerModeResponse configure_trigger_mode(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const simple_variant<TriggerMode, pb::int32>& trigger_mode);
 CreateAdvancedArbSequenceResponse create_advanced_arb_sequence(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::vector<pb::int32>& waveform_handles_array, const std::vector<pb::int32>& loop_counts_array, const std::vector<pb::int32>& sample_counts_array, const std::vector<pb::int32>& marker_location_array);
 CreateArbSequenceResponse create_arb_sequence(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::vector<pb::int32>& waveform_handles_array, const std::vector<pb::int32>& loop_counts_array);
 CreateFreqListResponse create_freq_list(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<Waveform, pb::int32>& waveform, const std::vector<double>& frequency_array, const std::vector<double>& duration_array);
@@ -129,7 +129,7 @@ ResetDeviceResponse reset_device(const StubPtr& stub, const nidevice_grpc::Sessi
 ResetInterchangeCheckResponse reset_interchange_check(const StubPtr& stub, const nidevice_grpc::Session& vi);
 ResetWithDefaultsResponse reset_with_defaults(const StubPtr& stub, const nidevice_grpc::Session& vi);
 RevisionQueryResponse revision_query(const StubPtr& stub, const nidevice_grpc::Session& vi);
-RouteSignalOutResponse route_signal_out(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::int32& route_signal_from, const pb::int32& route_signal_to);
+RouteSignalOutResponse route_signal_out(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const simple_variant<RouteSignalFrom, pb::int32>& route_signal_from, const simple_variant<RouteSignalTo, pb::int32>& route_signal_to);
 SelfCalResponse self_cal(const StubPtr& stub, const nidevice_grpc::Session& vi);
 SelfTestResponse self_test(const StubPtr& stub, const nidevice_grpc::Session& vi);
 SendSoftwareEdgeTriggerResponse send_software_edge_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<Trigger, pb::int32>& trigger, const pb::string& trigger_id);

@@ -335,6 +335,7 @@ functions = {
             {
                 'cppName': 'sequenceHandle',
                 'direction': 'in',
+                'enum': 'SequenceHandle',
                 'grpc_type': 'sint32',
                 'name': 'sequenceHandle',
                 'type': 'ViInt32'
@@ -355,6 +356,7 @@ functions = {
             {
                 'cppName': 'waveformHandle',
                 'direction': 'in',
+                'enum': 'WaveformHandle',
                 'grpc_type': 'sint32',
                 'name': 'waveformHandle',
                 'type': 'ViInt32'
@@ -388,6 +390,7 @@ functions = {
             {
                 'cppName': 'frequencyListHandle',
                 'direction': 'in',
+                'enum': 'FrequencyListOptions',
                 'grpc_type': 'sint32',
                 'name': 'frequencyListHandle',
                 'type': 'ViInt32'
@@ -597,6 +600,7 @@ functions = {
             {
                 'cppName': 'clockMode',
                 'direction': 'in',
+                'enum': 'ClockMode',
                 'grpc_type': 'sint32',
                 'name': 'clockMode',
                 'type': 'ViInt32'
@@ -913,6 +917,7 @@ functions = {
             {
                 'cppName': 'outputMode',
                 'direction': 'in',
+                'enum': 'OutputMode',
                 'grpc_type': 'sint32',
                 'name': 'outputMode',
                 'type': 'ViInt32'
@@ -1143,6 +1148,7 @@ functions = {
             {
                 'cppName': 'triggerMode',
                 'direction': 'in',
+                'enum': 'TriggerMode',
                 'grpc_type': 'sint32',
                 'name': 'triggerMode',
                 'type': 'ViInt32'
@@ -3266,6 +3272,7 @@ functions = {
             {
                 'cppName': 'routeSignalFrom',
                 'direction': 'in',
+                'enum': 'RouteSignalFrom',
                 'grpc_type': 'sint32',
                 'name': 'routeSignalFrom',
                 'type': 'ViInt32'
@@ -3273,6 +3280,7 @@ functions = {
             {
                 'cppName': 'routeSignalTo',
                 'direction': 'in',
+                'enum': 'RouteSignalTo',
                 'grpc_type': 'sint32',
                 'name': 'routeSignalTo',
                 'type': 'ViInt32'

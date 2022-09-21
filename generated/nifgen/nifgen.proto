@@ -374,6 +374,17 @@ enum ByteOrder {
   BYTE_ORDER_NIFGEN_VAL_BIG_ENDIAN = 1;
 }
 
+enum ClockMode {
+  CLOCK_MODE_NIFGEN_VAL_HIGH_RESOLUTION = 0;
+  CLOCK_MODE_NIFGEN_VAL_DIVIDE_DOWN = 1;
+  CLOCK_MODE_NIFGEN_VAL_AUTOMATIC = 2;
+}
+
+enum FrequencyListOptions {
+  FREQUENCY_LIST_OPTIONS_UNSPECIFIED = 0;
+  FREQUENCY_LIST_OPTIONS_NIFGEN_VAL_ALL_FLISTS = -1;
+}
+
 enum HardwareState {
   HARDWARE_STATE_NIFGEN_VAL_IDLE = 0;
   HARDWARE_STATE_NIFGEN_VAL_WAITING_FOR_START_TRIGGER = 100;
@@ -609,9 +620,61 @@ enum NiFgenStringAttributeValuesMapped {
   NIFGEN_STRING_SAMPLE_CLOCK_TIMEBASE_SOURCE_VAL_ONBOARD_CLOCK = 19;
 }
 
+enum OutputMode {
+  OUTPUT_MODE_NIFGEN_VAL_OUTPUT_FUNC = 0;
+  OUTPUT_MODE_NIFGEN_VAL_OUTPUT_ARB = 1;
+  OUTPUT_MODE_NIFGEN_VAL_OUTPUT_SEQ = 2;
+  OUTPUT_MODE_NIFGEN_VAL_OUTPUT_FREQ_LIST = 101;
+  OUTPUT_MODE_NIFGEN_VAL_OUTPUT_SCRIPT = 102;
+}
+
 enum RelativeTo {
   RELATIVE_TO_NIFGEN_VAL_WAVEFORM_POSITION_START = 0;
   RELATIVE_TO_NIFGEN_VAL_WAVEFORM_POSITION_CURRENT = 1;
+}
+
+enum RouteSignalFrom {
+  ROUTE_SIGNAL_FROM_UNSPECIFIED = 0;
+  ROUTE_SIGNAL_FROM_NIFGEN_VAL_MARKER = 1001;
+  ROUTE_SIGNAL_FROM_NIFGEN_VAL_SYNC_OUT = 1002;
+  ROUTE_SIGNAL_FROM_NIFGEN_VAL_OUT_START_TRIGGER = 1004;
+  ROUTE_SIGNAL_FROM_NIFGEN_VAL_BOARD_CLOCK = 1006;
+  ROUTE_SIGNAL_FROM_NIFGEN_VAL_SYNCHRONIZATION = 1007;
+  ROUTE_SIGNAL_FROM_NIFGEN_VAL_SOFTWARE_TRIG = 2;
+  ROUTE_SIGNAL_FROM_NIFGEN_VAL_REF_OUT = 1008;
+  ROUTE_SIGNAL_FROM_NIFGEN_VAL_CLOCK_OUT = 1009;
+  ROUTE_SIGNAL_FROM_NIFGEN_VAL_PXI_STAR = 131;
+  ROUTE_SIGNAL_FROM_NIFGEN_VAL_PFI_0 = 1011;
+  ROUTE_SIGNAL_FROM_NIFGEN_VAL_RTSI_0 = 141;
+  ROUTE_SIGNAL_FROM_NIFGEN_VAL_RTSI_1 = 142;
+  ROUTE_SIGNAL_FROM_NIFGEN_VAL_RTSI_2 = 143;
+  ROUTE_SIGNAL_FROM_NIFGEN_VAL_RTSI_3 = 144;
+  ROUTE_SIGNAL_FROM_NIFGEN_VAL_RTSI_4 = 145;
+  ROUTE_SIGNAL_FROM_NIFGEN_VAL_RTSI_5 = 146;
+  ROUTE_SIGNAL_FROM_NIFGEN_VAL_RTSI_6 = 147;
+  ROUTE_SIGNAL_FROM_NIFGEN_VAL_ONBOARD_REFERENCE_CLOCK = 1019;
+  ROUTE_SIGNAL_FROM_NIFGEN_VAL_RTSI_7 = 1010;
+}
+
+enum RouteSignalTo {
+  ROUTE_SIGNAL_TO_UNSPECIFIED = 0;
+  ROUTE_SIGNAL_TO_NIFGEN_VAL_RTSI_0 = 141;
+  ROUTE_SIGNAL_TO_NIFGEN_VAL_RTSI_1 = 142;
+  ROUTE_SIGNAL_TO_NIFGEN_VAL_RTSI_2 = 143;
+  ROUTE_SIGNAL_TO_NIFGEN_VAL_RTSI_3 = 144;
+  ROUTE_SIGNAL_TO_NIFGEN_VAL_RTSI_4 = 145;
+  ROUTE_SIGNAL_TO_NIFGEN_VAL_RTSI_5 = 146;
+  ROUTE_SIGNAL_TO_NIFGEN_VAL_RTSI_6 = 147;
+  ROUTE_SIGNAL_TO_NIFGEN_VAL_RTSI_7 = 1010;
+  ROUTE_SIGNAL_TO_NIFGEN_VAL_REF_OUT = 1008;
+  ROUTE_SIGNAL_TO_NIFGEN_VAL_PFI_0 = 1011;
+  ROUTE_SIGNAL_TO_NIFGEN_VAL_PFI_1 = 1012;
+  ROUTE_SIGNAL_TO_NIFGEN_VAL_PXI_STAR = 131;
+}
+
+enum SequenceHandle {
+  SEQUENCE_HANDLE_UNSPECIFIED = 0;
+  SEQUENCE_HANDLE_NIFGEN_VAL_ALL_SEQUENCES = -1;
 }
 
 enum Signal {
@@ -637,6 +700,14 @@ enum Trigger {
   TRIGGER_NIFGEN_VAL_SCRIPT_TRIGGER = 103;
 }
 
+enum TriggerMode {
+  TRIGGER_MODE_UNSPECIFIED = 0;
+  TRIGGER_MODE_NIFGEN_VAL_SINGLE = 1;
+  TRIGGER_MODE_NIFGEN_VAL_CONTINUOUS = 2;
+  TRIGGER_MODE_NIFGEN_VAL_STEPPED = 3;
+  TRIGGER_MODE_NIFGEN_VAL_BURST = 4;
+}
+
 enum TriggerWhen {
   TRIGGER_WHEN_UNSPECIFIED = 0;
   TRIGGER_WHEN_NIFGEN_VAL_ACTIVE_HIGH = 101;
@@ -653,6 +724,11 @@ enum Waveform {
   WAVEFORM_NIFGEN_VAL_WFM_DC = 6;
   WAVEFORM_NIFGEN_VAL_WFM_NOISE = 101;
   WAVEFORM_NIFGEN_VAL_WFM_USER = 102;
+}
+
+enum WaveformHandle {
+  WAVEFORM_HANDLE_UNSPECIFIED = 0;
+  WAVEFORM_HANDLE_NIFGEN_VAL_ALL_WAVEFORMS = -1;
 }
 
 message AbortGenerationRequest {
@@ -779,7 +855,10 @@ message ClearArbMemoryResponse {
 
 message ClearArbSequenceRequest {
   nidevice_grpc.Session vi = 1;
-  sint32 sequence_handle = 2;
+  oneof sequence_handle_enum {
+    SequenceHandle sequence_handle = 2;
+    sint32 sequence_handle_raw = 3;
+  }
 }
 
 message ClearArbSequenceResponse {
@@ -788,7 +867,10 @@ message ClearArbSequenceResponse {
 
 message ClearArbWaveformRequest {
   nidevice_grpc.Session vi = 1;
-  sint32 waveform_handle = 2;
+  oneof waveform_handle_enum {
+    WaveformHandle waveform_handle = 2;
+    sint32 waveform_handle_raw = 3;
+  }
 }
 
 message ClearArbWaveformResponse {
@@ -805,7 +887,10 @@ message ClearErrorResponse {
 
 message ClearFreqListRequest {
   nidevice_grpc.Session vi = 1;
-  sint32 frequency_list_handle = 2;
+  oneof frequency_list_handle_enum {
+    FrequencyListOptions frequency_list_handle = 2;
+    sint32 frequency_list_handle_raw = 3;
+  }
 }
 
 message ClearFreqListResponse {
@@ -890,7 +975,10 @@ message ConfigureChannelsResponse {
 
 message ConfigureClockModeRequest {
   nidevice_grpc.Session vi = 1;
-  sint32 clock_mode = 2;
+  oneof clock_mode_enum {
+    ClockMode clock_mode = 2;
+    sint32 clock_mode_raw = 3;
+  }
 }
 
 message ConfigureClockModeResponse {
@@ -997,7 +1085,10 @@ message ConfigureOutputImpedanceResponse {
 
 message ConfigureOutputModeRequest {
   nidevice_grpc.Session vi = 1;
-  sint32 output_mode = 2;
+  oneof output_mode_enum {
+    OutputMode output_mode = 2;
+    sint32 output_mode_raw = 3;
+  }
 }
 
 message ConfigureOutputModeResponse {
@@ -1088,7 +1179,10 @@ message ConfigureSynchronizationResponse {
 message ConfigureTriggerModeRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  sint32 trigger_mode = 3;
+  oneof trigger_mode_enum {
+    TriggerMode trigger_mode = 3;
+    sint32 trigger_mode_raw = 4;
+  }
 }
 
 message ConfigureTriggerModeResponse {
@@ -1764,8 +1858,14 @@ message RevisionQueryResponse {
 message RouteSignalOutRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  sint32 route_signal_from = 3;
-  sint32 route_signal_to = 4;
+  oneof route_signal_from_enum {
+    RouteSignalFrom route_signal_from = 3;
+    sint32 route_signal_from_raw = 4;
+  }
+  oneof route_signal_to_enum {
+    RouteSignalTo route_signal_to = 5;
+    sint32 route_signal_to_raw = 6;
+  }
 }
 
 message RouteSignalOutResponse {

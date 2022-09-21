@@ -372,7 +372,22 @@ namespace nifgen_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViInt32 sequence_handle = request->sequence_handle();
+      ViInt32 sequence_handle;
+      switch (request->sequence_handle_enum_case()) {
+        case nifgen_grpc::ClearArbSequenceRequest::SequenceHandleEnumCase::kSequenceHandle: {
+          sequence_handle = static_cast<ViInt32>(request->sequence_handle());
+          break;
+        }
+        case nifgen_grpc::ClearArbSequenceRequest::SequenceHandleEnumCase::kSequenceHandleRaw: {
+          sequence_handle = static_cast<ViInt32>(request->sequence_handle_raw());
+          break;
+        }
+        case nifgen_grpc::ClearArbSequenceRequest::SequenceHandleEnumCase::SEQUENCE_HANDLE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for sequence_handle was not specified or out of range");
+          break;
+        }
+      }
+
       auto status = library_->ClearArbSequence(vi, sequence_handle);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -395,7 +410,22 @@ namespace nifgen_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViInt32 waveform_handle = request->waveform_handle();
+      ViInt32 waveform_handle;
+      switch (request->waveform_handle_enum_case()) {
+        case nifgen_grpc::ClearArbWaveformRequest::WaveformHandleEnumCase::kWaveformHandle: {
+          waveform_handle = static_cast<ViInt32>(request->waveform_handle());
+          break;
+        }
+        case nifgen_grpc::ClearArbWaveformRequest::WaveformHandleEnumCase::kWaveformHandleRaw: {
+          waveform_handle = static_cast<ViInt32>(request->waveform_handle_raw());
+          break;
+        }
+        case nifgen_grpc::ClearArbWaveformRequest::WaveformHandleEnumCase::WAVEFORM_HANDLE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for waveform_handle was not specified or out of range");
+          break;
+        }
+      }
+
       auto status = library_->ClearArbWaveform(vi, waveform_handle);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -440,7 +470,22 @@ namespace nifgen_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViInt32 frequency_list_handle = request->frequency_list_handle();
+      ViInt32 frequency_list_handle;
+      switch (request->frequency_list_handle_enum_case()) {
+        case nifgen_grpc::ClearFreqListRequest::FrequencyListHandleEnumCase::kFrequencyListHandle: {
+          frequency_list_handle = static_cast<ViInt32>(request->frequency_list_handle());
+          break;
+        }
+        case nifgen_grpc::ClearFreqListRequest::FrequencyListHandleEnumCase::kFrequencyListHandleRaw: {
+          frequency_list_handle = static_cast<ViInt32>(request->frequency_list_handle_raw());
+          break;
+        }
+        case nifgen_grpc::ClearFreqListRequest::FrequencyListHandleEnumCase::FREQUENCY_LIST_HANDLE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for frequency_list_handle was not specified or out of range");
+          break;
+        }
+      }
+
       auto status = library_->ClearFreqList(vi, frequency_list_handle);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -652,7 +697,22 @@ namespace nifgen_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViInt32 clock_mode = request->clock_mode();
+      ViInt32 clock_mode;
+      switch (request->clock_mode_enum_case()) {
+        case nifgen_grpc::ConfigureClockModeRequest::ClockModeEnumCase::kClockMode: {
+          clock_mode = static_cast<ViInt32>(request->clock_mode());
+          break;
+        }
+        case nifgen_grpc::ConfigureClockModeRequest::ClockModeEnumCase::kClockModeRaw: {
+          clock_mode = static_cast<ViInt32>(request->clock_mode_raw());
+          break;
+        }
+        case nifgen_grpc::ConfigureClockModeRequest::ClockModeEnumCase::CLOCK_MODE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for clock_mode was not specified or out of range");
+          break;
+        }
+      }
+
       auto status = library_->ConfigureClockMode(vi, clock_mode);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -912,7 +972,22 @@ namespace nifgen_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      ViInt32 output_mode = request->output_mode();
+      ViInt32 output_mode;
+      switch (request->output_mode_enum_case()) {
+        case nifgen_grpc::ConfigureOutputModeRequest::OutputModeEnumCase::kOutputMode: {
+          output_mode = static_cast<ViInt32>(request->output_mode());
+          break;
+        }
+        case nifgen_grpc::ConfigureOutputModeRequest::OutputModeEnumCase::kOutputModeRaw: {
+          output_mode = static_cast<ViInt32>(request->output_mode_raw());
+          break;
+        }
+        case nifgen_grpc::ConfigureOutputModeRequest::OutputModeEnumCase::OUTPUT_MODE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for output_mode was not specified or out of range");
+          break;
+        }
+      }
+
       auto status = library_->ConfigureOutputMode(vi, output_mode);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -1141,7 +1216,22 @@ namespace nifgen_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
-      ViInt32 trigger_mode = request->trigger_mode();
+      ViInt32 trigger_mode;
+      switch (request->trigger_mode_enum_case()) {
+        case nifgen_grpc::ConfigureTriggerModeRequest::TriggerModeEnumCase::kTriggerMode: {
+          trigger_mode = static_cast<ViInt32>(request->trigger_mode());
+          break;
+        }
+        case nifgen_grpc::ConfigureTriggerModeRequest::TriggerModeEnumCase::kTriggerModeRaw: {
+          trigger_mode = static_cast<ViInt32>(request->trigger_mode_raw());
+          break;
+        }
+        case nifgen_grpc::ConfigureTriggerModeRequest::TriggerModeEnumCase::TRIGGER_MODE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for trigger_mode was not specified or out of range");
+          break;
+        }
+      }
+
       auto status = library_->ConfigureTriggerMode(vi, channel_name, trigger_mode);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -2983,8 +3073,38 @@ namespace nifgen_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
-      ViInt32 route_signal_from = request->route_signal_from();
-      ViInt32 route_signal_to = request->route_signal_to();
+      ViInt32 route_signal_from;
+      switch (request->route_signal_from_enum_case()) {
+        case nifgen_grpc::RouteSignalOutRequest::RouteSignalFromEnumCase::kRouteSignalFrom: {
+          route_signal_from = static_cast<ViInt32>(request->route_signal_from());
+          break;
+        }
+        case nifgen_grpc::RouteSignalOutRequest::RouteSignalFromEnumCase::kRouteSignalFromRaw: {
+          route_signal_from = static_cast<ViInt32>(request->route_signal_from_raw());
+          break;
+        }
+        case nifgen_grpc::RouteSignalOutRequest::RouteSignalFromEnumCase::ROUTE_SIGNAL_FROM_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for route_signal_from was not specified or out of range");
+          break;
+        }
+      }
+
+      ViInt32 route_signal_to;
+      switch (request->route_signal_to_enum_case()) {
+        case nifgen_grpc::RouteSignalOutRequest::RouteSignalToEnumCase::kRouteSignalTo: {
+          route_signal_to = static_cast<ViInt32>(request->route_signal_to());
+          break;
+        }
+        case nifgen_grpc::RouteSignalOutRequest::RouteSignalToEnumCase::kRouteSignalToRaw: {
+          route_signal_to = static_cast<ViInt32>(request->route_signal_to_raw());
+          break;
+        }
+        case nifgen_grpc::RouteSignalOutRequest::RouteSignalToEnumCase::ROUTE_SIGNAL_TO_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for route_signal_to was not specified or out of range");
+          break;
+        }
+      }
+
       auto status = library_->RouteSignalOut(vi, channel_name, route_signal_from, route_signal_to);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);

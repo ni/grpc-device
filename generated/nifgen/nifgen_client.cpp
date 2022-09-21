@@ -250,13 +250,20 @@ clear_arb_memory(const StubPtr& stub, const nidevice_grpc::Session& vi)
 }
 
 ClearArbSequenceResponse
-clear_arb_sequence(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& sequence_handle)
+clear_arb_sequence(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<SequenceHandle, pb::int32>& sequence_handle)
 {
   ::grpc::ClientContext context;
 
   auto request = ClearArbSequenceRequest{};
   request.mutable_vi()->CopyFrom(vi);
-  request.set_sequence_handle(sequence_handle);
+  const auto sequence_handle_ptr = sequence_handle.get_if<SequenceHandle>();
+  const auto sequence_handle_raw_ptr = sequence_handle.get_if<pb::int32>();
+  if (sequence_handle_ptr) {
+    request.set_sequence_handle(*sequence_handle_ptr);
+  }
+  else if (sequence_handle_raw_ptr) {
+    request.set_sequence_handle_raw(*sequence_handle_raw_ptr);
+  }
 
   auto response = ClearArbSequenceResponse{};
 
@@ -268,13 +275,20 @@ clear_arb_sequence(const StubPtr& stub, const nidevice_grpc::Session& vi, const 
 }
 
 ClearArbWaveformResponse
-clear_arb_waveform(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& waveform_handle)
+clear_arb_waveform(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<WaveformHandle, pb::int32>& waveform_handle)
 {
   ::grpc::ClientContext context;
 
   auto request = ClearArbWaveformRequest{};
   request.mutable_vi()->CopyFrom(vi);
-  request.set_waveform_handle(waveform_handle);
+  const auto waveform_handle_ptr = waveform_handle.get_if<WaveformHandle>();
+  const auto waveform_handle_raw_ptr = waveform_handle.get_if<pb::int32>();
+  if (waveform_handle_ptr) {
+    request.set_waveform_handle(*waveform_handle_ptr);
+  }
+  else if (waveform_handle_raw_ptr) {
+    request.set_waveform_handle_raw(*waveform_handle_raw_ptr);
+  }
 
   auto response = ClearArbWaveformResponse{};
 
@@ -303,13 +317,20 @@ clear_error(const StubPtr& stub, const nidevice_grpc::Session& vi)
 }
 
 ClearFreqListResponse
-clear_freq_list(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& frequency_list_handle)
+clear_freq_list(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<FrequencyListOptions, pb::int32>& frequency_list_handle)
 {
   ::grpc::ClientContext context;
 
   auto request = ClearFreqListRequest{};
   request.mutable_vi()->CopyFrom(vi);
-  request.set_frequency_list_handle(frequency_list_handle);
+  const auto frequency_list_handle_ptr = frequency_list_handle.get_if<FrequencyListOptions>();
+  const auto frequency_list_handle_raw_ptr = frequency_list_handle.get_if<pb::int32>();
+  if (frequency_list_handle_ptr) {
+    request.set_frequency_list_handle(*frequency_list_handle_ptr);
+  }
+  else if (frequency_list_handle_raw_ptr) {
+    request.set_frequency_list_handle_raw(*frequency_list_handle_raw_ptr);
+  }
 
   auto response = ClearFreqListResponse{};
 
@@ -469,13 +490,20 @@ configure_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const 
 }
 
 ConfigureClockModeResponse
-configure_clock_mode(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& clock_mode)
+configure_clock_mode(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<ClockMode, pb::int32>& clock_mode)
 {
   ::grpc::ClientContext context;
 
   auto request = ConfigureClockModeRequest{};
   request.mutable_vi()->CopyFrom(vi);
-  request.set_clock_mode(clock_mode);
+  const auto clock_mode_ptr = clock_mode.get_if<ClockMode>();
+  const auto clock_mode_raw_ptr = clock_mode.get_if<pb::int32>();
+  if (clock_mode_ptr) {
+    request.set_clock_mode(*clock_mode_ptr);
+  }
+  else if (clock_mode_raw_ptr) {
+    request.set_clock_mode_raw(*clock_mode_raw_ptr);
+  }
 
   auto response = ConfigureClockModeResponse{};
 
@@ -670,13 +698,20 @@ configure_output_impedance(const StubPtr& stub, const nidevice_grpc::Session& vi
 }
 
 ConfigureOutputModeResponse
-configure_output_mode(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& output_mode)
+configure_output_mode(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<OutputMode, pb::int32>& output_mode)
 {
   ::grpc::ClientContext context;
 
   auto request = ConfigureOutputModeRequest{};
   request.mutable_vi()->CopyFrom(vi);
-  request.set_output_mode(output_mode);
+  const auto output_mode_ptr = output_mode.get_if<OutputMode>();
+  const auto output_mode_raw_ptr = output_mode.get_if<pb::int32>();
+  if (output_mode_ptr) {
+    request.set_output_mode(*output_mode_ptr);
+  }
+  else if (output_mode_raw_ptr) {
+    request.set_output_mode_raw(*output_mode_raw_ptr);
+  }
 
   auto response = ConfigureOutputModeResponse{};
 
@@ -845,14 +880,21 @@ configure_synchronization(const StubPtr& stub, const nidevice_grpc::Session& vi,
 }
 
 ConfigureTriggerModeResponse
-configure_trigger_mode(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::int32& trigger_mode)
+configure_trigger_mode(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const simple_variant<TriggerMode, pb::int32>& trigger_mode)
 {
   ::grpc::ClientContext context;
 
   auto request = ConfigureTriggerModeRequest{};
   request.mutable_vi()->CopyFrom(vi);
   request.set_channel_name(channel_name);
-  request.set_trigger_mode(trigger_mode);
+  const auto trigger_mode_ptr = trigger_mode.get_if<TriggerMode>();
+  const auto trigger_mode_raw_ptr = trigger_mode.get_if<pb::int32>();
+  if (trigger_mode_ptr) {
+    request.set_trigger_mode(*trigger_mode_ptr);
+  }
+  else if (trigger_mode_raw_ptr) {
+    request.set_trigger_mode_raw(*trigger_mode_raw_ptr);
+  }
 
   auto response = ConfigureTriggerModeResponse{};
 
@@ -2051,15 +2093,29 @@ revision_query(const StubPtr& stub, const nidevice_grpc::Session& vi)
 }
 
 RouteSignalOutResponse
-route_signal_out(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::int32& route_signal_from, const pb::int32& route_signal_to)
+route_signal_out(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const simple_variant<RouteSignalFrom, pb::int32>& route_signal_from, const simple_variant<RouteSignalTo, pb::int32>& route_signal_to)
 {
   ::grpc::ClientContext context;
 
   auto request = RouteSignalOutRequest{};
   request.mutable_vi()->CopyFrom(vi);
   request.set_channel_name(channel_name);
-  request.set_route_signal_from(route_signal_from);
-  request.set_route_signal_to(route_signal_to);
+  const auto route_signal_from_ptr = route_signal_from.get_if<RouteSignalFrom>();
+  const auto route_signal_from_raw_ptr = route_signal_from.get_if<pb::int32>();
+  if (route_signal_from_ptr) {
+    request.set_route_signal_from(*route_signal_from_ptr);
+  }
+  else if (route_signal_from_raw_ptr) {
+    request.set_route_signal_from_raw(*route_signal_from_raw_ptr);
+  }
+  const auto route_signal_to_ptr = route_signal_to.get_if<RouteSignalTo>();
+  const auto route_signal_to_raw_ptr = route_signal_to.get_if<pb::int32>();
+  if (route_signal_to_ptr) {
+    request.set_route_signal_to(*route_signal_to_ptr);
+  }
+  else if (route_signal_to_raw_ptr) {
+    request.set_route_signal_to_raw(*route_signal_to_raw_ptr);
+  }
 
   auto response = RouteSignalOutResponse{};
 
