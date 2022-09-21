@@ -1,5 +1,6 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
+#include <iostream>
 
 #include "device_server.h"
 #include "nimxlcterminaladaptor_restricted/nimxlcterminaladaptor_restricted_client.h"
@@ -65,11 +66,14 @@ nidevice_grpc::Session init_session(const client::StubPtr& stub)
 TEST_F(NiMxLcTerminalAdaptorRestrictedDriverApiTests, RefreshedTerminalCache_GetDeviceContainer_StatusOK)
 {
   const auto session = init_session(stub());
+  std::cout << "session initialized" << std::endl;
   auto refresh_terminal_cache_response = client::refresh_terminal_cache(stub(), session);
+  std::cout << "refresh terminal cache refreshed" << std::endl;
   EXPECT_EQ(0, refresh_terminal_cache_response.status());
   EXPECT_EQ(0, refresh_terminal_cache_response.c_status().code());
   
   auto get_device_container_response = client::get_device_container(stub(), session);
+  std::cout << "get device container called" << std::endl;
 
   EXPECT_EQ(0, get_device_container_response.status());
   EXPECT_EQ(0, get_device_container_response.c_status().code());
