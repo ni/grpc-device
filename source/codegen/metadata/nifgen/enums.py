@@ -680,6 +680,10 @@ enums = {
                 'value': 16
             },
             {
+                'name': 'OSP_OVERFLOW_STATUS_VAL_OSP_OVERFLOW_PFIR_FILTER_Q',
+                'value': 32
+            },
+            {
                 'name': 'OSP_OVERFLOW_STATUS_VAL_OSP_OVERFLOW_FIR_FILTER_Q',
                 'value': 32
             },
@@ -1327,6 +1331,10 @@ enums = {
                 'value': 16
             },
             {
+                'name': 'NIFGEN_VAL_OSP_OVERFLOW_PFIR_FILTER_Q',
+                'value': 32
+            },
+            {
                 'name': 'NIFGEN_VAL_OSP_OVERFLOW_FIR_FILTER_Q',
                 'value': 32
             },
@@ -1518,12 +1526,12 @@ enums = {
                 'value': 147
             },
             {
-                'name': 'NIFGEN_VAL_ONBOARD_REFERENCE_CLOCK',
-                'value': 1019
-            },
-            {
                 'name': 'NIFGEN_VAL_RTSI_7',
                 'value': 1010
+            },
+            {
+                'name': 'NIFGEN_VAL_ONBOARD_REFERENCE_CLOCK',
+                'value': 1019
             }
         ]
     },
