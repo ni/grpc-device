@@ -2658,6 +2658,33 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
+    'GetStreamEndpointHandle': {
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'cppName': 'vi',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.Session',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'cppName': 'streamEndpoint',
+                'direction': 'in',
+                'grpc_type': 'string',
+                'name': 'streamEndpoint',
+                'type': 'ViConstString'
+            },
+            {
+                'cppName': 'readerHandle',
+                'direction': 'out',
+                'grpc_type': 'uint32',
+                'name': 'readerHandle',
+                'type': 'ViUInt32'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
     'ImportAttributeConfigurationBuffer': {
         'codegen_method': 'public',
         'parameters': [
@@ -3112,6 +3139,33 @@ functions = {
                 'grpc_type': 'nidevice_grpc.Session',
                 'name': 'vi',
                 'type': 'ViSession'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'ResetAttribute': {
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'cppName': 'vi',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.Session',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'cppName': 'channelName',
+                'direction': 'in',
+                'grpc_type': 'string',
+                'name': 'channelName',
+                'type': 'ViConstString'
+            },
+            {
+                'cppName': 'attributeId',
+                'direction': 'in',
+                'grpc_type': 'NiFgenAttribute',
+                'name': 'attributeId',
+                'type': 'ViAttr'
             }
         ],
         'returns': 'ViStatus'
@@ -3775,6 +3829,50 @@ functions = {
                 'size': {
                     'mechanism': 'len',
                     'value': 'size'
+                },
+                'type': 'ViInt16[]'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'WriteP2PEndpointI16': {
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'cppName': 'vi',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.Session',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'cppName': 'endpointName',
+                'direction': 'in',
+                'grpc_type': 'string',
+                'name': 'endpointName',
+                'type': 'ViConstString'
+            },
+            {
+                'cppName': 'numberOfSamples',
+                'determine_size_from': [
+                    'endpointData'
+                ],
+                'direction': 'in',
+                'grpc_type': 'sint32',
+                'include_in_proto': False,
+                'is_size_param': True,
+                'linked_params_are_optional': False,
+                'name': 'numberOfSamples',
+                'type': 'ViInt32'
+            },
+            {
+                'cppName': 'endpointData',
+                'direction': 'in',
+                'grpc_type': 'repeated sint32',
+                'name': 'endpointData',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'numberOfSamples'
                 },
                 'type': 'ViInt16[]'
             }

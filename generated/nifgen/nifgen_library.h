@@ -105,6 +105,7 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
   ViStatus GetSelfCalLastDateAndTime(ViSession vi, ViInt32* year, ViInt32* month, ViInt32* day, ViInt32* hour, ViInt32* minute);
   ViStatus GetSelfCalLastTemp(ViSession vi, ViReal64* temperature);
   ViStatus GetSelfCalSupported(ViSession vi, ViBoolean* selfCalSupported);
+  ViStatus GetStreamEndpointHandle(ViSession vi, ViConstString streamEndpoint, ViUInt32* readerHandle);
   ViStatus ImportAttributeConfigurationBuffer(ViSession vi, ViInt32 sizeInBytes, ViInt8 configuration[]);
   ViStatus ImportAttributeConfigurationFile(ViSession vi, ViConstString filePath);
   ViStatus Init(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* vi);
@@ -120,6 +121,7 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
   ViStatus QueryFreqListCapabilities(ViSession vi, ViInt32* maximumNumberOfFreqLists, ViInt32* minimumFrequencyListLength, ViInt32* maximumFrequencyListLength, ViReal64* minimumFrequencyListDuration, ViReal64* maximumFrequencyListDuration, ViReal64* frequencyListDurationQuantum);
   ViStatus ReadCurrentTemperature(ViSession vi, ViReal64* temperature);
   ViStatus Reset(ViSession vi);
+  ViStatus ResetAttribute(ViSession vi, ViConstString channelName, ViAttr attributeId);
   ViStatus ResetDevice(ViSession vi);
   ViStatus ResetInterchangeCheck(ViSession vi);
   ViStatus ResetWithDefaults(ViSession vi);
@@ -141,6 +143,7 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
   ViStatus WriteBinary16Waveform(ViSession vi, ViConstString channelName, ViInt32 waveformHandle, ViInt32 size, ViInt16 data[]);
   ViStatus WriteNamedWaveformF64(ViSession vi, ViConstString channelName, ViConstString waveformName, ViInt32 size, ViReal64 data[]);
   ViStatus WriteNamedWaveformI16(ViSession vi, ViConstString channelName, ViConstString waveformName, ViInt32 size, ViInt16 data[]);
+  ViStatus WriteP2PEndpointI16(ViSession vi, ViConstString endpointName, ViInt32 numberOfSamples, ViInt16 endpointData[]);
   ViStatus WriteScript(ViSession vi, ViConstString channelName, ViConstString script);
   ViStatus WriteWaveform(ViSession vi, ViConstString channelName, ViInt32 waveformHandle, ViInt32 size, ViReal64 data[]);
 
@@ -232,6 +235,7 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
   using GetSelfCalLastDateAndTimePtr = decltype(&niFgen_GetSelfCalLastDateAndTime);
   using GetSelfCalLastTempPtr = decltype(&niFgen_GetSelfCalLastTemp);
   using GetSelfCalSupportedPtr = decltype(&niFgen_GetSelfCalSupported);
+  using GetStreamEndpointHandlePtr = decltype(&niFgen_GetStreamEndpointHandle);
   using ImportAttributeConfigurationBufferPtr = decltype(&niFgen_ImportAttributeConfigurationBuffer);
   using ImportAttributeConfigurationFilePtr = decltype(&niFgen_ImportAttributeConfigurationFile);
   using InitPtr = decltype(&niFgen_init);
@@ -247,6 +251,7 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
   using QueryFreqListCapabilitiesPtr = decltype(&niFgen_QueryFreqListCapabilities);
   using ReadCurrentTemperaturePtr = decltype(&niFgen_ReadCurrentTemperature);
   using ResetPtr = decltype(&niFgen_reset);
+  using ResetAttributePtr = decltype(&niFgen_ResetAttribute);
   using ResetDevicePtr = decltype(&niFgen_ResetDevice);
   using ResetInterchangeCheckPtr = decltype(&niFgen_ResetInterchangeCheck);
   using ResetWithDefaultsPtr = decltype(&niFgen_ResetWithDefaults);
@@ -268,6 +273,7 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
   using WriteBinary16WaveformPtr = decltype(&niFgen_WriteBinary16Waveform);
   using WriteNamedWaveformF64Ptr = decltype(&niFgen_WriteNamedWaveformF64);
   using WriteNamedWaveformI16Ptr = decltype(&niFgen_WriteNamedWaveformI16);
+  using WriteP2PEndpointI16Ptr = decltype(&niFgen_WriteP2PEndpointI16);
   using WriteScriptPtr = decltype(&niFgen_WriteScript);
   using WriteWaveformPtr = decltype(&niFgen_WriteWaveform);
 
@@ -359,6 +365,7 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
     GetSelfCalLastDateAndTimePtr GetSelfCalLastDateAndTime;
     GetSelfCalLastTempPtr GetSelfCalLastTemp;
     GetSelfCalSupportedPtr GetSelfCalSupported;
+    GetStreamEndpointHandlePtr GetStreamEndpointHandle;
     ImportAttributeConfigurationBufferPtr ImportAttributeConfigurationBuffer;
     ImportAttributeConfigurationFilePtr ImportAttributeConfigurationFile;
     InitPtr Init;
@@ -374,6 +381,7 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
     QueryFreqListCapabilitiesPtr QueryFreqListCapabilities;
     ReadCurrentTemperaturePtr ReadCurrentTemperature;
     ResetPtr Reset;
+    ResetAttributePtr ResetAttribute;
     ResetDevicePtr ResetDevice;
     ResetInterchangeCheckPtr ResetInterchangeCheck;
     ResetWithDefaultsPtr ResetWithDefaults;
@@ -395,6 +403,7 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
     WriteBinary16WaveformPtr WriteBinary16Waveform;
     WriteNamedWaveformF64Ptr WriteNamedWaveformF64;
     WriteNamedWaveformI16Ptr WriteNamedWaveformI16;
+    WriteP2PEndpointI16Ptr WriteP2PEndpointI16;
     WriteScriptPtr WriteScript;
     WriteWaveformPtr WriteWaveform;
   } FunctionLoadStatus;

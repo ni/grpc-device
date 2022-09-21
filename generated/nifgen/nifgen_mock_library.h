@@ -104,6 +104,7 @@ class NiFgenMockLibrary : public nifgen_grpc::NiFgenLibraryInterface {
   MOCK_METHOD(ViStatus, GetSelfCalLastDateAndTime, (ViSession vi, ViInt32* year, ViInt32* month, ViInt32* day, ViInt32* hour, ViInt32* minute), (override));
   MOCK_METHOD(ViStatus, GetSelfCalLastTemp, (ViSession vi, ViReal64* temperature), (override));
   MOCK_METHOD(ViStatus, GetSelfCalSupported, (ViSession vi, ViBoolean* selfCalSupported), (override));
+  MOCK_METHOD(ViStatus, GetStreamEndpointHandle, (ViSession vi, ViConstString streamEndpoint, ViUInt32* readerHandle), (override));
   MOCK_METHOD(ViStatus, ImportAttributeConfigurationBuffer, (ViSession vi, ViInt32 sizeInBytes, ViInt8 configuration[]), (override));
   MOCK_METHOD(ViStatus, ImportAttributeConfigurationFile, (ViSession vi, ViConstString filePath), (override));
   MOCK_METHOD(ViStatus, Init, (ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* vi), (override));
@@ -119,6 +120,7 @@ class NiFgenMockLibrary : public nifgen_grpc::NiFgenLibraryInterface {
   MOCK_METHOD(ViStatus, QueryFreqListCapabilities, (ViSession vi, ViInt32* maximumNumberOfFreqLists, ViInt32* minimumFrequencyListLength, ViInt32* maximumFrequencyListLength, ViReal64* minimumFrequencyListDuration, ViReal64* maximumFrequencyListDuration, ViReal64* frequencyListDurationQuantum), (override));
   MOCK_METHOD(ViStatus, ReadCurrentTemperature, (ViSession vi, ViReal64* temperature), (override));
   MOCK_METHOD(ViStatus, Reset, (ViSession vi), (override));
+  MOCK_METHOD(ViStatus, ResetAttribute, (ViSession vi, ViConstString channelName, ViAttr attributeId), (override));
   MOCK_METHOD(ViStatus, ResetDevice, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, ResetInterchangeCheck, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, ResetWithDefaults, (ViSession vi), (override));
@@ -140,6 +142,7 @@ class NiFgenMockLibrary : public nifgen_grpc::NiFgenLibraryInterface {
   MOCK_METHOD(ViStatus, WriteBinary16Waveform, (ViSession vi, ViConstString channelName, ViInt32 waveformHandle, ViInt32 size, ViInt16 data[]), (override));
   MOCK_METHOD(ViStatus, WriteNamedWaveformF64, (ViSession vi, ViConstString channelName, ViConstString waveformName, ViInt32 size, ViReal64 data[]), (override));
   MOCK_METHOD(ViStatus, WriteNamedWaveformI16, (ViSession vi, ViConstString channelName, ViConstString waveformName, ViInt32 size, ViInt16 data[]), (override));
+  MOCK_METHOD(ViStatus, WriteP2PEndpointI16, (ViSession vi, ViConstString endpointName, ViInt32 numberOfSamples, ViInt16 endpointData[]), (override));
   MOCK_METHOD(ViStatus, WriteScript, (ViSession vi, ViConstString channelName, ViConstString script), (override));
   MOCK_METHOD(ViStatus, WriteWaveform, (ViSession vi, ViConstString channelName, ViInt32 waveformHandle, ViInt32 size, ViReal64 data[]), (override));
 };

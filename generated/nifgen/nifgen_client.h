@@ -109,6 +109,7 @@ GetNextInterchangeWarningResponse get_next_interchange_warning(const StubPtr& st
 GetSelfCalLastDateAndTimeResponse get_self_cal_last_date_and_time(const StubPtr& stub, const nidevice_grpc::Session& vi);
 GetSelfCalLastTempResponse get_self_cal_last_temp(const StubPtr& stub, const nidevice_grpc::Session& vi);
 GetSelfCalSupportedResponse get_self_cal_supported(const StubPtr& stub, const nidevice_grpc::Session& vi);
+GetStreamEndpointHandleResponse get_stream_endpoint_handle(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& stream_endpoint);
 ImportAttributeConfigurationBufferResponse import_attribute_configuration_buffer(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& configuration);
 ImportAttributeConfigurationFileResponse import_attribute_configuration_file(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& file_path);
 InitResponse init(const StubPtr& stub, const pb::string& resource_name, const bool& id_query, const bool& reset_device);
@@ -123,6 +124,7 @@ QueryArbWfmCapabilitiesResponse query_arb_wfm_capabilities(const StubPtr& stub, 
 QueryFreqListCapabilitiesResponse query_freq_list_capabilities(const StubPtr& stub, const nidevice_grpc::Session& vi);
 ReadCurrentTemperatureResponse read_current_temperature(const StubPtr& stub, const nidevice_grpc::Session& vi);
 ResetResponse reset(const StubPtr& stub, const nidevice_grpc::Session& vi);
+ResetAttributeResponse reset_attribute(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttribute& attribute_id);
 ResetDeviceResponse reset_device(const StubPtr& stub, const nidevice_grpc::Session& vi);
 ResetInterchangeCheckResponse reset_interchange_check(const StubPtr& stub, const nidevice_grpc::Session& vi);
 ResetWithDefaultsResponse reset_with_defaults(const StubPtr& stub, const nidevice_grpc::Session& vi);
@@ -143,6 +145,7 @@ WaitUntilDoneResponse wait_until_done(const StubPtr& stub, const nidevice_grpc::
 WriteBinary16WaveformResponse write_binary16_waveform(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::int32& waveform_handle, const std::vector<pb::int32>& data);
 WriteNamedWaveformF64Response write_named_waveform_f64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& waveform_name, const std::vector<double>& data);
 WriteNamedWaveformI16Response write_named_waveform_i16(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& waveform_name, const std::vector<pb::int32>& data);
+WriteP2PEndpointI16Response write_p2p_endpoint_i16(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& endpoint_name, const std::vector<pb::int32>& endpoint_data);
 WriteScriptResponse write_script(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& script);
 WriteWaveformResponse write_waveform(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::int32& waveform_handle, const std::vector<double>& data);
 

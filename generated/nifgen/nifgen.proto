@@ -103,6 +103,7 @@ service NiFgen {
   rpc GetSelfCalLastDateAndTime(GetSelfCalLastDateAndTimeRequest) returns (GetSelfCalLastDateAndTimeResponse);
   rpc GetSelfCalLastTemp(GetSelfCalLastTempRequest) returns (GetSelfCalLastTempResponse);
   rpc GetSelfCalSupported(GetSelfCalSupportedRequest) returns (GetSelfCalSupportedResponse);
+  rpc GetStreamEndpointHandle(GetStreamEndpointHandleRequest) returns (GetStreamEndpointHandleResponse);
   rpc ImportAttributeConfigurationBuffer(ImportAttributeConfigurationBufferRequest) returns (ImportAttributeConfigurationBufferResponse);
   rpc ImportAttributeConfigurationFile(ImportAttributeConfigurationFileRequest) returns (ImportAttributeConfigurationFileResponse);
   rpc Init(InitRequest) returns (InitResponse);
@@ -117,6 +118,7 @@ service NiFgen {
   rpc QueryFreqListCapabilities(QueryFreqListCapabilitiesRequest) returns (QueryFreqListCapabilitiesResponse);
   rpc ReadCurrentTemperature(ReadCurrentTemperatureRequest) returns (ReadCurrentTemperatureResponse);
   rpc Reset(ResetRequest) returns (ResetResponse);
+  rpc ResetAttribute(ResetAttributeRequest) returns (ResetAttributeResponse);
   rpc ResetDevice(ResetDeviceRequest) returns (ResetDeviceResponse);
   rpc ResetInterchangeCheck(ResetInterchangeCheckRequest) returns (ResetInterchangeCheckResponse);
   rpc ResetWithDefaults(ResetWithDefaultsRequest) returns (ResetWithDefaultsResponse);
@@ -137,6 +139,7 @@ service NiFgen {
   rpc WriteBinary16Waveform(WriteBinary16WaveformRequest) returns (WriteBinary16WaveformResponse);
   rpc WriteNamedWaveformF64(WriteNamedWaveformF64Request) returns (WriteNamedWaveformF64Response);
   rpc WriteNamedWaveformI16(WriteNamedWaveformI16Request) returns (WriteNamedWaveformI16Response);
+  rpc WriteP2PEndpointI16(WriteP2PEndpointI16Request) returns (WriteP2PEndpointI16Response);
   rpc WriteScript(WriteScriptRequest) returns (WriteScriptResponse);
   rpc WriteWaveform(WriteWaveformRequest) returns (WriteWaveformResponse);
 }
@@ -1529,6 +1532,16 @@ message GetSelfCalSupportedResponse {
   bool self_cal_supported = 2;
 }
 
+message GetStreamEndpointHandleRequest {
+  nidevice_grpc.Session vi = 1;
+  string stream_endpoint = 2;
+}
+
+message GetStreamEndpointHandleResponse {
+  int32 status = 1;
+  uint32 reader_handle = 2;
+}
+
 message ImportAttributeConfigurationBufferRequest {
   nidevice_grpc.Session vi = 1;
   bytes configuration = 2;
@@ -1674,6 +1687,16 @@ message ResetRequest {
 }
 
 message ResetResponse {
+  int32 status = 1;
+}
+
+message ResetAttributeRequest {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+  NiFgenAttribute attribute_id = 3;
+}
+
+message ResetAttributeResponse {
   int32 status = 1;
 }
 
@@ -1894,6 +1917,16 @@ message WriteNamedWaveformI16Request {
 }
 
 message WriteNamedWaveformI16Response {
+  int32 status = 1;
+}
+
+message WriteP2PEndpointI16Request {
+  nidevice_grpc.Session vi = 1;
+  string endpoint_name = 2;
+  repeated sint32 endpoint_data = 3;
+}
+
+message WriteP2PEndpointI16Response {
   int32 status = 1;
 }
 

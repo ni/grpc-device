@@ -1689,6 +1689,24 @@ get_self_cal_supported(const StubPtr& stub, const nidevice_grpc::Session& vi)
   return response;
 }
 
+GetStreamEndpointHandleResponse
+get_stream_endpoint_handle(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& stream_endpoint)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetStreamEndpointHandleRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_stream_endpoint(stream_endpoint);
+
+  auto response = GetStreamEndpointHandleResponse{};
+
+  raise_if_error(
+      stub->GetStreamEndpointHandle(&context, request, &response),
+      context);
+
+  return response;
+}
+
 ImportAttributeConfigurationBufferResponse
 import_attribute_configuration_buffer(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& configuration)
 {
@@ -1933,6 +1951,25 @@ reset(const StubPtr& stub, const nidevice_grpc::Session& vi)
 
   raise_if_error(
       stub->Reset(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ResetAttributeResponse
+reset_attribute(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttribute& attribute_id)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ResetAttributeRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_channel_name(channel_name);
+  request.set_attribute_id(attribute_id);
+
+  auto response = ResetAttributeResponse{};
+
+  raise_if_error(
+      stub->ResetAttribute(&context, request, &response),
       context);
 
   return response;
@@ -2349,6 +2386,25 @@ write_named_waveform_i16(const StubPtr& stub, const nidevice_grpc::Session& vi, 
 
   raise_if_error(
       stub->WriteNamedWaveformI16(&context, request, &response),
+      context);
+
+  return response;
+}
+
+WriteP2PEndpointI16Response
+write_p2p_endpoint_i16(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& endpoint_name, const std::vector<pb::int32>& endpoint_data)
+{
+  ::grpc::ClientContext context;
+
+  auto request = WriteP2PEndpointI16Request{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_endpoint_name(endpoint_name);
+  copy_array(endpoint_data, request.mutable_endpoint_data());
+
+  auto response = WriteP2PEndpointI16Response{};
+
+  raise_if_error(
+      stub->WriteP2PEndpointI16(&context, request, &response),
       context);
 
   return response;
