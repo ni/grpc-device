@@ -837,8 +837,8 @@ message CheckAttributeViStringRequest {
   string channel_name = 2;
   NiFgenAttribute attribute_id = 3;
   oneof attribute_value_enum {
-    NiFgenStringAttributeValuesMapped attribute_value_mapped = 4;
-    string attribute_value_raw = 5;
+    NiFgenStringAttributeValuesMapped attribute_value_mapped = 5;
+    string attribute_value_raw = 4;
   }
 }
 
@@ -1970,8 +1970,8 @@ message SetAttributeViStringRequest {
   string channel_name = 2;
   NiFgenAttribute attribute_id = 3;
   oneof attribute_value_enum {
-    NiFgenStringAttributeValuesMapped attribute_value_mapped = 4;
-    string attribute_value_raw = 5;
+    NiFgenStringAttributeValuesMapped attribute_value_mapped = 5;
+    string attribute_value_raw = 4;
   }
 }
 

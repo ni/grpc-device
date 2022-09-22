@@ -301,6 +301,8 @@ functions = {
             {
                 'cppName': 'attributeValue',
                 'direction': 'in',
+                'grpc_mapped_field_number': '5',
+                'grpc_raw_field_number': '4',
                 'grpc_type': 'string',
                 'mapped-enum': 'NiFgenStringAttributeValuesMapped',
                 'name': 'attributeValue',
@@ -3560,6 +3562,8 @@ functions = {
             {
                 'cppName': 'attributeValue',
                 'direction': 'in',
+                'grpc_mapped_field_number': '5',
+                'grpc_raw_field_number': '4',
                 'grpc_type': 'string',
                 'mapped-enum': 'NiFgenStringAttributeValuesMapped',
                 'name': 'attributeValue',
