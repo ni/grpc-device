@@ -229,7 +229,7 @@ attributes = {
     },
     1150015: {
         'codegen_method': 'public',
-        'enum': 'PPMUOutputFunction',
+        'enum': 'PpmuOutputFunction',
         'grpc_type': 'sint32',
         'name': 'PPMU_OUTPUT_FUNCTION',
         'resettable': True,
@@ -353,7 +353,7 @@ attributes = {
     },
     1150038: {
         'codegen_method': 'public',
-        'enum': 'PPMUApertureTimeUnits',
+        'enum': 'PpmuApertureTimeUnits',
         'grpc_type': 'sint32',
         'name': 'PPMU_APERTURE_TIME_UNITS',
         'resettable': True,
@@ -418,7 +418,7 @@ attributes = {
     },
     1150047: {
         'codegen_method': 'public',
-        'enum': 'HistoryRAMCyclesToAcquire',
+        'enum': 'HistoryRamCyclesToAcquire',
         'grpc_type': 'sint32',
         'name': 'HISTORY_RAM_CYCLES_TO_ACQUIRE',
         'resettable': True,
@@ -489,7 +489,7 @@ attributes = {
     },
     1150064: {
         'codegen_method': 'public',
-        'enum': 'PPMUCurrentLimitBehavior',
+        'enum': 'PpmuCurrentLimitBehavior',
         'grpc_type': 'sint32',
         'name': 'PPMU_CURRENT_LIMIT_BEHAVIOR',
         'resettable': True,
@@ -539,6 +539,7 @@ attributes = {
     },
     1150077: {
         'codegen_method': 'public',
+        'enum': 'HistoryRAMMaxSamplesToAcquirePerSite',
         'grpc_type': 'sint32',
         'name': 'HISTORY_RAM_MAX_SAMPLES_TO_ACQUIRE_PER_SITE',
         'resettable': True,

@@ -11,7 +11,7 @@ config = {
     'custom_types': [
     ],
     'driver_name': 'NI-Digital Pattern Driver',
-    'java_package': 'com.ni.grpc.digital',
+    'java_package': 'com.ni.grpc.nidigital',
     'library_info': {
         'Linux': {
             '64bit': {
@@ -31,7 +31,7 @@ config = {
         }
     },
     'linux_rt_support': False,
-    'module_name': 'nidigitalpattern',
+    'module_name': 'nidigital',
     'namespace_component': 'nidigitalpattern',
     'service_class_prefix': 'NiDigital',
     'session_handle_parameter_name': 'vi',
