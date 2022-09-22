@@ -13,6 +13,7 @@ option csharp_namespace = "NationalInstruments.Grpc.Fgen";
 
 package nifgen_grpc;
 
+import "nidevice.proto";
 import "session.proto";
 
 service NiFgen {
@@ -62,6 +63,7 @@ service NiFgen {
   rpc CreateAdvancedArbSequence(CreateAdvancedArbSequenceRequest) returns (CreateAdvancedArbSequenceResponse);
   rpc CreateArbSequence(CreateArbSequenceRequest) returns (CreateArbSequenceResponse);
   rpc CreateFreqList(CreateFreqListRequest) returns (CreateFreqListResponse);
+  rpc CreateWaveformComplexF64(CreateWaveformComplexF64Request) returns (CreateWaveformComplexF64Response);
   rpc CreateWaveformF64(CreateWaveformF64Request) returns (CreateWaveformF64Response);
   rpc CreateWaveformFromFileF64(CreateWaveformFromFileF64Request) returns (CreateWaveformFromFileF64Response);
   rpc CreateWaveformFromFileHWS(CreateWaveformFromFileHWSRequest) returns (CreateWaveformFromFileHWSResponse);
@@ -137,11 +139,15 @@ service NiFgen {
   rpc SetWaveformNextWritePosition(SetWaveformNextWritePositionRequest) returns (SetWaveformNextWritePositionResponse);
   rpc WaitUntilDone(WaitUntilDoneRequest) returns (WaitUntilDoneResponse);
   rpc WriteBinary16Waveform(WriteBinary16WaveformRequest) returns (WriteBinary16WaveformResponse);
+  rpc WriteComplexBinary16Waveform(WriteComplexBinary16WaveformRequest) returns (WriteComplexBinary16WaveformResponse);
+  rpc WriteNamedWaveformComplexF64(WriteNamedWaveformComplexF64Request) returns (WriteNamedWaveformComplexF64Response);
+  rpc WriteNamedWaveformComplexI16(WriteNamedWaveformComplexI16Request) returns (WriteNamedWaveformComplexI16Response);
   rpc WriteNamedWaveformF64(WriteNamedWaveformF64Request) returns (WriteNamedWaveformF64Response);
   rpc WriteNamedWaveformI16(WriteNamedWaveformI16Request) returns (WriteNamedWaveformI16Response);
   rpc WriteP2PEndpointI16(WriteP2PEndpointI16Request) returns (WriteP2PEndpointI16Response);
   rpc WriteScript(WriteScriptRequest) returns (WriteScriptResponse);
   rpc WriteWaveform(WriteWaveformRequest) returns (WriteWaveformResponse);
+  rpc WriteWaveformComplexF64(WriteWaveformComplexF64Request) returns (WriteWaveformComplexF64Response);
 }
 
 enum NiFgenAttribute {
@@ -1230,6 +1236,17 @@ message CreateFreqListResponse {
   sint32 frequency_list_handle = 2;
 }
 
+message CreateWaveformComplexF64Request {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+  repeated nidevice_grpc.NIComplexNumber waveform_data_array = 3;
+}
+
+message CreateWaveformComplexF64Response {
+  int32 status = 1;
+  sint32 waveform_handle = 2;
+}
+
 message CreateWaveformF64Request {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
@@ -2029,6 +2046,39 @@ message WriteBinary16WaveformResponse {
   int32 status = 1;
 }
 
+message WriteComplexBinary16WaveformRequest {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+  sint32 waveform_handle = 3;
+  repeated nidevice_grpc.NIComplexI16 data = 4;
+}
+
+message WriteComplexBinary16WaveformResponse {
+  int32 status = 1;
+}
+
+message WriteNamedWaveformComplexF64Request {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+  string waveform_name = 3;
+  repeated nidevice_grpc.NIComplexNumber data = 4;
+}
+
+message WriteNamedWaveformComplexF64Response {
+  int32 status = 1;
+}
+
+message WriteNamedWaveformComplexI16Request {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+  string waveform_name = 3;
+  repeated nidevice_grpc.NIComplexI16 data = 4;
+}
+
+message WriteNamedWaveformComplexI16Response {
+  int32 status = 1;
+}
+
 message WriteNamedWaveformF64Request {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
@@ -2079,6 +2129,17 @@ message WriteWaveformRequest {
 }
 
 message WriteWaveformResponse {
+  int32 status = 1;
+}
+
+message WriteWaveformComplexF64Request {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+  repeated nidevice_grpc.NIComplexNumber data = 3;
+  sint32 waveform_handle = 4;
+}
+
+message WriteWaveformComplexF64Response {
   int32 status = 1;
 }
 

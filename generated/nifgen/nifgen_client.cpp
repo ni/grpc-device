@@ -972,6 +972,25 @@ create_freq_list(const StubPtr& stub, const nidevice_grpc::Session& vi, const si
   return response;
 }
 
+CreateWaveformComplexF64Response
+create_waveform_complex_f64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const std::vector<nidevice_grpc::NIComplexNumber>& waveform_data_array)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CreateWaveformComplexF64Request{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_channel_name(channel_name);
+  copy_array(waveform_data_array, request.mutable_waveform_data_array());
+
+  auto response = CreateWaveformComplexF64Response{};
+
+  raise_if_error(
+      stub->CreateWaveformComplexF64(&context, request, &response),
+      context);
+
+  return response;
+}
+
 CreateWaveformF64Response
 create_waveform_f64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const std::vector<double>& waveform_data_array)
 {
@@ -2421,6 +2440,66 @@ write_binary16_waveform(const StubPtr& stub, const nidevice_grpc::Session& vi, c
   return response;
 }
 
+WriteComplexBinary16WaveformResponse
+write_complex_binary16_waveform(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::int32& waveform_handle, const std::vector<nidevice_grpc::NIComplexI16>& data)
+{
+  ::grpc::ClientContext context;
+
+  auto request = WriteComplexBinary16WaveformRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_channel_name(channel_name);
+  request.set_waveform_handle(waveform_handle);
+  copy_array(data, request.mutable_data());
+
+  auto response = WriteComplexBinary16WaveformResponse{};
+
+  raise_if_error(
+      stub->WriteComplexBinary16Waveform(&context, request, &response),
+      context);
+
+  return response;
+}
+
+WriteNamedWaveformComplexF64Response
+write_named_waveform_complex_f64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& waveform_name, const std::vector<nidevice_grpc::NIComplexNumber>& data)
+{
+  ::grpc::ClientContext context;
+
+  auto request = WriteNamedWaveformComplexF64Request{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_channel_name(channel_name);
+  request.set_waveform_name(waveform_name);
+  copy_array(data, request.mutable_data());
+
+  auto response = WriteNamedWaveformComplexF64Response{};
+
+  raise_if_error(
+      stub->WriteNamedWaveformComplexF64(&context, request, &response),
+      context);
+
+  return response;
+}
+
+WriteNamedWaveformComplexI16Response
+write_named_waveform_complex_i16(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& waveform_name, const std::vector<nidevice_grpc::NIComplexI16>& data)
+{
+  ::grpc::ClientContext context;
+
+  auto request = WriteNamedWaveformComplexI16Request{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_channel_name(channel_name);
+  request.set_waveform_name(waveform_name);
+  copy_array(data, request.mutable_data());
+
+  auto response = WriteNamedWaveformComplexI16Response{};
+
+  raise_if_error(
+      stub->WriteNamedWaveformComplexI16(&context, request, &response),
+      context);
+
+  return response;
+}
+
 WriteNamedWaveformF64Response
 write_named_waveform_f64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& waveform_name, const std::vector<double>& data)
 {
@@ -2514,6 +2593,26 @@ write_waveform(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::
 
   raise_if_error(
       stub->WriteWaveform(&context, request, &response),
+      context);
+
+  return response;
+}
+
+WriteWaveformComplexF64Response
+write_waveform_complex_f64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const std::vector<nidevice_grpc::NIComplexNumber>& data, const pb::int32& waveform_handle)
+{
+  ::grpc::ClientContext context;
+
+  auto request = WriteWaveformComplexF64Request{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_channel_name(channel_name);
+  copy_array(data, request.mutable_data());
+  request.set_waveform_handle(waveform_handle);
+
+  auto response = WriteWaveformComplexF64Response{};
+
+  raise_if_error(
+      stub->WriteWaveformComplexF64(&context, request, &response),
       context);
 
   return response;

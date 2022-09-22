@@ -1369,6 +1369,57 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
+    'CreateWaveformComplexF64': {
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'cppName': 'vi',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.Session',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'cppName': 'channelName',
+                'direction': 'in',
+                'grpc_type': 'string',
+                'name': 'channelName',
+                'type': 'ViConstString'
+            },
+            {
+                'cppName': 'numberOfSamples',
+                'determine_size_from': [
+                    'waveformDataArray'
+                ],
+                'direction': 'in',
+                'grpc_type': 'sint32',
+                'include_in_proto': False,
+                'is_size_param': True,
+                'linked_params_are_optional': False,
+                'name': 'numberOfSamples',
+                'type': 'ViInt32'
+            },
+            {
+                'cppName': 'waveformDataArray',
+                'direction': 'in',
+                'grpc_type': 'repeated nidevice_grpc.NIComplexNumber',
+                'name': 'waveformDataArray',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'numberOfSamples'
+                },
+                'type': 'NIComplexNumber_struct[]'
+            },
+            {
+                'cppName': 'waveformHandle',
+                'direction': 'out',
+                'grpc_type': 'sint32',
+                'name': 'waveformHandle',
+                'type': 'ViInt32'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
     'CreateWaveformF64': {
         'codegen_method': 'public',
         'parameters': [
@@ -3747,6 +3798,159 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
+    'WriteComplexBinary16Waveform': {
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'cppName': 'vi',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.Session',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'cppName': 'channelName',
+                'direction': 'in',
+                'grpc_type': 'string',
+                'name': 'channelName',
+                'type': 'ViConstString'
+            },
+            {
+                'cppName': 'waveformHandle',
+                'direction': 'in',
+                'grpc_type': 'sint32',
+                'name': 'waveformHandle',
+                'type': 'ViInt32'
+            },
+            {
+                'cppName': 'size',
+                'determine_size_from': [
+                    'data'
+                ],
+                'direction': 'in',
+                'grpc_type': 'sint32',
+                'include_in_proto': False,
+                'is_size_param': True,
+                'linked_params_are_optional': False,
+                'name': 'size',
+                'type': 'ViInt32'
+            },
+            {
+                'cppName': 'data',
+                'direction': 'in',
+                'grpc_type': 'repeated nidevice_grpc.NIComplexI16',
+                'name': 'data',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'size'
+                },
+                'type': 'NIComplexI16_struct[]'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'WriteNamedWaveformComplexF64': {
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'cppName': 'vi',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.Session',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'cppName': 'channelName',
+                'direction': 'in',
+                'grpc_type': 'string',
+                'name': 'channelName',
+                'type': 'ViConstString'
+            },
+            {
+                'cppName': 'waveformName',
+                'direction': 'in',
+                'grpc_type': 'string',
+                'name': 'waveformName',
+                'type': 'ViConstString'
+            },
+            {
+                'cppName': 'size',
+                'determine_size_from': [
+                    'data'
+                ],
+                'direction': 'in',
+                'grpc_type': 'sint32',
+                'include_in_proto': False,
+                'is_size_param': True,
+                'linked_params_are_optional': False,
+                'name': 'size',
+                'type': 'ViInt32'
+            },
+            {
+                'cppName': 'data',
+                'direction': 'in',
+                'grpc_type': 'repeated nidevice_grpc.NIComplexNumber',
+                'name': 'data',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'size'
+                },
+                'type': 'NIComplexNumber_struct[]'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'WriteNamedWaveformComplexI16': {
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'cppName': 'vi',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.Session',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'cppName': 'channelName',
+                'direction': 'in',
+                'grpc_type': 'string',
+                'name': 'channelName',
+                'type': 'ViConstString'
+            },
+            {
+                'cppName': 'waveformName',
+                'direction': 'in',
+                'grpc_type': 'string',
+                'name': 'waveformName',
+                'type': 'ViConstString'
+            },
+            {
+                'cppName': 'size',
+                'determine_size_from': [
+                    'data'
+                ],
+                'direction': 'in',
+                'grpc_type': 'sint32',
+                'include_in_proto': False,
+                'is_size_param': True,
+                'linked_params_are_optional': False,
+                'name': 'size',
+                'type': 'ViInt32'
+            },
+            {
+                'cppName': 'data',
+                'direction': 'in',
+                'grpc_type': 'repeated nidevice_grpc.NIComplexI16',
+                'name': 'data',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'size'
+                },
+                'type': 'NIComplexI16_struct[]'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
     'WriteNamedWaveformF64': {
         'codegen_method': 'public',
         'parameters': [
@@ -3967,6 +4171,57 @@ functions = {
                     'value': 'size'
                 },
                 'type': 'ViReal64[]'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'WriteWaveformComplexF64': {
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'cppName': 'vi',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.Session',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'cppName': 'channelName',
+                'direction': 'in',
+                'grpc_type': 'string',
+                'name': 'channelName',
+                'type': 'ViConstString'
+            },
+            {
+                'cppName': 'numberOfSamples',
+                'determine_size_from': [
+                    'data'
+                ],
+                'direction': 'in',
+                'grpc_type': 'sint32',
+                'include_in_proto': False,
+                'is_size_param': True,
+                'linked_params_are_optional': False,
+                'name': 'numberOfSamples',
+                'type': 'ViInt32'
+            },
+            {
+                'cppName': 'data',
+                'direction': 'in',
+                'grpc_type': 'repeated nidevice_grpc.NIComplexNumber',
+                'name': 'data',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'numberOfSamples'
+                },
+                'type': 'NIComplexNumber_struct[]'
+            },
+            {
+                'cppName': 'waveformHandle',
+                'direction': 'in',
+                'grpc_type': 'sint32',
+                'name': 'waveformHandle',
+                'type': 'ViInt32'
             }
         ],
         'returns': 'ViStatus'
