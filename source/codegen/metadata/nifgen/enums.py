@@ -680,11 +680,11 @@ enums = {
                 'value': 16
             },
             {
-                'name': 'OSP_OVERFLOW_STATUS_VAL_OSP_OVERFLOW_PFIR_FILTER_Q',
+                'name': 'OSP_OVERFLOW_STATUS_VAL_OSP_OVERFLOW_FIR_FILTER_Q',
                 'value': 32
             },
             {
-                'name': 'OSP_OVERFLOW_STATUS_VAL_OSP_OVERFLOW_FIR_FILTER_Q',
+                'name': 'OSP_OVERFLOW_STATUS_VAL_OSP_OVERFLOW_PFIR_FILTER_Q',
                 'value': 32
             },
             {
@@ -1331,11 +1331,11 @@ enums = {
                 'value': 16
             },
             {
-                'name': 'NIFGEN_VAL_OSP_OVERFLOW_PFIR_FILTER_Q',
+                'name': 'NIFGEN_VAL_OSP_OVERFLOW_FIR_FILTER_Q',
                 'value': 32
             },
             {
-                'name': 'NIFGEN_VAL_OSP_OVERFLOW_FIR_FILTER_Q',
+                'name': 'NIFGEN_VAL_OSP_OVERFLOW_PFIR_FILTER_Q',
                 'value': 32
             },
             {
