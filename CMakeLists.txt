@@ -465,6 +465,7 @@ set(system_test_runner_sources
   "source/tests/system/nidcpower_driver_api_tests.cpp"
   "source/tests/system/nidcpower_session_tests.cpp"
   "source/tests/system/nidigital_session_tests.cpp"
+  "source/tests/system/nidigital_driver_api_tests.cpp"
   "source/tests/system/nidmm_driver_api_tests.cpp"
   "source/tests/system/nidmm_session_tests.cpp"
   "source/tests/system/nifgen_driver_api_tests.cpp"
