@@ -7,6 +7,7 @@ The server and the client APIs allow NI's instrumentation to be accessed and con
 For more detailed information on the server and API design refer to the [wiki](https://github.com/ni/grpc-device/wiki).
 
 ## Supported NI drivers
+Indicates the most recent driver version used to test builds of the current source. Supported driver versions for specific releases will be found in the release notes for that version.
 
 |NI Driver|Version Tested (Windows)|Version Tested (Linux) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|Version Tested (Linux RT)|
 | :------------------------ | :------| :------------ | :------------ |
