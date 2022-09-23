@@ -364,6 +364,7 @@ functions = {
                 'grpc_mapped_field_number': '6',
                 'grpc_raw_field_number': '4',
                 'grpc_type': 'double',
+                'mapped-enum': 'NiScopeReal64AttributeValuesMapped',
                 'name': 'value',
                 'type': 'ViReal64'
             }
@@ -3237,6 +3238,7 @@ functions = {
                 'grpc_mapped_field_number': '6',
                 'grpc_raw_field_number': '4',
                 'grpc_type': 'double',
+                'mapped-enum': 'NiScopeReal64AttributeValuesMapped',
                 'name': 'value',
                 'type': 'ViReal64'
             }

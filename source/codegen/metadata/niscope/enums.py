@@ -566,12 +566,12 @@ enums = {
                 'value': 10
             },
             {
-                'name': 'NISCOPE_VAL_REF_CLOCK',
-                'value': 100
-            },
-            {
                 'name': 'NISCOPE_VAL_5V_OUT',
                 'value': 13
+            },
+            {
+                'name': 'NISCOPE_VAL_REF_CLOCK',
+                'value': 100
             },
             {
                 'name': 'NISCOPE_VAL_SAMPLE_CLOCK',
@@ -686,47 +686,49 @@ enums = {
     },
     'InputImpedance': {
         'codegen_method': 'public',
+        'generate-mappings': True,
         'values': [
             {
                 'name': 'NISCOPE_VAL_50_OHMS',
-                'value': 50
+                'value': 50.0
             },
             {
                 'name': 'NISCOPE_VAL_75_OHMS',
-                'value': 75
+                'value': 75.0
             },
             {
                 'name': 'NISCOPE_VAL_1_MEG_OHM',
-                'value': 1000000
+                'value': 1000000.0
             }
         ]
     },
     'MaxInputFrequency': {
         'codegen_method': 'public',
+        'generate-mappings': True,
         'values': [
             {
                 'name': 'NISCOPE_VAL_BANDWIDTH_DEVICE_DEFAULT',
-                'value': 0
+                'value': 0.0
             },
             {
                 'name': 'NISCOPE_VAL_BANDWIDTH_FULL',
-                'value': -1
+                'value': -1.0
             },
             {
                 'name': 'NISCOPE_VAL_20MHZ_BANDWIDTH',
-                'value': 20000000
+                'value': 20000000.0
             },
             {
                 'name': 'NISCOPE_VAL_100MHZ_BANDWIDTH',
-                'value': 100000000
+                'value': 100000000.0
             },
             {
                 'name': 'NISCOPE_VAL_20MHZ_MAX_INPUT_FREQUENCY',
-                'value': 20000000
+                'value': 20000000.0
             },
             {
                 'name': 'NISCOPE_VAL_100MHZ_MAX_INPUT_FREQUENCY',
-                'value': 100000000
+                'value': 100000000.0
             }
         ]
     },
@@ -1266,42 +1268,48 @@ enums = {
             {
                 'name': 'CABLE_SENSE_MODE_VAL_CABLE_SENSE_MODE_ON_DEMAND',
                 'value': 1
-            },
+            }
+        ]
+    },
+    'NiScopeReal64AttributeValuesMapped': {
+        'enum-value-prefix': 'NISCOPE_REAL64',
+        'generate-mappings': True,
+        'values': [
             {
                 'name': 'INPUT_IMPEDANCE_VAL_50_OHMS',
-                'value': 50
+                'value': 50.0
             },
             {
                 'name': 'INPUT_IMPEDANCE_VAL_75_OHMS',
-                'value': 75
+                'value': 75.0
             },
             {
                 'name': 'INPUT_IMPEDANCE_VAL_1_MEG_OHM',
-                'value': 1000000
+                'value': 1000000.0
             },
             {
                 'name': 'MAX_INPUT_FREQUENCY_VAL_BANDWIDTH_DEVICE_DEFAULT',
-                'value': 0
+                'value': 0.0
             },
             {
                 'name': 'MAX_INPUT_FREQUENCY_VAL_BANDWIDTH_FULL',
-                'value': -1
+                'value': -1.0
             },
             {
                 'name': 'MAX_INPUT_FREQUENCY_VAL_20MHZ_BANDWIDTH',
-                'value': 20000000
+                'value': 20000000.0
             },
             {
                 'name': 'MAX_INPUT_FREQUENCY_VAL_100MHZ_BANDWIDTH',
-                'value': 100000000
+                'value': 100000000.0
             },
             {
                 'name': 'MAX_INPUT_FREQUENCY_VAL_20MHZ_MAX_INPUT_FREQUENCY',
-                'value': 20000000
+                'value': 20000000.0
             },
             {
                 'name': 'MAX_INPUT_FREQUENCY_VAL_100MHZ_MAX_INPUT_FREQUENCY',
-                'value': 100000000
+                'value': 100000000.0
             }
         ]
     },
