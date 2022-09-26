@@ -14,8 +14,6 @@ namespace tests {
 namespace system {
 namespace {
 
-constexpr auto DEFAULT_HOSTNAME = "localhost";
-
 class NiMxLcTerminalAdaptorRestrictedDriverApiTests : public Test {
  protected:
   NiMxLcTerminalAdaptorRestrictedDriverApiTests()
