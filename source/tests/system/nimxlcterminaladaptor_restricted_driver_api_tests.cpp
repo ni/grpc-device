@@ -14,8 +14,6 @@ namespace tests {
 namespace system {
 namespace {
 
-constexpr auto DEFAULT_HOSTNAME = "localhost";
-
 class NiMxLcTerminalAdaptorRestrictedDriverApiTests : public Test {
  protected:
   NiMxLcTerminalAdaptorRestrictedDriverApiTests()
@@ -48,18 +46,13 @@ class NiMxLcTerminalAdaptorRestrictedDriverApiTests : public Test {
   std::unique_ptr<NimxlcTerminalAdaptorRestricted::Stub> nimxlcterminaladaptor_stub_;
 };
 
-nidevice_grpc::Session init_session(const client::StubPtr& stub, const std::string& hostname)
+nidevice_grpc::Session init_session(const client::StubPtr& stub)
 {
-  auto response = client::create_session(stub, hostname.c_str());
+  auto response = client::create_session(stub, "");
   EXPECT_EQ(0, response.status());
   EXPECT_EQ(0, response.c_status().code());
   auto session = response.handle();
   return session;
-}
-
-nidevice_grpc::Session init_session(const client::StubPtr& stub)
-{
-  return init_session(stub, DEFAULT_HOSTNAME);
 }
 
 TEST_F(NiMxLcTerminalAdaptorRestrictedDriverApiTests, RefreshedTerminalCache_GetDeviceContainer_StatusOK)
