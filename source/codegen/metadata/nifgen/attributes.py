@@ -376,13 +376,6 @@ attributes = {
         'resettable': True,
         'type': 'ViInt32'
     },
-    1150227: {
-        'codegen_method': 'public',
-        'grpc_type': 'sint32',
-        'name': 'CAL_ADC_INPUT',
-        'resettable': True,
-        'type': 'ViInt32'
-    },
     1150228: {
         'codegen_method': 'public',
         'grpc_type': 'double',
