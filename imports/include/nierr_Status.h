@@ -1,14 +1,19 @@
 /*!
    \file
    \brief Status C definition and helper functions.
+
+   This file is a pared-down version of the one in the nierr component,
+   with required elements defined in ni-build and additional dependencies removed.
 */
 /*
-   Copyright (c) 2012-2012 National Instruments Corporation.
+   Copyright (c) 2012-2022 National Instruments Corporation.
    All rights reserved.
 */
 
 #ifndef NIERR_NIERR_STATUS_H_
 #define NIERR_NIERR_STATUS_H_
+
+#include <stdint.h>
 
 extern "C" {
 #define kNICCall
@@ -21,6 +26,8 @@ extern "C" {
    #define  kNIInlineC     static inline
    #define  kNIForceInline __attribute__((always_inline))
 #endif
+
+#define JSONZ_TERMINATOR_SIZE 2 /* '\0' + JSONZ_TERM_CHAR */
 
 struct nierr_Status;
 
@@ -60,7 +67,9 @@ typedef struct nierr_Status
                           */
 } nierr_Status;
 
-/*! the default function to be used for nierr_Status::reallocJson field.
+void nierr_Status_initialize(struct nierr_Status * status);
+
+/*! the function to be used for nierr_Status::reallocJson field.
  *  This function is responsible to allocate/free json buffer and put the
  * buffer size into the capacity field for a given nierr_Status.
  * \return true if successful, else false. If size is 0, success is guaranteed.
@@ -72,6 +81,12 @@ typedef struct nierr_Status
  * \post if failed, nothing will be changed
  */
 bool kNICCall nierr_defaultReallocJson(struct nierr_Status * s, uint32_t size);
+
+/*! free the json string
+ * \param[in,out] s status
+ */
+kNIInlineC void nierr_Status_jsonFree(struct nierr_Status *s)
+   { s->reallocJson(s,0); }
 
 /*! whether nierr_Status code is fatal
  * \param s status

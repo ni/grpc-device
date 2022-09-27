@@ -50,7 +50,7 @@ class NiSwitchLibraryInterface {
   virtual ViStatus GetRelayName(ViSession vi, ViInt32 index, ViInt32 relayNameBufferSize, ViChar relayNameBuffer[]) = 0;
   virtual ViStatus GetRelayPosition(ViSession vi, ViConstString relayName, ViInt32* relayPosition) = 0;
   virtual ViStatus Init(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* vi) = 0;
-  virtual ViStatus InitWithOptions(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViConstString optionString, ViSession* vi) = 0;
+  virtual ViStatus InitWithOptions(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViConstString optionsString, ViSession* vi) = 0;
   virtual ViStatus InitWithTopology(ViRsrc resourceName, ViConstString topology, ViBoolean simulate, ViBoolean resetDevice, ViSession* vi) = 0;
   virtual ViStatus InitiateScan(ViSession vi) = 0;
   virtual ViStatus InvalidateAllAttributes(ViSession vi) = 0;

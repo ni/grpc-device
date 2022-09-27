@@ -53,7 +53,7 @@ class NiSwitchLibrary : public niswitch_grpc::NiSwitchLibraryInterface {
   ViStatus GetRelayName(ViSession vi, ViInt32 index, ViInt32 relayNameBufferSize, ViChar relayNameBuffer[]);
   ViStatus GetRelayPosition(ViSession vi, ViConstString relayName, ViInt32* relayPosition);
   ViStatus Init(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* vi);
-  ViStatus InitWithOptions(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViConstString optionString, ViSession* vi);
+  ViStatus InitWithOptions(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViConstString optionsString, ViSession* vi);
   ViStatus InitWithTopology(ViRsrc resourceName, ViConstString topology, ViBoolean simulate, ViBoolean resetDevice, ViSession* vi);
   ViStatus InitiateScan(ViSession vi);
   ViStatus InvalidateAllAttributes(ViSession vi);
@@ -116,7 +116,7 @@ class NiSwitchLibrary : public niswitch_grpc::NiSwitchLibraryInterface {
   using GetRelayCountPtr = decltype(&niSwitch_GetRelayCount);
   using GetRelayNamePtr = decltype(&niSwitch_GetRelayName);
   using GetRelayPositionPtr = decltype(&niSwitch_GetRelayPosition);
-  using InitPtr = decltype(&niSwitch_init );
+  using InitPtr = decltype(&niSwitch_init);
   using InitWithOptionsPtr = decltype(&niSwitch_InitWithOptions);
   using InitWithTopologyPtr = decltype(&niSwitch_InitWithTopology);
   using InitiateScanPtr = decltype(&niSwitch_InitiateScan);
