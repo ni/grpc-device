@@ -1,15 +1,15 @@
-# -*- coding: utf-8 -*-
+﻿# -*- coding: utf-8 -*-
 # This file is generated from NI-SCOPE API metadata version 20.5.0d7
 enums = {
     'AcquisitionStatus': {
         'values': [
             {
-                'name': 'NISCOPE_VAL_ACQ_COMPLETE',
-                'value': 1
-            },
-            {
                 'name': 'NISCOPE_VAL_ACQ_IN_PROGRESS',
                 'value': 0
+            },
+            {
+                'name': 'NISCOPE_VAL_ACQ_COMPLETE',
+                'value': 1
             },
             {
                 'name': 'NISCOPE_VAL_ACQ_STATUS_UNKNOWN',
@@ -274,12 +274,12 @@ enums = {
     'CalibrationTypes': {
         'values': [
             {
-                'name': 'NISCOPE_VAL_CAL_SELF',
-                'value': 1
-            },
-            {
                 'name': 'NISCOPE_VAL_CAL_EXTERNAL',
                 'value': 0
+            },
+            {
+                'name': 'NISCOPE_VAL_CAL_SELF',
+                'value': 1
             },
             {
                 'name': 'NISCOPE_VAL_CAL_MANUFACTURE',
@@ -289,6 +289,10 @@ enums = {
     },
     'ClearableMeasurement': {
         'values': [
+            {
+                'name': 'NISCOPE_VAL_RISE_TIME',
+                'value': 0
+            },
             {
                 'name': 'NISCOPE_VAL_ALL_MEASUREMENTS',
                 'value': 10000
@@ -324,10 +328,6 @@ enums = {
             {
                 'name': 'NISCOPE_VAL_AVERAGE_PERIOD',
                 'value': 1015
-            },
-            {
-                'name': 'NISCOPE_VAL_RISE_TIME',
-                'value': 0
             },
             {
                 'name': 'NISCOPE_VAL_FALL_TIME',
@@ -880,12 +880,12 @@ enums = {
         'generate-mappings': True,
         'values': [
             {
-                'name': 'NISCOPE_VAL_BANDWIDTH_FULL',
-                'value': -1.0
-            },
-            {
                 'name': 'NISCOPE_VAL_BANDWIDTH_DEVICE_DEFAULT',
                 'value': 0.0
+            },
+            {
+                'name': 'NISCOPE_VAL_BANDWIDTH_FULL',
+                'value': -1.0
             },
             {
                 'name': 'NISCOPE_VAL_20MHZ_BANDWIDTH',
@@ -950,6 +950,732 @@ enums = {
             {
                 'name': 'NISCOPE_VAL_MEAS_PERCENTAGE',
                 'value': 1
+            }
+        ]
+    },
+    'NiScopeInt32AttributeValues': {
+        'enum-value-prefix': 'NISCOPE_INT32',
+        'generate-mappings': False,
+        'values': [
+            {
+                'name': 'ACQUISITION_TYPE_VAL_NORMAL',
+                'value': 0
+            },
+            {
+                'name': 'ACQUISITION_TYPE_VAL_FLEXRES',
+                'value': 1001
+            },
+            {
+                'name': 'ACQUISITION_TYPE_VAL_DDC',
+                'value': 1002
+            },
+            {
+                'name': 'ADDRESS_TYPE_VAL_ADDR_PHYSICAL',
+                'value': 0
+            },
+            {
+                'name': 'ADDRESS_TYPE_VAL_ADDR_VIRTUAL',
+                'value': 1
+            },
+            {
+                'name': 'DATA_PROCESSING_MODE_VAL_REAL',
+                'value': 0
+            },
+            {
+                'name': 'DATA_PROCESSING_MODE_VAL_COMPLEX',
+                'value': 1
+            },
+            {
+                'name': 'FIR_FILTER_WINDOW_VAL_NONE',
+                'value': 0
+            },
+            {
+                'name': 'FIR_FILTER_WINDOW_VAL_HANNING',
+                'value': 409
+            },
+            {
+                'name': 'FIR_FILTER_WINDOW_VAL_FLAT_TOP',
+                'value': 410
+            },
+            {
+                'name': 'FIR_FILTER_WINDOW_VAL_HAMMING',
+                'value': 420
+            },
+            {
+                'name': 'FIR_FILTER_WINDOW_VAL_TRIANGLE',
+                'value': 423
+            },
+            {
+                'name': 'FIR_FILTER_WINDOW_VAL_BLACKMAN',
+                'value': 424
+            },
+            {
+                'name': 'FETCH_RELATIVE_TO_VAL_READ_POINTER',
+                'value': 388
+            },
+            {
+                'name': 'FETCH_RELATIVE_TO_VAL_PRETRIGGER',
+                'value': 477
+            },
+            {
+                'name': 'FETCH_RELATIVE_TO_VAL_NOW',
+                'value': 481
+            },
+            {
+                'name': 'FETCH_RELATIVE_TO_VAL_START',
+                'value': 482
+            },
+            {
+                'name': 'FETCH_RELATIVE_TO_VAL_TRIGGER',
+                'value': 483
+            },
+            {
+                'name': 'FLEX_FIR_ANTIALIAS_FILTER_TYPE_VAL_48_TAP_STANDARD',
+                'value': 0
+            },
+            {
+                'name': 'FLEX_FIR_ANTIALIAS_FILTER_TYPE_VAL_48_TAP_HANNING',
+                'value': 1
+            },
+            {
+                'name': 'FLEX_FIR_ANTIALIAS_FILTER_TYPE_VAL_16_TAP_HANNING',
+                'value': 2
+            },
+            {
+                'name': 'FLEX_FIR_ANTIALIAS_FILTER_TYPE_VAL_8_TAP_HANNING',
+                'value': 3
+            },
+            {
+                'name': 'GLITCH_CONDITION_VAL_GLITCH_GREATER_THAN',
+                'value': 2
+            },
+            {
+                'name': 'GLITCH_CONDITION_VAL_GLITCH_LESS_THAN',
+                'value': 1
+            },
+            {
+                'name': 'GLITCH_POLARITY_VAL_GLITCH_POSITIVE',
+                'value': 1
+            },
+            {
+                'name': 'GLITCH_POLARITY_VAL_GLITCH_NEGATIVE',
+                'value': 2
+            },
+            {
+                'name': 'GLITCH_POLARITY_VAL_GLITCH_EITHER',
+                'value': 3
+            },
+            {
+                'name': 'MEAS_FILTER_TYPE_VAL_MEAS_LOWPASS',
+                'value': 0
+            },
+            {
+                'name': 'MEAS_FILTER_TYPE_VAL_MEAS_HIGHPASS',
+                'value': 1
+            },
+            {
+                'name': 'MEAS_FILTER_TYPE_VAL_MEAS_BANDPASS',
+                'value': 2
+            },
+            {
+                'name': 'MEAS_FILTER_TYPE_VAL_MEAS_BANDSTOP',
+                'value': 3
+            },
+            {
+                'name': 'MEAS_PERCENTAGE_METHOD_VAL_MEAS_LOW_HIGH',
+                'value': 0
+            },
+            {
+                'name': 'MEAS_PERCENTAGE_METHOD_VAL_MEAS_MIN_MAX',
+                'value': 1
+            },
+            {
+                'name': 'MEAS_PERCENTAGE_METHOD_VAL_MEAS_BASE_TOP',
+                'value': 2
+            },
+            {
+                'name': 'MEAS_REF_LEVEL_UNITS_VAL_MEAS_VOLTAGE',
+                'value': 0
+            },
+            {
+                'name': 'MEAS_REF_LEVEL_UNITS_VAL_MEAS_PERCENTAGE',
+                'value': 1
+            },
+            {
+                'name': 'NOTIFICATION_TYPE_VAL_NOTIFY_NEVER',
+                'value': 0
+            },
+            {
+                'name': 'NOTIFICATION_TYPE_VAL_NOTIFY_DONE',
+                'value': 1
+            },
+            {
+                'name': 'OVERFLOW_ERROR_REPORTING_VAL_ERROR_REPORTING_ERROR',
+                'value': 0
+            },
+            {
+                'name': 'OVERFLOW_ERROR_REPORTING_VAL_ERROR_REPORTING_WARNING',
+                'value': 1
+            },
+            {
+                'name': 'OVERFLOW_ERROR_REPORTING_VAL_ERROR_REPORTING_DISABLED',
+                'value': 2
+            },
+            {
+                'name': 'P2_P_STREAM_RELATIVE_TO_VAL_STREAM_RELATIVE_TO_START_TRIGGER',
+                'value': 0
+            },
+            {
+                'name': 'P2_P_STREAM_RELATIVE_TO_VAL_STREAM_RELATIVE_TO_REFERENCE_TRIGGER',
+                'value': 1
+            },
+            {
+                'name': 'P2_P_STREAM_RELATIVE_TO_VAL_STREAM_RELATIVE_TO_SYNC_TRIGGER',
+                'value': 2
+            },
+            {
+                'name': 'RIS_METHOD_VAL_RIS_EXACT_NUM_AVERAGES',
+                'value': 1
+            },
+            {
+                'name': 'RIS_METHOD_VAL_RIS_MIN_NUM_AVERAGES',
+                'value': 2
+            },
+            {
+                'name': 'RIS_METHOD_VAL_RIS_INCOMPLETE',
+                'value': 3
+            },
+            {
+                'name': 'RIS_METHOD_VAL_RIS_LIMITED_BIN_WIDTH',
+                'value': 5
+            },
+            {
+                'name': 'REF_TRIGGER_DETECTOR_LOCATION_VAL_ANALOG_DETECTION_CIRCUIT',
+                'value': 0
+            },
+            {
+                'name': 'REF_TRIGGER_DETECTOR_LOCATION_VAL_DDC_OUTPUT',
+                'value': 1
+            },
+            {
+                'name': 'RUNT_POLARITY_VAL_RUNT_POSITIVE',
+                'value': 1
+            },
+            {
+                'name': 'RUNT_POLARITY_VAL_RUNT_NEGATIVE',
+                'value': 2
+            },
+            {
+                'name': 'RUNT_POLARITY_VAL_RUNT_EITHER',
+                'value': 3
+            },
+            {
+                'name': 'RUNT_TIME_CONDITION_VAL_RUNT_TIME_CONDITION_NONE',
+                'value': 0
+            },
+            {
+                'name': 'RUNT_TIME_CONDITION_VAL_RUNT_TIME_CONDITION_WITHIN',
+                'value': 1
+            },
+            {
+                'name': 'RUNT_TIME_CONDITION_VAL_RUNT_TIME_CONDITION_OUTSIDE',
+                'value': 2
+            },
+            {
+                'name': 'SAMPLE_MODE_VAL_REAL_TIME',
+                'value': 0
+            },
+            {
+                'name': 'SAMPLE_MODE_VAL_EQUIVALENT_TIME',
+                'value': 1
+            },
+            {
+                'name': 'TERMINAL_CONFIGURATION_VAL_SINGLE_ENDED',
+                'value': 0
+            },
+            {
+                'name': 'TERMINAL_CONFIGURATION_VAL_UNBALANCED_DIFFERENTIAL',
+                'value': 1
+            },
+            {
+                'name': 'TERMINAL_CONFIGURATION_VAL_DIFFERENTIAL',
+                'value': 2
+            },
+            {
+                'name': 'TRIGGER_COUPLING_VAL_AC',
+                'value': 0
+            },
+            {
+                'name': 'TRIGGER_COUPLING_VAL_DC',
+                'value': 1
+            },
+            {
+                'name': 'TRIGGER_COUPLING_VAL_HF_REJECT',
+                'value': 3
+            },
+            {
+                'name': 'TRIGGER_COUPLING_VAL_LF_REJECT',
+                'value': 4
+            },
+            {
+                'name': 'TRIGGER_COUPLING_VAL_AC_PLUS_HF_REJECT',
+                'value': 1001
+            },
+            {
+                'name': 'TRIGGER_MODIFIER_VAL_NO_TRIGGER_MOD',
+                'value': 1
+            },
+            {
+                'name': 'TRIGGER_MODIFIER_VAL_AUTO',
+                'value': 2
+            },
+            {
+                'name': 'TRIGGER_MODIFIER_VAL_AUTO_LEVEL',
+                'value': 3
+            },
+            {
+                'name': 'TRIGGER_SLOPE_VAL_NEGATIVE',
+                'value': 0
+            },
+            {
+                'name': 'TRIGGER_SLOPE_VAL_POSITIVE',
+                'value': 1
+            },
+            {
+                'name': 'TRIGGER_SLOPE_VAL_SLOPE_EITHER',
+                'value': 3
+            },
+            {
+                'name': 'TRIGGER_TYPE_VAL_EDGE_TRIGGER',
+                'value': 1
+            },
+            {
+                'name': 'TRIGGER_TYPE_VAL_HYSTERESIS_TRIGGER',
+                'value': 1001
+            },
+            {
+                'name': 'TRIGGER_TYPE_VAL_DIGITAL_TRIGGER',
+                'value': 1002
+            },
+            {
+                'name': 'TRIGGER_TYPE_VAL_WINDOW_TRIGGER',
+                'value': 1003
+            },
+            {
+                'name': 'TRIGGER_TYPE_VAL_SOFTWARE_TRIGGER',
+                'value': 1004
+            },
+            {
+                'name': 'TRIGGER_TYPE_VAL_TV_TRIGGER',
+                'value': 5
+            },
+            {
+                'name': 'TRIGGER_TYPE_VAL_GLITCH_TRIGGER',
+                'value': 4
+            },
+            {
+                'name': 'TRIGGER_TYPE_VAL_WIDTH_TRIGGER',
+                'value': 2
+            },
+            {
+                'name': 'TRIGGER_TYPE_VAL_RUNT_TRIGGER',
+                'value': 3
+            },
+            {
+                'name': 'TRIGGER_TYPE_VAL_IMMEDIATE_TRIGGER',
+                'value': 6
+            },
+            {
+                'name': 'TRIGGER_WINDOW_MODE_VAL_ENTERING_WINDOW',
+                'value': 0
+            },
+            {
+                'name': 'TRIGGER_WINDOW_MODE_VAL_LEAVING_WINDOW',
+                'value': 1
+            },
+            {
+                'name': 'TRIGGER_WINDOW_MODE_VAL_ENTERING_OR_LEAVING_WINDOW',
+                'value': 2
+            },
+            {
+                'name': 'VERTICAL_COUPLING_VAL_AC',
+                'value': 0
+            },
+            {
+                'name': 'VERTICAL_COUPLING_VAL_DC',
+                'value': 1
+            },
+            {
+                'name': 'VERTICAL_COUPLING_VAL_GND',
+                'value': 2
+            },
+            {
+                'name': 'VIDEO_POLARITY_VAL_TV_POSITIVE',
+                'value': 1
+            },
+            {
+                'name': 'VIDEO_POLARITY_VAL_TV_NEGATIVE',
+                'value': 2
+            },
+            {
+                'name': 'VIDEO_SIGNAL_FORMAT_VAL_NTSC',
+                'value': 1
+            },
+            {
+                'name': 'VIDEO_SIGNAL_FORMAT_VAL_PAL',
+                'value': 2
+            },
+            {
+                'name': 'VIDEO_SIGNAL_FORMAT_VAL_SECAM',
+                'value': 3
+            },
+            {
+                'name': 'VIDEO_SIGNAL_FORMAT_VAL_M_PAL',
+                'value': 1001
+            },
+            {
+                'name': 'VIDEO_SIGNAL_FORMAT_VAL_VIDEO_480I_59_94_FIELDS_PER_SECOND',
+                'value': 1010
+            },
+            {
+                'name': 'VIDEO_SIGNAL_FORMAT_VAL_VIDEO_480I_60_FIELDS_PER_SECOND',
+                'value': 1011
+            },
+            {
+                'name': 'VIDEO_SIGNAL_FORMAT_VAL_VIDEO_480P_59_94_FRAMES_PER_SECOND',
+                'value': 1015
+            },
+            {
+                'name': 'VIDEO_SIGNAL_FORMAT_VAL_VIDEO_480P_60_FRAMES_PER_SECOND',
+                'value': 1016
+            },
+            {
+                'name': 'VIDEO_SIGNAL_FORMAT_VAL_VIDEO_576I_50_FIELDS_PER_SECOND',
+                'value': 1020
+            },
+            {
+                'name': 'VIDEO_SIGNAL_FORMAT_VAL_VIDEO_576P_50_FRAMES_PER_SECOND',
+                'value': 1025
+            },
+            {
+                'name': 'VIDEO_SIGNAL_FORMAT_VAL_VIDEO_720P_50_FRAMES_PER_SECOND',
+                'value': 1031
+            },
+            {
+                'name': 'VIDEO_SIGNAL_FORMAT_VAL_VIDEO_720P_59_94_FRAMES_PER_SECOND',
+                'value': 1032
+            },
+            {
+                'name': 'VIDEO_SIGNAL_FORMAT_VAL_VIDEO_720P_60_FRAMES_PER_SECOND',
+                'value': 1033
+            },
+            {
+                'name': 'VIDEO_SIGNAL_FORMAT_VAL_VIDEO_1080I_50_FIELDS_PER_SECOND',
+                'value': 1040
+            },
+            {
+                'name': 'VIDEO_SIGNAL_FORMAT_VAL_VIDEO_1080I_59_94_FIELDS_PER_SECOND',
+                'value': 1041
+            },
+            {
+                'name': 'VIDEO_SIGNAL_FORMAT_VAL_VIDEO_1080I_60_FIELDS_PER_SECOND',
+                'value': 1042
+            },
+            {
+                'name': 'VIDEO_SIGNAL_FORMAT_VAL_VIDEO_1080P_24_FRAMES_PER_SECOND',
+                'value': 1045
+            },
+            {
+                'name': 'VIDEO_TRIGGER_EVENT_VAL_TV_EVENT_FIELD1',
+                'value': 1
+            },
+            {
+                'name': 'VIDEO_TRIGGER_EVENT_VAL_TV_EVENT_FIELD2',
+                'value': 2
+            },
+            {
+                'name': 'VIDEO_TRIGGER_EVENT_VAL_TV_EVENT_ANY_FIELD',
+                'value': 3
+            },
+            {
+                'name': 'VIDEO_TRIGGER_EVENT_VAL_TV_EVENT_ANY_LINE',
+                'value': 4
+            },
+            {
+                'name': 'VIDEO_TRIGGER_EVENT_VAL_TV_EVENT_LINE_NUMBER',
+                'value': 5
+            },
+            {
+                'name': 'WIDTH_CONDITION_VAL_WIDTH_WITHIN',
+                'value': 1
+            },
+            {
+                'name': 'WIDTH_CONDITION_VAL_WIDTH_OUTSIDE',
+                'value': 2
+            },
+            {
+                'name': 'WIDTH_POLARITY_VAL_WIDTH_POSITIVE',
+                'value': 1
+            },
+            {
+                'name': 'WIDTH_POLARITY_VAL_WIDTH_NEGATIVE',
+                'value': 2
+            },
+            {
+                'name': 'WIDTH_POLARITY_VAL_WIDTH_EITHER',
+                'value': 3
+            }
+        ]
+    },
+    'NiScopeInt64AttributeValues': {
+        'enum-value-prefix': 'NISCOPE_INT64',
+        'generate-mappings': False,
+        'values': [
+            {
+                'name': 'ADDRESS_TYPE_VAL_ADDR_PHYSICAL',
+                'value': 0
+            },
+            {
+                'name': 'ADDRESS_TYPE_VAL_ADDR_VIRTUAL',
+                'value': 1
+            }
+        ]
+    },
+    'NiScopeReal64AttributeValues': {
+        'enum-value-prefix': 'NISCOPE_REAL64',
+        'generate-mappings': False,
+        'values': [
+            {
+                'name': 'CABLE_SENSE_MODE_VAL_CABLE_SENSE_MODE_DISABLED',
+                'value': 0
+            },
+            {
+                'name': 'CABLE_SENSE_MODE_VAL_CABLE_SENSE_MODE_ON_DEMAND',
+                'value': 1
+            }
+        ]
+    },
+    'NiScopeReal64AttributeValuesMapped': {
+        'enum-value-prefix': 'NISCOPE_REAL64',
+        'generate-mappings': True,
+        'values': [
+            {
+                'name': 'INPUT_IMPEDANCE_VAL_50_OHMS',
+                'value': 50.0
+            },
+            {
+                'name': 'INPUT_IMPEDANCE_VAL_75_OHMS',
+                'value': 75.0
+            },
+            {
+                'name': 'INPUT_IMPEDANCE_VAL_1_MEG_OHM',
+                'value': 1000000.0
+            },
+            {
+                'name': 'MAX_INPUT_FREQUENCY_VAL_BANDWIDTH_DEVICE_DEFAULT',
+                'value': 0.0
+            },
+            {
+                'name': 'MAX_INPUT_FREQUENCY_VAL_BANDWIDTH_FULL',
+                'value': -1.0
+            },
+            {
+                'name': 'MAX_INPUT_FREQUENCY_VAL_20MHZ_BANDWIDTH',
+                'value': 20000000.0
+            },
+            {
+                'name': 'MAX_INPUT_FREQUENCY_VAL_100MHZ_BANDWIDTH',
+                'value': 100000000.0
+            },
+            {
+                'name': 'MAX_INPUT_FREQUENCY_VAL_20MHZ_MAX_INPUT_FREQUENCY',
+                'value': 20000000.0
+            },
+            {
+                'name': 'MAX_INPUT_FREQUENCY_VAL_100MHZ_MAX_INPUT_FREQUENCY',
+                'value': 100000000.0
+            }
+        ]
+    },
+    'NiScopeStringAttributeValuesMapped': {
+        'enum-value-prefix': 'NISCOPE_STRING',
+        'generate-mappings': True,
+        'values': [
+            {
+                'name': 'SAMP_CLK_TIMEPACE_SRC_VAL_CLK_IN',
+                'value': 'VAL_CLK_IN'
+            },
+            {
+                'name': 'SAMP_CLK_TIMEPACE_SRC_VAL_NO_SOURCE',
+                'value': 'VAL_NO_SOURCE'
+            },
+            {
+                'name': 'SAMP_CLK_TIMEPACE_SRC_VAL_PXI_STAR',
+                'value': 'VAL_PXI_STAR'
+            },
+            {
+                'name': 'SAMP_CLK_TIMEPACE_SRC_VAL_PXIE_DSTAR_A',
+                'value': 'VAL_PXIE_DSTAR_A'
+            },
+            {
+                'name': 'SAMP_CLK_TIMEPACE_SRC_VAL_AUX_0_CLK_IN',
+                'value': 'VAL_AUX_0_CLK_IN'
+            },
+            {
+                'name': 'SAMP_CLK_TIMEPACE_SRC_VAL_ONBOARD_CONFIGURABLE_RATE_CLK',
+                'value': 'VAL_ONBOARD_CONFIGURABLE_RATE_CLK'
+            },
+            {
+                'name': 'TRIGGER_SOURCE_VAL_IMMEDIATE',
+                'value': 'VAL_IMMEDIATE'
+            },
+            {
+                'name': 'TRIGGER_SOURCE_VAL_EXTERNAL',
+                'value': 'VAL_EXTERNAL'
+            },
+            {
+                'name': 'TRIGGER_SOURCE_VAL_SW_TRIG_FUNC',
+                'value': 'VAL_SW_TRIG_FUNC'
+            },
+            {
+                'name': 'TRIGGER_SOURCE_VAL_TTL0',
+                'value': 'VAL_TTL0'
+            },
+            {
+                'name': 'TRIGGER_SOURCE_VAL_TTL1',
+                'value': 'VAL_TTL1'
+            },
+            {
+                'name': 'TRIGGER_SOURCE_VAL_TTL2',
+                'value': 'VAL_TTL2'
+            },
+            {
+                'name': 'TRIGGER_SOURCE_VAL_TTL3',
+                'value': 'VAL_TTL3'
+            },
+            {
+                'name': 'TRIGGER_SOURCE_VAL_TTL4',
+                'value': 'VAL_TTL4'
+            },
+            {
+                'name': 'TRIGGER_SOURCE_VAL_TTL5',
+                'value': 'VAL_TTL5'
+            },
+            {
+                'name': 'TRIGGER_SOURCE_VAL_TTL6',
+                'value': 'VAL_TTL6'
+            },
+            {
+                'name': 'TRIGGER_SOURCE_VAL_TTL7',
+                'value': 'VAL_TTL7'
+            },
+            {
+                'name': 'TRIGGER_SOURCE_VAL_ECL0',
+                'value': 'VAL_ECL0'
+            },
+            {
+                'name': 'TRIGGER_SOURCE_VAL_ECL1',
+                'value': 'VAL_ECL1'
+            },
+            {
+                'name': 'TRIGGER_SOURCE_VAL_PXI_STAR',
+                'value': 'VAL_PXI_STAR'
+            },
+            {
+                'name': 'TRIGGER_SOURCE_VAL_RTSI_0',
+                'value': 'VAL_RTSI_0'
+            },
+            {
+                'name': 'TRIGGER_SOURCE_VAL_RTSI_1',
+                'value': 'VAL_RTSI_1'
+            },
+            {
+                'name': 'TRIGGER_SOURCE_VAL_RTSI_2',
+                'value': 'VAL_RTSI_2'
+            },
+            {
+                'name': 'TRIGGER_SOURCE_VAL_RTSI_3',
+                'value': 'VAL_RTSI_3'
+            },
+            {
+                'name': 'TRIGGER_SOURCE_VAL_RTSI_4',
+                'value': 'VAL_RTSI_4'
+            },
+            {
+                'name': 'TRIGGER_SOURCE_VAL_RTSI_5',
+                'value': 'VAL_RTSI_5'
+            },
+            {
+                'name': 'TRIGGER_SOURCE_VAL_RTSI_6',
+                'value': 'VAL_RTSI_6'
+            },
+            {
+                'name': 'TRIGGER_SOURCE_VAL_RTSI_7',
+                'value': 'VAL_RTSI_7'
+            },
+            {
+                'name': 'TRIGGER_SOURCE_VAL_PFI_0',
+                'value': 'VAL_PFI_0'
+            },
+            {
+                'name': 'TRIGGER_SOURCE_VAL_PFI_1',
+                'value': 'VAL_PFI_1'
+            },
+            {
+                'name': 'TRIGGER_SOURCE_VAL_PFI_2',
+                'value': 'VAL_PFI_2'
+            },
+            {
+                'name': 'TRIGGER_SOURCE_VAL_PFI_3',
+                'value': 'VAL_PFI_3'
+            },
+            {
+                'name': 'TRIGGER_SOURCE_VAL_PFI_4',
+                'value': 'VAL_PFI_4'
+            },
+            {
+                'name': 'TRIGGER_SOURCE_VAL_PFI_5',
+                'value': 'VAL_PFI_5'
+            },
+            {
+                'name': 'TRIGGER_SOURCE_VAL_PFI_6',
+                'value': 'VAL_PFI_6'
+            },
+            {
+                'name': 'TRIGGER_SOURCE_VAL_PFI_7',
+                'value': 'VAL_PFI_7'
+            },
+            {
+                'name': 'TRIGGER_SOURCE_VAL_AUX_0_PFI_0',
+                'value': 'VAL_AUX_0_PFI_0'
+            },
+            {
+                'name': 'TRIGGER_SOURCE_VAL_AUX_0_PFI_1',
+                'value': 'VAL_AUX_0_PFI_1'
+            },
+            {
+                'name': 'TRIGGER_SOURCE_VAL_AUX_0_PFI_3',
+                'value': 'VAL_AUX_0_PFI_3'
+            },
+            {
+                'name': 'TRIGGER_SOURCE_VAL_AUX_0_PFI_4',
+                'value': 'VAL_AUX_0_PFI_4'
+            },
+            {
+                'name': 'TRIGGER_SOURCE_VAL_AUX_0_PFI_5',
+                'value': 'VAL_AUX_0_PFI_5'
+            },
+            {
+                'name': 'TRIGGER_SOURCE_VAL_AUX_0_PFI_6',
+                'value': 'VAL_AUX_0_PFI_6'
+            },
+            {
+                'name': 'TRIGGER_SOURCE_VAL_AUX_0_PFI_7',
+                'value': 'VAL_AUX_0_PFI_7'
+            },
+            {
+                'name': 'TRIGGER_SOURCE_VAL_AUX_0_PFI_2',
+                'value': 'VAL_AUX_0_PFI_2'
             }
         ]
     },
@@ -1174,15 +1900,15 @@ enums = {
     'ScalarMeasurement': {
         'values': [
             {
+                'name': 'NISCOPE_VAL_RISE_TIME',
+                'value': 0
+            },
+            {
                 'documentation': {
                     'description': 'None'
                 },
                 'name': 'NISCOPE_VAL_NO_MEASUREMENT',
                 'value': 4000
-            },
-            {
-                'name': 'NISCOPE_VAL_RISE_TIME',
-                'value': 0
             },
             {
                 'name': 'NISCOPE_VAL_FALL_TIME',

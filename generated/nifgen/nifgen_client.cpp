@@ -1051,25 +1051,6 @@ create_waveform_from_file_hws(const StubPtr& stub, const nidevice_grpc::Session&
   return response;
 }
 
-CreateWaveformI16Response
-create_waveform_i16(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const std::vector<pb::int32>& waveform_data_array)
-{
-  ::grpc::ClientContext context;
-
-  auto request = CreateWaveformI16Request{};
-  request.mutable_vi()->CopyFrom(vi);
-  request.set_channel_name(channel_name);
-  copy_array(waveform_data_array, request.mutable_waveform_data_array());
-
-  auto response = CreateWaveformI16Response{};
-
-  raise_if_error(
-      stub->CreateWaveformI16(&context, request, &response),
-      context);
-
-  return response;
-}
-
 CreateWaveformFromFileI16Response
 create_waveform_from_file_i16(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& file_name, const simple_variant<ByteOrder, pb::int32>& byte_order)
 {
@@ -1092,6 +1073,25 @@ create_waveform_from_file_i16(const StubPtr& stub, const nidevice_grpc::Session&
 
   raise_if_error(
       stub->CreateWaveformFromFileI16(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CreateWaveformI16Response
+create_waveform_i16(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const std::vector<pb::int32>& waveform_data_array)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CreateWaveformI16Request{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_channel_name(channel_name);
+  copy_array(waveform_data_array, request.mutable_waveform_data_array());
+
+  auto response = CreateWaveformI16Response{};
+
+  raise_if_error(
+      stub->CreateWaveformI16(&context, request, &response),
       context);
 
   return response;
@@ -2446,6 +2446,46 @@ write_complex_binary16_waveform(const StubPtr& stub, const nidevice_grpc::Sessio
   return response;
 }
 
+WriteNamedWaveformComplexF64Response
+write_named_waveform_complex_f64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& waveform_name, const std::vector<nidevice_grpc::NIComplexNumber>& data)
+{
+  ::grpc::ClientContext context;
+
+  auto request = WriteNamedWaveformComplexF64Request{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_channel_name(channel_name);
+  request.set_waveform_name(waveform_name);
+  copy_array(data, request.mutable_data());
+
+  auto response = WriteNamedWaveformComplexF64Response{};
+
+  raise_if_error(
+      stub->WriteNamedWaveformComplexF64(&context, request, &response),
+      context);
+
+  return response;
+}
+
+WriteNamedWaveformComplexI16Response
+write_named_waveform_complex_i16(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& waveform_name, const std::vector<nidevice_grpc::NIComplexI16>& data)
+{
+  ::grpc::ClientContext context;
+
+  auto request = WriteNamedWaveformComplexI16Request{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_channel_name(channel_name);
+  request.set_waveform_name(waveform_name);
+  copy_array(data, request.mutable_data());
+
+  auto response = WriteNamedWaveformComplexI16Response{};
+
+  raise_if_error(
+      stub->WriteNamedWaveformComplexI16(&context, request, &response),
+      context);
+
+  return response;
+}
+
 WriteNamedWaveformF64Response
 write_named_waveform_f64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& waveform_name, const std::vector<double>& data)
 {
@@ -2559,46 +2599,6 @@ write_waveform_complex_f64(const StubPtr& stub, const nidevice_grpc::Session& vi
 
   raise_if_error(
       stub->WriteWaveformComplexF64(&context, request, &response),
-      context);
-
-  return response;
-}
-
-WriteNamedWaveformComplexF64Response
-write_named_waveform_complex_f64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& waveform_name, const std::vector<nidevice_grpc::NIComplexNumber>& data)
-{
-  ::grpc::ClientContext context;
-
-  auto request = WriteNamedWaveformComplexF64Request{};
-  request.mutable_vi()->CopyFrom(vi);
-  request.set_channel_name(channel_name);
-  request.set_waveform_name(waveform_name);
-  copy_array(data, request.mutable_data());
-
-  auto response = WriteNamedWaveformComplexF64Response{};
-
-  raise_if_error(
-      stub->WriteNamedWaveformComplexF64(&context, request, &response),
-      context);
-
-  return response;
-}
-
-WriteNamedWaveformComplexI16Response
-write_named_waveform_complex_i16(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& waveform_name, const std::vector<nidevice_grpc::NIComplexI16>& data)
-{
-  ::grpc::ClientContext context;
-
-  auto request = WriteNamedWaveformComplexI16Request{};
-  request.mutable_vi()->CopyFrom(vi);
-  request.set_channel_name(channel_name);
-  request.set_waveform_name(waveform_name);
-  copy_array(data, request.mutable_data());
-
-  auto response = WriteNamedWaveformComplexI16Response{};
-
-  raise_if_error(
-      stub->WriteNamedWaveformComplexI16(&context, request, &response),
       context);
 
   return response;

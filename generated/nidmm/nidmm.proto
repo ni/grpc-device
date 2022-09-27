@@ -16,7 +16,6 @@ package nidmm_grpc;
 import "session.proto";
 
 service NiDmm {
-  rpc Control4022(Control4022Request) returns (Control4022Response);
   rpc Abort(AbortRequest) returns (AbortResponse);
   rpc CheckAttributeViBoolean(CheckAttributeViBooleanRequest) returns (CheckAttributeViBooleanResponse);
   rpc CheckAttributeViInt32(CheckAttributeViInt32Request) returns (CheckAttributeViInt32Response);
@@ -34,26 +33,27 @@ service NiDmm {
   rpc ConfigureFixedRefJunction(ConfigureFixedRefJunctionRequest) returns (ConfigureFixedRefJunctionResponse);
   rpc ConfigureFrequencyVoltageRange(ConfigureFrequencyVoltageRangeRequest) returns (ConfigureFrequencyVoltageRangeResponse);
   rpc ConfigureMeasCompleteDest(ConfigureMeasCompleteDestRequest) returns (ConfigureMeasCompleteDestResponse);
-  rpc ConfigureMeasurementAbsolute(ConfigureMeasurementAbsoluteRequest) returns (ConfigureMeasurementAbsoluteResponse);
   rpc ConfigureMeasCompleteSlope(ConfigureMeasCompleteSlopeRequest) returns (ConfigureMeasCompleteSlopeResponse);
+  rpc ConfigureMeasurementAbsolute(ConfigureMeasurementAbsoluteRequest) returns (ConfigureMeasurementAbsoluteResponse);
   rpc ConfigureMeasurementDigits(ConfigureMeasurementDigitsRequest) returns (ConfigureMeasurementDigitsResponse);
   rpc ConfigureMultiPoint(ConfigureMultiPointRequest) returns (ConfigureMultiPointResponse);
   rpc ConfigureOffsetCompOhms(ConfigureOffsetCompOhmsRequest) returns (ConfigureOffsetCompOhmsResponse);
   rpc ConfigureOpenCableCompValues(ConfigureOpenCableCompValuesRequest) returns (ConfigureOpenCableCompValuesResponse);
   rpc ConfigurePowerLineFrequency(ConfigurePowerLineFrequencyRequest) returns (ConfigurePowerLineFrequencyResponse);
-  rpc ConfigureShortCableCompValues(ConfigureShortCableCompValuesRequest) returns (ConfigureShortCableCompValuesResponse);
   rpc ConfigureRTDCustom(ConfigureRTDCustomRequest) returns (ConfigureRTDCustomResponse);
   rpc ConfigureRTDType(ConfigureRTDTypeRequest) returns (ConfigureRTDTypeResponse);
   rpc ConfigureSampleTriggerSlope(ConfigureSampleTriggerSlopeRequest) returns (ConfigureSampleTriggerSlopeResponse);
+  rpc ConfigureShortCableCompValues(ConfigureShortCableCompValuesRequest) returns (ConfigureShortCableCompValuesResponse);
   rpc ConfigureThermistorCustom(ConfigureThermistorCustomRequest) returns (ConfigureThermistorCustomResponse);
-  rpc ConfigureThermocouple(ConfigureThermocoupleRequest) returns (ConfigureThermocoupleResponse);
   rpc ConfigureThermistorType(ConfigureThermistorTypeRequest) returns (ConfigureThermistorTypeResponse);
+  rpc ConfigureThermocouple(ConfigureThermocoupleRequest) returns (ConfigureThermocoupleResponse);
   rpc ConfigureTransducerType(ConfigureTransducerTypeRequest) returns (ConfigureTransducerTypeResponse);
   rpc ConfigureTrigger(ConfigureTriggerRequest) returns (ConfigureTriggerResponse);
   rpc ConfigureTriggerSlope(ConfigureTriggerSlopeRequest) returns (ConfigureTriggerSlopeResponse);
   rpc ConfigureWaveformAcquisition(ConfigureWaveformAcquisitionRequest) returns (ConfigureWaveformAcquisitionResponse);
   rpc ConfigureWaveformCoupling(ConfigureWaveformCouplingRequest) returns (ConfigureWaveformCouplingResponse);
   rpc Control(ControlRequest) returns (ControlResponse);
+  rpc Control4022(Control4022Request) returns (Control4022Response);
   rpc Disable(DisableRequest) returns (DisableResponse);
   rpc ExportAttributeConfigurationBuffer(ExportAttributeConfigurationBufferRequest) returns (ExportAttributeConfigurationBufferResponse);
   rpc ExportAttributeConfigurationFile(ExportAttributeConfigurationFileRequest) returns (ExportAttributeConfigurationFileResponse);
@@ -268,110 +268,6 @@ enum Function {
   FUNCTION_NIDMM_VAL_INDUCTANCE = 1006;
 }
 
-enum PowerLineFrequencies {
-  POWER_LINE_FREQUENCIES_UNSPECIFIED = 0;
-  POWER_LINE_FREQUENCIES_NIDMM_VAL_50_HERTZ = 50;
-  POWER_LINE_FREQUENCIES_NIDMM_VAL_60_HERTZ = 60;
-}
-
-enum RtdType {
-  RTD_TYPE_NIDMM_VAL_TEMP_RTD_CUSTOM = 0;
-  RTD_TYPE_NIDMM_VAL_TEMP_RTD_PT3750 = 1;
-  RTD_TYPE_NIDMM_VAL_TEMP_RTD_PT3851 = 2;
-  RTD_TYPE_NIDMM_VAL_TEMP_RTD_PT3911 = 3;
-  RTD_TYPE_NIDMM_VAL_TEMP_RTD_PT3916 = 4;
-  RTD_TYPE_NIDMM_VAL_TEMP_RTD_PT3920 = 5;
-  RTD_TYPE_NIDMM_VAL_TEMP_RTD_PT3928 = 6;
-}
-
-enum SampleCount {
-  SAMPLE_COUNT_NIDMM_VAL_SAMPLE_COUNT_INFINITE = 0;
-}
-
-enum SampleInterval {
-  SAMPLE_INTERVAL_UNSPECIFIED = 0;
-  SAMPLE_INTERVAL_NIDMM_VAL_AUTO_DELAY = -1;
-}
-
-enum SampleTrigSlope {
-  SAMPLE_TRIG_SLOPE_NIDMM_VAL_POSITIVE = 0;
-  SAMPLE_TRIG_SLOPE_NIDMM_VAL_NEGATIVE = 1;
-}
-
-enum SampleTrigger {
-  SAMPLE_TRIGGER_UNSPECIFIED = 0;
-  SAMPLE_TRIGGER_NIDMM_VAL_IMMEDIATE = 1;
-  SAMPLE_TRIGGER_NIDMM_VAL_EXTERNAL = 2;
-  SAMPLE_TRIGGER_NIDMM_VAL_SOFTWARE_TRIG = 3;
-  SAMPLE_TRIGGER_NIDMM_VAL_INTERVAL = 10;
-  SAMPLE_TRIGGER_NIDMM_VAL_PXI_TRIG0 = 111;
-  SAMPLE_TRIGGER_NIDMM_VAL_PXI_TRIG1 = 112;
-  SAMPLE_TRIGGER_NIDMM_VAL_PXI_TRIG2 = 113;
-  SAMPLE_TRIGGER_NIDMM_VAL_PXI_TRIG3 = 114;
-  SAMPLE_TRIGGER_NIDMM_VAL_PXI_TRIG4 = 115;
-  SAMPLE_TRIGGER_NIDMM_VAL_PXI_TRIG5 = 116;
-  SAMPLE_TRIGGER_NIDMM_VAL_PXI_TRIG6 = 117;
-  SAMPLE_TRIGGER_NIDMM_VAL_PXI_TRIG7 = 118;
-  SAMPLE_TRIGGER_NIDMM_VAL_PXI_STAR = 131;
-  SAMPLE_TRIGGER_NIDMM_VAL_AUX_TRIG1 = 1001;
-  SAMPLE_TRIGGER_NIDMM_VAL_LBR_TRIG1 = 1004;
-}
-
-enum ThermocoupleReferenceJunctionType {
-  THERMOCOUPLE_REFERENCE_JUNCTION_TYPE_UNSPECIFIED = 0;
-  THERMOCOUPLE_REFERENCE_JUNCTION_TYPE_NIDMM_VAL_TEMP_REF_JUNC_FIXED = 2;
-}
-
-enum ThermocoupleType {
-  THERMOCOUPLE_TYPE_UNSPECIFIED = 0;
-  THERMOCOUPLE_TYPE_NIDMM_VAL_TEMP_TC_B = 1;
-  THERMOCOUPLE_TYPE_NIDMM_VAL_TEMP_TC_E = 4;
-  THERMOCOUPLE_TYPE_NIDMM_VAL_TEMP_TC_J = 6;
-  THERMOCOUPLE_TYPE_NIDMM_VAL_TEMP_TC_K = 7;
-  THERMOCOUPLE_TYPE_NIDMM_VAL_TEMP_TC_N = 8;
-  THERMOCOUPLE_TYPE_NIDMM_VAL_TEMP_TC_R = 9;
-  THERMOCOUPLE_TYPE_NIDMM_VAL_TEMP_TC_S = 10;
-  THERMOCOUPLE_TYPE_NIDMM_VAL_TEMP_TC_T = 11;
-}
-
-enum TimeLimit {
-  TIME_LIMIT_UNSPECIFIED = 0;
-  TIME_LIMIT_NIDMM_VAL_TIME_LIMIT_AUTO = -1;
-}
-
-enum TriggerCount {
-  TRIGGER_COUNT_NIDMM_VAL_TRIG_COUNT_INFINITE = 0;
-}
-
-enum TriggerDelays {
-  TRIGGER_DELAYS_UNSPECIFIED = 0;
-  TRIGGER_DELAYS_NIDMM_VAL_AUTO_DELAY_ON = -1;
-  TRIGGER_DELAYS_NIDMM_VAL_AUTO_DELAY_OFF = -2;
-}
-
-enum TriggerSlope {
-  TRIGGER_SLOPE_NIDMM_VAL_POSITIVE = 0;
-  TRIGGER_SLOPE_NIDMM_VAL_NEGATIVE = 1;
-}
-
-enum TriggerSource {
-  TRIGGER_SOURCE_UNSPECIFIED = 0;
-  TRIGGER_SOURCE_NIDMM_VAL_IMMEDIATE = 1;
-  TRIGGER_SOURCE_NIDMM_VAL_EXTERNAL = 2;
-  TRIGGER_SOURCE_NIDMM_VAL_SOFTWARE_TRIG = 3;
-  TRIGGER_SOURCE_NIDMM_VAL_PXI_TRIG0 = 111;
-  TRIGGER_SOURCE_NIDMM_VAL_PXI_TRIG1 = 112;
-  TRIGGER_SOURCE_NIDMM_VAL_PXI_TRIG2 = 113;
-  TRIGGER_SOURCE_NIDMM_VAL_PXI_TRIG3 = 114;
-  TRIGGER_SOURCE_NIDMM_VAL_PXI_TRIG4 = 115;
-  TRIGGER_SOURCE_NIDMM_VAL_PXI_TRIG5 = 116;
-  TRIGGER_SOURCE_NIDMM_VAL_PXI_TRIG6 = 117;
-  TRIGGER_SOURCE_NIDMM_VAL_PXI_TRIG7 = 118;
-  TRIGGER_SOURCE_NIDMM_VAL_PXI_STAR = 131;
-  TRIGGER_SOURCE_NIDMM_VAL_AUX_TRIG1 = 1001;
-  TRIGGER_SOURCE_NIDMM_VAL_LBR_TRIG1 = 1004;
-}
-
 enum NiDmmInt32AttributeValues {
   option allow_alias = true;
   NIDMM_INT32_UNSPECIFIED = 0;
@@ -518,16 +414,108 @@ enum NiDmmReal64AttributeValues {
   NIDMM_REAL64_TRIGGER_DELAYS_VAL_AUTO_DELAY_OFF = -2;
 }
 
-message Control4022Request {
-  string resource_name = 1;
-  oneof configuration_enum {
-    Configuration4022 configuration = 2;
-    sint32 configuration_raw = 3;
-  }
+enum PowerLineFrequencies {
+  POWER_LINE_FREQUENCIES_UNSPECIFIED = 0;
+  POWER_LINE_FREQUENCIES_NIDMM_VAL_50_HERTZ = 50;
+  POWER_LINE_FREQUENCIES_NIDMM_VAL_60_HERTZ = 60;
 }
 
-message Control4022Response {
-  int32 status = 1;
+enum RtdType {
+  RTD_TYPE_NIDMM_VAL_TEMP_RTD_CUSTOM = 0;
+  RTD_TYPE_NIDMM_VAL_TEMP_RTD_PT3750 = 1;
+  RTD_TYPE_NIDMM_VAL_TEMP_RTD_PT3851 = 2;
+  RTD_TYPE_NIDMM_VAL_TEMP_RTD_PT3911 = 3;
+  RTD_TYPE_NIDMM_VAL_TEMP_RTD_PT3916 = 4;
+  RTD_TYPE_NIDMM_VAL_TEMP_RTD_PT3920 = 5;
+  RTD_TYPE_NIDMM_VAL_TEMP_RTD_PT3928 = 6;
+}
+
+enum SampleCount {
+  SAMPLE_COUNT_NIDMM_VAL_SAMPLE_COUNT_INFINITE = 0;
+}
+
+enum SampleInterval {
+  SAMPLE_INTERVAL_UNSPECIFIED = 0;
+  SAMPLE_INTERVAL_NIDMM_VAL_AUTO_DELAY = -1;
+}
+
+enum SampleTrigSlope {
+  SAMPLE_TRIG_SLOPE_NIDMM_VAL_POSITIVE = 0;
+  SAMPLE_TRIG_SLOPE_NIDMM_VAL_NEGATIVE = 1;
+}
+
+enum SampleTrigger {
+  SAMPLE_TRIGGER_UNSPECIFIED = 0;
+  SAMPLE_TRIGGER_NIDMM_VAL_IMMEDIATE = 1;
+  SAMPLE_TRIGGER_NIDMM_VAL_EXTERNAL = 2;
+  SAMPLE_TRIGGER_NIDMM_VAL_SOFTWARE_TRIG = 3;
+  SAMPLE_TRIGGER_NIDMM_VAL_INTERVAL = 10;
+  SAMPLE_TRIGGER_NIDMM_VAL_PXI_TRIG0 = 111;
+  SAMPLE_TRIGGER_NIDMM_VAL_PXI_TRIG1 = 112;
+  SAMPLE_TRIGGER_NIDMM_VAL_PXI_TRIG2 = 113;
+  SAMPLE_TRIGGER_NIDMM_VAL_PXI_TRIG3 = 114;
+  SAMPLE_TRIGGER_NIDMM_VAL_PXI_TRIG4 = 115;
+  SAMPLE_TRIGGER_NIDMM_VAL_PXI_TRIG5 = 116;
+  SAMPLE_TRIGGER_NIDMM_VAL_PXI_TRIG6 = 117;
+  SAMPLE_TRIGGER_NIDMM_VAL_PXI_TRIG7 = 118;
+  SAMPLE_TRIGGER_NIDMM_VAL_PXI_STAR = 131;
+  SAMPLE_TRIGGER_NIDMM_VAL_AUX_TRIG1 = 1001;
+  SAMPLE_TRIGGER_NIDMM_VAL_LBR_TRIG1 = 1004;
+}
+
+enum ThermocoupleReferenceJunctionType {
+  THERMOCOUPLE_REFERENCE_JUNCTION_TYPE_UNSPECIFIED = 0;
+  THERMOCOUPLE_REFERENCE_JUNCTION_TYPE_NIDMM_VAL_TEMP_REF_JUNC_FIXED = 2;
+}
+
+enum ThermocoupleType {
+  THERMOCOUPLE_TYPE_UNSPECIFIED = 0;
+  THERMOCOUPLE_TYPE_NIDMM_VAL_TEMP_TC_B = 1;
+  THERMOCOUPLE_TYPE_NIDMM_VAL_TEMP_TC_E = 4;
+  THERMOCOUPLE_TYPE_NIDMM_VAL_TEMP_TC_J = 6;
+  THERMOCOUPLE_TYPE_NIDMM_VAL_TEMP_TC_K = 7;
+  THERMOCOUPLE_TYPE_NIDMM_VAL_TEMP_TC_N = 8;
+  THERMOCOUPLE_TYPE_NIDMM_VAL_TEMP_TC_R = 9;
+  THERMOCOUPLE_TYPE_NIDMM_VAL_TEMP_TC_S = 10;
+  THERMOCOUPLE_TYPE_NIDMM_VAL_TEMP_TC_T = 11;
+}
+
+enum TimeLimit {
+  TIME_LIMIT_UNSPECIFIED = 0;
+  TIME_LIMIT_NIDMM_VAL_TIME_LIMIT_AUTO = -1;
+}
+
+enum TriggerCount {
+  TRIGGER_COUNT_NIDMM_VAL_TRIG_COUNT_INFINITE = 0;
+}
+
+enum TriggerDelays {
+  TRIGGER_DELAYS_UNSPECIFIED = 0;
+  TRIGGER_DELAYS_NIDMM_VAL_AUTO_DELAY_ON = -1;
+  TRIGGER_DELAYS_NIDMM_VAL_AUTO_DELAY_OFF = -2;
+}
+
+enum TriggerSlope {
+  TRIGGER_SLOPE_NIDMM_VAL_POSITIVE = 0;
+  TRIGGER_SLOPE_NIDMM_VAL_NEGATIVE = 1;
+}
+
+enum TriggerSource {
+  TRIGGER_SOURCE_UNSPECIFIED = 0;
+  TRIGGER_SOURCE_NIDMM_VAL_IMMEDIATE = 1;
+  TRIGGER_SOURCE_NIDMM_VAL_EXTERNAL = 2;
+  TRIGGER_SOURCE_NIDMM_VAL_SOFTWARE_TRIG = 3;
+  TRIGGER_SOURCE_NIDMM_VAL_PXI_TRIG0 = 111;
+  TRIGGER_SOURCE_NIDMM_VAL_PXI_TRIG1 = 112;
+  TRIGGER_SOURCE_NIDMM_VAL_PXI_TRIG2 = 113;
+  TRIGGER_SOURCE_NIDMM_VAL_PXI_TRIG3 = 114;
+  TRIGGER_SOURCE_NIDMM_VAL_PXI_TRIG4 = 115;
+  TRIGGER_SOURCE_NIDMM_VAL_PXI_TRIG5 = 116;
+  TRIGGER_SOURCE_NIDMM_VAL_PXI_TRIG6 = 117;
+  TRIGGER_SOURCE_NIDMM_VAL_PXI_TRIG7 = 118;
+  TRIGGER_SOURCE_NIDMM_VAL_PXI_STAR = 131;
+  TRIGGER_SOURCE_NIDMM_VAL_AUX_TRIG1 = 1001;
+  TRIGGER_SOURCE_NIDMM_VAL_LBR_TRIG1 = 1004;
 }
 
 message AbortRequest {
@@ -699,6 +687,15 @@ message ConfigureMeasCompleteDestResponse {
   int32 status = 1;
 }
 
+message ConfigureMeasCompleteSlopeRequest {
+  nidevice_grpc.Session vi = 1;
+  sint32 meas_complete_slope = 2;
+}
+
+message ConfigureMeasCompleteSlopeResponse {
+  int32 status = 1;
+}
+
 message ConfigureMeasurementAbsoluteRequest {
   nidevice_grpc.Session vi = 1;
   oneof measurement_function_enum {
@@ -710,15 +707,6 @@ message ConfigureMeasurementAbsoluteRequest {
 }
 
 message ConfigureMeasurementAbsoluteResponse {
-  int32 status = 1;
-}
-
-message ConfigureMeasCompleteSlopeRequest {
-  nidevice_grpc.Session vi = 1;
-  sint32 meas_complete_slope = 2;
-}
-
-message ConfigureMeasCompleteSlopeResponse {
   int32 status = 1;
 }
 
@@ -794,16 +782,6 @@ message ConfigurePowerLineFrequencyResponse {
   int32 status = 1;
 }
 
-message ConfigureShortCableCompValuesRequest {
-  nidevice_grpc.Session vi = 1;
-  double resistance = 2;
-  double reactance = 3;
-}
-
-message ConfigureShortCableCompValuesResponse {
-  int32 status = 1;
-}
-
 message ConfigureRTDCustomRequest {
   nidevice_grpc.Session vi = 1;
   double rtd_a = 2;
@@ -840,6 +818,16 @@ message ConfigureSampleTriggerSlopeResponse {
   int32 status = 1;
 }
 
+message ConfigureShortCableCompValuesRequest {
+  nidevice_grpc.Session vi = 1;
+  double resistance = 2;
+  double reactance = 3;
+}
+
+message ConfigureShortCableCompValuesResponse {
+  int32 status = 1;
+}
+
 message ConfigureThermistorCustomRequest {
   nidevice_grpc.Session vi = 1;
   double thermistor_a = 2;
@@ -848,6 +836,15 @@ message ConfigureThermistorCustomRequest {
 }
 
 message ConfigureThermistorCustomResponse {
+  int32 status = 1;
+}
+
+message ConfigureThermistorTypeRequest {
+  nidevice_grpc.Session vi = 1;
+  sint32 thermistor_type = 2;
+}
+
+message ConfigureThermistorTypeResponse {
   int32 status = 1;
 }
 
@@ -864,15 +861,6 @@ message ConfigureThermocoupleRequest {
 }
 
 message ConfigureThermocoupleResponse {
-  int32 status = 1;
-}
-
-message ConfigureThermistorTypeRequest {
-  nidevice_grpc.Session vi = 1;
-  sint32 thermistor_type = 2;
-}
-
-message ConfigureThermistorTypeResponse {
   int32 status = 1;
 }
 
@@ -946,6 +934,18 @@ message ControlRequest {
 }
 
 message ControlResponse {
+  int32 status = 1;
+}
+
+message Control4022Request {
+  string resource_name = 1;
+  oneof configuration_enum {
+    Configuration4022 configuration = 2;
+    sint32 configuration_raw = 3;
+  }
+}
+
+message Control4022Response {
   int32 status = 1;
 }
 

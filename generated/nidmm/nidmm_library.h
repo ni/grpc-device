@@ -18,7 +18,6 @@ class NiDmmLibrary : public nidmm_grpc::NiDmmLibraryInterface {
   virtual ~NiDmmLibrary();
 
   ::grpc::Status check_function_exists(std::string functionName);
-  ViStatus Control4022(ViRsrc resourceName, ViInt32 configuration);
   ViStatus Abort(ViSession vi);
   ViStatus CheckAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean attributeValue);
   ViStatus CheckAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 attributeValue);
@@ -36,26 +35,27 @@ class NiDmmLibrary : public nidmm_grpc::NiDmmLibraryInterface {
   ViStatus ConfigureFixedRefJunction(ViSession vi, ViReal64 fixedReferenceJunction);
   ViStatus ConfigureFrequencyVoltageRange(ViSession vi, ViReal64 voltageRange);
   ViStatus ConfigureMeasCompleteDest(ViSession vi, ViInt32 measCompleteDestination);
-  ViStatus ConfigureMeasurementAbsolute(ViSession vi, ViInt32 measurementFunction, ViReal64 range, ViReal64 resolutionAbsolute);
   ViStatus ConfigureMeasCompleteSlope(ViSession vi, ViInt32 measCompleteSlope);
+  ViStatus ConfigureMeasurementAbsolute(ViSession vi, ViInt32 measurementFunction, ViReal64 range, ViReal64 resolutionAbsolute);
   ViStatus ConfigureMeasurementDigits(ViSession vi, ViInt32 measurementFunction, ViReal64 range, ViReal64 resolutionDigits);
   ViStatus ConfigureMultiPoint(ViSession vi, ViInt32 triggerCount, ViInt32 sampleCount, ViInt32 sampleTrigger, ViReal64 sampleInterval);
   ViStatus ConfigureOffsetCompOhms(ViSession vi, ViInt32 offsetCompOhms);
   ViStatus ConfigureOpenCableCompValues(ViSession vi, ViReal64 conductance, ViReal64 susceptance);
   ViStatus ConfigurePowerLineFrequency(ViSession vi, ViReal64 powerLineFrequencyHz);
-  ViStatus ConfigureShortCableCompValues(ViSession vi, ViReal64 resistance, ViReal64 reactance);
   ViStatus ConfigureRTDCustom(ViSession vi, ViReal64 rtdA, ViReal64 rtdB, ViReal64 rtdC);
   ViStatus ConfigureRTDType(ViSession vi, ViInt32 rtdType, ViReal64 rtdResistance);
   ViStatus ConfigureSampleTriggerSlope(ViSession vi, ViInt32 sampleTriggerSlope);
+  ViStatus ConfigureShortCableCompValues(ViSession vi, ViReal64 resistance, ViReal64 reactance);
   ViStatus ConfigureThermistorCustom(ViSession vi, ViReal64 thermistorA, ViReal64 thermistorB, ViReal64 thermistorC);
-  ViStatus ConfigureThermocouple(ViSession vi, ViInt32 thermocoupleType, ViInt32 referenceJunctionType);
   ViStatus ConfigureThermistorType(ViSession vi, ViInt32 thermistorType);
+  ViStatus ConfigureThermocouple(ViSession vi, ViInt32 thermocoupleType, ViInt32 referenceJunctionType);
   ViStatus ConfigureTransducerType(ViSession vi, ViInt32 transducerType);
   ViStatus ConfigureTrigger(ViSession vi, ViInt32 triggerSource, ViReal64 triggerDelay);
   ViStatus ConfigureTriggerSlope(ViSession vi, ViInt32 triggerSlope);
   ViStatus ConfigureWaveformAcquisition(ViSession vi, ViInt32 measurementFunction, ViReal64 range, ViReal64 rate, ViInt32 waveformPoints);
   ViStatus ConfigureWaveformCoupling(ViSession vi, ViInt32 waveformCoupling);
   ViStatus Control(ViSession vi, ViInt32 controlAction);
+  ViStatus Control4022(ViRsrc resourceName, ViInt32 configuration);
   ViStatus Disable(ViSession vi);
   ViStatus ExportAttributeConfigurationBuffer(ViSession vi, ViInt32 size, ViInt8 configuration[]);
   ViStatus ExportAttributeConfigurationFile(ViSession vi, ViConstString filePath);
@@ -110,7 +110,6 @@ class NiDmmLibrary : public nidmm_grpc::NiDmmLibraryInterface {
   ViStatus UnlockSession(ViSession vi, ViBoolean* callerHasLock);
 
  private:
-  using Control4022Ptr = decltype(&niDMM_4022Control);
   using AbortPtr = decltype(&niDMM_Abort);
   using CheckAttributeViBooleanPtr = decltype(&niDMM_CheckAttributeViBoolean);
   using CheckAttributeViInt32Ptr = decltype(&niDMM_CheckAttributeViInt32);
@@ -128,26 +127,27 @@ class NiDmmLibrary : public nidmm_grpc::NiDmmLibraryInterface {
   using ConfigureFixedRefJunctionPtr = decltype(&niDMM_ConfigureFixedRefJunction);
   using ConfigureFrequencyVoltageRangePtr = decltype(&niDMM_ConfigureFrequencyVoltageRange);
   using ConfigureMeasCompleteDestPtr = decltype(&niDMM_ConfigureMeasCompleteDest);
-  using ConfigureMeasurementAbsolutePtr = decltype(&niDMM_ConfigureMeasurementAbsolute);
   using ConfigureMeasCompleteSlopePtr = decltype(&niDMM_ConfigureMeasCompleteSlope);
+  using ConfigureMeasurementAbsolutePtr = decltype(&niDMM_ConfigureMeasurementAbsolute);
   using ConfigureMeasurementDigitsPtr = decltype(&niDMM_ConfigureMeasurementDigits);
   using ConfigureMultiPointPtr = decltype(&niDMM_ConfigureMultiPoint);
   using ConfigureOffsetCompOhmsPtr = decltype(&niDMM_ConfigureOffsetCompOhms);
   using ConfigureOpenCableCompValuesPtr = decltype(&niDMM_ConfigureOpenCableCompValues);
   using ConfigurePowerLineFrequencyPtr = decltype(&niDMM_ConfigurePowerLineFrequency);
-  using ConfigureShortCableCompValuesPtr = decltype(&niDMM_ConfigureShortCableCompValues);
   using ConfigureRTDCustomPtr = decltype(&niDMM_ConfigureRTDCustom);
   using ConfigureRTDTypePtr = decltype(&niDMM_ConfigureRTDType);
   using ConfigureSampleTriggerSlopePtr = decltype(&niDMM_ConfigureSampleTriggerSlope);
+  using ConfigureShortCableCompValuesPtr = decltype(&niDMM_ConfigureShortCableCompValues);
   using ConfigureThermistorCustomPtr = decltype(&niDMM_ConfigureThermistorCustom);
-  using ConfigureThermocouplePtr = decltype(&niDMM_ConfigureThermocouple);
   using ConfigureThermistorTypePtr = decltype(&niDMM_ConfigureThermistorType);
+  using ConfigureThermocouplePtr = decltype(&niDMM_ConfigureThermocouple);
   using ConfigureTransducerTypePtr = decltype(&niDMM_ConfigureTransducerType);
   using ConfigureTriggerPtr = decltype(&niDMM_ConfigureTrigger);
   using ConfigureTriggerSlopePtr = decltype(&niDMM_ConfigureTriggerSlope);
   using ConfigureWaveformAcquisitionPtr = decltype(&niDMM_ConfigureWaveformAcquisition);
   using ConfigureWaveformCouplingPtr = decltype(&niDMM_ConfigureWaveformCoupling);
   using ControlPtr = decltype(&niDMM_Control);
+  using Control4022Ptr = decltype(&niDMM_4022Control);
   using DisablePtr = decltype(&niDMM_Disable);
   using ExportAttributeConfigurationBufferPtr = decltype(&niDMM_ExportAttributeConfigurationBuffer);
   using ExportAttributeConfigurationFilePtr = decltype(&niDMM_ExportAttributeConfigurationFile);
@@ -202,7 +202,6 @@ class NiDmmLibrary : public nidmm_grpc::NiDmmLibraryInterface {
   using UnlockSessionPtr = ViStatus (*)(ViSession vi, ViBoolean* callerHasLock);
 
   typedef struct FunctionPointers {
-    Control4022Ptr Control4022;
     AbortPtr Abort;
     CheckAttributeViBooleanPtr CheckAttributeViBoolean;
     CheckAttributeViInt32Ptr CheckAttributeViInt32;
@@ -220,26 +219,27 @@ class NiDmmLibrary : public nidmm_grpc::NiDmmLibraryInterface {
     ConfigureFixedRefJunctionPtr ConfigureFixedRefJunction;
     ConfigureFrequencyVoltageRangePtr ConfigureFrequencyVoltageRange;
     ConfigureMeasCompleteDestPtr ConfigureMeasCompleteDest;
-    ConfigureMeasurementAbsolutePtr ConfigureMeasurementAbsolute;
     ConfigureMeasCompleteSlopePtr ConfigureMeasCompleteSlope;
+    ConfigureMeasurementAbsolutePtr ConfigureMeasurementAbsolute;
     ConfigureMeasurementDigitsPtr ConfigureMeasurementDigits;
     ConfigureMultiPointPtr ConfigureMultiPoint;
     ConfigureOffsetCompOhmsPtr ConfigureOffsetCompOhms;
     ConfigureOpenCableCompValuesPtr ConfigureOpenCableCompValues;
     ConfigurePowerLineFrequencyPtr ConfigurePowerLineFrequency;
-    ConfigureShortCableCompValuesPtr ConfigureShortCableCompValues;
     ConfigureRTDCustomPtr ConfigureRTDCustom;
     ConfigureRTDTypePtr ConfigureRTDType;
     ConfigureSampleTriggerSlopePtr ConfigureSampleTriggerSlope;
+    ConfigureShortCableCompValuesPtr ConfigureShortCableCompValues;
     ConfigureThermistorCustomPtr ConfigureThermistorCustom;
-    ConfigureThermocouplePtr ConfigureThermocouple;
     ConfigureThermistorTypePtr ConfigureThermistorType;
+    ConfigureThermocouplePtr ConfigureThermocouple;
     ConfigureTransducerTypePtr ConfigureTransducerType;
     ConfigureTriggerPtr ConfigureTrigger;
     ConfigureTriggerSlopePtr ConfigureTriggerSlope;
     ConfigureWaveformAcquisitionPtr ConfigureWaveformAcquisition;
     ConfigureWaveformCouplingPtr ConfigureWaveformCoupling;
     ControlPtr Control;
+    Control4022Ptr Control4022;
     DisablePtr Disable;
     ExportAttributeConfigurationBufferPtr ExportAttributeConfigurationBuffer;
     ExportAttributeConfigurationFilePtr ExportAttributeConfigurationFile;

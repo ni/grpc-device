@@ -56,7 +56,7 @@ def check_for_warning(response):
         warning_message = client.GetErrorString(
             nidaqmx_types.GetErrorStringRequest(error_code=response.status)
         )
-        sys.stderr.write(f"{warning_message.error_message}\nWarning status: {response.status}\n")
+        sys.stderr.write(f"{warning_message.error_string}\nWarning status: {response.status}\n")
 
 
 try:
@@ -83,13 +83,15 @@ try:
     )
     check_for_warning(wait_until_task_done_response)
 
+    stop_task_response = client.StopTask(nidaqmx_types.StopTaskRequest(task=task))
+    check_for_warning(stop_task_response)
     print(f"Output was successfully written to {COUNTER_NAME}.")
 except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
-    for entry in rpc_error.trailing_metadata() or []:
-        if entry.key == "ni-error":
-            value = entry.value if isinstance(entry.value, str) else entry.value.decode("utf-8")
-            error_message += f"\nError status: {value}"
+    for key, value in rpc_error.trailing_metadata() or []:  # type: ignore
+        if key == "ni-error":
+            details = value if isinstance(value, str) else value.decode("utf-8")
+            error_message += f"\nError status: {details}"
     if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
         error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"
     elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
@@ -99,5 +101,4 @@ except grpc.RpcError as rpc_error:
     print(f"{error_message}")
 finally:
     if task:
-        clear_task_response = client.ClearTask(nidaqmx_types.ClearTaskRequest(task=task))
-        check_for_warning(clear_task_response)
+        client.ClearTask(nidaqmx_types.ClearTaskRequest(task=task))

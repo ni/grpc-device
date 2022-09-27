@@ -120,26 +120,6 @@ check_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi,
   return response;
 }
 
-CheckAttributeViStringResponse
-check_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiSwitchAttribute& attribute_id, const pb::string& attribute_value)
-{
-  ::grpc::ClientContext context;
-
-  auto request = CheckAttributeViStringRequest{};
-  request.mutable_vi()->CopyFrom(vi);
-  request.set_channel_name(channel_name);
-  request.set_attribute_id(attribute_id);
-  request.set_attribute_value_raw(attribute_value);
-
-  auto response = CheckAttributeViStringResponse{};
-
-  raise_if_error(
-      stub->CheckAttributeViString(&context, request, &response),
-      context);
-
-  return response;
-}
-
 CheckAttributeViSessionResponse
 check_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiSwitchAttribute& attribute_id, const nidevice_grpc::Session& attribute_value)
 {
@@ -155,6 +135,26 @@ check_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi
 
   raise_if_error(
       stub->CheckAttributeViSession(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CheckAttributeViStringResponse
+check_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiSwitchAttribute& attribute_id, const pb::string& attribute_value)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CheckAttributeViStringRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_channel_name(channel_name);
+  request.set_attribute_id(attribute_id);
+  request.set_attribute_value_raw(attribute_value);
+
+  auto response = CheckAttributeViStringResponse{};
+
+  raise_if_error(
+      stub->CheckAttributeViString(&context, request, &response),
       context);
 
   return response;
@@ -488,25 +488,6 @@ get_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, c
   return response;
 }
 
-GetAttributeViStringResponse
-get_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiSwitchAttribute& attribute_id)
-{
-  ::grpc::ClientContext context;
-
-  auto request = GetAttributeViStringRequest{};
-  request.mutable_vi()->CopyFrom(vi);
-  request.set_channel_name(channel_name);
-  request.set_attribute_id(attribute_id);
-
-  auto response = GetAttributeViStringResponse{};
-
-  raise_if_error(
-      stub->GetAttributeViString(&context, request, &response),
-      context);
-
-  return response;
-}
-
 GetAttributeViSessionResponse
 get_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiSwitchAttribute& attribute_id)
 {
@@ -521,6 +502,25 @@ get_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, 
 
   raise_if_error(
       stub->GetAttributeViSession(&context, request, &response),
+      context);
+
+  return response;
+}
+
+GetAttributeViStringResponse
+get_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiSwitchAttribute& attribute_id)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetAttributeViStringRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_channel_name(channel_name);
+  request.set_attribute_id(attribute_id);
+
+  auto response = GetAttributeViStringResponse{};
+
+  raise_if_error(
+      stub->GetAttributeViString(&context, request, &response),
       context);
 
   return response;
@@ -1084,26 +1084,6 @@ set_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, c
   return response;
 }
 
-SetAttributeViStringResponse
-set_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiSwitchAttribute& attribute_id, const pb::string& attribute_value)
-{
-  ::grpc::ClientContext context;
-
-  auto request = SetAttributeViStringRequest{};
-  request.mutable_vi()->CopyFrom(vi);
-  request.set_channel_name(channel_name);
-  request.set_attribute_id(attribute_id);
-  request.set_attribute_value_raw(attribute_value);
-
-  auto response = SetAttributeViStringResponse{};
-
-  raise_if_error(
-      stub->SetAttributeViString(&context, request, &response),
-      context);
-
-  return response;
-}
-
 SetAttributeViSessionResponse
 set_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiSwitchAttribute& attribute_id, const nidevice_grpc::Session& attribute_value)
 {
@@ -1119,6 +1099,26 @@ set_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, 
 
   raise_if_error(
       stub->SetAttributeViSession(&context, request, &response),
+      context);
+
+  return response;
+}
+
+SetAttributeViStringResponse
+set_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiSwitchAttribute& attribute_id, const pb::string& attribute_value)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetAttributeViStringRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_channel_name(channel_name);
+  request.set_attribute_id(attribute_id);
+  request.set_attribute_value_raw(attribute_value);
+
+  auto response = SetAttributeViStringResponse{};
+
+  raise_if_error(
+      stub->SetAttributeViString(&context, request, &response),
       context);
 
   return response;

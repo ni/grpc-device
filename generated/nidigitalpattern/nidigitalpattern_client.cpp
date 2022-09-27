@@ -420,24 +420,6 @@ configure_pattern_label_history_ram_trigger(const StubPtr& stub, const nidevice_
   return response;
 }
 
-ConfigureStartLabelResponse
-configure_start_label(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& label)
-{
-  ::grpc::ClientContext context;
-
-  auto request = ConfigureStartLabelRequest{};
-  request.mutable_vi()->CopyFrom(vi);
-  request.set_label(label);
-
-  auto response = ConfigureStartLabelResponse{};
-
-  raise_if_error(
-      stub->ConfigureStartLabel(&context, request, &response),
-      context);
-
-  return response;
-}
-
 ConfigureSoftwareEdgeConditionalJumpTriggerResponse
 configure_software_edge_conditional_jump_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& trigger_identifier)
 {
@@ -468,6 +450,24 @@ configure_software_edge_start_trigger(const StubPtr& stub, const nidevice_grpc::
 
   raise_if_error(
       stub->ConfigureSoftwareEdgeStartTrigger(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ConfigureStartLabelResponse
+configure_start_label(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& label)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ConfigureStartLabelRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_label(label);
+
+  auto response = ConfigureStartLabelResponse{};
+
+  raise_if_error(
+      stub->ConfigureStartLabel(&context, request, &response),
       context);
 
   return response;
@@ -805,21 +805,20 @@ create_channel_map(const StubPtr& stub, const nidevice_grpc::Session& vi, const 
   return response;
 }
 
-CreateSourceWaveformFromFileTDMSResponse
-create_source_waveform_from_file_tdms(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& waveform_name, const pb::string& waveform_file_path, const bool& write_waveform_data)
+CreatePinGroupResponse
+create_pin_group(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& pin_group_name, const pb::string& pin_list)
 {
   ::grpc::ClientContext context;
 
-  auto request = CreateSourceWaveformFromFileTDMSRequest{};
+  auto request = CreatePinGroupRequest{};
   request.mutable_vi()->CopyFrom(vi);
-  request.set_waveform_name(waveform_name);
-  request.set_waveform_file_path(waveform_file_path);
-  request.set_write_waveform_data(write_waveform_data);
+  request.set_pin_group_name(pin_group_name);
+  request.set_pin_list(pin_list);
 
-  auto response = CreateSourceWaveformFromFileTDMSResponse{};
+  auto response = CreatePinGroupResponse{};
 
   raise_if_error(
-      stub->CreateSourceWaveformFromFileTDMS(&context, request, &response),
+      stub->CreatePinGroup(&context, request, &response),
       context);
 
   return response;
@@ -844,20 +843,21 @@ create_pin_map(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::
   return response;
 }
 
-CreatePinGroupResponse
-create_pin_group(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& pin_group_name, const pb::string& pin_list)
+CreateSourceWaveformFromFileTDMSResponse
+create_source_waveform_from_file_tdms(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& waveform_name, const pb::string& waveform_file_path, const bool& write_waveform_data)
 {
   ::grpc::ClientContext context;
 
-  auto request = CreatePinGroupRequest{};
+  auto request = CreateSourceWaveformFromFileTDMSRequest{};
   request.mutable_vi()->CopyFrom(vi);
-  request.set_pin_group_name(pin_group_name);
-  request.set_pin_list(pin_list);
+  request.set_waveform_name(waveform_name);
+  request.set_waveform_file_path(waveform_file_path);
+  request.set_write_waveform_data(write_waveform_data);
 
-  auto response = CreatePinGroupResponse{};
+  auto response = CreateSourceWaveformFromFileTDMSResponse{};
 
   raise_if_error(
-      stub->CreatePinGroup(&context, request, &response),
+      stub->CreateSourceWaveformFromFileTDMS(&context, request, &response),
       context);
 
   return response;
@@ -1458,24 +1458,6 @@ get_history_ram_sample_count(const StubPtr& stub, const nidevice_grpc::Session& 
   return response;
 }
 
-GetPatternPinIndexesResponse
-get_pattern_pin_indexes(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& start_label)
-{
-  ::grpc::ClientContext context;
-
-  auto request = GetPatternPinIndexesRequest{};
-  request.mutable_vi()->CopyFrom(vi);
-  request.set_start_label(start_label);
-
-  auto response = GetPatternPinIndexesResponse{};
-
-  raise_if_error(
-      stub->GetPatternPinIndexes(&context, request, &response),
-      context);
-
-  return response;
-}
-
 GetPatternNameResponse
 get_pattern_name(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& pattern_index)
 {
@@ -1489,6 +1471,24 @@ get_pattern_name(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb
 
   raise_if_error(
       stub->GetPatternName(&context, request, &response),
+      context);
+
+  return response;
+}
+
+GetPatternPinIndexesResponse
+get_pattern_pin_indexes(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& start_label)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetPatternPinIndexesRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_start_label(start_label);
+
+  auto response = GetPatternPinIndexesResponse{};
+
+  raise_if_error(
+      stub->GetPatternPinIndexes(&context, request, &response),
       context);
 
   return response;
@@ -2603,6 +2603,28 @@ write_source_waveform_data_from_file_tdms(const StubPtr& stub, const nidevice_gr
   return response;
 }
 
+WriteSourceWaveformSiteUniqueU32Response
+write_source_waveform_site_unique_u32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& site_list, const pb::string& waveform_name, const pb::int32& num_waveforms, const pb::int32& samples_per_waveform, const std::vector<pb::uint32>& waveform_data)
+{
+  ::grpc::ClientContext context;
+
+  auto request = WriteSourceWaveformSiteUniqueU32Request{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_site_list(site_list);
+  request.set_waveform_name(waveform_name);
+  request.set_num_waveforms(num_waveforms);
+  request.set_samples_per_waveform(samples_per_waveform);
+  copy_array(waveform_data, request.mutable_waveform_data());
+
+  auto response = WriteSourceWaveformSiteUniqueU32Response{};
+
+  raise_if_error(
+      stub->WriteSourceWaveformSiteUniqueU32(&context, request, &response),
+      context);
+
+  return response;
+}
+
 WriteStaticResponse
 write_static(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const simple_variant<WriteStaticPinState, pb::uint32>& state)
 {
@@ -2624,28 +2646,6 @@ write_static(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::st
 
   raise_if_error(
       stub->WriteStatic(&context, request, &response),
-      context);
-
-  return response;
-}
-
-WriteSourceWaveformSiteUniqueU32Response
-write_source_waveform_site_unique_u32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& site_list, const pb::string& waveform_name, const pb::int32& num_waveforms, const pb::int32& samples_per_waveform, const std::vector<pb::uint32>& waveform_data)
-{
-  ::grpc::ClientContext context;
-
-  auto request = WriteSourceWaveformSiteUniqueU32Request{};
-  request.mutable_vi()->CopyFrom(vi);
-  request.set_site_list(site_list);
-  request.set_waveform_name(waveform_name);
-  request.set_num_waveforms(num_waveforms);
-  request.set_samples_per_waveform(samples_per_waveform);
-  copy_array(waveform_data, request.mutable_waveform_data());
-
-  auto response = WriteSourceWaveformSiteUniqueU32Response{};
-
-  raise_if_error(
-      stub->WriteSourceWaveformSiteUniqueU32(&context, request, &response),
       context);
 
   return response;

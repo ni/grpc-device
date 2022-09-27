@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+﻿# -*- coding: utf-8 -*-
 # This file is generated from NI-DCPower API metadata version 20.7.0d8
 enums = {
     'ApertureTimeUnits': {
@@ -135,18 +135,6 @@ enums = {
             {
                 'name': 'NIDCPOWER_VAL_ASYMMETRIC',
                 'value': 1
-            }
-        ]
-    },
-    'PowerLineFrequencies': {
-        'values': [
-            {
-                'name': 'NIDCPOWER_VAL_50_HERTZ',
-                'value': 50
-            },
-            {
-                'name': 'NIDCPOWER_VAL_60_HERTZ',
-                'value': 60
             }
         ]
     },
@@ -363,6 +351,246 @@ enums = {
             }
         ]
     },
+    'NiDCPowerInt32AttributeValues': {
+        'enum-value-prefix': 'NIDCPOWER_INT32',
+        'generate-mappings': False,
+        'values': [
+            {
+                'name': 'APERTURE_TIME_UNITS_VAL_SECONDS',
+                'value': 1028
+            },
+            {
+                'name': 'APERTURE_TIME_UNITS_VAL_POWER_LINE_CYCLES',
+                'value': 1029
+            },
+            {
+                'name': 'AUTO_ZERO_VAL_OFF',
+                'value': 0
+            },
+            {
+                'name': 'AUTO_ZERO_VAL_ON',
+                'value': 1
+            },
+            {
+                'name': 'AUTO_ZERO_VAL_ONCE',
+                'value': 1024
+            },
+            {
+                'name': 'AUTORANGE_APERTURE_TIME_MODE_VAL_APERTURE_TIME_AUTO',
+                'value': 1110
+            },
+            {
+                'name': 'AUTORANGE_APERTURE_TIME_MODE_VAL_APERTURE_TIME_CUSTOM',
+                'value': 1111
+            },
+            {
+                'name': 'AUTORANGE_BEHAVIOR_VAL_RANGE_UP_TO_LIMIT_THEN_DOWN',
+                'value': 1107
+            },
+            {
+                'name': 'AUTORANGE_BEHAVIOR_VAL_RANGE_UP',
+                'value': 1108
+            },
+            {
+                'name': 'AUTORANGE_BEHAVIOR_VAL_RANGE_UP_AND_DOWN',
+                'value': 1109
+            },
+            {
+                'name': 'AUTORANGE_THRESHOLD_MODE_VAL_THRESHOLD_MODE_NORMAL',
+                'value': 1112
+            },
+            {
+                'name': 'AUTORANGE_THRESHOLD_MODE_VAL_THRESHOLD_MODE_FAST_STEP',
+                'value': 1113
+            },
+            {
+                'name': 'AUTORANGE_THRESHOLD_MODE_VAL_THRESHOLD_MODE_HIGH_HYSTERESIS',
+                'value': 1114
+            },
+            {
+                'name': 'AUTORANGE_THRESHOLD_MODE_VAL_THRESHOLD_MODE_MEDIUM_HYSTERESIS',
+                'value': 1115
+            },
+            {
+                'name': 'AUTORANGE_THRESHOLD_MODE_VAL_THRESHOLD_MODE_HOLD',
+                'value': 1116
+            },
+            {
+                'name': 'COMPLIANCE_LIMIT_SYMMETRY_VAL_SYMMETRIC',
+                'value': 0
+            },
+            {
+                'name': 'COMPLIANCE_LIMIT_SYMMETRY_VAL_ASYMMETRIC',
+                'value': 1
+            },
+            {
+                'name': 'CURRENT_LIMIT_BEHAVIOR_VAL_CURRENT_REGULATE',
+                'value': 0
+            },
+            {
+                'name': 'CURRENT_LIMIT_BEHAVIOR_VAL_CURRENT_TRIP',
+                'value': 1
+            },
+            {
+                'name': 'DC_NOISE_REJECTION_VAL_DC_NOISE_REJECTION_SECOND_ORDER',
+                'value': 1043
+            },
+            {
+                'name': 'DC_NOISE_REJECTION_VAL_DC_NOISE_REJECTION_NORMAL',
+                'value': 1044
+            },
+            {
+                'name': 'DIGITAL_EDGE_VAL_RISING',
+                'value': 1016
+            },
+            {
+                'name': 'DIGITAL_EDGE_VAL_FALLING',
+                'value': 1017
+            },
+            {
+                'name': 'MEASURE_WHEN_VAL_AUTOMATICALLY_AFTER_SOURCE_COMPLETE',
+                'value': 1025
+            },
+            {
+                'name': 'MEASURE_WHEN_VAL_ON_DEMAND',
+                'value': 1026
+            },
+            {
+                'name': 'MEASURE_WHEN_VAL_ON_MEASURE_TRIGGER',
+                'value': 1027
+            },
+            {
+                'name': 'OUTPUT_CAPACITANCE_VAL_LOW',
+                'value': 1010
+            },
+            {
+                'name': 'OUTPUT_CAPACITANCE_VAL_HIGH',
+                'value': 1011
+            },
+            {
+                'name': 'OUTPUT_FUNCTION_VAL_DC_VOLTAGE',
+                'value': 1006
+            },
+            {
+                'name': 'OUTPUT_FUNCTION_VAL_DC_CURRENT',
+                'value': 1007
+            },
+            {
+                'name': 'OUTPUT_FUNCTION_VAL_PULSE_VOLTAGE',
+                'value': 1049
+            },
+            {
+                'name': 'OUTPUT_FUNCTION_VAL_PULSE_CURRENT',
+                'value': 1050
+            },
+            {
+                'name': 'POLARITY_VAL_ACTIVE_HIGH',
+                'value': 1018
+            },
+            {
+                'name': 'POLARITY_VAL_ACTIVE_LOW',
+                'value': 1019
+            },
+            {
+                'name': 'POWER_ALLOCATION_MODE_VAL_DISABLED',
+                'value': 1058
+            },
+            {
+                'name': 'POWER_ALLOCATION_MODE_VAL_AUTOMATIC',
+                'value': 1059
+            },
+            {
+                'name': 'POWER_ALLOCATION_MODE_VAL_MANUAL',
+                'value': 1060
+            },
+            {
+                'name': 'POWER_SOURCE_VAL_INTERNAL',
+                'value': 1003
+            },
+            {
+                'name': 'POWER_SOURCE_VAL_AUXILIARY',
+                'value': 1004
+            },
+            {
+                'name': 'POWER_SOURCE_VAL_AUTOMATIC',
+                'value': 1005
+            },
+            {
+                'name': 'POWER_SOURCE_IN_USE_VAL_INTERNAL',
+                'value': 1003
+            },
+            {
+                'name': 'POWER_SOURCE_IN_USE_VAL_AUXILIARY',
+                'value': 1004
+            },
+            {
+                'name': 'SELF_CALIBRATION_PERSISTENCE_VAL_KEEP_IN_MEMORY',
+                'value': 1045
+            },
+            {
+                'name': 'SELF_CALIBRATION_PERSISTENCE_VAL_WRITE_TO_EEPROM',
+                'value': 1046
+            },
+            {
+                'name': 'SENSE_VAL_LOCAL',
+                'value': 1008
+            },
+            {
+                'name': 'SENSE_VAL_REMOTE',
+                'value': 1009
+            },
+            {
+                'name': 'SOURCE_MODE_VAL_SINGLE_POINT',
+                'value': 1020
+            },
+            {
+                'name': 'SOURCE_MODE_VAL_SEQUENCE',
+                'value': 1021
+            },
+            {
+                'name': 'TRANSIENT_RESPONSE_VAL_NORMAL',
+                'value': 1038
+            },
+            {
+                'name': 'TRANSIENT_RESPONSE_VAL_FAST',
+                'value': 1039
+            },
+            {
+                'name': 'TRANSIENT_RESPONSE_VAL_SLOW',
+                'value': 1041
+            },
+            {
+                'name': 'TRANSIENT_RESPONSE_VAL_CUSTOM',
+                'value': 1042
+            },
+            {
+                'name': 'TRIGGER_TYPE_VAL_NONE',
+                'value': 1012
+            },
+            {
+                'name': 'TRIGGER_TYPE_VAL_DIGITAL_EDGE',
+                'value': 1014
+            },
+            {
+                'name': 'TRIGGER_TYPE_VAL_SOFTWARE_EDGE',
+                'value': 1015
+            }
+        ]
+    },
+    'NiDCPowerReal64AttributeValues': {
+        'enum-value-prefix': 'NIDCPOWER_REAL64',
+        'generate-mappings': False,
+        'values': [
+            {
+                'name': 'POWER_LINE_FREQUENCIES_VAL_50_HERTZ',
+                'value': 50
+            },
+            {
+                'name': 'POWER_LINE_FREQUENCIES_VAL_60_HERTZ',
+                'value': 60
+            }
+        ]
+    },
     'OutputCapacitance': {
         'values': [
             {
@@ -483,6 +711,18 @@ enums = {
                 },
                 'name': 'NIDCPOWER_VAL_MANUAL',
                 'value': 1060
+            }
+        ]
+    },
+    'PowerLineFrequencies': {
+        'values': [
+            {
+                'name': 'NIDCPOWER_VAL_50_HERTZ',
+                'value': 50
+            },
+            {
+                'name': 'NIDCPOWER_VAL_60_HERTZ',
+                'value': 60
             }
         ]
     },

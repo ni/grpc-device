@@ -41,7 +41,6 @@ public:
     const NiDmmFeatureToggles& feature_toggles = {});
   virtual ~NiDmmService();
   
-  ::grpc::Status Control4022(::grpc::ServerContext* context, const Control4022Request* request, Control4022Response* response) override;
   ::grpc::Status Abort(::grpc::ServerContext* context, const AbortRequest* request, AbortResponse* response) override;
   ::grpc::Status CheckAttributeViBoolean(::grpc::ServerContext* context, const CheckAttributeViBooleanRequest* request, CheckAttributeViBooleanResponse* response) override;
   ::grpc::Status CheckAttributeViInt32(::grpc::ServerContext* context, const CheckAttributeViInt32Request* request, CheckAttributeViInt32Response* response) override;
@@ -59,26 +58,27 @@ public:
   ::grpc::Status ConfigureFixedRefJunction(::grpc::ServerContext* context, const ConfigureFixedRefJunctionRequest* request, ConfigureFixedRefJunctionResponse* response) override;
   ::grpc::Status ConfigureFrequencyVoltageRange(::grpc::ServerContext* context, const ConfigureFrequencyVoltageRangeRequest* request, ConfigureFrequencyVoltageRangeResponse* response) override;
   ::grpc::Status ConfigureMeasCompleteDest(::grpc::ServerContext* context, const ConfigureMeasCompleteDestRequest* request, ConfigureMeasCompleteDestResponse* response) override;
-  ::grpc::Status ConfigureMeasurementAbsolute(::grpc::ServerContext* context, const ConfigureMeasurementAbsoluteRequest* request, ConfigureMeasurementAbsoluteResponse* response) override;
   ::grpc::Status ConfigureMeasCompleteSlope(::grpc::ServerContext* context, const ConfigureMeasCompleteSlopeRequest* request, ConfigureMeasCompleteSlopeResponse* response) override;
+  ::grpc::Status ConfigureMeasurementAbsolute(::grpc::ServerContext* context, const ConfigureMeasurementAbsoluteRequest* request, ConfigureMeasurementAbsoluteResponse* response) override;
   ::grpc::Status ConfigureMeasurementDigits(::grpc::ServerContext* context, const ConfigureMeasurementDigitsRequest* request, ConfigureMeasurementDigitsResponse* response) override;
   ::grpc::Status ConfigureMultiPoint(::grpc::ServerContext* context, const ConfigureMultiPointRequest* request, ConfigureMultiPointResponse* response) override;
   ::grpc::Status ConfigureOffsetCompOhms(::grpc::ServerContext* context, const ConfigureOffsetCompOhmsRequest* request, ConfigureOffsetCompOhmsResponse* response) override;
   ::grpc::Status ConfigureOpenCableCompValues(::grpc::ServerContext* context, const ConfigureOpenCableCompValuesRequest* request, ConfigureOpenCableCompValuesResponse* response) override;
   ::grpc::Status ConfigurePowerLineFrequency(::grpc::ServerContext* context, const ConfigurePowerLineFrequencyRequest* request, ConfigurePowerLineFrequencyResponse* response) override;
-  ::grpc::Status ConfigureShortCableCompValues(::grpc::ServerContext* context, const ConfigureShortCableCompValuesRequest* request, ConfigureShortCableCompValuesResponse* response) override;
   ::grpc::Status ConfigureRTDCustom(::grpc::ServerContext* context, const ConfigureRTDCustomRequest* request, ConfigureRTDCustomResponse* response) override;
   ::grpc::Status ConfigureRTDType(::grpc::ServerContext* context, const ConfigureRTDTypeRequest* request, ConfigureRTDTypeResponse* response) override;
   ::grpc::Status ConfigureSampleTriggerSlope(::grpc::ServerContext* context, const ConfigureSampleTriggerSlopeRequest* request, ConfigureSampleTriggerSlopeResponse* response) override;
+  ::grpc::Status ConfigureShortCableCompValues(::grpc::ServerContext* context, const ConfigureShortCableCompValuesRequest* request, ConfigureShortCableCompValuesResponse* response) override;
   ::grpc::Status ConfigureThermistorCustom(::grpc::ServerContext* context, const ConfigureThermistorCustomRequest* request, ConfigureThermistorCustomResponse* response) override;
-  ::grpc::Status ConfigureThermocouple(::grpc::ServerContext* context, const ConfigureThermocoupleRequest* request, ConfigureThermocoupleResponse* response) override;
   ::grpc::Status ConfigureThermistorType(::grpc::ServerContext* context, const ConfigureThermistorTypeRequest* request, ConfigureThermistorTypeResponse* response) override;
+  ::grpc::Status ConfigureThermocouple(::grpc::ServerContext* context, const ConfigureThermocoupleRequest* request, ConfigureThermocoupleResponse* response) override;
   ::grpc::Status ConfigureTransducerType(::grpc::ServerContext* context, const ConfigureTransducerTypeRequest* request, ConfigureTransducerTypeResponse* response) override;
   ::grpc::Status ConfigureTrigger(::grpc::ServerContext* context, const ConfigureTriggerRequest* request, ConfigureTriggerResponse* response) override;
   ::grpc::Status ConfigureTriggerSlope(::grpc::ServerContext* context, const ConfigureTriggerSlopeRequest* request, ConfigureTriggerSlopeResponse* response) override;
   ::grpc::Status ConfigureWaveformAcquisition(::grpc::ServerContext* context, const ConfigureWaveformAcquisitionRequest* request, ConfigureWaveformAcquisitionResponse* response) override;
   ::grpc::Status ConfigureWaveformCoupling(::grpc::ServerContext* context, const ConfigureWaveformCouplingRequest* request, ConfigureWaveformCouplingResponse* response) override;
   ::grpc::Status Control(::grpc::ServerContext* context, const ControlRequest* request, ControlResponse* response) override;
+  ::grpc::Status Control4022(::grpc::ServerContext* context, const Control4022Request* request, Control4022Response* response) override;
   ::grpc::Status Disable(::grpc::ServerContext* context, const DisableRequest* request, DisableResponse* response) override;
   ::grpc::Status ExportAttributeConfigurationBuffer(::grpc::ServerContext* context, const ExportAttributeConfigurationBufferRequest* request, ExportAttributeConfigurationBufferResponse* response) override;
   ::grpc::Status ExportAttributeConfigurationFile(::grpc::ServerContext* context, const ExportAttributeConfigurationFileRequest* request, ExportAttributeConfigurationFileResponse* response) override;

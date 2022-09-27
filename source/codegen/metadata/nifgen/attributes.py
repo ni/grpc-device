@@ -1,3 +1,5 @@
+﻿# -*- coding: utf-8 -*-
+# This file is generated from NI-FGEN API metadata version 20.0.0d5
 attributes = {
     1050002: {
         'access': 'read-write',
@@ -201,8 +203,8 @@ attributes = {
     },
     1150208: {
         'access': 'read-write',
-        'name': 'FREQ_LIST_HANDLE',
         'enum': 'FrequencyListHandle',
+        'name': 'FREQ_LIST_HANDLE',
         'resettable': False,
         'type': 'ViInt32'
     },
@@ -521,10 +523,10 @@ attributes = {
     },
     1150269: {
         'access': 'read-write',
+        'enum': 'OspOverflowStatus',
         'name': 'OSP_OVERFLOW_STATUS',
         'resettable': True,
-        'type': 'ViInt32',
-        'enum': 'OspOverflowStatus'
+        'type': 'ViInt32'
     },
     1150270: {
         'access': 'read-write',
@@ -1226,8 +1228,8 @@ attributes = {
     },
     1250201: {
         'access': 'read-write',
-        'name': 'ARB_WAVEFORM_HANDLE',
         'enum': 'ArbitraryWaveformHandle',
+        'name': 'ARB_WAVEFORM_HANDLE',
         'resettable': False,
         'type': 'ViInt32'
     },
@@ -1276,8 +1278,8 @@ attributes = {
     },
     1250211: {
         'access': 'read-write',
-        'name': 'ARB_SEQUENCE_HANDLE',
         'enum': 'ArbitrarySequenceHandle',
+        'name': 'ARB_SEQUENCE_HANDLE',
         'resettable': False,
         'type': 'ViInt32'
     },
@@ -1313,8 +1315,8 @@ attributes = {
         'type': 'ViInt32'
     },
     1250350: {
+        'enum': 'BurstCount',
         'name': 'BURST_COUNT',
-        'type': 'ViInt32',
-        'enum': 'BurstCount'
+        'type': 'ViInt32'
     }
 }

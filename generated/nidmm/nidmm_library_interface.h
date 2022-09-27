@@ -15,7 +15,6 @@ class NiDmmLibraryInterface {
  public:
   virtual ~NiDmmLibraryInterface() {}
 
-  virtual ViStatus Control4022(ViRsrc resourceName, ViInt32 configuration) = 0;
   virtual ViStatus Abort(ViSession vi) = 0;
   virtual ViStatus CheckAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean attributeValue) = 0;
   virtual ViStatus CheckAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 attributeValue) = 0;
@@ -33,26 +32,27 @@ class NiDmmLibraryInterface {
   virtual ViStatus ConfigureFixedRefJunction(ViSession vi, ViReal64 fixedReferenceJunction) = 0;
   virtual ViStatus ConfigureFrequencyVoltageRange(ViSession vi, ViReal64 voltageRange) = 0;
   virtual ViStatus ConfigureMeasCompleteDest(ViSession vi, ViInt32 measCompleteDestination) = 0;
-  virtual ViStatus ConfigureMeasurementAbsolute(ViSession vi, ViInt32 measurementFunction, ViReal64 range, ViReal64 resolutionAbsolute) = 0;
   virtual ViStatus ConfigureMeasCompleteSlope(ViSession vi, ViInt32 measCompleteSlope) = 0;
+  virtual ViStatus ConfigureMeasurementAbsolute(ViSession vi, ViInt32 measurementFunction, ViReal64 range, ViReal64 resolutionAbsolute) = 0;
   virtual ViStatus ConfigureMeasurementDigits(ViSession vi, ViInt32 measurementFunction, ViReal64 range, ViReal64 resolutionDigits) = 0;
   virtual ViStatus ConfigureMultiPoint(ViSession vi, ViInt32 triggerCount, ViInt32 sampleCount, ViInt32 sampleTrigger, ViReal64 sampleInterval) = 0;
   virtual ViStatus ConfigureOffsetCompOhms(ViSession vi, ViInt32 offsetCompOhms) = 0;
   virtual ViStatus ConfigureOpenCableCompValues(ViSession vi, ViReal64 conductance, ViReal64 susceptance) = 0;
   virtual ViStatus ConfigurePowerLineFrequency(ViSession vi, ViReal64 powerLineFrequencyHz) = 0;
-  virtual ViStatus ConfigureShortCableCompValues(ViSession vi, ViReal64 resistance, ViReal64 reactance) = 0;
   virtual ViStatus ConfigureRTDCustom(ViSession vi, ViReal64 rtdA, ViReal64 rtdB, ViReal64 rtdC) = 0;
   virtual ViStatus ConfigureRTDType(ViSession vi, ViInt32 rtdType, ViReal64 rtdResistance) = 0;
   virtual ViStatus ConfigureSampleTriggerSlope(ViSession vi, ViInt32 sampleTriggerSlope) = 0;
+  virtual ViStatus ConfigureShortCableCompValues(ViSession vi, ViReal64 resistance, ViReal64 reactance) = 0;
   virtual ViStatus ConfigureThermistorCustom(ViSession vi, ViReal64 thermistorA, ViReal64 thermistorB, ViReal64 thermistorC) = 0;
-  virtual ViStatus ConfigureThermocouple(ViSession vi, ViInt32 thermocoupleType, ViInt32 referenceJunctionType) = 0;
   virtual ViStatus ConfigureThermistorType(ViSession vi, ViInt32 thermistorType) = 0;
+  virtual ViStatus ConfigureThermocouple(ViSession vi, ViInt32 thermocoupleType, ViInt32 referenceJunctionType) = 0;
   virtual ViStatus ConfigureTransducerType(ViSession vi, ViInt32 transducerType) = 0;
   virtual ViStatus ConfigureTrigger(ViSession vi, ViInt32 triggerSource, ViReal64 triggerDelay) = 0;
   virtual ViStatus ConfigureTriggerSlope(ViSession vi, ViInt32 triggerSlope) = 0;
   virtual ViStatus ConfigureWaveformAcquisition(ViSession vi, ViInt32 measurementFunction, ViReal64 range, ViReal64 rate, ViInt32 waveformPoints) = 0;
   virtual ViStatus ConfigureWaveformCoupling(ViSession vi, ViInt32 waveformCoupling) = 0;
   virtual ViStatus Control(ViSession vi, ViInt32 controlAction) = 0;
+  virtual ViStatus Control4022(ViRsrc resourceName, ViInt32 configuration) = 0;
   virtual ViStatus Disable(ViSession vi) = 0;
   virtual ViStatus ExportAttributeConfigurationBuffer(ViSession vi, ViInt32 size, ViInt8 configuration[]) = 0;
   virtual ViStatus ExportAttributeConfigurationFile(ViSession vi, ViConstString filePath) = 0;
