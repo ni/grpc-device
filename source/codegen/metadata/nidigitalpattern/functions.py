@@ -812,7 +812,7 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
-    'ConfigureTimeSetDriveEdges2x': {
+    'ConfigureTimeSetDriveEdges2X': {
         'cname': 'niDigital_ConfigureTimeSetDriveEdges2x',
         'codegen_method': 'public',
         'parameters': [
@@ -833,7 +833,6 @@ functions = {
             {
                 'cppName': 'timeSet',
                 'direction': 'in',
-                'grpc_name': 'time_set_name',
                 'grpc_type': 'string',
                 'name': 'timeSet',
                 'type': 'ViConstString'
