@@ -1196,23 +1196,23 @@ enums = {
         'generate-mappings': True,
         'values': [
             {
-                'name': 'REFERENCE_CLOCK_SOURCE_CLOCK_IN',
+                'name': 'REFERENCE_CLOCK_SOURCE_VAL_CLOCK_IN_COLLISION_AVOIDANCE',
                 'value': 'ClkIn'
             },
             {
-                'name': 'REFERENCE_CLOCK_SOURCE_NONE',
+                'name': 'REFERENCE_CLOCK_SOURCE_VAL_NONE_COLLISION_AVOIDANCE',
                 'value': 'None'
             },
             {
-                'name': 'REFERENCE_CLOCK_SOURCE_ONBOARD_REFERENCE_CLOCK',
+                'name': 'REFERENCE_CLOCK_SOURCE_VAL_ONBOARD_REFERENCE_CLOCK_COLLISION_AVOIDANCE',
                 'value': 'OnboardRefClk'
             },
             {
-                'name': 'REFERENCE_CLOCK_SOURCE_PXI_CLOCK',
+                'name': 'REFERENCE_CLOCK_SOURCE_VAL_PXI_CLOCK_COLLISION_AVOIDANCE',
                 'value': 'PXI_Clk'
             },
             {
-                'name': 'REFERENCE_CLOCK_SOURCE_RTSI_7',
+                'name': 'REFERENCE_CLOCK_SOURCE_VAL_RTSI_7_COLLISION_AVOIDANCE',
                 'value': 'RTSI7'
             },
             {
@@ -1420,23 +1420,23 @@ enums = {
         'generate-mappings': True,
         'values': [
             {
-                'name': 'CLOCK_IN',
+                'name': 'NIFGEN_VAL_CLOCK_IN_COLLISION_AVOIDANCE',
                 'value': 'ClkIn'
             },
             {
-                'name': 'NONE',
+                'name': 'NIFGEN_VAL_NONE_COLLISION_AVOIDANCE',
                 'value': 'None'
             },
             {
-                'name': 'ONBOARD_REFERENCE_CLOCK',
+                'name': 'NIFGEN_VAL_ONBOARD_REFERENCE_CLOCK_COLLISION_AVOIDANCE',
                 'value': 'OnboardRefClk'
             },
             {
-                'name': 'PXI_CLOCK',
+                'name': 'NIFGEN_VAL_PXI_CLOCK_COLLISION_AVOIDANCE',
                 'value': 'PXI_Clk'
             },
             {
-                'name': 'RTSI_7',
+                'name': 'NIFGEN_VAL_RTSI_7_COLLISION_AVOIDANCE',
                 'value': 'RTSI7'
             }
         ]
