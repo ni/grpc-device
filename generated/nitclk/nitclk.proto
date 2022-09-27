@@ -9,24 +9,17 @@ syntax = "proto3";
 option java_multiple_files = true;
 option java_package = "com.ni.grpc.tclk";
 option java_outer_classname = "NiTClk";
-option csharp_namespace = "NationalInstruments.Grpc.TClk";
+option csharp_namespace = "NationalInstruments.Grpc.Tclk";
 
-package nitclk_grpc;
+package niTClk_grpc;
 
 import "session.proto";
 
 service NiTClk {
   rpc ConfigureForHomogeneousTriggers(ConfigureForHomogeneousTriggersRequest) returns (ConfigureForHomogeneousTriggersResponse);
   rpc FinishSyncPulseSenderSynchronize(FinishSyncPulseSenderSynchronizeRequest) returns (FinishSyncPulseSenderSynchronizeResponse);
-  rpc GetAttributeViReal64(GetAttributeViReal64Request) returns (GetAttributeViReal64Response);
-  rpc GetAttributeViSession(GetAttributeViSessionRequest) returns (GetAttributeViSessionResponse);
-  rpc GetAttributeViString(GetAttributeViStringRequest) returns (GetAttributeViStringResponse);
-  rpc GetExtendedErrorInfo(GetExtendedErrorInfoRequest) returns (GetExtendedErrorInfoResponse);
   rpc Initiate(InitiateRequest) returns (InitiateResponse);
   rpc IsDone(IsDoneRequest) returns (IsDoneResponse);
-  rpc SetAttributeViReal64(SetAttributeViReal64Request) returns (SetAttributeViReal64Response);
-  rpc SetAttributeViSession(SetAttributeViSessionRequest) returns (SetAttributeViSessionResponse);
-  rpc SetAttributeViString(SetAttributeViStringRequest) returns (SetAttributeViStringResponse);
   rpc SetupForSyncPulseSenderSynchronize(SetupForSyncPulseSenderSynchronizeRequest) returns (SetupForSyncPulseSenderSynchronizeResponse);
   rpc Synchronize(SynchronizeRequest) returns (SynchronizeResponse);
   rpc SynchronizeToSyncPulseSender(SynchronizeToSyncPulseSenderRequest) returns (SynchronizeToSyncPulseSenderResponse);
@@ -39,7 +32,6 @@ enum NiTClkAttribute {
   NITCLK_ATTRIBUTE_EXPORTED_SYNC_PULSE_OUTPUT_TERMINAL = 2;
   NITCLK_ATTRIBUTE_START_TRIGGER_MASTER_SESSION = 3;
   NITCLK_ATTRIBUTE_REF_TRIGGER_MASTER_SESSION = 4;
-  NITCLK_ATTRIBUTE_SCRIPT_TRIGGER_MASTER_SESSION = 5;
   NITCLK_ATTRIBUTE_PAUSE_TRIGGER_MASTER_SESSION = 6;
   NITCLK_ATTRIBUTE_TCLK_ACTUAL_PERIOD = 8;
   NITCLK_ATTRIBUTE_EXPORTED_TCLK_OUTPUT_TERMINAL = 9;
@@ -66,47 +58,6 @@ message FinishSyncPulseSenderSynchronizeResponse {
   int32 status = 1;
 }
 
-message GetAttributeViReal64Request {
-  nidevice_grpc.Session session = 1;
-  string channel_name = 2;
-  NiTClkAttribute attribute_id = 3;
-}
-
-message GetAttributeViReal64Response {
-  int32 status = 1;
-  double value = 2;
-}
-
-message GetAttributeViSessionRequest {
-  nidevice_grpc.Session session = 1;
-  string channel_name = 2;
-  NiTClkAttribute attribute_id = 3;
-}
-
-message GetAttributeViSessionResponse {
-  int32 status = 1;
-  nidevice_grpc.Session value = 2;
-}
-
-message GetAttributeViStringRequest {
-  nidevice_grpc.Session session = 1;
-  string channel_name = 2;
-  NiTClkAttribute attribute_id = 3;
-}
-
-message GetAttributeViStringResponse {
-  int32 status = 1;
-  string value = 2;
-}
-
-message GetExtendedErrorInfoRequest {
-}
-
-message GetExtendedErrorInfoResponse {
-  int32 status = 1;
-  string error_string = 2;
-}
-
 message InitiateRequest {
   repeated nidevice_grpc.Session sessions = 1;
 }
@@ -122,39 +73,6 @@ message IsDoneRequest {
 message IsDoneResponse {
   int32 status = 1;
   bool done = 2;
-}
-
-message SetAttributeViReal64Request {
-  nidevice_grpc.Session session = 1;
-  string channel_name = 2;
-  NiTClkAttribute attribute_id = 3;
-  double value_raw = 4;
-}
-
-message SetAttributeViReal64Response {
-  int32 status = 1;
-}
-
-message SetAttributeViSessionRequest {
-  nidevice_grpc.Session session = 1;
-  string channel_name = 2;
-  NiTClkAttribute attribute_id = 3;
-  nidevice_grpc.Session value = 4;
-}
-
-message SetAttributeViSessionResponse {
-  int32 status = 1;
-}
-
-message SetAttributeViStringRequest {
-  nidevice_grpc.Session session = 1;
-  string channel_name = 2;
-  NiTClkAttribute attribute_id = 3;
-  string value_raw = 4;
-}
-
-message SetAttributeViStringResponse {
-  int32 status = 1;
 }
 
 message SetupForSyncPulseSenderSynchronizeRequest {

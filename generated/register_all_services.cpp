@@ -199,7 +199,7 @@ std::shared_ptr<void> register_all_services(
       vi_session_repository,
       feature_toggles));
   service_vector->push_back(
-    nitclk_grpc::register_service(
+    niTClk_grpc::register_service(
       server_builder, 
       vi_session_repository,
       feature_toggles));

@@ -15,7 +15,7 @@ namespace ni {
 namespace tests {
 namespace unit {
 
-class NiTClkMockLibrary : public nitclk_grpc::NiTClkLibraryInterface {
+class NiTClkMockLibrary : public niTClk_grpc::NiTClkLibraryInterface {
  public:
   MOCK_METHOD(ViStatus, ConfigureForHomogeneousTriggers, (ViUInt32 sessionCount, ViSession sessions[]), (override));
   MOCK_METHOD(ViStatus, FinishSyncPulseSenderSynchronize, (ViUInt32 sessionCount, ViSession sessions[], ViReal64 minTime), (override));

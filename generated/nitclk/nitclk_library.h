@@ -10,9 +10,9 @@
 
 #include <server/shared_library.h>
 
-namespace nitclk_grpc {
+namespace niTClk_grpc {
 
-class NiTClkLibrary : public nitclk_grpc::NiTClkLibraryInterface {
+class NiTClkLibrary : public niTClk_grpc::NiTClkLibraryInterface {
  public:
   NiTClkLibrary();
   virtual ~NiTClkLibrary();
@@ -37,15 +37,15 @@ class NiTClkLibrary : public nitclk_grpc::NiTClkLibraryInterface {
  private:
   using ConfigureForHomogeneousTriggersPtr = decltype(&niTClk_ConfigureForHomogeneousTriggers);
   using FinishSyncPulseSenderSynchronizePtr = decltype(&niTClk_FinishSyncPulseSenderSynchronize);
-  using GetAttributeViReal64Ptr = decltype(&niTClk_GetAttributeViReal64);
-  using GetAttributeViSessionPtr = decltype(&niTClk_GetAttributeViSession);
-  using GetAttributeViStringPtr = decltype(&niTClk_GetAttributeViString);
-  using GetExtendedErrorInfoPtr = decltype(&niTClk_GetExtendedErrorInfo);
+  using GetAttributeViReal64Ptr = ViStatus (*)(ViSession session, ViConstString channelName, ViAttr attributeId, ViReal64* value);
+  using GetAttributeViSessionPtr = ViStatus (*)(ViSession session, ViConstString channelName, ViAttr attributeId, ViSession* value);
+  using GetAttributeViStringPtr = ViStatus (*)(ViSession session, ViConstString channelName, ViAttr attributeId, ViInt32 bufSize, ViChar value[]);
+  using GetExtendedErrorInfoPtr = ViStatus (*)(ViChar errorString[], ViUInt32 errorStringSize);
   using InitiatePtr = decltype(&niTClk_Initiate);
   using IsDonePtr = decltype(&niTClk_IsDone);
-  using SetAttributeViReal64Ptr = decltype(&niTClk_SetAttributeViReal64);
-  using SetAttributeViSessionPtr = decltype(&niTClk_SetAttributeViSession);
-  using SetAttributeViStringPtr = decltype(&niTClk_SetAttributeViString);
+  using SetAttributeViReal64Ptr = ViStatus (*)(ViSession session, ViConstString channelName, ViAttr attributeId, ViReal64 value);
+  using SetAttributeViSessionPtr = ViStatus (*)(ViSession session, ViConstString channelName, ViAttr attributeId, ViSession value);
+  using SetAttributeViStringPtr = ViStatus (*)(ViSession session, ViConstString channelName, ViAttr attributeId, ViConstString value);
   using SetupForSyncPulseSenderSynchronizePtr = decltype(&niTClk_SetupForSyncPulseSenderSynchronize);
   using SynchronizePtr = decltype(&niTClk_Synchronize);
   using SynchronizeToSyncPulseSenderPtr = decltype(&niTClk_SynchronizeToSyncPulseSender);
@@ -73,6 +73,6 @@ class NiTClkLibrary : public nitclk_grpc::NiTClkLibraryInterface {
   FunctionPointers function_pointers_;
 };
 
-}  // namespace nitclk_grpc
+}  // namespace niTClk_grpc
 
 #endif  // NITCLK_GRPC_LIBRARY_H

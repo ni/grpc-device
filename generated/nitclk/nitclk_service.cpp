@@ -13,16 +13,13 @@
 #include <vector>
 #include <server/converters.h>
 
-namespace nitclk_grpc {
+namespace niTClk_grpc {
 
   using nidevice_grpc::converters::allocate_output_storage;
   using nidevice_grpc::converters::calculate_linked_array_size;
   using nidevice_grpc::converters::convert_from_grpc;
   using nidevice_grpc::converters::convert_to_grpc;
   using nidevice_grpc::converters::MatchState;
-
-  const auto kErrorReadBufferTooSmall = -200229;
-  const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
 
   NiTClkService::NiTClkService(
       NiTClkLibraryInterface* library,
@@ -103,141 +100,6 @@ namespace nitclk_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiTClkService::GetAttributeViReal64(::grpc::ServerContext* context, const GetAttributeViReal64Request* request, GetAttributeViReal64Response* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto session_grpc_session = request->session();
-      ViSession session = session_repository_->access_session(session_grpc_session.id(), session_grpc_session.name());
-      auto channel_name = request->channel_name().c_str();
-      ViAttr attribute_id = request->attribute_id();
-      ViReal64 value {};
-      auto status = library_->GetAttributeViReal64(session, channel_name, attribute_id, &value);
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(context, status, session);
-      }
-      response->set_status(status);
-      response->set_value(value);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiTClkService::GetAttributeViSession(::grpc::ServerContext* context, const GetAttributeViSessionRequest* request, GetAttributeViSessionResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto session_grpc_session = request->session();
-      ViSession session = session_repository_->access_session(session_grpc_session.id(), session_grpc_session.name());
-      auto channel_name = request->channel_name().c_str();
-      ViAttr attribute_id = request->attribute_id();
-      ViSession value {};
-      auto status = library_->GetAttributeViSession(session, channel_name, attribute_id, &value);
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(context, status, session);
-      }
-      response->set_status(status);
-      auto session_id = session_repository_->resolve_session_id(value);
-      response->mutable_value()->set_id(session_id);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiTClkService::GetAttributeViString(::grpc::ServerContext* context, const GetAttributeViStringRequest* request, GetAttributeViStringResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto session_grpc_session = request->session();
-      ViSession session = session_repository_->access_session(session_grpc_session.id(), session_grpc_session.name());
-      auto channel_name = request->channel_name().c_str();
-      ViAttr attribute_id = request->attribute_id();
-
-      while (true) {
-        auto status = library_->GetAttributeViString(session, channel_name, attribute_id, 0, nullptr);
-        if (!status_ok(status)) {
-          return ConvertApiErrorStatusForViSession(context, status, session);
-        }
-        ViInt32 buf_size = status;
-
-        std::string value;
-        if (buf_size > 0) {
-            value.resize(buf_size /* Workaround: strlen-bug */);
-        }
-        status = library_->GetAttributeViString(session, channel_name, attribute_id, buf_size, (ViChar*)value.data());
-        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(buf_size)) {
-          // buffer is now too small, try again
-          continue;
-        }
-        if (!status_ok(status)) {
-          return ConvertApiErrorStatusForViSession(context, status, session);
-        }
-        response->set_status(status);
-        response->set_value(value);
-        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
-        return ::grpc::Status::OK;
-      }
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiTClkService::GetExtendedErrorInfo(::grpc::ServerContext* context, const GetExtendedErrorInfoRequest* request, GetExtendedErrorInfoResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-
-      while (true) {
-        auto status = library_->GetExtendedErrorInfo(nullptr, 0);
-        if (!status_ok(status)) {
-          return ConvertApiErrorStatusForViSession(context, status, 0);
-        }
-        ViUInt32 error_string_size = status;
-
-        std::string error_string;
-        if (error_string_size > 0) {
-            error_string.resize(error_string_size - 1);
-        }
-        status = library_->GetExtendedErrorInfo((ViChar*)error_string.data(), error_string_size);
-        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(error_string_size)) {
-          // buffer is now too small, try again
-          continue;
-        }
-        if (!status_ok(status)) {
-          return ConvertApiErrorStatusForViSession(context, status, 0);
-        }
-        response->set_status(status);
-        response->set_error_string(error_string);
-        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_string()));
-        return ::grpc::Status::OK;
-      }
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
   ::grpc::Status NiTClkService::Initiate(::grpc::ServerContext* context, const InitiateRequest* request, InitiateResponse* response)
   {
     if (context->IsCancelled()) {
@@ -287,82 +149,6 @@ namespace nitclk_grpc {
       }
       response->set_status(status);
       response->set_done(done);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiTClkService::SetAttributeViReal64(::grpc::ServerContext* context, const SetAttributeViReal64Request* request, SetAttributeViReal64Response* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto session_grpc_session = request->session();
-      ViSession session = session_repository_->access_session(session_grpc_session.id(), session_grpc_session.name());
-      auto channel_name = request->channel_name().c_str();
-      ViAttr attribute_id = request->attribute_id();
-      ViReal64 value = request->value_raw();
-      auto status = library_->SetAttributeViReal64(session, channel_name, attribute_id, value);
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(context, status, session);
-      }
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiTClkService::SetAttributeViSession(::grpc::ServerContext* context, const SetAttributeViSessionRequest* request, SetAttributeViSessionResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto session_grpc_session = request->session();
-      ViSession session = session_repository_->access_session(session_grpc_session.id(), session_grpc_session.name());
-      auto channel_name = request->channel_name().c_str();
-      ViAttr attribute_id = request->attribute_id();
-      auto value_grpc_session = request->value();
-      ViSession value = session_repository_->access_session(value_grpc_session.id(), value_grpc_session.name());
-      auto status = library_->SetAttributeViSession(session, channel_name, attribute_id, value);
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(context, status, session);
-      }
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiTClkService::SetAttributeViString(::grpc::ServerContext* context, const SetAttributeViStringRequest* request, SetAttributeViStringResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto session_grpc_session = request->session();
-      ViSession session = session_repository_->access_session(session_grpc_session.id(), session_grpc_session.name());
-      auto channel_name = request->channel_name().c_str();
-      ViAttr attribute_id = request->attribute_id();
-      auto value = request->value_raw().c_str();
-      auto status = library_->SetAttributeViString(session, channel_name, attribute_id, value);
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(context, status, session);
-      }
-      response->set_status(status);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -493,5 +279,5 @@ namespace nitclk_grpc {
         feature_toggles.is_feature_enabled("nitclk", CodeReadiness::kRelease))
   {
   }
-} // namespace nitclk_grpc
+} // namespace niTClk_grpc
 
