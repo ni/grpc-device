@@ -55,7 +55,6 @@ class NiDmmLibrary : public nidmm_grpc::NiDmmLibraryInterface {
   ViStatus ConfigureWaveformAcquisition(ViSession vi, ViInt32 measurementFunction, ViReal64 range, ViReal64 rate, ViInt32 waveformPoints);
   ViStatus ConfigureWaveformCoupling(ViSession vi, ViInt32 waveformCoupling);
   ViStatus Control(ViSession vi, ViInt32 controlAction);
-  ViStatus Control4022(ViRsrc resourceName, ViInt32 configuration);
   ViStatus Disable(ViSession vi);
   ViStatus ExportAttributeConfigurationBuffer(ViSession vi, ViInt32 size, ViInt8 configuration[]);
   ViStatus ExportAttributeConfigurationFile(ViSession vi, ViConstString filePath);
@@ -147,7 +146,6 @@ class NiDmmLibrary : public nidmm_grpc::NiDmmLibraryInterface {
   using ConfigureWaveformAcquisitionPtr = decltype(&niDMM_ConfigureWaveformAcquisition);
   using ConfigureWaveformCouplingPtr = decltype(&niDMM_ConfigureWaveformCoupling);
   using ControlPtr = decltype(&niDMM_Control);
-  using Control4022Ptr = decltype(&niDMM_4022Control);
   using DisablePtr = decltype(&niDMM_Disable);
   using ExportAttributeConfigurationBufferPtr = decltype(&niDMM_ExportAttributeConfigurationBuffer);
   using ExportAttributeConfigurationFilePtr = decltype(&niDMM_ExportAttributeConfigurationFile);
@@ -239,7 +237,6 @@ class NiDmmLibrary : public nidmm_grpc::NiDmmLibraryInterface {
     ConfigureWaveformAcquisitionPtr ConfigureWaveformAcquisition;
     ConfigureWaveformCouplingPtr ConfigureWaveformCoupling;
     ControlPtr Control;
-    Control4022Ptr Control4022;
     DisablePtr Disable;
     ExportAttributeConfigurationBufferPtr ExportAttributeConfigurationBuffer;
     ExportAttributeConfigurationFilePtr ExportAttributeConfigurationFile;

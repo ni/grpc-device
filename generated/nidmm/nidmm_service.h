@@ -78,7 +78,6 @@ public:
   ::grpc::Status ConfigureWaveformAcquisition(::grpc::ServerContext* context, const ConfigureWaveformAcquisitionRequest* request, ConfigureWaveformAcquisitionResponse* response) override;
   ::grpc::Status ConfigureWaveformCoupling(::grpc::ServerContext* context, const ConfigureWaveformCouplingRequest* request, ConfigureWaveformCouplingResponse* response) override;
   ::grpc::Status Control(::grpc::ServerContext* context, const ControlRequest* request, ControlResponse* response) override;
-  ::grpc::Status Control4022(::grpc::ServerContext* context, const Control4022Request* request, Control4022Response* response) override;
   ::grpc::Status Disable(::grpc::ServerContext* context, const DisableRequest* request, DisableResponse* response) override;
   ::grpc::Status ExportAttributeConfigurationBuffer(::grpc::ServerContext* context, const ExportAttributeConfigurationBufferRequest* request, ExportAttributeConfigurationBufferResponse* response) override;
   ::grpc::Status ExportAttributeConfigurationFile(::grpc::ServerContext* context, const ExportAttributeConfigurationFileRequest* request, ExportAttributeConfigurationFileResponse* response) override;

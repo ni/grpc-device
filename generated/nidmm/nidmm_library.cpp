@@ -58,7 +58,6 @@ NiDmmLibrary::NiDmmLibrary() : shared_library_(kLibraryName)
   function_pointers_.ConfigureWaveformAcquisition = reinterpret_cast<ConfigureWaveformAcquisitionPtr>(shared_library_.get_function_pointer("niDMM_ConfigureWaveformAcquisition"));
   function_pointers_.ConfigureWaveformCoupling = reinterpret_cast<ConfigureWaveformCouplingPtr>(shared_library_.get_function_pointer("niDMM_ConfigureWaveformCoupling"));
   function_pointers_.Control = reinterpret_cast<ControlPtr>(shared_library_.get_function_pointer("niDMM_Control"));
-  function_pointers_.Control4022 = reinterpret_cast<Control4022Ptr>(shared_library_.get_function_pointer("niDMM_4022Control"));
   function_pointers_.Disable = reinterpret_cast<DisablePtr>(shared_library_.get_function_pointer("niDMM_Disable"));
   function_pointers_.ExportAttributeConfigurationBuffer = reinterpret_cast<ExportAttributeConfigurationBufferPtr>(shared_library_.get_function_pointer("niDMM_ExportAttributeConfigurationBuffer"));
   function_pointers_.ExportAttributeConfigurationFile = reinterpret_cast<ExportAttributeConfigurationFilePtr>(shared_library_.get_function_pointer("niDMM_ExportAttributeConfigurationFile"));
@@ -565,18 +564,6 @@ ViStatus NiDmmLibrary::Control(ViSession vi, ViInt32 controlAction)
   return niDMM_Control(vi, controlAction);
 #else
   return function_pointers_.Control(vi, controlAction);
-#endif
-}
-
-ViStatus NiDmmLibrary::Control4022(ViRsrc resourceName, ViInt32 configuration)
-{
-  if (!function_pointers_.Control4022) {
-    throw nidevice_grpc::LibraryLoadException("Could not find niDMM_4022Control.");
-  }
-#if defined(_MSC_VER)
-  return niDMM_4022Control(resourceName, configuration);
-#else
-  return function_pointers_.Control4022(resourceName, configuration);
 #endif
 }
 

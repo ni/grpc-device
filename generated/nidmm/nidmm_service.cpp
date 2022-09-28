@@ -1234,43 +1234,6 @@ namespace nidmm_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiDmmService::Control4022(::grpc::ServerContext* context, const Control4022Request* request, Control4022Response* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      ViRsrc resource_name = (ViRsrc)request->resource_name().c_str();
-      ViInt32 configuration;
-      switch (request->configuration_enum_case()) {
-        case nidmm_grpc::Control4022Request::ConfigurationEnumCase::kConfiguration: {
-          configuration = static_cast<ViInt32>(request->configuration());
-          break;
-        }
-        case nidmm_grpc::Control4022Request::ConfigurationEnumCase::kConfigurationRaw: {
-          configuration = static_cast<ViInt32>(request->configuration_raw());
-          break;
-        }
-        case nidmm_grpc::Control4022Request::ConfigurationEnumCase::CONFIGURATION_ENUM_NOT_SET: {
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for configuration was not specified or out of range");
-          break;
-        }
-      }
-
-      auto status = library_->Control4022(resource_name, configuration);
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(context, status, 0);
-      }
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
   ::grpc::Status NiDmmService::Disable(::grpc::ServerContext* context, const DisableRequest* request, DisableResponse* response)
   {
     if (context->IsCancelled()) {

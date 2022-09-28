@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-DMM API metadata version 22.8.0d9999
+# This file is generated from NI-DMM API metadata version 23.0.0d9999
 enums = {
     'AcquisitionStatus': {
         'codegen_method': 'public',
@@ -167,31 +167,6 @@ enums = {
             {
                 'name': 'NIDMM_VAL_OFFSET_COMP_OHMS_ON',
                 'value': 1
-            }
-        ]
-    },
-    'Configuration4022': {
-        'codegen_method': 'public',
-        'values': [
-            {
-                'name': 'NIDMM_4022_CONFIG_GUARD',
-                'value': 0
-            },
-            {
-                'name': 'NIDMM_4022_CONFIG_CURRENT_100_NANOAMP',
-                'value': 2
-            },
-            {
-                'name': 'NIDMM_4022_CONFIG_CURRENT_10_MICROAMP',
-                'value': 3
-            },
-            {
-                'name': 'NIDMM_4022_CONFIG_CURRENT_1_MILLIAMP',
-                'value': 7
-            },
-            {
-                'name': 'NIDMM_4022_CONFIG_DISCONNECT_AGND',
-                'value': 8
             }
         ]
     },

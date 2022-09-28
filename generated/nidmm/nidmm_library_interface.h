@@ -52,7 +52,6 @@ class NiDmmLibraryInterface {
   virtual ViStatus ConfigureWaveformAcquisition(ViSession vi, ViInt32 measurementFunction, ViReal64 range, ViReal64 rate, ViInt32 waveformPoints) = 0;
   virtual ViStatus ConfigureWaveformCoupling(ViSession vi, ViInt32 waveformCoupling) = 0;
   virtual ViStatus Control(ViSession vi, ViInt32 controlAction) = 0;
-  virtual ViStatus Control4022(ViRsrc resourceName, ViInt32 configuration) = 0;
   virtual ViStatus Disable(ViSession vi) = 0;
   virtual ViStatus ExportAttributeConfigurationBuffer(ViSession vi, ViInt32 size, ViInt8 configuration[]) = 0;
   virtual ViStatus ExportAttributeConfigurationFile(ViSession vi, ViConstString filePath) = 0;

@@ -53,7 +53,6 @@ service NiDmm {
   rpc ConfigureWaveformAcquisition(ConfigureWaveformAcquisitionRequest) returns (ConfigureWaveformAcquisitionResponse);
   rpc ConfigureWaveformCoupling(ConfigureWaveformCouplingRequest) returns (ConfigureWaveformCouplingResponse);
   rpc Control(ControlRequest) returns (ControlResponse);
-  rpc Control4022(Control4022Request) returns (Control4022Response);
   rpc Disable(DisableRequest) returns (DisableResponse);
   rpc ExportAttributeConfigurationBuffer(ExportAttributeConfigurationBufferRequest) returns (ExportAttributeConfigurationBufferResponse);
   rpc ExportAttributeConfigurationFile(ExportAttributeConfigurationFileRequest) returns (ExportAttributeConfigurationFileResponse);
@@ -226,14 +225,6 @@ enum CalibrationType {
 enum CompensatedOhms {
   COMPENSATED_OHMS_NIDMM_VAL_OFFSET_COMP_OHMS_OFF = 0;
   COMPENSATED_OHMS_NIDMM_VAL_OFFSET_COMP_OHMS_ON = 1;
-}
-
-enum Configuration4022 {
-  CONFIGURATION4022_NIDMM_4022_CONFIG_GUARD = 0;
-  CONFIGURATION4022_NIDMM_4022_CONFIG_CURRENT_100_NANOAMP = 2;
-  CONFIGURATION4022_NIDMM_4022_CONFIG_CURRENT_10_MICROAMP = 3;
-  CONFIGURATION4022_NIDMM_4022_CONFIG_CURRENT_1_MILLIAMP = 7;
-  CONFIGURATION4022_NIDMM_4022_CONFIG_DISCONNECT_AGND = 8;
 }
 
 enum ControlCommit {
@@ -943,18 +934,6 @@ message ControlRequest {
 }
 
 message ControlResponse {
-  int32 status = 1;
-}
-
-message Control4022Request {
-  string resource_name = 1;
-  oneof configuration_enum {
-    Configuration4022 configuration = 2;
-    sint32 configuration_raw = 3;
-  }
-}
-
-message Control4022Response {
   int32 status = 1;
 }
 

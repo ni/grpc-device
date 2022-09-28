@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-DMM API metadata version 22.8.0d9999
+# This file is generated from NI-DMM API metadata version 23.0.0d9999
 functions = {
     'Abort': {
         'codegen_method': 'public',
@@ -943,28 +943,6 @@ functions = {
                 'enum': 'ControlCommit',
                 'grpc_type': 'sint32',
                 'name': 'controlAction',
-                'type': 'ViInt32'
-            }
-        ],
-        'returns': 'ViStatus'
-    },
-    'Control4022': {
-        'cname': 'niDMM_4022Control',
-        'codegen_method': 'public',
-        'parameters': [
-            {
-                'cppName': 'resourceName',
-                'direction': 'in',
-                'grpc_type': 'string',
-                'name': 'resourceName',
-                'type': 'ViRsrc'
-            },
-            {
-                'cppName': 'configuration',
-                'direction': 'in',
-                'enum': 'Configuration4022',
-                'grpc_type': 'sint32',
-                'name': 'configuration',
                 'type': 'ViInt32'
             }
         ],
