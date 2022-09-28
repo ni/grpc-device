@@ -2660,7 +2660,7 @@ namespace nidigitalpattern_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto resource_name = request->resource_name().c_str();
+      ViString resource_name = (ViString)request->resource_name().c_str();
       ViBoolean id_query = request->id_query();
       ViBoolean reset_device = request->reset_device();
       auto option_string = request->option_string().c_str();

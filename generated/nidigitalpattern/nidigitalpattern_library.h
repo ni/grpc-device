@@ -101,7 +101,7 @@ class NiDigitalLibrary : public nidigitalpattern_grpc::NiDigitalLibraryInterface
   ViStatus GetTimeSetName(ViSession vi, ViInt32 timeSetIndex, ViInt32 nameBufferSize, ViChar name[]);
   ViStatus GetTimeSetPeriod(ViSession vi, ViConstString timeSet, ViReal64* period);
   ViStatus Init(ViString resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* newVi);
-  ViStatus InitWithOptions(ViConstString resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViConstString optionString, ViSession* newVi);
+  ViStatus InitWithOptions(ViString resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViConstString optionString, ViSession* newVi);
   ViStatus Initiate(ViSession vi);
   ViStatus IsDone(ViSession vi, ViBoolean* done);
   ViStatus IsSiteEnabled(ViSession vi, ViConstString site, ViBoolean* enable);

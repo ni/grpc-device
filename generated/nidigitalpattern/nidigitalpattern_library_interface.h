@@ -98,7 +98,7 @@ class NiDigitalLibraryInterface {
   virtual ViStatus GetTimeSetName(ViSession vi, ViInt32 timeSetIndex, ViInt32 nameBufferSize, ViChar name[]) = 0;
   virtual ViStatus GetTimeSetPeriod(ViSession vi, ViConstString timeSet, ViReal64* period) = 0;
   virtual ViStatus Init(ViString resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* newVi) = 0;
-  virtual ViStatus InitWithOptions(ViConstString resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViConstString optionString, ViSession* newVi) = 0;
+  virtual ViStatus InitWithOptions(ViString resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViConstString optionString, ViSession* newVi) = 0;
   virtual ViStatus Initiate(ViSession vi) = 0;
   virtual ViStatus IsDone(ViSession vi, ViBoolean* done) = 0;
   virtual ViStatus IsSiteEnabled(ViSession vi, ViConstString site, ViBoolean* enable) = 0;

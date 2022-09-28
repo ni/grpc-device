@@ -1162,7 +1162,7 @@ ViStatus NiDigitalLibrary::Init(ViString resourceName, ViBoolean idQuery, ViBool
 #endif
 }
 
-ViStatus NiDigitalLibrary::InitWithOptions(ViConstString resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViConstString optionString, ViSession* newVi)
+ViStatus NiDigitalLibrary::InitWithOptions(ViString resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViConstString optionString, ViSession* newVi)
 {
   if (!function_pointers_.InitWithOptions) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDigital_InitWithOptions.");

@@ -100,7 +100,7 @@ class NiDigitalMockLibrary : public nidigitalpattern_grpc::NiDigitalLibraryInter
   MOCK_METHOD(ViStatus, GetTimeSetName, (ViSession vi, ViInt32 timeSetIndex, ViInt32 nameBufferSize, ViChar name[]), (override));
   MOCK_METHOD(ViStatus, GetTimeSetPeriod, (ViSession vi, ViConstString timeSet, ViReal64* period), (override));
   MOCK_METHOD(ViStatus, Init, (ViString resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* newVi), (override));
-  MOCK_METHOD(ViStatus, InitWithOptions, (ViConstString resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViConstString optionString, ViSession* newVi), (override));
+  MOCK_METHOD(ViStatus, InitWithOptions, (ViString resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViConstString optionString, ViSession* newVi), (override));
   MOCK_METHOD(ViStatus, Initiate, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, IsDone, (ViSession vi, ViBoolean* done), (override));
   MOCK_METHOD(ViStatus, IsSiteEnabled, (ViSession vi, ViConstString site, ViBoolean* enable), (override));

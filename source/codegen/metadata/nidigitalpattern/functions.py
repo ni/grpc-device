@@ -2969,7 +2969,7 @@ functions = {
                 'direction': 'in',
                 'grpc_type': 'string',
                 'name': 'resourceName',
-                'type': 'ViConstString'
+                'type': 'ViString'
             },
             {
                 'cppName': 'idQuery',

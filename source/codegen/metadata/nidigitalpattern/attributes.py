@@ -561,7 +561,7 @@ attributes = {
     },
     1150081: {
         'codegen_method': 'public',
-        'enum': 'TDREndpointTermination',
+        'enum': 'TdrEndpointTermination',
         'grpc_type': 'sint32',
         'name': 'TDR_ENDPOINT_TERMINATION',
         'resettable': True,
