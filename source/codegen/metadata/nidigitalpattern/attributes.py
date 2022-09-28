@@ -389,7 +389,7 @@ attributes = {
     },
     1150043: {
         'codegen_method': 'public',
-        'enum': 'HistoryRAMTriggerType',
+        'enum': 'HistoryRamTriggerType',
         'grpc_type': 'sint32',
         'name': 'HISTORY_RAM_TRIGGER_TYPE',
         'resettable': True,
@@ -539,7 +539,7 @@ attributes = {
     },
     1150077: {
         'codegen_method': 'public',
-        'enum': 'HistoryRAMMaxSamplesToAcquirePerSite',
+        'enum': 'HistoryRamMaxSamplesToAcquirePerSite',
         'grpc_type': 'sint32',
         'name': 'HISTORY_RAM_MAX_SAMPLES_TO_ACQUIRE_PER_SITE',
         'resettable': True,

@@ -86,7 +86,20 @@ enums = {
             }
         ]
     },
-    'HistoryRAMMaxSamplesToAcquirePerSite': {
+    'HistoryRamCyclesToAcquire': {
+        'codegen_method': 'public',
+        'values': [
+            {
+                'name': 'NIDIGITAL_VAL_FAILED_CYCLES',
+                'value': 2303
+            },
+            {
+                'name': 'NIDIGITAL_VAL_ALL_CYCLES',
+                'value': 2304
+            }
+        ]
+    },
+    'HistoryRamMaxSamplesToAcquirePerSite': {
         'codegen_method': 'public',
         'values': [
             {
@@ -95,7 +108,7 @@ enums = {
             }
         ]
     },
-    'HistoryRAMTriggerType': {
+    'HistoryRamTriggerType': {
         'codegen_method': 'public',
         'values': [
             {
@@ -109,19 +122,6 @@ enums = {
             {
                 'name': 'NIDIGITAL_VAL_PATTERN_LABEL',
                 'value': 2202
-            }
-        ]
-    },
-    'HistoryRamCyclesToAcquire': {
-        'codegen_method': 'public',
-        'values': [
-            {
-                'name': 'NIDIGITAL_VAL_FAILED_CYCLES',
-                'value': 2303
-            },
-            {
-                'name': 'NIDIGITAL_VAL_ALL_CYCLES',
-                'value': 2304
             }
         ]
     },
@@ -146,6 +146,14 @@ enums = {
                 'value': 3701
             },
             {
+                'name': 'HISTORY_RAM_CYCLES_TO_ACQUIRE_VAL_FAILED_CYCLES',
+                'value': 2303
+            },
+            {
+                'name': 'HISTORY_RAM_CYCLES_TO_ACQUIRE_VAL_ALL_CYCLES',
+                'value': 2304
+            },
+            {
                 'name': 'HISTORY_RAM_MAX_SAMPLES_TO_ACQUIRE_PER_SITE_VAL_ACQUIRE_ALL_SAMPLES',
                 'value': -1
             },
@@ -160,14 +168,6 @@ enums = {
             {
                 'name': 'HISTORY_RAM_TRIGGER_TYPE_VAL_PATTERN_LABEL',
                 'value': 2202
-            },
-            {
-                'name': 'HISTORY_RAM_CYCLES_TO_ACQUIRE_VAL_FAILED_CYCLES',
-                'value': 2303
-            },
-            {
-                'name': 'HISTORY_RAM_CYCLES_TO_ACQUIRE_VAL_ALL_CYCLES',
-                'value': 2304
             },
             {
                 'name': 'PPMU_APERTURE_TIME_UNITS_VAL_SECONDS',
