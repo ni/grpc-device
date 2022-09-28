@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-Digital Pattern Driver API metadata version 22.8.0d9999
+# This file is generated from NI-Digital Pattern Driver API metadata version 23.0.0d9999
 config = {
     'additional_headers': {
         'custom/ivi_errors.h': [
             'service.cpp'
         ]
     },
-    'api_version': '22.8.0d9999',
+    'api_version': '23.0.0d9999',
     'c_function_prefix': 'niDigital_',
     'c_header': 'niDigital.h',
     'close_function': 'Close',
