@@ -15,7 +15,7 @@
 #include <stdexcept>
 #include <vector>
 
-namespace niTClk_grpc::experimental::client {
+namespace nitclk_grpc::experimental::client {
 
 ConfigureForHomogeneousTriggersResponse
 configure_for_homogeneous_triggers(const StubPtr& stub, const std::vector<nidevice_grpc::Session>& sessions)
@@ -52,6 +52,79 @@ finish_sync_pulse_sender_synchronize(const StubPtr& stub, const std::vector<nide
   return response;
 }
 
+GetAttributeViReal64Response
+get_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::string& channel_name, const NiTClkAttribute& attribute_id)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetAttributeViReal64Request{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_channel_name(channel_name);
+  request.set_attribute_id(attribute_id);
+
+  auto response = GetAttributeViReal64Response{};
+
+  raise_if_error(
+      stub->GetAttributeViReal64(&context, request, &response),
+      context);
+
+  return response;
+}
+
+GetAttributeViSessionResponse
+get_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::string& channel_name, const NiTClkAttribute& attribute_id)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetAttributeViSessionRequest{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_channel_name(channel_name);
+  request.set_attribute_id(attribute_id);
+
+  auto response = GetAttributeViSessionResponse{};
+
+  raise_if_error(
+      stub->GetAttributeViSession(&context, request, &response),
+      context);
+
+  return response;
+}
+
+GetAttributeViStringResponse
+get_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::string& channel_name, const NiTClkAttribute& attribute_id)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetAttributeViStringRequest{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_channel_name(channel_name);
+  request.set_attribute_id(attribute_id);
+
+  auto response = GetAttributeViStringResponse{};
+
+  raise_if_error(
+      stub->GetAttributeViString(&context, request, &response),
+      context);
+
+  return response;
+}
+
+GetExtendedErrorInfoResponse
+get_extended_error_info(const StubPtr& stub)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetExtendedErrorInfoRequest{};
+
+  auto response = GetExtendedErrorInfoResponse{};
+
+  raise_if_error(
+      stub->GetExtendedErrorInfo(&context, request, &response),
+      context);
+
+  return response;
+}
+
 InitiateResponse
 initiate(const StubPtr& stub, const std::vector<nidevice_grpc::Session>& sessions)
 {
@@ -81,6 +154,66 @@ is_done(const StubPtr& stub, const std::vector<nidevice_grpc::Session>& sessions
 
   raise_if_error(
       stub->IsDone(&context, request, &response),
+      context);
+
+  return response;
+}
+
+SetAttributeViReal64Response
+set_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::string& channel_name, const NiTClkAttribute& attribute_id, const double& value)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetAttributeViReal64Request{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_channel_name(channel_name);
+  request.set_attribute_id(attribute_id);
+  request.set_value_raw(value);
+
+  auto response = SetAttributeViReal64Response{};
+
+  raise_if_error(
+      stub->SetAttributeViReal64(&context, request, &response),
+      context);
+
+  return response;
+}
+
+SetAttributeViSessionResponse
+set_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::string& channel_name, const NiTClkAttribute& attribute_id, const nidevice_grpc::Session& value)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetAttributeViSessionRequest{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_channel_name(channel_name);
+  request.set_attribute_id(attribute_id);
+  request.mutable_value()->CopyFrom(value);
+
+  auto response = SetAttributeViSessionResponse{};
+
+  raise_if_error(
+      stub->SetAttributeViSession(&context, request, &response),
+      context);
+
+  return response;
+}
+
+SetAttributeViStringResponse
+set_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::string& channel_name, const NiTClkAttribute& attribute_id, const pb::string& value)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetAttributeViStringRequest{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_channel_name(channel_name);
+  request.set_attribute_id(attribute_id);
+  request.set_value_raw(value);
+
+  auto response = SetAttributeViStringResponse{};
+
+  raise_if_error(
+      stub->SetAttributeViString(&context, request, &response),
       context);
 
   return response;
@@ -159,4 +292,4 @@ wait_until_done(const StubPtr& stub, const std::vector<nidevice_grpc::Session>& 
 }
 
 
-} // namespace niTClk_grpc::experimental::client
+} // namespace nitclk_grpc::experimental::client

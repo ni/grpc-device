@@ -17,7 +17,7 @@ namespace grpc {
 class ServerBuilder;
 }
 
-namespace niTClk_grpc {
+namespace nitclk_grpc {
 using CodeReadiness = nidevice_grpc::FeatureToggles::CodeReadiness;
 
 std::shared_ptr<void> register_service(
@@ -25,6 +25,6 @@ std::shared_ptr<void> register_service(
   const std::shared_ptr<nidevice_grpc::SessionResourceRepository<ViSession>>& resource_repository,
   const nidevice_grpc::FeatureToggles& feature_toggles);
 
-} // niTClk_grpc
+} // nitclk_grpc
 
 #endif  // NITCLK_GRPC_SERVICE_REGISTRAR_H

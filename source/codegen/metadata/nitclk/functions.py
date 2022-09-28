@@ -69,7 +69,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'GetAttributeViReal64': {
-        'codegen_method': 'private',
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'session',
@@ -103,7 +103,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'GetAttributeViSession': {
-        'codegen_method': 'private',
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'session',
@@ -137,7 +137,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'GetAttributeViString': {
-        'codegen_method': 'private',
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'session',
@@ -184,7 +184,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'GetExtendedErrorInfo': {
-        'codegen_method': 'private',
+        'codegen_method': 'public',
         'is_error_handling': True,
         'parameters': [
             {
@@ -278,7 +278,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'SetAttributeViReal64': {
-        'codegen_method': 'private',
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'session',
@@ -312,7 +312,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'SetAttributeViSession': {
-        'codegen_method': 'private',
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'session',
@@ -346,7 +346,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'SetAttributeViString': {
-        'codegen_method': 'private',
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'session',

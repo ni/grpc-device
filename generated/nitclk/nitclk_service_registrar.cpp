@@ -11,7 +11,7 @@
 #include "nitclk_service.h"
 #include "nitclk_service_registrar.h"
 
-namespace niTClk_grpc {
+namespace nitclk_grpc {
 
 namespace {
 struct LibraryAndService {
@@ -49,4 +49,4 @@ std::shared_ptr<void> register_service(
   return {};
 }
 
-} // niTClk_grpc
+} // nitclk_grpc

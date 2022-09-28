@@ -7,7 +7,7 @@ config = {
     'c_function_prefix': 'niTClk_',
     'c_header': 'niTClk.h',
     'close_function': None,
-    'csharp_namespace': 'NationalInstruments.Grpc.Tclk',
+    'csharp_namespace': 'NationalInstruments.Grpc.TClk',
     'custom_types': [
     ],
     'driver_name': 'NI-TClk',

@@ -9,7 +9,7 @@
 #include <grpcpp/grpcpp.h>
 #include <niTClk.h>
 
-namespace niTClk_grpc {
+namespace nitclk_grpc {
 
 class NiTClkLibraryInterface {
  public:
@@ -32,5 +32,5 @@ class NiTClkLibraryInterface {
   virtual ViStatus WaitUntilDone(ViUInt32 sessionCount, ViSession sessions[], ViReal64 timeout) = 0;
 };
 
-}  // namespace niTClk_grpc
+}  // namespace nitclk_grpc
 #endif  // NITCLK_GRPC_LIBRARY_WRAPPER_H

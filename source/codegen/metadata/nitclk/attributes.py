@@ -29,6 +29,13 @@ attributes = {
         'resettable': False,
         'type': 'ViSession'
     },
+    5: {
+        'codegen_method': 'public',
+        'grpc_type': 'nidevice_grpc.Session',
+        'name': 'SCRIPT_TRIGGER_MASTER_SESSION',
+        'resettable': False,
+        'type': 'ViSession'
+    },
     6: {
         'codegen_method': 'public',
         'grpc_type': 'nidevice_grpc.Session',
