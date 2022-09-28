@@ -1,6 +1,6 @@
 
 //---------------------------------------------------------------------
-// This file is generated from NI-Digital Pattern Driver API metadata version 19.5.0d7
+// This file is generated from NI-Digital Pattern Driver API metadata version 23.0.0d9999
 //---------------------------------------------------------------------
 // Proto file for the NI-Digital Pattern Driver Metadata
 //---------------------------------------------------------------------
@@ -41,16 +41,16 @@ service NiDigital {
   rpc ConfigureStartLabel(ConfigureStartLabelRequest) returns (ConfigureStartLabelResponse);
   rpc ConfigureTerminationMode(ConfigureTerminationModeRequest) returns (ConfigureTerminationModeResponse);
   rpc ConfigureTimeSetCompareEdgesStrobe(ConfigureTimeSetCompareEdgesStrobeRequest) returns (ConfigureTimeSetCompareEdgesStrobeResponse);
-  rpc ConfigureTimeSetCompareEdgesStrobe2X(ConfigureTimeSetCompareEdgesStrobe2XRequest) returns (ConfigureTimeSetCompareEdgesStrobe2XResponse);
+  rpc ConfigureTimeSetCompareEdgesStrobe2x(ConfigureTimeSetCompareEdgesStrobe2xRequest) returns (ConfigureTimeSetCompareEdgesStrobe2xResponse);
   rpc ConfigureTimeSetDriveEdges(ConfigureTimeSetDriveEdgesRequest) returns (ConfigureTimeSetDriveEdgesResponse);
-  rpc ConfigureTimeSetDriveEdges2x(ConfigureTimeSetDriveEdges2xRequest) returns (ConfigureTimeSetDriveEdges2xResponse);
+  rpc ConfigureTimeSetDriveEdges2X(ConfigureTimeSetDriveEdges2XRequest) returns (ConfigureTimeSetDriveEdges2XResponse);
   rpc ConfigureTimeSetDriveFormat(ConfigureTimeSetDriveFormatRequest) returns (ConfigureTimeSetDriveFormatResponse);
   rpc ConfigureTimeSetEdge(ConfigureTimeSetEdgeRequest) returns (ConfigureTimeSetEdgeResponse);
   rpc ConfigureTimeSetEdgeMultiplier(ConfigureTimeSetEdgeMultiplierRequest) returns (ConfigureTimeSetEdgeMultiplierResponse);
   rpc ConfigureTimeSetPeriod(ConfigureTimeSetPeriodRequest) returns (ConfigureTimeSetPeriodResponse);
   rpc ConfigureVoltageLevels(ConfigureVoltageLevelsRequest) returns (ConfigureVoltageLevelsResponse);
   rpc CreateCaptureWaveformFromFileDigicapture(CreateCaptureWaveformFromFileDigicaptureRequest) returns (CreateCaptureWaveformFromFileDigicaptureResponse);
-   rpc CreateCaptureWaveformParallel(CreateCaptureWaveformParallelRequest) returns (CreateCaptureWaveformParallelResponse);
+  rpc CreateCaptureWaveformParallel(CreateCaptureWaveformParallelRequest) returns (CreateCaptureWaveformParallelResponse);
   rpc CreateCaptureWaveformSerial(CreateCaptureWaveformSerialRequest) returns (CreateCaptureWaveformSerialResponse);
   rpc CreateChannelMap(CreateChannelMapRequest) returns (CreateChannelMapResponse);
   rpc CreatePinGroup(CreatePinGroupRequest) returns (CreatePinGroupResponse);
@@ -231,6 +231,12 @@ enum NiDigitalAttribute {
   NIDIGITAL_ATTRIBUTE_TDR_ENDPOINT_TERMINATION = 1150081;
   NIDIGITAL_ATTRIBUTE_FREQUENCY_COUNTER_MEASUREMENT_MODE = 1150084;
   NIDIGITAL_ATTRIBUTE_FREQUENCY_COUNTER_HYSTERESIS_ENABLED = 1150085;
+  NIDIGITAL_ATTRIBUTE_RIO_TRIGGER_TYPE = 1150086;
+  NIDIGITAL_ATTRIBUTE_DIGITAL_EDGE_RIO_TRIGGER_SOURCE = 1150087;
+  NIDIGITAL_ATTRIBUTE_DIGITAL_EDGE_RIO_TRIGGER_EDGE = 1150088;
+  NIDIGITAL_ATTRIBUTE_RIO_TRIGGER_TERMINAL_NAME = 1150089;
+  NIDIGITAL_ATTRIBUTE_EXPORTED_RIO_EVENT_OUTPUT_TERMINAL = 1150090;
+  NIDIGITAL_ATTRIBUTE_RIO_EVENT_TERMINAL_NAME = 1150091;
 }
 
 enum BitOrder {
@@ -259,6 +265,7 @@ enum ExportSignal {
   EXPORT_SIGNAL_NIDIGITAL_VAL_CONDITIONAL_JUMP_TRIGGER = 2001;
   EXPORT_SIGNAL_NIDIGITAL_VAL_PATTERN_OPCODE_EVENT = 2002;
   EXPORT_SIGNAL_NIDIGITAL_VAL_REF_CLOCK = 2003;
+  EXPORT_SIGNAL_NIDIGITAL_VAL_RIO_EVENT = 2004;
 }
 
 enum FrequencyMeasurementMode {
@@ -279,12 +286,12 @@ enum NiDigitalInt32AttributeValues {
   NIDIGITAL_INT32_DIGITAL_EDGE_VAL_FALLING_EDGE = 1801;
   NIDIGITAL_INT32_FREQUENCY_MEASUREMENT_MODE_VAL_BANKED = 3700;
   NIDIGITAL_INT32_FREQUENCY_MEASUREMENT_MODE_VAL_PARALLEL = 3701;
-  NIDIGITAL_INT32_HISTORY_RAM_CYCLES_TO_ACQUIRE_VAL_FAILED_CYCLES = 2303;
-  NIDIGITAL_INT32_HISTORY_RAM_CYCLES_TO_ACQUIRE_VAL_ALL_CYCLES = 2304;
   NIDIGITAL_INT32_HISTORY_RAM_MAX_SAMPLES_TO_ACQUIRE_PER_SITE_VAL_ACQUIRE_ALL_SAMPLES = -1;
   NIDIGITAL_INT32_HISTORY_RAM_TRIGGER_TYPE_VAL_FIRST_FAILURE = 2200;
   NIDIGITAL_INT32_HISTORY_RAM_TRIGGER_TYPE_VAL_CYCLE_NUMBER = 2201;
   NIDIGITAL_INT32_HISTORY_RAM_TRIGGER_TYPE_VAL_PATTERN_LABEL = 2202;
+  NIDIGITAL_INT32_HISTORY_RAM_CYCLES_TO_ACQUIRE_VAL_FAILED_CYCLES = 2303;
+  NIDIGITAL_INT32_HISTORY_RAM_CYCLES_TO_ACQUIRE_VAL_ALL_CYCLES = 2304;
   NIDIGITAL_INT32_PPMU_APERTURE_TIME_UNITS_VAL_SECONDS = 2100;
   NIDIGITAL_INT32_PPMU_CURRENT_LIMIT_BEHAVIOR_VAL_CURRENT_REGULATE = 3100;
   NIDIGITAL_INT32_PPMU_OUTPUT_FUNCTION_VAL_DC_VOLTAGE = 1300;
@@ -293,6 +300,7 @@ enum NiDigitalInt32AttributeValues {
   NIDIGITAL_INT32_SELECTED_FUNCTION_VAL_PPMU = 1101;
   NIDIGITAL_INT32_SELECTED_FUNCTION_VAL_OFF = 1102;
   NIDIGITAL_INT32_SELECTED_FUNCTION_VAL_DISCONNECT = 1103;
+  NIDIGITAL_INT32_SELECTED_FUNCTION_VAL_RIO = 1104;
   NIDIGITAL_INT32_TDR_ENDPOINT_TERMINATION_VAL_TDR_TO_OPEN = 3600;
   NIDIGITAL_INT32_TDR_ENDPOINT_TERMINATION_VAL_TDR_TO_SHORT_TO_GROUND = 3601;
   NIDIGITAL_INT32_TERMINATION_MODE_VAL_ACTIVE_LOAD = 1200;
@@ -345,6 +353,7 @@ enum SelectedFunction {
   SELECTED_FUNCTION_NIDIGITAL_VAL_PPMU = 1101;
   SELECTED_FUNCTION_NIDIGITAL_VAL_OFF = 1102;
   SELECTED_FUNCTION_NIDIGITAL_VAL_DISCONNECT = 1103;
+  SELECTED_FUNCTION_NIDIGITAL_VAL_RIO = 1104;
 }
 
 enum SiteResultType {
@@ -681,10 +690,10 @@ message ConfigureTimeSetDriveEdgesResponse {
   int32 status = 1;
 }
 
-message ConfigureTimeSetDriveEdges2xRequest {
+message ConfigureTimeSetDriveEdges2XRequest {
   nidevice_grpc.Session vi = 1;
   string pin_list = 2;
-  string time_set_name = 3;
+  string time_set = 3;
   oneof format_enum {
     DriveFormat format = 4;
     sint32 format_raw = 5;
@@ -697,7 +706,7 @@ message ConfigureTimeSetDriveEdges2xRequest {
   double drive_return2_edge = 11;
 }
 
-message ConfigureTimeSetDriveEdges2xResponse {
+message ConfigureTimeSetDriveEdges2XResponse {
   int32 status = 1;
 }
 

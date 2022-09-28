@@ -332,44 +332,6 @@ enums = {
             }
         ]
     },
-    'RIOTriggerId': {
-        'codegen_method': 'public',
-        'generate-mappings': True,
-        'values': [
-            {
-                'name': 'NIDIGITAL_VAL_RIO_TRIGGER0',
-                'value': 'RIOTrigger0'
-            },
-            {
-                'name': 'NIDIGITAL_VAL_RIO_TRIGGER1',
-                'value': 'RIOTrigger1'
-            },
-            {
-                'name': 'NIDIGITAL_VAL_RIO_TRIGGER2',
-                'value': 'RIOTrigger2'
-            },
-            {
-                'name': 'NIDIGITAL_VAL_RIO_TRIGGER3',
-                'value': 'RIOTrigger3'
-            },
-            {
-                'name': 'NIDIGITAL_VAL_RIO_TRIGGER4',
-                'value': 'RIOTrigger4'
-            },
-            {
-                'name': 'NIDIGITAL_VAL_RIO_TRIGGER5',
-                'value': 'RIOTrigger5'
-            },
-            {
-                'name': 'NIDIGITAL_VAL_RIO_TRIGGER6',
-                'value': 'RIOTrigger6'
-            },
-            {
-                'name': 'NIDIGITAL_VAL_RIO_TRIGGER7',
-                'value': 'RIOTrigger7'
-            }
-        ]
-    },
     'SelectedFunction': {
         'codegen_method': 'public',
         'values': [
