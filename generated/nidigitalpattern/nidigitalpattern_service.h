@@ -68,7 +68,7 @@ public:
   ::grpc::Status ConfigureTimeSetCompareEdgesStrobe(::grpc::ServerContext* context, const ConfigureTimeSetCompareEdgesStrobeRequest* request, ConfigureTimeSetCompareEdgesStrobeResponse* response) override;
   ::grpc::Status ConfigureTimeSetCompareEdgesStrobe2x(::grpc::ServerContext* context, const ConfigureTimeSetCompareEdgesStrobe2xRequest* request, ConfigureTimeSetCompareEdgesStrobe2xResponse* response) override;
   ::grpc::Status ConfigureTimeSetDriveEdges(::grpc::ServerContext* context, const ConfigureTimeSetDriveEdgesRequest* request, ConfigureTimeSetDriveEdgesResponse* response) override;
-  ::grpc::Status ConfigureTimeSetDriveEdges2X(::grpc::ServerContext* context, const ConfigureTimeSetDriveEdges2XRequest* request, ConfigureTimeSetDriveEdges2XResponse* response) override;
+  ::grpc::Status ConfigureTimeSetDriveEdges2x(::grpc::ServerContext* context, const ConfigureTimeSetDriveEdges2xRequest* request, ConfigureTimeSetDriveEdges2xResponse* response) override;
   ::grpc::Status ConfigureTimeSetDriveFormat(::grpc::ServerContext* context, const ConfigureTimeSetDriveFormatRequest* request, ConfigureTimeSetDriveFormatResponse* response) override;
   ::grpc::Status ConfigureTimeSetEdge(::grpc::ServerContext* context, const ConfigureTimeSetEdgeRequest* request, ConfigureTimeSetEdgeResponse* response) override;
   ::grpc::Status ConfigureTimeSetEdgeMultiplier(::grpc::ServerContext* context, const ConfigureTimeSetEdgeMultiplierRequest* request, ConfigureTimeSetEdgeMultiplierResponse* response) override;

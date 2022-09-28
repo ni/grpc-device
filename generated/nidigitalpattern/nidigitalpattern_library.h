@@ -45,7 +45,7 @@ class NiDigitalLibrary : public nidigitalpattern_grpc::NiDigitalLibraryInterface
   ViStatus ConfigureTimeSetCompareEdgesStrobe(ViSession vi, ViConstString pinList, ViConstString timeSet, ViReal64 strobeEdge);
   ViStatus ConfigureTimeSetCompareEdgesStrobe2x(ViSession vi, ViConstString pinList, ViConstString timeSet, ViReal64 strobeEdge, ViReal64 strobe2Edge);
   ViStatus ConfigureTimeSetDriveEdges(ViSession vi, ViConstString pinList, ViConstString timeSet, ViInt32 format, ViReal64 driveOnEdge, ViReal64 driveDataEdge, ViReal64 driveReturnEdge, ViReal64 driveOffEdge);
-  ViStatus ConfigureTimeSetDriveEdges2X(ViSession vi, ViConstString pinList, ViConstString timeSet, ViInt32 format, ViReal64 driveOnEdge, ViReal64 driveDataEdge, ViReal64 driveReturnEdge, ViReal64 driveOffEdge, ViReal64 driveData2Edge, ViReal64 driveReturn2Edge);
+  ViStatus ConfigureTimeSetDriveEdges2x(ViSession vi, ViConstString pinList, ViConstString timeSet, ViInt32 format, ViReal64 driveOnEdge, ViReal64 driveDataEdge, ViReal64 driveReturnEdge, ViReal64 driveOffEdge, ViReal64 driveData2Edge, ViReal64 driveReturn2Edge);
   ViStatus ConfigureTimeSetDriveFormat(ViSession vi, ViConstString pinList, ViConstString timeSet, ViInt32 driveFormat);
   ViStatus ConfigureTimeSetEdge(ViSession vi, ViConstString pinList, ViConstString timeSet, ViInt32 edge, ViReal64 time);
   ViStatus ConfigureTimeSetEdgeMultiplier(ViSession vi, ViConstString pinList, ViConstString timeSet, ViInt32 edgeMultiplier);
@@ -179,7 +179,7 @@ class NiDigitalLibrary : public nidigitalpattern_grpc::NiDigitalLibraryInterface
   using ConfigureTimeSetCompareEdgesStrobePtr = decltype(&niDigital_ConfigureTimeSetCompareEdgesStrobe);
   using ConfigureTimeSetCompareEdgesStrobe2xPtr = decltype(&niDigital_ConfigureTimeSetCompareEdgesStrobe2x);
   using ConfigureTimeSetDriveEdgesPtr = decltype(&niDigital_ConfigureTimeSetDriveEdges);
-  using ConfigureTimeSetDriveEdges2XPtr = decltype(&niDigital_ConfigureTimeSetDriveEdges2x);
+  using ConfigureTimeSetDriveEdges2xPtr = decltype(&niDigital_ConfigureTimeSetDriveEdges2x);
   using ConfigureTimeSetDriveFormatPtr = decltype(&niDigital_ConfigureTimeSetDriveFormat);
   using ConfigureTimeSetEdgePtr = decltype(&niDigital_ConfigureTimeSetEdge);
   using ConfigureTimeSetEdgeMultiplierPtr = decltype(&niDigital_ConfigureTimeSetEdgeMultiplier);
@@ -313,7 +313,7 @@ class NiDigitalLibrary : public nidigitalpattern_grpc::NiDigitalLibraryInterface
     ConfigureTimeSetCompareEdgesStrobePtr ConfigureTimeSetCompareEdgesStrobe;
     ConfigureTimeSetCompareEdgesStrobe2xPtr ConfigureTimeSetCompareEdgesStrobe2x;
     ConfigureTimeSetDriveEdgesPtr ConfigureTimeSetDriveEdges;
-    ConfigureTimeSetDriveEdges2XPtr ConfigureTimeSetDriveEdges2X;
+    ConfigureTimeSetDriveEdges2xPtr ConfigureTimeSetDriveEdges2x;
     ConfigureTimeSetDriveFormatPtr ConfigureTimeSetDriveFormat;
     ConfigureTimeSetEdgePtr ConfigureTimeSetEdge;
     ConfigureTimeSetEdgeMultiplierPtr ConfigureTimeSetEdgeMultiplier;

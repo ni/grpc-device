@@ -48,7 +48,7 @@ NiDigitalLibrary::NiDigitalLibrary() : shared_library_(kLibraryName)
   function_pointers_.ConfigureTimeSetCompareEdgesStrobe = reinterpret_cast<ConfigureTimeSetCompareEdgesStrobePtr>(shared_library_.get_function_pointer("niDigital_ConfigureTimeSetCompareEdgesStrobe"));
   function_pointers_.ConfigureTimeSetCompareEdgesStrobe2x = reinterpret_cast<ConfigureTimeSetCompareEdgesStrobe2xPtr>(shared_library_.get_function_pointer("niDigital_ConfigureTimeSetCompareEdgesStrobe2x"));
   function_pointers_.ConfigureTimeSetDriveEdges = reinterpret_cast<ConfigureTimeSetDriveEdgesPtr>(shared_library_.get_function_pointer("niDigital_ConfigureTimeSetDriveEdges"));
-  function_pointers_.ConfigureTimeSetDriveEdges2X = reinterpret_cast<ConfigureTimeSetDriveEdges2XPtr>(shared_library_.get_function_pointer("niDigital_ConfigureTimeSetDriveEdges2x"));
+  function_pointers_.ConfigureTimeSetDriveEdges2x = reinterpret_cast<ConfigureTimeSetDriveEdges2xPtr>(shared_library_.get_function_pointer("niDigital_ConfigureTimeSetDriveEdges2x"));
   function_pointers_.ConfigureTimeSetDriveFormat = reinterpret_cast<ConfigureTimeSetDriveFormatPtr>(shared_library_.get_function_pointer("niDigital_ConfigureTimeSetDriveFormat"));
   function_pointers_.ConfigureTimeSetEdge = reinterpret_cast<ConfigureTimeSetEdgePtr>(shared_library_.get_function_pointer("niDigital_ConfigureTimeSetEdge"));
   function_pointers_.ConfigureTimeSetEdgeMultiplier = reinterpret_cast<ConfigureTimeSetEdgeMultiplierPtr>(shared_library_.get_function_pointer("niDigital_ConfigureTimeSetEdgeMultiplier"));
@@ -490,15 +490,15 @@ ViStatus NiDigitalLibrary::ConfigureTimeSetDriveEdges(ViSession vi, ViConstStrin
 #endif
 }
 
-ViStatus NiDigitalLibrary::ConfigureTimeSetDriveEdges2X(ViSession vi, ViConstString pinList, ViConstString timeSet, ViInt32 format, ViReal64 driveOnEdge, ViReal64 driveDataEdge, ViReal64 driveReturnEdge, ViReal64 driveOffEdge, ViReal64 driveData2Edge, ViReal64 driveReturn2Edge)
+ViStatus NiDigitalLibrary::ConfigureTimeSetDriveEdges2x(ViSession vi, ViConstString pinList, ViConstString timeSet, ViInt32 format, ViReal64 driveOnEdge, ViReal64 driveDataEdge, ViReal64 driveReturnEdge, ViReal64 driveOffEdge, ViReal64 driveData2Edge, ViReal64 driveReturn2Edge)
 {
-  if (!function_pointers_.ConfigureTimeSetDriveEdges2X) {
+  if (!function_pointers_.ConfigureTimeSetDriveEdges2x) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDigital_ConfigureTimeSetDriveEdges2x.");
   }
 #if defined(_MSC_VER)
   return niDigital_ConfigureTimeSetDriveEdges2x(vi, pinList, timeSet, format, driveOnEdge, driveDataEdge, driveReturnEdge, driveOffEdge, driveData2Edge, driveReturn2Edge);
 #else
-  return function_pointers_.ConfigureTimeSetDriveEdges2X(vi, pinList, timeSet, format, driveOnEdge, driveDataEdge, driveReturnEdge, driveOffEdge, driveData2Edge, driveReturn2Edge);
+  return function_pointers_.ConfigureTimeSetDriveEdges2x(vi, pinList, timeSet, format, driveOnEdge, driveDataEdge, driveReturnEdge, driveOffEdge, driveData2Edge, driveReturn2Edge);
 #endif
 }
 

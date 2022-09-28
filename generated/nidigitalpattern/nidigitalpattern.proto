@@ -43,7 +43,7 @@ service NiDigital {
   rpc ConfigureTimeSetCompareEdgesStrobe(ConfigureTimeSetCompareEdgesStrobeRequest) returns (ConfigureTimeSetCompareEdgesStrobeResponse);
   rpc ConfigureTimeSetCompareEdgesStrobe2x(ConfigureTimeSetCompareEdgesStrobe2xRequest) returns (ConfigureTimeSetCompareEdgesStrobe2xResponse);
   rpc ConfigureTimeSetDriveEdges(ConfigureTimeSetDriveEdgesRequest) returns (ConfigureTimeSetDriveEdgesResponse);
-  rpc ConfigureTimeSetDriveEdges2X(ConfigureTimeSetDriveEdges2XRequest) returns (ConfigureTimeSetDriveEdges2XResponse);
+  rpc ConfigureTimeSetDriveEdges2x(ConfigureTimeSetDriveEdges2xRequest) returns (ConfigureTimeSetDriveEdges2xResponse);
   rpc ConfigureTimeSetDriveFormat(ConfigureTimeSetDriveFormatRequest) returns (ConfigureTimeSetDriveFormatResponse);
   rpc ConfigureTimeSetEdge(ConfigureTimeSetEdgeRequest) returns (ConfigureTimeSetEdgeResponse);
   rpc ConfigureTimeSetEdgeMultiplier(ConfigureTimeSetEdgeMultiplierRequest) returns (ConfigureTimeSetEdgeMultiplierResponse);
@@ -690,10 +690,10 @@ message ConfigureTimeSetDriveEdgesResponse {
   int32 status = 1;
 }
 
-message ConfigureTimeSetDriveEdges2XRequest {
+message ConfigureTimeSetDriveEdges2xRequest {
   nidevice_grpc.Session vi = 1;
   string pin_list = 2;
-  string time_set = 3;
+  string time_set_name = 3;
   oneof format_enum {
     DriveFormat format = 4;
     sint32 format_raw = 5;
@@ -706,7 +706,7 @@ message ConfigureTimeSetDriveEdges2XRequest {
   double drive_return2_edge = 11;
 }
 
-message ConfigureTimeSetDriveEdges2XResponse {
+message ConfigureTimeSetDriveEdges2xResponse {
   int32 status = 1;
 }
 

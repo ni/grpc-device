@@ -44,7 +44,7 @@ class NiDigitalMockLibrary : public nidigitalpattern_grpc::NiDigitalLibraryInter
   MOCK_METHOD(ViStatus, ConfigureTimeSetCompareEdgesStrobe, (ViSession vi, ViConstString pinList, ViConstString timeSet, ViReal64 strobeEdge), (override));
   MOCK_METHOD(ViStatus, ConfigureTimeSetCompareEdgesStrobe2x, (ViSession vi, ViConstString pinList, ViConstString timeSet, ViReal64 strobeEdge, ViReal64 strobe2Edge), (override));
   MOCK_METHOD(ViStatus, ConfigureTimeSetDriveEdges, (ViSession vi, ViConstString pinList, ViConstString timeSet, ViInt32 format, ViReal64 driveOnEdge, ViReal64 driveDataEdge, ViReal64 driveReturnEdge, ViReal64 driveOffEdge), (override));
-  MOCK_METHOD(ViStatus, ConfigureTimeSetDriveEdges2X, (ViSession vi, ViConstString pinList, ViConstString timeSet, ViInt32 format, ViReal64 driveOnEdge, ViReal64 driveDataEdge, ViReal64 driveReturnEdge, ViReal64 driveOffEdge, ViReal64 driveData2Edge, ViReal64 driveReturn2Edge), (override));
+  MOCK_METHOD(ViStatus, ConfigureTimeSetDriveEdges2x, (ViSession vi, ViConstString pinList, ViConstString timeSet, ViInt32 format, ViReal64 driveOnEdge, ViReal64 driveDataEdge, ViReal64 driveReturnEdge, ViReal64 driveOffEdge, ViReal64 driveData2Edge, ViReal64 driveReturn2Edge), (override));
   MOCK_METHOD(ViStatus, ConfigureTimeSetDriveFormat, (ViSession vi, ViConstString pinList, ViConstString timeSet, ViInt32 driveFormat), (override));
   MOCK_METHOD(ViStatus, ConfigureTimeSetEdge, (ViSession vi, ViConstString pinList, ViConstString timeSet, ViInt32 edge, ViReal64 time), (override));
   MOCK_METHOD(ViStatus, ConfigureTimeSetEdgeMultiplier, (ViSession vi, ViConstString pinList, ViConstString timeSet, ViInt32 edgeMultiplier), (override));

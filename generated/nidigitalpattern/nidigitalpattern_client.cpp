@@ -571,15 +571,15 @@ configure_time_set_drive_edges(const StubPtr& stub, const nidevice_grpc::Session
   return response;
 }
 
-ConfigureTimeSetDriveEdges2XResponse
-configure_time_set_drive_edges2_x(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& pin_list, const pb::string& time_set, const simple_variant<DriveFormat, pb::int32>& format, const double& drive_on_edge, const double& drive_data_edge, const double& drive_return_edge, const double& drive_off_edge, const double& drive_data2_edge, const double& drive_return2_edge)
+ConfigureTimeSetDriveEdges2xResponse
+configure_time_set_drive_edges2x(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& pin_list, const pb::string& time_set_name, const simple_variant<DriveFormat, pb::int32>& format, const double& drive_on_edge, const double& drive_data_edge, const double& drive_return_edge, const double& drive_off_edge, const double& drive_data2_edge, const double& drive_return2_edge)
 {
   ::grpc::ClientContext context;
 
-  auto request = ConfigureTimeSetDriveEdges2XRequest{};
+  auto request = ConfigureTimeSetDriveEdges2xRequest{};
   request.mutable_vi()->CopyFrom(vi);
   request.set_pin_list(pin_list);
-  request.set_time_set(time_set);
+  request.set_time_set_name(time_set_name);
   const auto format_ptr = format.get_if<DriveFormat>();
   const auto format_raw_ptr = format.get_if<pb::int32>();
   if (format_ptr) {
@@ -595,10 +595,10 @@ configure_time_set_drive_edges2_x(const StubPtr& stub, const nidevice_grpc::Sess
   request.set_drive_data2_edge(drive_data2_edge);
   request.set_drive_return2_edge(drive_return2_edge);
 
-  auto response = ConfigureTimeSetDriveEdges2XResponse{};
+  auto response = ConfigureTimeSetDriveEdges2xResponse{};
 
   raise_if_error(
-      stub->ConfigureTimeSetDriveEdges2X(&context, request, &response),
+      stub->ConfigureTimeSetDriveEdges2x(&context, request, &response),
       context);
 
   return response;

@@ -792,7 +792,7 @@ namespace nidigitalpattern_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiDigitalService::ConfigureTimeSetDriveEdges2X(::grpc::ServerContext* context, const ConfigureTimeSetDriveEdges2XRequest* request, ConfigureTimeSetDriveEdges2XResponse* response)
+  ::grpc::Status NiDigitalService::ConfigureTimeSetDriveEdges2x(::grpc::ServerContext* context, const ConfigureTimeSetDriveEdges2xRequest* request, ConfigureTimeSetDriveEdges2xResponse* response)
   {
     if (context->IsCancelled()) {
       return ::grpc::Status::CANCELLED;
@@ -801,18 +801,18 @@ namespace nidigitalpattern_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto pin_list = request->pin_list().c_str();
-      auto time_set = request->time_set().c_str();
+      auto time_set_name = request->time_set_name().c_str();
       ViInt32 format;
       switch (request->format_enum_case()) {
-        case nidigitalpattern_grpc::ConfigureTimeSetDriveEdges2XRequest::FormatEnumCase::kFormat: {
+        case nidigitalpattern_grpc::ConfigureTimeSetDriveEdges2xRequest::FormatEnumCase::kFormat: {
           format = static_cast<ViInt32>(request->format());
           break;
         }
-        case nidigitalpattern_grpc::ConfigureTimeSetDriveEdges2XRequest::FormatEnumCase::kFormatRaw: {
+        case nidigitalpattern_grpc::ConfigureTimeSetDriveEdges2xRequest::FormatEnumCase::kFormatRaw: {
           format = static_cast<ViInt32>(request->format_raw());
           break;
         }
-        case nidigitalpattern_grpc::ConfigureTimeSetDriveEdges2XRequest::FormatEnumCase::FORMAT_ENUM_NOT_SET: {
+        case nidigitalpattern_grpc::ConfigureTimeSetDriveEdges2xRequest::FormatEnumCase::FORMAT_ENUM_NOT_SET: {
           return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for format was not specified or out of range");
           break;
         }
@@ -824,7 +824,7 @@ namespace nidigitalpattern_grpc {
       ViReal64 drive_off_edge = request->drive_off_edge();
       ViReal64 drive_data2_edge = request->drive_data2_edge();
       ViReal64 drive_return2_edge = request->drive_return2_edge();
-      auto status = library_->ConfigureTimeSetDriveEdges2X(vi, pin_list, time_set, format, drive_on_edge, drive_data_edge, drive_return_edge, drive_off_edge, drive_data2_edge, drive_return2_edge);
+      auto status = library_->ConfigureTimeSetDriveEdges2x(vi, pin_list, time_set_name, format, drive_on_edge, drive_data_edge, drive_return_edge, drive_off_edge, drive_data2_edge, drive_return2_edge);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
       }

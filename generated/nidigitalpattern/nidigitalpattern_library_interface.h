@@ -42,7 +42,7 @@ class NiDigitalLibraryInterface {
   virtual ViStatus ConfigureTimeSetCompareEdgesStrobe(ViSession vi, ViConstString pinList, ViConstString timeSet, ViReal64 strobeEdge) = 0;
   virtual ViStatus ConfigureTimeSetCompareEdgesStrobe2x(ViSession vi, ViConstString pinList, ViConstString timeSet, ViReal64 strobeEdge, ViReal64 strobe2Edge) = 0;
   virtual ViStatus ConfigureTimeSetDriveEdges(ViSession vi, ViConstString pinList, ViConstString timeSet, ViInt32 format, ViReal64 driveOnEdge, ViReal64 driveDataEdge, ViReal64 driveReturnEdge, ViReal64 driveOffEdge) = 0;
-  virtual ViStatus ConfigureTimeSetDriveEdges2X(ViSession vi, ViConstString pinList, ViConstString timeSet, ViInt32 format, ViReal64 driveOnEdge, ViReal64 driveDataEdge, ViReal64 driveReturnEdge, ViReal64 driveOffEdge, ViReal64 driveData2Edge, ViReal64 driveReturn2Edge) = 0;
+  virtual ViStatus ConfigureTimeSetDriveEdges2x(ViSession vi, ViConstString pinList, ViConstString timeSet, ViInt32 format, ViReal64 driveOnEdge, ViReal64 driveDataEdge, ViReal64 driveReturnEdge, ViReal64 driveOffEdge, ViReal64 driveData2Edge, ViReal64 driveReturn2Edge) = 0;
   virtual ViStatus ConfigureTimeSetDriveFormat(ViSession vi, ViConstString pinList, ViConstString timeSet, ViInt32 driveFormat) = 0;
   virtual ViStatus ConfigureTimeSetEdge(ViSession vi, ViConstString pinList, ViConstString timeSet, ViInt32 edge, ViReal64 time) = 0;
   virtual ViStatus ConfigureTimeSetEdgeMultiplier(ViSession vi, ViConstString pinList, ViConstString timeSet, ViInt32 edgeMultiplier) = 0;
