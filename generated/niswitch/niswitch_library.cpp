@@ -55,7 +55,7 @@ NiSwitchLibrary::NiSwitchLibrary() : shared_library_(kLibraryName)
   function_pointers_.GetRelayCount = reinterpret_cast<GetRelayCountPtr>(shared_library_.get_function_pointer("niSwitch_GetRelayCount"));
   function_pointers_.GetRelayName = reinterpret_cast<GetRelayNamePtr>(shared_library_.get_function_pointer("niSwitch_GetRelayName"));
   function_pointers_.GetRelayPosition = reinterpret_cast<GetRelayPositionPtr>(shared_library_.get_function_pointer("niSwitch_GetRelayPosition"));
-  function_pointers_.Init = reinterpret_cast<InitPtr>(shared_library_.get_function_pointer("niSwitch_init "));
+  function_pointers_.Init = reinterpret_cast<InitPtr>(shared_library_.get_function_pointer("niSwitch_init"));
   function_pointers_.InitWithOptions = reinterpret_cast<InitWithOptionsPtr>(shared_library_.get_function_pointer("niSwitch_InitWithOptions"));
   function_pointers_.InitWithTopology = reinterpret_cast<InitWithTopologyPtr>(shared_library_.get_function_pointer("niSwitch_InitWithTopology"));
   function_pointers_.InitiateScan = reinterpret_cast<InitiateScanPtr>(shared_library_.get_function_pointer("niSwitch_InitiateScan"));
@@ -507,24 +507,24 @@ ViStatus NiSwitchLibrary::GetRelayPosition(ViSession vi, ViConstString relayName
 ViStatus NiSwitchLibrary::Init(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* vi)
 {
   if (!function_pointers_.Init) {
-    throw nidevice_grpc::LibraryLoadException("Could not find niSwitch_init .");
+    throw nidevice_grpc::LibraryLoadException("Could not find niSwitch_init.");
   }
 #if defined(_MSC_VER)
-  return niSwitch_init (resourceName, idQuery, resetDevice, vi);
+  return niSwitch_init(resourceName, idQuery, resetDevice, vi);
 #else
   return function_pointers_.Init(resourceName, idQuery, resetDevice, vi);
 #endif
 }
 
-ViStatus NiSwitchLibrary::InitWithOptions(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViConstString optionString, ViSession* vi)
+ViStatus NiSwitchLibrary::InitWithOptions(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViConstString optionsString, ViSession* vi)
 {
   if (!function_pointers_.InitWithOptions) {
     throw nidevice_grpc::LibraryLoadException("Could not find niSwitch_InitWithOptions.");
   }
 #if defined(_MSC_VER)
-  return niSwitch_InitWithOptions(resourceName, idQuery, resetDevice, optionString, vi);
+  return niSwitch_InitWithOptions(resourceName, idQuery, resetDevice, optionsString, vi);
 #else
-  return function_pointers_.InitWithOptions(resourceName, idQuery, resetDevice, optionString, vi);
+  return function_pointers_.InitWithOptions(resourceName, idQuery, resetDevice, optionsString, vi);
 #endif
 }
 
