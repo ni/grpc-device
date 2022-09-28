@@ -396,7 +396,7 @@ enums = {
             }
         ]
     },
-    'TDREndpointTermination': {
+    'TdrEndpointTermination': {
         'codegen_method': 'public',
         'values': [
             {
