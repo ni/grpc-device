@@ -19,52 +19,39 @@ On Mismatch:
 3. The proto generators (mako and helper python files) likely changed between grpc-device and hapigen and need to be synced up.
 """
 
-import argparse
+import click
 import filecmp
 import glob
 import os
 import sys
 
-
-def _check_mismatched_protos(imported_dir: str, generated_dir: str) -> bool:
+@click.command()
+@click.option('--imported', '-i', help="Directory where imported .proto files reside")
+@click.option('--generated', '-g', help='Directory where generated .proto files reside')
+def _check_mismatched_protos(imported: str, generated: str):
     any_mismatches = False
-    file_paths = glob.glob(f"{imported_dir}/**/*.proto", recursive=True)
+    file_paths = glob.glob(f"{imported}/**/*.proto", recursive=True)
     for file_path in file_paths:
         driver_dir_name = os.path.split(os.path.split(file_path)[0])[1]
         file_name = os.path.basename(file_path)
         driver_and_file_path = f"{driver_dir_name}/{file_name}"
-        generated_file_path = f"{generated_dir}/{driver_and_file_path}"
+        generated_file_path = f"{generated}/{driver_and_file_path}"
         compare_result = filecmp.cmp(file_path, generated_file_path)
         if compare_result:
             print(
-                f"✔️ {f'{imported_dir}/{driver_and_file_path}'} matched {f'{generated_dir}/{driver_and_file_path}.'}"
+                f"✔️ {f'{imported}/{driver_and_file_path}'} matched {f'{generated}/{driver_and_file_path}.'}"
             )
         else:
             any_mismatches = True
             print(
-                f"❌ {f'{imported_dir}/{driver_and_file_path}'} did not match {f'{generated_dir}/{driver_and_file_path}'}."
+                f"❌ {f'{imported}/{driver_and_file_path}'} did not match {f'{generated}/{driver_and_file_path}'}."
             )
-    return any_mismatches
-
-
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser(
-        description="Check if any file has changed that affects the Linux RT Feed."
-    )
-    parser.add_argument(
-        "-i",
-        "--imported",
-        help="The path to the directory containing all of the imported proto files.",
-    )
-    parser.add_argument(
-        "-g",
-        "--generated",
-        help="The path to the directory containing all the generated files.",
-    )
-    args = parser.parse_args()
-    any_mismatches = _check_mismatched_protos(args.imported, args.generated)
     if any_mismatches:
         print("\nFail: Some imported proto files didn't match the generated ones.")
         sys.exit(1)
     else:
         print("\nSuccess: All the imported proto files matched the generated ones.")
+
+
+if __name__ == "__main__":
+    _check_mismatched_protos()
