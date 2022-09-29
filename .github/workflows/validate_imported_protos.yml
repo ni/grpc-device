@@ -22,4 +22,4 @@ jobs:
 
     - name: Validate imported proto files against generated
       run: |
-        python source/codegen/validate_imported_protos.py -i source/codegen/protos -g generated
+        python source/codegen/validate_imported_protos.py -i source/codegen/metadata -g generated

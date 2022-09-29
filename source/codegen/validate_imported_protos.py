@@ -1,12 +1,12 @@
 """Script validating that any imported proto file matches its corresponding generated one.
 
-Expects import path as source/codegen/protos and generated folder path.
+Expects import path as source/codegen/metadata and generated folder path.
 
 Background: 
-All MI driver metadata is being sourced from hapigen. We're also creating .proto files
+All MI driver metadata is being imported from hapigen. We're also creating .proto files
 based on the metadata in that component. So when an MI driver is updated, the export will have
 a metadata folder with [attributes.py, config.py, enums.py, functions.py, <driver-name>.proto]. Someone
-will copy these files to grpc-device: metadata files (.py) to source/codegen/metadata folder and the .proto file to source/codegen/protos.
+will import those five files to grpc-device's source/codegen/metadata folder.
 
 Purpose: 
 Since, at the moment, we have both grpc-device and hapigen generating the driver .proto files we want a way to validate
