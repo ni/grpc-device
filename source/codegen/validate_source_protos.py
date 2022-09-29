@@ -7,6 +7,7 @@ import argparse
 import filecmp
 import glob
 import os
+import sys
 
 
 def _check_mismatched_protos(source: str, generated: str) -> bool:
@@ -48,9 +49,6 @@ if __name__ == "__main__":
     any_mismatches = _check_mismatched_protos(args.source, args.generated)
     if any_mismatches:
         print("\nFail: Some source proto files didn't match the generated ones.")
+        sys.exit(1)
     else:
         print("\nSuccess: All the source proto files matched the generated ones.")
-    env_file = os.getenv("GITHUB_ENV")
-    if env_file:
-        with open(env_file, "a") as myfile:
-            myfile.write(f"PROTO_FILE_MISMATCH={any_mismatches}")

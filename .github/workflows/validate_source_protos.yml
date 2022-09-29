@@ -23,10 +23,3 @@ jobs:
     - name: Validate source proto files against generated
       run: |
         python source/codegen/validate_source_protos.py -s source/codegen/protos -g generated
-
-    - name: Verify result
-      if: ${{ env.PROTO_FILE_MISMATCH == 'True'}}
-      uses: actions/github-script@v6
-      with:
-        script: |
-            core.setFailed(`One or more of the source proto files didn't match their corresponding generated one.`)
