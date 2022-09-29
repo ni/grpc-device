@@ -1,7 +1,7 @@
-# Why is there a .proto file here?
+# Why are there .proto files here?
 
 Hapigen is also producing .proto files based on the metadata files (functions.py, etc). We are importing the hapigen created
-.proto file here so we can validate that it matches the one generated in grpc-device (the latter bundled in grpc-device releases).
+.proto files here so we can validate that they match against the ones generated in grpc-device.
 
 # Failing build on Validate Imported Protos step
 
