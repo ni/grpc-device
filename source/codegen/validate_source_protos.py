@@ -1,5 +1,6 @@
-"""Script for validating the source/codegen/protos proto files against their corresponding ones
-in the generated folder.
+"""Script for validating the source proto files against generated ones.
+
+Expects input source path to source/codegen/protos and generated folder path.
 """
 
 import argparse
