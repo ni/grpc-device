@@ -1,0 +1,32 @@
+name: Validate Source Proto Files
+
+on:
+  workflow_call:
+  workflow_dispatch:
+
+jobs:
+  validate:
+    name: Validate Source Proto Files
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Repo
+      uses: actions/checkout@v2
+
+    - name: Setup python3
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.7.x'
+
+    - name: Install build dependencies
+      run: python -m pip install -r python_build_requirements.txt
+
+    - name: Validate source proto files against generated
+      run: |
+        python source/codegen/validate_source_protos.py -s source/codegen/protos -g generated
+
+    - name: Verify result
+      if: ${{ env.PROTO_FILE_MISMATCH == 'True'}}
+      uses: actions/github-script@v6
+      with:
+        script: |
+            core.setFailed(`One or more of the source proto files didn't match their corresponding generated proto files.`)

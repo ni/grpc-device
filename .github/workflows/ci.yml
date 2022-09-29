@@ -10,13 +10,19 @@ on:
 jobs:
   cancel_builds:
     uses: ./.github/workflows/cancel_builds.yml
+  validate_source_protos:
+    uses: ./.github/workflows/validate_source_protos.yml
   validate_python:
     uses: ./.github/workflows/validate_python.yml
   build_desktop:
-    needs: validate_python
+    needs: 
+      - validate_source_protos
+      - validate_python
     uses: ./.github/workflows/build_cmake.yml
   build_nilrt:
-    needs: validate_python
+    needs: 
+      - validate_source_protos
+      - validate_python
     uses: ./.github/workflows/build_nilrt.yml
   run_win_system_tests:
     needs: build_desktop
