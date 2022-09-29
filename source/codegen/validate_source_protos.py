@@ -21,11 +21,11 @@ def _check_mismatched_protos(source: str, generated: str) -> bool:
         if not compare_result:
             any_mismatches = True
             print(
-                f"[Mismatch] {f'source/codegen/proto/{driver_and_file_path}'} did not match {f'generated/{driver_and_file_path}.'}"
+                f"❌ {f'source/codegen/proto/{driver_and_file_path}'} did not match {f'generated/{driver_and_file_path}.'}"
             )
         else:
             print(
-                f"[Match] {f'source/codegen/proto/{driver_and_file_path}'} matched {f'generated/{driver_and_file_path}.'}"
+                f"✅ {f'source/codegen/proto/{driver_and_file_path}'} matched {f'generated/{driver_and_file_path}.'}"
             )
     return any_mismatches
 
