@@ -1,4 +1,4 @@
-name: Validate Source Proto Files
+name: Validate Imported Proto Files
 
 on:
   workflow_call:
@@ -6,7 +6,7 @@ on:
 
 jobs:
   validate:
-    name: Validate Source Proto Files
+    name: Validate Imported Proto Files
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Repo
@@ -15,11 +15,11 @@ jobs:
     - name: Setup python3
       uses: actions/setup-python@v2
       with:
-        python-version: '3.7.x'
+        python-version: '3.x'
 
     - name: Install build dependencies
       run: python -m pip install -r python_build_requirements.txt
 
-    - name: Validate source proto files against generated
+    - name: Validate imported proto files against generated
       run: |
-        python source/codegen/validate_source_protos.py -s source/codegen/protos -g generated
+        python source/codegen/validate_imported_protos.py -i source/codegen/protos -g generated
