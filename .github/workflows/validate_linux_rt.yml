@@ -52,7 +52,7 @@ jobs:
 
     - name: Check if Linux RT needs updating
       run: |
-        git diff --name-only ${{ steps.secondlatesttag.outputs.tag}}..${{ steps.latesttag.outputs.tag }} | python source/codegen/validate-linux-rt.py source/codegen/metadata
+        git diff --name-only ${{ steps.secondlatesttag.outputs.tag}}..${{ steps.latesttag.outputs.tag }} | python source/codegen/validate_linux_rt.py source/codegen/metadata
 
     - name: Create GitHub Issue
       if: ${{ env.SHOULD_UPDATE_LINUX_RT == 'True'}}
