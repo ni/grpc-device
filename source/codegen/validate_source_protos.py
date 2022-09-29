@@ -1,10 +1,14 @@
+"""Script for validating the source/codegen/protos proto files against their corresponding ones
+in the generated folder.
+"""
+
 import argparse
 import filecmp
 import glob
 import os
 
 
-def _check_mismatched_protos(source, generated):
+def _check_mismatched_protos(source: str, generated: str) -> bool:
     any_mismatches = False
     file_paths = glob.glob(f"{source}/**/*.proto", recursive=True)
     for file_path in file_paths:
