@@ -98,15 +98,18 @@ def _format_mi_metadata(metadata_dir: str):
         api_version = metadata["config"]["api_version"]
         for metadata_name in metadata_names:
             actual_metadata = metadata[metadata_name]
-            pretty_metadata = "# -*- coding: utf-8 -*-"        
+            pretty_metadata = "# -*- coding: utf-8 -*-"
             pretty_metadata += "\r\n"
             pretty_metadata += (
                 f"# This file is generated from {api_name} API metadata version {api_version}"
             )
             pretty_metadata += "\r\n"
-            pretty_metadata += f"{metadata_name} = {pretty(actual_metadata)}\r\n"
-            with io.open(f"{path}{metadata_name}.py", "w", encoding="utf-8-sig", newline = '\n') as temp:
+            pretty_metadata += f"{metadata_name} = {pretty(actual_metadata)}"
+            with io.open(
+                f"{path}{metadata_name}.py", "w", encoding="utf-8-sig", newline="\n"
+            ) as temp:
                 temp.write(pretty_metadata)
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
