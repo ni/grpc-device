@@ -26,4 +26,4 @@ jobs:
     
     - name: Check for files dirtied by codegen
       run: |
-        git diff --exit-code
+        git diff --ignore-space-at-eol --exit-code
