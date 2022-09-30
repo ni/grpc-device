@@ -106,7 +106,7 @@ def _format_mi_metadata(metadata_dir: str):
             pretty_metadata += "\r\n"
             pretty_metadata += f"{metadata_name} = {pretty(actual_metadata)}"
             with io.open(
-                f"{path}{metadata_name}.py", "w", encoding="utf-8-sig", newline="\n"
+                f"{path}{metadata_name}.py", "w", encoding="utf-8", newline="\n"
             ) as temp:
                 temp.write(pretty_metadata)
 
