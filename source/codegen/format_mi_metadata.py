@@ -1,6 +1,6 @@
 """Script for formatting mi-driver metadata in same style as hapigen output."""
 import argparse
-import codecs
+import io
 import os
 from enum import Enum
 
@@ -104,10 +104,9 @@ def _format_mi_metadata(metadata_dir: str):
                 f"# This file is generated from {api_name} API metadata version {api_version}"
             )
             pretty_metadata += "\r\n"
-            pretty_metadata += f"{metadata_name} = {pretty(actual_metadata)}"
-            with codecs.open(f"{path}{metadata_name}.py", "w", "utf-8-sig") as temp:
+            pretty_metadata += f"{metadata_name} = {pretty(actual_metadata)}\r\n"
+            with io.open(f"{path}{metadata_name}.py", "w", encoding="utf-8-sig", newline = '\n') as temp:
                 temp.write(pretty_metadata)
-
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
