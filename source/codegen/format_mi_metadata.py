@@ -104,10 +104,8 @@ def _format_mi_metadata(metadata_dir: str):
                 f"# This file is generated from {api_name} API metadata version {api_version}"
             )
             pretty_metadata += "\r\n"
-            pretty_metadata += f"{metadata_name} = {pretty(actual_metadata)}"
-            with io.open(
-                f"{path}{metadata_name}.py", "w", encoding="utf-8", newline="\n"
-            ) as temp:
+            pretty_metadata += f"{metadata_name} = {pretty(actual_metadata)}\r\n"
+            with io.open(f"{path}{metadata_name}.py", "w", encoding="utf-8", newline="\n") as temp:
                 temp.write(pretty_metadata)
 
 
