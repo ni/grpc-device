@@ -22,7 +22,7 @@ jobs:
 
     - name: Validate mi driver metadata mutations 
       run: |
-        python source/codegen/format_mi_metadata.py source\codegen\metadata
+        python source/codegen/format_mi_metadata.py source/codegen/metadata
     
     - name: Check for files dirtied by codegen
       run: |
