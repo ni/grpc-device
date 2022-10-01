@@ -1,6 +1,6 @@
 
 //---------------------------------------------------------------------
-// This file is generated from NI-SCOPE API metadata version 20.5.0d7
+// This file is generated from NI-SCOPE API metadata version 23.0.0
 //---------------------------------------------------------------------
 // Proto file for the NI-SCOPE Metadata
 //---------------------------------------------------------------------
@@ -365,12 +365,6 @@ enum ArrayMeasurement {
   ARRAY_MEASUREMENT_NISCOPE_VAL_ARRAY_GAIN = 4026;
 }
 
-enum CalibrationTypes {
-  CALIBRATION_TYPES_NISCOPE_VAL_CAL_EXTERNAL = 0;
-  CALIBRATION_TYPES_NISCOPE_VAL_CAL_SELF = 1;
-  CALIBRATION_TYPES_NISCOPE_VAL_CAL_MANUFACTURE = 2;
-}
-
 enum ClearableMeasurement {
   CLEARABLE_MEASUREMENT_NISCOPE_VAL_RISE_TIME = 0;
   CLEARABLE_MEASUREMENT_NISCOPE_VAL_ALL_MEASUREMENTS = 10000;
@@ -611,13 +605,6 @@ enum NiScopeInt32AttributeValues {
   NISCOPE_INT32_WIDTH_POLARITY_VAL_WIDTH_EITHER = 3;
 }
 
-enum NiScopeInt64AttributeValues {
-  option allow_alias = true;
-  NISCOPE_INT64_UNSPECIFIED = 0;
-  NISCOPE_INT64_ADDRESS_TYPE_VAL_ADDR_PHYSICAL = 0;
-  NISCOPE_INT64_ADDRESS_TYPE_VAL_ADDR_VIRTUAL = 1;
-}
-
 enum NiScopeReal64AttributeValues {
   option allow_alias = true;
   NISCOPE_REAL64_UNSPECIFIED = 0;
@@ -823,6 +810,13 @@ enum WidthPolarity {
   WIDTH_POLARITY_NISCOPE_VAL_WIDTH_EITHER = 3;
 }
 
+message CoefficientInfo {
+  double offset = 1;
+  double gain = 2;
+  double reserved1 = 3;
+  double reserved2 = 4;
+}
+
 message WaveformInfo {
   double absolute_initial_x = 1;
   double relative_initial_x = 2;
@@ -832,13 +826,6 @@ message WaveformInfo {
   double gain = 6;
   double reserved1 = 7;
   double reserved2 = 8;
-}
-
-message CoefficientInfo {
-  double offset = 1;
-  double gain = 2;
-  double reserved1 = 3;
-  double reserved2 = 4;
 }
 
 message AbortRequest {
@@ -979,10 +966,7 @@ message CheckAttributeViInt64Request {
   nidevice_grpc.Session vi = 1;
   string channel_list = 2;
   NiScopeAttribute attribute_id = 3;
-  oneof value_enum {
-    int64 value_raw = 4;
-    NiScopeInt64AttributeValues value = 5;
-  }
+  int64 value_raw = 5;
 }
 
 message CheckAttributeViInt64Response {
@@ -1882,10 +1866,7 @@ message SetAttributeViInt64Request {
   nidevice_grpc.Session vi = 1;
   string channel_list = 2;
   NiScopeAttribute attribute_id = 3;
-  oneof value_enum {
-    int64 value_raw = 4;
-    NiScopeInt64AttributeValues value = 5;
-  }
+  int64 value_raw = 5;
 }
 
 message SetAttributeViInt64Response {

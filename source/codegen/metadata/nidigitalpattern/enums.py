@@ -1,7 +1,8 @@
-﻿# -*- coding: utf-8 -*-
-# This file is generated from NI-Digital Pattern Driver API metadata version 19.5.0d7
+# -*- coding: utf-8 -*-
+# This file is generated from NI-Digital Pattern Driver API metadata version 23.0.0d15
 enums = {
     'BitOrder': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDIGITAL_VAL_MSB_FIRST',
@@ -14,6 +15,7 @@ enums = {
         ]
     },
     'DigitalEdge': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDIGITAL_VAL_RISING_EDGE',
@@ -26,6 +28,7 @@ enums = {
         ]
     },
     'DriveFormat': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDIGITAL_VAL_NR',
@@ -46,6 +49,7 @@ enums = {
         ]
     },
     'ExportSignal': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDIGITAL_VAL_START_TRIGGER',
@@ -62,10 +66,15 @@ enums = {
             {
                 'name': 'NIDIGITAL_VAL_REF_CLOCK',
                 'value': 2003
+            },
+            {
+                'name': 'NIDIGITAL_VAL_RIO_EVENT',
+                'value': 2004
             }
         ]
     },
     'FrequencyMeasurementMode': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDIGITAL_VAL_BANKED',
@@ -78,6 +87,7 @@ enums = {
         ]
     },
     'HistoryRamCyclesToAcquire': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDIGITAL_VAL_FAILED_CYCLES',
@@ -90,6 +100,7 @@ enums = {
         ]
     },
     'HistoryRamMaxSamplesToAcquirePerSite': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDIGITAL_VAL_ACQUIRE_ALL_SAMPLES',
@@ -98,6 +109,7 @@ enums = {
         ]
     },
     'HistoryRamTriggerType': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDIGITAL_VAL_FIRST_FAILURE',
@@ -190,6 +202,10 @@ enums = {
                 'value': 1103
             },
             {
+                'name': 'SELECTED_FUNCTION_VAL_RIO',
+                'value': 1104
+            },
+            {
                 'name': 'TDR_ENDPOINT_TERMINATION_VAL_TDR_TO_OPEN',
                 'value': 3600
             },
@@ -224,6 +240,7 @@ enums = {
         ]
     },
     'PinState': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDIGITAL_VAL_0',
@@ -272,6 +289,7 @@ enums = {
         ]
     },
     'PpmuApertureTimeUnits': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDIGITAL_VAL_SECONDS',
@@ -280,6 +298,7 @@ enums = {
         ]
     },
     'PpmuCurrentLimitBehavior': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDIGITAL_VAL_CURRENT_REGULATE',
@@ -288,6 +307,7 @@ enums = {
         ]
     },
     'PpmuMeasurementType': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDIGITAL_VAL_MEASURE_CURRENT',
@@ -300,6 +320,7 @@ enums = {
         ]
     },
     'PpmuOutputFunction': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDIGITAL_VAL_DC_VOLTAGE',
@@ -312,6 +333,7 @@ enums = {
         ]
     },
     'SelectedFunction': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDIGITAL_VAL_DIGITAL',
@@ -328,10 +350,15 @@ enums = {
             {
                 'name': 'NIDIGITAL_VAL_DISCONNECT',
                 'value': 1103
+            },
+            {
+                'name': 'NIDIGITAL_VAL_RIO',
+                'value': 1104
             }
         ]
     },
     'SiteResultType': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDIGITAL_VAL_PASS_FAIL',
@@ -344,6 +371,7 @@ enums = {
         ]
     },
     'SoftwareTrigger': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDIGITAL_VAL_START_TRIGGER',
@@ -356,6 +384,7 @@ enums = {
         ]
     },
     'SourceDataMapping': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDIGITAL_VAL_BROADCAST',
@@ -368,6 +397,7 @@ enums = {
         ]
     },
     'TdrEndpointTermination': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDIGITAL_VAL_TDR_TO_OPEN',
@@ -380,6 +410,7 @@ enums = {
         ]
     },
     'TerminationMode': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDIGITAL_VAL_ACTIVE_LOAD',
@@ -396,6 +427,7 @@ enums = {
         ]
     },
     'TimeSetEdgeType': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDIGITAL_VAL_DRIVE_ON',
@@ -432,6 +464,7 @@ enums = {
         ]
     },
     'TriggerType': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDIGITAL_VAL_NONE',
@@ -448,6 +481,7 @@ enums = {
         ]
     },
     'WriteStaticPinState': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDIGITAL_VAL_0',

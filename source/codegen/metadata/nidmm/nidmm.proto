@@ -1,6 +1,6 @@
 
 //---------------------------------------------------------------------
-// This file is generated from NI-DMM API metadata version 19.6.0d7
+// This file is generated from NI-DMM API metadata version 23.0.0
 //---------------------------------------------------------------------
 // Proto file for the NI-DMM Metadata
 //---------------------------------------------------------------------
@@ -53,7 +53,6 @@ service NiDmm {
   rpc ConfigureWaveformAcquisition(ConfigureWaveformAcquisitionRequest) returns (ConfigureWaveformAcquisitionResponse);
   rpc ConfigureWaveformCoupling(ConfigureWaveformCouplingRequest) returns (ConfigureWaveformCouplingResponse);
   rpc Control(ControlRequest) returns (ControlResponse);
-  rpc Control4022(Control4022Request) returns (Control4022Response);
   rpc Disable(DisableRequest) returns (DisableResponse);
   rpc ExportAttributeConfigurationBuffer(ExportAttributeConfigurationBufferRequest) returns (ExportAttributeConfigurationBufferResponse);
   rpc ExportAttributeConfigurationFile(ExportAttributeConfigurationFileRequest) returns (ExportAttributeConfigurationFileResponse);
@@ -119,7 +118,6 @@ enum NiDmmAttribute {
   NIDMM_ATTRIBUTE_SPECIFIC_DRIVER_PREFIX = 1050302;
   NIDMM_ATTRIBUTE_IO_RESOURCE_DESCRIPTOR = 1050304;
   NIDMM_ATTRIBUTE_LOGICAL_NAME = 1050305;
-  NIDMM_ATTRIBUTE_IO_SESSION = 1050322;
   NIDMM_ATTRIBUTE_SUPPORTED_INSTRUMENT_MODELS = 1050327;
   NIDMM_ATTRIBUTE_GROUP_CAPABILITIES = 1050401;
   NIDMM_ATTRIBUTE_SPECIFIC_DRIVER_MAJOR_VERSION = 1050503;
@@ -131,8 +129,6 @@ enum NiDmmAttribute {
   NIDMM_ATTRIBUTE_SPECIFIC_DRIVER_DESCRIPTION = 1050514;
   NIDMM_ATTRIBUTE_SPECIFIC_DRIVER_CLASS_SPEC_MAJOR_VERSION = 1050515;
   NIDMM_ATTRIBUTE_SPECIFIC_DRIVER_CLASS_SPEC_MINOR_VERSION = 1050516;
-  NIDMM_ATTRIBUTE_CLASS_DRIVER_CLASS_SPEC_MAJOR_VERSION = 1050519;
-  NIDMM_ATTRIBUTE_CLASS_DRIVER_CLASS_SPEC_MINOR_VERSION = 1050520;
   NIDMM_ATTRIBUTE_SPECIFIC_DRIVER_REVISION = 1050551;
   NIDMM_ATTRIBUTE_MEAS_DEST_SLOPE = 1150002;
   NIDMM_ATTRIBUTE_SHUNT_VALUE = 1150003;
@@ -229,14 +225,6 @@ enum CalibrationType {
 enum CompensatedOhms {
   COMPENSATED_OHMS_NIDMM_VAL_OFFSET_COMP_OHMS_OFF = 0;
   COMPENSATED_OHMS_NIDMM_VAL_OFFSET_COMP_OHMS_ON = 1;
-}
-
-enum Configuration4022 {
-  CONFIGURATION4022_NIDMM_4022_CONFIG_GUARD = 0;
-  CONFIGURATION4022_NIDMM_4022_CONFIG_CURRENT_100_NANOAMP = 2;
-  CONFIGURATION4022_NIDMM_4022_CONFIG_CURRENT_10_MICROAMP = 3;
-  CONFIGURATION4022_NIDMM_4022_CONFIG_CURRENT_1_MILLIAMP = 7;
-  CONFIGURATION4022_NIDMM_4022_CONFIG_DISCONNECT_AGND = 8;
 }
 
 enum ControlCommit {
@@ -414,6 +402,17 @@ enum NiDmmReal64AttributeValues {
   NIDMM_REAL64_TRIGGER_DELAYS_VAL_AUTO_DELAY_OFF = -2;
 }
 
+enum NiDmmReal64AttributeValuesMapped {
+  NIDMM_REAL64_MAPPED_UNSPECIFIED = 0;
+  NIDMM_REAL64_CURRENT_SOURCE_VAL_1_MICROAMP = 1;
+  NIDMM_REAL64_CURRENT_SOURCE_VAL_10_MICROAMP = 2;
+  NIDMM_REAL64_CURRENT_SOURCE_VAL_100_MICROAMP = 3;
+  NIDMM_REAL64_CURRENT_SOURCE_VAL_1_MILLIAMP = 4;
+  NIDMM_REAL64_INPUT_RESISTANCE_VAL_1_MEGAOHM = 5;
+  NIDMM_REAL64_INPUT_RESISTANCE_VAL_10_MEGAOHM = 6;
+  NIDMM_REAL64_INPUT_RESISTANCE_VAL_GREATER_THAN_10_GIGAOHM = 7;
+}
+
 enum PowerLineFrequencies {
   POWER_LINE_FREQUENCIES_UNSPECIFIED = 0;
   POWER_LINE_FREQUENCIES_NIDMM_VAL_50_HERTZ = 50;
@@ -558,6 +557,7 @@ message CheckAttributeViReal64Request {
   oneof attribute_value_enum {
     NiDmmReal64AttributeValues attribute_value = 4;
     double attribute_value_raw = 5;
+    NiDmmReal64AttributeValuesMapped attribute_value_mapped = 6;
   }
 }
 
@@ -934,18 +934,6 @@ message ControlRequest {
 }
 
 message ControlResponse {
-  int32 status = 1;
-}
-
-message Control4022Request {
-  string resource_name = 1;
-  oneof configuration_enum {
-    Configuration4022 configuration = 2;
-    sint32 configuration_raw = 3;
-  }
-}
-
-message Control4022Response {
   int32 status = 1;
 }
 
@@ -1456,6 +1444,7 @@ message SetAttributeViReal64Request {
   oneof attribute_value_enum {
     NiDmmReal64AttributeValues attribute_value = 4;
     double attribute_value_raw = 5;
+    NiDmmReal64AttributeValuesMapped attribute_value_mapped = 6;
   }
 }
 
