@@ -85,17 +85,26 @@ def _is_custom_struct(parameter: dict) -> bool:
     return parameter["type"].startswith("struct")
 
 
-def uses_nidevice_common_message_types(functions: dict) -> bool:
-    """Whether the function has any parameters whose type is a common nidevice type."""
-    return any(
+def uses_nidevice_common_message_types(config: dict, functions: dict) -> bool:
+    """Whether a custom_type or function has any parameters whose type is a common nidevice type."""
+    any_funcs = any(
         p
         for f in functions.values()
         for p in f["parameters"]
         if _is_nidevice_common_message_type(p)
     )
+    any_custom_types = any(
+        field
+        for ct in config.get("custom_types", {})
+        for field in ct["fields"]
+        if _is_nidevice_common_message_type(field)
+    )
+    return any_funcs or any_custom_types
 
 
 def _is_nidevice_common_message_type(parameter: dict) -> bool:
+    if "grpc_type" not in parameter:
+        return False
     grpc_type = _get_underlying_grpc_type(parameter)
     return grpc_type in _NIDEVICE_COMMON_MESSAGE_TYPES
 
