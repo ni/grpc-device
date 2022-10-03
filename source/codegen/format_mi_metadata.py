@@ -99,7 +99,7 @@ def _format_mi_metadata(metadata_dir: str):
         for metadata_name in metadata_names:
             actual_metadata = metadata[metadata_name]
             pretty_metadata = "# -*- coding: utf-8 -*-"
-            pretty_metadata += "\r\n"
+            pretty_metadata += "\n"
             pretty_metadata += (
                 f"# This file is generated from {api_name} API metadata version {api_version}"
             )
