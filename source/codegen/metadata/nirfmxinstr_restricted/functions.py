@@ -752,6 +752,9 @@ functions = {
                 'name': 'infoJson',
                 'size': {
                     'mechanism': 'ivi-dance',
+                    'tags': [
+                        'strlen-bug'
+                    ],
                     'value': 'infoJsonSize'
                 },
                 'type': 'char[]'
