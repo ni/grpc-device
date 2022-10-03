@@ -5453,22 +5453,6 @@ get_exported_signal_attribute_uint32(const StubPtr& stub, const nidevice_grpc::S
   return response;
 }
 
-GetExtendedErrorInfoResponse
-get_extended_error_info(const StubPtr& stub)
-{
-  ::grpc::ClientContext context;
-
-  auto request = GetExtendedErrorInfoRequest{};
-
-  auto response = GetExtendedErrorInfoResponse{};
-
-  raise_if_error(
-      stub->GetExtendedErrorInfo(&context, request, &response),
-      context);
-
-  return response;
-}
-
 GetFirstSampClkWhenResponse
 get_first_samp_clk_when(const StubPtr& stub, const nidevice_grpc::Session& task)
 {
