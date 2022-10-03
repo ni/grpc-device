@@ -6909,6 +6909,7 @@ functions = {
         'returns': 'int32'
     },
     'GetExtendedErrorInfo': {
+        'codegen_method': 'private',
         'parameters': [
             {
                 'direction': 'out',
