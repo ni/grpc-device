@@ -721,7 +721,7 @@ namespace nirfmxinstr_restricted_grpc {
 
         std::string info_json;
         if (info_json_size > 0) {
-            info_json.resize(info_json_size - 1);
+            info_json.resize(info_json_size /* Workaround: strlen-bug */);
         }
         status = library_->GetOpenSessionsInformation(resource_name, info_json_size, (char*)info_json.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(info_json_size)) {
