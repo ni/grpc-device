@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-FGEN API metadata version 20.0.0d5
+# This file is generated from NI-FGEN API metadata version 23.0.0d13
 enums = {
     'AddressType': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_ADDR_PHYSICAL',
@@ -14,6 +15,7 @@ enums = {
         ]
     },
     'AnalogPath': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_MAIN_ANALOG_PATH',
@@ -34,6 +36,7 @@ enums = {
         ]
     },
     'ArbitrarySequenceHandle': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_FIRST_SEQUENCE_HANDLE',
@@ -50,6 +53,7 @@ enums = {
         ]
     },
     'ArbitraryWaveformHandle': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_FIRST_WAVEFORM_HANDLE',
@@ -66,6 +70,7 @@ enums = {
         ]
     },
     'BurstCount': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_GENERATE_CONTINUOUS',
@@ -74,6 +79,7 @@ enums = {
         ]
     },
     'BusType': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_BUS_INVALID',
@@ -106,6 +112,7 @@ enums = {
         ]
     },
     'ByteOrder': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_LITTLE_ENDIAN',
@@ -118,6 +125,7 @@ enums = {
         ]
     },
     'ClockMode': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_HIGH_RESOLUTION',
@@ -134,6 +142,7 @@ enums = {
         ]
     },
     'DataMarkerEventLevelPolarity': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_ACTIVE_HIGH',
@@ -146,6 +155,7 @@ enums = {
         ]
     },
     'DataProcessingMode': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_OSP_REAL',
@@ -158,6 +168,7 @@ enums = {
         ]
     },
     'DoneEventActiveLevel': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_ACTIVE_HIGH',
@@ -170,6 +181,7 @@ enums = {
         ]
     },
     'DoneEventDelayUnits': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_SAMPLE_CLOCK_PERIODS',
@@ -182,6 +194,7 @@ enums = {
         ]
     },
     'DoneEventOutputBehavior': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_PULSE',
@@ -194,6 +207,7 @@ enums = {
         ]
     },
     'DoneEventPulsePolarity': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_ACTIVE_HIGH',
@@ -206,6 +220,7 @@ enums = {
         ]
     },
     'DoneEventPulseWidthUnits': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_SAMPLE_CLOCK_PERIODS',
@@ -218,6 +233,7 @@ enums = {
         ]
     },
     'FilterType': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_OSP_FLAT',
@@ -242,6 +258,7 @@ enums = {
         ]
     },
     'FrequencyListHandle': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_FIRST_FREQ_LIST_HANDLE',
@@ -258,6 +275,7 @@ enums = {
         ]
     },
     'FrequencyListOptions': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_ALL_FLISTS',
@@ -266,6 +284,7 @@ enums = {
         ]
     },
     'HardwareState': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_IDLE',
@@ -290,6 +309,7 @@ enums = {
         ]
     },
     'IdleBehavior': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_HOLD_LAST_VALUE',
@@ -302,6 +322,7 @@ enums = {
         ]
     },
     'LoadImpedance': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_MATCHED_LOAD_IMPEDANCE',
@@ -310,6 +331,7 @@ enums = {
         ]
     },
     'MarkerEventDelayUnits': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_SAMPLE_CLOCK_PERIODS',
@@ -322,6 +344,7 @@ enums = {
         ]
     },
     'MarkerEventOutputBehavior': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_PULSE',
@@ -338,6 +361,7 @@ enums = {
         ]
     },
     'MarkerEventPulsePolarity': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_ACTIVE_HIGH',
@@ -350,6 +374,7 @@ enums = {
         ]
     },
     'MarkerEventPulseWidthUnits': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_SAMPLE_CLOCK_PERIODS',
@@ -362,6 +387,7 @@ enums = {
         ]
     },
     'MarkerEventToggleInitialState': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_HIGH',
@@ -990,6 +1016,86 @@ enums = {
                 'value': 1018
             },
             {
+                'name': 'UPDATE_CLOCK_SOURCE_VAL_INTERNAL',
+                'value': 0
+            },
+            {
+                'name': 'UPDATE_CLOCK_SOURCE_VAL_EXTERNAL',
+                'value': 1
+            },
+            {
+                'name': 'UPDATE_CLOCK_SOURCE_VAL_TTL1',
+                'value': 112
+            },
+            {
+                'name': 'UPDATE_CLOCK_SOURCE_VAL_TTL2',
+                'value': 113
+            },
+            {
+                'name': 'UPDATE_CLOCK_SOURCE_VAL_TTL3',
+                'value': 114
+            },
+            {
+                'name': 'UPDATE_CLOCK_SOURCE_VAL_TTL4',
+                'value': 115
+            },
+            {
+                'name': 'UPDATE_CLOCK_SOURCE_VAL_TTL5',
+                'value': 116
+            },
+            {
+                'name': 'UPDATE_CLOCK_SOURCE_VAL_TTL6',
+                'value': 117
+            },
+            {
+                'name': 'UPDATE_CLOCK_SOURCE_VAL_PXI_STAR',
+                'value': 131
+            },
+            {
+                'name': 'UPDATE_CLOCK_SOURCE_VAL_RTSI_0',
+                'value': 141
+            },
+            {
+                'name': 'UPDATE_CLOCK_SOURCE_VAL_RTSI_1',
+                'value': 142
+            },
+            {
+                'name': 'UPDATE_CLOCK_SOURCE_VAL_RTSI_2',
+                'value': 143
+            },
+            {
+                'name': 'UPDATE_CLOCK_SOURCE_VAL_RTSI_3',
+                'value': 144
+            },
+            {
+                'name': 'UPDATE_CLOCK_SOURCE_VAL_RTSI_4',
+                'value': 145
+            },
+            {
+                'name': 'UPDATE_CLOCK_SOURCE_VAL_RTSI_5',
+                'value': 146
+            },
+            {
+                'name': 'UPDATE_CLOCK_SOURCE_VAL_RTSI_6',
+                'value': 147
+            },
+            {
+                'name': 'UPDATE_CLOCK_SOURCE_VAL_RTSI_7',
+                'value': 1010
+            },
+            {
+                'name': 'UPDATE_CLOCK_SOURCE_VAL_OTHER_TERMINAL',
+                'value': 1018
+            },
+            {
+                'name': 'UPDATE_CLOCK_SOURCE_VAL_CLK_IN',
+                'value': 1202
+            },
+            {
+                'name': 'UPDATE_CLOCK_SOURCE_VAL_DDC_CLK_IN',
+                'value': 1203
+            },
+            {
                 'name': 'VIDEO_WAVEFORM_TYPE_VAL_PAL_B',
                 'value': 0
             },
@@ -1085,7 +1191,90 @@ enums = {
             }
         ]
     },
+    'NiFgenStringAttributeValuesMapped': {
+        'enum-value-prefix': 'NIFGEN_STRING',
+        'generate-mappings': True,
+        'values': [
+            {
+                'name': 'REFERENCE_CLOCK_SOURCE_VAL_CLOCK_IN_COLLISION_AVOIDANCE',
+                'value': 'ClkIn'
+            },
+            {
+                'name': 'REFERENCE_CLOCK_SOURCE_VAL_NONE_COLLISION_AVOIDANCE',
+                'value': 'None'
+            },
+            {
+                'name': 'REFERENCE_CLOCK_SOURCE_VAL_ONBOARD_REFERENCE_CLOCK_COLLISION_AVOIDANCE',
+                'value': 'OnboardRefClk'
+            },
+            {
+                'name': 'REFERENCE_CLOCK_SOURCE_VAL_PXI_CLOCK_COLLISION_AVOIDANCE',
+                'value': 'PXI_Clk'
+            },
+            {
+                'name': 'REFERENCE_CLOCK_SOURCE_VAL_RTSI_7_COLLISION_AVOIDANCE',
+                'value': 'RTSI7'
+            },
+            {
+                'name': 'SAMPLE_CLOCK_SOURCE_VAL_CLOCK_IN',
+                'value': 'ClkIn'
+            },
+            {
+                'name': 'SAMPLE_CLOCK_SOURCE_VAL_DDC_CLOCK_IN',
+                'value': 'DDC_ClkIn'
+            },
+            {
+                'name': 'SAMPLE_CLOCK_SOURCE_VAL_ONBOARD_CLOCK',
+                'value': 'OnboardClock'
+            },
+            {
+                'name': 'SAMPLE_CLOCK_SOURCE_VAL_PXI_STAR_LINE',
+                'value': 'PXI_Star'
+            },
+            {
+                'name': 'SAMPLE_CLOCK_SOURCE_VAL_PXI_TRIGGER_LINE_0_RTSI_0',
+                'value': 'PXI_Trig0'
+            },
+            {
+                'name': 'SAMPLE_CLOCK_SOURCE_VAL_PXI_TRIGGER_LINE_1_RTSI_1',
+                'value': 'PXI_Trig1'
+            },
+            {
+                'name': 'SAMPLE_CLOCK_SOURCE_VAL_PXI_TRIGGER_LINE_2_RTSI_2',
+                'value': 'PXI_Trig2'
+            },
+            {
+                'name': 'SAMPLE_CLOCK_SOURCE_VAL_PXI_TRIGGER_LINE_3_RTSI_3',
+                'value': 'PXI_Trig3'
+            },
+            {
+                'name': 'SAMPLE_CLOCK_SOURCE_VAL_PXI_TRIGGER_LINE_4_RTSI_4',
+                'value': 'PXI_Trig4'
+            },
+            {
+                'name': 'SAMPLE_CLOCK_SOURCE_VAL_PXI_TRIGGER_LINE_5_RTSI_5',
+                'value': 'PXI_Trig5'
+            },
+            {
+                'name': 'SAMPLE_CLOCK_SOURCE_VAL_PXI_TRIGGER_LINE_6_RTSI_6',
+                'value': 'PXI_Trig6'
+            },
+            {
+                'name': 'SAMPLE_CLOCK_SOURCE_VAL_PXI_TRIGGER_LINE_7_RTSI_7',
+                'value': 'PXI_Trig7'
+            },
+            {
+                'name': 'SAMPLE_CLOCK_TIMEBASE_SOURCE_VAL_CLOCK_IN',
+                'value': 'ClkIn'
+            },
+            {
+                'name': 'SAMPLE_CLOCK_TIMEBASE_SOURCE_VAL_ONBOARD_CLOCK',
+                'value': 'OnboardClock'
+            }
+        ]
+    },
     'OspMode': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_OSP_IF',
@@ -1098,6 +1287,7 @@ enums = {
         ]
     },
     'OspOverflowErrorReporting': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_ERROR_REPORTING_ERROR',
@@ -1110,6 +1300,7 @@ enums = {
         ]
     },
     'OspOverflowStatus': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_OSP_OVERFLOW_NONE',
@@ -1174,6 +1365,7 @@ enums = {
         ]
     },
     'OutputImpedance': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_50_OHMS',
@@ -1186,6 +1378,7 @@ enums = {
         ]
     },
     'OutputMode': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_OUTPUT_FUNC',
@@ -1210,6 +1403,7 @@ enums = {
         ]
     },
     'ReadyForStartEventActiveLevel': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_ACTIVE_HIGH',
@@ -1221,7 +1415,34 @@ enums = {
             }
         ]
     },
+    'ReferenceClockSource': {
+        'codegen_method': 'public',
+        'generate-mappings': True,
+        'values': [
+            {
+                'name': 'NIFGEN_VAL_CLOCK_IN_COLLISION_AVOIDANCE',
+                'value': 'ClkIn'
+            },
+            {
+                'name': 'NIFGEN_VAL_NONE_COLLISION_AVOIDANCE',
+                'value': 'None'
+            },
+            {
+                'name': 'NIFGEN_VAL_ONBOARD_REFERENCE_CLOCK_COLLISION_AVOIDANCE',
+                'value': 'OnboardRefClk'
+            },
+            {
+                'name': 'NIFGEN_VAL_PXI_CLOCK_COLLISION_AVOIDANCE',
+                'value': 'PXI_Clk'
+            },
+            {
+                'name': 'NIFGEN_VAL_RTSI_7_COLLISION_AVOIDANCE',
+                'value': 'RTSI7'
+            }
+        ]
+    },
     'RelativeTo': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_WAVEFORM_POSITION_START',
@@ -1234,6 +1455,7 @@ enums = {
         ]
     },
     'RouteSignalFrom': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_MARKER',
@@ -1314,6 +1536,7 @@ enums = {
         ]
     },
     'RouteSignalTo': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_RTSI_0',
@@ -1365,7 +1588,76 @@ enums = {
             }
         ]
     },
+    'SampleClockSource': {
+        'codegen_method': 'public',
+        'generate-mappings': True,
+        'values': [
+            {
+                'name': 'NIFGEN_VAL_CLOCK_IN',
+                'value': 'ClkIn'
+            },
+            {
+                'name': 'NIFGEN_VAL_DDC_CLOCK_IN',
+                'value': 'DDC_ClkIn'
+            },
+            {
+                'name': 'NIFGEN_VAL_ONBOARD_CLOCK',
+                'value': 'OnboardClock'
+            },
+            {
+                'name': 'NIFGEN_VAL_PXI_STAR_LINE',
+                'value': 'PXI_Star'
+            },
+            {
+                'name': 'NIFGEN_VAL_PXI_TRIGGER_LINE_0_RTSI_0',
+                'value': 'PXI_Trig0'
+            },
+            {
+                'name': 'NIFGEN_VAL_PXI_TRIGGER_LINE_1_RTSI_1',
+                'value': 'PXI_Trig1'
+            },
+            {
+                'name': 'NIFGEN_VAL_PXI_TRIGGER_LINE_2_RTSI_2',
+                'value': 'PXI_Trig2'
+            },
+            {
+                'name': 'NIFGEN_VAL_PXI_TRIGGER_LINE_3_RTSI_3',
+                'value': 'PXI_Trig3'
+            },
+            {
+                'name': 'NIFGEN_VAL_PXI_TRIGGER_LINE_4_RTSI_4',
+                'value': 'PXI_Trig4'
+            },
+            {
+                'name': 'NIFGEN_VAL_PXI_TRIGGER_LINE_5_RTSI_5',
+                'value': 'PXI_Trig5'
+            },
+            {
+                'name': 'NIFGEN_VAL_PXI_TRIGGER_LINE_6_RTSI_6',
+                'value': 'PXI_Trig6'
+            },
+            {
+                'name': 'NIFGEN_VAL_PXI_TRIGGER_LINE_7_RTSI_7',
+                'value': 'PXI_Trig7'
+            }
+        ]
+    },
+    'SampleClockTimebaseSource': {
+        'codegen_method': 'public',
+        'generate-mappings': True,
+        'values': [
+            {
+                'name': 'NIFGEN_VAL_CLOCK_IN',
+                'value': 'ClkIn'
+            },
+            {
+                'name': 'NIFGEN_VAL_ONBOARD_CLOCK',
+                'value': 'OnboardClock'
+            }
+        ]
+    },
     'SampleRate': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_EXTERNAL_SAMPLE_RATE',
@@ -1374,6 +1666,7 @@ enums = {
         ]
     },
     'ScriptTriggerDigitalEdgeEdge': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_RISING_EDGE',
@@ -1386,6 +1679,7 @@ enums = {
         ]
     },
     'ScriptTriggerDigitalLevelActiveLevel': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_ACTIVE_HIGH',
@@ -1398,6 +1692,7 @@ enums = {
         ]
     },
     'ScriptTriggerType': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_TRIG_NONE',
@@ -1418,6 +1713,7 @@ enums = {
         ]
     },
     'SequenceHandle': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_ALL_SEQUENCES',
@@ -1426,22 +1722,23 @@ enums = {
         ]
     },
     'Signal': {
+        'codegen_method': 'public',
         'values': [
             {
-                'name': 'NIFGEN_VAL_MARKER_EVENT',
-                'value': 1001
+                'name': 'NIFGEN_VAL_ONBOARD_REFERENCE_CLOCK',
+                'value': 1019
             },
             {
                 'name': 'NIFGEN_VAL_SYNC_OUT',
                 'value': 1002
             },
             {
-                'name': 'NIFGEN_VAL_ONBOARD_REFERENCE_CLOCK',
-                'value': 1019
-            },
-            {
                 'name': 'NIFGEN_VAL_START_TRIGGER',
                 'value': 1004
+            },
+            {
+                'name': 'NIFGEN_VAL_MARKER_EVENT',
+                'value': 1001
             },
             {
                 'name': 'NIFGEN_VAL_SAMPLE_CLOCK_TIMEBASE',
@@ -1482,6 +1779,7 @@ enums = {
         ]
     },
     'StartTriggerDigitalEdgeEdge': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_RISING_EDGE',
@@ -1494,6 +1792,7 @@ enums = {
         ]
     },
     'StartTriggerType': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_TRIG_NONE',
@@ -1514,6 +1813,7 @@ enums = {
         ]
     },
     'StartedEventActiveLevel': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_ACTIVE_HIGH',
@@ -1526,6 +1826,7 @@ enums = {
         ]
     },
     'StartedEventDelayUnits': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_SAMPLE_CLOCK_PERIODS',
@@ -1538,6 +1839,7 @@ enums = {
         ]
     },
     'StartedEventOutputBehavior': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_PULSE',
@@ -1550,6 +1852,7 @@ enums = {
         ]
     },
     'StartedEventPulsePolarity': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_ACTIVE_HIGH',
@@ -1562,6 +1865,7 @@ enums = {
         ]
     },
     'StartedEventPulseWidthUnits': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_SAMPLE_CLOCK_PERIODS',
@@ -1574,6 +1878,7 @@ enums = {
         ]
     },
     'SynchronizationSource': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_TTL0',
@@ -1638,6 +1943,7 @@ enums = {
         ]
     },
     'TerminalConfiguration': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_SINGLE_ENDED',
@@ -1650,6 +1956,7 @@ enums = {
         ]
     },
     'Trigger': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_START_TRIGGER',
@@ -1662,6 +1969,7 @@ enums = {
         ]
     },
     'TriggerMode': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_SINGLE',
@@ -1682,6 +1990,7 @@ enums = {
         ]
     },
     'TriggerSource': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_IMMEDIATE',
@@ -1782,6 +2091,7 @@ enums = {
         ]
     },
     'TriggerWhen': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_ACTIVE_HIGH',
@@ -1793,7 +2103,93 @@ enums = {
             }
         ]
     },
+    'UpdateClockSource': {
+        'codegen_method': 'public',
+        'values': [
+            {
+                'name': 'NIFGEN_VAL_INTERNAL',
+                'value': 0
+            },
+            {
+                'name': 'NIFGEN_VAL_EXTERNAL',
+                'value': 1
+            },
+            {
+                'name': 'NIFGEN_VAL_TTL1',
+                'value': 112
+            },
+            {
+                'name': 'NIFGEN_VAL_TTL2',
+                'value': 113
+            },
+            {
+                'name': 'NIFGEN_VAL_TTL3',
+                'value': 114
+            },
+            {
+                'name': 'NIFGEN_VAL_TTL4',
+                'value': 115
+            },
+            {
+                'name': 'NIFGEN_VAL_TTL5',
+                'value': 116
+            },
+            {
+                'name': 'NIFGEN_VAL_TTL6',
+                'value': 117
+            },
+            {
+                'name': 'NIFGEN_VAL_PXI_STAR',
+                'value': 131
+            },
+            {
+                'name': 'NIFGEN_VAL_RTSI_0',
+                'value': 141
+            },
+            {
+                'name': 'NIFGEN_VAL_RTSI_1',
+                'value': 142
+            },
+            {
+                'name': 'NIFGEN_VAL_RTSI_2',
+                'value': 143
+            },
+            {
+                'name': 'NIFGEN_VAL_RTSI_3',
+                'value': 144
+            },
+            {
+                'name': 'NIFGEN_VAL_RTSI_4',
+                'value': 145
+            },
+            {
+                'name': 'NIFGEN_VAL_RTSI_5',
+                'value': 146
+            },
+            {
+                'name': 'NIFGEN_VAL_RTSI_6',
+                'value': 147
+            },
+            {
+                'name': 'NIFGEN_VAL_RTSI_7',
+                'value': 1010
+            },
+            {
+                'name': 'NIFGEN_VAL_OTHER_TERMINAL',
+                'value': 1018
+            },
+            {
+                'name': 'NIFGEN_VAL_CLK_IN',
+                'value': 1202
+            },
+            {
+                'name': 'NIFGEN_VAL_DDC_CLK_IN',
+                'value': 1203
+            }
+        ]
+    },
     'VideoWaveformType': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_PAL_B',
@@ -1830,6 +2226,7 @@ enums = {
         ]
     },
     'WaitBehavior': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_HOLD_LAST_VALUE',
@@ -1842,6 +2239,7 @@ enums = {
         ]
     },
     'Waveform': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_WFM_SINE',
@@ -1878,6 +2276,7 @@ enums = {
         ]
     },
     'WaveformHandle': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIFGEN_VAL_ALL_WAVEFORMS',

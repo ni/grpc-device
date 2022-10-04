@@ -84,7 +84,7 @@ class NiFgenMockLibrary : public nifgen_grpc::NiFgenLibraryInterface {
   MOCK_METHOD(ViStatus, ErrorHandler, (ViSession vi, ViStatus errorCode, ViChar errorMessage[256]), (override));
   MOCK_METHOD(ViStatus, ErrorMessage, (ViSession vi, ViStatus errorCode, ViChar errorMessage[256]), (override));
   MOCK_METHOD(ViStatus, ErrorQuery, (ViSession vi, ViInt32* errorCode, ViChar errorMessage[256]), (override));
-  MOCK_METHOD(ViStatus, ExportAttributeConfigurationBuffer, (ViSession vi, ViInt32 sizeInBytes, ViAddr configuration[]), (override));
+  MOCK_METHOD(ViStatus, ExportAttributeConfigurationBuffer, (ViSession vi, ViInt32 sizeInBytes, ViInt8 configuration[]), (override));
   MOCK_METHOD(ViStatus, ExportAttributeConfigurationFile, (ViSession vi, ViConstString filePath), (override));
   MOCK_METHOD(ViStatus, ExportSignal, (ViSession vi, ViInt32 signal, ViConstString signalIdentifier, ViConstString outputTerminal), (override));
   MOCK_METHOD(ViStatus, GetAttributeViBoolean, (ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean* attributeValue), (override));
@@ -106,11 +106,11 @@ class NiFgenMockLibrary : public nifgen_grpc::NiFgenLibraryInterface {
   MOCK_METHOD(ViStatus, GetSelfCalLastTemp, (ViSession vi, ViReal64* temperature), (override));
   MOCK_METHOD(ViStatus, GetSelfCalSupported, (ViSession vi, ViBoolean* selfCalSupported), (override));
   MOCK_METHOD(ViStatus, GetStreamEndpointHandle, (ViSession vi, ViConstString streamEndpoint, ViUInt32* readerHandle), (override));
-  MOCK_METHOD(ViStatus, ImportAttributeConfigurationBuffer, (ViSession vi, ViInt32 sizeInBytes, ViAddr configuration[]), (override));
+  MOCK_METHOD(ViStatus, ImportAttributeConfigurationBuffer, (ViSession vi, ViInt32 sizeInBytes, ViInt8 configuration[]), (override));
   MOCK_METHOD(ViStatus, ImportAttributeConfigurationFile, (ViSession vi, ViConstString filePath), (override));
   MOCK_METHOD(ViStatus, Init, (ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* vi), (override));
-  MOCK_METHOD(ViStatus, InitWithOptions, (ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViConstString optionString, ViSession* vi), (override));
-  MOCK_METHOD(ViStatus, InitializeWithChannels, (ViRsrc resourceName, ViConstString channelName, ViBoolean resetDevice, ViConstString optionString, ViSession* vi), (override));
+  MOCK_METHOD(ViStatus, InitWithOptions, (ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViString optionString, ViSession* vi), (override));
+  MOCK_METHOD(ViStatus, InitializeWithChannels, (ViRsrc resourceName, ViString channelName, ViBoolean resetDevice, ViString optionString, ViSession* vi), (override));
   MOCK_METHOD(ViStatus, InitiateGeneration, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, InvalidateAllAttributes, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, IsDone, (ViSession vi, ViBoolean* done), (override));

@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-Digital Pattern Driver API metadata version 19.5.0d7
+# This file is generated from NI-Digital Pattern Driver API metadata version 23.0.0d15
 functions = {
     'Abort': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -14,6 +15,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'AbortKeepAlive': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -26,6 +28,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'ApplyLevelsAndTiming': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -38,9 +41,7 @@ functions = {
                 'cppName': 'siteList',
                 'direction': 'in',
                 'grpc_type': 'string',
-                'is_repeated_capability': True,
                 'name': 'siteList',
-                'repeated_capability_type': 'sites',
                 'type': 'ViConstString'
             },
             {
@@ -82,6 +83,8 @@ functions = {
         'returns': 'ViStatus'
     },
     'ApplyTDROffsets': {
+        'cname': 'niDigital_ApplyTDROffsets',
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -138,9 +141,7 @@ functions = {
                 'cppName': 'siteList',
                 'direction': 'in',
                 'grpc_type': 'string',
-                'is_repeated_capability': True,
                 'name': 'siteList',
-                'repeated_capability_type': 'sites',
                 'type': 'ViConstString'
             },
             {
@@ -175,6 +176,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'BurstPatternSynchronized': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'sessionCount',
@@ -248,6 +250,7 @@ functions = {
     },
     'ClockGeneratorAbort': {
         'cname': 'niDigital_ClockGenerator_Abort',
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -268,6 +271,7 @@ functions = {
     },
     'ClockGeneratorGenerateClock': {
         'cname': 'niDigital_ClockGenerator_GenerateClock',
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -336,6 +340,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'Commit': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -348,6 +353,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'ConfigureActiveLoadLevels': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -388,6 +394,8 @@ functions = {
         'returns': 'ViStatus'
     },
     'ConfigureCycleNumberHistoryRAMTrigger': {
+        'cname': 'niDigital_ConfigureCycleNumberHistoryRAMTrigger',
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -414,6 +422,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'ConfigureDigitalEdgeConditionalJumpTrigger': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -448,6 +457,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'ConfigureDigitalEdgeStartTrigger': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -475,6 +485,8 @@ functions = {
         'returns': 'ViStatus'
     },
     'ConfigureFirstFailureHistoryRAMTrigger': {
+        'cname': 'niDigital_ConfigureFirstFailureHistoryRAMTrigger',
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -494,6 +506,8 @@ functions = {
         'returns': 'ViStatus'
     },
     'ConfigureHistoryRAMCyclesToAcquire': {
+        'cname': 'niDigital_ConfigureHistoryRAMCyclesToAcquire',
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -514,6 +528,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'ConfigurePatternBurstSites': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -526,15 +541,15 @@ functions = {
                 'cppName': 'siteList',
                 'direction': 'in',
                 'grpc_type': 'string',
-                'is_repeated_capability': True,
                 'name': 'siteList',
-                'repeated_capability_type': 'sites',
                 'type': 'ViConstString'
             }
         ],
         'returns': 'ViStatus'
     },
     'ConfigurePatternLabelHistoryRAMTrigger': {
+        'cname': 'niDigital_ConfigurePatternLabelHistoryRAMTrigger',
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -575,6 +590,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'ConfigureSoftwareEdgeConditionalJumpTrigger': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -594,6 +610,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'ConfigureSoftwareEdgeStartTrigger': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -606,6 +623,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'ConfigureStartLabel': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -625,6 +643,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'ConfigureTerminationMode': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -652,6 +671,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'ConfigureTimeSetCompareEdgesStrobe': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -664,16 +684,15 @@ functions = {
                 'cppName': 'pinList',
                 'direction': 'in',
                 'grpc_type': 'string',
-                'is_repeated_capability': True,
                 'name': 'pinList',
-                'repeated_capability_type': 'pins',
                 'type': 'ViConstString'
             },
             {
-                'cppName': 'timeSetName',
+                'cppName': 'timeSet',
                 'direction': 'in',
+                'grpc_name': 'time_set_name',
                 'grpc_type': 'string',
-                'name': 'timeSetName',
+                'name': 'timeSet',
                 'type': 'ViConstString'
             },
             {
@@ -687,6 +706,8 @@ functions = {
         'returns': 'ViStatus'
     },
     'ConfigureTimeSetCompareEdgesStrobe2x': {
+        'cname': 'niDigital_ConfigureTimeSetCompareEdgesStrobe2x',
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -699,16 +720,15 @@ functions = {
                 'cppName': 'pinList',
                 'direction': 'in',
                 'grpc_type': 'string',
-                'is_repeated_capability': True,
                 'name': 'pinList',
-                'repeated_capability_type': 'pins',
                 'type': 'ViConstString'
             },
             {
-                'cppName': 'timeSetName',
+                'cppName': 'timeSet',
                 'direction': 'in',
+                'grpc_name': 'time_set_name',
                 'grpc_type': 'string',
-                'name': 'timeSetName',
+                'name': 'timeSet',
                 'type': 'ViConstString'
             },
             {
@@ -729,6 +749,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'ConfigureTimeSetDriveEdges': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -741,16 +762,15 @@ functions = {
                 'cppName': 'pinList',
                 'direction': 'in',
                 'grpc_type': 'string',
-                'is_repeated_capability': True,
                 'name': 'pinList',
-                'repeated_capability_type': 'pins',
                 'type': 'ViConstString'
             },
             {
-                'cppName': 'timeSetName',
+                'cppName': 'timeSet',
                 'direction': 'in',
+                'grpc_name': 'time_set_name',
                 'grpc_type': 'string',
-                'name': 'timeSetName',
+                'name': 'timeSet',
                 'type': 'ViConstString'
             },
             {
@@ -793,6 +813,8 @@ functions = {
         'returns': 'ViStatus'
     },
     'ConfigureTimeSetDriveEdges2x': {
+        'cname': 'niDigital_ConfigureTimeSetDriveEdges2x',
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -805,16 +827,15 @@ functions = {
                 'cppName': 'pinList',
                 'direction': 'in',
                 'grpc_type': 'string',
-                'is_repeated_capability': True,
                 'name': 'pinList',
-                'repeated_capability_type': 'pins',
                 'type': 'ViConstString'
             },
             {
-                'cppName': 'timeSetName',
+                'cppName': 'timeSet',
                 'direction': 'in',
+                'grpc_name': 'time_set_name',
                 'grpc_type': 'string',
-                'name': 'timeSetName',
+                'name': 'timeSet',
                 'type': 'ViConstString'
             },
             {
@@ -871,6 +892,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'ConfigureTimeSetDriveFormat': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -883,16 +905,15 @@ functions = {
                 'cppName': 'pinList',
                 'direction': 'in',
                 'grpc_type': 'string',
-                'is_repeated_capability': True,
                 'name': 'pinList',
-                'repeated_capability_type': 'pins',
                 'type': 'ViConstString'
             },
             {
-                'cppName': 'timeSetName',
+                'cppName': 'timeSet',
                 'direction': 'in',
+                'grpc_name': 'time_set_name',
                 'grpc_type': 'string',
-                'name': 'timeSetName',
+                'name': 'timeSet',
                 'type': 'ViConstString'
             },
             {
@@ -907,6 +928,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'ConfigureTimeSetEdge': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -919,16 +941,15 @@ functions = {
                 'cppName': 'pinList',
                 'direction': 'in',
                 'grpc_type': 'string',
-                'is_repeated_capability': True,
                 'name': 'pinList',
-                'repeated_capability_type': 'pins',
                 'type': 'ViConstString'
             },
             {
-                'cppName': 'timeSetName',
+                'cppName': 'timeSet',
                 'direction': 'in',
+                'grpc_name': 'time_set_name',
                 'grpc_type': 'string',
-                'name': 'timeSetName',
+                'name': 'timeSet',
                 'type': 'ViConstString'
             },
             {
@@ -950,6 +971,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'ConfigureTimeSetEdgeMultiplier': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -962,16 +984,15 @@ functions = {
                 'cppName': 'pinList',
                 'direction': 'in',
                 'grpc_type': 'string',
-                'is_repeated_capability': True,
                 'name': 'pinList',
-                'repeated_capability_type': 'pins',
                 'type': 'ViConstString'
             },
             {
-                'cppName': 'timeSetName',
+                'cppName': 'timeSet',
                 'direction': 'in',
+                'grpc_name': 'time_set_name',
                 'grpc_type': 'string',
-                'name': 'timeSetName',
+                'name': 'timeSet',
                 'type': 'ViConstString'
             },
             {
@@ -985,6 +1006,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'ConfigureTimeSetPeriod': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -994,10 +1016,11 @@ functions = {
                 'type': 'ViSession'
             },
             {
-                'cppName': 'timeSetName',
+                'cppName': 'timeSet',
                 'direction': 'in',
+                'grpc_name': 'time_set_name',
                 'grpc_type': 'string',
-                'name': 'timeSetName',
+                'name': 'timeSet',
                 'type': 'ViConstString'
             },
             {
@@ -1011,6 +1034,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'ConfigureVoltageLevels': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -1065,6 +1089,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'CreateCaptureWaveformFromFileDigicapture': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -1091,6 +1116,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'CreateCaptureWaveformParallel': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -1103,9 +1129,7 @@ functions = {
                 'cppName': 'pinList',
                 'direction': 'in',
                 'grpc_type': 'string',
-                'is_repeated_capability': True,
                 'name': 'pinList',
-                'repeated_capability_type': 'pins',
                 'type': 'ViConstString'
             },
             {
@@ -1119,6 +1143,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'CreateCaptureWaveformSerial': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -1131,9 +1156,7 @@ functions = {
                 'cppName': 'pinList',
                 'direction': 'in',
                 'grpc_type': 'string',
-                'is_repeated_capability': True,
                 'name': 'pinList',
-                'repeated_capability_type': 'pins',
                 'type': 'ViConstString'
             },
             {
@@ -1162,6 +1185,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'CreateChannelMap': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -1181,6 +1205,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'CreatePinGroup': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -1207,6 +1232,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'CreatePinMap': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -1233,6 +1259,8 @@ functions = {
         'returns': 'ViStatus'
     },
     'CreateSourceWaveformFromFileTDMS': {
+        'cname': 'niDigital_CreateSourceWaveformFromFileTDMS',
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -1266,6 +1294,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'CreateSourceWaveformParallel': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -1278,9 +1307,7 @@ functions = {
                 'cppName': 'pinList',
                 'direction': 'in',
                 'grpc_type': 'string',
-                'is_repeated_capability': True,
                 'name': 'pinList',
-                'repeated_capability_type': 'pins',
                 'type': 'ViConstString'
             },
             {
@@ -1302,6 +1329,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'CreateSourceWaveformSerial': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -1314,9 +1342,7 @@ functions = {
                 'cppName': 'pinList',
                 'direction': 'in',
                 'grpc_type': 'string',
-                'is_repeated_capability': True,
                 'name': 'pinList',
-                'repeated_capability_type': 'pins',
                 'type': 'ViConstString'
             },
             {
@@ -1353,6 +1379,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'CreateTimeSet': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -1372,6 +1399,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'DeleteAllTimeSets': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -1384,6 +1412,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'DisableConditionalJumpTrigger': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -1403,6 +1432,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'DisableSites': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -1415,15 +1445,14 @@ functions = {
                 'cppName': 'siteList',
                 'direction': 'in',
                 'grpc_type': 'string',
-                'is_repeated_capability': True,
                 'name': 'siteList',
-                'repeated_capability_type': 'sites',
                 'type': 'ViConstString'
             }
         ],
         'returns': 'ViStatus'
     },
     'DisableStartTrigger': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -1436,6 +1465,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'EnableMatchFailCombination': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'sessionCount',
@@ -1467,6 +1497,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'EnableSites': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -1479,15 +1510,14 @@ functions = {
                 'cppName': 'siteList',
                 'direction': 'in',
                 'grpc_type': 'string',
-                'is_repeated_capability': True,
                 'name': 'siteList',
-                'repeated_capability_type': 'sites',
                 'type': 'ViConstString'
             }
         ],
         'returns': 'ViStatus'
     },
     'EndChannelMap': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -1533,6 +1563,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'ExportSignal': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -1643,6 +1674,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'FetchHistoryRAMCycleInformation': {
+        'cname': 'niDigital_FetchHistoryRAMCycleInformation',
         'codegen_method': 'public',
         'parameters': [
             {
@@ -1656,9 +1688,7 @@ functions = {
                 'cppName': 'site',
                 'direction': 'in',
                 'grpc_type': 'string',
-                'is_repeated_capability': True,
                 'name': 'site',
-                'repeated_capability_type': 'sites',
                 'type': 'ViConstString'
             },
             {
@@ -1707,6 +1737,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'FetchHistoryRAMCyclePinData': {
+        'cname': 'niDigital_FetchHistoryRAMCyclePinData',
         'codegen_method': 'public',
         'parameters': [
             {
@@ -1802,6 +1833,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'FetchHistoryRAMScanCycleNumber': {
+        'cname': 'niDigital_FetchHistoryRAMScanCycleNumber',
         'codegen_method': 'public',
         'parameters': [
             {
@@ -1815,9 +1847,7 @@ functions = {
                 'cppName': 'site',
                 'direction': 'in',
                 'grpc_type': 'string',
-                'is_repeated_capability': True,
                 'name': 'site',
-                'repeated_capability_type': 'sites',
                 'type': 'ViConstString'
             },
             {
@@ -1839,6 +1869,7 @@ functions = {
     },
     'FrequencyCounterConfigureMeasurementMode': {
         'cname': 'niDigital_FrequencyCounter_ConfigureMeasurementMode',
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -1848,11 +1879,12 @@ functions = {
                 'type': 'ViSession'
             },
             {
-                'cppName': 'measurementMode',
+                'cppName': 'measurementmode',
                 'direction': 'in',
                 'enum': 'FrequencyMeasurementMode',
+                'grpc_name': 'measurement_mode',
                 'grpc_type': 'sint32',
-                'name': 'measurementMode',
+                'name': 'measurementmode',
                 'type': 'ViInt32'
             }
         ],
@@ -1860,6 +1892,7 @@ functions = {
     },
     'FrequencyCounterConfigureMeasurementTime': {
         'cname': 'niDigital_FrequencyCounter_ConfigureMeasurementTime',
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -1887,6 +1920,7 @@ functions = {
     },
     'FrequencyCounterMeasureFrequency': {
         'cname': 'niDigital_FrequencyCounter_MeasureFrequency',
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -2070,6 +2104,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'GetAttributeViSession': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -2079,10 +2114,11 @@ functions = {
                 'type': 'ViSession'
             },
             {
-                'cppName': 'channelList',
+                'cppName': 'channelName',
                 'direction': 'in',
+                'grpc_name': 'channel_list',
                 'grpc_type': 'string',
-                'name': 'channelList',
+                'name': 'channelName',
                 'type': 'ViConstString'
             },
             {
@@ -2190,6 +2226,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'GetChannelNameFromString': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -2199,10 +2236,11 @@ functions = {
                 'type': 'ViSession'
             },
             {
-                'cppName': 'indices',
+                'cppName': 'index',
                 'direction': 'in',
+                'grpc_name': 'indices',
                 'grpc_type': 'string',
-                'name': 'indices',
+                'name': 'index',
                 'type': 'ViConstString'
             },
             {
@@ -2215,10 +2253,11 @@ functions = {
                 'type': 'ViInt32'
             },
             {
-                'cppName': 'names',
+                'cppName': 'name',
                 'direction': 'out',
+                'grpc_name': 'names',
                 'grpc_type': 'string',
-                'name': 'names',
+                'name': 'name',
                 'size': {
                     'mechanism': 'ivi-dance',
                     'value': 'nameBufferSize'
@@ -2226,7 +2265,6 @@ functions = {
                 'type': 'ViChar[]'
             }
         ],
-        'render_in_session_base': True,
         'returns': 'ViStatus'
     },
     'GetError': {
@@ -2271,6 +2309,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'GetFailCount': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -2318,6 +2357,8 @@ functions = {
         'returns': 'ViStatus'
     },
     'GetHistoryRAMSampleCount': {
+        'cname': 'niDigital_GetHistoryRAMSampleCount',
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -2330,9 +2371,7 @@ functions = {
                 'cppName': 'site',
                 'direction': 'in',
                 'grpc_type': 'string',
-                'is_repeated_capability': True,
                 'name': 'site',
-                'repeated_capability_type': 'sites',
                 'type': 'ViConstString'
             },
             {
@@ -2383,10 +2422,10 @@ functions = {
                 'type': 'ViChar[]'
             }
         ],
-        'render_in_session_base': True,
         'returns': 'ViStatus'
     },
     'GetPatternPinIndexes': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -2434,6 +2473,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'GetPatternPinList': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -2510,7 +2550,6 @@ functions = {
                 'type': 'ViChar[]'
             }
         ],
-        'render_in_session_base': True,
         'returns': 'ViStatus'
     },
     'GetPinResultsPinInformation': {
@@ -2690,6 +2729,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'GetTimeSetDriveFormat': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -2702,16 +2742,15 @@ functions = {
                 'cppName': 'pin',
                 'direction': 'in',
                 'grpc_type': 'string',
-                'is_repeated_capability': True,
                 'name': 'pin',
-                'repeated_capability_type': 'pins',
                 'type': 'ViConstString'
             },
             {
-                'cppName': 'timeSetName',
+                'cppName': 'timeSet',
                 'direction': 'in',
+                'grpc_name': 'time_set_name',
                 'grpc_type': 'string',
-                'name': 'timeSetName',
+                'name': 'timeSet',
                 'type': 'ViConstString'
             },
             {
@@ -2726,6 +2765,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'GetTimeSetEdge': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -2738,16 +2778,15 @@ functions = {
                 'cppName': 'pin',
                 'direction': 'in',
                 'grpc_type': 'string',
-                'is_repeated_capability': True,
                 'name': 'pin',
-                'repeated_capability_type': 'pins',
                 'type': 'ViConstString'
             },
             {
-                'cppName': 'timeSetName',
+                'cppName': 'timeSet',
                 'direction': 'in',
+                'grpc_name': 'time_set_name',
                 'grpc_type': 'string',
-                'name': 'timeSetName',
+                'name': 'timeSet',
                 'type': 'ViConstString'
             },
             {
@@ -2769,6 +2808,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'GetTimeSetEdgeMultiplier': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -2781,16 +2821,15 @@ functions = {
                 'cppName': 'pin',
                 'direction': 'in',
                 'grpc_type': 'string',
-                'is_repeated_capability': True,
                 'name': 'pin',
-                'repeated_capability_type': 'pins',
                 'type': 'ViConstString'
             },
             {
-                'cppName': 'timeSetName',
+                'cppName': 'timeSet',
                 'direction': 'in',
+                'grpc_name': 'time_set_name',
                 'grpc_type': 'string',
-                'name': 'timeSetName',
+                'name': 'timeSet',
                 'type': 'ViConstString'
             },
             {
@@ -2841,10 +2880,10 @@ functions = {
                 'type': 'ViChar[]'
             }
         ],
-        'render_in_session_base': True,
         'returns': 'ViStatus'
     },
     'GetTimeSetPeriod': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -2854,10 +2893,11 @@ functions = {
                 'type': 'ViSession'
             },
             {
-                'cppName': 'timeSetName',
+                'cppName': 'timeSet',
                 'direction': 'in',
+                'grpc_name': 'time_set_name',
                 'grpc_type': 'string',
-                'name': 'timeSetName',
+                'name': 'timeSet',
                 'type': 'ViConstString'
             },
             {
@@ -2872,6 +2912,7 @@ functions = {
     },
     'Init': {
         'cname': 'niDigital_init',
+        'codegen_method': 'public',
         'init_method': True,
         'parameters': [
             {
@@ -2879,7 +2920,7 @@ functions = {
                 'direction': 'in',
                 'grpc_type': 'string',
                 'name': 'resourceName',
-                'type': 'ViRsrc'
+                'type': 'ViString'
             },
             {
                 'cppName': 'idQuery',
@@ -2896,16 +2937,17 @@ functions = {
                 'type': 'ViBoolean'
             },
             {
-                'cppName': 'vi',
+                'cppName': 'newVi',
                 'direction': 'out',
+                'grpc_name': 'vi',
                 'grpc_type': 'nidevice_grpc.Session',
-                'name': 'vi',
+                'name': 'newVi',
                 'type': 'ViSession'
             },
             {
                 'cppName': 'errorMessage',
                 'direction': 'out',
-                'get_last_error': 'get_last_error_message',
+                'get_last_error': 'deprecated',
                 'grpc_type': 'string',
                 'name': 'errorMessage',
                 'type': 'ViChar[]'
@@ -2922,7 +2964,7 @@ functions = {
                 'direction': 'in',
                 'grpc_type': 'string',
                 'name': 'resourceName',
-                'type': 'ViRsrc'
+                'type': 'ViString'
             },
             {
                 'cppName': 'idQuery',
@@ -2946,16 +2988,17 @@ functions = {
                 'type': 'ViConstString'
             },
             {
-                'cppName': 'vi',
+                'cppName': 'newVi',
                 'direction': 'out',
+                'grpc_name': 'vi',
                 'grpc_type': 'nidevice_grpc.Session',
-                'name': 'vi',
+                'name': 'newVi',
                 'type': 'ViSession'
             },
             {
                 'cppName': 'errorMessage',
                 'direction': 'out',
-                'get_last_error': 'get_last_error_message',
+                'get_last_error': 'deprecated',
                 'grpc_type': 'string',
                 'name': 'errorMessage',
                 'type': 'ViChar[]'
@@ -2977,6 +3020,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'IsDone': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -2996,6 +3040,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'IsSiteEnabled': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -3008,9 +3053,7 @@ functions = {
                 'cppName': 'site',
                 'direction': 'in',
                 'grpc_type': 'string',
-                'is_repeated_capability': True,
                 'name': 'site',
-                'repeated_capability_type': 'sites',
                 'type': 'ViConstString'
             },
             {
@@ -3034,16 +3077,18 @@ functions = {
                 'type': 'ViSession'
             },
             {
-                'cppName': 'filePath',
+                'cppName': 'levelsFilePath',
                 'direction': 'in',
+                'grpc_name': 'file_path',
                 'grpc_type': 'string',
-                'name': 'filePath',
+                'name': 'levelsFilePath',
                 'type': 'ViConstString'
             }
         ],
         'returns': 'ViStatus'
     },
     'LoadPattern': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -3063,6 +3108,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'LoadPinMap': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -3072,10 +3118,11 @@ functions = {
                 'type': 'ViSession'
             },
             {
-                'cppName': 'filePath',
+                'cppName': 'pinMapFilePath',
                 'direction': 'in',
+                'grpc_name': 'file_path',
                 'grpc_type': 'string',
-                'name': 'filePath',
+                'name': 'pinMapFilePath',
                 'type': 'ViConstString'
             }
         ],
@@ -3092,10 +3139,11 @@ functions = {
                 'type': 'ViSession'
             },
             {
-                'cppName': 'filePath',
+                'cppName': 'specificationsFilePath',
                 'direction': 'in',
+                'grpc_name': 'file_path',
                 'grpc_type': 'string',
-                'name': 'filePath',
+                'name': 'specificationsFilePath',
                 'type': 'ViConstString'
             }
         ],
@@ -3112,10 +3160,11 @@ functions = {
                 'type': 'ViSession'
             },
             {
-                'cppName': 'filePath',
+                'cppName': 'timingFilePath',
                 'direction': 'in',
+                'grpc_name': 'file_path',
                 'grpc_type': 'string',
-                'name': 'filePath',
+                'name': 'timingFilePath',
                 'type': 'ViConstString'
             }
         ],
@@ -3139,10 +3188,10 @@ functions = {
                 'type': 'ViBoolean'
             }
         ],
-        'render_in_session_base': True,
         'returns': 'ViStatus'
     },
     'MapPinToChannel': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -3177,6 +3226,7 @@ functions = {
     },
     'PPMUConfigureApertureTime': {
         'cname': 'niDigital_PPMU_ConfigureApertureTime',
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -3212,6 +3262,7 @@ functions = {
     },
     'PPMUConfigureCurrentLevel': {
         'cname': 'niDigital_PPMU_ConfigureCurrentLevel',
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -3239,6 +3290,7 @@ functions = {
     },
     'PPMUConfigureCurrentLevelRange': {
         'cname': 'niDigital_PPMU_ConfigureCurrentLevelRange',
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -3266,6 +3318,7 @@ functions = {
     },
     'PPMUConfigureCurrentLimit': {
         'cname': 'niDigital_PPMU_ConfigureCurrentLimit',
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -3301,6 +3354,7 @@ functions = {
     },
     'PPMUConfigureCurrentLimitRange': {
         'cname': 'niDigital_PPMU_ConfigureCurrentLimitRange',
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -3328,6 +3382,7 @@ functions = {
     },
     'PPMUConfigureOutputFunction': {
         'cname': 'niDigital_PPMU_ConfigureOutputFunction',
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -3356,6 +3411,7 @@ functions = {
     },
     'PPMUConfigureVoltageLevel': {
         'cname': 'niDigital_PPMU_ConfigureVoltageLevel',
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -3383,6 +3439,7 @@ functions = {
     },
     'PPMUConfigureVoltageLimits': {
         'cname': 'niDigital_PPMU_ConfigureVoltageLimits',
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -3417,6 +3474,7 @@ functions = {
     },
     'PPMUMeasure': {
         'cname': 'niDigital_PPMU_Measure',
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -3473,6 +3531,7 @@ functions = {
     },
     'PPMUSource': {
         'cname': 'niDigital_PPMU_Source',
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -3492,6 +3551,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'ReadSequencerFlag': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -3518,6 +3578,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'ReadSequencerRegister': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -3544,6 +3605,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'ReadStatic': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -3593,6 +3655,7 @@ functions = {
     },
     'Reset': {
         'cname': 'niDigital_reset',
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -3632,6 +3695,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'ResetDevice': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -3644,6 +3708,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'SelectFunction': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -3671,6 +3736,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'SelfCalibrate': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -3685,7 +3751,6 @@ functions = {
     'SelfTest': {
         'cname': 'niDigital_self_test',
         'codegen_method': 'public',
-        'method_name_for_documentation': 'self_test',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -3716,6 +3781,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'SendSoftwareEdgeTrigger': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -3880,6 +3946,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'SetAttributeViSession': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -3889,10 +3956,11 @@ functions = {
                 'type': 'ViSession'
             },
             {
-                'cppName': 'channelList',
+                'cppName': 'channelName',
                 'direction': 'in',
+                'grpc_name': 'channel_list',
                 'grpc_type': 'string',
-                'name': 'channelList',
+                'name': 'channelName',
                 'type': 'ViConstString'
             },
             {
@@ -3947,6 +4015,8 @@ functions = {
         'returns': 'ViStatus'
     },
     'TDR': {
+        'cname': 'niDigital_TDR',
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -4001,6 +4071,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'UnloadAllPatterns': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -4030,10 +4101,11 @@ functions = {
                 'type': 'ViSession'
             },
             {
-                'cppName': 'filePath',
+                'cppName': 'specificationsFilePath',
                 'direction': 'in',
+                'grpc_name': 'file_path',
                 'grpc_type': 'string',
-                'name': 'filePath',
+                'name': 'specificationsFilePath',
                 'type': 'ViConstString'
             }
         ],
@@ -4057,10 +4129,10 @@ functions = {
                 'type': 'ViBoolean'
             }
         ],
-        'render_in_session_base': True,
         'returns': 'ViStatus'
     },
     'WaitUntilDone': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -4080,6 +4152,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'WriteSequencerFlag': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -4106,6 +4179,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'WriteSequencerFlagSynchronized': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'sessionCount',
@@ -4144,6 +4218,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'WriteSequencerRegister': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -4170,6 +4245,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'WriteSourceWaveformBroadcastU32': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -4213,6 +4289,8 @@ functions = {
         'returns': 'ViStatus'
     },
     'WriteSourceWaveformDataFromFileTDMS': {
+        'cname': 'niDigital_WriteSourceWaveformDataFromFileTDMS',
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -4252,9 +4330,7 @@ functions = {
                 'cppName': 'siteList',
                 'direction': 'in',
                 'grpc_type': 'string',
-                'is_repeated_capability': True,
                 'name': 'siteList',
-                'repeated_capability_type': 'sites',
                 'type': 'ViConstString'
             },
             {
@@ -4287,13 +4363,13 @@ functions = {
                     'mechanism': 'fixed',
                     'value': 1
                 },
-                'type': 'ViUInt32[]',
-                'use_array': True
+                'type': 'ViUInt32[]'
             }
         ],
         'returns': 'ViStatus'
     },
     'WriteStatic': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',

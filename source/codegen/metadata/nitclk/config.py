@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-TClk API metadata version 255.0.0d0
+# This file is generated from NI-TClk API metadata version 23.0.0d7
 config = {
-    'api_version': '255.0.0d0',
+    'additional_headers': {
+    },
+    'api_version': '23.0.0',
     'c_function_prefix': 'niTClk_',
     'c_header': 'niTClk.h',
     'close_function': None,
@@ -9,8 +11,6 @@ config = {
     'custom_types': [
     ],
     'driver_name': 'NI-TClk',
-    'extra_errors_used': [
-    ],
     'java_package': 'com.ni.grpc.tclk',
     'library_info': {
         'Linux': {
@@ -21,21 +21,18 @@ config = {
         },
         'Windows': {
             '32bit': {
-                'name': 'nitclk.dll',
+                'name': 'niTClk.dll',
                 'type': 'windll'
             },
             '64bit': {
-                'name': 'nitclk_64.dll',
+                'name': 'niTClk_64.dll',
                 'type': 'cdll'
             }
         }
     },
     'linux_rt_support': True,
-    'metadata_version': '2.0',
     'module_name': 'nitclk',
     'namespace_component': 'nitclk',
-    'repeated_capabilities': [
-    ],
     'service_class_prefix': 'NiTClk',
     'session_handle_parameter_name': 'session_number',
     'status_ok': 'status >= 0'

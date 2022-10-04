@@ -31,7 +31,7 @@ CheckAttributeViInt32Response check_attribute_vi_int32(const StubPtr& stub, cons
 CheckAttributeViInt64Response check_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttribute& attribute_id, const pb::int64& attribute_value);
 CheckAttributeViReal64Response check_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttribute& attribute_id, const simple_variant<NiFgenReal64AttributeValues, double>& attribute_value);
 CheckAttributeViSessionResponse check_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttribute& attribute_id, const nidevice_grpc::Session& attribute_value);
-CheckAttributeViStringResponse check_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttribute& attribute_id, const pb::string& attribute_value);
+CheckAttributeViStringResponse check_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttribute& attribute_id, const simple_variant<NiFgenStringAttributeValuesMapped, std::string>& attribute_value);
 ClearArbMemoryResponse clear_arb_memory(const StubPtr& stub, const nidevice_grpc::Session& vi);
 ClearArbSequenceResponse clear_arb_sequence(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<SequenceHandle, pb::int32>& sequence_handle);
 ClearArbWaveformResponse clear_arb_waveform(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<WaveformHandle, pb::int32>& waveform_handle);
@@ -111,7 +111,7 @@ GetSelfCalLastDateAndTimeResponse get_self_cal_last_date_and_time(const StubPtr&
 GetSelfCalLastTempResponse get_self_cal_last_temp(const StubPtr& stub, const nidevice_grpc::Session& vi);
 GetSelfCalSupportedResponse get_self_cal_supported(const StubPtr& stub, const nidevice_grpc::Session& vi);
 GetStreamEndpointHandleResponse get_stream_endpoint_handle(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& stream_endpoint);
-ImportAttributeConfigurationBufferResponse import_attribute_configuration_buffer(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::vector<pb::uint64>& configuration);
+ImportAttributeConfigurationBufferResponse import_attribute_configuration_buffer(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& configuration);
 ImportAttributeConfigurationFileResponse import_attribute_configuration_file(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& file_path);
 InitResponse init(const StubPtr& stub, const pb::string& resource_name, const bool& id_query, const bool& reset_device);
 InitWithOptionsResponse init_with_options(const StubPtr& stub, const pb::string& resource_name, const bool& id_query, const bool& reset_device, const pb::string& option_string);
@@ -139,7 +139,7 @@ SetAttributeViInt32Response set_attribute_vi_int32(const StubPtr& stub, const ni
 SetAttributeViInt64Response set_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttribute& attribute_id, const pb::int64& attribute_value);
 SetAttributeViReal64Response set_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttribute& attribute_id, const simple_variant<NiFgenReal64AttributeValues, double>& attribute_value);
 SetAttributeViSessionResponse set_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttribute& attribute_id, const nidevice_grpc::Session& attribute_value);
-SetAttributeViStringResponse set_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttribute& attribute_id, const pb::string& attribute_value);
+SetAttributeViStringResponse set_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttribute& attribute_id, const simple_variant<NiFgenStringAttributeValuesMapped, std::string>& attribute_value);
 SetNamedWaveformNextWritePositionResponse set_named_waveform_next_write_position(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& waveform_name, const simple_variant<RelativeTo, pb::int32>& relative_to, const pb::int32& offset);
 SetWaveformNextWritePositionResponse set_waveform_next_write_position(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::int32& waveform_handle, const simple_variant<RelativeTo, pb::int32>& relative_to, const pb::int32& offset);
 WaitUntilDoneResponse wait_until_done(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& max_time);

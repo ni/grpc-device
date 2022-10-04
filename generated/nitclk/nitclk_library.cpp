@@ -6,7 +6,7 @@
 #include "nitclk_library.h"
 
 #if defined(_MSC_VER)
-static const char* kLibraryName = "nitclk_64.dll";
+static const char* kLibraryName = "niTClk_64.dll";
 #else
 static const char* kLibraryName = "libnitclk.so";
 #endif

@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-DMM API metadata version 19.6.0d7
+# This file is generated from NI-DMM API metadata version 23.0.0d13
 enums = {
     'AcquisitionStatus': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDMM_VAL_RUNNING_ANTICOLLISION',
@@ -26,6 +27,7 @@ enums = {
         ]
     },
     'AdcCalibration': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDMM_VAL_ADC_CALIBRATION_OFF',
@@ -42,6 +44,7 @@ enums = {
         ]
     },
     'ApertureTime': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDMM_VAL_APERTURE_TIME_AUTO',
@@ -78,6 +81,7 @@ enums = {
         ]
     },
     'ApertureTimeUnits': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDMM_VAL_SECONDS',
@@ -90,6 +94,7 @@ enums = {
         ]
     },
     'AutoZero': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDMM_VAL_AUTO_ZERO_OFF',
@@ -110,6 +115,7 @@ enums = {
         ]
     },
     'BufferSize': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDMM_VAL_BUFFER_SIZE_AUTO',
@@ -118,6 +124,7 @@ enums = {
         ]
     },
     'CableCompensationType': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDMM_VAL_CABLE_COMP_NONE',
@@ -138,6 +145,7 @@ enums = {
         ]
     },
     'CalibrationType': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDMM_VAL_INTERNAL_AREA',
@@ -150,6 +158,7 @@ enums = {
         ]
     },
     'CompensatedOhms': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDMM_VAL_OFFSET_COMP_OHMS_OFF',
@@ -161,31 +170,8 @@ enums = {
             }
         ]
     },
-    'Configuration4022': {
-        'values': [
-            {
-                'name': 'NIDMM_4022_CONFIG_GUARD',
-                'value': 0
-            },
-            {
-                'name': 'NIDMM_4022_CONFIG_CURRENT_100_NANOAMP',
-                'value': 2
-            },
-            {
-                'name': 'NIDMM_4022_CONFIG_CURRENT_10_MICROAMP',
-                'value': 3
-            },
-            {
-                'name': 'NIDMM_4022_CONFIG_CURRENT_1_MILLIAMP',
-                'value': 7
-            },
-            {
-                'name': 'NIDMM_4022_CONFIG_DISCONNECT_AGND',
-                'value': 8
-            }
-        ]
-    },
     'ControlCommit': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDMM_VAL_CONTROL_COMMIT',
@@ -193,7 +179,30 @@ enums = {
             }
         ]
     },
+    'CurrentSource': {
+        'codegen_method': 'public',
+        'generate-mappings': True,
+        'values': [
+            {
+                'name': 'NIDMM_VAL_1_MICROAMP',
+                'value': 1e-06
+            },
+            {
+                'name': 'NIDMM_VAL_10_MICROAMP',
+                'value': 1e-05
+            },
+            {
+                'name': 'NIDMM_VAL_100_MICROAMP',
+                'value': 0.0001
+            },
+            {
+                'name': 'NIDMM_VAL_1_MILLIAMP',
+                'value': 0.001
+            }
+        ]
+    },
     'DcBias': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDMM_VAL_DC_BIAS_OFF',
@@ -206,6 +215,7 @@ enums = {
         ]
     },
     'DcNoiseRejection': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDMM_VAL_DCNR_NORMAL',
@@ -226,6 +236,7 @@ enums = {
         ]
     },
     'FrequencyVoltageRange': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDMM_VAL_AUTO_RANGE_ON',
@@ -238,6 +249,7 @@ enums = {
         ]
     },
     'Function': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDMM_VAL_DC_VOLTS',
@@ -301,7 +313,26 @@ enums = {
             }
         ]
     },
+    'InputResistance': {
+        'codegen_method': 'public',
+        'generate-mappings': True,
+        'values': [
+            {
+                'name': 'NIDMM_VAL_1_MEGAOHM',
+                'value': 1000000
+            },
+            {
+                'name': 'NIDMM_VAL_10_MEGAOHM',
+                'value': 10000000
+            },
+            {
+                'name': 'NIDMM_VAL_GREATER_THAN_10_GIGAOHM',
+                'value': 10000000000.0
+            }
+        ]
+    },
     'Latency': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDMM_VAL_LATENCY_AUTO',
@@ -310,6 +341,7 @@ enums = {
         ]
     },
     'LcCalculationModel': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDMM_VAL_CALC_MODEL_SERIES',
@@ -326,6 +358,7 @@ enums = {
         ]
     },
     'MeasurementCompleteDest': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDMM_VAL_NONE',
@@ -374,6 +407,7 @@ enums = {
         ]
     },
     'MeasurementDestinationSlope': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDMM_VAL_POSITIVE',
@@ -941,7 +975,42 @@ enums = {
             }
         ]
     },
+    'NiDmmReal64AttributeValuesMapped': {
+        'enum-value-prefix': 'NIDMM_REAL64',
+        'generate-mappings': True,
+        'values': [
+            {
+                'name': 'CURRENT_SOURCE_VAL_1_MICROAMP',
+                'value': 1e-06
+            },
+            {
+                'name': 'CURRENT_SOURCE_VAL_10_MICROAMP',
+                'value': 1e-05
+            },
+            {
+                'name': 'CURRENT_SOURCE_VAL_100_MICROAMP',
+                'value': 0.0001
+            },
+            {
+                'name': 'CURRENT_SOURCE_VAL_1_MILLIAMP',
+                'value': 0.001
+            },
+            {
+                'name': 'INPUT_RESISTANCE_VAL_1_MEGAOHM',
+                'value': 1000000
+            },
+            {
+                'name': 'INPUT_RESISTANCE_VAL_10_MEGAOHM',
+                'value': 10000000
+            },
+            {
+                'name': 'INPUT_RESISTANCE_VAL_GREATER_THAN_10_GIGAOHM',
+                'value': 10000000000.0
+            }
+        ]
+    },
     'OperationMode': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDMM_VAL_IVIDMM_MODE',
@@ -954,6 +1023,7 @@ enums = {
         ]
     },
     'PowerLineFrequencies': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDMM_VAL_50_HERTZ',
@@ -966,6 +1036,7 @@ enums = {
         ]
     },
     'Range': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDMM_VAL_AUTO_RANGE_ON',
@@ -982,6 +1053,7 @@ enums = {
         ]
     },
     'RtdType': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDMM_VAL_TEMP_RTD_CUSTOM',
@@ -1014,6 +1086,7 @@ enums = {
         ]
     },
     'SampleCount': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDMM_VAL_SAMPLE_COUNT_INFINITE',
@@ -1022,6 +1095,7 @@ enums = {
         ]
     },
     'SampleInterval': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDMM_VAL_AUTO_DELAY',
@@ -1030,6 +1104,7 @@ enums = {
         ]
     },
     'SampleTrigSlope': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDMM_VAL_POSITIVE',
@@ -1042,6 +1117,7 @@ enums = {
         ]
     },
     'SampleTrigger': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDMM_VAL_IMMEDIATE',
@@ -1106,6 +1182,7 @@ enums = {
         ]
     },
     'SettleTime': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDMM_VAL_SETTLE_TIME_AUTO',
@@ -1114,6 +1191,7 @@ enums = {
         ]
     },
     'ThermistorType': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDMM_VAL_TEMP_THERMISTOR_CUSTOM',
@@ -1134,6 +1212,7 @@ enums = {
         ]
     },
     'ThermocoupleReferenceJunctionType': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDMM_VAL_TEMP_REF_JUNC_FIXED',
@@ -1142,6 +1221,7 @@ enums = {
         ]
     },
     'ThermocoupleType': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDMM_VAL_TEMP_TC_B',
@@ -1178,6 +1258,7 @@ enums = {
         ]
     },
     'TimeLimit': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDMM_VAL_TIME_LIMIT_AUTO',
@@ -1186,6 +1267,7 @@ enums = {
         ]
     },
     'TransducerType': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDMM_VAL_THERMOCOUPLE',
@@ -1206,6 +1288,7 @@ enums = {
         ]
     },
     'TriggerCount': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDMM_VAL_TRIG_COUNT_INFINITE',
@@ -1214,6 +1297,7 @@ enums = {
         ]
     },
     'TriggerDelays': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDMM_VAL_AUTO_DELAY_ON',
@@ -1226,6 +1310,7 @@ enums = {
         ]
     },
     'TriggerSlope': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDMM_VAL_POSITIVE',
@@ -1238,6 +1323,7 @@ enums = {
         ]
     },
     'TriggerSource': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDMM_VAL_IMMEDIATE',
@@ -1298,6 +1384,7 @@ enums = {
         ]
     },
     'WaveformCoupling': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'NIDMM_VAL_WAVEFORM_COUPLING_AC',

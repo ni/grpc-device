@@ -59,7 +59,6 @@ ConfigureTriggerSlopeResponse configure_trigger_slope(const StubPtr& stub, const
 ConfigureWaveformAcquisitionResponse configure_waveform_acquisition(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<Function, pb::int32>& measurement_function, const double& range, const double& rate, const pb::int32& waveform_points);
 ConfigureWaveformCouplingResponse configure_waveform_coupling(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& waveform_coupling);
 ControlResponse control(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<ControlCommit, pb::int32>& control_action);
-Control4022Response control4022(const StubPtr& stub, const pb::string& resource_name, const simple_variant<Configuration4022, pb::int32>& configuration);
 DisableResponse disable(const StubPtr& stub, const nidevice_grpc::Session& vi);
 ExportAttributeConfigurationBufferResponse export_attribute_configuration_buffer(const StubPtr& stub, const nidevice_grpc::Session& vi);
 ExportAttributeConfigurationFileResponse export_attribute_configuration_file(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& file_path);

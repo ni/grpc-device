@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-SWITCH API metadata version 22.8.0d130
+# This file is generated from NI-SWITCH API metadata version 23.0.0d23
 enums = {
     'HandshakingInitiation': {
         'codegen_method': 'public',

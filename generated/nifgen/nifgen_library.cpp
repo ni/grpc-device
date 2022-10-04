@@ -112,7 +112,7 @@ NiFgenLibrary::NiFgenLibrary() : shared_library_(kLibraryName)
   function_pointers_.GetStreamEndpointHandle = reinterpret_cast<GetStreamEndpointHandlePtr>(shared_library_.get_function_pointer("niFgen_GetStreamEndpointHandle"));
   function_pointers_.ImportAttributeConfigurationBuffer = reinterpret_cast<ImportAttributeConfigurationBufferPtr>(shared_library_.get_function_pointer("niFgen_ImportAttributeConfigurationBuffer"));
   function_pointers_.ImportAttributeConfigurationFile = reinterpret_cast<ImportAttributeConfigurationFilePtr>(shared_library_.get_function_pointer("niFgen_ImportAttributeConfigurationFile"));
-  function_pointers_.Init = reinterpret_cast<InitPtr>(shared_library_.get_function_pointer("niFgen_init "));
+  function_pointers_.Init = reinterpret_cast<InitPtr>(shared_library_.get_function_pointer("niFgen_init"));
   function_pointers_.InitWithOptions = reinterpret_cast<InitWithOptionsPtr>(shared_library_.get_function_pointer("niFgen_InitWithOptions"));
   function_pointers_.InitializeWithChannels = reinterpret_cast<InitializeWithChannelsPtr>(shared_library_.get_function_pointer("niFgen_InitializeWithChannels"));
   function_pointers_.InitiateGeneration = reinterpret_cast<InitiateGenerationPtr>(shared_library_.get_function_pointer("niFgen_InitiateGeneration"));
@@ -971,7 +971,7 @@ ViStatus NiFgenLibrary::ErrorQuery(ViSession vi, ViInt32* errorCode, ViChar erro
 #endif
 }
 
-ViStatus NiFgenLibrary::ExportAttributeConfigurationBuffer(ViSession vi, ViInt32 sizeInBytes, ViAddr configuration[])
+ViStatus NiFgenLibrary::ExportAttributeConfigurationBuffer(ViSession vi, ViInt32 sizeInBytes, ViInt8 configuration[])
 {
   if (!function_pointers_.ExportAttributeConfigurationBuffer) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_ExportAttributeConfigurationBuffer.");
@@ -1235,7 +1235,7 @@ ViStatus NiFgenLibrary::GetStreamEndpointHandle(ViSession vi, ViConstString stre
 #endif
 }
 
-ViStatus NiFgenLibrary::ImportAttributeConfigurationBuffer(ViSession vi, ViInt32 sizeInBytes, ViAddr configuration[])
+ViStatus NiFgenLibrary::ImportAttributeConfigurationBuffer(ViSession vi, ViInt32 sizeInBytes, ViInt8 configuration[])
 {
   if (!function_pointers_.ImportAttributeConfigurationBuffer) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_ImportAttributeConfigurationBuffer.");
@@ -1262,16 +1262,16 @@ ViStatus NiFgenLibrary::ImportAttributeConfigurationFile(ViSession vi, ViConstSt
 ViStatus NiFgenLibrary::Init(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* vi)
 {
   if (!function_pointers_.Init) {
-    throw nidevice_grpc::LibraryLoadException("Could not find niFgen_init .");
+    throw nidevice_grpc::LibraryLoadException("Could not find niFgen_init.");
   }
 #if defined(_MSC_VER)
-  return niFgen_init (resourceName, idQuery, resetDevice, vi);
+  return niFgen_init(resourceName, idQuery, resetDevice, vi);
 #else
   return function_pointers_.Init(resourceName, idQuery, resetDevice, vi);
 #endif
 }
 
-ViStatus NiFgenLibrary::InitWithOptions(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViConstString optionString, ViSession* vi)
+ViStatus NiFgenLibrary::InitWithOptions(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViString optionString, ViSession* vi)
 {
   if (!function_pointers_.InitWithOptions) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_InitWithOptions.");
@@ -1283,7 +1283,7 @@ ViStatus NiFgenLibrary::InitWithOptions(ViRsrc resourceName, ViBoolean idQuery, 
 #endif
 }
 
-ViStatus NiFgenLibrary::InitializeWithChannels(ViRsrc resourceName, ViConstString channelName, ViBoolean resetDevice, ViConstString optionString, ViSession* vi)
+ViStatus NiFgenLibrary::InitializeWithChannels(ViRsrc resourceName, ViString channelName, ViBoolean resetDevice, ViString optionString, ViSession* vi)
 {
   if (!function_pointers_.InitializeWithChannels) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_InitializeWithChannels.");
