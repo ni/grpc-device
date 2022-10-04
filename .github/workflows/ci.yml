@@ -12,21 +12,17 @@ jobs:
     uses: ./.github/workflows/cancel_builds.yml
   validate_imported_protos:
     uses: ./.github/workflows/validate_imported_protos.yml
-  validate_mi_mutation:
-    uses: ./.github/workflows/validate_mi_mutation.yml
   validate_python:
     uses: ./.github/workflows/validate_python.yml
   build_desktop:
     needs: 
       - validate_imported_protos
       - validate_python
-      - validate_mi_mutation
     uses: ./.github/workflows/build_cmake.yml
   build_nilrt:
     needs: 
       - validate_imported_protos
       - validate_python
-      - validate_mi_mutation
     uses: ./.github/workflows/build_nilrt.yml
   run_win_system_tests:
     needs: build_desktop
@@ -42,7 +38,6 @@ jobs:
       - build_desktop
       - build_nilrt
       - create_client_artifacts
-      - validate_mi_mutation
     uses: ./.github/workflows/create_release.yml
   trigger_azdo_ci:
     needs:
