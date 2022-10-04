@@ -849,31 +849,6 @@ control(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_vari
   return response;
 }
 
-Control4022Response
-control4022(const StubPtr& stub, const pb::string& resource_name, const simple_variant<Configuration4022, pb::int32>& configuration)
-{
-  ::grpc::ClientContext context;
-
-  auto request = Control4022Request{};
-  request.set_resource_name(resource_name);
-  const auto configuration_ptr = configuration.get_if<Configuration4022>();
-  const auto configuration_raw_ptr = configuration.get_if<pb::int32>();
-  if (configuration_ptr) {
-    request.set_configuration(*configuration_ptr);
-  }
-  else if (configuration_raw_ptr) {
-    request.set_configuration_raw(*configuration_raw_ptr);
-  }
-
-  auto response = Control4022Response{};
-
-  raise_if_error(
-      stub->Control4022(&context, request, &response),
-      context);
-
-  return response;
-}
-
 DisableResponse
 disable(const StubPtr& stub, const nidevice_grpc::Session& vi)
 {

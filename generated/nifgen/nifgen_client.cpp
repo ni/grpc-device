@@ -206,7 +206,7 @@ check_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi
 }
 
 CheckAttributeViStringResponse
-check_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttribute& attribute_id, const pb::string& attribute_value)
+check_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttribute& attribute_id, const simple_variant<NiFgenStringAttributeValuesMapped, std::string>& attribute_value)
 {
   ::grpc::ClientContext context;
 
@@ -214,7 +214,14 @@ check_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi,
   request.mutable_vi()->CopyFrom(vi);
   request.set_channel_name(channel_name);
   request.set_attribute_id(attribute_id);
-  request.set_attribute_value_raw(attribute_value);
+  const auto attribute_value_ptr = attribute_value.get_if<NiFgenStringAttributeValuesMapped>();
+  const auto attribute_value_raw_ptr = attribute_value.get_if<std::string>();
+  if (attribute_value_ptr) {
+    request.set_attribute_value_mapped(*attribute_value_ptr);
+  }
+  else if (attribute_value_raw_ptr) {
+    request.set_attribute_value_raw(*attribute_value_raw_ptr);
+  }
 
   auto response = CheckAttributeViStringResponse{};
 
@@ -1769,13 +1776,13 @@ get_stream_endpoint_handle(const StubPtr& stub, const nidevice_grpc::Session& vi
 }
 
 ImportAttributeConfigurationBufferResponse
-import_attribute_configuration_buffer(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::vector<pb::uint64>& configuration)
+import_attribute_configuration_buffer(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& configuration)
 {
   ::grpc::ClientContext context;
 
   auto request = ImportAttributeConfigurationBufferRequest{};
   request.mutable_vi()->CopyFrom(vi);
-  copy_array(configuration, request.mutable_configuration());
+  request.set_configuration(configuration);
 
   auto response = ImportAttributeConfigurationBufferResponse{};
 
@@ -2313,7 +2320,7 @@ set_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, 
 }
 
 SetAttributeViStringResponse
-set_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttribute& attribute_id, const pb::string& attribute_value)
+set_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFgenAttribute& attribute_id, const simple_variant<NiFgenStringAttributeValuesMapped, std::string>& attribute_value)
 {
   ::grpc::ClientContext context;
 
@@ -2321,7 +2328,14 @@ set_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, c
   request.mutable_vi()->CopyFrom(vi);
   request.set_channel_name(channel_name);
   request.set_attribute_id(attribute_id);
-  request.set_attribute_value_raw(attribute_value);
+  const auto attribute_value_ptr = attribute_value.get_if<NiFgenStringAttributeValuesMapped>();
+  const auto attribute_value_raw_ptr = attribute_value.get_if<std::string>();
+  if (attribute_value_ptr) {
+    request.set_attribute_value_mapped(*attribute_value_ptr);
+  }
+  else if (attribute_value_raw_ptr) {
+    request.set_attribute_value_raw(*attribute_value_raw_ptr);
+  }
 
   auto response = SetAttributeViStringResponse{};
 

@@ -150,6 +150,14 @@ namespace nidmm_grpc {
           attribute_value = static_cast<ViReal64>(request->attribute_value());
           break;
         }
+        case nidmm_grpc::CheckAttributeViReal64Request::AttributeValueEnumCase::kAttributeValueMapped: {
+          auto attribute_value_imap_it = nidmmreal64attributevaluesmapped_input_map_.find(request->attribute_value_mapped());
+          if (attribute_value_imap_it == nidmmreal64attributevaluesmapped_input_map_.end()) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for attribute_value_mapped was not specified or out of range.");
+          }
+          attribute_value = static_cast<ViReal64>(attribute_value_imap_it->second);
+          break;
+        }
         case nidmm_grpc::CheckAttributeViReal64Request::AttributeValueEnumCase::kAttributeValueRaw: {
           attribute_value = static_cast<ViReal64>(request->attribute_value_raw());
           break;
@@ -1226,43 +1234,6 @@ namespace nidmm_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiDmmService::Control4022(::grpc::ServerContext* context, const Control4022Request* request, Control4022Response* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      ViRsrc resource_name = (ViRsrc)request->resource_name().c_str();
-      ViInt32 configuration;
-      switch (request->configuration_enum_case()) {
-        case nidmm_grpc::Control4022Request::ConfigurationEnumCase::kConfiguration: {
-          configuration = static_cast<ViInt32>(request->configuration());
-          break;
-        }
-        case nidmm_grpc::Control4022Request::ConfigurationEnumCase::kConfigurationRaw: {
-          configuration = static_cast<ViInt32>(request->configuration_raw());
-          break;
-        }
-        case nidmm_grpc::Control4022Request::ConfigurationEnumCase::CONFIGURATION_ENUM_NOT_SET: {
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for configuration was not specified or out of range");
-          break;
-        }
-      }
-
-      auto status = library_->Control4022(resource_name, configuration);
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(context, status, 0);
-      }
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
   ::grpc::Status NiDmmService::Disable(::grpc::ServerContext* context, const DisableRequest* request, DisableResponse* response)
   {
     if (context->IsCancelled()) {
@@ -2120,7 +2091,7 @@ namespace nidmm_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      ViRsrc resource_name = (ViRsrc)request->resource_name().c_str();
+      ViString resource_name = (ViString)request->resource_name().c_str();
       ViBoolean id_query = request->id_query();
       ViBoolean reset_device = request->reset_device();
 
@@ -2730,6 +2701,14 @@ namespace nidmm_grpc {
       switch (request->attribute_value_enum_case()) {
         case nidmm_grpc::SetAttributeViReal64Request::AttributeValueEnumCase::kAttributeValue: {
           attribute_value = static_cast<ViReal64>(request->attribute_value());
+          break;
+        }
+        case nidmm_grpc::SetAttributeViReal64Request::AttributeValueEnumCase::kAttributeValueMapped: {
+          auto attribute_value_imap_it = nidmmreal64attributevaluesmapped_input_map_.find(request->attribute_value_mapped());
+          if (attribute_value_imap_it == nidmmreal64attributevaluesmapped_input_map_.end()) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for attribute_value_mapped was not specified or out of range.");
+          }
+          attribute_value = static_cast<ViReal64>(attribute_value_imap_it->second);
           break;
         }
         case nidmm_grpc::SetAttributeViReal64Request::AttributeValueEnumCase::kAttributeValueRaw: {
