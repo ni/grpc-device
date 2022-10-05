@@ -46,6 +46,7 @@ NiRFmxInstrRestrictedLibrary::NiRFmxInstrRestrictedLibrary() : shared_library_(k
   function_pointers_.GetRFmxVersion = reinterpret_cast<GetRFmxVersionPtr>(shared_library_.get_function_pointer("RFmxInstr_GetRFmxVersion"));
   function_pointers_.GetSessionUniqueIdentifier = reinterpret_cast<GetSessionUniqueIdentifierPtr>(shared_library_.get_function_pointer("RFmxInstr_GetSessionUniqueIdentifier"));
   function_pointers_.GetSignalConfigurationState64 = reinterpret_cast<GetSignalConfigurationState64Ptr>(shared_library_.get_function_pointer("RFmxInstr_GetSignalConfigurationState64"));
+  function_pointers_.GetSnapshotInfoFromCache = reinterpret_cast<GetSnapshotInfoFromCachePtr>(shared_library_.get_function_pointer("RFmxInstr_GetSnapshotInfoFromCache"));
   function_pointers_.GetSnapshotState = reinterpret_cast<GetSnapshotStatePtr>(shared_library_.get_function_pointer("RFmxInstr_GetSnapshotState"));
   function_pointers_.GetTracesInfoForMonitorSnapshot = reinterpret_cast<GetTracesInfoForMonitorSnapshotPtr>(shared_library_.get_function_pointer("RFmxInstr_GetTracesInfoForMonitorSnapshot"));
   function_pointers_.LoadAllForRevert = reinterpret_cast<LoadAllForRevertPtr>(shared_library_.get_function_pointer("RFmxInstr_LoadAllForRevert"));
@@ -268,6 +269,14 @@ int32 NiRFmxInstrRestrictedLibrary::GetSignalConfigurationState64(niRFmxInstrHan
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetSignalConfigurationState64.");
   }
   return function_pointers_.GetSignalConfigurationState64(instrumentHandle, signalName, signalType, signalState, timeStamp);
+}
+
+int32 NiRFmxInstrRestrictedLibrary::GetSnapshotInfoFromCache(niRFmxInstrHandle instrumentHandle, uInt64 snapshotInfoCacheIndex, int32 personalityIDArray[], int32 personalityIDArraySize, int32* personalityIDArrayActualSize, char signalNames[], int32 signalNamesSize, int32* signalNamesActualSize, char resultNames[], int32 resultNamesSize, int32* resultNamesActualSize, char snapshotIdentifiers[], int32 snapshotIdentifiersSize, int32* snapshotIdentifiersActualSize, uInt64 snapshotTimestampArray[], int32 snapshotTimestampArraySize, int32* snapshotTimestampArrayActualSize)
+{
+  if (!function_pointers_.GetSnapshotInfoFromCache) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_GetSnapshotInfoFromCache.");
+  }
+  return function_pointers_.GetSnapshotInfoFromCache(instrumentHandle, snapshotInfoCacheIndex, personalityIDArray, personalityIDArraySize, personalityIDArrayActualSize, signalNames, signalNamesSize, signalNamesActualSize, resultNames, resultNamesSize, resultNamesActualSize, snapshotIdentifiers, snapshotIdentifiersSize, snapshotIdentifiersActualSize, snapshotTimestampArray, snapshotTimestampArraySize, snapshotTimestampArrayActualSize);
 }
 
 int32 NiRFmxInstrRestrictedLibrary::GetSnapshotState(niRFmxInstrHandle instrumentHandle, int32 personality, char selectorString[], int32* snapshotState)

@@ -43,6 +43,7 @@ class NiRFmxInstrRestrictedLibrary : public nirfmxinstr_restricted_grpc::NiRFmxI
   int32 GetRFmxVersion(niRFmxInstrHandle instrumentHandle, int32 arraySize, char RFmxVersion[]);
   int32 GetSessionUniqueIdentifier(char resourceNames[], char optionString[], int32 sessionUniqueIdentifierSize, char sessionUniqueIdentifier[]);
   int32 GetSignalConfigurationState64(niRFmxInstrHandle instrumentHandle, char signalName[], uInt32 signalType, int32* signalState, uInt64* timeStamp);
+  int32 GetSnapshotInfoFromCache(niRFmxInstrHandle instrumentHandle, uInt64 snapshotInfoCacheIndex, int32 personalityIDArray[], int32 personalityIDArraySize, int32* personalityIDArrayActualSize, char signalNames[], int32 signalNamesSize, int32* signalNamesActualSize, char resultNames[], int32 resultNamesSize, int32* resultNamesActualSize, char snapshotIdentifiers[], int32 snapshotIdentifiersSize, int32* snapshotIdentifiersActualSize, uInt64 snapshotTimestampArray[], int32 snapshotTimestampArraySize, int32* snapshotTimestampArrayActualSize);
   int32 GetSnapshotState(niRFmxInstrHandle instrumentHandle, int32 personality, char selectorString[], int32* snapshotState);
   int32 GetTracesInfoForMonitorSnapshot(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* allTracesEnabled);
   int32 LoadAllForRevert(niRFmxInstrHandle instrumentHandle, char filePath[]);
@@ -81,6 +82,7 @@ class NiRFmxInstrRestrictedLibrary : public nirfmxinstr_restricted_grpc::NiRFmxI
   using GetRFmxVersionPtr = int32 (*)(niRFmxInstrHandle instrumentHandle, int32 arraySize, char RFmxVersion[]);
   using GetSessionUniqueIdentifierPtr = int32 (*)(char resourceNames[], char optionString[], int32 sessionUniqueIdentifierSize, char sessionUniqueIdentifier[]);
   using GetSignalConfigurationState64Ptr = int32 (*)(niRFmxInstrHandle instrumentHandle, char signalName[], uInt32 signalType, int32* signalState, uInt64* timeStamp);
+  using GetSnapshotInfoFromCachePtr = int32 (*)(niRFmxInstrHandle instrumentHandle, uInt64 snapshotInfoCacheIndex, int32 personalityIDArray[], int32 personalityIDArraySize, int32* personalityIDArrayActualSize, char signalNames[], int32 signalNamesSize, int32* signalNamesActualSize, char resultNames[], int32 resultNamesSize, int32* resultNamesActualSize, char snapshotIdentifiers[], int32 snapshotIdentifiersSize, int32* snapshotIdentifiersActualSize, uInt64 snapshotTimestampArray[], int32 snapshotTimestampArraySize, int32* snapshotTimestampArrayActualSize);
   using GetSnapshotStatePtr = int32 (*)(niRFmxInstrHandle instrumentHandle, int32 personality, char selectorString[], int32* snapshotState);
   using GetTracesInfoForMonitorSnapshotPtr = int32 (*)(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* allTracesEnabled);
   using LoadAllForRevertPtr = int32 (*)(niRFmxInstrHandle instrumentHandle, char filePath[]);
@@ -119,6 +121,7 @@ class NiRFmxInstrRestrictedLibrary : public nirfmxinstr_restricted_grpc::NiRFmxI
     GetRFmxVersionPtr GetRFmxVersion;
     GetSessionUniqueIdentifierPtr GetSessionUniqueIdentifier;
     GetSignalConfigurationState64Ptr GetSignalConfigurationState64;
+    GetSnapshotInfoFromCachePtr GetSnapshotInfoFromCache;
     GetSnapshotStatePtr GetSnapshotState;
     GetTracesInfoForMonitorSnapshotPtr GetTracesInfoForMonitorSnapshot;
     LoadAllForRevertPtr LoadAllForRevert;
