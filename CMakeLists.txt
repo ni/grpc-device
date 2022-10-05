@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.12.0)
 
 
 
-project(ni_grpc_device_server VERSION 1.2.3.4 LANGUAGES C CXX)
+project(ni_grpc_device_server VERSION 1.5.2.0 LANGUAGES C CXX)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 include(CreateVirtualEnvironment)
