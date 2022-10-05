@@ -47,8 +47,10 @@ public:
   ::grpc::Status AcceptViUInt32Array(::grpc::ServerContext* context, const AcceptViUInt32ArrayRequest* request, AcceptViUInt32ArrayResponse* response) override;
   ::grpc::Status BoolArrayInputFunction(::grpc::ServerContext* context, const BoolArrayInputFunctionRequest* request, BoolArrayInputFunctionResponse* response) override;
   ::grpc::Status BoolArrayOutputFunction(::grpc::ServerContext* context, const BoolArrayOutputFunctionRequest* request, BoolArrayOutputFunctionResponse* response) override;
+  ::grpc::Status Close(::grpc::ServerContext* context, const CloseRequest* request, CloseResponse* response) override;
   ::grpc::Status CloseExtCal(::grpc::ServerContext* context, const CloseExtCalRequest* request, CloseExtCalResponse* response) override;
   ::grpc::Status CommandWithReservedParam(::grpc::ServerContext* context, const CommandWithReservedParamRequest* request, CommandWithReservedParamResponse* response) override;
+  ::grpc::Status Control4022(::grpc::ServerContext* context, const Control4022Request* request, Control4022Response* response) override;
   ::grpc::Status CreateConfigurationList(::grpc::ServerContext* context, const CreateConfigurationListRequest* request, CreateConfigurationListResponse* response) override;
   ::grpc::Status DoubleAllTheNums(::grpc::ServerContext* context, const DoubleAllTheNumsRequest* request, DoubleAllTheNumsResponse* response) override;
   ::grpc::Status EnumArrayOutputFunction(::grpc::ServerContext* context, const EnumArrayOutputFunctionRequest* request, EnumArrayOutputFunctionResponse* response) override;
@@ -87,6 +89,12 @@ public:
   ::grpc::Status InitExtCal(::grpc::ServerContext* context, const InitExtCalRequest* request, InitExtCalResponse* response) override;
   ::grpc::Status InitWithOptions(::grpc::ServerContext* context, const InitWithOptionsRequest* request, InitWithOptionsResponse* response) override;
   ::grpc::Status InitWithVarArgs(::grpc::ServerContext* context, const InitWithVarArgsRequest* request, InitWithVarArgsResponse* response) override;
+  ::grpc::Status MethodUsingEnumWithGrpcNameValues(::grpc::ServerContext* context, const MethodUsingEnumWithGrpcNameValuesRequest* request, MethodUsingEnumWithGrpcNameValuesResponse* response) override;
+  ::grpc::Status MethodUsingWholeAndFractionalNumbers(::grpc::ServerContext* context, const MethodUsingWholeAndFractionalNumbersRequest* request, MethodUsingWholeAndFractionalNumbersResponse* response) override;
+  ::grpc::Status MethodUsingWholeMappedNumbers(::grpc::ServerContext* context, const MethodUsingWholeMappedNumbersRequest* request, MethodUsingWholeMappedNumbersResponse* response) override;
+  ::grpc::Status MethodWithGetLastErrorParam(::grpc::ServerContext* context, const MethodWithGetLastErrorParamRequest* request, MethodWithGetLastErrorParamResponse* response) override;
+  ::grpc::Status MethodWithGrpcFieldNumber(::grpc::ServerContext* context, const MethodWithGrpcFieldNumberRequest* request, MethodWithGrpcFieldNumberResponse* response) override;
+  ::grpc::Status MethodWithGrpcOnlyParam(::grpc::ServerContext* context, const MethodWithGrpcOnlyParamRequest* request, MethodWithGrpcOnlyParamResponse* response) override;
   ::grpc::Status MultipleArrayTypes(::grpc::ServerContext* context, const MultipleArrayTypesRequest* request, MultipleArrayTypesResponse* response) override;
   ::grpc::Status MultipleArraysSameSize(::grpc::ServerContext* context, const MultipleArraysSameSizeRequest* request, MultipleArraysSameSizeResponse* response) override;
   ::grpc::Status MultipleArraysSameSizeWithOptional(::grpc::ServerContext* context, const MultipleArraysSameSizeWithOptionalRequest* request, MultipleArraysSameSizeWithOptionalResponse* response) override;
@@ -111,7 +119,6 @@ public:
   ::grpc::Status ViUInt8ArrayInputFunction(::grpc::ServerContext* context, const ViUInt8ArrayInputFunctionRequest* request, ViUInt8ArrayInputFunctionResponse* response) override;
   ::grpc::Status ViUInt8ArrayOutputFunction(::grpc::ServerContext* context, const ViUInt8ArrayOutputFunctionRequest* request, ViUInt8ArrayOutputFunctionResponse* response) override;
   ::grpc::Status WriteWaveform(::grpc::ServerContext* context, const WriteWaveformRequest* request, WriteWaveformResponse* response) override;
-  ::grpc::Status Close(::grpc::ServerContext* context, const CloseRequest* request, CloseResponse* response) override;
 private:
   NiFakeLibraryInterface* library_;
   ResourceRepositorySharedPtr session_repository_;
@@ -119,6 +126,10 @@ private:
   void Copy(const std::vector<ViBoolean>& input, google::protobuf::RepeatedField<bool>* output);
   template <typename TEnum>
   void CopyBytesToEnums(const std::string& input, google::protobuf::RepeatedField<TEnum>* output);
+  std::map<std::int32_t, std::int32_t> decimalmixednumber_input_map_ { {0, 0},{1, 22},{2, 2.2f},{3, -3},{4, 2147483647},{5, 2147483648.0f},{6, -2147483648},{7, -2147483649.0f}, };
+  std::map<std::int32_t, std::int32_t> decimalmixednumber_output_map_ { {0, 0},{22, 1},{2.2f, 2},{-3, 3},{2147483647, 4},{2147483648.0f, 5},{-2147483648, 6},{-2147483649.0f, 7}, };
+  std::map<std::int32_t, double> decimalwholenumbermapped_input_map_ { {1, 0.0f},{2, -1.0f},{3, 22.0f}, };
+  std::map<double, std::int32_t> decimalwholenumbermapped_output_map_ { {0.0f, 1},{-1.0f, 2},{22.0f, 3}, };
   std::map<std::int32_t, double> floatenum_input_map_ { {1, 3.5f},{2, 4.5f},{3, 5.5f},{4, 6.5f},{5, 7.5f}, };
   std::map<double, std::int32_t> floatenum_output_map_ { {3.5f, 1},{4.5f, 2},{5.5f, 3},{6.5f, 4},{7.5f, 5}, };
   std::map<std::int32_t, std::string> mobileosnames_input_map_ { {1, "Android"},{2, "iOS"},{3, "None"}, };

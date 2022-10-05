@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-FAKE API metadata version 1.2.0d9
+# This file is generated from NI-FAKE API metadata version 23.0.0d18
 enums = {
     'Bitfield': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'FLAG_A',
@@ -21,27 +22,90 @@ enums = {
             }
         ]
     },
-    'Color': {
+    'DecimalMixedNumber': {
+        'codegen_method': 'public',
+        'generate-mappings': True,
         'values': [
             {
-                'name': 'RED',
+                'name': 'TWENTY_TWO',
+                'value': 22
+            },
+            {
+                'name': 'TWO_POINT_TWO',
+                'value': 2.2
+            },
+            {
+                'name': 'NEGATIVE_THREE',
+                'value': -3
+            },
+            {
+                'name': 'MAX_INT_32',
+                'value': 2147483647
+            },
+            {
+                'name': 'MAX_INT_32_PLUS_ONE',
+                'value': 2147483648.0
+            },
+            {
+                'name': 'MIN_INT_32',
+                'value': -2147483648
+            },
+            {
+                'name': 'MIN_INT_32_MINUS_ONE',
+                'value': -2147483649.0
+            }
+        ]
+    },
+    'DecimalWholeNumber': {
+        'codegen_method': 'public',
+        'values': [
+            {
+                'name': 'ZERO',
+                'value': 0
+            },
+            {
+                'name': 'NEGATIVE_ONE',
+                'value': -1
+            },
+            {
+                'name': 'TWENTY_TWO',
+                'value': 22
+            }
+        ]
+    },
+    'DecimalWholeNumberMapped': {
+        'codegen_method': 'public',
+        'generate-mappings': True,
+        'values': [
+            {
+                'name': 'ZERO',
+                'value': 0.0
+            },
+            {
+                'name': 'NEGATIVE_ONE',
+                'value': -1.0
+            },
+            {
+                'name': 'TWENTY_TWO',
+                'value': 22.0
+            }
+        ]
+    },
+    'EnumWithGrpcNameValues': {
+        'codegen_method': 'public',
+        'values': [
+            {
+                'name': 'ALTERED_GRPC_NAME_ONE',
                 'value': 1
             },
             {
-                'name': 'BLUE',
+                'name': 'TWO',
                 'value': 2
-            },
-            {
-                'name': 'YELLOW',
-                'value': 5
-            },
-            {
-                'name': 'BLACK',
-                'value': 42
             }
         ]
     },
     'FloatEnum': {
+        'codegen_method': 'public',
         'generate-mappings': True,
         'values': [
             {
@@ -66,7 +130,29 @@ enums = {
             }
         ]
     },
+    'GrpcColorOverride': {
+        'codegen_method': 'public',
+        'values': [
+            {
+                'name': 'RED',
+                'value': 1
+            },
+            {
+                'name': 'BLUE',
+                'value': 2
+            },
+            {
+                'name': 'YELLOW',
+                'value': 5
+            },
+            {
+                'name': 'BLACK',
+                'value': 42
+            }
+        ]
+    },
     'MobileOSNames': {
+        'codegen_method': 'public',
         'generate-mappings': True,
         'values': [
             {
@@ -88,19 +174,19 @@ enums = {
         'generate-mappings': False,
         'values': [
             {
-                'name': 'COLOR_RED',
+                'name': 'GRPC_COLOR_OVERRIDE_RED',
                 'value': 1
             },
             {
-                'name': 'COLOR_BLUE',
+                'name': 'GRPC_COLOR_OVERRIDE_BLUE',
                 'value': 2
             },
             {
-                'name': 'COLOR_YELLOW',
+                'name': 'GRPC_COLOR_OVERRIDE_YELLOW',
                 'value': 5
             },
             {
-                'name': 'COLOR_BLACK',
+                'name': 'GRPC_COLOR_OVERRIDE_BLACK',
                 'value': 42
             }
         ]
@@ -132,6 +218,7 @@ enums = {
         ]
     },
     'Turtle': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'LEONARDO',

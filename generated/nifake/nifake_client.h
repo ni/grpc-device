@@ -28,8 +28,10 @@ AcceptViSessionArrayResponse accept_vi_session_array(const StubPtr& stub, const 
 AcceptViUInt32ArrayResponse accept_vi_uint32_array(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::vector<pb::uint32>& u_int32_array);
 BoolArrayInputFunctionResponse bool_array_input_function(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& number_of_elements, const std::vector<bool>& an_array);
 BoolArrayOutputFunctionResponse bool_array_output_function(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& number_of_elements);
+CloseResponse close(const StubPtr& stub, const nidevice_grpc::Session& vi);
 CloseExtCalResponse close_ext_cal(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& action);
 CommandWithReservedParamResponse command_with_reserved_param(const StubPtr& stub, const nidevice_grpc::Session& vi);
+Control4022Response control4022(const StubPtr& stub, const pb::string& resource_name, const pb::int32& configuration);
 CreateConfigurationListResponse create_configuration_list(const StubPtr& stub, const std::vector<NiFakeAttribute>& list_attribute_ids);
 DoubleAllTheNumsResponse double_all_the_nums(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::vector<double>& numbers);
 EnumArrayOutputFunctionResponse enum_array_output_function(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& number_of_elements);
@@ -44,7 +46,7 @@ GetAnIviDanceWithATwistArrayResponse get_an_ivi_dance_with_a_twist_array(const S
 GetAnIviDanceWithATwistArrayOfCustomTypeResponse get_an_ivi_dance_with_a_twist_array_of_custom_type(const StubPtr& stub, const nidevice_grpc::Session& vi);
 GetAnIviDanceWithATwistArrayWithInputArrayResponse get_an_ivi_dance_with_a_twist_array_with_input_array(const StubPtr& stub, const std::vector<pb::int32>& data_in);
 GetAnIviDanceWithATwistByteArrayResponse get_an_ivi_dance_with_a_twist_byte_array(const StubPtr& stub);
-GetAnIviDanceWithATwistStringResponse get_an_ivi_dance_with_a_twist_string(const StubPtr& stub);
+GetAnIviDanceWithATwistStringResponse get_an_ivi_dance_with_a_twist_string(const StubPtr& stub, const nidevice_grpc::Session& vi);
 GetAnIviDanceWithATwistStringStrlenBugResponse get_an_ivi_dance_with_a_twist_string_strlen_bug(const StubPtr& stub);
 GetArraySizeForCustomCodeResponse get_array_size_for_custom_code(const StubPtr& stub, const nidevice_grpc::Session& vi);
 GetArrayUsingIviDanceResponse get_array_using_ivi_dance(const StubPtr& stub, const nidevice_grpc::Session& vi);
@@ -53,7 +55,7 @@ GetAttributeViBooleanResponse get_attribute_vi_boolean(const StubPtr& stub, cons
 GetAttributeViInt32Response get_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFakeAttribute& attribute_id);
 GetAttributeViInt64Response get_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFakeAttribute& attribute_id);
 GetAttributeViReal64Response get_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFakeAttribute& attribute_id);
-GetAttributeViSessionResponse get_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& attribute_id);
+GetAttributeViSessionResponse get_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFakeAttribute& attribute_id);
 GetAttributeViStringResponse get_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFakeAttribute& attribute_id);
 GetBitfieldAsEnumArrayResponse get_bitfield_as_enum_array(const StubPtr& stub);
 GetCalDateAndTimeResponse get_cal_date_and_time(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& cal_type);
@@ -68,6 +70,12 @@ ImportAttributeConfigurationBufferResponse import_attribute_configuration_buffer
 InitExtCalResponse init_ext_cal(const StubPtr& stub, const pb::string& resource_name, const pb::string& calibration_password);
 InitWithOptionsResponse init_with_options(const StubPtr& stub, const pb::string& resource_name, const bool& id_query, const bool& reset_device, const pb::string& option_string);
 InitWithVarArgsResponse init_with_var_args(const StubPtr& stub, const pb::string& resource_name, const std::vector<StringAndTurtle>& name_and_turtle);
+MethodUsingEnumWithGrpcNameValuesResponse method_using_enum_with_grpc_name_values(const StubPtr& stub, const simple_variant<EnumWithGrpcNameValues, pb::int32>& using_enum);
+MethodUsingWholeAndFractionalNumbersResponse method_using_whole_and_fractional_numbers(const StubPtr& stub);
+MethodUsingWholeMappedNumbersResponse method_using_whole_mapped_numbers(const StubPtr& stub);
+MethodWithGetLastErrorParamResponse method_with_get_last_error_param(const StubPtr& stub);
+MethodWithGrpcFieldNumberResponse method_with_grpc_field_number(const StubPtr& stub, const pb::int32& attribute_value);
+MethodWithGrpcOnlyParamResponse method_with_grpc_only_param(const StubPtr& stub, const pb::int32& simple_param);
 MultipleArrayTypesResponse multiple_array_types(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& output_array_size, const std::vector<double>& input_array_of_floats, const std::vector<pb::int32>& input_array_of_integers);
 MultipleArraysSameSizeResponse multiple_arrays_same_size(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::vector<double>& values1, const std::vector<double>& values2, const std::vector<double>& values3, const std::vector<double>& values4);
 MultipleArraysSameSizeWithOptionalResponse multiple_arrays_same_size_with_optional(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::vector<double>& values1, const std::vector<double>& values2, const std::vector<double>& values3, const std::vector<double>& values4, const std::vector<FakeCustomStruct>& values5);
@@ -92,7 +100,6 @@ ViInt16ArrayInputFunctionResponse vi_int16_array_input_function(const StubPtr& s
 ViUInt8ArrayInputFunctionResponse vi_uint8_array_input_function(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& number_of_elements, const pb::string& an_array);
 ViUInt8ArrayOutputFunctionResponse vi_uint8_array_output_function(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& number_of_elements);
 WriteWaveformResponse write_waveform(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::vector<double>& waveform);
-CloseResponse close(const StubPtr& stub, const nidevice_grpc::Session& vi);
 
 } // namespace nifake_grpc::experimental::client
 
