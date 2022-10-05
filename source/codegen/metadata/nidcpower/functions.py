@@ -656,6 +656,94 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
+    'ConfigureLCRCompensation': {
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'cppName': 'vi',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.Session',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'cppName': 'channelName',
+                'direction': 'in',
+                'grpc_type': 'string',
+                'name': 'channelName',
+                'type': 'ViConstString'
+            },
+            {
+                'cppName': 'compensationDataSize',
+                'determine_size_from': [
+                    'compensationData'
+                ],
+                'direction': 'in',
+                'grpc_type': 'sint32',
+                'include_in_proto': False,
+                'is_size_param': True,
+                'linked_params_are_optional': False,
+                'name': 'compensationDataSize',
+                'type': 'ViInt32'
+            },
+            {
+                'cppName': 'compensationData',
+                'direction': 'in',
+                'grpc_type': 'bytes',
+                'name': 'compensationData',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'compensationDataSize'
+                },
+                'type': 'ViInt8[]'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'ConfigureLCRCustomCableCompensation': {
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'cppName': 'vi',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.Session',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'cppName': 'channelName',
+                'direction': 'in',
+                'grpc_type': 'string',
+                'name': 'channelName',
+                'type': 'ViConstString'
+            },
+            {
+                'cppName': 'customCableCompensationDataSize',
+                'determine_size_from': [
+                    'customCableCompensationData'
+                ],
+                'direction': 'in',
+                'grpc_type': 'sint32',
+                'include_in_proto': False,
+                'is_size_param': True,
+                'linked_params_are_optional': False,
+                'name': 'customCableCompensationDataSize',
+                'type': 'ViInt32'
+            },
+            {
+                'cppName': 'customCableCompensationData',
+                'direction': 'in',
+                'grpc_type': 'bytes',
+                'name': 'customCableCompensationData',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'customCableCompensationDataSize'
+                },
+                'type': 'ViInt8[]'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
     'ConfigureOutputEnabled': {
         'codegen_method': 'public',
         'parameters': [
@@ -2187,6 +2275,59 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
+    'FetchMultipleLCR': {
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'cppName': 'vi',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.Session',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'cppName': 'channelName',
+                'direction': 'in',
+                'grpc_type': 'string',
+                'name': 'channelName',
+                'type': 'ViConstString'
+            },
+            {
+                'cppName': 'timeout',
+                'direction': 'in',
+                'grpc_type': 'double',
+                'name': 'timeout',
+                'type': 'ViReal64'
+            },
+            {
+                'cppName': 'count',
+                'direction': 'in',
+                'grpc_type': 'sint32',
+                'is_size_param': True,
+                'name': 'count',
+                'type': 'ViInt32'
+            },
+            {
+                'cppName': 'measurements',
+                'direction': 'out',
+                'grpc_type': 'repeated NILCRMeasurement',
+                'name': 'measurements',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'count'
+                },
+                'type': 'struct NILCRMeasurement_struct[]'
+            },
+            {
+                'cppName': 'actualCount',
+                'direction': 'out',
+                'grpc_type': 'sint32',
+                'name': 'actualCount',
+                'type': 'ViInt32'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
     'GetAttributeViBoolean': {
         'codegen_method': 'public',
         'parameters': [
@@ -2609,6 +2750,149 @@ functions = {
                 'grpc_type': 'sint32',
                 'name': 'months',
                 'type': 'ViInt32'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'GetLCRCompensationData': {
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'cppName': 'vi',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.Session',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'cppName': 'channelName',
+                'direction': 'in',
+                'grpc_type': 'string',
+                'name': 'channelName',
+                'type': 'ViConstString'
+            },
+            {
+                'cppName': 'compensationDataSize',
+                'direction': 'in',
+                'grpc_type': 'sint32',
+                'include_in_proto': False,
+                'is_size_param': True,
+                'name': 'compensationDataSize',
+                'type': 'ViInt32'
+            },
+            {
+                'cppName': 'compensationData',
+                'direction': 'out',
+                'grpc_type': 'bytes',
+                'name': 'compensationData',
+                'size': {
+                    'mechanism': 'ivi-dance',
+                    'value': 'compensationDataSize'
+                },
+                'type': 'ViInt8[]'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'GetLCRCompensationLastDateAndTime': {
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'cppName': 'vi',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.Session',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'cppName': 'channelName',
+                'direction': 'in',
+                'grpc_type': 'string',
+                'name': 'channelName',
+                'type': 'ViConstString'
+            },
+            {
+                'cppName': 'compensationType',
+                'direction': 'in',
+                'enum': 'LCRCompensationType',
+                'grpc_type': 'sint32',
+                'name': 'compensationType',
+                'type': 'ViInt32'
+            },
+            {
+                'cppName': 'year',
+                'direction': 'out',
+                'grpc_type': 'sint32',
+                'name': 'year',
+                'type': 'ViInt32'
+            },
+            {
+                'cppName': 'month',
+                'direction': 'out',
+                'grpc_type': 'sint32',
+                'name': 'month',
+                'type': 'ViInt32'
+            },
+            {
+                'cppName': 'day',
+                'direction': 'out',
+                'grpc_type': 'sint32',
+                'name': 'day',
+                'type': 'ViInt32'
+            },
+            {
+                'cppName': 'hour',
+                'direction': 'out',
+                'grpc_type': 'sint32',
+                'name': 'hour',
+                'type': 'ViInt32'
+            },
+            {
+                'cppName': 'minute',
+                'direction': 'out',
+                'grpc_type': 'sint32',
+                'name': 'minute',
+                'type': 'ViInt32'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'GetLCRCustomCableCompensationData': {
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'cppName': 'vi',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.Session',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'cppName': 'channelName',
+                'direction': 'in',
+                'grpc_type': 'string',
+                'name': 'channelName',
+                'type': 'ViConstString'
+            },
+            {
+                'cppName': 'customCableCompensationDataSize',
+                'direction': 'in',
+                'grpc_type': 'sint32',
+                'include_in_proto': False,
+                'is_size_param': True,
+                'name': 'customCableCompensationDataSize',
+                'type': 'ViInt32'
+            },
+            {
+                'cppName': 'customCableCompensationData',
+                'direction': 'out',
+                'grpc_type': 'bytes',
+                'name': 'customCableCompensationData',
+                'size': {
+                    'mechanism': 'ivi-dance',
+                    'value': 'customCableCompensationDataSize'
+                },
+                'type': 'ViInt8[]'
             }
         ],
         'returns': 'ViStatus'
@@ -3040,6 +3324,37 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
+    'MeasureMultipleLCR': {
+        'codegen_method': 'CustomCode',
+        'parameters': [
+            {
+                'cppName': 'vi',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.Session',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'cppName': 'channelName',
+                'direction': 'in',
+                'grpc_type': 'string',
+                'name': 'channelName',
+                'type': 'ViConstString'
+            },
+            {
+                'cppName': 'measurements',
+                'direction': 'out',
+                'grpc_type': 'repeated NILCRMeasurement',
+                'name': 'measurements',
+                'size': {
+                    'mechanism': 'custom-code',
+                    'value': 'number_of_channels'
+                },
+                'type': 'struct NILCRMeasurement_struct[]'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
     'ParseChannelCount': {
         'codegen_method': 'private',
         'parameters': [
@@ -3063,6 +3378,178 @@ functions = {
                 'grpc_type': 'uint32',
                 'name': 'numberOfChannels',
                 'type': 'ViUInt32'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'PerformLCRLoadCompensation': {
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'cppName': 'vi',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.Session',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'cppName': 'channelName',
+                'direction': 'in',
+                'grpc_type': 'string',
+                'name': 'channelName',
+                'type': 'ViConstString'
+            },
+            {
+                'cppName': 'numCompensationSpots',
+                'determine_size_from': [
+                    'compensationSpots'
+                ],
+                'direction': 'in',
+                'grpc_type': 'sint32',
+                'include_in_proto': False,
+                'is_size_param': True,
+                'linked_params_are_optional': False,
+                'name': 'numCompensationSpots',
+                'type': 'ViInt32'
+            },
+            {
+                'cppName': 'compensationSpots',
+                'direction': 'in',
+                'grpc_type': 'repeated NILCRLoadCompensationSpot',
+                'name': 'compensationSpots',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'numCompensationSpots'
+                },
+                'type': 'struct NILCRLoadCompensationSpot_struct[]'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'PerformLCROpenCompensation': {
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'cppName': 'vi',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.Session',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'cppName': 'channelName',
+                'direction': 'in',
+                'grpc_type': 'string',
+                'name': 'channelName',
+                'type': 'ViConstString'
+            },
+            {
+                'cppName': 'numFrequencies',
+                'determine_size_from': [
+                    'additionalFrequencies'
+                ],
+                'direction': 'in',
+                'grpc_type': 'sint32',
+                'include_in_proto': False,
+                'is_size_param': True,
+                'linked_params_are_optional': False,
+                'name': 'numFrequencies',
+                'type': 'ViInt32'
+            },
+            {
+                'cppName': 'additionalFrequencies',
+                'direction': 'in',
+                'grpc_type': 'repeated double',
+                'name': 'additionalFrequencies',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'numFrequencies'
+                },
+                'type': 'ViReal64[]'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'PerformLCROpenCustomCableCompensation': {
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'cppName': 'vi',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.Session',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'cppName': 'channelName',
+                'direction': 'in',
+                'grpc_type': 'string',
+                'name': 'channelName',
+                'type': 'ViConstString'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'PerformLCRShortCompensation': {
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'cppName': 'vi',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.Session',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'cppName': 'channelName',
+                'direction': 'in',
+                'grpc_type': 'string',
+                'name': 'channelName',
+                'type': 'ViConstString'
+            },
+            {
+                'cppName': 'numFrequencies',
+                'determine_size_from': [
+                    'additionalFrequencies'
+                ],
+                'direction': 'in',
+                'grpc_type': 'sint32',
+                'include_in_proto': False,
+                'is_size_param': True,
+                'linked_params_are_optional': False,
+                'name': 'numFrequencies',
+                'type': 'ViInt32'
+            },
+            {
+                'cppName': 'additionalFrequencies',
+                'direction': 'in',
+                'grpc_type': 'repeated double',
+                'name': 'additionalFrequencies',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'numFrequencies'
+                },
+                'type': 'ViReal64[]'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'PerformLCRShortCustomCableCompensation': {
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'cppName': 'vi',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.Session',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'cppName': 'channelName',
+                'direction': 'in',
+                'grpc_type': 'string',
+                'name': 'channelName',
+                'type': 'ViConstString'
             }
         ],
         'returns': 'ViStatus'

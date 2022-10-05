@@ -47,6 +47,8 @@ ConfigureDigitalEdgeSourceTriggerResponse configure_digital_edge_source_trigger(
 ConfigureDigitalEdgeSourceTriggerWithChannelsResponse configure_digital_edge_source_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& input_terminal, const simple_variant<DigitalEdge, pb::int32>& edge);
 ConfigureDigitalEdgeStartTriggerResponse configure_digital_edge_start_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& input_terminal, const simple_variant<DigitalEdge, pb::int32>& edge);
 ConfigureDigitalEdgeStartTriggerWithChannelsResponse configure_digital_edge_start_trigger_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& input_terminal, const simple_variant<DigitalEdge, pb::int32>& edge);
+ConfigureLCRCompensationResponse configure_lcr_compensation(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& compensation_data);
+ConfigureLCRCustomCableCompensationResponse configure_lcr_custom_cable_compensation(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& custom_cable_compensation_data);
 ConfigureOutputEnabledResponse configure_output_enabled(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const bool& enabled);
 ConfigureOutputFunctionResponse configure_output_function(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const simple_variant<OutputFunction, pb::int32>& function);
 ConfigureOutputRangeResponse configure_output_range(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::int32& range_type, const double& range);
@@ -107,6 +109,7 @@ ExportAttributeConfigurationFileResponse export_attribute_configuration_file(con
 ExportSignalResponse export_signal(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<ExportSignal, pb::int32>& signal, const pb::string& signal_identifier, const pb::string& output_terminal);
 ExportSignalWithChannelsResponse export_signal_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const simple_variant<ExportSignal, pb::int32>& signal, const pb::string& signal_identifier, const pb::string& output_terminal);
 FetchMultipleResponse fetch_multiple(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& timeout, const pb::int32& count);
+FetchMultipleLCRResponse fetch_multiple_lcr(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& timeout, const pb::int32& count);
 GetAttributeViBooleanResponse get_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttribute& attribute_id);
 GetAttributeViInt32Response get_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttribute& attribute_id);
 GetAttributeViInt64Response get_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttribute& attribute_id);
@@ -119,6 +122,9 @@ GetErrorResponse get_error(const StubPtr& stub, const nidevice_grpc::Session& vi
 GetExtCalLastDateAndTimeResponse get_ext_cal_last_date_and_time(const StubPtr& stub, const nidevice_grpc::Session& vi);
 GetExtCalLastTempResponse get_ext_cal_last_temp(const StubPtr& stub, const nidevice_grpc::Session& vi);
 GetExtCalRecommendedIntervalResponse get_ext_cal_recommended_interval(const StubPtr& stub, const nidevice_grpc::Session& vi);
+GetLCRCompensationDataResponse get_lcr_compensation_data(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name);
+GetLCRCompensationLastDateAndTimeResponse get_lcr_compensation_last_date_and_time(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const simple_variant<LCRCompensationType, pb::int32>& compensation_type);
+GetLCRCustomCableCompensationDataResponse get_lcr_custom_cable_compensation_data(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name);
 GetNextCoercionRecordResponse get_next_coercion_record(const StubPtr& stub, const nidevice_grpc::Session& vi);
 GetNextInterchangeWarningResponse get_next_interchange_warning(const StubPtr& stub, const nidevice_grpc::Session& vi);
 GetSelfCalLastDateAndTimeResponse get_self_cal_last_date_and_time(const StubPtr& stub, const nidevice_grpc::Session& vi);
@@ -132,6 +138,12 @@ InitiateWithChannelsResponse initiate_with_channels(const StubPtr& stub, const n
 InvalidateAllAttributesResponse invalidate_all_attributes(const StubPtr& stub, const nidevice_grpc::Session& vi);
 MeasureResponse measure(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const simple_variant<MeasurementTypes, pb::int32>& measurement_type);
 MeasureMultipleResponse measure_multiple(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name);
+MeasureMultipleLCRResponse measure_multiple_lcr(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name);
+PerformLCRLoadCompensationResponse perform_lcr_load_compensation(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const std::vector<NILCRLoadCompensationSpot>& compensation_spots);
+PerformLCROpenCompensationResponse perform_lcr_open_compensation(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const std::vector<double>& additional_frequencies);
+PerformLCROpenCustomCableCompensationResponse perform_lcr_open_custom_cable_compensation(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name);
+PerformLCRShortCompensationResponse perform_lcr_short_compensation(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const std::vector<double>& additional_frequencies);
+PerformLCRShortCustomCableCompensationResponse perform_lcr_short_custom_cable_compensation(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name);
 QueryInComplianceResponse query_in_compliance(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name);
 QueryMaxCurrentLimitResponse query_max_current_limit(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& voltage_level);
 QueryMaxVoltageLevelResponse query_max_voltage_level(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& current_limit);

@@ -153,7 +153,7 @@ def supports_standard_copy_conversion_routines(parameter: dict) -> bool:
     return (
         _has_copy_convert_tag(parameter)
         or is_struct(parameter)
-        or parameter["grpc_type"] == "repeated bool"
+        or parameter.get("grpc_type", "") == "repeated bool"
     )
 
 
@@ -233,7 +233,7 @@ def get_underlying_type(parameter_or_attribute: dict) -> str:
 
 
 def _get_underlying_grpc_type(parameter: dict) -> str:
-    return _get_underlying_grpc_type_name(parameter["grpc_type"])
+    return _get_underlying_grpc_type_name(parameter.get("grpc_type", ""))
 
 
 def has_unsupported_parameter(function):

@@ -321,6 +321,31 @@ enums = {
             }
         ]
     },
+    'LCRCompensationType': {
+        'codegen_method': 'public',
+        'values': [
+            {
+                'name': 'NIDCPOWER_VAL_OPEN_COMPENSATION',
+                'value': 1130
+            },
+            {
+                'name': 'NIDCPOWER_VAL_SHORT_COMPENSATION',
+                'value': 1131
+            },
+            {
+                'name': 'NIDCPOWER_VAL_LOAD_COMPENSATION',
+                'value': 1132
+            },
+            {
+                'name': 'NIDCPOWER_VAL_OPEN_CUSTOM_CABLE_COMPENSATION',
+                'value': 1133
+            },
+            {
+                'name': 'NIDCPOWER_VAL_SHORT_CUSTOM_CABLE_COMPENSATION',
+                'value': 1134
+            }
+        ]
+    },
     'LCRDCBiasSource': {
         'codegen_method': 'public',
         'values': [

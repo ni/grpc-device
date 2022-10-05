@@ -42,6 +42,8 @@ service NiDCPower {
   rpc ConfigureDigitalEdgeSourceTriggerWithChannels(ConfigureDigitalEdgeSourceTriggerWithChannelsRequest) returns (ConfigureDigitalEdgeSourceTriggerWithChannelsResponse);
   rpc ConfigureDigitalEdgeStartTrigger(ConfigureDigitalEdgeStartTriggerRequest) returns (ConfigureDigitalEdgeStartTriggerResponse);
   rpc ConfigureDigitalEdgeStartTriggerWithChannels(ConfigureDigitalEdgeStartTriggerWithChannelsRequest) returns (ConfigureDigitalEdgeStartTriggerWithChannelsResponse);
+  rpc ConfigureLCRCompensation(ConfigureLCRCompensationRequest) returns (ConfigureLCRCompensationResponse);
+  rpc ConfigureLCRCustomCableCompensation(ConfigureLCRCustomCableCompensationRequest) returns (ConfigureLCRCustomCableCompensationResponse);
   rpc ConfigureOutputEnabled(ConfigureOutputEnabledRequest) returns (ConfigureOutputEnabledResponse);
   rpc ConfigureOutputFunction(ConfigureOutputFunctionRequest) returns (ConfigureOutputFunctionResponse);
   rpc ConfigureOutputRange(ConfigureOutputRangeRequest) returns (ConfigureOutputRangeResponse);
@@ -102,6 +104,7 @@ service NiDCPower {
   rpc ExportSignal(ExportSignalRequest) returns (ExportSignalResponse);
   rpc ExportSignalWithChannels(ExportSignalWithChannelsRequest) returns (ExportSignalWithChannelsResponse);
   rpc FetchMultiple(FetchMultipleRequest) returns (FetchMultipleResponse);
+  rpc FetchMultipleLCR(FetchMultipleLCRRequest) returns (FetchMultipleLCRResponse);
   rpc GetAttributeViBoolean(GetAttributeViBooleanRequest) returns (GetAttributeViBooleanResponse);
   rpc GetAttributeViInt32(GetAttributeViInt32Request) returns (GetAttributeViInt32Response);
   rpc GetAttributeViInt64(GetAttributeViInt64Request) returns (GetAttributeViInt64Response);
@@ -114,6 +117,9 @@ service NiDCPower {
   rpc GetExtCalLastDateAndTime(GetExtCalLastDateAndTimeRequest) returns (GetExtCalLastDateAndTimeResponse);
   rpc GetExtCalLastTemp(GetExtCalLastTempRequest) returns (GetExtCalLastTempResponse);
   rpc GetExtCalRecommendedInterval(GetExtCalRecommendedIntervalRequest) returns (GetExtCalRecommendedIntervalResponse);
+  rpc GetLCRCompensationData(GetLCRCompensationDataRequest) returns (GetLCRCompensationDataResponse);
+  rpc GetLCRCompensationLastDateAndTime(GetLCRCompensationLastDateAndTimeRequest) returns (GetLCRCompensationLastDateAndTimeResponse);
+  rpc GetLCRCustomCableCompensationData(GetLCRCustomCableCompensationDataRequest) returns (GetLCRCustomCableCompensationDataResponse);
   rpc GetNextCoercionRecord(GetNextCoercionRecordRequest) returns (GetNextCoercionRecordResponse);
   rpc GetNextInterchangeWarning(GetNextInterchangeWarningRequest) returns (GetNextInterchangeWarningResponse);
   rpc GetSelfCalLastDateAndTime(GetSelfCalLastDateAndTimeRequest) returns (GetSelfCalLastDateAndTimeResponse);
@@ -127,6 +133,12 @@ service NiDCPower {
   rpc InvalidateAllAttributes(InvalidateAllAttributesRequest) returns (InvalidateAllAttributesResponse);
   rpc Measure(MeasureRequest) returns (MeasureResponse);
   rpc MeasureMultiple(MeasureMultipleRequest) returns (MeasureMultipleResponse);
+  rpc MeasureMultipleLCR(MeasureMultipleLCRRequest) returns (MeasureMultipleLCRResponse);
+  rpc PerformLCRLoadCompensation(PerformLCRLoadCompensationRequest) returns (PerformLCRLoadCompensationResponse);
+  rpc PerformLCROpenCompensation(PerformLCROpenCompensationRequest) returns (PerformLCROpenCompensationResponse);
+  rpc PerformLCROpenCustomCableCompensation(PerformLCROpenCustomCableCompensationRequest) returns (PerformLCROpenCustomCableCompensationResponse);
+  rpc PerformLCRShortCompensation(PerformLCRShortCompensationRequest) returns (PerformLCRShortCompensationResponse);
+  rpc PerformLCRShortCustomCableCompensation(PerformLCRShortCustomCableCompensationRequest) returns (PerformLCRShortCustomCableCompensationResponse);
   rpc QueryInCompliance(QueryInComplianceRequest) returns (QueryInComplianceResponse);
   rpc QueryMaxCurrentLimit(QueryMaxCurrentLimitRequest) returns (QueryMaxCurrentLimitResponse);
   rpc QueryMaxVoltageLevel(QueryMaxVoltageLevelRequest) returns (QueryMaxVoltageLevelResponse);
@@ -420,6 +432,15 @@ enum ExportSignal {
   EXPORT_SIGNAL_NIDCPOWER_VAL_SEQUENCE_ADVANCE_TRIGGER = 1037;
   EXPORT_SIGNAL_NIDCPOWER_VAL_PULSE_TRIGGER = 1053;
   EXPORT_SIGNAL_NIDCPOWER_VAL_SHUTDOWN_TRIGGER = 1118;
+}
+
+enum LCRCompensationType {
+  LCR_COMPENSATION_TYPE_UNSPECIFIED = 0;
+  LCR_COMPENSATION_TYPE_NIDCPOWER_VAL_OPEN_COMPENSATION = 1130;
+  LCR_COMPENSATION_TYPE_NIDCPOWER_VAL_SHORT_COMPENSATION = 1131;
+  LCR_COMPENSATION_TYPE_NIDCPOWER_VAL_LOAD_COMPENSATION = 1132;
+  LCR_COMPENSATION_TYPE_NIDCPOWER_VAL_OPEN_CUSTOM_CABLE_COMPENSATION = 1133;
+  LCR_COMPENSATION_TYPE_NIDCPOWER_VAL_SHORT_CUSTOM_CABLE_COMPENSATION = 1134;
 }
 
 enum MeasurementTypes {
@@ -897,6 +918,26 @@ message ConfigureDigitalEdgeStartTriggerWithChannelsRequest {
 }
 
 message ConfigureDigitalEdgeStartTriggerWithChannelsResponse {
+  int32 status = 1;
+}
+
+message ConfigureLCRCompensationRequest {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+  bytes compensation_data = 3;
+}
+
+message ConfigureLCRCompensationResponse {
+  int32 status = 1;
+}
+
+message ConfigureLCRCustomCableCompensationRequest {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+  bytes custom_cable_compensation_data = 3;
+}
+
+message ConfigureLCRCustomCableCompensationResponse {
   int32 status = 1;
 }
 
@@ -1497,6 +1538,19 @@ message FetchMultipleResponse {
   sint32 actual_count = 5;
 }
 
+message FetchMultipleLCRRequest {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+  double timeout = 3;
+  sint32 count = 4;
+}
+
+message FetchMultipleLCRResponse {
+  int32 status = 1;
+  repeated NILCRMeasurement measurements = 2;
+  sint32 actual_count = 3;
+}
+
 message GetAttributeViBooleanRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
@@ -1622,6 +1676,44 @@ message GetExtCalRecommendedIntervalRequest {
 message GetExtCalRecommendedIntervalResponse {
   int32 status = 1;
   sint32 months = 2;
+}
+
+message GetLCRCompensationDataRequest {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+}
+
+message GetLCRCompensationDataResponse {
+  int32 status = 1;
+  bytes compensation_data = 2;
+}
+
+message GetLCRCompensationLastDateAndTimeRequest {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+  oneof compensation_type_enum {
+    LCRCompensationType compensation_type = 3;
+    sint32 compensation_type_raw = 4;
+  }
+}
+
+message GetLCRCompensationLastDateAndTimeResponse {
+  int32 status = 1;
+  sint32 year = 2;
+  sint32 month = 3;
+  sint32 day = 4;
+  sint32 hour = 5;
+  sint32 minute = 6;
+}
+
+message GetLCRCustomCableCompensationDataRequest {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+}
+
+message GetLCRCustomCableCompensationDataResponse {
+  int32 status = 1;
+  bytes custom_cable_compensation_data = 2;
 }
 
 message GetNextCoercionRecordRequest {
@@ -1757,6 +1849,64 @@ message MeasureMultipleResponse {
   int32 status = 1;
   repeated double voltage_measurements = 2;
   repeated double current_measurements = 3;
+}
+
+message MeasureMultipleLCRRequest {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+}
+
+message MeasureMultipleLCRResponse {
+  int32 status = 1;
+  repeated NILCRMeasurement measurements = 2;
+}
+
+message PerformLCRLoadCompensationRequest {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+  repeated NILCRLoadCompensationSpot compensation_spots = 3;
+}
+
+message PerformLCRLoadCompensationResponse {
+  int32 status = 1;
+}
+
+message PerformLCROpenCompensationRequest {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+  repeated double additional_frequencies = 3;
+}
+
+message PerformLCROpenCompensationResponse {
+  int32 status = 1;
+}
+
+message PerformLCROpenCustomCableCompensationRequest {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+}
+
+message PerformLCROpenCustomCableCompensationResponse {
+  int32 status = 1;
+}
+
+message PerformLCRShortCompensationRequest {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+  repeated double additional_frequencies = 3;
+}
+
+message PerformLCRShortCompensationResponse {
+  int32 status = 1;
+}
+
+message PerformLCRShortCustomCableCompensationRequest {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+}
+
+message PerformLCRShortCustomCableCompensationResponse {
+  int32 status = 1;
 }
 
 message QueryInComplianceRequest {

@@ -585,6 +585,44 @@ configure_digital_edge_start_trigger_with_channels(const StubPtr& stub, const ni
   return response;
 }
 
+ConfigureLCRCompensationResponse
+configure_lcr_compensation(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& compensation_data)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ConfigureLCRCompensationRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_channel_name(channel_name);
+  request.set_compensation_data(compensation_data);
+
+  auto response = ConfigureLCRCompensationResponse{};
+
+  raise_if_error(
+      stub->ConfigureLCRCompensation(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ConfigureLCRCustomCableCompensationResponse
+configure_lcr_custom_cable_compensation(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& custom_cable_compensation_data)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ConfigureLCRCustomCableCompensationRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_channel_name(channel_name);
+  request.set_custom_cable_compensation_data(custom_cable_compensation_data);
+
+  auto response = ConfigureLCRCustomCableCompensationResponse{};
+
+  raise_if_error(
+      stub->ConfigureLCRCustomCableCompensation(&context, request, &response),
+      context);
+
+  return response;
+}
+
 ConfigureOutputEnabledResponse
 configure_output_enabled(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const bool& enabled)
 {
@@ -1742,6 +1780,26 @@ fetch_multiple(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::
   return response;
 }
 
+FetchMultipleLCRResponse
+fetch_multiple_lcr(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& timeout, const pb::int32& count)
+{
+  ::grpc::ClientContext context;
+
+  auto request = FetchMultipleLCRRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_channel_name(channel_name);
+  request.set_timeout(timeout);
+  request.set_count(count);
+
+  auto response = FetchMultipleLCRResponse{};
+
+  raise_if_error(
+      stub->FetchMultipleLCR(&context, request, &response),
+      context);
+
+  return response;
+}
+
 GetAttributeViBooleanResponse
 get_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiDCPowerAttribute& attribute_id)
 {
@@ -1955,6 +2013,68 @@ get_ext_cal_recommended_interval(const StubPtr& stub, const nidevice_grpc::Sessi
 
   raise_if_error(
       stub->GetExtCalRecommendedInterval(&context, request, &response),
+      context);
+
+  return response;
+}
+
+GetLCRCompensationDataResponse
+get_lcr_compensation_data(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetLCRCompensationDataRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_channel_name(channel_name);
+
+  auto response = GetLCRCompensationDataResponse{};
+
+  raise_if_error(
+      stub->GetLCRCompensationData(&context, request, &response),
+      context);
+
+  return response;
+}
+
+GetLCRCompensationLastDateAndTimeResponse
+get_lcr_compensation_last_date_and_time(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const simple_variant<LCRCompensationType, pb::int32>& compensation_type)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetLCRCompensationLastDateAndTimeRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_channel_name(channel_name);
+  const auto compensation_type_ptr = compensation_type.get_if<LCRCompensationType>();
+  const auto compensation_type_raw_ptr = compensation_type.get_if<pb::int32>();
+  if (compensation_type_ptr) {
+    request.set_compensation_type(*compensation_type_ptr);
+  }
+  else if (compensation_type_raw_ptr) {
+    request.set_compensation_type_raw(*compensation_type_raw_ptr);
+  }
+
+  auto response = GetLCRCompensationLastDateAndTimeResponse{};
+
+  raise_if_error(
+      stub->GetLCRCompensationLastDateAndTime(&context, request, &response),
+      context);
+
+  return response;
+}
+
+GetLCRCustomCableCompensationDataResponse
+get_lcr_custom_cable_compensation_data(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetLCRCustomCableCompensationDataRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_channel_name(channel_name);
+
+  auto response = GetLCRCustomCableCompensationDataResponse{};
+
+  raise_if_error(
+      stub->GetLCRCustomCableCompensationData(&context, request, &response),
       context);
 
   return response;
@@ -2194,6 +2314,117 @@ measure_multiple(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb
 
   raise_if_error(
       stub->MeasureMultiple(&context, request, &response),
+      context);
+
+  return response;
+}
+
+MeasureMultipleLCRResponse
+measure_multiple_lcr(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name)
+{
+  ::grpc::ClientContext context;
+
+  auto request = MeasureMultipleLCRRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_channel_name(channel_name);
+
+  auto response = MeasureMultipleLCRResponse{};
+
+  raise_if_error(
+      stub->MeasureMultipleLCR(&context, request, &response),
+      context);
+
+  return response;
+}
+
+PerformLCRLoadCompensationResponse
+perform_lcr_load_compensation(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const std::vector<NILCRLoadCompensationSpot>& compensation_spots)
+{
+  ::grpc::ClientContext context;
+
+  auto request = PerformLCRLoadCompensationRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_channel_name(channel_name);
+  copy_array(compensation_spots, request.mutable_compensation_spots());
+
+  auto response = PerformLCRLoadCompensationResponse{};
+
+  raise_if_error(
+      stub->PerformLCRLoadCompensation(&context, request, &response),
+      context);
+
+  return response;
+}
+
+PerformLCROpenCompensationResponse
+perform_lcr_open_compensation(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const std::vector<double>& additional_frequencies)
+{
+  ::grpc::ClientContext context;
+
+  auto request = PerformLCROpenCompensationRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_channel_name(channel_name);
+  copy_array(additional_frequencies, request.mutable_additional_frequencies());
+
+  auto response = PerformLCROpenCompensationResponse{};
+
+  raise_if_error(
+      stub->PerformLCROpenCompensation(&context, request, &response),
+      context);
+
+  return response;
+}
+
+PerformLCROpenCustomCableCompensationResponse
+perform_lcr_open_custom_cable_compensation(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name)
+{
+  ::grpc::ClientContext context;
+
+  auto request = PerformLCROpenCustomCableCompensationRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_channel_name(channel_name);
+
+  auto response = PerformLCROpenCustomCableCompensationResponse{};
+
+  raise_if_error(
+      stub->PerformLCROpenCustomCableCompensation(&context, request, &response),
+      context);
+
+  return response;
+}
+
+PerformLCRShortCompensationResponse
+perform_lcr_short_compensation(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const std::vector<double>& additional_frequencies)
+{
+  ::grpc::ClientContext context;
+
+  auto request = PerformLCRShortCompensationRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_channel_name(channel_name);
+  copy_array(additional_frequencies, request.mutable_additional_frequencies());
+
+  auto response = PerformLCRShortCompensationResponse{};
+
+  raise_if_error(
+      stub->PerformLCRShortCompensation(&context, request, &response),
+      context);
+
+  return response;
+}
+
+PerformLCRShortCustomCableCompensationResponse
+perform_lcr_short_custom_cable_compensation(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name)
+{
+  ::grpc::ClientContext context;
+
+  auto request = PerformLCRShortCustomCableCompensationRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_channel_name(channel_name);
+
+  auto response = PerformLCRShortCustomCableCompensationResponse{};
+
+  raise_if_error(
+      stub->PerformLCRShortCustomCableCompensation(&context, request, &response),
       context);
 
   return response;

@@ -66,6 +66,8 @@ public:
   ::grpc::Status ConfigureDigitalEdgeSourceTriggerWithChannels(::grpc::ServerContext* context, const ConfigureDigitalEdgeSourceTriggerWithChannelsRequest* request, ConfigureDigitalEdgeSourceTriggerWithChannelsResponse* response) override;
   ::grpc::Status ConfigureDigitalEdgeStartTrigger(::grpc::ServerContext* context, const ConfigureDigitalEdgeStartTriggerRequest* request, ConfigureDigitalEdgeStartTriggerResponse* response) override;
   ::grpc::Status ConfigureDigitalEdgeStartTriggerWithChannels(::grpc::ServerContext* context, const ConfigureDigitalEdgeStartTriggerWithChannelsRequest* request, ConfigureDigitalEdgeStartTriggerWithChannelsResponse* response) override;
+  ::grpc::Status ConfigureLCRCompensation(::grpc::ServerContext* context, const ConfigureLCRCompensationRequest* request, ConfigureLCRCompensationResponse* response) override;
+  ::grpc::Status ConfigureLCRCustomCableCompensation(::grpc::ServerContext* context, const ConfigureLCRCustomCableCompensationRequest* request, ConfigureLCRCustomCableCompensationResponse* response) override;
   ::grpc::Status ConfigureOutputEnabled(::grpc::ServerContext* context, const ConfigureOutputEnabledRequest* request, ConfigureOutputEnabledResponse* response) override;
   ::grpc::Status ConfigureOutputFunction(::grpc::ServerContext* context, const ConfigureOutputFunctionRequest* request, ConfigureOutputFunctionResponse* response) override;
   ::grpc::Status ConfigureOutputRange(::grpc::ServerContext* context, const ConfigureOutputRangeRequest* request, ConfigureOutputRangeResponse* response) override;
@@ -126,6 +128,7 @@ public:
   ::grpc::Status ExportSignal(::grpc::ServerContext* context, const ExportSignalRequest* request, ExportSignalResponse* response) override;
   ::grpc::Status ExportSignalWithChannels(::grpc::ServerContext* context, const ExportSignalWithChannelsRequest* request, ExportSignalWithChannelsResponse* response) override;
   ::grpc::Status FetchMultiple(::grpc::ServerContext* context, const FetchMultipleRequest* request, FetchMultipleResponse* response) override;
+  ::grpc::Status FetchMultipleLCR(::grpc::ServerContext* context, const FetchMultipleLCRRequest* request, FetchMultipleLCRResponse* response) override;
   ::grpc::Status GetAttributeViBoolean(::grpc::ServerContext* context, const GetAttributeViBooleanRequest* request, GetAttributeViBooleanResponse* response) override;
   ::grpc::Status GetAttributeViInt32(::grpc::ServerContext* context, const GetAttributeViInt32Request* request, GetAttributeViInt32Response* response) override;
   ::grpc::Status GetAttributeViInt64(::grpc::ServerContext* context, const GetAttributeViInt64Request* request, GetAttributeViInt64Response* response) override;
@@ -138,6 +141,9 @@ public:
   ::grpc::Status GetExtCalLastDateAndTime(::grpc::ServerContext* context, const GetExtCalLastDateAndTimeRequest* request, GetExtCalLastDateAndTimeResponse* response) override;
   ::grpc::Status GetExtCalLastTemp(::grpc::ServerContext* context, const GetExtCalLastTempRequest* request, GetExtCalLastTempResponse* response) override;
   ::grpc::Status GetExtCalRecommendedInterval(::grpc::ServerContext* context, const GetExtCalRecommendedIntervalRequest* request, GetExtCalRecommendedIntervalResponse* response) override;
+  ::grpc::Status GetLCRCompensationData(::grpc::ServerContext* context, const GetLCRCompensationDataRequest* request, GetLCRCompensationDataResponse* response) override;
+  ::grpc::Status GetLCRCompensationLastDateAndTime(::grpc::ServerContext* context, const GetLCRCompensationLastDateAndTimeRequest* request, GetLCRCompensationLastDateAndTimeResponse* response) override;
+  ::grpc::Status GetLCRCustomCableCompensationData(::grpc::ServerContext* context, const GetLCRCustomCableCompensationDataRequest* request, GetLCRCustomCableCompensationDataResponse* response) override;
   ::grpc::Status GetNextCoercionRecord(::grpc::ServerContext* context, const GetNextCoercionRecordRequest* request, GetNextCoercionRecordResponse* response) override;
   ::grpc::Status GetNextInterchangeWarning(::grpc::ServerContext* context, const GetNextInterchangeWarningRequest* request, GetNextInterchangeWarningResponse* response) override;
   ::grpc::Status GetSelfCalLastDateAndTime(::grpc::ServerContext* context, const GetSelfCalLastDateAndTimeRequest* request, GetSelfCalLastDateAndTimeResponse* response) override;
@@ -151,6 +157,12 @@ public:
   ::grpc::Status InvalidateAllAttributes(::grpc::ServerContext* context, const InvalidateAllAttributesRequest* request, InvalidateAllAttributesResponse* response) override;
   ::grpc::Status Measure(::grpc::ServerContext* context, const MeasureRequest* request, MeasureResponse* response) override;
   ::grpc::Status MeasureMultiple(::grpc::ServerContext* context, const MeasureMultipleRequest* request, MeasureMultipleResponse* response) override;
+  ::grpc::Status MeasureMultipleLCR(::grpc::ServerContext* context, const MeasureMultipleLCRRequest* request, MeasureMultipleLCRResponse* response) override;
+  ::grpc::Status PerformLCRLoadCompensation(::grpc::ServerContext* context, const PerformLCRLoadCompensationRequest* request, PerformLCRLoadCompensationResponse* response) override;
+  ::grpc::Status PerformLCROpenCompensation(::grpc::ServerContext* context, const PerformLCROpenCompensationRequest* request, PerformLCROpenCompensationResponse* response) override;
+  ::grpc::Status PerformLCROpenCustomCableCompensation(::grpc::ServerContext* context, const PerformLCROpenCustomCableCompensationRequest* request, PerformLCROpenCustomCableCompensationResponse* response) override;
+  ::grpc::Status PerformLCRShortCompensation(::grpc::ServerContext* context, const PerformLCRShortCompensationRequest* request, PerformLCRShortCompensationResponse* response) override;
+  ::grpc::Status PerformLCRShortCustomCableCompensation(::grpc::ServerContext* context, const PerformLCRShortCustomCableCompensationRequest* request, PerformLCRShortCustomCableCompensationResponse* response) override;
   ::grpc::Status QueryInCompliance(::grpc::ServerContext* context, const QueryInComplianceRequest* request, QueryInComplianceResponse* response) override;
   ::grpc::Status QueryMaxCurrentLimit(::grpc::ServerContext* context, const QueryMaxCurrentLimitRequest* request, QueryMaxCurrentLimitResponse* response) override;
   ::grpc::Status QueryMaxVoltageLevel(::grpc::ServerContext* context, const QueryMaxVoltageLevelRequest* request, QueryMaxVoltageLevelResponse* response) override;
@@ -185,5 +197,14 @@ private:
 };
 
 } // namespace nidcpower_grpc
+
+namespace nidevice_grpc {
+namespace converters {
+template <>
+NILCRLoadCompensationSpot_struct convert_from_grpc(const nidcpower_grpc::NILCRLoadCompensationSpot& input);
+template <>
+void convert_to_grpc(const NILCRMeasurement_struct& input, nidcpower_grpc::NILCRMeasurement* output);
+} // namespace converters
+} // namespace nidevice_grpc
 
 #endif  // NIDCPOWER_GRPC_SERVICE_H

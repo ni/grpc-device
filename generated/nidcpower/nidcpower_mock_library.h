@@ -42,6 +42,8 @@ class NiDCPowerMockLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   MOCK_METHOD(ViStatus, ConfigureDigitalEdgeSourceTriggerWithChannels, (ViSession vi, ViConstString channelName, ViConstString inputTerminal, ViInt32 edge), (override));
   MOCK_METHOD(ViStatus, ConfigureDigitalEdgeStartTrigger, (ViSession vi, ViConstString inputTerminal, ViInt32 edge), (override));
   MOCK_METHOD(ViStatus, ConfigureDigitalEdgeStartTriggerWithChannels, (ViSession vi, ViConstString channelName, ViConstString inputTerminal, ViInt32 edge), (override));
+  MOCK_METHOD(ViStatus, ConfigureLCRCompensation, (ViSession vi, ViConstString channelName, ViInt32 compensationDataSize, ViInt8 compensationData[]), (override));
+  MOCK_METHOD(ViStatus, ConfigureLCRCustomCableCompensation, (ViSession vi, ViConstString channelName, ViInt32 customCableCompensationDataSize, ViInt8 customCableCompensationData[]), (override));
   MOCK_METHOD(ViStatus, ConfigureOutputEnabled, (ViSession vi, ViConstString channelName, ViBoolean enabled), (override));
   MOCK_METHOD(ViStatus, ConfigureOutputFunction, (ViSession vi, ViConstString channelName, ViInt32 function), (override));
   MOCK_METHOD(ViStatus, ConfigureOutputRange, (ViSession vi, ViConstString channelName, ViInt32 rangeType, ViReal64 range), (override));
@@ -102,6 +104,7 @@ class NiDCPowerMockLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   MOCK_METHOD(ViStatus, ExportSignal, (ViSession vi, ViInt32 signal, ViConstString signalIdentifier, ViConstString outputTerminal), (override));
   MOCK_METHOD(ViStatus, ExportSignalWithChannels, (ViSession vi, ViConstString channelName, ViInt32 signal, ViConstString signalIdentifier, ViConstString outputTerminal), (override));
   MOCK_METHOD(ViStatus, FetchMultiple, (ViSession vi, ViConstString channelName, ViReal64 timeout, ViInt32 count, ViReal64 voltageMeasurements[], ViReal64 currentMeasurements[], ViBoolean inCompliance[], ViInt32* actualCount), (override));
+  MOCK_METHOD(ViStatus, FetchMultipleLCR, (ViSession vi, ViConstString channelName, ViReal64 timeout, ViInt32 count, NILCRMeasurement_struct measurements[], ViInt32* actualCount), (override));
   MOCK_METHOD(ViStatus, GetAttributeViBoolean, (ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean* attributeValue), (override));
   MOCK_METHOD(ViStatus, GetAttributeViInt32, (ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32* attributeValue), (override));
   MOCK_METHOD(ViStatus, GetAttributeViInt64, (ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt64* attributeValue), (override));
@@ -114,6 +117,9 @@ class NiDCPowerMockLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   MOCK_METHOD(ViStatus, GetExtCalLastDateAndTime, (ViSession vi, ViInt32* year, ViInt32* month, ViInt32* day, ViInt32* hour, ViInt32* minute), (override));
   MOCK_METHOD(ViStatus, GetExtCalLastTemp, (ViSession vi, ViReal64* temperature), (override));
   MOCK_METHOD(ViStatus, GetExtCalRecommendedInterval, (ViSession vi, ViInt32* months), (override));
+  MOCK_METHOD(ViStatus, GetLCRCompensationData, (ViSession vi, ViConstString channelName, ViInt32 compensationDataSize, ViInt8 compensationData[]), (override));
+  MOCK_METHOD(ViStatus, GetLCRCompensationLastDateAndTime, (ViSession vi, ViConstString channelName, ViInt32 compensationType, ViInt32* year, ViInt32* month, ViInt32* day, ViInt32* hour, ViInt32* minute), (override));
+  MOCK_METHOD(ViStatus, GetLCRCustomCableCompensationData, (ViSession vi, ViConstString channelName, ViInt32 customCableCompensationDataSize, ViInt8 customCableCompensationData[]), (override));
   MOCK_METHOD(ViStatus, GetNextCoercionRecord, (ViSession vi, ViInt32 bufferSize, ViChar coercionRecord[]), (override));
   MOCK_METHOD(ViStatus, GetNextInterchangeWarning, (ViSession vi, ViInt32 bufferSize, ViChar interchangeWarning[]), (override));
   MOCK_METHOD(ViStatus, GetSelfCalLastDateAndTime, (ViSession vi, ViInt32* year, ViInt32* month, ViInt32* day, ViInt32* hour, ViInt32* minute), (override));
@@ -128,7 +134,13 @@ class NiDCPowerMockLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   MOCK_METHOD(ViStatus, LockSession, (ViSession vi, ViBoolean* callerHasLock), (override));
   MOCK_METHOD(ViStatus, Measure, (ViSession vi, ViConstString channelName, ViInt32 measurementType, ViReal64* measurement), (override));
   MOCK_METHOD(ViStatus, MeasureMultiple, (ViSession vi, ViConstString channelName, ViReal64 voltageMeasurements[], ViReal64 currentMeasurements[]), (override));
+  MOCK_METHOD(ViStatus, MeasureMultipleLCR, (ViSession vi, ViConstString channelName, NILCRMeasurement_struct measurements[]), (override));
   MOCK_METHOD(ViStatus, ParseChannelCount, (ViSession vi, ViConstString channelsString, ViUInt32* numberOfChannels), (override));
+  MOCK_METHOD(ViStatus, PerformLCRLoadCompensation, (ViSession vi, ViConstString channelName, ViInt32 numCompensationSpots, NILCRLoadCompensationSpot_struct compensationSpots[]), (override));
+  MOCK_METHOD(ViStatus, PerformLCROpenCompensation, (ViSession vi, ViConstString channelName, ViInt32 numFrequencies, ViReal64 additionalFrequencies[]), (override));
+  MOCK_METHOD(ViStatus, PerformLCROpenCustomCableCompensation, (ViSession vi, ViConstString channelName), (override));
+  MOCK_METHOD(ViStatus, PerformLCRShortCompensation, (ViSession vi, ViConstString channelName, ViInt32 numFrequencies, ViReal64 additionalFrequencies[]), (override));
+  MOCK_METHOD(ViStatus, PerformLCRShortCustomCableCompensation, (ViSession vi, ViConstString channelName), (override));
   MOCK_METHOD(ViStatus, QueryInCompliance, (ViSession vi, ViConstString channelName, ViBoolean* inCompliance), (override));
   MOCK_METHOD(ViStatus, QueryMaxCurrentLimit, (ViSession vi, ViConstString channelName, ViReal64 voltageLevel, ViReal64* maxCurrentLimit), (override));
   MOCK_METHOD(ViStatus, QueryMaxVoltageLevel, (ViSession vi, ViConstString channelName, ViReal64 currentLimit, ViReal64* maxVoltageLevel), (override));

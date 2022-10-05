@@ -853,6 +853,56 @@ namespace nidcpower_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiDCPowerService::ConfigureLCRCompensation(::grpc::ServerContext* context, const ConfigureLCRCompensationRequest* request, ConfigureLCRCompensationResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto channel_name = request->channel_name().c_str();
+      ViInt32 compensation_data_size = static_cast<ViInt32>(request->compensation_data().size());
+      ViInt8* compensation_data = (ViInt8*)request->compensation_data().c_str();
+      auto status = library_->ConfigureLCRCompensation(vi, channel_name, compensation_data_size, compensation_data);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(context, status, vi);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDCPowerService::ConfigureLCRCustomCableCompensation(::grpc::ServerContext* context, const ConfigureLCRCustomCableCompensationRequest* request, ConfigureLCRCustomCableCompensationResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto channel_name = request->channel_name().c_str();
+      ViInt32 custom_cable_compensation_data_size = static_cast<ViInt32>(request->custom_cable_compensation_data().size());
+      ViInt8* custom_cable_compensation_data = (ViInt8*)request->custom_cable_compensation_data().c_str();
+      auto status = library_->ConfigureLCRCustomCableCompensation(vi, channel_name, custom_cable_compensation_data_size, custom_cable_compensation_data);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(context, status, vi);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiDCPowerService::ConfigureOutputEnabled(::grpc::ServerContext* context, const ConfigureOutputEnabledRequest* request, ConfigureOutputEnabledResponse* response)
   {
     if (context->IsCancelled()) {
@@ -2399,6 +2449,35 @@ namespace nidcpower_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiDCPowerService::FetchMultipleLCR(::grpc::ServerContext* context, const FetchMultipleLCRRequest* request, FetchMultipleLCRResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto channel_name = request->channel_name().c_str();
+      ViReal64 timeout = request->timeout();
+      ViInt32 count = request->count();
+      std::vector<NILCRMeasurement_struct> measurements(count, NILCRMeasurement_struct());
+      ViInt32 actual_count {};
+      auto status = library_->FetchMultipleLCR(vi, channel_name, timeout, count, measurements.data(), &actual_count);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(context, status, vi);
+      }
+      response->set_status(status);
+      convert_to_grpc(measurements, response->mutable_measurements());
+      response->set_actual_count(actual_count);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiDCPowerService::GetAttributeViBoolean(::grpc::ServerContext* context, const GetAttributeViBooleanRequest* request, GetAttributeViBooleanResponse* response)
   {
     if (context->IsCancelled()) {
@@ -2780,6 +2859,131 @@ namespace nidcpower_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiDCPowerService::GetLCRCompensationData(::grpc::ServerContext* context, const GetLCRCompensationDataRequest* request, GetLCRCompensationDataResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto channel_name = request->channel_name().c_str();
+
+      while (true) {
+        auto status = library_->GetLCRCompensationData(vi, channel_name, 0, nullptr);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(context, status, vi);
+        }
+        ViInt32 compensation_data_size = status;
+
+        std::string compensation_data(compensation_data_size, '\0');
+        status = library_->GetLCRCompensationData(vi, channel_name, compensation_data_size, (ViInt8*)compensation_data.data());
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(compensation_data_size)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(context, status, vi);
+        }
+        response->set_status(status);
+        response->set_compensation_data(compensation_data);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDCPowerService::GetLCRCompensationLastDateAndTime(::grpc::ServerContext* context, const GetLCRCompensationLastDateAndTimeRequest* request, GetLCRCompensationLastDateAndTimeResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto channel_name = request->channel_name().c_str();
+      ViInt32 compensation_type;
+      switch (request->compensation_type_enum_case()) {
+        case nidcpower_grpc::GetLCRCompensationLastDateAndTimeRequest::CompensationTypeEnumCase::kCompensationType: {
+          compensation_type = static_cast<ViInt32>(request->compensation_type());
+          break;
+        }
+        case nidcpower_grpc::GetLCRCompensationLastDateAndTimeRequest::CompensationTypeEnumCase::kCompensationTypeRaw: {
+          compensation_type = static_cast<ViInt32>(request->compensation_type_raw());
+          break;
+        }
+        case nidcpower_grpc::GetLCRCompensationLastDateAndTimeRequest::CompensationTypeEnumCase::COMPENSATION_TYPE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for compensation_type was not specified or out of range");
+          break;
+        }
+      }
+
+      ViInt32 year {};
+      ViInt32 month {};
+      ViInt32 day {};
+      ViInt32 hour {};
+      ViInt32 minute {};
+      auto status = library_->GetLCRCompensationLastDateAndTime(vi, channel_name, compensation_type, &year, &month, &day, &hour, &minute);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(context, status, vi);
+      }
+      response->set_status(status);
+      response->set_year(year);
+      response->set_month(month);
+      response->set_day(day);
+      response->set_hour(hour);
+      response->set_minute(minute);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDCPowerService::GetLCRCustomCableCompensationData(::grpc::ServerContext* context, const GetLCRCustomCableCompensationDataRequest* request, GetLCRCustomCableCompensationDataResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto channel_name = request->channel_name().c_str();
+
+      while (true) {
+        auto status = library_->GetLCRCustomCableCompensationData(vi, channel_name, 0, nullptr);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(context, status, vi);
+        }
+        ViInt32 custom_cable_compensation_data_size = status;
+
+        std::string custom_cable_compensation_data(custom_cable_compensation_data_size, '\0');
+        status = library_->GetLCRCustomCableCompensationData(vi, channel_name, custom_cable_compensation_data_size, (ViInt8*)custom_cable_compensation_data.data());
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(custom_cable_compensation_data_size)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(context, status, vi);
+        }
+        response->set_status(status);
+        response->set_custom_cable_compensation_data(custom_cable_compensation_data);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiDCPowerService::GetNextCoercionRecord(::grpc::ServerContext* context, const GetNextCoercionRecordRequest* request, GetNextCoercionRecordResponse* response)
   {
     if (context->IsCancelled()) {
@@ -3137,6 +3341,127 @@ namespace nidcpower_grpc {
       }
       response->set_status(status);
       response->set_measurement(measurement);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDCPowerService::PerformLCRLoadCompensation(::grpc::ServerContext* context, const PerformLCRLoadCompensationRequest* request, PerformLCRLoadCompensationResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto channel_name = request->channel_name().c_str();
+      ViInt32 num_compensation_spots = static_cast<ViInt32>(request->compensation_spots().size());
+      auto compensation_spots = convert_from_grpc<NILCRLoadCompensationSpot_struct>(request->compensation_spots());
+      auto status = library_->PerformLCRLoadCompensation(vi, channel_name, num_compensation_spots, compensation_spots.data());
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(context, status, vi);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDCPowerService::PerformLCROpenCompensation(::grpc::ServerContext* context, const PerformLCROpenCompensationRequest* request, PerformLCROpenCompensationResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto channel_name = request->channel_name().c_str();
+      ViInt32 num_frequencies = static_cast<ViInt32>(request->additional_frequencies().size());
+      auto additional_frequencies = const_cast<ViReal64*>(request->additional_frequencies().data());
+      auto status = library_->PerformLCROpenCompensation(vi, channel_name, num_frequencies, additional_frequencies);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(context, status, vi);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDCPowerService::PerformLCROpenCustomCableCompensation(::grpc::ServerContext* context, const PerformLCROpenCustomCableCompensationRequest* request, PerformLCROpenCustomCableCompensationResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto channel_name = request->channel_name().c_str();
+      auto status = library_->PerformLCROpenCustomCableCompensation(vi, channel_name);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(context, status, vi);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDCPowerService::PerformLCRShortCompensation(::grpc::ServerContext* context, const PerformLCRShortCompensationRequest* request, PerformLCRShortCompensationResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto channel_name = request->channel_name().c_str();
+      ViInt32 num_frequencies = static_cast<ViInt32>(request->additional_frequencies().size());
+      auto additional_frequencies = const_cast<ViReal64*>(request->additional_frequencies().data());
+      auto status = library_->PerformLCRShortCompensation(vi, channel_name, num_frequencies, additional_frequencies);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(context, status, vi);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDCPowerService::PerformLCRShortCustomCableCompensation(::grpc::ServerContext* context, const PerformLCRShortCustomCableCompensationRequest* request, PerformLCRShortCustomCableCompensationResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto channel_name = request->channel_name().c_str();
+      auto status = library_->PerformLCRShortCustomCableCompensation(vi, channel_name);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(context, status, vi);
+      }
+      response->set_status(status);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
@@ -3860,4 +4185,55 @@ namespace nidcpower_grpc {
   {
   }
 } // namespace nidcpower_grpc
+
+namespace nidevice_grpc {
+namespace converters {
+template <>
+NILCRLoadCompensationSpot_struct convert_from_grpc(const nidcpower_grpc::NILCRLoadCompensationSpot& input) 
+{
+  auto output = NILCRLoadCompensationSpot_struct();  
+  output.frequency = input.frequency();
+  output.referenceValueType = input.reference_value_type();
+  output.referenceValueA = input.reference_value_a();
+  output.referenceValueB = input.reference_value_b();
+  return output;
+}
+
+template <>
+void convert_to_grpc(const NILCRMeasurement_struct& input, nidcpower_grpc::NILCRMeasurement* output) 
+{
+  output->set_vdc(input.Vdc);
+  output->set_idc(input.Idc);
+  output->set_stimulus_frequency(input.stimulusFrequency);
+  convert_to_grpc(input.ACVoltage, output->mutable_ac_voltage());
+  convert_to_grpc(input.ACCurrent, output->mutable_ac_current());
+  convert_to_grpc(input.Z, output->mutable_z());
+  output->set_z_magnitude(input.ZMagnitude);
+  output->set_z_phase(input.ZPhase);
+  convert_to_grpc(input.Y, output->mutable_y());
+  output->set_y_magnitude(input.YMagnitude);
+  output->set_y_phase(input.YPhase);
+  output->set_ls(input.Ls);
+  output->set_cs(input.Cs);
+  output->set_rs(input.Rs);
+  output->set_lp(input.Lp);
+  output->set_cp(input.Cp);
+  output->set_rp(input.Rp);
+  output->set_d(input.D);
+  output->set_q(input.Q);
+  output->set_measurement_mode(input.measurementMode);
+  output->set_dc_in_compliance(input.dcInCompliance);
+  output->set_ac_in_compliance(input.acInCompliance);
+  output->set_unbalanced(input.unbalanced);
+  output->set_reserved1(input.reserved1);
+  output->set_reserved2(input.reserved2);
+  output->set_reserved3(input.reserved3);
+  output->set_reserved4(input.reserved4);
+  output->set_reserved5(input.reserved5);
+  output->set_reserved6(input.reserved6);
+  output->set_reserved7(input.reserved7);
+}
+
+} // converters
+} // nidevice_grpc
 

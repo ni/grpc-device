@@ -36,18 +36,18 @@ config = {
                 }
             ],
             'grpc_name': 'NILCRLoadCompensationSpot',
-            'name': 'NILCRLoadCompensationSpot'
+            'name': 'NILCRLoadCompensationSpot_struct'
         },
         {
             'fields': [
                 {
                     'grpc_type': 'double',
-                    'name': 'vdc',
+                    'name': 'Vdc',
                     'type': 'ViReal64'
                 },
                 {
                     'grpc_type': 'double',
-                    'name': 'idc',
+                    'name': 'Idc',
                     'type': 'ViReal64'
                 },
                 {
@@ -57,82 +57,82 @@ config = {
                 },
                 {
                     'grpc_type': 'nidevice_grpc.NIComplexNumber',
-                    'name': 'acVoltage',
-                    'type': 'NIComplexNumber_struct'
+                    'name': 'ACVoltage',
+                    'type': 'struct NIComplexNumber_struct'
                 },
                 {
                     'grpc_type': 'nidevice_grpc.NIComplexNumber',
-                    'name': 'acCurrent',
-                    'type': 'NIComplexNumber_struct'
+                    'name': 'ACCurrent',
+                    'type': 'struct NIComplexNumber_struct'
                 },
                 {
                     'grpc_type': 'nidevice_grpc.NIComplexNumber',
-                    'name': 'z',
-                    'type': 'NIComplexNumber_struct'
+                    'name': 'Z',
+                    'type': 'struct NIComplexNumber_struct'
                 },
                 {
                     'grpc_type': 'double',
-                    'name': 'zMagnitude',
+                    'name': 'ZMagnitude',
                     'type': 'ViReal64'
                 },
                 {
                     'grpc_type': 'double',
-                    'name': 'zPhase',
+                    'name': 'ZPhase',
                     'type': 'ViReal64'
                 },
                 {
                     'grpc_type': 'nidevice_grpc.NIComplexNumber',
-                    'name': 'y',
-                    'type': 'NIComplexNumber_struct'
+                    'name': 'Y',
+                    'type': 'struct NIComplexNumber_struct'
                 },
                 {
                     'grpc_type': 'double',
-                    'name': 'yMagnitude',
+                    'name': 'YMagnitude',
                     'type': 'ViReal64'
                 },
                 {
                     'grpc_type': 'double',
-                    'name': 'yPhase',
+                    'name': 'YPhase',
                     'type': 'ViReal64'
                 },
                 {
                     'grpc_type': 'double',
-                    'name': 'ls',
+                    'name': 'Ls',
                     'type': 'ViReal64'
                 },
                 {
                     'grpc_type': 'double',
-                    'name': 'cs',
+                    'name': 'Cs',
                     'type': 'ViReal64'
                 },
                 {
                     'grpc_type': 'double',
-                    'name': 'rs',
+                    'name': 'Rs',
                     'type': 'ViReal64'
                 },
                 {
                     'grpc_type': 'double',
-                    'name': 'lp',
+                    'name': 'Lp',
                     'type': 'ViReal64'
                 },
                 {
                     'grpc_type': 'double',
-                    'name': 'cp',
+                    'name': 'Cp',
                     'type': 'ViReal64'
                 },
                 {
                     'grpc_type': 'double',
-                    'name': 'rp',
+                    'name': 'Rp',
                     'type': 'ViReal64'
                 },
                 {
                     'grpc_type': 'double',
-                    'name': 'd',
+                    'name': 'D',
                     'type': 'ViReal64'
                 },
                 {
                     'grpc_type': 'double',
-                    'name': 'q',
+                    'name': 'Q',
                     'type': 'ViReal64'
                 },
                 {
@@ -192,7 +192,7 @@ config = {
                 }
             ],
             'grpc_name': 'NILCRMeasurement',
-            'name': 'NILCRMeasurement'
+            'name': 'NILCRMeasurement_struct'
         }
     ],
     'driver_name': 'NI-DCPower',
