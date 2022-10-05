@@ -1,1322 +1,1597 @@
-﻿# -*- coding: utf-8 -*-
-# This file is generated from NI-FGEN API metadata version 20.0.0d5
+# -*- coding: utf-8 -*-
+# This file is generated from NI-FGEN API metadata version 23.0.0d13
 attributes = {
     1050002: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'bool',
         'name': 'RANGE_CHECK',
         'resettable': False,
         'type': 'ViBoolean'
     },
     1050003: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'bool',
         'name': 'QUERY_INSTRUMENT_STATUS',
         'resettable': False,
         'type': 'ViBoolean'
     },
     1050004: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'bool',
         'name': 'CACHE',
         'resettable': False,
         'type': 'ViBoolean'
     },
     1050005: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'bool',
         'name': 'SIMULATE',
         'resettable': False,
         'type': 'ViBoolean'
     },
     1050006: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'bool',
         'name': 'RECORD_COERCIONS',
         'resettable': False,
         'type': 'ViBoolean'
     },
     1050007: {
-        'access': 'read only',
+        'codegen_method': 'public',
+        'grpc_type': 'string',
         'name': 'DRIVER_SETUP',
         'resettable': True,
         'type': 'ViString'
     },
     1050021: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'bool',
         'name': 'INTERCHANGE_CHECK',
         'resettable': False,
         'type': 'ViBoolean'
     },
     1050203: {
-        'access': 'read only',
+        'codegen_method': 'public',
+        'grpc_type': 'sint32',
         'name': 'CHANNEL_COUNT',
+        'resettable': False,
         'type': 'ViInt32'
     },
     1050302: {
-        'access': 'read only',
+        'codegen_method': 'public',
+        'grpc_type': 'string',
         'name': 'SPECIFIC_DRIVER_PREFIX',
         'resettable': False,
         'type': 'ViString'
     },
     1050304: {
-        'access': 'read only',
+        'codegen_method': 'public',
+        'grpc_type': 'string',
         'name': 'IO_RESOURCE_DESCRIPTOR',
         'resettable': False,
         'type': 'ViString'
     },
     1050305: {
-        'access': 'read only',
+        'codegen_method': 'public',
+        'grpc_type': 'string',
         'name': 'LOGICAL_NAME',
         'resettable': False,
         'type': 'ViString'
     },
     1050327: {
-        'access': 'read only',
+        'codegen_method': 'public',
+        'grpc_type': 'string',
         'name': 'SUPPORTED_INSTRUMENT_MODELS',
         'resettable': False,
         'type': 'ViString'
     },
     1050401: {
-        'access': 'read only',
+        'codegen_method': 'public',
+        'grpc_type': 'string',
         'name': 'GROUP_CAPABILITIES',
         'resettable': False,
         'type': 'ViString'
     },
+    1050503: {
+        'codegen_method': 'public',
+        'grpc_type': 'sint32',
+        'name': 'SPECIFIC_DRIVER_MAJOR_VERSION',
+        'resettable': False,
+        'type': 'ViInt32'
+    },
+    1050504: {
+        'codegen_method': 'public',
+        'grpc_type': 'sint32',
+        'name': 'SPECIFIC_DRIVER_MINOR_VERSION',
+        'resettable': False,
+        'type': 'ViInt32'
+    },
     1050510: {
-        'access': 'read only',
+        'codegen_method': 'public',
+        'grpc_type': 'string',
         'name': 'INSTRUMENT_FIRMWARE_REVISION',
         'resettable': False,
         'type': 'ViString'
     },
     1050511: {
-        'access': 'read only',
+        'codegen_method': 'public',
+        'grpc_type': 'string',
         'name': 'INSTRUMENT_MANUFACTURER',
         'resettable': False,
         'type': 'ViString'
     },
     1050512: {
-        'access': 'read only',
+        'codegen_method': 'public',
+        'grpc_type': 'string',
         'name': 'INSTRUMENT_MODEL',
         'resettable': False,
         'type': 'ViString'
     },
     1050513: {
-        'access': 'read only',
+        'codegen_method': 'public',
+        'grpc_type': 'string',
         'name': 'SPECIFIC_DRIVER_VENDOR',
         'resettable': False,
         'type': 'ViString'
     },
     1050514: {
-        'access': 'read only',
+        'codegen_method': 'public',
+        'grpc_type': 'string',
         'name': 'SPECIFIC_DRIVER_DESCRIPTION',
         'resettable': False,
         'type': 'ViString'
     },
     1050515: {
-        'access': 'read only',
+        'codegen_method': 'public',
+        'grpc_type': 'sint32',
         'name': 'SPECIFIC_DRIVER_CLASS_SPEC_MAJOR_VERSION',
         'resettable': False,
         'type': 'ViInt32'
     },
     1050516: {
-        'access': 'read only',
+        'codegen_method': 'public',
+        'grpc_type': 'sint32',
         'name': 'SPECIFIC_DRIVER_CLASS_SPEC_MINOR_VERSION',
         'resettable': False,
         'type': 'ViInt32'
     },
     1050551: {
-        'access': 'read only',
+        'codegen_method': 'public',
+        'grpc_type': 'string',
         'name': 'SPECIFIC_DRIVER_REVISION',
         'resettable': False,
         'type': 'ViString'
     },
     1150001: {
-        'access': 'read only',
+        'codegen_method': 'public',
+        'grpc_type': 'string',
         'name': 'ID_QUERY_RESPONSE',
         'resettable': True,
         'type': 'ViString'
     },
     1150101: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'bool',
         'name': 'DIGITAL_PATTERN_ENABLED',
         'resettable': True,
         'type': 'ViBoolean'
     },
     1150102: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'bool',
         'name': 'DIGITAL_FILTER_ENABLED',
         'resettable': False,
         'type': 'ViBoolean'
     },
     1150103: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'bool',
         'name': 'ANALOG_FILTER_ENABLED',
         'resettable': False,
         'type': 'ViBoolean'
     },
     1150104: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'double',
         'name': 'FILTER_CORRECTION_FREQUENCY',
         'resettable': False,
         'type': 'ViReal64'
     },
     1150105: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'double',
         'name': 'SYNC_DUTY_CYCLE_HIGH',
         'resettable': False,
         'type': 'ViReal64'
     },
+    1150106: {
+        'codegen_method': 'public',
+        'enum': 'UpdateClockSource',
+        'grpc_type': 'sint32',
+        'name': 'UPDATE_CLOCK_SOURCE',
+        'resettable': True,
+        'type': 'ViInt32'
+    },
     1150107: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'double',
         'name': 'REF_CLOCK_FREQUENCY',
         'resettable': True,
         'type': 'ViReal64'
     },
     1150108: {
-        'access': 'read-write',
+        'codegen_method': 'public',
         'enum': 'TriggerMode',
+        'grpc_type': 'sint32',
         'name': 'TRIGGER_MODE',
         'resettable': False,
         'type': 'ViInt32'
     },
     1150110: {
-        'access': 'read-write',
+        'codegen_method': 'public',
         'enum': 'ClockMode',
+        'grpc_type': 'sint32',
         'name': 'CLOCK_MODE',
         'resettable': True,
         'type': 'ViInt32'
     },
     1150111: {
-        'access': 'read-write',
+        'codegen_method': 'public',
         'enum': 'SynchronizationSource',
+        'grpc_type': 'sint32',
         'name': 'SYNCHRONIZATION',
         'resettable': False,
         'type': 'ViInt32'
     },
     1150112: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'enum': 'SampleClockSource',
+        'grpc_type': 'string',
         'name': 'SAMPLE_CLOCK_SOURCE',
         'resettable': True,
         'type': 'ViString'
     },
     1150113: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'enum': 'ReferenceClockSource',
+        'grpc_type': 'string',
         'name': 'REFERENCE_CLOCK_SOURCE',
         'resettable': True,
         'type': 'ViString'
     },
     1150208: {
-        'access': 'read-write',
+        'codegen_method': 'public',
         'enum': 'FrequencyListHandle',
+        'grpc_type': 'sint32',
         'name': 'FREQ_LIST_HANDLE',
         'resettable': False,
         'type': 'ViInt32'
     },
     1150209: {
-        'access': 'read only',
+        'codegen_method': 'public',
+        'grpc_type': 'sint32',
         'name': 'MAX_NUM_FREQ_LISTS',
         'resettable': False,
         'type': 'ViInt32'
     },
     1150210: {
-        'access': 'read only',
+        'codegen_method': 'public',
+        'grpc_type': 'sint32',
         'name': 'MIN_FREQ_LIST_LENGTH',
         'resettable': False,
         'type': 'ViInt32'
     },
     1150211: {
-        'access': 'read only',
+        'codegen_method': 'public',
+        'grpc_type': 'sint32',
         'name': 'MAX_FREQ_LIST_LENGTH',
         'resettable': False,
         'type': 'ViInt32'
     },
     1150212: {
-        'access': 'read only',
+        'codegen_method': 'public',
+        'grpc_type': 'double',
         'name': 'MIN_FREQ_LIST_DURATION',
         'resettable': False,
         'type': 'ViReal64'
     },
     1150213: {
-        'access': 'read only',
+        'codegen_method': 'public',
+        'grpc_type': 'double',
         'name': 'MAX_FREQ_LIST_DURATION',
         'resettable': False,
         'type': 'ViReal64'
     },
     1150214: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'double',
         'name': 'FREQ_LIST_DURATION_QUANTUM',
         'resettable': False,
         'type': 'ViReal64'
     },
     1150215: {
-        'access': 'read only',
+        'codegen_method': 'public',
         'enum': 'BusType',
+        'grpc_type': 'sint32',
         'name': 'BUS_TYPE',
         'resettable': False,
         'type': 'ViInt32'
     },
     1150216: {
-        'access': 'read-write',
+        'codegen_method': 'public',
         'enum': 'VideoWaveformType',
+        'grpc_type': 'sint32',
         'name': 'VIDEO_WAVEFORM_TYPE',
         'resettable': False,
         'type': 'ViInt32'
     },
     1150218: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'double',
         'name': 'DIGITAL_FILTER_INTERPOLATION_FACTOR',
         'resettable': False,
         'type': 'ViReal64'
     },
     1150219: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'sint32',
         'name': 'EXPORTED_SAMPLE_CLOCK_DIVISOR',
         'resettable': True,
         'type': 'ViInt32'
     },
     1150220: {
-        'access': 'read-write',
+        'codegen_method': 'public',
         'enum': 'LoadImpedance',
+        'grpc_type': 'double',
         'name': 'LOAD_IMPEDANCE',
         'resettable': True,
         'type': 'ViReal64'
     },
     1150222: {
-        'access': 'read-write',
+        'codegen_method': 'public',
         'enum': 'AnalogPath',
+        'grpc_type': 'sint32',
         'name': 'ANALOG_PATH',
         'resettable': True,
         'type': 'ViInt32'
     },
+    1150223: {
+        'codegen_method': 'public',
+        'grpc_type': 'sint32',
+        'name': 'GAIN_DAC_VALUE',
+        'resettable': True,
+        'type': 'ViInt32'
+    },
+    1150224: {
+        'codegen_method': 'public',
+        'grpc_type': 'sint32',
+        'name': 'OFFSET_DAC_VALUE',
+        'resettable': True,
+        'type': 'ViInt32'
+    },
+    1150225: {
+        'codegen_method': 'public',
+        'grpc_type': 'sint32',
+        'name': 'OSCILLATOR_FREQ_DAC_VALUE',
+        'resettable': True,
+        'type': 'ViInt32'
+    },
+    1150228: {
+        'codegen_method': 'public',
+        'grpc_type': 'double',
+        'name': 'PRE_AMPLIFIER_ATTENUATION',
+        'resettable': True,
+        'type': 'ViReal64'
+    },
+    1150229: {
+        'codegen_method': 'public',
+        'grpc_type': 'double',
+        'name': 'POST_AMPLIFIER_ATTENUATION',
+        'resettable': True,
+        'type': 'ViReal64'
+    },
     1150230: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'sint32',
         'name': 'EXPORTED_SAMPLE_CLOCK_TIMEBASE_DIVISOR',
         'resettable': True,
         'type': 'ViInt32'
     },
     1150231: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'double',
         'name': 'SAMPLE_CLOCK_ABSOLUTE_DELAY',
         'resettable': True,
         'type': 'ViReal64'
     },
     1150232: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'sint32',
         'name': 'OSCILLATOR_PHASE_DAC_VALUE',
         'resettable': True,
         'type': 'ViInt32'
     },
     1150233: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'sint32',
         'name': 'EXTERNAL_CLOCK_DELAY_BINARY_VALUE',
         'resettable': True,
         'type': 'ViInt32'
     },
     1150234: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'sint32',
         'name': 'ANALOG_DATA_MASK',
         'resettable': True,
         'type': 'ViInt32'
     },
     1150235: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'sint32',
         'name': 'ANALOG_STATIC_VALUE',
         'resettable': True,
         'type': 'ViInt32'
     },
     1150236: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'sint32',
         'name': 'DIGITAL_DATA_MASK',
         'resettable': True,
         'type': 'ViInt32'
     },
     1150237: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'sint32',
         'name': 'DIGITAL_STATIC_VALUE',
         'resettable': True,
         'type': 'ViInt32'
     },
     1150238: {
-        'access': 'read only',
+        'codegen_method': 'public',
+        'grpc_type': 'sint32',
         'name': 'FUNC_BUFFER_SIZE',
         'resettable': False,
         'type': 'ViInt32'
     },
     1150239: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'sint32',
         'name': 'FUNC_MAX_BUFFER_SIZE',
         'resettable': False,
         'type': 'ViInt32'
     },
     1150240: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'sint32',
         'name': 'FILE_TRANSFER_BLOCK_SIZE',
         'resettable': False,
         'type': 'ViInt32'
     },
     1150241: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'sint32',
         'name': 'DATA_TRANSFER_BLOCK_SIZE',
         'resettable': True,
         'type': 'ViInt32'
     },
     1150242: {
-        'access': 'read only',
+        'codegen_method': 'public',
+        'grpc_type': 'sint32',
         'name': 'MEMORY_SIZE',
         'resettable': False,
         'type': 'ViInt32'
     },
     1150243: {
-        'access': 'read only',
+        'codegen_method': 'public',
+        'grpc_type': 'string',
         'name': 'SERIAL_NUMBER',
         'resettable': False,
         'type': 'ViString'
     },
     1150244: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'bool',
         'name': 'DIRECT_DMA_ENABLED',
         'resettable': True,
         'type': 'ViBoolean'
     },
     1150245: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'sint32',
         'name': 'DIRECT_DMA_WINDOW_SIZE',
         'resettable': True,
         'type': 'ViInt32'
     },
     1150246: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'bool',
         'name': 'OSP_ENABLED',
         'resettable': False,
         'type': 'ViBoolean'
     },
     1150247: {
-        'access': 'read-write',
+        'codegen_method': 'public',
         'enum': 'DataProcessingMode',
+        'grpc_type': 'sint32',
         'name': 'OSP_DATA_PROCESSING_MODE',
         'resettable': True,
         'type': 'ViInt32'
     },
     1150248: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'double',
         'name': 'OSP_IQ_RATE',
         'resettable': True,
         'type': 'ViReal64'
     },
     1150249: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'bool',
         'name': 'OSP_CARRIER_ENABLED',
         'resettable': True,
         'type': 'ViBoolean'
     },
     1150250: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'double',
         'name': 'OSP_CARRIER_FREQUENCY',
         'resettable': True,
         'type': 'ViReal64'
     },
     1150251: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'double',
         'name': 'OSP_CARRIER_PHASE_I',
         'resettable': True,
         'type': 'ViReal64'
     },
     1150252: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'double',
         'name': 'OSP_CARRIER_PHASE_Q',
         'resettable': True,
         'type': 'ViReal64'
     },
     1150253: {
-        'access': 'read-write',
+        'codegen_method': 'public',
         'enum': 'FilterType',
+        'grpc_type': 'sint32',
         'name': 'OSP_FIR_FILTER_TYPE',
         'resettable': True,
         'type': 'ViInt32'
     },
     1150254: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'double',
         'name': 'DIGITAL_GAIN',
         'resettable': True,
         'type': 'ViReal64'
     },
     1150255: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'bool',
         'name': 'OSP_FIR_FILTER_ENABLED',
         'resettable': True,
         'type': 'ViBoolean'
     },
     1150256: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'double',
         'name': 'OSP_FIR_FILTER_INTERPOLATION',
         'resettable': True,
         'type': 'ViReal64'
     },
     1150257: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'bool',
         'name': 'OSP_CIC_FILTER_ENABLED',
         'resettable': True,
         'type': 'ViBoolean'
     },
     1150258: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'double',
         'name': 'OSP_CIC_FILTER_INTERPOLATION',
         'resettable': True,
         'type': 'ViReal64'
     },
     1150259: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'double',
         'name': 'OSP_FIR_FILTER_ROOT_RAISED_COSINE_ALPHA',
         'resettable': True,
         'type': 'ViReal64'
     },
     1150260: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'double',
         'name': 'OSP_FIR_FILTER_RAISED_COSINE_ALPHA',
         'resettable': True,
         'type': 'ViReal64'
     },
     1150261: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'double',
         'name': 'OSP_FIR_FILTER_FLAT_PASSBAND',
         'resettable': True,
         'type': 'ViReal64'
     },
     1150262: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'double',
         'name': 'OSP_FIR_FILTER_GAUSSIAN_BT',
         'resettable': True,
         'type': 'ViReal64'
     },
     1150263: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'double',
         'name': 'OSP_CIC_FILTER_GAIN',
         'resettable': True,
         'type': 'ViReal64'
     },
     1150264: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'double',
         'name': 'OSP_PRE_FILTER_GAIN_I',
         'resettable': True,
         'type': 'ViReal64'
     },
     1150265: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'double',
         'name': 'OSP_PRE_FILTER_GAIN_Q',
         'resettable': True,
         'type': 'ViReal64'
     },
     1150266: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'double',
         'name': 'OSP_PRE_FILTER_OFFSET_I',
         'resettable': True,
         'type': 'ViReal64'
     },
     1150267: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'double',
         'name': 'OSP_PRE_FILTER_OFFSET_Q',
         'resettable': True,
         'type': 'ViReal64'
     },
     1150268: {
-        'access': 'read-write',
+        'codegen_method': 'public',
         'enum': 'OspOverflowErrorReporting',
+        'grpc_type': 'sint32',
         'name': 'OSP_OVERFLOW_ERROR_REPORTING',
         'resettable': True,
         'type': 'ViInt32'
     },
     1150269: {
-        'access': 'read-write',
+        'codegen_method': 'public',
         'enum': 'OspOverflowStatus',
+        'grpc_type': 'sint32',
         'name': 'OSP_OVERFLOW_STATUS',
         'resettable': True,
         'type': 'ViInt32'
     },
     1150270: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'string',
         'name': 'SCRIPT_TO_GENERATE',
         'resettable': False,
         'type': 'ViString'
     },
     1150271: {
-        'access': 'read only',
+        'codegen_method': 'public',
+        'grpc_type': 'sint32',
         'name': 'MARKER_EVENTS_COUNT',
         'resettable': False,
         'type': 'ViInt32'
     },
     1150272: {
-        'access': 'read only',
+        'codegen_method': 'public',
+        'grpc_type': 'sint32',
         'name': 'SCRIPT_TRIGGERS_COUNT',
         'resettable': False,
         'type': 'ViInt32'
     },
     1150273: {
-        'access': 'read only',
+        'codegen_method': 'public',
+        'grpc_type': 'sint32',
         'name': 'DATA_MARKER_EVENTS_COUNT',
         'resettable': False,
         'type': 'ViInt32'
     },
     1150274: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'sint32',
         'name': 'DIRECT_DMA_WINDOW_ADDRESS',
         'resettable': True,
         'type': 'ViInt32'
     },
     1150280: {
-        'access': 'read-write',
+        'codegen_method': 'public',
         'enum': 'StartTriggerType',
+        'grpc_type': 'sint32',
         'name': 'START_TRIGGER_TYPE',
         'resettable': True,
         'type': 'ViInt32'
     },
     1150281: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'string',
         'name': 'DIGITAL_EDGE_START_TRIGGER_SOURCE',
         'resettable': True,
         'type': 'ViString'
     },
     1150282: {
-        'access': 'read-write',
+        'codegen_method': 'public',
         'enum': 'StartTriggerDigitalEdgeEdge',
+        'grpc_type': 'sint32',
         'name': 'DIGITAL_EDGE_START_TRIGGER_EDGE',
         'resettable': True,
         'type': 'ViInt32'
     },
     1150283: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'string',
         'name': 'EXPORTED_START_TRIGGER_OUTPUT_TERMINAL',
         'resettable': True,
         'type': 'ViString'
     },
     1150290: {
-        'access': 'read-write',
+        'codegen_method': 'public',
         'enum': 'ScriptTriggerType',
+        'grpc_type': 'sint32',
         'name': 'SCRIPT_TRIGGER_TYPE',
         'resettable': True,
         'type': 'ViInt32'
     },
     1150291: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'string',
         'name': 'DIGITAL_EDGE_SCRIPT_TRIGGER_SOURCE',
         'resettable': True,
         'type': 'ViString'
     },
     1150292: {
-        'access': 'read-write',
+        'codegen_method': 'public',
         'enum': 'ScriptTriggerDigitalEdgeEdge',
+        'grpc_type': 'sint32',
         'name': 'DIGITAL_EDGE_SCRIPT_TRIGGER_EDGE',
         'resettable': True,
         'type': 'ViInt32'
     },
     1150293: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'string',
         'name': 'DIGITAL_LEVEL_SCRIPT_TRIGGER_SOURCE',
         'resettable': True,
         'type': 'ViString'
     },
     1150294: {
-        'access': 'read-write',
+        'codegen_method': 'public',
         'enum': 'ScriptTriggerDigitalLevelActiveLevel',
+        'grpc_type': 'sint32',
         'name': 'DIGITAL_LEVEL_SCRIPT_TRIGGER_ACTIVE_LEVEL',
         'resettable': True,
         'type': 'ViInt32'
     },
     1150295: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'string',
         'name': 'EXPORTED_SCRIPT_TRIGGER_OUTPUT_TERMINAL',
         'resettable': True,
         'type': 'ViString'
     },
     1150310: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'string',
         'name': 'READY_FOR_START_EVENT_OUTPUT_TERMINAL',
         'resettable': True,
         'type': 'ViString'
     },
     1150311: {
-        'access': 'read-write',
+        'codegen_method': 'public',
         'enum': 'ReadyForStartEventActiveLevel',
+        'grpc_type': 'sint32',
         'name': 'READY_FOR_START_EVENT_LEVEL_ACTIVE_LEVEL',
         'resettable': True,
         'type': 'ViInt32'
     },
     1150312: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'string',
         'name': 'MARKER_EVENT_OUTPUT_TERMINAL',
         'resettable': True,
         'type': 'ViString'
     },
     1150313: {
-        'access': 'read-write',
+        'codegen_method': 'public',
         'enum': 'MarkerEventPulsePolarity',
+        'grpc_type': 'sint32',
         'name': 'MARKER_EVENT_PULSE_POLARITY',
         'resettable': True,
         'type': 'ViInt32'
     },
     1150314: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'string',
         'name': 'STARTED_EVENT_OUTPUT_TERMINAL',
         'resettable': True,
         'type': 'ViString'
     },
     1150315: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'string',
         'name': 'DONE_EVENT_OUTPUT_TERMINAL',
         'resettable': True,
         'type': 'ViString'
     },
     1150316: {
-        'access': 'read-write',
+        'codegen_method': 'public',
         'enum': 'StartedEventActiveLevel',
+        'grpc_type': 'sint32',
         'name': 'STARTED_EVENT_LEVEL_ACTIVE_LEVEL',
         'resettable': True,
         'type': 'ViInt32'
     },
     1150317: {
-        'access': 'read-write',
+        'codegen_method': 'public',
         'enum': 'DoneEventActiveLevel',
+        'grpc_type': 'sint32',
         'name': 'DONE_EVENT_LEVEL_ACTIVE_LEVEL',
         'resettable': True,
         'type': 'ViInt32'
     },
     1150318: {
-        'access': 'read-write',
+        'codegen_method': 'public',
         'enum': 'StartedEventPulsePolarity',
+        'grpc_type': 'sint32',
         'name': 'STARTED_EVENT_PULSE_POLARITY',
         'resettable': True,
         'type': 'ViInt32'
     },
     1150319: {
-        'access': 'read-write',
+        'codegen_method': 'public',
         'enum': 'DoneEventPulsePolarity',
+        'grpc_type': 'sint32',
         'name': 'DONE_EVENT_PULSE_POLARITY',
         'resettable': True,
         'type': 'ViInt32'
     },
     1150320: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'string',
         'name': 'EXPORTED_SAMPLE_CLOCK_OUTPUT_TERMINAL',
         'resettable': True,
         'type': 'ViString'
     },
     1150321: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'string',
         'name': 'EXPORTED_REFERENCE_CLOCK_OUTPUT_TERMINAL',
         'resettable': True,
         'type': 'ViString'
     },
     1150322: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'string',
         'name': 'EXPORTED_ONBOARD_REFERENCE_CLOCK_OUTPUT_TERMINAL',
         'resettable': True,
         'type': 'ViString'
     },
     1150323: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'bool',
         'name': 'FLATNESS_CORRECTION_ENABLED',
         'resettable': True,
         'type': 'ViBoolean'
     },
     1150324: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'sint32',
         'name': 'STREAMING_WAVEFORM_HANDLE',
         'resettable': False,
         'type': 'ViInt32'
     },
     1150325: {
-        'access': 'read only',
+        'codegen_method': 'public',
+        'grpc_type': 'sint32',
         'name': 'STREAMING_SPACE_AVAILABLE_IN_WAVEFORM',
         'resettable': False,
         'type': 'ViInt32'
     },
     1150326: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'string',
         'name': 'STREAMING_WAVEFORM_NAME',
         'resettable': True,
         'type': 'ViString'
     },
     1150327: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'sint32',
         'name': 'ARB_MARKER_POSITION',
         'resettable': False,
         'type': 'ViInt32'
     },
     1150328: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'sint32',
         'name': 'ARB_REPEAT_COUNT',
         'resettable': False,
         'type': 'ViInt32'
     },
     1150329: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'string',
         'name': 'EXPORTED_SAMPLE_CLOCK_TIMEBASE_OUTPUT_TERMINAL',
         'resettable': True,
         'type': 'ViString'
     },
     1150330: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'string',
         'name': 'SYNC_OUT_OUTPUT_TERMINAL',
         'resettable': True,
         'type': 'ViString'
     },
     1150331: {
-        'access': 'read-write',
+        'codegen_method': 'public',
         'enum': 'StartedEventOutputBehavior',
+        'grpc_type': 'sint32',
         'name': 'STARTED_EVENT_OUTPUT_BEHAVIOR',
         'resettable': True,
         'type': 'ViInt32'
     },
     1150332: {
-        'access': 'read-write',
+        'codegen_method': 'public',
         'enum': 'DoneEventOutputBehavior',
+        'grpc_type': 'sint32',
         'name': 'DONE_EVENT_OUTPUT_BEHAVIOR',
         'resettable': True,
         'type': 'ViInt32'
     },
     1150333: {
-        'access': 'read-write',
+        'codegen_method': 'public',
         'enum': 'StartedEventPulseWidthUnits',
+        'grpc_type': 'sint32',
         'name': 'STARTED_EVENT_PULSE_WIDTH_UNITS',
         'resettable': True,
         'type': 'ViInt32'
     },
     1150334: {
-        'access': 'read-write',
+        'codegen_method': 'public',
         'enum': 'DoneEventPulseWidthUnits',
+        'grpc_type': 'sint32',
         'name': 'DONE_EVENT_PULSE_WIDTH_UNITS',
         'resettable': True,
         'type': 'ViInt32'
     },
     1150335: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'double',
         'name': 'STARTED_EVENT_PULSE_WIDTH',
         'resettable': True,
         'type': 'ViReal64'
     },
     1150336: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'double',
         'name': 'DONE_EVENT_PULSE_WIDTH',
         'resettable': True,
         'type': 'ViReal64'
     },
     1150337: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'sint32',
         'name': 'DATA_MARKER_EVENT_DATA_BIT_NUMBER',
         'resettable': True,
         'type': 'ViInt32'
     },
     1150338: {
-        'access': 'read-write',
+        'codegen_method': 'public',
         'enum': 'DataMarkerEventLevelPolarity',
+        'grpc_type': 'sint32',
         'name': 'DATA_MARKER_EVENT_LEVEL_POLARITY',
         'resettable': True,
         'type': 'ViInt32'
     },
     1150339: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'string',
         'name': 'DATA_MARKER_EVENT_OUTPUT_TERMINAL',
         'resettable': True,
         'type': 'ViString'
     },
     1150340: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'double',
         'name': 'MARKER_EVENT_PULSE_WIDTH',
         'resettable': True,
         'type': 'ViReal64'
     },
     1150341: {
-        'access': 'read-write',
+        'codegen_method': 'public',
         'enum': 'MarkerEventPulseWidthUnits',
+        'grpc_type': 'sint32',
         'name': 'MARKER_EVENT_PULSE_WIDTH_UNITS',
         'resettable': True,
         'type': 'ViInt32'
     },
     1150342: {
-        'access': 'read-write',
+        'codegen_method': 'public',
         'enum': 'MarkerEventOutputBehavior',
+        'grpc_type': 'sint32',
         'name': 'MARKER_EVENT_OUTPUT_BEHAVIOR',
         'resettable': True,
         'type': 'ViInt32'
     },
     1150343: {
-        'access': 'read-write',
+        'codegen_method': 'public',
         'enum': 'MarkerEventToggleInitialState',
+        'grpc_type': 'sint32',
         'name': 'MARKER_EVENT_TOGGLE_INITIAL_STATE',
         'resettable': True,
         'type': 'ViInt32'
     },
     1150344: {
-        'access': 'read only',
+        'codegen_method': 'public',
+        'grpc_type': 'sint32',
         'name': 'ALL_MARKER_EVENTS_LIVE_STATUS',
         'resettable': False,
         'type': 'ViInt32'
     },
     1150345: {
-        'access': 'read only',
+        'codegen_method': 'public',
+        'grpc_type': 'bool',
         'name': 'MARKER_EVENT_LIVE_STATUS',
         'resettable': False,
         'type': 'ViBoolean'
     },
     1150348: {
-        'access': 'read only',
+        'codegen_method': 'public',
+        'grpc_type': 'bool',
         'name': 'READY_FOR_START_EVENT_LIVE_STATUS',
         'resettable': False,
         'type': 'ViBoolean'
     },
     1150349: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'sint32',
         'name': 'ALL_MARKER_EVENTS_LATCHED_STATUS',
         'resettable': True,
         'type': 'ViInt32'
     },
     1150350: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'bool',
         'name': 'MARKER_EVENT_LATCHED_STATUS',
         'resettable': True,
         'type': 'ViBoolean'
     },
     1150351: {
-        'access': 'read only',
+        'codegen_method': 'public',
+        'grpc_type': 'bool',
         'name': 'DONE_EVENT_LATCHED_STATUS',
         'resettable': False,
         'type': 'ViBoolean'
     },
     1150352: {
-        'access': 'read only',
+        'codegen_method': 'public',
+        'grpc_type': 'bool',
         'name': 'STARTED_EVENT_LATCHED_STATUS',
         'resettable': False,
         'type': 'ViBoolean'
     },
     1150354: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'double',
         'name': 'MARKER_EVENT_DELAY',
         'resettable': True,
         'type': 'ViReal64'
     },
     1150355: {
-        'access': 'read-write',
+        'codegen_method': 'public',
         'enum': 'MarkerEventDelayUnits',
+        'grpc_type': 'sint32',
         'name': 'MARKER_EVENT_DELAY_UNITS',
         'resettable': True,
         'type': 'ViInt32'
     },
     1150356: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'double',
         'name': 'STARTED_EVENT_DELAY',
         'resettable': True,
         'type': 'ViReal64'
     },
     1150357: {
-        'access': 'read-write',
+        'codegen_method': 'public',
         'enum': 'StartedEventDelayUnits',
+        'grpc_type': 'sint32',
         'name': 'STARTED_EVENT_DELAY_UNITS',
         'resettable': True,
         'type': 'ViInt32'
     },
     1150358: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'double',
         'name': 'DONE_EVENT_DELAY',
         'resettable': True,
         'type': 'ViReal64'
     },
     1150359: {
-        'access': 'read-write',
+        'codegen_method': 'public',
         'enum': 'DoneEventDelayUnits',
+        'grpc_type': 'sint32',
         'name': 'DONE_EVENT_DELAY_UNITS',
         'resettable': True,
         'type': 'ViInt32'
     },
     1150362: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'bool',
         'name': 'PCI_DMA_OPTIMIZATIONS_ENABLED',
         'resettable': True,
         'type': 'ViBoolean'
     },
     1150365: {
-        'access': 'read-write',
+        'codegen_method': 'public',
         'enum': 'TerminalConfiguration',
+        'grpc_type': 'sint32',
         'name': 'TERMINAL_CONFIGURATION',
         'resettable': True,
         'type': 'ViInt32'
     },
     1150366: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'double',
         'name': 'COMMON_MODE_OFFSET',
         'resettable': True,
         'type': 'ViReal64'
     },
     1150367: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'enum': 'SampleClockTimebaseSource',
+        'grpc_type': 'string',
         'name': 'SAMPLE_CLOCK_TIMEBASE_SOURCE',
         'resettable': True,
         'type': 'ViString'
     },
     1150368: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'double',
         'name': 'SAMPLE_CLOCK_TIMEBASE_RATE',
         'resettable': True,
         'type': 'ViReal64'
     },
     1150369: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'double',
         'name': 'CHANNEL_DELAY',
         'resettable': True,
         'type': 'ViReal64'
     },
     1150370: {
-        'access': 'read-write',
+        'codegen_method': 'public',
         'enum': 'OspMode',
+        'grpc_type': 'sint32',
         'name': 'OSP_MODE',
         'resettable': True,
         'type': 'ViInt32'
     },
     1150371: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'double',
         'name': 'OSP_FREQUENCY_SHIFT',
         'resettable': True,
         'type': 'ViReal64'
     },
     1150373: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'double',
         'name': 'DATA_TRANSFER_MAXIMUM_BANDWIDTH',
         'resettable': True,
         'type': 'ViReal64'
     },
     1150374: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'sint32',
         'name': 'DATA_TRANSFER_PREFERRED_PACKET_SIZE',
         'resettable': True,
         'type': 'ViInt32'
     },
     1150375: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'sint32',
         'name': 'DATA_TRANSFER_MAXIMUM_IN_FLIGHT_READS',
         'resettable': True,
         'type': 'ViInt32'
     },
     1150376: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'double',
         'name': 'EXTERNAL_SAMPLE_CLOCK_MULTIPLIER',
         'resettable': True,
         'type': 'ViReal64'
     },
     1150377: {
-        'access': 'read-write',
+        'codegen_method': 'public',
         'enum': 'IdleBehavior',
+        'grpc_type': 'sint32',
         'name': 'IDLE_BEHAVIOR',
         'resettable': True,
         'type': 'ViInt32'
     },
     1150378: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'sint32',
         'name': 'IDLE_VALUE',
         'resettable': True,
         'type': 'ViInt32'
     },
     1150379: {
-        'access': 'read-write',
+        'codegen_method': 'public',
         'enum': 'WaitBehavior',
+        'grpc_type': 'sint32',
         'name': 'WAIT_BEHAVIOR',
         'resettable': True,
         'type': 'ViInt32'
     },
     1150380: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'sint32',
         'name': 'WAIT_VALUE',
         'resettable': True,
         'type': 'ViInt32'
     },
     1150389: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'bool',
         'name': 'OSP_COMPENSATE_FOR_FILTER_GROUP_DELAY',
         'resettable': True,
         'type': 'ViBoolean'
     },
     1150390: {
-        'access': 'read only',
+        'codegen_method': 'public',
+        'grpc_type': 'string',
         'name': 'MODULE_REVISION',
         'resettable': False,
         'type': 'ViString'
     },
     1150391: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'bool',
         'name': 'P2P_ENABLED',
         'resettable': False,
         'type': 'ViBoolean'
     },
     1150392: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'string',
         'name': 'P2P_DESTINATION_CHANNELS',
         'resettable': False,
         'type': 'ViString'
     },
     1150393: {
-        'access': 'read only',
+        'codegen_method': 'public',
+        'grpc_type': 'sint32',
         'name': 'P2P_ENDPOINT_SIZE',
         'resettable': False,
         'type': 'ViInt32'
     },
     1150394: {
-        'access': 'read only',
+        'codegen_method': 'public',
+        'grpc_type': 'sint32',
         'name': 'P2P_SPACE_AVAILABLE_IN_ENDPOINT',
         'resettable': False,
         'type': 'ViInt32'
     },
     1150395: {
-        'access': 'read only',
+        'codegen_method': 'public',
+        'grpc_type': 'sint32',
         'name': 'P2P_MOST_SPACE_AVAILABLE_IN_ENDPOINT',
         'resettable': False,
         'type': 'ViInt32'
     },
     1150396: {
-        'access': 'read only',
+        'codegen_method': 'public',
+        'grpc_type': 'sint32',
         'name': 'P2P_ENDPOINT_COUNT',
         'resettable': False,
         'type': 'ViInt32'
     },
     1150397: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'bool',
         'name': 'P2P_MANUAL_CONFIGURATION_ENABLED',
         'resettable': False,
         'type': 'ViBoolean'
     },
     1150398: {
-        'access': 'write only',
+        'codegen_method': 'public',
+        'grpc_type': 'int64',
         'name': 'P2P_DATA_TRANSFER_PERMISSION_ADDRESS',
         'resettable': False,
         'type': 'ViInt64'
     },
     1150399: {
-        'access': 'read-write',
+        'codegen_method': 'public',
         'enum': 'AddressType',
+        'grpc_type': 'sint32',
         'name': 'P2P_DATA_TRANSFER_PERMISSION_ADDRESS_TYPE',
         'resettable': False,
         'type': 'ViInt32'
     },
     1150400: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'sint32',
         'name': 'P2P_DATA_TRANSFER_PERMISSION_INTERVAL',
         'resettable': False,
         'type': 'ViInt32'
     },
     1150401: {
-        'access': 'read only',
+        'codegen_method': 'public',
+        'grpc_type': 'int64',
         'name': 'P2P_ENDPOINT_WINDOW_ADDRESS',
         'resettable': False,
         'type': 'ViInt64'
     },
     1150402: {
-        'access': 'read-write',
+        'codegen_method': 'public',
         'enum': 'AddressType',
+        'grpc_type': 'sint32',
         'name': 'P2P_ENDPOINT_WINDOW_ADDRESS_TYPE',
         'resettable': False,
         'type': 'ViInt32'
     },
     1150403: {
-        'access': 'read only',
+        'codegen_method': 'public',
+        'grpc_type': 'sint32',
         'name': 'P2P_ENDPOINT_WINDOW_SIZE',
         'resettable': False,
         'type': 'ViInt32'
     },
     1150405: {
-        'access': 'read only',
+        'codegen_method': 'public',
+        'grpc_type': 'int64',
         'name': 'P2P_DONE_NOTIFICATION_ADDRESS',
         'resettable': False,
         'type': 'ViInt64'
     },
     1150406: {
-        'access': 'read-write',
+        'codegen_method': 'public',
         'enum': 'AddressType',
+        'grpc_type': 'sint32',
         'name': 'P2P_DONE_NOTIFICATION_ADDRESS_TYPE',
         'resettable': False,
         'type': 'ViInt32'
     },
     1150407: {
-        'access': 'read only',
+        'codegen_method': 'public',
+        'grpc_type': 'sint32',
         'name': 'P2P_DONE_NOTIFICATION_VALUE',
         'resettable': False,
         'type': 'ViInt32'
     },
     1150408: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'sint32',
         'name': 'P2P_DATA_TRANSFER_PERMISSION_INITIAL_CREDITS',
         'resettable': False,
         'type': 'ViInt32'
     },
     1150409: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'double',
         'name': 'STREAMING_WRITE_TIMEOUT',
         'resettable': True,
         'type': 'ViReal64'
     },
     1150410: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'sint32',
         'name': 'P2P_ENDPOINT_FULLNESS_START_TRIGGER_LEVEL',
         'resettable': False,
         'type': 'ViInt32'
     },
     1150411: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'bool',
         'name': 'AUX_POWER_ENABLED',
         'resettable': True,
         'type': 'ViBoolean'
     },
     1150412: {
-        'access': 'read only',
+        'codegen_method': 'public',
+        'grpc_type': 'string',
         'name': 'FPGA_BITFILE_PATH',
         'resettable': False,
         'type': 'ViString'
     },
     1150413: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'double',
         'name': 'ABSOLUTE_DELAY',
         'resettable': True,
         'type': 'ViReal64'
     },
     1250001: {
-        'access': 'read-write',
+        'codegen_method': 'public',
         'enum': 'OutputMode',
+        'grpc_type': 'sint32',
         'name': 'OUTPUT_MODE',
         'resettable': False,
         'type': 'ViInt32'
     },
     1250003: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'bool',
         'name': 'OUTPUT_ENABLED',
         'resettable': True,
         'type': 'ViBoolean'
     },
     1250004: {
-        'access': 'read-write',
+        'codegen_method': 'public',
         'enum': 'OutputImpedance',
+        'grpc_type': 'double',
         'name': 'OUTPUT_IMPEDANCE',
         'resettable': True,
         'type': 'ViReal64'
     },
     1250101: {
-        'access': 'read-write',
+        'codegen_method': 'public',
         'enum': 'Waveform',
+        'grpc_type': 'sint32',
         'name': 'FUNC_WAVEFORM',
         'resettable': False,
         'type': 'ViInt32'
     },
     1250102: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'double',
         'name': 'FUNC_AMPLITUDE',
         'resettable': False,
         'type': 'ViReal64'
     },
     1250103: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'double',
         'name': 'FUNC_DC_OFFSET',
         'resettable': False,
         'type': 'ViReal64'
     },
     1250104: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'double',
         'name': 'FUNC_FREQUENCY',
         'resettable': False,
         'type': 'ViReal64'
     },
     1250105: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'double',
         'name': 'FUNC_START_PHASE',
         'resettable': False,
         'type': 'ViReal64'
     },
     1250106: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'double',
         'name': 'FUNC_DUTY_CYCLE_HIGH',
         'resettable': False,
         'type': 'ViReal64'
     },
     1250201: {
-        'access': 'read-write',
+        'codegen_method': 'public',
         'enum': 'ArbitraryWaveformHandle',
+        'grpc_type': 'sint32',
         'name': 'ARB_WAVEFORM_HANDLE',
         'resettable': False,
         'type': 'ViInt32'
     },
     1250202: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'double',
         'name': 'ARB_GAIN',
         'resettable': True,
         'type': 'ViReal64'
     },
     1250203: {
-        'access': 'read-write',
+        'codegen_method': 'public',
+        'grpc_type': 'double',
         'name': 'ARB_OFFSET',
         'resettable': True,
         'type': 'ViReal64'
     },
     1250204: {
-        'access': 'read-write',
+        'codegen_method': 'public',
         'enum': 'SampleRate',
+        'grpc_type': 'double',
         'name': 'ARB_SAMPLE_RATE',
         'resettable': True,
         'type': 'ViReal64'
     },
     1250205: {
-        'access': 'read only',
+        'codegen_method': 'public',
+        'grpc_type': 'sint32',
         'name': 'MAX_NUM_WAVEFORMS',
         'resettable': False,
         'type': 'ViInt32'
     },
     1250206: {
-        'access': 'read only',
+        'codegen_method': 'public',
+        'grpc_type': 'sint32',
         'name': 'WAVEFORM_QUANTUM',
         'resettable': False,
         'type': 'ViInt32'
     },
     1250207: {
-        'access': 'read only',
+        'codegen_method': 'public',
+        'grpc_type': 'sint32',
         'name': 'MIN_WAVEFORM_SIZE',
         'resettable': False,
         'type': 'ViInt32'
     },
     1250208: {
-        'access': 'read only',
+        'codegen_method': 'public',
+        'grpc_type': 'sint32',
         'name': 'MAX_WAVEFORM_SIZE',
         'resettable': False,
         'type': 'ViInt32'
     },
     1250211: {
-        'access': 'read-write',
+        'codegen_method': 'public',
         'enum': 'ArbitrarySequenceHandle',
+        'grpc_type': 'sint32',
         'name': 'ARB_SEQUENCE_HANDLE',
         'resettable': False,
         'type': 'ViInt32'
     },
     1250212: {
-        'access': 'read only',
+        'codegen_method': 'public',
+        'grpc_type': 'sint32',
         'name': 'MAX_NUM_SEQUENCES',
         'resettable': False,
         'type': 'ViInt32'
     },
     1250213: {
-        'access': 'read only',
+        'codegen_method': 'public',
+        'grpc_type': 'sint32',
         'name': 'MIN_SEQUENCE_LENGTH',
         'resettable': False,
         'type': 'ViInt32'
     },
     1250214: {
-        'access': 'read only',
+        'codegen_method': 'public',
+        'grpc_type': 'sint32',
         'name': 'MAX_SEQUENCE_LENGTH',
         'resettable': False,
         'type': 'ViInt32'
     },
     1250215: {
-        'access': 'read only',
+        'codegen_method': 'public',
+        'grpc_type': 'sint32',
         'name': 'MAX_LOOP_COUNT',
         'resettable': False,
         'type': 'ViInt32'
     },
     1250302: {
-        'access': 'read-write',
+        'codegen_method': 'public',
         'enum': 'TriggerSource',
+        'grpc_type': 'sint32',
         'name': 'TRIGGER_SOURCE',
         'resettable': True,
         'type': 'ViInt32'
     },
     1250350: {
+        'codegen_method': 'public',
         'enum': 'BurstCount',
+        'grpc_type': 'sint32',
         'name': 'BURST_COUNT',
+        'resettable': True,
         'type': 'ViInt32'
     }
 }

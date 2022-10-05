@@ -193,7 +193,7 @@ def _get_enum_parameters(parameter, parameter_name, parameter_type, is_array, us
             "grpc_field_number": grpc_raw_field_number,
         }
     )
-    return enum_parameters
+    return sorted(enum_parameters, key=lambda x: x["grpc_field_number"])
 
 
 def _get_parameter_type(parameter):

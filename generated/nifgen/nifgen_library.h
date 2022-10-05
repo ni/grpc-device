@@ -85,7 +85,7 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
   ViStatus ErrorHandler(ViSession vi, ViStatus errorCode, ViChar errorMessage[256]);
   ViStatus ErrorMessage(ViSession vi, ViStatus errorCode, ViChar errorMessage[256]);
   ViStatus ErrorQuery(ViSession vi, ViInt32* errorCode, ViChar errorMessage[256]);
-  ViStatus ExportAttributeConfigurationBuffer(ViSession vi, ViInt32 sizeInBytes, ViAddr configuration[]);
+  ViStatus ExportAttributeConfigurationBuffer(ViSession vi, ViInt32 sizeInBytes, ViInt8 configuration[]);
   ViStatus ExportAttributeConfigurationFile(ViSession vi, ViConstString filePath);
   ViStatus ExportSignal(ViSession vi, ViInt32 signal, ViConstString signalIdentifier, ViConstString outputTerminal);
   ViStatus GetAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean* attributeValue);
@@ -107,11 +107,11 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
   ViStatus GetSelfCalLastTemp(ViSession vi, ViReal64* temperature);
   ViStatus GetSelfCalSupported(ViSession vi, ViBoolean* selfCalSupported);
   ViStatus GetStreamEndpointHandle(ViSession vi, ViConstString streamEndpoint, ViUInt32* readerHandle);
-  ViStatus ImportAttributeConfigurationBuffer(ViSession vi, ViInt32 sizeInBytes, ViAddr configuration[]);
+  ViStatus ImportAttributeConfigurationBuffer(ViSession vi, ViInt32 sizeInBytes, ViInt8 configuration[]);
   ViStatus ImportAttributeConfigurationFile(ViSession vi, ViConstString filePath);
   ViStatus Init(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* vi);
-  ViStatus InitWithOptions(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViConstString optionString, ViSession* vi);
-  ViStatus InitializeWithChannels(ViRsrc resourceName, ViConstString channelName, ViBoolean resetDevice, ViConstString optionString, ViSession* vi);
+  ViStatus InitWithOptions(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViString optionString, ViSession* vi);
+  ViStatus InitializeWithChannels(ViRsrc resourceName, ViString channelName, ViBoolean resetDevice, ViString optionString, ViSession* vi);
   ViStatus InitiateGeneration(ViSession vi);
   ViStatus InvalidateAllAttributes(ViSession vi);
   ViStatus IsDone(ViSession vi, ViBoolean* done);
@@ -244,7 +244,7 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
   using GetStreamEndpointHandlePtr = decltype(&niFgen_GetStreamEndpointHandle);
   using ImportAttributeConfigurationBufferPtr = decltype(&niFgen_ImportAttributeConfigurationBuffer);
   using ImportAttributeConfigurationFilePtr = decltype(&niFgen_ImportAttributeConfigurationFile);
-  using InitPtr = decltype(&niFgen_init );
+  using InitPtr = decltype(&niFgen_init);
   using InitWithOptionsPtr = decltype(&niFgen_InitWithOptions);
   using InitializeWithChannelsPtr = decltype(&niFgen_InitializeWithChannels);
   using InitiateGenerationPtr = decltype(&niFgen_InitiateGeneration);

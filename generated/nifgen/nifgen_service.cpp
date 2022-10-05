@@ -309,7 +309,26 @@ namespace nifgen_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
-      auto attribute_value = request->attribute_value_raw().c_str();
+      ViConstString attribute_value;
+      switch (request->attribute_value_enum_case()) {
+        case nifgen_grpc::CheckAttributeViStringRequest::AttributeValueEnumCase::kAttributeValueMapped: {
+          auto attribute_value_imap_it = nifgenstringattributevaluesmapped_input_map_.find(request->attribute_value_mapped());
+          if (attribute_value_imap_it == nifgenstringattributevaluesmapped_input_map_.end()) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for attribute_value_mapped was not specified or out of range.");
+          }
+          attribute_value = const_cast<ViConstString>((attribute_value_imap_it->second).c_str());
+          break;
+        }
+        case nifgen_grpc::CheckAttributeViStringRequest::AttributeValueEnumCase::kAttributeValueRaw: {
+          attribute_value = const_cast<ViConstString>(request->attribute_value_raw().c_str());
+          break;
+        }
+        case nifgen_grpc::CheckAttributeViStringRequest::AttributeValueEnumCase::ATTRIBUTE_VALUE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for attribute_value was not specified or out of range");
+          break;
+        }
+      }
+
       auto status = library_->CheckAttributeViString(vi, channel_name, attribute_id, attribute_value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -1893,9 +1912,8 @@ namespace nifgen_grpc {
         }
         ViInt32 size_in_bytes = status;
 
-        response->mutable_configuration()->Resize(size_in_bytes, 0);
-        ViAddr* configuration = reinterpret_cast<ViAddr*>(response->mutable_configuration()->mutable_data());
-        status = library_->ExportAttributeConfigurationBuffer(vi, size_in_bytes, configuration);
+        std::string configuration(size_in_bytes, '\0');
+        status = library_->ExportAttributeConfigurationBuffer(vi, size_in_bytes, (ViInt8*)configuration.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(size_in_bytes)) {
           // buffer is now too small, try again
           continue;
@@ -1904,6 +1922,7 @@ namespace nifgen_grpc {
           return ConvertApiErrorStatusForViSession(context, status, vi);
         }
         response->set_status(status);
+        response->set_configuration(configuration);
         return ::grpc::Status::OK;
       }
     }
@@ -2576,7 +2595,7 @@ namespace nifgen_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViInt32 size_in_bytes = static_cast<ViInt32>(request->configuration().size());
-      auto configuration = const_cast<ViAddr*>(reinterpret_cast<const ViAddr*>(request->configuration().data()));
+      ViInt8* configuration = (ViInt8*)request->configuration().c_str();
       auto status = library_->ImportAttributeConfigurationBuffer(vi, size_in_bytes, configuration);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -2659,7 +2678,7 @@ namespace nifgen_grpc {
       ViRsrc resource_name = (ViRsrc)request->resource_name().c_str();
       ViBoolean id_query = request->id_query();
       ViBoolean reset_device = request->reset_device();
-      auto option_string = request->option_string().c_str();
+      ViString option_string = (ViString)request->option_string().c_str();
 
       auto init_lambda = [&] () {
         ViSession vi;
@@ -2694,9 +2713,9 @@ namespace nifgen_grpc {
     }
     try {
       ViRsrc resource_name = (ViRsrc)request->resource_name().c_str();
-      auto channel_name = request->channel_name().c_str();
+      ViString channel_name = (ViString)request->channel_name().c_str();
       ViBoolean reset_device = request->reset_device();
-      auto option_string = request->option_string().c_str();
+      ViString option_string = (ViString)request->option_string().c_str();
 
       auto init_lambda = [&] () {
         ViSession vi;
@@ -3382,7 +3401,26 @@ namespace nifgen_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
-      auto attribute_value = request->attribute_value_raw().c_str();
+      ViConstString attribute_value;
+      switch (request->attribute_value_enum_case()) {
+        case nifgen_grpc::SetAttributeViStringRequest::AttributeValueEnumCase::kAttributeValueMapped: {
+          auto attribute_value_imap_it = nifgenstringattributevaluesmapped_input_map_.find(request->attribute_value_mapped());
+          if (attribute_value_imap_it == nifgenstringattributevaluesmapped_input_map_.end()) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for attribute_value_mapped was not specified or out of range.");
+          }
+          attribute_value = const_cast<ViConstString>((attribute_value_imap_it->second).c_str());
+          break;
+        }
+        case nifgen_grpc::SetAttributeViStringRequest::AttributeValueEnumCase::kAttributeValueRaw: {
+          attribute_value = const_cast<ViConstString>(request->attribute_value_raw().c_str());
+          break;
+        }
+        case nifgen_grpc::SetAttributeViStringRequest::AttributeValueEnumCase::ATTRIBUTE_VALUE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for attribute_value was not specified or out of range");
+          break;
+        }
+      }
+
       auto status = library_->SetAttributeViString(vi, channel_name, attribute_id, attribute_value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);

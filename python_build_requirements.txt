@@ -6,3 +6,4 @@ black>=21.10b0
 mypy>=0.910
 ni-python-styleguide~=0.1
 pycodestyle==2.7.0
+importlib-metadata==4.12.0
