@@ -1,5 +1,5 @@
 #include <iostream>
-#include <vector>
+#include <map>
 #include <server/converters.h>
 #include <nierr_Status.h>
 #include <nimxlcterminaladaptor_restricted.pb.h>
@@ -12,20 +12,6 @@ namespace nimxlcterminaladaptor_restricted_grpc {
   using nidevice_grpc::converters::convert_to_grpc;
   using nimxlcterminaladaptor_restricted_grpc::NIErrStatus;
   
-// Provide a callback that only returns false because we initialize json to nullptr on initialization.
-bool nierr_noOpReallocJson(struct nierr_Status * s, uint32_t size)
-{
-   return false;
-}
-
-void nierr_Status_initialize(struct nierr_Status * status)
-{
-   status->code = 0;
-   status->capacity = 0;
-   status->reallocJson = &nierr_noOpReallocJson;
-   status->json = nullptr;
-}
-
 class DeviceContainerPtr
 {
     public:
@@ -40,8 +26,7 @@ class DeviceContainerPtr
         library_ = nullptr;
     }
 
-    operator nimxlc_DeviceContainer*()
-    {
+    operator nimxlc_DeviceContainer*() {
         return &container_;
     }
 
@@ -64,8 +49,7 @@ class TerminalContainerPtr
         library_ = nullptr;
     }
 
-    operator nimxlc_TerminalContainer*()
-    {
+    operator nimxlc_TerminalContainer*() {
         return &container_;
     }
 
@@ -83,25 +67,19 @@ class TerminalContainerPtr
         auto grpc_session = request->session();
         nimxlc_Session session = session_repository_->access_session(grpc_session.id(), grpc_session.name());
 
-        nierr_Status status;
-        nimxlcterminaladaptor_restricted_grpc::nierr_Status_initialize(&status);
-       
+        auto status = allocate_output_storage<nierr_Status, NIErrStatus>(context);
         DeviceContainerPtr deviceContainerPtr(library_, library_->getDeviceContainer(session, &status));
-        if (nierr_Status_isNotFatal(&status))
-        {
+        if (nierr_Status_isNotFatal(&status)) {
             nimxlc_DeviceIterator deviceIterator = library_->DeviceContainer_begin(*deviceContainerPtr);
-            while (!library_->DeviceIterator_isEnd(*deviceContainerPtr, deviceIterator) && nierr_Status_isNotFatal(&status))
-            {
+            while (!library_->DeviceIterator_isEnd(*deviceContainerPtr, deviceIterator) && nierr_Status_isNotFatal(&status)) {
                 auto device = response->add_container_out();
                 device->set_name(library_->DeviceIterator_getDeviceName(*deviceContainerPtr, deviceIterator, &status));
                 device->set_supportsonboardclock(library_->DeviceIterator_supportsOnBoardClock(*deviceContainerPtr, deviceIterator, &status));
 
                 TerminalContainerPtr terminalContainerPtr(library_, library_->DeviceIterator_getTerminalContainer(*deviceContainerPtr, deviceIterator, &status));
-                if (nierr_Status_isNotFatal(&status))
-                {
+                if (nierr_Status_isNotFatal(&status)) {
                     nimxlc_TerminalIterator terminalIterator = library_->TerminalContainer_begin(*terminalContainerPtr);
-                    while (!library_->TerminalIterator_isEnd(*terminalContainerPtr, terminalIterator) && nierr_Status_isNotFatal(&status))
-                    {
+                    while (!library_->TerminalIterator_isEnd(*terminalContainerPtr, terminalIterator) && nierr_Status_isNotFatal(&status)) {
                         auto terminal = device->add_terminals();
                         terminal->set_name(library_->TerminalIterator_getTerminalName(*terminalContainerPtr, terminalIterator, &status));
                         terminal->set_visibility(library_->TerminalIterator_getVisibility(*terminalContainerPtr, terminalIterator, &status));
@@ -114,20 +92,10 @@ class TerminalContainerPtr
             }
         }
 
-        response->set_status((&status)->code);
-
-        NIErrStatus* responseCStatus = new NIErrStatus();
-        nidevice_grpc::converters::convert_to_grpc(status, responseCStatus);
-        response->set_allocated_c_status(responseCStatus);
-
-        ::grpc::Status grpcStatus;
-        if (nierr_Status_isFatal(&status)){
-            grpcStatus = ::grpc::Status(::grpc::INTERNAL, status.json);
-        }
-        else {
-            grpcStatus = ::grpc::Status::OK;
-        }
-        return grpcStatus;
+        int32_t statusCode = (&status)->code;
+        response->set_status(statusCode);
+        convert_to_grpc(status, response->mutable_c_status());
+        return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::LibraryLoadException& ex) {
         return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
@@ -137,6 +105,15 @@ class TerminalContainerPtr
 ::grpc::Status NimxlcTerminalAdaptorRestrictedService::ConvertApiErrorStatusForNimxlc_Session(::grpc::ServerContext* context, int32_t status, nimxlc_Session session)
 {
     std::string description;
+    auto metadata = context->client_metadata();
+    auto iterator = metadata.find("ni-error");
+    if (iterator != metadata.end())
+    {
+        description = "Error " 
+            + std::string(iterator->second.data(), iterator->second.length()) 
+            + " has occurred in nimxlcTerminalAdaptor. Refer to the trailing metadata for details.";
+    }
+      
     return nidevice_grpc::ApiErrorAndDescriptionToStatus(context, status, description);
 }
 

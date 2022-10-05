@@ -13,6 +13,7 @@ functions = {
                 'grpc_type': 'NIErrStatus',
                 'supports_standard_output_allocation': True,
                 'supports_standard_copy_convert': True,
+                'additional_arguments_to_output_allocation': ['context'],
                 'name': 'c_status',
                 'type': 'nierr_Status'
             },
@@ -50,6 +51,7 @@ functions = {
                 'grpc_type': 'NIErrStatus',
                 'supports_standard_output_allocation': True,
                 'supports_standard_copy_convert': True,
+                'additional_arguments_to_output_allocation': ['context'],
                 'name': 'c_status',
                 'type': 'nierr_Status',
             },
@@ -74,6 +76,7 @@ functions = {
                 'grpc_type': 'NIErrStatus',
                 'supports_standard_output_allocation': True,
                 'supports_standard_copy_convert': True,
+                'additional_arguments_to_output_allocation': ['context'],
                 'name': 'c_status',
                 'type': 'nierr_Status'
             },
@@ -99,6 +102,7 @@ functions = {
                 'grpc_type': 'NIErrStatus',
                 'supports_standard_output_allocation': True,
                 'supports_standard_copy_convert': True,
+                'additional_arguments_to_output_allocation': ['context'],
                 'name': 'c_status',
                 'type': 'nierr_Status'
             },
@@ -124,6 +128,7 @@ functions = {
                 'grpc_type': 'NIErrStatus',
                 'supports_standard_output_allocation': True,
                 'supports_standard_copy_convert': True,
+                'additional_arguments_to_output_allocation': ['context'],
                 'name': 'c_status',
                 'type': 'nierr_Status'
             },
@@ -187,6 +192,7 @@ functions = {
                 'grpc_type': 'NIErrStatus',
                 'supports_standard_output_allocation': True,
                 'supports_standard_copy_convert': True,
+                'additional_arguments_to_output_allocation': ['context'],
                 'name': 'cStatus',
                 'type': 'nierr_Status'
             },
@@ -218,6 +224,7 @@ functions = {
                 'grpc_type': 'NIErrStatus',
                 'supports_standard_output_allocation': True,
                 'supports_standard_copy_convert': True,
+                'additional_arguments_to_output_allocation': ['context'],
                 'name': 'cStatus',
                 'type': 'nierr_Status'
             },
@@ -249,6 +256,7 @@ functions = {
                 'grpc_type': 'NIErrStatus',
                 'supports_standard_output_allocation': True,
                 'supports_standard_copy_convert': True,
+                'additional_arguments_to_output_allocation': ['context'],
                 'name': 'cStatus',
                 'type': 'nierr_Status'
             },
@@ -380,6 +388,7 @@ functions = {
                 'grpc_type': 'NIErrStatus',
                 'supports_standard_output_allocation': True,
                 'supports_standard_copy_convert': True,
+                'additional_arguments_to_output_allocation': ['context'],
                 'name': 'cStatus',
                 'type': 'nierr_Status'
             },
@@ -411,6 +420,7 @@ functions = {
                 'grpc_type': 'NIErrStatus',
                 'supports_standard_output_allocation': True,
                 'supports_standard_copy_convert': True,
+                'additional_arguments_to_output_allocation': ['context'],
                 'name': 'cStatus',
                 'type': 'nierr_Status'
             },
