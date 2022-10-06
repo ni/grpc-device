@@ -35,7 +35,7 @@ BEGIN
             VALUE "FileDescription", ""
             VALUE "FileVersion", "@PROJECT_VERSION_MAJOR@.@PROJECT_VERSION_MINOR@.@PROJECT_VERSION_PATCH@.@PROJECT_VERSION_TWEAK@"
             VALUE "InternalName", ""
-            VALUE "LegalCopyright", "Copyright (C) 2022"
+            VALUE "LegalCopyright", "Copyright (C) 2021 - 2022"
             VALUE "OriginalFilename", "ni_grpc_device_server.exe"
             VALUE "ProductName", "NI gRPC Device Server"
             VALUE "ProductVersion", "@PROJECT_VERSION_MAJOR@.@PROJECT_VERSION_MINOR@"
