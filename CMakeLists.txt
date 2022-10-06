@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.12.0)
 
-project(ni_grpc_device_server VERSION 1.5.2.0 LANGUAGES C CXX)
+project(ni_grpc_device_server C CXX)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 include(CreateVirtualEnvironment)
@@ -9,6 +9,26 @@ include(CreateVirtualEnvironment)
 if (CMAKE_SYSTEM_PROCESSOR STREQUAL "AMD64")
   set(CMAKE_SYSTEM_PROCESSOR "amd64")
 endif()
+
+#----------------------------------------------------------------------
+# Determine version using current branch Git tag (e.g. v1.5.2)
+#----------------------------------------------------------------------
+if(EXISTS "${CMAKE_SOURCE_DIR}/.git")
+  execute_process(
+    COMMAND git describe --tags
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+    OUTPUT_VARIABLE GIT_TAG
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+  )
+else(EXISTS "${CMAKE_SOURCE_DIR}/.git")
+  set(GIT_TAG "")
+endif(EXISTS "${CMAKE_SOURCE_DIR}/.git")
+
+message(STATUS "Parsing Git tag ${GIT_TAG}.")
+
+string(REGEX REPLACE "^v([0-9]+)\\..*" "\\1" GIT_TAG_MAJOR "${GIT_TAG}")
+string(REGEX REPLACE "^v[0-9]+\\.([0-9]+).*" "\\1" GIT_TAG_MINOR "${GIT_TAG}")
+string(REGEX REPLACE "^v[0-9]+\\.[0-9]+\\.([0-9]+).*" "\\1" GIT_TAG_PATCH "${GIT_TAG}")
 
 #----------------------------------------------------------------------
 # Use the grpc targets directly from this build, only when not cross-compiling.
