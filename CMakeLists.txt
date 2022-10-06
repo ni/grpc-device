@@ -21,14 +21,22 @@ if(EXISTS "${CMAKE_SOURCE_DIR}/.git")
     OUTPUT_STRIP_TRAILING_WHITESPACE
   )
 else(EXISTS "${CMAKE_SOURCE_DIR}/.git")
-  set(GIT_TAG "")
+  set(GIT_TAG "v0.0.0")
 endif(EXISTS "${CMAKE_SOURCE_DIR}/.git")
 
 message(STATUS "Parsing Git tag ${GIT_TAG}.")
 
-string(REGEX REPLACE "^v([0-9]+)\\..*" "\\1" GIT_TAG_MAJOR "${GIT_TAG}")
-string(REGEX REPLACE "^v[0-9]+\\.([0-9]+).*" "\\1" GIT_TAG_MINOR "${GIT_TAG}")
-string(REGEX REPLACE "^v[0-9]+\\.[0-9]+\\.([0-9]+).*" "\\1" GIT_TAG_PATCH "${GIT_TAG}")
+if(GIT_TAG MATCHES "^v([0-9]+)\\.([0-9]+)\\.?([0-9]+)?")
+  set(GIT_TAG_MAJOR ${CMAKE_MATCH_1})
+  set(GIT_TAG_MINOR ${CMAKE_MATCH_2})
+  if(CMAKE_MATCH_3)
+    set(GIT_TAG_PATCH ${CMAKE_MATCH_3})
+  else()
+    set(GIT_TAG_PATCH "0")
+  endif()
+else()
+  message(FATAL_ERROR "Unable to parse Git tag. Tag must contain major and minor version with optional patch. e.g. \"v1.33.7\"")
+endif()
 
 #----------------------------------------------------------------------
 # Use the grpc targets directly from this build, only when not cross-compiling.
