@@ -549,6 +549,7 @@ functions = {
         'returns': 'int32'
     },
     'GetInitiaitedSnapshotStrings': {
+        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
@@ -558,6 +559,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'include_in_proto': False,
                 'name': 'snapshotInfoCacheIndex',
                 'type': 'uInt64'
             },
@@ -665,6 +667,7 @@ functions = {
         'returns': 'int32'
     },
     'GetLatestConfigurationSnapshot': {
+        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
@@ -674,6 +677,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'include_in_proto': False,
                 'name': 'snapshotInfoCacheIndex',
                 'type': 'uInt64'
             },
@@ -865,6 +869,118 @@ functions = {
                 'direction': 'out',
                 'name': 'timeStamp',
                 'type': 'uInt64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetSnapshotInfoFromCache': {
+        'codegen_method': 'private',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'snapshotInfoCacheIndex',
+                'type': 'uInt64'
+            },
+            {
+                'direction': 'out',
+                'name': 'personalityIDArray',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'personalityIDArraySize'
+                },
+                'type': 'int32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'personalityIDArraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'personalityIDArrayActualSize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'signalNames',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'signalNamesSize'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'signalNamesSize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'signalNamesActualSize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'resultNames',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'resultNamesSize'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'resultNamesSize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'resultNamesActualSize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'snapshotIdentifiers',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'snapshotIdentifiersSize'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'snapshotIdentifiersSize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'snapshotIdentifiersActualSize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'snapshotTimestampArray',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'snapshotTimestampArraySize'
+                },
+                'type': 'uInt64[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'snapshotTimestampArraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'snapshotTimestampArrayActualSize',
+                'type': 'int32'
             }
         ],
         'returns': 'int32'

@@ -235,17 +235,16 @@ message GetInitiaitedSnapshotStringsRequest {
 
 message GetInitiaitedSnapshotStringsResponse {
   int32 status = 1;
-  uint64 snapshot_info_cache_index = 2;
-  repeated int32 personality_id_array = 3;
-  int32 personality_id_array_actual_size = 4;
-  string signal_names = 5;
-  int32 signal_names_actual_size = 6;
-  string result_names = 7;
-  int32 result_names_actual_size = 8;
-  string snapshot_identifiers = 9;
-  int32 snapshot_identifiers_actual_size = 10;
-  repeated uint64 snapshot_timestamp_array = 11;
-  int32 snapshot_timestamp_array_actual_size = 12;
+  repeated int32 personality_id_array = 2;
+  int32 personality_id_array_actual_size = 3;
+  string signal_names = 4;
+  int32 signal_names_actual_size = 5;
+  string result_names = 6;
+  int32 result_names_actual_size = 7;
+  string snapshot_identifiers = 8;
+  int32 snapshot_identifiers_actual_size = 9;
+  repeated uint64 snapshot_timestamp_array = 10;
+  int32 snapshot_timestamp_array_actual_size = 11;
 }
 
 message GetLatestConfigurationSnapshotRequest {
@@ -254,14 +253,13 @@ message GetLatestConfigurationSnapshotRequest {
 
 message GetLatestConfigurationSnapshotResponse {
   int32 status = 1;
-  uint64 snapshot_info_cache_index = 2;
-  int32 personality_id = 3;
-  string signal_name = 4;
-  int32 signal_name_actual_size = 5;
-  string snapshot_identifier = 6;
-  int32 snapshot_identifier_actual_size = 7;
-  int32 signal_configuration_state = 8;
-  uint64 signal_timestamp = 9;
+  int32 personality_id = 2;
+  string signal_name = 3;
+  int32 signal_name_actual_size = 4;
+  string snapshot_identifier = 5;
+  int32 snapshot_identifier_actual_size = 6;
+  int32 signal_configuration_state = 7;
+  uint64 signal_timestamp = 8;
 }
 
 message GetOpenSessionsInformationRequest {
