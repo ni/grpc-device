@@ -65,8 +65,8 @@ class NiScopeLibrary : public niscope_grpc::NiScopeLibraryInterface {
   ViStatus FetchBinary16(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 numSamples, ViInt16 waveform[], niScope_wfmInfo wfmInfo[]);
   ViStatus FetchBinary32(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 numSamples, ViInt32 waveform[], niScope_wfmInfo wfmInfo[]);
   ViStatus FetchBinary8(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 numSamples, ViInt8 waveform[], niScope_wfmInfo wfmInfo[]);
-  ViStatus FetchComplex(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 numSamples, NIComplexNumber wfm[], niScope_wfmInfo wfmInfo[]);
-  ViStatus FetchComplexBinary16(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 numSamples, NIComplexI16 wfm[], niScope_wfmInfo wfmInfo[]);
+  ViStatus FetchComplex(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 numSamples, NIComplexNumber_struct wfm[], niScope_wfmInfo wfmInfo[]);
+  ViStatus FetchComplexBinary16(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 numSamples, NIComplexI16_struct wfm[], niScope_wfmInfo wfmInfo[]);
   ViStatus FetchMeasurement(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 scalarMeasFunction, ViReal64 result[]);
   ViStatus FetchMeasurementStats(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 scalarMeasFunction, ViReal64 result[], ViReal64 mean[], ViReal64 stdev[], ViReal64 min[], ViReal64 max[], ViInt32 numInStats[]);
   ViStatus GetAttributeViBoolean(ViSession vi, ViConstString channelList, ViAttr attributeId, ViBoolean* value);

@@ -1801,7 +1801,7 @@ functions = {
                     'mechanism': 'custom-code',
                     'value': '(num_samples * actual_num_wfms)'
                 },
-                'type': 'struct NIComplexNumber[]'
+                'type': 'struct NIComplexNumber_struct[]'
             },
             {
                 'cppName': 'wfmInfo',
@@ -1857,7 +1857,7 @@ functions = {
                     'mechanism': 'custom-code',
                     'value': '(num_samples * actual_num_wfms)'
                 },
-                'type': 'struct NIComplexI16[]'
+                'type': 'struct NIComplexI16_struct[]'
             },
             {
                 'cppName': 'wfmInfo',
