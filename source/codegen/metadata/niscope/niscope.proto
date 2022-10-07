@@ -465,8 +465,8 @@ enum ExportableSignals {
   EXPORTABLE_SIGNALS_NISCOPE_VAL_READY_FOR_ADVANCE_EVENT = 6;
   EXPORTABLE_SIGNALS_NISCOPE_VAL_READY_FOR_START_EVENT = 7;
   EXPORTABLE_SIGNALS_NISCOPE_VAL_READY_FOR_REF_EVENT = 10;
-  EXPORTABLE_SIGNALS_NISCOPE_VAL_REF_CLOCK = 100;
   EXPORTABLE_SIGNALS_NISCOPE_VAL_5V_OUT = 13;
+  EXPORTABLE_SIGNALS_NISCOPE_VAL_REF_CLOCK = 100;
   EXPORTABLE_SIGNALS_NISCOPE_VAL_SAMPLE_CLOCK = 101;
 }
 
@@ -953,8 +953,8 @@ message CheckAttributeViInt32Request {
   string channel_list = 2;
   NiScopeAttribute attribute_id = 3;
   oneof value_enum {
-    NiScopeInt32AttributeValues value = 5;
     sint32 value_raw = 4;
+    NiScopeInt32AttributeValues value = 5;
   }
 }
 
@@ -978,9 +978,9 @@ message CheckAttributeViReal64Request {
   string channel_list = 2;
   NiScopeAttribute attribute_id = 3;
   oneof value_enum {
+    double value_raw = 4;
     NiScopeReal64AttributeValues value = 5;
     NiScopeReal64AttributeValuesMapped value_mapped = 6;
-    double value_raw = 4;
   }
 }
 
@@ -1074,16 +1074,16 @@ message ConfigureChanCharacteristicsResponse {
 message ConfigureClockRequest {
   nidevice_grpc.Session vi = 1;
   oneof input_clock_source_enum {
-    ClockingTerminalValues input_clock_source_mapped = 6;
     string input_clock_source_raw = 2;
+    ClockingTerminalValues input_clock_source_mapped = 6;
   }
   oneof output_clock_source_enum {
-    ClockingTerminalValues output_clock_source_mapped = 7;
     string output_clock_source_raw = 3;
+    ClockingTerminalValues output_clock_source_mapped = 7;
   }
   oneof clock_sync_pulse_source_enum {
-    ClockingTerminalValues clock_sync_pulse_source_mapped = 8;
     string clock_sync_pulse_source_raw = 4;
+    ClockingTerminalValues clock_sync_pulse_source_mapped = 8;
   }
   bool master_enabled = 5;
 }
@@ -1853,8 +1853,8 @@ message SetAttributeViInt32Request {
   string channel_list = 2;
   NiScopeAttribute attribute_id = 3;
   oneof value_enum {
-    NiScopeInt32AttributeValues value = 5;
     sint32 value_raw = 4;
+    NiScopeInt32AttributeValues value = 5;
   }
 }
 
@@ -1878,9 +1878,9 @@ message SetAttributeViReal64Request {
   string channel_list = 2;
   NiScopeAttribute attribute_id = 3;
   oneof value_enum {
+    double value_raw = 4;
     NiScopeReal64AttributeValues value = 5;
     NiScopeReal64AttributeValuesMapped value_mapped = 6;
-    double value_raw = 4;
   }
 }
 
