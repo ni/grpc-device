@@ -559,6 +559,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'include_in_proto': False,
                 'name': 'snapshotInfoCacheIndex',
                 'type': 'uInt64'
             },
@@ -676,6 +677,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'include_in_proto': False,
                 'name': 'snapshotInfoCacheIndex',
                 'type': 'uInt64'
             },

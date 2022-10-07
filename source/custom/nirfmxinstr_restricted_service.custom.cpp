@@ -63,62 +63,64 @@ inline bool status_ok(int32 status)
     if (!status_ok(status)) {
       return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
     }
-    response->mutable_personality_id_array()->Resize(personality_id_array_actual_size, 0);
-    int32* personality_id_array = reinterpret_cast<int32*>(response->mutable_personality_id_array()->mutable_data());
-    std::string signal_names;
-    if (signal_names_actual_size > 0) {
-        signal_names.resize(signal_names_actual_size - 1);
-    }
-    std::string result_names;
-    if (result_names_actual_size > 0) {
-        result_names.resize(result_names_actual_size - 1);
-    }
-    std::string snapshot_identifiers;
-    if (snapshot_identifiers_actual_size > 0) {
-        snapshot_identifiers.resize(snapshot_identifiers_actual_size - 1);
-    }
-    response->mutable_snapshot_timestamp_array()->Resize(snapshot_timestamp_array_actual_size, 0);
-    uInt64* snapshot_timestamp_array = reinterpret_cast<uInt64*>(response->mutable_snapshot_timestamp_array()->mutable_data());
-    auto personality_id_array_size = personality_id_array_actual_size;
-    auto result_names_size = result_names_actual_size;
-    auto signal_names_size = signal_names_actual_size;
-    auto snapshot_identifiers_size = snapshot_identifiers_actual_size;
-    auto snapshot_timestamp_array_size = snapshot_timestamp_array_actual_size;
-    status = library_->GetSnapshotInfoFromCache(
-      instrument,
-      snapshot_info_cache_index,
-      personality_id_array,
-      personality_id_array_size,
-      &personality_id_array_actual_size,
-      (char*)signal_names.data(),
-      signal_names_size,
-      &signal_names_actual_size,
-      (char*)result_names.data(),
-      result_names_size,
-      &result_names_actual_size,
-      (char*)snapshot_identifiers.data(),
-      snapshot_identifiers_size,
-      &snapshot_identifiers_actual_size,
-      snapshot_timestamp_array,
-      snapshot_timestamp_array_size,
-      &snapshot_timestamp_array_actual_size);
-    if (!status_ok(status)) {
-      return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+    if (snapshot_info_cache_index != 0)
+    {
+      response->mutable_personality_id_array()->Resize(personality_id_array_actual_size, 0);
+      int32* personality_id_array = reinterpret_cast<int32*>(response->mutable_personality_id_array()->mutable_data());
+      std::string signal_names;
+      if (signal_names_actual_size > 0) {
+          signal_names.resize(signal_names_actual_size - 1);
+      }
+      std::string result_names;
+      if (result_names_actual_size > 0) {
+          result_names.resize(result_names_actual_size - 1);
+      }
+      std::string snapshot_identifiers;
+      if (snapshot_identifiers_actual_size > 0) {
+          snapshot_identifiers.resize(snapshot_identifiers_actual_size - 1);
+      }
+      response->mutable_snapshot_timestamp_array()->Resize(snapshot_timestamp_array_actual_size, 0);
+      uInt64* snapshot_timestamp_array = reinterpret_cast<uInt64*>(response->mutable_snapshot_timestamp_array()->mutable_data());
+      auto personality_id_array_size = personality_id_array_actual_size;
+      auto result_names_size = result_names_actual_size;
+      auto signal_names_size = signal_names_actual_size;
+      auto snapshot_identifiers_size = snapshot_identifiers_actual_size;
+      auto snapshot_timestamp_array_size = snapshot_timestamp_array_actual_size;
+      status = library_->GetSnapshotInfoFromCache(
+        instrument,
+        snapshot_info_cache_index,
+        personality_id_array,
+        personality_id_array_size,
+        &personality_id_array_actual_size,
+        (char*)signal_names.data(),
+        signal_names_size,
+        &signal_names_actual_size,
+        (char*)result_names.data(),
+        result_names_size,
+        &result_names_actual_size,
+        (char*)snapshot_identifiers.data(),
+        snapshot_identifiers_size,
+        &snapshot_identifiers_actual_size,
+        snapshot_timestamp_array,
+        snapshot_timestamp_array_size,
+        &snapshot_timestamp_array_actual_size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->mutable_personality_id_array()->Resize(personality_id_array_actual_size, 0);
+      response->set_signal_names(signal_names);
+      nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_signal_names()));
+      response->set_result_names(result_names);
+      nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_result_names()));
+      response->set_snapshot_identifiers(snapshot_identifiers);
+      nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_snapshot_identifiers()));
+      response->mutable_snapshot_timestamp_array()->Resize(snapshot_timestamp_array_actual_size, 0);
     }
     response->set_status(status);
-    response->set_snapshot_info_cache_index(snapshot_info_cache_index);
-    response->mutable_personality_id_array()->Resize(personality_id_array_actual_size, 0);
     response->set_personality_id_array_actual_size(personality_id_array_actual_size);
-    response->set_signal_names(signal_names);
-    nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_signal_names()));
     response->set_signal_names_actual_size(signal_names_actual_size);
-    response->set_result_names(result_names);
-    nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_result_names()));
     response->set_result_names_actual_size(result_names_actual_size);
-    response->set_snapshot_identifiers(snapshot_identifiers);
-    nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_snapshot_identifiers()));
     response->set_snapshot_identifiers_actual_size(snapshot_identifiers_actual_size);
-    response->mutable_snapshot_timestamp_array()->Resize(snapshot_timestamp_array_actual_size, 0);
     response->set_snapshot_timestamp_array_actual_size(snapshot_timestamp_array_actual_size);
     return ::grpc::Status::OK;
   }
@@ -161,45 +163,47 @@ inline bool status_ok(int32 status)
     if (!status_ok(status)) {
       return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
     }
-    std::string signal_name;
-    if (signal_name_actual_size > 0) {
-        signal_name.resize(signal_name_actual_size - 1);
-    }
-    std::string snapshot_identifier;
-    if (snapshot_identifier_actual_size > 0) {
-        snapshot_identifier.resize(snapshot_identifier_actual_size - 1);
-    }
-    auto signal_name_size = signal_name_actual_size;
-    auto snapshot_identifier_size = snapshot_identifier_actual_size;
-    status = library_->GetSnapshotInfoFromCache(
-      instrument,
-      snapshot_info_cache_index,
-      nullptr,  // personalityIDArray
-      0,        // personalityIDArraySize
-      nullptr,  // personalityIDArrayActualSize
-      (char*)signal_name.data(),
-      signal_name_size,
-      &signal_name_actual_size,
-      nullptr,  // resultNames
-      0,        // resultNamesSize
-      nullptr,  // resultNamesActualSize
-      (char*)snapshot_identifier.data(),
-      snapshot_identifier_size,
-      &snapshot_identifier_actual_size,
-      nullptr,  // snapshotTimestampArray
-      0,        // snapshotTimestampArraySize
-      nullptr); // snapshotTimestampArrayActualSize
-    if (!status_ok(status)) {
-      return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+    if (snapshot_info_cache_index != 0)
+    {
+      std::string signal_name;
+      if (signal_name_actual_size > 0) {
+          signal_name.resize(signal_name_actual_size - 1);
+      }
+      std::string snapshot_identifier;
+      if (snapshot_identifier_actual_size > 0) {
+          snapshot_identifier.resize(snapshot_identifier_actual_size - 1);
+      }
+      auto signal_name_size = signal_name_actual_size;
+      auto snapshot_identifier_size = snapshot_identifier_actual_size;
+      status = library_->GetSnapshotInfoFromCache(
+        instrument,
+        snapshot_info_cache_index,
+        nullptr,  // personalityIDArray
+        0,        // personalityIDArraySize
+        nullptr,  // personalityIDArrayActualSize
+        (char*)signal_name.data(),
+        signal_name_size,
+        &signal_name_actual_size,
+        nullptr,  // resultNames
+        0,        // resultNamesSize
+        nullptr,  // resultNamesActualSize
+        (char*)snapshot_identifier.data(),
+        snapshot_identifier_size,
+        &snapshot_identifier_actual_size,
+        nullptr,  // snapshotTimestampArray
+        0,        // snapshotTimestampArraySize
+        nullptr); // snapshotTimestampArrayActualSize
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_signal_name(signal_name);
+      nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_signal_name()));
+      response->set_snapshot_identifier(snapshot_identifier);
+      nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_snapshot_identifier()));
     }
     response->set_status(status);
-    response->set_snapshot_info_cache_index(snapshot_info_cache_index);
     response->set_personality_id(personality_id);
-    response->set_signal_name(signal_name);
-    nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_signal_name()));
     response->set_signal_name_actual_size(signal_name_actual_size);
-    response->set_snapshot_identifier(snapshot_identifier);
-    nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_snapshot_identifier()));
     response->set_snapshot_identifier_actual_size(snapshot_identifier_actual_size);
     response->set_signal_configuration_state(signal_configuration_state);
     response->set_signal_timestamp(signal_timestamp);
