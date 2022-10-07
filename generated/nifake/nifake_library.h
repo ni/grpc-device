@@ -29,6 +29,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
   ViStatus CommandWithReservedParam(ViSession vi, ViBoolean* reserved);
   ViStatus Control4022(ViString resourceName, ViInt32 configuration);
   ViStatus CreateConfigurationList(ViInt32 numberOfListAttributes, ViAttr listAttributeIds[]);
+  ViStatus CustomNestedStructRoundtrip(CustomStructNestedTypedef_struct nestedCustomTypeIn, CustomStructNestedTypedef_struct* nestedCustomTypeOut);
   ViStatus DoubleAllTheNums(ViSession vi, ViInt32 numberCount, ViReal64 numbers[]);
   ViStatus EnumArrayOutputFunction(ViSession vi, ViInt32 numberOfElements, ViInt16 anArray[]);
   ViStatus EnumInputFunctionWithDefaults(ViSession vi, ViInt16 aTurtle);
@@ -118,6 +119,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
   using CommandWithReservedParamPtr = decltype(&niFake_CommandWithReservedParam);
   using Control4022Ptr = decltype(&niFake_4022Control);
   using CreateConfigurationListPtr = decltype(&niFake_CreateConfigurationList);
+  using CustomNestedStructRoundtripPtr = decltype(&niFake_CustomNestedStructRoundtrip);
   using DoubleAllTheNumsPtr = decltype(&niFake_DoubleAllTheNums);
   using EnumArrayOutputFunctionPtr = decltype(&niFake_EnumArrayOutputFunction);
   using EnumInputFunctionWithDefaultsPtr = decltype(&niFake_EnumInputFunctionWithDefaults);
@@ -207,6 +209,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
     CommandWithReservedParamPtr CommandWithReservedParam;
     Control4022Ptr Control4022;
     CreateConfigurationListPtr CreateConfigurationList;
+    CustomNestedStructRoundtripPtr CustomNestedStructRoundtrip;
     DoubleAllTheNumsPtr DoubleAllTheNums;
     EnumArrayOutputFunctionPtr EnumArrayOutputFunction;
     EnumInputFunctionWithDefaultsPtr EnumInputFunctionWithDefaults;

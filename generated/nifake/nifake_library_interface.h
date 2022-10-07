@@ -26,6 +26,7 @@ class NiFakeLibraryInterface {
   virtual ViStatus CommandWithReservedParam(ViSession vi, ViBoolean* reserved) = 0;
   virtual ViStatus Control4022(ViString resourceName, ViInt32 configuration) = 0;
   virtual ViStatus CreateConfigurationList(ViInt32 numberOfListAttributes, ViAttr listAttributeIds[]) = 0;
+  virtual ViStatus CustomNestedStructRoundtrip(CustomStructNestedTypedef_struct nestedCustomTypeIn, CustomStructNestedTypedef_struct* nestedCustomTypeOut) = 0;
   virtual ViStatus DoubleAllTheNums(ViSession vi, ViInt32 numberCount, ViReal64 numbers[]) = 0;
   virtual ViStatus EnumArrayOutputFunction(ViSession vi, ViInt32 numberOfElements, ViInt16 anArray[]) = 0;
   virtual ViStatus EnumInputFunctionWithDefaults(ViSession vi, ViInt16 aTurtle) = 0;

@@ -118,7 +118,7 @@ message ${common_helpers.snake_to_pascal(function)}Response {
 message ${custom_type["grpc_name"]} {
 % for field in common_helpers.filter_parameters_for_grpc_fields(custom_type["fields"]):
 <%
-  field_type = field.get("enum", None) or common_helpers.get_grpc_type(field["type"], config)
+  field_type = field.get("enum", None) or field.get("grpc_type", None) or common_helpers.get_grpc_type(field["type"], config)
   field_name = common_helpers.get_grpc_field_name(field)
   field_number = proto_helpers.generate_parameter_field_number(field, used_indexes)
 %>\

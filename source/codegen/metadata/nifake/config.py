@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-FAKE API metadata version 23.0.0d18
+# This file is generated from NI-FAKE API metadata version 23.0.0d9999
 config = {
     'additional_headers': {
     },
@@ -9,6 +9,17 @@ config = {
     'close_function': 'Close',
     'csharp_namespace': 'NationalInstruments.Grpc.Fake',
     'custom_types': [
+        {
+            'fields': [
+                {
+                    'grpc_type': 'string',
+                    'name': 'stringArg',
+                    'type': 'ViConstString'
+                }
+            ],
+            'grpc_name': 'CustomNamedType',
+            'name': 'namedType_custom'
+        },
         {
             'fields': [
                 {
@@ -28,13 +39,34 @@ config = {
         {
             'fields': [
                 {
-                    'grpc_type': 'string',
-                    'name': 'stringArg',
-                    'type': 'ViConstString'
+                    'grpc_type': 'FakeCustomStruct',
+                    'name': 'structCustomStruct',
+                    'type': 'struct CustomStruct'
+                },
+                {
+                    'grpc_type': 'CustomStructTypedef',
+                    'name': 'structCustomStructTypedef',
+                    'type': 'struct CustomStructTypedef_struct'
                 }
             ],
-            'grpc_name': 'CustomNamedType',
-            'name': 'namedType_custom'
+            'grpc_name': 'CustomStructNestedTypedef',
+            'name': 'CustomStructNestedTypedef_struct'
+        },
+        {
+            'fields': [
+                {
+                    'grpc_type': 'sint32',
+                    'name': 'structInt',
+                    'type': 'ViInt32'
+                },
+                {
+                    'grpc_type': 'double',
+                    'name': 'structDouble',
+                    'type': 'ViReal64'
+                }
+            ],
+            'grpc_name': 'CustomStructTypedef',
+            'name': 'CustomStructTypedef_struct'
         },
         {
             'fields': [

@@ -1,6 +1,6 @@
 /*
     **** THIS FILE IS GENERATED. ANY CHANGES WILL BE OVERWRITTEN! ****
-    Command-line: /P/MI/shared/hapigen/hapigen/export/1.2/1.2.0f0/tools/linux/i386/hapigen_render --processed-metadata-path /P/MI/shared/hapigen/hapigen_cheader_plugin/trunk/1.2/objects/export/test_output/linux/system_test_cheader_expanded_metadata.hapigen_processed --template-path ./objects/export/templates/ivi_based_public_header.h.mako --output-path ./objects/export/test_output/niFake.h --template-search-path /P/MI/shared/hapigen/hapigen/export/1.2/1.2.0f0/templates --template-search-path /P/MI/shared/hapigen/hapigen_cheader_plugin/trunk/1.2/objects/export/templates
+    Command-line: c:/perforce/build/exports/ni/hapi/hapigen/official/export/23.0/23.0.0d18/tools/win32/i386/hapigen_render.exe --processed-metadata-path c:/dev/_r/1/src/hapigen/niFakeHeaders/objects/niFakeHeaders/win64U/x64/other/release/cheader_expanded_metadata.hapigen_processed --template-path c:/perforce/build/exports/ni/hapi/hapigen_cheader_plugin/official/export/23.0/23.0.0d18/templates/ivi_based_public_header.h.mako --output-path ./objects/codegen/niFakeHeaders/niFake.h --template-search-path c:/perforce/build/exports/ni/hapi/hapigen/official/export/23.0/23.0.0d18/templates --template-search-path c:/perforce/build/exports/ni/hapi/hapigen_cheader_plugin/official/export/23.0/23.0.0d18/templates
 */
 
 #ifndef __NIFAKE_HEADER
@@ -21,8 +21,8 @@
 /****************************************************************************
  *----------------- Instrument Driver Revision Information -----------------*
  ****************************************************************************/
-#define NIFAKE_MAJOR_VERSION                                   1                               // Instrument driver major version
-#define NIFAKE_MINOR_VERSION                                   2                               // Instrument driver minor version
+#define NIFAKE_MAJOR_VERSION                                   23                              // Instrument driver major version
+#define NIFAKE_MINOR_VERSION                                   0                               // Instrument driver minor version
 #define NIFAKE_UPDATE_VERSION                                  0                               // Instrument driver update version
 
 
@@ -45,18 +45,33 @@
 #define NIFAKE_INT_DEFINE                                      42                              // 42 (0x2a)
 
 // Values
+// Alt Color
+// Test comment
+#define NIFAKE_VAL_RED                                         1                               // 1 (0x1)
+#define NIFAKE_VAL_BLUE                                        (NIFAKE_VAL_RED + 1L)           // 2 (0x2)
+#define NIFAKE_VAL_YELLOW                                      5                               // 5 (0x5)
+#define NIFAKE_VAL_BLACK                                       42                              // 42 (0x2a)
+
 // Beautiful Color
 #define NIFAKE_VAL_PINK                                        44                              // 44 (0x2c)
 #define NIFAKE_VAL_AQUA                                        43                              // 43 (0x2b)
 #define NIFAKE_VAL_GREEN                                       45                              // 45 (0x2d)
-#define NIFAKE_VAL_BLACK                                       42                              // 42 (0x2a)
+// #define NIFAKE_VAL_BLACK                                    DEFINED ABOVE (42)              // 42 (0x2a)
 
 // Test comment
 // Values used in
 //     NIFAKE_ATTR_READ_WRITE_COLOR
-#define NIFAKE_VAL_RED                                         1                               // 1 (0x1)
-#define NIFAKE_VAL_BLUE                                        (NIFAKE_VAL_RED + 1L)           // 2 (0x2)
-#define NIFAKE_VAL_YELLOW                                      5                               // 5 (0x5)
+// #define NIFAKE_VAL_RED                                      DEFINED ABOVE (1)               // 1 (0x1)
+// #define NIFAKE_VAL_BLUE                                     DEFINED ABOVE ((NIFAKE_VAL_RED + 1L)) // 2 (0x2)
+// #define NIFAKE_VAL_YELLOW                                   DEFINED ABOVE (5)               // 5 (0x5)
+// #define NIFAKE_VAL_BLACK                                    DEFINED ABOVE (42)              // 42 (0x2a)
+
+// Test comment
+// Values used in
+//     NIFAKE_ATTR_READ_WRITE_ENUM_WITH_CONVERTER
+// #define NIFAKE_VAL_RED                                      DEFINED ABOVE (1)               // 1 (0x1)
+// #define NIFAKE_VAL_BLUE                                     DEFINED ABOVE ((NIFAKE_VAL_RED + 1L)) // 2 (0x2)
+// #define NIFAKE_VAL_YELLOW                                   DEFINED ABOVE (5)               // 5 (0x5)
 // #define NIFAKE_VAL_BLACK                                    DEFINED ABOVE (42)              // 42 (0x2a)
 
 // Values used in
@@ -94,6 +109,7 @@
 #define NIFAKE_ATTR_READ_WRITE_INTEGER_WITH_CONVERTER          (NIFAKE_ATTR_BASE + 8L)         // 1000008 (0xf4248), ViInt32
 #define NIFAKE_ATTR_READ_WRITE_DOUBLE_WITH_REPEATED_CAPABILITY (NIFAKE_ATTR_BASE + 9L)         // 1000009 (0xf4249), ViReal64,   multi-channel
 #define NIFAKE_ATTR_READ_WRITE_STRING_REPEATED_CAPABILITY      (NIFAKE_ATTR_BASE + 10L)        // 1000010 (0xf424a), ViString
+#define NIFAKE_ATTR_READ_WRITE_ENUM_WITH_CONVERTER             (NIFAKE_ATTR_BASE + 11L)        // 1000011 (0xf424b), ViInt32
 
 #pragma pack(push,8)
 // Test comment
@@ -105,6 +121,26 @@ struct CustomStruct
     ViReal64 structDouble;
 };
 #endif // !defined(_NIStruct)
+
+// Test comment
+#if !defined(_NIStructTypedef)
+#define _NIStructTypedef
+typedef struct CustomStructTypedef_struct
+{
+    ViInt32 structInt;
+    ViReal64 structDouble;
+} CustomStructTypedef;
+#endif // !defined(_NIStructTypedef)
+
+// Test comment
+#if !defined(_NIStructNestedTypedef)
+#define _NIStructNestedTypedef
+typedef struct CustomStructNestedTypedef_struct
+{
+    struct CustomStruct structCustomStruct;
+    CustomStructTypedef structCustomStructTypedef;
+} CustomStructNestedTypedef;
+#endif // !defined(_NIStructNestedTypedef)
 
 #pragma pack(pop)
 
@@ -462,6 +498,12 @@ ViStatus _VI_FUNC niFake_GetChannelName(
    ViInt32 nameSize,
    ViChar name[]);
 
+ViStatus _VI_FUNC niFake_GetChannelNames(
+   ViSession vi,
+   ViConstString indices,
+   ViInt32 nameSize,
+   ViChar names[]);
+
 ViStatus _VI_FUNC niFake_GetAttributeWithOptionsViInt64(
    ViSession vi,
    ViConstString channelName,
@@ -497,6 +539,11 @@ ViStatus _VI_FUNC niFake_DoubleAllTheNums(
    ViInt32 numberCount,
    ViReal64 numbers[]);
 
+ViStatus _VI_FUNC niFake_GetCustomTypeTypedef(
+   ViSession vi,
+   CustomStructTypedef* cst,
+   CustomStructNestedTypedef* csnt);
+
 ViStatus _VI_FUNC niFake_AcceptListOfDurationsInSeconds(
    ViSession vi,
    ViInt32 count,
@@ -504,12 +551,22 @@ ViStatus _VI_FUNC niFake_AcceptListOfDurationsInSeconds(
 
 ViStatus _VI_FUNC niFake_ReturnDurationInSeconds(
    ViSession vi,
-   ViReal64 timedelta);
+   ViReal64* timedelta);
 
 ViStatus _VI_FUNC niFake_ReturnListOfDurationsInSeconds(
    ViSession vi,
    ViInt32 numberOfElements,
    ViReal64 timedeltas[]);
+
+ViStatus _VI_FUNC niFake_FunctionWithRepeatedCapabilityType(
+   ViSession vi,
+   ViConstString siteList);
+
+// Test comment
+ViStatus _VI_FUNC niDifferentPrefix_GetAnIviDanceWithCFunctionPrefixString(
+   ViSession vi,
+   ViInt32 bufferSize,
+   ViChar aString[]);
 
 ViStatus _VI_FUNC niFake_ImportAttributeConfigurationBuffer(
    ViSession vi,
@@ -527,4 +584,3 @@ ViStatus _VI_FUNC niFake_ExportAttributeConfigurationBuffer(
 #include "niFakeObsolete.h"
 
 #endif /* __NIFAKE_HEADER */
-

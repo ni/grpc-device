@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-FAKE API metadata version 23.0.0d18
+# This file is generated from NI-FAKE API metadata version 23.0.0d9999
 functions = {
     'Abort': {
         'codegen_method': 'public',
@@ -282,6 +282,26 @@ functions = {
                     'value': 'numberOfListAttributes'
                 },
                 'type': 'ViAttr[]'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'CustomNestedStructRoundtrip': {
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'cppName': 'nestedCustomTypeIn',
+                'direction': 'in',
+                'grpc_type': 'CustomStructNestedTypedef',
+                'name': 'nestedCustomTypeIn',
+                'type': 'struct CustomStructNestedTypedef_struct'
+            },
+            {
+                'cppName': 'nestedCustomTypeOut',
+                'direction': 'out',
+                'grpc_type': 'CustomStructNestedTypedef',
+                'name': 'nestedCustomTypeOut',
+                'type': 'struct CustomStructNestedTypedef_struct'
             }
         ],
         'returns': 'ViStatus'

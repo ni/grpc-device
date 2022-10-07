@@ -27,6 +27,7 @@ service NiFake {
   rpc CommandWithReservedParam(CommandWithReservedParamRequest) returns (CommandWithReservedParamResponse);
   rpc Control4022(Control4022Request) returns (Control4022Response);
   rpc CreateConfigurationList(CreateConfigurationListRequest) returns (CreateConfigurationListResponse);
+  rpc CustomNestedStructRoundtrip(CustomNestedStructRoundtripRequest) returns (CustomNestedStructRoundtripResponse);
   rpc DoubleAllTheNums(DoubleAllTheNumsRequest) returns (DoubleAllTheNumsResponse);
   rpc EnumArrayOutputFunction(EnumArrayOutputFunctionRequest) returns (EnumArrayOutputFunctionResponse);
   rpc EnumInputFunctionWithDefaults(EnumInputFunctionWithDefaultsRequest) returns (EnumInputFunctionWithDefaultsResponse);
@@ -197,13 +198,23 @@ enum Turtle {
   TURTLE_MICHELANGELO = 3;
 }
 
+message CustomNamedType {
+  string string_arg = 1;
+}
+
 message FakeCustomStruct {
   sint32 struct_int = 1;
   double struct_double = 2;
 }
 
-message CustomNamedType {
-  string string_arg = 1;
+message CustomStructNestedTypedef {
+  FakeCustomStruct struct_custom_struct = 1;
+  CustomStructTypedef struct_custom_struct_typedef = 2;
+}
+
+message CustomStructTypedef {
+  sint32 struct_int = 1;
+  double struct_double = 2;
 }
 
 message StringAndTurtle {
@@ -306,6 +317,15 @@ message CreateConfigurationListRequest {
 
 message CreateConfigurationListResponse {
   int32 status = 1;
+}
+
+message CustomNestedStructRoundtripRequest {
+  CustomStructNestedTypedef nested_custom_type_in = 1;
+}
+
+message CustomNestedStructRoundtripResponse {
+  int32 status = 1;
+  CustomStructNestedTypedef nested_custom_type_out = 2;
 }
 
 message DoubleAllTheNumsRequest {
