@@ -1,26 +1,23 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-FAKE API metadata version 1.2.0d9
+# This file is generated from NI-FAKE API metadata version 23.0.0d18
 config = {
-    'api_version': '1.2.0d9',
+    'additional_headers': {
+    },
+    'api_version': '23.0.0',
     'c_function_prefix': 'niFake_',
     'c_header': 'niFake.h',
-    'close_function': 'close',
-    'context_manager_name': {
-        'abort_function': 'Abort',
-        'initiate_function': 'Initiate',
-        'task': 'acquisition'
-    },
+    'close_function': 'Close',
     'csharp_namespace': 'NationalInstruments.Grpc.Fake',
     'custom_types': [
         {
             'fields': [
                 {
-                    'grpc_name': 'struct_int',
+                    'grpc_type': 'sint32',
                     'name': 'structInt',
                     'type': 'ViInt32'
                 },
                 {
-                    'grpc_name': 'struct_double',
+                    'grpc_type': 'double',
                     'name': 'structDouble',
                     'type': 'ViReal64'
                 }
@@ -31,12 +28,25 @@ config = {
         {
             'fields': [
                 {
+                    'grpc_type': 'string',
+                    'name': 'stringArg',
+                    'type': 'ViConstString'
+                }
+            ],
+            'grpc_name': 'CustomNamedType',
+            'name': 'namedType_custom'
+        },
+        {
+            'fields': [
+                {
+                    'grpc_type': 'string',
                     'name': 'stringArg',
                     'type': 'ViConstString'
                 },
                 {
                     'coerced': True,
                     'enum': 'Turtle',
+                    'grpc_type': 'Turtle',
                     'name': 'turtle',
                     'type': 'ViInt16'
                 }
@@ -46,14 +56,6 @@ config = {
         }
     ],
     'driver_name': 'NI-FAKE',
-    'enum_whitelist_suffix': [
-        '_POINT_FIVE'
-    ],
-    'extra_errors_used': [
-        'InvalidRepeatedCapabilityError',
-        'SelfTestError'
-    ],
-    'init_function': 'InitWithOptions',
     'java_package': 'com.ni.grpc.fake',
     'library_info': {
         'Linux': {
@@ -74,22 +76,9 @@ config = {
         }
     },
     'linux_rt_support': False,
-    'metadata_version': '2.0',
     'module_name': 'nifake',
     'namespace_component': 'nifake',
-    'repeated_capabilities': [
-        {
-            'prefix': '',
-            'python_name': 'channels'
-        },
-        {
-            'prefix': 'site',
-            'python_name': 'sites'
-        }
-    ],
     'service_class_prefix': 'NiFake',
-    'session_class_description': 'An NI-FAKE session to a fake MI driver whose sole purpose is to test nimi-python code generation',
     'session_handle_parameter_name': 'vi',
-    'status_ok': 'status >= 0',
-    'uses_nitclk': True
+    'status_ok': 'status >= 0'
 }

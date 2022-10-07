@@ -125,6 +125,23 @@ bool_array_output_function(const StubPtr& stub, const nidevice_grpc::Session& vi
   return response;
 }
 
+CloseResponse
+close(const StubPtr& stub, const nidevice_grpc::Session& vi)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CloseRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+
+  auto response = CloseResponse{};
+
+  raise_if_error(
+      stub->Close(&context, request, &response),
+      context);
+
+  return response;
+}
+
 CloseExtCalResponse
 close_ext_cal(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& action)
 {
@@ -155,6 +172,24 @@ command_with_reserved_param(const StubPtr& stub, const nidevice_grpc::Session& v
 
   raise_if_error(
       stub->CommandWithReservedParam(&context, request, &response),
+      context);
+
+  return response;
+}
+
+Control4022Response
+control4022(const StubPtr& stub, const pb::string& resource_name, const pb::int32& configuration)
+{
+  ::grpc::ClientContext context;
+
+  auto request = Control4022Request{};
+  request.set_resource_name(resource_name);
+  request.set_configuration(configuration);
+
+  auto response = Control4022Response{};
+
+  raise_if_error(
+      stub->Control4022(&context, request, &response),
       context);
 
   return response;
@@ -410,11 +445,12 @@ get_an_ivi_dance_with_a_twist_byte_array(const StubPtr& stub)
 }
 
 GetAnIviDanceWithATwistStringResponse
-get_an_ivi_dance_with_a_twist_string(const StubPtr& stub)
+get_an_ivi_dance_with_a_twist_string(const StubPtr& stub, const nidevice_grpc::Session& vi)
 {
   ::grpc::ClientContext context;
 
   auto request = GetAnIviDanceWithATwistStringRequest{};
+  request.mutable_vi()->CopyFrom(vi);
 
   auto response = GetAnIviDanceWithATwistStringResponse{};
 
@@ -570,12 +606,13 @@ get_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, c
 }
 
 GetAttributeViSessionResponse
-get_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& attribute_id)
+get_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFakeAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
   auto request = GetAttributeViSessionRequest{};
   request.mutable_vi()->CopyFrom(vi);
+  request.set_channel_name(channel_name);
   request.set_attribute_id(attribute_id);
 
   auto response = GetAttributeViSessionResponse{};
@@ -831,6 +868,112 @@ init_with_var_args(const StubPtr& stub, const pb::string& resource_name, const s
 
   raise_if_error(
       stub->InitWithVarArgs(&context, request, &response),
+      context);
+
+  return response;
+}
+
+MethodUsingEnumWithGrpcNameValuesResponse
+method_using_enum_with_grpc_name_values(const StubPtr& stub, const simple_variant<EnumWithGrpcNameValues, pb::int32>& using_enum)
+{
+  ::grpc::ClientContext context;
+
+  auto request = MethodUsingEnumWithGrpcNameValuesRequest{};
+  const auto using_enum_ptr = using_enum.get_if<EnumWithGrpcNameValues>();
+  const auto using_enum_raw_ptr = using_enum.get_if<pb::int32>();
+  if (using_enum_ptr) {
+    request.set_using_enum(*using_enum_ptr);
+  }
+  else if (using_enum_raw_ptr) {
+    request.set_using_enum_raw(*using_enum_raw_ptr);
+  }
+
+  auto response = MethodUsingEnumWithGrpcNameValuesResponse{};
+
+  raise_if_error(
+      stub->MethodUsingEnumWithGrpcNameValues(&context, request, &response),
+      context);
+
+  return response;
+}
+
+MethodUsingWholeAndFractionalNumbersResponse
+method_using_whole_and_fractional_numbers(const StubPtr& stub)
+{
+  ::grpc::ClientContext context;
+
+  auto request = MethodUsingWholeAndFractionalNumbersRequest{};
+
+  auto response = MethodUsingWholeAndFractionalNumbersResponse{};
+
+  raise_if_error(
+      stub->MethodUsingWholeAndFractionalNumbers(&context, request, &response),
+      context);
+
+  return response;
+}
+
+MethodUsingWholeMappedNumbersResponse
+method_using_whole_mapped_numbers(const StubPtr& stub)
+{
+  ::grpc::ClientContext context;
+
+  auto request = MethodUsingWholeMappedNumbersRequest{};
+
+  auto response = MethodUsingWholeMappedNumbersResponse{};
+
+  raise_if_error(
+      stub->MethodUsingWholeMappedNumbers(&context, request, &response),
+      context);
+
+  return response;
+}
+
+MethodWithGetLastErrorParamResponse
+method_with_get_last_error_param(const StubPtr& stub)
+{
+  ::grpc::ClientContext context;
+
+  auto request = MethodWithGetLastErrorParamRequest{};
+
+  auto response = MethodWithGetLastErrorParamResponse{};
+
+  raise_if_error(
+      stub->MethodWithGetLastErrorParam(&context, request, &response),
+      context);
+
+  return response;
+}
+
+MethodWithGrpcFieldNumberResponse
+method_with_grpc_field_number(const StubPtr& stub, const pb::int32& attribute_value)
+{
+  ::grpc::ClientContext context;
+
+  auto request = MethodWithGrpcFieldNumberRequest{};
+  request.set_attribute_value(attribute_value);
+
+  auto response = MethodWithGrpcFieldNumberResponse{};
+
+  raise_if_error(
+      stub->MethodWithGrpcFieldNumber(&context, request, &response),
+      context);
+
+  return response;
+}
+
+MethodWithGrpcOnlyParamResponse
+method_with_grpc_only_param(const StubPtr& stub, const pb::int32& simple_param)
+{
+  ::grpc::ClientContext context;
+
+  auto request = MethodWithGrpcOnlyParamRequest{};
+  request.set_simple_param(simple_param);
+
+  auto response = MethodWithGrpcOnlyParamResponse{};
+
+  raise_if_error(
+      stub->MethodWithGrpcOnlyParam(&context, request, &response),
       context);
 
   return response;
@@ -1296,23 +1439,6 @@ write_waveform(const StubPtr& stub, const nidevice_grpc::Session& vi, const std:
 
   raise_if_error(
       stub->WriteWaveform(&context, request, &response),
-      context);
-
-  return response;
-}
-
-CloseResponse
-close(const StubPtr& stub, const nidevice_grpc::Session& vi)
-{
-  ::grpc::ClientContext context;
-
-  auto request = CloseRequest{};
-  request.mutable_vi()->CopyFrom(vi);
-
-  auto response = CloseResponse{};
-
-  raise_if_error(
-      stub->Close(&context, request, &response),
       context);
 
   return response;

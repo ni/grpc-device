@@ -1,18 +1,12 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-FAKE API metadata version 1.2.0d9
+# This file is generated from NI-FAKE API metadata version 23.0.0d18
 functions = {
     'Abort': {
         'codegen_method': 'public',
-        'documentation': {
-            'description': 'Aborts a previously initiated thingie.'
-        },
         'parameters': [
             {
                 'cppName': 'vi',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Identifies a particular instrument session.'
-                },
                 'grpc_type': 'nidevice_grpc.Session',
                 'name': 'vi',
                 'type': 'ViSession'
@@ -22,16 +16,10 @@ functions = {
     },
     'AcceptListOfDurationsInSeconds': {
         'codegen_method': 'public',
-        'documentation': {
-            'description': 'Accepts list of floats or hightime.timedelta instances representing time delays.'
-        },
         'parameters': [
             {
                 'cppName': 'vi',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Identifies a particular instrument session.'
-                },
                 'grpc_type': 'nidevice_grpc.Session',
                 'name': 'vi',
                 'type': 'ViSession'
@@ -42,9 +30,6 @@ functions = {
                     'delays'
                 ],
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Count of input values.'
-                },
                 'grpc_type': 'sint32',
                 'include_in_proto': False,
                 'is_size_param': True,
@@ -55,18 +40,13 @@ functions = {
             {
                 'cppName': 'delays',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'A collection of time delay values.'
-                },
                 'grpc_type': 'repeated double',
                 'name': 'delays',
-                'python_api_converter_name': 'convert_timedeltas_to_seconds_real64',
                 'size': {
                     'mechanism': 'len',
                     'value': 'count'
                 },
-                'type': 'ViReal64[]',
-                'type_in_documentation': 'hightime.timedelta, datetime.timedelta, or float in seconds'
+                'type': 'ViReal64[]'
             }
         ],
         'returns': 'ViStatus'
@@ -97,6 +77,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'AcceptViUInt32Array': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -134,16 +115,10 @@ functions = {
     },
     'BoolArrayInputFunction': {
         'codegen_method': 'public',
-        'documentation': {
-            'description': 'This function accepts an array of booleans.'
-        },
         'parameters': [
             {
                 'cppName': 'vi',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Identifies a particular instrument session. You obtain the **vi** parameter from niFake_InitWithOptions.'
-                },
                 'grpc_type': 'nidevice_grpc.Session',
                 'name': 'vi',
                 'type': 'ViSession'
@@ -151,9 +126,6 @@ functions = {
             {
                 'cppName': 'numberOfElements',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Number of elements in the array.'
-                },
                 'grpc_type': 'sint32',
                 'is_size_param': True,
                 'name': 'numberOfElements',
@@ -162,9 +134,6 @@ functions = {
             {
                 'cppName': 'anArray',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Input boolean array'
-                },
                 'grpc_type': 'repeated bool',
                 'name': 'anArray',
                 'size': {
@@ -178,16 +147,10 @@ functions = {
     },
     'BoolArrayOutputFunction': {
         'codegen_method': 'public',
-        'documentation': {
-            'description': 'This function returns an array of booleans.'
-        },
         'parameters': [
             {
                 'cppName': 'vi',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Identifies a particular instrument session. You obtain the **vi** parameter from niFake_InitWithOptions.'
-                },
                 'grpc_type': 'nidevice_grpc.Session',
                 'name': 'vi',
                 'type': 'ViSession'
@@ -195,9 +158,6 @@ functions = {
             {
                 'cppName': 'numberOfElements',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Number of elements in the array.'
-                },
                 'grpc_type': 'sint32',
                 'is_size_param': True,
                 'name': 'numberOfElements',
@@ -206,9 +166,6 @@ functions = {
             {
                 'cppName': 'anArray',
                 'direction': 'out',
-                'documentation': {
-                    'description': 'Contains an array of booleans'
-                },
                 'grpc_type': 'repeated bool',
                 'name': 'anArray',
                 'size': {
@@ -216,6 +173,20 @@ functions = {
                     'value': 'numberOfElements'
                 },
                 'type': 'ViBoolean[]'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'Close': {
+        'cname': 'niFake_close',
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'cppName': 'vi',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.Session',
+                'name': 'vi',
+                'type': 'ViSession'
             }
         ],
         'returns': 'ViStatus'
@@ -242,6 +213,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'CommandWithReservedParam': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -263,7 +235,29 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
+    'Control4022': {
+        'cname': 'niFake_4022Control',
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'cppName': 'resourceName',
+                'direction': 'in',
+                'grpc_type': 'string',
+                'name': 'resourceName',
+                'type': 'ViString'
+            },
+            {
+                'cppName': 'configuration',
+                'direction': 'in',
+                'grpc_type': 'sint32',
+                'name': 'configuration',
+                'type': 'ViInt32'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
     'CreateConfigurationList': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'numberOfListAttributes',
@@ -293,16 +287,11 @@ functions = {
         'returns': 'ViStatus'
     },
     'DoubleAllTheNums': {
-        'documentation': {
-            'description': 'Test for buffer with converter'
-        },
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Identifies a particular instrument session. You obtain the **vi** parameter from niFake_InitWithOptions.'
-                },
                 'grpc_type': 'nidevice_grpc.Session',
                 'name': 'vi',
                 'type': 'ViSession'
@@ -313,9 +302,6 @@ functions = {
                     'numbers'
                 ],
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Number of elements in the number array'
-                },
                 'grpc_type': 'sint32',
                 'include_in_proto': False,
                 'is_size_param': True,
@@ -326,12 +312,8 @@ functions = {
             {
                 'cppName': 'numbers',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'numbers is an array of numbers we want to double.'
-                },
                 'grpc_type': 'repeated double',
                 'name': 'numbers',
-                'python_api_converter_name': 'convert_double_each_element',
                 'size': {
                     'mechanism': 'len',
                     'value': 'numberCount'
@@ -343,16 +325,10 @@ functions = {
     },
     'EnumArrayOutputFunction': {
         'codegen_method': 'public',
-        'documentation': {
-            'description': 'This function returns an array of enums, stored as 16 bit integers under the hood.'
-        },
         'parameters': [
             {
                 'cppName': 'vi',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Identifies a particular instrument session. You obtain the **vi** parameter from niFake_InitWithOptions.'
-                },
                 'grpc_type': 'nidevice_grpc.Session',
                 'name': 'vi',
                 'type': 'ViSession'
@@ -360,9 +336,6 @@ functions = {
             {
                 'cppName': 'numberOfElements',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Number of elements in the array.'
-                },
                 'grpc_type': 'sint32',
                 'is_size_param': True,
                 'name': 'numberOfElements',
@@ -371,9 +344,6 @@ functions = {
             {
                 'cppName': 'anArray',
                 'direction': 'out',
-                'documentation': {
-                    'description': 'Contains an array of enums, stored as 16 bit integers under the hood '
-                },
                 'enum': 'Turtle',
                 'grpc_type': 'repeated sint32',
                 'name': 'anArray',
@@ -388,45 +358,17 @@ functions = {
     },
     'EnumInputFunctionWithDefaults': {
         'codegen_method': 'public',
-        'documentation': {
-            'description': 'This function takes one parameter other than the session, which happens to be an enum and has a default value.'
-        },
         'parameters': [
             {
                 'cppName': 'vi',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Identifies a particular instrument session. You obtain the **vi** parameter from niFake_InitWithOptions.'
-                },
                 'grpc_type': 'nidevice_grpc.Session',
                 'name': 'vi',
                 'type': 'ViSession'
             },
             {
                 'cppName': 'aTurtle',
-                'default_value': 'Turtle.LEONARDO',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Indicates a ninja turtle',
-                    'table_body': [
-                        [
-                            '0',
-                            'Leonardo'
-                        ],
-                        [
-                            '1',
-                            'Donatello'
-                        ],
-                        [
-                            '2',
-                            'Raphael'
-                        ],
-                        [
-                            '3',
-                            'Mich elangelo'
-                        ]
-                    ]
-                },
                 'enum': 'Turtle',
                 'grpc_type': 'sint32',
                 'name': 'aTurtle',
@@ -435,10 +377,41 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
+    'ErrorMessage': {
+        'cname': 'niFake_error_message',
+        'codegen_method': 'private',
+        'is_error_handling': True,
+        'parameters': [
+            {
+                'cppName': 'vi',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.Session',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'cppName': 'errorCode',
+                'direction': 'in',
+                'grpc_type': 'sint32',
+                'name': 'errorCode',
+                'type': 'ViStatus'
+            },
+            {
+                'cppName': 'errorMessage',
+                'direction': 'out',
+                'grpc_type': 'string',
+                'name': 'errorMessage',
+                'size': {
+                    'mechanism': 'fixed',
+                    'value': 256
+                },
+                'type': 'ViChar[]'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
     'ExportAttributeConfigurationBuffer': {
-        'documentation': {
-            'description': 'Export configuration buffer.'
-        },
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -461,42 +434,21 @@ functions = {
                 'direction': 'out',
                 'grpc_type': 'bytes',
                 'name': 'configuration',
-                'python_api_converter_name': 'convert_to_bytes',
                 'size': {
                     'mechanism': 'ivi-dance',
                     'value': 'sizeInBytes'
                 },
-                'type': 'ViInt8[]',
-                'type_in_documentation': 'bytes',
-                'use_array': True
+                'type': 'ViInt8[]'
             }
         ],
         'returns': 'ViStatus'
     },
     'FetchWaveform': {
         'codegen_method': 'public',
-        'documentation': {
-            'description': 'Returns waveform data.'
-        },
-        'method_templates': [
-            {
-                'documentation_filename': 'default_method',
-                'method_python_name_suffix': '',
-                'session_filename': 'default_method'
-            },
-            {
-                'documentation_filename': 'numpy_method',
-                'method_python_name_suffix': '_into',
-                'session_filename': 'numpy_read_method'
-            }
-        ],
         'parameters': [
             {
                 'cppName': 'vi',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Identifies a particular instrument session.'
-                },
                 'grpc_type': 'nidevice_grpc.Session',
                 'name': 'vi',
                 'type': 'ViSession'
@@ -504,9 +456,6 @@ functions = {
             {
                 'cppName': 'numberOfSamples',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Number of samples to return'
-                },
                 'grpc_type': 'sint32',
                 'is_size_param': True,
                 'name': 'numberOfSamples',
@@ -515,46 +464,30 @@ functions = {
             {
                 'cppName': 'waveformData',
                 'direction': 'out',
-                'documentation': {
-                    'description': 'Samples fetched from the device. Array should be numberOfSamples big.'
-                },
                 'grpc_type': 'repeated double',
                 'name': 'waveformData',
-                'numpy': True,
                 'size': {
                     'mechanism': 'passed-in',
                     'value': 'numberOfSamples'
                 },
-                'type': 'ViReal64[]',
-                'use_array': True
+                'type': 'ViReal64[]'
             },
             {
                 'cppName': 'actualNumberOfSamples',
                 'direction': 'out',
-                'documentation': {
-                    'description': 'Number of samples actually fetched.'
-                },
                 'grpc_type': 'sint32',
                 'name': 'actualNumberOfSamples',
-                'type': 'ViInt32',
-                'use_in_python_api': False
+                'type': 'ViInt32'
             }
         ],
         'returns': 'ViStatus'
     },
     'GetABoolean': {
         'codegen_method': 'public',
-        'documentation': {
-            'description': 'Returns a boolean.',
-            'note': 'This function rules!'
-        },
         'parameters': [
             {
                 'cppName': 'vi',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Identifies a particular instrument session.'
-                },
                 'grpc_type': 'nidevice_grpc.Session',
                 'name': 'vi',
                 'type': 'ViSession'
@@ -562,9 +495,6 @@ functions = {
             {
                 'cppName': 'aBoolean',
                 'direction': 'out',
-                'documentation': {
-                    'description': 'Contains a boolean.'
-                },
                 'grpc_type': 'bool',
                 'name': 'aBoolean',
                 'type': 'ViBoolean'
@@ -574,17 +504,10 @@ functions = {
     },
     'GetANumber': {
         'codegen_method': 'public',
-        'documentation': {
-            'description': 'Returns a number.',
-            'note': 'This function rules!'
-        },
         'parameters': [
             {
                 'cppName': 'vi',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Identifies a particular instrument session.'
-                },
                 'grpc_type': 'nidevice_grpc.Session',
                 'name': 'vi',
                 'type': 'ViSession'
@@ -592,9 +515,6 @@ functions = {
             {
                 'cppName': 'aNumber',
                 'direction': 'out',
-                'documentation': {
-                    'description': 'Contains a number.'
-                },
                 'grpc_type': 'sint32',
                 'name': 'aNumber',
                 'type': 'ViInt16'
@@ -604,16 +524,10 @@ functions = {
     },
     'GetAStringOfFixedMaximumSize': {
         'codegen_method': 'public',
-        'documentation': {
-            'description': 'Illustrates returning a string of fixed size.'
-        },
         'parameters': [
             {
                 'cppName': 'vi',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Identifies a particular instrument session.'
-                },
                 'grpc_type': 'nidevice_grpc.Session',
                 'name': 'vi',
                 'type': 'ViSession'
@@ -621,9 +535,6 @@ functions = {
             {
                 'cppName': 'aString',
                 'direction': 'out',
-                'documentation': {
-                    'description': 'String comes back here. Buffer must be 256 big.'
-                },
                 'grpc_type': 'string',
                 'name': 'aString',
                 'size': {
@@ -637,16 +548,10 @@ functions = {
     },
     'GetAnIviDanceString': {
         'codegen_method': 'public',
-        'documentation': {
-            'description': 'Returns a string using the IVI dance.'
-        },
         'parameters': [
             {
                 'cppName': 'vi',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Identifies a particular instrument session.'
-                },
                 'grpc_type': 'nidevice_grpc.Session',
                 'name': 'vi',
                 'type': 'ViSession'
@@ -654,9 +559,6 @@ functions = {
             {
                 'cppName': 'bufferSize',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Number of bytes in aString You can IVI-dance with this.'
-                },
                 'grpc_type': 'sint32',
                 'include_in_proto': False,
                 'is_size_param': True,
@@ -666,9 +568,6 @@ functions = {
             {
                 'cppName': 'aString',
                 'direction': 'out',
-                'documentation': {
-                    'description': 'Returns the string.'
-                },
                 'grpc_type': 'string',
                 'name': 'aString',
                 'size': {
@@ -681,6 +580,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'GetAnIviDanceWithATwistArray': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -728,6 +628,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'GetAnIviDanceWithATwistArrayOfCustomType': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -768,6 +669,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'GetAnIviDanceWithATwistArrayWithInputArray': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'dataIn',
@@ -825,6 +727,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'GetAnIviDanceWithATwistByteArray': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'bufferSize',
@@ -858,7 +761,15 @@ functions = {
         'returns': 'ViStatus'
     },
     'GetAnIviDanceWithATwistString': {
+        'codegen_method': 'public',
         'parameters': [
+            {
+                'cppName': 'vi',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.Session',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
             {
                 'cppName': 'bufferSize',
                 'direction': 'in',
@@ -869,10 +780,10 @@ functions = {
                 'type': 'ViInt32'
             },
             {
-                'cppName': 'arrayOut',
+                'cppName': 'aString',
                 'direction': 'out',
                 'grpc_type': 'string',
-                'name': 'arrayOut',
+                'name': 'aString',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',
                     'value': 'bufferSize',
@@ -891,6 +802,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'GetAnIviDanceWithATwistStringStrlenBug': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'bufferSize',
@@ -928,16 +840,10 @@ functions = {
     },
     'GetArraySizeForCustomCode': {
         'codegen_method': 'public',
-        'documentation': {
-            'description': 'This function returns the size of the array for use in custom-code size mechanism.'
-        },
         'parameters': [
             {
                 'cppName': 'vi',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Identifies a particular instrument session.'
-                },
                 'grpc_type': 'nidevice_grpc.Session',
                 'name': 'vi',
                 'type': 'ViSession'
@@ -945,9 +851,6 @@ functions = {
             {
                 'cppName': 'sizeOut',
                 'direction': 'out',
-                'documentation': {
-                    'description': 'Size of array'
-                },
                 'grpc_type': 'sint32',
                 'name': 'sizeOut',
                 'type': 'ViInt32'
@@ -957,16 +860,10 @@ functions = {
     },
     'GetArrayUsingIviDance': {
         'codegen_method': 'public',
-        'documentation': {
-            'description': 'This function returns an array of float whose size is determined with the IVI dance.'
-        },
         'parameters': [
             {
                 'cppName': 'vi',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Identifies a particular instrument session.'
-                },
                 'grpc_type': 'nidevice_grpc.Session',
                 'name': 'vi',
                 'type': 'ViSession'
@@ -974,9 +871,6 @@ functions = {
             {
                 'cppName': 'arraySize',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Specifies the size of the buffer for copyint arrayOut onto.'
-                },
                 'grpc_type': 'sint32',
                 'include_in_proto': False,
                 'is_size_param': True,
@@ -986,9 +880,6 @@ functions = {
             {
                 'cppName': 'arrayOut',
                 'direction': 'out',
-                'documentation': {
-                    'description': 'The array returned by this function'
-                },
                 'grpc_type': 'repeated double',
                 'name': 'arrayOut',
                 'size': {
@@ -1001,6 +892,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'GetArrayViUInt8WithEnum': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -1020,7 +912,7 @@ functions = {
             {
                 'cppName': 'uInt8EnumArray',
                 'direction': 'out',
-                'enum': 'Color',
+                'enum': 'GrpcColorOverride',
                 'grpc_type': 'bytes',
                 'name': 'uInt8EnumArray',
                 'size': {
@@ -1034,16 +926,10 @@ functions = {
     },
     'GetAttributeViBoolean': {
         'codegen_method': 'public',
-        'documentation': {
-            'description': 'Queries the value of a ViBoolean attribute.'
-        },
         'parameters': [
             {
                 'cppName': 'vi',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Identifies a particular instrument session.'
-                },
                 'grpc_type': 'nidevice_grpc.Session',
                 'name': 'vi',
                 'type': 'ViSession'
@@ -1051,9 +937,6 @@ functions = {
             {
                 'cppName': 'channelName',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'This is the channel(s) that this function will apply to.'
-                },
                 'grpc_type': 'string',
                 'name': 'channelName',
                 'type': 'ViConstString'
@@ -1061,9 +944,6 @@ functions = {
             {
                 'cppName': 'attributeId',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Pass the ID of an attribute.'
-                },
                 'grpc_type': 'NiFakeAttribute',
                 'name': 'attributeId',
                 'type': 'ViAttr'
@@ -1071,9 +951,6 @@ functions = {
             {
                 'cppName': 'attributeValue',
                 'direction': 'out',
-                'documentation': {
-                    'description': 'Returns the value of the attribute.'
-                },
                 'grpc_type': 'bool',
                 'name': 'attributeValue',
                 'type': 'ViBoolean'
@@ -1083,16 +960,10 @@ functions = {
     },
     'GetAttributeViInt32': {
         'codegen_method': 'public',
-        'documentation': {
-            'description': 'Queries the value of a ViInt32 attribute.'
-        },
         'parameters': [
             {
                 'cppName': 'vi',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Identifies a particular instrument session.'
-                },
                 'grpc_type': 'nidevice_grpc.Session',
                 'name': 'vi',
                 'type': 'ViSession'
@@ -1100,9 +971,6 @@ functions = {
             {
                 'cppName': 'channelName',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'This is the channel(s) that this function will apply to.'
-                },
                 'grpc_type': 'string',
                 'name': 'channelName',
                 'type': 'ViConstString'
@@ -1110,9 +978,6 @@ functions = {
             {
                 'cppName': 'attributeId',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Pass the ID of an attribute.'
-                },
                 'grpc_type': 'NiFakeAttribute',
                 'name': 'attributeId',
                 'type': 'ViAttr'
@@ -1120,9 +985,6 @@ functions = {
             {
                 'cppName': 'attributeValue',
                 'direction': 'out',
-                'documentation': {
-                    'description': 'Returns the value of the attribute.'
-                },
                 'grpc_type': 'sint32',
                 'name': 'attributeValue',
                 'type': 'ViInt32'
@@ -1132,16 +994,10 @@ functions = {
     },
     'GetAttributeViInt64': {
         'codegen_method': 'public',
-        'documentation': {
-            'description': 'Queries the value of a ViInt64 attribute.'
-        },
         'parameters': [
             {
                 'cppName': 'vi',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Identifies a particular instrument session.'
-                },
                 'grpc_type': 'nidevice_grpc.Session',
                 'name': 'vi',
                 'type': 'ViSession'
@@ -1149,9 +1005,6 @@ functions = {
             {
                 'cppName': 'channelName',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'This is the channel(s) that this function will apply to.'
-                },
                 'grpc_type': 'string',
                 'name': 'channelName',
                 'type': 'ViConstString'
@@ -1159,9 +1012,6 @@ functions = {
             {
                 'cppName': 'attributeId',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Pass the ID of an attribute.'
-                },
                 'grpc_type': 'NiFakeAttribute',
                 'name': 'attributeId',
                 'type': 'ViAttr'
@@ -1169,9 +1019,6 @@ functions = {
             {
                 'cppName': 'attributeValue',
                 'direction': 'out',
-                'documentation': {
-                    'description': 'Returns the value of the attribute.'
-                },
                 'grpc_type': 'int64',
                 'name': 'attributeValue',
                 'type': 'ViInt64'
@@ -1181,16 +1028,10 @@ functions = {
     },
     'GetAttributeViReal64': {
         'codegen_method': 'public',
-        'documentation': {
-            'description': 'Queries the value of a ViReal attribute.'
-        },
         'parameters': [
             {
                 'cppName': 'vi',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Identifies a particular instrument session.'
-                },
                 'grpc_type': 'nidevice_grpc.Session',
                 'name': 'vi',
                 'type': 'ViSession'
@@ -1198,9 +1039,6 @@ functions = {
             {
                 'cppName': 'channelName',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'This is the channel(s) that this function will apply to.'
-                },
                 'grpc_type': 'string',
                 'name': 'channelName',
                 'type': 'ViConstString'
@@ -1208,9 +1046,6 @@ functions = {
             {
                 'cppName': 'attributeId',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Pass the ID of an attribute.'
-                },
                 'grpc_type': 'NiFakeAttribute',
                 'name': 'attributeId',
                 'type': 'ViAttr'
@@ -1218,9 +1053,6 @@ functions = {
             {
                 'cppName': 'attributeValue',
                 'direction': 'out',
-                'documentation': {
-                    'description': 'Returns the value of the attribute.'
-                },
                 'grpc_type': 'double',
                 'name': 'attributeValue',
                 'type': 'ViReal64'
@@ -1229,43 +1061,11 @@ functions = {
         'returns': 'ViStatus'
     },
     'GetAttributeViSession': {
-        'parameters': [
-            {
-                'cppName': 'vi',
-                'direction': 'in',
-                'grpc_type': 'nidevice_grpc.Session',
-                'name': 'vi',
-                'type': 'ViSession'
-            },
-            {
-                'cppName': 'attributeId',
-                'direction': 'in',
-                'grpc_type': 'sint32',
-                'name': 'attributeId',
-                'type': 'ViInt32'
-            },
-            {
-                'cppName': 'sessionOut',
-                'direction': 'out',
-                'grpc_type': 'nidevice_grpc.Session',
-                'name': 'sessionOut',
-                'type': 'ViSession'
-            }
-        ],
-        'returns': 'ViStatus'
-    },
-    'GetAttributeViString': {
         'codegen_method': 'public',
-        'documentation': {
-            'description': 'Queries the value of a ViBoolean attribute.'
-        },
         'parameters': [
             {
                 'cppName': 'vi',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Identifies a particular instrument session.'
-                },
                 'grpc_type': 'nidevice_grpc.Session',
                 'name': 'vi',
                 'type': 'ViSession'
@@ -1273,9 +1073,6 @@ functions = {
             {
                 'cppName': 'channelName',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'This is the channel(s) that this function will apply to.'
-                },
                 'grpc_type': 'string',
                 'name': 'channelName',
                 'type': 'ViConstString'
@@ -1283,9 +1080,40 @@ functions = {
             {
                 'cppName': 'attributeId',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Pass the ID of an attribute.'
-                },
+                'grpc_type': 'NiFakeAttribute',
+                'name': 'attributeId',
+                'type': 'ViAttr'
+            },
+            {
+                'cppName': 'attributeValue',
+                'direction': 'out',
+                'grpc_type': 'nidevice_grpc.Session',
+                'name': 'attributeValue',
+                'type': 'ViSession'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'GetAttributeViString': {
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'cppName': 'vi',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.Session',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'cppName': 'channelName',
+                'direction': 'in',
+                'grpc_type': 'string',
+                'name': 'channelName',
+                'type': 'ViConstString'
+            },
+            {
+                'cppName': 'attributeId',
+                'direction': 'in',
                 'grpc_type': 'NiFakeAttribute',
                 'name': 'attributeId',
                 'type': 'ViAttr'
@@ -1293,9 +1121,6 @@ functions = {
             {
                 'cppName': 'bufferSize',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Number of bytes in attributeValue. You can IVI-dance with this.'
-                },
                 'grpc_type': 'sint32',
                 'include_in_proto': False,
                 'is_size_param': True,
@@ -1305,9 +1130,6 @@ functions = {
             {
                 'cppName': 'attributeValue',
                 'direction': 'out',
-                'documentation': {
-                    'description': 'Returns the value of the attribute.'
-                },
                 'grpc_type': 'string',
                 'name': 'attributeValue',
                 'size': {
@@ -1320,6 +1142,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'GetBitfieldAsEnumArray': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'bitfield_as_enum_array': 'Bitfield',
@@ -1334,16 +1157,10 @@ functions = {
     },
     'GetCalDateAndTime': {
         'codegen_method': 'public',
-        'documentation': {
-            'description': 'Returns the date and time of the last calibration performed.'
-        },
         'parameters': [
             {
                 'cppName': 'vi',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Identifies a particular instrument session.'
-                },
                 'grpc_type': 'nidevice_grpc.Session',
                 'name': 'vi',
                 'type': 'ViSession'
@@ -1351,9 +1168,6 @@ functions = {
             {
                 'cppName': 'calType',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Specifies the type of calibration performed (external or self-calibration).'
-                },
                 'grpc_type': 'sint32',
                 'name': 'calType',
                 'type': 'ViInt32'
@@ -1361,9 +1175,6 @@ functions = {
             {
                 'cppName': 'month',
                 'direction': 'out',
-                'documentation': {
-                    'description': 'Indicates the **month** of the last calibration.'
-                },
                 'grpc_type': 'sint32',
                 'name': 'month',
                 'type': 'ViInt32'
@@ -1371,9 +1182,6 @@ functions = {
             {
                 'cppName': 'day',
                 'direction': 'out',
-                'documentation': {
-                    'description': 'Indicates the **day** of the last calibration.'
-                },
                 'grpc_type': 'sint32',
                 'name': 'day',
                 'type': 'ViInt32'
@@ -1381,9 +1189,6 @@ functions = {
             {
                 'cppName': 'year',
                 'direction': 'out',
-                'documentation': {
-                    'description': 'Indicates the **year** of the last calibration.'
-                },
                 'grpc_type': 'sint32',
                 'name': 'year',
                 'type': 'ViInt32'
@@ -1391,9 +1196,6 @@ functions = {
             {
                 'cppName': 'hour',
                 'direction': 'out',
-                'documentation': {
-                    'description': 'Indicates the **hour** of the last calibration.'
-                },
                 'grpc_type': 'sint32',
                 'name': 'hour',
                 'type': 'ViInt32'
@@ -1401,9 +1203,6 @@ functions = {
             {
                 'cppName': 'minute',
                 'direction': 'out',
-                'documentation': {
-                    'description': 'Indicates the **minute** of the last calibration.'
-                },
                 'grpc_type': 'sint32',
                 'name': 'minute',
                 'type': 'ViInt32'
@@ -1412,16 +1211,11 @@ functions = {
         'returns': 'ViStatus'
     },
     'GetCalInterval': {
-        'documentation': {
-            'description': 'Returns the recommended maximum interval, in **months**, between external calibrations.'
-        },
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Identifies a particular instrument session.'
-                },
                 'grpc_type': 'nidevice_grpc.Session',
                 'name': 'vi',
                 'type': 'ViSession'
@@ -1429,29 +1223,19 @@ functions = {
             {
                 'cppName': 'months',
                 'direction': 'out',
-                'documentation': {
-                    'description': 'Specifies the recommended maximum interval, in **months**, between external calibrations.'
-                },
                 'grpc_type': 'sint32',
                 'name': 'months',
-                'python_api_converter_name': 'convert_month_to_timedelta',
-                'type': 'ViInt32',
-                'type_in_documentation': 'hightime.timedelta'
+                'type': 'ViInt32'
             }
         ],
         'returns': 'ViStatus'
     },
     'GetCustomType': {
-        'documentation': {
-            'description': 'This function returns a custom type.'
-        },
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Identifies a particular instrument session.'
-                },
                 'grpc_type': 'nidevice_grpc.Session',
                 'name': 'vi',
                 'type': 'ViSession'
@@ -1459,9 +1243,6 @@ functions = {
             {
                 'cppName': 'cs',
                 'direction': 'out',
-                'documentation': {
-                    'description': 'Set using custom type'
-                },
                 'grpc_type': 'FakeCustomStruct',
                 'name': 'cs',
                 'type': 'struct CustomStruct'
@@ -1471,16 +1252,10 @@ functions = {
     },
     'GetCustomTypeArray': {
         'codegen_method': 'public',
-        'documentation': {
-            'description': 'This function returns a custom type.'
-        },
         'parameters': [
             {
                 'cppName': 'vi',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Identifies a particular instrument session.'
-                },
                 'grpc_type': 'nidevice_grpc.Session',
                 'name': 'vi',
                 'type': 'ViSession'
@@ -1488,9 +1263,6 @@ functions = {
             {
                 'cppName': 'numberOfElements',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Number of elements in the array.'
-                },
                 'grpc_type': 'sint32',
                 'is_size_param': True,
                 'name': 'numberOfElements',
@@ -1499,9 +1271,6 @@ functions = {
             {
                 'cppName': 'cs',
                 'direction': 'out',
-                'documentation': {
-                    'description': 'Get using custom type'
-                },
                 'grpc_type': 'repeated FakeCustomStruct',
                 'name': 'cs',
                 'size': {
@@ -1515,17 +1284,10 @@ functions = {
     },
     'GetEnumValue': {
         'codegen_method': 'public',
-        'documentation': {
-            'description': 'Returns an enum value',
-            'note': 'Splinter is not supported.'
-        },
         'parameters': [
             {
                 'cppName': 'vi',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Identifies a particular instrument session.'
-                },
                 'grpc_type': 'nidevice_grpc.Session',
                 'name': 'vi',
                 'type': 'ViSession'
@@ -1533,10 +1295,6 @@ functions = {
             {
                 'cppName': 'aQuantity',
                 'direction': 'out',
-                'documentation': {
-                    'description': 'This is an amount.',
-                    'note': 'The amount will be between -2^31 and (2^31-1)'
-                },
                 'grpc_type': 'sint32',
                 'name': 'aQuantity',
                 'type': 'ViInt32'
@@ -1544,27 +1302,6 @@ functions = {
             {
                 'cppName': 'aTurtle',
                 'direction': 'out',
-                'documentation': {
-                    'description': 'Indicates a ninja turtle',
-                    'table_body': [
-                        [
-                            '0',
-                            'Leonardo'
-                        ],
-                        [
-                            '1',
-                            'Donatello'
-                        ],
-                        [
-                            '2',
-                            'Raphael'
-                        ],
-                        [
-                            '3',
-                            'Mich elangelo'
-                        ]
-                    ]
-                },
                 'enum': 'Turtle',
                 'grpc_type': 'sint32',
                 'name': 'aTurtle',
@@ -1575,17 +1312,11 @@ functions = {
     },
     'GetError': {
         'codegen_method': 'private',
-        'documentation': {
-            'description': 'Returns the error information associated with the session.'
-        },
         'is_error_handling': True,
         'parameters': [
             {
                 'cppName': 'vi',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Identifies a particular instrument session.'
-                },
                 'grpc_type': 'nidevice_grpc.Session',
                 'name': 'vi',
                 'type': 'ViSession'
@@ -1593,9 +1324,6 @@ functions = {
             {
                 'cppName': 'errorCode',
                 'direction': 'out',
-                'documentation': {
-                    'description': 'Returns errorCode for the session. If you pass 0 for bufferSize, you can pass VI_NULL for this.'
-                },
                 'grpc_type': 'sint32',
                 'name': 'errorCode',
                 'type': 'ViStatus'
@@ -1603,9 +1331,6 @@ functions = {
             {
                 'cppName': 'bufferSize',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Number of bytes in description buffer.'
-                },
                 'grpc_type': 'sint32',
                 'include_in_proto': False,
                 'is_size_param': True,
@@ -1615,9 +1340,6 @@ functions = {
             {
                 'cppName': 'description',
                 'direction': 'out',
-                'documentation': {
-                    'description': 'At least bufferSize big, string comes out here.'
-                },
                 'grpc_type': 'string',
                 'name': 'description',
                 'size': {
@@ -1627,10 +1349,10 @@ functions = {
                 'type': 'ViChar[]'
             }
         ],
-        'returns': 'ViStatus',
-        'use_session_lock': False
+        'returns': 'ViStatus'
     },
     'GetViInt32Array': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -1662,6 +1384,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'GetViUInt32Array': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -1713,9 +1436,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'ImportAttributeConfigurationBuffer': {
-        'documentation': {
-            'description': 'Import configuration buffer.'
-        },
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -1742,13 +1463,11 @@ functions = {
                 'direction': 'in',
                 'grpc_type': 'bytes',
                 'name': 'configuration',
-                'python_api_converter_name': 'convert_to_bytes',
                 'size': {
                     'mechanism': 'len',
                     'value': 'sizeInBytes'
                 },
-                'type': 'ViInt8[]',
-                'type_in_documentation': 'bytes'
+                'type': 'ViInt8[]'
             }
         ],
         'returns': 'ViStatus'
@@ -1784,65 +1503,25 @@ functions = {
     },
     'InitWithOptions': {
         'codegen_method': 'public',
-        'documentation': {
-            'description': 'Creates a new IVI instrument driver session.'
-        },
         'init_method': True,
         'parameters': [
             {
                 'cppName': 'resourceName',
                 'direction': 'in',
-                'documentation': {
-                    'caution': 'This is just some string.',
-                    'description': 'Contains the **resource_name** of the device to initialize.'
-                },
                 'grpc_type': 'string',
                 'name': 'resourceName',
                 'type': 'ViString'
             },
             {
                 'cppName': 'idQuery',
-                'default_value': False,
                 'direction': 'in',
-                'documentation': {
-                    'description': 'NI-FAKE is probably not needed.',
-                    'table_body': [
-                        [
-                            'VI_TRUE (default)',
-                            '1',
-                            'Perform ID Query'
-                        ],
-                        [
-                            'VI_FALSE',
-                            '0',
-                            'Skip ID Query'
-                        ]
-                    ]
-                },
                 'grpc_type': 'bool',
                 'name': 'idQuery',
-                'type': 'ViBoolean',
-                'use_in_python_api': False
+                'type': 'ViBoolean'
             },
             {
                 'cppName': 'resetDevice',
-                'default_value': False,
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Specifies whether to reset',
-                    'table_body': [
-                        [
-                            'VI_TRUE (default)',
-                            '1',
-                            'Reset Device'
-                        ],
-                        [
-                            'VI_FALSE',
-                            '0',
-                            "Don't Reset"
-                        ]
-                    ]
-                },
                 'grpc_type': 'bool',
                 'name': 'resetDevice',
                 'type': 'ViBoolean'
@@ -1850,28 +1529,19 @@ functions = {
             {
                 'cppName': 'optionString',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Some options'
-                },
                 'grpc_type': 'string',
                 'name': 'optionString',
-                'python_api_converter_name': 'convert_init_with_options_dictionary',
-                'type': 'ViConstString',
-                'type_in_documentation': 'dict'
+                'type': 'ViConstString'
             },
             {
                 'cppName': 'vi',
                 'direction': 'out',
-                'documentation': {
-                    'description': 'Returns a ViSession handle that you use.'
-                },
                 'grpc_type': 'nidevice_grpc.Session',
                 'name': 'vi',
                 'type': 'ViSession'
             }
         ],
-        'returns': 'ViStatus',
-        'use_session_lock': False
+        'returns': 'ViStatus'
     },
     'InitWithVarArgs': {
         'codegen_method': 'public',
@@ -1925,16 +1595,10 @@ functions = {
     },
     'Initiate': {
         'codegen_method': 'private',
-        'documentation': {
-            'description': 'Initiates a thingie.'
-        },
         'parameters': [
             {
                 'cppName': 'vi',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Identifies a particular instrument session.'
-                },
                 'grpc_type': 'nidevice_grpc.Session',
                 'name': 'vi',
                 'type': 'ViSession'
@@ -1942,18 +1606,112 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
+    'MethodUsingEnumWithGrpcNameValues': {
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'cppName': 'usingEnum',
+                'direction': 'in',
+                'enum': 'EnumWithGrpcNameValues',
+                'grpc_type': 'sint32',
+                'name': 'usingEnum',
+                'type': 'ViInt32'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'MethodUsingWholeAndFractionalNumbers': {
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'cppName': 'wholeNumber',
+                'direction': 'out',
+                'enum': 'DecimalWholeNumber',
+                'grpc_type': 'sint32',
+                'name': 'wholeNumber',
+                'type': 'ViInt32'
+            },
+            {
+                'cppName': 'fractionalNumber',
+                'direction': 'out',
+                'grpc_type': 'double',
+                'mapped-enum': 'DecimalMixedNumber',
+                'name': 'fractionalNumber',
+                'type': 'ViReal64'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'MethodUsingWholeMappedNumbers': {
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'cppName': 'wholeNumber',
+                'direction': 'out',
+                'grpc_type': 'double',
+                'mapped-enum': 'DecimalWholeNumberMapped',
+                'name': 'wholeNumber',
+                'type': 'ViReal64'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'MethodWithGetLastErrorParam': {
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'cppName': 'lastError',
+                'direction': 'out',
+                'get_last_error': 'deprecated',
+                'grpc_type': 'string',
+                'name': 'lastError',
+                'type': 'ViChar[]'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'MethodWithGrpcFieldNumber': {
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'cppName': 'attributeValue',
+                'direction': 'in',
+                'grpc_field_number': '5',
+                'grpc_mapped_field_number': '6',
+                'grpc_raw_field_number': '4',
+                'grpc_type': 'sint32',
+                'name': 'attributeValue',
+                'type': 'ViInt32'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'MethodWithGrpcOnlyParam': {
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'cppName': 'simpleParam',
+                'direction': 'in',
+                'grpc_type': 'sint32',
+                'name': 'simpleParam',
+                'type': 'ViInt32'
+            },
+            {
+                'cppName': 'grpcOnlyParam',
+                'direction': 'out',
+                'grpc_type': 'sint32',
+                'name': 'grpcOnlyParam',
+                'type': 'ViInt32'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
     'MultipleArrayTypes': {
         'codegen_method': 'public',
-        'documentation': {
-            'description': 'Receives and returns multiple types of arrays.'
-        },
         'parameters': [
             {
                 'cppName': 'vi',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Identifies a particular instrument session.'
-                },
                 'grpc_type': 'nidevice_grpc.Session',
                 'name': 'vi',
                 'type': 'ViSession'
@@ -1961,9 +1719,6 @@ functions = {
             {
                 'cppName': 'outputArraySize',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Size of the array that will be returned.'
-                },
                 'grpc_type': 'sint32',
                 'is_size_param': True,
                 'name': 'outputArraySize',
@@ -1972,10 +1727,6 @@ functions = {
             {
                 'cppName': 'outputArray',
                 'direction': 'out',
-                'documentation': {
-                    'description': 'Array that will be returned.',
-                    'note': 'The size must be at least outputArraySize.'
-                },
                 'grpc_type': 'repeated double',
                 'name': 'outputArray',
                 'size': {
@@ -1987,9 +1738,6 @@ functions = {
             {
                 'cppName': 'outputArrayOfFixedLength',
                 'direction': 'out',
-                'documentation': {
-                    'description': 'An array of doubles with fixed size.'
-                },
                 'grpc_type': 'repeated double',
                 'name': 'outputArrayOfFixedLength',
                 'size': {
@@ -2005,9 +1753,6 @@ functions = {
                     'inputArrayOfIntegers'
                 ],
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Size of inputArrayOfFloats and inputArrayOfIntegers'
-                },
                 'grpc_type': 'sint32',
                 'include_in_proto': False,
                 'is_size_param': True,
@@ -2018,9 +1763,6 @@ functions = {
             {
                 'cppName': 'inputArrayOfFloats',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Array of floats'
-                },
                 'grpc_type': 'repeated double',
                 'name': 'inputArrayOfFloats',
                 'size': {
@@ -2031,11 +1773,7 @@ functions = {
             },
             {
                 'cppName': 'inputArrayOfIntegers',
-                'default_value': None,
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Array of integers. Optional. If passed in then size must match that of inputArrayOfFloats.'
-                },
                 'grpc_type': 'repeated sint32',
                 'name': 'inputArrayOfIntegers',
                 'size': {
@@ -2048,16 +1786,11 @@ functions = {
         'returns': 'ViStatus'
     },
     'MultipleArraysSameSize': {
-        'documentation': {
-            'description': 'Function to test multiple arrays that use the same size'
-        },
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Identifies a particular instrument session.'
-                },
                 'grpc_type': 'nidevice_grpc.Session',
                 'name': 'vi',
                 'type': 'ViSession'
@@ -2065,9 +1798,6 @@ functions = {
             {
                 'cppName': 'values1',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Array 1 of same size.'
-                },
                 'grpc_type': 'repeated double',
                 'name': 'values1',
                 'size': {
@@ -2079,9 +1809,6 @@ functions = {
             {
                 'cppName': 'values2',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Array 2 of same size.'
-                },
                 'grpc_type': 'repeated double',
                 'name': 'values2',
                 'size': {
@@ -2093,9 +1820,6 @@ functions = {
             {
                 'cppName': 'values3',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Array 3 of same size.'
-                },
                 'grpc_type': 'repeated double',
                 'name': 'values3',
                 'size': {
@@ -2107,9 +1831,6 @@ functions = {
             {
                 'cppName': 'values4',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Array 4 of same size.'
-                },
                 'grpc_type': 'repeated double',
                 'name': 'values4',
                 'size': {
@@ -2127,9 +1848,6 @@ functions = {
                     'values4'
                 ],
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Size for all arrays'
-                },
                 'grpc_type': 'sint32',
                 'include_in_proto': False,
                 'is_size_param': True,
@@ -2141,16 +1859,11 @@ functions = {
         'returns': 'ViStatus'
     },
     'MultipleArraysSameSizeWithOptional': {
-        'documentation': {
-            'description': 'Function to test multiple arrays that use the same size'
-        },
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Identifies a particular instrument session.'
-                },
                 'grpc_type': 'nidevice_grpc.Session',
                 'name': 'vi',
                 'type': 'ViSession'
@@ -2158,9 +1871,6 @@ functions = {
             {
                 'cppName': 'values1',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Array 1 of same size.'
-                },
                 'grpc_type': 'repeated double',
                 'name': 'values1',
                 'size': {
@@ -2175,9 +1885,6 @@ functions = {
             {
                 'cppName': 'values2',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Array 2 of same size.'
-                },
                 'grpc_type': 'repeated double',
                 'name': 'values2',
                 'size': {
@@ -2192,9 +1899,6 @@ functions = {
             {
                 'cppName': 'values3',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Array 3 of same size.'
-                },
                 'grpc_type': 'repeated double',
                 'name': 'values3',
                 'size': {
@@ -2209,9 +1913,6 @@ functions = {
             {
                 'cppName': 'values4',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Array 4 of same size.'
-                },
                 'grpc_type': 'repeated double',
                 'name': 'values4',
                 'size': {
@@ -2226,9 +1927,6 @@ functions = {
             {
                 'cppName': 'values5',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Array 5 of same size.'
-                },
                 'grpc_type': 'repeated FakeCustomStruct',
                 'name': 'values5',
                 'size': {
@@ -2250,9 +1948,6 @@ functions = {
                     'values5'
                 ],
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Size for all arrays'
-                },
                 'grpc_type': 'sint32',
                 'include_in_proto': False,
                 'is_size_param': True,
@@ -2265,16 +1960,10 @@ functions = {
     },
     'OneInputFunction': {
         'codegen_method': 'public',
-        'documentation': {
-            'description': 'This function takes one parameter other than the session.'
-        },
         'parameters': [
             {
                 'cppName': 'vi',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Identifies a particular instrument session. You obtain the **vi** parameter from niFake_InitWithOptions.'
-                },
                 'grpc_type': 'nidevice_grpc.Session',
                 'name': 'vi',
                 'type': 'ViSession'
@@ -2282,9 +1971,6 @@ functions = {
             {
                 'cppName': 'aNumber',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Contains a number'
-                },
                 'grpc_type': 'sint32',
                 'name': 'aNumber',
                 'type': 'ViInt32'
@@ -2294,16 +1980,10 @@ functions = {
     },
     'ParametersAreMultipleTypes': {
         'codegen_method': 'public',
-        'documentation': {
-            'description': 'Has parameters of multiple types.'
-        },
         'parameters': [
             {
                 'cppName': 'vi',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Identifies a particular instrument session.'
-                },
                 'grpc_type': 'nidevice_grpc.Session',
                 'name': 'vi',
                 'type': 'ViSession'
@@ -2311,9 +1991,6 @@ functions = {
             {
                 'cppName': 'aBoolean',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Contains a boolean.'
-                },
                 'grpc_type': 'bool',
                 'name': 'aBoolean',
                 'type': 'ViBoolean'
@@ -2321,9 +1998,6 @@ functions = {
             {
                 'cppName': 'anInt32',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Contains a 32-bit integer.'
-                },
                 'grpc_type': 'sint32',
                 'name': 'anInt32',
                 'type': 'ViInt32'
@@ -2331,9 +2005,6 @@ functions = {
             {
                 'cppName': 'anInt64',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Contains a 64-bit integer.'
-                },
                 'grpc_type': 'int64',
                 'name': 'anInt64',
                 'type': 'ViInt64'
@@ -2341,27 +2012,6 @@ functions = {
             {
                 'cppName': 'anIntEnum',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Indicates a ninja turtle',
-                    'table_body': [
-                        [
-                            '0',
-                            'Leonardo'
-                        ],
-                        [
-                            '1',
-                            'Donatello'
-                        ],
-                        [
-                            '2',
-                            'Raphael'
-                        ],
-                        [
-                            '3',
-                            'Mich elangelo'
-                        ]
-                    ]
-                },
                 'enum': 'Turtle',
                 'grpc_type': 'sint32',
                 'name': 'anIntEnum',
@@ -2370,9 +2020,6 @@ functions = {
             {
                 'cppName': 'aFloat',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'The measured value.'
-                },
                 'grpc_type': 'double',
                 'name': 'aFloat',
                 'type': 'ViReal64'
@@ -2380,9 +2027,6 @@ functions = {
             {
                 'cppName': 'aFloatEnum',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'A float enum.'
-                },
                 'grpc_type': 'double',
                 'mapped-enum': 'FloatEnum',
                 'name': 'aFloatEnum',
@@ -2394,9 +2038,6 @@ functions = {
                     'aString'
                 ],
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Number of bytes allocated for aString'
-                },
                 'grpc_type': 'sint32',
                 'include_in_proto': False,
                 'is_size_param': True,
@@ -2407,9 +2048,6 @@ functions = {
             {
                 'cppName': 'aString',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'An IVI dance string.'
-                },
                 'grpc_type': 'string',
                 'name': 'aString',
                 'size': {
@@ -2423,36 +2061,23 @@ functions = {
     },
     'PoorlyNamedSimpleFunction': {
         'codegen_method': 'public',
-        'documentation': {
-            'description': 'This function takes no parameters other than the session.'
-        },
         'parameters': [
             {
                 'cppName': 'vi',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Identifies a particular instrument session. You obtain the **vi** parameter from niFake_InitWithOptions.'
-                },
                 'grpc_type': 'nidevice_grpc.Session',
                 'name': 'vi',
                 'type': 'ViSession'
             }
         ],
-        'python_name': 'simple_function',
         'returns': 'ViStatus'
     },
     'Read': {
         'codegen_method': 'public',
-        'documentation': {
-            'description': 'Acquires a single measurement and returns the measured value.'
-        },
         'parameters': [
             {
                 'cppName': 'vi',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Identifies a particular instrument session.'
-                },
                 'grpc_type': 'nidevice_grpc.Session',
                 'name': 'vi',
                 'type': 'ViSession'
@@ -2460,21 +2085,13 @@ functions = {
             {
                 'cppName': 'maximumTime',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Specifies the **maximum_time** allowed in seconds.'
-                },
                 'grpc_type': 'double',
                 'name': 'maximumTime',
-                'python_api_converter_name': 'convert_timedelta_to_seconds_real64',
-                'type': 'ViReal64',
-                'type_in_documentation': 'hightime.timedelta'
+                'type': 'ViReal64'
             },
             {
                 'cppName': 'reading',
                 'direction': 'out',
-                'documentation': {
-                    'description': 'The measured value.'
-                },
                 'grpc_type': 'double',
                 'name': 'reading',
                 'type': 'ViReal64'
@@ -2483,6 +2100,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'ReadDataWithInOutIviTwist': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'data',
@@ -2508,6 +2126,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'ReadDataWithMultipleIviTwistParamSets': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'bufferSize',
@@ -2570,16 +2189,10 @@ functions = {
     },
     'ReadFromChannel': {
         'codegen_method': 'public',
-        'documentation': {
-            'description': 'Acquires a single measurement and returns the measured value.'
-        },
         'parameters': [
             {
                 'cppName': 'vi',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Identifies a particular instrument session.'
-                },
                 'grpc_type': 'nidevice_grpc.Session',
                 'name': 'vi',
                 'type': 'ViSession'
@@ -2587,9 +2200,6 @@ functions = {
             {
                 'cppName': 'channelName',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'This is the channel(s) that this function will apply to.'
-                },
                 'grpc_type': 'string',
                 'name': 'channelName',
                 'type': 'ViConstString'
@@ -2597,21 +2207,13 @@ functions = {
             {
                 'cppName': 'maximumTime',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Specifies the **maximum_time** allowed in milliseconds.'
-                },
                 'grpc_type': 'sint32',
                 'name': 'maximumTime',
-                'python_api_converter_name': 'convert_timedelta_to_milliseconds_int32',
-                'type': 'ViInt32',
-                'type_in_documentation': 'hightime.timedelta'
+                'type': 'ViInt32'
             },
             {
                 'cppName': 'reading',
                 'direction': 'out',
-                'documentation': {
-                    'description': 'The measured value.'
-                },
                 'grpc_type': 'double',
                 'name': 'reading',
                 'type': 'ViReal64'
@@ -2621,17 +2223,10 @@ functions = {
     },
     'ReturnANumberAndAString': {
         'codegen_method': 'public',
-        'documentation': {
-            'description': 'Returns a number and a string.',
-            'note': 'This function rules!'
-        },
         'parameters': [
             {
                 'cppName': 'vi',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Identifies a particular instrument session.'
-                },
                 'grpc_type': 'nidevice_grpc.Session',
                 'name': 'vi',
                 'type': 'ViSession'
@@ -2639,9 +2234,6 @@ functions = {
             {
                 'cppName': 'aNumber',
                 'direction': 'out',
-                'documentation': {
-                    'description': 'Contains a number.'
-                },
                 'grpc_type': 'sint32',
                 'name': 'aNumber',
                 'type': 'ViInt16'
@@ -2649,9 +2241,6 @@ functions = {
             {
                 'cppName': 'aString',
                 'direction': 'out',
-                'documentation': {
-                    'description': 'Contains a string. Buffer must be 256 bytes or larger.'
-                },
                 'grpc_type': 'string',
                 'name': 'aString',
                 'size': {
@@ -2665,16 +2254,10 @@ functions = {
     },
     'ReturnDurationInSeconds': {
         'codegen_method': 'public',
-        'documentation': {
-            'description': 'Returns a hightime.timedelta instance.'
-        },
         'parameters': [
             {
                 'cppName': 'vi',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Identifies a particular instrument session.'
-                },
                 'grpc_type': 'nidevice_grpc.Session',
                 'name': 'vi',
                 'type': 'ViSession'
@@ -2682,30 +2265,19 @@ functions = {
             {
                 'cppName': 'timedelta',
                 'direction': 'out',
-                'documentation': {
-                    'description': 'Duration in seconds.'
-                },
                 'grpc_type': 'double',
                 'name': 'timedelta',
-                'python_api_converter_name': 'convert_seconds_real64_to_timedelta',
-                'type': 'ViReal64',
-                'type_in_documentation': 'hightime.timedelta'
+                'type': 'ViReal64'
             }
         ],
         'returns': 'ViStatus'
     },
     'ReturnListOfDurationsInSeconds': {
         'codegen_method': 'public',
-        'documentation': {
-            'description': 'Returns a list of hightime.timedelta instances.'
-        },
         'parameters': [
             {
                 'cppName': 'vi',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Identifies a particular instrument session.'
-                },
                 'grpc_type': 'nidevice_grpc.Session',
                 'name': 'vi',
                 'type': 'ViSession'
@@ -2713,9 +2285,6 @@ functions = {
             {
                 'cppName': 'numberOfElements',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Number of elements in output.'
-                },
                 'grpc_type': 'sint32',
                 'is_size_param': True,
                 'name': 'numberOfElements',
@@ -2724,34 +2293,23 @@ functions = {
             {
                 'cppName': 'timedeltas',
                 'direction': 'out',
-                'documentation': {
-                    'description': 'Contains a list of hightime.timedelta instances.'
-                },
                 'grpc_type': 'repeated double',
                 'name': 'timedeltas',
-                'python_api_converter_name': 'convert_seconds_real64_to_timedeltas',
                 'size': {
                     'mechanism': 'passed-in',
                     'value': 'numberOfElements'
                 },
-                'type': 'ViReal64[]',
-                'type_in_documentation': 'hightime.timedelta'
+                'type': 'ViReal64[]'
             }
         ],
         'returns': 'ViStatus'
     },
     'ReturnMultipleTypes': {
         'codegen_method': 'public',
-        'documentation': {
-            'description': 'Returns multiple types.'
-        },
         'parameters': [
             {
                 'cppName': 'vi',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Identifies a particular instrument session.'
-                },
                 'grpc_type': 'nidevice_grpc.Session',
                 'name': 'vi',
                 'type': 'ViSession'
@@ -2759,9 +2317,6 @@ functions = {
             {
                 'cppName': 'aBoolean',
                 'direction': 'out',
-                'documentation': {
-                    'description': 'Contains a boolean.'
-                },
                 'grpc_type': 'bool',
                 'name': 'aBoolean',
                 'type': 'ViBoolean'
@@ -2769,9 +2324,6 @@ functions = {
             {
                 'cppName': 'anInt32',
                 'direction': 'out',
-                'documentation': {
-                    'description': 'Contains a 32-bit integer.'
-                },
                 'grpc_type': 'sint32',
                 'name': 'anInt32',
                 'type': 'ViInt32'
@@ -2779,9 +2331,6 @@ functions = {
             {
                 'cppName': 'anInt64',
                 'direction': 'out',
-                'documentation': {
-                    'description': 'Contains a 64-bit integer.'
-                },
                 'grpc_type': 'int64',
                 'name': 'anInt64',
                 'type': 'ViInt64'
@@ -2789,27 +2338,6 @@ functions = {
             {
                 'cppName': 'anIntEnum',
                 'direction': 'out',
-                'documentation': {
-                    'description': 'Indicates a ninja turtle',
-                    'table_body': [
-                        [
-                            '0',
-                            'Leonardo'
-                        ],
-                        [
-                            '1',
-                            'Donatello'
-                        ],
-                        [
-                            '2',
-                            'Raphael'
-                        ],
-                        [
-                            '3',
-                            'Mich elangelo'
-                        ]
-                    ]
-                },
                 'enum': 'Turtle',
                 'grpc_type': 'sint32',
                 'name': 'anIntEnum',
@@ -2818,9 +2346,6 @@ functions = {
             {
                 'cppName': 'aFloat',
                 'direction': 'out',
-                'documentation': {
-                    'description': 'The measured value.'
-                },
                 'grpc_type': 'double',
                 'name': 'aFloat',
                 'type': 'ViReal64'
@@ -2828,9 +2353,6 @@ functions = {
             {
                 'cppName': 'aFloatEnum',
                 'direction': 'out',
-                'documentation': {
-                    'description': 'A float enum.'
-                },
                 'grpc_type': 'double',
                 'mapped-enum': 'FloatEnum',
                 'name': 'aFloatEnum',
@@ -2839,9 +2361,6 @@ functions = {
             {
                 'cppName': 'arraySize',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Number of measurements to acquire.'
-                },
                 'grpc_type': 'sint32',
                 'is_size_param': True,
                 'name': 'arraySize',
@@ -2850,10 +2369,6 @@ functions = {
             {
                 'cppName': 'anArray',
                 'direction': 'out',
-                'documentation': {
-                    'description': 'An array of measurement values.',
-                    'note': 'The size must be at least arraySize.'
-                },
                 'grpc_type': 'repeated double',
                 'name': 'anArray',
                 'size': {
@@ -2865,9 +2380,6 @@ functions = {
             {
                 'cppName': 'stringSize',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Number of bytes allocated for aString'
-                },
                 'grpc_type': 'sint32',
                 'include_in_proto': False,
                 'is_size_param': True,
@@ -2877,9 +2389,6 @@ functions = {
             {
                 'cppName': 'aString',
                 'direction': 'out',
-                'documentation': {
-                    'description': 'An IVI dance string.'
-                },
                 'grpc_type': 'string',
                 'name': 'aString',
                 'size': {
@@ -2891,18 +2400,44 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
-    'SetAttributeViBoolean': {
+    'SelfTest': {
+        'cname': 'niFake_self_test',
         'codegen_method': 'private',
-        'documentation': {
-            'description': 'This function sets the value of a ViBoolean attribute.'
-        },
         'parameters': [
             {
                 'cppName': 'vi',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Identifies a particular instrument session.'
+                'grpc_type': 'nidevice_grpc.Session',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'cppName': 'selfTestResult',
+                'direction': 'out',
+                'grpc_type': 'sint32',
+                'name': 'selfTestResult',
+                'type': 'ViInt16'
+            },
+            {
+                'cppName': 'selfTestMessage',
+                'direction': 'out',
+                'grpc_type': 'string',
+                'name': 'selfTestMessage',
+                'size': {
+                    'mechanism': 'fixed',
+                    'value': 256
                 },
+                'type': 'ViChar[]'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'SetAttributeViBoolean': {
+        'codegen_method': 'private',
+        'parameters': [
+            {
+                'cppName': 'vi',
+                'direction': 'in',
                 'grpc_type': 'nidevice_grpc.Session',
                 'name': 'vi',
                 'type': 'ViSession'
@@ -2910,9 +2445,6 @@ functions = {
             {
                 'cppName': 'channelName',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'This is the channel(s) that this function will apply to.'
-                },
                 'grpc_type': 'string',
                 'name': 'channelName',
                 'type': 'ViConstString'
@@ -2920,9 +2452,6 @@ functions = {
             {
                 'cppName': 'attributeId',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Pass the ID of an attribute.'
-                },
                 'grpc_type': 'NiFakeAttribute',
                 'name': 'attributeId',
                 'type': 'ViAttr'
@@ -2930,9 +2459,6 @@ functions = {
             {
                 'cppName': 'attributeValue',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Pass the value that you want to set the attribute to.'
-                },
                 'grpc_type': 'bool',
                 'name': 'attributeValue',
                 'type': 'ViBoolean'
@@ -2942,16 +2468,10 @@ functions = {
     },
     'SetAttributeViInt32': {
         'codegen_method': 'private',
-        'documentation': {
-            'description': 'This function sets the value of a ViInt32 attribute.'
-        },
         'parameters': [
             {
                 'cppName': 'vi',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Identifies a particular instrument session.'
-                },
                 'grpc_type': 'nidevice_grpc.Session',
                 'name': 'vi',
                 'type': 'ViSession'
@@ -2959,9 +2479,6 @@ functions = {
             {
                 'cppName': 'channelName',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'This is the channel(s) that this function will apply to.'
-                },
                 'grpc_type': 'string',
                 'name': 'channelName',
                 'type': 'ViConstString'
@@ -2969,9 +2486,6 @@ functions = {
             {
                 'cppName': 'attributeId',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Pass the ID of an attribute.'
-                },
                 'grpc_type': 'NiFakeAttribute',
                 'name': 'attributeId',
                 'type': 'ViAttr'
@@ -2979,9 +2493,6 @@ functions = {
             {
                 'cppName': 'attributeValue',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Pass the value that you want to set the attribute to.'
-                },
                 'enum': 'NiFakeInt32AttributeValues',
                 'grpc_type': 'sint32',
                 'name': 'attributeValue',
@@ -2992,16 +2503,10 @@ functions = {
     },
     'SetAttributeViInt64': {
         'codegen_method': 'private',
-        'documentation': {
-            'description': 'This function sets the value of a ViInt64 attribute.'
-        },
         'parameters': [
             {
                 'cppName': 'vi',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Identifies a particular instrument session.'
-                },
                 'grpc_type': 'nidevice_grpc.Session',
                 'name': 'vi',
                 'type': 'ViSession'
@@ -3009,9 +2514,6 @@ functions = {
             {
                 'cppName': 'channelName',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'This is the channel(s) that this function will apply to.'
-                },
                 'grpc_type': 'string',
                 'name': 'channelName',
                 'type': 'ViConstString'
@@ -3019,9 +2521,6 @@ functions = {
             {
                 'cppName': 'attributeId',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Pass the ID of an attribute.'
-                },
                 'grpc_type': 'NiFakeAttribute',
                 'name': 'attributeId',
                 'type': 'ViAttr'
@@ -3029,9 +2528,6 @@ functions = {
             {
                 'cppName': 'attributeValue',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Pass the value that you want to set the attribute to.'
-                },
                 'grpc_type': 'int64',
                 'name': 'attributeValue_raw',
                 'type': 'ViInt64'
@@ -3041,16 +2537,10 @@ functions = {
     },
     'SetAttributeViReal64': {
         'codegen_method': 'private',
-        'documentation': {
-            'description': 'This function sets the value of a ViReal64 attribute.'
-        },
         'parameters': [
             {
                 'cppName': 'vi',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Identifies a particular instrument session.'
-                },
                 'grpc_type': 'nidevice_grpc.Session',
                 'name': 'vi',
                 'type': 'ViSession'
@@ -3058,9 +2548,6 @@ functions = {
             {
                 'cppName': 'channelName',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'This is the channel(s) that this function will apply to.'
-                },
                 'grpc_type': 'string',
                 'name': 'channelName',
                 'type': 'ViConstString'
@@ -3068,9 +2555,6 @@ functions = {
             {
                 'cppName': 'attributeId',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Pass the ID of an attribute.'
-                },
                 'grpc_type': 'NiFakeAttribute',
                 'name': 'attributeId',
                 'type': 'ViAttr'
@@ -3078,9 +2562,6 @@ functions = {
             {
                 'cppName': 'attributeValue',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Pass the value that you want to set the attribute to.'
-                },
                 'grpc_type': 'double',
                 'mapped-enum': 'NiFakeReal64AttributeValuesMapped',
                 'name': 'attributeValue',
@@ -3091,16 +2572,10 @@ functions = {
     },
     'SetAttributeViString': {
         'codegen_method': 'private',
-        'documentation': {
-            'description': 'This function sets the value of a ViString attribute.'
-        },
         'parameters': [
             {
                 'cppName': 'vi',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Identifies a particular instrument session.'
-                },
                 'grpc_type': 'nidevice_grpc.Session',
                 'name': 'vi',
                 'type': 'ViSession'
@@ -3108,9 +2583,6 @@ functions = {
             {
                 'cppName': 'channelName',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'This is the channel(s) that this function will apply to.'
-                },
                 'grpc_type': 'string',
                 'name': 'channelName',
                 'type': 'ViConstString'
@@ -3118,9 +2590,6 @@ functions = {
             {
                 'cppName': 'attributeId',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Pass the ID of an attribute.'
-                },
                 'grpc_type': 'NiFakeAttribute',
                 'name': 'attributeId',
                 'type': 'ViAttr'
@@ -3128,9 +2597,6 @@ functions = {
             {
                 'cppName': 'attributeValue',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Pass the value that you want to set the attribute to.'
-                },
                 'grpc_type': 'string',
                 'name': 'attributeValue_raw',
                 'type': 'ViConstString'
@@ -3139,16 +2605,11 @@ functions = {
         'returns': 'ViStatus'
     },
     'SetCustomType': {
-        'documentation': {
-            'description': 'This function takes a custom type.'
-        },
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Identifies a particular instrument session.'
-                },
                 'grpc_type': 'nidevice_grpc.Session',
                 'name': 'vi',
                 'type': 'ViSession'
@@ -3156,9 +2617,6 @@ functions = {
             {
                 'cppName': 'cs',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Set using custom type'
-                },
                 'grpc_type': 'FakeCustomStruct',
                 'name': 'cs',
                 'type': 'struct CustomStruct'
@@ -3167,16 +2625,11 @@ functions = {
         'returns': 'ViStatus'
     },
     'SetCustomTypeArray': {
-        'documentation': {
-            'description': 'This function takes an array of custom types.'
-        },
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Identifies a particular instrument session.'
-                },
                 'grpc_type': 'nidevice_grpc.Session',
                 'name': 'vi',
                 'type': 'ViSession'
@@ -3187,9 +2640,6 @@ functions = {
                     'cs'
                 ],
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Number of elements in the array.'
-                },
                 'grpc_type': 'sint32',
                 'include_in_proto': False,
                 'is_size_param': True,
@@ -3200,9 +2650,6 @@ functions = {
             {
                 'cppName': 'cs',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Set using custom type'
-                },
                 'grpc_type': 'repeated FakeCustomStruct',
                 'name': 'cs',
                 'size': {
@@ -3216,41 +2663,17 @@ functions = {
     },
     'StringValuedEnumInputFunctionWithDefaults': {
         'codegen_method': 'public',
-        'documentation': {
-            'description': 'This function takes one parameter other than the session, which happens to be a string-valued enum and has a default value.'
-        },
         'parameters': [
             {
                 'cppName': 'vi',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Identifies a particular instrument session. You obtain the **vi**'
-                },
                 'grpc_type': 'nidevice_grpc.Session',
                 'name': 'vi',
                 'type': 'ViSession'
             },
             {
                 'cppName': 'aMobileOSName',
-                'default_value': 'MobileOSNames.ANDROID',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Indicates a Mobile OS',
-                    'table_body': [
-                        [
-                            'ANDROID',
-                            'Android'
-                        ],
-                        [
-                            'IOS',
-                            'iOS'
-                        ],
-                        [
-                            'NONE',
-                            'None'
-                        ]
-                    ]
-                },
                 'grpc_type': 'string',
                 'mapped-enum': 'MobileOSNames',
                 'name': 'aMobileOSName',
@@ -3261,16 +2684,10 @@ functions = {
     },
     'TwoInputFunction': {
         'codegen_method': 'public',
-        'documentation': {
-            'description': 'This function takes two parameters other than the session.'
-        },
         'parameters': [
             {
                 'cppName': 'vi',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Identifies a particular instrument session. You obtain the **vi** parameter from niFake_InitWithOptions.'
-                },
                 'grpc_type': 'nidevice_grpc.Session',
                 'name': 'vi',
                 'type': 'ViSession'
@@ -3278,9 +2695,6 @@ functions = {
             {
                 'cppName': 'aNumber',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Contains a number'
-                },
                 'grpc_type': 'double',
                 'name': 'aNumber',
                 'type': 'ViReal64'
@@ -3288,9 +2702,6 @@ functions = {
             {
                 'cppName': 'aString',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Contains a string'
-                },
                 'grpc_type': 'string',
                 'name': 'aString',
                 'type': 'ViString'
@@ -3300,17 +2711,10 @@ functions = {
     },
     'Use64BitNumber': {
         'codegen_method': 'public',
-        'documentation': {
-            'description': 'Returns a number and a string.',
-            'note': 'This function rules!'
-        },
         'parameters': [
             {
                 'cppName': 'vi',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Identifies a particular instrument session.'
-                },
                 'grpc_type': 'nidevice_grpc.Session',
                 'name': 'vi',
                 'type': 'ViSession'
@@ -3318,9 +2722,6 @@ functions = {
             {
                 'cppName': 'input',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'A big number on its way in.'
-                },
                 'grpc_type': 'int64',
                 'name': 'input',
                 'type': 'ViInt64'
@@ -3328,9 +2729,6 @@ functions = {
             {
                 'cppName': 'output',
                 'direction': 'out',
-                'documentation': {
-                    'description': 'A big number on its way out.'
-                },
                 'grpc_type': 'int64',
                 'name': 'output',
                 'type': 'ViInt64'
@@ -3339,6 +2737,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'UseATwoDimensionParameter': {
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -3488,28 +2887,10 @@ functions = {
     },
     'WriteWaveform': {
         'codegen_method': 'public',
-        'documentation': {
-            'description': 'Writes waveform to the driver'
-        },
-        'method_templates': [
-            {
-                'documentation_filename': 'default_method',
-                'method_python_name_suffix': '',
-                'session_filename': 'default_method'
-            },
-            {
-                'documentation_filename': 'numpy_method',
-                'method_python_name_suffix': '_numpy',
-                'session_filename': 'numpy_write_method'
-            }
-        ],
         'parameters': [
             {
                 'cppName': 'vi',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Identifies a particular instrument session.'
-                },
                 'grpc_type': 'nidevice_grpc.Session',
                 'name': 'vi',
                 'type': 'ViSession'
@@ -3520,9 +2901,6 @@ functions = {
                     'waveform'
                 ],
                 'direction': 'in',
-                'documentation': {
-                    'description': 'How many samples the waveform contains.'
-                },
                 'grpc_type': 'sint32',
                 'include_in_proto': False,
                 'is_size_param': True,
@@ -3533,127 +2911,13 @@ functions = {
             {
                 'cppName': 'waveform',
                 'direction': 'in',
-                'documentation': {
-                    'description': 'Waveform data.'
-                },
                 'grpc_type': 'repeated double',
                 'name': 'waveform',
-                'numpy': True,
                 'size': {
                     'mechanism': 'len',
                     'value': 'numberOfSamples'
                 },
-                'type': 'ViReal64[]',
-                'use_array': True
-            }
-        ],
-        'returns': 'ViStatus'
-    },
-    'close': {
-        'codegen_method': 'public',
-        'documentation': {
-            'description': 'Closes the specified session and deallocates resources that it reserved.'
-        },
-        'parameters': [
-            {
-                'cppName': 'vi',
-                'direction': 'in',
-                'documentation': {
-                    'description': 'Identifies a particular instrument session.'
-                },
-                'grpc_type': 'nidevice_grpc.Session',
-                'name': 'vi',
-                'type': 'ViSession'
-            }
-        ],
-        'python_name': '_close',
-        'returns': 'ViStatus',
-        'use_session_lock': False
-    },
-    'error_message': {
-        'codegen_method': 'private',
-        'documentation': {
-            'description': 'Takes the errorCode returned by a functiona and returns it as a user-readable string.'
-        },
-        'is_error_handling': True,
-        'parameters': [
-            {
-                'cppName': 'vi',
-                'direction': 'in',
-                'documentation': {
-                    'description': 'Identifies a particular instrument session.'
-                },
-                'grpc_type': 'nidevice_grpc.Session',
-                'name': 'vi',
-                'type': 'ViSession'
-            },
-            {
-                'cppName': 'errorCode',
-                'direction': 'in',
-                'documentation': {
-                    'description': 'The errorCode returned from the instrument.'
-                },
-                'grpc_type': 'sint32',
-                'name': 'errorCode',
-                'type': 'ViStatus'
-            },
-            {
-                'cppName': 'errorMessage',
-                'direction': 'out',
-                'documentation': {
-                    'description': 'The error information formatted into a string.'
-                },
-                'grpc_type': 'string',
-                'name': 'errorMessage',
-                'size': {
-                    'mechanism': 'fixed',
-                    'value': 256
-                },
-                'type': 'ViChar[]'
-            }
-        ],
-        'returns': 'ViStatus',
-        'use_session_lock': False
-    },
-    'self_test': {
-        'codegen_method': 'private',
-        'documentation': {
-            'description': 'Performs a self-test.'
-        },
-        'parameters': [
-            {
-                'cppName': 'vi',
-                'direction': 'in',
-                'documentation': {
-                    'description': 'Identifies a particular instrument session. You obtain the **vi** parameter from niFake_InitWithOptions.'
-                },
-                'grpc_type': 'nidevice_grpc.Session',
-                'name': 'vi',
-                'type': 'ViSession'
-            },
-            {
-                'cppName': 'selfTestResult',
-                'direction': 'out',
-                'documentation': {
-                    'description': 'Contains the value returned from the instrument self-test. Zero indicates success.'
-                },
-                'grpc_type': 'sint32',
-                'name': 'selfTestResult',
-                'type': 'ViInt16'
-            },
-            {
-                'cppName': 'selfTestMessage',
-                'direction': 'out',
-                'documentation': {
-                    'description': 'This parameter contains the string returned from the instrument self-test. The array must contain at least 256 elements.'
-                },
-                'grpc_type': 'string',
-                'name': 'selfTestMessage',
-                'size': {
-                    'mechanism': 'fixed',
-                    'value': 256
-                },
-                'type': 'ViChar[]'
+                'type': 'ViReal64[]'
             }
         ],
         'returns': 'ViStatus'
