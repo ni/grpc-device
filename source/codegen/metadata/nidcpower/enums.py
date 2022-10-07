@@ -420,6 +420,10 @@ enums = {
             {
                 'name': 'NIDCPOWER_VAL_AS_DEFINED',
                 'value': 1075
+            },
+            {
+                'name': 'NIDCPOWER_VAL_AS_CONFIGURED',
+                'value': 1146
             }
         ]
     },
@@ -702,6 +706,10 @@ enums = {
             {
                 'name': 'LCR_OPEN_SHORT_LOAD_COMPENSATION_DATA_SOURCE_VAL_AS_DEFINED',
                 'value': 1075
+            },
+            {
+                'name': 'LCR_OPEN_SHORT_LOAD_COMPENSATION_DATA_SOURCE_VAL_AS_CONFIGURED',
+                'value': 1146
             },
             {
                 'name': 'LCR_SOURCE_DELAY_MODE_VAL_LCR_SOURCE_DELAY_MODE_AUTOMATIC',
