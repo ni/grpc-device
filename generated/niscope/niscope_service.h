@@ -148,9 +148,9 @@ private:
 namespace nidevice_grpc {
 namespace converters {
 template <>
-void convert_to_grpc(const niScope_wfmInfo& input, niscope_grpc::WaveformInfo* output);
-template <>
 void convert_to_grpc(const niScope_coefficientInfo& input, niscope_grpc::CoefficientInfo* output);
+template <>
+void convert_to_grpc(const niScope_wfmInfo& input, niscope_grpc::WaveformInfo* output);
 } // namespace converters
 } // namespace nidevice_grpc
 
