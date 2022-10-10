@@ -228,7 +228,7 @@ def populate_grpc_types(parameters, config):
 
 
 def set_grpc_type_for_custom_type_fields(fields, config):
-    """Set the grpc_type for each field of a custom type"""
+    """Set the grpc_type for each field of a custom type."""
     for field in fields:
         if "grpc_type" in field:
             continue
