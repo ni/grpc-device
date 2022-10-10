@@ -8984,45 +8984,6 @@ namespace nidaqmx_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiDAQmxService::GetExtendedErrorInfo(::grpc::ServerContext* context, const GetExtendedErrorInfoRequest* request, GetExtendedErrorInfoResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-
-      while (true) {
-        auto status = library_->GetExtendedErrorInfo(nullptr, 0);
-        if (!status_ok(status)) {
-          return ConvertApiErrorStatusForTaskHandle(context, status, 0);
-        }
-        uInt32 buffer_size = status;
-
-        std::string error_string;
-        if (buffer_size > 0) {
-            error_string.resize(buffer_size - 1);
-        }
-        status = library_->GetExtendedErrorInfo((char*)error_string.data(), buffer_size);
-        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(buffer_size)) {
-          // buffer is now too small, try again
-          continue;
-        }
-        if (!status_ok(status)) {
-          return ConvertApiErrorStatusForTaskHandle(context, status, 0);
-        }
-        response->set_status(status);
-        response->set_error_string(error_string);
-        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_string()));
-        return ::grpc::Status::OK;
-      }
-    }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
   ::grpc::Status NiDAQmxService::GetFirstSampClkWhen(::grpc::ServerContext* context, const GetFirstSampClkWhenRequest* request, GetFirstSampClkWhenResponse* response)
   {
     if (context->IsCancelled()) {

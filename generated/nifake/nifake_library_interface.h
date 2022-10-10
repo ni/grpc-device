@@ -21,12 +21,16 @@ class NiFakeLibraryInterface {
   virtual ViStatus AcceptViUInt32Array(ViSession vi, ViInt32 arrayLen, ViUInt32 uInt32Array[]) = 0;
   virtual ViStatus BoolArrayInputFunction(ViSession vi, ViInt32 numberOfElements, ViBoolean anArray[]) = 0;
   virtual ViStatus BoolArrayOutputFunction(ViSession vi, ViInt32 numberOfElements, ViBoolean anArray[]) = 0;
+  virtual ViStatus Close(ViSession vi) = 0;
   virtual ViStatus CloseExtCal(ViSession vi, ViInt32 action) = 0;
   virtual ViStatus CommandWithReservedParam(ViSession vi, ViBoolean* reserved) = 0;
+  virtual ViStatus Control4022(ViString resourceName, ViInt32 configuration) = 0;
   virtual ViStatus CreateConfigurationList(ViInt32 numberOfListAttributes, ViAttr listAttributeIds[]) = 0;
+  virtual ViStatus CustomNestedStructRoundtrip(CustomStructNestedTypedef_struct nestedCustomTypeIn, CustomStructNestedTypedef_struct* nestedCustomTypeOut) = 0;
   virtual ViStatus DoubleAllTheNums(ViSession vi, ViInt32 numberCount, ViReal64 numbers[]) = 0;
   virtual ViStatus EnumArrayOutputFunction(ViSession vi, ViInt32 numberOfElements, ViInt16 anArray[]) = 0;
   virtual ViStatus EnumInputFunctionWithDefaults(ViSession vi, ViInt16 aTurtle) = 0;
+  virtual ViStatus ErrorMessage(ViSession vi, ViStatus errorCode, ViChar errorMessage[256]) = 0;
   virtual ViStatus ExportAttributeConfigurationBuffer(ViSession vi, ViInt32 sizeInBytes, ViInt8 configuration[]) = 0;
   virtual ViStatus FetchWaveform(ViSession vi, ViInt32 numberOfSamples, ViReal64 waveformData[], ViInt32* actualNumberOfSamples) = 0;
   virtual ViStatus GetABoolean(ViSession vi, ViBoolean* aBoolean) = 0;
@@ -37,7 +41,7 @@ class NiFakeLibraryInterface {
   virtual ViStatus GetAnIviDanceWithATwistArrayOfCustomType(ViSession vi, ViInt32 bufferSize, CustomStruct arrayOut[], ViInt32* actualSize) = 0;
   virtual ViStatus GetAnIviDanceWithATwistArrayWithInputArray(ViInt32 dataIn[], ViInt32 arraySizeIn, ViInt32 bufferSize, ViInt32 arrayOut[], ViInt32* actualSize) = 0;
   virtual ViStatus GetAnIviDanceWithATwistByteArray(ViInt32 bufferSize, ViInt8 arrayOut[], ViInt32* actualSize) = 0;
-  virtual ViStatus GetAnIviDanceWithATwistString(ViInt32 bufferSize, ViChar arrayOut[], ViInt32* actualSize) = 0;
+  virtual ViStatus GetAnIviDanceWithATwistString(ViSession vi, ViInt32 bufferSize, ViChar aString[], ViInt32* actualSize) = 0;
   virtual ViStatus GetAnIviDanceWithATwistStringStrlenBug(ViInt32 bufferSize, ViChar stringOut[], ViInt32* actualSize) = 0;
   virtual ViStatus GetArraySizeForCustomCode(ViSession vi, ViInt32* sizeOut) = 0;
   virtual ViStatus GetArrayUsingIviDance(ViSession vi, ViInt32 arraySize, ViReal64 arrayOut[]) = 0;
@@ -46,7 +50,7 @@ class NiFakeLibraryInterface {
   virtual ViStatus GetAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32* attributeValue) = 0;
   virtual ViStatus GetAttributeViInt64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt64* attributeValue) = 0;
   virtual ViStatus GetAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64* attributeValue) = 0;
-  virtual ViStatus GetAttributeViSession(ViSession vi, ViInt32 attributeId, ViSession* sessionOut) = 0;
+  virtual ViStatus GetAttributeViSession(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession* attributeValue) = 0;
   virtual ViStatus GetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 bufferSize, ViChar attributeValue[]) = 0;
   virtual ViStatus GetBitfieldAsEnumArray(ViInt64* flags) = 0;
   virtual ViStatus GetCalDateAndTime(ViSession vi, ViInt32 calType, ViInt32* month, ViInt32* day, ViInt32* year, ViInt32* hour, ViInt32* minute) = 0;
@@ -63,6 +67,12 @@ class NiFakeLibraryInterface {
   virtual ViStatus InitWithOptions(ViString resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViConstString optionString, ViSession* vi) = 0;
   virtual ViStatus InitWithVarArgs(ViRsrc resourceName, ViSession* vi, ViConstString stringArg, ViInt16 turtle, ViConstString stringArg0, ViInt16 turtle0, ViConstString stringArg1, ViInt16 turtle1, ViConstString stringArg2, ViInt16 turtle2) = 0;
   virtual ViStatus Initiate(ViSession vi) = 0;
+  virtual ViStatus MethodUsingEnumWithGrpcNameValues(ViInt32 usingEnum) = 0;
+  virtual ViStatus MethodUsingWholeAndFractionalNumbers(ViInt32* wholeNumber, ViReal64* fractionalNumber) = 0;
+  virtual ViStatus MethodUsingWholeMappedNumbers(ViReal64* wholeNumber) = 0;
+  virtual ViStatus MethodWithGetLastErrorParam() = 0;
+  virtual ViStatus MethodWithGrpcFieldNumber(ViInt32 attributeValue) = 0;
+  virtual ViStatus MethodWithGrpcOnlyParam(ViInt32 simpleParam, ViInt32* grpcOnlyParam) = 0;
   virtual ViStatus MultipleArrayTypes(ViSession vi, ViInt32 outputArraySize, ViReal64 outputArray[], ViReal64 outputArrayOfFixedLength[3], ViInt32 inputArraySizes, ViReal64 inputArrayOfFloats[], ViInt16 inputArrayOfIntegers[]) = 0;
   virtual ViStatus MultipleArraysSameSize(ViSession vi, ViReal64 values1[], ViReal64 values2[], ViReal64 values3[], ViReal64 values4[], ViInt32 size) = 0;
   virtual ViStatus MultipleArraysSameSizeWithOptional(ViSession vi, ViReal64 values1[], ViReal64 values2[], ViReal64 values3[], ViReal64 values4[], CustomStruct values5[], ViInt32 size) = 0;
@@ -77,6 +87,7 @@ class NiFakeLibraryInterface {
   virtual ViStatus ReturnDurationInSeconds(ViSession vi, ViReal64* timedelta) = 0;
   virtual ViStatus ReturnListOfDurationsInSeconds(ViSession vi, ViInt32 numberOfElements, ViReal64 timedeltas[]) = 0;
   virtual ViStatus ReturnMultipleTypes(ViSession vi, ViBoolean* aBoolean, ViInt32* anInt32, ViInt64* anInt64, ViInt16* anIntEnum, ViReal64* aFloat, ViReal64* aFloatEnum, ViInt32 arraySize, ViReal64 anArray[], ViInt32 stringSize, ViChar aString[]) = 0;
+  virtual ViStatus SelfTest(ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[256]) = 0;
   virtual ViStatus SetAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean attributeValue) = 0;
   virtual ViStatus SetAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 attributeValue) = 0;
   virtual ViStatus SetAttributeViInt64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt64 attributeValue) = 0;
@@ -92,9 +103,6 @@ class NiFakeLibraryInterface {
   virtual ViStatus ViUInt8ArrayInputFunction(ViSession vi, ViInt32 numberOfElements, ViUInt8 anArray[]) = 0;
   virtual ViStatus ViUInt8ArrayOutputFunction(ViSession vi, ViInt32 numberOfElements, ViUInt8 anArray[]) = 0;
   virtual ViStatus WriteWaveform(ViSession vi, ViInt32 numberOfSamples, ViReal64 waveform[]) = 0;
-  virtual ViStatus close(ViSession vi) = 0;
-  virtual ViStatus error_message(ViSession vi, ViStatus errorCode, ViChar errorMessage[256]) = 0;
-  virtual ViStatus self_test(ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[256]) = 0;
 };
 
 }  // namespace nifake_grpc

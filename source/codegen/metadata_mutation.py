@@ -111,6 +111,10 @@ def mutate(metadata: dict):
 
     move_zero_enums_to_front(metadata["enums"])
 
+    for custom_type in config["custom_types"]:
+        fields = custom_type["fields"]
+        set_grpc_type_for_custom_type_fields(fields, config)
+
     attribute_expander = AttributeAccessorExpander(metadata)
     for function_name in metadata["functions"]:
         function = metadata["functions"][function_name]
@@ -221,6 +225,17 @@ def populate_grpc_types(parameters, config):
         if "grpc_type" in parameter:
             continue
         parameter["grpc_type"] = common_helpers.get_grpc_type(parameter["type"], config)
+
+
+def set_grpc_type_for_custom_type_fields(fields, config):
+    """Set the grpc_type for each field of a custom type."""
+    for field in fields:
+        if "grpc_type" in field:
+            continue
+        elif "enum" in field:
+            field["grpc_type"] = field["enum"]
+        else:
+            field["grpc_type"] = common_helpers.get_grpc_type(field["type"], config)
 
 
 def _get_short_enum_type_name(typename: str) -> str:

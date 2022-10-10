@@ -9,7 +9,7 @@ service_class_prefix = config["service_class_prefix"]
 namespace_prefix = config["namespace_component"] + "_grpc::"
 module_name = config["module_name"]
 custom_types = common_helpers.get_custom_types(config)
-(input_custom_types, output_custom_types) = common_helpers.get_input_and_output_custom_types(functions)
+(input_custom_types, output_custom_types) = common_helpers.get_input_and_output_custom_types(config, functions)
 has_async_functions = any(service_helpers.get_async_functions(functions))
 has_two_dimension_functions = any(service_helpers.get_functions_with_two_dimension_param(functions))
 function_names = service_helpers.filter_proto_rpc_functions_to_generate(functions)
@@ -222,7 +222,7 @@ ${custom_type["name"]} convert_from_grpc(const ${namespace_prefix}${custom_type[
   c_type_underlying_type = common_helpers.get_underlying_type_name(c_type)
   request_snippet = f'input.{input_field_name}()'
 %>\
-  output.${output_field_name} = convert_from_grpc<${c_type_underlying_type}>(${str.join(", ", [request_snippet] + field.get("additional_arguments_to_copy_convert", []))});\ 
+  output.${output_field_name} = convert_from_grpc<${c_type_underlying_type}>(${str.join(", ", [request_snippet] + field.get("additional_arguments_to_copy_convert", []))});
 %            else:
   output.${output_field_name} = input.${input_field_name}();
 %            endif

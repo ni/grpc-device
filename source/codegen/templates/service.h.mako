@@ -14,7 +14,7 @@ driver_library_interface = common_helpers.get_library_interface_type_name(config
 include_guard_name = service_helpers.get_include_guard_name(config, "_SERVICE_H")
 namespace_prefix = config["namespace_component"] + "_grpc::"
 custom_types = common_helpers.get_custom_types(config)
-(input_custom_types, output_custom_types) = common_helpers.get_input_and_output_custom_types(functions)
+(input_custom_types, output_custom_types) = common_helpers.get_input_and_output_custom_types(config, functions)
 resource_repository_deps = service_helpers.get_driver_shared_resource_repository_ptr_deps(config, functions)
 resource_handle_types = service_helpers.get_resource_handle_types(config)
 

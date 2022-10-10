@@ -40,6 +40,7 @@ class NiRFmxInstrRestrictedLibraryInterface {
   virtual int32 GetRFmxVersion(niRFmxInstrHandle instrumentHandle, int32 arraySize, char RFmxVersion[]) = 0;
   virtual int32 GetSessionUniqueIdentifier(char resourceNames[], char optionString[], int32 sessionUniqueIdentifierSize, char sessionUniqueIdentifier[]) = 0;
   virtual int32 GetSignalConfigurationState64(niRFmxInstrHandle instrumentHandle, char signalName[], uInt32 signalType, int32* signalState, uInt64* timeStamp) = 0;
+  virtual int32 GetSnapshotInfoFromCache(niRFmxInstrHandle instrumentHandle, uInt64 snapshotInfoCacheIndex, int32 personalityIDArray[], int32 personalityIDArraySize, int32* personalityIDArrayActualSize, char signalNames[], int32 signalNamesSize, int32* signalNamesActualSize, char resultNames[], int32 resultNamesSize, int32* resultNamesActualSize, char snapshotIdentifiers[], int32 snapshotIdentifiersSize, int32* snapshotIdentifiersActualSize, uInt64 snapshotTimestampArray[], int32 snapshotTimestampArraySize, int32* snapshotTimestampArrayActualSize) = 0;
   virtual int32 GetSnapshotState(niRFmxInstrHandle instrumentHandle, int32 personality, char selectorString[], int32* snapshotState) = 0;
   virtual int32 GetTracesInfoForMonitorSnapshot(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* allTracesEnabled) = 0;
   virtual int32 LoadAllForRevert(niRFmxInstrHandle instrumentHandle, char filePath[]) = 0;

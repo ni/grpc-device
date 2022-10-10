@@ -1,129 +1,83 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-FAKE API metadata version 1.2.0d9
+# This file is generated from NI-FAKE API metadata version 23.0.0d26
 attributes = {
     1000000: {
-        'access': 'read-write',
-        'channel_based': False,
-        'documentation': {
-            'description': 'An attribute of type bool with read/write access.'
-        },
-        'lv_property': 'Fake attributes:Read Write Bool',
+        'codegen_method': 'public',
+        'grpc_type': 'bool',
         'name': 'READ_WRITE_BOOL',
         'resettable': False,
         'type': 'ViBoolean'
     },
     1000001: {
-        'access': 'read-write',
-        'channel_based': False,
-        'documentation': {
-            'description': 'An attribute of type float with read/write access.'
-        },
-        'lv_property': 'Fake attributes:Read Write Float',
+        'codegen_method': 'public',
+        'grpc_type': 'double',
         'name': 'READ_WRITE_DOUBLE',
         'resettable': False,
         'type': 'ViReal64'
     },
     1000002: {
-        'access': 'read-write',
-        'channel_based': False,
-        'documentation': {
-            'description': 'An attribute of type string with read/write access.'
-        },
-        'lv_property': 'Fake attributes:Read Write String',
+        'codegen_method': 'public',
+        'grpc_type': 'string',
         'name': 'READ_WRITE_STRING',
         'resettable': False,
         'type': 'ViString'
     },
     1000003: {
-        'access': 'read-write',
-        'channel_based': False,
-        'documentation': {
-            'description': 'An attribute of type Color with read/write access.'
-        },
-        'enum': 'Color',
-        'lv_property': 'Fake attributes:Read Write Color',
+        'codegen_method': 'public',
+        'enum': 'GrpcColorOverride',
+        'grpc_type': 'sint32',
         'name': 'READ_WRITE_COLOR',
         'resettable': False,
         'type': 'ViInt32'
     },
     1000004: {
-        'access': 'read-write',
-        'channel_based': False,
-        'documentation': {
-            'description': 'An attribute of type integer with read/write access.'
-        },
-        'lv_property': 'Fake attributes:Read Write Int',
+        'codegen_method': 'public',
+        'grpc_type': 'sint32',
         'name': 'READ_WRITE_INTEGER',
         'resettable': True,
         'type': 'ViInt32'
     },
     1000005: {
-        'access': 'read-write',
-        'channel_based': False,
-        'documentation': {
-            'description': 'An attribute with an enum that is also a float'
-        },
+        'codegen_method': 'public',
         'enum': 'FloatEnum',
-        'lv_property': 'Fake attributes:Float enum',
-        'name': 'FLOAT_ENUM',
+        'grpc_type': 'double',
+        'name': 'FLOAT_ENUM_NAME_OVERRIDE',
         'resettable': False,
         'type': 'ViReal64'
     },
     1000006: {
-        'access': 'read-write',
-        'channel_based': False,
-        'documentation': {
-            'description': 'An attribute of type 64-bit integer with read/write access.'
-        },
-        'lv_property': 'Fake attributes:Read Write long long',
+        'codegen_method': 'public',
+        'grpc_type': 'int64',
         'name': 'READ_WRITE_INT64',
         'resettable': False,
         'type': 'ViInt64'
     },
     1000007: {
-        'access': 'read-write',
-        'attribute_class': 'AttributeViReal64TimeDeltaSeconds',
-        'channel_based': False,
-        'documentation': {
-            'description': 'Attribute in seconds'
-        },
-        'lv_property': 'Fake attributes:Read Write Double with Converter',
+        'codegen_method': 'public',
+        'grpc_type': 'double',
         'name': 'READ_WRITE_DOUBLE_WITH_CONVERTER',
         'resettable': False,
-        'type': 'ViReal64',
-        'type_in_documentation': 'hightime.timedelta, datetime.timedelta, or float in seconds'
+        'type': 'ViReal64'
     },
     1000008: {
-        'access': 'read-write',
-        'attribute_class': 'AttributeViInt32TimeDeltaMilliseconds',
-        'channel_based': False,
-        'documentation': {
-            'description': 'Attribute in milliseconds'
-        },
-        'lv_property': 'Fake attributes:Read Write Int with Converter',
+        'codegen_method': 'public',
+        'grpc_type': 'sint32',
         'name': 'READ_WRITE_INTEGER_WITH_CONVERTER',
         'resettable': False,
-        'type': 'ViInt32',
-        'type_in_documentation': 'hightime.timedelta, datetime.timedelta, or int in milliseconds'
+        'type': 'ViInt32'
     },
     1000009: {
-        'access': 'read-write',
-        'channel_based': True,
+        'codegen_method': 'public',
+        'grpc_type': 'double',
         'name': 'READ_WRITE_DOUBLE_WITH_REPEATED_CAPABILITY',
         'resettable': False,
         'type': 'ViReal64'
     },
     1000010: {
-        'access': 'read-write',
-        'attribute_class': 'AttributeViStringRepeatedCapability',
-        'channel_based': False,
-        'documentation': {
-            'description': 'An attribute with read/write access, that represents a repeated capability'
-        },
-        'lv_property': 'Fake attributes:Read Write String Repeated Capability',
+        'codegen_method': 'public',
+        'grpc_type': 'string',
         'name': 'READ_WRITE_STRING_REPEATED_CAPABILITY',
         'resettable': False,
-        'type': 'ViString',
-        'type_in_documentation': "Any repeated capability type, as defined in nimi-python:\n        - str\n        - str - Comma delimited list\n        - str - Range (using '-' or ':')\n        - int\n        - Basic sequence types (list, tuple, range, slice) of other supported types"
+        'type': 'ViString'
     }
 }

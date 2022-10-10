@@ -184,18 +184,37 @@ def get_custom_types(config: dict) -> List[Dict[str, Any]]:
     return config.get("custom_types", [])
 
 
-def get_input_and_output_custom_types(functions):
+def get_input_and_output_custom_types(config, functions):
     """Return a set of custom types used by input and output parameters separately."""
     input_custom_types = set()
     output_custom_types = set()
     for function in functions:
         struct_params = [p for p in functions[function]["parameters"] if _is_custom_struct(p)]
         for parameter in struct_params:
+            underlying_type_name = get_underlying_type_name(parameter["type"])
+            nested_types = _get_nested_types(config, underlying_type_name)
             if is_input_parameter(parameter):
-                input_custom_types.add(get_underlying_type_name(parameter["type"]))
+                input_custom_types.add(underlying_type_name)
+                input_custom_types = input_custom_types.union(nested_types)
             elif is_output_parameter(parameter):
-                output_custom_types.add(get_underlying_type_name(parameter["type"]))
+                output_custom_types.add(underlying_type_name)
+                output_custom_types = output_custom_types.union(nested_types)
     return (input_custom_types, output_custom_types)
+
+
+def _get_nested_types(config, type_name):
+    custom_types = set()
+    matching_custom_type = [
+        custom_type
+        for custom_type in config.get("custom_types", [])
+        if custom_type["name"] == type_name
+    ][0]
+    for field in matching_custom_type["fields"]:
+        if field["type"].startswith("struct "):
+            nested_type_name = get_underlying_type_name(field["type"])
+            custom_types.add(nested_type_name)
+            custom_types = custom_types.union(_get_nested_types(config, nested_type_name))
+    return custom_types
 
 
 def _is_null_terminated_in_c(parameter):
