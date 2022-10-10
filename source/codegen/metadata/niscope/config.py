@@ -21,41 +21,49 @@ config = {
             'fields': [
                 {
                     'grpc_name': 'absolute_initial_x',
+                    'grpc_type': 'double',
                     'name': 'absoluteInitialX',
                     'type': 'ViReal64'
                 },
                 {
                     'grpc_name': 'relative_initial_x',
+                    'grpc_type': 'double',
                     'name': 'relativeInitialX',
                     'type': 'ViReal64'
                 },
                 {
                     'grpc_name': 'x_increment',
+                    'grpc_type': 'double',
                     'name': 'xIncrement',
                     'type': 'ViReal64'
                 },
                 {
                     'grpc_name': 'actual_samples',
+                    'grpc_type': 'sint32',
                     'name': 'actualSamples',
                     'type': 'ViInt32'
                 },
                 {
                     'grpc_name': 'offset',
+                    'grpc_type': 'double',
                     'name': 'offset',
                     'type': 'ViReal64'
                 },
                 {
                     'grpc_name': 'gain',
+                    'grpc_type': 'double',
                     'name': 'gain',
                     'type': 'ViReal64'
                 },
                 {
                     'grpc_name': 'reserved1',
+                    'grpc_type': 'double',
                     'name': 'reserved1',
                     'type': 'ViReal64'
                 },
                 {
                     'grpc_name': 'reserved2',
+                    'grpc_type': 'double',
                     'name': 'reserved2',
                     'type': 'ViReal64'
                 }
@@ -67,21 +75,25 @@ config = {
             'fields': [
                 {
                     'grpc_name': 'offset',
+                    'grpc_type': 'double',
                     'name': 'offset',
                     'type': 'ViReal64'
                 },
                 {
                     'grpc_name': 'gain',
+                    'grpc_type': 'double',
                     'name': 'gain',
                     'type': 'ViReal64'
                 },
                 {
                     'grpc_name': 'reserved1',
+                    'grpc_type': 'double',
                     'name': 'reserved1',
                     'type': 'ViReal64'
                 },
                 {
                     'grpc_name': 'reserved2',
+                    'grpc_type': 'double',
                     'name': 'reserved2',
                     'type': 'ViReal64'
                 }
