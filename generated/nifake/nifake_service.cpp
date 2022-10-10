@@ -317,6 +317,29 @@ namespace nifake_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiFakeService::CustomNestedStructRoundtrip(::grpc::ServerContext* context, const CustomNestedStructRoundtripRequest* request, CustomNestedStructRoundtripResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto nested_custom_type_in = convert_from_grpc<CustomStructNestedTypedef_struct>(request->nested_custom_type_in());
+      CustomStructNestedTypedef_struct nested_custom_type_out {};
+      auto status = library_->CustomNestedStructRoundtrip(nested_custom_type_in, &nested_custom_type_out);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(context, status, 0);
+      }
+      response->set_status(status);
+      convert_to_grpc(nested_custom_type_out, response->mutable_nested_custom_type_out());
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::LibraryLoadException& ex) {
+      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::DoubleAllTheNums(::grpc::ServerContext* context, const DoubleAllTheNumsRequest* request, DoubleAllTheNumsResponse* response)
   {
     if (context->IsCancelled()) {
@@ -2415,6 +2438,38 @@ template <>
 CustomStruct convert_from_grpc(const nifake_grpc::FakeCustomStruct& input) 
 {
   auto output = CustomStruct();  
+  output.structInt = input.struct_int();
+  output.structDouble = input.struct_double();
+  return output;
+}
+
+template <>
+void convert_to_grpc(const CustomStructNestedTypedef_struct& input, nifake_grpc::CustomStructNestedTypedef* output) 
+{
+  convert_to_grpc(input.structCustomStruct, output->mutable_struct_custom_struct());
+  convert_to_grpc(input.structCustomStructTypedef, output->mutable_struct_custom_struct_typedef());
+}
+
+template <>
+CustomStructNestedTypedef_struct convert_from_grpc(const nifake_grpc::CustomStructNestedTypedef& input) 
+{
+  auto output = CustomStructNestedTypedef_struct();  
+  output.structCustomStruct = convert_from_grpc<CustomStruct>(input.struct_custom_struct());
+  output.structCustomStructTypedef = convert_from_grpc<CustomStructTypedef_struct>(input.struct_custom_struct_typedef());
+  return output;
+}
+
+template <>
+void convert_to_grpc(const CustomStructTypedef_struct& input, nifake_grpc::CustomStructTypedef* output) 
+{
+  output->set_struct_int(input.structInt);
+  output->set_struct_double(input.structDouble);
+}
+
+template <>
+CustomStructTypedef_struct convert_from_grpc(const nifake_grpc::CustomStructTypedef& input) 
+{
+  auto output = CustomStructTypedef_struct();  
   output.structInt = input.struct_int();
   output.structDouble = input.struct_double();
   return output;

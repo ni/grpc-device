@@ -21,6 +21,14 @@ bool operator==(const nifake_grpc::FakeCustomStruct& first, const nifake_grpc::F
 {
   return first.struct_int() == second.struct_int() && first.struct_double() == second.struct_double();
 }
+bool operator==(const nifake_grpc::CustomStructTypedef& first, const nifake_grpc::CustomStructTypedef& second)
+{
+  return first.struct_int() == second.struct_int() && first.struct_double() == second.struct_double();
+}
+bool operator==(const nifake_grpc::CustomStructNestedTypedef& first, const nifake_grpc::CustomStructNestedTypedef& second)
+{
+  return first.struct_custom_struct() == second.struct_custom_struct() && first.struct_custom_struct_typedef() == second.struct_custom_struct_typedef();
+}
 }  // namespace nifake_grpc
 // Adding operator for matching Custom Structs
 bool operator==(const CustomStruct& first, const CustomStruct& second)
@@ -34,6 +42,38 @@ bool operator==(const nifake_grpc::FakeCustomStruct& first, const CustomStruct& 
 }
 
 bool operator==(const CustomStruct& first, const nifake_grpc::FakeCustomStruct& second)
+{
+  return second == first;
+}
+
+// Adding operator for matching CustomStructTypedef
+bool operator==(const CustomStructTypedef_struct& first, const CustomStructTypedef_struct& second)
+{
+  return first.structDouble == second.structDouble && first.structInt == second.structInt;
+}
+
+bool operator==(const nifake_grpc::CustomStructTypedef& first, const CustomStructTypedef_struct& second)
+{
+  return first.struct_double() == second.structDouble && first.struct_int() == second.structInt;
+}
+
+bool operator==(const CustomStructTypedef_struct& first, const nifake_grpc::CustomStructTypedef& second)
+{
+  return second == first;
+}
+
+// Adding operator for matching CustomStructNestedTypedef
+bool operator==(const CustomStructNestedTypedef_struct& first, const CustomStructNestedTypedef_struct& second)
+{
+  return first.structCustomStruct == second.structCustomStruct && first.structCustomStructTypedef == second.structCustomStructTypedef;
+}
+
+bool operator==(const nifake_grpc::CustomStructNestedTypedef& first, const CustomStructNestedTypedef_struct& second)
+{
+  return first.struct_custom_struct() == second.structCustomStruct && first.struct_custom_struct_typedef() == second.structCustomStructTypedef;
+}
+
+bool operator==(const CustomStructNestedTypedef_struct& first, const nifake_grpc::CustomStructNestedTypedef& second)
 {
   return second == first;
 }
@@ -2698,6 +2738,35 @@ TEST(NiFakeServiceTests, FakeService_SetCustomStruct_PassesCustomStruct)
   service_holder.service.SetCustomType(&service_holder.context, &request, &response);
 
   EXPECT_EQ(0, response.status());
+}
+
+TEST(NiFakeServiceTests, FakeService_CustomNestedStructRoundtrip_PassesAndReceivesStruct)
+{
+  auto EXPECTED_INPUT = nifake_grpc::CustomStructNestedTypedef{};
+  auto NESTED_CUSTOM_STRUCT = nifake_grpc::FakeCustomStruct();
+  NESTED_CUSTOM_STRUCT.set_struct_double(1e6);
+  NESTED_CUSTOM_STRUCT.set_struct_int(500);
+  auto NESTED_CUSTOM_STRUCT_TYPEDEF = nifake_grpc::CustomStructTypedef();
+  NESTED_CUSTOM_STRUCT_TYPEDEF.set_struct_double(2e6);
+  NESTED_CUSTOM_STRUCT_TYPEDEF.set_struct_int(600);
+  EXPECTED_INPUT.mutable_struct_custom_struct()->CopyFrom(NESTED_CUSTOM_STRUCT);
+  EXPECTED_INPUT.mutable_struct_custom_struct_typedef()->CopyFrom(NESTED_CUSTOM_STRUCT_TYPEDEF);
+  auto EXPECTED_OUTPUT = CustomStructNestedTypedef_struct{};
+  EXPECTED_OUTPUT.structCustomStruct.structDouble = 1e6;
+  EXPECTED_OUTPUT.structCustomStruct.structInt = 500;
+  EXPECTED_OUTPUT.structCustomStructTypedef.structDouble = 2e6;
+  EXPECTED_OUTPUT.structCustomStructTypedef.structInt = 600;
+  FakeServiceHolder service_holder;
+  EXPECT_CALL(service_holder.library, CustomNestedStructRoundtrip(Eq(EXPECTED_INPUT), _))
+      .WillOnce(DoAll(SetArgPointee<1>(EXPECTED_OUTPUT), Return(kDriverSuccess)));
+
+  auto request = CustomNestedStructRoundtripRequest{};
+  request.mutable_nested_custom_type_in()->CopyFrom(EXPECTED_INPUT);
+  auto response = CustomNestedStructRoundtripResponse{};
+  service_holder.service.CustomNestedStructRoundtrip(&service_holder.context, &request, &response);
+
+  EXPECT_EQ(0, response.status());
+  EXPECT_EQ(response.nested_custom_type_out(), EXPECTED_OUTPUT);
 }
 
 TEST(NiFakeServiceTests, GetBitfieldAsEnumArray_ZeroBitfield_ReturnsEmptyArray)

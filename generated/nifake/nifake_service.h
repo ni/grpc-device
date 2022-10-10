@@ -52,6 +52,7 @@ public:
   ::grpc::Status CommandWithReservedParam(::grpc::ServerContext* context, const CommandWithReservedParamRequest* request, CommandWithReservedParamResponse* response) override;
   ::grpc::Status Control4022(::grpc::ServerContext* context, const Control4022Request* request, Control4022Response* response) override;
   ::grpc::Status CreateConfigurationList(::grpc::ServerContext* context, const CreateConfigurationListRequest* request, CreateConfigurationListResponse* response) override;
+  ::grpc::Status CustomNestedStructRoundtrip(::grpc::ServerContext* context, const CustomNestedStructRoundtripRequest* request, CustomNestedStructRoundtripResponse* response) override;
   ::grpc::Status DoubleAllTheNums(::grpc::ServerContext* context, const DoubleAllTheNumsRequest* request, DoubleAllTheNumsResponse* response) override;
   ::grpc::Status EnumArrayOutputFunction(::grpc::ServerContext* context, const EnumArrayOutputFunctionRequest* request, EnumArrayOutputFunctionResponse* response) override;
   ::grpc::Status EnumInputFunctionWithDefaults(::grpc::ServerContext* context, const EnumInputFunctionWithDefaultsRequest* request, EnumInputFunctionWithDefaultsResponse* response) override;
@@ -148,6 +149,14 @@ template <>
 void convert_to_grpc(const CustomStruct& input, nifake_grpc::FakeCustomStruct* output);
 template <>
 CustomStruct convert_from_grpc(const nifake_grpc::FakeCustomStruct& input);
+template <>
+void convert_to_grpc(const CustomStructNestedTypedef_struct& input, nifake_grpc::CustomStructNestedTypedef* output);
+template <>
+CustomStructNestedTypedef_struct convert_from_grpc(const nifake_grpc::CustomStructNestedTypedef& input);
+template <>
+void convert_to_grpc(const CustomStructTypedef_struct& input, nifake_grpc::CustomStructTypedef* output);
+template <>
+CustomStructTypedef_struct convert_from_grpc(const nifake_grpc::CustomStructTypedef& input);
 } // namespace converters
 } // namespace nidevice_grpc
 

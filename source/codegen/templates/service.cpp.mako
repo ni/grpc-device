@@ -9,7 +9,7 @@ service_class_prefix = config["service_class_prefix"]
 namespace_prefix = config["namespace_component"] + "_grpc::"
 module_name = config["module_name"]
 custom_types = common_helpers.get_custom_types(config)
-(input_custom_types, output_custom_types) = common_helpers.get_input_and_output_custom_types(functions)
+(input_custom_types, output_custom_types) = common_helpers.get_input_and_output_custom_types(config, functions)
 has_async_functions = any(service_helpers.get_async_functions(functions))
 has_two_dimension_functions = any(service_helpers.get_functions_with_two_dimension_param(functions))
 function_names = service_helpers.filter_proto_rpc_functions_to_generate(functions)
@@ -185,7 +185,11 @@ template <>
 void convert_to_grpc(const ${custom_type["name"]}& input, ${namespace_prefix}${custom_type["grpc_name"]}* output) 
 {
 %       for field in common_helpers.filter_parameters_for_grpc_fields(custom_type["fields"]):
+%         if common_helpers.supports_standard_copy_conversion_routines(field):
+  convert_to_grpc(${str.join(", ", [f'input.{field["name"]}', f'output->mutable_{common_helpers.get_grpc_field_name(field)}()'] + field.get("additional_arguments_to_copy_convert", []))});
+%         else:
   output->set_${common_helpers.get_grpc_field_name(field)}(input.${field["name"]});
+%         endif
 %       endfor
 }
 
@@ -200,7 +204,7 @@ ${custom_type["name"]} convert_from_grpc(const ${namespace_prefix}${custom_type[
             input_field_name = common_helpers.get_grpc_field_name(field)
             output_field_name = field["name"]
 %>\
-%           if field.get("coerced", False):
+%             if field.get("coerced", False):
 <%
                c_element_type = field["type"]
 %>\
@@ -212,6 +216,13 @@ ${custom_type["name"]} convert_from_grpc(const ${namespace_prefix}${custom_type[
       throw nidevice_grpc::ValueOutOfRangeException(message);
   }
   output.${output_field_name} = static_cast<${c_element_type}>(input.${input_field_name}());
+%            elif common_helpers.supports_standard_copy_conversion_routines(field):
+<%
+  c_type = field['type']
+  c_type_underlying_type = common_helpers.get_underlying_type_name(c_type)
+  request_snippet = f'input.{input_field_name}()'
+%>\
+  output.${output_field_name} = convert_from_grpc<${c_type_underlying_type}>(${str.join(", ", [request_snippet] + field.get("additional_arguments_to_copy_convert", []))});
 %            else:
   output.${output_field_name} = input.${input_field_name}();
 %            endif

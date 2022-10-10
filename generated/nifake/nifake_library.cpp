@@ -32,6 +32,7 @@ NiFakeLibrary::NiFakeLibrary() : shared_library_(kLibraryName)
   function_pointers_.CommandWithReservedParam = reinterpret_cast<CommandWithReservedParamPtr>(shared_library_.get_function_pointer("niFake_CommandWithReservedParam"));
   function_pointers_.Control4022 = reinterpret_cast<Control4022Ptr>(shared_library_.get_function_pointer("niFake_4022Control"));
   function_pointers_.CreateConfigurationList = reinterpret_cast<CreateConfigurationListPtr>(shared_library_.get_function_pointer("niFake_CreateConfigurationList"));
+  function_pointers_.CustomNestedStructRoundtrip = reinterpret_cast<CustomNestedStructRoundtripPtr>(shared_library_.get_function_pointer("niFake_CustomNestedStructRoundtrip"));
   function_pointers_.DoubleAllTheNums = reinterpret_cast<DoubleAllTheNumsPtr>(shared_library_.get_function_pointer("niFake_DoubleAllTheNums"));
   function_pointers_.EnumArrayOutputFunction = reinterpret_cast<EnumArrayOutputFunctionPtr>(shared_library_.get_function_pointer("niFake_EnumArrayOutputFunction"));
   function_pointers_.EnumInputFunctionWithDefaults = reinterpret_cast<EnumInputFunctionWithDefaultsPtr>(shared_library_.get_function_pointer("niFake_EnumInputFunctionWithDefaults"));
@@ -250,6 +251,18 @@ ViStatus NiFakeLibrary::CreateConfigurationList(ViInt32 numberOfListAttributes, 
   return niFake_CreateConfigurationList(numberOfListAttributes, listAttributeIds);
 #else
   return function_pointers_.CreateConfigurationList(numberOfListAttributes, listAttributeIds);
+#endif
+}
+
+ViStatus NiFakeLibrary::CustomNestedStructRoundtrip(CustomStructNestedTypedef_struct nestedCustomTypeIn, CustomStructNestedTypedef_struct* nestedCustomTypeOut)
+{
+  if (!function_pointers_.CustomNestedStructRoundtrip) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niFake_CustomNestedStructRoundtrip.");
+  }
+#if defined(_MSC_VER)
+  return niFake_CustomNestedStructRoundtrip(nestedCustomTypeIn, nestedCustomTypeOut);
+#else
+  return function_pointers_.CustomNestedStructRoundtrip(nestedCustomTypeIn, nestedCustomTypeOut);
 #endif
 }
 

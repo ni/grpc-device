@@ -85,17 +85,26 @@ def _is_custom_struct(parameter: dict) -> bool:
     return parameter["type"].startswith("struct")
 
 
-def uses_nidevice_common_message_types(functions: dict) -> bool:
-    """Whether the function has any parameters whose type is a common nidevice type."""
-    return any(
+def uses_nidevice_common_message_types(config: dict, functions: dict) -> bool:
+    """Whether a custom_type or function has any parameters whose type is a common nidevice type."""
+    any_funcs = any(
         p
         for f in functions.values()
         for p in f["parameters"]
         if _is_nidevice_common_message_type(p)
     )
+    any_custom_types = any(
+        field
+        for ct in config.get("custom_types", {})
+        for field in ct["fields"]
+        if _is_nidevice_common_message_type(field)
+    )
+    return any_funcs or any_custom_types
 
 
 def _is_nidevice_common_message_type(parameter: dict) -> bool:
+    if "grpc_type" not in parameter:
+        return False
     grpc_type = _get_underlying_grpc_type(parameter)
     return grpc_type in _NIDEVICE_COMMON_MESSAGE_TYPES
 
@@ -144,7 +153,7 @@ def supports_standard_copy_conversion_routines(parameter: dict) -> bool:
     return (
         _has_copy_convert_tag(parameter)
         or is_struct(parameter)
-        or parameter["grpc_type"] == "repeated bool"
+        or parameter.get("grpc_type", "") == "repeated bool"
     )
 
 
@@ -175,18 +184,37 @@ def get_custom_types(config: dict) -> List[Dict[str, Any]]:
     return config.get("custom_types", [])
 
 
-def get_input_and_output_custom_types(functions):
+def get_input_and_output_custom_types(config, functions):
     """Return a set of custom types used by input and output parameters separately."""
     input_custom_types = set()
     output_custom_types = set()
     for function in functions:
         struct_params = [p for p in functions[function]["parameters"] if _is_custom_struct(p)]
         for parameter in struct_params:
+            underlying_type_name = get_underlying_type_name(parameter["type"])
+            nested_types = _get_nested_types(config, underlying_type_name)
             if is_input_parameter(parameter):
-                input_custom_types.add(get_underlying_type_name(parameter["type"]))
+                input_custom_types.add(underlying_type_name)
+                input_custom_types = input_custom_types.union(nested_types)
             elif is_output_parameter(parameter):
-                output_custom_types.add(get_underlying_type_name(parameter["type"]))
+                output_custom_types.add(underlying_type_name)
+                output_custom_types = output_custom_types.union(nested_types)
     return (input_custom_types, output_custom_types)
+
+
+def _get_nested_types(config, type_name):
+    custom_types = set()
+    matching_custom_type = [
+        custom_type
+        for custom_type in config.get("custom_types", [])
+        if custom_type["name"] == type_name
+    ][0]
+    for field in matching_custom_type["fields"]:
+        if field["type"].startswith("struct "):
+            nested_type_name = get_underlying_type_name(field["type"])
+            custom_types.add(nested_type_name)
+            custom_types = custom_types.union(_get_nested_types(config, nested_type_name))
+    return custom_types
 
 
 def _is_null_terminated_in_c(parameter):
@@ -224,7 +252,7 @@ def get_underlying_type(parameter_or_attribute: dict) -> str:
 
 
 def _get_underlying_grpc_type(parameter: dict) -> str:
-    return _get_underlying_grpc_type_name(parameter["grpc_type"])
+    return _get_underlying_grpc_type_name(parameter.get("grpc_type", ""))
 
 
 def has_unsupported_parameter(function):

@@ -212,6 +212,23 @@ create_configuration_list(const StubPtr& stub, const std::vector<NiFakeAttribute
   return response;
 }
 
+CustomNestedStructRoundtripResponse
+custom_nested_struct_roundtrip(const StubPtr& stub, const CustomStructNestedTypedef& nested_custom_type_in)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CustomNestedStructRoundtripRequest{};
+  request.mutable_nested_custom_type_in()->CopyFrom(nested_custom_type_in);
+
+  auto response = CustomNestedStructRoundtripResponse{};
+
+  raise_if_error(
+      stub->CustomNestedStructRoundtrip(&context, request, &response),
+      context);
+
+  return response;
+}
+
 DoubleAllTheNumsResponse
 double_all_the_nums(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::vector<double>& numbers)
 {
