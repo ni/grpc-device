@@ -2369,11 +2369,7 @@ int32 NiDAQmxLibrary::GetExtendedErrorInfo(char errorString[], uInt32 bufferSize
   if (!function_pointers_.GetExtendedErrorInfo) {
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetExtendedErrorInfo.");
   }
-#if defined(_MSC_VER)
-  return DAQmxGetExtendedErrorInfo(errorString, bufferSize);
-#else
   return function_pointers_.GetExtendedErrorInfo(errorString, bufferSize);
-#endif
 }
 
 int32 NiDAQmxLibrary::GetFirstSampClkWhen(TaskHandle task, CVIAbsoluteTime* data)

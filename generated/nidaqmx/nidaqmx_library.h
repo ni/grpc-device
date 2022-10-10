@@ -568,7 +568,7 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   using GetExportedSignalAttributeInt32Ptr = decltype(&DAQmxGetExportedSignalAttribute);
   using GetExportedSignalAttributeStringPtr = decltype(&DAQmxGetExportedSignalAttribute);
   using GetExportedSignalAttributeUInt32Ptr = decltype(&DAQmxGetExportedSignalAttribute);
-  using GetExtendedErrorInfoPtr = decltype(&DAQmxGetExtendedErrorInfo);
+  using GetExtendedErrorInfoPtr = int32 (*)(char errorString[], uInt32 bufferSize);
   using GetFirstSampClkWhenPtr = decltype(&DAQmxGetFirstSampClkWhen);
   using GetFirstSampTimestampValPtr = decltype(&DAQmxGetFirstSampTimestampVal);
   using GetNthTaskChannelPtr = decltype(&DAQmxGetNthTaskChannel);

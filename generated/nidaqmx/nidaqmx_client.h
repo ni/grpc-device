@@ -184,7 +184,6 @@ GetExportedSignalAttributeDoubleResponse get_exported_signal_attribute_double(co
 GetExportedSignalAttributeInt32Response get_exported_signal_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<ExportSignalInt32Attribute, pb::int32>& attribute);
 GetExportedSignalAttributeStringResponse get_exported_signal_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<ExportSignalStringAttribute, pb::int32>& attribute);
 GetExportedSignalAttributeUInt32Response get_exported_signal_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& task, const simple_variant<ExportSignalUInt32Attribute, pb::int32>& attribute);
-GetExtendedErrorInfoResponse get_extended_error_info(const StubPtr& stub);
 GetFirstSampClkWhenResponse get_first_samp_clk_when(const StubPtr& stub, const nidevice_grpc::Session& task);
 GetFirstSampTimestampValResponse get_first_samp_timestamp_val(const StubPtr& stub, const nidevice_grpc::Session& task);
 GetNthTaskChannelResponse get_nth_task_channel(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::uint32& index);
