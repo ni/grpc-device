@@ -580,7 +580,7 @@ ViStatus NiScopeLibrary::Disable(ViSession vi)
 #endif
 }
 
-ViStatus NiScopeLibrary::ErrorHandler(ViSession vi, ViStatus errorCode, ViChar errorSource[642], ViChar errorDescription[642])
+ViStatus NiScopeLibrary::ErrorHandler(ViSession vi, ViStatus errorCode, ViChar errorSource[55], ViChar errorDescription[642])
 {
   if (!function_pointers_.ErrorHandler) {
     throw nidevice_grpc::LibraryLoadException("Could not find niScope_errorHandler.");
@@ -640,15 +640,15 @@ ViStatus NiScopeLibrary::Fetch(ViSession vi, ViConstString channelList, ViReal64
 #endif
 }
 
-ViStatus NiScopeLibrary::FetchArrayMeasurement(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 arrayMeasFunction, ViInt32 measurementWaveformSize, ViReal64 measWfm[], niScope_wfmInfo wfmInfo[])
+ViStatus NiScopeLibrary::FetchArrayMeasurement(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 arrayMeasFunction, ViInt32 measWfmSize, ViReal64 measWfm[], niScope_wfmInfo wfmInfo[])
 {
   if (!function_pointers_.FetchArrayMeasurement) {
     throw nidevice_grpc::LibraryLoadException("Could not find niScope_FetchArrayMeasurement.");
   }
 #if defined(_MSC_VER)
-  return niScope_FetchArrayMeasurement(vi, channelList, timeout, arrayMeasFunction, measurementWaveformSize, measWfm, wfmInfo);
+  return niScope_FetchArrayMeasurement(vi, channelList, timeout, arrayMeasFunction, measWfmSize, measWfm, wfmInfo);
 #else
-  return function_pointers_.FetchArrayMeasurement(vi, channelList, timeout, arrayMeasFunction, measurementWaveformSize, measWfm, wfmInfo);
+  return function_pointers_.FetchArrayMeasurement(vi, channelList, timeout, arrayMeasFunction, measWfmSize, measWfm, wfmInfo);
 #endif
 }
 

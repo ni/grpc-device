@@ -204,12 +204,14 @@ def get_input_and_output_custom_types(config, functions):
 
 def _get_nested_types(config, type_name):
     custom_types = set()
-    matching_custom_type = [
+    matching_custom_types = [
         custom_type
         for custom_type in config.get("custom_types", [])
         if custom_type["name"] == type_name
-    ][0]
-    for field in matching_custom_type["fields"]:
+    ]
+    if not matching_custom_types:
+        return custom_types
+    for field in matching_custom_types[0]["fields"]:
         if field["type"].startswith("struct "):
             nested_type_name = get_underlying_type_name(field["type"])
             custom_types.add(nested_type_name)
