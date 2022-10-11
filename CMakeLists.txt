@@ -11,6 +11,34 @@ if (CMAKE_SYSTEM_PROCESSOR STREQUAL "AMD64")
 endif()
 
 #----------------------------------------------------------------------
+# Determine version using current branch Git tag (e.g. v1.5.2)
+#----------------------------------------------------------------------
+if(EXISTS "${CMAKE_SOURCE_DIR}/.git")
+  execute_process(
+    COMMAND git describe --tags
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+    OUTPUT_VARIABLE GIT_TAG
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+  )
+else(EXISTS "${CMAKE_SOURCE_DIR}/.git")
+  set(GIT_TAG "v0.0.0")
+endif(EXISTS "${CMAKE_SOURCE_DIR}/.git")
+
+message(STATUS "Parsing Git tag ${GIT_TAG}.")
+
+if(GIT_TAG MATCHES "^v([0-9]+)\\.([0-9]+)\\.?([0-9]+)?")
+  set(GIT_TAG_MAJOR ${CMAKE_MATCH_1})
+  set(GIT_TAG_MINOR ${CMAKE_MATCH_2})
+  if(CMAKE_MATCH_3)
+    set(GIT_TAG_PATCH ${CMAKE_MATCH_3})
+  else()
+    set(GIT_TAG_PATCH "0")
+  endif()
+else()
+  message(FATAL_ERROR "Unable to parse Git tag. Tag must contain major and minor version with optional patch. e.g. \"v1.33.7\"")
+endif()
+
+#----------------------------------------------------------------------
 # Use the grpc targets directly from this build, only when not cross-compiling.
 #----------------------------------------------------------------------
 if(CMAKE_CROSSCOMPILING)
@@ -39,11 +67,11 @@ else()
 endif()
 
 CreateVirtualEnvironment(virtual_environment
-  REQUIREMENTS_TXT 
+  REQUIREMENTS_TXT
     ${CMAKE_SOURCE_DIR}/python_build_requirements.txt
   ENV_NAME
     venv
-  OUT_PYTHON_EXE 
+  OUT_PYTHON_EXE
     PYTHON_EXE
 )
 
@@ -101,12 +129,12 @@ set(codegen_scripts
   "${codegen_dir}/templates/proto.mako"
   "${codegen_dir}/templates/proto_helpers.mako"
   "${codegen_dir}/templates/register_all_services.h.mako"
-  "${codegen_dir}/templates/register_all_services.cpp.mako"  
+  "${codegen_dir}/templates/register_all_services.cpp.mako"
   "${codegen_dir}/templates/service.cpp.mako"
   "${codegen_dir}/templates/service_helpers.mako"
   "${codegen_dir}/templates/service.h.mako"
   "${codegen_dir}/templates/service_registrar.h.mako"
-  "${codegen_dir}/templates/service_registrar.cpp.mako"  
+  "${codegen_dir}/templates/service_registrar.cpp.mako"
   )
 
 # Populated in the api loop below.
@@ -177,16 +205,16 @@ foreach(api ${nidrivers})
 endforeach()
 
 add_custom_command(
-  OUTPUT 
+  OUTPUT
     ${service_output_dir}/register_all_services.cpp
     ${service_output_dir}/register_all_services.h
-  COMMAND 
+  COMMAND
     ${PYTHON_EXE} ${codegen_dir}/generate_shared_service_files.py ${metadata_dir}/ -o ${service_output_dir}/
-  COMMENT 
+  COMMENT
     "Generating shared service files"
   DEPENDS
     ${all_codegen_dependencies}
-    ${codegen_scripts} 
+    ${codegen_scripts}
     virtual_environment
 )
 
@@ -240,9 +268,9 @@ GenerateGrpcSources(
   PROTO
     ${session_proto}
   OUTPUT
-    "${session_proto_srcs}" 
-    "${session_proto_hdrs}" 
-    "${session_grpc_srcs}" 
+    "${session_proto_srcs}"
+    "${session_proto_hdrs}"
+    "${session_grpc_srcs}"
     "${session_grpc_hdrs}"
 )
 
@@ -290,6 +318,21 @@ add_executable(ni_grpc_device_server
    ${session_proto_srcs}
    ${session_grpc_srcs}
    ${nidriver_service_srcs})
+
+if(WIN32)
+  set(version_generated_dir "${CMAKE_CURRENT_BINARY_DIR}/version")
+  file(MAKE_DIRECTORY ${version_generated_dir})
+
+  # Generate version resource file for Windows
+  configure_file(
+    source/server/version.rc.in
+    ${version_generated_dir}/version.rc
+    @ONLY)
+
+  target_sources(ni_grpc_device_server
+    PRIVATE "${version_generated_dir}/version.rc"
+  )
+endif()
 
 if(CMAKE_SYSTEM_NAME STREQUAL Linux)
   target_sources(ni_grpc_device_server
@@ -428,7 +471,7 @@ add_executable(UnitTestsRunner
     "${custom_dir}/nixnet_service.custom.cpp"
 )
 
-# ni_fake_service_tests.cpp and several DAQ cpp files exceed the MSVC limit for the number of sections 
+# ni_fake_service_tests.cpp and several DAQ cpp files exceed the MSVC limit for the number of sections
 # in an obj file defined by PE-COFF. This line disables the limit.
 if(MSVC)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /bigobj /D_SILENCE_CXX17_ITERATOR_BASE_CLASS_DEPRECATION_WARNING")
@@ -503,7 +546,7 @@ set(system_test_runner_sources
 
 if(WIN32)
   list(
-    APPEND 
+    APPEND
       system_test_runner_sources
         "source/tests/system/nimxlcterminaladaptor_restricted_driver_api_tests.cpp"
         "source/tests/system/nirfmxbluetooth_driver_api_tests.cpp"
