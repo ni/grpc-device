@@ -56,12 +56,12 @@ class NiScopeLibrary : public niscope_grpc::NiScopeLibraryInterface {
   ViStatus ConfigureTriggerWindow(ViSession vi, ViConstString triggerSource, ViReal64 lowLevel, ViReal64 highLevel, ViInt32 windowMode, ViInt32 triggerCoupling, ViReal64 holdoff, ViReal64 delay);
   ViStatus ConfigureVertical(ViSession vi, ViConstString channelList, ViReal64 range, ViReal64 offset, ViInt32 coupling, ViReal64 probeAttenuation, ViBoolean enabled);
   ViStatus Disable(ViSession vi);
-  ViStatus ErrorHandler(ViSession vi, ViStatus errorCode, ViChar errorSource[642], ViChar errorDescription[642]);
+  ViStatus ErrorHandler(ViSession vi, ViStatus errorCode, ViChar errorSource[55], ViChar errorDescription[642]);
   ViStatus ExportAttributeConfigurationBuffer(ViSession vi, ViInt32 sizeInBytes, ViInt8 configuration[]);
   ViStatus ExportAttributeConfigurationFile(ViSession vi, ViConstString filePath);
   ViStatus ExportSignal(ViSession vi, ViInt32 signal, ViConstString signalIdentifier, ViConstString outputTerminal);
   ViStatus Fetch(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 numSamples, ViReal64 waveform[], niScope_wfmInfo wfmInfo[]);
-  ViStatus FetchArrayMeasurement(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 arrayMeasFunction, ViInt32 measurementWaveformSize, ViReal64 measWfm[], niScope_wfmInfo wfmInfo[]);
+  ViStatus FetchArrayMeasurement(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 arrayMeasFunction, ViInt32 measWfmSize, ViReal64 measWfm[], niScope_wfmInfo wfmInfo[]);
   ViStatus FetchBinary16(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 numSamples, ViInt16 waveform[], niScope_wfmInfo wfmInfo[]);
   ViStatus FetchBinary32(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 numSamples, ViInt32 waveform[], niScope_wfmInfo wfmInfo[]);
   ViStatus FetchBinary8(ViSession vi, ViConstString channelList, ViReal64 timeout, ViInt32 numSamples, ViInt8 waveform[], niScope_wfmInfo wfmInfo[]);
