@@ -2,6 +2,13 @@
 
 #include <grpcpp/grpcpp.h>
 
+#if !defined(NI_SESSION_REQUESTED_NEW_SESSION_BUT_ONE_ALREADY_EXISTS_ERROR)
+#define NI_SESSION_REQUESTED_NEW_SESSION_BUT_ONE_ALREADY_EXISTS_ERROR -1
+#endif
+#if !defined(NI_SESSION_REQUESTED_ATTACH_TO_EXISTING_SESSION_BUT_NONE_OPEN_ERROR)
+#define NI_SESSION_REQUESTED_ATTACH_TO_EXISTING_SESSION_BUT_NONE_OPEN_ERROR -2
+#endif
+
 namespace nidevice_grpc {
 
 SessionRepository::SessionRepository()
@@ -27,12 +34,24 @@ int SessionRepository::add_session(
     const std::string& session_name,
     InitFunc init_func,
     CleanupSessionFunc cleanup_func,
-    uint32_t& session_id)
+    uint32_t& session_id,
+    SessionInitializationBehavior initializationBehavior,
+    bool* createdNewSession)
 {
+  if (createdNewSession) {
+    *createdNewSession = false;
+  }
   session_id = 0;
   std::unique_lock<std::shared_mutex> lock(repository_lock_);
   auto now = std::chrono::steady_clock::now();
   auto it = named_sessions_.find(session_name);
+  if (initializationBehavior == SESSION_INITIALIZATION_BEHAVIOR_CREATE_NEW && it != named_sessions_.end()) {
+    return NI_SESSION_REQUESTED_NEW_SESSION_BUT_ONE_ALREADY_EXISTS_ERROR;
+  }
+  else if (initializationBehavior == SESSION_INITIALIZATION_BEHAVIOR_ATTACH_TO_EXISTING && it == named_sessions_.end()) {
+    return NI_SESSION_REQUESTED_ATTACH_TO_EXISTING_SESSION_BUT_NONE_OPEN_ERROR;
+  }
+
   if (it != named_sessions_.end()) {
     session_id = it->second->id;
     it->second->last_access_time = now;
@@ -51,6 +70,9 @@ int SessionRepository::add_session(
   if (!session_name.empty()) {
     info->name = session_name;
     named_sessions_.emplace(session_name, info);
+  }
+  if (createdNewSession) {
+    *createdNewSession = true;
   }
   return 0;
 }

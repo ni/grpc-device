@@ -5,6 +5,7 @@
 #include <functional>
 #include <map>
 #include <shared_mutex>
+#include <session.pb.h>
 #include <vector>
 
 #include "semaphore.h"
@@ -24,7 +25,13 @@ class SessionRepository {
   typedef std::function<int32_t()> InitFunc;
   typedef std::function<void(uint32_t)> CleanupSessionFunc;
 
-  int add_session(const std::string& session_name, InitFunc init_func, CleanupSessionFunc cleanup_func, uint32_t& session_id);
+  int add_session(
+      const std::string& session_name,
+      InitFunc init_func,
+      CleanupSessionFunc cleanup_func,
+      uint32_t& session_id,
+      SessionInitializationBehavior initializationBehavior = SESSION_INITIALIZATION_BEHAVIOR_ATTACH_OR_CREATE,
+      bool* createdNewSession = nullptr);
   uint32_t access_session(uint32_t session_id, const std::string& session_name);
   void remove_session(uint32_t id);
 
