@@ -18,14 +18,14 @@ typedef HMODULE LibraryHandle;
 typedef void* LibraryHandle;
 #endif
 
-class LibraryLoadException : NonDriverException {
+class LibraryLoadException : public NonDriverException {
  public:
   LibraryLoadException(const std::string& message) : NonDriverException(::grpc::StatusCode::NOT_FOUND, message) {}
   LibraryLoadException(const char* message) : NonDriverException(::grpc::StatusCode::NOT_FOUND, message) {}
   LibraryLoadException(const LibraryLoadException& other) : NonDriverException(other) {}
 };
 
-class SessionException : NonDriverException {
+class SessionException : public NonDriverException {
  public:
   SessionException(const std::string& message) : NonDriverException(::grpc::StatusCode::INVALID_ARGUMENT, message) {}
   SessionException(const char* message) : NonDriverException(::grpc::StatusCode::INVALID_ARGUMENT, message) {}
