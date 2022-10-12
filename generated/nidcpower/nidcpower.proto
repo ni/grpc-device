@@ -626,13 +626,6 @@ message NILCRMeasurement {
   bool dc_in_compliance = 21;
   bool ac_in_compliance = 22;
   bool unbalanced = 23;
-  double reserved1 = 24;
-  double reserved2 = 25;
-  double reserved3 = 26;
-  double reserved4 = 27;
-  double reserved5 = 28;
-  double reserved6 = 29;
-  double reserved7 = 30;
 }
 
 message AbortRequest {

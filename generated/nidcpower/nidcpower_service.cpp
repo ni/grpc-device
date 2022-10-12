@@ -4225,13 +4225,6 @@ void convert_to_grpc(const NILCRMeasurement_struct& input, nidcpower_grpc::NILCR
   output->set_dc_in_compliance(input.dcInCompliance);
   output->set_ac_in_compliance(input.acInCompliance);
   output->set_unbalanced(input.unbalanced);
-  output->set_reserved1(input.reserved1);
-  output->set_reserved2(input.reserved2);
-  output->set_reserved3(input.reserved3);
-  output->set_reserved4(input.reserved4);
-  output->set_reserved5(input.reserved5);
-  output->set_reserved6(input.reserved6);
-  output->set_reserved7(input.reserved7);
 }
 
 } // converters

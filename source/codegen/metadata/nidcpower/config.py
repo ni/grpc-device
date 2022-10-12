@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-DCPower API metadata version 23.0.0d92
+# This file is generated from NI-DCPower API metadata version 23.0.0d9999
 config = {
     'additional_headers': {
         'custom/ivi_errors.h': [
@@ -154,41 +154,6 @@ config = {
                     'grpc_type': 'bool',
                     'name': 'unbalanced',
                     'type': 'ViBoolean'
-                },
-                {
-                    'grpc_type': 'double',
-                    'name': 'reserved1',
-                    'type': 'ViReal64'
-                },
-                {
-                    'grpc_type': 'double',
-                    'name': 'reserved2',
-                    'type': 'ViReal64'
-                },
-                {
-                    'grpc_type': 'double',
-                    'name': 'reserved3',
-                    'type': 'ViReal64'
-                },
-                {
-                    'grpc_type': 'double',
-                    'name': 'reserved4',
-                    'type': 'ViReal64'
-                },
-                {
-                    'grpc_type': 'double',
-                    'name': 'reserved5',
-                    'type': 'ViReal64'
-                },
-                {
-                    'grpc_type': 'double',
-                    'name': 'reserved6',
-                    'type': 'ViReal64'
-                },
-                {
-                    'grpc_type': 'double',
-                    'name': 'reserved7',
-                    'type': 'ViReal64'
                 }
             ],
             'grpc_name': 'NILCRMeasurement',
