@@ -211,8 +211,8 @@ ${call_library_method(
 
         this->set_producer(std::move(handler));
       }
-      catch (nidevice_grpc::LibraryLoadException& ex) {
-         return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+      catch (nidevice_grpc::NonDriverException& ex) {
+         return ex.GetStatus();
       }
 
       return ::grpc::Status::OK;

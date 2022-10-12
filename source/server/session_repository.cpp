@@ -2,6 +2,8 @@
 
 #include <grpcpp/grpcpp.h>
 
+#include "shared_library.h"
+
 namespace nidevice_grpc {
 
 SessionRepository::SessionRepository()
@@ -27,12 +29,24 @@ int SessionRepository::add_session(
     const std::string& session_name,
     InitFunc init_func,
     CleanupSessionFunc cleanup_func,
-    uint32_t& session_id)
+    uint32_t& session_id,
+    SessionInitializationBehavior initializationBehavior,
+    bool* initializedNewSession)
 {
+  if (initializedNewSession) {
+    *initializedNewSession = false;
+  }
   session_id = 0;
   std::unique_lock<std::shared_mutex> lock(repository_lock_);
   auto now = std::chrono::steady_clock::now();
   auto it = named_sessions_.find(session_name);
+  if (initializationBehavior == SESSION_INITIALIZATION_BEHAVIOR_INITIALIZE_NEW && it != named_sessions_.end()) {
+    throw NonDriverException(::grpc::StatusCode::ALREADY_EXISTS, "Cannot initialize '" + session_name + "' when a session already exists.");
+  }
+  else if (initializationBehavior == SESSION_INITIALIZATION_BEHAVIOR_ATTACH_TO_EXISTING && it == named_sessions_.end()) {
+    throw NonDriverException(::grpc::StatusCode::FAILED_PRECONDITION, "Cannot attach to '" + session_name + "' because a session has not been initialized.");
+  }
+
   if (it != named_sessions_.end()) {
     session_id = it->second->id;
     it->second->last_access_time = now;
@@ -51,6 +65,9 @@ int SessionRepository::add_session(
   if (!session_name.empty()) {
     info->name = session_name;
     named_sessions_.emplace(session_name, info);
+  }
+  if (initializedNewSession) {
+    *initializedNewSession = true;
   }
   return 0;
 }

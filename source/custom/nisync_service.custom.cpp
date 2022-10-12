@@ -32,8 +32,8 @@ namespace nisync_grpc {
     response->set_timestamps_read(timestamps_read);
     return ::grpc::Status::OK;
   }
-  catch (nidevice_grpc::LibraryLoadException& ex) {
-    return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+  catch (nidevice_grpc::NonDriverException& ex) {
+    return ex.GetStatus();
   }
 }
 
