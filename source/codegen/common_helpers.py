@@ -759,7 +759,7 @@ def get_params_not_in_ivi_twist(
 
 def is_init_method(function_data):
     """Whether the function is an init_method."""
-    return function_data.get("init_method", False)
+    return function_data.get("init_method", False) != False
 
 
 def _get_session_output_param(function_data):

@@ -4,6 +4,8 @@
 #include <stdexcept>
 #include <string>
 
+#include "exceptions.h"
+
 #if defined(_MSC_VER)
   #include <Windows.h>
 #endif
@@ -16,16 +18,18 @@ typedef HMODULE LibraryHandle;
 typedef void* LibraryHandle;
 #endif
 
-struct LibraryLoadException : std::runtime_error {
-  LibraryLoadException(const std::string& message) : std::runtime_error(message) {}
-  LibraryLoadException(const char* message) : std::runtime_error(message) {}
-  LibraryLoadException(const LibraryLoadException& other) : std::runtime_error(other) {}
+class LibraryLoadException : NonDriverException {
+ public:
+  LibraryLoadException(const std::string& message) : NonDriverException(::grpc::StatusCode::NOT_FOUND, message) {}
+  LibraryLoadException(const char* message) : NonDriverException(::grpc::StatusCode::NOT_FOUND, message) {}
+  LibraryLoadException(const LibraryLoadException& other) : NonDriverException(other) {}
 };
 
-struct SessionException : std::runtime_error {
-  SessionException(const std::string& message) : std::runtime_error(message) {}
-  SessionException(const char* message) : std::runtime_error(message) {}
-  SessionException(const SessionException& other) : std::runtime_error(other) {}
+class SessionException : NonDriverException {
+ public:
+  SessionException(const std::string& message) : NonDriverException(::grpc::StatusCode::INVALID_ARGUMENT, message) {}
+  SessionException(const char* message) : NonDriverException(::grpc::StatusCode::INVALID_ARGUMENT, message) {}
+  SessionException(const SessionException& other) : NonDriverException(other) {}
 };
 
 class SharedLibrary {

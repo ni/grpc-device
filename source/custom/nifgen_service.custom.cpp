@@ -33,8 +33,8 @@ namespace nifgen_grpc {
     response->set_sequence_handle(sequence_handle);
     return ::grpc::Status::OK;
   }
-  catch (nidevice_grpc::LibraryLoadException& ex) {
-    return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+  catch (nidevice_grpc::NonDriverException& ex) {
+    return ex.GetStatus();
   }
 }
 

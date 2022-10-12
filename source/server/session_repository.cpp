@@ -2,12 +2,7 @@
 
 #include <grpcpp/grpcpp.h>
 
-#if !defined(NI_SESSION_REQUESTED_NEW_SESSION_BUT_ONE_ALREADY_EXISTS_ERROR)
-#define NI_SESSION_REQUESTED_NEW_SESSION_BUT_ONE_ALREADY_EXISTS_ERROR -1
-#endif
-#if !defined(NI_SESSION_REQUESTED_ATTACH_TO_EXISTING_SESSION_BUT_NONE_OPEN_ERROR)
-#define NI_SESSION_REQUESTED_ATTACH_TO_EXISTING_SESSION_BUT_NONE_OPEN_ERROR -2
-#endif
+#include "shared_library.h"
 
 namespace nidevice_grpc {
 
@@ -36,20 +31,20 @@ int SessionRepository::add_session(
     CleanupSessionFunc cleanup_func,
     uint32_t& session_id,
     SessionInitializationBehavior initializationBehavior,
-    bool* createdNewSession)
+    bool* initializedNewSession)
 {
-  if (createdNewSession) {
-    *createdNewSession = false;
+  if (initializedNewSession) {
+    *initializedNewSession = false;
   }
   session_id = 0;
   std::unique_lock<std::shared_mutex> lock(repository_lock_);
   auto now = std::chrono::steady_clock::now();
   auto it = named_sessions_.find(session_name);
-  if (initializationBehavior == SESSION_INITIALIZATION_BEHAVIOR_CREATE_NEW && it != named_sessions_.end()) {
-    return NI_SESSION_REQUESTED_NEW_SESSION_BUT_ONE_ALREADY_EXISTS_ERROR;
+  if (initializationBehavior == SESSION_INITIALIZATION_BEHAVIOR_INITIALIZE_NEW && it != named_sessions_.end()) {
+    throw NonDriverException(::grpc::StatusCode::ALREADY_EXISTS, "Cannot initialize '" + session_name + "' when a session already exists.");
   }
   else if (initializationBehavior == SESSION_INITIALIZATION_BEHAVIOR_ATTACH_TO_EXISTING && it == named_sessions_.end()) {
-    return NI_SESSION_REQUESTED_ATTACH_TO_EXISTING_SESSION_BUT_NONE_OPEN_ERROR;
+    throw NonDriverException(::grpc::StatusCode::FAILED_PRECONDITION, "Cannot attach to '" + session_name + "' because a session has not been initialized.");
   }
 
   if (it != named_sessions_.end()) {
@@ -71,8 +66,8 @@ int SessionRepository::add_session(
     info->name = session_name;
     named_sessions_.emplace(session_name, info);
   }
-  if (createdNewSession) {
-    *createdNewSession = true;
+  if (initializedNewSession) {
+    *initializedNewSession = true;
   }
   return 0;
 }

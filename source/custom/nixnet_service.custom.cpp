@@ -229,8 +229,8 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
     response->set_fault(fault);
     return ::grpc::Status::OK;
   }
-  catch (nidevice_grpc::LibraryLoadException& ex) {
-    return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+  catch (nidevice_grpc::NonDriverException& ex) {
+    return ex.GetStatus();
   }
 }
 
@@ -313,8 +313,8 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
     response->set_status(status);
     return ::grpc::Status::OK;
   }
-  catch (nidevice_grpc::LibraryLoadException& ex) {
-    return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+  catch (nidevice_grpc::NonDriverException& ex) {
+    return ex.GetStatus();
   }
 }
 
@@ -576,8 +576,8 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
     response->set_status(status);
     return ::grpc::Status::OK;
   }
-  catch (nidevice_grpc::LibraryLoadException& ex) {
-    return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+  catch (nidevice_grpc::NonDriverException& ex) {
+    return ex.GetStatus();
   }
 }
 
@@ -651,8 +651,8 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
     response->set_status(status);
     return ::grpc::Status::OK;
   }
-  catch (nidevice_grpc::LibraryLoadException& ex) {
-    return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+  catch (nidevice_grpc::NonDriverException& ex) {
+    return ex.GetStatus();
   }
 }
 
@@ -805,8 +805,8 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
     response->set_status(status);
     return ::grpc::Status::OK;
   }
-  catch (nidevice_grpc::LibraryLoadException& ex) {
-    return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+  catch (nidevice_grpc::NonDriverException& ex) {
+    return ex.GetStatus();
   }
 }
 
@@ -923,8 +923,8 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
     response->set_status(status);
     return ::grpc::Status::OK;
   }
-  catch (nidevice_grpc::LibraryLoadException& ex) {
-    return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+  catch (nidevice_grpc::NonDriverException& ex) {
+    return ex.GetStatus();
   }
 }
 
@@ -987,8 +987,8 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
     response->set_status(status);
     return ::grpc::Status::OK;
   }
-  catch (nidevice_grpc::LibraryLoadException& ex) {
-    return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+  catch (nidevice_grpc::NonDriverException& ex) {
+    return ex.GetStatus();
   }
 }
 
@@ -1091,8 +1091,8 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
     response->set_status(status);
     return ::grpc::Status::OK;
   }
-  catch (nidevice_grpc::LibraryLoadException& ex) {
-    return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+  catch (nidevice_grpc::NonDriverException& ex) {
+    return ex.GetStatus();
   }
 }
 
@@ -1129,8 +1129,8 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
     response->set_number_of_databases(number_of_databases);
     return ::grpc::Status::OK;
   }
-  catch (nidevice_grpc::LibraryLoadException& ex) {
-    return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+  catch (nidevice_grpc::NonDriverException& ex) {
+    return ex.GetStatus();
   }
 }
 
@@ -1180,8 +1180,8 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
     response->set_attribute_text(attribute_text.c_str());
     return ::grpc::Status::OK;
   }
-  catch (nidevice_grpc::LibraryLoadException& ex) {
-    return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+  catch (nidevice_grpc::NonDriverException& ex) {
+    return ex.GetStatus();
   }
 }
 

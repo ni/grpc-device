@@ -62,8 +62,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -86,8 +86,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -111,8 +111,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -151,8 +151,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -176,8 +176,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -216,8 +216,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -242,8 +242,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -286,8 +286,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -310,8 +310,8 @@ namespace nirfsg_grpc {
       response->set_is_done(is_done);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -335,8 +335,8 @@ namespace nirfsg_grpc {
       response->set_list_exists(list_exists);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -360,8 +360,8 @@ namespace nirfsg_grpc {
       response->set_script_exists(script_exists);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -385,8 +385,8 @@ namespace nirfsg_grpc {
       response->set_waveform_exists(waveform_exists);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -407,8 +407,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -430,8 +430,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -452,8 +452,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -474,8 +474,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -497,8 +497,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -519,8 +519,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -559,8 +559,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -583,8 +583,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -607,8 +607,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -665,8 +665,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -743,8 +743,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -801,8 +801,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -879,8 +879,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -903,8 +903,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -941,8 +941,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -964,8 +964,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -987,8 +987,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -1029,8 +1029,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -1067,8 +1067,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -1091,8 +1091,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -1134,8 +1134,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -1157,8 +1157,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -1199,8 +1199,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -1221,8 +1221,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -1246,8 +1246,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -1272,8 +1272,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -1295,8 +1295,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -1340,8 +1340,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -1381,8 +1381,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -1403,8 +1403,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -1426,8 +1426,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -1450,8 +1450,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -1473,8 +1473,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -1495,8 +1495,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -1517,8 +1517,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -1539,8 +1539,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -1581,8 +1581,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -1603,8 +1603,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -1629,8 +1629,8 @@ namespace nirfsg_grpc {
       nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_message()));
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -1656,8 +1656,8 @@ namespace nirfsg_grpc {
       nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_message()));
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -1734,8 +1734,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -1760,8 +1760,8 @@ namespace nirfsg_grpc {
       response->set_value(value);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -1786,8 +1786,8 @@ namespace nirfsg_grpc {
       response->set_value(value);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -1812,8 +1812,8 @@ namespace nirfsg_grpc {
       response->set_value(value);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -1838,8 +1838,8 @@ namespace nirfsg_grpc {
       response->set_value(value);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -1865,8 +1865,8 @@ namespace nirfsg_grpc {
       response->mutable_value()->set_id(session_id);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -1908,8 +1908,8 @@ namespace nirfsg_grpc {
         return ::grpc::Status::OK;
       }
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -1950,8 +1950,8 @@ namespace nirfsg_grpc {
         return ::grpc::Status::OK;
       }
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -1996,8 +1996,8 @@ namespace nirfsg_grpc {
         return ::grpc::Status::OK;
       }
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -2039,8 +2039,8 @@ namespace nirfsg_grpc {
         return ::grpc::Status::OK;
       }
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -2073,8 +2073,8 @@ namespace nirfsg_grpc {
       response->set_second(second);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -2123,8 +2123,8 @@ namespace nirfsg_grpc {
       response->set_second(second);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -2163,8 +2163,8 @@ namespace nirfsg_grpc {
       response->set_temperature(temperature);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -2240,8 +2240,8 @@ namespace nirfsg_grpc {
         return ::grpc::Status::OK;
       }
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -2279,8 +2279,8 @@ namespace nirfsg_grpc {
         return ::grpc::Status::OK;
       }
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -2318,8 +2318,8 @@ namespace nirfsg_grpc {
         return ::grpc::Status::OK;
       }
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -2357,8 +2357,8 @@ namespace nirfsg_grpc {
         return ::grpc::Status::OK;
       }
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -2396,8 +2396,8 @@ namespace nirfsg_grpc {
         return ::grpc::Status::OK;
       }
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -2429,11 +2429,8 @@ namespace nirfsg_grpc {
       response->mutable_new_vi()->set_id(session_id);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-    catch (nidevice_grpc::SessionException& ex) {
-      return ::grpc::Status(::grpc::INVALID_ARGUMENT, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -2466,11 +2463,8 @@ namespace nirfsg_grpc {
       response->mutable_vi()->set_id(session_id);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-    catch (nidevice_grpc::SessionException& ex) {
-      return ::grpc::Status(::grpc::INVALID_ARGUMENT, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -2491,8 +2485,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -2513,8 +2507,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -2537,8 +2531,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -2559,8 +2553,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -2581,8 +2575,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -2611,8 +2605,8 @@ namespace nirfsg_grpc {
       response->set_max_waveform_size(max_waveform_size);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -2636,8 +2630,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -2658,8 +2652,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -2682,8 +2676,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -2704,8 +2698,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -2726,8 +2720,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -2764,8 +2758,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -2792,8 +2786,8 @@ namespace nirfsg_grpc {
       nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_firmware_revision()));
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -2816,8 +2810,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -2839,8 +2833,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -2861,8 +2855,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -2903,8 +2897,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -2930,8 +2924,8 @@ namespace nirfsg_grpc {
       nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_self_test_message()));
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -2988,8 +2982,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -3028,8 +3022,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -3053,8 +3047,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -3093,8 +3087,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -3118,8 +3112,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -3158,8 +3152,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -3184,8 +3178,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -3228,8 +3222,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -3253,8 +3247,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -3278,8 +3272,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -3303,8 +3297,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -3328,8 +3322,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -3351,8 +3345,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -3389,8 +3383,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -3415,8 +3409,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -3441,8 +3435,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -3466,8 +3460,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -3504,8 +3498,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -3527,8 +3521,8 @@ namespace nirfsg_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 

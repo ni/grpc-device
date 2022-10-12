@@ -72,11 +72,8 @@ namespace nisync_grpc {
       response->mutable_vi()->set_id(session_id);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-    catch (nidevice_grpc::SessionException& ex) {
-      return ::grpc::Status(::grpc::INVALID_ARGUMENT, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -98,8 +95,8 @@ namespace nisync_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -124,8 +121,8 @@ namespace nisync_grpc {
       nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_message()));
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -146,8 +143,8 @@ namespace nisync_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -168,8 +165,8 @@ namespace nisync_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -195,8 +192,8 @@ namespace nisync_grpc {
       nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_self_test_message()));
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -223,8 +220,8 @@ namespace nisync_grpc {
       nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_firmware_revision()));
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -250,8 +247,8 @@ namespace nisync_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -274,8 +271,8 @@ namespace nisync_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -302,8 +299,8 @@ namespace nisync_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -326,8 +323,8 @@ namespace nisync_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -349,8 +346,8 @@ namespace nisync_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -373,8 +370,8 @@ namespace nisync_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -397,8 +394,8 @@ namespace nisync_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -427,8 +424,8 @@ namespace nisync_grpc {
       response->set_error(error);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -458,8 +455,8 @@ namespace nisync_grpc {
       response->set_frequency_error(frequency_error);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -480,8 +477,8 @@ namespace nisync_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -502,8 +499,8 @@ namespace nisync_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -524,8 +521,8 @@ namespace nisync_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -546,8 +543,8 @@ namespace nisync_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -572,8 +569,8 @@ namespace nisync_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -600,8 +597,8 @@ namespace nisync_grpc {
       response->set_time_fractional_nanoseconds(time_fractional_nanoseconds);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -622,8 +619,8 @@ namespace nisync_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -649,8 +646,8 @@ namespace nisync_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -672,8 +669,8 @@ namespace nisync_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -696,8 +693,8 @@ namespace nisync_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -721,8 +718,8 @@ namespace nisync_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -753,8 +750,8 @@ namespace nisync_grpc {
       response->set_detected_edge(detected_edge);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -776,8 +773,8 @@ namespace nisync_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -807,8 +804,8 @@ namespace nisync_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -830,8 +827,8 @@ namespace nisync_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -852,8 +849,8 @@ namespace nisync_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -874,8 +871,8 @@ namespace nisync_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -898,8 +895,8 @@ namespace nisync_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -925,8 +922,8 @@ namespace nisync_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -947,8 +944,8 @@ namespace nisync_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -969,8 +966,8 @@ namespace nisync_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -991,8 +988,8 @@ namespace nisync_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -1015,8 +1012,8 @@ namespace nisync_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -1049,8 +1046,8 @@ namespace nisync_grpc {
       response->set_gps_fractional_nanoseconds(gps_fractional_nanoseconds);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -1084,8 +1081,8 @@ namespace nisync_grpc {
       response->set_irigb_fractional_nanoseconds(irigb_fractional_nanoseconds);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -1106,8 +1103,8 @@ namespace nisync_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -1129,8 +1126,8 @@ namespace nisync_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -1157,8 +1154,8 @@ namespace nisync_grpc {
       response->set_up_velocity(up_velocity);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -1185,8 +1182,8 @@ namespace nisync_grpc {
       response->set_altitude(altitude);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -1226,8 +1223,8 @@ namespace nisync_grpc {
         return ::grpc::Status::OK;
       }
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -1252,8 +1249,8 @@ namespace nisync_grpc {
       response->set_value(value);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -1278,8 +1275,8 @@ namespace nisync_grpc {
       response->set_value(value);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -1304,8 +1301,8 @@ namespace nisync_grpc {
       response->set_value(value);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -1347,8 +1344,8 @@ namespace nisync_grpc {
         return ::grpc::Status::OK;
       }
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -1372,8 +1369,8 @@ namespace nisync_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -1397,8 +1394,8 @@ namespace nisync_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -1422,8 +1419,8 @@ namespace nisync_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -1447,8 +1444,8 @@ namespace nisync_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -1479,8 +1476,8 @@ namespace nisync_grpc {
       response->set_minute(minute);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -1503,8 +1500,8 @@ namespace nisync_grpc {
       response->set_temp(temp);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -1527,8 +1524,8 @@ namespace nisync_grpc {
       response->set_months(months);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -1551,8 +1548,8 @@ namespace nisync_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -1575,8 +1572,8 @@ namespace nisync_grpc {
       response->set_temperature(temperature);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -1599,8 +1596,8 @@ namespace nisync_grpc {
       response->set_voltage(voltage);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -1623,8 +1620,8 @@ namespace nisync_grpc {
       response->set_voltage(voltage);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -1647,8 +1644,8 @@ namespace nisync_grpc {
       response->set_voltage(voltage);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -1671,8 +1668,8 @@ namespace nisync_grpc {
       response->set_phase(phase);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -1703,11 +1700,8 @@ namespace nisync_grpc {
       response->mutable_vi()->set_id(session_id);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
-    }
-    catch (nidevice_grpc::SessionException& ex) {
-      return ::grpc::Status(::grpc::INVALID_ARGUMENT, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -1729,8 +1723,8 @@ namespace nisync_grpc {
       response->set_status(status);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -1754,8 +1748,8 @@ namespace nisync_grpc {
       response->set_old_voltage(old_voltage);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -1779,8 +1773,8 @@ namespace nisync_grpc {
       response->set_old_voltage(old_voltage);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -1804,8 +1798,8 @@ namespace nisync_grpc {
       response->set_old_voltage(old_voltage);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 
@@ -1829,8 +1823,8 @@ namespace nisync_grpc {
       response->set_old_phase(old_phase);
       return ::grpc::Status::OK;
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
   }
 

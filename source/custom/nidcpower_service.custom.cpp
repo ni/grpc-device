@@ -50,8 +50,8 @@ static void CheckStatus(int status)
     response->set_status(status);
     return ::grpc::Status::OK;
   }
-  catch (nidevice_grpc::LibraryLoadException& ex) {
-    return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+  catch (nidevice_grpc::NonDriverException& ex) {
+    return ex.GetStatus();
   }
   catch (const DriverWarningOrErrorException& ex) {
     if (ex.status() < VI_SUCCESS) {

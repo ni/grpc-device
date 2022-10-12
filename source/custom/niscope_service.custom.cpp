@@ -53,8 +53,8 @@ void CheckStatus(int status)
     convert_to_grpc(waveform_info, response->mutable_wfm_info());
     return ::grpc::Status::OK;
   }
-  catch (nidevice_grpc::LibraryLoadException& ex) {
-    return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+  catch (nidevice_grpc::NonDriverException& ex) {
+    return ex.GetStatus();
   }
   catch (const DriverWarningOrErrorException& ex) {
     if (ex.status_ < VI_SUCCESS) {
@@ -97,8 +97,8 @@ void CheckStatus(int status)
     convert_to_grpc(waveform_info, response->mutable_wfm_info());
     return ::grpc::Status::OK;
   }
-  catch (nidevice_grpc::LibraryLoadException& ex) {
-    return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+  catch (nidevice_grpc::NonDriverException& ex) {
+    return ex.GetStatus();
   }
   catch (const DriverWarningOrErrorException& ex) {
     if (ex.status_ < VI_SUCCESS) {
@@ -141,8 +141,8 @@ void CheckStatus(int status)
     response->mutable_waveform()->Add(waveform.begin(), waveform.end());
     return ::grpc::Status::OK;
   }
-  catch (nidevice_grpc::LibraryLoadException& ex) {
-    return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+  catch (nidevice_grpc::NonDriverException& ex) {
+    return ex.GetStatus();
   }
   catch (const DriverWarningOrErrorException& ex) {
     if (ex.status_ < VI_SUCCESS) {
@@ -185,8 +185,8 @@ void CheckStatus(int status)
     convert_to_grpc(waveform_info, response->mutable_wfm_info());
     return ::grpc::Status::OK;
   }
-  catch (nidevice_grpc::LibraryLoadException& ex) {
-    return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+  catch (nidevice_grpc::NonDriverException& ex) {
+    return ex.GetStatus();
   }
   catch (const DriverWarningOrErrorException& ex) {
     if (ex.status_ < VI_SUCCESS) {
@@ -240,8 +240,8 @@ void CheckStatus(int status)
     convert_to_grpc(waveform_info, response->mutable_wfm_info());
     return ::grpc::Status::OK;
   }
-  catch (nidevice_grpc::LibraryLoadException& ex) {
-    return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+  catch (nidevice_grpc::NonDriverException& ex) {
+    return ex.GetStatus();
   }
   catch (const DriverWarningOrErrorException& ex) {
     if (ex.status_ < VI_SUCCESS) {
@@ -300,8 +300,8 @@ void CheckStatus(int status)
     response->mutable_num_in_stats()->Add(num_in_stats.begin(), num_in_stats.end());
     return ::grpc::Status::OK;
   }
-  catch (nidevice_grpc::LibraryLoadException& ex) {
-    return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+  catch (nidevice_grpc::NonDriverException& ex) {
+    return ex.GetStatus();
   }
   catch (const DriverWarningOrErrorException& ex) {
     if (ex.status_ < VI_SUCCESS) {
@@ -344,8 +344,8 @@ void CheckStatus(int status)
     convert_to_grpc(waveform_info, response->mutable_wfm_info());
     return ::grpc::Status::OK;
   }
-  catch (nidevice_grpc::LibraryLoadException& ex) {
-    return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+  catch (nidevice_grpc::NonDriverException& ex) {
+    return ex.GetStatus();
   }
   catch (const DriverWarningOrErrorException& ex) {
     if (ex.status_ < VI_SUCCESS) {
@@ -388,8 +388,8 @@ void CheckStatus(int status)
     convert_to_grpc(waveform_info, response->mutable_wfm_info());
     return ::grpc::Status::OK;
   }
-  catch (nidevice_grpc::LibraryLoadException& ex) {
-    return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+  catch (nidevice_grpc::NonDriverException& ex) {
+    return ex.GetStatus();
   }
   catch (const DriverWarningOrErrorException& ex) {
     if (ex.status_ < VI_SUCCESS) {
@@ -432,8 +432,8 @@ void CheckStatus(int status)
     convert_to_grpc(waveform_info, response->mutable_wfm_info());
     return ::grpc::Status::OK;
   }
-  catch (nidevice_grpc::LibraryLoadException& ex) {
-    return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+  catch (nidevice_grpc::NonDriverException& ex) {
+    return ex.GetStatus();
   }
   catch (const DriverWarningOrErrorException& ex) {
     if (ex.status_ < VI_SUCCESS) {
@@ -482,8 +482,8 @@ void CheckStatus(int status)
     response->set_status(status);
     return ::grpc::Status::OK;
   }
-  catch (nidevice_grpc::LibraryLoadException& ex) {
-    return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+  catch (nidevice_grpc::NonDriverException& ex) {
+    return ex.GetStatus();
   }
   catch (const DriverWarningOrErrorException& ex) {
     if (ex.status_ < VI_SUCCESS) {
@@ -532,8 +532,8 @@ void CheckStatus(int status)
     response->set_status(status);
     return ::grpc::Status::OK;
   }
-  catch (nidevice_grpc::LibraryLoadException& ex) {
-    return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+  catch (nidevice_grpc::NonDriverException& ex) {
+    return ex.GetStatus();
   }
   catch (const DriverWarningOrErrorException& ex) {
     if (ex.status_ < VI_SUCCESS) {
