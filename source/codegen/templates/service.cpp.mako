@@ -141,19 +141,9 @@ ${mako_helper.define_repeated_varargs_method_body(function_name=function_name, f
 ${mako_helper.define_simple_method_body(function_name=function_name, function_data=function_data, parameters=parameters)}
 %   endif
     }
-    catch (nidevice_grpc::LibraryLoadException& ex) {
-      return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
     }
-% if common_helpers.is_init_method(function_data):
-    catch (nidevice_grpc::SessionException& ex) {
-      return ::grpc::Status(::grpc::INVALID_ARGUMENT, ex.what());
-    }
-% endif
-% if service_helpers.requires_checked_conversion(parameters, custom_types):
-    catch (nidevice_grpc::ValueOutOfRangeException& ex) {
-      return ::grpc::Status(::grpc::OUT_OF_RANGE, ex.what());
-    }
-% endif
   }
 % endif
 

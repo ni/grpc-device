@@ -1,6 +1,8 @@
 #ifndef NIDEVICE_GRPC_SESSION_REPOSITORY
 #define NIDEVICE_GRPC_SESSION_REPOSITORY
 
+#include <session.pb.h>
+
 #include <atomic>
 #include <functional>
 #include <map>
@@ -24,7 +26,13 @@ class SessionRepository {
   typedef std::function<int32_t()> InitFunc;
   typedef std::function<void(uint32_t)> CleanupSessionFunc;
 
-  int add_session(const std::string& session_name, InitFunc init_func, CleanupSessionFunc cleanup_func, uint32_t& session_id);
+  int add_session(
+      const std::string& session_name,
+      InitFunc init_func,
+      CleanupSessionFunc cleanup_func,
+      uint32_t& session_id,
+      SessionInitializationBehavior initializationBehavior = SESSION_INITIALIZATION_BEHAVIOR_UNSPECIFIED,
+      bool* initializedNewSession = nullptr);
   uint32_t access_session(uint32_t session_id, const std::string& session_name);
   void remove_session(uint32_t id);
 
@@ -37,7 +45,7 @@ class SessionRepository {
       ::grpc::Status& status);
   bool is_reserved_by_client(const std::string& reservation_id, const std::string& client_id);
   bool unreserve(const std::string& reservation_id, const std::string& client_id);
-  bool reset_server(bool cleanup=true);
+  bool reset_server(bool cleanup = true);
 
  private:
   struct ReservationInfo {
@@ -68,7 +76,7 @@ class SessionRepository {
     std::string name;
     std::chrono::steady_clock::time_point last_access_time;
     SessionRepository::CleanupSessionFunc cleanup_func;
-    std::vector<std::unique_ptr<RemoveAction> > dependent_sessions;
+    std::vector<std::unique_ptr<RemoveAction>> dependent_sessions;
   };
 
   using NamedSessionMap = std::map<std::string, std::shared_ptr<SessionInfo>>;

@@ -280,7 +280,7 @@ check_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, 
 }
 
 CheckAttributeViInt64Response
-check_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttribute& attribute_id, const simple_variant<NiScopeInt64AttributeValues, pb::int64>& value)
+check_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttribute& attribute_id, const pb::int64& value)
 {
   ::grpc::ClientContext context;
 
@@ -288,14 +288,7 @@ check_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, 
   request.mutable_vi()->CopyFrom(vi);
   request.set_channel_list(channel_list);
   request.set_attribute_id(attribute_id);
-  const auto value_ptr = value.get_if<NiScopeInt64AttributeValues>();
-  const auto value_raw_ptr = value.get_if<pb::int64>();
-  if (value_ptr) {
-    request.set_value(*value_ptr);
-  }
-  else if (value_raw_ptr) {
-    request.set_value_raw(*value_raw_ptr);
-  }
+  request.set_value_raw(value);
 
   auto response = CheckAttributeViInt64Response{};
 
@@ -1902,7 +1895,7 @@ set_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, co
 }
 
 SetAttributeViInt64Response
-set_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttribute& attribute_id, const simple_variant<NiScopeInt64AttributeValues, pb::int64>& value)
+set_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttribute& attribute_id, const pb::int64& value)
 {
   ::grpc::ClientContext context;
 
@@ -1910,14 +1903,7 @@ set_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, co
   request.mutable_vi()->CopyFrom(vi);
   request.set_channel_list(channel_list);
   request.set_attribute_id(attribute_id);
-  const auto value_ptr = value.get_if<NiScopeInt64AttributeValues>();
-  const auto value_raw_ptr = value.get_if<pb::int64>();
-  if (value_ptr) {
-    request.set_value(*value_ptr);
-  }
-  else if (value_raw_ptr) {
-    request.set_value_raw(*value_raw_ptr);
-  }
+  request.set_value_raw(value);
 
   auto response = SetAttributeViInt64Response{};
 
