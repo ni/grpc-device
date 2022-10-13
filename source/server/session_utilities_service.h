@@ -7,15 +7,17 @@
 #include <session.grpc.pb.h>
 
 #include "device_enumerator.h"
+#include "software_enumerator.h"
 #include "session_repository.h"
 
 namespace nidevice_grpc {
 
 class SessionUtilitiesService final : public SessionUtilities::Service {
  public:
-  SessionUtilitiesService(SessionRepository* session_repository, DeviceEnumerator* device_enumerator);
+  SessionUtilitiesService(SessionRepository* session_repository, DeviceEnumerator* device_enumerator, SoftwareEnumerator* software_enumerator);
 
   ::grpc::Status EnumerateDevices(::grpc::ServerContext* context, const EnumerateDevicesRequest* request, EnumerateDevicesResponse* response) override;
+  ::grpc::Status EnumerateSoftware(::grpc::ServerContext* context, const EnumerateSoftwareRequest* request, EnumerateSoftwareResponse* response) override;
   ::grpc::Status Reserve(::grpc::ServerContext* context, const ReserveRequest* request, ReserveResponse* response) override;
   ::grpc::Status IsReservedByClient(::grpc::ServerContext* context, const IsReservedByClientRequest* request, IsReservedByClientResponse* response) override;
   ::grpc::Status Unreserve(::grpc::ServerContext* context, const UnreserveRequest* request, UnreserveResponse* response) override;
@@ -24,6 +26,7 @@ class SessionUtilitiesService final : public SessionUtilities::Service {
  private:
   SessionRepository* session_repository_;
   DeviceEnumerator* device_enumerator_;
+  SoftwareEnumerator* software_enumerator_;
 };
 
 }  // namespace nidevice_grpc

@@ -313,6 +313,7 @@ add_executable(ni_grpc_device_server
    "source/server/session_repository.cpp"
    "source/server/session_utilities_service.cpp"
    "source/server/shared_library.cpp"
+   "source/server/software_enumerator.cpp"
    "source/server/syscfg_library.cpp"
    ${nidevice_proto_srcs}
    ${session_proto_srcs}
@@ -391,6 +392,7 @@ add_executable(IntegrationTestsRunner
     "source/server/session_repository.cpp"
     "source/server/session_utilities_service.cpp"
     "source/server/shared_library.cpp"
+    "source/server/software_enumerator.cpp"
     ${nidevice_proto_srcs}
     ${session_proto_srcs}
     ${session_grpc_srcs}
@@ -446,6 +448,7 @@ add_executable(UnitTestsRunner
     "source/server/server_security_configuration.cpp"
     "source/server/session_repository.cpp"
     "source/server/shared_library.cpp"
+    "source/server/software_enumerator.cpp"
     "source/server/syscfg_library.cpp"
     ${nidevice_proto_srcs}
     ${session_proto_srcs}
@@ -536,6 +539,7 @@ set(system_test_runner_sources
   "source/server/session_repository.cpp"
   "source/server/session_utilities_service.cpp"
   "source/server/shared_library.cpp"
+  "source/server/software_enumerator.cpp"
   "source/server/syscfg_library.cpp"
   ${nidevice_proto_srcs}
   ${session_proto_srcs}

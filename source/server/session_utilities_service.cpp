@@ -2,14 +2,19 @@
 
 namespace nidevice_grpc {
 
-SessionUtilitiesService::SessionUtilitiesService(SessionRepository* session_repository, DeviceEnumerator* device_enumerator)
-    : session_repository_(session_repository), device_enumerator_(device_enumerator)
+SessionUtilitiesService::SessionUtilitiesService(SessionRepository* session_repository, DeviceEnumerator* device_enumerator, SoftwareEnumerator* software_enumerator)
+    : session_repository_(session_repository), device_enumerator_(device_enumerator), software_enumerator_(software_enumerator)
 {
 }
 
 ::grpc::Status SessionUtilitiesService::EnumerateDevices(::grpc::ServerContext* context, const EnumerateDevicesRequest* request, EnumerateDevicesResponse* response)
 {
   return device_enumerator_->enumerate_devices(response->mutable_devices());
+}
+
+::grpc::Status SessionUtilitiesService::EnumerateSoftware(::grpc::ServerContext* context, const EnumerateSoftwareRequest* request, EnumerateSoftwareResponse* response)
+{
+  return software_enumerator_->enumerate_software(response->mutable_software());
 }
 
 ::grpc::Status SessionUtilitiesService::Reserve(::grpc::ServerContext* context, const ReserveRequest* request, ReserveResponse* response)
@@ -51,6 +56,7 @@ SessionUtilitiesService::SessionUtilitiesService(SessionRepository* session_repo
   bool is_server_reset = session_repository_->reset_server();
   response->set_is_server_reset(is_server_reset);
   device_enumerator_->clear_syscfg_session();
+  software_enumerator_->clear_syscfg_session();
   return ::grpc::Status::OK;
 }
 

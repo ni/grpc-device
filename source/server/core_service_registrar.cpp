@@ -1,6 +1,7 @@
 #include "core_service_registrar.h"
 
 #include "device_enumerator.h"
+#include "software_enumerator.h"
 #include "session_utilities_service.h"
 #include "syscfg_library.h"
 
@@ -11,16 +12,19 @@ struct CoreLibraryAndService {
       : session_repository(session_repository),
         library(),
         device_enumerator(&library),
-        service(session_repository.get(), &device_enumerator) {}
+        software_enumerator(&library),
+        service(session_repository.get(), &device_enumerator, &software_enumerator) {}
   ~CoreLibraryAndService()
   {
     // This code is currently unreachable, but if the call to wait exits, we need to clean up the service here.
     session_repository->reset_server();
     device_enumerator.clear_syscfg_session();
+    software_enumerator.clear_syscfg_session();
   }
   std::shared_ptr<SessionRepository> session_repository;
   SysCfgLibrary library;
   DeviceEnumerator device_enumerator;
+  SoftwareEnumerator software_enumerator;
   SessionUtilitiesService service;
 };
 }  // namespace
