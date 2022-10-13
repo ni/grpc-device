@@ -62,6 +62,43 @@ static void CheckStatus(int status)
   }
 }
 
+//---------------------------------------------------------------------
+//---------------------------------------------------------------------
+::grpc::Status NiDCPowerService::MeasureMultipleLCR(::grpc::ServerContext* context, const MeasureMultipleLCRRequest* request, MeasureMultipleLCRResponse* response)
+{
+  if (context->IsCancelled()) {
+    return ::grpc::Status::CANCELLED;
+  }
+  ViSession vi = VI_NULL;
+  try {
+    auto vi_grpc_session = request->vi();
+    vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+    ViConstString channel_name = request->channel_name().c_str();
+
+    ViUInt32 number_of_channels;
+    CheckStatus(library_->ParseChannelCount(vi, channel_name, &number_of_channels));
+    std::vector<NILCRMeasurement_struct> measurements(number_of_channels, NILCRMeasurement_struct());
+
+    auto status = library_->MeasureMultipleLCR(vi, channel_name, measurements.data());
+    if (status < VI_SUCCESS) {
+      return ConvertApiErrorStatusForViSession(context, status, vi);
+    }
+    response->set_status(status);
+    nidevice_grpc::converters::convert_to_grpc(measurements, response->mutable_measurements());
+    return ::grpc::Status::OK;
+  }
+  catch (nidevice_grpc::LibraryLoadException& ex) {
+    return ::grpc::Status(::grpc::NOT_FOUND, ex.what());
+  }
+  catch (const DriverWarningOrErrorException& ex) {
+    if (ex.status() < VI_SUCCESS) {
+      return ConvertApiErrorStatusForViSession(context, ex.status(), vi);
+    }
+    response->set_status(ex.status());
+    return ::grpc::Status::OK;
+  }
+}
+
 ::grpc::Status NiDCPowerService::ConvertApiErrorStatusForViSession(::grpc::ServerContext* context, int32_t status, ViSession vi)
 {
   static_assert(nidevice_grpc::kMaxGrpcErrorDescriptionSize >= 256, "ErrorMessage expects a minimum buffer size.");
