@@ -30,12 +30,12 @@ SoftwareEnumerator::~SoftwareEnumerator()
 
   try {
     if (NISysCfg_Succeeded(status = open_or_get_localhost_syscfg_session(&session))) {
-      if (NISysCfg_Succeeded(status = NISysCfgGetInstalledSoftwareComponents(session, NISysCfgIncludeItemsAllVisible, NISysCfgBoolTrue, &installedComps)))
+      if (NISysCfg_Succeeded(status = library_->GetInstalledSoftwareComponents(session, NISysCfgIncludeItemsAllVisible, NISysCfgBoolTrue, &installedComps)))
       {
-        NISysCfgResetEnumeratorGetCount(installedComps, &numInstalledComps);
+        library_->ResetEnumeratorGetCount(installedComps, &numInstalledComps);
         for (unsigned int index = 0; index < numInstalledComps; ++index)
           {
-            NISysCfgNextComponentInfo(installedComps, product_name, version, package_name, NULL, NULL);
+            library_->NextComponentInfo(installedComps, product_name, version, package_name, NULL, NULL);
             SoftwareProperties* properties = software->Add();
             properties->set_product_name(product_name);
             properties->set_package_name(package_name);

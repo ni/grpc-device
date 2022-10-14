@@ -61,6 +61,21 @@ class SysCfgLibrary : public SysCfgLibraryInterface {
       NISysCfgResourceHandle resource_handle,
       NISysCfgResourceProperty property_ID,
       void* value);
+  NISysCfgStatus GetInstalledSoftwareComponents(
+      NISysCfgSessionHandle session_handle,
+      NISysCfgIncludeComponentTypes item_types,
+      NISysCfgBool cached,
+      NISysCfgEnumSoftwareComponentHandle* component_enum_handle);
+  NISysCfgStatus ResetEnumeratorGetCount(
+      void* enumHandle,
+      unsigned int* count);
+  NISysCfgStatus NextComponentInfo(
+      NISysCfgEnumSoftwareComponentHandle component_enum_handle,
+      char* id,
+      char* version,
+      char* title,
+      NISysCfgComponentType* itemType,
+      char** detailedDescription);
 
  private:
   using InitializeSessionPtr = NISysCfgStatus (*)(
@@ -87,6 +102,11 @@ class SysCfgLibrary : public SysCfgLibraryInterface {
       NISysCfgFilterHandle filter_handle,
       const char* expert_names,
       NISysCfgEnumResourceHandle* resource_enum_handle);
+  using GetInstalledSoftwareComponentsPtr = NISysCfgStatus (*)(
+      NISysCfgSessionHandle session_handle,
+      NISysCfgIncludeComponentTypes item_types,
+      NISysCfgBool cached,
+      NISysCfgEnumSoftwareComponentHandle* component_enum_handle);
   using NextResourcePtr = NISysCfgStatus (*)(
       NISysCfgSessionHandle session_handle,
       NISysCfgEnumResourceHandle resource_enum_handle,
@@ -100,6 +120,16 @@ class SysCfgLibrary : public SysCfgLibraryInterface {
       NISysCfgResourceHandle resource_handle,
       NISysCfgResourceProperty property_ID,
       void* value);
+  using ResetEnumeratorGetCountPtr = NISysCfgStatus (*)(
+      void* enumHandle,
+      unsigned int* count);
+  using NextComponentInfoPtr = NISysCfgStatus (*)(
+      NISysCfgEnumSoftwareComponentHandle component_enum_handle,
+      char* id,
+      char* version,
+      char* title,
+      NISysCfgComponentType* itemType,
+      char** detailedDescription);
 
   typedef struct FunctionPointers {
     InitializeSessionPtr InitializeSession;
@@ -110,6 +140,9 @@ class SysCfgLibrary : public SysCfgLibraryInterface {
     NextResourcePtr NextResource;
     GetResourceIndexedPropertyPtr GetResourceIndexedProperty;
     GetResourcePropertyPtr GetResourceProperty;
+    GetInstalledSoftwareComponentsPtr GetInstalledSoftwareComponents;
+    ResetEnumeratorGetCountPtr ResetEnumeratorGetCount;
+    NextComponentInfoPtr NextComponentInfo;
   } FunctionLoadStatus;
 
   SharedLibrary shared_library_;

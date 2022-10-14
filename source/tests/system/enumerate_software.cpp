@@ -10,11 +10,11 @@ namespace system {
 
 const google::protobuf::RepeatedPtrField<nidevice_grpc::SoftwareProperties> EnumerateSoftware(bool clear_cache)
 {
-  static bool devices_are_cached = false;
-  static google::protobuf::RepeatedPtrField<nidevice_grpc::SoftwareProperties> devices_cache;
+  static bool software_is_cached = false;
+  static google::protobuf::RepeatedPtrField<nidevice_grpc::SoftwareProperties> software_cache;
 
-  if (!devices_are_cached || clear_cache) {
-    devices_are_cached = false;
+  if (!software_is_cached || clear_cache) {
+    software_is_cached = false;
 
     ::nidevice_grpc::SessionUtilities::Stub stub(DeviceServerInterface::Singleton()->InProcessChannel());
 
@@ -26,11 +26,11 @@ const google::protobuf::RepeatedPtrField<nidevice_grpc::SoftwareProperties> Enum
       throw std::runtime_error("Failed to enumerate software");
     }
 
-    devices_cache.CopyFrom(response.software());
-    devices_are_cached = true;
+    software_cache.CopyFrom(response.software());
+    software_is_cached = true;
   }
 
-  return devices_cache;
+  return software_cache;
 }
 
 }  // namespace system

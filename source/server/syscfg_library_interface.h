@@ -47,6 +47,21 @@ class SysCfgLibraryInterface {
       NISysCfgResourceHandle resource_handle,
       NISysCfgResourceProperty property_ID,
       void* value) = 0;
+  virtual NISysCfgStatus GetInstalledSoftwareComponents(
+      NISysCfgSessionHandle session_handle,
+      NISysCfgIncludeComponentTypes item_types,
+      NISysCfgBool cached,
+      NISysCfgEnumSoftwareComponentHandle* component_enum_handle) = 0;
+  virtual NISysCfgStatus ResetEnumeratorGetCount(
+      void* enumHandle,
+      unsigned int* count) = 0;
+  virtual NISysCfgStatus NextComponentInfo(
+      NISysCfgEnumSoftwareComponentHandle component_enum_handle,
+      char* id,
+      char* version,
+      char* title,
+      NISysCfgComponentType* itemType,
+      char** detailedDescription) = 0;
 };
 
 }  // namespace nidevice_grpc

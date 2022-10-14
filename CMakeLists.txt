@@ -508,6 +508,7 @@ set(system_test_runner_sources
   "source/server/core_service_registrar.cpp"
   "source/tests/system/device_server.cpp"
   "source/tests/system/enumerate_devices.cpp"
+  "source/tests/system/enumerate_software.cpp"
   "source/tests/system/session_utilities_service_tests.cpp"
   "source/tests/system/nidaqmx_driver_api_tests.cpp"
   "source/tests/system/nidaqmx_session_tests.cpp"
