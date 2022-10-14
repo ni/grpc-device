@@ -47,6 +47,10 @@ class SysCfgLibraryInterface {
       NISysCfgResourceHandle resource_handle,
       NISysCfgResourceProperty property_ID,
       void* value) = 0;
+  virtual NISysCfgStatus SetResourceProperty(
+      NISysCfgResourceHandle resource_handle,
+      NISysCfgResourceProperty property_ID,
+      ...) = 0;
 };
 
 }  // namespace nidevice_grpc

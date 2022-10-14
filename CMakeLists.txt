@@ -228,6 +228,7 @@ set(nidriver_service_srcs
 #----------------------------------------------------------------------
 get_filename_component(session_proto "source/protobuf/session.proto" ABSOLUTE)
 get_filename_component(nidevice_proto "source/protobuf/nidevice.proto" ABSOLUTE)
+get_filename_component(debugsessionproperties_restricted_proto "source/protobuf/debugsessionproperties_restricted.proto" ABSOLUTE)
 get_filename_component(session_proto_path "${session_proto}" PATH)
 
 #----------------------------------------------------------------------
@@ -263,6 +264,11 @@ set(session_grpc_srcs "${proto_srcs_dir}/session.grpc.pb.cc")
 set(session_grpc_hdrs "${proto_srcs_dir}/session.grpc.pb.h")
 set(nidevice_proto_srcs "${proto_srcs_dir}/nidevice.pb.cc")
 set(nidevice_proto_hdrs "${proto_srcs_dir}/nidevice.pb.h")
+set(debugsessionproperties_restricted_proto_srcs "${proto_srcs_dir}/debugsessionproperties_restricted.pb.cc")
+set(debugsessionproperties_restricted_proto_hdrs "${proto_srcs_dir}/debugsessionproperties_restricted.pb.h")
+set(debugsessionproperties_restricted_grpc_srcs "${proto_srcs_dir}/debugsessionproperties_restricted.grpc.pb.cc")
+set(debugsessionproperties_restricted_grpc_hdrs "${proto_srcs_dir}/debugsessionproperties_restricted.grpc.pb.h")
+
 
 GenerateGrpcSources(
   PROTO
@@ -280,6 +286,16 @@ GenerateGrpcSources(
   OUTPUT
     "${nidevice_proto_srcs}"
     "${nidevice_proto_hdrs}"
+)
+
+GenerateGrpcSources(
+  PROTO
+    ${debugsessionproperties_restricted_proto}
+  OUTPUT
+    "${debugsessionproperties_restricted_proto_srcs}"
+    "${debugsessionproperties_restricted_proto_hdrs}"
+    "${debugsessionproperties_restricted_grpc_srcs}"
+    "${debugsessionproperties_restricted_grpc_hdrs}"
 )
 
 foreach(api ${nidrivers})
@@ -303,7 +319,9 @@ endforeach()
 add_executable(ni_grpc_device_server
    "imports/include/nierr_Status.cpp"
    "source/server/core_server.cpp"
-   "source/server/core_service_registrar.cpp"
+   "source/server/core_services_registrar.cpp"
+   "source/server/debug_session_properties_restricted_service_registrar.cpp"
+   "source/server/debug_session_properties_restricted_service.cpp"
    "source/server/device_enumerator.cpp"
    "source/server/feature_toggles.cpp"
    "source/server/logging.cpp"
@@ -312,11 +330,15 @@ add_executable(ni_grpc_device_server
    "source/server/server_security_configuration.cpp"
    "source/server/session_repository.cpp"
    "source/server/session_utilities_service.cpp"
+   "source/server/session_utilities_service_registrar.cpp"
    "source/server/shared_library.cpp"
    "source/server/syscfg_library.cpp"
+   "source/server/syscfg_session_handler.cpp"
    ${nidevice_proto_srcs}
    ${session_proto_srcs}
    ${session_grpc_srcs}
+   ${debugsessionproperties_restricted_proto_srcs}
+   ${debugsessionproperties_restricted_grpc_srcs}
    ${nidriver_service_srcs})
 
 if(WIN32)
@@ -391,9 +413,12 @@ add_executable(IntegrationTestsRunner
     "source/server/session_repository.cpp"
     "source/server/session_utilities_service.cpp"
     "source/server/shared_library.cpp"
+    "source/server/syscfg_session_handler.cpp"
     ${nidevice_proto_srcs}
     ${session_proto_srcs}
     ${session_grpc_srcs}
+    ${debugsessionproperties_restricted_proto_srcs}
+    ${debugsessionproperties_restricted_grpc_srcs}
     "${proto_srcs_dir}/nifake.pb.cc"
     "${proto_srcs_dir}/nifake.grpc.pb.cc"
     "${proto_srcs_dir}/nifake_non_ivi.pb.cc"
@@ -447,9 +472,12 @@ add_executable(UnitTestsRunner
     "source/server/session_repository.cpp"
     "source/server/shared_library.cpp"
     "source/server/syscfg_library.cpp"
+    "source/server/syscfg_session_handler.cpp"
     ${nidevice_proto_srcs}
     ${session_proto_srcs}
     ${session_grpc_srcs}
+    ${debugsessionproperties_restricted_proto_srcs}
+    ${debugsessionproperties_restricted_grpc_srcs}
     "${proto_srcs_dir}/nifake.pb.cc"
     "${proto_srcs_dir}/nifake.grpc.pb.cc"
     "${proto_srcs_dir}/nifake_extension.pb.cc"
@@ -502,7 +530,7 @@ add_custom_command(
 set(system_test_runner_sources
   "imports/include/nierr_Status.cpp"
   "source/tests/utilities/run_all_tests.cpp"
-  "source/server/core_service_registrar.cpp"
+  "source/server/core_services_registrar.cpp"
   "source/tests/system/device_server.cpp"
   "source/tests/system/enumerate_devices.cpp"
   "source/tests/system/session_utilities_service_tests.cpp"
@@ -530,16 +558,22 @@ set(system_test_runner_sources
   "source/tests/system/nixnet_can_driver_api_tests.cpp"
   "source/tests/system/nixnet_ethernet_driver_api_tests.cpp"
   "source/tests/system/nixnetsocket_driver_api_tests.cpp"
+  "source/server/debug_session_properties_restricted_service_registrar.cpp"
+  "source/server/debug_session_properties_restricted_service.cpp"
   "source/server/device_enumerator.cpp"
   "source/server/feature_toggles.cpp"
   "source/server/semaphore.cpp"
   "source/server/session_repository.cpp"
   "source/server/session_utilities_service.cpp"
+  "source/server/session_utilities_service_registrar.cpp"
   "source/server/shared_library.cpp"
   "source/server/syscfg_library.cpp"
+  "source/server/syscfg_session_handler.cpp"
   ${nidevice_proto_srcs}
   ${session_proto_srcs}
   ${session_grpc_srcs}
+  ${debugsessionproperties_restricted_proto_srcs}
+  ${debugsessionproperties_restricted_grpc_srcs}
   ${nidriver_service_srcs}
   ${nidriver_client_srcs}
 )

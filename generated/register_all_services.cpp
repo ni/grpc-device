@@ -8,7 +8,7 @@
 #include <string>
 #include <vector>
 
-#include <server/core_service_registrar.h>
+#include <server/core_services_registrar.h>
 #include <server/session_repository.h>
 
 #include "nidaqmx/nidaqmx_service_registrar.h"
@@ -61,10 +61,8 @@ std::shared_ptr<void> register_all_services(
   auto service_vector = std::make_shared<std::vector<std::shared_ptr<void>>>();
 
   auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
-  auto core_service = nidevice_grpc::register_core_service(server_builder, session_repository);
-  service_vector->insert(
-    service_vector->end(), 
-    {session_repository, core_service});
+  service_vector->push_back(session_repository);
+  nidevice_grpc::register_core_services(service_vector, server_builder, session_repository);
 
   auto task_handle_repository = std::make_shared<nidevice_grpc::SessionResourceRepository<TaskHandle>>(session_repository.get());
   auto vi_session_repository = std::make_shared<nidevice_grpc::SessionResourceRepository<ViSession>>(session_repository.get());

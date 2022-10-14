@@ -32,6 +32,13 @@ class SysCfgMockLibrary : public nidevice_grpc::SysCfgLibraryInterface {
   MOCK_METHOD(NISysCfgStatus, NextResource, (NISysCfgSessionHandle session_handle, NISysCfgEnumResourceHandle resource_enum_handle, NISysCfgResourceHandle* resource_handle), (override));
   MOCK_METHOD(NISysCfgStatus, GetResourceIndexedProperty, (NISysCfgResourceHandle resource_handle, NISysCfgIndexedProperty property_ID, unsigned int index, void* value), (override));
   MOCK_METHOD(NISysCfgStatus, GetResourceProperty, (NISysCfgResourceHandle resource_handle, NISysCfgResourceProperty property_ID, void* value), (override));
+  NISysCfgStatus SetResourceProperty(
+      NISysCfgResourceHandle resource_handle,
+      NISysCfgResourceProperty property_ID,
+      ...)
+  {
+    return NISysCfg_OK;
+  }
 };
 
 }  // namespace utilities
