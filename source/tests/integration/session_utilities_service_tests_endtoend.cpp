@@ -25,7 +25,8 @@ class SessionUtilitiesServiceTests_EndToEnd : public ::testing::Test {
     ON_CALL(*(syscfg_mock_library_.get()), InitializeSession)
         .WillByDefault(Throw(nidevice_grpc::LibraryLoadException(nidevice_grpc::kSysCfgApiNotInstalledMessage)));
     device_enumerator_ = std::make_unique<nidevice_grpc::DeviceEnumerator>(syscfg_mock_library_.get());
-    service_ = std::make_unique<nidevice_grpc::SessionUtilitiesService>(session_repository_.get(), device_enumerator_.get());
+    software_enumerator_ = std::make_unique<nidevice_grpc::SoftwareEnumerator>(syscfg_mock_library_.get());
+    service_ = std::make_unique<nidevice_grpc::SessionUtilitiesService>(session_repository_.get(), device_enumerator_.get(), software_enumerator_.get());
     builder.RegisterService(service_.get());
     server_ = builder.BuildAndStart();
     ResetStub();
@@ -97,6 +98,7 @@ class SessionUtilitiesServiceTests_EndToEnd : public ::testing::Test {
   std::unique_ptr<nidevice_grpc::SessionRepository> session_repository_;
   std::unique_ptr<NiceMock<ni::tests::utilities::SysCfgMockLibrary>> syscfg_mock_library_;
   std::unique_ptr<nidevice_grpc::DeviceEnumerator> device_enumerator_;
+  std::unique_ptr<nidevice_grpc::SoftwareEnumerator> software_enumerator_;
   std::unique_ptr<nidevice_grpc::SessionUtilitiesService> service_;
   std::unique_ptr<::grpc::Server> server_;
 };

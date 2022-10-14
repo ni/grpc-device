@@ -1,6 +1,7 @@
 #include <grpcpp/impl/grpc_library.h>
 #include <gtest/gtest.h>
 #include <server/device_enumerator.h>
+#include <server/software_enumerator.h>
 #include <server/semaphore.h>
 #include <server/session_repository.h>
 #include <server/session_utilities_service.h>
@@ -23,7 +24,8 @@ TEST(SessionUtilitiesServiceTests, SysCfgLibraryNotPresent_EnumerateDevices_Retu
   nidevice_grpc::SessionRepository session_repository;
   ni::tests::utilities::SysCfgMockLibrary syscfg_mock_library;
   nidevice_grpc::DeviceEnumerator device_enumerator(&syscfg_mock_library);
-  nidevice_grpc::SessionUtilitiesService service(&session_repository, &device_enumerator);
+  nidevice_grpc::SoftwareEnumerator software_enumerator(&syscfg_mock_library);
+  nidevice_grpc::SessionUtilitiesService service(&session_repository, &device_enumerator, &software_enumerator);
   EXPECT_CALL(syscfg_mock_library, InitializeSession)
       .WillOnce(Throw(nidevice_grpc::LibraryLoadException(nidevice_grpc::kSysCfgApiNotInstalledMessage)));
 
@@ -41,7 +43,8 @@ TEST(SessionUtilitiesServiceTests, EmptyReserveId_Reserve_ReturnsInvalidId)
   nidevice_grpc::SessionRepository session_repository;
   ni::tests::utilities::SysCfgMockLibrary syscfg_mock_library;
   nidevice_grpc::DeviceEnumerator device_enumerator(&syscfg_mock_library);
-  nidevice_grpc::SessionUtilitiesService service(&session_repository, &device_enumerator);
+  nidevice_grpc::SoftwareEnumerator software_enumerator(&syscfg_mock_library);
+  nidevice_grpc::SessionUtilitiesService service(&session_repository, &device_enumerator, &software_enumerator);
   nidevice_grpc::ReserveRequest request;
 
   ::grpc::ServerContext context;
@@ -57,7 +60,8 @@ TEST(SessionUtilitiesServiceTests, EmptyClientId_Reserve_ReturnsInvalidId)
   nidevice_grpc::SessionRepository session_repository;
   ni::tests::utilities::SysCfgMockLibrary syscfg_mock_library;
   nidevice_grpc::DeviceEnumerator device_enumerator(&syscfg_mock_library);
-  nidevice_grpc::SessionUtilitiesService service(&session_repository, &device_enumerator);
+  nidevice_grpc::SoftwareEnumerator software_enumerator(&syscfg_mock_library);
+  nidevice_grpc::SessionUtilitiesService service(&session_repository, &device_enumerator, &software_enumerator);
   nidevice_grpc::ReserveRequest request;
   request.set_reservation_id("foo");
 
@@ -74,7 +78,8 @@ TEST(SessionUtilitiesServiceTests, NewReserveIdAndClientId_Reserve_ReservesSessi
   nidevice_grpc::SessionRepository session_repository;
   ni::tests::utilities::SysCfgMockLibrary syscfg_mock_library;
   nidevice_grpc::DeviceEnumerator device_enumerator(&syscfg_mock_library);
-  nidevice_grpc::SessionUtilitiesService service(&session_repository, &device_enumerator);
+  nidevice_grpc::SoftwareEnumerator software_enumerator(&syscfg_mock_library);
+  nidevice_grpc::SessionUtilitiesService service(&session_repository, &device_enumerator, &software_enumerator);
   nidevice_grpc::ReserveRequest request;
   request.set_reservation_id("foo");
   request.set_client_id("a");
@@ -177,7 +182,8 @@ TEST(SessionUtilitiesServiceTests, IdReserved_ReserveWithNewClientId_WaitsForUnr
   nidevice_grpc::SessionRepository session_repository;
   ni::tests::utilities::SysCfgMockLibrary syscfg_mock_library;
   nidevice_grpc::DeviceEnumerator device_enumerator(&syscfg_mock_library);
-  nidevice_grpc::SessionUtilitiesService service(&session_repository, &device_enumerator);
+  nidevice_grpc::SoftwareEnumerator software_enumerator(&syscfg_mock_library);
+  nidevice_grpc::SessionUtilitiesService service(&session_repository, &device_enumerator, &software_enumerator);
   call_reserve(&service, "foo", "a");
 
   nidevice_grpc::ReserveRequest clientb_request;
@@ -203,7 +209,8 @@ TEST(SessionUtilitiesServiceTests, IdReserved_ReserveWithNewClientIdTwice_WaitsF
   nidevice_grpc::SessionRepository session_repository;
   ni::tests::utilities::SysCfgMockLibrary syscfg_mock_library;
   nidevice_grpc::DeviceEnumerator device_enumerator(&syscfg_mock_library);
-  nidevice_grpc::SessionUtilitiesService service(&session_repository, &device_enumerator);
+  nidevice_grpc::SoftwareEnumerator software_enumerator(&syscfg_mock_library);
+  nidevice_grpc::SessionUtilitiesService service(&session_repository, &device_enumerator, &software_enumerator);
   nidevice_grpc::ReserveRequest request;
   call_reserve(&service, "foo", "a");
 
@@ -233,7 +240,8 @@ TEST(SessionUtilitiesServiceTests, IdReserved_ReserveWithSameClientId_ReturnsRes
   nidevice_grpc::SessionRepository session_repository;
   ni::tests::utilities::SysCfgMockLibrary syscfg_mock_library;
   nidevice_grpc::DeviceEnumerator device_enumerator(&syscfg_mock_library);
-  nidevice_grpc::SessionUtilitiesService service(&session_repository, &device_enumerator);
+  nidevice_grpc::SoftwareEnumerator software_enumerator(&syscfg_mock_library);
+  nidevice_grpc::SessionUtilitiesService service(&session_repository, &device_enumerator, &software_enumerator);
   nidevice_grpc::ReserveRequest request;
   request.set_reservation_id("foo");
   request.set_client_id("a");
@@ -252,7 +260,8 @@ TEST(SessionUtilitiesServiceTests, IdReserved_ReserveWithSameClientId_ReturnsFai
   nidevice_grpc::SessionRepository session_repository;
   ni::tests::utilities::SysCfgMockLibrary syscfg_mock_library;
   nidevice_grpc::DeviceEnumerator device_enumerator(&syscfg_mock_library);
-  nidevice_grpc::SessionUtilitiesService service(&session_repository, &device_enumerator);
+  nidevice_grpc::SoftwareEnumerator software_enumerator(&syscfg_mock_library);
+  nidevice_grpc::SessionUtilitiesService service(&session_repository, &device_enumerator, &software_enumerator);
   call_reserve(&service, "foo", "a");
 
   ::grpc::Status status;
@@ -266,7 +275,8 @@ TEST(SessionUtilitiesServiceTests, NoReservations_IsReserved_ReturnsFalse)
   nidevice_grpc::SessionRepository session_repository;
   ni::tests::utilities::SysCfgMockLibrary syscfg_mock_library;
   nidevice_grpc::DeviceEnumerator device_enumerator(&syscfg_mock_library);
-  nidevice_grpc::SessionUtilitiesService service(&session_repository, &device_enumerator);
+  nidevice_grpc::SoftwareEnumerator software_enumerator(&syscfg_mock_library);
+  nidevice_grpc::SessionUtilitiesService service(&session_repository, &device_enumerator, &software_enumerator);
 
   bool is_reserved = call_is_reserved(&service, "foo", "a");
 
@@ -278,7 +288,8 @@ TEST(SessionUtilitiesServiceTests, Reservation_IsReservedWithDifferentReservatio
   nidevice_grpc::SessionRepository session_repository;
   ni::tests::utilities::SysCfgMockLibrary syscfg_mock_library;
   nidevice_grpc::DeviceEnumerator device_enumerator(&syscfg_mock_library);
-  nidevice_grpc::SessionUtilitiesService service(&session_repository, &device_enumerator);
+  nidevice_grpc::SoftwareEnumerator software_enumerator(&syscfg_mock_library);
+  nidevice_grpc::SessionUtilitiesService service(&session_repository, &device_enumerator, &software_enumerator);
   call_reserve(&service, "foo", "a");
 
   bool is_reserved = call_is_reserved(&service, "bar", "a");
@@ -291,7 +302,8 @@ TEST(SessionUtilitiesServiceTests, Reservation_IsReservedWithDifferentClientId_R
   nidevice_grpc::SessionRepository session_repository;
   ni::tests::utilities::SysCfgMockLibrary syscfg_mock_library;
   nidevice_grpc::DeviceEnumerator device_enumerator(&syscfg_mock_library);
-  nidevice_grpc::SessionUtilitiesService service(&session_repository, &device_enumerator);
+  nidevice_grpc::SoftwareEnumerator software_enumerator(&syscfg_mock_library);
+  nidevice_grpc::SessionUtilitiesService service(&session_repository, &device_enumerator, &software_enumerator);
   call_reserve(&service, "foo", "a");
 
   bool is_reserved = call_is_reserved(&service, "foo", "b");
@@ -304,7 +316,8 @@ TEST(SessionUtilitiesServiceTests, Reservation_IsReservedWithSameClientId_Return
   nidevice_grpc::SessionRepository session_repository;
   ni::tests::utilities::SysCfgMockLibrary syscfg_mock_library;
   nidevice_grpc::DeviceEnumerator device_enumerator(&syscfg_mock_library);
-  nidevice_grpc::SessionUtilitiesService service(&session_repository, &device_enumerator);
+  nidevice_grpc::SoftwareEnumerator software_enumerator(&syscfg_mock_library);
+  nidevice_grpc::SessionUtilitiesService service(&session_repository, &device_enumerator, &software_enumerator);
   call_reserve(&service, "foo", "a");
 
   ::grpc::Status status;
@@ -319,7 +332,8 @@ TEST(SessionUtilitiesServiceTests, NoReservations_Unreserve_ReturnsFalse)
   nidevice_grpc::SessionRepository session_repository;
   ni::tests::utilities::SysCfgMockLibrary syscfg_mock_library;
   nidevice_grpc::DeviceEnumerator device_enumerator(&syscfg_mock_library);
-  nidevice_grpc::SessionUtilitiesService service(&session_repository, &device_enumerator);
+  nidevice_grpc::SoftwareEnumerator software_enumerator(&syscfg_mock_library);
+  nidevice_grpc::SessionUtilitiesService service(&session_repository, &device_enumerator, &software_enumerator);
 
   bool is_unreserved = call_unreserve(&service, "foo", "a");
 
@@ -331,7 +345,8 @@ TEST(SessionUtilitiesServiceTests, Reservation_UnreserveWithDifferentReservation
   nidevice_grpc::SessionRepository session_repository;
   ni::tests::utilities::SysCfgMockLibrary syscfg_mock_library;
   nidevice_grpc::DeviceEnumerator device_enumerator(&syscfg_mock_library);
-  nidevice_grpc::SessionUtilitiesService service(&session_repository, &device_enumerator);
+  nidevice_grpc::SoftwareEnumerator software_enumerator(&syscfg_mock_library);
+  nidevice_grpc::SessionUtilitiesService service(&session_repository, &device_enumerator, &software_enumerator);
   nidevice_grpc::ReserveRequest reserve_request;
   call_reserve(&service, "foo", "a");
 
@@ -347,7 +362,8 @@ TEST(SessionUtilitiesServiceTests, Reservation_UnreserveWithDifferentClientId_Re
   nidevice_grpc::SessionRepository session_repository;
   ni::tests::utilities::SysCfgMockLibrary syscfg_mock_library;
   nidevice_grpc::DeviceEnumerator device_enumerator(&syscfg_mock_library);
-  nidevice_grpc::SessionUtilitiesService service(&session_repository, &device_enumerator);
+  nidevice_grpc::SoftwareEnumerator software_enumerator(&syscfg_mock_library);
+  nidevice_grpc::SessionUtilitiesService service(&session_repository, &device_enumerator, &software_enumerator);
   call_reserve(&service, "foo", "a");
 
   bool is_unreserved = call_unreserve(&service, "foo", "b");
@@ -362,7 +378,8 @@ TEST(SessionUtilitiesServiceTests, Reservation_Unreserve_Unreserves)
   nidevice_grpc::SessionRepository session_repository;
   ni::tests::utilities::SysCfgMockLibrary syscfg_mock_library;
   nidevice_grpc::DeviceEnumerator device_enumerator(&syscfg_mock_library);
-  nidevice_grpc::SessionUtilitiesService service(&session_repository, &device_enumerator);
+  nidevice_grpc::SoftwareEnumerator software_enumerator(&syscfg_mock_library);
+  nidevice_grpc::SessionUtilitiesService service(&session_repository, &device_enumerator, &software_enumerator);
   call_reserve(&service, "foo", "a");
 
   ::grpc::Status status;
@@ -379,7 +396,8 @@ TEST(SessionUtilitiesServiceTests, Reservation_ResetServer_Unreserves)
   nidevice_grpc::SessionRepository session_repository;
   ni::tests::utilities::SysCfgMockLibrary syscfg_mock_library;
   nidevice_grpc::DeviceEnumerator device_enumerator(&syscfg_mock_library);
-  nidevice_grpc::SessionUtilitiesService service(&session_repository, &device_enumerator);
+  nidevice_grpc::SoftwareEnumerator software_enumerator(&syscfg_mock_library);
+  nidevice_grpc::SessionUtilitiesService service(&session_repository, &device_enumerator, &software_enumerator);
   call_reserve(&service, "foo", "a");
 
   ::grpc::ServerContext context;
@@ -397,7 +415,8 @@ TEST(SessionUtilitiesServiceTests, ReservationAndSession_ResetServer_UnreservesA
   nidevice_grpc::SessionRepository session_repository;
   ni::tests::utilities::SysCfgMockLibrary syscfg_mock_library;
   nidevice_grpc::DeviceEnumerator device_enumerator(&syscfg_mock_library);
-  nidevice_grpc::SessionUtilitiesService service(&session_repository, &device_enumerator);
+  nidevice_grpc::SoftwareEnumerator software_enumerator(&syscfg_mock_library);
+  nidevice_grpc::SessionUtilitiesService service(&session_repository, &device_enumerator, &software_enumerator);
   std::string session_name = "session_name";
   uint32_t named_session_id;
   int status = session_repository.add_session(
@@ -423,7 +442,8 @@ TEST(SessionUtilitiesServiceTests, TwoReservations_ResetServer_Unreserves)
   nidevice_grpc::SessionRepository session_repository;
   ni::tests::utilities::SysCfgMockLibrary syscfg_mock_library;
   nidevice_grpc::DeviceEnumerator device_enumerator(&syscfg_mock_library);
-  nidevice_grpc::SessionUtilitiesService service(&session_repository, &device_enumerator);
+  nidevice_grpc::SoftwareEnumerator software_enumerator(&syscfg_mock_library);
+  nidevice_grpc::SessionUtilitiesService service(&session_repository, &device_enumerator, &software_enumerator);
   call_reserve(&service, "foo", "a");
   call_reserve(&service, "bar", "b");
 
@@ -443,7 +463,8 @@ TEST(SessionUtilitiesServiceTests, ReservationWithClientWaiting_ResetServer_Clie
   nidevice_grpc::SessionRepository session_repository;
   ni::tests::utilities::SysCfgMockLibrary syscfg_mock_library;
   nidevice_grpc::DeviceEnumerator device_enumerator(&syscfg_mock_library);
-  nidevice_grpc::SessionUtilitiesService service(&session_repository, &device_enumerator);
+  nidevice_grpc::SoftwareEnumerator software_enumerator(&syscfg_mock_library);
+  nidevice_grpc::SessionUtilitiesService service(&session_repository, &device_enumerator, &software_enumerator);
   call_reserve(&service, "foo", "a");
   nidevice_grpc::ReserveRequest clientb_request;
   nidevice_grpc::ReserveResponse clientb_response;
@@ -470,7 +491,8 @@ TEST(SessionUtilitiesServiceTests, ReservationWithMultipleClientsWaiting_ResetSe
   nidevice_grpc::SessionRepository session_repository;
   ni::tests::utilities::SysCfgMockLibrary syscfg_mock_library;
   nidevice_grpc::DeviceEnumerator device_enumerator(&syscfg_mock_library);
-  nidevice_grpc::SessionUtilitiesService service(&session_repository, &device_enumerator);
+  nidevice_grpc::SoftwareEnumerator software_enumerator(&syscfg_mock_library);
+  nidevice_grpc::SessionUtilitiesService service(&session_repository, &device_enumerator, &software_enumerator);
   nidevice_grpc::ReserveRequest clientb_request, clientc_request;
   nidevice_grpc::ReserveResponse clientb_response, clientc_response;
   ::grpc::Status clientb_status, clientc_status;
@@ -504,7 +526,8 @@ TEST(SessionUtilitiesServiceTests, ReservationWithClientWaiting_ResetServer_Wait
   nidevice_grpc::SessionRepository session_repository;
   ni::tests::utilities::SysCfgMockLibrary syscfg_mock_library;
   nidevice_grpc::DeviceEnumerator device_enumerator(&syscfg_mock_library);
-  nidevice_grpc::SessionUtilitiesService service(&session_repository, &device_enumerator);
+  nidevice_grpc::SoftwareEnumerator software_enumerator(&syscfg_mock_library);
+  nidevice_grpc::SessionUtilitiesService service(&session_repository, &device_enumerator, &software_enumerator);
   call_reserve(&service, "foo", "a");
   nidevice_grpc::ReserveRequest clientb_request;
   nidevice_grpc::ReserveResponse clientb_response;
@@ -529,7 +552,8 @@ TEST(SessionUtilitiesServiceTests, ReservationWithMultipleClientsWaiting_ResetSe
   nidevice_grpc::SessionRepository session_repository;
   ni::tests::utilities::SysCfgMockLibrary syscfg_mock_library;
   nidevice_grpc::DeviceEnumerator device_enumerator(&syscfg_mock_library);
-  nidevice_grpc::SessionUtilitiesService service(&session_repository, &device_enumerator);
+  nidevice_grpc::SoftwareEnumerator software_enumerator(&syscfg_mock_library);
+  nidevice_grpc::SessionUtilitiesService service(&session_repository, &device_enumerator, &software_enumerator);
   nidevice_grpc::ReserveRequest clientb_request, clientc_request;
   nidevice_grpc::ReserveResponse clientb_response, clientc_response;
   ::grpc::Status clientb_status, clientc_status;
@@ -560,15 +584,18 @@ TEST(SessionUtilitiesServiceTests, SysCfgLibraryPresent_ClearSysCfgSession_IsSes
   nidevice_grpc::SessionRepository session_repository;
   ni::tests::utilities::SysCfgMockLibrary syscfg_mock_library;
   nidevice_grpc::DeviceEnumerator device_enumerator(&syscfg_mock_library);
-  nidevice_grpc::SessionUtilitiesService service(&session_repository, &device_enumerator);
+  nidevice_grpc::SoftwareEnumerator software_enumerator(&syscfg_mock_library);
+  nidevice_grpc::SessionUtilitiesService service(&session_repository, &device_enumerator, &software_enumerator);
   ::grpc::ServerContext context;
   nidevice_grpc::EnumerateDevicesRequest request;
   nidevice_grpc::EnumerateDevicesResponse response;
   ::grpc::Status status = service.EnumerateDevices(&context, &request, &response);
 
   device_enumerator.clear_syscfg_session();
+  software_enumerator.clear_syscfg_session();
 
   EXPECT_FALSE(device_enumerator.is_session_open());
+  EXPECT_FALSE(software_enumerator.is_session_open());
 }
 
 }  // namespace integration
