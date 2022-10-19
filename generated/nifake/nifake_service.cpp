@@ -1467,7 +1467,7 @@ namespace nifake_grpc {
       auto option_string = request->option_string().c_str();
       auto requested_behavior = request->requested_behavior();
 
-      bool new_session_initialized = false;
+      bool new_session_initialized {};
       auto init_lambda = [&] () {
         ViSession vi;
         auto status = library_->InitWithOptions(resource_name, id_query, reset_device, option_string, &vi);

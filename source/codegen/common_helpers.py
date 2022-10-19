@@ -1166,3 +1166,13 @@ def get_driver_api_params(parameters: List[dict]) -> List[dict]:
             is_return_value(p) or is_get_last_error_output_param(p) or is_proto_only_parameter(p)
         )
     ]
+
+
+def get_params_needing_initialization(parameters: List[dict]) -> List[dict]:
+    """Return all parameters that need to be initialized before the API call.
+
+    Excludes:
+    * Return values.
+    * Outputs that are calculated/populated after the API call.
+    """
+    return [p for p in parameters if not (is_return_value(p) or is_get_last_error_output_param(p))]

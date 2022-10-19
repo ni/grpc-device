@@ -27,9 +27,6 @@
 %>\
 ${initialize_input_params(function_name, parameters)}
 ${initialize_output_params(output_parameters_to_initialize)}\
-% if session_initialized_param:
-      bool ${session_initialized_param_name} = false;
-% endif
       auto init_lambda = [&] () {
 ## If the session is not returned, it's an output param and need to be declared before calling.
 % if not service_helpers.is_session_returned_from_function(parameters):
@@ -664,7 +661,7 @@ ${initialize_standard_input_param(function_name, parameter)}
 ## Initialize the output parameters for an API call.
 <%def name="initialize_output_params(output_parameters)">\
 <%
-  output_parameters = common_helpers.get_driver_api_params(output_parameters)
+  output_parameters = common_helpers.get_params_needing_initialization(output_parameters)
 %>\
 % for parameter in output_parameters:
 <%
