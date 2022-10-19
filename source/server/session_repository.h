@@ -31,8 +31,8 @@ class SessionRepository {
       InitFunc init_func,
       CleanupSessionFunc cleanup_func,
       uint32_t& session_id,
-      SessionInitializationBehavior initializationBehavior = SESSION_INITIALIZATION_BEHAVIOR_UNSPECIFIED,
-      bool* initializedNewSession = nullptr);
+      SessionInitializationBehavior initialization_behavior = SESSION_INITIALIZATION_BEHAVIOR_UNSPECIFIED,
+      bool* initialized_new_session = nullptr);
   uint32_t access_session(uint32_t session_id, const std::string& session_name);
   void remove_session(uint32_t id);
 

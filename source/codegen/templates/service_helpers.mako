@@ -8,7 +8,10 @@
 <%
   config = data['config']
   output_parameters = [p for p in parameters if common_helpers.is_output_parameter(p)]
-  session_output_param = next((parameter for parameter in output_parameters if parameter['grpc_type'] == 'nidevice_grpc.Session'), None)
+  input_parameters = [p for p in parameters if common_helpers.is_input_parameter(p)]
+  session_output_param = next((p for p in output_parameters if p['grpc_type'] == 'nidevice_grpc.Session'), None)
+  session_behavior_param = next((p for p in input_parameters if p['grpc_type'] == 'nidevice_grpc.SessionInitializationBehavior'), None)
+  session_initialized_param = next((p for p in output_parameters if common_helpers.is_proto_only_parameter(p) and p['type'] == 'bool'), None)
   output_parameters_to_initialize = [p for p in output_parameters if p['grpc_type'] != 'nidevice_grpc.Session']
   resource_handle_type = session_output_param['type']
   session_output_var_name = common_helpers.get_cpp_local_name(session_output_param)
@@ -16,9 +19,17 @@
 
   explicit_session_params = (common_helpers.get_cpp_local_name(param) for param in parameters if param.get('is_session_name', False))
   session_field_name = next(explicit_session_params, 'session_name')
+  add_session_snippet = 'add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id)'
+  if session_behavior_param and session_initialized_param:
+      session_behavior_param_name = common_helpers.get_cpp_local_name(session_behavior_param)
+      session_initialized_param_name = common_helpers.get_cpp_local_name(session_initialized_param)
+      add_session_snippet = f'add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id, {session_behavior_param_name}, &{session_initialized_param_name})'
 %>\
 ${initialize_input_params(function_name, parameters)}
 ${initialize_output_params(output_parameters_to_initialize)}\
+% if session_initialized_param:
+      bool ${session_initialized_param_name};
+% endif
       auto init_lambda = [&] () {
 ## If the session is not returned, it's an output param and need to be declared before calling.
 % if not service_helpers.is_session_returned_from_function(parameters):
@@ -36,7 +47,7 @@ ${call_library_method(
       uint32_t session_id = 0;
       const std::string& grpc_device_session_name = request->${session_field_name}();
       auto cleanup_lambda = [&] (${resource_handle_type} id) { library_->${close_function_call}; };
-      int status = ${service_helpers.session_repository_field_name(session_output_param, config)}->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
+      int status = ${service_helpers.session_repository_field_name(session_output_param, config)}->${add_session_snippet};
 ${populate_response(function_data=function_data, parameters=parameters, init_method=True)}\
       return ::grpc::Status::OK;\
 </%def>
@@ -629,6 +640,8 @@ ${initialize_standard_input_param(function_name, parameter)}
         });
 % elif common_helpers.is_array(c_type):
       auto ${parameter_name} = const_cast<${c_type_pointer}>(${request_snippet}.data());\
+% elif common_helpers.is_nidevice_enum_param(grpc_type):
+      auto ${parameter_name} = ${request_snippet};\
 % else:
       ${c_type} ${parameter_name} = ${request_snippet};\
 % endif
