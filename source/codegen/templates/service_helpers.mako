@@ -28,7 +28,7 @@
 ${initialize_input_params(function_name, parameters)}
 ${initialize_output_params(output_parameters_to_initialize)}\
 % if session_initialized_param:
-      bool ${session_initialized_param_name};
+      bool ${session_initialized_param_name} = false;
 % endif
       auto init_lambda = [&] () {
 ## If the session is not returned, it's an output param and need to be declared before calling.
