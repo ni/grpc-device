@@ -640,7 +640,7 @@ ${initialize_standard_input_param(function_name, parameter)}
         });
 % elif common_helpers.is_array(c_type):
       auto ${parameter_name} = const_cast<${c_type_pointer}>(${request_snippet}.data());\
-% elif common_helpers.is_nidevice_enum_param(grpc_type):
+% elif common_helpers.is_nidevice_enum_parameter(grpc_type):
       auto ${parameter_name} = ${request_snippet};\
 % else:
       ${c_type} ${parameter_name} = ${request_snippet};\

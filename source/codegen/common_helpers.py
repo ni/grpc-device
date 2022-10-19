@@ -228,7 +228,7 @@ def is_string_arg(parameter):
     return parameter["grpc_type"] in ["string", "bytes"]
 
 
-def is_nidevice_enum_param(grpc_type):
+def is_nidevice_enum_parameter(grpc_type):
     """Whether the grpc_type is one of the enums in nidevice_grpc."""
     return grpc_type in ["nidevice_grpc.SessionInitializationBehavior"]
 
