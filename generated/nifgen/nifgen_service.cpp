@@ -2642,6 +2642,7 @@ namespace nifgen_grpc {
       ViRsrc resource_name = (ViRsrc)request->resource_name().c_str();
       ViBoolean id_query = request->id_query();
       ViBoolean reset_device = request->reset_device();
+      ViInt32 requested_behavior = request->requested_behavior();
 
       auto init_lambda = [&] () {
         ViSession vi;
@@ -2657,6 +2658,7 @@ namespace nifgen_grpc {
       }
       response->set_status(status);
       response->mutable_vi()->set_id(session_id);
+      response->set_new_session_initialized(new_session_initialized);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
@@ -2676,6 +2678,7 @@ namespace nifgen_grpc {
       ViBoolean id_query = request->id_query();
       ViBoolean reset_device = request->reset_device();
       ViString option_string = (ViString)request->option_string().c_str();
+      ViInt32 requested_behavior = request->requested_behavior();
 
       auto init_lambda = [&] () {
         ViSession vi;
@@ -2691,6 +2694,7 @@ namespace nifgen_grpc {
       }
       response->set_status(status);
       response->mutable_vi()->set_id(session_id);
+      response->set_new_session_initialized(new_session_initialized);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
@@ -2710,6 +2714,7 @@ namespace nifgen_grpc {
       ViString channel_name = (ViString)request->channel_name().c_str();
       ViBoolean reset_device = request->reset_device();
       ViString option_string = (ViString)request->option_string().c_str();
+      ViInt32 requested_behavior = request->requested_behavior();
 
       auto init_lambda = [&] () {
         ViSession vi;
@@ -2725,6 +2730,7 @@ namespace nifgen_grpc {
       }
       response->set_status(status);
       response->mutable_vi()->set_id(session_id);
+      response->set_new_session_initialized(new_session_initialized);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
@@ -3812,4 +3818,9 @@ namespace nifgen_grpc {
   {
   }
 } // namespace nifgen_grpc
+
+namespace nidevice_grpc {
+namespace converters {
+} // converters
+} // nidevice_grpc
 

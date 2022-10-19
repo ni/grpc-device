@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-FGEN API metadata version 23.0.0d13
+# This file is generated from NI-FGEN API metadata version 23.0.0d36
 functions = {
     'AbortGeneration': {
         'codegen_method': 'public',
@@ -1408,7 +1408,7 @@ functions = {
                     'mechanism': 'len',
                     'value': 'numberOfSamples'
                 },
-                'type': 'NIComplexNumber_struct[]'
+                'type': 'struct NIComplexNumber_struct[]'
             },
             {
                 'cppName': 'waveformHandle',
@@ -2842,6 +2842,22 @@ functions = {
                 'grpc_type': 'string',
                 'name': 'errorMessage',
                 'type': 'ViChar[]'
+            },
+            {
+                'cppName': 'requestedBehavior',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.SessionInitializationBehavior',
+                'name': 'requestedBehavior',
+                'proto_only': True,
+                'type': 'ViInt32'
+            },
+            {
+                'cppName': 'newSessionInitialized',
+                'direction': 'out',
+                'grpc_type': 'bool',
+                'name': 'newSessionInitialized',
+                'proto_only': True,
+                'type': 'bool'
             }
         ],
         'returns': 'ViStatus'
@@ -2892,6 +2908,22 @@ functions = {
                 'grpc_type': 'string',
                 'name': 'errorMessage',
                 'type': 'ViChar[]'
+            },
+            {
+                'cppName': 'requestedBehavior',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.SessionInitializationBehavior',
+                'name': 'requestedBehavior',
+                'proto_only': True,
+                'type': 'ViInt32'
+            },
+            {
+                'cppName': 'newSessionInitialized',
+                'direction': 'out',
+                'grpc_type': 'bool',
+                'name': 'newSessionInitialized',
+                'proto_only': True,
+                'type': 'bool'
             }
         ],
         'returns': 'ViStatus'
@@ -2942,6 +2974,22 @@ functions = {
                 'grpc_type': 'string',
                 'name': 'errorMessage',
                 'type': 'ViChar[]'
+            },
+            {
+                'cppName': 'requestedBehavior',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.SessionInitializationBehavior',
+                'name': 'requestedBehavior',
+                'proto_only': True,
+                'type': 'ViInt32'
+            },
+            {
+                'cppName': 'newSessionInitialized',
+                'direction': 'out',
+                'grpc_type': 'bool',
+                'name': 'newSessionInitialized',
+                'proto_only': True,
+                'type': 'bool'
             }
         ],
         'returns': 'ViStatus'
@@ -3844,7 +3892,7 @@ functions = {
                     'mechanism': 'len',
                     'value': 'size'
                 },
-                'type': 'NIComplexI16_struct[]'
+                'type': 'struct NIComplexI16_struct[]'
             }
         ],
         'returns': 'ViStatus'
@@ -3895,7 +3943,7 @@ functions = {
                     'mechanism': 'len',
                     'value': 'size'
                 },
-                'type': 'NIComplexNumber_struct[]'
+                'type': 'struct NIComplexNumber_struct[]'
             }
         ],
         'returns': 'ViStatus'
@@ -3946,7 +3994,7 @@ functions = {
                     'mechanism': 'len',
                     'value': 'size'
                 },
-                'type': 'NIComplexI16_struct[]'
+                'type': 'struct NIComplexI16_struct[]'
             }
         ],
         'returns': 'ViStatus'
@@ -4214,7 +4262,7 @@ functions = {
                     'mechanism': 'len',
                     'value': 'numberOfSamples'
                 },
-                'type': 'NIComplexNumber_struct[]'
+                'type': 'struct NIComplexNumber_struct[]'
             },
             {
                 'cppName': 'waveformHandle',
