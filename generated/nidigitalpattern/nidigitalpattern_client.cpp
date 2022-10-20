@@ -1694,7 +1694,7 @@ get_time_set_period(const StubPtr& stub, const nidevice_grpc::Session& vi, const
 }
 
 InitResponse
-init(const StubPtr& stub, const pb::string& resource_name, const bool& id_query, const bool& reset_device)
+init(const StubPtr& stub, const pb::string& resource_name, const bool& id_query, const bool& reset_device, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
 {
   ::grpc::ClientContext context;
 
@@ -1702,6 +1702,7 @@ init(const StubPtr& stub, const pb::string& resource_name, const bool& id_query,
   request.set_resource_name(resource_name);
   request.set_id_query(id_query);
   request.set_reset_device(reset_device);
+  request.set_initialization_behavior(initialization_behavior);
 
   auto response = InitResponse{};
 
@@ -1713,7 +1714,7 @@ init(const StubPtr& stub, const pb::string& resource_name, const bool& id_query,
 }
 
 InitWithOptionsResponse
-init_with_options(const StubPtr& stub, const pb::string& resource_name, const bool& id_query, const bool& reset_device, const pb::string& option_string)
+init_with_options(const StubPtr& stub, const pb::string& resource_name, const bool& id_query, const bool& reset_device, const pb::string& option_string, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
 {
   ::grpc::ClientContext context;
 
@@ -1722,6 +1723,7 @@ init_with_options(const StubPtr& stub, const pb::string& resource_name, const bo
   request.set_id_query(id_query);
   request.set_reset_device(reset_device);
   request.set_option_string(option_string);
+  request.set_initialization_behavior(initialization_behavior);
 
   auto response = InitWithOptionsResponse{};
 

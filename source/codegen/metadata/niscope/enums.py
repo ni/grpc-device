@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-SCOPE API metadata version 23.0.0d42
+# This file is generated from NI-SCOPE API metadata version 23.0.0d58
 enums = {
     'AcquisitionStatus': {
         'codegen_method': 'public',
@@ -566,12 +566,12 @@ enums = {
                 'value': 10
             },
             {
-                'name': 'NISCOPE_VAL_REF_CLOCK',
-                'value': 100
-            },
-            {
                 'name': 'NISCOPE_VAL_5V_OUT',
                 'value': 13
+            },
+            {
+                'name': 'NISCOPE_VAL_REF_CLOCK',
+                'value': 100
             },
             {
                 'name': 'NISCOPE_VAL_SAMPLE_CLOCK',

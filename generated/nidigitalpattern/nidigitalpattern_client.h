@@ -104,8 +104,8 @@ GetTimeSetEdgeResponse get_time_set_edge(const StubPtr& stub, const nidevice_grp
 GetTimeSetEdgeMultiplierResponse get_time_set_edge_multiplier(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& pin, const pb::string& time_set_name);
 GetTimeSetNameResponse get_time_set_name(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& time_set_index);
 GetTimeSetPeriodResponse get_time_set_period(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& time_set_name);
-InitResponse init(const StubPtr& stub, const pb::string& resource_name, const bool& id_query, const bool& reset_device);
-InitWithOptionsResponse init_with_options(const StubPtr& stub, const pb::string& resource_name, const bool& id_query, const bool& reset_device, const pb::string& option_string);
+InitResponse init(const StubPtr& stub, const pb::string& resource_name, const bool& id_query, const bool& reset_device, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior);
+InitWithOptionsResponse init_with_options(const StubPtr& stub, const pb::string& resource_name, const bool& id_query, const bool& reset_device, const pb::string& option_string, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior);
 InitiateResponse initiate(const StubPtr& stub, const nidevice_grpc::Session& vi);
 IsDoneResponse is_done(const StubPtr& stub, const nidevice_grpc::Session& vi);
 IsSiteEnabledResponse is_site_enabled(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& site);
