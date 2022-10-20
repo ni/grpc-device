@@ -47,7 +47,7 @@ def is_repeated_varargs_parameter(parameter: dict):
     return parameter.get("repeated_var_args", False)
 
 
-def is_proto_only_paramater(parameter: dict):
+def is_proto_only_parameter(parameter: dict):
     """Whether the parameter is only included in the proto file and not the driver API."""
     return parameter.get("proto_only", False)
 
@@ -226,6 +226,11 @@ def _is_null_terminated_in_c(parameter):
 def is_string_arg(parameter):
     """Whether the parameter's type is string or bytes."""
     return parameter["grpc_type"] in ["string", "bytes"]
+
+
+def is_nidevice_enum_parameter(grpc_type):
+    """Whether the grpc_type is one of the enums in nidevice_grpc."""
+    return grpc_type in ["nidevice_grpc.SessionInitializationBehavior"]
 
 
 def strip_repeated_from_grpc_type(grpc_type):
@@ -1158,6 +1163,16 @@ def get_driver_api_params(parameters: List[dict]) -> List[dict]:
         p
         for p in parameters
         if not (
-            is_return_value(p) or is_get_last_error_output_param(p) or is_proto_only_paramater(p)
+            is_return_value(p) or is_get_last_error_output_param(p) or is_proto_only_parameter(p)
         )
     ]
+
+
+def get_params_needing_initialization(parameters: List[dict]) -> List[dict]:
+    """Return all parameters that need to be initialized before the API call.
+
+    Excludes:
+    * Return values.
+    * Outputs that are calculated/populated after the API call.
+    """
+    return [p for p in parameters if not (is_return_value(p) or is_get_last_error_output_param(p))]

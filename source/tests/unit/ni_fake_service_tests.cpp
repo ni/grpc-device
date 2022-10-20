@@ -169,6 +169,134 @@ TEST(NiFakeServiceTests, NiFakeService_InitWithOptionsSucceeds_CreatesAndStoresS
   nidevice_grpc::Session session = response.vi();
   EXPECT_NE(0, session_repository.access_session(session.id(), ""));
   EXPECT_NE(0, session_repository.access_session(0, session_name));
+  EXPECT_TRUE(response.new_session_initialized());
+}
+
+TEST(NiFakeServiceTests, NiFakeService_InitWithOptionsWithAttachBehavior_DoesNotCallIntoDriverAndReturnsFailedPreconditionError)
+{
+  nidevice_grpc::SessionRepository session_repository;
+  NiFakeMockLibrary library;
+  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  nifake_grpc::NiFakeService service(&library, resource_repository);
+  const char* resource_name = "Dev0";
+  const char* option_string = "Simulate = 1";
+  bool id_query = false, reset_device = true;
+  const char* session_name = "sessionName";
+  EXPECT_CALL(library, InitWithOptions)
+      .Times(0);
+
+  ::grpc::ServerContext context;
+  nifake_grpc::InitWithOptionsRequest request;
+  request.set_resource_name(resource_name);
+  request.set_id_query(id_query);
+  request.set_reset_device(reset_device);
+  request.set_option_string(option_string);
+  request.set_session_name(session_name);
+  request.set_requested_behavior(nidevice_grpc::SESSION_INITIALIZATION_BEHAVIOR_ATTACH_TO_EXISTING);
+  nifake_grpc::InitWithOptionsResponse response;
+  ::grpc::Status status = service.InitWithOptions(&context, &request, &response);
+
+  EXPECT_FALSE(status.ok());
+  EXPECT_EQ(::grpc::StatusCode::FAILED_PRECONDITION, status.error_code());
+  const char* expected_error_message = "Cannot attach to 'sessionName' because a session has not been initialized.";
+  EXPECT_STREQ(expected_error_message, status.error_message().c_str());
+}
+
+TEST(NiFakeServiceTests, NiFakeService_InitWithOptionsWithInitializeBehavior_CreatesAndStoresSession)
+{
+  nidevice_grpc::SessionRepository session_repository;
+  NiFakeMockLibrary library;
+  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  nifake_grpc::NiFakeService service(&library, resource_repository);
+  const char* resource_name = "Dev0";
+  const char* option_string = "Simulate = 1";
+  bool id_query = false, reset_device = true;
+  const char* session_name = "sessionName";
+  EXPECT_CALL(library, InitWithOptions(Pointee(*resource_name), id_query, reset_device, Pointee(*option_string), _))
+      .WillOnce(DoAll(SetArgPointee<4>(kTestViSession), Return(kDriverSuccess)));
+
+  ::grpc::ServerContext context;
+  nifake_grpc::InitWithOptionsRequest request;
+  request.set_resource_name(resource_name);
+  request.set_id_query(id_query);
+  request.set_reset_device(reset_device);
+  request.set_option_string(option_string);
+  request.set_session_name(session_name);
+  request.set_requested_behavior(nidevice_grpc::SESSION_INITIALIZATION_BEHAVIOR_INITIALIZE_NEW);
+  nifake_grpc::InitWithOptionsResponse response;
+  ::grpc::Status status = service.InitWithOptions(&context, &request, &response);
+
+  EXPECT_TRUE(status.ok());
+  EXPECT_EQ(kDriverSuccess, response.status());
+  nidevice_grpc::Session session = response.vi();
+  EXPECT_NE(0, session_repository.access_session(session.id(), ""));
+  EXPECT_NE(0, session_repository.access_session(0, session_name));
+  EXPECT_TRUE(response.new_session_initialized());
+}
+
+TEST(NiFakeServiceTests, NiFakeServiceWithSession_InitWithOptionsWithInitializeBehavior_ReturnsAlreadyExistsError)
+{
+  nidevice_grpc::SessionRepository session_repository;
+  NiFakeMockLibrary library;
+  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  nifake_grpc::NiFakeService service(&library, resource_repository);
+  const char* session_name = "sessionName";
+  auto session_id = create_session(library, service, session_name, kTestViSession);
+  const char* resource_name = "Dev0";
+  const char* option_string = "Simulate = 1";
+  bool id_query = false, reset_device = true;
+  EXPECT_CALL(library, InitWithOptions)
+      .Times(0);
+
+  ::grpc::ServerContext context;
+  nifake_grpc::InitWithOptionsRequest request;
+  request.set_resource_name(resource_name);
+  request.set_id_query(id_query);
+  request.set_reset_device(reset_device);
+  request.set_option_string(option_string);
+  request.set_session_name(session_name);
+  request.set_requested_behavior(nidevice_grpc::SESSION_INITIALIZATION_BEHAVIOR_INITIALIZE_NEW);
+  nifake_grpc::InitWithOptionsResponse response;
+  ::grpc::Status status = service.InitWithOptions(&context, &request, &response);
+
+  EXPECT_FALSE(status.ok());
+  EXPECT_EQ(::grpc::StatusCode::ALREADY_EXISTS, status.error_code());
+  const char* expected_error_message = "Cannot initialize 'sessionName' when a session already exists.";
+  EXPECT_STREQ(expected_error_message, status.error_message().c_str());
+}
+
+TEST(NiFakeServiceTests, NiFakeServiceWithSession_InitWithOptionsWithAttachBehavior_ReturnsAlreadyInitializedSession)
+{
+  nidevice_grpc::SessionRepository session_repository;
+  NiFakeMockLibrary library;
+  auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
+  nifake_grpc::NiFakeService service(&library, resource_repository);
+  const char* session_name = "sessionName";
+  auto session_id = create_session(library, service, session_name, kTestViSession);
+  const char* resource_name = "Dev0";
+  const char* option_string = "Simulate = 1";
+  bool id_query = false, reset_device = true;
+
+  EXPECT_CALL(library, InitWithOptions)
+      .Times(0);
+
+  ::grpc::ServerContext context;
+  nifake_grpc::InitWithOptionsRequest request;
+  request.set_resource_name(resource_name);
+  request.set_id_query(id_query);
+  request.set_reset_device(reset_device);
+  request.set_option_string(option_string);
+  request.set_session_name(session_name);
+  request.set_requested_behavior(nidevice_grpc::SESSION_INITIALIZATION_BEHAVIOR_ATTACH_TO_EXISTING);
+  nifake_grpc::InitWithOptionsResponse response;
+  ::grpc::Status status = service.InitWithOptions(&context, &request, &response);
+
+  EXPECT_TRUE(status.ok());
+  EXPECT_EQ(kDriverSuccess, response.status());
+  nidevice_grpc::Session session = response.vi();
+  EXPECT_NE(0, session_repository.access_session(session.id(), ""));
+  EXPECT_NE(0, session_repository.access_session(0, session_name));
+  EXPECT_FALSE(response.new_session_initialized());
 }
 
 TEST(NiFakeServiceTests, NiFakeService_InitWithOptionsFails_NoSessionIsStored)

@@ -56,6 +56,7 @@ public:
   ::grpc::Status DoubleAllTheNums(::grpc::ServerContext* context, const DoubleAllTheNumsRequest* request, DoubleAllTheNumsResponse* response) override;
   ::grpc::Status EnumArrayOutputFunction(::grpc::ServerContext* context, const EnumArrayOutputFunctionRequest* request, EnumArrayOutputFunctionResponse* response) override;
   ::grpc::Status EnumInputFunctionWithDefaults(::grpc::ServerContext* context, const EnumInputFunctionWithDefaultsRequest* request, EnumInputFunctionWithDefaultsResponse* response) override;
+  ::grpc::Status ErrorMessage(::grpc::ServerContext* context, const ErrorMessageRequest* request, ErrorMessageResponse* response) override;
   ::grpc::Status ExportAttributeConfigurationBuffer(::grpc::ServerContext* context, const ExportAttributeConfigurationBufferRequest* request, ExportAttributeConfigurationBufferResponse* response) override;
   ::grpc::Status FetchWaveform(::grpc::ServerContext* context, const FetchWaveformRequest* request, FetchWaveformResponse* response) override;
   ::grpc::Status GetABoolean(::grpc::ServerContext* context, const GetABooleanRequest* request, GetABooleanResponse* response) override;
@@ -83,6 +84,7 @@ public:
   ::grpc::Status GetCustomType(::grpc::ServerContext* context, const GetCustomTypeRequest* request, GetCustomTypeResponse* response) override;
   ::grpc::Status GetCustomTypeArray(::grpc::ServerContext* context, const GetCustomTypeArrayRequest* request, GetCustomTypeArrayResponse* response) override;
   ::grpc::Status GetEnumValue(::grpc::ServerContext* context, const GetEnumValueRequest* request, GetEnumValueResponse* response) override;
+  ::grpc::Status GetError(::grpc::ServerContext* context, const GetErrorRequest* request, GetErrorResponse* response) override;
   ::grpc::Status GetViInt32Array(::grpc::ServerContext* context, const GetViInt32ArrayRequest* request, GetViInt32ArrayResponse* response) override;
   ::grpc::Status GetViUInt32Array(::grpc::ServerContext* context, const GetViUInt32ArrayRequest* request, GetViUInt32ArrayResponse* response) override;
   ::grpc::Status GetViUInt8(::grpc::ServerContext* context, const GetViUInt8Request* request, GetViUInt8Response* response) override;
@@ -96,6 +98,7 @@ public:
   ::grpc::Status MethodWithGetLastErrorParam(::grpc::ServerContext* context, const MethodWithGetLastErrorParamRequest* request, MethodWithGetLastErrorParamResponse* response) override;
   ::grpc::Status MethodWithGrpcFieldNumber(::grpc::ServerContext* context, const MethodWithGrpcFieldNumberRequest* request, MethodWithGrpcFieldNumberResponse* response) override;
   ::grpc::Status MethodWithGrpcOnlyParam(::grpc::ServerContext* context, const MethodWithGrpcOnlyParamRequest* request, MethodWithGrpcOnlyParamResponse* response) override;
+  ::grpc::Status MethodWithProtoOnlyParameter(::grpc::ServerContext* context, const MethodWithProtoOnlyParameterRequest* request, MethodWithProtoOnlyParameterResponse* response) override;
   ::grpc::Status MultipleArrayTypes(::grpc::ServerContext* context, const MultipleArrayTypesRequest* request, MultipleArrayTypesResponse* response) override;
   ::grpc::Status MultipleArraysSameSize(::grpc::ServerContext* context, const MultipleArraysSameSizeRequest* request, MultipleArraysSameSizeResponse* response) override;
   ::grpc::Status MultipleArraysSameSizeWithOptional(::grpc::ServerContext* context, const MultipleArraysSameSizeWithOptionalRequest* request, MultipleArraysSameSizeWithOptionalResponse* response) override;
@@ -110,6 +113,11 @@ public:
   ::grpc::Status ReturnDurationInSeconds(::grpc::ServerContext* context, const ReturnDurationInSecondsRequest* request, ReturnDurationInSecondsResponse* response) override;
   ::grpc::Status ReturnListOfDurationsInSeconds(::grpc::ServerContext* context, const ReturnListOfDurationsInSecondsRequest* request, ReturnListOfDurationsInSecondsResponse* response) override;
   ::grpc::Status ReturnMultipleTypes(::grpc::ServerContext* context, const ReturnMultipleTypesRequest* request, ReturnMultipleTypesResponse* response) override;
+  ::grpc::Status SetAttributeViBoolean(::grpc::ServerContext* context, const SetAttributeViBooleanRequest* request, SetAttributeViBooleanResponse* response) override;
+  ::grpc::Status SetAttributeViInt32(::grpc::ServerContext* context, const SetAttributeViInt32Request* request, SetAttributeViInt32Response* response) override;
+  ::grpc::Status SetAttributeViInt64(::grpc::ServerContext* context, const SetAttributeViInt64Request* request, SetAttributeViInt64Response* response) override;
+  ::grpc::Status SetAttributeViReal64(::grpc::ServerContext* context, const SetAttributeViReal64Request* request, SetAttributeViReal64Response* response) override;
+  ::grpc::Status SetAttributeViString(::grpc::ServerContext* context, const SetAttributeViStringRequest* request, SetAttributeViStringResponse* response) override;
   ::grpc::Status SetCustomType(::grpc::ServerContext* context, const SetCustomTypeRequest* request, SetCustomTypeResponse* response) override;
   ::grpc::Status SetCustomTypeArray(::grpc::ServerContext* context, const SetCustomTypeArrayRequest* request, SetCustomTypeArrayResponse* response) override;
   ::grpc::Status StringValuedEnumInputFunctionWithDefaults(::grpc::ServerContext* context, const StringValuedEnumInputFunctionWithDefaultsRequest* request, StringValuedEnumInputFunctionWithDefaultsResponse* response) override;

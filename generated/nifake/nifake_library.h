@@ -76,6 +76,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
   ViStatus MethodWithGetLastErrorParam();
   ViStatus MethodWithGrpcFieldNumber(ViInt32 attributeValue);
   ViStatus MethodWithGrpcOnlyParam(ViInt32 simpleParam, ViInt32* grpcOnlyParam);
+  ViStatus MethodWithProtoOnlyParameter();
   ViStatus MultipleArrayTypes(ViSession vi, ViInt32 outputArraySize, ViReal64 outputArray[], ViReal64 outputArrayOfFixedLength[3], ViInt32 inputArraySizes, ViReal64 inputArrayOfFloats[], ViInt16 inputArrayOfIntegers[]);
   ViStatus MultipleArraysSameSize(ViSession vi, ViReal64 values1[], ViReal64 values2[], ViReal64 values3[], ViReal64 values4[], ViInt32 size);
   ViStatus MultipleArraysSameSizeWithOptional(ViSession vi, ViReal64 values1[], ViReal64 values2[], ViReal64 values3[], ViReal64 values4[], CustomStruct values5[], ViInt32 size);
@@ -123,7 +124,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
   using DoubleAllTheNumsPtr = decltype(&niFake_DoubleAllTheNums);
   using EnumArrayOutputFunctionPtr = decltype(&niFake_EnumArrayOutputFunction);
   using EnumInputFunctionWithDefaultsPtr = decltype(&niFake_EnumInputFunctionWithDefaults);
-  using ErrorMessagePtr = ViStatus (*)(ViSession vi, ViStatus errorCode, ViChar errorMessage[256]);
+  using ErrorMessagePtr = decltype(&niFake_error_message);
   using ExportAttributeConfigurationBufferPtr = decltype(&niFake_ExportAttributeConfigurationBuffer);
   using FetchWaveformPtr = decltype(&niFake_FetchWaveform);
   using GetABooleanPtr = decltype(&niFake_GetABoolean);
@@ -151,7 +152,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
   using GetCustomTypePtr = decltype(&niFake_GetCustomType);
   using GetCustomTypeArrayPtr = decltype(&niFake_GetCustomTypeArray);
   using GetEnumValuePtr = decltype(&niFake_GetEnumValue);
-  using GetErrorPtr = ViStatus (*)(ViSession vi, ViStatus* errorCode, ViInt32 bufferSize, ViChar description[]);
+  using GetErrorPtr = decltype(&niFake_GetError);
   using GetViInt32ArrayPtr = decltype(&niFake_GetViInt32Array);
   using GetViUInt32ArrayPtr = decltype(&niFake_GetViUInt32Array);
   using GetViUInt8Ptr = decltype(&niFake_GetViUInt8);
@@ -166,6 +167,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
   using MethodWithGetLastErrorParamPtr = decltype(&niFake_MethodWithGetLastErrorParam);
   using MethodWithGrpcFieldNumberPtr = decltype(&niFake_MethodWithGrpcFieldNumber);
   using MethodWithGrpcOnlyParamPtr = decltype(&niFake_MethodWithGrpcOnlyParam);
+  using MethodWithProtoOnlyParameterPtr = decltype(&niFake_MethodWithProtoOnlyParameter);
   using MultipleArrayTypesPtr = decltype(&niFake_MultipleArrayTypes);
   using MultipleArraysSameSizePtr = decltype(&niFake_MultipleArraysSameSize);
   using MultipleArraysSameSizeWithOptionalPtr = decltype(&niFake_MultipleArraysSameSizeWithOptional);
@@ -181,11 +183,11 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
   using ReturnListOfDurationsInSecondsPtr = decltype(&niFake_ReturnListOfDurationsInSeconds);
   using ReturnMultipleTypesPtr = decltype(&niFake_ReturnMultipleTypes);
   using SelfTestPtr = ViStatus (*)(ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[256]);
-  using SetAttributeViBooleanPtr = ViStatus (*)(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean attributeValue);
-  using SetAttributeViInt32Ptr = ViStatus (*)(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 attributeValue);
-  using SetAttributeViInt64Ptr = ViStatus (*)(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt64 attributeValue);
-  using SetAttributeViReal64Ptr = ViStatus (*)(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64 attributeValue);
-  using SetAttributeViStringPtr = ViStatus (*)(ViSession vi, ViConstString channelName, ViAttr attributeId, ViConstString attributeValue);
+  using SetAttributeViBooleanPtr = decltype(&niFake_SetAttributeViBoolean);
+  using SetAttributeViInt32Ptr = decltype(&niFake_SetAttributeViInt32);
+  using SetAttributeViInt64Ptr = decltype(&niFake_SetAttributeViInt64);
+  using SetAttributeViReal64Ptr = decltype(&niFake_SetAttributeViReal64);
+  using SetAttributeViStringPtr = decltype(&niFake_SetAttributeViString);
   using SetCustomTypePtr = decltype(&niFake_SetCustomType);
   using SetCustomTypeArrayPtr = decltype(&niFake_SetCustomTypeArray);
   using StringValuedEnumInputFunctionWithDefaultsPtr = decltype(&niFake_StringValuedEnumInputFunctionWithDefaults);
@@ -256,6 +258,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
     MethodWithGetLastErrorParamPtr MethodWithGetLastErrorParam;
     MethodWithGrpcFieldNumberPtr MethodWithGrpcFieldNumber;
     MethodWithGrpcOnlyParamPtr MethodWithGrpcOnlyParam;
+    MethodWithProtoOnlyParameterPtr MethodWithProtoOnlyParameter;
     MultipleArrayTypesPtr MultipleArrayTypes;
     MultipleArraysSameSizePtr MultipleArraysSameSize;
     MultipleArraysSameSizeWithOptionalPtr MultipleArraysSameSizeWithOptional;
