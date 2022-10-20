@@ -715,7 +715,7 @@ message InitWithOptionsRequest {
   bool id_query = 3;
   bool reset_device = 4;
   string option_string = 5;
-  nidevice_grpc.SessionInitializationBehavior requested_behavior = 6;
+  nidevice_grpc.SessionInitializationBehavior initialization_behavior = 6;
 }
 
 message InitWithOptionsResponse {

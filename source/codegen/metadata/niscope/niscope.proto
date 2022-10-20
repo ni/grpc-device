@@ -465,8 +465,8 @@ enum ExportableSignals {
   EXPORTABLE_SIGNALS_NISCOPE_VAL_READY_FOR_ADVANCE_EVENT = 6;
   EXPORTABLE_SIGNALS_NISCOPE_VAL_READY_FOR_START_EVENT = 7;
   EXPORTABLE_SIGNALS_NISCOPE_VAL_READY_FOR_REF_EVENT = 10;
-  EXPORTABLE_SIGNALS_NISCOPE_VAL_REF_CLOCK = 100;
   EXPORTABLE_SIGNALS_NISCOPE_VAL_5V_OUT = 13;
+  EXPORTABLE_SIGNALS_NISCOPE_VAL_REF_CLOCK = 100;
   EXPORTABLE_SIGNALS_NISCOPE_VAL_SAMPLE_CLOCK = 101;
 }
 
@@ -1697,12 +1697,14 @@ message InitRequest {
   string resource_name = 2;
   bool id_query = 3;
   bool reset_device = 4;
+  nidevice_grpc.SessionInitializationBehavior initialization_behavior = 5;
 }
 
 message InitResponse {
   int32 status = 1;
   nidevice_grpc.Session vi = 2;
   string error_message = 3 [deprecated = true];
+  bool new_session_initialized = 4;
 }
 
 message InitWithOptionsRequest {
@@ -1711,12 +1713,14 @@ message InitWithOptionsRequest {
   bool id_query = 3;
   bool reset_device = 4;
   string option_string = 5;
+  nidevice_grpc.SessionInitializationBehavior initialization_behavior = 6;
 }
 
 message InitWithOptionsResponse {
   int32 status = 1;
   nidevice_grpc.Session vi = 2;
   string error_message = 3 [deprecated = true];
+  bool new_session_initialized = 4;
 }
 
 message InitiateAcquisitionRequest {

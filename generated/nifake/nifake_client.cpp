@@ -888,7 +888,7 @@ init_ext_cal(const StubPtr& stub, const pb::string& resource_name, const pb::str
 }
 
 InitWithOptionsResponse
-init_with_options(const StubPtr& stub, const pb::string& resource_name, const bool& id_query, const bool& reset_device, const pb::string& option_string, const nidevice_grpc::SessionInitializationBehavior& requested_behavior)
+init_with_options(const StubPtr& stub, const pb::string& resource_name, const bool& id_query, const bool& reset_device, const pb::string& option_string, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
 {
   ::grpc::ClientContext context;
 
@@ -897,7 +897,7 @@ init_with_options(const StubPtr& stub, const pb::string& resource_name, const bo
   request.set_id_query(id_query);
   request.set_reset_device(reset_device);
   request.set_option_string(option_string);
-  request.set_requested_behavior(requested_behavior);
+  request.set_initialization_behavior(initialization_behavior);
 
   auto response = InitWithOptionsResponse{};
 

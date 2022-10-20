@@ -1465,7 +1465,7 @@ namespace nifake_grpc {
       ViBoolean id_query = request->id_query();
       ViBoolean reset_device = request->reset_device();
       auto option_string = request->option_string().c_str();
-      auto requested_behavior = request->requested_behavior();
+      auto initialization_behavior = request->initialization_behavior();
 
       bool new_session_initialized {};
       auto init_lambda = [&] () {
@@ -1476,7 +1476,7 @@ namespace nifake_grpc {
       uint32_t session_id = 0;
       const std::string& grpc_device_session_name = request->session_name();
       auto cleanup_lambda = [&] (ViSession id) { library_->Close(id); };
-      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id, requested_behavior, &new_session_initialized);
+      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id, initialization_behavior, &new_session_initialized);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, 0);
       }

@@ -192,7 +192,7 @@ TEST(NiFakeServiceTests, NiFakeService_InitWithOptionsWithAttachBehavior_DoesNot
   request.set_reset_device(reset_device);
   request.set_option_string(option_string);
   request.set_session_name(session_name);
-  request.set_requested_behavior(nidevice_grpc::SESSION_INITIALIZATION_BEHAVIOR_ATTACH_TO_EXISTING);
+  request.set_initialization_behavior(nidevice_grpc::SESSION_INITIALIZATION_BEHAVIOR_ATTACH_TO_EXISTING);
   nifake_grpc::InitWithOptionsResponse response;
   ::grpc::Status status = service.InitWithOptions(&context, &request, &response);
 
@@ -222,7 +222,7 @@ TEST(NiFakeServiceTests, NiFakeService_InitWithOptionsWithInitializeBehavior_Cre
   request.set_reset_device(reset_device);
   request.set_option_string(option_string);
   request.set_session_name(session_name);
-  request.set_requested_behavior(nidevice_grpc::SESSION_INITIALIZATION_BEHAVIOR_INITIALIZE_NEW);
+  request.set_initialization_behavior(nidevice_grpc::SESSION_INITIALIZATION_BEHAVIOR_INITIALIZE_NEW);
   nifake_grpc::InitWithOptionsResponse response;
   ::grpc::Status status = service.InitWithOptions(&context, &request, &response);
 
@@ -255,7 +255,7 @@ TEST(NiFakeServiceTests, NiFakeServiceWithSession_InitWithOptionsWithInitializeB
   request.set_reset_device(reset_device);
   request.set_option_string(option_string);
   request.set_session_name(session_name);
-  request.set_requested_behavior(nidevice_grpc::SESSION_INITIALIZATION_BEHAVIOR_INITIALIZE_NEW);
+  request.set_initialization_behavior(nidevice_grpc::SESSION_INITIALIZATION_BEHAVIOR_INITIALIZE_NEW);
   nifake_grpc::InitWithOptionsResponse response;
   ::grpc::Status status = service.InitWithOptions(&context, &request, &response);
 
@@ -287,7 +287,7 @@ TEST(NiFakeServiceTests, NiFakeServiceWithSession_InitWithOptionsWithAttachBehav
   request.set_reset_device(reset_device);
   request.set_option_string(option_string);
   request.set_session_name(session_name);
-  request.set_requested_behavior(nidevice_grpc::SESSION_INITIALIZATION_BEHAVIOR_ATTACH_TO_EXISTING);
+  request.set_initialization_behavior(nidevice_grpc::SESSION_INITIALIZATION_BEHAVIOR_ATTACH_TO_EXISTING);
   nifake_grpc::InitWithOptionsResponse response;
   ::grpc::Status status = service.InitWithOptions(&context, &request, &response);
 

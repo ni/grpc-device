@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-FAKE API metadata version 23.0.0d45
+# This file is generated from NI-FAKE API metadata version 23.0.0d49
 functions = {
     'Abort': {
         'codegen_method': 'public',
@@ -1561,10 +1561,10 @@ functions = {
                 'type': 'ViSession'
             },
             {
-                'cppName': 'requestedBehavior',
+                'cppName': 'initializationBehavior',
                 'direction': 'in',
                 'grpc_type': 'nidevice_grpc.SessionInitializationBehavior',
-                'name': 'requestedBehavior',
+                'name': 'initializationBehavior',
                 'proto_only': True,
                 'type': 'ViInt32'
             },
