@@ -1820,7 +1820,7 @@ init(const StubPtr& stub, const pb::string& resource_name, const bool& id_query,
   request.set_resource_name(resource_name);
   request.set_id_query(id_query);
   request.set_reset_device(reset_device);
-  request.mutable_requested_behavior()->CopyFrom(requested_behavior);
+  request.set_requested_behavior(requested_behavior);
 
   auto response = InitResponse{};
 
@@ -1841,7 +1841,7 @@ init_with_options(const StubPtr& stub, const pb::string& resource_name, const bo
   request.set_id_query(id_query);
   request.set_reset_device(reset_device);
   request.set_option_string(option_string);
-  request.mutable_requested_behavior()->CopyFrom(requested_behavior);
+  request.set_requested_behavior(requested_behavior);
 
   auto response = InitWithOptionsResponse{};
 
@@ -1862,7 +1862,7 @@ initialize_with_channels(const StubPtr& stub, const pb::string& resource_name, c
   request.set_channel_name(channel_name);
   request.set_reset_device(reset_device);
   request.set_option_string(option_string);
-  request.mutable_requested_behavior()->CopyFrom(requested_behavior);
+  request.set_requested_behavior(requested_behavior);
 
   auto response = InitializeWithChannelsResponse{};
 

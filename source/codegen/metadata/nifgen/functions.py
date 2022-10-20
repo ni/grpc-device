@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-FGEN API metadata version 23.0.0d36
+# This file is generated from NI-FGEN API metadata version 23.0.0d39
 functions = {
     'AbortGeneration': {
         'codegen_method': 'public',
@@ -2844,10 +2844,10 @@ functions = {
                 'type': 'ViChar[]'
             },
             {
-                'cppName': 'requestedBehavior',
+                'cppName': 'initializationBehavior',
                 'direction': 'in',
                 'grpc_type': 'nidevice_grpc.SessionInitializationBehavior',
-                'name': 'requestedBehavior',
+                'name': 'initializationBehavior',
                 'proto_only': True,
                 'type': 'ViInt32'
             },
@@ -2910,10 +2910,10 @@ functions = {
                 'type': 'ViChar[]'
             },
             {
-                'cppName': 'requestedBehavior',
+                'cppName': 'initializationBehavior',
                 'direction': 'in',
                 'grpc_type': 'nidevice_grpc.SessionInitializationBehavior',
-                'name': 'requestedBehavior',
+                'name': 'initializationBehavior',
                 'proto_only': True,
                 'type': 'ViInt32'
             },
@@ -2976,10 +2976,10 @@ functions = {
                 'type': 'ViChar[]'
             },
             {
-                'cppName': 'requestedBehavior',
+                'cppName': 'initializationBehavior',
                 'direction': 'in',
                 'grpc_type': 'nidevice_grpc.SessionInitializationBehavior',
-                'name': 'requestedBehavior',
+                'name': 'initializationBehavior',
                 'proto_only': True,
                 'type': 'ViInt32'
             },

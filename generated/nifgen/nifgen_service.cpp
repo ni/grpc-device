@@ -2642,8 +2642,9 @@ namespace nifgen_grpc {
       ViRsrc resource_name = (ViRsrc)request->resource_name().c_str();
       ViBoolean id_query = request->id_query();
       ViBoolean reset_device = request->reset_device();
-      ViInt32 requested_behavior = request->requested_behavior();
+      auto requested_behavior = request->requested_behavior();
 
+      bool new_session_initialized {};
       auto init_lambda = [&] () {
         ViSession vi;
         auto status = library_->Init(resource_name, id_query, reset_device, &vi);
@@ -2652,7 +2653,7 @@ namespace nifgen_grpc {
       uint32_t session_id = 0;
       const std::string& grpc_device_session_name = request->session_name();
       auto cleanup_lambda = [&] (ViSession id) { library_->Close(id); };
-      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
+      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id, requested_behavior, &new_session_initialized);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, 0);
       }
@@ -2678,8 +2679,9 @@ namespace nifgen_grpc {
       ViBoolean id_query = request->id_query();
       ViBoolean reset_device = request->reset_device();
       ViString option_string = (ViString)request->option_string().c_str();
-      ViInt32 requested_behavior = request->requested_behavior();
+      auto requested_behavior = request->requested_behavior();
 
+      bool new_session_initialized {};
       auto init_lambda = [&] () {
         ViSession vi;
         auto status = library_->InitWithOptions(resource_name, id_query, reset_device, option_string, &vi);
@@ -2688,7 +2690,7 @@ namespace nifgen_grpc {
       uint32_t session_id = 0;
       const std::string& grpc_device_session_name = request->session_name();
       auto cleanup_lambda = [&] (ViSession id) { library_->Close(id); };
-      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
+      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id, requested_behavior, &new_session_initialized);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, 0);
       }
@@ -2714,8 +2716,9 @@ namespace nifgen_grpc {
       ViString channel_name = (ViString)request->channel_name().c_str();
       ViBoolean reset_device = request->reset_device();
       ViString option_string = (ViString)request->option_string().c_str();
-      ViInt32 requested_behavior = request->requested_behavior();
+      auto requested_behavior = request->requested_behavior();
 
+      bool new_session_initialized {};
       auto init_lambda = [&] () {
         ViSession vi;
         auto status = library_->InitializeWithChannels(resource_name, channel_name, reset_device, option_string, &vi);
@@ -2724,7 +2727,7 @@ namespace nifgen_grpc {
       uint32_t session_id = 0;
       const std::string& grpc_device_session_name = request->session_name();
       auto cleanup_lambda = [&] (ViSession id) { library_->Close(id); };
-      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
+      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id, requested_behavior, &new_session_initialized);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, 0);
       }
