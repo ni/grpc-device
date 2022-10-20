@@ -37,6 +37,7 @@ CustomNestedStructRoundtripResponse custom_nested_struct_roundtrip(const StubPtr
 DoubleAllTheNumsResponse double_all_the_nums(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::vector<double>& numbers);
 EnumArrayOutputFunctionResponse enum_array_output_function(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& number_of_elements);
 EnumInputFunctionWithDefaultsResponse enum_input_function_with_defaults(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<Turtle, pb::int32>& a_turtle);
+ErrorMessageResponse error_message(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& error_code);
 ExportAttributeConfigurationBufferResponse export_attribute_configuration_buffer(const StubPtr& stub, const nidevice_grpc::Session& vi);
 FetchWaveformResponse fetch_waveform(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& number_of_samples);
 GetABooleanResponse get_a_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi);
@@ -64,12 +65,13 @@ GetCalIntervalResponse get_cal_interval(const StubPtr& stub, const nidevice_grpc
 GetCustomTypeResponse get_custom_type(const StubPtr& stub, const nidevice_grpc::Session& vi);
 GetCustomTypeArrayResponse get_custom_type_array(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& number_of_elements);
 GetEnumValueResponse get_enum_value(const StubPtr& stub, const nidevice_grpc::Session& vi);
+GetErrorResponse get_error(const StubPtr& stub, const nidevice_grpc::Session& vi);
 GetViInt32ArrayResponse get_vi_int32_array(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& array_len);
 GetViUInt32ArrayResponse get_vi_uint32_array(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& array_len);
 GetViUInt8Response get_vi_uint8(const StubPtr& stub, const nidevice_grpc::Session& vi);
 ImportAttributeConfigurationBufferResponse import_attribute_configuration_buffer(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& configuration);
 InitExtCalResponse init_ext_cal(const StubPtr& stub, const pb::string& resource_name, const pb::string& calibration_password);
-InitWithOptionsResponse init_with_options(const StubPtr& stub, const pb::string& resource_name, const bool& id_query, const bool& reset_device, const pb::string& option_string);
+InitWithOptionsResponse init_with_options(const StubPtr& stub, const pb::string& resource_name, const bool& id_query, const bool& reset_device, const pb::string& option_string, const nidevice_grpc::SessionInitializationBehavior& requested_behavior);
 InitWithVarArgsResponse init_with_var_args(const StubPtr& stub, const pb::string& resource_name, const std::vector<StringAndTurtle>& name_and_turtle);
 MethodUsingEnumWithGrpcNameValuesResponse method_using_enum_with_grpc_name_values(const StubPtr& stub, const simple_variant<EnumWithGrpcNameValues, pb::int32>& using_enum);
 MethodUsingWholeAndFractionalNumbersResponse method_using_whole_and_fractional_numbers(const StubPtr& stub);
@@ -77,6 +79,7 @@ MethodUsingWholeMappedNumbersResponse method_using_whole_mapped_numbers(const St
 MethodWithGetLastErrorParamResponse method_with_get_last_error_param(const StubPtr& stub);
 MethodWithGrpcFieldNumberResponse method_with_grpc_field_number(const StubPtr& stub, const pb::int32& attribute_value);
 MethodWithGrpcOnlyParamResponse method_with_grpc_only_param(const StubPtr& stub, const pb::int32& simple_param);
+MethodWithProtoOnlyParameterResponse method_with_proto_only_parameter(const StubPtr& stub, const pb::int32& attribute_value);
 MultipleArrayTypesResponse multiple_array_types(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& output_array_size, const std::vector<double>& input_array_of_floats, const std::vector<pb::int32>& input_array_of_integers);
 MultipleArraysSameSizeResponse multiple_arrays_same_size(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::vector<double>& values1, const std::vector<double>& values2, const std::vector<double>& values3, const std::vector<double>& values4);
 MultipleArraysSameSizeWithOptionalResponse multiple_arrays_same_size_with_optional(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::vector<double>& values1, const std::vector<double>& values2, const std::vector<double>& values3, const std::vector<double>& values4, const std::vector<FakeCustomStruct>& values5);
@@ -91,6 +94,11 @@ ReturnANumberAndAStringResponse return_a_number_and_a_string(const StubPtr& stub
 ReturnDurationInSecondsResponse return_duration_in_seconds(const StubPtr& stub, const nidevice_grpc::Session& vi);
 ReturnListOfDurationsInSecondsResponse return_list_of_durations_in_seconds(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& number_of_elements);
 ReturnMultipleTypesResponse return_multiple_types(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& array_size);
+SetAttributeViBooleanResponse set_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFakeAttribute& attribute_id, const bool& attribute_value);
+SetAttributeViInt32Response set_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFakeAttribute& attribute_id, const simple_variant<NiFakeInt32AttributeValues, pb::int32>& attribute_value);
+SetAttributeViInt64Response set_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFakeAttribute& attribute_id, const pb::int64& attribute_value);
+SetAttributeViReal64Response set_attribute_vi_real64(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFakeAttribute& attribute_id, const simple_variant<NiFakeReal64AttributeValuesMapped, double>& attribute_value);
+SetAttributeViStringResponse set_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const NiFakeAttribute& attribute_id, const pb::string& attribute_value);
 SetCustomTypeResponse set_custom_type(const StubPtr& stub, const nidevice_grpc::Session& vi, const FakeCustomStruct& cs);
 SetCustomTypeArrayResponse set_custom_type_array(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::vector<FakeCustomStruct>& cs);
 StringValuedEnumInputFunctionWithDefaultsResponse string_valued_enum_input_function_with_defaults(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<MobileOSNames, std::string>& a_mobile_os_name);

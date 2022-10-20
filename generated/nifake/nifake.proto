@@ -31,6 +31,7 @@ service NiFake {
   rpc DoubleAllTheNums(DoubleAllTheNumsRequest) returns (DoubleAllTheNumsResponse);
   rpc EnumArrayOutputFunction(EnumArrayOutputFunctionRequest) returns (EnumArrayOutputFunctionResponse);
   rpc EnumInputFunctionWithDefaults(EnumInputFunctionWithDefaultsRequest) returns (EnumInputFunctionWithDefaultsResponse);
+  rpc ErrorMessage(ErrorMessageRequest) returns (ErrorMessageResponse);
   rpc ExportAttributeConfigurationBuffer(ExportAttributeConfigurationBufferRequest) returns (ExportAttributeConfigurationBufferResponse);
   rpc FetchWaveform(FetchWaveformRequest) returns (FetchWaveformResponse);
   rpc GetABoolean(GetABooleanRequest) returns (GetABooleanResponse);
@@ -58,6 +59,7 @@ service NiFake {
   rpc GetCustomType(GetCustomTypeRequest) returns (GetCustomTypeResponse);
   rpc GetCustomTypeArray(GetCustomTypeArrayRequest) returns (GetCustomTypeArrayResponse);
   rpc GetEnumValue(GetEnumValueRequest) returns (GetEnumValueResponse);
+  rpc GetError(GetErrorRequest) returns (GetErrorResponse);
   rpc GetViInt32Array(GetViInt32ArrayRequest) returns (GetViInt32ArrayResponse);
   rpc GetViUInt32Array(GetViUInt32ArrayRequest) returns (GetViUInt32ArrayResponse);
   rpc GetViUInt8(GetViUInt8Request) returns (GetViUInt8Response);
@@ -71,6 +73,7 @@ service NiFake {
   rpc MethodWithGetLastErrorParam(MethodWithGetLastErrorParamRequest) returns (MethodWithGetLastErrorParamResponse);
   rpc MethodWithGrpcFieldNumber(MethodWithGrpcFieldNumberRequest) returns (MethodWithGrpcFieldNumberResponse);
   rpc MethodWithGrpcOnlyParam(MethodWithGrpcOnlyParamRequest) returns (MethodWithGrpcOnlyParamResponse);
+  rpc MethodWithProtoOnlyParameter(MethodWithProtoOnlyParameterRequest) returns (MethodWithProtoOnlyParameterResponse);
   rpc MultipleArrayTypes(MultipleArrayTypesRequest) returns (MultipleArrayTypesResponse);
   rpc MultipleArraysSameSize(MultipleArraysSameSizeRequest) returns (MultipleArraysSameSizeResponse);
   rpc MultipleArraysSameSizeWithOptional(MultipleArraysSameSizeWithOptionalRequest) returns (MultipleArraysSameSizeWithOptionalResponse);
@@ -85,6 +88,11 @@ service NiFake {
   rpc ReturnDurationInSeconds(ReturnDurationInSecondsRequest) returns (ReturnDurationInSecondsResponse);
   rpc ReturnListOfDurationsInSeconds(ReturnListOfDurationsInSecondsRequest) returns (ReturnListOfDurationsInSecondsResponse);
   rpc ReturnMultipleTypes(ReturnMultipleTypesRequest) returns (ReturnMultipleTypesResponse);
+  rpc SetAttributeViBoolean(SetAttributeViBooleanRequest) returns (SetAttributeViBooleanResponse);
+  rpc SetAttributeViInt32(SetAttributeViInt32Request) returns (SetAttributeViInt32Response);
+  rpc SetAttributeViInt64(SetAttributeViInt64Request) returns (SetAttributeViInt64Response);
+  rpc SetAttributeViReal64(SetAttributeViReal64Request) returns (SetAttributeViReal64Response);
+  rpc SetAttributeViString(SetAttributeViStringRequest) returns (SetAttributeViStringResponse);
   rpc SetCustomType(SetCustomTypeRequest) returns (SetCustomTypeResponse);
   rpc SetCustomTypeArray(SetCustomTypeArrayRequest) returns (SetCustomTypeArrayResponse);
   rpc StringValuedEnumInputFunctionWithDefaults(StringValuedEnumInputFunctionWithDefaultsRequest) returns (StringValuedEnumInputFunctionWithDefaultsResponse);
@@ -360,6 +368,16 @@ message EnumInputFunctionWithDefaultsResponse {
   int32 status = 1;
 }
 
+message ErrorMessageRequest {
+  nidevice_grpc.Session vi = 1;
+  sint32 error_code = 2;
+}
+
+message ErrorMessageResponse {
+  int32 status = 1;
+  string error_message = 2;
+}
+
 message ExportAttributeConfigurationBufferRequest {
   nidevice_grpc.Session vi = 1;
 }
@@ -632,6 +650,16 @@ message GetEnumValueResponse {
   sint32 a_turtle_raw = 4;
 }
 
+message GetErrorRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message GetErrorResponse {
+  int32 status = 1;
+  sint32 error_code = 2;
+  string description = 3;
+}
+
 message GetViInt32ArrayRequest {
   nidevice_grpc.Session vi = 1;
   sint32 array_len = 2;
@@ -687,11 +715,13 @@ message InitWithOptionsRequest {
   bool id_query = 3;
   bool reset_device = 4;
   string option_string = 5;
+  nidevice_grpc.SessionInitializationBehavior requested_behavior = 6;
 }
 
 message InitWithOptionsResponse {
   int32 status = 1;
   nidevice_grpc.Session vi = 2;
+  bool new_session_initialized = 3;
 }
 
 message InitWithVarArgsRequest {
@@ -759,6 +789,14 @@ message MethodWithGrpcOnlyParamRequest {
 message MethodWithGrpcOnlyParamResponse {
   int32 status = 1;
   sint32 grpc_only_param = 2;
+}
+
+message MethodWithProtoOnlyParameterRequest {
+  sint32 attribute_value = 1;
+}
+
+message MethodWithProtoOnlyParameterResponse {
+  int32 status = 1;
 }
 
 message MultipleArrayTypesRequest {
@@ -924,6 +962,67 @@ message ReturnMultipleTypesResponse {
   double a_float_enum_raw = 9;
   repeated double an_array = 10;
   string a_string = 11;
+}
+
+message SetAttributeViBooleanRequest {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+  NiFakeAttribute attribute_id = 3;
+  bool attribute_value = 4;
+}
+
+message SetAttributeViBooleanResponse {
+  int32 status = 1;
+}
+
+message SetAttributeViInt32Request {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+  NiFakeAttribute attribute_id = 3;
+  oneof attribute_value_enum {
+    NiFakeInt32AttributeValues attribute_value = 4;
+    sint32 attribute_value_raw = 5;
+  }
+}
+
+message SetAttributeViInt32Response {
+  int32 status = 1;
+}
+
+message SetAttributeViInt64Request {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+  NiFakeAttribute attribute_id = 3;
+  int64 attribute_value_raw = 4;
+}
+
+message SetAttributeViInt64Response {
+  int32 status = 1;
+}
+
+message SetAttributeViReal64Request {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+  NiFakeAttribute attribute_id = 3;
+  oneof attribute_value_enum {
+    NiFakeReal64AttributeValuesMapped attribute_value_mapped = 4;
+    double attribute_value_raw = 5;
+  }
+}
+
+message SetAttributeViReal64Response {
+  int32 status = 1;
+}
+
+message SetAttributeViStringRequest {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+  NiFakeAttribute attribute_id = 3;
+  string attribute_value_raw = 4;
+}
+
+message SetAttributeViStringResponse {
+  int32 status = 1;
 }
 
 message SetCustomTypeRequest {
