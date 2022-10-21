@@ -29,6 +29,8 @@ class SessionResourceRepository {
       InitFunc init_func,
       CleanupSessionFunc cleanup_func,
       uint32_t& session_id,
+      SessionInitializationBehavior initialization_behavior = SESSION_INITIALIZATION_BEHAVIOR_UNSPECIFIED,
+      bool* initialized_new_session = nullptr,
       bool include_in_reverse_lookup = true);
 
   TResourceHandle access_session(uint32_t session_id, const std::string& session_name) const;
@@ -87,6 +89,8 @@ int SessionResourceRepository<TResourceHandle>::add_session(
     InitFunc init_func,
     CleanupSessionFunc cleanup_func,
     uint32_t& session_id,
+    SessionInitializationBehavior initialization_behavior,
+    bool* initialized_new_session,
     bool include_in_reverse_lookup)
 {
   uint32_t session_from_repository = 0;
@@ -101,7 +105,9 @@ int SessionResourceRepository<TResourceHandle>::add_session(
         auto handle = resource_map->remove_session_id(id);
         return cleanup_func(handle);
       },
-      session_from_repository);
+      session_from_repository,
+      initialization_behavior,
+      initialized_new_session);
 
   if (status) {
     session_id = 0;
@@ -133,7 +139,13 @@ int SessionResourceRepository<TResourceHandle>::add_dependent_session(
   // cleanup code will be executed when the initiating session is closed.
   // We're only responsible for cleaning up the map structures.
   auto status = add_session(
-      session_name, init_func, [](uint32_t id) {}, session_id, /* include_in_reverse_lookup = */ false);
+      session_name,
+      init_func,
+      [](uint32_t id) {},
+      session_id,
+      /* initialization_behavior = */ SESSION_INITIALIZATION_BEHAVIOR_UNSPECIFIED,
+      /* initialized_new_session = */ nullptr,
+      /* include_in_reverse_lookup = */ false);
   auto resource_map = resource_map_;
   session_repository_->register_dependent_session(
       initiating_session,

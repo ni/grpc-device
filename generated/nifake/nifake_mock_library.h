@@ -75,6 +75,7 @@ class NiFakeMockLibrary : public nifake_grpc::NiFakeLibraryInterface {
   MOCK_METHOD(ViStatus, MethodWithGetLastErrorParam, (), (override));
   MOCK_METHOD(ViStatus, MethodWithGrpcFieldNumber, (ViInt32 attributeValue), (override));
   MOCK_METHOD(ViStatus, MethodWithGrpcOnlyParam, (ViInt32 simpleParam, ViInt32* grpcOnlyParam), (override));
+  MOCK_METHOD(ViStatus, MethodWithProtoOnlyParameter, (), (override));
   MOCK_METHOD(ViStatus, MultipleArrayTypes, (ViSession vi, ViInt32 outputArraySize, ViReal64 outputArray[], ViReal64 outputArrayOfFixedLength[3], ViInt32 inputArraySizes, ViReal64 inputArrayOfFloats[], ViInt16 inputArrayOfIntegers[]), (override));
   MOCK_METHOD(ViStatus, MultipleArraysSameSize, (ViSession vi, ViReal64 values1[], ViReal64 values2[], ViReal64 values3[], ViReal64 values4[], ViInt32 size), (override));
   MOCK_METHOD(ViStatus, MultipleArraysSameSizeWithOptional, (ViSession vi, ViReal64 values1[], ViReal64 values2[], ViReal64 values3[], ViReal64 values4[], CustomStruct values5[], ViInt32 size), (override));

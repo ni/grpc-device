@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-FAKE API metadata version 23.0.0d26
+# This file is generated from NI-FAKE API metadata version 23.0.0d49
 functions = {
     'Abort': {
         'codegen_method': 'public',
@@ -399,7 +399,7 @@ functions = {
     },
     'ErrorMessage': {
         'cname': 'niFake_error_message',
-        'codegen_method': 'private',
+        'codegen_method': 'public',
         'is_error_handling': True,
         'parameters': [
             {
@@ -1331,7 +1331,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'GetError': {
-        'codegen_method': 'private',
+        'codegen_method': 'public',
         'is_error_handling': True,
         'parameters': [
             {
@@ -1559,6 +1559,22 @@ functions = {
                 'grpc_type': 'nidevice_grpc.Session',
                 'name': 'vi',
                 'type': 'ViSession'
+            },
+            {
+                'cppName': 'initializationBehavior',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.SessionInitializationBehavior',
+                'name': 'initializationBehavior',
+                'proto_only': True,
+                'type': 'ViInt32'
+            },
+            {
+                'cppName': 'newSessionInitialized',
+                'direction': 'out',
+                'grpc_type': 'bool',
+                'name': 'newSessionInitialized',
+                'proto_only': True,
+                'type': 'bool'
             }
         ],
         'returns': 'ViStatus'
@@ -1721,6 +1737,20 @@ functions = {
                 'direction': 'out',
                 'grpc_type': 'sint32',
                 'name': 'grpcOnlyParam',
+                'type': 'ViInt32'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'MethodWithProtoOnlyParameter': {
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'cppName': 'attributeValue',
+                'direction': 'in',
+                'grpc_type': 'sint32',
+                'name': 'attributeValue',
+                'proto_only': True,
                 'type': 'ViInt32'
             }
         ],
@@ -2453,7 +2483,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'SetAttributeViBoolean': {
-        'codegen_method': 'private',
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -2487,7 +2517,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'SetAttributeViInt32': {
-        'codegen_method': 'private',
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -2522,7 +2552,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'SetAttributeViInt64': {
-        'codegen_method': 'private',
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -2556,7 +2586,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'SetAttributeViReal64': {
-        'codegen_method': 'private',
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
@@ -2591,7 +2621,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'SetAttributeViString': {
-        'codegen_method': 'private',
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',
