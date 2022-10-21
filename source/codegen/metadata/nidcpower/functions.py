@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-DCPower API metadata version 23.0.0d114
+# This file is generated from NI-DCPower API metadata version 23.0.0d171
 functions = {
     'Abort': {
         'codegen_method': 'public',
@@ -695,7 +695,7 @@ functions = {
                     'mechanism': 'len',
                     'value': 'compensationDataSize'
                 },
-                'type': 'ViInt8[]'
+                'type': 'ViAddr[]'
             }
         ],
         'returns': 'ViStatus'
@@ -739,7 +739,7 @@ functions = {
                     'mechanism': 'len',
                     'value': 'customCableCompensationDataSize'
                 },
-                'type': 'ViInt8[]'
+                'type': 'ViAddr[]'
             }
         ],
         'returns': 'ViStatus'
@@ -2098,7 +2098,7 @@ functions = {
                     'mechanism': 'ivi-dance',
                     'value': 'size'
                 },
-                'type': 'ViInt8[]'
+                'type': 'ViAddr[]'
             }
         ],
         'returns': 'ViStatus'
@@ -2789,7 +2789,7 @@ functions = {
                     'mechanism': 'ivi-dance',
                     'value': 'compensationDataSize'
                 },
-                'type': 'ViInt8[]'
+                'type': 'ViAddr[]'
             }
         ],
         'returns': 'ViStatus'
@@ -2892,7 +2892,7 @@ functions = {
                     'mechanism': 'ivi-dance',
                     'value': 'customCableCompensationDataSize'
                 },
-                'type': 'ViInt8[]'
+                'type': 'ViAddr[]'
             }
         ],
         'returns': 'ViStatus'
@@ -3063,7 +3063,7 @@ functions = {
                     'mechanism': 'len',
                     'value': 'size'
                 },
-                'type': 'ViInt8[]'
+                'type': 'ViAddr[]'
             }
         ],
         'returns': 'ViStatus'
@@ -3134,6 +3134,22 @@ functions = {
                 'grpc_type': 'string',
                 'name': 'errorMessage',
                 'type': 'ViChar[]'
+            },
+            {
+                'cppName': 'initializationBehavior',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.SessionInitializationBehavior',
+                'name': 'initializationBehavior',
+                'proto_only': True,
+                'type': 'ViInt32'
+            },
+            {
+                'cppName': 'newSessionInitialized',
+                'direction': 'out',
+                'grpc_type': 'bool',
+                'name': 'newSessionInitialized',
+                'proto_only': True,
+                'type': 'bool'
             }
         ],
         'returns': 'ViStatus'
@@ -3177,6 +3193,22 @@ functions = {
                 'grpc_type': 'string',
                 'name': 'errorMessage',
                 'type': 'ViChar[]'
+            },
+            {
+                'cppName': 'initializationBehavior',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.SessionInitializationBehavior',
+                'name': 'initializationBehavior',
+                'proto_only': True,
+                'type': 'ViInt32'
+            },
+            {
+                'cppName': 'newSessionInitialized',
+                'direction': 'out',
+                'grpc_type': 'bool',
+                'name': 'newSessionInitialized',
+                'proto_only': True,
+                'type': 'bool'
             }
         ],
         'returns': 'ViStatus'
