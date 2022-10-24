@@ -50,9 +50,9 @@ def print_software(software):
         "-----------------------------------------------------------------------------------------------------\n"
     )
     for package in software:
+        print(f"    Package ID: {package.package_id}")
         print(f"    Product Name: {package.product_name}")
-        print(f"    Package Name: {package.package_name}")
-        print(f"    Serial Number: {package.version} \n")
+        print(f"    Version: {package.version} \n")
 
 
 try:

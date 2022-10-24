@@ -23,9 +23,9 @@ SoftwareEnumerator::~SoftwareEnumerator()
   NISysCfgSessionHandle session = NULL;
   NISysCfgEnumSoftwareComponentHandle installedComps = NULL;
   unsigned int numInstalledComps = 0;
-  char product_name[NISYSCFG_SIMPLE_STRING_LENGTH] = "";
-  char package_name[NISYSCFG_SIMPLE_STRING_LENGTH] = "";
+  char package_id[NISYSCFG_SIMPLE_STRING_LENGTH] = "";
   char version[NISYSCFG_SIMPLE_STRING_LENGTH] = "";
+  char product_name[NISYSCFG_SIMPLE_STRING_LENGTH] = "";
   NISysCfgBool is_ni_product = NISysCfgBoolFalse;
 
   try {
@@ -35,11 +35,11 @@ SoftwareEnumerator::~SoftwareEnumerator()
         library_->ResetEnumeratorGetCount(installedComps, &numInstalledComps);
         for (unsigned int index = 0; index < numInstalledComps; ++index)
           {
-            library_->NextComponentInfo(installedComps, product_name, version, package_name, NULL, NULL);
+            library_->NextComponentInfo(installedComps, package_id, version, product_name, NULL, NULL);
             SoftwareProperties* properties = software->Add();
-            properties->set_product_name(product_name);
-            properties->set_package_name(package_name);
+            properties->set_package_id(package_id);
             properties->set_version(version);
+            properties->set_product_name(product_name);
           }
         
           library_->CloseHandle(installedComps);
