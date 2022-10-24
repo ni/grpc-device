@@ -37,7 +37,7 @@ std::shared_ptr<void> register_all_services(
 
   auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   service_vector->push_back(session_repository);
-  nidevice_grpc::register_core_services(service_vector, server_builder, session_repository);
+  nidevice_grpc::register_core_services(service_vector, server_builder, session_repository, feature_toggles);
 
 % for type_name, config in repository_type_to_config.items():
 <%block filter="common_helpers.os_conditional_compile_block(config)">\
