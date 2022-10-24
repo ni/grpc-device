@@ -6,6 +6,7 @@
 #include <grpcpp/health_check_service_interface.h>
 #include <debugsessionproperties_restricted.grpc.pb.h>
 
+#include "feature_toggles.h"
 #include "shared_library.h"
 #include "syscfg_library_interface.h"
 #include "syscfg_session_handler.h"
@@ -13,6 +14,14 @@
 namespace nidevice_restricted_grpc {
 
 static const char* kDebugSessionPropertyAccessFailedMessage = "The NI System Configuration API was unable to access the debug session property.";
+
+struct DebugSessionPropertiesRestrictedFeatureToggles
+{
+  using CodeReadiness = nidevice_grpc::FeatureToggles::CodeReadiness;
+  DebugSessionPropertiesRestrictedFeatureToggles(const nidevice_grpc::FeatureToggles& feature_toggles = {});
+
+  bool is_enabled;
+};
 
 class DebugSessionPropertiesRestrictedService final :
   public DebugSessionPropertiesRestricted::Service,

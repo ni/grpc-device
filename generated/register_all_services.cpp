@@ -62,7 +62,7 @@ std::shared_ptr<void> register_all_services(
 
   auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   service_vector->push_back(session_repository);
-  nidevice_grpc::register_core_services(service_vector, server_builder, session_repository);
+  nidevice_grpc::register_core_services(service_vector, server_builder, session_repository, feature_toggles);
 
   auto task_handle_repository = std::make_shared<nidevice_grpc::SessionResourceRepository<TaskHandle>>(session_repository.get());
   auto vi_session_repository = std::make_shared<nidevice_grpc::SessionResourceRepository<ViSession>>(session_repository.get());

@@ -166,6 +166,10 @@ DebugSessionPropertiesRestrictedService::DebugSessionPropertiesRestrictedService
         if (NISysCfg_Succeeded(status = library->FindHardware(session, NISysCfgFilterModeMatchValuesAll, filter, NULL, &resources_handle))) {
           if (NISysCfg_Succeeded(status) && (status = library->NextResource(session, resources_handle, &resource)) == NISysCfg_OK) {
             library->SetResourceProperty(resource, property_id, syscfg_value);
+            NISysCfgBool changes_require_restart = NISysCfgBoolFalse;
+            char* detailed_changes = nullptr;
+            library->SaveResourceChanges(resource, &changes_require_restart, &detailed_changes);
+            library->FreeDetailedString(detailed_changes);
             library->CloseHandle(resource);
           }
           library->CloseHandle(resources_handle);
@@ -207,6 +211,10 @@ DebugSessionPropertiesRestrictedService::DebugSessionPropertiesRestrictedService
         if (NISysCfg_Succeeded(status = library->FindHardware(session, NISysCfgFilterModeMatchValuesAll, filter, NULL, &resources_handle))) {
           if (NISysCfg_Succeeded(status) && (status = library->NextResource(session, resources_handle, &resource)) == NISysCfg_OK) {
             library->SetResourceProperty(resource, property_id, value);
+            NISysCfgBool changes_require_restart = NISysCfgBoolFalse;
+            char* detailed_changes = nullptr;
+            library->SaveResourceChanges(resource, &changes_require_restart, &detailed_changes);
+            library->FreeDetailedString(detailed_changes);
             library->CloseHandle(resource);
           }
           library->CloseHandle(resources_handle);
@@ -226,4 +234,11 @@ DebugSessionPropertiesRestrictedService::DebugSessionPropertiesRestrictedService
   return ::grpc::Status::OK;
 }
 
-}  // namespace nidevice_grpc
+DebugSessionPropertiesRestrictedFeatureToggles::DebugSessionPropertiesRestrictedFeatureToggles(
+  const nidevice_grpc::FeatureToggles& feature_toggles)
+  : is_enabled(
+      feature_toggles.is_feature_enabled("debugsessionproperties_restricted", CodeReadiness::kRestrictedNextRelease))
+{
+}
+
+}  // namespace nidevice_restricted_grpc

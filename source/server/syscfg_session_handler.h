@@ -3,6 +3,7 @@
 
 #include <shared_mutex>
 
+#include "server_reset_observer_interface.h"
 #include "shared_library.h"
 #include "syscfg_library_interface.h"
 
@@ -12,7 +13,7 @@ static const char* kLocalHostTargetName = "localhost";
 static const char* kNetworkExpertName = "network";
 static const int kConnectionTimeoutMilliSec = 10000;
 
-class SysCfgSessionHandler {
+class SysCfgSessionHandler : public ServerResetObserverInterface {
  public:
   SysCfgSessionHandler(SysCfgLibraryInterface* library);
   virtual ~SysCfgSessionHandler();
@@ -20,6 +21,8 @@ class SysCfgSessionHandler {
   virtual NISysCfgStatus open_or_get_localhost_syscfg_session(NISysCfgSessionHandle* session);
   virtual void clear_syscfg_session();
   virtual bool is_session_open();
+
+  void on_server_reset() override;
 
  protected:
   virtual SysCfgLibraryInterface* get_syscfg_library_interface();

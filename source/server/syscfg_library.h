@@ -65,6 +65,12 @@ class SysCfgLibrary : public SysCfgLibraryInterface {
       NISysCfgResourceHandle resource_handle,
       NISysCfgResourceProperty property_ID,
       ...);
+  NISysCfgStatus SaveResourceChanges(
+      NISysCfgResourceHandle resource_handle,
+      NISysCfgBool* changes_require_restart,
+      char** detailed_result);
+  NISysCfgStatus FreeDetailedString(
+      char str[]);
 
  private:
   using InitializeSessionPtr = NISysCfgStatus (*)(
@@ -108,6 +114,12 @@ class SysCfgLibrary : public SysCfgLibraryInterface {
       NISysCfgResourceHandle resource_handle,
       NISysCfgResourceProperty property_ID,
       va_list args);
+  using SaveResourceChangesPtr = NISysCfgStatus (*)(
+      NISysCfgResourceHandle resource_handle,
+      NISysCfgBool* changes_require_restart,
+      char** detailed_result);
+  using FreeDetailedStringPtr = NISysCfgStatus (*)(
+      char str[]);
 
   typedef struct FunctionPointers {
     InitializeSessionPtr InitializeSession;
@@ -119,6 +131,8 @@ class SysCfgLibrary : public SysCfgLibraryInterface {
     GetResourceIndexedPropertyPtr GetResourceIndexedProperty;
     GetResourcePropertyPtr GetResourceProperty;
     SetResourcePropertyVPtr SetResourcePropertyV;
+    SaveResourceChangesPtr SaveResourceChanges;
+    FreeDetailedStringPtr FreeDetailedString;
   } FunctionLoadStatus;
 
   SharedLibrary shared_library_;

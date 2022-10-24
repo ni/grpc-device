@@ -49,4 +49,9 @@ SysCfgLibraryInterface* SysCfgSessionHandler::get_syscfg_library_interface()
   return library_;
 }
 
+void SysCfgSessionHandler::on_server_reset()
+{
+  clear_syscfg_session();
+}
+
 }  // namespace nidevice_grpc
