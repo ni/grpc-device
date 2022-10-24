@@ -40,6 +40,7 @@ PROTOBUF_TYPE_TO_CPP_TYPE = {
     "string": "string",
     "bytes": "string",
 }
+NIDEVICE_ENUMS = ["nidevice_grpc.SessionInitializationBehavior"]
 
 
 def _to_parameter_list(client_params: List[ClientParam]) -> List[str]:
@@ -74,6 +75,7 @@ def _is_basic_type(grpc_type: str) -> bool:
         or grpc_type in PROTOBUF_TYPE_TO_CPP_TYPE
         or grpc_type.endswith("Attributes")
         or grpc_type.endswith("Attribute")
+        or grpc_type in NIDEVICE_ENUMS
     )
 
 

@@ -9,7 +9,12 @@ inline void expect_driver_error(const nidevice_grpc::experimental::client::grpc_
 {
   EXPECT_EQ(::grpc::StatusCode::UNKNOWN, ex.StatusCode());
   EXPECT_LT(expected_error, 0);
-  const auto& actual_error = ex.Trailers().find("ni-error")->second;
+  std::string actual_error = "";
+  auto iterator = ex.Trailers().find("ni-error");
+  if (iterator != ex.Trailers().end())
+  {
+    actual_error = iterator->second;
+  }
   EXPECT_EQ(expected_error, std::stoi(actual_error));
 }
 

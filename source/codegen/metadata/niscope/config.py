@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-SCOPE API metadata version 23.0.0d42
+# This file is generated from NI-SCOPE API metadata version 23.0.0d58
 config = {
     'additional_headers': {
         'custom/ivi_errors.h': [

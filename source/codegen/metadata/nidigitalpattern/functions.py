@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-Digital Pattern Driver API metadata version 23.0.0d15
+# This file is generated from NI-Digital Pattern Driver API metadata version 23.0.0d41
 functions = {
     'Abort': {
         'codegen_method': 'public',
@@ -2951,6 +2951,22 @@ functions = {
                 'grpc_type': 'string',
                 'name': 'errorMessage',
                 'type': 'ViChar[]'
+            },
+            {
+                'cppName': 'initializationBehavior',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.SessionInitializationBehavior',
+                'name': 'initializationBehavior',
+                'proto_only': True,
+                'type': 'ViInt32'
+            },
+            {
+                'cppName': 'newSessionInitialized',
+                'direction': 'out',
+                'grpc_type': 'bool',
+                'name': 'newSessionInitialized',
+                'proto_only': True,
+                'type': 'bool'
             }
         ],
         'returns': 'ViStatus'
@@ -3002,6 +3018,22 @@ functions = {
                 'grpc_type': 'string',
                 'name': 'errorMessage',
                 'type': 'ViChar[]'
+            },
+            {
+                'cppName': 'initializationBehavior',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.SessionInitializationBehavior',
+                'name': 'initializationBehavior',
+                'proto_only': True,
+                'type': 'ViInt32'
+            },
+            {
+                'cppName': 'newSessionInitialized',
+                'direction': 'out',
+                'grpc_type': 'bool',
+                'name': 'newSessionInitialized',
+                'proto_only': True,
+                'type': 'bool'
             }
         ],
         'returns': 'ViStatus'
