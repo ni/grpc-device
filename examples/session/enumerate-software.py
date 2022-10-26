@@ -1,4 +1,4 @@
-r"""List out devices connected to the server machine.
+r"""List out NI software installed on the server machine.
 
 Getting Started:
 
@@ -56,11 +56,10 @@ def print_software(software):
 
 
 try:
-    # EnumerateSoftware API gives a list of devices (simulated and physical) connected to the server
-    # machine.
+    # EnumerateSoftware API gives a list of NI packages installed on the server machine.
     enumerate_software_response = client.EnumerateSoftware(session_types.EnumerateSoftwareRequest())
 
-    # Display devices connected to the server machine.
+    # Display software installed on the server machine.
     print_software(enumerate_software_response.software)
 
 # If EnumerateSoftware API throws an exception, print the error message.
