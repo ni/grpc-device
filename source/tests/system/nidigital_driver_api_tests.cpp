@@ -1,7 +1,16 @@
 #include <gtest/gtest.h>
 
+#include <filesystem>
+
 #include "device_server.h"
 #include "nidigitalpattern/nidigitalpattern_client.h"
+
+#define EXPECT_SUCCESS(status)               \
+  EXPECT_TRUE((status).ok());                \
+  if (!(status).ok()) {                      \
+    EXPECT_EQ(0, (status).error_code());     \
+    EXPECT_EQ("", (status).error_message()); \
+  }
 
 namespace ni {
 namespace tests {
@@ -32,10 +41,12 @@ class NiDigitalDriverApiTest : public ::testing::Test {
     GTEST_SKIP() << "Digital pattern is not supported on Linux.";
 #endif
     initialize_driver_session();
+    initialize_multi_instrument_driver_session();
   }
 
   void TearDown() override
   {
+    close_multi_instrument_driver_session();
     close_driver_session();
   }
 
@@ -47,6 +58,11 @@ class NiDigitalDriverApiTest : public ::testing::Test {
   int GetSessionId()
   {
     return driver_session_->id();
+  }
+
+  int GetMultiInstrumentSessionId()
+  {
+    return multi_instrument_driver_session_->id();
   }
 
   void initialize_driver_session()
@@ -67,6 +83,24 @@ class NiDigitalDriverApiTest : public ::testing::Test {
     ASSERT_EQ(kDigitalDriverApiSuccess, response.status());
   }
 
+  void initialize_multi_instrument_driver_session()
+  {
+    ::grpc::ClientContext context;
+    digital::InitWithOptionsRequest request;
+    request.set_resource_name("PXI1Slot2,PXI1Slot5");
+    request.set_option_string("Simulate=1, DriverSetup=Model:6570; BoardType:PXIe");
+    request.set_session_name("");
+    request.set_reset_device(false);
+    request.set_id_query(false);
+    digital::InitWithOptionsResponse response;
+
+    ::grpc::Status status = GetStub()->InitWithOptions(&context, request, &response);
+    multi_instrument_driver_session_ = std::make_unique<nidevice_grpc::Session>(response.vi());
+
+    ASSERT_TRUE(status.ok());
+    ASSERT_EQ(kDigitalDriverApiSuccess, response.status());
+  }
+
   void close_driver_session()
   {
     if (!driver_session_) {
@@ -79,7 +113,23 @@ class NiDigitalDriverApiTest : public ::testing::Test {
 
     ::grpc::Status status = GetStub()->Close(&context, request, &response);
 
-    EXPECT_TRUE(status.ok());
+    EXPECT_SUCCESS(status);
+    expect_api_success(response.status());
+  }
+
+  void close_multi_instrument_driver_session()
+  {
+    if (!multi_instrument_driver_session_) {
+      return;
+    }
+    ::grpc::ClientContext context;
+    digital::CloseRequest request;
+    request.mutable_vi()->set_id(multi_instrument_driver_session_->id());
+    digital::CloseResponse response;
+
+    ::grpc::Status status = GetStub()->Close(&context, request, &response);
+
+    EXPECT_SUCCESS(status);
     expect_api_success(response.status());
   }
 
@@ -97,9 +147,200 @@ class NiDigitalDriverApiTest : public ::testing::Test {
     digital::ErrorMessageResponse response;
 
     ::grpc::Status status = GetStub()->ErrorMessage(&context, request, &response);
-    EXPECT_TRUE(status.ok());
+    EXPECT_SUCCESS(status);
     EXPECT_EQ(kDigitalDriverApiSuccess, response.status());
     return response.error_message();
+  }
+
+  void load_pin_map(int session_id, const std::filesystem::path& file_path)
+  {
+    ::grpc::ClientContext context;
+    digital::LoadPinMapRequest request;
+    request.mutable_vi()->set_id(session_id);
+    request.set_file_path(file_path.string());
+    digital::LoadPinMapResponse response;
+
+    ::grpc::Status status = GetStub()->LoadPinMap(&context, request, &response);
+
+    EXPECT_SUCCESS(status);
+    EXPECT_EQ(kDigitalDriverApiSuccess, response.status());
+  }
+
+  void load_specifications(int session_id, const std::filesystem::path& file_path)
+  {
+    ::grpc::ClientContext context;
+    digital::LoadSpecificationsRequest request;
+    request.mutable_vi()->set_id(session_id);
+    request.set_file_path(file_path.string());
+    digital::LoadSpecificationsResponse response;
+
+    ::grpc::Status status = GetStub()->LoadSpecifications(&context, request, &response);
+
+    EXPECT_SUCCESS(status);
+    EXPECT_EQ(kDigitalDriverApiSuccess, response.status());
+  }
+
+  void load_levels(int session_id, const std::filesystem::path& file_path)
+  {
+    ::grpc::ClientContext context;
+    digital::LoadLevelsRequest request;
+    request.mutable_vi()->set_id(session_id);
+    request.set_file_path(file_path.string());
+    digital::LoadLevelsResponse response;
+
+    ::grpc::Status status = GetStub()->LoadLevels(&context, request, &response);
+
+    EXPECT_SUCCESS(status);
+    EXPECT_EQ(kDigitalDriverApiSuccess, response.status());
+  }
+
+  void load_timing(int session_id, const std::filesystem::path& file_path)
+  {
+    ::grpc::ClientContext context;
+    digital::LoadTimingRequest request;
+    request.mutable_vi()->set_id(session_id);
+    request.set_file_path(file_path.string());
+    digital::LoadTimingResponse response;
+
+    ::grpc::Status status = GetStub()->LoadTiming(&context, request, &response);
+
+    EXPECT_SUCCESS(status);
+    EXPECT_EQ(kDigitalDriverApiSuccess, response.status());
+  }
+
+  void apply_levels_and_timing(int session_id, const char* levels_sheet, const char* timing_sheet)
+  {
+    ::grpc::ClientContext context;
+    digital::ApplyLevelsAndTimingRequest request;
+    request.mutable_vi()->set_id(session_id);
+    request.set_levels_sheet(levels_sheet);
+    request.set_timing_sheet(timing_sheet);
+    digital::ApplyLevelsAndTimingResponse response;
+
+    ::grpc::Status status = GetStub()->ApplyLevelsAndTiming(&context, request, &response);
+
+    EXPECT_SUCCESS(status);
+    EXPECT_EQ(kDigitalDriverApiSuccess, response.status());
+  }
+
+  void configure_session(int session_id)
+  {
+    load_pin_map(session_id, std::filesystem::absolute("test_create_capture_waveform_serial/pin_map.pinmap"));
+    load_specifications(session_id, std::filesystem::absolute("test_create_capture_waveform_serial/specifications.specs"));
+    load_levels(session_id, std::filesystem::absolute("test_create_capture_waveform_serial/pin_levels.digilevels"));
+    load_timing(session_id, std::filesystem::absolute("test_create_capture_waveform_serial/timing.digitiming"));
+    apply_levels_and_timing(session_id, "pin_levels", "timing");
+  }
+
+  void load_pattern(int session_id, const std::filesystem::path& file_path)
+  {
+    ::grpc::ClientContext context;
+    digital::LoadPatternRequest request;
+    request.mutable_vi()->set_id(session_id);
+    request.set_file_path(file_path.string());
+    digital::LoadPatternResponse response;
+
+    ::grpc::Status status = GetStub()->LoadPattern(&context, request, &response);
+
+    EXPECT_SUCCESS(status);
+    EXPECT_EQ(kDigitalDriverApiSuccess, response.status());
+  }
+
+  void create_capture_waveform_serial(
+      int session_id,
+      const char* pin_list,
+      const char* waveform_name,
+      int sample_width,
+      digital::BitOrder bit_order)
+  {
+    ::grpc::ClientContext context;
+    digital::CreateCaptureWaveformSerialRequest request;
+    request.mutable_vi()->set_id(session_id);
+    request.set_pin_list(pin_list);
+    request.set_waveform_name(waveform_name);
+    request.set_sample_width(sample_width);
+    request.set_bit_order(bit_order);
+    digital::CreateCaptureWaveformSerialResponse response;
+
+    ::grpc::Status status = GetStub()->CreateCaptureWaveformSerial(&context, request, &response);
+
+    EXPECT_SUCCESS(status);
+    EXPECT_EQ(kDigitalDriverApiSuccess, response.status());
+  }
+
+  void create_source_waveform_serial(
+      int session_id,
+      const char* pin_list,
+      const char* waveform_name,
+      digital::SourceDataMapping data_mapping,
+      int sample_width,
+      digital::BitOrder bit_order)
+  {
+    ::grpc::ClientContext context;
+    digital::CreateSourceWaveformSerialRequest request;
+    request.mutable_vi()->set_id(session_id);
+    request.set_pin_list(pin_list);
+    request.set_waveform_name(waveform_name);
+    request.set_data_mapping(data_mapping);
+    request.set_sample_width(sample_width);
+    request.set_bit_order(bit_order);
+    digital::CreateSourceWaveformSerialResponse response;
+
+    ::grpc::Status status = GetStub()->CreateSourceWaveformSerial(&context, request, &response);
+
+    EXPECT_SUCCESS(status);
+    EXPECT_EQ(kDigitalDriverApiSuccess, response.status());
+  }
+
+  void write_source_waveform_broadcast_u32(int session_id, const char* waveform_name, unsigned int* waveform_data, int num_samples)
+  {
+    ::grpc::ClientContext context;
+    digital::WriteSourceWaveformBroadcastU32Request request;
+    request.mutable_vi()->set_id(session_id);
+    request.set_waveform_name(waveform_name);
+    for (int i = 0; i < num_samples; ++i) {
+      request.add_waveform_data(waveform_data[i]);
+    }
+    digital::WriteSourceWaveformBroadcastU32Response response;
+
+    ::grpc::Status status = GetStub()->WriteSourceWaveformBroadcastU32(&context, request, &response);
+
+    EXPECT_SUCCESS(status);
+    EXPECT_EQ(kDigitalDriverApiSuccess, response.status());
+  }
+
+  void burst_pattern(int session_id, const char* start_label)
+  {
+    ::grpc::ClientContext context;
+    digital::BurstPatternRequest request;
+    request.mutable_vi()->set_id(session_id);
+    request.set_start_label(start_label);
+    digital::BurstPatternResponse response;
+
+    ::grpc::Status status = GetStub()->BurstPattern(&context, request, &response);
+
+    EXPECT_SUCCESS(status);
+    EXPECT_EQ(kDigitalDriverApiSuccess, response.status());
+  }
+
+  void fetch_capture_waveform(
+      int session_id,
+      const char* site_list,
+      const char* waveform_name,
+      int samples_to_read,
+      digital::FetchCaptureWaveformU32Response* response)
+  {
+    ::grpc::ClientContext context;
+    digital::FetchCaptureWaveformU32Request request;
+    request.mutable_vi()->set_id(session_id);
+    request.set_site_list(site_list);
+    request.set_waveform_name(waveform_name);
+    request.set_samples_to_read(samples_to_read);
+    request.set_timeout(2.0);
+
+    ::grpc::Status status = GetStub()->FetchCaptureWaveformU32(&context, request, response);
+
+    EXPECT_SUCCESS(status);
   }
 
   void set_bool_attribute(const char* channel_name, digital::NiDigitalAttribute attribute, bool value)
@@ -114,7 +355,7 @@ class NiDigitalDriverApiTest : public ::testing::Test {
 
     ::grpc::Status status = GetStub()->SetAttributeViBoolean(&context, request, &response);
 
-    EXPECT_TRUE(status.ok());
+    EXPECT_SUCCESS(status);
     expect_api_success(response.status());
   }
 
@@ -130,7 +371,7 @@ class NiDigitalDriverApiTest : public ::testing::Test {
 
     ::grpc::Status status = GetStub()->SetAttributeViInt32(&context, request, &response);
 
-    EXPECT_TRUE(status.ok());
+    EXPECT_SUCCESS(status);
     expect_api_success(response.status());
   }
 
@@ -146,7 +387,7 @@ class NiDigitalDriverApiTest : public ::testing::Test {
 
     ::grpc::Status status = GetStub()->SetAttributeViInt64(&context, request, &response);
 
-    EXPECT_TRUE(status.ok());
+    EXPECT_SUCCESS(status);
     expect_api_success(response.status());
   }
 
@@ -162,7 +403,7 @@ class NiDigitalDriverApiTest : public ::testing::Test {
 
     ::grpc::Status status = GetStub()->SetAttributeViString(&context, request, &response);
 
-    EXPECT_TRUE(status.ok());
+    EXPECT_SUCCESS(status);
     expect_api_success(response.status());
   }
 
@@ -177,7 +418,7 @@ class NiDigitalDriverApiTest : public ::testing::Test {
 
     ::grpc::Status status = GetStub()->GetAttributeViBoolean(&context, request, &response);
 
-    EXPECT_TRUE(status.ok());
+    EXPECT_SUCCESS(status);
     expect_api_success(response.status());
     return response.value();
   }
@@ -193,7 +434,7 @@ class NiDigitalDriverApiTest : public ::testing::Test {
 
     ::grpc::Status status = GetStub()->GetAttributeViInt32(&context, request, &response);
 
-    EXPECT_TRUE(status.ok());
+    EXPECT_SUCCESS(status);
     expect_api_success(response.status());
     return response.value();
   }
@@ -209,7 +450,7 @@ class NiDigitalDriverApiTest : public ::testing::Test {
 
     ::grpc::Status status = GetStub()->GetAttributeViInt64(&context, request, &response);
 
-    EXPECT_TRUE(status.ok());
+    EXPECT_SUCCESS(status);
     expect_api_success(response.status());
     return response.value();
   }
@@ -225,7 +466,7 @@ class NiDigitalDriverApiTest : public ::testing::Test {
 
     ::grpc::Status status = GetStub()->GetAttributeViString(&context, request, &response);
 
-    EXPECT_TRUE(status.ok());
+    EXPECT_SUCCESS(status);
     expect_api_success(response.status());
     return response.value();
   }
@@ -241,7 +482,7 @@ class NiDigitalDriverApiTest : public ::testing::Test {
 
     ::grpc::Status status = GetStub()->FrequencyCounterConfigureMeasurementTime(&context, request, &response);
 
-    EXPECT_TRUE(status.ok());
+    EXPECT_SUCCESS(status);
     expect_api_success(response.status());
   }
 
@@ -256,13 +497,14 @@ class NiDigitalDriverApiTest : public ::testing::Test {
 
     ::grpc::Status status = GetStub()->SelectFunction(&context, request, &response);
 
-    EXPECT_TRUE(status.ok());
+    EXPECT_SUCCESS(status);
     expect_api_success(response.status());
   }
 
  private:
   DeviceServerInterface* device_server_;
   std::unique_ptr<::nidevice_grpc::Session> driver_session_;
+  std::unique_ptr<::nidevice_grpc::Session> multi_instrument_driver_session_;
   std::unique_ptr<digital::NiDigital::Stub> nidigital_stub_;
 };
 
@@ -277,7 +519,7 @@ TEST_F(NiDigitalDriverApiTest, PerformReadStatic_CompletesSuccessfully)
   digital::ReadStaticResponse response;
   ::grpc::Status status = GetStub()->ReadStatic(&context, request, &response);
 
-  EXPECT_TRUE(status.ok());
+  EXPECT_SUCCESS(status);
   expect_api_success(response.status());
 }
 
@@ -293,7 +535,7 @@ TEST_F(NiDigitalDriverApiTest, PerformWriteStatic_CompletesSuccessfully)
   digital::WriteStaticResponse response;
   ::grpc::Status status = GetStub()->WriteStatic(&context, request, &response);
 
-  EXPECT_TRUE(status.ok());
+  EXPECT_SUCCESS(status);
   expect_api_success(response.status());
 }
 
@@ -310,8 +552,31 @@ TEST_F(NiDigitalDriverApiTest, PerformFrequencyCounterMeasureFrequency_Completes
   digital::FrequencyCounterMeasureFrequencyResponse response;
   ::grpc::Status status = GetStub()->FrequencyCounterMeasureFrequency(&context, request, &response);
 
-  EXPECT_TRUE(status.ok());
+  EXPECT_SUCCESS(status);
   expect_api_success(response.status());
+}
+
+TEST_F(NiDigitalDriverApiTest, CreateCaptureWaveformSerial_FetchCaptureWaveform_ReturnsReasonableData)
+{
+  int session_id = GetMultiInstrumentSessionId();
+  configure_session(session_id);
+  load_pattern(session_id, std::filesystem::absolute("test_create_capture_waveform_serial/pattern.digipat"));
+  auto bit_order = digital::BitOrder::BIT_ORDER_NIDIGITAL_VAL_LSB_FIRST;
+  create_capture_waveform_serial(session_id, "HI0", "capt_wfm", 2, bit_order);
+  // The pattern references a wfm "src_wfm", so we have to load it before we can burst
+  auto source_data_mapping = digital::SourceDataMapping::SOURCE_DATA_MAPPING_NIDIGITAL_VAL_BROADCAST;
+  create_source_waveform_serial(session_id, "LO0", "src_wfm", source_data_mapping, 2, bit_order);
+  unsigned int waveform_data[] = {1, 2};
+  write_source_waveform_broadcast_u32(session_id, "src_wfm", waveform_data, sizeof(waveform_data) / sizeof(unsigned int));
+  burst_pattern(session_id, "new_pattern");
+
+  int num_samples = 2;
+  digital::FetchCaptureWaveformU32Response response;
+  fetch_capture_waveform(session_id, "site0,site1", "capt_wfm", num_samples, &response);
+
+  int num_sites = 2;
+  expect_api_success(response.status());
+  EXPECT_EQ(num_sites * num_samples, response.data_size());
 }
 
 TEST_F(NiDigitalDriverApiTest, SelfTest_SelfTestCompletesSuccessfully)
@@ -322,7 +587,7 @@ TEST_F(NiDigitalDriverApiTest, SelfTest_SelfTestCompletesSuccessfully)
   digital::SelfTestResponse response;
   ::grpc::Status status = GetStub()->SelfTest(&context, request, &response);
 
-  EXPECT_TRUE(status.ok());
+  EXPECT_SUCCESS(status);
   expect_api_success(response.status());
   EXPECT_EQ(0, response.test_result());
   EXPECT_LT(0, strlen(response.test_message().c_str()));
@@ -336,7 +601,7 @@ TEST_F(NiDigitalDriverApiTest, Reset_ResetCompletesSuccessfully)
   digital::ResetResponse response;
   ::grpc::Status status = GetStub()->Reset(&context, request, &response);
 
-  EXPECT_TRUE(status.ok());
+  EXPECT_SUCCESS(status);
   expect_api_success(response.status());
 }
 
@@ -396,7 +661,7 @@ TEST_F(NiDigitalDriverApiTest, SelfCalibrate_CompletesSuccessfully)
   digital::SelfCalibrateResponse response;
   ::grpc::Status status = GetStub()->SelfCalibrate(&context, request, &response);
 
-  EXPECT_TRUE(status.ok());
+  EXPECT_SUCCESS(status);
   expect_api_success(response.status());
 }
 
@@ -410,7 +675,7 @@ TEST_F(NiDigitalDriverApiTest, ClockGeneratorInitiate_ClockGenerationInitiated)
   digital::ClockGeneratorInitiateResponse response;
   ::grpc::Status status = GetStub()->ClockGeneratorInitiate(&context, request, &response);
 
-  EXPECT_TRUE(status.ok());
+  EXPECT_SUCCESS(status);
   expect_api_success(response.status());
   EXPECT_TRUE(get_bool_attribute("0", digital::NIDIGITAL_ATTRIBUTE_CLOCK_GENERATOR_IS_RUNNING));
 }
@@ -423,7 +688,7 @@ TEST_F(NiDigitalDriverApiTest, ConfigureSoftwareEdgeStartTrigger_StartTriggerTyp
   digital::ConfigureSoftwareEdgeStartTriggerResponse response;
   ::grpc::Status status = GetStub()->ConfigureSoftwareEdgeStartTrigger(&context, request, &response);
 
-  EXPECT_TRUE(status.ok());
+  EXPECT_SUCCESS(status);
   expect_api_success(response.status());
   int start_trigger_type = get_int32_attribute("", digital::NIDIGITAL_ATTRIBUTE_START_TRIGGER_TYPE);
   EXPECT_EQ(digital::NiDigitalInt32AttributeValues::NIDIGITAL_INT32_TRIGGER_TYPE_VAL_SOFTWARE, start_trigger_type);
@@ -439,7 +704,7 @@ TEST_F(NiDigitalDriverApiTest, ConfigureStartLabel_StartLabelConfigured)
   digital::ConfigureStartLabelResponse response;
   ::grpc::Status status = GetStub()->ConfigureStartLabel(&context, request, &response);
 
-  EXPECT_TRUE(status.ok());
+  EXPECT_SUCCESS(status);
   expect_api_success(response.status());
   std::string actual_start_label = get_string_attribute("", digital::NIDIGITAL_ATTRIBUTE_START_LABEL);
   EXPECT_EQ(start_label, actual_start_label);
