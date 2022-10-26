@@ -432,6 +432,7 @@ add_executable(UnitTestsRunner
     "source/tests/unit/session_resource_repository_tests.cpp"
     "source/tests/unit/session_repository_tests.cpp"
     "source/tests/unit/device_enumerator_tests.cpp"
+    "source/tests/unit/software_enumerator_tests.cpp"
     "source/tests/unit/server_configuration_parser_tests.cpp"
     "source/tests/unit/server_security_configuration_tests.cpp"
     "source/tests/unit/ni_fake_non_ivi_service_tests.cpp"
