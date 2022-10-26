@@ -26,23 +26,23 @@ SoftwareEnumerator::~SoftwareEnumerator()
   char package_id[NISYSCFG_SIMPLE_STRING_LENGTH] = "";
   char version[NISYSCFG_SIMPLE_STRING_LENGTH] = "";
   char product_name[NISYSCFG_SIMPLE_STRING_LENGTH] = "";
-  NISysCfgBool is_ni_product = NISysCfgBoolFalse;
 
   try {
     if (NISysCfg_Succeeded(status = open_or_get_localhost_syscfg_session(&session))) {
       if (NISysCfg_Succeeded(status = library_->GetInstalledSoftwareComponents(session, NISysCfgIncludeItemsAllVisible, NISysCfgBoolTrue, &installedComps)))
       {
-        library_->ResetEnumeratorGetCount(installedComps, &numInstalledComps);
-        for (unsigned int index = 0; index < numInstalledComps; ++index)
+        if (NISysCfg_Succeeded(status = library_->ResetEnumeratorGetCount(installedComps, &numInstalledComps)) && numInstalledComps > 0)
+        {
+          while (NISysCfg_Succeeded(status) && (status = library_->NextComponentInfo(installedComps, package_id, version, product_name, NULL, NULL)) == NISysCfg_OK)
           {
-            library_->NextComponentInfo(installedComps, package_id, version, product_name, NULL, NULL);
             SoftwareProperties* properties = software->Add();
             properties->set_package_id(package_id);
             properties->set_version(version);
             properties->set_product_name(product_name);
           }
+        }
         
-          library_->CloseHandle(installedComps);
+        library_->CloseHandle(installedComps);
       }
     }
   }
