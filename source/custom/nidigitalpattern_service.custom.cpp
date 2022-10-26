@@ -28,7 +28,7 @@ inline bool status_ok(int32 status)
 
 ::grpc::Status NiDigitalService::FetchCaptureWaveformU32(::grpc::ServerContext* context, const FetchCaptureWaveformU32Request* request, FetchCaptureWaveformU32Response* response)
 {
-  // This function is modified from the generated code to multiple the two 'ivi-dance' parameters
+  // This function is modified from the generated code to multiply the two 'ivi-dance' parameters
   if (context->IsCancelled()) {
     return ::grpc::Status::CANCELLED;
   }
