@@ -6,7 +6,7 @@ config = {
             'service.cpp'
         ]
     },
-    'api_version': '23.0.0',
+    'api_version': '23.0.0d58',
     'c_function_prefix': 'niSwitch_',
     'c_header': 'niswitch.h',
     'close_function': 'Close',
