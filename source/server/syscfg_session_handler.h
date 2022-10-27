@@ -21,6 +21,15 @@ class SysCfgSessionHandler : public ServerResetObserverInterface {
   virtual NISysCfgStatus open_or_get_localhost_syscfg_session(NISysCfgSessionHandle* session);
   virtual void clear_syscfg_session();
   virtual bool is_session_open();
+  virtual ::grpc::Status convert_api_error_status_for_syscfg_session(
+    ::grpc::ServerContext* context,
+    NISysCfgStatus status,
+    NISysCfgSessionHandle session);
+  virtual ::grpc::Status convert_api_error_status_for_syscfg_session(
+    ::grpc::ServerContext* context,
+    NISysCfgStatus status,
+    const std::string& description,
+    NISysCfgSessionHandle session);
 
   void on_server_reset() override;
 

@@ -1,5 +1,7 @@
 #include "syscfg_session_handler.h"
 
+#include "converters.h"
+
 namespace nidevice_grpc {
 
 SysCfgSessionHandler::SysCfgSessionHandler(SysCfgLibraryInterface* library)
@@ -44,14 +46,48 @@ bool SysCfgSessionHandler::is_session_open()
   return syscfg_session_ != nullptr;
 }
 
-SysCfgLibraryInterface* SysCfgSessionHandler::get_syscfg_library_interface()
+// Creates a ::grpc::Status from status parameter
+::grpc::Status SysCfgSessionHandler::convert_api_error_status_for_syscfg_session(
+  ::grpc::ServerContext* context,
+  NISysCfgStatus status,
+  NISysCfgSessionHandle session)
 {
-  return library_;
+  std::string empty_description;
+  return convert_api_error_status_for_syscfg_session(context, status, empty_description, session);
+}
+
+// Creates a ::grpc::Status from status and description parameters
+// If description parameter is empty, calls GetStatusDescription on NISysCfg
+// session parameter can be NULL
+::grpc::Status SysCfgSessionHandler::convert_api_error_status_for_syscfg_session(
+  ::grpc::ServerContext* context,
+  NISysCfgStatus status,
+  const std::string& description,
+  NISysCfgSessionHandle session)
+{
+  std::string local_description(description);
+  if (local_description.empty()) {
+    char* detailed_description = nullptr;
+    library_->GetStatusDescription(session, status, &detailed_description);
+    if (detailed_description != nullptr) {
+      local_description = detailed_description;
+      library_->FreeDetailedString(detailed_description);
+    }
+  }
+  if (local_description.length() > nidevice_grpc::kMaxGrpcErrorDescriptionSize) {
+    local_description.resize(nidevice_grpc::kMaxGrpcErrorDescriptionSize);
+  }
+  return nidevice_grpc::ApiErrorAndDescriptionToStatus(context, status, local_description);
 }
 
 void SysCfgSessionHandler::on_server_reset()
 {
   clear_syscfg_session();
+}
+
+SysCfgLibraryInterface* SysCfgSessionHandler::get_syscfg_library_interface()
+{
+  return library_;
 }
 
 }  // namespace nidevice_grpc

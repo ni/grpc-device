@@ -55,11 +55,9 @@ SessionUtilitiesService::SessionUtilitiesService(SessionRepository* session_repo
 
   {
     std::unique_lock<std::shared_mutex> lock(observers_mutex_);
-    auto i = observers_.begin();
-    auto e = observers_.end();
-    for (; i != e; ++i)
+    for (auto observer : observers_)
     {
-      (*i)->on_server_reset();
+      observer->on_server_reset();
     }
   }
 

@@ -228,7 +228,7 @@ set(nidriver_service_srcs
 #----------------------------------------------------------------------
 get_filename_component(session_proto "source/protobuf/session.proto" ABSOLUTE)
 get_filename_component(nidevice_proto "source/protobuf/nidevice.proto" ABSOLUTE)
-get_filename_component(debugsessionproperties_restricted_proto "source/protobuf/debugsessionproperties_restricted.proto" ABSOLUTE)
+get_filename_component(debugsessionproperties_restricted_proto "source/protobuf_restricted/debugsessionproperties_restricted.proto" ABSOLUTE)
 get_filename_component(session_proto_path "${session_proto}" PATH)
 
 #----------------------------------------------------------------------

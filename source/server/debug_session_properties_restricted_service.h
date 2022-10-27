@@ -13,8 +13,6 @@
 
 namespace nidevice_restricted_grpc {
 
-static const char* kDebugSessionPropertyAccessFailedMessage = "The NI System Configuration API was unable to access the debug session property.";
-
 struct DebugSessionPropertiesRestrictedFeatureToggles
 {
   using CodeReadiness = nidevice_grpc::FeatureToggles::CodeReadiness;
@@ -51,10 +49,30 @@ class DebugSessionPropertiesRestrictedService final :
     SetDebugSessionServerOutOfProcessResponse* response) override;
 
  private:
-  ::grpc::Status get_bool_property(NISysCfgResourceProperty property_id, uint32_t product_id, const char* serial_number, bool* value);
-  ::grpc::Status get_uint_property(NISysCfgResourceProperty property_id, uint32_t product_id, const char* serial_number, uint32_t* value);
-  ::grpc::Status set_bool_property(NISysCfgResourceProperty property_id, uint32_t product_id, const char* serial_number, bool value);
-  ::grpc::Status set_uint_property(NISysCfgResourceProperty property_id, uint32_t product_id, const char* serial_number, uint32_t value);
+  ::grpc::Status access_syscfg_resource_by_device_id_filter(
+    ::grpc::ServerContext* context,
+    const nidevice_restricted_grpc::DeviceId& device_id,
+    std::function<NISysCfgStatus(nidevice_grpc::SysCfgLibraryInterface*, NISysCfgResourceHandle, bool*)> syscfg_resource_action_func);
+  ::grpc::Status get_bool_property(
+    ::grpc::ServerContext* context,
+    NISysCfgResourceProperty property_id,
+    const nidevice_restricted_grpc::DeviceId& device_id,
+    bool* value);
+  ::grpc::Status get_uint_property(
+    ::grpc::ServerContext* context,
+    NISysCfgResourceProperty property_id,
+    const nidevice_restricted_grpc::DeviceId& device_id,
+    uint32_t* value);
+  ::grpc::Status set_bool_property(
+    ::grpc::ServerContext* context,
+    NISysCfgResourceProperty property_id,
+    const nidevice_restricted_grpc::DeviceId& device_id,
+    bool value);
+  ::grpc::Status set_uint_property(
+    ::grpc::ServerContext* context,
+    NISysCfgResourceProperty property_id,
+    const nidevice_restricted_grpc::DeviceId& device_id,
+    uint32_t value);
 };
 
 }  // namespace nidevice_restricted_grpc

@@ -15,9 +15,14 @@ service DebugSessionPropertiesRestricted {
   rpc SetDebugSessionServerOutOfProcess(SetDebugSessionServerOutOfProcessRequest) returns (SetDebugSessionServerOutOfProcessResponse);
 }
 
-message IsDebugSessionEnabledRequest {
-  uint32 product_id = 1;
+message DeviceId {
+  string name = 1;
   string serial_number = 2;
+  uint32 product_id = 3;
+}
+
+message IsDebugSessionEnabledRequest {
+  DeviceId device_id = 1;
 }
 
 message IsDebugSessionEnabledResponse {
@@ -25,8 +30,7 @@ message IsDebugSessionEnabledResponse {
 }
 
 message IsDebugSessionServerOutOfProcessRequest {
-  uint32 product_id = 1;
-  string serial_number = 2;
+  DeviceId device_id = 1;
 }
  
 message IsDebugSessionServerOutOfProcessResponse {
@@ -34,8 +38,7 @@ message IsDebugSessionServerOutOfProcessResponse {
 }
 
 message IsDebugSessionSupportedRequest {
-  uint32 product_id = 1;
-  string serial_number = 2;
+  DeviceId device_id = 1;
 }
  
 message IsDebugSessionSupportedResponse {
@@ -43,17 +46,15 @@ message IsDebugSessionSupportedResponse {
 }
 
 message SetDebugSessionEnabledRequest {
-  uint32 product_id = 1;
-  string serial_number = 2;
-  bool enabled = 3;
+  DeviceId device_id = 1;
+  bool enabled = 2;
 }
 
 message SetDebugSessionEnabledResponse {}
 
 message SetDebugSessionServerOutOfProcessRequest {
-  uint32 product_id = 1;
-  string serial_number = 2;
-  bool out_of_process = 3;
+  DeviceId device_id = 1;
+  bool out_of_process = 2;
 }
 
 message SetDebugSessionServerOutOfProcessResponse {}
