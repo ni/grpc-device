@@ -588,7 +588,7 @@ if(WIN32)
 endif()
 if(_GRPC_DEVICE_NILRT_LEGACY_TOOLCHAIN)
     target_link_libraries(SystemTestsRunner stdc++fs)
-    set(SystemTestsRunner CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DFS_EXPERIMENTAL")
+    target_compile_definitions(SystemTestsRunner PRIVATE FS_EXPERIMENTAL)
 endif()
 
 
