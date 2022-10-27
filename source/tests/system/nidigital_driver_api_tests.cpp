@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#if FS_EXPERIMENTAL
+#ifdef FS_EXPERIMENTAL
   #include <experimental/filesystem>
 #else
   #include <filesystem>
@@ -22,7 +22,7 @@ namespace system {
 
 namespace digital = nidigitalpattern_grpc;
 namespace pb = ::google::protobuf;
-#if FS_EXPERIMENTAL
+#ifdef FS_EXPERIMENTAL
 namespace fs = std::experimental::filesystem;
 #else
 namespace fs = std::filesystem;
