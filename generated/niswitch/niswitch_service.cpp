@@ -1071,7 +1071,9 @@ namespace niswitch_grpc {
       ViRsrc resource_name = (ViRsrc)request->resource_name().c_str();
       ViBoolean id_query = request->id_query();
       ViBoolean reset_device = request->reset_device();
+      auto initialization_behavior = request->initialization_behavior();
 
+      bool new_session_initialized {};
       auto init_lambda = [&] () {
         ViSession vi;
         auto status = library_->Init(resource_name, id_query, reset_device, &vi);
@@ -1080,12 +1082,13 @@ namespace niswitch_grpc {
       uint32_t session_id = 0;
       const std::string& grpc_device_session_name = request->session_name();
       auto cleanup_lambda = [&] (ViSession id) { library_->Close(id); };
-      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
+      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id, initialization_behavior, &new_session_initialized);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, 0);
       }
       response->set_status(status);
       response->mutable_vi()->set_id(session_id);
+      response->set_new_session_initialized(new_session_initialized);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
@@ -1105,7 +1108,9 @@ namespace niswitch_grpc {
       ViBoolean id_query = request->id_query();
       ViBoolean reset_device = request->reset_device();
       auto option_string = request->option_string().c_str();
+      auto initialization_behavior = request->initialization_behavior();
 
+      bool new_session_initialized {};
       auto init_lambda = [&] () {
         ViSession vi;
         auto status = library_->InitWithOptions(resource_name, id_query, reset_device, option_string, &vi);
@@ -1114,12 +1119,13 @@ namespace niswitch_grpc {
       uint32_t session_id = 0;
       const std::string& grpc_device_session_name = request->session_name();
       auto cleanup_lambda = [&] (ViSession id) { library_->Close(id); };
-      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
+      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id, initialization_behavior, &new_session_initialized);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, 0);
       }
       response->set_status(status);
       response->mutable_vi()->set_id(session_id);
+      response->set_new_session_initialized(new_session_initialized);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
@@ -1139,7 +1145,9 @@ namespace niswitch_grpc {
       auto topology = request->topology().c_str();
       ViBoolean simulate = request->simulate();
       ViBoolean reset_device = request->reset_device();
+      auto initialization_behavior = request->initialization_behavior();
 
+      bool new_session_initialized {};
       auto init_lambda = [&] () {
         ViSession vi;
         auto status = library_->InitWithTopology(resource_name, topology, simulate, reset_device, &vi);
@@ -1148,12 +1156,13 @@ namespace niswitch_grpc {
       uint32_t session_id = 0;
       const std::string& grpc_device_session_name = request->session_name();
       auto cleanup_lambda = [&] (ViSession id) { library_->Close(id); };
-      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
+      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id, initialization_behavior, &new_session_initialized);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, 0);
       }
       response->set_status(status);
       response->mutable_vi()->set_id(session_id);
+      response->set_new_session_initialized(new_session_initialized);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
