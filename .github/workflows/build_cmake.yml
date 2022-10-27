@@ -188,6 +188,7 @@ jobs:
           build/Release/LTE20MHz Waveform (Two Subframes).json
           build/Release/NR_FR2_UL_SISO_CC-1_BW-50MHz_SCS-120kHz.json
           build/Release/WLAN_80211n_20MHz_1Seg_2Chain_MIMO.json
+          build/Release/test_create_capture_waveform_serial/
           build/Release/test_mutual_tls_config.json
           build/Release/UnitTestsRunner.exe
           LICENSE
