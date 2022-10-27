@@ -1,6 +1,10 @@
 #include <gtest/gtest.h>
 
-#include <filesystem>
+#if FS_EXPERIMENTAL
+  #include <experimental/filesystem>
+#else
+  #include <filesystem>
+#endif
 
 #include "device_server.h"
 #include "nidigitalpattern/nidigitalpattern_client.h"
@@ -18,6 +22,11 @@ namespace system {
 
 namespace digital = nidigitalpattern_grpc;
 namespace pb = ::google::protobuf;
+#if FS_EXPERIMENTAL
+namespace fs = std::experimental::filesystem;
+#else
+namespace fs = std::filesystem;
+#endif
 
 typedef pb::int32 int32;
 typedef pb::int64 int64;
@@ -152,7 +161,7 @@ class NiDigitalDriverApiTest : public ::testing::Test {
     return response.error_message();
   }
 
-  void load_pin_map(int session_id, const std::filesystem::path& file_path)
+  void load_pin_map(int session_id, const fs::path& file_path)
   {
     ::grpc::ClientContext context;
     digital::LoadPinMapRequest request;
@@ -166,7 +175,7 @@ class NiDigitalDriverApiTest : public ::testing::Test {
     EXPECT_EQ(kDigitalDriverApiSuccess, response.status());
   }
 
-  void load_specifications(int session_id, const std::filesystem::path& file_path)
+  void load_specifications(int session_id, const fs::path& file_path)
   {
     ::grpc::ClientContext context;
     digital::LoadSpecificationsRequest request;
@@ -180,7 +189,7 @@ class NiDigitalDriverApiTest : public ::testing::Test {
     EXPECT_EQ(kDigitalDriverApiSuccess, response.status());
   }
 
-  void load_levels(int session_id, const std::filesystem::path& file_path)
+  void load_levels(int session_id, const fs::path& file_path)
   {
     ::grpc::ClientContext context;
     digital::LoadLevelsRequest request;
@@ -194,7 +203,7 @@ class NiDigitalDriverApiTest : public ::testing::Test {
     EXPECT_EQ(kDigitalDriverApiSuccess, response.status());
   }
 
-  void load_timing(int session_id, const std::filesystem::path& file_path)
+  void load_timing(int session_id, const fs::path& file_path)
   {
     ::grpc::ClientContext context;
     digital::LoadTimingRequest request;
@@ -225,14 +234,14 @@ class NiDigitalDriverApiTest : public ::testing::Test {
 
   void configure_session(int session_id)
   {
-    load_pin_map(session_id, std::filesystem::absolute("test_create_capture_waveform_serial/pin_map.pinmap"));
-    load_specifications(session_id, std::filesystem::absolute("test_create_capture_waveform_serial/specifications.specs"));
-    load_levels(session_id, std::filesystem::absolute("test_create_capture_waveform_serial/pin_levels.digilevels"));
-    load_timing(session_id, std::filesystem::absolute("test_create_capture_waveform_serial/timing.digitiming"));
+    load_pin_map(session_id, fs::absolute("test_create_capture_waveform_serial/pin_map.pinmap"));
+    load_specifications(session_id, fs::absolute("test_create_capture_waveform_serial/specifications.specs"));
+    load_levels(session_id, fs::absolute("test_create_capture_waveform_serial/pin_levels.digilevels"));
+    load_timing(session_id, fs::absolute("test_create_capture_waveform_serial/timing.digitiming"));
     apply_levels_and_timing(session_id, "pin_levels", "timing");
   }
 
-  void load_pattern(int session_id, const std::filesystem::path& file_path)
+  void load_pattern(int session_id, const fs::path& file_path)
   {
     ::grpc::ClientContext context;
     digital::LoadPatternRequest request;
@@ -560,7 +569,7 @@ TEST_F(NiDigitalDriverApiTest, CreateCaptureWaveformSerial_FetchCaptureWaveform_
 {
   int session_id = GetMultiInstrumentSessionId();
   configure_session(session_id);
-  load_pattern(session_id, std::filesystem::absolute("test_create_capture_waveform_serial/pattern.digipat"));
+  load_pattern(session_id, fs::absolute("test_create_capture_waveform_serial/pattern.digipat"));
   auto bit_order = digital::BitOrder::BIT_ORDER_NIDIGITAL_VAL_LSB_FIRST;
   create_capture_waveform_serial(session_id, "HI0", "capt_wfm", 2, bit_order);
   // The pattern references a wfm "src_wfm", so we have to load it before we can burst

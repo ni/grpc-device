@@ -23,9 +23,16 @@ set(CMAKE_CXX_COMPILER x86_64-nilrt-linux-g++)
 #----------------------------------------------------------------------
 set(CMAKE_SYSROOT ${toolchain_path}/core2-64-nilrt-linux)
 set(CMAKE_<LANG>_STANDARD_INCLUDE_DIRECTORIES ${toolchain_path}/${include_path} ${toolchain_path}/${include_path}/x86_64-nilrt-linux)
-set(CMAKE_<LANG>_FLAGS "-Wall -fmessage-length=0")
+set(CMAKE_<LANG>_FLAGS "-Wall -fmessage-length=0 -DFS_EXPERIMENTAL")
 set(CMAKE_<LANG>_FLAGS_DEBUG "-O0 -g3")
 set(CMAKE_<LANG>_FLAGS_RELEASE "-O3")
+
+#----------------------------------------------------------------------
+# Link flags
+#----------------------------------------------------------------------
+target_link_libraries(SystemTestsRunner
+   stdc++fs
+)
 
 #----------------------------------------------------------------------
 # Define proper search behavior for cross compilation
