@@ -1532,50 +1532,6 @@ namespace nidigitalpattern_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiDigitalService::FetchCaptureWaveformU32(::grpc::ServerContext* context, const FetchCaptureWaveformU32Request* request, FetchCaptureWaveformU32Response* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      auto site_list = request->site_list().c_str();
-      auto waveform_name = request->waveform_name().c_str();
-      ViInt32 samples_to_read = request->samples_to_read();
-      ViReal64 timeout = request->timeout();
-      ViInt32 actual_num_waveforms {};
-      ViInt32 actual_samples_per_waveform {};
-      while (true) {
-        auto status = library_->FetchCaptureWaveformU32(vi, site_list, waveform_name, samples_to_read, timeout, 0, nullptr, &actual_num_waveforms, &actual_samples_per_waveform);
-        if (!status_ok(status)) {
-          return ConvertApiErrorStatusForViSession(context, status, vi);
-        }
-        response->mutable_data()->Resize(actual_num_waveforms, 0);
-        ViUInt32* data = reinterpret_cast<ViUInt32*>(response->mutable_data()->mutable_data());
-        auto data_buffer_size = actual_num_waveforms;
-        status = library_->FetchCaptureWaveformU32(vi, site_list, waveform_name, samples_to_read, timeout, data_buffer_size, data, &actual_num_waveforms, &actual_samples_per_waveform);
-        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
-          // buffer is now too small, try again
-          continue;
-        }
-        if (!status_ok(status)) {
-          return ConvertApiErrorStatusForViSession(context, status, vi);
-        }
-        response->set_status(status);
-        response->mutable_data()->Resize(actual_num_waveforms, 0);
-        response->set_actual_num_waveforms(actual_num_waveforms);
-        response->set_actual_samples_per_waveform(actual_samples_per_waveform);
-        return ::grpc::Status::OK;
-      }
-    }
-    catch (nidevice_grpc::NonDriverException& ex) {
-      return ex.GetStatus();
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
   ::grpc::Status NiDigitalService::FetchHistoryRAMCycleInformation(::grpc::ServerContext* context, const FetchHistoryRAMCycleInformationRequest* request, FetchHistoryRAMCycleInformationResponse* response)
   {
     if (context->IsCancelled()) {
