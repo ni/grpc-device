@@ -58,7 +58,8 @@ class NiDCPowerDriverApiTest : public ::testing::Test {
           GetStub(),
           DEVICE,
           false,
-          OPTIONS);
+          OPTIONS,
+          nidevice_grpc::SESSION_INITIALIZATION_BEHAVIOR_INITIALIZE_NEW);
 
       ASSERT_EQ(kdcpowerDriverApiSuccess, independent_response.status());
       driver_session_ = std::make_unique<nidevice_grpc::Session>(independent_response.vi());
@@ -69,7 +70,8 @@ class NiDCPowerDriverApiTest : public ::testing::Test {
           DEVICE,
           "0",
           false,
-          OPTIONS);
+          OPTIONS,
+          nidevice_grpc::SESSION_INITIALIZATION_BEHAVIOR_INITIALIZE_NEW);
 
       ASSERT_EQ(kdcpowerDriverApiSuccess, legacy_response.status());
       driver_session_ = std::make_unique<nidevice_grpc::Session>(legacy_response.vi());

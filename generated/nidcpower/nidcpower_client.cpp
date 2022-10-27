@@ -2185,7 +2185,7 @@ import_attribute_configuration_file(const StubPtr& stub, const nidevice_grpc::Se
 }
 
 InitializeWithChannelsResponse
-initialize_with_channels(const StubPtr& stub, const pb::string& resource_name, const pb::string& channels, const bool& reset, const pb::string& option_string)
+initialize_with_channels(const StubPtr& stub, const pb::string& resource_name, const pb::string& channels, const bool& reset, const pb::string& option_string, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
 {
   ::grpc::ClientContext context;
 
@@ -2194,6 +2194,7 @@ initialize_with_channels(const StubPtr& stub, const pb::string& resource_name, c
   request.set_channels(channels);
   request.set_reset(reset);
   request.set_option_string(option_string);
+  request.set_initialization_behavior(initialization_behavior);
 
   auto response = InitializeWithChannelsResponse{};
 
@@ -2205,7 +2206,7 @@ initialize_with_channels(const StubPtr& stub, const pb::string& resource_name, c
 }
 
 InitializeWithIndependentChannelsResponse
-initialize_with_independent_channels(const StubPtr& stub, const pb::string& resource_name, const bool& reset, const pb::string& option_string)
+initialize_with_independent_channels(const StubPtr& stub, const pb::string& resource_name, const bool& reset, const pb::string& option_string, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
 {
   ::grpc::ClientContext context;
 
@@ -2213,6 +2214,7 @@ initialize_with_independent_channels(const StubPtr& stub, const pb::string& reso
   request.set_resource_name(resource_name);
   request.set_reset(reset);
   request.set_option_string(option_string);
+  request.set_initialization_behavior(initialization_behavior);
 
   auto response = InitializeWithIndependentChannelsResponse{};
 

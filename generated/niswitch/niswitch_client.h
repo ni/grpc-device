@@ -56,9 +56,9 @@ GetPathResponse get_path(const StubPtr& stub, const nidevice_grpc::Session& vi, 
 GetRelayCountResponse get_relay_count(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& relay_name);
 GetRelayNameResponse get_relay_name(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& index);
 GetRelayPositionResponse get_relay_position(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& relay_name);
-InitResponse init(const StubPtr& stub, const pb::string& resource_name, const bool& id_query, const bool& reset_device);
-InitWithOptionsResponse init_with_options(const StubPtr& stub, const pb::string& resource_name, const bool& id_query, const bool& reset_device, const pb::string& option_string);
-InitWithTopologyResponse init_with_topology(const StubPtr& stub, const pb::string& resource_name, const pb::string& topology, const bool& simulate, const bool& reset_device);
+InitResponse init(const StubPtr& stub, const pb::string& resource_name, const bool& id_query, const bool& reset_device, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior);
+InitWithOptionsResponse init_with_options(const StubPtr& stub, const pb::string& resource_name, const bool& id_query, const bool& reset_device, const pb::string& option_string, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior);
+InitWithTopologyResponse init_with_topology(const StubPtr& stub, const pb::string& resource_name, const pb::string& topology, const bool& simulate, const bool& reset_device, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior);
 InitiateScanResponse initiate_scan(const StubPtr& stub, const nidevice_grpc::Session& vi);
 InvalidateAllAttributesResponse invalidate_all_attributes(const StubPtr& stub, const nidevice_grpc::Session& vi);
 IsDebouncedResponse is_debounced(const StubPtr& stub, const nidevice_grpc::Session& vi);
