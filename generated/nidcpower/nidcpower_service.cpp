@@ -863,7 +863,7 @@ namespace nidcpower_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
       ViInt32 compensation_data_size = static_cast<ViInt32>(request->compensation_data().size());
-      ViAddr* compensation_data = (ViAddr*)request->compensation_data().c_str();
+      ViInt8* compensation_data = (ViInt8*)request->compensation_data().c_str();
       auto status = library_->ConfigureLCRCompensation(vi, channel_name, compensation_data_size, compensation_data);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -888,7 +888,7 @@ namespace nidcpower_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
       ViInt32 custom_cable_compensation_data_size = static_cast<ViInt32>(request->custom_cable_compensation_data().size());
-      ViAddr* custom_cable_compensation_data = (ViAddr*)request->custom_cable_compensation_data().c_str();
+      ViInt8* custom_cable_compensation_data = (ViInt8*)request->custom_cable_compensation_data().c_str();
       auto status = library_->ConfigureLCRCustomCableCompensation(vi, channel_name, custom_cable_compensation_data_size, custom_cable_compensation_data);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -2292,7 +2292,7 @@ namespace nidcpower_grpc {
         ViInt32 size = status;
 
         std::string configuration(size, '\0');
-        status = library_->ExportAttributeConfigurationBuffer(vi, size, (ViAddr*)configuration.data());
+        status = library_->ExportAttributeConfigurationBuffer(vi, size, (ViInt8*)configuration.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(size)) {
           // buffer is now too small, try again
           continue;
@@ -2877,7 +2877,7 @@ namespace nidcpower_grpc {
         ViInt32 compensation_data_size = status;
 
         std::string compensation_data(compensation_data_size, '\0');
-        status = library_->GetLCRCompensationData(vi, channel_name, compensation_data_size, (ViAddr*)compensation_data.data());
+        status = library_->GetLCRCompensationData(vi, channel_name, compensation_data_size, (ViInt8*)compensation_data.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(compensation_data_size)) {
           // buffer is now too small, try again
           continue;
@@ -2964,7 +2964,7 @@ namespace nidcpower_grpc {
         ViInt32 custom_cable_compensation_data_size = status;
 
         std::string custom_cable_compensation_data(custom_cable_compensation_data_size, '\0');
-        status = library_->GetLCRCustomCableCompensationData(vi, channel_name, custom_cable_compensation_data_size, (ViAddr*)custom_cable_compensation_data.data());
+        status = library_->GetLCRCustomCableCompensationData(vi, channel_name, custom_cable_compensation_data_size, (ViInt8*)custom_cable_compensation_data.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(custom_cable_compensation_data_size)) {
           // buffer is now too small, try again
           continue;
@@ -3131,7 +3131,7 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
       ViInt32 size = static_cast<ViInt32>(request->configuration().size());
-      ViAddr* configuration = (ViAddr*)request->configuration().c_str();
+      ViInt8* configuration = (ViInt8*)request->configuration().c_str();
       auto status = library_->ImportAttributeConfigurationBuffer(vi, size, configuration);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);

@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-DCPower API metadata version 23.0.0d171
+# This file is generated from NI-DCPower API metadata version 23.0.0d196
 config = {
     'additional_headers': {
         'custom/ivi_errors.h': [
             'service.cpp'
         ]
     },
-    'api_version': '23.0.0',
+    'api_version': '23.0.0d196',
     'c_function_prefix': 'niDCPower_',
     'c_header': 'nidcpower.h',
     'close_function': 'Close',

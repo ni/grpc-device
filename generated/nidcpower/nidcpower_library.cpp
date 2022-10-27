@@ -483,7 +483,7 @@ ViStatus NiDCPowerLibrary::ConfigureDigitalEdgeStartTriggerWithChannels(ViSessio
 #endif
 }
 
-ViStatus NiDCPowerLibrary::ConfigureLCRCompensation(ViSession vi, ViConstString channelName, ViInt32 compensationDataSize, ViAddr compensationData[])
+ViStatus NiDCPowerLibrary::ConfigureLCRCompensation(ViSession vi, ViConstString channelName, ViInt32 compensationDataSize, ViInt8 compensationData[])
 {
   if (!function_pointers_.ConfigureLCRCompensation) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ConfigureLCRCompensation.");
@@ -495,7 +495,7 @@ ViStatus NiDCPowerLibrary::ConfigureLCRCompensation(ViSession vi, ViConstString 
 #endif
 }
 
-ViStatus NiDCPowerLibrary::ConfigureLCRCustomCableCompensation(ViSession vi, ViConstString channelName, ViInt32 customCableCompensationDataSize, ViAddr customCableCompensationData[])
+ViStatus NiDCPowerLibrary::ConfigureLCRCustomCableCompensation(ViSession vi, ViConstString channelName, ViInt32 customCableCompensationDataSize, ViInt8 customCableCompensationData[])
 {
   if (!function_pointers_.ConfigureLCRCustomCableCompensation) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ConfigureLCRCustomCableCompensation.");
@@ -1167,7 +1167,7 @@ ViStatus NiDCPowerLibrary::ErrorQuery(ViSession vi, ViInt32* errorCode, ViChar e
 #endif
 }
 
-ViStatus NiDCPowerLibrary::ExportAttributeConfigurationBuffer(ViSession vi, ViInt32 size, ViAddr configuration[])
+ViStatus NiDCPowerLibrary::ExportAttributeConfigurationBuffer(ViSession vi, ViInt32 size, ViInt8 configuration[])
 {
   if (!function_pointers_.ExportAttributeConfigurationBuffer) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ExportAttributeConfigurationBuffer.");
@@ -1383,7 +1383,7 @@ ViStatus NiDCPowerLibrary::GetExtCalRecommendedInterval(ViSession vi, ViInt32* m
 #endif
 }
 
-ViStatus NiDCPowerLibrary::GetLCRCompensationData(ViSession vi, ViConstString channelName, ViInt32 compensationDataSize, ViAddr compensationData[])
+ViStatus NiDCPowerLibrary::GetLCRCompensationData(ViSession vi, ViConstString channelName, ViInt32 compensationDataSize, ViInt8 compensationData[])
 {
   if (!function_pointers_.GetLCRCompensationData) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_GetLCRCompensationData.");
@@ -1407,7 +1407,7 @@ ViStatus NiDCPowerLibrary::GetLCRCompensationLastDateAndTime(ViSession vi, ViCon
 #endif
 }
 
-ViStatus NiDCPowerLibrary::GetLCRCustomCableCompensationData(ViSession vi, ViConstString channelName, ViInt32 customCableCompensationDataSize, ViAddr customCableCompensationData[])
+ViStatus NiDCPowerLibrary::GetLCRCustomCableCompensationData(ViSession vi, ViConstString channelName, ViInt32 customCableCompensationDataSize, ViInt8 customCableCompensationData[])
 {
   if (!function_pointers_.GetLCRCustomCableCompensationData) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_GetLCRCustomCableCompensationData.");
@@ -1467,7 +1467,7 @@ ViStatus NiDCPowerLibrary::GetSelfCalLastTemp(ViSession vi, ViReal64* temperatur
 #endif
 }
 
-ViStatus NiDCPowerLibrary::ImportAttributeConfigurationBuffer(ViSession vi, ViInt32 size, ViAddr configuration[])
+ViStatus NiDCPowerLibrary::ImportAttributeConfigurationBuffer(ViSession vi, ViInt32 size, ViInt8 configuration[])
 {
   if (!function_pointers_.ImportAttributeConfigurationBuffer) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ImportAttributeConfigurationBuffer.");

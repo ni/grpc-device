@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-DCPower API metadata version 23.0.0d171
+# This file is generated from NI-DCPower API metadata version 23.0.0d196
 functions = {
     'Abort': {
         'codegen_method': 'public',
@@ -695,7 +695,7 @@ functions = {
                     'mechanism': 'len',
                     'value': 'compensationDataSize'
                 },
-                'type': 'ViAddr[]'
+                'type': 'ViInt8[]'
             }
         ],
         'returns': 'ViStatus'
@@ -739,7 +739,7 @@ functions = {
                     'mechanism': 'len',
                     'value': 'customCableCompensationDataSize'
                 },
-                'type': 'ViAddr[]'
+                'type': 'ViInt8[]'
             }
         ],
         'returns': 'ViStatus'
@@ -2098,7 +2098,7 @@ functions = {
                     'mechanism': 'ivi-dance',
                     'value': 'size'
                 },
-                'type': 'ViAddr[]'
+                'type': 'ViInt8[]'
             }
         ],
         'returns': 'ViStatus'
@@ -2789,7 +2789,7 @@ functions = {
                     'mechanism': 'ivi-dance',
                     'value': 'compensationDataSize'
                 },
-                'type': 'ViAddr[]'
+                'type': 'ViInt8[]'
             }
         ],
         'returns': 'ViStatus'
@@ -2892,7 +2892,7 @@ functions = {
                     'mechanism': 'ivi-dance',
                     'value': 'customCableCompensationDataSize'
                 },
-                'type': 'ViAddr[]'
+                'type': 'ViInt8[]'
             }
         ],
         'returns': 'ViStatus'
@@ -3063,7 +3063,7 @@ functions = {
                     'mechanism': 'len',
                     'value': 'size'
                 },
-                'type': 'ViAddr[]'
+                'type': 'ViInt8[]'
             }
         ],
         'returns': 'ViStatus'
