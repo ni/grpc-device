@@ -7,8 +7,8 @@
 #include <session.grpc.pb.h>
 
 #include "device_enumerator.h"
-#include "software_enumerator.h"
 #include "session_repository.h"
+#include "software_enumerator.h"
 
 namespace nidevice_grpc {
 

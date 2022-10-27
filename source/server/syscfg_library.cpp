@@ -159,8 +159,7 @@ NISysCfgStatus SysCfgLibrary::GetInstalledSoftwareComponents(
 
 NISysCfgStatus SysCfgLibrary::ResetEnumeratorGetCount(
     void* enum_handle,
-    unsigned int* count
-)
+    unsigned int* count)
 {
   if (!function_pointers_.ResetEnumeratorGetCount) {
     throw LibraryLoadException(kSysCfgApiNotInstalledMessage);
@@ -174,13 +173,12 @@ NISysCfgStatus SysCfgLibrary::NextComponentInfo(
     char* version,
     char* title,
     NISysCfgComponentType* itemType,
-    char** detailedDescription
-  )
-  {
-    if (!function_pointers_.NextComponentInfo) {
+    char** detailedDescription)
+{
+  if (!function_pointers_.NextComponentInfo) {
     throw LibraryLoadException(kSysCfgApiNotInstalledMessage);
   }
   return function_pointers_.NextComponentInfo(component_enum_handle, id, version, title, itemType, detailedDescription);
-  }
+}
 
 }  // namespace nidevice_grpc

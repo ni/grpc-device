@@ -1,8 +1,8 @@
 #include "core_service_registrar.h"
 
 #include "device_enumerator.h"
-#include "software_enumerator.h"
 #include "session_utilities_service.h"
+#include "software_enumerator.h"
 #include "syscfg_library.h"
 
 namespace nidevice_grpc {

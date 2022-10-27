@@ -29,19 +29,16 @@ SoftwareEnumerator::~SoftwareEnumerator()
 
   try {
     if (NISysCfg_Succeeded(status = open_or_get_localhost_syscfg_session(&session))) {
-      if (NISysCfg_Succeeded(status = library_->GetInstalledSoftwareComponents(session, NISysCfgIncludeItemsAllVisible, NISysCfgBoolTrue, &installedComps)))
-      {
-        if (NISysCfg_Succeeded(status = library_->ResetEnumeratorGetCount(installedComps, &numInstalledComps)) && numInstalledComps > 0)
-        {
-          while (NISysCfg_Succeeded(status) && (status = library_->NextComponentInfo(installedComps, package_id, version, product_name, NULL, NULL)) == NISysCfg_OK)
-          {
+      if (NISysCfg_Succeeded(status = library_->GetInstalledSoftwareComponents(session, NISysCfgIncludeItemsAllVisible, NISysCfgBoolTrue, &installedComps))) {
+        if (NISysCfg_Succeeded(status = library_->ResetEnumeratorGetCount(installedComps, &numInstalledComps)) && numInstalledComps > 0) {
+          while (NISysCfg_Succeeded(status) && (status = library_->NextComponentInfo(installedComps, package_id, version, product_name, NULL, NULL)) == NISysCfg_OK) {
             SoftwareProperties* properties = software->Add();
             properties->set_package_id(package_id);
             properties->set_version(version);
             properties->set_product_name(product_name);
           }
         }
-        
+
         library_->CloseHandle(installedComps);
       }
     }
