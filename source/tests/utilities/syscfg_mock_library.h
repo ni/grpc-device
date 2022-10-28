@@ -41,7 +41,6 @@ class SysCfgMockLibrary : public nidevice_grpc::SysCfgLibraryInterface {
   }
   MOCK_METHOD(NISysCfgStatus, SaveResourceChanges, (NISysCfgResourceHandle resource_handle, NISysCfgBool* changes_require_restart, char** detailed_result), (override));
   MOCK_METHOD(NISysCfgStatus, FreeDetailedString, (char str[]), (override));
-  MOCK_METHOD(NISysCfgStatus, GetStatusDescription, (NISysCfgSessionHandle session_handle, NISysCfgStatus status, char** detailed_description), (override));
 };
 
 }  // namespace utilities

@@ -4,6 +4,8 @@
 
 namespace nidevice_restricted_grpc {
 
+static const char* kDebugSessionPropertyAccessFailedMessage = "The NI System Configuration API was unable to access the debug session property.";
+
 DebugSessionPropertiesRestrictedFeatureToggles::DebugSessionPropertiesRestrictedFeatureToggles(
   const nidevice_grpc::FeatureToggles& feature_toggles)
   : is_enabled(
@@ -107,13 +109,15 @@ DebugSessionPropertiesRestrictedService::DebugSessionPropertiesRestrictedService
         library->CloseHandle(filter);
       }
     }
-    if (NISysCfg_Failed(status)) {
-      return convert_api_error_status_for_syscfg_session(context, status, description, session);
-    }
   }
   catch (nidevice_grpc::NonDriverException& ex) {
     return ex.GetStatus();
   }
+
+  if (NISysCfg_Failed(status)) {
+    return ::grpc::Status(::grpc::StatusCode::INTERNAL, kDebugSessionPropertyAccessFailedMessage);
+  }
+
   return ::grpc::Status::OK;
 }
 

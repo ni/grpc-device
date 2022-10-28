@@ -57,10 +57,6 @@ class SysCfgLibraryInterface {
       char** detailed_result) = 0;
   virtual NISysCfgStatus FreeDetailedString(
       char str[]) = 0;
-  virtual NISysCfgStatus GetStatusDescription(
-      NISysCfgSessionHandle session_handle,
-      NISysCfgStatus status,
-      char** detailed_description) = 0;
 };
 
 }  // namespace nidevice_grpc

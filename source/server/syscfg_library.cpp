@@ -24,7 +24,6 @@ SysCfgLibrary::SysCfgLibrary()
   GET_POINTER(function_pointers_, shared_library_, SetResourcePropertyV);
   GET_POINTER(function_pointers_, shared_library_, SaveResourceChanges);
   GET_POINTER(function_pointers_, shared_library_, FreeDetailedString);
-  GET_POINTER(function_pointers_, shared_library_, GetStatusDescription);
 }
 
 SysCfgLibrary::~SysCfgLibrary()
@@ -179,17 +178,6 @@ NISysCfgStatus SysCfgLibrary::FreeDetailedString(char str[])
     throw LibraryLoadException(kSysCfgApiNotInstalledMessage);
   }
   return function_pointers_.FreeDetailedString(str);
-}
-
-NISysCfgStatus SysCfgLibrary::GetStatusDescription(
-    NISysCfgSessionHandle session_handle,
-    NISysCfgStatus status,
-    char** detailed_description)
-{
-  if (!function_pointers_.GetStatusDescription) {
-    throw LibraryLoadException(kSysCfgApiNotInstalledMessage);
-  }
-  return function_pointers_.GetStatusDescription(session_handle, status, detailed_description);
 }
 
 }  // namespace nidevice_grpc
