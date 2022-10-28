@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-Digital Pattern Driver API metadata version 23.0.0d41
+# This file is generated from NI-Digital Pattern Driver API metadata version 23.0.0d48
 functions = {
     'Abort': {
         'codegen_method': 'public',
@@ -1598,7 +1598,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'FetchCaptureWaveformU32': {
-        'codegen_method': 'public',
+        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'cppName': 'vi',
