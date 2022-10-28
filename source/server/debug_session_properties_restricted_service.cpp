@@ -78,7 +78,6 @@ DebugSessionPropertiesRestrictedService::DebugSessionPropertiesRestrictedService
   NISysCfgFilterHandle filter = NULL;
   NISysCfgEnumResourceHandle resources_handle = NULL;
   NISysCfgResourceHandle resource = NULL;
-  std::string description;
 
   try {
     auto library = get_syscfg_library_interface();
@@ -95,10 +94,7 @@ DebugSessionPropertiesRestrictedService::DebugSessionPropertiesRestrictedService
               if (save_changes) {
                 NISysCfgBool changes_require_restart = NISysCfgBoolFalse;
                 char* detailed_changes = nullptr;
-                if (NISysCfg_Failed(status = library->SaveResourceChanges(resource, &changes_require_restart, &detailed_changes))
-                    && detailed_changes != nullptr) {
-                  description = detailed_changes;
-                }
+                status = library->SaveResourceChanges(resource, &changes_require_restart, &detailed_changes);
                 library->FreeDetailedString(detailed_changes);
               }
             }
