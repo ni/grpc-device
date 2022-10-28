@@ -33,3 +33,4 @@ jobs:
       run: |
         python source/codegen/validate_examples.py -p "*rfmx*"
         python source/codegen/validate_examples.py -p "*xnet*"
+        python source/codegen/validate_examples.py -p "session"
