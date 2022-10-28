@@ -39,7 +39,7 @@ jobs:
 
     - name: Stage Restricted Client Files
       run: |
-        python source/codegen/stage_client_files.py --include-prerelease -o ${{ runner.temp }}/staging_restricted/
+        python source/codegen/stage_client_files.py --ignore-release-readiness -o ${{ runner.temp }}/staging_restricted/
 
     - name: Tar Linux Client Files
       if: ${{ (runner.os == 'Linux') }}
