@@ -30,6 +30,16 @@ TEST(ServerConfigurationParserTests, CreateConfigurationParserFromPathToDefaultC
   EXPECT_FALSE(address.empty());
 }
 
+TEST(ServerConfigurationParserTests, CreateConfigurationParserFromPathToLocalhostConfigFile_ParseAddress_ReturnsLocalhostAddressAndPort)
+{
+  std::string config_file_path = nidevice_grpc::ServerConfigurationParser::get_exe_path() + "test_localhost_config.json";
+  nidevice_grpc::ServerConfigurationParser server_config_parser(config_file_path);
+
+  auto address = server_config_parser.parse_address();
+
+  EXPECT_EQ(address, "[::1]:0");
+}
+
 TEST(ServerConfigurationParserTests, CreateConfigurationParserFromPathToMutualTlsConfigFile_ParseAllSecurityKeys_NoneEmpty)
 {
   std::string config_file_path = nidevice_grpc::ServerConfigurationParser::get_exe_path() + "test_mutual_tls_config.json";
