@@ -112,8 +112,12 @@ DebugSessionPropertiesRestrictedService::DebugSessionPropertiesRestrictedService
     return ex.GetStatus();
   }
 
-  if (NISysCfg_Failed(status) || no_hardware_found) {
-    return ::grpc::Status(::grpc::StatusCode::INTERNAL, kDebugSessionPropertyAccessFailedMessage);
+  if (NISysCfg_Failed(status)) {
+    return nidevice_grpc::ApiErrorAndDescriptionToStatus(context, status, std::string(kDebugSessionPropertyAccessFailedMessage));
+  }
+
+  if (no_hardware_found) {
+    return ::grpc::Status(::grpc::StatusCode::NOT_FOUND, kDebugSessionPropertyAccessFailedMessage);
   }
 
   return ::grpc::Status::OK;
@@ -126,7 +130,6 @@ DebugSessionPropertiesRestrictedService::DebugSessionPropertiesRestrictedService
   bool* value)
 {
   auto get_bool_lambda = [&] (nidevice_grpc::SysCfgLibraryInterface* library, NISysCfgResourceHandle resource, bool* save_changes) {
-    *save_changes = false;
     NISysCfgBool syscfg_value = NISysCfgBoolFalse;
     auto status = library->GetResourceProperty(resource, property_id, &syscfg_value);
     *value = syscfg_value != NISysCfgBoolFalse;
@@ -142,7 +145,6 @@ DebugSessionPropertiesRestrictedService::DebugSessionPropertiesRestrictedService
   uint32_t* value)
 {
   auto get_uint_lambda = [&] (nidevice_grpc::SysCfgLibraryInterface* library, NISysCfgResourceHandle resource, bool* save_changes) {
-      *save_changes = false;
       return library->GetResourceProperty(resource, property_id, value);
   };
   return access_syscfg_resource_by_device_id_filter(context, device_id, get_uint_lambda);

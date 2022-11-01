@@ -1,3 +1,4 @@
+#include <grpcpp/test/server_context_test_spouse.h>
 #include <gtest/gtest.h>
 #include <server/debug_session_properties_restricted_service.h>
 #include <server/syscfg_library.h>
@@ -161,7 +162,7 @@ TEST(DebugSessionPropertiesTests, SysCfgApiNotInstalled_QueryDebugSessionSupport
   EXPECT_EQ(nidevice_grpc::kSysCfgApiNotInstalledMessage, status.error_message());
 }
 
-TEST(DebugSessionPropertiesTests, InitializeSessionReturnsError_QueryDebugSessionSupported_ReturnsInternalGrpcStatusCode)
+TEST(DebugSessionPropertiesTests, InitializeSessionReturnsError_QueryDebugSessionSupported_ReturnsUnknownGrpcStatusCode)
 {
   NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
   nidevice_restricted_grpc::DebugSessionPropertiesRestrictedService service(&mock_library);
@@ -175,7 +176,7 @@ TEST(DebugSessionPropertiesTests, InitializeSessionReturnsError_QueryDebugSessio
 
   ::grpc::Status status = service.IsDebugSessionSupported(&context, &request, &response);
 
-  EXPECT_EQ(::grpc::StatusCode::INTERNAL, status.error_code());
+  EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status.error_code());
   EXPECT_EQ(nidevice_restricted_grpc::kDebugSessionPropertyAccessFailedMessage, status.error_message());
 }
 
@@ -206,7 +207,7 @@ TEST(DebugSessionPropertiesTests, InitializeSessionSucceeds_QueryDebugSessionSup
   EXPECT_EQ(::grpc::StatusCode::OK, status.error_code());
 }
 
-TEST(DebugSessionPropertiesTests, CreateFilterReturnsError_QueryDebugSessionSupported_ReturnsInternalError)
+TEST(DebugSessionPropertiesTests, CreateFilterReturnsError_QueryDebugSessionSupported_ReturnsUnknownErrorSysCfgErrorInMetadata)
 {
   NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
   nidevice_restricted_grpc::DebugSessionPropertiesRestrictedService service(&mock_library);
@@ -220,8 +221,16 @@ TEST(DebugSessionPropertiesTests, CreateFilterReturnsError_QueryDebugSessionSupp
 
   ::grpc::Status status = service.IsDebugSessionSupported(&context, &request, &response);
 
-  EXPECT_EQ(::grpc::StatusCode::INTERNAL, status.error_code());
+  EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status.error_code());
   EXPECT_EQ(nidevice_restricted_grpc::kDebugSessionPropertyAccessFailedMessage, status.error_message());
+  ::grpc::testing::ServerContextTestSpouse spouse(&context);
+  auto trailing_metadata = spouse.GetTrailingMetadata();
+  auto error_iterator = trailing_metadata.find("ni-error");
+  EXPECT_NE(trailing_metadata.end(), error_iterator);
+  if (error_iterator != trailing_metadata.end())
+  {
+    EXPECT_EQ(NISysCfg_InvalidArg, std::stoi(error_iterator->second));
+  }
 }
 
 static NISysCfgStatus SetFilterHandleToOne(NISysCfgFilterHandle* filter_handle)
@@ -251,7 +260,7 @@ TEST(DebugSessionPropertiesTests, CreateFilterSetsFilterHandle_QueryDebugSession
   EXPECT_TRUE(status.ok());
 }
 
-TEST(DebugSessionPropertiesTests, FindHardwareReturnsError_QueryDebugSessionSupported_ReturnsInternalError)
+TEST(DebugSessionPropertiesTests, FindHardwareReturnsError_QueryDebugSessionSupported_ReturnsUnknownError)
 {
   NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
   nidevice_restricted_grpc::DebugSessionPropertiesRestrictedService service(&mock_library);
@@ -265,7 +274,7 @@ TEST(DebugSessionPropertiesTests, FindHardwareReturnsError_QueryDebugSessionSupp
 
   ::grpc::Status status = service.IsDebugSessionSupported(&context, &request, &response);
 
-  EXPECT_EQ(::grpc::StatusCode::INTERNAL, status.error_code());
+  EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status.error_code());
   EXPECT_EQ(nidevice_restricted_grpc::kDebugSessionPropertyAccessFailedMessage, status.error_message());
 }
 
@@ -313,7 +322,7 @@ TEST(DebugSessionPropertiesTests, FindHardwareSetsResourceEnumHandle_QueryDebugS
   EXPECT_TRUE(status.ok());
 }
 
-TEST(DebugSessionPropertiesTests, NextResourceReturnsError_QueryDebugSessionSupported_ReturnsInternalError)
+TEST(DebugSessionPropertiesTests, NextResourceReturnsError_QueryDebugSessionSupported_ReturnsUnknownError)
 {
   NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
   nidevice_restricted_grpc::DebugSessionPropertiesRestrictedService service(&mock_library);
@@ -327,7 +336,7 @@ TEST(DebugSessionPropertiesTests, NextResourceReturnsError_QueryDebugSessionSupp
 
   ::grpc::Status status = service.IsDebugSessionSupported(&context, &request, &response);
 
-  EXPECT_EQ(::grpc::StatusCode::INTERNAL, status.error_code());
+  EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status.error_code());
   EXPECT_EQ(nidevice_restricted_grpc::kDebugSessionPropertyAccessFailedMessage, status.error_message());
 }
 
@@ -373,7 +382,7 @@ TEST(DebugSessionPropertiesTests, NextResourceSetsResourceHandle_QueryDebugSessi
   EXPECT_TRUE(status.ok());
 }
 
-TEST(DebugSessionPropertiesTests, NoMatchForFilter_QueryDebugSessionSupported_ReturnsInternalError)
+TEST(DebugSessionPropertiesTests, NoMatchForFilter_QueryDebugSessionSupported_ReturnsNotFoundError)
 {
   NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
   nidevice_restricted_grpc::DebugSessionPropertiesRestrictedService service(&mock_library);
@@ -385,7 +394,7 @@ TEST(DebugSessionPropertiesTests, NoMatchForFilter_QueryDebugSessionSupported_Re
 
   ::grpc::Status status = service.IsDebugSessionSupported(&context, &request, &response);
 
-  EXPECT_EQ(::grpc::StatusCode::INTERNAL, status.error_code());
+  EXPECT_EQ(::grpc::StatusCode::NOT_FOUND, status.error_code());
   EXPECT_EQ(nidevice_restricted_grpc::kDebugSessionPropertyAccessFailedMessage, status.error_message());
 }
 
