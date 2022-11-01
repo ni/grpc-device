@@ -78,7 +78,7 @@ TEST(DeviceEnumeratorTests, InitializeSessionReturnsError_EnumerateDevices_ListO
   EXPECT_EQ(0, devices.size());
 }
 
-NISysCfgStatus SetSessionHandleToOne(NISysCfgSessionHandle* session_handle)
+static NISysCfgStatus SetSessionHandleToOne(NISysCfgSessionHandle* session_handle)
 {
   *session_handle = (NISysCfgSessionHandle)1;
   return NISysCfg_OK;
@@ -118,7 +118,7 @@ TEST(DeviceEnumeratorTests, CreateFilterReturnsError_EnumerateDevices_ListOfDevi
   EXPECT_EQ(0, devices.size());
 }
 
-NISysCfgStatus SetFilterHandleToOne(NISysCfgFilterHandle* filter_handle)
+static NISysCfgStatus SetFilterHandleToOne(NISysCfgFilterHandle* filter_handle)
 {
   *filter_handle = (NISysCfgFilterHandle)1;
   return NISysCfg_OK;
@@ -158,7 +158,7 @@ TEST(DeviceEnumeratorTests, FindHardwareReturnsError_EnumerateDevices_ListOfDevi
   EXPECT_EQ(0, devices.size());
 }
 
-NISysCfgStatus SetResourceEnumHandleToOne(NISysCfgEnumResourceHandle* resource_enum_handle)
+static NISysCfgStatus SetResourceEnumHandleToOne(NISysCfgEnumResourceHandle* resource_enum_handle)
 {
   *resource_enum_handle = (NISysCfgEnumResourceHandle)1;
   return NISysCfg_OK;
@@ -213,7 +213,7 @@ TEST(DeviceEnumeratorTests, NextResourceReturnsError_EnumerateDevices_ListOfDevi
   EXPECT_EQ(0, devices.size());
 }
 
-NISysCfgStatus SetResourceHandleToOne(NISysCfgResourceHandle* resource_handle)
+static NISysCfgStatus SetResourceHandleToOne(NISysCfgResourceHandle* resource_handle)
 {
   *resource_handle = (NISysCfgResourceHandle)1;
   return NISysCfg_OK;
@@ -269,14 +269,14 @@ TEST(DeviceEnumeratorTests, SysCfgApiInstalledAndNoDevicesPresent_EnumerateDevic
   EXPECT_EQ(0, devices.size());
 }
 
-NISysCfgStatus SetIsNIProductToTrue(void* value)
+static NISysCfgStatus SetIsNIProductToTrue(void* value)
 {
   NISysCfgBool* is_ni_product = (NISysCfgBool*)value;
   *is_ni_product = NISysCfgBoolTrue;
   return NISysCfg_OK;
 }
 
-NISysCfgStatus SetIsNIProductToFalse(void* value)
+static NISysCfgStatus SetIsNIProductToFalse(void* value)
 {
   NISysCfgBool* is_ni_product = (NISysCfgBool*)value;
   *is_ni_product = NISysCfgBoolFalse;
@@ -304,7 +304,7 @@ TEST(DeviceEnumeratorTests, LocalHostContainsNonNiDevices_EnumerateDevices_ListO
   EXPECT_EQ(1, devices.size());
 }
 
-NISysCfgStatus SetExpertNameToNetwork(void* value)
+static NISysCfgStatus SetExpertNameToNetwork(void* value)
 {
   char* expert_name = (char*)value;
   strcpy(expert_name, nidevice_grpc::kNetworkExpertName);
@@ -391,7 +391,7 @@ TEST(DeviceEnumeratorTests, NISysCfgLibraryIsLoaded_ClearSysCfgSession_CalledClo
   status = device_enumerator.open_or_get_localhost_syscfg_session(&session);
 }
 
-NISysCfgStatus SetAliasName(void* value)
+static NISysCfgStatus SetAliasName(void* value)
 {
   char* name = (char*)value;
   strcpy(name, kScopeName);
@@ -422,7 +422,7 @@ TEST(DeviceEnumeratorTests, GetResourceIndexedPropertySetsName_EnumerateDevices_
   EXPECT_EQ(kScopeName, devices.Get(0).name());
 }
 
-NISysCfgStatus SetModelName(void* value)
+static NISysCfgStatus SetModelName(void* value)
 {
   char* model = (char*)value;
   strcpy(model, kModel);
@@ -451,7 +451,7 @@ TEST(DeviceEnumeratorTests, GetResourcePropertySetsModelName_EnumerateDevices_Re
   EXPECT_EQ(kModel, devices.Get(0).model());
 }
 
-NISysCfgStatus SetVendorName(void* value)
+static NISysCfgStatus SetVendorName(void* value)
 {
   char* vendor = (char*)value;
   strcpy(vendor, kVendor);
@@ -480,7 +480,7 @@ TEST(DeviceEnumeratorTests, GetResourcePropertySetsVendorName_EnumerateDevices_R
   EXPECT_EQ(kVendor, devices.Get(0).vendor());
 }
 
-NISysCfgStatus SetSerialNumber(void* value)
+static NISysCfgStatus SetSerialNumber(void* value)
 {
   char* serial_number = (char*)value;
   strcpy(serial_number, kSerialNumber);
@@ -509,7 +509,7 @@ TEST(DeviceEnumeratorTests, GetResourcePropertySetsSerialNumber_EnumerateDevices
   EXPECT_EQ(kSerialNumber, devices.Get(0).serial_number());
 }
 
-NISysCfgStatus SetProductId(void* value)
+static NISysCfgStatus SetProductId(void* value)
 {
   uint32_t* product_id = (uint32_t*)value;
   *product_id = kProductId;

@@ -4,8 +4,6 @@
 
 namespace nidevice_restricted_grpc {
 
-static const char* kDebugSessionPropertyAccessFailedMessage = "The NI System Configuration API was unable to access the debug session property.";
-
 DebugSessionPropertiesRestrictedFeatureToggles::DebugSessionPropertiesRestrictedFeatureToggles(
   const nidevice_grpc::FeatureToggles& feature_toggles)
   : is_enabled(
@@ -24,7 +22,7 @@ DebugSessionPropertiesRestrictedService::DebugSessionPropertiesRestrictedService
   IsDebugSessionSupportedResponse* response)
 {
   bool supported = false;
-  auto status = get_bool_property(context, (NISysCfgResourceProperty)0x10001000, request->device_id(), &supported);
+  auto status = get_bool_property(context, kDebugSessionSupportedPropertyId, request->device_id(), &supported);
   response->set_supported(supported);
   return status;
 }
@@ -35,7 +33,7 @@ DebugSessionPropertiesRestrictedService::DebugSessionPropertiesRestrictedService
   IsDebugSessionEnabledResponse* response)
 {
   uint32_t enabled = false;
-  auto status = get_uint_property(context, (NISysCfgResourceProperty)0x10002000, request->device_id(), &enabled);
+  auto status = get_uint_property(context, kDebugSessionEnabledPropertyId, request->device_id(), &enabled);
   response->set_enabled(enabled != 0);
   return status;
 }
@@ -46,7 +44,7 @@ DebugSessionPropertiesRestrictedService::DebugSessionPropertiesRestrictedService
   IsDebugSessionServerOutOfProcessResponse* response)
 {
   bool out_of_process = false;
-  auto status = get_bool_property(context, (NISysCfgResourceProperty)0x10003000, request->device_id(), &out_of_process);
+  auto status = get_bool_property(context, kDebugSessionServerOutOfProcessPropertyId, request->device_id(), &out_of_process);
   response->set_out_of_process(out_of_process);
   return status;
 }
@@ -57,7 +55,7 @@ DebugSessionPropertiesRestrictedService::DebugSessionPropertiesRestrictedService
   SetDebugSessionEnabledResponse* response)
 {
   uint32_t enabled = request->enabled() ? 1 : 0;
-  return set_uint_property(context, (NISysCfgResourceProperty)0x10002000, request->device_id(), enabled);
+  return set_uint_property(context, kDebugSessionEnabledPropertyId, request->device_id(), enabled);
 }
 
 ::grpc::Status DebugSessionPropertiesRestrictedService::SetDebugSessionServerOutOfProcess(
@@ -65,7 +63,7 @@ DebugSessionPropertiesRestrictedService::DebugSessionPropertiesRestrictedService
   const SetDebugSessionServerOutOfProcessRequest* request,
   SetDebugSessionServerOutOfProcessResponse* response)
 {
-  return set_bool_property(context, (NISysCfgResourceProperty)0x10003000, request->device_id(), request->out_of_process());
+  return set_bool_property(context, kDebugSessionServerOutOfProcessPropertyId, request->device_id(), request->out_of_process());
 }
 
 ::grpc::Status DebugSessionPropertiesRestrictedService::access_syscfg_resource_by_device_id_filter(
@@ -78,6 +76,7 @@ DebugSessionPropertiesRestrictedService::DebugSessionPropertiesRestrictedService
   NISysCfgFilterHandle filter = NULL;
   NISysCfgEnumResourceHandle resources_handle = NULL;
   NISysCfgResourceHandle resource = NULL;
+  bool no_hardware_found = false;
 
   try {
     auto library = get_syscfg_library_interface();
@@ -88,7 +87,7 @@ DebugSessionPropertiesRestrictedService::DebugSessionPropertiesRestrictedService
         library->SetFilterProperty(filter, NISysCfgFilterPropertySerialNumber, device_id.serial_number().c_str());
         library->SetFilterProperty(filter, NISysCfgFilterPropertyProductId, device_id.product_id());
         if (NISysCfg_Succeeded(status = library->FindHardware(session, NISysCfgFilterModeMatchValuesAll, filter, NULL, &resources_handle))) {
-          if (NISysCfg_Succeeded(status) && (status = library->NextResource(session, resources_handle, &resource)) == NISysCfg_OK) {
+          if ((status = library->NextResource(session, resources_handle, &resource)) == NISysCfg_OK) {
             bool save_changes = false;
             if (NISysCfg_Succeeded(status = syscfg_resource_action_func(library, resource, &save_changes))) {
               if (save_changes) {
@@ -100,6 +99,9 @@ DebugSessionPropertiesRestrictedService::DebugSessionPropertiesRestrictedService
             }
             library->CloseHandle(resource);
           }
+          else{
+            no_hardware_found = true;
+          }
           library->CloseHandle(resources_handle);
         }
         library->CloseHandle(filter);
@@ -110,7 +112,7 @@ DebugSessionPropertiesRestrictedService::DebugSessionPropertiesRestrictedService
     return ex.GetStatus();
   }
 
-  if (NISysCfg_Failed(status)) {
+  if (NISysCfg_Failed(status) || no_hardware_found) {
     return ::grpc::Status(::grpc::StatusCode::INTERNAL, kDebugSessionPropertyAccessFailedMessage);
   }
 

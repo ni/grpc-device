@@ -13,6 +13,11 @@
 
 namespace nidevice_restricted_grpc {
 
+static const char* kDebugSessionPropertyAccessFailedMessage = "The NI System Configuration API was unable to access the debug session property.";
+static const auto kDebugSessionSupportedPropertyId = (NISysCfgResourceProperty)0x10001000;
+static const auto kDebugSessionEnabledPropertyId = (NISysCfgResourceProperty)0x10002000;
+static const auto kDebugSessionServerOutOfProcessPropertyId = (NISysCfgResourceProperty)0x10003000;
+
 struct DebugSessionPropertiesRestrictedFeatureToggles
 {
   using CodeReadiness = nidevice_grpc::FeatureToggles::CodeReadiness;
