@@ -113,7 +113,8 @@ DebugSessionPropertiesRestrictedService::DebugSessionPropertiesRestrictedService
   }
 
   if (NISysCfg_Failed(status)) {
-    return nidevice_grpc::ApiErrorAndDescriptionToStatus(context, status, std::string(kDebugSessionPropertyAccessFailedMessage));
+    std::string description(kDebugSessionPropertyAccessFailedMessage);
+    return nidevice_grpc::ApiErrorAndDescriptionToStatus(context, status, description);
   }
 
   if (no_hardware_found) {

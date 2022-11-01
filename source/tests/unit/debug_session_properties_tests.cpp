@@ -47,7 +47,7 @@ class DebugSessionPropertiesSysCfgMockLibrary : public NiceMock<ni::tests::utili
     switch(property_ID) {
       case NISysCfgFilterPropertyIsDevice: {
         is_device_set_ = true;
-        is_device_ = va_arg(args, NISysCfgBool);
+        is_device_ = (NISysCfgBool)va_arg(args, int);
         status = NISysCfg_OK;
         break;
       }
@@ -99,7 +99,7 @@ class DebugSessionPropertiesSysCfgMockLibrary : public NiceMock<ni::tests::utili
         if (expect_out_of_process_)
         {
           out_of_process_set_ = true;
-          out_of_process_ = va_arg(args, NISysCfgBool);
+          out_of_process_ = (NISysCfgBool)va_arg(args, int);
           status = NISysCfg_OK;
         }
         break;
@@ -125,7 +125,7 @@ class DebugSessionPropertiesSysCfgMockLibrary : public NiceMock<ni::tests::utili
   unsigned int debug_enabled() const { return debug_enabled_; }
   void set_expect_out_of_process() { expect_out_of_process_ = true; }
   bool out_of_process_set() const { return out_of_process_set_; }
-  bool out_of_process() const { return out_of_process_; }
+  NISysCfgBool out_of_process() const { return out_of_process_; }
 
  private:
   bool is_device_set_;
