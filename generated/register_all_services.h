@@ -8,6 +8,7 @@
 #include <server/feature_toggles.h>
 
 #include <memory>
+#include <vector>
 
 namespace grpc {
 class ServerBuilder;
