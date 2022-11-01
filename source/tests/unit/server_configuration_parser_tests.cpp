@@ -17,7 +17,7 @@ TEST(ServerConfigurationParserTests, CreateConfigurationParserFromDefaultConfigF
 
   auto address = server_config_parser.parse_address();
 
-  EXPECT_EQ(address, nidevice_grpc::kDefaultAddressPrefix + std::string("31763"));
+  EXPECT_EQ(address, std::string(nidevice_grpc::kDefaultAddressPrefix) + ":" + std::string("31763"));
 }
 
 TEST(ServerConfigurationParserTests, CreateConfigurationParserFromPathToDefaultConfigFile_ParseAddress_NotEmpty)
@@ -373,7 +373,7 @@ TEST(ServerConfigurationParserTests, JsonConfigWithEnabledFeature_ParseFeatureTo
 {
   nlohmann::json config_json = nlohmann::json::parse(R"(
     {
-      "feature_toggles" : { 
+      "feature_toggles" : {
         "feature": true
       }
     })");
@@ -391,7 +391,7 @@ TEST(ServerConfigurationParserTests, JsonConfigWithEnabledFeature_ParseFeatureTo
 {
   nlohmann::json config_json = nlohmann::json::parse(R"(
     {
-      "feature_toggles" : { 
+      "feature_toggles" : {
         "feature": true
       }
     })");
@@ -406,7 +406,7 @@ TEST(ServerConfigurationParserTests, JsonConfigWithDisabledFeature_ParseFeatureT
 {
   nlohmann::json config_json = nlohmann::json::parse(R"(
     {
-      "feature_toggles" : { 
+      "feature_toggles" : {
         "feature": false
       }
     })");
@@ -424,7 +424,7 @@ TEST(ServerConfigurationParserTests, JsonConfigWithMultipleFeaturesWithDifferent
 {
   nlohmann::json config_json = nlohmann::json::parse(R"(
     {
-      "feature_toggles" : { 
+      "feature_toggles" : {
         "feature1": false,
         "feature2": true,
         "feature3": false,
@@ -446,7 +446,7 @@ TEST(ServerConfigurationParserTests, JsonConfigWithInvalidFeatureToggleValue_Par
 {
   nlohmann::json config_json = nlohmann::json::parse(R"(
     {
-      "feature_toggles" : { 
+      "feature_toggles" : {
         "feature": 12345
       }
     })");
