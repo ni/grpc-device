@@ -61,6 +61,16 @@ class SysCfgLibrary : public SysCfgLibraryInterface {
       NISysCfgResourceHandle resource_handle,
       NISysCfgResourceProperty property_ID,
       void* value);
+  NISysCfgStatus SetResourceProperty(
+      NISysCfgResourceHandle resource_handle,
+      NISysCfgResourceProperty property_ID,
+      ...);
+  NISysCfgStatus SaveResourceChanges(
+      NISysCfgResourceHandle resource_handle,
+      NISysCfgBool* changes_require_restart,
+      char** detailed_result);
+  NISysCfgStatus FreeDetailedString(
+      char str[]);
   NISysCfgStatus GetInstalledSoftwareComponents(
       NISysCfgSessionHandle session_handle,
       NISysCfgIncludeComponentTypes item_types,
@@ -87,6 +97,9 @@ class SysCfgLibrary : public SysCfgLibraryInterface {
   using NextResourcePtr = decltype(&NISysCfgNextResource);
   using GetResourceIndexedPropertyPtr = decltype(&NISysCfgGetResourceIndexedProperty);
   using GetResourcePropertyPtr = decltype(&NISysCfgGetResourceProperty);
+  using SetResourcePropertyVPtr = decltype(&NISysCfgSetResourcePropertyV);
+  using SaveResourceChangesPtr = decltype(&NISysCfgSaveResourceChanges);
+  using FreeDetailedStringPtr = decltype(&NISysCfgFreeDetailedString);
   using ResetEnumeratorGetCountPtr = decltype(&NISysCfgResetEnumeratorGetCount);
   using NextComponentInfoPtr = decltype(&NISysCfgNextComponentInfo);
 
@@ -99,6 +112,9 @@ class SysCfgLibrary : public SysCfgLibraryInterface {
     NextResourcePtr NextResource;
     GetResourceIndexedPropertyPtr GetResourceIndexedProperty;
     GetResourcePropertyPtr GetResourceProperty;
+    SetResourcePropertyVPtr SetResourcePropertyV;
+    SaveResourceChangesPtr SaveResourceChanges;
+    FreeDetailedStringPtr FreeDetailedString;
     GetInstalledSoftwareComponentsPtr GetInstalledSoftwareComponents;
     ResetEnumeratorGetCountPtr ResetEnumeratorGetCount;
     NextComponentInfoPtr NextComponentInfo;
