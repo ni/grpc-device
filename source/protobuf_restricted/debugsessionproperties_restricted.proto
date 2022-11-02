@@ -1,0 +1,60 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.ni.grpc.devicerestricted";
+option java_outer_classname = "NiDeviceRestricted";
+option csharp_namespace = "NationalInstruments.Grpc.DeviceRestricted";
+
+package nidevice_restricted_grpc;
+
+service DebugSessionPropertiesRestricted {
+  rpc IsDebugSessionEnabled(IsDebugSessionEnabledRequest) returns (IsDebugSessionEnabledResponse);
+  rpc IsDebugSessionServerOutOfProcess(IsDebugSessionServerOutOfProcessRequest) returns (IsDebugSessionServerOutOfProcessResponse);
+  rpc IsDebugSessionSupported(IsDebugSessionSupportedRequest) returns (IsDebugSessionSupportedResponse);
+  rpc SetDebugSessionEnabled(SetDebugSessionEnabledRequest) returns (SetDebugSessionEnabledResponse);
+  rpc SetDebugSessionServerOutOfProcess(SetDebugSessionServerOutOfProcessRequest) returns (SetDebugSessionServerOutOfProcessResponse);
+}
+
+message DeviceId {
+  string name = 1;
+  string serial_number = 2;
+  uint32 product_id = 3;
+}
+
+message IsDebugSessionEnabledRequest {
+  DeviceId device_id = 1;
+}
+
+message IsDebugSessionEnabledResponse {
+  bool enabled = 1;
+}
+
+message IsDebugSessionServerOutOfProcessRequest {
+  DeviceId device_id = 1;
+}
+ 
+message IsDebugSessionServerOutOfProcessResponse {
+  bool out_of_process = 1;
+}
+
+message IsDebugSessionSupportedRequest {
+  DeviceId device_id = 1;
+}
+ 
+message IsDebugSessionSupportedResponse {
+  bool supported = 1;
+}
+
+message SetDebugSessionEnabledRequest {
+  DeviceId device_id = 1;
+  bool enabled = 2;
+}
+
+message SetDebugSessionEnabledResponse {}
+
+message SetDebugSessionServerOutOfProcessRequest {
+  DeviceId device_id = 1;
+  bool out_of_process = 2;
+}
+
+message SetDebugSessionServerOutOfProcessResponse {}

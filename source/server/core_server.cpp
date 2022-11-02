@@ -112,6 +112,12 @@ static void RunServer(const ServerConfiguration& config)
       "Security is configured with %s%s.", security_description, tls_description);
   // This call will block until another thread shuts down the server.
   server->Wait();
+
+  // destroy services in reverse order
+  while (!services->empty())
+  {
+    services->pop_back();
+  }
 }
 
 struct Options {

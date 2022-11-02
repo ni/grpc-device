@@ -1,5 +1,7 @@
 #include "session_utilities_service.h"
 
+#include <algorithm>
+
 namespace nidevice_grpc {
 
 SessionUtilitiesService::SessionUtilitiesService(SessionRepository* session_repository, DeviceEnumerator* device_enumerator)
@@ -50,8 +52,35 @@ SessionUtilitiesService::SessionUtilitiesService(SessionRepository* session_repo
   }
   bool is_server_reset = session_repository_->reset_server();
   response->set_is_server_reset(is_server_reset);
-  device_enumerator_->clear_syscfg_session();
+
+  {
+    std::unique_lock<std::shared_mutex> lock(observers_mutex_);
+    for (auto observer : observers_)
+    {
+      observer->on_server_reset();
+    }
+  }
+
   return ::grpc::Status::OK;
+}
+
+void SessionUtilitiesService::register_observer(ServerResetObserverInterface* observer)
+{
+  std::unique_lock<std::shared_mutex> lock(observers_mutex_);
+  if (std::find(observers_.begin(), observers_.end(), observer) == observers_.end())
+  {
+    observers_.push_back(observer);
+  }
+}
+
+void SessionUtilitiesService::unregister_observer(ServerResetObserverInterface* observer)
+{
+  std::unique_lock<std::shared_mutex> lock(observers_mutex_);
+  auto i = std::find(observers_.begin(), observers_.end(), observer);
+  if (i != observers_.end())
+  {
+    observers_.erase(i);
+  }
 }
 
 }  // namespace nidevice_grpc
