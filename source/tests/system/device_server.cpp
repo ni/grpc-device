@@ -16,7 +16,7 @@ DeviceServerInterface::~DeviceServerInterface() {}
 class DeviceServer : public DeviceServerInterface {
  public:
   DeviceServer();
-  ~DeviceServer() override{};
+  ~DeviceServer() override;
 
   // DeviceServerInterface overrides
   void ResetServer() override;
@@ -24,7 +24,7 @@ class DeviceServer : public DeviceServerInterface {
 
  private:
   grpc::ServerBuilder builder_;
-  std::shared_ptr<void> services_;
+  std::shared_ptr<std::vector<std::shared_ptr<void>>> services_;
   std::unique_ptr<::grpc::Server> server_;
   std::shared_ptr<::grpc::Channel> channel_;
   std::unique_ptr<nidevice_grpc::SessionUtilities::Stub> session_stub_;
@@ -41,6 +41,15 @@ DeviceServer::DeviceServer()
       channel_(server_->InProcessChannel(::grpc::ChannelArguments())),
       session_stub_(nidevice_grpc::SessionUtilities::NewStub(channel_))
 {
+}
+
+DeviceServer::~DeviceServer()
+{
+  // destroy services in reverse order
+  while (!services_->empty())
+  {
+    services_->pop_back();
+  }
 }
 
 void DeviceServer::ResetServer()

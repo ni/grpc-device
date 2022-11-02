@@ -39,13 +39,3 @@ jobs:
       - build_nilrt
       - create_client_artifacts
     uses: ./.github/workflows/create_release.yml
-  trigger_azdo_ci:
-    needs:
-     - run_win_system_tests
-     - run_ubuntu_system_tests
-     - build_nilrt
-     - create_client_artifacts
-     - create_release
-    uses: ./.github/workflows/trigger_azdo_ci.yml
-    secrets:
-      AZDO_PIPELINE_TRIGGERS: ${{secrets.AZDO_PIPELINE_TRIGGERS}}
