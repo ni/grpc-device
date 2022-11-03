@@ -232,7 +232,7 @@ std::string ServerConfigurationParser::parse_bind_address() const
       parsed_bind_address = it->get<std::string>();
     }
     catch (const nlohmann::json::type_error& ex) {
-      throw WrongPortTypeException(ex.what());
+      throw WrongAddressTypeException(ex.what());
     }
 
     if (parsed_bind_address.empty()) {
@@ -274,6 +274,11 @@ ServerConfigurationParser::ConfigFileNotFoundException::ConfigFileNotFoundExcept
 
 ServerConfigurationParser::InvalidAddressException::InvalidAddressException()
     : std::runtime_error(kInvalidAddressMessage)
+{
+}
+
+ServerConfigurationParser::WrongAddressTypeException::WrongAddressTypeException(const std::string& type_error_details)
+    : std::runtime_error(kWrongAddressTypeMessage + type_error_details)
 {
 }
 

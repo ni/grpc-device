@@ -67,6 +67,36 @@ TEST(ServerConfigurationParserTests, CreateConfigurationParserFromMissingConfigF
   }
 }
 
+TEST(ServerConfigurationParserTests, JsonConfigWithIntegerAddress_ParseAddress_ThrowsWrongAddressTypeException)
+{
+  nlohmann::json config_json = nlohmann::json::parse(R"({ "address": 0, "port": 0 })");
+  nidevice_grpc::ServerConfigurationParser server_config_parser(config_json);
+
+  try {
+    auto address = server_config_parser.parse_address();
+
+    FAIL() << "WrongAddressTypeException not thrown";
+  }
+  catch (const nidevice_grpc::ServerConfigurationParser::WrongAddressTypeException& ex) {
+    EXPECT_THAT(ex.what(), testing::HasSubstr(nidevice_grpc::kWrongAddressTypeMessage));
+  }
+}
+
+TEST(ServerConfigurationParserTests, JsonConfigWithEmptyAddress_ParseAddress_ThrowsInvalidAddressException)
+{
+  nlohmann::json config_json = nlohmann::json::parse(R"({ "address": "", "port": 0 })");
+  nidevice_grpc::ServerConfigurationParser server_config_parser(config_json);
+
+  try {
+    auto address = server_config_parser.parse_address();
+
+    FAIL() << "InvalidAddressException not thrown";
+  }
+  catch (const nidevice_grpc::ServerConfigurationParser::InvalidAddressException& ex) {
+    EXPECT_EQ(std::string(nidevice_grpc::kInvalidAddressMessage), ex.what());
+  }
+}
+
 TEST(ServerConfigurationParserTests, JsonConfigWithNegativePortNumber_ParseAddress_ThrowsInvalidPortException)
 {
   nlohmann::json config_json = nlohmann::json::parse(R"({ "port": -1 })");
