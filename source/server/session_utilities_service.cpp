@@ -16,7 +16,7 @@ SessionUtilitiesService::SessionUtilitiesService(SessionRepository* session_repo
 
 ::grpc::Status SessionUtilitiesService::EnumerateSoftware(::grpc::ServerContext* context, const EnumerateSoftwareRequest* request, EnumerateSoftwareResponse* response)
 {
-  return software_enumerator_->enumerate_software(response->mutable_software());
+  return software_enumerator_->enumerate_software(context, response->mutable_software());
 }
 
 ::grpc::Status SessionUtilitiesService::Reserve(::grpc::ServerContext* context, const ReserveRequest* request, ReserveResponse* response)

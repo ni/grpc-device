@@ -1,3 +1,4 @@
+#include <grpcpp/test/server_context_test_spouse.h>
 #include <gtest/gtest.h>
 #include <server/software_enumerator.h>
 #include <server/syscfg_library.h>
@@ -23,13 +24,14 @@ TEST(SoftwareEnumeratorTests, SysCfgApiNotInstalled_EnumerateSoftware_ReturnsNot
 {
   NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
   nidevice_grpc::SoftwareEnumerator software_enumerator(&mock_library);
+  ::grpc::ServerContext context;
   google::protobuf::RepeatedPtrField<nidevice_grpc::SoftwareProperties> software;
   EXPECT_CALL(mock_library, InitializeSession)
       .WillOnce(Throw(nidevice_grpc::LibraryLoadException(nidevice_grpc::kSysCfgApiNotInstalledMessage)));
   EXPECT_CALL(mock_library, CloseHandle)
       .Times(0);
 
-  ::grpc::Status status = software_enumerator.enumerate_software(&software);
+  ::grpc::Status status = software_enumerator.enumerate_software(&context, &software);
 
   EXPECT_EQ(::grpc::StatusCode::NOT_FOUND, status.error_code());
   EXPECT_EQ(nidevice_grpc::kSysCfgApiNotInstalledMessage, status.error_message());
@@ -39,40 +41,50 @@ TEST(SoftwareEnumeratorTests, SysCfgApiNotInstalled_EnumerateSoftware_SoftwareLi
 {
   NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
   nidevice_grpc::SoftwareEnumerator software_enumerator(&mock_library);
+  ::grpc::ServerContext context;
   google::protobuf::RepeatedPtrField<nidevice_grpc::SoftwareProperties> software;
   EXPECT_CALL(mock_library, InitializeSession)
       .WillOnce(Throw(nidevice_grpc::LibraryLoadException(nidevice_grpc::kSysCfgApiNotInstalledMessage)));
 
-  ::grpc::Status status = software_enumerator.enumerate_software(&software);
+  ::grpc::Status status = software_enumerator.enumerate_software(&context, &software);
 
   EXPECT_EQ(0, software.size());
 }
 
-TEST(SoftwareEnumeratorTests, InitializeSessionReturnsError_EnumerateSoftware_ReturnsInternalGrpcStatusCode)
+TEST(SoftwareEnumeratorTests, InitializeSessionReturnsError_EnumerateSoftware_ReturnsUnknownGrpcStatusCodeWithSysCfgErrorInMetadata)
 {
   NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
   nidevice_grpc::SoftwareEnumerator software_enumerator(&mock_library);
+  ::grpc::ServerContext context;
   google::protobuf::RepeatedPtrField<nidevice_grpc::SoftwareProperties> software;
   EXPECT_CALL(mock_library, InitializeSession)
       .WillOnce(Return(NISysCfg_InvalidLoginCredentials));
   EXPECT_CALL(mock_library, CloseHandle)
       .Times(0);
 
-  ::grpc::Status status = software_enumerator.enumerate_software(&software);
+  ::grpc::Status status = software_enumerator.enumerate_software(&context, &software);
 
-  EXPECT_EQ(::grpc::StatusCode::INTERNAL, status.error_code());
+  EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status.error_code());
   EXPECT_EQ(nidevice_grpc::kSoftwareEnumerationFailedMessage, status.error_message());
+  ::grpc::testing::ServerContextTestSpouse spouse(&context);
+  auto trailing_metadata = spouse.GetTrailingMetadata();
+  auto error_iterator = trailing_metadata.find("ni-error");
+  EXPECT_NE(trailing_metadata.end(), error_iterator);
+  if (error_iterator != trailing_metadata.end()) {
+    EXPECT_EQ(NISysCfg_InvalidLoginCredentials, std::stoi(error_iterator->second));
+  }
 }
 
 TEST(SoftwareEnumeratorTests, InitializeSessionReturnsError_EnumerateSoftware_SoftwareListIsEmpty)
 {
   NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
   nidevice_grpc::SoftwareEnumerator software_enumerator(&mock_library);
+  ::grpc::ServerContext context;
   google::protobuf::RepeatedPtrField<nidevice_grpc::SoftwareProperties> software;
   EXPECT_CALL(mock_library, InitializeSession)
       .WillOnce(Return(NISysCfg_InvalidLoginCredentials));
 
-  ::grpc::Status status = software_enumerator.enumerate_software(&software);
+  ::grpc::Status status = software_enumerator.enumerate_software(&context, &software);
 
   EXPECT_EQ(0, software.size());
 }
@@ -88,16 +100,18 @@ TEST(SoftwareEnumeratorTests, InitializeSessionSucceeds_EnumerateSoftware_CallsI
   EXPECT_CALL(mock_library, CloseHandle((void*)1))
       .Times(0);
 
+  ::grpc::ServerContext context;
   google::protobuf::RepeatedPtrField<nidevice_grpc::SoftwareProperties> software;
-  ::grpc::Status status = software_enumerator.enumerate_software(&software);
+  ::grpc::Status status = software_enumerator.enumerate_software(&context, &software);
 
   EXPECT_EQ(::grpc::StatusCode::OK, status.error_code());
 }
 
-TEST(SoftwareEnumeratorTests, GetInstalledSoftwareComponentsReturnsError_EnumerateSoftware_SoftwareListIsEmptyAndReturnsInternalError)
+TEST(SoftwareEnumeratorTests, GetInstalledSoftwareComponentsReturnsError_EnumerateSoftware_SoftwareListIsEmptyAndReturnsUnknownErrorWithSysCfgErrorInMetadata)
 {
   NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
   nidevice_grpc::SoftwareEnumerator software_enumerator(&mock_library);
+  ::grpc::ServerContext context;
   google::protobuf::RepeatedPtrField<nidevice_grpc::SoftwareProperties> software;
   EXPECT_CALL(mock_library, GetInstalledSoftwareComponents)
       .WillOnce(Return(NISysCfg_InvalidArg));
@@ -106,11 +120,18 @@ TEST(SoftwareEnumeratorTests, GetInstalledSoftwareComponentsReturnsError_Enumera
   EXPECT_CALL(mock_library, NextComponentInfo)
       .Times(0);
 
-  ::grpc::Status status = software_enumerator.enumerate_software(&software);
+  ::grpc::Status status = software_enumerator.enumerate_software(&context, &software);
 
-  EXPECT_EQ(::grpc::StatusCode::INTERNAL, status.error_code());
+  EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status.error_code());
   EXPECT_EQ(nidevice_grpc::kSoftwareEnumerationFailedMessage, status.error_message());
   EXPECT_EQ(0, software.size());
+  ::grpc::testing::ServerContextTestSpouse spouse(&context);
+  auto trailing_metadata = spouse.GetTrailingMetadata();
+  auto error_iterator = trailing_metadata.find("ni-error");
+  EXPECT_NE(trailing_metadata.end(), error_iterator);
+  if (error_iterator != trailing_metadata.end()) {
+    EXPECT_EQ(NISysCfg_InvalidArg, std::stoi(error_iterator->second));
+  }
 }
 
 NISysCfgStatus SetEnumSoftwareComponentHandleToOne(NISysCfgEnumSoftwareComponentHandle* enum_software_component_handle)
@@ -123,6 +144,7 @@ TEST(SoftwareEnumeratorTests, GetInstalledSoftwareComponentsSetsEnumSoftwareComp
 {
   NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
   nidevice_grpc::SoftwareEnumerator software_enumerator(&mock_library);
+  ::grpc::ServerContext context;
   google::protobuf::RepeatedPtrField<nidevice_grpc::SoftwareProperties> software;
   EXPECT_CALL(mock_library, GetInstalledSoftwareComponents)
       .WillOnce(WithArg<3>(SetEnumSoftwareComponentHandleToOne));
@@ -131,7 +153,7 @@ TEST(SoftwareEnumeratorTests, GetInstalledSoftwareComponentsSetsEnumSoftwareComp
   EXPECT_CALL(mock_library, CloseHandle((void*)1))
       .WillOnce(Return(NISysCfg_OK));
 
-  ::grpc::Status status = software_enumerator.enumerate_software(&software);
+  ::grpc::Status status = software_enumerator.enumerate_software(&context, &software);
 
   EXPECT_TRUE(status.ok());
 }
@@ -146,6 +168,7 @@ TEST(SoftwareEnumeratorTests, GetInstalledSoftwareComponentsSetsEnumSoftwareComp
 {
   NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
   nidevice_grpc::SoftwareEnumerator software_enumerator(&mock_library);
+  ::grpc::ServerContext context;
   google::protobuf::RepeatedPtrField<nidevice_grpc::SoftwareProperties> software;
   EXPECT_CALL(mock_library, GetInstalledSoftwareComponents)
       .WillOnce(WithArg<3>(SetEnumSoftwareComponentHandleToOne));
@@ -154,32 +177,41 @@ TEST(SoftwareEnumeratorTests, GetInstalledSoftwareComponentsSetsEnumSoftwareComp
   EXPECT_CALL(mock_library, NextComponentInfo((void*)1, _, _, _, _, _))
       .WillOnce(Return(NISysCfg_EndOfEnum));
 
-  ::grpc::Status status = software_enumerator.enumerate_software(&software);
+  ::grpc::Status status = software_enumerator.enumerate_software(&context, &software);
 
   EXPECT_TRUE(status.ok());
 }
 
-TEST(SoftwareEnumeratorTests, ResetEnumeratorGetCountReturnsError_EnumerateSoftware_SoftwareListIsEmptyAndReturnsInternalError)
+TEST(SoftwareEnumeratorTests, ResetEnumeratorGetCountReturnsError_EnumerateSoftware_SoftwareListIsEmptyAndReturnsUnknownErrorWithSysCfgErrorInMetadata)
 {
   NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
   nidevice_grpc::SoftwareEnumerator software_enumerator(&mock_library);
+  ::grpc::ServerContext context;
   google::protobuf::RepeatedPtrField<nidevice_grpc::SoftwareProperties> software;
   EXPECT_CALL(mock_library, ResetEnumeratorGetCount)
       .WillOnce(Return(NISysCfg_InvalidArg));
   EXPECT_CALL(mock_library, NextComponentInfo)
       .Times(0);
 
-  ::grpc::Status status = software_enumerator.enumerate_software(&software);
+  ::grpc::Status status = software_enumerator.enumerate_software(&context, &software);
 
-  EXPECT_EQ(::grpc::StatusCode::INTERNAL, status.error_code());
+  EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status.error_code());
   EXPECT_EQ(nidevice_grpc::kSoftwareEnumerationFailedMessage, status.error_message());
   EXPECT_EQ(0, software.size());
+  ::grpc::testing::ServerContextTestSpouse spouse(&context);
+  auto trailing_metadata = spouse.GetTrailingMetadata();
+  auto error_iterator = trailing_metadata.find("ni-error");
+  EXPECT_NE(trailing_metadata.end(), error_iterator);
+  if (error_iterator != trailing_metadata.end()) {
+    EXPECT_EQ(NISysCfg_InvalidArg, std::stoi(error_iterator->second));
+  }
 }
 
-TEST(SoftwareEnumeratorTests, NextComponentInfoReturnsError_EnumerateSoftware_SoftwareListIsEmptyAndReturnsInternalError)
+TEST(SoftwareEnumeratorTests, NextComponentInfoReturnsError_EnumerateSoftware_SoftwareListIsEmptyAndReturnsUnknownErrorWithSysCfgErrorInMetadata)
 {
   NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
   nidevice_grpc::SoftwareEnumerator software_enumerator(&mock_library);
+  ::grpc::ServerContext context;
   google::protobuf::RepeatedPtrField<nidevice_grpc::SoftwareProperties> software;
   EXPECT_CALL(mock_library, GetInstalledSoftwareComponents)
       .WillOnce(WithArg<3>(SetEnumSoftwareComponentHandleToOne));
@@ -188,11 +220,18 @@ TEST(SoftwareEnumeratorTests, NextComponentInfoReturnsError_EnumerateSoftware_So
   EXPECT_CALL(mock_library, NextComponentInfo((void*)1, _, _, _, _, _))
       .WillOnce(Return(NISysCfg_InvalidArg));
 
-  ::grpc::Status status = software_enumerator.enumerate_software(&software);
+  ::grpc::Status status = software_enumerator.enumerate_software(&context, &software);
 
-  EXPECT_EQ(::grpc::StatusCode::INTERNAL, status.error_code());
+  EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status.error_code());
   EXPECT_EQ(nidevice_grpc::kSoftwareEnumerationFailedMessage, status.error_message());
   EXPECT_EQ(0, software.size());
+  ::grpc::testing::ServerContextTestSpouse spouse(&context);
+  auto trailing_metadata = spouse.GetTrailingMetadata();
+  auto error_iterator = trailing_metadata.find("ni-error");
+  EXPECT_NE(trailing_metadata.end(), error_iterator);
+  if (error_iterator != trailing_metadata.end()) {
+    EXPECT_EQ(NISysCfg_InvalidArg, std::stoi(error_iterator->second));
+  }
 }
 
 NISysCfgStatus SetEnumeratorCountToZero(unsigned int* numInstalledComps)
@@ -205,13 +244,14 @@ TEST(SoftwareEnumeratorTests, SysCfgApiInstalledAndNoNISoftwarePresent_Enumerate
 {
   NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
   nidevice_grpc::SoftwareEnumerator software_enumerator(&mock_library);
+  ::grpc::ServerContext context;
   google::protobuf::RepeatedPtrField<nidevice_grpc::SoftwareProperties> software;
   EXPECT_CALL(mock_library, GetInstalledSoftwareComponents)
       .WillOnce(WithArg<3>(SetEnumSoftwareComponentHandleToOne));
   EXPECT_CALL(mock_library, ResetEnumeratorGetCount((void*)1, _))
       .WillOnce(WithArg<1>(SetEnumeratorCountToZero));
 
-  ::grpc::Status status = software_enumerator.enumerate_software(&software);
+  ::grpc::Status status = software_enumerator.enumerate_software(&context, &software);
 
   EXPECT_EQ(::grpc::StatusCode::OK, status.error_code());
   EXPECT_EQ(0, software.size());
@@ -221,6 +261,7 @@ TEST(SoftwareEnumeratorTests, NISysCfgLibraryIsLoaded_GetSysCfgSession_CallsInit
 {
   ni::tests::utilities::SysCfgMockLibrary mock_library;
   nidevice_grpc::SoftwareEnumerator software_enumerator(&mock_library);
+  ::grpc::ServerContext context;
   google::protobuf::RepeatedPtrField<nidevice_grpc::SoftwareProperties> software;
   EXPECT_CALL(mock_library, InitializeSession)
       .WillOnce(WithArg<7>(SetSessionHandleToOne));
@@ -238,6 +279,7 @@ TEST(SoftwareEnumeratorTests, NISysCfgLibraryIsLoaded_ClearSysCfgSession_CalledC
 {
   ni::tests::utilities::SysCfgMockLibrary mock_library;
   nidevice_grpc::SoftwareEnumerator software_enumerator(&mock_library);
+  ::grpc::ServerContext context;
   google::protobuf::RepeatedPtrField<nidevice_grpc::SoftwareProperties> software;
   EXPECT_CALL(mock_library, InitializeSession)
       .WillRepeatedly(WithArg<7>(SetSessionHandleToOne));
@@ -263,6 +305,7 @@ TEST(SoftwareEnumeratorTests, NextComponentInfoSetsPackageId_EnumerateSoftware_R
 {
   NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
   nidevice_grpc::SoftwareEnumerator software_enumerator(&mock_library);
+  ::grpc::ServerContext context;
   google::protobuf::RepeatedPtrField<nidevice_grpc::SoftwareProperties> software;
   EXPECT_CALL(mock_library, GetInstalledSoftwareComponents)
       .WillOnce(WithArg<3>(SetEnumSoftwareComponentHandleToOne));
@@ -272,7 +315,7 @@ TEST(SoftwareEnumeratorTests, NextComponentInfoSetsPackageId_EnumerateSoftware_R
       .WillOnce(WithArg<1>(SetPackageId))
       .WillOnce(Return(NISysCfg_EndOfEnum));
 
-  ::grpc::Status status = software_enumerator.enumerate_software(&software);
+  ::grpc::Status status = software_enumerator.enumerate_software(&context, &software);
 
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(1, software.size());
@@ -290,6 +333,7 @@ TEST(SoftwareEnumeratorTests, NextComponentInfoSetsVersion_EnumerateSoftware_Res
 {
   NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
   nidevice_grpc::SoftwareEnumerator software_enumerator(&mock_library);
+  ::grpc::ServerContext context;
   google::protobuf::RepeatedPtrField<nidevice_grpc::SoftwareProperties> software;
   EXPECT_CALL(mock_library, GetInstalledSoftwareComponents)
       .WillOnce(WithArg<3>(SetEnumSoftwareComponentHandleToOne));
@@ -299,7 +343,7 @@ TEST(SoftwareEnumeratorTests, NextComponentInfoSetsVersion_EnumerateSoftware_Res
       .WillOnce(WithArg<2>(SetVersion))
       .WillOnce(Return(NISysCfg_EndOfEnum));
 
-  ::grpc::Status status = software_enumerator.enumerate_software(&software);
+  ::grpc::Status status = software_enumerator.enumerate_software(&context, &software);
 
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(1, software.size());
@@ -317,6 +361,7 @@ TEST(SoftwareEnumeratorTests, NextComponentInfoSetsProductName_EnumerateSoftware
 {
   NiceMock<ni::tests::utilities::SysCfgMockLibrary> mock_library;
   nidevice_grpc::SoftwareEnumerator software_enumerator(&mock_library);
+  ::grpc::ServerContext context;
   google::protobuf::RepeatedPtrField<nidevice_grpc::SoftwareProperties> software;
   EXPECT_CALL(mock_library, GetInstalledSoftwareComponents)
       .WillOnce(WithArg<3>(SetEnumSoftwareComponentHandleToOne));
@@ -326,7 +371,7 @@ TEST(SoftwareEnumeratorTests, NextComponentInfoSetsProductName_EnumerateSoftware
       .WillOnce(WithArg<3>(SetProductName))
       .WillOnce(Return(NISysCfg_EndOfEnum));
 
-  ::grpc::Status status = software_enumerator.enumerate_software(&software);
+  ::grpc::Status status = software_enumerator.enumerate_software(&context, &software);
 
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(1, software.size());

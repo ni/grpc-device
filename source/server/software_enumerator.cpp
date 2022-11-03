@@ -14,7 +14,9 @@ SoftwareEnumerator::~SoftwareEnumerator()
 // Provides a list of installed software on a server under localhost. This internally uses the
 // "NI System Configuration API". If it is not currently installed, it can be downloaded from this page:
 // https://www.ni.com/en-in/support/downloads/drivers/download.system-configuration.html.
-::grpc::Status SoftwareEnumerator::enumerate_software(google::protobuf::RepeatedPtrField<SoftwareProperties>* software)
+::grpc::Status SoftwareEnumerator::enumerate_software(
+    ::grpc::ServerContext* context,
+    google::protobuf::RepeatedPtrField<SoftwareProperties>* software)
 {
   NISysCfgStatus status = NISysCfg_OK;
   NISysCfgSessionHandle session = NULL;
@@ -46,7 +48,8 @@ SoftwareEnumerator::~SoftwareEnumerator()
   }
 
   if (NISysCfg_Failed(status)) {
-    return ::grpc::Status(::grpc::StatusCode::INTERNAL, kSoftwareEnumerationFailedMessage);
+    std::string description(kSoftwareEnumerationFailedMessage);
+    return nidevice_grpc::ApiErrorAndDescriptionToStatus(context, status, description);
   }
 
   return ::grpc::Status::OK;

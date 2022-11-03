@@ -7,6 +7,7 @@
 
 #include <shared_mutex>
 
+#include "converters.h"
 #include "syscfg_library_interface.h"
 #include "syscfg_session_handler.h"
 
@@ -19,7 +20,9 @@ class SoftwareEnumerator : public SysCfgSessionHandler {
   SoftwareEnumerator(SysCfgLibraryInterface* library);
   virtual ~SoftwareEnumerator();
 
-  ::grpc::Status enumerate_software(google::protobuf::RepeatedPtrField<SoftwareProperties>* software);
+  ::grpc::Status enumerate_software(
+      ::grpc::ServerContext* context,
+      google::protobuf::RepeatedPtrField<SoftwareProperties>* software);
 };
 
 }  // namespace nidevice_grpc
