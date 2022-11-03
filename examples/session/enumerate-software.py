@@ -24,10 +24,27 @@ import session_pb2 as session_types
 import session_pb2_grpc as grpc_session
 
 # Parser for command-line options
-parser = argparse.ArgumentParser(description='Lists out NI software installed on the server machine.')
-parser.add_argument("server_address", help="The IP address or machine name of the server. The default is localhost.", nargs='?', default="localhost")
-parser.add_argument("port_number", help="The port number of the server. The default is 31763.", nargs='?', default="31763")
-parser.add_argument("--show-hidden", help="Include hidden packages in the list of software.", action="store_true", default=False)
+parser = argparse.ArgumentParser(
+    description="Lists out NI software installed on the server machine."
+)
+parser.add_argument(
+    "server_address",
+    help="The IP address or machine name of the server. The default is localhost.",
+    nargs="?",
+    default="localhost",
+)
+parser.add_argument(
+    "port_number",
+    help="The port number of the server. The default is 31763.",
+    nargs="?",
+    default="31763",
+)
+parser.add_argument(
+    "--show-hidden",
+    help="Include hidden packages in the list of software.",
+    action="store_true",
+    default=False,
+)
 args = parser.parse_args()
 
 # Read in cmd args
@@ -60,10 +77,14 @@ def print_software(software):
 
 try:
     # The EnumerateInstalledSoftware API gives a list of NI packages installed on the server machine.
-    if (SHOW_HIDDEN_PACKAGES):
-        enumerate_software_response = client.EnumerateInstalledSoftwareIncludeHiddenPackages(session_types.EnumerateInstalledSoftwareIncludeHiddenPackagesRequest())
+    if SHOW_HIDDEN_PACKAGES:
+        enumerate_software_response = client.EnumerateInstalledSoftwareIncludeHiddenPackages(
+            session_types.EnumerateInstalledSoftwareIncludeHiddenPackagesRequest()
+        )
     else:
-        enumerate_software_response = client.EnumerateInstalledSoftware(session_types.EnumerateInstalledSoftwareRequest())
+        enumerate_software_response = client.EnumerateInstalledSoftware(
+            session_types.EnumerateInstalledSoftwareRequest()
+        )
 
     # Display software installed on the server machine.
     print_software(enumerate_software_response.software)
