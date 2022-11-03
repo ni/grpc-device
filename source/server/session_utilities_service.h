@@ -22,7 +22,6 @@ class SessionUtilitiesService final : public SessionUtilities::Service, public S
 
   ::grpc::Status EnumerateDevices(::grpc::ServerContext* context, const EnumerateDevicesRequest* request, EnumerateDevicesResponse* response) override;
   ::grpc::Status EnumerateInstalledSoftware(::grpc::ServerContext* context, const EnumerateInstalledSoftwareRequest* request, EnumerateInstalledSoftwareResponse* response) override;
-  ::grpc::Status EnumerateInstalledSoftwareIncludeHiddenPackages(::grpc::ServerContext* context, const EnumerateInstalledSoftwareIncludeHiddenPackagesRequest* request, EnumerateInstalledSoftwareIncludeHiddenPackagesResponse* response) override;
   ::grpc::Status Reserve(::grpc::ServerContext* context, const ReserveRequest* request, ReserveResponse* response) override;
   ::grpc::Status IsReservedByClient(::grpc::ServerContext* context, const IsReservedByClientRequest* request, IsReservedByClientResponse* response) override;
   ::grpc::Status Unreserve(::grpc::ServerContext* context, const UnreserveRequest* request, UnreserveResponse* response) override;

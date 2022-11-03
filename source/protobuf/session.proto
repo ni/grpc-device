@@ -16,10 +16,6 @@ service SessionUtilities {
   rpc EnumerateInstalledSoftware(EnumerateInstalledSoftwareRequest)
       returns (EnumerateInstalledSoftwareResponse);
 
-  // Provides a list of NI software installed on server under localhost, including hidden packages
-  rpc EnumerateInstalledSoftwareIncludeHiddenPackages(EnumerateInstalledSoftwareIncludeHiddenPackagesRequest)
-      returns (EnumerateInstalledSoftwareIncludeHiddenPackagesResponse);
-
   // Reserve a set of client defined resources for exclusive use
   rpc Reserve(ReserveRequest) returns (ReserveResponse);
 
@@ -68,15 +64,11 @@ message SoftwareProperties {
   string product_name = 3;
 }
 
-message EnumerateInstalledSoftwareRequest {}
-
-message EnumerateInstalledSoftwareResponse {
-  repeated SoftwareProperties software = 1;
+message EnumerateInstalledSoftwareRequest {
+  bool include_hidden_packages = 1;
 }
 
-message EnumerateInstalledSoftwareIncludeHiddenPackagesRequest {}
-
-message EnumerateInstalledSoftwareIncludeHiddenPackagesResponse {
+message EnumerateInstalledSoftwareResponse {
   repeated SoftwareProperties software = 1;
 }
 

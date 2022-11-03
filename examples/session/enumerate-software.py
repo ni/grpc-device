@@ -77,14 +77,9 @@ def print_software(software):
 
 try:
     # The EnumerateInstalledSoftware API gives a list of NI packages installed on the server machine.
-    if SHOW_HIDDEN_PACKAGES:
-        enumerate_software_response = client.EnumerateInstalledSoftwareIncludeHiddenPackages(
-            session_types.EnumerateInstalledSoftwareIncludeHiddenPackagesRequest()
-        )
-    else:
-        enumerate_software_response = client.EnumerateInstalledSoftware(
-            session_types.EnumerateInstalledSoftwareRequest()
-        )
+    enumerate_software_response = client.EnumerateInstalledSoftware(
+        session_types.EnumerateInstalledSoftwareRequest(include_hidden_packages=SHOW_HIDDEN_PACKAGES)
+    )
 
     # Display software installed on the server machine.
     print_software(enumerate_software_response.software)
