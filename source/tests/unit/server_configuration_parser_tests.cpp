@@ -17,7 +17,7 @@ TEST(ServerConfigurationParserTests, CreateConfigurationParserFromDefaultConfigF
 
   auto address = server_config_parser.parse_address();
 
-  EXPECT_EQ(address, std::string(nidevice_grpc::kDefaultAddressPrefix) + ":" + std::string("31763"));
+  EXPECT_EQ(address, std::string(nidevice_grpc::kDefaultAddress) + ":" + std::string("31763"));
 }
 
 TEST(ServerConfigurationParserTests, CreateConfigurationParserFromPathToDefaultConfigFile_ParseAddress_NotEmpty)

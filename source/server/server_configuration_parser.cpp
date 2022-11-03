@@ -224,7 +224,7 @@ std::string ServerConfigurationParser::read_keycert(const std::string& filename)
 std::string ServerConfigurationParser::parse_bind_address() const
 {
   // Use default address if none is specified
-  std::string parsed_bind_address = kDefaultAddressPrefix;
+  std::string parsed_bind_address = kDefaultAddress;
 
   auto it = config_file_.find(kAddressJsonKey);
   if (it != config_file_.end()) {
