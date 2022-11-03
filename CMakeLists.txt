@@ -388,11 +388,11 @@ add_custom_command(
             $<TARGET_FILE_DIR:ni_grpc_device_server>/server_config.json)
 
 #----------------------------------------------------------------------
-# Generate server_impl_info.json to binary output directory
+# Generate server_capabilities.json to binary output directory
 #----------------------------------------------------------------------
 add_custom_command(
    TARGET ni_grpc_device_server POST_BUILD
-   COMMAND  ${PYTHON_EXE} ${codegen_dir}/generate_server_impl_info.py ${metadata_dir}/
+   COMMAND  ${PYTHON_EXE} ${codegen_dir}/generate_server_capabilities.py ${metadata_dir}/
             -o $<TARGET_FILE_DIR:ni_grpc_device_server>/)
 
 

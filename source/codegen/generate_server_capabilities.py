@@ -4,6 +4,7 @@ import argparse
 import json
 from pathlib import Path
 
+from common_helpers import get_driver_readiness
 from template_helpers import load_metadata
 
 
@@ -16,11 +17,12 @@ def _generate_file(metadata_dir: Path, output_dir: Path) -> None:
     ]
     for data in driver_modules:
         config = data["config"]
-        service_name = f'{config["module_name"]}_grpc.{config["service_class_prefix"]}'
-        service_instance_names.append(service_name)
+        if get_driver_readiness(config) == "Release":
+            service_name = f'{config["module_name"]}_grpc.{config["service_class_prefix"]}'
+            service_instance_names.append(service_name)
     service_information_dict = {}
     service_information_dict["provided_service_interfaces"] = service_instance_names
-    output_file_path = Path(output_dir).joinpath("server_impl_info.json")
+    output_file_path = Path(output_dir).joinpath("server_capabilities.json")
     with open(output_file_path, "w") as outfile:
         json.dump(service_information_dict, outfile, indent=4)
 
