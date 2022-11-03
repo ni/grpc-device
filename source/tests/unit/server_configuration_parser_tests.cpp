@@ -17,7 +17,7 @@ TEST(ServerConfigurationParserTests, CreateConfigurationParserFromDefaultConfigF
 
   auto address = server_config_parser.parse_address();
 
-  EXPECT_EQ(address, nidevice_grpc::kDefaultAddressPrefix + std::string("31763"));
+  EXPECT_EQ(address, std::string(nidevice_grpc::kDefaultAddress) + ":" + std::string("31763"));
 }
 
 TEST(ServerConfigurationParserTests, CreateConfigurationParserFromPathToDefaultConfigFile_ParseAddress_NotEmpty)
@@ -28,6 +28,16 @@ TEST(ServerConfigurationParserTests, CreateConfigurationParserFromPathToDefaultC
   auto address = server_config_parser.parse_address();
 
   EXPECT_FALSE(address.empty());
+}
+
+TEST(ServerConfigurationParserTests, CreateConfigurationParserFromPathToLocalhostConfigFile_ParseAddress_ReturnsLocalhostAddressAndPort)
+{
+  std::string config_file_path = nidevice_grpc::ServerConfigurationParser::get_exe_path() + "test_localhost_config.json";
+  nidevice_grpc::ServerConfigurationParser server_config_parser(config_file_path);
+
+  auto address = server_config_parser.parse_address();
+
+  EXPECT_EQ(address, "[::1]:0");
 }
 
 TEST(ServerConfigurationParserTests, CreateConfigurationParserFromPathToMutualTlsConfigFile_ParseAllSecurityKeys_NoneEmpty)
@@ -54,6 +64,36 @@ TEST(ServerConfigurationParserTests, CreateConfigurationParserFromMissingConfigF
   }
   catch (const nidevice_grpc::ServerConfigurationParser::ConfigFileNotFoundException& ex) {
     EXPECT_EQ(nidevice_grpc::kConfigFileNotFoundMessage + std::string(missing_file_path), ex.what());
+  }
+}
+
+TEST(ServerConfigurationParserTests, JsonConfigWithIntegerAddress_ParseAddress_ThrowsWrongAddressTypeException)
+{
+  nlohmann::json config_json = nlohmann::json::parse(R"({ "address": 0, "port": 0 })");
+  nidevice_grpc::ServerConfigurationParser server_config_parser(config_json);
+
+  try {
+    auto address = server_config_parser.parse_address();
+
+    FAIL() << "WrongAddressTypeException not thrown";
+  }
+  catch (const nidevice_grpc::ServerConfigurationParser::WrongAddressTypeException& ex) {
+    EXPECT_THAT(ex.what(), testing::HasSubstr(nidevice_grpc::kWrongAddressTypeMessage));
+  }
+}
+
+TEST(ServerConfigurationParserTests, JsonConfigWithEmptyAddress_ParseAddress_ThrowsInvalidAddressException)
+{
+  nlohmann::json config_json = nlohmann::json::parse(R"({ "address": "", "port": 0 })");
+  nidevice_grpc::ServerConfigurationParser server_config_parser(config_json);
+
+  try {
+    auto address = server_config_parser.parse_address();
+
+    FAIL() << "InvalidAddressException not thrown";
+  }
+  catch (const nidevice_grpc::ServerConfigurationParser::InvalidAddressException& ex) {
+    EXPECT_EQ(std::string(nidevice_grpc::kInvalidAddressMessage), ex.what());
   }
 }
 
@@ -373,7 +413,7 @@ TEST(ServerConfigurationParserTests, JsonConfigWithEnabledFeature_ParseFeatureTo
 {
   nlohmann::json config_json = nlohmann::json::parse(R"(
     {
-      "feature_toggles" : { 
+      "feature_toggles" : {
         "feature": true
       }
     })");
@@ -391,7 +431,7 @@ TEST(ServerConfigurationParserTests, JsonConfigWithEnabledFeature_ParseFeatureTo
 {
   nlohmann::json config_json = nlohmann::json::parse(R"(
     {
-      "feature_toggles" : { 
+      "feature_toggles" : {
         "feature": true
       }
     })");
@@ -406,7 +446,7 @@ TEST(ServerConfigurationParserTests, JsonConfigWithDisabledFeature_ParseFeatureT
 {
   nlohmann::json config_json = nlohmann::json::parse(R"(
     {
-      "feature_toggles" : { 
+      "feature_toggles" : {
         "feature": false
       }
     })");
@@ -424,7 +464,7 @@ TEST(ServerConfigurationParserTests, JsonConfigWithMultipleFeaturesWithDifferent
 {
   nlohmann::json config_json = nlohmann::json::parse(R"(
     {
-      "feature_toggles" : { 
+      "feature_toggles" : {
         "feature1": false,
         "feature2": true,
         "feature3": false,
@@ -446,7 +486,7 @@ TEST(ServerConfigurationParserTests, JsonConfigWithInvalidFeatureToggleValue_Par
 {
   nlohmann::json config_json = nlohmann::json::parse(R"(
     {
-      "feature_toggles" : { 
+      "feature_toggles" : {
         "feature": 12345
       }
     })");
