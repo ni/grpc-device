@@ -32,7 +32,7 @@ if len(sys.argv) >= 2:
 if len(sys.argv) >= 3:
     SERVER_PORT = sys.argv[2]
 
-# Create communication with the server using gRPC APIs.
+# Open communication with the server using gRPC APIs.
 channel = grpc.insecure_channel(f"{SERVER_ADDRESS}:{SERVER_PORT}")
 client = grpc_session.SessionUtilitiesStub(channel)
 
@@ -56,13 +56,13 @@ def print_software(software):
 
 
 try:
-    # EnumerateSoftware API gives a list of NI packages installed on the server machine.
-    enumerate_software_response = client.EnumerateSoftware(session_types.EnumerateSoftwareRequest())
+    # The EnumerateInstalledSoftware API gives a list of NI packages installed on the server machine.
+    enumerate_software_response = client.EnumerateInstalledSoftware(session_types.EnumerateInstalledSoftwareRequest())
 
     # Display software installed on the server machine.
     print_software(enumerate_software_response.software)
 
-# If EnumerateSoftware API throws an exception, print the error message.
+# If the EnumerateInstalledSoftware API throws an exception, print the error message.
 except grpc.RpcError as rpc_error:
     error_message = rpc_error.details()
     for entry in rpc_error.trailing_metadata() or []:

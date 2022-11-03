@@ -20,8 +20,9 @@ class SoftwareEnumerator : public SysCfgSessionHandler {
   SoftwareEnumerator(SysCfgLibraryInterface* library);
   virtual ~SoftwareEnumerator();
 
-  ::grpc::Status enumerate_software(
+  ::grpc::Status enumerate_installed_software(
       ::grpc::ServerContext* context,
+      bool includeHiddenPackages,
       google::protobuf::RepeatedPtrField<SoftwareProperties>* software);
 };
 

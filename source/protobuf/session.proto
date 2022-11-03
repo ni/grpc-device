@@ -12,9 +12,13 @@ service SessionUtilities {
   rpc EnumerateDevices(EnumerateDevicesRequest)
       returns (EnumerateDevicesResponse);
 
-  // Provides a list of software installed on server under localhost
-  rpc EnumerateSoftware(EnumerateSoftwareRequest)
-      returns (EnumerateSoftwareResponse);
+  // Provides a list of NI software installed on server under localhost
+  rpc EnumerateInstalledSoftware(EnumerateInstalledSoftwareRequest)
+      returns (EnumerateInstalledSoftwareResponse);
+
+  // Provides a list of NI software installed on server under localhost, including hidden packages
+  rpc EnumerateInstalledSoftwareIncludeHiddenPackages(EnumerateInstalledSoftwareIncludeHiddenPackagesRequest)
+      returns (EnumerateInstalledSoftwareIncludeHiddenPackagesResponse);
 
   // Reserve a set of client defined resources for exclusive use
   rpc Reserve(ReserveRequest) returns (ReserveResponse);
@@ -60,13 +64,19 @@ message EnumerateDevicesResponse {
 
 message SoftwareProperties {
   string package_id = 1;
-  string version = 2;
+  string package_version = 2;
   string product_name = 3;
 }
 
-message EnumerateSoftwareRequest {}
+message EnumerateInstalledSoftwareRequest {}
 
-message EnumerateSoftwareResponse {
+message EnumerateInstalledSoftwareResponse {
+  repeated SoftwareProperties software = 1;
+}
+
+message EnumerateInstalledSoftwareIncludeHiddenPackagesRequest {}
+
+message EnumerateInstalledSoftwareIncludeHiddenPackagesResponse {
   repeated SoftwareProperties software = 1;
 }
 

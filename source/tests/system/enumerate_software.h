@@ -7,7 +7,7 @@ namespace ni {
 namespace tests {
 namespace system {
 
-const google::protobuf::RepeatedPtrField<nidevice_grpc::SoftwareProperties> EnumerateSoftware(bool clear_cache = false);
+const google::protobuf::RepeatedPtrField<nidevice_grpc::SoftwareProperties> EnumerateInstalledSoftware(bool clear_cache = false);
 
 }  // namespace system
 }  // namespace tests

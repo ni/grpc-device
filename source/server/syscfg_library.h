@@ -93,13 +93,13 @@ class SysCfgLibrary : public SysCfgLibraryInterface {
   using CreateFilterPtr = decltype(&NISysCfgCreateFilter);
   using SetFilterPropertyVPtr = decltype(&NISysCfgSetFilterPropertyV);
   using FindHardwarePtr = decltype(&NISysCfgFindHardware);
-  using GetInstalledSoftwareComponentsPtr = decltype(&NISysCfgGetInstalledSoftwareComponents);
   using NextResourcePtr = decltype(&NISysCfgNextResource);
   using GetResourceIndexedPropertyPtr = decltype(&NISysCfgGetResourceIndexedProperty);
   using GetResourcePropertyPtr = decltype(&NISysCfgGetResourceProperty);
   using SetResourcePropertyVPtr = decltype(&NISysCfgSetResourcePropertyV);
   using SaveResourceChangesPtr = decltype(&NISysCfgSaveResourceChanges);
   using FreeDetailedStringPtr = decltype(&NISysCfgFreeDetailedString);
+  using GetInstalledSoftwareComponentsPtr = decltype(&NISysCfgGetInstalledSoftwareComponents);
   using ResetEnumeratorGetCountPtr = decltype(&NISysCfgResetEnumeratorGetCount);
   using NextComponentInfoPtr = decltype(&NISysCfgNextComponentInfo);
 

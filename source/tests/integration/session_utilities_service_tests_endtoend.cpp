@@ -172,13 +172,13 @@ TEST_F(SessionUtilitiesServiceTests_EndToEnd, SysCfgLibraryNotPresent_ClientCall
   EXPECT_EQ(nidevice_grpc::kSysCfgApiNotInstalledMessage, status.error_message());
 }
 
-TEST_F(SessionUtilitiesServiceTests_EndToEnd, SysCfgLibraryNotPresent_ClientCallsEnumerateSoftware_ReturnsNotFoundGrpcStatusError)
+TEST_F(SessionUtilitiesServiceTests_EndToEnd, SysCfgLibraryNotPresent_ClientCallsEnumerateInstalledSoftware_ReturnsNotFoundGrpcStatusError)
 {
-  nidevice_grpc::EnumerateSoftwareRequest request;
-  nidevice_grpc::EnumerateSoftwareResponse response;
+  nidevice_grpc::EnumerateInstalledSoftwareRequest request;
+  nidevice_grpc::EnumerateInstalledSoftwareResponse response;
   ::grpc::ClientContext context;
 
-  ::grpc::Status status = GetStub()->EnumerateSoftware(&context, request, &response);
+  ::grpc::Status status = GetStub()->EnumerateInstalledSoftware(&context, request, &response);
 
   EXPECT_EQ(::grpc::StatusCode::NOT_FOUND, status.error_code());
   EXPECT_EQ(nidevice_grpc::kSysCfgApiNotInstalledMessage, status.error_message());

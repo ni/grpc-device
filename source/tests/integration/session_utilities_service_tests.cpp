@@ -38,7 +38,7 @@ TEST(SessionUtilitiesServiceTests, SysCfgLibraryNotPresent_EnumerateDevices_Retu
   EXPECT_EQ(nidevice_grpc::kSysCfgApiNotInstalledMessage, status.error_message());
 }
 
-TEST(SessionUtilitiesServiceTests, SysCfgLibraryNotPresent_EnumerateSoftware_ReturnsNotFoundGrpcStatusError)
+TEST(SessionUtilitiesServiceTests, SysCfgLibraryNotPresent_EnumerateInstalledSoftware_ReturnsNotFoundGrpcStatusError)
 {
   nidevice_grpc::SessionRepository session_repository;
   ni::tests::utilities::SysCfgMockLibrary syscfg_mock_library;
@@ -49,9 +49,9 @@ TEST(SessionUtilitiesServiceTests, SysCfgLibraryNotPresent_EnumerateSoftware_Ret
       .WillOnce(Throw(nidevice_grpc::LibraryLoadException(nidevice_grpc::kSysCfgApiNotInstalledMessage)));
 
   ::grpc::ServerContext context;
-  nidevice_grpc::EnumerateSoftwareRequest request;
-  nidevice_grpc::EnumerateSoftwareResponse response;
-  ::grpc::Status status = service.EnumerateSoftware(&context, &request, &response);
+  nidevice_grpc::EnumerateInstalledSoftwareRequest request;
+  nidevice_grpc::EnumerateInstalledSoftwareResponse response;
+  ::grpc::Status status = service.EnumerateInstalledSoftware(&context, &request, &response);
 
   EXPECT_EQ(::grpc::StatusCode::NOT_FOUND, status.error_code());
   EXPECT_EQ(nidevice_grpc::kSysCfgApiNotInstalledMessage, status.error_message());

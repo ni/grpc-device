@@ -14,8 +14,9 @@ SoftwareEnumerator::~SoftwareEnumerator()
 // Provides a list of installed software on a server under localhost. This internally uses the
 // "NI System Configuration API". If it is not currently installed, it can be downloaded from this page:
 // https://www.ni.com/en-in/support/downloads/drivers/download.system-configuration.html.
-::grpc::Status SoftwareEnumerator::enumerate_software(
+::grpc::Status SoftwareEnumerator::enumerate_installed_software(
     ::grpc::ServerContext* context,
+    bool include_hidden_packages,
     google::protobuf::RepeatedPtrField<SoftwareProperties>* software)
 {
   NISysCfgStatus status = NISysCfg_OK;
@@ -23,18 +24,19 @@ SoftwareEnumerator::~SoftwareEnumerator()
   NISysCfgEnumSoftwareComponentHandle installedComps = NULL;
   unsigned int numInstalledComps = 0;
   char package_id[NISYSCFG_SIMPLE_STRING_LENGTH] = "";
-  char version[NISYSCFG_SIMPLE_STRING_LENGTH] = "";
+  char package_version[NISYSCFG_SIMPLE_STRING_LENGTH] = "";
   char product_name[NISYSCFG_SIMPLE_STRING_LENGTH] = "";
 
   try {
     auto library = get_syscfg_library_interface();
     if (NISysCfg_Succeeded(status = open_or_get_localhost_syscfg_session(&session))) {
-      if (NISysCfg_Succeeded(status = library->GetInstalledSoftwareComponents(session, NISysCfgIncludeItemsAllVisibleAndHidden, NISysCfgBoolFalse, &installedComps))) {
+      auto item_types = include_hidden_packages ? NISysCfgIncludeItemsAllVisibleAndHidden : NISysCfgIncludeItemsAllVisible;
+      if (NISysCfg_Succeeded(status = library->GetInstalledSoftwareComponents(session, item_types, NISysCfgBoolFalse, &installedComps))) {
         if (NISysCfg_Succeeded(status = library->ResetEnumeratorGetCount(installedComps, &numInstalledComps)) && numInstalledComps > 0) {
-          while (NISysCfg_Succeeded(status) && (status = library->NextComponentInfo(installedComps, package_id, version, product_name, NULL, NULL)) == NISysCfg_OK) {
+          while (NISysCfg_Succeeded(status) && (status = library->NextComponentInfo(installedComps, package_id, package_version, product_name, NULL, NULL)) == NISysCfg_OK) {
             SoftwareProperties* properties = software->Add();
             properties->set_package_id(package_id);
-            properties->set_version(version);
+            properties->set_package_version(package_version);
             properties->set_product_name(product_name);
           }
         }

@@ -8,7 +8,7 @@ namespace ni {
 namespace tests {
 namespace system {
 
-const google::protobuf::RepeatedPtrField<nidevice_grpc::SoftwareProperties> EnumerateSoftware(bool clear_cache)
+const google::protobuf::RepeatedPtrField<nidevice_grpc::SoftwareProperties> EnumerateInstalledSoftware(bool clear_cache)
 {
   static bool software_is_cached = false;
   static google::protobuf::RepeatedPtrField<nidevice_grpc::SoftwareProperties> software_cache;
@@ -18,11 +18,11 @@ const google::protobuf::RepeatedPtrField<nidevice_grpc::SoftwareProperties> Enum
 
     ::nidevice_grpc::SessionUtilities::Stub stub(DeviceServerInterface::Singleton()->InProcessChannel());
 
-    nidevice_grpc::EnumerateSoftwareRequest request;
-    nidevice_grpc::EnumerateSoftwareResponse response;
+    nidevice_grpc::EnumerateInstalledSoftwareRequest request;
+    nidevice_grpc::EnumerateInstalledSoftwareResponse response;
     ::grpc::ClientContext context;
 
-    if (::grpc::StatusCode::OK != stub.EnumerateSoftware(&context, request, &response).error_code()) {
+    if (::grpc::StatusCode::OK != stub.EnumerateInstalledSoftware(&context, request, &response).error_code()) {
       throw std::runtime_error("Failed to enumerate software");
     }
 

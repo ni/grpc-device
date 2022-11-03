@@ -14,9 +14,14 @@ SessionUtilitiesService::SessionUtilitiesService(SessionRepository* session_repo
   return device_enumerator_->enumerate_devices(response->mutable_devices());
 }
 
-::grpc::Status SessionUtilitiesService::EnumerateSoftware(::grpc::ServerContext* context, const EnumerateSoftwareRequest* request, EnumerateSoftwareResponse* response)
+::grpc::Status SessionUtilitiesService::EnumerateInstalledSoftware(::grpc::ServerContext* context, const EnumerateInstalledSoftwareRequest* request, EnumerateInstalledSoftwareResponse* response)
 {
-  return software_enumerator_->enumerate_software(context, response->mutable_software());
+  return software_enumerator_->enumerate_installed_software(context, false, response->mutable_software());
+}
+
+::grpc::Status SessionUtilitiesService::EnumerateInstalledSoftwareIncludeHiddenPackages(::grpc::ServerContext* context, const EnumerateInstalledSoftwareIncludeHiddenPackagesRequest* request, EnumerateInstalledSoftwareIncludeHiddenPackagesResponse* response)
+{
+  return software_enumerator_->enumerate_installed_software(context, true, response->mutable_software());
 }
 
 ::grpc::Status SessionUtilitiesService::Reserve(::grpc::ServerContext* context, const ReserveRequest* request, ReserveResponse* response)
