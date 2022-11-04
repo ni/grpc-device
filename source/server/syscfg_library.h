@@ -71,55 +71,37 @@ class SysCfgLibrary : public SysCfgLibraryInterface {
       char** detailed_result);
   NISysCfgStatus FreeDetailedString(
       char str[]);
+  NISysCfgStatus GetInstalledSoftwareComponents(
+      NISysCfgSessionHandle session_handle,
+      NISysCfgIncludeComponentTypes item_types,
+      NISysCfgBool cached,
+      NISysCfgEnumSoftwareComponentHandle* component_enum_handle);
+  NISysCfgStatus ResetEnumeratorGetCount(
+      void* enumHandle,
+      unsigned int* count);
+  NISysCfgStatus NextComponentInfo(
+      NISysCfgEnumSoftwareComponentHandle component_enum_handle,
+      char* id,
+      char* version,
+      char* title,
+      NISysCfgComponentType* itemType,
+      char** detailedDescription);
 
  private:
-  using InitializeSessionPtr = NISysCfgStatus (*)(
-      const char* target_name,
-      const char* username,
-      const char* password,
-      NISysCfgLocale language,
-      NISysCfgBool force_property_refresh,
-      unsigned int connect_timeout_msec,
-      NISysCfgEnumExpertHandle* expert_enum_handle,
-      NISysCfgSessionHandle* session_handle);
-  using CloseHandlePtr = NISysCfgStatus (*)(
-      void* syscfg_handle);
-  using CreateFilterPtr = NISysCfgStatus (*)(
-      NISysCfgSessionHandle session_handle,
-      NISysCfgFilterHandle* filter_handle);
-  using SetFilterPropertyVPtr = NISysCfgStatus (*)(
-      NISysCfgFilterHandle filter_handle,
-      NISysCfgFilterProperty property_ID,
-      va_list args);
-  using FindHardwarePtr = NISysCfgStatus (*)(
-      NISysCfgSessionHandle session_handle,
-      NISysCfgFilterMode filter_mode,
-      NISysCfgFilterHandle filter_handle,
-      const char* expert_names,
-      NISysCfgEnumResourceHandle* resource_enum_handle);
-  using NextResourcePtr = NISysCfgStatus (*)(
-      NISysCfgSessionHandle session_handle,
-      NISysCfgEnumResourceHandle resource_enum_handle,
-      NISysCfgResourceHandle* resource_handle);
-  using GetResourceIndexedPropertyPtr = NISysCfgStatus (*)(
-      NISysCfgResourceHandle resource_handle,
-      NISysCfgIndexedProperty property_ID,
-      unsigned int index,
-      void* value);
-  using GetResourcePropertyPtr = NISysCfgStatus (*)(
-      NISysCfgResourceHandle resource_handle,
-      NISysCfgResourceProperty property_ID,
-      void* value);
-  using SetResourcePropertyVPtr = NISysCfgStatus (*)(
-      NISysCfgResourceHandle resource_handle,
-      NISysCfgResourceProperty property_ID,
-      va_list args);
-  using SaveResourceChangesPtr = NISysCfgStatus (*)(
-      NISysCfgResourceHandle resource_handle,
-      NISysCfgBool* changes_require_restart,
-      char** detailed_result);
-  using FreeDetailedStringPtr = NISysCfgStatus (*)(
-      char str[]);
+  using InitializeSessionPtr = decltype(&NISysCfgInitializeSession);
+  using CloseHandlePtr = decltype(&NISysCfgCloseHandle);
+  using CreateFilterPtr = decltype(&NISysCfgCreateFilter);
+  using SetFilterPropertyVPtr = decltype(&NISysCfgSetFilterPropertyV);
+  using FindHardwarePtr = decltype(&NISysCfgFindHardware);
+  using NextResourcePtr = decltype(&NISysCfgNextResource);
+  using GetResourceIndexedPropertyPtr = decltype(&NISysCfgGetResourceIndexedProperty);
+  using GetResourcePropertyPtr = decltype(&NISysCfgGetResourceProperty);
+  using SetResourcePropertyVPtr = decltype(&NISysCfgSetResourcePropertyV);
+  using SaveResourceChangesPtr = decltype(&NISysCfgSaveResourceChanges);
+  using FreeDetailedStringPtr = decltype(&NISysCfgFreeDetailedString);
+  using GetInstalledSoftwareComponentsPtr = decltype(&NISysCfgGetInstalledSoftwareComponents);
+  using ResetEnumeratorGetCountPtr = decltype(&NISysCfgResetEnumeratorGetCount);
+  using NextComponentInfoPtr = decltype(&NISysCfgNextComponentInfo);
 
   typedef struct FunctionPointers {
     InitializeSessionPtr InitializeSession;
@@ -133,6 +115,9 @@ class SysCfgLibrary : public SysCfgLibraryInterface {
     SetResourcePropertyVPtr SetResourcePropertyV;
     SaveResourceChangesPtr SaveResourceChanges;
     FreeDetailedStringPtr FreeDetailedString;
+    GetInstalledSoftwareComponentsPtr GetInstalledSoftwareComponents;
+    ResetEnumeratorGetCountPtr ResetEnumeratorGetCount;
+    NextComponentInfoPtr NextComponentInfo;
   } FunctionLoadStatus;
 
   SharedLibrary shared_library_;

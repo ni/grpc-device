@@ -2,6 +2,7 @@
 
 #include "device_enumerator.h"
 #include "session_utilities_service.h"
+#include "software_enumerator.h"
 #include "syscfg_library.h"
 
 namespace nidevice_grpc {
@@ -13,7 +14,8 @@ struct SessionUtilitiesLibraryAndService {
       : session_repository(session_repository),
         library(),
         device_enumerator(&library),
-        service(session_repository.get(), &device_enumerator)
+        software_enumerator(&library),
+        service(session_repository.get(), &device_enumerator, &software_enumerator)
   {
     service.register_observer(&device_enumerator);
     *serverResetObserverRegistrar = &service;
@@ -25,11 +27,13 @@ struct SessionUtilitiesLibraryAndService {
     session_repository->reset_server();
     service.unregister_observer(&device_enumerator);
     device_enumerator.clear_syscfg_session();
+    software_enumerator.clear_syscfg_session();
   }
 
   std::shared_ptr<SessionRepository> session_repository;
   SysCfgLibrary library;
   DeviceEnumerator device_enumerator;
+  SoftwareEnumerator software_enumerator;
   SessionUtilitiesService service;
 };
 }  // namespace

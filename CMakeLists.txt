@@ -332,6 +332,7 @@ add_executable(ni_grpc_device_server
    "source/server/session_utilities_service.cpp"
    "source/server/session_utilities_service_registrar.cpp"
    "source/server/shared_library.cpp"
+   "source/server/software_enumerator.cpp"
    "source/server/syscfg_library.cpp"
    "source/server/syscfg_session_handler.cpp"
    ${nidevice_proto_srcs}
@@ -422,6 +423,7 @@ add_executable(IntegrationTestsRunner
     "source/server/session_repository.cpp"
     "source/server/session_utilities_service.cpp"
     "source/server/shared_library.cpp"
+    "source/server/software_enumerator.cpp"
     "source/server/syscfg_session_handler.cpp"
     ${nidevice_proto_srcs}
     ${session_proto_srcs}
@@ -465,6 +467,7 @@ add_executable(UnitTestsRunner
     "source/tests/unit/session_repository_tests.cpp"
     "source/tests/unit/debug_session_properties_tests.cpp"
     "source/tests/unit/device_enumerator_tests.cpp"
+    "source/tests/unit/software_enumerator_tests.cpp"
     "source/tests/unit/server_configuration_parser_tests.cpp"
     "source/tests/unit/server_security_configuration_tests.cpp"
     "source/tests/unit/ni_fake_non_ivi_service_tests.cpp"
@@ -482,6 +485,7 @@ add_executable(UnitTestsRunner
     "source/server/server_security_configuration.cpp"
     "source/server/session_repository.cpp"
     "source/server/shared_library.cpp"
+    "source/server/software_enumerator.cpp"
     "source/server/syscfg_library.cpp"
     "source/server/syscfg_session_handler.cpp"
     ${nidevice_proto_srcs}
@@ -544,6 +548,7 @@ set(system_test_runner_sources
   "source/server/core_services_registrar.cpp"
   "source/tests/system/device_server.cpp"
   "source/tests/system/enumerate_devices.cpp"
+  "source/tests/system/enumerate_software.cpp"
   "source/tests/system/session_utilities_service_tests.cpp"
   "source/tests/system/nidaqmx_driver_api_tests.cpp"
   "source/tests/system/nidaqmx_session_tests.cpp"
@@ -578,6 +583,7 @@ set(system_test_runner_sources
   "source/server/session_utilities_service.cpp"
   "source/server/session_utilities_service_registrar.cpp"
   "source/server/shared_library.cpp"
+  "source/server/software_enumerator.cpp"
   "source/server/syscfg_library.cpp"
   "source/server/syscfg_session_handler.cpp"
   ${nidevice_proto_srcs}

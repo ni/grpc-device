@@ -2,6 +2,7 @@
 #include <server/device_enumerator.h>
 #include <server/syscfg_library.h>
 #include <tests/utilities/syscfg_mock_library.h>
+#include <tests/utilities/syscfg_test_helpers.h>
 
 namespace ni {
 namespace tests {
@@ -76,12 +77,6 @@ TEST(DeviceEnumeratorTests, InitializeSessionReturnsError_EnumerateDevices_ListO
   ::grpc::Status status = device_enumerator.enumerate_devices(&devices);
 
   EXPECT_EQ(0, devices.size());
-}
-
-static NISysCfgStatus SetSessionHandleToOne(NISysCfgSessionHandle* session_handle)
-{
-  *session_handle = (NISysCfgSessionHandle)1;
-  return NISysCfg_OK;
 }
 
 TEST(DeviceEnumeratorTests, InitializeSessionSucceeds_EnumerateDevices_CallsInitializeButNotClose)

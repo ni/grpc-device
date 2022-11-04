@@ -41,6 +41,9 @@ class SysCfgMockLibrary : public nidevice_grpc::SysCfgLibraryInterface {
   }
   MOCK_METHOD(NISysCfgStatus, SaveResourceChanges, (NISysCfgResourceHandle resource_handle, NISysCfgBool* changes_require_restart, char** detailed_result), (override));
   MOCK_METHOD(NISysCfgStatus, FreeDetailedString, (char str[]), (override));
+  MOCK_METHOD(NISysCfgStatus, GetInstalledSoftwareComponents, (NISysCfgSessionHandle session_handle, NISysCfgIncludeComponentTypes item_types, NISysCfgBool cached, NISysCfgEnumSoftwareComponentHandle* component_enum_handle), (override));
+  MOCK_METHOD(NISysCfgStatus, ResetEnumeratorGetCount, (void* enumHandle, unsigned int* count), (override));
+  MOCK_METHOD(NISysCfgStatus, NextComponentInfo, (NISysCfgEnumSoftwareComponentHandle component_enum_handle, char* id, char* version, char* title, NISysCfgComponentType* itemType, char** detailedDescription), (override));
 };
 
 }  // namespace utilities

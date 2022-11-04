@@ -24,6 +24,9 @@ SysCfgLibrary::SysCfgLibrary()
   GET_POINTER(function_pointers_, shared_library_, SetResourcePropertyV);
   GET_POINTER(function_pointers_, shared_library_, SaveResourceChanges);
   GET_POINTER(function_pointers_, shared_library_, FreeDetailedString);
+  GET_POINTER(function_pointers_, shared_library_, GetInstalledSoftwareComponents);
+  GET_POINTER(function_pointers_, shared_library_, ResetEnumeratorGetCount);
+  GET_POINTER(function_pointers_, shared_library_, NextComponentInfo);
 }
 
 SysCfgLibrary::~SysCfgLibrary()
@@ -178,6 +181,42 @@ NISysCfgStatus SysCfgLibrary::FreeDetailedString(char str[])
     throw LibraryLoadException(kSysCfgApiNotInstalledMessage);
   }
   return function_pointers_.FreeDetailedString(str);
+}
+
+NISysCfgStatus SysCfgLibrary::GetInstalledSoftwareComponents(
+    NISysCfgSessionHandle session_handle,
+    NISysCfgIncludeComponentTypes item_types,
+    NISysCfgBool cached,
+    NISysCfgEnumSoftwareComponentHandle* component_enum_handle)
+{
+  if (!function_pointers_.GetInstalledSoftwareComponents) {
+    throw LibraryLoadException(kSysCfgApiNotInstalledMessage);
+  }
+  return function_pointers_.GetInstalledSoftwareComponents(session_handle, item_types, cached, component_enum_handle);
+}
+
+NISysCfgStatus SysCfgLibrary::ResetEnumeratorGetCount(
+    void* enum_handle,
+    unsigned int* count)
+{
+  if (!function_pointers_.ResetEnumeratorGetCount) {
+    throw LibraryLoadException(kSysCfgApiNotInstalledMessage);
+  }
+  return function_pointers_.ResetEnumeratorGetCount(enum_handle, count);
+}
+
+NISysCfgStatus SysCfgLibrary::NextComponentInfo(
+    NISysCfgEnumSoftwareComponentHandle component_enum_handle,
+    char* id,
+    char* version,
+    char* title,
+    NISysCfgComponentType* itemType,
+    char** detailedDescription)
+{
+  if (!function_pointers_.NextComponentInfo) {
+    throw LibraryLoadException(kSysCfgApiNotInstalledMessage);
+  }
+  return function_pointers_.NextComponentInfo(component_enum_handle, id, version, title, itemType, detailedDescription);
 }
 
 }  // namespace nidevice_grpc
