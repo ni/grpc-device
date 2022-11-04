@@ -36,6 +36,7 @@ import session_pb2_grpc as grpc_session
 
 
 def main(args):
+    """Open a connection to the server, then run the command specified in args."""
     # Store command line args
     server_address = args.server_address
     server_port = args.port_number
@@ -68,13 +69,14 @@ def main(args):
 
 
 def enumerate_devices(client):
-    """Retrieves a list of devices (simulated and physical) connected to the server, then prints them."""
+    """Retrieve a list of devices (simulated and physical) connected to the server,
+    then print them."""
     enumerate_devices_response = client.EnumerateDevices(session_types.EnumerateDevicesRequest())
     print_devices(enumerate_devices_response.devices)
 
 
 def enumerate_software(client, show_hidden_packages):
-    """Retrieves a list of NI packages installed on the server."""
+    """Retrieve a list of NI packages installed on the server, then print them."""
     enumerate_software_response = client.EnumerateInstalledSoftware(
         session_types.EnumerateInstalledSoftwareRequest(
             include_hidden_packages=show_hidden_packages
