@@ -1,4 +1,4 @@
-r"""Get information about the remote machine using NI System Configuration.
+r"""Commands that can get information about the server.
 
 Getting Started:
 
@@ -11,7 +11,7 @@ Client" wiki page:
 
 Running from the command line:
 
-usage: nisyscfg.py [-h]
+usage: session-utilities.py [-h]
                    [server_address] [port_number]
                    {enumerate-devices,enumerate-software} ...
 
@@ -124,7 +124,7 @@ def print_software(software):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
-        description="Get information about the remote machine using NI System Configuration."
+        description="Commands that can get information about the server."
     )
     parser.add_argument(
         "server_address",
