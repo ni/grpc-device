@@ -388,6 +388,15 @@ add_custom_command(
             $<TARGET_FILE_DIR:ni_grpc_device_server>/server_config.json)
 
 #----------------------------------------------------------------------
+# Generate server_capabilities.json to binary output directory
+#----------------------------------------------------------------------
+add_custom_command(
+   TARGET ni_grpc_device_server POST_BUILD
+   COMMAND  ${PYTHON_EXE} ${codegen_dir}/generate_server_capabilities.py ${metadata_dir}/
+            -o $<TARGET_FILE_DIR:ni_grpc_device_server>/)
+
+
+#----------------------------------------------------------------------
 # Add JSON parser and configure google tests
 #----------------------------------------------------------------------
 if(CMAKE_CROSSCOMPILING AND NOT _GRPC_DEVICE_NILRT_LEGACY_TOOLCHAIN)

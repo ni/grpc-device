@@ -120,6 +120,7 @@ jobs:
         -C ${GITHUB_WORKSPACE}/build
         ni_grpc_device_server
         server_config.json
+        server_capabilities.json
         -C ${GITHUB_WORKSPACE}
         LICENSE
         ThirdPartyNotices.txt
@@ -174,6 +175,7 @@ jobs:
         path: |
           build/Release/ni_grpc_device_server.exe
           build/Release/server_config.json
+          build/Release/server_capabilities.json
         retention-days: 5
 
     - name: Upload Windows Test Binaries Artifact
