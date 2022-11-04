@@ -69,16 +69,13 @@ def main(args):
 
 
 def enumerate_devices(client):
-    """
-    Retrieve a list of devices (simulated and physical) connected to the server,
-    then print them.
-    """
+    """Retrieve and print a list of devices (simulated and physical) connected to the server."""
     enumerate_devices_response = client.EnumerateDevices(session_types.EnumerateDevicesRequest())
     print_devices(enumerate_devices_response.devices)
 
 
 def enumerate_software(client, show_hidden_packages):
-    """Retrieve a list of NI packages installed on the server, then print them."""
+    """Retrieve and print a list of NI packages installed on the server."""
     enumerate_software_response = client.EnumerateInstalledSoftware(
         session_types.EnumerateInstalledSoftwareRequest(
             include_hidden_packages=show_hidden_packages
