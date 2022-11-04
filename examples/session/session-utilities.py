@@ -37,18 +37,18 @@ import session_pb2_grpc as grpc_session
 
 def main(args):
     # Store command line args
-    SERVER_ADDRESS = args.server_address
-    SERVER_PORT = args.port_number
-    ACTION = args.action
+    server_address = args.server_address
+    server_port = args.port_number
+    action = args.action
 
     # Open communication with the server using gRPC APIs.
-    channel = grpc.insecure_channel(f"{SERVER_ADDRESS}:{SERVER_PORT}")
+    channel = grpc.insecure_channel(f"{server_address}:{server_port}")
     client = grpc_session.SessionUtilitiesStub(channel)
 
     try:
-        if ACTION == "enumerate-devices":
+        if action == "enumerate-devices":
             enumerate_devices(client)
-        elif ACTION == "enumerate-software":
+        elif action == "enumerate-software":
             enumerate_software(client, args.show_hidden)
 
     # If the API throws an exception, print the error message.
@@ -59,7 +59,7 @@ def main(args):
                 value = entry.value if isinstance(entry.value, str) else entry.value.decode("utf-8")
                 error_message += f"\nError status: {value}"
         if rpc_error.code() == grpc.StatusCode.UNAVAILABLE:
-            error_message = f"Failed to connect to server on {SERVER_ADDRESS}:{SERVER_PORT}"
+            error_message = f"Failed to connect to server on {server_address}:{server_port}"
         elif rpc_error.code() == grpc.StatusCode.UNIMPLEMENTED:
             error_message = (
                 "The operation is not implemented or is not supported/enabled in this service"
@@ -67,14 +67,14 @@ def main(args):
         print(f"{error_message}")
 
 
-# Retrieves a list of devices (simulated and physical) connected to the server, then prints them.
 def enumerate_devices(client):
+    """Retrieves a list of devices (simulated and physical) connected to the server, then prints them."""
     enumerate_devices_response = client.EnumerateDevices(session_types.EnumerateDevicesRequest())
     print_devices(enumerate_devices_response.devices)
 
 
-# Retrieves a list of NI packages installed on the server.
 def enumerate_software(client, show_hidden_packages):
+    """Retrieves a list of NI packages installed on the server."""
     enumerate_software_response = client.EnumerateInstalledSoftware(
         session_types.EnumerateInstalledSoftwareRequest(
             include_hidden_packages=show_hidden_packages
