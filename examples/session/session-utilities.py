@@ -69,8 +69,10 @@ def main(args):
 
 
 def enumerate_devices(client):
-    """Retrieve a list of devices (simulated and physical) connected to the server,
-    then print them."""
+    """
+    Retrieve a list of devices (simulated and physical) connected to the server,
+    then print them.
+    """
     enumerate_devices_response = client.EnumerateDevices(session_types.EnumerateDevicesRequest())
     print_devices(enumerate_devices_response.devices)
 
