@@ -5,6 +5,9 @@ on:
     workflows: [CI]
     types:
       - completed
+    branches:
+      - main
+      - 'releases/**'
   workflow_dispatch:
 
 jobs:
@@ -14,7 +17,7 @@ jobs:
     steps:
     - name: Trigger Main CI
       uses: Azure/pipelines@v1
-      if: ${{ github.repository == 'ni/grpc-device' && github.ref == 'refs/heads/main' }}
+      if: ${{ github.repository == 'ni/grpc-device' && github.event.workflow_run.head_branch == 'main' }}
       with:
         azure-devops-project-url: 'https://dev.azure.com/ni/DevCentral'
         azure-pipeline-name: 'ni-central-grpc_device-main-desktop'
@@ -22,7 +25,7 @@ jobs:
 
     - name: Trigger Release CI
       uses: Azure/pipelines@v1
-      if: ${{ github.repository == 'ni/grpc-device' && startsWith(github.ref, 'refs/heads/releases') }}
+      if: ${{ github.repository == 'ni/grpc-device' && startsWith(github.event.workflow_run.head_branch, 'releases') }}
       with:
         azure-devops-project-url: 'https://dev.azure.com/ni/DevCentral'
         azure-pipeline-name: 'ni-central-grpc_device-release-desktop'
@@ -30,7 +33,7 @@ jobs:
 
     - name: Trigger Main CI
       uses: Azure/pipelines@v1
-      if: ${{ github.repository == 'ni/grpc-device' && github.ref == 'refs/heads/main' }}
+      if: ${{ github.repository == 'ni/grpc-device' && github.event.workflow_run.head_branch == 'main' }}
       with:
         azure-devops-project-url: 'https://dev.azure.com/ni/DevCentral'
         azure-pipeline-name: 'ni-central-grpc_device-main-linux-rt'
@@ -38,7 +41,7 @@ jobs:
 
     - name: Trigger Release CI
       uses: Azure/pipelines@v1
-      if: ${{ github.repository == 'ni/grpc-device' && startsWith(github.ref, 'refs/heads/releases') }}
+      if: ${{ github.repository == 'ni/grpc-device' && startsWith(github.event.workflow_run.head_branch, 'releases') }}
       with:
         azure-devops-project-url: 'https://dev.azure.com/ni/DevCentral'
         azure-pipeline-name: 'ni-central-grpc_device-release-linux-rt'
