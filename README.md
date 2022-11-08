@@ -63,23 +63,23 @@ There are two ways to start the server:
 1. Launch the server application without specifying a path to a configuration file (use the default configuration file):
 
     **Windows**
-    
+
     `.\ni_grpc_device_server.exe`
-    
+
    **Note:** It is also possible to start the server by double-clicking the executable. Starting the server through a command prompt, however, allows for observation of [startup errors](#common-server-startup-errors).
-   
+
     **Linux and Linux RT**
-    
+
     `./ni_grpc_device_server`
 
 2. Launch the server application by specifying a path (relative or absolute) to the configuration file:
 
     **Windows**
-    
+
     `.\ni_grpc_device_server.exe C:\path\to\config\file\server_config.json`
 
     **Linux and Linux RT**
-    
+
     `./ni_grpc_device_server /path/to/config/file/server_config.json`
 
 
@@ -124,3 +124,21 @@ Each supported driver API has a corresponding `.proto` file that defines the int
 ## SSL/TLS Support
 
 The server supports both server-side TLS and mutual TLS. Security configuration is accomplished by setting the `server_cert`, `server_key` and `root_cert` values in the server's configuration file. The server expects the certificate files specified in the configuration file to exist in a `certs` folder that is located in the same directory as the configuration file being used by the server. For more detailed information on SSL/TLS support refer to the [Server Security Support wiki page](https://github.com/ni/grpc-device/wiki/Server-Security-Support).
+
+## Bind Address Support
+
+The server supports specifying the address to bind to. The address can be used to enable local or remote connections. Valid address values include any valid IPv4 or IPv6 address. To bind to local (loopback) connection, specify address `"[::1]"`. To bind to any address, specify address `"[::]"`. If no address is specified, the server configuration defaults to any address `"[::]"`.
+
+Below are the contents of a server configuration file accepting localhost connection on port `31763` and configured without SSL/TLS.
+
+```json
+{
+    "address": "[::1]",
+    "port": 31763,
+    "security" : {
+       "server_cert": "",
+       "server_key": "",
+       "root_cert": ""
+    }
+ }
+```
