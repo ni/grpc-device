@@ -96,11 +96,12 @@ If the server fails to start (i.e. a port is not specified in the configuration 
 ### Common Server Startup Errors
 
 1. The datatypes of the values in the configuration file don't match the expected datatypes. For example, the port must be an integer type and not a string. The error message will provide specific details on the type requirements.
-2. The configuration file can't be found at the provided location. This error can also occur if the user lacks read permissions for the file.
-3. The server configuration file is malformed and is not in proper JSON format. Refer to the JSON configuration file in this readme for an example of the expected format.
-4. The specified port is out of the allowed port range. The solution is to select a port in the allowable range (0-65535).
-5. The specified port is already in use. The solution is to select another port or terminate the other application using the port.
-6. Security configuration errors. See [Server Security Support wiki page](https://github.com/ni/grpc-device/wiki/Server-Security-Support).
+1. The configuration file can't be found at the provided location. This error can also occur if the user lacks read permissions for the file.
+1. The server configuration file is malformed and is not in proper JSON format. Refer to the JSON configuration file in this readme for an example of the expected format.
+1. The specified address is not valid. The solution is to select a valid IPv4 or IPv6 address.
+1. The specified port is out of the allowed port range. The solution is to select a port in the allowable range (0-65535).
+1. The specified port is already in use. The solution is to select another port or terminate the other application using the port.
+1. Security configuration errors. See [Server Security Support wiki page](https://github.com/ni/grpc-device/wiki/Server-Security-Support).
 
 ### Default Configuration File (insecure):
 
@@ -117,17 +118,9 @@ Below are the contents of a default configuration file using port `31763` and co
 }
 ```
 
-## Creating a gRPC Client
+### Bind Address Support
 
-Each supported driver API has a corresponding `.proto` file that defines the interface used by clients to interact with the NI devices connected to the server. Creating a client requires compiling the `.proto` into supporting files in the client's language of choice using the protocol buffer compiler `protoc`. For more detailed information refer to the [Creating a gRPC Client wiki page](https://github.com/ni/grpc-device/wiki/Creating-a-gRPC-Client).
-
-## SSL/TLS Support
-
-The server supports both server-side TLS and mutual TLS. Security configuration is accomplished by setting the `server_cert`, `server_key` and `root_cert` values in the server's configuration file. The server expects the certificate files specified in the configuration file to exist in a `certs` folder that is located in the same directory as the configuration file being used by the server. For more detailed information on SSL/TLS support refer to the [Server Security Support wiki page](https://github.com/ni/grpc-device/wiki/Server-Security-Support).
-
-## Bind Address Support
-
-The server supports specifying the address to bind to. The address can be used to enable local or remote connections. Valid address values include any valid IPv4 or IPv6 address. To bind to local (loopback) connection, specify address `"[::1]"`. To bind to any address, specify address `"[::]"`. If no address is specified, the server configuration defaults to any address `"[::]"`.
+The server supports specifying the address to bind to. The address can be used to enable local or remote connections. Address values include any valid IPv4 or IPv6 address. To bind to local (loopback) connection, specify address `"[::1]"`. To bind to any address, specify address `"[::]"`. If no address is specified, the server configuration defaults to any address `"[::]"`.
 
 Below are the contents of a server configuration file accepting localhost connection on port `31763` and configured without SSL/TLS.
 
@@ -142,3 +135,11 @@ Below are the contents of a server configuration file accepting localhost connec
     }
  }
 ```
+
+## Creating a gRPC Client
+
+Each supported driver API has a corresponding `.proto` file that defines the interface used by clients to interact with the NI devices connected to the server. Creating a client requires compiling the `.proto` into supporting files in the client's language of choice using the protocol buffer compiler `protoc`. For more detailed information refer to the [Creating a gRPC Client wiki page](https://github.com/ni/grpc-device/wiki/Creating-a-gRPC-Client).
+
+## SSL/TLS Support
+
+The server supports both server-side TLS and mutual TLS. Security configuration is accomplished by setting the `server_cert`, `server_key` and `root_cert` values in the server's configuration file. The server expects the certificate files specified in the configuration file to exist in a `certs` folder that is located in the same directory as the configuration file being used by the server. For more detailed information on SSL/TLS support refer to the [Server Security Support wiki page](https://github.com/ni/grpc-device/wiki/Server-Security-Support).
