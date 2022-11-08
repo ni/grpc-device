@@ -63,7 +63,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto status = library_->Abort(vi);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -85,7 +85,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto status = library_->AbortKeepAlive(vi);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -107,7 +107,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto site_list = request->site_list().c_str();
       auto levels_sheet = request->levels_sheet().c_str();
       auto timing_sheet = request->timing_sheet().c_str();
@@ -135,7 +135,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_list = request->channel_list().c_str();
       ViInt32 num_offsets = static_cast<ViInt32>(request->offsets().size());
       auto offsets = const_cast<ViReal64*>(request->offsets().data());
@@ -160,7 +160,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto site_list = request->site_list().c_str();
       auto start_label = request->start_label().c_str();
       ViBoolean select_digital_function = request->select_digital_function();
@@ -193,7 +193,7 @@ namespace nidigitalpattern_grpc {
         sessions_request.begin(),
         sessions_request.end(),
         std::back_inserter(sessions),
-        [&](auto session) { return session_repository_->access_session(session.id(), session.name()); }); 
+        [&](auto session) { return session_repository_->access_session(session.name()); }); 
       auto site_list = request->site_list().c_str();
       auto start_label = request->start_label().c_str();
       ViBoolean select_digital_function = request->select_digital_function();
@@ -220,7 +220,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto status = library_->ClearError(vi);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -242,7 +242,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_list = request->channel_list().c_str();
       auto status = library_->ClockGeneratorAbort(vi, channel_list);
       if (!status_ok(status)) {
@@ -265,7 +265,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_list = request->channel_list().c_str();
       ViReal64 frequency = request->frequency();
       ViBoolean select_digital_function = request->select_digital_function();
@@ -290,7 +290,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_list = request->channel_list().c_str();
       auto status = library_->ClockGeneratorInitiate(vi, channel_list);
       if (!status_ok(status)) {
@@ -313,8 +313,8 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      session_repository_->remove_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
+      session_repository_->remove_session(vi_grpc_session.name());
       auto status = library_->Close(vi);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -336,7 +336,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto status = library_->Commit(vi);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -358,7 +358,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_list = request->channel_list().c_str();
       ViReal64 iol = request->iol();
       ViReal64 ioh = request->ioh();
@@ -384,7 +384,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViInt64 cycle_number = request->cycle_number();
       ViInt32 pretrigger_samples = request->pretrigger_samples();
       auto status = library_->ConfigureCycleNumberHistoryRAMTrigger(vi, cycle_number, pretrigger_samples);
@@ -408,7 +408,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto trigger_identifier = request->trigger_identifier().c_str();
       auto source = request->source().c_str();
       ViInt32 edge;
@@ -448,7 +448,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto source = request->source().c_str();
       ViInt32 edge;
       switch (request->edge_enum_case()) {
@@ -487,7 +487,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViInt32 pretrigger_samples = request->pretrigger_samples();
       auto status = library_->ConfigureFirstFailureHistoryRAMTrigger(vi, pretrigger_samples);
       if (!status_ok(status)) {
@@ -510,7 +510,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViInt32 cycles_to_acquire;
       switch (request->cycles_to_acquire_enum_case()) {
         case nidigitalpattern_grpc::ConfigureHistoryRAMCyclesToAcquireRequest::CyclesToAcquireEnumCase::kCyclesToAcquire: {
@@ -548,7 +548,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto site_list = request->site_list().c_str();
       auto status = library_->ConfigurePatternBurstSites(vi, site_list);
       if (!status_ok(status)) {
@@ -571,7 +571,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto label = request->label().c_str();
       ViInt64 vector_offset = request->vector_offset();
       ViInt64 cycle_offset = request->cycle_offset();
@@ -597,7 +597,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto trigger_identifier = request->trigger_identifier().c_str();
       auto status = library_->ConfigureSoftwareEdgeConditionalJumpTrigger(vi, trigger_identifier);
       if (!status_ok(status)) {
@@ -620,7 +620,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto status = library_->ConfigureSoftwareEdgeStartTrigger(vi);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -642,7 +642,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto label = request->label().c_str();
       auto status = library_->ConfigureStartLabel(vi, label);
       if (!status_ok(status)) {
@@ -665,7 +665,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_list = request->channel_list().c_str();
       ViInt32 mode;
       switch (request->mode_enum_case()) {
@@ -704,7 +704,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto pin_list = request->pin_list().c_str();
       auto time_set_name = request->time_set_name().c_str();
       ViReal64 strobe_edge = request->strobe_edge();
@@ -729,7 +729,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto pin_list = request->pin_list().c_str();
       auto time_set_name = request->time_set_name().c_str();
       ViReal64 strobe_edge = request->strobe_edge();
@@ -755,7 +755,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto pin_list = request->pin_list().c_str();
       auto time_set_name = request->time_set_name().c_str();
       ViInt32 format;
@@ -799,7 +799,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto pin_list = request->pin_list().c_str();
       auto time_set_name = request->time_set_name().c_str();
       ViInt32 format;
@@ -845,7 +845,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto pin_list = request->pin_list().c_str();
       auto time_set_name = request->time_set_name().c_str();
       ViInt32 drive_format;
@@ -885,7 +885,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto pin_list = request->pin_list().c_str();
       auto time_set_name = request->time_set_name().c_str();
       ViInt32 edge;
@@ -926,7 +926,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto pin_list = request->pin_list().c_str();
       auto time_set_name = request->time_set_name().c_str();
       ViInt32 edge_multiplier = request->edge_multiplier();
@@ -951,7 +951,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto time_set_name = request->time_set_name().c_str();
       ViReal64 period = request->period();
       auto status = library_->ConfigureTimeSetPeriod(vi, time_set_name, period);
@@ -975,7 +975,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_list = request->channel_list().c_str();
       ViReal64 vil = request->vil();
       ViReal64 vih = request->vih();
@@ -1003,7 +1003,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto waveform_name = request->waveform_name().c_str();
       auto waveform_file_path = request->waveform_file_path().c_str();
       auto status = library_->CreateCaptureWaveformFromFileDigicapture(vi, waveform_name, waveform_file_path);
@@ -1027,7 +1027,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto pin_list = request->pin_list().c_str();
       auto waveform_name = request->waveform_name().c_str();
       auto status = library_->CreateCaptureWaveformParallel(vi, pin_list, waveform_name);
@@ -1051,7 +1051,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto pin_list = request->pin_list().c_str();
       auto waveform_name = request->waveform_name().c_str();
       ViUInt32 sample_width = request->sample_width();
@@ -1092,7 +1092,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViInt32 num_sites = request->num_sites();
       auto status = library_->CreateChannelMap(vi, num_sites);
       if (!status_ok(status)) {
@@ -1115,7 +1115,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto pin_group_name = request->pin_group_name().c_str();
       auto pin_list = request->pin_list().c_str();
       auto status = library_->CreatePinGroup(vi, pin_group_name, pin_list);
@@ -1139,7 +1139,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto dut_pin_list = request->dut_pin_list().c_str();
       auto system_pin_list = request->system_pin_list().c_str();
       auto status = library_->CreatePinMap(vi, dut_pin_list, system_pin_list);
@@ -1163,7 +1163,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto waveform_name = request->waveform_name().c_str();
       auto waveform_file_path = request->waveform_file_path().c_str();
       ViBoolean write_waveform_data = request->write_waveform_data();
@@ -1188,7 +1188,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto pin_list = request->pin_list().c_str();
       auto waveform_name = request->waveform_name().c_str();
       ViInt32 data_mapping;
@@ -1228,7 +1228,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto pin_list = request->pin_list().c_str();
       auto waveform_name = request->waveform_name().c_str();
       ViInt32 data_mapping;
@@ -1285,7 +1285,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto name = request->name().c_str();
       auto status = library_->CreateTimeSet(vi, name);
       if (!status_ok(status)) {
@@ -1308,7 +1308,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto status = library_->DeleteAllTimeSets(vi);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -1330,7 +1330,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto trigger_identifier = request->trigger_identifier().c_str();
       auto status = library_->DisableConditionalJumpTrigger(vi, trigger_identifier);
       if (!status_ok(status)) {
@@ -1353,7 +1353,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto site_list = request->site_list().c_str();
       auto status = library_->DisableSites(vi, site_list);
       if (!status_ok(status)) {
@@ -1376,7 +1376,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto status = library_->DisableStartTrigger(vi);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -1404,9 +1404,9 @@ namespace nidigitalpattern_grpc {
         sessions_request.begin(),
         sessions_request.end(),
         std::back_inserter(sessions),
-        [&](auto session) { return session_repository_->access_session(session.id(), session.name()); }); 
+        [&](auto session) { return session_repository_->access_session(session.name()); }); 
       auto sync_session_grpc_session = request->sync_session();
-      ViSession sync_session = session_repository_->access_session(sync_session_grpc_session.id(), sync_session_grpc_session.name());
+      ViSession sync_session = session_repository_->access_session(sync_session_grpc_session.name());
       auto status = library_->EnableMatchFailCombination(session_count, sessions.data(), sync_session);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, sync_session);
@@ -1428,7 +1428,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto site_list = request->site_list().c_str();
       auto status = library_->EnableSites(vi, site_list);
       if (!status_ok(status)) {
@@ -1451,7 +1451,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto status = library_->EndChannelMap(vi);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -1473,7 +1473,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViStatus error_code = request->error_code();
       std::string error_message(256 - 1, '\0');
       auto status = library_->ErrorMessage(vi, error_code, (ViChar*)error_message.data());
@@ -1499,7 +1499,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViInt32 signal;
       switch (request->signal_enum_case()) {
         case nidigitalpattern_grpc::ExportSignalRequest::SignalEnumCase::kSignal: {
@@ -1539,7 +1539,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto site = request->site().c_str();
       ViInt64 sample_index = request->sample_index();
       ViInt32 pattern_index {};
@@ -1573,7 +1573,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto site = request->site().c_str();
       auto pin_list = request->pin_list().c_str();
       ViInt64 sample_index = request->sample_index();
@@ -1623,7 +1623,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto site = request->site().c_str();
       ViInt64 sample_index = request->sample_index();
       ViInt64 scan_cycle_number {};
@@ -1649,7 +1649,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViInt32 measurement_mode;
       switch (request->measurement_mode_enum_case()) {
         case nidigitalpattern_grpc::FrequencyCounterConfigureMeasurementModeRequest::MeasurementModeEnumCase::kMeasurementMode: {
@@ -1687,7 +1687,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_list = request->channel_list().c_str();
       ViReal64 measurement_time = request->measurement_time();
       auto status = library_->FrequencyCounterConfigureMeasurementTime(vi, channel_list, measurement_time);
@@ -1711,7 +1711,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_list = request->channel_list().c_str();
       ViInt32 actual_num_frequencies {};
       while (true) {
@@ -1750,7 +1750,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
       ViAttr attribute = request->attribute();
       ViBoolean value {};
@@ -1776,7 +1776,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
       ViAttr attribute = request->attribute();
       ViInt32 value {};
@@ -1802,7 +1802,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
       ViAttr attribute = request->attribute();
       ViInt64 value {};
@@ -1828,7 +1828,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
       ViAttr attribute = request->attribute();
       ViReal64 value {};
@@ -1854,7 +1854,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_list = request->channel_list().c_str();
       ViAttr attribute = request->attribute();
       ViSession value {};
@@ -1863,8 +1863,8 @@ namespace nidigitalpattern_grpc {
         return ConvertApiErrorStatusForViSession(context, status, vi);
       }
       response->set_status(status);
-      auto session_id = session_repository_->resolve_session_id(value);
-      response->mutable_value()->set_id(session_id);
+      auto grpc_device_session_name = session_repository_->resolve_session_name(value);
+      response->mutable_value()->set_name(grpc_device_session_name);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
@@ -1881,7 +1881,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
       ViAttr attribute = request->attribute();
 
@@ -1924,7 +1924,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViInt32 index = request->index();
 
       while (true) {
@@ -1966,7 +1966,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto indices = request->indices().c_str();
 
       while (true) {
@@ -2008,7 +2008,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
 
       while (true) {
         auto status = library_->GetError(vi, nullptr, 0, nullptr);
@@ -2051,7 +2051,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_list = request->channel_list().c_str();
       ViInt32 actual_num_read {};
       while (true) {
@@ -2090,7 +2090,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto site = request->site().c_str();
       ViInt64 sample_count {};
       auto status = library_->GetHistoryRAMSampleCount(vi, site, &sample_count);
@@ -2115,7 +2115,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViInt32 pattern_index = request->pattern_index();
 
       while (true) {
@@ -2157,7 +2157,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto start_label = request->start_label().c_str();
       ViInt32 actual_num_pins {};
       while (true) {
@@ -2196,7 +2196,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto start_label = request->start_label().c_str();
 
       while (true) {
@@ -2238,7 +2238,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViInt32 pin_index = request->pin_index();
 
       while (true) {
@@ -2280,7 +2280,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_list = request->channel_list().c_str();
       ViInt32 actual_num_values {};
       while (true) {
@@ -2325,7 +2325,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto site_list = request->site_list().c_str();
       ViInt32 actual_num_sites {};
       while (true) {
@@ -2364,7 +2364,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto site_list = request->site_list().c_str();
       ViInt32 site_result_type;
       switch (request->site_result_type_enum_case()) {
@@ -2419,7 +2419,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto pin = request->pin().c_str();
       auto time_set_name = request->time_set_name().c_str();
       ViInt32 format {};
@@ -2446,7 +2446,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto pin = request->pin().c_str();
       auto time_set_name = request->time_set_name().c_str();
       ViInt32 edge;
@@ -2488,7 +2488,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto pin = request->pin().c_str();
       auto time_set_name = request->time_set_name().c_str();
       ViInt32 edge_multiplier {};
@@ -2514,7 +2514,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViInt32 time_set_index = request->time_set_index();
 
       while (true) {
@@ -2556,7 +2556,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto time_set_name = request->time_set_name().c_str();
       ViReal64 period {};
       auto status = library_->GetTimeSetPeriod(vi, time_set_name, &period);
@@ -2591,15 +2591,14 @@ namespace nidigitalpattern_grpc {
         auto status = library_->Init(resource_name, id_query, reset_device, &vi);
         return std::make_tuple(status, vi);
       };
-      uint32_t session_id = 0;
-      const std::string& grpc_device_session_name = request->session_name();
+      std::string grpc_device_session_name = request->session_name();
       auto cleanup_lambda = [&] (ViSession id) { library_->Close(id); };
-      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id, initialization_behavior, &new_session_initialized);
+      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, initialization_behavior, &new_session_initialized);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, 0);
       }
       response->set_status(status);
-      response->mutable_vi()->set_id(session_id);
+      response->mutable_vi()->set_name(grpc_device_session_name);
       response->set_new_session_initialized(new_session_initialized);
       return ::grpc::Status::OK;
     }
@@ -2628,15 +2627,14 @@ namespace nidigitalpattern_grpc {
         auto status = library_->InitWithOptions(resource_name, id_query, reset_device, option_string, &vi);
         return std::make_tuple(status, vi);
       };
-      uint32_t session_id = 0;
-      const std::string& grpc_device_session_name = request->session_name();
+      std::string grpc_device_session_name = request->session_name();
       auto cleanup_lambda = [&] (ViSession id) { library_->Close(id); };
-      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id, initialization_behavior, &new_session_initialized);
+      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, initialization_behavior, &new_session_initialized);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, 0);
       }
       response->set_status(status);
-      response->mutable_vi()->set_id(session_id);
+      response->mutable_vi()->set_name(grpc_device_session_name);
       response->set_new_session_initialized(new_session_initialized);
       return ::grpc::Status::OK;
     }
@@ -2654,7 +2652,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto status = library_->Initiate(vi);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -2676,7 +2674,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViBoolean done {};
       auto status = library_->IsDone(vi, &done);
       if (!status_ok(status)) {
@@ -2700,7 +2698,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto site = request->site().c_str();
       ViBoolean enable {};
       auto status = library_->IsSiteEnabled(vi, site, &enable);
@@ -2725,7 +2723,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto file_path = request->file_path().c_str();
       auto status = library_->LoadLevels(vi, file_path);
       if (!status_ok(status)) {
@@ -2748,7 +2746,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto file_path = request->file_path().c_str();
       auto status = library_->LoadPattern(vi, file_path);
       if (!status_ok(status)) {
@@ -2771,7 +2769,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto file_path = request->file_path().c_str();
       auto status = library_->LoadPinMap(vi, file_path);
       if (!status_ok(status)) {
@@ -2794,7 +2792,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto file_path = request->file_path().c_str();
       auto status = library_->LoadSpecifications(vi, file_path);
       if (!status_ok(status)) {
@@ -2817,7 +2815,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto file_path = request->file_path().c_str();
       auto status = library_->LoadTiming(vi, file_path);
       if (!status_ok(status)) {
@@ -2840,7 +2838,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto pin = request->pin().c_str();
       ViInt32 site = request->site();
       auto channel = request->channel().c_str();
@@ -2865,7 +2863,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_list = request->channel_list().c_str();
       ViReal64 aperture_time = request->aperture_time();
       ViInt32 units;
@@ -2905,7 +2903,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_list = request->channel_list().c_str();
       ViReal64 current_level = request->current_level();
       auto status = library_->PPMUConfigureCurrentLevel(vi, channel_list, current_level);
@@ -2929,7 +2927,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_list = request->channel_list().c_str();
       ViReal64 range = request->range();
       auto status = library_->PPMUConfigureCurrentLevelRange(vi, channel_list, range);
@@ -2953,7 +2951,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_list = request->channel_list().c_str();
       ViInt32 behavior;
       switch (request->behavior_enum_case()) {
@@ -2993,7 +2991,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_list = request->channel_list().c_str();
       ViReal64 range = request->range();
       auto status = library_->PPMUConfigureCurrentLimitRange(vi, channel_list, range);
@@ -3017,7 +3015,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_list = request->channel_list().c_str();
       ViInt32 output_function;
       switch (request->output_function_enum_case()) {
@@ -3056,7 +3054,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_list = request->channel_list().c_str();
       ViReal64 voltage_level = request->voltage_level();
       auto status = library_->PPMUConfigureVoltageLevel(vi, channel_list, voltage_level);
@@ -3080,7 +3078,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_list = request->channel_list().c_str();
       ViReal64 lower_voltage_limit = request->lower_voltage_limit();
       ViReal64 upper_voltage_limit = request->upper_voltage_limit();
@@ -3105,7 +3103,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_list = request->channel_list().c_str();
       ViInt32 measurement_type;
       switch (request->measurement_type_enum_case()) {
@@ -3160,7 +3158,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_list = request->channel_list().c_str();
       auto status = library_->PPMUSource(vi, channel_list);
       if (!status_ok(status)) {
@@ -3183,7 +3181,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto flag = request->flag().c_str();
       ViBoolean value {};
       auto status = library_->ReadSequencerFlag(vi, flag, &value);
@@ -3208,7 +3206,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto reg = request->reg().c_str();
       ViInt32 value {};
       auto status = library_->ReadSequencerRegister(vi, reg, &value);
@@ -3233,7 +3231,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_list = request->channel_list().c_str();
       ViInt32 actual_num_read {};
       while (true) {
@@ -3273,7 +3271,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto status = library_->Reset(vi);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -3295,7 +3293,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
       auto status = library_->ResetAttribute(vi, channel_name, attribute_id);
@@ -3319,7 +3317,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto status = library_->ResetDevice(vi);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -3341,7 +3339,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_list = request->channel_list().c_str();
       ViInt32 function;
       switch (request->function_enum_case()) {
@@ -3380,7 +3378,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto status = library_->SelfCalibrate(vi);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -3402,7 +3400,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViInt16 test_result {};
       std::string test_message(2048 - 1, '\0');
       auto status = library_->SelfTest(vi, &test_result, (ViChar*)test_message.data());
@@ -3429,7 +3427,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViInt32 trigger;
       switch (request->trigger_enum_case()) {
         case nidigitalpattern_grpc::SendSoftwareEdgeTriggerRequest::TriggerEnumCase::kTrigger: {
@@ -3468,7 +3466,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
       ViAttr attribute = request->attribute();
       ViBoolean value = request->value();
@@ -3493,7 +3491,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
       ViAttr attribute = request->attribute();
       ViInt32 value;
@@ -3533,7 +3531,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
       ViAttr attribute = request->attribute();
       ViInt64 value = request->value_raw();
@@ -3558,7 +3556,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
       ViAttr attribute = request->attribute();
       ViReal64 value = request->value_raw();
@@ -3583,11 +3581,11 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_list = request->channel_list().c_str();
       ViAttr attribute = request->attribute();
       auto value_grpc_session = request->value();
-      ViSession value = session_repository_->access_session(value_grpc_session.id(), value_grpc_session.name());
+      ViSession value = session_repository_->access_session(value_grpc_session.name());
       auto status = library_->SetAttributeViSession(vi, channel_list, attribute, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -3609,7 +3607,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
       ViAttr attribute = request->attribute();
       auto value = request->value_raw().c_str();
@@ -3634,7 +3632,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_list = request->channel_list().c_str();
       ViBoolean apply_offsets = request->apply_offsets();
       ViInt32 actual_num_offsets {};
@@ -3674,7 +3672,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViBoolean unload_keep_alive_pattern = request->unload_keep_alive_pattern();
       auto status = library_->UnloadAllPatterns(vi, unload_keep_alive_pattern);
       if (!status_ok(status)) {
@@ -3697,7 +3695,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto file_path = request->file_path().c_str();
       auto status = library_->UnloadSpecifications(vi, file_path);
       if (!status_ok(status)) {
@@ -3720,7 +3718,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViReal64 timeout = request->timeout();
       auto status = library_->WaitUntilDone(vi, timeout);
       if (!status_ok(status)) {
@@ -3743,7 +3741,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto flag = request->flag().c_str();
       ViBoolean value = request->value();
       auto status = library_->WriteSequencerFlag(vi, flag, value);
@@ -3773,7 +3771,7 @@ namespace nidigitalpattern_grpc {
         sessions_request.begin(),
         sessions_request.end(),
         std::back_inserter(sessions),
-        [&](auto session) { return session_repository_->access_session(session.id(), session.name()); }); 
+        [&](auto session) { return session_repository_->access_session(session.name()); }); 
       auto flag = request->flag().c_str();
       ViBoolean value = request->value();
       auto status = library_->WriteSequencerFlagSynchronized(session_count, sessions.data(), flag, value);
@@ -3797,7 +3795,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto reg = request->reg().c_str();
       ViInt32 value = request->value();
       auto status = library_->WriteSequencerRegister(vi, reg, value);
@@ -3821,7 +3819,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto waveform_name = request->waveform_name().c_str();
       ViInt32 waveform_size = static_cast<ViInt32>(request->waveform_data().size());
       auto waveform_data = const_cast<ViUInt32*>(reinterpret_cast<const ViUInt32*>(request->waveform_data().data()));
@@ -3846,7 +3844,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto waveform_name = request->waveform_name().c_str();
       auto waveform_file_path = request->waveform_file_path().c_str();
       auto status = library_->WriteSourceWaveformDataFromFileTDMS(vi, waveform_name, waveform_file_path);
@@ -3870,7 +3868,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto site_list = request->site_list().c_str();
       auto waveform_name = request->waveform_name().c_str();
       ViInt32 num_waveforms = request->num_waveforms();
@@ -3897,7 +3895,7 @@ namespace nidigitalpattern_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_list = request->channel_list().c_str();
       ViUInt8 state;
       switch (request->state_enum_case()) {

@@ -10,21 +10,21 @@ namespace tests {
 namespace unit {
 
 const uint32_t kNoSession = 0;
+std::string kNoSessionName;
 const int32_t kNoError = 0;
 
 template <typename TResourceHandle>
-uint32_t add_session_resource(
+std::string add_session_resource(
     SessionResourceRepository<TResourceHandle>& resource_repository,
     const TResourceHandle& resource)
 {
-  uint32_t session_id;
+  std::string session_name;
   auto result = resource_repository.add_session(
-      "",
+     session_name,
       [=]() { return std::make_tuple(kNoError, resource); },
-      [](TResourceHandle handle) {},
-      session_id);
+      [](TResourceHandle handle) {});
   EXPECT_EQ(kNoError, result);
-  return session_id;
+  return session_name;
 }
 
 TEST(SessionResourceRepositoryTests, AddSessionResource_ResourceIsAdded)
@@ -34,28 +34,23 @@ TEST(SessionResourceRepositoryTests, AddSessionResource_ResourceIsAdded)
       &repository);
 
   const uint64_t kResourceHandle = 0x1111222233334444;
-  const std::string kSessionName("session");
-  uint32_t session_id;
+  std::string session_id("session");
   auto result = resource_repository.add_session(
-      kSessionName,
+      session_id,
       [=]() { return std::make_tuple(kNoError, kResourceHandle); },
-      [](uint64_t handle) {},
-      session_id);
+      [](uint64_t handle) {});
 
   EXPECT_EQ(kNoError, result);
-  EXPECT_NE(kNoSession, session_id);
+  EXPECT_NE(kNoSessionName, session_id);
   EXPECT_EQ(
       kResourceHandle,
-      resource_repository.access_session(session_id, ""));
+      resource_repository.access_session(session_id));
   EXPECT_EQ(
       kResourceHandle,
-      resource_repository.access_session(0, kSessionName));
+      resource_repository.access_session(session_id));
   EXPECT_EQ(
       session_id,
-      repository.access_session(0, kSessionName));
-  EXPECT_EQ(
-      session_id,
-      repository.access_session(session_id, ""));
+      repository.access_session(session_id));
 }
 
 TEST(SessionResourceRepositoryTests, AddTwoSessionsWithSameResourceHandle_RemoveOneSession_ResourceStillAccessible)
@@ -69,19 +64,19 @@ TEST(SessionResourceRepositoryTests, AddTwoSessionsWithSameResourceHandle_Remove
   EXPECT_NE(session_id_one, session_id_two);
   EXPECT_EQ(
       kResourceHandle,
-      resource_repository.access_session(session_id_one, ""));
+      resource_repository.access_session(session_id_one));
   EXPECT_EQ(
       kResourceHandle,
-      resource_repository.access_session(session_id_two, ""));
+      resource_repository.access_session(session_id_two));
 
-  resource_repository.remove_session(session_id_one, "");
+  resource_repository.remove_session(session_id_one);
 
   EXPECT_EQ(
       kNoSession,
-      resource_repository.access_session(session_id_one, ""));
+      resource_repository.access_session(session_id_one));
   EXPECT_EQ(
       kResourceHandle,
-      resource_repository.access_session(session_id_two, ""));
+      resource_repository.access_session(session_id_two));
 }
 
 TEST(SessionResourceRepositoryTests, SessionResource_RemoveSession_ResourceIsRemoved)
@@ -96,10 +91,10 @@ TEST(SessionResourceRepositoryTests, SessionResource_RemoveSession_ResourceIsRem
 
   EXPECT_EQ(
       kNoSession,
-      resource_repository.access_session(session_id, ""));
+      resource_repository.access_session(session_id));
   EXPECT_EQ(
-      kNoSession,
-      repository.access_session(session_id, ""));
+      kNoSessionName,
+      repository.access_session(session_id));
 }
 
 TEST(SessionResourceRepositoryTests, SessionResource_RemoveFromResourceRepository_ResourceIsRemoved)
@@ -112,17 +107,17 @@ TEST(SessionResourceRepositoryTests, SessionResource_RemoveFromResourceRepositor
 
   // Remove from the SessionResourceRepository and ensure that it removes from the
   // SessionRepository and SessionResourceRepository.
-  resource_repository.remove_session(session_id, "");
+  resource_repository.remove_session(session_id);
 
   EXPECT_EQ(
-      kNoSession,
-      repository.access_session(session_id, ""));
+      kNoSessionName,
+      repository.access_session(session_id));
   EXPECT_EQ(
-      0L,
-      resource_repository.access_session(session_id, ""));
+      0,
+      resource_repository.access_session(session_id));
   EXPECT_EQ(
-      kNoSession,
-      resource_repository.resolve_session_id(kResourceHandle));
+      kNoSessionName,
+      resource_repository.resolve_session_name(kResourceHandle));
 }
 
 TEST(SessionResourceRepositoryTests, SessionResource_ResetServer_ResourceIsRemoved)
@@ -137,10 +132,7 @@ TEST(SessionResourceRepositoryTests, SessionResource_ResetServer_ResourceIsRemov
 
   EXPECT_EQ(
       kNoSession,
-      resource_repository.access_session(session_id, ""));
-  EXPECT_EQ(
-      kNoSession,
-      resource_repository.resolve_session_id(kResourceHandle));
+      resource_repository.access_session(session_id));
 }
 
 TEST(SessionResourceRepositoryTests, SessionResource_ResetServer_CleanupIsCalled)
@@ -149,12 +141,11 @@ TEST(SessionResourceRepositoryTests, SessionResource_ResetServer_CleanupIsCalled
   SessionResourceRepository<int64_t> resource_repository(
       &repository);
   bool cleanup_called = false;
-  uint32_t session_id;
+  std::string session_name;
   resource_repository.add_session(
-      "",
+      session_name,
       [=]() { return std::make_tuple(kNoError, 12345678); },
-      [&](int64_t) { cleanup_called = true; },
-      session_id);
+      [&](int64_t) { cleanup_called = true; });
   EXPECT_FALSE(cleanup_called);
 
   repository.reset_server();
@@ -169,15 +160,14 @@ TEST(SessionResourceRepositoryTests, AddSessionResourceWithErrrOnInit_ResourceIs
       &repository);
 
   const int32_t kErrorCode = 9999;
-  uint32_t session_id;
+  std::string session_name;
   auto result = resource_repository.add_session(
-      "",
+      session_name,
       [=]() { return std::make_tuple(kErrorCode, 5555); },
-      [](uint64_t handle) {},
-      session_id);
+      [](uint64_t handle) {});
 
   EXPECT_EQ(kErrorCode, result);
-  EXPECT_EQ(kNoSession, session_id);
+  EXPECT_EQ(kNoSessionName, session_name);
 }
 
 TEST(SessionResourceRepositoryTests, MultipleResourceRepositories_AddResourceToEach_ResourcesAreAded)
@@ -199,10 +189,10 @@ TEST(SessionResourceRepositoryTests, MultipleResourceRepositories_AddResourceToE
 
   EXPECT_EQ(
       kIntResourceHandle,
-      int_resource_repository.access_session(int_session_id, ""));
+      int_resource_repository.access_session(int_session_id));
   EXPECT_EQ(
       kStringResourceHandle,
-      string_resource_repository.access_session(string_session_id, ""));
+      string_resource_repository.access_session(string_session_id));
 }
 
 TEST(SessionResourceRepositoryTests, AddMultipleResources_ResourcesAreAdded)
@@ -222,10 +212,10 @@ TEST(SessionResourceRepositoryTests, AddMultipleResources_ResourcesAreAdded)
 
   EXPECT_EQ(
       kResourceHandle1,
-      resource_repository.access_session(session_id_1, ""));
+      resource_repository.access_session(session_id_1));
   EXPECT_EQ(
       kResourceHandle2,
-      resource_repository.access_session(session_id_2, ""));
+      resource_repository.access_session(session_id_2));
 }
 
 TEST(SessionResourceRepositoryTests, AddSessionResource_AccessFromDifferentRepository_DoesNotReturnSession)
@@ -241,7 +231,7 @@ TEST(SessionResourceRepositoryTests, AddSessionResource_AccessFromDifferentRepos
       kResourceHandle1);
 
   auto session_from_other_repository =
-      other_resource_repository.access_session(session_id, "");
+      other_resource_repository.access_session(session_id);
 
   EXPECT_EQ(kNoSession, session_from_other_repository);
 }
@@ -254,26 +244,22 @@ TEST(SessionResourceRepositoryTests, AddSessionResource_AddSessionWithSameNameFr
   SessionResourceRepository<int32_t> other_resource_repository(
       &repository);
   const int32_t kResourceHandle1 = -123456;
-  uint32_t session_id;
-  const std::string kTestResource("test_resource");
+  std::string kTestResource("test_resource");
   auto result = resource_repository.add_session(
       kTestResource,
       []() { return std::make_tuple(0, 5555); },
-      [](int32_t handle) {},
-      session_id);
+      [](int32_t handle) {});
 
   const int32_t kErrorCode = 9999;
   using MockInitDelegate = ::testing::MockFunction<std::tuple<int32_t, int32_t>(void)>;
   MockInitDelegate mock_init;
-  uint32_t second_session_id = kNoSession;
   EXPECT_THROW(
       {
         try {
           result = other_resource_repository.add_session(
               kTestResource,
               mock_init.AsStdFunction(),
-              [](int32_t handle) { FAIL() << "Unexpected Cleanup"; },
-              second_session_id);
+              [](int32_t handle) { FAIL() << "Unexpected Cleanup"; });
         }
         catch (const nidevice_grpc::SessionException& ex) {
           const std::string expected_message("The session name \"" + kTestResource + "\" is being used by a different driver.");
@@ -282,35 +268,33 @@ TEST(SessionResourceRepositoryTests, AddSessionResource_AddSessionWithSameNameFr
         }
       },
       nidevice_grpc::SessionException);
-  EXPECT_EQ(kNoSession, second_session_id);
 }
 
 template <typename TResource>
-uint32_t simple_add_session(SessionResourceRepository<TResource> resource_repository, const std::string& session_name, TResource new_resource_handle)
+std::string simple_add_session(SessionResourceRepository<TResource> resource_repository, const std::string& session_name, TResource new_resource_handle)
 {
-  auto session_id = uint32_t{};
+  std::string session_id = session_name;
   const auto status = resource_repository.add_session(
-      session_name,
+      session_id,
       [new_resource_handle]() { return std::make_tuple(0, new_resource_handle); },
-      [](TResource handle) {},
-      session_id);
+      [](TResource handle) {});
   EXPECT_EQ(0, status);
   return session_id;
 }
 
 template <typename TResource>
-uint32_t simple_add_dependent_session(
+std::string simple_add_dependent_session(
     SessionResourceRepository<TResource> resource_repository,
     const std::string& session_name,
-    uint32_t initiating_session_id,
+    const std::string& initiating_session_id,
     TResource new_resource_handle)
 {
-  auto session_id = uint32_t{};
+  std::string session_id = session_name;
+  std::string initiating_session_name = initiating_session_id;
   const auto status = resource_repository.add_dependent_session(
-      session_name,
+      session_id,
       [new_resource_handle]() { return std::make_tuple(0, new_resource_handle); },
-      initiating_session_id,
-      session_id);
+      initiating_session_name);
   EXPECT_EQ(0, status);
   return session_id;
 }
@@ -328,7 +312,7 @@ TEST(SessionResourceRepositoryTests, SessionAlreadyInResourceRepository_AddDepen
 
   const auto dupe_dependent_session_id = simple_add_dependent_session(resource_repository, "dependent_session", initiating_session_id, DUPE_SESSION_HANDLE);
 
-  EXPECT_EQ(primary_with_dupe_session_id, resource_repository.resolve_session_id(DUPE_SESSION_HANDLE));
+  EXPECT_EQ(primary_with_dupe_session_id, resource_repository.resolve_session_name(DUPE_SESSION_HANDLE));
 }
 
 // Note: This is how the above criteria (SessionAlreadyInResourceRepository_AddDependentSessionWithSameHandle_ResolveSessionByHandleGivesOriginalSession)
@@ -344,7 +328,7 @@ TEST(SessionResourceRepositoryTests, AddDependentSession_DependentSessionIsNotRe
   const auto initiating_session_id = simple_add_session(resource_repository, "initiating_session", INITIATING_SESSION_HANDLE);
   const auto dupe_dependent_session_id = simple_add_dependent_session(resource_repository, "dependent_session", initiating_session_id, DEPENDENT_SESSION_HANDLE);
 
-  EXPECT_EQ(0, resource_repository.resolve_session_id(DEPENDENT_SESSION_HANDLE));
+  EXPECT_EQ("", resource_repository.resolve_session_name(DEPENDENT_SESSION_HANDLE));
 }
 
 TEST(SessionResourceRepositoryTests, AddDependentSession_RemoveDependentSession_SessionIsRemoved)
@@ -356,9 +340,9 @@ TEST(SessionResourceRepositoryTests, AddDependentSession_RemoveDependentSession_
   const auto initiating_session_id = simple_add_session(resource_repository, "initiating_session", INITIATING_SESSION_HANDLE);
   const auto dependent_session_id = simple_add_dependent_session(resource_repository, "dependent_session", initiating_session_id, DEPENDENT_SESSION_HANDLE);
 
-  resource_repository.remove_session(dependent_session_id, "");
+  resource_repository.remove_session(dependent_session_id);
 
-  EXPECT_EQ(0, resource_repository.access_session(dependent_session_id, ""));
+  EXPECT_EQ(0, resource_repository.access_session(dependent_session_id));
 }
 
 TEST(SessionResourceRepositoryTests, AddDependentSession_RemoveInitiatingSession_BothSessionsAreRemoved)
@@ -370,10 +354,10 @@ TEST(SessionResourceRepositoryTests, AddDependentSession_RemoveInitiatingSession
   const auto initiating_session_id = simple_add_session(resource_repository, "initiating_session", INITIATING_SESSION_HANDLE);
   const auto dependent_session_id = simple_add_dependent_session(resource_repository, "dependent_session", initiating_session_id, DEPENDENT_SESSION_HANDLE);
 
-  resource_repository.remove_session(initiating_session_id, "");
+  resource_repository.remove_session(initiating_session_id);
 
-  EXPECT_EQ(0, resource_repository.access_session(initiating_session_id, ""));
-  EXPECT_EQ(0, resource_repository.access_session(dependent_session_id, ""));
+  EXPECT_EQ(0, resource_repository.access_session(initiating_session_id));
+  EXPECT_EQ(0, resource_repository.access_session(dependent_session_id));
 }
 
 }  // namespace unit

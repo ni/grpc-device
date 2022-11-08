@@ -51,7 +51,7 @@ class NiRFSGSessionTest : public ::testing::Test {
   {
     ::grpc::ClientContext context;
     rfsg::GetErrorRequest error_request;
-    error_request.mutable_vi()->set_id(session.id());
+    error_request.mutable_vi()->set_name(session.name());
     rfsg::GetErrorResponse error_response;
     ::grpc::Status status = GetStub()->GetError(&context, error_request, &error_response);
     EXPECT_TRUE(status.ok());
@@ -71,7 +71,7 @@ TEST_F(NiRFSGSessionTest, InitializeSessionWithDeviceAndSessionName_CreatesDrive
 
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(0, response.status());
-  EXPECT_NE(0, response.vi().id());
+  EXPECT_NE("", response.vi().name());
   EXPECT_EQ("", response.error_message());
 }
 
@@ -82,7 +82,7 @@ TEST_F(NiRFSGSessionTest, InitializeSessionWithDeviceAndNoSessionName_CreatesDri
 
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(0, response.status());
-  EXPECT_NE(0, response.vi().id());
+  EXPECT_NE("", response.vi().name());
   EXPECT_EQ("", response.error_message());
 }
 
@@ -94,7 +94,7 @@ TEST_F(NiRFSGSessionTest, InitializedSession_CloseSession_ClosesDriverSession)
   nidevice_grpc::Session session = init_response.vi();
   ::grpc::ClientContext context;
   rfsg::CloseRequest close_request;
-  close_request.mutable_vi()->set_id(session.id());
+  close_request.mutable_vi()->set_name(session.name());
   rfsg::CloseResponse close_response;
   ::grpc::Status status = GetStub()->Close(&context, close_request, &close_response);
 
@@ -118,12 +118,12 @@ TEST_F(NiRFSGSessionTest, InitWithErrorFromDriver_ReturnsDriverErrorWithUserErro
 TEST_F(NiRFSGSessionTest, InvalidSession_CloseSession_ReturnsInvalidSessionError)
 {
   nidevice_grpc::Session session;
-  session.set_id(0UL);
+  session.set_name("");
 
   try {
     ::grpc::ClientContext context;
     rfsg::CloseRequest request;
-    request.mutable_vi()->set_id(session.id());
+    request.mutable_vi()->set_name(session.name());
     rfsg::CloseResponse response;
     auto status = GetStub()->Close(&context, request, &response);
     nidevice_grpc::experimental::client::raise_if_error(status, context);

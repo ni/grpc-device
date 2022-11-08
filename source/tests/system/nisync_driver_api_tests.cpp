@@ -107,7 +107,7 @@ class NiSyncDriverApiTest : public ::testing::Test {
 
     ::grpc::ClientContext context;
     nisync::CloseRequest request;
-    request.mutable_vi()->set_id(driver_session_->id());
+    request.mutable_vi()->set_name(driver_session_->name());
     nisync::CloseResponse response;
 
     ::grpc::Status status = GetStub()->Close(&context, request, &response);
@@ -121,7 +121,7 @@ class NiSyncDriverApiTest : public ::testing::Test {
     ::grpc::ClientContext clientContext;
     nisync::RevisionQueryRequest request;
     nisync::RevisionQueryResponse response;
-    request.mutable_vi()->set_id(driver_session_->id());
+    request.mutable_vi()->set_name(driver_session_->name());
     auto grpcStatus = GetStub()->RevisionQuery(&clientContext, request, &response);
     *driverRevision = response.driver_revision();
     *firmwareRevision = response.firmware_revision();
@@ -135,7 +135,7 @@ class NiSyncDriverApiTest : public ::testing::Test {
     nisync::SendSoftwareTriggerRequest request;
     nisync::SendSoftwareTriggerResponse response;
     request.set_src_terminal(srcTerminal);
-    request.mutable_vi()->set_id(driver_session_->id());
+    request.mutable_vi()->set_name(driver_session_->name());
     auto grpcStatus = GetStub()->SendSoftwareTrigger(&clientContext, request, &response);
     *viStatusOut = response.status();
     return grpcStatus;
@@ -148,7 +148,7 @@ class NiSyncDriverApiTest : public ::testing::Test {
     nisync::ConnectClkTerminalsResponse response;
     request.set_src_terminal(srcTerminal);
     request.set_dest_terminal(destTerminal);
-    request.mutable_vi()->set_id(driver_session_->id());
+    request.mutable_vi()->set_name(driver_session_->name());
     auto grpcStatus = GetStub()->ConnectClkTerminals(&clientContext, request, &response);
     *viStatusOut = response.status();
     return grpcStatus;
@@ -161,7 +161,7 @@ class NiSyncDriverApiTest : public ::testing::Test {
     nisync::DisconnectClkTerminalsResponse response;
     request.set_src_terminal(srcTerminal);
     request.set_dest_terminal(destTerminal);
-    request.mutable_vi()->set_id(driver_session_->id());
+    request.mutable_vi()->set_name(driver_session_->name());
     auto grpcStatus = GetStub()->DisconnectClkTerminals(&clientContext, request, &response);
     *viStatusOut = response.status();
     return grpcStatus;
@@ -185,7 +185,7 @@ class NiSyncDriverApiTest : public ::testing::Test {
     request.set_invert(invert);
     request.set_update_edge(updateEdge);
     request.set_delay(delay);
-    request.mutable_vi()->set_id(driver_session_->id());
+    request.mutable_vi()->set_name(driver_session_->name());
     auto grpcStatus = GetStub()->ConnectSWTrigToTerminal(&clientContext, request, &response);
     *viStatusOut = response.status();
     return grpcStatus;
@@ -198,7 +198,7 @@ class NiSyncDriverApiTest : public ::testing::Test {
     nisync::DisconnectSWTrigFromTerminalResponse response;
     request.set_src_terminal(srcTerminal);
     request.set_dest_terminal(destTerminal);
-    request.mutable_vi()->set_id(driver_session_->id());
+    request.mutable_vi()->set_name(driver_session_->name());
     auto grpcStatus = GetStub()->DisconnectSWTrigFromTerminal(&clientContext, request, &response);
     *viStatusOut = response.status();
     return grpcStatus;
@@ -220,7 +220,7 @@ class NiSyncDriverApiTest : public ::testing::Test {
     request.set_sync_clock(syncClock);
     request.set_invert(invert);
     request.set_update_edge(updateEdge);
-    request.mutable_vi()->set_id(driver_session_->id());
+    request.mutable_vi()->set_name(driver_session_->name());
     auto grpcStatus = GetStub()->ConnectTrigTerminals(&clientContext, request, &response);
     *viStatusOut = response.status();
     return grpcStatus;
@@ -233,7 +233,7 @@ class NiSyncDriverApiTest : public ::testing::Test {
     nisync::DisconnectTrigTerminalsResponse response;
     request.set_src_terminal(srcTerminal);
     request.set_dest_terminal(destTerminal);
-    request.mutable_vi()->set_id(driver_session_->id());
+    request.mutable_vi()->set_name(driver_session_->name());
     auto grpcStatus = GetStub()->DisconnectTrigTerminals(&clientContext, request, &response);
     *viStatusOut = response.status();
     return grpcStatus;
@@ -247,7 +247,7 @@ class NiSyncDriverApiTest : public ::testing::Test {
     request.set_active_item(activeItem);
     request.set_attribute(static_cast<nisync::NiSyncAttribute>(attribute));
     request.set_value_raw(value);
-    request.mutable_vi()->set_id(driver_session_->id());
+    request.mutable_vi()->set_name(driver_session_->name());
     auto grpcStatus = GetStub()->SetAttributeViInt32(&clientContext, request, &response);
     *viStatusOut = response.status();
     return grpcStatus;
@@ -260,7 +260,7 @@ class NiSyncDriverApiTest : public ::testing::Test {
     nisync::GetAttributeViInt32Response response;
     request.set_active_item(activeItem);
     request.set_attribute(static_cast<nisync::NiSyncAttribute>(attribute));
-    request.mutable_vi()->set_id(driver_session_->id());
+    request.mutable_vi()->set_name(driver_session_->name());
     auto grpcStatus = GetStub()->GetAttributeViInt32(&clientContext, request, &response);
     *valueOut = response.value();
     *viStatusOut = response.status();
@@ -275,7 +275,7 @@ class NiSyncDriverApiTest : public ::testing::Test {
     request.set_active_item(activeItem);
     request.set_attribute(static_cast<nisync::NiSyncAttribute>(attribute));
     request.set_value_raw(value);
-    request.mutable_vi()->set_id(driver_session_->id());
+    request.mutable_vi()->set_name(driver_session_->name());
     auto grpcStatus = GetStub()->SetAttributeViString(&clientContext, request, &response);
     *viStatusOut = response.status();
     return grpcStatus;
@@ -288,7 +288,7 @@ class NiSyncDriverApiTest : public ::testing::Test {
     nisync::GetAttributeViStringResponse response;
     request.set_active_item(activeItem);
     request.set_attribute(static_cast<nisync::NiSyncAttribute>(attribute));
-    request.mutable_vi()->set_id(driver_session_->id());
+    request.mutable_vi()->set_name(driver_session_->name());
     auto grpcStatus = GetStub()->GetAttributeViString(&clientContext, request, &response);
     *valueOut = response.value();
     *viStatusOut = response.status();
@@ -303,7 +303,7 @@ class NiSyncDriverApiTest : public ::testing::Test {
     request.set_active_item(activeItem);
     request.set_attribute(static_cast<nisync::NiSyncAttribute>(attribute));
     request.set_value(value);
-    request.mutable_vi()->set_id(driver_session_->id());
+    request.mutable_vi()->set_name(driver_session_->name());
     auto grpcStatus = GetStub()->SetAttributeViBoolean(&clientContext, request, &response);
     *viStatusOut = response.status();
     return grpcStatus;
@@ -316,7 +316,7 @@ class NiSyncDriverApiTest : public ::testing::Test {
     nisync::GetAttributeViBooleanResponse response;
     request.set_active_item(activeItem);
     request.set_attribute(static_cast<nisync::NiSyncAttribute>(attribute));
-    request.mutable_vi()->set_id(driver_session_->id());
+    request.mutable_vi()->set_name(driver_session_->name());
     auto grpcStatus = GetStub()->GetAttributeViBoolean(&clientContext, request, &response);
     *valueOut = response.value();
     *viStatusOut = response.status();
@@ -331,7 +331,7 @@ class NiSyncDriverApiTest : public ::testing::Test {
     request.set_active_item(activeItem);
     request.set_attribute(static_cast<nisync::NiSyncAttribute>(attribute));
     request.set_value_raw(value);
-    request.mutable_vi()->set_id(driver_session_->id());
+    request.mutable_vi()->set_name(driver_session_->name());
     auto grpcStatus = GetStub()->SetAttributeViReal64(&clientContext, request, &response);
     *viStatusOut = response.status();
     return grpcStatus;
@@ -344,7 +344,7 @@ class NiSyncDriverApiTest : public ::testing::Test {
     nisync::GetAttributeViReal64Response response;
     request.set_active_item(activeItem);
     request.set_attribute(static_cast<nisync::NiSyncAttribute>(attribute));
-    request.mutable_vi()->set_id(driver_session_->id());
+    request.mutable_vi()->set_name(driver_session_->name());
     auto grpcStatus = GetStub()->GetAttributeViReal64(&clientContext, request, &response);
     *valueOut = response.value();
     *viStatusOut = response.status();
@@ -366,7 +366,7 @@ class NiSyncDriverApiTest : public ::testing::Test {
     request.set_src_terminal(srcTerminal);
     request.set_duration(duration);
     request.set_decimation_count(decimationCount);
-    request.mutable_vi()->set_id(driver_session_->id());
+    request.mutable_vi()->set_name(driver_session_->name());
     auto grpcStatus = GetStub()->MeasureFrequencyEx(&clientContext, request, &response);
     *actualDurationOut = response.actual_duration();
     *frequencyOut = response.frequency();
@@ -384,7 +384,7 @@ class NiSyncDriverApiTest : public ::testing::Test {
     ::grpc::ClientContext clientContext;
     nisync::GetTimeRequest request;
     nisync::GetTimeResponse response;
-    request.mutable_vi()->set_id(driver_session_->id());
+    request.mutable_vi()->set_name(driver_session_->name());
     auto grpcStatus = GetStub()->GetTime(&clientContext, request, &response);
     *timeSeconds = response.time_seconds();
     *timeNanoseconds = response.time_nanoseconds();
@@ -398,7 +398,7 @@ class NiSyncDriverApiTest : public ::testing::Test {
     ::grpc::ClientContext clientContext;
     nisync::SetTimeReferenceFreeRunningRequest request;
     nisync::SetTimeReferenceFreeRunningResponse response;
-    request.mutable_vi()->set_id(driver_session_->id());
+    request.mutable_vi()->set_name(driver_session_->name());
     auto grpcStatus = GetStub()->SetTimeReferenceFreeRunning(&clientContext, request, &response);
     *viStatusOut = response.status();
     return grpcStatus;
@@ -409,7 +409,7 @@ class NiSyncDriverApiTest : public ::testing::Test {
     ::grpc::ClientContext clientContext;
     nisync::SetTimeReferenceGPSRequest request;
     nisync::SetTimeReferenceGPSResponse response;
-    request.mutable_vi()->set_id(driver_session_->id());
+    request.mutable_vi()->set_name(driver_session_->name());
     auto grpcStatus = GetStub()->SetTimeReferenceGPS(&clientContext, request, &response);
     *viStatusOut = response.status();
     return grpcStatus;
@@ -425,7 +425,7 @@ class NiSyncDriverApiTest : public ::testing::Test {
     nisync::SetTimeReferenceIRIGResponse response;
     request.set_irig_type(irigType);
     request.set_terminal_name(terminalName);
-    request.mutable_vi()->set_id(driver_session_->id());
+    request.mutable_vi()->set_name(driver_session_->name());
     auto grpcStatus = GetStub()->SetTimeReferenceIRIG(&clientContext, request, &response);
     *viStatusOut = response.status();
     return grpcStatus;
@@ -447,7 +447,7 @@ class NiSyncDriverApiTest : public ::testing::Test {
     request.set_initial_time_seconds(initialTimeSeconds);
     request.set_initial_time_nanoseconds(initialTimeNanoseconds);
     request.set_initial_time_fractional_nanoseconds(initialTimeFractionalNanoseconds);
-    request.mutable_vi()->set_id(driver_session_->id());
+    request.mutable_vi()->set_name(driver_session_->name());
     auto grpcStatus = GetStub()->SetTimeReferencePPS(&clientContext, request, &response);
     *viStatusOut = response.status();
     return grpcStatus;
@@ -458,7 +458,7 @@ class NiSyncDriverApiTest : public ::testing::Test {
     ::grpc::ClientContext clientContext;
     nisync::SetTimeReference1588OrdinaryClockRequest request;
     nisync::SetTimeReference1588OrdinaryClockResponse response;
-    request.mutable_vi()->set_id(driver_session_->id());
+    request.mutable_vi()->set_name(driver_session_->name());
     auto grpcStatus = GetStub()->SetTimeReference1588OrdinaryClock(&clientContext, request, &response);
     *viStatusOut = response.status();
     return grpcStatus;
@@ -469,7 +469,7 @@ class NiSyncDriverApiTest : public ::testing::Test {
     ::grpc::ClientContext clientContext;
     nisync::SetTimeReference8021ASRequest request;
     nisync::SetTimeReference8021ASResponse response;
-    request.mutable_vi()->set_id(driver_session_->id());
+    request.mutable_vi()->set_name(driver_session_->name());
     auto grpcStatus = GetStub()->SetTimeReference8021AS(&clientContext, request, &response);
     *viStatusOut = response.status();
     return grpcStatus;
@@ -491,7 +491,7 @@ class NiSyncDriverApiTest : public ::testing::Test {
     request.set_time_seconds(timeSeconds);
     request.set_time_nanoseconds(timeNanoseconds);
     request.set_time_fractional_nanoseconds(timeFractionalNanoseconds);
-    request.mutable_vi()->set_id(driver_session_->id());
+    request.mutable_vi()->set_name(driver_session_->name());
     auto grpcStatus = GetStub()->CreateFutureTimeEvent(&clientContext, request, &response);
     *viStatusOut = response.status();
     return grpcStatus;
@@ -524,7 +524,7 @@ class NiSyncDriverApiTest : public ::testing::Test {
     nisync::ClearFutureTimeEventsRequest request;
     nisync::ClearFutureTimeEventsResponse response;
     request.set_terminal(terminal);
-    request.mutable_vi()->set_id(driver_session_->id());
+    request.mutable_vi()->set_name(driver_session_->name());
     auto grpcStatus = GetStub()->ClearFutureTimeEvents(&clientContext, request, &response);
     *viStatusOut = response.status();
     return grpcStatus;
@@ -554,7 +554,7 @@ class NiSyncDriverApiTest : public ::testing::Test {
     request.set_stop_time_seconds(stopTimeSeconds);
     request.set_stop_time_nanoseconds(stopTimeNanoseconds);
     request.set_stop_time_fractional_nanoseconds(stopTimeFractionalNanoseconds);
-    request.mutable_vi()->set_id(driver_session_->id());
+    request.mutable_vi()->set_name(driver_session_->name());
     auto grpcStatus = GetStub()->CreateClock(&clientContext, request, &response);
     *viStatusOut = response.status();
     return grpcStatus;
@@ -568,7 +568,7 @@ class NiSyncDriverApiTest : public ::testing::Test {
     nisync::ClearClockRequest request;
     nisync::ClearClockResponse response;
     request.set_terminal(terminal);
-    request.mutable_vi()->set_id(driver_session_->id());
+    request.mutable_vi()->set_name(driver_session_->name());
     auto grpcStatus = GetStub()->ClearClock(&clientContext, request, &response);
     *viStatusOut = response.status();
     return grpcStatus;
@@ -580,7 +580,7 @@ class NiSyncDriverApiTest : public ::testing::Test {
   {
     ::grpc::ClientContext clientContext;
     nisync::GetTimeReferenceNamesRequest request;
-    request.mutable_vi()->set_id(driver_session_->id());
+    request.mutable_vi()->set_name(driver_session_->name());
     nisync::GetTimeReferenceNamesResponse response;
     auto grpcStatus = GetStub()->GetTimeReferenceNames(&clientContext, request, &response);
     *valueOut = response.time_reference_names();
@@ -598,7 +598,7 @@ class NiSyncDriverApiTest : public ::testing::Test {
     nisync::EnableTimeStampTriggerResponse response;
     request.set_terminal(terminal);
     request.set_active_edge(activeEdge);
-    request.mutable_vi()->set_id(driver_session_->id());
+    request.mutable_vi()->set_name(driver_session_->name());
     auto grpcStatus = GetStub()->EnableTimeStampTrigger(&clientContext, request, &response);
     *viStatusOut = response.status();
     return grpcStatus;
@@ -628,7 +628,7 @@ class NiSyncDriverApiTest : public ::testing::Test {
     nisync::ReadTriggerTimeStampResponse response;
     request.set_terminal(terminal);
     request.set_timeout(timeout);
-    request.mutable_vi()->set_id(driver_session_->id());
+    request.mutable_vi()->set_name(driver_session_->name());
     auto grpcStatus = GetStub()->ReadTriggerTimeStamp(&clientContext, request, &response);
     *timeSeconds = response.time_seconds();
     *timeNanoseconds = response.time_nanoseconds();
@@ -655,7 +655,7 @@ class NiSyncDriverApiTest : public ::testing::Test {
     request.set_terminal(terminal);
     request.set_timeout(timeout);
     request.set_timestamps_to_read(timestampsToRead);
-    request.mutable_vi()->set_id(driver_session_->id());
+    request.mutable_vi()->set_name(driver_session_->name());
     auto grpcStatus = GetStub()->ReadMultipleTriggerTimeStamp(&clientContext, request, &response);
     *timestampsRead = response.timestamps_read();
     std::copy(response.time_seconds_buffer().begin(), response.time_seconds_buffer().end(), timeSecondsBuffer);
@@ -674,7 +674,7 @@ class NiSyncDriverApiTest : public ::testing::Test {
     nisync::DisableTimeStampTriggerRequest request;
     nisync::DisableTimeStampTriggerResponse response;
     request.set_terminal(terminal);
-    request.mutable_vi()->set_id(driver_session_->id());
+    request.mutable_vi()->set_name(driver_session_->name());
     auto grpcStatus = GetStub()->DisableTimeStampTrigger(&clientContext, request, &response);
     *viStatusOut = response.status();
     return grpcStatus;

@@ -615,7 +615,7 @@ class NiDAQmxDriverApiTests : public Test {
     request.set_session_name("saved_task");
     auto status = stub()->LoadTask(&context, request, &response);
     if (status.ok()) {
-      EXPECT_NE(driver_session_->id(), response.task().id());
+      EXPECT_NE(driver_session_->name(), response.task().name());
       driver_session_ = std::make_unique<nidevice_grpc::Session>(response.task());
     }
     return status;
@@ -705,7 +705,7 @@ class NiDAQmxDriverApiTests : public Test {
   template <typename TRequest>
   void set_request_session_id(TRequest& request, const nidevice_grpc::Session& session)
   {
-    request.mutable_task()->set_id(session.id());
+    request.mutable_task()->set_name(session.name());
   }
 
   template <typename TResponse>

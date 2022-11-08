@@ -38,9 +38,9 @@ class NiDmmDriverApiTest : public ::testing::Test {
     return nidmm_stub_;
   }
 
-  int GetSessionId()
+  std::string GetSessionName()
   {
-    return driver_session_->id();
+    return driver_session_->name();
   }
 
   void expect_api_success(int error_status)
@@ -70,7 +70,7 @@ class NiDmmDriverApiTest : public ::testing::Test {
   {
     ::grpc::ClientContext context;
     dmm::CloseRequest request;
-    request.mutable_vi()->set_id(driver_session_->id());
+    request.mutable_vi()->set_name(driver_session_->name());
     dmm::CloseResponse response;
 
     ::grpc::Status status = GetStub()->Close(&context, request, &response);
@@ -83,7 +83,7 @@ class NiDmmDriverApiTest : public ::testing::Test {
   {
     ::grpc::ClientContext context;
     dmm::GetErrorMessageRequest request;
-    request.mutable_vi()->set_id(GetSessionId());
+    request.mutable_vi()->set_name(GetSessionName());
     request.set_error_code(error_status);
     dmm::GetErrorMessageResponse response;
     ::grpc::Status status = GetStub()->GetErrorMessage(&context, request, &response);
@@ -98,7 +98,7 @@ class NiDmmDriverApiTest : public ::testing::Test {
   {
     ::grpc::ClientContext context;
     dmm::GetAttributeViBooleanRequest request;
-    request.mutable_vi()->set_id(GetSessionId());
+    request.mutable_vi()->set_name(GetSessionName());
     request.set_channel_name(channel_name);
     request.set_attribute_id(attribute_id);
     dmm::GetAttributeViBooleanResponse response;
@@ -114,7 +114,7 @@ class NiDmmDriverApiTest : public ::testing::Test {
   {
     ::grpc::ClientContext context;
     dmm::GetAttributeViInt32Request request;
-    request.mutable_vi()->set_id(GetSessionId());
+    request.mutable_vi()->set_name(GetSessionName());
     request.set_channel_name(channel_name);
     request.set_attribute_id(attribute_id);
     dmm::GetAttributeViInt32Response response;
@@ -130,7 +130,7 @@ class NiDmmDriverApiTest : public ::testing::Test {
   {
     ::grpc::ClientContext context;
     dmm::GetAttributeViReal64Request request;
-    request.mutable_vi()->set_id(GetSessionId());
+    request.mutable_vi()->set_name(GetSessionName());
     request.set_channel_name(channel_name);
     request.set_attribute_id(attribute_id);
     dmm::GetAttributeViReal64Response response;
@@ -146,7 +146,7 @@ class NiDmmDriverApiTest : public ::testing::Test {
   {
     ::grpc::ClientContext context;
     dmm::ConfigureCurrentSourceRequest request;
-    request.mutable_vi()->set_id(GetSessionId());
+    request.mutable_vi()->set_name(GetSessionName());
     request.set_current_source(value);
     dmm::ConfigureCurrentSourceResponse response;
     ::grpc::Status status = GetStub()->ConfigureCurrentSource(&context, request, &response);
@@ -159,7 +159,7 @@ class NiDmmDriverApiTest : public ::testing::Test {
   {
     ::grpc::ClientContext context;
     dmm::ExportAttributeConfigurationBufferRequest request;
-    request.mutable_vi()->set_id(GetSessionId());
+    request.mutable_vi()->set_name(GetSessionName());
     dmm::ExportAttributeConfigurationBufferResponse response;
     ::grpc::Status status = GetStub()->ExportAttributeConfigurationBuffer(&context, request, &response);
 
@@ -173,7 +173,7 @@ class NiDmmDriverApiTest : public ::testing::Test {
   {
     ::grpc::ClientContext context;
     dmm::ResetRequest request;
-    request.mutable_vi()->set_id(GetSessionId());
+    request.mutable_vi()->set_name(GetSessionName());
     dmm::ResetResponse response;
     ::grpc::Status status = GetStub()->Reset(&context, request, &response);
 
@@ -185,7 +185,7 @@ class NiDmmDriverApiTest : public ::testing::Test {
   {
     ::grpc::ClientContext context;
     dmm::ImportAttributeConfigurationBufferRequest import_request;
-    import_request.mutable_vi()->set_id(GetSessionId());
+    import_request.mutable_vi()->set_name(GetSessionName());
     auto exported_configuration = exported_configuration_response.configuration();
     import_request.mutable_configuration()->append(exported_configuration.begin(), exported_configuration.end());
     dmm::ImportAttributeConfigurationBufferResponse import_response;
@@ -205,7 +205,7 @@ TEST_F(NiDmmDriverApiTest, SelfTest_CompletesSuccessfully)
 {
   ::grpc::ClientContext context;
   dmm::SelfTestRequest request;
-  request.mutable_vi()->set_id(GetSessionId());
+  request.mutable_vi()->set_name(GetSessionName());
   dmm::SelfTestResponse response;
   ::grpc::Status status = GetStub()->SelfTest(&context, request, &response);
 
@@ -219,7 +219,7 @@ TEST_F(NiDmmDriverApiTest, Reset_CompletesSuccessfully)
 {
   ::grpc::ClientContext context;
   dmm::ResetRequest request;
-  request.mutable_vi()->set_id(GetSessionId());
+  request.mutable_vi()->set_name(GetSessionName());
   dmm::ResetResponse response;
   ::grpc::Status status = GetStub()->Reset(&context, request, &response);
 
@@ -234,7 +234,7 @@ TEST_F(NiDmmDriverApiTest, SetViReal64Attribute_GetViReal64Attribute_ValueMatche
   const ViReal64 expected_value = 42.24;
   ::grpc::ClientContext context;
   dmm::SetAttributeViReal64Request request;
-  request.mutable_vi()->set_id(GetSessionId());
+  request.mutable_vi()->set_name(GetSessionName());
   request.set_channel_name(channel_name);
   request.set_attribute_id(attribute_to_set);
   request.set_attribute_value_raw(expected_value);
@@ -254,7 +254,7 @@ TEST_F(NiDmmDriverApiTest, SetViInt32Attribute_GetViInt32Attribute_ValueMatchesS
   const ViInt32 expected_value = 4;
   ::grpc::ClientContext context;
   dmm::SetAttributeViInt32Request request;
-  request.mutable_vi()->set_id(GetSessionId());
+  request.mutable_vi()->set_name(GetSessionName());
   request.set_channel_name(channel_name);
   request.set_attribute_id(attribute_to_set);
   request.set_attribute_value_raw(expected_value);
@@ -274,7 +274,7 @@ TEST_F(NiDmmDriverApiTest, SetViBooleanAttribute_GetViBooleanAttribute_ValueMatc
   const ViBoolean expected_value = true;
   ::grpc::ClientContext context;
   dmm::SetAttributeViBooleanRequest request;
-  request.mutable_vi()->set_id(GetSessionId());
+  request.mutable_vi()->set_name(GetSessionName());
   request.set_channel_name(channel_name);
   request.set_attribute_id(attribute_to_set);
   request.set_attribute_value(expected_value);
@@ -291,7 +291,7 @@ TEST_F(NiDmmDriverApiTest, ConfigureMeasurementAbsolute_CompletesSuccessfully)
 {
   ::grpc::ClientContext context;
   dmm::ConfigureMeasurementAbsoluteRequest request;
-  request.mutable_vi()->set_id(GetSessionId());
+  request.mutable_vi()->set_name(GetSessionName());
   request.set_measurement_function(dmm::Function::FUNCTION_NIDMM_VAL_DC_VOLTS);
   request.set_range(10);
   request.set_resolution_absolute(5.5);
@@ -306,7 +306,7 @@ TEST_F(NiDmmDriverApiTest, ConfigureCurrentSourse_CompletesSuccessfully)
 {
   ::grpc::ClientContext context;
   dmm::ConfigureCurrentSourceRequest request;
-  request.mutable_vi()->set_id(GetSessionId());
+  request.mutable_vi()->set_name(GetSessionName());
   request.set_current_source(0.0001);
   dmm::ConfigureCurrentSourceResponse response;
   ::grpc::Status status = GetStub()->ConfigureCurrentSource(&context, request, &response);
@@ -332,7 +332,7 @@ TEST_F(NiDmmDriverApiTest, ConfiguredTrigger_ConfiguresSuccessfully)
 {
   ::grpc::ClientContext context;
   dmm::ConfigureTriggerRequest request;
-  request.mutable_vi()->set_id(GetSessionId());
+  request.mutable_vi()->set_name(GetSessionName());
   request.set_trigger_source(dmm::TriggerSource::TRIGGER_SOURCE_NIDMM_VAL_SOFTWARE_TRIG);
   request.set_trigger_delay(dmm::TriggerDelays::TRIGGER_DELAYS_NIDMM_VAL_AUTO_DELAY_ON);
   dmm::ConfigureTriggerResponse response;
@@ -346,7 +346,7 @@ TEST_F(NiDmmDriverApiTest, AcquireMeasurement_CompletesSuccesfully)
 {
   ::grpc::ClientContext context;
   dmm::ReadRequest request;
-  request.mutable_vi()->set_id(GetSessionId());
+  request.mutable_vi()->set_name(GetSessionName());
   request.set_maximum_time_raw(1000);
   dmm::ReadResponse response;
   ::grpc::Status status = GetStub()->Read(&context, request, &response);
@@ -360,7 +360,7 @@ TEST_F(NiDmmDriverApiTest, SelfCalibrate_CompletesSuccessfully)
 {
   ::grpc::ClientContext context;
   dmm::SelfCalRequest request;
-  request.mutable_vi()->set_id(GetSessionId());
+  request.mutable_vi()->set_name(GetSessionName());
   dmm::SelfCalResponse response;
   ::grpc::Status status = GetStub()->SelfCal(&context, request, &response);
 

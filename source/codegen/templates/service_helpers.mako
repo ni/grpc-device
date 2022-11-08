@@ -19,11 +19,11 @@
 
   explicit_session_params = (common_helpers.get_cpp_local_name(param) for param in parameters if param.get('is_session_name', False))
   session_field_name = next(explicit_session_params, 'session_name')
-  add_session_snippet = 'add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id)'
+  add_session_snippet = 'add_session(grpc_device_session_name, init_lambda, cleanup_lambda)'
   if session_behavior_param and session_initialized_param:
       session_behavior_param_name = common_helpers.get_cpp_local_name(session_behavior_param)
       session_initialized_param_name = common_helpers.get_cpp_local_name(session_initialized_param)
-      add_session_snippet = f'add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id, {session_behavior_param_name}, &{session_initialized_param_name})'
+      add_session_snippet = f'add_session(grpc_device_session_name, init_lambda, cleanup_lambda, {session_behavior_param_name}, &{session_initialized_param_name})'
 %>\
 ${initialize_input_params(function_name, parameters)}
 ${initialize_output_params(output_parameters_to_initialize)}\
@@ -41,8 +41,7 @@ ${call_library_method(
 }\
         return std::make_tuple(status, ${session_output_var_name});
       };
-      uint32_t session_id = 0;
-      const std::string& grpc_device_session_name = request->${session_field_name}();
+      std::string grpc_device_session_name = request->${session_field_name}();
       auto cleanup_lambda = [&] (${resource_handle_type} id) { library_->${close_function_call}; };
       int status = ${service_helpers.session_repository_field_name(session_output_param, config)}->${add_session_snippet};
 ${populate_response(function_data=function_data, parameters=parameters, init_method=True)}\
@@ -64,18 +63,17 @@ ${populate_response(function_data=function_data, parameters=parameters, init_met
 %>\
 ${initialize_input_params(function_name, parameters)}
 ${initialize_output_params(output_parameters_to_initialize)}\
-      auto initiating_session_id = ${service_helpers.session_repository_field_name(initiating_driver_input_param, config)}->access_session_id(${initiating_driver_c_name}.id(), ${initiating_driver_c_name}.name());
+      auto initiating_session_name = ${initiating_driver_c_name}.name();
       auto init_lambda = [&] () {
         ${cross_driver_dep.resource_handle_type} ${session_output_var_name};
         int status = library_->${function_name}(${service_helpers.create_args(parameters)});
         return std::make_tuple(status, ${session_output_var_name});
       };
-      uint32_t session_id = 0;
-      const std::string& grpc_device_session_name = request->session_name();
-      int status = ${cross_driver_dep.field_name}->add_dependent_session(grpc_device_session_name, init_lambda, initiating_session_id, session_id);
+      std::string session_name;
+      int status = ${cross_driver_dep.field_name}->add_dependent_session(session_name, init_lambda, initiating_session_name);
       response->set_status(status);
       if (status == 0) {
-        response->mutable_${session_output_field_name}()->set_id(session_id);
+        response->mutable_${session_output_field_name}()->set_name(session_name);
       }
       return ::grpc::Status::OK;\
 </%def>
@@ -263,7 +261,7 @@ ${initialize_output_params(output_parameters)}\
   session_param = common_helpers.get_first_session_param(parameters)
   session_param_name = f'{common_helpers.get_cpp_local_name(session_param)}_grpc_session'
 %>\
-      ${service_helpers.session_repository_field_name(session_param, config)}->remove_session(${session_param_name}.id(), ${session_param_name}.name());
+      ${service_helpers.session_repository_field_name(session_param, config)}->remove_session(${session_param_name}.name());
 % endif
 ${call_library_method(
   function_name=function_name, 
@@ -579,7 +577,7 @@ ${initialize_standard_input_param(function_name, parameter)}
         ${parameter_name}_request.begin(),
         ${parameter_name}_request.end(),
         std::back_inserter(${parameter_name}),
-        [&](auto session) { return ${service_helpers.session_repository_field_name(parameter, config)}->access_session(session.id(), session.name()); }); \
+        [&](auto session) { return ${service_helpers.session_repository_field_name(parameter, config)}->access_session(session.name()); }); \
 % elif c_type == 'ViBoolean[]':
       auto ${parameter_name}_request = ${request_snippet};
       std::vector<${c_type_underlying_type}> ${parameter_name};
@@ -600,7 +598,7 @@ ${initialize_standard_input_param(function_name, parameter)}
       ${c_type} ${parameter_name} = (${c_type})${request_snippet};\
 % elif grpc_type == 'nidevice_grpc.Session':
       auto ${parameter_name}_grpc_session = ${request_snippet};
-      ${c_type} ${parameter_name} = ${service_helpers.session_repository_field_name(parameter, config)}->access_session(${parameter_name}_grpc_session.id(), ${parameter_name}_grpc_session.name());\
+      ${c_type} ${parameter_name} = ${service_helpers.session_repository_field_name(parameter, config)}->access_session(${parameter_name}_grpc_session.name());\
 % elif is_array and common_helpers.is_driver_typedef_with_same_size_but_different_qualifiers(c_type_underlying_type):
       auto ${parameter_name} = const_cast<${c_type_pointer}>(reinterpret_cast<const ${c_type_pointer}>(${request_snippet}.data()));\
 %elif c_type in ['const int32[]', 'const uInt32[]']:
@@ -862,9 +860,9 @@ ${copy_to_response_with_transform(source_buffer=parameter_name, parameter_name=p
       response->set_${field_name}(${parameter_name});
 %   elif parameter['grpc_type'] == 'nidevice_grpc.Session':
 %      if not init_method: # Non-init methods need to resolve the session ID from the out param.
-      auto session_id = ${service_helpers.session_repository_field_name(parameter, config)}->resolve_session_id(${parameter_name});
+      auto grpc_device_session_name = ${service_helpers.session_repository_field_name(parameter, config)}->resolve_session_name(${parameter_name});
 %      endif
-      response->mutable_${field_name}()->set_id(session_id);
+      response->mutable_${field_name}()->set_name(grpc_device_session_name);
 %   elif common_helpers.is_array(parameter['type']):
 %     if common_helpers.get_size_mechanism(parameter) == 'passed-in-by-ptr':
 ### size may have changed

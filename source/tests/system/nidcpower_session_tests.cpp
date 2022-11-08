@@ -72,7 +72,7 @@ class NiDCPowerSessionTest : public ::testing::Test {
 
     ::grpc::ClientContext context;
     dcpower::ErrorMessageRequest request;
-    request.mutable_vi()->set_id(session.id());
+    request.mutable_vi()->set_name(session.name());
     request.set_error_code(error_status);
     dcpower::ErrorMessageResponse error_response;
 
@@ -100,7 +100,7 @@ TEST_F(NiDCPowerSessionTest, InitializeSessionWithDeviceAndSessionName_CreatesDr
   GTEST_SKIP_IF_UNSUPPORTED(status);
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(0, response.status());
-  EXPECT_NE(0, response.vi().id());
+  EXPECT_NE("", response.vi().name());
   EXPECT_EQ("", response.error_message());
 }
 
@@ -112,7 +112,7 @@ TEST_F(NiDCPowerSessionTest, InitializeSessionWithDeviceAndNoSessionName_Creates
   GTEST_SKIP_IF_UNSUPPORTED(status);
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(0, response.status());
-  EXPECT_NE(0, response.vi().id());
+  EXPECT_NE("", response.vi().name());
   EXPECT_EQ("", response.error_message());
 }
 
@@ -139,7 +139,7 @@ TEST_F(NiDCPowerSessionTest, InitializedSession_CloseSession_ClosesDriverSession
 
   ::grpc::ClientContext context;
   dcpower::CloseRequest close_request;
-  close_request.mutable_vi()->set_id(session.id());
+  close_request.mutable_vi()->set_name(session.name());
   dcpower::CloseResponse close_response;
   status = GetStub()->Close(&context, close_request, &close_response);
 
@@ -150,12 +150,12 @@ TEST_F(NiDCPowerSessionTest, InitializedSession_CloseSession_ClosesDriverSession
 TEST_F(NiDCPowerSessionTest, InvalidSession_CloseSession_ReturnsInvalidSessionError)
 {
   nidevice_grpc::Session session;
-  session.set_id(0UL);
+  session.set_name("");
 
   try {
     ::grpc::ClientContext context;
     dcpower::CloseRequest request;
-    request.mutable_vi()->set_id(session.id());
+    request.mutable_vi()->set_name(session.name());
     dcpower::CloseResponse response;
     auto status = GetStub()->Close(&context, request, &response);
     nidevice_grpc::experimental::client::raise_if_error(status, context);
