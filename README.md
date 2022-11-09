@@ -122,7 +122,7 @@ Below are the contents of a default configuration file using port `31763` and co
 
 The server supports specifying the address to bind to. The address can be used to enable local or remote connections. Address values include any valid IPv4 or IPv6 address. To bind to local (loopback) connection, specify address `"[::1]"`. To bind to any address, specify address `"[::]"`. If no address is specified, the server configuration defaults to any address `"[::]"`.
 
-Below are the contents of a server configuration file accepting localhost connection on port `31763` and configured without SSL/TLS.
+Below are the contents of a server configuration file accepting localhost connections on port `31763` and configured without SSL/TLS.
 
 ```json
 {
