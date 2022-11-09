@@ -441,22 +441,22 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
         break;
       }
       case db_ref_: {
-        auto initiating_session_id = session_grpc_session.name();
+        auto initiating_session_name = session_grpc_session.name();
         auto init_lambda = [&]() {
           nxDatabaseRef_t property_value;
           status = library_->GetProperty(session, property_id, property_size, &property_value);
           return std::make_tuple(status, property_value);
         };
-        std::string session_id;
-        status = nx_database_ref_t_resource_repository_->add_dependent_session(session_id, init_lambda, initiating_session_id);
+        std::string session_name;
+        status = nx_database_ref_t_resource_repository_->add_dependent_session(session_name, init_lambda, initiating_session_name);
         if (!status_ok(status)) {
           return ConvertApiErrorStatusForNxSessionRef_t(context, status, session);
         }
-        response->mutable_db_ref()->set_name(session_id);
+        response->mutable_db_ref()->set_name(session_name);
         break;
       }
       case db_ref_array_: {
-        auto initiating_session_id = session_grpc_session.name();
+        auto initiating_session_name = session_grpc_session.name();
         int32_t number_of_elements = property_size / sizeof(nxDatabaseRef_t);
         std::vector<nxDatabaseRef_t> property_value_vector(number_of_elements, 0U);
         nxDatabaseRef_t* property_value = static_cast<nxDatabaseRef_t*>(property_value_vector.data());
@@ -475,7 +475,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
                 return std::make_tuple(status, x);
               };
               std::string session_name;
-              status = nx_database_ref_t_resource_repository_->add_dependent_session(session_name, init_lambda, initiating_session_id);
+              status = nx_database_ref_t_resource_repository_->add_dependent_session(session_name, init_lambda, initiating_session_name);
               nidevice_grpc::Session dependent_session{};
               dependent_session.set_name(session_name);
               return dependent_session;
@@ -483,7 +483,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
         break;
       }
       case dev_ref_: {
-        auto initiating_session_id = session_grpc_session.name();
+        auto initiating_session_name = session_grpc_session.name();
         auto init_lambda = [&]() {
           nxSessionRef_t property_value;
           status = library_->GetProperty(session, property_id, property_size, &property_value);
@@ -492,7 +492,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
         std::string session_name;
         // We are adding it to session_repository_ and not to "device repository", because devices don't have a close API,
         // so it makes sense to tie their lifetime with session's lifetime.
-        status = session_repository_->add_dependent_session(session_name, init_lambda, initiating_session_id);
+        status = session_repository_->add_dependent_session(session_name, init_lambda, initiating_session_name);
         if (!status_ok(status)) {
           return ConvertApiErrorStatusForNxSessionRef_t(context, status, session);
         }
@@ -500,7 +500,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
         break;
       }
       case dev_ref_array_: {
-        auto initiating_session_id = session_grpc_session.name();
+        auto initiating_session_name = session_grpc_session.name();
         int32_t number_of_elements = property_size / sizeof(nxSessionRef_t);
         std::vector<nxSessionRef_t> property_value_vector(number_of_elements, 0U);
         nxSessionRef_t* property_value = property_value_vector.data();
@@ -521,7 +521,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
               std::string session_name;
               // We are adding it to session_repository_ and not to "device repository", because devices don't have a close API,
               // so it makes sense to tie their lifetime with session's lifetime.
-              status = session_repository_->add_dependent_session(session_name, init_lambda, initiating_session_id);
+              status = session_repository_->add_dependent_session(session_name, init_lambda, initiating_session_name);
               nidevice_grpc::Session dependent_session{};
               dependent_session.set_name(session_name);
               return dependent_session;
@@ -529,7 +529,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
         break;
       }
       case intf_ref_array_: {
-        auto initiating_session_id = session_grpc_session.name();
+        auto initiating_session_name = session_grpc_session.name();
         int32_t number_of_elements = property_size / sizeof(nxSessionRef_t);
         std::vector<nxSessionRef_t> property_value_vector(number_of_elements, 0U);
         nxSessionRef_t* property_value = property_value_vector.data();
@@ -550,7 +550,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
               std::string session_name;
               // We are adding it to session_repository_ and not to "interface repository", because interfaces don't have a close API,
               // so it makes sense to tie their lifetime with session's lifetime.
-              status = session_repository_->add_dependent_session(session_name, init_lambda, initiating_session_id);
+              status = session_repository_->add_dependent_session(session_name, init_lambda, initiating_session_name);
               nidevice_grpc::Session dependent_session{};
               dependent_session.set_name(session_name);
               return dependent_session;
@@ -756,14 +756,14 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
         response->set_u8_array(property_value);
       }
       case db_ref_: {
-        auto initiating_session_id = dbobject_grpc_session.name();
+        auto initiating_session_name = dbobject_grpc_session.name();
         auto init_lambda = [&]() {
           nxDatabaseRef_t property_value;
           status = library_->DbGetProperty(dbobject, property_id, property_size, &property_value);
           return std::make_tuple(status, property_value);
         };
         std::string session_name;
-        status = nx_database_ref_t_resource_repository_->add_dependent_session(session_name, init_lambda, initiating_session_id);
+        status = nx_database_ref_t_resource_repository_->add_dependent_session(session_name, init_lambda, initiating_session_name);
         if (!status_ok(status)) {
           return ConvertApiErrorStatusForNxDatabaseRef_t(context, status, dbobject);
         }
@@ -772,7 +772,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
       }
       case db_ref_array_: {
         int32_t number_of_elements = property_size / sizeof(nxDatabaseRef_t);
-        auto initiating_session_id = dbobject_grpc_session.name();
+        auto initiating_session_name = dbobject_grpc_session.name();
         std::vector<nxDatabaseRef_t> property_value_vector(number_of_elements, 0U);
         nxDatabaseRef_t* property_value = static_cast<nxDatabaseRef_t*>(property_value_vector.data());
         status = library_->DbGetProperty(dbobject, property_id, property_size, property_value);
@@ -790,7 +790,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
                 return std::make_tuple(status, x);
               };
               std::string session_name;
-              status = nx_database_ref_t_resource_repository_->add_dependent_session(session_name, init_lambda, initiating_session_id);
+              status = nx_database_ref_t_resource_repository_->add_dependent_session(session_name, init_lambda, initiating_session_name);
               nidevice_grpc::Session dependent_session{};
               dependent_session.set_name(session_name);
               return dependent_session;

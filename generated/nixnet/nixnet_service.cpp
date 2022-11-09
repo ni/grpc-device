@@ -555,7 +555,7 @@ namespace nixnet_grpc {
         int status = library_->DbCreateObject(parent_object, object_class, object_name, &db_object);
         return std::make_tuple(status, db_object);
       };
-      std::string session_name;
+      std::string session_name = request->session_name();
       int status = nx_database_ref_t_resource_repository_->add_dependent_session(session_name, init_lambda, initiating_session_name);
       response->set_status(status);
       if (status == 0) {
@@ -635,7 +635,7 @@ namespace nixnet_grpc {
         int status = library_->DbFindObject(parent_object, object_class, object_name, &db_object);
         return std::make_tuple(status, db_object);
       };
-      std::string session_name;
+      std::string session_name = request->session_name();
       int status = nx_database_ref_t_resource_repository_->add_dependent_session(session_name, init_lambda, initiating_session_name);
       response->set_status(status);
       if (status == 0) {

@@ -1763,7 +1763,7 @@ namespace nirfmxinstr_grpc {
         int status = library_->GetNIRFSASession(instrument, &nirfsa_session);
         return std::make_tuple(status, nirfsa_session);
       };
-      std::string session_name;
+      std::string session_name = request->session_name();
       int status = vi_session_resource_repository_->add_dependent_session(session_name, init_lambda, initiating_session_name);
       response->set_status(status);
       if (status == 0) {

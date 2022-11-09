@@ -69,7 +69,7 @@ ${initialize_output_params(output_parameters_to_initialize)}\
         int status = library_->${function_name}(${service_helpers.create_args(parameters)});
         return std::make_tuple(status, ${session_output_var_name});
       };
-      std::string session_name;
+      std::string session_name = request->session_name();
       int status = ${cross_driver_dep.field_name}->add_dependent_session(session_name, init_lambda, initiating_session_name);
       response->set_status(status);
       if (status == 0) {

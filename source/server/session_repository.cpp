@@ -20,7 +20,7 @@ SessionRepository::~SessionRepository()
   reset_server(/* cleanup_external_resources =*/false);
 }
 
-// Either returns (via session_id) an existing session with the specified name or initializes and
+// Either returns (via session_name) an existing session with the specified name or initializes and
 // adds a new session using the init_func provided. The init_func is only called when an existing
 // session with session_name is not found. It is expected to return a tuple, where the first value
 // is a status code, and the second value is the ID of a newly initialized session. The return
