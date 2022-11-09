@@ -224,7 +224,7 @@ std::string SessionResourceRepository<TResourceHandle>::ResourceMap::get_session
   }
   // Note: failed resolve will ultimately be reported as a bad resource by the driver
   // on use.
-  return 0;
+  return "";
 }
 
 template <typename TResourceHandle>

@@ -118,8 +118,8 @@ std::string create_session(
   const char* resource_name = "Dev0";
   const char* option_string = "Simulate = 1";
   bool id_query = false, reset_device = true;
-  //EXPECT_CALL(library, InitWithOptions(Pointee(*resource_name), id_query, reset_device, Pointee(*option_string), _))
-  //    .WillOnce(DoAll(SetArgPointee<4>(session_name), Return(kDriverSuccess)));
+  EXPECT_CALL(library, InitWithOptions(Pointee(*resource_name), id_query, reset_device, Pointee(*option_string), _))
+      .WillOnce(DoAll(SetArgPointee<4>(std::atoi(session_name.c_str())), Return(kDriverSuccess)));
 
   ::grpc::ServerContext context;
   nifake_grpc::InitWithOptionsRequest request;
@@ -1995,15 +1995,15 @@ TEST(NiFakeServiceTests, NiFakeService_AcceptViSessionArray_CallsAcceptViSession
   NiFakeMockLibrary library;
   auto resource_repository = std::make_shared<FakeResourceRepository>(&session_repository);
   nifake_grpc::NiFakeService service(&library, resource_repository);
-  std::array<std::string, 3> vi_session_array{"12345671", "12345672", "12345673"};
+  std::array<std::uint32_t, 3> vi_session_array{12345671, 12345672, 12345673};
   auto session_id1 = create_session(library, service, vi_session_array[0]);
   auto session_id2 = create_session(library, service, vi_session_array[1]);
   auto session_id3 = create_session(library, service, vi_session_array[2]);
 
   std::uint32_t session_count = 3;
-  //EXPECT_CALL(library, AcceptViSessionArray(session_count, _))
-  //    .With(Args<1, 0>(ElementsAreArray(vi_session_array)))
-  //    .WillOnce(Return(kDriverSuccess));
+  EXPECT_CALL(library, AcceptViSessionArray(session_count, _))
+      .With(Args<1, 0>(ElementsAreArray(vi_session_array)))
+      .WillOnce(Return(kDriverSuccess));
 
   ::grpc::ServerContext context;
   nifake_grpc::AcceptViSessionArrayRequest request;

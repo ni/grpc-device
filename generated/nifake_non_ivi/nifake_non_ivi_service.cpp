@@ -114,7 +114,7 @@ namespace nifake_non_ivi_grpc {
         int status = library_->GetCrossDriverSession(handle, &cross_driver_session);
         return std::make_tuple(status, cross_driver_session);
       };
-      std::string session_name;
+      std::string session_name = request->session_name();
       int status = fake_cross_driver_handle_resource_repository_->add_dependent_session(session_name, init_lambda, initiating_session_name);
       response->set_status(status);
       if (status == 0) {

@@ -197,7 +197,7 @@ class NiFakeNonIviServiceTests : public ::testing::Test {
 
     ::grpc::ServerContext context;
     InitRequest request;
-    request.set_session_name(session_name.c_str());
+    request.set_session_name(session_name);
     InitResponse response;
 
     service_.Init(&context, &request, &response);

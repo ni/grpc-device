@@ -450,7 +450,7 @@ TEST(SessionUtilitiesServiceTests, ReservationAndSession_ResetServer_UnreservesA
   EXPECT_TRUE(reset_response.is_server_reset());
   bool is_reserved = call_is_reserved(&service, session_name, "a");
   EXPECT_FALSE(is_reserved);
-  EXPECT_NE("", session_repository.access_session(session_name));
+  EXPECT_EQ("", session_repository.access_session(session_name));
 }
 
 TEST(SessionUtilitiesServiceTests, TwoReservations_ResetServer_Unreserves)

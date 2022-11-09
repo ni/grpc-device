@@ -54,7 +54,9 @@ int SessionRepository::add_session(
   if (status) {
     return status;
   }
-  session_name = next_id();
+  if (session_name.length() == 0) {
+    session_name = next_id();
+  }
   info->cleanup_func = cleanup_func;
   info->last_access_time = now;
   info->name = session_name;
@@ -78,7 +80,7 @@ std::string SessionRepository::access_session(const std::string& session_name)
     it->second->last_access_time = now;
     return it->second->name;
   }
-  return 0;
+  return "";
 }
 
 // Removes a session by ID.
