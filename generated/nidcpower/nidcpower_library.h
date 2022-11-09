@@ -23,6 +23,7 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   ViStatus CalSelfCalibrate(ViSession vi, ViConstString channelName);
   ViStatus ClearError(ViSession vi);
   ViStatus ClearInterchangeWarnings(ViSession vi);
+  ViStatus ClearLatchedOutputCutoffState(ViSession vi, ViConstString channelName, ViInt32 outputCutoffReason);
   ViStatus Close(ViSession vi);
   ViStatus Commit(ViSession vi);
   ViStatus CommitWithChannels(ViSession vi, ViConstString channelName);
@@ -143,6 +144,7 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   ViStatus PerformLCRShortCompensation(ViSession vi, ViConstString channelName, ViInt32 numFrequencies, ViReal64 additionalFrequencies[]);
   ViStatus PerformLCRShortCustomCableCompensation(ViSession vi, ViConstString channelName);
   ViStatus QueryInCompliance(ViSession vi, ViConstString channelName, ViBoolean* inCompliance);
+  ViStatus QueryLatchedOutputCutoffState(ViSession vi, ViConstString channelName, ViInt32 outputCutoffReason, ViBoolean* outputCutoffState);
   ViStatus QueryMaxCurrentLimit(ViSession vi, ViConstString channelName, ViReal64 voltageLevel, ViReal64* maxCurrentLimit);
   ViStatus QueryMaxVoltageLevel(ViSession vi, ViConstString channelName, ViReal64 currentLimit, ViReal64* maxVoltageLevel);
   ViStatus QueryMinCurrentLimit(ViSession vi, ViConstString channelName, ViReal64 voltageLevel, ViReal64* minCurrentLimit);
@@ -174,6 +176,7 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   using CalSelfCalibratePtr = decltype(&niDCPower_CalSelfCalibrate);
   using ClearErrorPtr = decltype(&niDCPower_ClearError);
   using ClearInterchangeWarningsPtr = decltype(&niDCPower_ClearInterchangeWarnings);
+  using ClearLatchedOutputCutoffStatePtr = decltype(&niDCPower_ClearLatchedOutputCutoffState);
   using ClosePtr = decltype(&niDCPower_close);
   using CommitPtr = decltype(&niDCPower_Commit);
   using CommitWithChannelsPtr = decltype(&niDCPower_CommitWithChannels);
@@ -294,6 +297,7 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   using PerformLCRShortCompensationPtr = decltype(&niDCPower_PerformLCRShortCompensation);
   using PerformLCRShortCustomCableCompensationPtr = decltype(&niDCPower_PerformLCRShortCustomCableCompensation);
   using QueryInCompliancePtr = decltype(&niDCPower_QueryInCompliance);
+  using QueryLatchedOutputCutoffStatePtr = decltype(&niDCPower_QueryLatchedOutputCutoffState);
   using QueryMaxCurrentLimitPtr = decltype(&niDCPower_QueryMaxCurrentLimit);
   using QueryMaxVoltageLevelPtr = decltype(&niDCPower_QueryMaxVoltageLevel);
   using QueryMinCurrentLimitPtr = decltype(&niDCPower_QueryMinCurrentLimit);
@@ -325,6 +329,7 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
     CalSelfCalibratePtr CalSelfCalibrate;
     ClearErrorPtr ClearError;
     ClearInterchangeWarningsPtr ClearInterchangeWarnings;
+    ClearLatchedOutputCutoffStatePtr ClearLatchedOutputCutoffState;
     ClosePtr Close;
     CommitPtr Commit;
     CommitWithChannelsPtr CommitWithChannels;
@@ -445,6 +450,7 @@ class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
     PerformLCRShortCompensationPtr PerformLCRShortCompensation;
     PerformLCRShortCustomCableCompensationPtr PerformLCRShortCustomCableCompensation;
     QueryInCompliancePtr QueryInCompliance;
+    QueryLatchedOutputCutoffStatePtr QueryLatchedOutputCutoffState;
     QueryMaxCurrentLimitPtr QueryMaxCurrentLimit;
     QueryMaxVoltageLevelPtr QueryMaxVoltageLevel;
     QueryMinCurrentLimitPtr QueryMinCurrentLimit;

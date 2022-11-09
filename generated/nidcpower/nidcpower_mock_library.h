@@ -22,6 +22,7 @@ class NiDCPowerMockLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   MOCK_METHOD(ViStatus, CalSelfCalibrate, (ViSession vi, ViConstString channelName), (override));
   MOCK_METHOD(ViStatus, ClearError, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, ClearInterchangeWarnings, (ViSession vi), (override));
+  MOCK_METHOD(ViStatus, ClearLatchedOutputCutoffState, (ViSession vi, ViConstString channelName, ViInt32 outputCutoffReason), (override));
   MOCK_METHOD(ViStatus, Close, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, Commit, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, CommitWithChannels, (ViSession vi, ViConstString channelName), (override));
@@ -142,6 +143,7 @@ class NiDCPowerMockLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
   MOCK_METHOD(ViStatus, PerformLCRShortCompensation, (ViSession vi, ViConstString channelName, ViInt32 numFrequencies, ViReal64 additionalFrequencies[]), (override));
   MOCK_METHOD(ViStatus, PerformLCRShortCustomCableCompensation, (ViSession vi, ViConstString channelName), (override));
   MOCK_METHOD(ViStatus, QueryInCompliance, (ViSession vi, ViConstString channelName, ViBoolean* inCompliance), (override));
+  MOCK_METHOD(ViStatus, QueryLatchedOutputCutoffState, (ViSession vi, ViConstString channelName, ViInt32 outputCutoffReason, ViBoolean* outputCutoffState), (override));
   MOCK_METHOD(ViStatus, QueryMaxCurrentLimit, (ViSession vi, ViConstString channelName, ViReal64 voltageLevel, ViReal64* maxCurrentLimit), (override));
   MOCK_METHOD(ViStatus, QueryMaxVoltageLevel, (ViSession vi, ViConstString channelName, ViReal64 currentLimit, ViReal64* maxVoltageLevel), (override));
   MOCK_METHOD(ViStatus, QueryMinCurrentLimit, (ViSession vi, ViConstString channelName, ViReal64 voltageLevel, ViReal64* minCurrentLimit), (override));

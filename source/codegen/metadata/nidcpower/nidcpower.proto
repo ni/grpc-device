@@ -1,6 +1,6 @@
 
 //---------------------------------------------------------------------
-// This file is generated from NI-DCPower API metadata version 23.0.0d196
+// This file is generated from NI-DCPower API metadata version 23.0.0d285
 //---------------------------------------------------------------------
 // Proto file for the NI-DCPower Metadata
 //---------------------------------------------------------------------
@@ -22,6 +22,7 @@ service NiDCPower {
   rpc CalSelfCalibrate(CalSelfCalibrateRequest) returns (CalSelfCalibrateResponse);
   rpc ClearError(ClearErrorRequest) returns (ClearErrorResponse);
   rpc ClearInterchangeWarnings(ClearInterchangeWarningsRequest) returns (ClearInterchangeWarningsResponse);
+  rpc ClearLatchedOutputCutoffState(ClearLatchedOutputCutoffStateRequest) returns (ClearLatchedOutputCutoffStateResponse);
   rpc Close(CloseRequest) returns (CloseResponse);
   rpc Commit(CommitRequest) returns (CommitResponse);
   rpc CommitWithChannels(CommitWithChannelsRequest) returns (CommitWithChannelsResponse);
@@ -140,6 +141,7 @@ service NiDCPower {
   rpc PerformLCRShortCompensation(PerformLCRShortCompensationRequest) returns (PerformLCRShortCompensationResponse);
   rpc PerformLCRShortCustomCableCompensation(PerformLCRShortCustomCableCompensationRequest) returns (PerformLCRShortCustomCableCompensationResponse);
   rpc QueryInCompliance(QueryInComplianceRequest) returns (QueryInComplianceResponse);
+  rpc QueryLatchedOutputCutoffState(QueryLatchedOutputCutoffStateRequest) returns (QueryLatchedOutputCutoffStateResponse);
   rpc QueryMaxCurrentLimit(QueryMaxCurrentLimitRequest) returns (QueryMaxCurrentLimitResponse);
   rpc QueryMaxVoltageLevel(QueryMaxVoltageLevelRequest) returns (QueryMaxVoltageLevelResponse);
   rpc QueryMinCurrentLimit(QueryMinCurrentLimitRequest) returns (QueryMinCurrentLimitResponse);
@@ -667,6 +669,16 @@ message ClearInterchangeWarningsRequest {
 }
 
 message ClearInterchangeWarningsResponse {
+  int32 status = 1;
+}
+
+message ClearLatchedOutputCutoffStateRequest {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+  sint32 output_cutoff_reason = 3;
+}
+
+message ClearLatchedOutputCutoffStateResponse {
   int32 status = 1;
 }
 
@@ -1915,6 +1927,17 @@ message QueryInComplianceRequest {
 message QueryInComplianceResponse {
   int32 status = 1;
   bool in_compliance = 2;
+}
+
+message QueryLatchedOutputCutoffStateRequest {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+  sint32 output_cutoff_reason = 3;
+}
+
+message QueryLatchedOutputCutoffStateResponse {
+  int32 status = 1;
+  bool output_cutoff_state = 2;
 }
 
 message QueryMaxCurrentLimitRequest {
