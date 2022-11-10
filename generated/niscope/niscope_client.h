@@ -32,6 +32,8 @@ AdjustSampleClockRelativeDelayResponse adjust_sample_clock_relative_delay(const 
 AutoSetupResponse auto_setup(const StubPtr& stub, const nidevice_grpc::Session& vi);
 CableSenseSignalStartResponse cable_sense_signal_start(const StubPtr& stub, const nidevice_grpc::Session& vi);
 CableSenseSignalStopResponse cable_sense_signal_stop(const StubPtr& stub, const nidevice_grpc::Session& vi);
+CalFetchDateResponse cal_fetch_date(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<CalibrationTypes, pb::int32>& which_one);
+CalFetchTemperatureResponse cal_fetch_temperature(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<CalibrationTypes, pb::int32>& which_one);
 CalSelfCalibrateResponse cal_self_calibrate(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const simple_variant<Option, pb::int32>& option);
 CheckAttributeViBooleanResponse check_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttribute& attribute_id, const bool& value);
 CheckAttributeViInt32Response check_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const NiScopeAttribute& attribute_id, const simple_variant<NiScopeInt32AttributeValues, pb::int32>& value);

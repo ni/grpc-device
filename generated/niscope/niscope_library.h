@@ -28,6 +28,8 @@ class NiScopeLibrary : public niscope_grpc::NiScopeLibraryInterface {
   ViStatus AutoSetup(ViSession vi);
   ViStatus CableSenseSignalStart(ViSession vi);
   ViStatus CableSenseSignalStop(ViSession vi);
+  ViStatus CalFetchDate(ViSession vi, ViInt32 whichOne, ViInt32* year, ViInt32* month, ViInt32* day);
+  ViStatus CalFetchTemperature(ViSession vi, ViInt32 whichOne, ViReal64* temperature);
   ViStatus CalSelfCalibrate(ViSession vi, ViConstString channelList, ViInt32 option);
   ViStatus CheckAttributeViBoolean(ViSession vi, ViConstString channelList, ViAttr attributeId, ViBoolean value);
   ViStatus CheckAttributeViInt32(ViSession vi, ViConstString channelList, ViAttr attributeId, ViInt32 value);
@@ -120,6 +122,8 @@ class NiScopeLibrary : public niscope_grpc::NiScopeLibraryInterface {
   using AutoSetupPtr = decltype(&niScope_AutoSetup);
   using CableSenseSignalStartPtr = decltype(&niScope_CableSenseSignalStart);
   using CableSenseSignalStopPtr = decltype(&niScope_CableSenseSignalStop);
+  using CalFetchDatePtr = decltype(&niScope_CalFetchDate);
+  using CalFetchTemperaturePtr = decltype(&niScope_CalFetchTemperature);
   using CalSelfCalibratePtr = decltype(&niScope_CalSelfCalibrate);
   using CheckAttributeViBooleanPtr = decltype(&niScope_CheckAttributeViBoolean);
   using CheckAttributeViInt32Ptr = decltype(&niScope_CheckAttributeViInt32);
@@ -212,6 +216,8 @@ class NiScopeLibrary : public niscope_grpc::NiScopeLibraryInterface {
     AutoSetupPtr AutoSetup;
     CableSenseSignalStartPtr CableSenseSignalStart;
     CableSenseSignalStopPtr CableSenseSignalStop;
+    CalFetchDatePtr CalFetchDate;
+    CalFetchTemperaturePtr CalFetchTemperature;
     CalSelfCalibratePtr CalSelfCalibrate;
     CheckAttributeViBooleanPtr CheckAttributeViBoolean;
     CheckAttributeViInt32Ptr CheckAttributeViInt32;
