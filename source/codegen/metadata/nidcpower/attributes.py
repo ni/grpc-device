@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-DCPower API metadata version 23.0.0d285
+# This file is generated from NI-DCPower API metadata version 23.0.0d288
 attributes = {
     1050002: {
         'codegen_method': 'public',

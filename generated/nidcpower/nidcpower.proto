@@ -1,6 +1,6 @@
 
 //---------------------------------------------------------------------
-// This file is generated from NI-DCPower API metadata version 23.0.0d285
+// This file is generated from NI-DCPower API metadata version 23.0.0d288
 //---------------------------------------------------------------------
 // Proto file for the NI-DCPower Metadata
 //---------------------------------------------------------------------
@@ -553,6 +553,19 @@ enum NiDCPowerReal64AttributeValues {
   NIDCPOWER_REAL64_POWER_LINE_FREQUENCIES_VAL_60_HERTZ = 60;
 }
 
+enum OutputCutoffReason {
+  OUTPUT_CUTOFF_REASON_UNSPECIFIED = 0;
+  OUTPUT_CUTOFF_REASON_NIDCPOWER_VAL_OUTPUT_CUTOFF_REASON_ALL = -1;
+  OUTPUT_CUTOFF_REASON_NIDCPOWER_VAL_OUTPUT_CUTOFF_REASON_VOLTAGE_OUTPUT_HIGH = 1;
+  OUTPUT_CUTOFF_REASON_NIDCPOWER_VAL_OUTPUT_CUTOFF_REASON_VOLTAGE_OUTPUT_LOW = 2;
+  OUTPUT_CUTOFF_REASON_NIDCPOWER_VAL_OUTPUT_CUTOFF_REASON_CURRENT_MEASURE_HIGH = 4;
+  OUTPUT_CUTOFF_REASON_NIDCPOWER_VAL_OUTPUT_CUTOFF_REASON_CURRENT_MEASURE_LOW = 8;
+  OUTPUT_CUTOFF_REASON_NIDCPOWER_VAL_OUTPUT_CUTOFF_REASON_VOLTAGE_CHANGE_HIGH = 16;
+  OUTPUT_CUTOFF_REASON_NIDCPOWER_VAL_OUTPUT_CUTOFF_REASON_VOLTAGE_CHANGE_LOW = 32;
+  OUTPUT_CUTOFF_REASON_NIDCPOWER_VAL_OUTPUT_CUTOFF_REASON_CURRENT_CHANGE_HIGH = 64;
+  OUTPUT_CUTOFF_REASON_NIDCPOWER_VAL_OUTPUT_CUTOFF_REASON_CURRENT_CHANGE_LOW = 128;
+}
+
 enum OutputFunction {
   OUTPUT_FUNCTION_UNSPECIFIED = 0;
   OUTPUT_FUNCTION_NIDCPOWER_VAL_DC_VOLTAGE = 1006;
@@ -675,7 +688,10 @@ message ClearInterchangeWarningsResponse {
 message ClearLatchedOutputCutoffStateRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  sint32 output_cutoff_reason = 3;
+  oneof output_cutoff_reason_enum {
+    OutputCutoffReason output_cutoff_reason = 3;
+    sint32 output_cutoff_reason_raw = 4;
+  }
 }
 
 message ClearLatchedOutputCutoffStateResponse {
@@ -1932,7 +1948,10 @@ message QueryInComplianceResponse {
 message QueryLatchedOutputCutoffStateRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  sint32 output_cutoff_reason = 3;
+  oneof output_cutoff_reason_enum {
+    OutputCutoffReason output_cutoff_reason = 3;
+    sint32 output_cutoff_reason_raw = 4;
+  }
 }
 
 message QueryLatchedOutputCutoffStateResponse {

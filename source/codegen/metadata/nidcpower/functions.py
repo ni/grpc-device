@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-DCPower API metadata version 23.0.0d285
+# This file is generated from NI-DCPower API metadata version 23.0.0d288
 functions = {
     'Abort': {
         'codegen_method': 'public',
@@ -100,6 +100,7 @@ functions = {
             {
                 'cppName': 'outputCutoffReason',
                 'direction': 'in',
+                'enum': 'OutputCutoffReason',
                 'grpc_type': 'sint32',
                 'name': 'outputCutoffReason',
                 'type': 'ViInt32'
@@ -3660,6 +3661,7 @@ functions = {
             {
                 'cppName': 'outputCutoffReason',
                 'direction': 'in',
+                'enum': 'OutputCutoffReason',
                 'grpc_type': 'sint32',
                 'name': 'outputCutoffReason',
                 'type': 'ViInt32'
