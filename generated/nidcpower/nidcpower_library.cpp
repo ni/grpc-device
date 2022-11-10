@@ -26,6 +26,7 @@ NiDCPowerLibrary::NiDCPowerLibrary() : shared_library_(kLibraryName)
   function_pointers_.CalSelfCalibrate = reinterpret_cast<CalSelfCalibratePtr>(shared_library_.get_function_pointer("niDCPower_CalSelfCalibrate"));
   function_pointers_.ClearError = reinterpret_cast<ClearErrorPtr>(shared_library_.get_function_pointer("niDCPower_ClearError"));
   function_pointers_.ClearInterchangeWarnings = reinterpret_cast<ClearInterchangeWarningsPtr>(shared_library_.get_function_pointer("niDCPower_ClearInterchangeWarnings"));
+  function_pointers_.ClearLatchedOutputCutoffState = reinterpret_cast<ClearLatchedOutputCutoffStatePtr>(shared_library_.get_function_pointer("niDCPower_ClearLatchedOutputCutoffState"));
   function_pointers_.Close = reinterpret_cast<ClosePtr>(shared_library_.get_function_pointer("niDCPower_close"));
   function_pointers_.Commit = reinterpret_cast<CommitPtr>(shared_library_.get_function_pointer("niDCPower_Commit"));
   function_pointers_.CommitWithChannels = reinterpret_cast<CommitWithChannelsPtr>(shared_library_.get_function_pointer("niDCPower_CommitWithChannels"));
@@ -146,6 +147,7 @@ NiDCPowerLibrary::NiDCPowerLibrary() : shared_library_(kLibraryName)
   function_pointers_.PerformLCRShortCompensation = reinterpret_cast<PerformLCRShortCompensationPtr>(shared_library_.get_function_pointer("niDCPower_PerformLCRShortCompensation"));
   function_pointers_.PerformLCRShortCustomCableCompensation = reinterpret_cast<PerformLCRShortCustomCableCompensationPtr>(shared_library_.get_function_pointer("niDCPower_PerformLCRShortCustomCableCompensation"));
   function_pointers_.QueryInCompliance = reinterpret_cast<QueryInCompliancePtr>(shared_library_.get_function_pointer("niDCPower_QueryInCompliance"));
+  function_pointers_.QueryLatchedOutputCutoffState = reinterpret_cast<QueryLatchedOutputCutoffStatePtr>(shared_library_.get_function_pointer("niDCPower_QueryLatchedOutputCutoffState"));
   function_pointers_.QueryMaxCurrentLimit = reinterpret_cast<QueryMaxCurrentLimitPtr>(shared_library_.get_function_pointer("niDCPower_QueryMaxCurrentLimit"));
   function_pointers_.QueryMaxVoltageLevel = reinterpret_cast<QueryMaxVoltageLevelPtr>(shared_library_.get_function_pointer("niDCPower_QueryMaxVoltageLevel"));
   function_pointers_.QueryMinCurrentLimit = reinterpret_cast<QueryMinCurrentLimitPtr>(shared_library_.get_function_pointer("niDCPower_QueryMinCurrentLimit"));
@@ -240,6 +242,18 @@ ViStatus NiDCPowerLibrary::ClearInterchangeWarnings(ViSession vi)
   return niDCPower_ClearInterchangeWarnings(vi);
 #else
   return function_pointers_.ClearInterchangeWarnings(vi);
+#endif
+}
+
+ViStatus NiDCPowerLibrary::ClearLatchedOutputCutoffState(ViSession vi, ViConstString channelName, ViInt32 outputCutoffReason)
+{
+  if (!function_pointers_.ClearLatchedOutputCutoffState) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_ClearLatchedOutputCutoffState.");
+  }
+#if defined(_MSC_VER)
+  return niDCPower_ClearLatchedOutputCutoffState(vi, channelName, outputCutoffReason);
+#else
+  return function_pointers_.ClearLatchedOutputCutoffState(vi, channelName, outputCutoffReason);
 #endif
 }
 
@@ -1672,6 +1686,18 @@ ViStatus NiDCPowerLibrary::QueryInCompliance(ViSession vi, ViConstString channel
   return niDCPower_QueryInCompliance(vi, channelName, inCompliance);
 #else
   return function_pointers_.QueryInCompliance(vi, channelName, inCompliance);
+#endif
+}
+
+ViStatus NiDCPowerLibrary::QueryLatchedOutputCutoffState(ViSession vi, ViConstString channelName, ViInt32 outputCutoffReason, ViBoolean* outputCutoffState)
+{
+  if (!function_pointers_.QueryLatchedOutputCutoffState) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niDCPower_QueryLatchedOutputCutoffState.");
+  }
+#if defined(_MSC_VER)
+  return niDCPower_QueryLatchedOutputCutoffState(vi, channelName, outputCutoffReason, outputCutoffState);
+#else
+  return function_pointers_.QueryLatchedOutputCutoffState(vi, channelName, outputCutoffReason, outputCutoffState);
 #endif
 }
 

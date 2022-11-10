@@ -27,6 +27,7 @@ AbortWithChannelsResponse abort_with_channels(const StubPtr& stub, const nidevic
 CalSelfCalibrateResponse cal_self_calibrate(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name);
 ClearErrorResponse clear_error(const StubPtr& stub, const nidevice_grpc::Session& vi);
 ClearInterchangeWarningsResponse clear_interchange_warnings(const StubPtr& stub, const nidevice_grpc::Session& vi);
+ClearLatchedOutputCutoffStateResponse clear_latched_output_cutoff_state(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const simple_variant<OutputCutoffReason, pb::int32>& output_cutoff_reason);
 CloseResponse close(const StubPtr& stub, const nidevice_grpc::Session& vi);
 CommitResponse commit(const StubPtr& stub, const nidevice_grpc::Session& vi);
 CommitWithChannelsResponse commit_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name);
@@ -145,6 +146,7 @@ PerformLCROpenCustomCableCompensationResponse perform_lcr_open_custom_cable_comp
 PerformLCRShortCompensationResponse perform_lcr_short_compensation(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const std::vector<double>& additional_frequencies);
 PerformLCRShortCustomCableCompensationResponse perform_lcr_short_custom_cable_compensation(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name);
 QueryInComplianceResponse query_in_compliance(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name);
+QueryLatchedOutputCutoffStateResponse query_latched_output_cutoff_state(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const simple_variant<OutputCutoffReason, pb::int32>& output_cutoff_reason);
 QueryMaxCurrentLimitResponse query_max_current_limit(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& voltage_level);
 QueryMaxVoltageLevelResponse query_max_voltage_level(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& current_limit);
 QueryMinCurrentLimitResponse query_min_current_limit(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const double& voltage_level);

@@ -104,6 +104,32 @@ clear_interchange_warnings(const StubPtr& stub, const nidevice_grpc::Session& vi
   return response;
 }
 
+ClearLatchedOutputCutoffStateResponse
+clear_latched_output_cutoff_state(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const simple_variant<OutputCutoffReason, pb::int32>& output_cutoff_reason)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ClearLatchedOutputCutoffStateRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_channel_name(channel_name);
+  const auto output_cutoff_reason_ptr = output_cutoff_reason.get_if<OutputCutoffReason>();
+  const auto output_cutoff_reason_raw_ptr = output_cutoff_reason.get_if<pb::int32>();
+  if (output_cutoff_reason_ptr) {
+    request.set_output_cutoff_reason(*output_cutoff_reason_ptr);
+  }
+  else if (output_cutoff_reason_raw_ptr) {
+    request.set_output_cutoff_reason_raw(*output_cutoff_reason_raw_ptr);
+  }
+
+  auto response = ClearLatchedOutputCutoffStateResponse{};
+
+  raise_if_error(
+      stub->ClearLatchedOutputCutoffState(&context, request, &response),
+      context);
+
+  return response;
+}
+
 CloseResponse
 close(const StubPtr& stub, const nidevice_grpc::Session& vi)
 {
@@ -2445,6 +2471,32 @@ query_in_compliance(const StubPtr& stub, const nidevice_grpc::Session& vi, const
 
   raise_if_error(
       stub->QueryInCompliance(&context, request, &response),
+      context);
+
+  return response;
+}
+
+QueryLatchedOutputCutoffStateResponse
+query_latched_output_cutoff_state(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const simple_variant<OutputCutoffReason, pb::int32>& output_cutoff_reason)
+{
+  ::grpc::ClientContext context;
+
+  auto request = QueryLatchedOutputCutoffStateRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_channel_name(channel_name);
+  const auto output_cutoff_reason_ptr = output_cutoff_reason.get_if<OutputCutoffReason>();
+  const auto output_cutoff_reason_raw_ptr = output_cutoff_reason.get_if<pb::int32>();
+  if (output_cutoff_reason_ptr) {
+    request.set_output_cutoff_reason(*output_cutoff_reason_ptr);
+  }
+  else if (output_cutoff_reason_raw_ptr) {
+    request.set_output_cutoff_reason_raw(*output_cutoff_reason_raw_ptr);
+  }
+
+  auto response = QueryLatchedOutputCutoffStateResponse{};
+
+  raise_if_error(
+      stub->QueryLatchedOutputCutoffState(&context, request, &response),
       context);
 
   return response;

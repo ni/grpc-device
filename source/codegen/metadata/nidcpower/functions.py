@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-DCPower API metadata version 23.0.0d196
+# This file is generated from NI-DCPower API metadata version 23.0.0d288
 functions = {
     'Abort': {
         'codegen_method': 'public',
@@ -76,6 +76,34 @@ functions = {
                 'grpc_type': 'nidevice_grpc.Session',
                 'name': 'vi',
                 'type': 'ViSession'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'ClearLatchedOutputCutoffState': {
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'cppName': 'vi',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.Session',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'cppName': 'channelName',
+                'direction': 'in',
+                'grpc_type': 'string',
+                'name': 'channelName',
+                'type': 'ViConstString'
+            },
+            {
+                'cppName': 'outputCutoffReason',
+                'direction': 'in',
+                'enum': 'OutputCutoffReason',
+                'grpc_type': 'sint32',
+                'name': 'outputCutoffReason',
+                'type': 'ViInt32'
             }
         ],
         'returns': 'ViStatus'
@@ -3613,6 +3641,41 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
+    'QueryLatchedOutputCutoffState': {
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'cppName': 'vi',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.Session',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'cppName': 'channelName',
+                'direction': 'in',
+                'grpc_type': 'string',
+                'name': 'channelName',
+                'type': 'ViConstString'
+            },
+            {
+                'cppName': 'outputCutoffReason',
+                'direction': 'in',
+                'enum': 'OutputCutoffReason',
+                'grpc_type': 'sint32',
+                'name': 'outputCutoffReason',
+                'type': 'ViInt32'
+            },
+            {
+                'cppName': 'outputCutoffState',
+                'direction': 'out',
+                'grpc_type': 'bool',
+                'name': 'outputCutoffState',
+                'type': 'ViBoolean'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
     'QueryMaxCurrentLimit': {
         'codegen_method': 'public',
         'parameters': [
@@ -4057,7 +4120,7 @@ functions = {
                 'cppName': 'attributeValue',
                 'direction': 'in',
                 'grpc_type': 'int64',
-                'name': 'attributeValue_raw',
+                'name': 'attribute_value_raw',
                 'type': 'ViInt64'
             }
         ],
@@ -4160,7 +4223,7 @@ functions = {
                 'cppName': 'attributeValue',
                 'direction': 'in',
                 'grpc_type': 'string',
-                'name': 'attributeValue_raw',
+                'name': 'attribute_value_raw',
                 'type': 'ViConstString'
             }
         ],
