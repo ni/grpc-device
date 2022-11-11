@@ -311,6 +311,90 @@ namespace niscope_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiScopeService::CalFetchDate(::grpc::ServerContext* context, const CalFetchDateRequest* request, CalFetchDateResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViInt32 which_one;
+      switch (request->which_one_enum_case()) {
+        case niscope_grpc::CalFetchDateRequest::WhichOneEnumCase::kWhichOne: {
+          which_one = static_cast<ViInt32>(request->which_one());
+          break;
+        }
+        case niscope_grpc::CalFetchDateRequest::WhichOneEnumCase::kWhichOneRaw: {
+          which_one = static_cast<ViInt32>(request->which_one_raw());
+          break;
+        }
+        case niscope_grpc::CalFetchDateRequest::WhichOneEnumCase::WHICH_ONE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for which_one was not specified or out of range");
+          break;
+        }
+      }
+
+      ViInt32 year {};
+      ViInt32 month {};
+      ViInt32 day {};
+      auto status = library_->CalFetchDate(vi, which_one, &year, &month, &day);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(context, status, vi);
+      }
+      response->set_status(status);
+      response->set_year(year);
+      response->set_month(month);
+      response->set_day(day);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiScopeService::CalFetchTemperature(::grpc::ServerContext* context, const CalFetchTemperatureRequest* request, CalFetchTemperatureResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViInt32 which_one;
+      switch (request->which_one_enum_case()) {
+        case niscope_grpc::CalFetchTemperatureRequest::WhichOneEnumCase::kWhichOne: {
+          which_one = static_cast<ViInt32>(request->which_one());
+          break;
+        }
+        case niscope_grpc::CalFetchTemperatureRequest::WhichOneEnumCase::kWhichOneRaw: {
+          which_one = static_cast<ViInt32>(request->which_one_raw());
+          break;
+        }
+        case niscope_grpc::CalFetchTemperatureRequest::WhichOneEnumCase::WHICH_ONE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for which_one was not specified or out of range");
+          break;
+        }
+      }
+
+      ViReal64 temperature {};
+      auto status = library_->CalFetchTemperature(vi, which_one, &temperature);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(context, status, vi);
+      }
+      response->set_status(status);
+      response->set_temperature(temperature);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiScopeService::CalSelfCalibrate(::grpc::ServerContext* context, const CalSelfCalibrateRequest* request, CalSelfCalibrateResponse* response)
   {
     if (context->IsCancelled()) {

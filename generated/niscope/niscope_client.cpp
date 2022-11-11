@@ -206,6 +206,56 @@ cable_sense_signal_stop(const StubPtr& stub, const nidevice_grpc::Session& vi)
   return response;
 }
 
+CalFetchDateResponse
+cal_fetch_date(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<CalibrationTypes, pb::int32>& which_one)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalFetchDateRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+  const auto which_one_ptr = which_one.get_if<CalibrationTypes>();
+  const auto which_one_raw_ptr = which_one.get_if<pb::int32>();
+  if (which_one_ptr) {
+    request.set_which_one(*which_one_ptr);
+  }
+  else if (which_one_raw_ptr) {
+    request.set_which_one_raw(*which_one_raw_ptr);
+  }
+
+  auto response = CalFetchDateResponse{};
+
+  raise_if_error(
+      stub->CalFetchDate(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalFetchTemperatureResponse
+cal_fetch_temperature(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<CalibrationTypes, pb::int32>& which_one)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalFetchTemperatureRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+  const auto which_one_ptr = which_one.get_if<CalibrationTypes>();
+  const auto which_one_raw_ptr = which_one.get_if<pb::int32>();
+  if (which_one_ptr) {
+    request.set_which_one(*which_one_ptr);
+  }
+  else if (which_one_raw_ptr) {
+    request.set_which_one_raw(*which_one_raw_ptr);
+  }
+
+  auto response = CalFetchTemperatureResponse{};
+
+  raise_if_error(
+      stub->CalFetchTemperature(&context, request, &response),
+      context);
+
+  return response;
+}
+
 CalSelfCalibrateResponse
 cal_self_calibrate(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_list, const simple_variant<Option, pb::int32>& option)
 {

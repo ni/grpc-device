@@ -27,6 +27,8 @@ class NiScopeMockLibrary : public niscope_grpc::NiScopeLibraryInterface {
   MOCK_METHOD(ViStatus, AutoSetup, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, CableSenseSignalStart, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, CableSenseSignalStop, (ViSession vi), (override));
+  MOCK_METHOD(ViStatus, CalFetchDate, (ViSession vi, ViInt32 whichOne, ViInt32* year, ViInt32* month, ViInt32* day), (override));
+  MOCK_METHOD(ViStatus, CalFetchTemperature, (ViSession vi, ViInt32 whichOne, ViReal64* temperature), (override));
   MOCK_METHOD(ViStatus, CalSelfCalibrate, (ViSession vi, ViConstString channelList, ViInt32 option), (override));
   MOCK_METHOD(ViStatus, CheckAttributeViBoolean, (ViSession vi, ViConstString channelList, ViAttr attributeId, ViBoolean value), (override));
   MOCK_METHOD(ViStatus, CheckAttributeViInt32, (ViSession vi, ViConstString channelList, ViAttr attributeId, ViInt32 value), (override));
