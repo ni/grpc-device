@@ -7,7 +7,7 @@
 #define NISCOPE_GRPC_LIBRARY_WRAPPER_H
 
 #include <grpcpp/grpcpp.h>
-#include <niScope.h>
+#include <niScopeCal.h>
 
 namespace niscope_grpc {
 
@@ -25,6 +25,8 @@ class NiScopeLibraryInterface {
   virtual ViStatus AutoSetup(ViSession vi) = 0;
   virtual ViStatus CableSenseSignalStart(ViSession vi) = 0;
   virtual ViStatus CableSenseSignalStop(ViSession vi) = 0;
+  virtual ViStatus CalFetchDate(ViSession vi, ViInt32 whichOne, ViInt32* year, ViInt32* month, ViInt32* day) = 0;
+  virtual ViStatus CalFetchTemperature(ViSession vi, ViInt32 whichOne, ViReal64* temperature) = 0;
   virtual ViStatus CalSelfCalibrate(ViSession vi, ViConstString channelList, ViInt32 option) = 0;
   virtual ViStatus CheckAttributeViBoolean(ViSession vi, ViConstString channelList, ViAttr attributeId, ViBoolean value) = 0;
   virtual ViStatus CheckAttributeViInt32(ViSession vi, ViConstString channelList, ViAttr attributeId, ViInt32 value) = 0;

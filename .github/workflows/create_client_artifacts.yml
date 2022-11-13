@@ -37,6 +37,10 @@ jobs:
       run: |
         python source/codegen/stage_client_files.py -o ${{ runner.temp }}/staging/
 
+    - name: Stage Restricted Client Files
+      run: |
+        python source/codegen/stage_client_files.py --ignore-release-readiness -o ${{ runner.temp }}/staging_restricted/
+
     - name: Tar Linux Client Files
       if: ${{ (runner.os == 'Linux') }}
       run: |
@@ -57,4 +61,13 @@ jobs:
         name: ni-grpc-device-client
         path: |
           ${{ runner.temp }}/staging
+        retention-days: 5
+
+    - name: Upload Windows Restricted Client Files Artifact
+      uses: actions/upload-artifact@v2
+      if: ${{ (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/releases')) && (runner.os == 'Windows') }}
+      with:
+        name: ni-grpc-device-client-restricted
+        path: |
+          ${{ runner.temp }}/staging_restricted
         retention-days: 5

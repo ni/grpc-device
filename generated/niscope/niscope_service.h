@@ -51,6 +51,8 @@ public:
   ::grpc::Status AutoSetup(::grpc::ServerContext* context, const AutoSetupRequest* request, AutoSetupResponse* response) override;
   ::grpc::Status CableSenseSignalStart(::grpc::ServerContext* context, const CableSenseSignalStartRequest* request, CableSenseSignalStartResponse* response) override;
   ::grpc::Status CableSenseSignalStop(::grpc::ServerContext* context, const CableSenseSignalStopRequest* request, CableSenseSignalStopResponse* response) override;
+  ::grpc::Status CalFetchDate(::grpc::ServerContext* context, const CalFetchDateRequest* request, CalFetchDateResponse* response) override;
+  ::grpc::Status CalFetchTemperature(::grpc::ServerContext* context, const CalFetchTemperatureRequest* request, CalFetchTemperatureResponse* response) override;
   ::grpc::Status CalSelfCalibrate(::grpc::ServerContext* context, const CalSelfCalibrateRequest* request, CalSelfCalibrateResponse* response) override;
   ::grpc::Status CheckAttributeViBoolean(::grpc::ServerContext* context, const CheckAttributeViBooleanRequest* request, CheckAttributeViBooleanResponse* response) override;
   ::grpc::Status CheckAttributeViInt32(::grpc::ServerContext* context, const CheckAttributeViInt32Request* request, CheckAttributeViInt32Response* response) override;

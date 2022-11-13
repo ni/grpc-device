@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-DCPower API metadata version 23.0.0d196
+# This file is generated from NI-DCPower API metadata version 23.0.0d288
 enums = {
     'ApertureTimeAutoMode': {
         'codegen_method': 'public',
@@ -881,6 +881,47 @@ enums = {
             {
                 'name': 'NIDCPOWER_VAL_HIGH',
                 'value': 1011
+            }
+        ]
+    },
+    'OutputCutoffReason': {
+        'codegen_method': 'public',
+        'values': [
+            {
+                'name': 'NIDCPOWER_VAL_OUTPUT_CUTOFF_REASON_ALL',
+                'value': -1
+            },
+            {
+                'name': 'NIDCPOWER_VAL_OUTPUT_CUTOFF_REASON_VOLTAGE_OUTPUT_HIGH',
+                'value': 1
+            },
+            {
+                'name': 'NIDCPOWER_VAL_OUTPUT_CUTOFF_REASON_VOLTAGE_OUTPUT_LOW',
+                'value': 2
+            },
+            {
+                'name': 'NIDCPOWER_VAL_OUTPUT_CUTOFF_REASON_CURRENT_MEASURE_HIGH',
+                'value': 4
+            },
+            {
+                'name': 'NIDCPOWER_VAL_OUTPUT_CUTOFF_REASON_CURRENT_MEASURE_LOW',
+                'value': 8
+            },
+            {
+                'name': 'NIDCPOWER_VAL_OUTPUT_CUTOFF_REASON_VOLTAGE_CHANGE_HIGH',
+                'value': 16
+            },
+            {
+                'name': 'NIDCPOWER_VAL_OUTPUT_CUTOFF_REASON_VOLTAGE_CHANGE_LOW',
+                'value': 32
+            },
+            {
+                'name': 'NIDCPOWER_VAL_OUTPUT_CUTOFF_REASON_CURRENT_CHANGE_HIGH',
+                'value': 64
+            },
+            {
+                'name': 'NIDCPOWER_VAL_OUTPUT_CUTOFF_REASON_CURRENT_CHANGE_LOW',
+                'value': 128
             }
         ]
     },

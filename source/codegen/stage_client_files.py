@@ -72,6 +72,10 @@ class _ArtifactLocations:
         return self.repo_root / "source" / "protobuf"
 
     @property
+    def restricted_protos(self) -> Path:
+        return self.repo_root / "source" / "protobuf_restricted"
+
+    @property
     def metadata_dir(self) -> Path:
         return self.repo_root / "source" / "codegen" / "metadata"
 
@@ -104,6 +108,10 @@ def stage_client_files(output_path: Path, ignore_release_readiness: bool):
 
     for file in _get_release_proto_files(artifact_locations, readiness):
         copy2(file, proto_path)
+
+    if readiness.ignore_release_readiness:
+        for file in artifact_locations.restricted_protos.iterdir():
+            copy2(file, proto_path)
 
     examples_path = output_path / "examples"
     examples_path.mkdir(parents=True)

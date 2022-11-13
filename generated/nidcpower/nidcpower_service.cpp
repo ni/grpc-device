@@ -159,6 +159,45 @@ namespace nidcpower_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiDCPowerService::ClearLatchedOutputCutoffState(::grpc::ServerContext* context, const ClearLatchedOutputCutoffStateRequest* request, ClearLatchedOutputCutoffStateResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto channel_name = request->channel_name().c_str();
+      ViInt32 output_cutoff_reason;
+      switch (request->output_cutoff_reason_enum_case()) {
+        case nidcpower_grpc::ClearLatchedOutputCutoffStateRequest::OutputCutoffReasonEnumCase::kOutputCutoffReason: {
+          output_cutoff_reason = static_cast<ViInt32>(request->output_cutoff_reason());
+          break;
+        }
+        case nidcpower_grpc::ClearLatchedOutputCutoffStateRequest::OutputCutoffReasonEnumCase::kOutputCutoffReasonRaw: {
+          output_cutoff_reason = static_cast<ViInt32>(request->output_cutoff_reason_raw());
+          break;
+        }
+        case nidcpower_grpc::ClearLatchedOutputCutoffStateRequest::OutputCutoffReasonEnumCase::OUTPUT_CUTOFF_REASON_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for output_cutoff_reason was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->ClearLatchedOutputCutoffState(vi, channel_name, output_cutoff_reason);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(context, status, vi);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiDCPowerService::Close(::grpc::ServerContext* context, const CloseRequest* request, CloseResponse* response)
   {
     if (context->IsCancelled()) {
@@ -3485,6 +3524,47 @@ namespace nidcpower_grpc {
       }
       response->set_status(status);
       response->set_in_compliance(in_compliance);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDCPowerService::QueryLatchedOutputCutoffState(::grpc::ServerContext* context, const QueryLatchedOutputCutoffStateRequest* request, QueryLatchedOutputCutoffStateResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      auto channel_name = request->channel_name().c_str();
+      ViInt32 output_cutoff_reason;
+      switch (request->output_cutoff_reason_enum_case()) {
+        case nidcpower_grpc::QueryLatchedOutputCutoffStateRequest::OutputCutoffReasonEnumCase::kOutputCutoffReason: {
+          output_cutoff_reason = static_cast<ViInt32>(request->output_cutoff_reason());
+          break;
+        }
+        case nidcpower_grpc::QueryLatchedOutputCutoffStateRequest::OutputCutoffReasonEnumCase::kOutputCutoffReasonRaw: {
+          output_cutoff_reason = static_cast<ViInt32>(request->output_cutoff_reason_raw());
+          break;
+        }
+        case nidcpower_grpc::QueryLatchedOutputCutoffStateRequest::OutputCutoffReasonEnumCase::OUTPUT_CUTOFF_REASON_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for output_cutoff_reason was not specified or out of range");
+          break;
+        }
+      }
+
+      ViBoolean output_cutoff_state {};
+      auto status = library_->QueryLatchedOutputCutoffState(vi, channel_name, output_cutoff_reason, &output_cutoff_state);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(context, status, vi);
+      }
+      response->set_status(status);
+      response->set_output_cutoff_state(output_cutoff_state);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {

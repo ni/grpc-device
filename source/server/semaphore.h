@@ -2,6 +2,7 @@
 #define NIDEVICE_GRPC_SEMAPHORE_H
 
 #include <shared_mutex>
+#include <condition_variable>
 
 namespace nidevice_grpc {
 
