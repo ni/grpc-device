@@ -7,31 +7,31 @@ namespace ni {
 namespace tests {
 namespace unit {
 
-// Starting with session_id 1 isn't functionally important, but we want to start with
+// Starting with session_name 1 isn't functionally important, but we want to start with
 // something intentional. NOT an uninitialized uint.
 constexpr auto EXPECTED_FIRST_SESSION_ID = 1;
 
 TEST(SessionRepositoryTests, AddSessionWithNonZeroStatus_ReturnsStatusAndDoesNotStoreSession)
 {
   nidevice_grpc::SessionRepository session_repository;
-  std::string session_id = "42";
+  std::string session_name = "42";
   int status = session_repository.add_session(
-      session_id,
-      [session_id]() { return 1; },
+      session_name,
+      [session_name]() { return 1; },
       NULL);
 
   EXPECT_EQ(status, 1);
-  EXPECT_EQ("" , session_repository.access_session(session_id));
+  EXPECT_EQ("" , session_repository.access_session(session_name));
 }
 
 TEST(SessionRepositoryTests, AddSessionWithNonZeroStatus_InitializedNewSessionIsFalse)
 {
   nidevice_grpc::SessionRepository session_repository;
-  std::string session_id = "42";
+  std::string session_name = "42";
   bool initialized_new_session;
   int status = session_repository.add_session(
-      session_id,
-      [session_id]() { return 1; },
+      session_name,
+      [session_name]() { return 1; },
       NULL,
       nidevice_grpc::SESSION_INITIALIZATION_BEHAVIOR_UNSPECIFIED,
       &initialized_new_session);
@@ -42,17 +42,17 @@ TEST(SessionRepositoryTests, AddSessionWithNonZeroStatus_InitializedNewSessionIs
 TEST(SessionRepositoryTests, AddSession_StoresSessionWithGivenId)
 {
   nidevice_grpc::SessionRepository session_repository;
-  std::string session_id;
+  std::string session_name;
   bool initialized_new_session;
   int status = session_repository.add_session(
-      session_id,
+      session_name,
       []() { return 0; },
       NULL,
       nidevice_grpc::SESSION_INITIALIZATION_BEHAVIOR_UNSPECIFIED,
       &initialized_new_session);
 
   EXPECT_EQ(status, 0);
-  EXPECT_EQ(session_repository.access_session(session_id), session_id);
+  EXPECT_EQ(session_repository.access_session(session_name), session_name);
   EXPECT_TRUE(initialized_new_session);
 }
 
@@ -99,15 +99,15 @@ TEST(SessionRepositoryTests, AddNamedSession_StoresSessionWithGivenIdAndName)
 TEST(SessionRepositoryTests, UnnamedSessionAdded_RemoveSession_RemovesSession)
 {
   nidevice_grpc::SessionRepository session_repository;
-  std::string session_id;
+  std::string session_name;
   session_repository.add_session(
-      session_id,
+      session_name,
       []() { return 0; },
       NULL);
 
-  session_repository.remove_session(session_id);
+  session_repository.remove_session(session_name);
 
-  EXPECT_EQ("",  session_repository.access_session(session_id));
+  EXPECT_EQ("",  session_repository.access_session(session_name));
 }
 
 TEST(SessionRepositoryTests, NamedSessionAdded_RemoveSession_RemovesSession)
@@ -198,15 +198,15 @@ TEST(SessionRepositoryTests, NamedSessionAdded_ResetServer_RemovesSession)
 TEST(SessionRepositoryTests, UnnamedSessionAdded_ResetServer_RemovesSession)
 {
   nidevice_grpc::SessionRepository session_repository;
-  std::string session_id;
+  std::string session_name;
   session_repository.add_session(
-      session_id,
+      session_name,
       []() { return 0; },
       NULL);
 
   bool is_server_reset = session_repository.reset_server();
 
-  EXPECT_EQ("", session_repository.access_session(session_id));
+  EXPECT_EQ("", session_repository.access_session(session_name));
   EXPECT_TRUE(is_server_reset);
 }
 
@@ -218,16 +218,16 @@ TEST(SessionRepositoryTests, NamedAndUnnamedSessionsAdded_ResetServer_RemovesBot
       session_name,
       []() { return 0; },
       NULL);
-  std::string unnamed_session_id;
+  std::string unnamed_session_name;
   session_repository.add_session(
-      unnamed_session_id,
+      unnamed_session_name,
       []() { return 0; },
       NULL);
 
   bool is_server_reset = session_repository.reset_server();
 
   EXPECT_EQ("", session_repository.access_session(session_name));
-  EXPECT_EQ("", session_repository.access_session(unnamed_session_id));
+  EXPECT_EQ("", session_repository.access_session(unnamed_session_name));
   EXPECT_TRUE(is_server_reset);
 }
 

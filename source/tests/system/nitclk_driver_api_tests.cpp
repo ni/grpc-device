@@ -103,7 +103,7 @@ class NiTClkDriverApiTest : public ::testing::Test {
     return response.value();
   }
 
-  std::string get_session_id_from_attribute(const char* channel_name, tclk::NiTClkAttribute attribute_id)
+  std::string get_session_name_from_attribute(const char* channel_name, tclk::NiTClkAttribute attribute_id)
   {
     ::grpc::ClientContext context;
     tclk::GetAttributeViSessionRequest request;
@@ -151,14 +151,14 @@ class NiTClkDriverApiTest : public ::testing::Test {
     EXPECT_EQ(kTClkDriverApiSuccess, response.status());
   }
 
-  void set_session_attribute(const char* channel_name, tclk::NiTClkAttribute attribute_id, const std::string& session_id)
+  void set_session_attribute(const char* channel_name, tclk::NiTClkAttribute attribute_id, const std::string& session_name)
   {
     ::grpc::ClientContext context;
     tclk::SetAttributeViSessionRequest request;
     request.mutable_session()->set_name(GetScopeSessionName());
     request.set_channel_name(channel_name);
     request.set_attribute_id(attribute_id);
-    request.mutable_value()->set_name(session_id);
+    request.mutable_value()->set_name(session_name);
     tclk::SetAttributeViSessionResponse response;
 
     ::grpc::Status status = GetTClkStub()->SetAttributeViSession(&context, request, &response);
@@ -233,7 +233,7 @@ TEST_F(NiTClkDriverApiTest, SetAttributeViSession_CallGetAttributeViSession_Valu
   auto expected_value = GetScopeSessionName();
   set_session_attribute(channel_name, attribute_to_set, expected_value);
 
-  auto get_attribute_value = get_session_id_from_attribute(channel_name, attribute_to_set);
+  auto get_attribute_value = get_session_name_from_attribute(channel_name, attribute_to_set);
 
   EXPECT_EQ(expected_value, get_attribute_value);
 }

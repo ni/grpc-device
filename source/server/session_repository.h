@@ -35,7 +35,7 @@ class SessionRepository {
   std::string access_session(const std::string& session_name);
   void remove_session(const std::string& name);
 
-  void register_dependent_session(const std::string& id, const std::string& dependent_session_id, std::function<void()> cleanup);
+  void register_dependent_session(const std::string& name, const std::string& dependent_session_name, std::function<void()> cleanup);
 
   bool reserve(
       const ::grpc::ServerContext* context,
