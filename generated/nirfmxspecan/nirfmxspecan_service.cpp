@@ -56,7 +56,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 averaging_enabled;
       switch (request->averaging_enabled_enum_case()) {
@@ -112,7 +112,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 integration_bandwidth = request->integration_bandwidth();
       int32 number_of_offsets = request->number_of_offsets();
@@ -138,7 +138,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 carrier_frequency = request->carrier_frequency();
       auto status = library_->ACPCfgCarrierFrequency(instrument, selector_string, carrier_frequency);
@@ -162,7 +162,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 integration_bandwidth = request->integration_bandwidth();
       auto status = library_->ACPCfgCarrierIntegrationBandwidth(instrument, selector_string, integration_bandwidth);
@@ -186,7 +186,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 carrier_mode;
       switch (request->carrier_mode_enum_case()) {
@@ -225,7 +225,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 rrc_filter_enabled;
       switch (request->rrc_filter_enabled_enum_case()) {
@@ -265,7 +265,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 fft_window;
       switch (request->fft_window_enum_case()) {
@@ -305,7 +305,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 measurement_method;
       switch (request->measurement_method_enum_case()) {
@@ -344,7 +344,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 noise_compensation_enabled;
       switch (request->noise_compensation_enabled_enum_case()) {
@@ -383,7 +383,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 number_of_carriers = request->number_of_carriers();
       auto status = library_->ACPCfgNumberOfCarriers(instrument, selector_string, number_of_carriers);
@@ -407,7 +407,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 number_of_offsets = request->number_of_offsets();
       auto status = library_->ACPCfgNumberOfOffsets(instrument, selector_string, number_of_offsets);
@@ -431,7 +431,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 offset_frequency = request->offset_frequency();
       int32 offset_sideband;
@@ -487,7 +487,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto offset_frequency = const_cast<float64*>(request->offset_frequency().data());
       auto offset_sideband_vector = std::vector<int32>();
@@ -548,7 +548,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 offset_frequency_definition;
       switch (request->offset_frequency_definition_enum_case()) {
@@ -587,7 +587,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 integration_bandwidth = request->integration_bandwidth();
       auto status = library_->ACPCfgOffsetIntegrationBandwidth(instrument, selector_string, integration_bandwidth);
@@ -611,7 +611,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto integration_bandwidth = const_cast<float64*>(request->integration_bandwidth().data());
       int32 number_of_elements = static_cast<int32>(request->integration_bandwidth().size());
@@ -636,7 +636,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 offset_reference_carrier;
       switch (request->offset_reference_carrier_enum_case()) {
@@ -676,7 +676,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto offset_power_reference_carrier_vector = std::vector<int32>();
       offset_power_reference_carrier_vector.reserve(request->offset_power_reference_carrier().size());
@@ -726,7 +726,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 rrc_filter_enabled;
       switch (request->rrc_filter_enabled_enum_case()) {
@@ -766,7 +766,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto rrc_filter_enabled_vector = std::vector<int32>();
       rrc_filter_enabled_vector.reserve(request->rrc_filter_enabled().size());
@@ -816,7 +816,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 relative_attenuation = request->relative_attenuation();
       auto status = library_->ACPCfgOffsetRelativeAttenuation(instrument, selector_string, relative_attenuation);
@@ -840,7 +840,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto relative_attenuation = const_cast<float64*>(request->relative_attenuation().data());
       int32 number_of_elements = static_cast<int32>(request->relative_attenuation().size());
@@ -865,7 +865,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 power_units;
       switch (request->power_units_enum_case()) {
@@ -904,7 +904,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 rbw_auto;
       switch (request->rbw_auto_enum_case()) {
@@ -960,7 +960,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 sweep_time_auto;
       switch (request->sweep_time_auto_enum_case()) {
@@ -1000,7 +1000,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 trace_index = request->trace_index();
@@ -1045,7 +1045,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 absolute_power {};
@@ -1077,7 +1077,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 frequency_resolution {};
@@ -1103,7 +1103,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 lower_relative_power {};
@@ -1135,7 +1135,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
@@ -1184,7 +1184,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 trace_index = request->trace_index();
@@ -1229,7 +1229,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
@@ -1273,7 +1273,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 total_carrier_power {};
@@ -1299,7 +1299,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 carrier_absolute_power {};
@@ -1333,7 +1333,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 noise_calibration_data_valid {};
       auto status = library_->ACPValidateNoiseCalibrationData(instrument, selector_string, &noise_calibration_data_valid);
@@ -1359,7 +1359,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 am_to_am_curve_fit_order = request->am_to_am_curve_fit_order();
       int32 am_to_am_curve_fit_type;
@@ -1399,7 +1399,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 am_to_pm_curve_fit_order = request->am_to_pm_curve_fit_order();
       int32 am_to_pm_curve_fit_type;
@@ -1439,7 +1439,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 averaging_enabled;
       switch (request->averaging_enabled_enum_case()) {
@@ -1479,7 +1479,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 compression_point_enabled;
       switch (request->compression_point_enabled_enum_case()) {
@@ -1520,7 +1520,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 dut_average_input_power = request->dut_average_input_power();
       auto status = library_->AMPMCfgDUTAverageInputPower(instrument, selector_string, dut_average_input_power);
@@ -1544,7 +1544,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 measurement_interval = request->measurement_interval();
       auto status = library_->AMPMCfgMeasurementInterval(instrument, selector_string, measurement_interval);
@@ -1568,7 +1568,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 sample_rate_mode;
       switch (request->sample_rate_mode_enum_case()) {
@@ -1608,7 +1608,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 reference_power_type;
       switch (request->reference_power_type_enum_case()) {
@@ -1647,7 +1647,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 x0 = request->x0();
       float64 dx = request->dx();
@@ -1706,7 +1706,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 synchronization_method;
       switch (request->synchronization_method_enum_case()) {
@@ -1745,7 +1745,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 threshold_enabled;
       switch (request->threshold_enabled_enum_case()) {
@@ -1801,7 +1801,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
@@ -1847,7 +1847,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
@@ -1893,7 +1893,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
@@ -1936,7 +1936,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
@@ -1979,7 +1979,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 am_to_am_residual {};
@@ -2007,7 +2007,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 mean_linear_gain {};
@@ -2037,7 +2037,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 gain_error_range {};
@@ -2067,7 +2067,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
@@ -2117,7 +2117,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
@@ -2167,7 +2167,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
@@ -2211,7 +2211,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
@@ -2255,7 +2255,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto status = library_->AbortMeasurements(instrument, selector_string);
       if (!status_ok(status)) {
@@ -2278,7 +2278,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       char* result_name = (char*)request->result_name().c_str();
       float64 x0 = request->x0();
@@ -2308,7 +2308,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       char* result_name = (char*)request->result_name().c_str();
       float64 x0 = request->x0();
@@ -2338,7 +2338,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 bandwidth = request->bandwidth();
       float64 measurement_interval = request->measurement_interval();
@@ -2860,7 +2860,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 measurement_interval = request->measurement_interval();
       auto status = library_->CCDFCfgMeasurementInterval(instrument, selector_string, measurement_interval);
@@ -2884,7 +2884,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 number_of_records = request->number_of_records();
       auto status = library_->CCDFCfgNumberOfRecords(instrument, selector_string, number_of_records);
@@ -2908,7 +2908,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 rbw = request->rbw();
       int32 rbw_filter_type;
@@ -2949,7 +2949,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 threshold_enabled;
       switch (request->threshold_enabled_enum_case()) {
@@ -3005,7 +3005,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 ten_percent_power {};
@@ -3041,7 +3041,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
@@ -3085,7 +3085,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 mean_power {};
@@ -3117,7 +3117,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
@@ -3161,7 +3161,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 mean_power {};
@@ -3193,7 +3193,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 averaging_enabled;
       switch (request->averaging_enabled_enum_case()) {
@@ -3249,7 +3249,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 carrier_frequency = request->carrier_frequency();
       auto status = library_->CHPCfgCarrierOffset(instrument, selector_string, carrier_frequency);
@@ -3273,7 +3273,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 fft_window;
       switch (request->fft_window_enum_case()) {
@@ -3313,7 +3313,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 integration_bandwidth = request->integration_bandwidth();
       auto status = library_->CHPCfgIntegrationBandwidth(instrument, selector_string, integration_bandwidth);
@@ -3337,7 +3337,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 number_of_carriers = request->number_of_carriers();
       auto status = library_->CHPCfgNumberOfCarriers(instrument, selector_string, number_of_carriers);
@@ -3361,7 +3361,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 rbw_auto;
       switch (request->rbw_auto_enum_case()) {
@@ -3417,7 +3417,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 rrc_filter_enabled;
       switch (request->rrc_filter_enabled_enum_case()) {
@@ -3457,7 +3457,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 span = request->span();
       auto status = library_->CHPCfgSpan(instrument, selector_string, span);
@@ -3481,7 +3481,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 sweep_time_auto;
       switch (request->sweep_time_auto_enum_case()) {
@@ -3521,7 +3521,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 absolute_power {};
@@ -3551,7 +3551,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
@@ -3595,7 +3595,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 total_carrier_power {};
@@ -3621,7 +3621,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 absolute_power {};
@@ -3649,7 +3649,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 noise_calibration_data_valid {};
       auto status = library_->CHPValidateNoiseCalibrationData(instrument, selector_string, &noise_calibration_data_valid);
@@ -3675,7 +3675,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       char* digital_edge_source;
       switch (request->digital_edge_source_enum_case()) {
@@ -3736,7 +3736,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 external_attenuation = request->external_attenuation();
       auto status = library_->CfgExternalAttenuation(instrument, selector_string, external_attenuation);
@@ -3760,7 +3760,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 center_frequency = request->center_frequency();
       auto status = library_->CfgFrequency(instrument, selector_string, center_frequency);
@@ -3784,7 +3784,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* channel_name = (char*)request->channel_name().c_str();
       char* frequency_reference_source;
       switch (request->frequency_reference_source_enum_case()) {
@@ -3828,7 +3828,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       char* iq_power_edge_source = (char*)request->iq_power_edge_source().c_str();
       float64 iq_power_edge_level = request->iq_power_edge_level();
@@ -3888,7 +3888,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* channel_name = (char*)request->channel_name().c_str();
       int32 mechanical_attenuation_auto;
       switch (request->mechanical_attenuation_auto_enum_case()) {
@@ -3928,7 +3928,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 center_frequency = request->center_frequency();
       float64 reference_level = request->reference_level();
@@ -3954,7 +3954,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* channel_name = (char*)request->channel_name().c_str();
       int32 rf_attenuation_auto;
       switch (request->rf_attenuation_auto_enum_case()) {
@@ -3994,7 +3994,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 reference_level = request->reference_level();
       auto status = library_->CfgReferenceLevel(instrument, selector_string, reference_level);
@@ -4018,7 +4018,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 trigger_delay = request->trigger_delay();
       int32 enable_trigger = request->enable_trigger();
@@ -4043,7 +4043,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 is_done {};
       auto status = library_->CheckMeasurementStatus(instrument, selector_string, &is_done);
@@ -4068,7 +4068,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto status = library_->ClearAllNamedResults(instrument, selector_string);
       if (!status_ok(status)) {
@@ -4091,7 +4091,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto status = library_->ClearNamedResult(instrument, selector_string);
       if (!status_ok(status)) {
@@ -4114,7 +4114,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto status = library_->ClearNoiseCalibrationDatabase(instrument, selector_string);
       if (!status_ok(status)) {
@@ -4137,7 +4137,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* old_signal_name = (char*)request->old_signal_name().c_str();
       char* new_signal_name = (char*)request->new_signal_name().c_str();
       auto status = library_->CloneSignalConfiguration(instrument, old_signal_name, new_signal_name);
@@ -4161,9 +4161,9 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       int32 force_destroy = request->force_destroy();
-      session_repository_->remove_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      session_repository_->remove_session(instrument_grpc_session.name());
       auto status = library_->Close(instrument, force_destroy);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -4185,7 +4185,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto status = library_->Commit(instrument, selector_string);
       if (!status_ok(status)) {
@@ -4208,7 +4208,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* list_name = (char*)request->list_name().c_str();
       auto status = library_->CreateList(instrument, list_name);
       if (!status_ok(status)) {
@@ -4231,7 +4231,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 created_step_index {};
       auto status = library_->CreateListStep(instrument, selector_string, &created_step_index);
@@ -4256,7 +4256,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* signal_name = (char*)request->signal_name().c_str();
       auto status = library_->CreateSignalConfiguration(instrument, signal_name);
       if (!status_ok(status)) {
@@ -4279,7 +4279,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 x0_in = request->x0_in();
       float64 dx_in = request->dx_in();
@@ -4353,7 +4353,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 x0_in = request->x0_in();
       float64 dx_in = request->dx_in();
@@ -4424,7 +4424,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 configuration_input;
       switch (request->configuration_input_enum_case()) {
@@ -4463,7 +4463,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 lut_correction_type;
       switch (request->lut_correction_type_enum_case()) {
@@ -4502,7 +4502,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 memory_model_correction_type;
       switch (request->memory_model_correction_type_enum_case()) {
@@ -4541,7 +4541,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto dpd_polynomial = convert_from_grpc<NIComplexSingle>(request->dpd_polynomial());
       int32 array_size = static_cast<int32>(request->dpd_polynomial().size());
@@ -4566,7 +4566,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto lut_input_powers = const_cast<float32*>(request->lut_input_powers().data());
       auto lut_complex_gains = convert_from_grpc<NIComplexSingle>(request->lut_complex_gains());
@@ -4608,7 +4608,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 averaging_enabled;
       switch (request->averaging_enabled_enum_case()) {
@@ -4648,7 +4648,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 dpd_model;
       switch (request->dpd_model_enum_case()) {
@@ -4687,7 +4687,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 dut_average_input_power = request->dut_average_input_power();
       auto status = library_->DPDCfgDUTAverageInputPower(instrument, selector_string, dut_average_input_power);
@@ -4711,7 +4711,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 memory_polynomial_lead_order = request->memory_polynomial_lead_order();
       int32 memory_polynomial_lag_order = request->memory_polynomial_lag_order();
@@ -4740,7 +4740,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 iterative_dpd_enabled;
       switch (request->iterative_dpd_enabled_enum_case()) {
@@ -4779,7 +4779,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 am_to_am_curve_fit_order = request->am_to_am_curve_fit_order();
       int32 am_to_am_curve_fit_type;
@@ -4819,7 +4819,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 am_to_pm_curve_fit_order = request->am_to_pm_curve_fit_order();
       int32 am_to_pm_curve_fit_type;
@@ -4859,7 +4859,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 step_size = request->step_size();
       auto status = library_->DPDCfgLookupTableStepSize(instrument, selector_string, step_size);
@@ -4883,7 +4883,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 threshold_enabled;
       switch (request->threshold_enabled_enum_case()) {
@@ -4939,7 +4939,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 lookup_table_type;
       switch (request->lookup_table_type_enum_case()) {
@@ -4978,7 +4978,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 measurement_interval = request->measurement_interval();
       auto status = library_->DPDCfgMeasurementInterval(instrument, selector_string, measurement_interval);
@@ -5002,7 +5002,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 sample_rate_mode;
       switch (request->sample_rate_mode_enum_case()) {
@@ -5042,7 +5042,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 memory_polynomial_order = request->memory_polynomial_order();
       int32 memory_polynomial_memory_depth = request->memory_polynomial_memory_depth();
@@ -5067,7 +5067,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto previous_dpd_polynomial = convert_from_grpc<NIComplexSingle>(request->previous_dpd_polynomial());
       int32 array_size = static_cast<int32>(request->previous_dpd_polynomial().size());
@@ -5092,7 +5092,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 x0 = request->x0();
       float64 dx = request->dx();
@@ -5151,7 +5151,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 synchronization_method;
       switch (request->synchronization_method_enum_case()) {
@@ -5190,7 +5190,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 pre_cfr_papr {};
@@ -5216,7 +5216,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 average_gain {};
@@ -5242,7 +5242,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
@@ -5288,7 +5288,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
@@ -5337,7 +5337,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 nmse {};
@@ -5363,7 +5363,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
@@ -5413,7 +5413,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
@@ -5463,7 +5463,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* list_name = (char*)request->list_name().c_str();
       auto status = library_->DeleteList(instrument, list_name);
       if (!status_ok(status)) {
@@ -5486,7 +5486,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* signal_name = (char*)request->signal_name().c_str();
       auto status = library_->DeleteSignalConfiguration(instrument, signal_name);
       if (!status_ok(status)) {
@@ -5509,7 +5509,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto status = library_->DisableTrigger(instrument, selector_string);
       if (!status_ok(status)) {
@@ -5532,7 +5532,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 averaging_enabled;
       switch (request->averaging_enabled_enum_case()) {
@@ -5588,7 +5588,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 measurement_interval = request->measurement_interval();
       auto status = library_->FCntCfgMeasurementInterval(instrument, selector_string, measurement_interval);
@@ -5612,7 +5612,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 rbw = request->rbw();
       int32 rbw_filter_type;
@@ -5653,7 +5653,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 threshold_enabled;
       switch (request->threshold_enabled_enum_case()) {
@@ -5709,7 +5709,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 allan_deviation {};
@@ -5735,7 +5735,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
@@ -5779,7 +5779,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 average_relative_frequency {};
@@ -5809,7 +5809,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
@@ -5853,7 +5853,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
@@ -5897,7 +5897,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 average_relative_frequency {};
@@ -5927,7 +5927,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 actual_result_names_size {};
       int32 default_result_exists {};
@@ -5971,7 +5971,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       float32 attr_val {};
@@ -5997,7 +5997,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_array_size {};
@@ -6037,7 +6037,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       float64 attr_val {};
@@ -6063,7 +6063,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_array_size {};
@@ -6103,7 +6103,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       int16 attr_val {};
@@ -6129,7 +6129,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       int32 attr_val {};
@@ -6161,7 +6161,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_array_size {};
@@ -6215,7 +6215,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       int64 attr_val {};
@@ -6241,7 +6241,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_array_size {};
@@ -6281,7 +6281,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       int8 attr_val {};
@@ -6307,7 +6307,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_array_size {};
@@ -6355,7 +6355,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_array_size {};
@@ -6401,7 +6401,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_array_size {};
@@ -6447,7 +6447,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
 
@@ -6490,7 +6490,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       uInt16 attr_val {};
@@ -6516,7 +6516,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       uInt32 attr_val {};
@@ -6542,7 +6542,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_array_size {};
@@ -6582,7 +6582,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_array_size {};
@@ -6622,7 +6622,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       uInt8 attr_val {};
@@ -6648,7 +6648,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_array_size {};
@@ -6688,7 +6688,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
 
       while (true) {
         auto status = library_->GetError(instrument, nullptr, 0, nullptr);
@@ -6731,7 +6731,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       int32 error_code = request->error_code();
 
       while (true) {
@@ -6773,7 +6773,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 auto_harmonics_setup_enabled;
       switch (request->auto_harmonics_setup_enabled_enum_case()) {
@@ -6812,7 +6812,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 averaging_enabled;
       switch (request->averaging_enabled_enum_case()) {
@@ -6868,7 +6868,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 measurement_interval = request->measurement_interval();
       auto status = library_->HarmCfgFundamentalMeasurementInterval(instrument, selector_string, measurement_interval);
@@ -6892,7 +6892,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 rbw = request->rbw();
       int32 rbw_filter_type;
@@ -6933,7 +6933,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 harmonic_order = request->harmonic_order();
       float64 harmonic_bandwidth = request->harmonic_bandwidth();
@@ -6975,7 +6975,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto harmonic_order = const_cast<int32*>(reinterpret_cast<const int32*>(request->harmonic_order().data()));
       auto harmonic_bandwidth = const_cast<float64*>(request->harmonic_bandwidth().data());
@@ -7031,7 +7031,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 number_of_harmonics = request->number_of_harmonics();
       auto status = library_->HarmCfgNumberOfHarmonics(instrument, selector_string, number_of_harmonics);
@@ -7055,7 +7055,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 average_relative_power {};
@@ -7087,7 +7087,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
@@ -7136,7 +7136,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
@@ -7180,7 +7180,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 total_harmonic_distortion {};
@@ -7210,7 +7210,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 total_harmonic_distortion {};
@@ -7238,7 +7238,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 auto_intermods_setup_enabled;
       switch (request->auto_intermods_setup_enabled_enum_case()) {
@@ -7278,7 +7278,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 averaging_enabled;
       switch (request->averaging_enabled_enum_case()) {
@@ -7334,7 +7334,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 fft_window;
       switch (request->fft_window_enum_case()) {
@@ -7374,7 +7374,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 frequency_definition;
       switch (request->frequency_definition_enum_case()) {
@@ -7413,7 +7413,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 lower_tone_frequency = request->lower_tone_frequency();
       float64 upper_tone_frequency = request->upper_tone_frequency();
@@ -7438,7 +7438,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 intermod_order = request->intermod_order();
       float64 lower_intermod_frequency = request->lower_intermod_frequency();
@@ -7496,7 +7496,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto intermod_order = const_cast<int32*>(reinterpret_cast<const int32*>(request->intermod_order().data()));
       auto lower_intermod_frequency = const_cast<float64*>(request->lower_intermod_frequency().data());
@@ -7563,7 +7563,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 measurement_method;
       switch (request->measurement_method_enum_case()) {
@@ -7602,7 +7602,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 number_of_intermods = request->number_of_intermods();
       auto status = library_->IMCfgNumberOfIntermods(instrument, selector_string, number_of_intermods);
@@ -7626,7 +7626,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 rbw_auto;
       switch (request->rbw_auto_enum_case()) {
@@ -7682,7 +7682,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 sweep_time_auto;
       switch (request->sweep_time_auto_enum_case()) {
@@ -7722,7 +7722,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 lower_tone_power {};
@@ -7750,7 +7750,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 intermod_order {};
@@ -7782,7 +7782,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
@@ -7831,7 +7831,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 intermod_order {};
@@ -7861,7 +7861,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
@@ -7907,7 +7907,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 spectrum_index = request->spectrum_index();
@@ -7952,7 +7952,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 sample_rate = request->sample_rate();
       int32 number_of_records = request->number_of_records();
@@ -7979,7 +7979,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 bandwidth_auto;
       switch (request->bandwidth_auto_enum_case()) {
@@ -8019,7 +8019,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 record_to_fetch = request->record_to_fetch();
@@ -8071,7 +8071,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 records_done {};
       auto status = library_->IQGetRecordsDone(instrument, selector_string, &records_done);
@@ -8104,15 +8104,14 @@ namespace nirfmxspecan_grpc {
         auto status = library_->Initialize(resource_name, option_string, &instrument, &is_new_session);
         return std::make_tuple(status, instrument);
       };
-      uint32_t session_id = 0;
-      const std::string& grpc_device_session_name = request->session_name();
+      std::string grpc_device_session_name = request->session_name();
       auto cleanup_lambda = [&] (niRFmxInstrHandle id) { library_->Close(id, RFMXSPECAN_VAL_FALSE); };
-      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
+      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
       }
       response->set_status(status);
-      response->mutable_instrument()->set_id(session_id);
+      response->mutable_instrument()->set_name(grpc_device_session_name);
       response->set_is_new_session(is_new_session);
       return ::grpc::Status::OK;
     }
@@ -8130,22 +8129,21 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto nirfsa_session_grpc_session = request->nirfsa_session();
-      uInt32 nirfsa_session = vi_session_resource_repository_->access_session(nirfsa_session_grpc_session.id(), nirfsa_session_grpc_session.name());
+      uInt32 nirfsa_session = vi_session_resource_repository_->access_session(nirfsa_session_grpc_session.name());
 
       auto init_lambda = [&] () {
         niRFmxInstrHandle instrument;
         auto status = library_->InitializeFromNIRFSASession(nirfsa_session, &instrument);
         return std::make_tuple(status, instrument);
       };
-      uint32_t session_id = 0;
-      const std::string& grpc_device_session_name = request->session_name();
+      std::string grpc_device_session_name = request->session_name();
       auto cleanup_lambda = [&] (niRFmxInstrHandle id) { library_->Close(id, RFMXSPECAN_VAL_FALSE); };
-      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
+      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
       }
       response->set_status(status);
-      response->mutable_instrument()->set_id(session_id);
+      response->mutable_instrument()->set_name(grpc_device_session_name);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
@@ -8162,7 +8160,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       char* result_name = (char*)request->result_name().c_str();
       auto status = library_->Initiate(instrument, selector_string, result_name);
@@ -8186,7 +8184,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 number_of_markers = request->number_of_markers();
       auto status = library_->MarkerCfgNumberOfMarkers(instrument, selector_string, number_of_markers);
@@ -8210,7 +8208,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 peak_excursion_enabled;
       switch (request->peak_excursion_enabled_enum_case()) {
@@ -8250,7 +8248,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 reference_marker = request->reference_marker();
       auto status = library_->MarkerCfgReferenceMarker(instrument, selector_string, reference_marker);
@@ -8274,7 +8272,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 threshold_enabled;
       switch (request->threshold_enabled_enum_case()) {
@@ -8314,7 +8312,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 trace;
       switch (request->trace_enum_case()) {
@@ -8353,7 +8351,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 marker_type;
       switch (request->marker_type_enum_case()) {
@@ -8392,7 +8390,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 marker_x_location = request->marker_x_location();
       auto status = library_->MarkerCfgXLocation(instrument, selector_string, marker_x_location);
@@ -8416,7 +8414,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 marker_x_location {};
       float64 marker_y_location {};
@@ -8443,7 +8441,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 next_peak;
       switch (request->next_peak_enum_case()) {
@@ -8484,7 +8482,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 number_of_peaks {};
       auto status = library_->MarkerPeakSearch(instrument, selector_string, &number_of_peaks);
@@ -8509,7 +8507,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 averaging_enabled;
       switch (request->averaging_enabled_enum_case()) {
@@ -8549,7 +8547,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 calibration_loss_compensation_enabled;
       switch (request->calibration_loss_compensation_enabled_enum_case()) {
@@ -8608,7 +8606,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto dut_s_parameters_frequency = const_cast<float64*>(request->dut_s_parameters_frequency().data());
       auto dut_s21 = const_cast<float64*>(request->dut_s21().data());
@@ -8659,7 +8657,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto termination_vswr = const_cast<float64*>(request->termination_vswr().data());
       auto termination_vswr_frequency = const_cast<float64*>(request->termination_vswr_frequency().data());
@@ -8702,7 +8700,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 cold_source_mode;
       switch (request->cold_source_mode_enum_case()) {
@@ -8741,7 +8739,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 dut_input_loss_compensation_enabled;
       switch (request->dut_input_loss_compensation_enabled_enum_case()) {
@@ -8800,7 +8798,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 dut_output_loss_compensation_enabled;
       switch (request->dut_output_loss_compensation_enabled_enum_case()) {
@@ -8859,7 +8857,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto frequency_list = const_cast<float64*>(request->frequency_list().data());
       int32 array_size = static_cast<int32>(request->frequency_list().size());
@@ -8884,7 +8882,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 start_frequency = request->start_frequency();
       float64 stop_frequency = request->stop_frequency();
@@ -8910,7 +8908,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 start_frequency = request->start_frequency();
       float64 stop_frequency = request->stop_frequency();
@@ -8936,7 +8934,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 measurement_bandwidth = request->measurement_bandwidth();
       auto status = library_->NFCfgMeasurementBandwidth(instrument, selector_string, measurement_bandwidth);
@@ -8960,7 +8958,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 measurement_interval = request->measurement_interval();
       auto status = library_->NFCfgMeasurementInterval(instrument, selector_string, measurement_interval);
@@ -8984,7 +8982,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 measurement_method;
       switch (request->measurement_method_enum_case()) {
@@ -9023,7 +9021,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 y_factor_mode;
       switch (request->y_factor_mode_enum_case()) {
@@ -9062,7 +9060,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto enr_frequency = const_cast<float64*>(request->enr_frequency().data());
       auto enr = const_cast<float64*>(request->enr().data());
@@ -9106,7 +9104,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 noise_source_loss_compensation_enabled;
       switch (request->noise_source_loss_compensation_enabled_enum_case()) {
@@ -9165,7 +9163,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 settling_time = request->settling_time();
       auto status = library_->NFCfgYFactorNoiseSourceSettlingTime(instrument, selector_string, settling_time);
@@ -9189,7 +9187,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* calibration_setup_id = (char*)request->calibration_setup_id().c_str();
       auto status = library_->NFClearCalibrationDatabase(instrument, calibration_setup_id);
       if (!status_ok(status)) {
@@ -9212,7 +9210,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
@@ -9252,7 +9250,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
@@ -9292,7 +9290,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
@@ -9338,7 +9336,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
@@ -9381,7 +9379,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
@@ -9424,7 +9422,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 dut_max_gain = request->dut_max_gain();
       float64 dut_max_noise_figure = request->dut_max_noise_figure();
@@ -9451,7 +9449,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 calibration_data_valid {};
       auto status = library_->NFValidateCalibrationData(instrument, selector_string, &calibration_data_valid);
@@ -9477,7 +9475,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 averaging_enabled;
       switch (request->averaging_enabled_enum_case()) {
@@ -9533,7 +9531,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 bandwidth_percentage = request->bandwidth_percentage();
       auto status = library_->OBWCfgBandwidthPercentage(instrument, selector_string, bandwidth_percentage);
@@ -9557,7 +9555,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 fft_window;
       switch (request->fft_window_enum_case()) {
@@ -9597,7 +9595,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 power_units;
       switch (request->power_units_enum_case()) {
@@ -9636,7 +9634,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 rbw_auto;
       switch (request->rbw_auto_enum_case()) {
@@ -9692,7 +9690,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 span = request->span();
       auto status = library_->OBWCfgSpan(instrument, selector_string, span);
@@ -9716,7 +9714,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 sweep_time_auto;
       switch (request->sweep_time_auto_enum_case()) {
@@ -9756,7 +9754,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 occupied_bandwidth {};
@@ -9790,7 +9788,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
@@ -9834,7 +9832,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 occupied_bandwidth {};
@@ -9868,7 +9866,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 measurement_bandwidth = request->measurement_bandwidth();
       auto status = library_->PAVTCfgMeasurementBandwidth(instrument, selector_string, measurement_bandwidth);
@@ -9892,7 +9890,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 measurement_offset = request->measurement_offset();
       float64 measurement_length = request->measurement_length();
@@ -9917,7 +9915,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 measurement_interval_mode;
       switch (request->measurement_interval_mode_enum_case()) {
@@ -9956,7 +9954,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 measurement_location_type;
       switch (request->measurement_location_type_enum_case()) {
@@ -9995,7 +9993,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 number_of_segments = request->number_of_segments();
       auto status = library_->PAVTCfgNumberOfSegments(instrument, selector_string, number_of_segments);
@@ -10019,7 +10017,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 segment_measurement_offset = request->segment_measurement_offset();
       float64 segment_measurement_length = request->segment_measurement_length();
@@ -10044,7 +10042,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto segment_measurement_offset = const_cast<float64*>(request->segment_measurement_offset().data());
       auto segment_measurement_length = const_cast<float64*>(request->segment_measurement_length().data());
@@ -10086,7 +10084,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto segment_start_time = const_cast<float64*>(request->segment_start_time().data());
       int32 number_of_elements = static_cast<int32>(request->segment_start_time().size());
@@ -10111,7 +10109,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 number_of_segments = request->number_of_segments();
       float64 segment0_start_time = request->segment0_start_time();
@@ -10137,7 +10135,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 segment_type;
       switch (request->segment_type_enum_case()) {
@@ -10176,7 +10174,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto segment_type_vector = std::vector<int32>();
       segment_type_vector.reserve(request->segment_type().size());
@@ -10209,7 +10207,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 trace_index = request->trace_index();
@@ -10254,7 +10252,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 mean_relative_phase {};
@@ -10286,7 +10284,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
@@ -10335,7 +10333,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 trace_index = request->trace_index();
@@ -10380,7 +10378,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 start_frequency = request->start_frequency();
       float64 stop_frequency = request->stop_frequency();
@@ -10406,7 +10404,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 averaging_multiplier = request->averaging_multiplier();
       auto status = library_->PhaseNoiseCfgAveragingMultiplier(instrument, selector_string, averaging_multiplier);
@@ -10430,7 +10428,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 cancellation_enabled;
       switch (request->cancellation_enabled_enum_case()) {
@@ -10489,7 +10487,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 integrated_noise_range_definition;
       switch (request->integrated_noise_range_definition_enum_case()) {
@@ -10547,7 +10545,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 number_of_ranges = request->number_of_ranges();
       auto status = library_->PhaseNoiseCfgNumberOfRanges(instrument, selector_string, number_of_ranges);
@@ -10571,7 +10569,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto range_start_frequency = const_cast<float64*>(request->range_start_frequency().data());
       auto range_stop_frequency = const_cast<float64*>(request->range_stop_frequency().data());
@@ -10619,7 +10617,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 range_definition;
       switch (request->range_definition_enum_case()) {
@@ -10658,7 +10656,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 smoothing_type;
       switch (request->smoothing_type_enum_case()) {
@@ -10698,7 +10696,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto frequency_list = const_cast<float64*>(request->frequency_list().data());
       int32 array_size = static_cast<int32>(request->frequency_list().size());
@@ -10723,7 +10721,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 spur_removal_enabled;
       switch (request->spur_removal_enabled_enum_case()) {
@@ -10763,7 +10761,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 carrier_frequency {};
@@ -10791,7 +10789,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
@@ -10843,7 +10841,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
@@ -10886,7 +10884,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
@@ -10929,7 +10927,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
@@ -10969,7 +10967,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       auto status = library_->ResetAttribute(instrument, selector_string, attribute_id);
@@ -10993,7 +10991,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto status = library_->ResetToDefault(instrument, selector_string);
       if (!status_ok(status)) {
@@ -11016,7 +11014,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 averaging_enabled;
       switch (request->averaging_enabled_enum_case()) {
@@ -11072,7 +11070,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 carrier_channel_bandwidth = request->carrier_channel_bandwidth();
       auto status = library_->SEMCfgCarrierChannelBandwidth(instrument, selector_string, carrier_channel_bandwidth);
@@ -11096,7 +11094,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 carrier_enabled;
       switch (request->carrier_enabled_enum_case()) {
@@ -11135,7 +11133,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 carrier_frequency = request->carrier_frequency();
       auto status = library_->SEMCfgCarrierFrequency(instrument, selector_string, carrier_frequency);
@@ -11159,7 +11157,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 integration_bandwidth = request->integration_bandwidth();
       auto status = library_->SEMCfgCarrierIntegrationBandwidth(instrument, selector_string, integration_bandwidth);
@@ -11183,7 +11181,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 rbw_auto;
       switch (request->rbw_auto_enum_case()) {
@@ -11239,7 +11237,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 rrc_filter_enabled;
       switch (request->rrc_filter_enabled_enum_case()) {
@@ -11279,7 +11277,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 fft_window;
       switch (request->fft_window_enum_case()) {
@@ -11319,7 +11317,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 number_of_carriers = request->number_of_carriers();
       auto status = library_->SEMCfgNumberOfCarriers(instrument, selector_string, number_of_carriers);
@@ -11343,7 +11341,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 number_of_offsets = request->number_of_offsets();
       auto status = library_->SEMCfgNumberOfOffsets(instrument, selector_string, number_of_offsets);
@@ -11367,7 +11365,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 absolute_limit_mode;
       switch (request->absolute_limit_mode_enum_case()) {
@@ -11408,7 +11406,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto absolute_limit_mode_vector = std::vector<int32>();
       absolute_limit_mode_vector.reserve(request->absolute_limit_mode().size());
@@ -11461,7 +11459,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 bandwidth_integral = request->bandwidth_integral();
       auto status = library_->SEMCfgOffsetBandwidthIntegral(instrument, selector_string, bandwidth_integral);
@@ -11485,7 +11483,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 offset_start_frequency = request->offset_start_frequency();
       float64 offset_stop_frequency = request->offset_stop_frequency();
@@ -11542,7 +11540,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto offset_start_frequency = const_cast<float64*>(request->offset_start_frequency().data());
       auto offset_stop_frequency = const_cast<float64*>(request->offset_stop_frequency().data());
@@ -11606,7 +11604,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 offset_frequency_definition;
       switch (request->offset_frequency_definition_enum_case()) {
@@ -11645,7 +11643,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 limit_fail_mask;
       switch (request->limit_fail_mask_enum_case()) {
@@ -11684,7 +11682,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 rbw_auto;
       switch (request->rbw_auto_enum_case()) {
@@ -11740,7 +11738,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto rbw_auto_vector = std::vector<int32>();
       rbw_auto_vector.reserve(request->rbw_auto().size());
@@ -11801,7 +11799,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 relative_attenuation = request->relative_attenuation();
       auto status = library_->SEMCfgOffsetRelativeAttenuation(instrument, selector_string, relative_attenuation);
@@ -11825,7 +11823,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto relative_attenuation = const_cast<float64*>(request->relative_attenuation().data());
       int32 number_of_elements = static_cast<int32>(request->relative_attenuation().size());
@@ -11850,7 +11848,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 relative_limit_mode;
       switch (request->relative_limit_mode_enum_case()) {
@@ -11891,7 +11889,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto relative_limit_mode_vector = std::vector<int32>();
       relative_limit_mode_vector.reserve(request->relative_limit_mode().size());
@@ -11944,7 +11942,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 power_units;
       switch (request->power_units_enum_case()) {
@@ -11983,7 +11981,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 reference_type;
       switch (request->reference_type_enum_case()) {
@@ -12022,7 +12020,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 sweep_time_auto;
       switch (request->sweep_time_auto_enum_case()) {
@@ -12062,7 +12060,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
@@ -12106,7 +12104,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 absolute_power {};
@@ -12138,7 +12136,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 composite_measurement_status {};
@@ -12165,7 +12163,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 frequency_resolution {};
@@ -12191,7 +12189,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 measurement_status {};
@@ -12226,7 +12224,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
@@ -12287,7 +12285,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 total_absolute_power {};
@@ -12321,7 +12319,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
@@ -12373,7 +12371,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
@@ -12417,7 +12415,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
@@ -12461,7 +12459,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 total_carrier_power {};
@@ -12487,7 +12485,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 measurement_status {};
@@ -12522,7 +12520,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
@@ -12583,7 +12581,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 total_absolute_power {};
@@ -12617,7 +12615,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
@@ -12669,7 +12667,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       uInt32 measurements;
       switch (request->measurements_enum_case()) {
@@ -12709,7 +12707,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       auto status = library_->SendSoftwareEdgeTrigger(instrument);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -12731,7 +12729,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       float32 attr_val = request->attr_val();
@@ -12756,7 +12754,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = const_cast<float32*>(request->attr_val().data());
@@ -12782,7 +12780,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       float64 attr_val = request->attr_val();
@@ -12807,7 +12805,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = const_cast<float64*>(request->attr_val().data());
@@ -12833,7 +12831,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val_raw = request->attr_val();
@@ -12867,7 +12865,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       int32 attr_val;
@@ -12907,7 +12905,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val_vector = std::vector<int32>();
@@ -12941,7 +12939,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       int64 attr_val = request->attr_val();
@@ -12966,7 +12964,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = const_cast<int64*>(reinterpret_cast<const int64*>(request->attr_val().data()));
@@ -12992,7 +12990,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val_raw = request->attr_val();
@@ -13026,7 +13024,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val_raw = request->attr_val();
@@ -13069,7 +13067,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = convert_from_grpc<NIComplexDouble>(request->attr_val());
@@ -13095,7 +13093,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = convert_from_grpc<NIComplexSingle>(request->attr_val());
@@ -13121,7 +13119,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       char* attr_val;
@@ -13165,7 +13163,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val_raw = request->attr_val();
@@ -13199,7 +13197,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       uInt32 attr_val = request->attr_val();
@@ -13224,7 +13222,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = const_cast<uInt32*>(reinterpret_cast<const uInt32*>(request->attr_val().data()));
@@ -13250,7 +13248,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = const_cast<uInt64*>(reinterpret_cast<const uInt64*>(request->attr_val().data()));
@@ -13276,7 +13274,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       uInt8 attr_val = request->attr_val();
@@ -13301,7 +13299,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       uInt8* attr_val = (uInt8*)request->attr_val().c_str();
@@ -13327,7 +13325,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 averaging_enabled;
       switch (request->averaging_enabled_enum_case()) {
@@ -13383,7 +13381,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 detector_type;
       switch (request->detector_type_enum_case()) {
@@ -13423,7 +13421,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 fft_window;
       switch (request->fft_window_enum_case()) {
@@ -13463,7 +13461,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 start_frequency = request->start_frequency();
       float64 stop_frequency = request->stop_frequency();
@@ -13488,7 +13486,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 noise_compensation_enabled;
       switch (request->noise_compensation_enabled_enum_case()) {
@@ -13527,7 +13525,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 spectrum_power_units;
       switch (request->spectrum_power_units_enum_case()) {
@@ -13566,7 +13564,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 rbw_auto;
       switch (request->rbw_auto_enum_case()) {
@@ -13622,7 +13620,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 span = request->span();
       auto status = library_->SpectrumCfgSpan(instrument, selector_string, span);
@@ -13646,7 +13644,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 sweep_time_auto;
       switch (request->sweep_time_auto_enum_case()) {
@@ -13686,7 +13684,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 vbw_auto;
       switch (request->vbw_auto_enum_case()) {
@@ -13727,7 +13725,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 peak_amplitude {};
@@ -13757,7 +13755,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
@@ -13801,7 +13799,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
@@ -13845,7 +13843,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
@@ -13889,7 +13887,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 noise_calibration_data_valid {};
       auto status = library_->SpectrumValidateNoiseCalibrationData(instrument, selector_string, &noise_calibration_data_valid);
@@ -13915,7 +13913,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 averaging_enabled;
       switch (request->averaging_enabled_enum_case()) {
@@ -13971,7 +13969,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 fft_window;
       switch (request->fft_window_enum_case()) {
@@ -14010,7 +14008,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 number_of_ranges = request->number_of_ranges();
       auto status = library_->SpurCfgNumberOfRanges(instrument, selector_string, number_of_ranges);
@@ -14034,7 +14032,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 absolute_limit_mode;
       switch (request->absolute_limit_mode_enum_case()) {
@@ -14075,7 +14073,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto absolute_limit_mode_vector = std::vector<int32>();
       absolute_limit_mode_vector.reserve(request->absolute_limit_mode().size());
@@ -14128,7 +14126,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 detector_type;
       switch (request->detector_type_enum_case()) {
@@ -14168,7 +14166,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto detector_type_vector = std::vector<int32>();
       detector_type_vector.reserve(request->detector_type().size());
@@ -14218,7 +14216,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 start_frequency = request->start_frequency();
       float64 stop_frequency = request->stop_frequency();
@@ -14259,7 +14257,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto start_frequency = const_cast<float64*>(request->start_frequency().data());
       auto stop_frequency = const_cast<float64*>(request->stop_frequency().data());
@@ -14312,7 +14310,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 number_of_spurs_to_report = request->number_of_spurs_to_report();
       auto status = library_->SpurCfgRangeNumberOfSpursToReport(instrument, selector_string, number_of_spurs_to_report);
@@ -14336,7 +14334,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto number_of_spurs_to_report = const_cast<int32*>(reinterpret_cast<const int32*>(request->number_of_spurs_to_report().data()));
       int32 number_of_elements = static_cast<int32>(request->number_of_spurs_to_report().size());
@@ -14361,7 +14359,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 threshold = request->threshold();
       float64 excursion = request->excursion();
@@ -14386,7 +14384,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto threshold = const_cast<float64*>(request->threshold().data());
       auto excursion = const_cast<float64*>(request->excursion().data());
@@ -14428,7 +14426,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto rbw_auto_vector = std::vector<int32>();
       rbw_auto_vector.reserve(request->rbw_auto().size());
@@ -14489,7 +14487,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 rbw_auto;
       switch (request->rbw_auto_enum_case()) {
@@ -14545,7 +14543,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 relative_attenuation = request->relative_attenuation();
       auto status = library_->SpurCfgRangeRelativeAttenuation(instrument, selector_string, relative_attenuation);
@@ -14569,7 +14567,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto relative_attenuation = const_cast<float64*>(request->relative_attenuation().data());
       int32 number_of_elements = static_cast<int32>(request->relative_attenuation().size());
@@ -14594,7 +14592,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 sweep_time_auto;
       switch (request->sweep_time_auto_enum_case()) {
@@ -14634,7 +14632,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto sweep_time_auto_vector = std::vector<int32>();
       sweep_time_auto_vector.reserve(request->sweep_time_auto().size());
@@ -14684,7 +14682,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 vbw_auto;
       switch (request->vbw_auto_enum_case()) {
@@ -14725,7 +14723,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto vbw_auto_vector = std::vector<int32>();
       vbw_auto_vector.reserve(request->vbw_auto().size());
@@ -14778,7 +14776,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 trace_range_index = request->trace_range_index();
       auto status = library_->SpurCfgTraceRangeIndex(instrument, selector_string, trace_range_index);
@@ -14802,7 +14800,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
@@ -14854,7 +14852,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 measurement_status {};
@@ -14881,7 +14879,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
@@ -14925,7 +14923,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
@@ -14969,7 +14967,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 range_status {};
@@ -14998,7 +14996,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
@@ -15050,7 +15048,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 spur_frequency {};
@@ -15082,7 +15080,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
@@ -15131,7 +15129,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 averaging_enabled;
       switch (request->averaging_enabled_enum_case()) {
@@ -15187,7 +15185,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 measurement_interval = request->measurement_interval();
       auto status = library_->TXPCfgMeasurementInterval(instrument, selector_string, measurement_interval);
@@ -15211,7 +15209,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 rbw = request->rbw();
       int32 rbw_filter_type;
@@ -15252,7 +15250,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 threshold_enabled;
       switch (request->threshold_enabled_enum_case()) {
@@ -15308,7 +15306,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 vbw_auto;
       switch (request->vbw_auto_enum_case()) {
@@ -15349,7 +15347,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 average_mean_power {};
@@ -15381,7 +15379,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
@@ -15425,7 +15423,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 average_mean_power {};
@@ -15457,7 +15455,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       float64 timeout = request->timeout();
       auto status = library_->WaitForAcquisitionComplete(instrument, timeout);
       if (!status_ok(status)) {
@@ -15480,7 +15478,7 @@ namespace nirfmxspecan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       auto status = library_->WaitForMeasurementComplete(instrument, selector_string, timeout);

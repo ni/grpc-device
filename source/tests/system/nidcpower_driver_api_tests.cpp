@@ -44,9 +44,9 @@ class NiDCPowerDriverApiTest : public ::testing::Test {
     return nidcpower_stub_;
   }
 
-  int GetSessionId()
+  std::string GetSessionName()
   {
-    return driver_session_->id();
+    return driver_session_->name();
   }
 
   void initialize_driver_session()
@@ -89,7 +89,7 @@ class NiDCPowerDriverApiTest : public ::testing::Test {
     dcpower::InitiateRequest request;
     dcpower::InitiateResponse response;
     ::grpc::ClientContext context;
-    request.mutable_vi()->set_id(GetSessionId());
+    request.mutable_vi()->set_name(GetSessionName());
 
     ::grpc::Status status = GetStub()->Initiate(&context, request, &response);
 
@@ -101,7 +101,7 @@ class NiDCPowerDriverApiTest : public ::testing::Test {
   {
     ::grpc::ClientContext context;
     dcpower::CloseRequest request;
-    request.mutable_vi()->set_id(driver_session_->id());
+    request.mutable_vi()->set_name(driver_session_->name());
     dcpower::CloseResponse response;
 
     ::grpc::Status status = GetStub()->Close(&context, request, &response);
@@ -114,7 +114,7 @@ class NiDCPowerDriverApiTest : public ::testing::Test {
   {
     ::grpc::ClientContext context;
     dcpower::MeasureMultipleRequest request;
-    request.mutable_vi()->set_id(GetSessionId());
+    request.mutable_vi()->set_name(GetSessionName());
     request.set_channel_name(channel_name);
 
     ::grpc::Status status = GetStub()->MeasureMultiple(&context, request, response);
@@ -126,7 +126,7 @@ class NiDCPowerDriverApiTest : public ::testing::Test {
   {
     ::grpc::ClientContext context;
     dcpower::GetAttributeViBooleanRequest request;
-    request.mutable_vi()->set_id(GetSessionId());
+    request.mutable_vi()->set_name(GetSessionName());
     request.set_channel_name(channel_list);
     request.set_attribute_id(attribute_id);
     dcpower::GetAttributeViBooleanResponse response;
@@ -142,7 +142,7 @@ class NiDCPowerDriverApiTest : public ::testing::Test {
   {
     ::grpc::ClientContext context;
     dcpower::GetAttributeViInt32Request request;
-    request.mutable_vi()->set_id(GetSessionId());
+    request.mutable_vi()->set_name(GetSessionName());
     request.set_channel_name(channel_list);
     request.set_attribute_id(attribute_id);
     dcpower::GetAttributeViInt32Response response;
@@ -158,7 +158,7 @@ class NiDCPowerDriverApiTest : public ::testing::Test {
   {
     ::grpc::ClientContext context;
     dcpower::GetAttributeViInt64Request request;
-    request.mutable_vi()->set_id(GetSessionId());
+    request.mutable_vi()->set_name(GetSessionName());
     request.set_channel_name(channel_list);
     request.set_attribute_id(attribute_id);
     dcpower::GetAttributeViInt64Response response;
@@ -174,7 +174,7 @@ class NiDCPowerDriverApiTest : public ::testing::Test {
   {
     ::grpc::ClientContext context;
     dcpower::GetAttributeViReal64Request request;
-    request.mutable_vi()->set_id(GetSessionId());
+    request.mutable_vi()->set_name(GetSessionName());
     request.set_channel_name(channel_list);
     request.set_attribute_id(attribute_id);
     dcpower::GetAttributeViReal64Response response;
@@ -190,7 +190,7 @@ class NiDCPowerDriverApiTest : public ::testing::Test {
   {
     ::grpc::ClientContext context;
     dcpower::GetAttributeViStringRequest request;
-    request.mutable_vi()->set_id(GetSessionId());
+    request.mutable_vi()->set_name(GetSessionName());
     request.set_channel_name(channel_list);
     request.set_attribute_id(attribute_id);
     dcpower::GetAttributeViStringResponse response;
@@ -207,7 +207,7 @@ class NiDCPowerDriverApiTest : public ::testing::Test {
     ::grpc::ClientContext context;
     const dcpower::NiDCPowerAttribute attribute_to_set = attribute_id;
     dcpower::SetAttributeViInt32Request request;
-    request.mutable_vi()->set_id(GetSessionId());
+    request.mutable_vi()->set_name(GetSessionName());
     request.set_channel_name(channel_list);
     request.set_attribute_id(attribute_to_set);
     request.set_attribute_value(attribute_value);
@@ -223,7 +223,7 @@ class NiDCPowerDriverApiTest : public ::testing::Test {
   {
     ::grpc::ClientContext context;
     dcpower::ConfigureOutputFunctionRequest request;
-    request.mutable_vi()->set_id(GetSessionId());
+    request.mutable_vi()->set_name(GetSessionName());
     request.set_channel_name(channel_name);
     request.set_function(function);
     dcpower::ConfigureOutputFunctionResponse response;
@@ -238,7 +238,7 @@ class NiDCPowerDriverApiTest : public ::testing::Test {
   {
     ::grpc::ClientContext context;
     dcpower::ConfigureVoltageLevelRequest request;
-    request.mutable_vi()->set_id(GetSessionId());
+    request.mutable_vi()->set_name(GetSessionName());
     request.set_channel_name(channel_name);
     request.set_level(level);
     dcpower::ConfigureVoltageLevelResponse response;
@@ -253,7 +253,7 @@ class NiDCPowerDriverApiTest : public ::testing::Test {
   {
     ::grpc::ClientContext context;
     dcpower::ConfigureCurrentLevelRequest request;
-    request.mutable_vi()->set_id(GetSessionId());
+    request.mutable_vi()->set_name(GetSessionName());
     request.set_channel_name(channel_name);
     request.set_level(level);
     dcpower::ConfigureCurrentLevelResponse response;
@@ -268,7 +268,7 @@ class NiDCPowerDriverApiTest : public ::testing::Test {
   {
     ::grpc::ClientContext context;
     dcpower::ExportAttributeConfigurationBufferRequest request;
-    request.mutable_vi()->set_id(GetSessionId());
+    request.mutable_vi()->set_name(GetSessionName());
     dcpower::ExportAttributeConfigurationBufferResponse response;
 
     ::grpc::Status status = GetStub()->ExportAttributeConfigurationBuffer(&context, request, &response);
@@ -282,7 +282,7 @@ class NiDCPowerDriverApiTest : public ::testing::Test {
   {
     ::grpc::ClientContext context;
     dcpower::ResetWithChannelsRequest request;
-    request.mutable_vi()->set_id(GetSessionId());
+    request.mutable_vi()->set_name(GetSessionName());
     request.set_channel_name(channel_name);
     dcpower::ResetWithChannelsResponse response;
 
@@ -296,7 +296,7 @@ class NiDCPowerDriverApiTest : public ::testing::Test {
   {
     ::grpc::ClientContext context;
     dcpower::FetchMultipleRequest request;
-    request.mutable_vi()->set_id(GetSessionId());
+    request.mutable_vi()->set_name(GetSessionName());
     request.set_channel_name(channel_name);
     request.set_timeout(5);
     request.set_count(20);
@@ -310,7 +310,7 @@ class NiDCPowerDriverApiTest : public ::testing::Test {
   {
     ::grpc::ClientContext context;
     dcpower::ImportAttributeConfigurationBufferRequest import_request;
-    import_request.mutable_vi()->set_id(GetSessionId());
+    import_request.mutable_vi()->set_name(GetSessionName());
     auto exported_configuration = export_buffer_response.configuration();
     import_request.mutable_configuration()->append(exported_configuration.begin(), exported_configuration.end());
     dcpower::ImportAttributeConfigurationBufferResponse import_response;
@@ -338,7 +338,7 @@ TEST_F(NiDCPowerDriverApiTest, PerformSelfTest_CompletesSuccessfuly)
 {
   ::grpc::ClientContext context;
   dcpower::SelfTestRequest request;
-  request.mutable_vi()->set_id(GetSessionId());
+  request.mutable_vi()->set_name(GetSessionName());
   dcpower::SelfTestResponse response;
   ::grpc::Status status = GetStub()->SelfTest(&context, request, &response);
 
@@ -352,7 +352,7 @@ TEST_F(NiDCPowerDriverApiTest, PerformReset_CompletesSuccessfuly)
 {
   ::grpc::ClientContext context;
   dcpower::ResetRequest request;
-  request.mutable_vi()->set_id(GetSessionId());
+  request.mutable_vi()->set_name(GetSessionName());
   dcpower::ResetResponse response;
   ::grpc::Status status = GetStub()->Reset(&context, request, &response);
 
@@ -367,7 +367,7 @@ TEST_F(NiDCPowerDriverApiTest, SetAttributeViInt32_GetAttributeViInt32ReturnsSam
   const auto expected_value = dcpower::NiDCPowerInt32AttributeValues::NIDCPOWER_INT32_MEASURE_WHEN_VAL_AUTOMATICALLY_AFTER_SOURCE_COMPLETE;
   ::grpc::ClientContext context;
   dcpower::SetAttributeViInt32Request request;
-  request.mutable_vi()->set_id(GetSessionId());
+  request.mutable_vi()->set_name(GetSessionName());
   request.set_channel_name(channel_name);
   request.set_attribute_id(attribute_to_set);
   request.set_attribute_value(expected_value);
@@ -394,7 +394,7 @@ TEST_F(NiDCPowerDriverApiTest, SetAttributeViReal64_GetAttributeViReal64ReturnsS
   const double expected_value = 2.516;
   ::grpc::ClientContext context;
   dcpower::SetAttributeViReal64Request request;
-  request.mutable_vi()->set_id(GetSessionId());
+  request.mutable_vi()->set_name(GetSessionName());
   request.set_channel_name(channel_name);
   request.set_attribute_id(attribute_to_set);
   request.set_attribute_value_raw(expected_value);
@@ -421,7 +421,7 @@ TEST_F(NiDCPowerDriverApiTest, SetAttributeViBoolean_GetAttributeViBooleanReturn
   const bool expected_value = true;
   ::grpc::ClientContext context;
   dcpower::SetAttributeViBooleanRequest request;
-  request.mutable_vi()->set_id(GetSessionId());
+  request.mutable_vi()->set_name(GetSessionName());
   request.set_channel_name(channel_name);
   request.set_attribute_id(attribute_to_set);
   request.set_attribute_value(expected_value);
@@ -442,7 +442,7 @@ TEST_F(NiDCPowerDriverApiTest, SetAttributeViString_GetAttributeViStringReturnsS
   const char* expected_value = "/Dev1/PXI_Trig0";
   ::grpc::ClientContext context;
   dcpower::SetAttributeViStringRequest request;
-  request.mutable_vi()->set_id(GetSessionId());
+  request.mutable_vi()->set_name(GetSessionName());
   request.set_channel_name(channel_name);
   request.set_attribute_id(attribute_to_set);
   request.set_attribute_value_raw(expected_value);
@@ -462,7 +462,7 @@ TEST_F(NiDCPowerDriverApiTest, SetAttributeViInt64_GetAttributeViInt64ReturnsSam
   const int64 expected_value = 1;
   ::grpc::ClientContext context;
   dcpower::SetAttributeViInt64Request request;
-  request.mutable_vi()->set_id(GetSessionId());
+  request.mutable_vi()->set_name(GetSessionName());
   request.set_channel_name(channel_name);
   request.set_attribute_id(attribute_to_set);
   request.set_attribute_value_raw(expected_value);
@@ -560,7 +560,7 @@ TEST_F(NiDCPowerDriverApiTest, CalSelfCalibrate_CompletesSuccessfully)
   const char* channel_name = "";
   ::grpc::ClientContext context;
   dcpower::CalSelfCalibrateRequest request;
-  request.mutable_vi()->set_id(GetSessionId());
+  request.mutable_vi()->set_name(GetSessionName());
   request.set_channel_name(channel_name);
   dcpower::CalSelfCalibrateResponse response;
   ::grpc::Status status = GetStub()->CalSelfCalibrate(&context, request, &response);

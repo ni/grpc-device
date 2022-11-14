@@ -63,7 +63,7 @@ namespace nifake_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto status = library_->Abort(vi);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -85,7 +85,7 @@ namespace nifake_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViInt32 count = static_cast<ViInt32>(request->delays().size());
       auto delays = const_cast<ViReal64*>(request->delays().data());
       auto status = library_->AcceptListOfDurationsInSeconds(vi, count, delays);
@@ -115,7 +115,7 @@ namespace nifake_grpc {
         session_array_request.begin(),
         session_array_request.end(),
         std::back_inserter(session_array),
-        [&](auto session) { return session_repository_->access_session(session.id(), session.name()); }); 
+        [&](auto session) { return session_repository_->access_session(session.name()); }); 
       auto status = library_->AcceptViSessionArray(session_count, session_array.data());
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, 0);
@@ -137,7 +137,7 @@ namespace nifake_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViInt32 array_len = static_cast<ViInt32>(request->u_int32_array().size());
       auto u_int32_array = const_cast<ViUInt32*>(reinterpret_cast<const ViUInt32*>(request->u_int32_array().data()));
       auto status = library_->AcceptViUInt32Array(vi, array_len, u_int32_array);
@@ -161,7 +161,7 @@ namespace nifake_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViInt32 number_of_elements = request->number_of_elements();
       auto an_array = convert_from_grpc<ViBoolean>(request->an_array());
       auto status = library_->BoolArrayInputFunction(vi, number_of_elements, an_array.data());
@@ -185,7 +185,7 @@ namespace nifake_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViInt32 number_of_elements = request->number_of_elements();
       std::vector<ViBoolean> an_array(number_of_elements, ViBoolean());
       auto status = library_->BoolArrayOutputFunction(vi, number_of_elements, an_array.data());
@@ -210,8 +210,8 @@ namespace nifake_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-      session_repository_->remove_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
+      session_repository_->remove_session(vi_grpc_session.name());
       auto status = library_->Close(vi);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -233,9 +233,9 @@ namespace nifake_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViInt32 action = request->action();
-      session_repository_->remove_session(vi_grpc_session.id(), vi_grpc_session.name());
+      session_repository_->remove_session(vi_grpc_session.name());
       auto status = library_->CloseExtCal(vi, action);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -257,7 +257,7 @@ namespace nifake_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto reserved = nullptr;
       auto status = library_->CommandWithReservedParam(vi, reserved);
       if (!status_ok(status)) {
@@ -347,7 +347,7 @@ namespace nifake_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViInt32 number_count = static_cast<ViInt32>(request->numbers().size());
       auto numbers = const_cast<ViReal64*>(request->numbers().data());
       auto status = library_->DoubleAllTheNums(vi, number_count, numbers);
@@ -386,7 +386,7 @@ namespace nifake_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViInt16 a_turtle;
       switch (request->a_turtle_enum_case()) {
         case nifake_grpc::EnumInputFunctionWithDefaultsRequest::ATurtleEnumCase::kATurtle: {
@@ -424,7 +424,7 @@ namespace nifake_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViStatus error_code = request->error_code();
       std::string error_message(256 - 1, '\0');
       auto status = library_->ErrorMessage(vi, error_code, (ViChar*)error_message.data());
@@ -450,7 +450,7 @@ namespace nifake_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
 
       while (true) {
         auto status = library_->ExportAttributeConfigurationBuffer(vi, 0, nullptr);
@@ -487,7 +487,7 @@ namespace nifake_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViInt32 number_of_samples = request->number_of_samples();
       response->mutable_waveform_data()->Resize(number_of_samples, 0);
       ViReal64* waveform_data = response->mutable_waveform_data()->mutable_data();
@@ -514,7 +514,7 @@ namespace nifake_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViBoolean a_boolean {};
       auto status = library_->GetABoolean(vi, &a_boolean);
       if (!status_ok(status)) {
@@ -538,7 +538,7 @@ namespace nifake_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViInt16 a_number {};
       auto status = library_->GetANumber(vi, &a_number);
       if (!status_ok(status)) {
@@ -562,7 +562,7 @@ namespace nifake_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       std::string a_string(256 - 1, '\0');
       auto status = library_->GetAStringOfFixedMaximumSize(vi, (ViChar*)a_string.data());
       if (!status_ok(status)) {
@@ -587,7 +587,7 @@ namespace nifake_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
 
       while (true) {
         auto status = library_->GetAnIviDanceString(vi, 0, nullptr);
@@ -628,7 +628,7 @@ namespace nifake_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto a_string = request->a_string().c_str();
       ViInt32 actual_size {};
       while (true) {
@@ -667,7 +667,7 @@ namespace nifake_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViInt32 actual_size {};
       while (true) {
         auto status = library_->GetAnIviDanceWithATwistArrayOfCustomType(vi, 0, nullptr, &actual_size);
@@ -785,7 +785,7 @@ namespace nifake_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViInt32 actual_size {};
       while (true) {
         auto status = library_->GetAnIviDanceWithATwistString(vi, 0, nullptr, &actual_size);
@@ -865,7 +865,7 @@ namespace nifake_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViInt32 size_out {};
       auto status = library_->GetArraySizeForCustomCode(vi, &size_out);
       if (!status_ok(status)) {
@@ -889,7 +889,7 @@ namespace nifake_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
 
       while (true) {
         auto status = library_->GetArrayUsingIviDance(vi, 0, nullptr);
@@ -926,7 +926,7 @@ namespace nifake_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViInt32 array_len = request->array_len();
       std::string u_int8_enum_array(array_len, '\0');
       auto status = library_->GetArrayViUInt8WithEnum(vi, array_len, (ViUInt8*)u_int8_enum_array.data());
@@ -952,7 +952,7 @@ namespace nifake_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
       ViBoolean attribute_value {};
@@ -978,7 +978,7 @@ namespace nifake_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
       ViInt32 attribute_value {};
@@ -1004,7 +1004,7 @@ namespace nifake_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
       ViInt64 attribute_value {};
@@ -1030,7 +1030,7 @@ namespace nifake_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
       ViReal64 attribute_value {};
@@ -1056,7 +1056,7 @@ namespace nifake_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
       ViSession attribute_value {};
@@ -1065,8 +1065,8 @@ namespace nifake_grpc {
         return ConvertApiErrorStatusForViSession(context, status, vi);
       }
       response->set_status(status);
-      auto session_id = session_repository_->resolve_session_id(attribute_value);
-      response->mutable_attribute_value()->set_id(session_id);
+      auto grpc_device_session_name = session_repository_->resolve_session_name(attribute_value);
+      response->mutable_attribute_value()->set_name(grpc_device_session_name);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
@@ -1083,7 +1083,7 @@ namespace nifake_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
 
@@ -1156,7 +1156,7 @@ namespace nifake_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViInt32 cal_type = request->cal_type();
       ViInt32 month {};
       ViInt32 day {};
@@ -1189,7 +1189,7 @@ namespace nifake_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViInt32 months {};
       auto status = library_->GetCalInterval(vi, &months);
       if (!status_ok(status)) {
@@ -1213,7 +1213,7 @@ namespace nifake_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       CustomStruct cs {};
       auto status = library_->GetCustomType(vi, &cs);
       if (!status_ok(status)) {
@@ -1237,7 +1237,7 @@ namespace nifake_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViInt32 number_of_elements = request->number_of_elements();
       std::vector<CustomStruct> cs(number_of_elements, CustomStruct());
       auto status = library_->GetCustomTypeArray(vi, number_of_elements, cs.data());
@@ -1262,7 +1262,7 @@ namespace nifake_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViInt32 a_quantity {};
       ViInt16 a_turtle {};
       auto status = library_->GetEnumValue(vi, &a_quantity, &a_turtle);
@@ -1289,7 +1289,7 @@ namespace nifake_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
 
       while (true) {
         auto status = library_->GetError(vi, nullptr, 0, nullptr);
@@ -1332,7 +1332,7 @@ namespace nifake_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViInt32 array_len = request->array_len();
       response->mutable_int32_array()->Resize(array_len, 0);
       ViInt32* int32_array = reinterpret_cast<ViInt32*>(response->mutable_int32_array()->mutable_data());
@@ -1357,7 +1357,7 @@ namespace nifake_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViInt32 array_len = request->array_len();
       response->mutable_u_int32_array()->Resize(array_len, 0);
       ViUInt32* u_int32_array = reinterpret_cast<ViUInt32*>(response->mutable_u_int32_array()->mutable_data());
@@ -1382,7 +1382,7 @@ namespace nifake_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViUInt8 a_uint8_number {};
       auto status = library_->GetViUInt8(vi, &a_uint8_number);
       if (!status_ok(status)) {
@@ -1406,7 +1406,7 @@ namespace nifake_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViInt32 size_in_bytes = static_cast<ViInt32>(request->configuration().size());
       ViInt8* configuration = (ViInt8*)request->configuration().c_str();
       auto status = library_->ImportAttributeConfigurationBuffer(vi, size_in_bytes, configuration);
@@ -1437,15 +1437,14 @@ namespace nifake_grpc {
         auto status = library_->InitExtCal(resource_name, calibration_password, &vi);
         return std::make_tuple(status, vi);
       };
-      uint32_t session_id = 0;
-      const std::string& grpc_device_session_name = request->session_name();
+      std::string grpc_device_session_name = request->session_name();
       auto cleanup_lambda = [&] (ViSession id) { library_->CloseExtCal(id, 0); };
-      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
+      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, 0);
       }
       response->set_status(status);
-      response->mutable_vi()->set_id(session_id);
+      response->mutable_vi()->set_name(grpc_device_session_name);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
@@ -1473,15 +1472,14 @@ namespace nifake_grpc {
         auto status = library_->InitWithOptions(resource_name, id_query, reset_device, option_string, &vi);
         return std::make_tuple(status, vi);
       };
-      uint32_t session_id = 0;
-      const std::string& grpc_device_session_name = request->session_name();
+      std::string grpc_device_session_name = request->session_name();
       auto cleanup_lambda = [&] (ViSession id) { library_->Close(id); };
-      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id, initialization_behavior, &new_session_initialized);
+      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, initialization_behavior, &new_session_initialized);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, 0);
       }
       response->set_status(status);
-      response->mutable_vi()->set_id(session_id);
+      response->mutable_vi()->set_name(grpc_device_session_name);
       response->set_new_session_initialized(new_session_initialized);
       return ::grpc::Status::OK;
     }
@@ -1525,15 +1523,14 @@ namespace nifake_grpc {
         auto status = library_->InitWithVarArgs(resource_name, &vi, get_stringArg_if(name_and_turtle, 0), get_turtle_if(name_and_turtle, 0), get_stringArg_if(name_and_turtle, 1), get_turtle_if(name_and_turtle, 1), get_stringArg_if(name_and_turtle, 2), get_turtle_if(name_and_turtle, 2), get_stringArg_if(name_and_turtle, 3), get_turtle_if(name_and_turtle, 3));
         return std::make_tuple(status, vi);
       };
-      uint32_t session_id = 0;
-      const std::string& grpc_device_session_name = request->session_name();
+      std::string grpc_device_session_name = request->session_name();
       auto cleanup_lambda = [&] (ViSession id) { library_->Close(id); };
-      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
+      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, 0);
       }
       response->set_status(status);
-      response->mutable_vi()->set_id(session_id);
+      response->mutable_vi()->set_name(grpc_device_session_name);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
@@ -1726,7 +1723,7 @@ namespace nifake_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViInt32 output_array_size = request->output_array_size();
       auto input_array_sizes_determine_from_sizes = std::array<int, 2>
       {
@@ -1773,7 +1770,7 @@ namespace nifake_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto values1 = const_cast<ViReal64*>(request->values1().data());
       auto values2 = const_cast<ViReal64*>(request->values2().data());
       auto values3 = const_cast<ViReal64*>(request->values3().data());
@@ -1813,7 +1810,7 @@ namespace nifake_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto values1 = const_cast<ViReal64*>(request->values1().data());
       auto values2 = const_cast<ViReal64*>(request->values2().data());
       auto values3 = const_cast<ViReal64*>(request->values3().data());
@@ -1863,7 +1860,7 @@ namespace nifake_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViInt32 a_number = request->a_number();
       auto status = library_->OneInputFunction(vi, a_number);
       if (!status_ok(status)) {
@@ -1886,7 +1883,7 @@ namespace nifake_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViBoolean a_boolean = request->a_boolean();
       ViInt32 an_int32 = request->an_int32();
       ViInt64 an_int64 = request->an_int64();
@@ -1950,7 +1947,7 @@ namespace nifake_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto status = library_->PoorlyNamedSimpleFunction(vi);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -1972,7 +1969,7 @@ namespace nifake_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViReal64 maximum_time = request->maximum_time();
       ViReal64 reading {};
       auto status = library_->Read(vi, maximum_time, &reading);
@@ -2074,7 +2071,7 @@ namespace nifake_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
       ViInt32 maximum_time = request->maximum_time();
       ViReal64 reading {};
@@ -2100,7 +2097,7 @@ namespace nifake_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViInt16 a_number {};
       std::string a_string(256 - 1, '\0');
       auto status = library_->ReturnANumberAndAString(vi, &a_number, (ViChar*)a_string.data());
@@ -2127,7 +2124,7 @@ namespace nifake_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViReal64 timedelta {};
       auto status = library_->ReturnDurationInSeconds(vi, &timedelta);
       if (!status_ok(status)) {
@@ -2151,7 +2148,7 @@ namespace nifake_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViInt32 number_of_elements = request->number_of_elements();
       response->mutable_timedeltas()->Resize(number_of_elements, 0);
       ViReal64* timedeltas = response->mutable_timedeltas()->mutable_data();
@@ -2176,7 +2173,7 @@ namespace nifake_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViInt32 array_size = request->array_size();
 
       while (true) {
@@ -2237,7 +2234,7 @@ namespace nifake_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
       ViBoolean attribute_value = request->attribute_value();
@@ -2262,7 +2259,7 @@ namespace nifake_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
       ViInt32 attribute_value;
@@ -2302,7 +2299,7 @@ namespace nifake_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
       ViInt64 attribute_value = request->attribute_value_raw();
@@ -2327,7 +2324,7 @@ namespace nifake_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
       ViReal64 attribute_value;
@@ -2371,7 +2368,7 @@ namespace nifake_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
       ViAttr attribute_id = request->attribute_id();
       auto attribute_value = request->attribute_value_raw().c_str();
@@ -2396,7 +2393,7 @@ namespace nifake_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto cs = convert_from_grpc<CustomStruct>(request->cs());
       auto status = library_->SetCustomType(vi, cs);
       if (!status_ok(status)) {
@@ -2419,7 +2416,7 @@ namespace nifake_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViInt32 number_of_elements = static_cast<ViInt32>(request->cs().size());
       auto cs = convert_from_grpc<CustomStruct>(request->cs());
       auto status = library_->SetCustomTypeArray(vi, number_of_elements, cs.data());
@@ -2443,7 +2440,7 @@ namespace nifake_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViConstString a_mobile_os_name;
       switch (request->a_mobile_os_name_enum_case()) {
         case nifake_grpc::StringValuedEnumInputFunctionWithDefaultsRequest::AMobileOsNameEnumCase::kAMobileOsNameMapped: {
@@ -2485,7 +2482,7 @@ namespace nifake_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViReal64 a_number = request->a_number();
       ViString a_string = (ViString)request->a_string().c_str();
       auto status = library_->TwoInputFunction(vi, a_number, a_string);
@@ -2509,7 +2506,7 @@ namespace nifake_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViInt64 input = request->input();
       ViInt64 output {};
       auto status = library_->Use64BitNumber(vi, input, &output);
@@ -2534,7 +2531,7 @@ namespace nifake_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto array = const_cast<ViInt32*>(reinterpret_cast<const ViInt32*>(request->array().data()));
       auto total_length = std::accumulate(request->array_lengths().cbegin(), request->array_lengths().cend(), 0);
 
@@ -2565,7 +2562,7 @@ namespace nifake_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViInt32 number_of_elements = static_cast<ViInt32>(request->an_array().size());
       auto an_array_request = request->an_array();
       std::vector<ViInt16> an_array;
@@ -2595,7 +2592,7 @@ namespace nifake_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViInt32 number_of_elements = request->number_of_elements();
       ViUInt8* an_array = (ViUInt8*)request->an_array().c_str();
       auto status = library_->ViUInt8ArrayInputFunction(vi, number_of_elements, an_array);
@@ -2619,7 +2616,7 @@ namespace nifake_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViInt32 number_of_elements = request->number_of_elements();
       std::string an_array(number_of_elements, '\0');
       auto status = library_->ViUInt8ArrayOutputFunction(vi, number_of_elements, (ViUInt8*)an_array.data());
@@ -2644,7 +2641,7 @@ namespace nifake_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViInt32 number_of_samples = static_cast<ViInt32>(request->waveform().size());
       auto waveform = const_cast<ViReal64*>(request->waveform().data());
       auto status = library_->WriteWaveform(vi, number_of_samples, waveform);

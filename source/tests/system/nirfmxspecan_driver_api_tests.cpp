@@ -558,7 +558,7 @@ TEST_P(NiRFmxSpecAnDriverApiCompatibleResourceInitTests, InitializeTwoCompatible
 {
   const auto session1 = init_session(stub(), PXI_5663, std::get<0>(GetParam()));
   const auto session2 = init_session(stub(), PXI_5663, std::get<1>(GetParam()));
-  EXPECT_NE(session1.id(), session2.id());
+  EXPECT_NE(session1.name(), session2.name());
   EXPECT_VALID_DRIVER_SESSION(session1);
   EXPECT_VALID_DRIVER_SESSION(session2);
 
@@ -575,9 +575,9 @@ TEST_F(NiRFmxSpecAnDriverApiTests, InitializeThreeIdenticalResourcesAsSeparateSe
   const auto session1 = init_session(stub(), PXI_5663, "specan1,specan2");
   const auto session2 = init_session(stub(), PXI_5663, "specan2,specan1");
   const auto session3 = init_session(stub(), PXI_5663, "specan1,specan2");
-  EXPECT_NE(session1.id(), session2.id());
-  EXPECT_NE(session1.id(), session3.id());
-  EXPECT_NE(session2.id(), session3.id());
+  EXPECT_NE(session1.name(), session2.name());
+  EXPECT_NE(session1.name(), session3.name());
+  EXPECT_NE(session2.name(), session3.name());
   EXPECT_VALID_DRIVER_SESSION(session1);
   EXPECT_VALID_DRIVER_SESSION(session2);
   EXPECT_VALID_DRIVER_SESSION(session3);
@@ -604,7 +604,7 @@ TEST_P(NiRFmxSpecAnDriverApiIndependentResourceInitTests, InitializeTwoSessionsW
 {
   const auto session1 = init_session(stub(), PXI_5663, std::get<0>(GetParam()));
   const auto session2 = init_session(stub(), PXI_5663, std::get<1>(GetParam()));
-  EXPECT_NE(session1.id(), session2.id());
+  EXPECT_NE(session1.name(), session2.name());
   EXPECT_VALID_DRIVER_SESSION(session1);
   EXPECT_VALID_DRIVER_SESSION(session2);
 
@@ -625,7 +625,7 @@ TEST_P(NiRFmxSpecAnDriverApiSameUnderlyingResourceInitTests, InitializeTwoSessio
 {
   const auto session1 = init_session(stub(), PXI_5663, std::get<0>(GetParam()));
   const auto session2 = init_session(stub(), PXI_5663, std::get<1>(GetParam()));
-  EXPECT_NE(session1.id(), session2.id());
+  EXPECT_NE(session1.name(), session2.name());
   EXPECT_VALID_DRIVER_SESSION(session1);
   EXPECT_VALID_DRIVER_SESSION(session2);
 

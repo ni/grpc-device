@@ -67,7 +67,7 @@ class NiFgenSessionTest : public ::testing::Test {
 
     ::grpc::ClientContext context;
     fgen::ErrorMessageRequest request;
-    request.mutable_vi()->set_id(session.id());
+    request.mutable_vi()->set_name(session.name());
     request.set_error_code(error_status);
     fgen::ErrorMessageResponse error_response;
 
@@ -88,7 +88,7 @@ TEST_F(NiFgenSessionTest, InitializeSessionWithDeviceAndSessionName_CreatesDrive
 
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(0, response.status());
-  EXPECT_NE(0, response.vi().id());
+  EXPECT_NE("", response.vi().name());
   EXPECT_EQ("", response.error_message());
 }
 
@@ -99,7 +99,7 @@ TEST_F(NiFgenSessionTest, InitializeSessionWithDeviceAndNoSessionName_CreatesDri
 
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(0, response.status());
-  EXPECT_NE(0, response.vi().id());
+  EXPECT_NE("", response.vi().name());
   EXPECT_EQ("", response.error_message());
 }
 
@@ -111,7 +111,7 @@ TEST_F(NiFgenSessionTest, InitializedSession_CloseSession_ClosesDriverSession)
 
   ::grpc::ClientContext context;
   fgen::CloseRequest close_request;
-  close_request.mutable_vi()->set_id(session.id());
+  close_request.mutable_vi()->set_name(session.name());
   fgen::CloseResponse close_response;
   ::grpc::Status status = GetStub()->Close(&context, close_request, &close_response);
 
@@ -122,12 +122,12 @@ TEST_F(NiFgenSessionTest, InitializedSession_CloseSession_ClosesDriverSession)
 TEST_F(NiFgenSessionTest, InvalidSession_CloseSession_ReturnsInvalidSessionError)
 {
   nidevice_grpc::Session session;
-  session.set_id(NULL);
+  session.set_name("");
 
   try {
     ::grpc::ClientContext context;
     fgen::CloseRequest request;
-    request.mutable_vi()->set_id(session.id());
+    request.mutable_vi()->set_name(session.name());
     fgen::CloseResponse response;
     auto status = GetStub()->Close(&context, request, &response);
     nidevice_grpc::experimental::client::raise_if_error(status, context);

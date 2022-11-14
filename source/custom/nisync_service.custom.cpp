@@ -11,7 +11,7 @@ namespace nisync_grpc {
   }
   try {
     auto vi_grpc_session = request->vi();
-    ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+    ViSession vi = session_repository_->access_session(vi_grpc_session.name());
     ViConstString terminal = request->terminal().c_str();
     ViUInt32 timestamps_to_read = request->timestamps_to_read();
     ViReal64 timeout = request->timeout();

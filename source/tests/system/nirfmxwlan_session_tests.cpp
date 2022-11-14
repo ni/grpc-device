@@ -50,7 +50,7 @@ class NiRFmxWLANSessionTest : public ::testing::Test {
   {
     ::grpc::ClientContext context;
     rfmxwlan::CloseRequest request;
-    request.mutable_instrument()->set_id(session.id());
+    request.mutable_instrument()->set_name(session.name());
     request.set_force_destroy(force_destroy);
 
     ::grpc::Status status = GetStub()->Close(&context, request, response);
@@ -70,7 +70,7 @@ TEST_F(NiRFmxWLANSessionTest, InitializeSessionWithDeviceAndSessionName_CreatesD
 
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(0, response.status());
-  EXPECT_NE(0, response.instrument().id());
+  EXPECT_NE("", response.instrument().name());
 }
 
 TEST_F(NiRFmxWLANSessionTest, InitializeSessionWithDeviceAndNoSessionName_CreatesDriverSession)
@@ -80,7 +80,7 @@ TEST_F(NiRFmxWLANSessionTest, InitializeSessionWithDeviceAndNoSessionName_Create
 
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(0, response.status());
-  EXPECT_NE(0, response.instrument().id());
+  EXPECT_NE("", response.instrument().name());
 }
 
 TEST_F(NiRFmxWLANSessionTest, InitializeSessionWithoutDevice_ReturnsDriverError)
@@ -103,7 +103,7 @@ TEST_F(NiRFmxWLANSessionTest, InitializedSession_CloseSession_ClosesDriverSessio
   nidevice_grpc::Session session = init_response.instrument();
   ::grpc::ClientContext context;
   rfmxwlan::CloseRequest close_request;
-  close_request.mutable_instrument()->set_id(session.id());
+  close_request.mutable_instrument()->set_name(session.name());
   close_request.set_force_destroy(false);
   rfmxwlan::CloseResponse close_response;
   ::grpc::Status status = GetStub()->Close(&context, close_request, &close_response);
@@ -121,7 +121,7 @@ TEST_F(NiRFmxWLANSessionTest, TwoInitializedSessionsOnSameDevice_CloseSessions_C
   EXPECT_EQ(0, init_response_one.status());
   EXPECT_TRUE(status_two.ok());
   EXPECT_EQ(0, init_response_two.status());
-  EXPECT_NE(init_response_one.instrument().id(), init_response_two.instrument().id());
+  EXPECT_NE(init_response_one.instrument().name(), init_response_two.instrument().name());
 
   nidevice_grpc::Session session_one = init_response_one.instrument();
   nidevice_grpc::Session session_two = init_response_two.instrument();
@@ -138,7 +138,7 @@ TEST_F(NiRFmxWLANSessionTest, TwoInitializedSessionsOnSameDevice_CloseSessions_C
 TEST_F(NiRFmxWLANSessionTest, InvalidSession_CloseSession_ReturnsInvalidSessionError)
 {
   nidevice_grpc::Session session;
-  session.set_id(0UL);
+  session.set_name("");
 
   try {
     rfmxwlan::CloseResponse response;
@@ -159,7 +159,7 @@ TEST_F(NiRFmxWLANSessionTest, CallInitializeTwiceWithSameSessionNameOnSameDevice
   EXPECT_EQ(0, init_response_one.status());
   EXPECT_TRUE(status_two.ok());
   EXPECT_EQ(0, init_response_two.status());
-  EXPECT_EQ(init_response_one.instrument().id(), init_response_two.instrument().id());
+  EXPECT_EQ(init_response_one.instrument().name(), init_response_two.instrument().name());
 
   nidevice_grpc::Session session_one = init_response_one.instrument();
   nidevice_grpc::Session session_two = init_response_two.instrument();

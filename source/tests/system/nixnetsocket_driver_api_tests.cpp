@@ -285,7 +285,7 @@ SocketResponse socket(client::StubPtr& stub)
 TEST_F(NiXnetSocketNoHardwareTests, InitWithInvalidIpStack_Close_ReturnsAndSetsExpectedErrors)
 {
   SocketResponse invalid_socket;
-  invalid_socket.mutable_socket()->set_id(static_cast<uint32_t>(INVALID_XNET_SOCKET));
+  invalid_socket.mutable_socket()->set_name("");
 
   try {
     client::close(stub(), invalid_socket.socket());
@@ -301,7 +301,7 @@ TEST_F(NiXnetSocketNoHardwareTests, InitWithInvalidIpStack_Close_ReturnsAndSetsE
 TEST_F(NiXnetSocketNoHardwareTests, InitWithInvalidIpStack_Bind_ReturnsAndSetsExpectedErrors)
 {
   SocketResponse invalid_socket;
-  invalid_socket.mutable_socket()->set_id(static_cast<uint32_t>(INVALID_XNET_SOCKET));
+  invalid_socket.mutable_socket()->set_name("");
   auto sock_addr = SockAddr{};
   sock_addr.mutable_ipv4()->mutable_addr()->set_addr(0x7F000001);
   sock_addr.mutable_ipv4()->set_port(31764);
@@ -320,7 +320,7 @@ TEST_F(NiXnetSocketNoHardwareTests, InitWithInvalidIpStack_Bind_ReturnsAndSetsEx
 TEST_F(NiXnetSocketNoHardwareTests, SocketAndEmptySet_IsSet_ReturnsFalse)
 {
   SocketResponse invalid_socket;
-  invalid_socket.mutable_socket()->set_id(static_cast<uint32_t>(INVALID_XNET_SOCKET));
+  invalid_socket.mutable_socket()->set_name("");
 
   auto is_set_response = client::fd_is_set(stub(), invalid_socket.socket(), {});
 
@@ -331,7 +331,7 @@ TEST_F(NiXnetSocketNoHardwareTests, SocketAndEmptySet_IsSet_ReturnsFalse)
 TEST_F(NiXnetSocketNoHardwareTests, SocketAndSetContainingSocket_IsSet_ReturnsTrue)
 {
   SocketResponse invalid_socket;
-  invalid_socket.mutable_socket()->set_id(static_cast<uint32_t>(INVALID_XNET_SOCKET));
+  invalid_socket.mutable_socket()->set_name("");
 
   auto is_set_response = client::fd_is_set(stub(), invalid_socket.socket(), {invalid_socket.socket()});
 
@@ -342,7 +342,7 @@ TEST_F(NiXnetSocketNoHardwareTests, SocketAndSetContainingSocket_IsSet_ReturnsTr
 TEST_F(NiXnetSocketNoHardwareTests, InvalidSocket_Select_ReturnsAndSetsExpectedErrors)
 {
   SocketResponse invalid_socket;
-  invalid_socket.mutable_socket()->set_id(static_cast<uint32_t>(INVALID_XNET_SOCKET));
+  invalid_socket.mutable_socket()->set_name("");
   auto duration = pb::Duration{};
   duration.set_seconds(1);
   duration.set_nanos(500000);

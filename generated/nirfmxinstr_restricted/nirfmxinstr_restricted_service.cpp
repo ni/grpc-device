@@ -53,7 +53,7 @@ namespace nirfmxinstr_restricted_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       float64 reference_or_trigger_level_in = request->reference_or_trigger_level_in();
       int32 input_power_units = request->input_power_units();
       int32 output_power_units = request->output_power_units();
@@ -82,7 +82,7 @@ namespace nirfmxinstr_restricted_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       int32 personality = request->personality();
       char* selector_string = (char*)request->selector_string().c_str();
       auto status = library_->DeleteSnapshot(instrument, personality, selector_string);
@@ -106,7 +106,7 @@ namespace nirfmxinstr_restricted_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* signal_name = (char*)request->signal_name().c_str();
       uInt32 signal_type = request->signal_type();
       int32 actual_result_size {};
@@ -151,7 +151,7 @@ namespace nirfmxinstr_restricted_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
 
       while (true) {
@@ -193,7 +193,7 @@ namespace nirfmxinstr_restricted_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       int32 attr_val {};
@@ -219,7 +219,7 @@ namespace nirfmxinstr_restricted_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* channel_name = (char*)request->channel_name().c_str();
       int32 attribute_id = request->attribute_id();
       float32 attr_val {};
@@ -245,7 +245,7 @@ namespace nirfmxinstr_restricted_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* channel_name = (char*)request->channel_name().c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_array_size {};
@@ -285,7 +285,7 @@ namespace nirfmxinstr_restricted_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* channel_name = (char*)request->channel_name().c_str();
       int32 attribute_id = request->attribute_id();
       float64 attr_val {};
@@ -311,7 +311,7 @@ namespace nirfmxinstr_restricted_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* channel_name = (char*)request->channel_name().c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_array_size {};
@@ -351,7 +351,7 @@ namespace nirfmxinstr_restricted_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* channel_name = (char*)request->channel_name().c_str();
       int32 attribute_id = request->attribute_id();
       int32 attr_val {};
@@ -377,7 +377,7 @@ namespace nirfmxinstr_restricted_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* channel_name = (char*)request->channel_name().c_str();
       int32 attribute_id = request->attribute_id();
       int64 attr_val {};
@@ -403,7 +403,7 @@ namespace nirfmxinstr_restricted_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* channel_name = (char*)request->channel_name().c_str();
       int32 attribute_id = request->attribute_id();
 
@@ -446,7 +446,7 @@ namespace nirfmxinstr_restricted_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 calibration_plane_enabled {};
       auto status = library_->GetCalibrationPlaneEnabled(instrument, selector_string, &calibration_plane_enabled);
@@ -471,7 +471,7 @@ namespace nirfmxinstr_restricted_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
 
       while (true) {
@@ -513,7 +513,7 @@ namespace nirfmxinstr_restricted_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
 
       while (true) {
@@ -555,7 +555,7 @@ namespace nirfmxinstr_restricted_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* channel_name = (char*)request->channel_name().c_str();
       int32 attr_val {};
       auto status = library_->GetForceAllTracesEnabled(instrument, channel_name, &attr_val);
@@ -620,7 +620,7 @@ namespace nirfmxinstr_restricted_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       int32 is_connection_alive {};
       int32 privilege_level {};
       auto status = library_->GetPrivilegeLevel(instrument, &is_connection_alive, &privilege_level);
@@ -646,7 +646,7 @@ namespace nirfmxinstr_restricted_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
 
       while (true) {
         auto status = library_->GetRFmxVersion(instrument, 0, nullptr);
@@ -728,7 +728,7 @@ namespace nirfmxinstr_restricted_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* signal_name = (char*)request->signal_name().c_str();
       uInt32 signal_type = request->signal_type();
       int32 signal_state {};
@@ -756,7 +756,7 @@ namespace nirfmxinstr_restricted_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       int32 personality = request->personality();
       char* selector_string = (char*)request->selector_string().c_str();
       int32 snapshot_state {};
@@ -782,7 +782,7 @@ namespace nirfmxinstr_restricted_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 all_traces_enabled {};
       auto status = library_->GetTracesInfoForMonitorSnapshot(instrument, selector_string, &all_traces_enabled);
@@ -807,7 +807,7 @@ namespace nirfmxinstr_restricted_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* file_path = (char*)request->file_path().c_str();
       auto status = library_->LoadAllForRevert(instrument, file_path);
       if (!status_ok(status)) {
@@ -830,7 +830,7 @@ namespace nirfmxinstr_restricted_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* json_string = (char*)request->json_string().c_str();
       int32 array_size = static_cast<int32>(request->json_string().size());
       auto status = library_->LoadConfigurationsFromJSON(instrument, json_string, array_size);
@@ -875,7 +875,7 @@ namespace nirfmxinstr_restricted_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       int32 privilege_level = request->privilege_level();
       auto status = library_->RequestPrivilege(instrument, privilege_level);
       if (!status_ok(status)) {
@@ -898,7 +898,7 @@ namespace nirfmxinstr_restricted_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* file_path = (char*)request->file_path().c_str();
       auto status = library_->SaveAllForRevert(instrument, file_path);
       if (!status_ok(status)) {
@@ -921,7 +921,7 @@ namespace nirfmxinstr_restricted_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* signal_names = (char*)request->signal_names().c_str();
       int32 actual_array_size {};
       while (true) {
@@ -963,7 +963,7 @@ namespace nirfmxinstr_restricted_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* channel_name = (char*)request->channel_name().c_str();
       int32 attr_val = request->attr_val();
       auto status = library_->SetForceAllTracesEnabled(instrument, channel_name, attr_val);
@@ -987,7 +987,7 @@ namespace nirfmxinstr_restricted_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       int32 io_trace_status = request->io_trace_status();
       auto status = library_->SetIOTraceStatus(instrument, io_trace_status);
       if (!status_ok(status)) {

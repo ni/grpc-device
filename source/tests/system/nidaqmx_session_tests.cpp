@@ -28,15 +28,12 @@ class NiDAQmxSessionTests : public ::testing::Test {
     return stub()->CreateTask(&context, request, &response);
   }
 
-  ::grpc::Status clear_task(const std::string& name, uint32_t session_id, ClearTaskResponse& response)
+  ::grpc::Status clear_task(const std::string& name, ClearTaskResponse& response)
   {
     ::grpc::ClientContext context;
     ClearTaskRequest request;
     if (!name.empty()) {
       request.mutable_task()->set_name(name);
-    }
-    if (session_id) {
-      request.mutable_task()->set_id(session_id);
     }
     return stub()->ClearTask(&context, request, &response);
   }
@@ -55,13 +52,13 @@ TEST_F(NiDAQmxSessionTests, CreateTask_ClearTask_Succeeds)
   auto create_status = create_task("", create_response);
 
   ClearTaskResponse clear_response;
-  auto clear_status = clear_task("", create_response.task().id(), clear_response);
+  auto clear_status = clear_task("", clear_response);
 
   EXPECT_TRUE(create_status.ok());
   EXPECT_TRUE(clear_status.ok());
   EXPECT_EQ(DAQMX_SUCCESS, create_response.status());
   EXPECT_EQ(DAQMX_SUCCESS, clear_response.status());
-  EXPECT_NE(0, create_response.task().id());
+  EXPECT_NE("", create_response.task().name());
 }
 }  // namespace system
 }  // namespace tests

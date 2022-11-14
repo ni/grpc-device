@@ -24,19 +24,18 @@ class SessionRepository {
   ~SessionRepository();
 
   typedef std::function<int32_t()> InitFunc;
-  typedef std::function<void(uint32_t)> CleanupSessionFunc;
+  typedef std::function<void(const std::string&)> CleanupSessionFunc;
 
   int add_session(
-      const std::string& session_name,
+      std::string& session_name,
       InitFunc init_func,
       CleanupSessionFunc cleanup_func,
-      uint32_t& session_id,
       SessionInitializationBehavior initialization_behavior = SESSION_INITIALIZATION_BEHAVIOR_UNSPECIFIED,
       bool* initialized_new_session = nullptr);
-  uint32_t access_session(uint32_t session_id, const std::string& session_name);
-  void remove_session(uint32_t id);
+  std::string access_session(const std::string& session_name);
+  void remove_session(const std::string& name);
 
-  void register_dependent_session(uint32_t id, uint32_t dependent_session_id, std::function<void()> cleanup);
+  void register_dependent_session(const std::string& name, const std::string& dependent_session_name, std::function<void()> cleanup);
 
   bool reserve(
       const ::grpc::ServerContext* context,
@@ -72,7 +71,6 @@ class SessionRepository {
   };
 
   struct SessionInfo {
-    uint32_t id;
     std::string name;
     std::chrono::steady_clock::time_point last_access_time;
     SessionRepository::CleanupSessionFunc cleanup_func;
@@ -80,7 +78,6 @@ class SessionRepository {
   };
 
   using NamedSessionMap = std::map<std::string, std::shared_ptr<SessionInfo>>;
-  using SessionMap = std::map<uint32_t, std::shared_ptr<SessionInfo>>;
   using ReservationMap = std::map<std::string, std::shared_ptr<ReservationInfo>>;
 
   std::shared_ptr<ReservationInfo> find_or_create_reservation(const std::string& reservation_id, const std::string& client_id);
@@ -88,11 +85,9 @@ class SessionRepository {
   bool close_sessions(bool cleanup);
   void cleanup_session(const std::shared_ptr<SessionInfo>& session_info);
   bool release_reservation(const ReservationInfo* reservation_info);
-  uint32_t next_id() { return ++_next_id; }
+  std::string next_id() { return "ni:generated:" + std::to_string(++_next_id); }
 
   std::shared_mutex repository_lock_;
-  // This map contains every session, including both named and unnamed ones.
-  SessionMap sessions_;
   // These entries point at SessionInfo objects that are also contained in sessions_.
   NamedSessionMap named_sessions_;
   ReservationMap reservations_;

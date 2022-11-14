@@ -142,9 +142,9 @@ ResourceRepositoryHolder create_resource_repository(std::unordered_map<std::stri
 {
   auto repository = ResourceRepositoryHolder{};
   for (const auto pair : socket_sessions) {
-    uint32_t session_id;
+    std::string session_name = pair.first;
     repository.resource_repository->add_session(
-        pair.first, [pair]() { return std::make_tuple(0, pair.second); }, nullptr, session_id);
+        session_name, [pair]() { return std::make_tuple(0, pair.second); }, nullptr);
   }
 
   return repository;
