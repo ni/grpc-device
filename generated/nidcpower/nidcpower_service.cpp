@@ -166,7 +166,7 @@ namespace nidcpower_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
       ViInt32 output_cutoff_reason;
       switch (request->output_cutoff_reason_enum_case()) {
@@ -3540,7 +3540,7 @@ namespace nidcpower_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
       ViInt32 output_cutoff_reason;
       switch (request->output_cutoff_reason_enum_case()) {

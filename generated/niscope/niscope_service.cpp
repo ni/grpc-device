@@ -318,7 +318,7 @@ namespace niscope_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViInt32 which_one;
       switch (request->which_one_enum_case()) {
         case niscope_grpc::CalFetchDateRequest::WhichOneEnumCase::kWhichOne: {
@@ -362,7 +362,7 @@ namespace niscope_grpc {
     }
     try {
       auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViInt32 which_one;
       switch (request->which_one_enum_case()) {
         case niscope_grpc::CalFetchTemperatureRequest::WhichOneEnumCase::kWhichOne: {
