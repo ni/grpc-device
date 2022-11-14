@@ -103,26 +103,9 @@ If the server fails to start (i.e. a port is not specified in the configuration 
 1. The specified port is already in use. The solution is to select another port or terminate the other application using the port.
 1. Security configuration errors. See [Server Security Support wiki page](https://github.com/ni/grpc-device/wiki/Server-Security-Support).
 
-### Default Configuration File (insecure):
+### Default Configuration File (localhost):
 
-Below are the contents of a default configuration file using port `31763` and configured without SSL/TLS.  A configuration file with these contents also exists in the same directory as the `ni_grpc_device_server` binary.
-
-```json
-{
-   "port": 31763,
-   "security" : {
-      "server_cert": "",
-      "server_key": "",
-      "root_cert": ""
-   }
-}
-```
-
-### Bind Address Support
-
-The server supports specifying the address to bind to. The address can be used to enable local or remote connections. Address values include any valid IPv4 or IPv6 address. To bind to local (loopback) connection, specify address `"[::1]"`. To bind to any address, specify address `"[::]"`. If no address is specified, the server configuration defaults to any address `"[::]"`.
-
-Below are the contents of a server configuration file accepting localhost connections on port `31763` and configured without SSL/TLS.
+Below are the contents of a default configuration file accepting localhost connections on port `31763` and configured without SSL/TLS.  A configuration file with these contents also exists in the same directory as the `ni_grpc_device_server` binary.
 
 ```json
 {
@@ -135,6 +118,10 @@ Below are the contents of a server configuration file accepting localhost connec
     }
  }
 ```
+
+### Bind Address Support
+
+The server supports specifying the address to bind to. The address can be used to enable local or remote connections. Address values include any valid IPv4 or IPv6 address. To bind to local (loopback) connection, specify address `"[::1]"`. To bind to any address, specify address `"[::]"`. If no address is specified, the server configuration defaults to any address `"[::]"`.
 
 ## Creating a gRPC Client
 
