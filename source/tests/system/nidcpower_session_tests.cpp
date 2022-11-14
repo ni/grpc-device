@@ -13,7 +13,7 @@ using namespace ::testing;
 
 const int kInvalidRsrc = -1074118656;
 const int kInvalidDCPowerSession = -1074130544;
-const char* kViErrorResourceNotFoundMessage = "Device was not recognized.  The device is not supported with this driver or version.\n\nInvalid Identifier: ";
+const char* kViErrorResourceNotFoundMessage = "Device was not recognized. The device is not supported with this driver or version.\n\nInvalid Identifier: ";
 const char* kInvalidDCPowerSessionMessage = "The session handle is not valid.";
 const char* kTestRsrc = "FakeDevice";
 const char* kOptionsString = "Simulate=1, DriverSetup=Model:4147; BoardType:PXIe";
