@@ -184,9 +184,4 @@ private:
 
 } // namespace nifgen_grpc
 
-namespace nidevice_grpc {
-namespace converters {
-} // namespace converters
-} // namespace nidevice_grpc
-
 #endif  // NIFGEN_GRPC_SERVICE_H
