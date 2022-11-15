@@ -34,7 +34,7 @@ inline bool status_ok(int32 status)
   }
   try {
     auto vi_grpc_session = request->vi();
-    ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+    ViSession vi = session_repository_->access_session(vi_grpc_session.name());
     auto site_list = request->site_list().c_str();
     auto waveform_name = request->waveform_name().c_str();
     ViInt32 samples_to_read = request->samples_to_read();

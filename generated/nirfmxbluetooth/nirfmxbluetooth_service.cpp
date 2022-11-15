@@ -56,7 +56,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 averaging_enabled;
       switch (request->averaging_enabled_enum_case()) {
@@ -96,7 +96,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 burst_synchronization_type;
       switch (request->burst_synchronization_type_enum_case()) {
@@ -135,7 +135,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 number_of_offsets = request->number_of_offsets();
       auto status = library_->ACPCfgNumberOfOffsets(instrument, selector_string, number_of_offsets);
@@ -159,7 +159,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 offset_channel_mode;
       switch (request->offset_channel_mode_enum_case()) {
@@ -198,7 +198,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
@@ -242,7 +242,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
@@ -289,7 +289,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 measurement_status {};
@@ -316,7 +316,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 lower_absolute_power {};
@@ -352,7 +352,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
@@ -407,7 +407,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 reference_channel_power {};
@@ -433,7 +433,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
@@ -477,7 +477,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto status = library_->AbortMeasurements(instrument, selector_string);
       if (!status_ok(status)) {
@@ -500,7 +500,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       char* result_name = (char*)request->result_name().c_str();
       float64 x0 = request->x0();
@@ -530,7 +530,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       auto status = library_->AutoDetectSignal(instrument, selector_string, timeout);
@@ -554,7 +554,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 measurement_interval = request->measurement_interval();
       float64 reference_level {};
@@ -703,7 +703,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 channel_number = request->channel_number();
       auto status = library_->CfgChannelNumber(instrument, selector_string, channel_number);
@@ -727,7 +727,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 data_rate = request->data_rate();
       auto status = library_->CfgDataRate(instrument, selector_string, data_rate);
@@ -751,7 +751,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       char* digital_edge_source = (char*)request->digital_edge_source().c_str();
       int32 digital_edge;
@@ -793,7 +793,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 external_attenuation = request->external_attenuation();
       auto status = library_->CfgExternalAttenuation(instrument, selector_string, external_attenuation);
@@ -817,7 +817,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 center_frequency = request->center_frequency();
       auto status = library_->CfgFrequency(instrument, selector_string, center_frequency);
@@ -841,7 +841,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 standard;
       switch (request->standard_enum_case()) {
@@ -881,7 +881,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* channel_name = (char*)request->channel_name().c_str();
       char* frequency_reference_source;
       switch (request->frequency_reference_source_enum_case()) {
@@ -925,7 +925,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       char* iq_power_edge_source = (char*)request->iq_power_edge_source().c_str();
       int32 iq_power_edge_slope;
@@ -1001,7 +1001,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 direction_finding_mode;
       switch (request->direction_finding_mode_enum_case()) {
@@ -1042,7 +1042,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* channel_name = (char*)request->channel_name().c_str();
       int32 mechanical_attenuation_auto;
       switch (request->mechanical_attenuation_auto_enum_case()) {
@@ -1082,7 +1082,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 packet_type;
       switch (request->packet_type_enum_case()) {
@@ -1121,7 +1121,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 payload_bit_pattern;
       switch (request->payload_bit_pattern_enum_case()) {
@@ -1160,7 +1160,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 payload_length_mode;
       switch (request->payload_length_mode_enum_case()) {
@@ -1200,7 +1200,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 center_frequency = request->center_frequency();
       float64 reference_level = request->reference_level();
@@ -1226,7 +1226,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* channel_name = (char*)request->channel_name().c_str();
       int32 rf_attenuation_auto;
       switch (request->rf_attenuation_auto_enum_case()) {
@@ -1266,7 +1266,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 reference_level = request->reference_level();
       auto status = library_->CfgReferenceLevel(instrument, selector_string, reference_level);
@@ -1290,7 +1290,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 trigger_delay = request->trigger_delay();
       int32 enable_trigger = request->enable_trigger();
@@ -1315,7 +1315,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 is_done {};
       auto status = library_->CheckMeasurementStatus(instrument, selector_string, &is_done);
@@ -1340,7 +1340,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto status = library_->ClearAllNamedResults(instrument, selector_string);
       if (!status_ok(status)) {
@@ -1363,7 +1363,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto status = library_->ClearNamedResult(instrument, selector_string);
       if (!status_ok(status)) {
@@ -1386,7 +1386,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* old_signal_name = (char*)request->old_signal_name().c_str();
       char* new_signal_name = (char*)request->new_signal_name().c_str();
       auto status = library_->CloneSignalConfiguration(instrument, old_signal_name, new_signal_name);
@@ -1410,9 +1410,9 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       int32 force_destroy = request->force_destroy();
-      session_repository_->remove_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      session_repository_->remove_session(instrument_grpc_session.name());
       auto status = library_->Close(instrument, force_destroy);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -1434,7 +1434,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto status = library_->Commit(instrument, selector_string);
       if (!status_ok(status)) {
@@ -1457,7 +1457,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* signal_name = (char*)request->signal_name().c_str();
       auto status = library_->CreateSignalConfiguration(instrument, signal_name);
       if (!status_ok(status)) {
@@ -1480,7 +1480,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* signal_name = (char*)request->signal_name().c_str();
       auto status = library_->DeleteSignalConfiguration(instrument, signal_name);
       if (!status_ok(status)) {
@@ -1503,7 +1503,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto status = library_->DisableTrigger(instrument, selector_string);
       if (!status_ok(status)) {
@@ -1526,7 +1526,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 averaging_enabled;
       switch (request->averaging_enabled_enum_case()) {
@@ -1566,7 +1566,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 span = request->span();
       auto status = library_->FrequencyRangeCfgSpan(instrument, selector_string, span);
@@ -1590,7 +1590,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 high_frequency {};
@@ -1618,7 +1618,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
@@ -1662,7 +1662,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 actual_result_names_size {};
       int32 default_result_exists {};
@@ -1706,7 +1706,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       float32 attr_val {};
@@ -1732,7 +1732,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_array_size {};
@@ -1772,7 +1772,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       float64 attr_val {};
@@ -1798,7 +1798,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_array_size {};
@@ -1838,7 +1838,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       int16 attr_val {};
@@ -1864,7 +1864,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       int32 attr_val {};
@@ -1896,7 +1896,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_array_size {};
@@ -1950,7 +1950,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       int64 attr_val {};
@@ -1976,7 +1976,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_array_size {};
@@ -2016,7 +2016,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       int8 attr_val {};
@@ -2042,7 +2042,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_array_size {};
@@ -2090,7 +2090,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_array_size {};
@@ -2136,7 +2136,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_array_size {};
@@ -2182,7 +2182,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
 
@@ -2225,7 +2225,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       uInt16 attr_val {};
@@ -2251,7 +2251,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       uInt32 attr_val {};
@@ -2277,7 +2277,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_array_size {};
@@ -2317,7 +2317,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_array_size {};
@@ -2357,7 +2357,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       uInt8 attr_val {};
@@ -2383,7 +2383,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_array_size {};
@@ -2423,7 +2423,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
 
       while (true) {
         auto status = library_->GetError(instrument, nullptr, 0, nullptr);
@@ -2466,7 +2466,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       int32 error_code = request->error_code();
 
       while (true) {
@@ -2516,15 +2516,14 @@ namespace nirfmxbluetooth_grpc {
         auto status = library_->Initialize(resource_name, option_string, &instrument, &is_new_session);
         return std::make_tuple(status, instrument);
       };
-      uint32_t session_id = 0;
-      const std::string& grpc_device_session_name = request->session_name();
+      std::string grpc_device_session_name = request->session_name();
       auto cleanup_lambda = [&] (niRFmxInstrHandle id) { library_->Close(id, RFMXBT_VAL_FALSE); };
-      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
+      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
       }
       response->set_status(status);
-      response->mutable_instrument()->set_id(session_id);
+      response->mutable_instrument()->set_name(grpc_device_session_name);
       response->set_is_new_session(is_new_session);
       return ::grpc::Status::OK;
     }
@@ -2542,22 +2541,21 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto nirfsa_session_grpc_session = request->nirfsa_session();
-      uInt32 nirfsa_session = vi_session_resource_repository_->access_session(nirfsa_session_grpc_session.id(), nirfsa_session_grpc_session.name());
+      uInt32 nirfsa_session = vi_session_resource_repository_->access_session(nirfsa_session_grpc_session.name());
 
       auto init_lambda = [&] () {
         niRFmxInstrHandle instrument;
         auto status = library_->InitializeFromNIRFSASession(nirfsa_session, &instrument);
         return std::make_tuple(status, instrument);
       };
-      uint32_t session_id = 0;
-      const std::string& grpc_device_session_name = request->session_name();
+      std::string grpc_device_session_name = request->session_name();
       auto cleanup_lambda = [&] (niRFmxInstrHandle id) { library_->Close(id, RFMXBT_VAL_FALSE); };
-      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
+      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
       }
       response->set_status(status);
-      response->mutable_instrument()->set_id(session_id);
+      response->mutable_instrument()->set_name(grpc_device_session_name);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
@@ -2574,7 +2572,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       char* result_name = (char*)request->result_name().c_str();
       auto status = library_->Initiate(instrument, selector_string, result_name);
@@ -2598,7 +2596,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 averaging_enabled;
       switch (request->averaging_enabled_enum_case()) {
@@ -2638,7 +2636,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 burst_synchronization_type;
       switch (request->burst_synchronization_type_enum_case()) {
@@ -2677,7 +2675,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
@@ -2723,7 +2721,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 peak_rms_devm_maximum {};
@@ -2753,7 +2751,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 average_rms_magnitude_error_mean {};
@@ -2781,7 +2779,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
@@ -2821,7 +2819,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 average_rms_phase_error_mean {};
@@ -2849,7 +2847,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
@@ -2897,7 +2895,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 df1avg_maximum {};
@@ -2925,7 +2923,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
@@ -2968,7 +2966,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 df2avg_minimum {};
@@ -2996,7 +2994,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
@@ -3039,7 +3037,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 initial_frequency_error_maximum {};
@@ -3069,7 +3067,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 header_frequency_error_wi_maximum {};
@@ -3099,7 +3097,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 peak_frequency_error_maximum {};
@@ -3131,7 +3129,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
@@ -3174,7 +3172,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
@@ -3217,7 +3215,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
@@ -3260,7 +3258,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
@@ -3304,7 +3302,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
@@ -3344,7 +3342,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       auto status = library_->ResetAttribute(instrument, selector_string, attribute_id);
@@ -3368,7 +3366,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       auto status = library_->ResetToDefault(instrument, selector_string);
       if (!status_ok(status)) {
@@ -3391,7 +3389,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       uInt32 measurements;
       switch (request->measurements_enum_case()) {
@@ -3431,7 +3429,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       auto status = library_->SendSoftwareEdgeTrigger(instrument);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -3453,7 +3451,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       float32 attr_val = request->attr_val();
@@ -3478,7 +3476,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = const_cast<float32*>(request->attr_val().data());
@@ -3504,7 +3502,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       float64 attr_val = request->attr_val();
@@ -3529,7 +3527,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = const_cast<float64*>(request->attr_val().data());
@@ -3555,7 +3553,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val_raw = request->attr_val();
@@ -3589,7 +3587,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       int32 attr_val;
@@ -3629,7 +3627,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val_vector = std::vector<int32>();
@@ -3663,7 +3661,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       int64 attr_val = request->attr_val();
@@ -3688,7 +3686,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = const_cast<int64*>(reinterpret_cast<const int64*>(request->attr_val().data()));
@@ -3714,7 +3712,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val_raw = request->attr_val();
@@ -3748,7 +3746,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val_raw = request->attr_val();
@@ -3791,7 +3789,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = convert_from_grpc<NIComplexDouble>(request->attr_val());
@@ -3817,7 +3815,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = convert_from_grpc<NIComplexSingle>(request->attr_val());
@@ -3843,7 +3841,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       char* attr_val;
@@ -3887,7 +3885,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val_raw = request->attr_val();
@@ -3921,7 +3919,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       uInt32 attr_val = request->attr_val();
@@ -3946,7 +3944,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = const_cast<uInt32*>(reinterpret_cast<const uInt32*>(request->attr_val().data()));
@@ -3972,7 +3970,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = const_cast<uInt64*>(reinterpret_cast<const uInt64*>(request->attr_val().data()));
@@ -3998,7 +3996,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       uInt8 attr_val = request->attr_val();
@@ -4023,7 +4021,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 attribute_id = request->attribute_id();
       uInt8* attr_val = (uInt8*)request->attr_val().c_str();
@@ -4049,7 +4047,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 averaging_enabled;
       switch (request->averaging_enabled_enum_case()) {
@@ -4089,7 +4087,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 burst_synchronization_type;
       switch (request->burst_synchronization_type_enum_case()) {
@@ -4128,7 +4126,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 edr_gfsk_average_power_mean {};
@@ -4158,7 +4156,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 reference_period_average_power_mean {};
@@ -4186,7 +4184,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 transmit_slot_average_power_mean {};
@@ -4214,7 +4212,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
@@ -4257,7 +4255,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
@@ -4301,7 +4299,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 average_power_mean {};
@@ -4333,7 +4331,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 averaging_enabled;
       switch (request->averaging_enabled_enum_case()) {
@@ -4373,7 +4371,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 peak_power {};
@@ -4405,7 +4403,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
@@ -4449,7 +4447,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       float64 timeout = request->timeout();
       auto status = library_->WaitForAcquisitionComplete(instrument, timeout);
       if (!status_ok(status)) {
@@ -4472,7 +4470,7 @@ namespace nirfmxbluetooth_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       auto status = library_->WaitForMeasurementComplete(instrument, selector_string, timeout);

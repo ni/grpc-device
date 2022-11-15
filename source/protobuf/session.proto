@@ -38,10 +38,7 @@ enum SessionInitializationBehavior {
 }
 
 message Session {
-  oneof session {
-    string name = 1;
-    uint32 id = 2;
-  }
+  string name = 1;
 }
 
 message DeviceProperties {

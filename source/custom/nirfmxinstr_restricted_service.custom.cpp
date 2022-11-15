@@ -35,7 +35,7 @@ inline bool status_ok(int32 status)
   }
   try {
     auto instrument_grpc_session = request->instrument();
-    niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+    niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
     uInt64 snapshot_info_cache_index{};
     int32 personality_id_array_actual_size{};
     int32 signal_names_actual_size{};
@@ -140,7 +140,7 @@ inline bool status_ok(int32 status)
   }
   try {
     auto instrument_grpc_session = request->instrument();
-    niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+    niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
     uInt64 snapshot_info_cache_index{};
     int32 personality_id{};
     int32 signal_name_actual_size{};

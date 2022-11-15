@@ -16,8 +16,8 @@ const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
   }
   try {
     auto instrument_grpc_session = request->instrument();
-    auto instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-    auto initiating_session_id = session_repository_->access_session_id(instrument_grpc_session.id(), instrument_grpc_session.name());
+    auto instrument = session_repository_->access_session(instrument_grpc_session.name());
+    auto initiating_session_name = instrument_grpc_session.name();
     auto nirfsa_sessions = std::vector<ViSession>{};
 
     int32 array_size{};
@@ -49,11 +49,10 @@ const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
         auto init_lambda = [&]() {
           return std::make_tuple(0, nirfsa_sessions[i]);
         };
-        uint32_t session_id = 0;
-        const auto session_name = request->session_names_size() ? request->session_names(i) : "";
-        int status = vi_session_resource_repository_->add_dependent_session(session_name, init_lambda, initiating_session_id, session_id);
+        auto session_name = request->session_names_size() ? request->session_names(i) : "";
+        int status = vi_session_resource_repository_->add_dependent_session(session_name, init_lambda, initiating_session_name);
         auto session = response->add_nirfsa_sessions();
-        session->set_id(session_id);
+        session->set_name(session_name);
       }
       return ::grpc::Status::OK;
     }

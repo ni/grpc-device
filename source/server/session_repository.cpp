@@ -20,23 +20,21 @@ SessionRepository::~SessionRepository()
   reset_server(/* cleanup_external_resources =*/false);
 }
 
-// Either returns (via session_id) an existing session with the specified name or initializes and
+// Either returns (via session_name) an existing session with the specified name or initializes and
 // adds a new session using the init_func provided. The init_func is only called when an existing
 // session with session_name is not found. It is expected to return a tuple, where the first value
 // is a status code, and the second value is the ID of a newly initialized session. The return
 // value is the status returned from the init_func, or 0 if an existing named session is found.
 int SessionRepository::add_session(
-    const std::string& session_name,
+    std::string& session_name,
     InitFunc init_func,
     CleanupSessionFunc cleanup_func,
-    uint32_t& session_id,
     SessionInitializationBehavior initialization_behavior,
     bool* initialized_new_session)
 {
   if (initialized_new_session) {
     *initialized_new_session = false;
   }
-  session_id = 0;
   std::unique_lock<std::shared_mutex> lock(repository_lock_);
   auto now = std::chrono::steady_clock::now();
   auto it = named_sessions_.find(session_name);
@@ -48,7 +46,6 @@ int SessionRepository::add_session(
   }
 
   if (it != named_sessions_.end()) {
-    session_id = it->second->id;
     it->second->last_access_time = now;
     return 0;
   }
@@ -57,15 +54,13 @@ int SessionRepository::add_session(
   if (status) {
     return status;
   }
-  session_id = next_id();
-  info->id = session_id;
+  if (session_name.length() == 0) {
+    session_name = next_id();
+  }
   info->cleanup_func = cleanup_func;
   info->last_access_time = now;
-  sessions_.emplace(session_id, info);
-  if (!session_name.empty()) {
-    info->name = session_name;
-    named_sessions_.emplace(session_name, info);
-  }
+  info->name = session_name;
+  named_sessions_.emplace(session_name, info);
   if (initialized_new_session) {
     *initialized_new_session = true;
   }
@@ -76,46 +71,37 @@ int SessionRepository::add_session(
 // the ID of the session that matches the given ID or name, or 0 if such a session is not found.
 // Only one of the two parameters needs to be specified.
 // Passing only a name returns the corresponding ID.
-uint32_t SessionRepository::access_session(uint32_t session_id, const std::string& session_name)
+std::string SessionRepository::access_session(const std::string& session_name)
 {
   std::unique_lock<std::shared_mutex> lock(repository_lock_);
   auto now = std::chrono::steady_clock::now();
   auto it = named_sessions_.find(session_name);
   if (it != named_sessions_.end()) {
     it->second->last_access_time = now;
-    return it->second->id;
+    return it->second->name;
   }
-  auto sessions_it = sessions_.find(session_id);
-  if (sessions_it != sessions_.end()) {
-    sessions_it->second->last_access_time = now;
-    return session_id;
-  }
-  return 0;
+  return "";
 }
 
 // Removes a session by ID.
 // To remove a session by name, use access_session to get the session ID.
-void SessionRepository::remove_session(uint32_t id)
+void SessionRepository::remove_session(const std::string& name)
 {
   std::unique_lock<std::shared_mutex> lock(repository_lock_);
-  auto it = sessions_.find(id);
-  if (it != sessions_.end()) {
-    auto named_it = named_sessions_.find(it->second->name);
-    if (named_it != named_sessions_.end()) {
-      named_sessions_.erase(named_it);
-    }
-    sessions_.erase(it);
+  auto named_it = named_sessions_.find(name);
+  if (named_it != named_sessions_.end()) {
+    named_sessions_.erase(named_it);
   }
 }
 
-void SessionRepository::register_dependent_session(uint32_t id, uint32_t dependent_session_id, std::function<void()> cleanup)
+void SessionRepository::register_dependent_session(const std::string& name, const std::string& dependent_session_name, std::function<void()> cleanup)
 {
   std::unique_lock<std::shared_mutex> lock(repository_lock_);
-  auto it = sessions_.find(id);
-  if (it != sessions_.end()) {
-    auto remove_action = std::make_unique<RemoveAction>([dependent_session_id, cleanup, this]() {
+  auto it = named_sessions_.find(name);
+  if (it != named_sessions_.end()) {
+    auto remove_action = std::make_unique<RemoveAction>([dependent_session_name, cleanup, this]() {
       cleanup();
-      sessions_.erase(dependent_session_id);
+      named_sessions_.erase(dependent_session_name);
     });
     it->second->dependent_sessions.emplace_back(std::move(remove_action));
   }
@@ -257,31 +243,30 @@ bool SessionRepository::reset_server(bool cleanup_external_resources)
 
 bool SessionRepository::close_sessions(bool cleanup_external_resources)
 {
-  named_sessions_.clear();
   // Copy sessions for cleanup to avoid invalidating iterators when dependent sessions
   // are removed.
   auto sessions_cleanup = std::vector<std::shared_ptr<SessionInfo>>();
   std::transform(
-      sessions_.cbegin(),
-      sessions_.cend(),
+      named_sessions_.cbegin(),
+      named_sessions_.cend(),
       std::back_inserter(sessions_cleanup),
-      [](const SessionMap::value_type& entry) { return entry.second; });
+      [](const NamedSessionMap::value_type& entry) { return entry.second; });
 
-  sessions_.clear();
+  named_sessions_.clear();
   if (cleanup_external_resources) {
     for (auto session_info : sessions_cleanup) {
       cleanup_session(session_info);
     }
   }
   sessions_cleanup.clear();
-  return named_sessions_.empty() && sessions_.empty();
+  return named_sessions_.empty();
 }
 
 void SessionRepository::cleanup_session(const std::shared_ptr<SessionInfo>& session_info)
 {
   auto cleanup_process = session_info->cleanup_func;
   if (cleanup_process) {
-    cleanup_process(session_info->id);
+    cleanup_process(session_info->name);
   }
 }
 

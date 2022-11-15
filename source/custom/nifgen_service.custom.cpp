@@ -13,7 +13,7 @@ namespace nifgen_grpc {
   }
   try {
     auto vi_grpc_session = request->vi();
-    ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
+    ViSession vi = session_repository_->access_session(vi_grpc_session.name());
     ViInt32 sequence_length = request->waveform_handles_array().size();
     auto waveform_handles_array = const_cast<ViInt32*>(reinterpret_cast<const ViInt32*>(request->waveform_handles_array().data()));
     auto loop_counts_array = const_cast<ViInt32*>(reinterpret_cast<const ViInt32*>(request->loop_counts_array().data()));

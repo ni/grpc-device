@@ -31,7 +31,7 @@ void CheckStatus(int status)
   ViSession vi = VI_NULL;
   try {
     auto session = request->vi();
-    vi = session_repository_->access_session(session.id(), session.name());
+    vi = session_repository_->access_session(session.name());
     ViConstString channel_list = request->channel_list().c_str();
     ViReal64 timeout = request->timeout();
     ViInt32 num_samples = request->num_samples();
@@ -75,7 +75,7 @@ void CheckStatus(int status)
   ViSession vi = VI_NULL;
   try {
     auto session = request->vi();
-    vi = session_repository_->access_session(session.id(), session.name());
+    vi = session_repository_->access_session(session.name());
     ViConstString channel_list = request->channel_list().c_str();
     ViReal64 timeout = request->timeout();
     ViInt32 num_samples = request->num_samples();
@@ -119,7 +119,7 @@ void CheckStatus(int status)
   ViSession vi = VI_NULL;
   try {
     auto session = request->vi();
-    vi = session_repository_->access_session(session.id(), session.name());
+    vi = session_repository_->access_session(session.name());
     ViConstString channel_list = request->channel_list().c_str();
     ViReal64 timeout = request->timeout();
     ViInt32 num_samples = request->num_samples();
@@ -163,7 +163,7 @@ void CheckStatus(int status)
   ViSession vi = VI_NULL;
   try {
     auto session = request->vi();
-    vi = session_repository_->access_session(session.id(), session.name());
+    vi = session_repository_->access_session(session.name());
     ViConstString channel_list = request->channel_list().c_str();
     ViReal64 timeout = request->timeout();
     ViInt32 num_samples = request->num_samples();
@@ -207,7 +207,7 @@ void CheckStatus(int status)
   ViSession vi = VI_NULL;
   try {
     auto session = request->vi();
-    vi = session_repository_->access_session(session.id(), session.name());
+    vi = session_repository_->access_session(session.name());
     ViConstString channel_list = request->channel_list().c_str();
     ViReal64 timeout = request->timeout();
     ViInt32 array_meas_function;
@@ -262,7 +262,7 @@ void CheckStatus(int status)
   ViSession vi = VI_NULL;
   try {
     auto session = request->vi();
-    vi = session_repository_->access_session(session.id(), session.name());
+    vi = session_repository_->access_session(session.name());
     ViConstString channel_list = request->channel_list().c_str();
     ViReal64 timeout = request->timeout();
     ViInt32 scalar_meas_function;
@@ -322,7 +322,7 @@ void CheckStatus(int status)
   ViSession vi = VI_NULL;
   try {
     auto session = request->vi();
-    vi = session_repository_->access_session(session.id(), session.name());
+    vi = session_repository_->access_session(session.name());
     ViConstString channel_list = request->channel_list().c_str();
     ViReal64 timeout = request->timeout();
     ViInt32 num_samples = request->num_samples();
@@ -366,7 +366,7 @@ void CheckStatus(int status)
   ViSession vi = VI_NULL;
   try {
     auto session = request->vi();
-    vi = session_repository_->access_session(session.id(), session.name());
+    vi = session_repository_->access_session(session.name());
     ViConstString channel_list = request->channel_list().c_str();
     ViReal64 timeout = request->timeout();
     ViInt32 num_samples = request->num_samples();
@@ -410,7 +410,7 @@ void CheckStatus(int status)
   ViSession vi = VI_NULL;
   try {
     auto session = request->vi();
-    vi = session_repository_->access_session(session.id(), session.name());
+    vi = session_repository_->access_session(session.name());
     ViConstString channel_list = request->channel_list().c_str();
     ViReal64 timeout = request->timeout();
     ViInt32 num_samples = request->num_samples();
@@ -454,7 +454,7 @@ void CheckStatus(int status)
   ViSession vi = VI_NULL;
   try {
     auto session = request->vi();
-    vi = session_repository_->access_session(session.id(), session.name());
+    vi = session_repository_->access_session(session.name());
     ViConstString channel_list = request->channel_list().c_str();
     ViReal64 timeout = request->timeout();
     ViInt32 scalar_meas_function;
@@ -504,7 +504,7 @@ void CheckStatus(int status)
   ViSession vi = VI_NULL;
   try {
     auto session = request->vi();
-    vi = session_repository_->access_session(session.id(), session.name());
+    vi = session_repository_->access_session(session.name());
     ViConstString channel_list = request->channel_list().c_str();
     ViReal64 timeout = request->timeout();
     ViInt32 scalar_meas_function;

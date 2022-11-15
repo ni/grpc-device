@@ -50,7 +50,7 @@ class NiRFmxNRSessionTest : public ::testing::Test {
   {
     ::grpc::ClientContext context;
     rfmxnr::CloseRequest request;
-    request.mutable_instrument()->set_id(session.id());
+    request.mutable_instrument()->set_name(session.name());
     request.set_force_destroy(force_destroy);
 
     ::grpc::Status status = GetStub()->Close(&context, request, response);
@@ -70,7 +70,7 @@ TEST_F(NiRFmxNRSessionTest, InitializeSessionWithDeviceAndSessionName_CreatesDri
 
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(0, response.status());
-  EXPECT_NE(0, response.instrument().id());
+  EXPECT_NE("", response.instrument().name());
 }
 
 TEST_F(NiRFmxNRSessionTest, InitializeSessionWithDeviceAndNoSessionName_CreatesDriverSession)
@@ -80,7 +80,7 @@ TEST_F(NiRFmxNRSessionTest, InitializeSessionWithDeviceAndNoSessionName_CreatesD
 
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(0, response.status());
-  EXPECT_NE(0, response.instrument().id());
+  EXPECT_NE("", response.instrument().name());
 }
 
 TEST_F(NiRFmxNRSessionTest, InitializeSessionWithoutDevice_ReturnsDriverError)
@@ -103,7 +103,7 @@ TEST_F(NiRFmxNRSessionTest, InitializedSession_CloseSession_ClosesDriverSession)
   nidevice_grpc::Session session = init_response.instrument();
   ::grpc::ClientContext context;
   rfmxnr::CloseRequest close_request;
-  close_request.mutable_instrument()->set_id(session.id());
+  close_request.mutable_instrument()->set_name(session.name());
   close_request.set_force_destroy(false);
   rfmxnr::CloseResponse close_response;
   ::grpc::Status status = GetStub()->Close(&context, close_request, &close_response);
@@ -121,7 +121,7 @@ TEST_F(NiRFmxNRSessionTest, TwoInitializedSessionsOnSameDevice_CloseSessions_Clo
   EXPECT_EQ(0, init_response_one.status());
   EXPECT_TRUE(status_two.ok());
   EXPECT_EQ(0, init_response_two.status());
-  EXPECT_NE(init_response_one.instrument().id(), init_response_two.instrument().id());
+  EXPECT_NE(init_response_one.instrument().name(), init_response_two.instrument().name());
 
   nidevice_grpc::Session session_one = init_response_one.instrument();
   nidevice_grpc::Session session_two = init_response_two.instrument();
@@ -144,7 +144,7 @@ TEST_F(NiRFmxNRSessionTest, CallInitializeTwiceWithSameSessionNameOnSameDevice_C
   EXPECT_EQ(0, init_response_one.status());
   EXPECT_TRUE(status_two.ok());
   EXPECT_EQ(0, init_response_two.status());
-  EXPECT_EQ(init_response_one.instrument().id(), init_response_two.instrument().id());
+  EXPECT_EQ(init_response_one.instrument().name(), init_response_two.instrument().name());
 
   nidevice_grpc::Session session_one = init_response_one.instrument();
   nidevice_grpc::Session session_two = init_response_two.instrument();
@@ -167,7 +167,7 @@ TEST_F(NiRFmxNRSessionTest, CallInitializeTwiceWithSameSessionNameOnSameDevice_C
 TEST_F(NiRFmxNRSessionTest, InvalidSession_CloseSession_ReturnsInvalidSessionError)
 {
   nidevice_grpc::Session session;
-  session.set_id(0UL);
+  session.set_name("");
 
   try {
     rfmxnr::CloseResponse response;

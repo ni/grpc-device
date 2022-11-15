@@ -437,12 +437,10 @@ TEST(SessionUtilitiesServiceTests, ReservationAndSession_ResetServer_UnreservesA
   nidevice_grpc::SoftwareEnumerator software_enumerator(&syscfg_mock_library);
   nidevice_grpc::SessionUtilitiesService service(&session_repository, &device_enumerator, &software_enumerator);
   std::string session_name = "session_name";
-  uint32_t named_session_id;
   int status = session_repository.add_session(
       session_name,
       []() { return 0; },
-      NULL,
-      named_session_id);
+      NULL);
   call_reserve(&service, session_name, "a");
 
   ::grpc::ServerContext context;
@@ -452,8 +450,7 @@ TEST(SessionUtilitiesServiceTests, ReservationAndSession_ResetServer_UnreservesA
   EXPECT_TRUE(reset_response.is_server_reset());
   bool is_reserved = call_is_reserved(&service, session_name, "a");
   EXPECT_FALSE(is_reserved);
-  EXPECT_FALSE(session_repository.access_session(named_session_id, ""));
-  EXPECT_FALSE(session_repository.access_session(0, session_name));
+  EXPECT_EQ("", session_repository.access_session(session_name));
 }
 
 TEST(SessionUtilitiesServiceTests, TwoReservations_ResetServer_Unreserves)

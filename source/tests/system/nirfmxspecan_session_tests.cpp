@@ -60,7 +60,7 @@ TEST_F(NiRFmxSpecAnSessionTest, InitializeSessionWithDeviceAndSessionName_Create
 
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(0, response.status());
-  EXPECT_NE(0, response.instrument().id());
+  EXPECT_NE("", response.instrument().name());
 }
 
 TEST_F(NiRFmxSpecAnSessionTest, InitializeSessionWithDeviceAndNoSessionName_CreatesDriverSession)
@@ -70,7 +70,7 @@ TEST_F(NiRFmxSpecAnSessionTest, InitializeSessionWithDeviceAndNoSessionName_Crea
 
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(0, response.status());
-  EXPECT_NE(0, response.instrument().id());
+  EXPECT_NE("", response.instrument().name());
 }
 
 TEST_F(NiRFmxSpecAnSessionTest, InitializedSession_CloseSession_ClosesDriverSession)
@@ -81,7 +81,7 @@ TEST_F(NiRFmxSpecAnSessionTest, InitializedSession_CloseSession_ClosesDriverSess
   nidevice_grpc::Session session = init_response.instrument();
   ::grpc::ClientContext context;
   rfmxspecan::CloseRequest close_request;
-  close_request.mutable_instrument()->set_id(session.id());
+  close_request.mutable_instrument()->set_name(session.name());
   close_request.set_force_destroy(false);
   rfmxspecan::CloseResponse close_response;
   ::grpc::Status status = GetStub()->Close(&context, close_request, &close_response);
@@ -129,12 +129,12 @@ TEST_F(NiRFmxSpecAnSessionTest, InitWithErrorFromDriver_ReinitSuccessfully_Error
 TEST_F(NiRFmxSpecAnSessionTest, InvalidSession_CloseSession_ReturnsInvalidSessionError)
 {
   nidevice_grpc::Session session;
-  session.set_id(0UL);
+  session.set_name("");
 
   try {
     ::grpc::ClientContext context;
     rfmxspecan::CloseRequest request;
-    request.mutable_instrument()->set_id(session.id());
+    request.mutable_instrument()->set_name(session.name());
     request.set_force_destroy(false);
     rfmxspecan::CloseResponse response;
     ::grpc::Status status = GetStub()->Close(&context, request, &response);

@@ -70,7 +70,7 @@ class TerminalContainerPtr {
   }
   try {
     auto grpc_session = request->session();
-    nimxlc_Session session = session_repository_->access_session(grpc_session.id(), grpc_session.name());
+    nimxlc_Session session = session_repository_->access_session(grpc_session.name());
 
     auto status = allocate_output_storage<nierr_Status, NIErrStatus>(context);
     DeviceContainerPtr deviceContainerPtr(library_, library_->getDeviceContainer(session, &status));

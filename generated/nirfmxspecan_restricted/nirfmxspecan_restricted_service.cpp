@@ -53,7 +53,7 @@ namespace nirfmxspecan_restricted_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       int32 selector_string_out_size = request->selector_string_out_size();
       std::string selector_string_out;
@@ -83,7 +83,7 @@ namespace nirfmxspecan_restricted_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       char* selector_string = (char*)request->selector_string().c_str();
       float64 timeout = request->timeout();
       int32 record_to_fetch = request->record_to_fetch();

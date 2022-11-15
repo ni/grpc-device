@@ -77,7 +77,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto channel_names = request->channel_names().c_str();
       auto status = library_->AddGlobalChansToTask(task, channel_names);
       if (!status_ok(status)) {
@@ -217,7 +217,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto trigger_source = request->trigger_source().c_str();
       int32 trigger_slope;
       switch (request->trigger_slope_enum_case()) {
@@ -258,7 +258,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto trigger_source = request->trigger_source().c_str();
       int32 trigger_slope;
       switch (request->trigger_slope_enum_case()) {
@@ -298,7 +298,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto trigger_sources = request->trigger_sources().c_str();
       auto trigger_slope_array = reinterpret_cast<const int32*>(request->trigger_slope_array().data());
       auto trigger_level_array = const_cast<const float64*>(request->trigger_level_array().data());
@@ -336,7 +336,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto trigger_sources = request->trigger_sources().c_str();
       auto trigger_slope_array = reinterpret_cast<const int32*>(request->trigger_slope_array().data());
       auto trigger_level_array = const_cast<const float64*>(request->trigger_level_array().data());
@@ -373,7 +373,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto trigger_source = request->trigger_source().c_str();
       int32 trigger_when;
       switch (request->trigger_when_enum_case()) {
@@ -415,7 +415,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto trigger_source = request->trigger_source().c_str();
       int32 trigger_when;
       switch (request->trigger_when_enum_case()) {
@@ -456,7 +456,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 sample_mode;
       switch (request->sample_mode_enum_case()) {
         case nidaqmx_grpc::CfgBurstHandshakingTimingExportClockRequest::SampleModeEnumCase::kSampleMode: {
@@ -545,7 +545,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 sample_mode;
       switch (request->sample_mode_enum_case()) {
         case nidaqmx_grpc::CfgBurstHandshakingTimingImportClockRequest::SampleModeEnumCase::kSampleMode: {
@@ -634,7 +634,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto rising_edge_chan = request->rising_edge_chan().c_str();
       auto falling_edge_chan = request->falling_edge_chan().c_str();
       int32 sample_mode;
@@ -675,7 +675,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto trigger_source = request->trigger_source().c_str();
       int32 trigger_edge;
       switch (request->trigger_edge_enum_case()) {
@@ -715,7 +715,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto trigger_source = request->trigger_source().c_str();
       int32 trigger_edge;
       switch (request->trigger_edge_enum_case()) {
@@ -754,7 +754,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto trigger_source = request->trigger_source().c_str();
       auto trigger_pattern = request->trigger_pattern().c_str();
       int32 trigger_when;
@@ -795,7 +795,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto trigger_source = request->trigger_source().c_str();
       auto trigger_pattern = request->trigger_pattern().c_str();
       int32 trigger_when;
@@ -835,7 +835,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 sample_mode;
       switch (request->sample_mode_enum_case()) {
         case nidaqmx_grpc::CfgHandshakingTimingRequest::SampleModeEnumCase::kSampleMode: {
@@ -874,7 +874,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 sample_mode;
       switch (request->sample_mode_enum_case()) {
         case nidaqmx_grpc::CfgImplicitTimingRequest::SampleModeEnumCase::kSampleMode: {
@@ -913,7 +913,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       uInt32 num_samps_per_chan = request->num_samps_per_chan();
       auto status = library_->CfgInputBuffer(task, num_samps_per_chan);
       if (!status_ok(status)) {
@@ -936,7 +936,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       uInt32 num_samps_per_chan = request->num_samps_per_chan();
       auto status = library_->CfgOutputBuffer(task, num_samps_per_chan);
       if (!status_ok(status)) {
@@ -959,7 +959,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto source = request->source().c_str();
       float64 rate = request->rate();
       int32 active_edge;
@@ -1016,7 +1016,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto source = request->source().c_str();
       float64 rate = request->rate();
       int32 active_edge;
@@ -1073,7 +1073,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto when = convert_from_grpc<CVIAbsoluteTime>(request->when());
       int32 timescale;
       switch (request->timescale_enum_case()) {
@@ -1112,7 +1112,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto channel_names = request->channel_names().c_str();
       auto expir_state_array = const_cast<const float64*>(request->expir_state_array().data());
       auto output_type_array_vector = std::vector<int32>();
@@ -1157,7 +1157,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto channel_names = request->channel_names().c_str();
       auto expir_state_array_vector = std::vector<int32>();
       expir_state_array_vector.reserve(request->expir_state_array().size());
@@ -1190,7 +1190,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto channel_names = request->channel_names().c_str();
       auto expir_state_array_vector = std::vector<int32>();
       expir_state_array_vector.reserve(request->expir_state_array().size());
@@ -1244,8 +1244,8 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
-      session_repository_->remove_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
+      session_repository_->remove_session(task_grpc_session.name());
       auto status = library_->ClearTask(task);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
@@ -1267,7 +1267,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto file_path = request->file_path().c_str();
       int32 logging_mode;
       switch (request->logging_mode_enum_case()) {
@@ -1383,7 +1383,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 action;
       switch (request->action_enum_case()) {
         case nidaqmx_grpc::ControlWatchdogTaskRequest::ActionEnumCase::kAction: {
@@ -1421,7 +1421,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto physical_channel = request->physical_channel().c_str();
       auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
       int32 terminal_config;
@@ -1515,7 +1515,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto physical_channel = request->physical_channel().c_str();
       auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
       int32 terminal_config;
@@ -1608,7 +1608,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto physical_channel = request->physical_channel().c_str();
       auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
       int32 terminal_config;
@@ -1684,7 +1684,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto physical_channel = request->physical_channel().c_str();
       auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
       float64 min_val = request->min_val();
@@ -1761,7 +1761,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto physical_channel = request->physical_channel().c_str();
       auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
       int32 terminal_config;
@@ -1820,7 +1820,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto physical_channel = request->physical_channel().c_str();
       auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
       int32 terminal_config;
@@ -1896,7 +1896,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto physical_channel = request->physical_channel().c_str();
       auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
       int32 terminal_config;
@@ -1972,7 +1972,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto physical_channel = request->physical_channel().c_str();
       auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
       float64 min_val = request->min_val();
@@ -2085,7 +2085,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto physical_channel = request->physical_channel().c_str();
       auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
       float64 min_val = request->min_val();
@@ -2198,7 +2198,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto physical_channel = request->physical_channel().c_str();
       auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
       float64 min_val = request->min_val();
@@ -2311,7 +2311,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto physical_channel = request->physical_channel().c_str();
       auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
       int32 terminal_config;
@@ -2404,7 +2404,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto physical_channel = request->physical_channel().c_str();
       auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
       float64 min_val = request->min_val();
@@ -2449,7 +2449,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto physical_channel = request->physical_channel().c_str();
       auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
       int32 terminal_config;
@@ -2525,7 +2525,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto physical_channel = request->physical_channel().c_str();
       auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
       float64 min_val = request->min_val();
@@ -2585,7 +2585,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto physical_channel = request->physical_channel().c_str();
       auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
       float64 min_val = request->min_val();
@@ -2679,7 +2679,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto physical_channel = request->physical_channel().c_str();
       auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
       float64 min_val = request->min_val();
@@ -2773,7 +2773,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto physical_channel = request->physical_channel().c_str();
       auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
       float64 min_val = request->min_val();
@@ -2886,7 +2886,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto physical_channel = request->physical_channel().c_str();
       auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
       float64 min_val = request->min_val();
@@ -2999,7 +2999,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto physical_channel = request->physical_channel().c_str();
       auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
       float64 min_val = request->min_val();
@@ -3112,7 +3112,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto physical_channel = request->physical_channel().c_str();
       auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
       float64 min_val = request->min_val();
@@ -3204,7 +3204,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto physical_channel = request->physical_channel().c_str();
       auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
       float64 min_val = request->min_val();
@@ -3280,7 +3280,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto physical_channel = request->physical_channel().c_str();
       auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
       float64 min_val = request->min_val();
@@ -3362,7 +3362,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto physical_channel = request->physical_channel().c_str();
       auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
       float64 min_val = request->min_val();
@@ -3443,7 +3443,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto physical_channel = request->physical_channel().c_str();
       auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
       int32 units;
@@ -3483,7 +3483,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto physical_channel = request->physical_channel().c_str();
       auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
       float64 min_val = request->min_val();
@@ -3559,7 +3559,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto physical_channel = request->physical_channel().c_str();
       auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
       float64 min_val = request->min_val();
@@ -3637,7 +3637,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto physical_channel = request->physical_channel().c_str();
       auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
       float64 min_val = request->min_val();
@@ -3716,7 +3716,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto physical_channel = request->physical_channel().c_str();
       auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
       float64 min_val = request->min_val();
@@ -3829,7 +3829,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto physical_channel = request->physical_channel().c_str();
       auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
       float64 min_val = request->min_val();
@@ -3942,7 +3942,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto physical_channel = request->physical_channel().c_str();
       auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
       float64 min_val = request->min_val();
@@ -4055,7 +4055,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto physical_channel = request->physical_channel().c_str();
       auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
       int32 terminal_config;
@@ -4148,7 +4148,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto physical_channel = request->physical_channel().c_str();
       auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
       int32 terminal_config;
@@ -4207,7 +4207,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto physical_channel = request->physical_channel().c_str();
       auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
       int32 terminal_config;
@@ -4300,7 +4300,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto physical_channel = request->physical_channel().c_str();
       auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
       int32 terminal_config;
@@ -4359,7 +4359,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto physical_channel = request->physical_channel().c_str();
       auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
       float64 min_val = request->min_val();
@@ -4402,7 +4402,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto physical_channel = request->physical_channel().c_str();
       auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
       int32 type;
@@ -4445,7 +4445,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto physical_channel = request->physical_channel().c_str();
       auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
       float64 min_val = request->min_val();
@@ -4488,7 +4488,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto counter = request->counter().c_str();
       auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
       int32 decoding_type;
@@ -4565,7 +4565,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto counter = request->counter().c_str();
       auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
       float64 min_val = request->min_val();
@@ -4625,7 +4625,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto counter = request->counter().c_str();
       auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
       int32 edge;
@@ -4682,7 +4682,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto counter = request->counter().c_str();
       auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
       float64 min_freq = request->min_freq();
@@ -4725,7 +4725,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto counter = request->counter().c_str();
       auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
       float64 min_val = request->min_val();
@@ -4802,7 +4802,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto counter = request->counter().c_str();
       auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
       int32 units;
@@ -4859,7 +4859,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto counter = request->counter().c_str();
       auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
       int32 decoding_type;
@@ -4936,7 +4936,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto counter = request->counter().c_str();
       auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
       float64 min_val = request->min_val();
@@ -4996,7 +4996,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto counter = request->counter().c_str();
       auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
       float64 min_val = request->min_val();
@@ -5073,7 +5073,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto counter = request->counter().c_str();
       auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
       float64 min_val = request->min_val();
@@ -5115,7 +5115,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto counter = request->counter().c_str();
       auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
       auto source_terminal = request->source_terminal().c_str();
@@ -5142,7 +5142,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto counter = request->counter().c_str();
       auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
       float64 min_val = request->min_val();
@@ -5184,7 +5184,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto counter = request->counter().c_str();
       auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
       float64 min_val = request->min_val();
@@ -5243,7 +5243,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto counter = request->counter().c_str();
       auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
       float64 min_val = request->min_val();
@@ -5286,7 +5286,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto counter = request->counter().c_str();
       auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
       float64 min_val = request->min_val();
@@ -5361,7 +5361,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto counter = request->counter().c_str();
       auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
       int32 units;
@@ -5420,7 +5420,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto counter = request->counter().c_str();
       auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
       auto source_terminal = request->source_terminal().c_str();
@@ -5464,7 +5464,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto counter = request->counter().c_str();
       auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
       int32 units;
@@ -5523,7 +5523,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto lines = request->lines().c_str();
       auto name_to_assign_to_lines = request->name_to_assign_to_lines().c_str();
       int32 line_grouping;
@@ -5563,7 +5563,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto lines = request->lines().c_str();
       auto name_to_assign_to_lines = request->name_to_assign_to_lines().c_str();
       int32 line_grouping;
@@ -5727,7 +5727,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto physical_channel = request->physical_channel().c_str();
       auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
       int32 terminal_config;
@@ -5803,7 +5803,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto physical_channel = request->physical_channel().c_str();
       auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
       float64 min_val = request->min_val();
@@ -5863,7 +5863,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto physical_channel = request->physical_channel().c_str();
       auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
       int32 terminal_config;
@@ -5939,7 +5939,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto physical_channel = request->physical_channel().c_str();
       auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
       float64 min_val = request->min_val();
@@ -5999,7 +5999,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto physical_channel = request->physical_channel().c_str();
       auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
       int32 terminal_config;
@@ -6075,7 +6075,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto physical_channel = request->physical_channel().c_str();
       auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
       int32 terminal_config;
@@ -6150,7 +6150,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto physical_channel = request->physical_channel().c_str();
       auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
       float64 min_val = request->min_val();
@@ -6227,7 +6227,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto physical_channel = request->physical_channel().c_str();
       auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
       float64 min_val = request->min_val();
@@ -6304,7 +6304,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto physical_channel = request->physical_channel().c_str();
       auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
       float64 min_val = request->min_val();
@@ -6364,7 +6364,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto physical_channel = request->physical_channel().c_str();
       auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
       float64 min_val = request->min_val();
@@ -6439,7 +6439,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto physical_channel = request->physical_channel().c_str();
       auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
       float64 min_val = request->min_val();
@@ -6515,7 +6515,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto physical_channel = request->physical_channel().c_str();
       auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
       float64 min_val = request->min_val();
@@ -6577,7 +6577,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto physical_channel = request->physical_channel().c_str();
       auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
       float64 min_val = request->min_val();
@@ -6637,7 +6637,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto physical_channel = request->physical_channel().c_str();
       auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
       float64 min_val = request->min_val();
@@ -6712,7 +6712,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto physical_channel = request->physical_channel().c_str();
       auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
       float64 min_val = request->min_val();
@@ -6788,7 +6788,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto physical_channel = request->physical_channel().c_str();
       auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
       float64 min_val = request->min_val();
@@ -6848,7 +6848,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto physical_channel = request->physical_channel().c_str();
       auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
       int32 terminal_config;
@@ -6907,7 +6907,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto physical_channel = request->physical_channel().c_str();
       auto name_to_assign_to_channel = request->name_to_assign_to_channel().c_str();
       int32 terminal_config;
@@ -7031,15 +7031,14 @@ namespace nidaqmx_grpc {
         auto status = library_->CreateTask(session_name, &task);
         return std::make_tuple(status, task);
       };
-      uint32_t session_id = 0;
-      const std::string& grpc_device_session_name = request->session_name();
+      std::string grpc_device_session_name = request->session_name();
       auto cleanup_lambda = [&] (TaskHandle id) { library_->ClearTask(id); };
-      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
+      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, 0);
       }
       response->set_status(status);
-      response->mutable_task()->set_id(session_id);
+      response->mutable_task()->set_name(grpc_device_session_name);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
@@ -7084,15 +7083,14 @@ namespace nidaqmx_grpc {
         auto status = ((NiDAQmxLibrary*)library_)->CreateWatchdogTimerTask(device_name, session_name, &task, timeout, get_lines_if(exp_states, 0), get_expState_if(exp_states, 0), get_lines_if(exp_states, 1), get_expState_if(exp_states, 1), get_lines_if(exp_states, 2), get_expState_if(exp_states, 2), get_lines_if(exp_states, 3), get_expState_if(exp_states, 3), get_lines_if(exp_states, 4), get_expState_if(exp_states, 4), get_lines_if(exp_states, 5), get_expState_if(exp_states, 5), get_lines_if(exp_states, 6), get_expState_if(exp_states, 6), get_lines_if(exp_states, 7), get_expState_if(exp_states, 7), get_lines_if(exp_states, 8), get_expState_if(exp_states, 8), get_lines_if(exp_states, 9), get_expState_if(exp_states, 9), get_lines_if(exp_states, 10), get_expState_if(exp_states, 10), get_lines_if(exp_states, 11), get_expState_if(exp_states, 11), get_lines_if(exp_states, 12), get_expState_if(exp_states, 12), get_lines_if(exp_states, 13), get_expState_if(exp_states, 13), get_lines_if(exp_states, 14), get_expState_if(exp_states, 14), get_lines_if(exp_states, 15), get_expState_if(exp_states, 15), get_lines_if(exp_states, 16), get_expState_if(exp_states, 16), get_lines_if(exp_states, 17), get_expState_if(exp_states, 17), get_lines_if(exp_states, 18), get_expState_if(exp_states, 18), get_lines_if(exp_states, 19), get_expState_if(exp_states, 19), get_lines_if(exp_states, 20), get_expState_if(exp_states, 20), get_lines_if(exp_states, 21), get_expState_if(exp_states, 21), get_lines_if(exp_states, 22), get_expState_if(exp_states, 22), get_lines_if(exp_states, 23), get_expState_if(exp_states, 23), get_lines_if(exp_states, 24), get_expState_if(exp_states, 24), get_lines_if(exp_states, 25), get_expState_if(exp_states, 25), get_lines_if(exp_states, 26), get_expState_if(exp_states, 26), get_lines_if(exp_states, 27), get_expState_if(exp_states, 27), get_lines_if(exp_states, 28), get_expState_if(exp_states, 28), get_lines_if(exp_states, 29), get_expState_if(exp_states, 29), get_lines_if(exp_states, 30), get_expState_if(exp_states, 30), get_lines_if(exp_states, 31), get_expState_if(exp_states, 31), get_lines_if(exp_states, 32), get_expState_if(exp_states, 32), get_lines_if(exp_states, 33), get_expState_if(exp_states, 33), get_lines_if(exp_states, 34), get_expState_if(exp_states, 34), get_lines_if(exp_states, 35), get_expState_if(exp_states, 35), get_lines_if(exp_states, 36), get_expState_if(exp_states, 36), get_lines_if(exp_states, 37), get_expState_if(exp_states, 37), get_lines_if(exp_states, 38), get_expState_if(exp_states, 38), get_lines_if(exp_states, 39), get_expState_if(exp_states, 39), get_lines_if(exp_states, 40), get_expState_if(exp_states, 40), get_lines_if(exp_states, 41), get_expState_if(exp_states, 41), get_lines_if(exp_states, 42), get_expState_if(exp_states, 42), get_lines_if(exp_states, 43), get_expState_if(exp_states, 43), get_lines_if(exp_states, 44), get_expState_if(exp_states, 44), get_lines_if(exp_states, 45), get_expState_if(exp_states, 45), get_lines_if(exp_states, 46), get_expState_if(exp_states, 46), get_lines_if(exp_states, 47), get_expState_if(exp_states, 47), get_lines_if(exp_states, 48), get_expState_if(exp_states, 48), get_lines_if(exp_states, 49), get_expState_if(exp_states, 49), get_lines_if(exp_states, 50), get_expState_if(exp_states, 50), get_lines_if(exp_states, 51), get_expState_if(exp_states, 51), get_lines_if(exp_states, 52), get_expState_if(exp_states, 52), get_lines_if(exp_states, 53), get_expState_if(exp_states, 53), get_lines_if(exp_states, 54), get_expState_if(exp_states, 54), get_lines_if(exp_states, 55), get_expState_if(exp_states, 55), get_lines_if(exp_states, 56), get_expState_if(exp_states, 56), get_lines_if(exp_states, 57), get_expState_if(exp_states, 57), get_lines_if(exp_states, 58), get_expState_if(exp_states, 58), get_lines_if(exp_states, 59), get_expState_if(exp_states, 59), get_lines_if(exp_states, 60), get_expState_if(exp_states, 60), get_lines_if(exp_states, 61), get_expState_if(exp_states, 61), get_lines_if(exp_states, 62), get_expState_if(exp_states, 62), get_lines_if(exp_states, 63), get_expState_if(exp_states, 63), get_lines_if(exp_states, 64), get_expState_if(exp_states, 64), get_lines_if(exp_states, 65), get_expState_if(exp_states, 65), get_lines_if(exp_states, 66), get_expState_if(exp_states, 66), get_lines_if(exp_states, 67), get_expState_if(exp_states, 67), get_lines_if(exp_states, 68), get_expState_if(exp_states, 68), get_lines_if(exp_states, 69), get_expState_if(exp_states, 69), get_lines_if(exp_states, 70), get_expState_if(exp_states, 70), get_lines_if(exp_states, 71), get_expState_if(exp_states, 71), get_lines_if(exp_states, 72), get_expState_if(exp_states, 72), get_lines_if(exp_states, 73), get_expState_if(exp_states, 73), get_lines_if(exp_states, 74), get_expState_if(exp_states, 74), get_lines_if(exp_states, 75), get_expState_if(exp_states, 75), get_lines_if(exp_states, 76), get_expState_if(exp_states, 76), get_lines_if(exp_states, 77), get_expState_if(exp_states, 77), get_lines_if(exp_states, 78), get_expState_if(exp_states, 78), get_lines_if(exp_states, 79), get_expState_if(exp_states, 79), get_lines_if(exp_states, 80), get_expState_if(exp_states, 80), get_lines_if(exp_states, 81), get_expState_if(exp_states, 81), get_lines_if(exp_states, 82), get_expState_if(exp_states, 82), get_lines_if(exp_states, 83), get_expState_if(exp_states, 83), get_lines_if(exp_states, 84), get_expState_if(exp_states, 84), get_lines_if(exp_states, 85), get_expState_if(exp_states, 85), get_lines_if(exp_states, 86), get_expState_if(exp_states, 86), get_lines_if(exp_states, 87), get_expState_if(exp_states, 87), get_lines_if(exp_states, 88), get_expState_if(exp_states, 88), get_lines_if(exp_states, 89), get_expState_if(exp_states, 89), get_lines_if(exp_states, 90), get_expState_if(exp_states, 90), get_lines_if(exp_states, 91), get_expState_if(exp_states, 91), get_lines_if(exp_states, 92), get_expState_if(exp_states, 92), get_lines_if(exp_states, 93), get_expState_if(exp_states, 93), get_lines_if(exp_states, 94), get_expState_if(exp_states, 94), get_lines_if(exp_states, 95), get_expState_if(exp_states, 95), get_lines_if(exp_states, 96), get_expState_if(exp_states, 96));
         return std::make_tuple(status, task);
       };
-      uint32_t session_id = 0;
-      const std::string& grpc_device_session_name = request->session_name();
+      std::string grpc_device_session_name = request->session_name();
       auto cleanup_lambda = [&] (TaskHandle id) { library_->ClearTask(id); };
-      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
+      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, 0);
       }
       response->set_status(status);
-      response->mutable_task()->set_id(session_id);
+      response->mutable_task()->set_name(grpc_device_session_name);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
@@ -7117,15 +7115,14 @@ namespace nidaqmx_grpc {
         auto status = library_->CreateWatchdogTimerTaskEx(device_name, session_name, &task, timeout);
         return std::make_tuple(status, task);
       };
-      uint32_t session_id = 0;
-      const std::string& grpc_device_session_name = request->session_name();
+      std::string grpc_device_session_name = request->session_name();
       auto cleanup_lambda = [&] (TaskHandle id) { library_->ClearTask(id); };
-      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
+      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, 0);
       }
       response->set_status(status);
-      response->mutable_task()->set_id(session_id);
+      response->mutable_task()->set_name(grpc_device_session_name);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
@@ -7249,7 +7246,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto status = library_->DisableRefTrig(task);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
@@ -7271,7 +7268,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto status = library_->DisableStartTrig(task);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
@@ -7315,7 +7312,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 signal_id;
       switch (request->signal_id_enum_case()) {
         case nidaqmx_grpc::ExportSignalRequest::SignalIdEnumCase::kSignalId: {
@@ -7354,7 +7351,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
       uInt32 year {};
       uInt32 month {};
@@ -7387,7 +7384,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
       uInt32 year {};
       uInt32 month {};
@@ -7508,7 +7505,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       CVIAbsoluteTime data {};
       auto status = library_->GetArmStartTrigTimestampVal(task, &data);
       if (!status_ok(status)) {
@@ -7532,7 +7529,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       CVIAbsoluteTime data {};
       auto status = library_->GetArmStartTrigTrigWhen(task, &data);
       if (!status_ok(status)) {
@@ -7595,7 +7592,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetBufferAttributeUInt32Request::AttributeEnumCase::kAttribute: {
@@ -7826,7 +7823,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto channel = request->channel().c_str();
       int32 attribute;
       switch (request->attribute_enum_case()) {
@@ -7871,7 +7868,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto channel = request->channel().c_str();
       int32 attribute;
       switch (request->attribute_enum_case()) {
@@ -7916,7 +7913,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto channel = request->channel().c_str();
       int32 attribute;
       switch (request->attribute_enum_case()) {
@@ -7973,7 +7970,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto channel = request->channel().c_str();
       int32 attribute;
       switch (request->attribute_enum_case()) {
@@ -8024,7 +8021,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto channel = request->channel().c_str();
       int32 attribute;
       switch (request->attribute_enum_case()) {
@@ -8085,7 +8082,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto channel = request->channel().c_str();
       int32 attribute;
       switch (request->attribute_enum_case()) {
@@ -8740,7 +8737,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetExportedSignalAttributeBoolRequest::AttributeEnumCase::kAttribute: {
@@ -8784,7 +8781,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetExportedSignalAttributeDoubleRequest::AttributeEnumCase::kAttribute: {
@@ -8828,7 +8825,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetExportedSignalAttributeInt32Request::AttributeEnumCase::kAttribute: {
@@ -8878,7 +8875,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetExportedSignalAttributeStringRequest::AttributeEnumCase::kAttribute: {
@@ -8938,7 +8935,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetExportedSignalAttributeUInt32Request::AttributeEnumCase::kAttribute: {
@@ -8982,7 +8979,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       CVIAbsoluteTime data {};
       auto status = library_->GetFirstSampClkWhen(task, &data);
       if (!status_ok(status)) {
@@ -9006,7 +9003,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       CVIAbsoluteTime data {};
       auto status = library_->GetFirstSampTimestampVal(task, &data);
       if (!status_ok(status)) {
@@ -9030,7 +9027,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       uInt32 index = request->index();
 
       while (true) {
@@ -9072,7 +9069,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       uInt32 index = request->index();
 
       while (true) {
@@ -9114,7 +9111,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       uInt32 index = request->index();
 
       while (true) {
@@ -9933,7 +9930,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetReadAttributeBoolRequest::AttributeEnumCase::kAttribute: {
@@ -9977,7 +9974,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetReadAttributeDoubleRequest::AttributeEnumCase::kAttribute: {
@@ -10021,7 +10018,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetReadAttributeInt32Request::AttributeEnumCase::kAttribute: {
@@ -10071,7 +10068,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetReadAttributeStringRequest::AttributeEnumCase::kAttribute: {
@@ -10131,7 +10128,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetReadAttributeUInt32Request::AttributeEnumCase::kAttribute: {
@@ -10175,7 +10172,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetReadAttributeUInt64Request::AttributeEnumCase::kAttribute: {
@@ -10219,7 +10216,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetRealTimeAttributeBoolRequest::AttributeEnumCase::kAttribute: {
@@ -10263,7 +10260,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetRealTimeAttributeInt32Request::AttributeEnumCase::kAttribute: {
@@ -10313,7 +10310,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetRealTimeAttributeUInt32Request::AttributeEnumCase::kAttribute: {
@@ -10357,7 +10354,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       CVIAbsoluteTime data {};
       auto status = library_->GetRefTrigTimestampVal(task, &data);
       if (!status_ok(status)) {
@@ -10618,7 +10615,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       CVIAbsoluteTime data {};
       auto status = library_->GetStartTrigTimestampVal(task, &data);
       if (!status_ok(status)) {
@@ -10642,7 +10639,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       CVIAbsoluteTime data {};
       auto status = library_->GetStartTrigTrigWhen(task, &data);
       if (!status_ok(status)) {
@@ -10666,7 +10663,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       CVIAbsoluteTime data {};
       auto status = library_->GetSyncPulseTimeWhen(task, &data);
       if (!status_ok(status)) {
@@ -10790,7 +10787,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetTaskAttributeBoolRequest::AttributeEnumCase::kAttribute: {
@@ -10834,7 +10831,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetTaskAttributeStringRequest::AttributeEnumCase::kAttribute: {
@@ -10894,7 +10891,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetTaskAttributeUInt32Request::AttributeEnumCase::kAttribute: {
@@ -10938,7 +10935,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetTimingAttributeBoolRequest::AttributeEnumCase::kAttribute: {
@@ -10982,7 +10979,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetTimingAttributeDoubleRequest::AttributeEnumCase::kAttribute: {
@@ -11026,7 +11023,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto device_names = request->device_names().c_str();
       int32 attribute;
       switch (request->attribute_enum_case()) {
@@ -11071,7 +11068,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto device_names = request->device_names().c_str();
       int32 attribute;
       switch (request->attribute_enum_case()) {
@@ -11116,7 +11113,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto device_names = request->device_names().c_str();
       int32 attribute;
       switch (request->attribute_enum_case()) {
@@ -11167,7 +11164,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto device_names = request->device_names().c_str();
       int32 attribute;
       switch (request->attribute_enum_case()) {
@@ -11228,7 +11225,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto device_names = request->device_names().c_str();
       int32 attribute;
       switch (request->attribute_enum_case()) {
@@ -11273,7 +11270,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto device_names = request->device_names().c_str();
       int32 attribute;
       switch (request->attribute_enum_case()) {
@@ -11318,7 +11315,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto device_names = request->device_names().c_str();
       int32 attribute;
       switch (request->attribute_enum_case()) {
@@ -11363,7 +11360,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetTimingAttributeInt32Request::AttributeEnumCase::kAttribute: {
@@ -11413,7 +11410,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetTimingAttributeStringRequest::AttributeEnumCase::kAttribute: {
@@ -11473,7 +11470,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetTimingAttributeTimestampRequest::AttributeEnumCase::kAttribute: {
@@ -11517,7 +11514,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetTimingAttributeUInt32Request::AttributeEnumCase::kAttribute: {
@@ -11561,7 +11558,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetTimingAttributeUInt64Request::AttributeEnumCase::kAttribute: {
@@ -11605,7 +11602,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetTrigAttributeBoolRequest::AttributeEnumCase::kAttribute: {
@@ -11649,7 +11646,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetTrigAttributeDoubleRequest::AttributeEnumCase::kAttribute: {
@@ -11693,7 +11690,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetTrigAttributeDoubleArrayRequest::AttributeEnumCase::kAttribute: {
@@ -11749,7 +11746,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetTrigAttributeInt32Request::AttributeEnumCase::kAttribute: {
@@ -11799,7 +11796,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetTrigAttributeInt32ArrayRequest::AttributeEnumCase::kAttribute: {
@@ -11869,7 +11866,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetTrigAttributeStringRequest::AttributeEnumCase::kAttribute: {
@@ -11929,7 +11926,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetTrigAttributeTimestampRequest::AttributeEnumCase::kAttribute: {
@@ -11973,7 +11970,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetTrigAttributeUInt32Request::AttributeEnumCase::kAttribute: {
@@ -12017,7 +12014,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto lines = request->lines().c_str();
       int32 attribute;
       switch (request->attribute_enum_case()) {
@@ -12062,7 +12059,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto lines = request->lines().c_str();
       int32 attribute;
       switch (request->attribute_enum_case()) {
@@ -12107,7 +12104,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto lines = request->lines().c_str();
       int32 attribute;
       switch (request->attribute_enum_case()) {
@@ -12158,7 +12155,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto lines = request->lines().c_str();
       int32 attribute;
       switch (request->attribute_enum_case()) {
@@ -12219,7 +12216,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetWriteAttributeBoolRequest::AttributeEnumCase::kAttribute: {
@@ -12263,7 +12260,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetWriteAttributeDoubleRequest::AttributeEnumCase::kAttribute: {
@@ -12307,7 +12304,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetWriteAttributeInt32Request::AttributeEnumCase::kAttribute: {
@@ -12357,7 +12354,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetWriteAttributeStringRequest::AttributeEnumCase::kAttribute: {
@@ -12417,7 +12414,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetWriteAttributeUInt32Request::AttributeEnumCase::kAttribute: {
@@ -12461,7 +12458,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetWriteAttributeUInt64Request::AttributeEnumCase::kAttribute: {
@@ -12505,7 +12502,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       bool32 is_task_done {};
       auto status = library_->IsTaskDone(task, &is_task_done);
       if (!status_ok(status)) {
@@ -12535,15 +12532,14 @@ namespace nidaqmx_grpc {
         auto status = library_->LoadTask(session_name, &task);
         return std::make_tuple(status, task);
       };
-      uint32_t session_id = 0;
-      const std::string& grpc_device_session_name = request->session_name();
+      std::string grpc_device_session_name = request->session_name();
       auto cleanup_lambda = [&] (TaskHandle id) { library_->ClearTask(id); };
-      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
+      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, 0);
       }
       response->set_status(status);
-      response->mutable_task()->set_id(session_id);
+      response->mutable_task()->set_name(grpc_device_session_name);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
@@ -12560,7 +12556,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 num_samps_per_chan = request->num_samps_per_chan();
       float64 timeout = request->timeout();
       int32 fill_mode;
@@ -12606,7 +12602,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       float64 timeout = request->timeout();
       auto reserved = nullptr;
       float64 value {};
@@ -12632,7 +12628,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 num_samps_per_chan = request->num_samps_per_chan();
       float64 timeout = request->timeout();
       int32 fill_mode;
@@ -12686,7 +12682,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 num_samps_per_chan = request->num_samps_per_chan();
       float64 timeout = request->timeout();
       int32 fill_mode;
@@ -12732,7 +12728,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 num_samps_per_chan = request->num_samps_per_chan();
       float64 timeout = request->timeout();
       int32 fill_mode;
@@ -12786,7 +12782,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 num_samps_per_chan = request->num_samps_per_chan();
       float64 timeout = request->timeout();
       int32 fill_mode;
@@ -12832,7 +12828,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 num_samps_per_chan = request->num_samps_per_chan();
       float64 timeout = request->timeout();
       uInt32 array_size_in_samps = request->array_size_in_samps();
@@ -12862,7 +12858,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 num_samps_per_chan = request->num_samps_per_chan();
       float64 timeout = request->timeout();
       int32 fill_mode;
@@ -12908,7 +12904,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       float64 timeout = request->timeout();
       auto reserved = nullptr;
       float64 value {};
@@ -12934,7 +12930,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       float64 timeout = request->timeout();
       auto reserved = nullptr;
       uInt32 value {};
@@ -12960,7 +12956,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 num_samps_per_chan = request->num_samps_per_chan();
       float64 timeout = request->timeout();
       uInt32 array_size_in_samps = request->array_size_in_samps();
@@ -12990,7 +12986,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 num_samps_per_chan = request->num_samps_per_chan();
       float64 timeout = request->timeout();
       int32 fill_mode;
@@ -13036,7 +13032,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 num_samps_per_chan = request->num_samps_per_chan();
       float64 timeout = request->timeout();
       int32 interleaved;
@@ -13084,7 +13080,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       float64 timeout = request->timeout();
       auto reserved = nullptr;
       float64 frequency {};
@@ -13112,7 +13108,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 num_samps_per_chan = request->num_samps_per_chan();
       float64 timeout = request->timeout();
       int32 interleaved;
@@ -13160,7 +13156,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       float64 timeout = request->timeout();
       auto reserved = nullptr;
       uInt32 high_ticks {};
@@ -13188,7 +13184,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 num_samps_per_chan = request->num_samps_per_chan();
       float64 timeout = request->timeout();
       int32 interleaved;
@@ -13236,7 +13232,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       float64 timeout = request->timeout();
       auto reserved = nullptr;
       float64 high_time {};
@@ -13264,7 +13260,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 num_samps_per_chan = request->num_samps_per_chan();
       float64 timeout = request->timeout();
       int32 fill_mode;
@@ -13312,7 +13308,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       float64 timeout = request->timeout();
       auto reserved = nullptr;
       uInt32 value {};
@@ -13338,7 +13334,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 num_samps_per_chan = request->num_samps_per_chan();
       float64 timeout = request->timeout();
       int32 fill_mode;
@@ -13392,7 +13388,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 num_samps_per_chan = request->num_samps_per_chan();
       float64 timeout = request->timeout();
       int32 fill_mode;
@@ -13438,7 +13434,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 num_samps_per_chan = request->num_samps_per_chan();
       float64 timeout = request->timeout();
       int32 fill_mode;
@@ -13484,7 +13480,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 num_samps_per_chan = request->num_samps_per_chan();
       float64 timeout = request->timeout();
       uInt32 array_size_in_bytes = request->array_size_in_bytes();
@@ -13536,7 +13532,7 @@ namespace nidaqmx_grpc {
         });
 
         auto task_grpc_session = request->task();
-        TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+        TaskHandle task = session_repository_->access_session(task_grpc_session.name());
         auto options = 0U;
 
         auto status = library->RegisterDoneEvent(task, options, CallbackRouter::handle_callback, handler->token());
@@ -13594,7 +13590,7 @@ namespace nidaqmx_grpc {
         });
 
         auto task_grpc_session = request->task();
-        TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+        TaskHandle task = session_repository_->access_session(task_grpc_session.name());
         int32 every_n_samples_event_type;
         switch (request->every_n_samples_event_type_enum_case()) {
           case nidaqmx_grpc::RegisterEveryNSamplesEventRequest::EveryNSamplesEventTypeEnumCase::kEveryNSamplesEventType: {
@@ -13667,7 +13663,7 @@ namespace nidaqmx_grpc {
         });
 
         auto task_grpc_session = request->task();
-        TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+        TaskHandle task = session_repository_->access_session(task_grpc_session.name());
         int32 signal_id;
         switch (request->signal_id_enum_case()) {
           case nidaqmx_grpc::RegisterSignalEventRequest::SignalIdEnumCase::kSignalId: {
@@ -13762,7 +13758,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::ResetBufferAttributeRequest::AttributeEnumCase::kAttribute: {
@@ -13803,7 +13799,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto channel = request->channel().c_str();
       int32 attribute;
       switch (request->attribute_enum_case()) {
@@ -13866,7 +13862,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::ResetExportedSignalAttributeRequest::AttributeEnumCase::kAttribute: {
@@ -13907,7 +13903,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::ResetReadAttributeRequest::AttributeEnumCase::kAttribute: {
@@ -13948,7 +13944,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::ResetRealTimeAttributeRequest::AttributeEnumCase::kAttribute: {
@@ -13989,7 +13985,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::ResetTimingAttributeRequest::AttributeEnumCase::kAttribute: {
@@ -14030,7 +14026,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto device_names = request->device_names().c_str();
       int32 attribute;
       switch (request->attribute_enum_case()) {
@@ -14072,7 +14068,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::ResetTrigAttributeRequest::AttributeEnumCase::kAttribute: {
@@ -14113,7 +14109,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto lines = request->lines().c_str();
       int32 attribute;
       switch (request->attribute_enum_case()) {
@@ -14155,7 +14151,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::ResetWriteAttributeRequest::AttributeEnumCase::kAttribute: {
@@ -14196,7 +14192,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
       auto save_as = request->save_as().c_str();
       auto author = request->author().c_str();
@@ -14276,7 +14272,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto save_as = request->save_as().c_str();
       auto author = request->author().c_str();
       uInt32 options;
@@ -14358,7 +14354,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
       uInt32 year = request->year();
       uInt32 month = request->month();
@@ -14386,7 +14382,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto channel_name = request->channel_name().c_str();
       uInt32 year = request->year();
       uInt32 month = request->month();
@@ -14504,7 +14500,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto data = convert_from_grpc<CVIAbsoluteTime>(request->data());
       auto status = library_->SetArmStartTrigTrigWhen(task, data);
       if (!status_ok(status)) {
@@ -14527,7 +14523,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetBufferAttributeUInt32Request::AttributeEnumCase::kAttribute: {
@@ -14737,7 +14733,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto channel = request->channel().c_str();
       int32 attribute;
       switch (request->attribute_enum_case()) {
@@ -14781,7 +14777,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto channel = request->channel().c_str();
       int32 attribute;
       switch (request->attribute_enum_case()) {
@@ -14825,7 +14821,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto channel = request->channel().c_str();
       int32 attribute;
       switch (request->attribute_enum_case()) {
@@ -14869,7 +14865,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto channel = request->channel().c_str();
       int32 attribute;
       switch (request->attribute_enum_case()) {
@@ -14928,7 +14924,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto channel = request->channel().c_str();
       int32 attribute;
       switch (request->attribute_enum_case()) {
@@ -14972,7 +14968,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto channel = request->channel().c_str();
       int32 attribute;
       switch (request->attribute_enum_case()) {
@@ -15135,7 +15131,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetExportedSignalAttributeBoolRequest::AttributeEnumCase::kAttribute: {
@@ -15178,7 +15174,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetExportedSignalAttributeDoubleRequest::AttributeEnumCase::kAttribute: {
@@ -15221,7 +15217,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetExportedSignalAttributeInt32Request::AttributeEnumCase::kAttribute: {
@@ -15279,7 +15275,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetExportedSignalAttributeStringRequest::AttributeEnumCase::kAttribute: {
@@ -15322,7 +15318,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetExportedSignalAttributeUInt32Request::AttributeEnumCase::kAttribute: {
@@ -15365,7 +15361,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto data = convert_from_grpc<CVIAbsoluteTime>(request->data());
       auto status = library_->SetFirstSampClkWhen(task, data);
       if (!status_ok(status)) {
@@ -15388,7 +15384,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetReadAttributeBoolRequest::AttributeEnumCase::kAttribute: {
@@ -15431,7 +15427,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetReadAttributeDoubleRequest::AttributeEnumCase::kAttribute: {
@@ -15474,7 +15470,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetReadAttributeInt32Request::AttributeEnumCase::kAttribute: {
@@ -15532,7 +15528,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetReadAttributeStringRequest::AttributeEnumCase::kAttribute: {
@@ -15575,7 +15571,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetReadAttributeUInt32Request::AttributeEnumCase::kAttribute: {
@@ -15618,7 +15614,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetReadAttributeUInt64Request::AttributeEnumCase::kAttribute: {
@@ -15661,7 +15657,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetRealTimeAttributeBoolRequest::AttributeEnumCase::kAttribute: {
@@ -15704,7 +15700,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetRealTimeAttributeInt32Request::AttributeEnumCase::kAttribute: {
@@ -15762,7 +15758,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetRealTimeAttributeUInt32Request::AttributeEnumCase::kAttribute: {
@@ -15988,7 +15984,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto data = convert_from_grpc<CVIAbsoluteTime>(request->data());
       auto status = library_->SetStartTrigTrigWhen(task, data);
       if (!status_ok(status)) {
@@ -16011,7 +16007,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto data = convert_from_grpc<CVIAbsoluteTime>(request->data());
       auto status = library_->SetSyncPulseTimeWhen(task, data);
       if (!status_ok(status)) {
@@ -16034,7 +16030,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetTimingAttributeBoolRequest::AttributeEnumCase::kAttribute: {
@@ -16077,7 +16073,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetTimingAttributeDoubleRequest::AttributeEnumCase::kAttribute: {
@@ -16120,7 +16116,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto device_names = request->device_names().c_str();
       int32 attribute;
       switch (request->attribute_enum_case()) {
@@ -16164,7 +16160,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto device_names = request->device_names().c_str();
       int32 attribute;
       switch (request->attribute_enum_case()) {
@@ -16208,7 +16204,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto device_names = request->device_names().c_str();
       int32 attribute;
       switch (request->attribute_enum_case()) {
@@ -16267,7 +16263,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto device_names = request->device_names().c_str();
       int32 attribute;
       switch (request->attribute_enum_case()) {
@@ -16311,7 +16307,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto device_names = request->device_names().c_str();
       int32 attribute;
       switch (request->attribute_enum_case()) {
@@ -16355,7 +16351,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto device_names = request->device_names().c_str();
       int32 attribute;
       switch (request->attribute_enum_case()) {
@@ -16399,7 +16395,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto device_names = request->device_names().c_str();
       int32 attribute;
       switch (request->attribute_enum_case()) {
@@ -16443,7 +16439,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetTimingAttributeInt32Request::AttributeEnumCase::kAttribute: {
@@ -16501,7 +16497,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetTimingAttributeStringRequest::AttributeEnumCase::kAttribute: {
@@ -16544,7 +16540,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetTimingAttributeTimestampRequest::AttributeEnumCase::kAttribute: {
@@ -16587,7 +16583,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetTimingAttributeUInt32Request::AttributeEnumCase::kAttribute: {
@@ -16630,7 +16626,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetTimingAttributeUInt64Request::AttributeEnumCase::kAttribute: {
@@ -16673,7 +16669,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetTrigAttributeBoolRequest::AttributeEnumCase::kAttribute: {
@@ -16716,7 +16712,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetTrigAttributeDoubleRequest::AttributeEnumCase::kAttribute: {
@@ -16759,7 +16755,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetTrigAttributeDoubleArrayRequest::AttributeEnumCase::kAttribute: {
@@ -16802,7 +16798,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetTrigAttributeInt32Request::AttributeEnumCase::kAttribute: {
@@ -16860,7 +16856,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetTrigAttributeInt32ArrayRequest::AttributeEnumCase::kAttribute: {
@@ -16903,7 +16899,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetTrigAttributeStringRequest::AttributeEnumCase::kAttribute: {
@@ -16946,7 +16942,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetTrigAttributeTimestampRequest::AttributeEnumCase::kAttribute: {
@@ -16989,7 +16985,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetTrigAttributeUInt32Request::AttributeEnumCase::kAttribute: {
@@ -17032,7 +17028,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto lines = request->lines().c_str();
       int32 attribute;
       switch (request->attribute_enum_case()) {
@@ -17076,7 +17072,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto lines = request->lines().c_str();
       int32 attribute;
       switch (request->attribute_enum_case()) {
@@ -17120,7 +17116,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto lines = request->lines().c_str();
       int32 attribute;
       switch (request->attribute_enum_case()) {
@@ -17179,7 +17175,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto lines = request->lines().c_str();
       int32 attribute;
       switch (request->attribute_enum_case()) {
@@ -17223,7 +17219,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetWriteAttributeBoolRequest::AttributeEnumCase::kAttribute: {
@@ -17266,7 +17262,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetWriteAttributeDoubleRequest::AttributeEnumCase::kAttribute: {
@@ -17309,7 +17305,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetWriteAttributeInt32Request::AttributeEnumCase::kAttribute: {
@@ -17367,7 +17363,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetWriteAttributeStringRequest::AttributeEnumCase::kAttribute: {
@@ -17410,7 +17406,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetWriteAttributeUInt32Request::AttributeEnumCase::kAttribute: {
@@ -17453,7 +17449,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetWriteAttributeUInt64Request::AttributeEnumCase::kAttribute: {
@@ -17496,7 +17492,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto file_path = request->file_path().c_str();
       auto status = library_->StartNewFile(task, file_path);
       if (!status_ok(status)) {
@@ -17519,7 +17515,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto status = library_->StartTask(task);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
@@ -17541,7 +17537,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       auto status = library_->StopTask(task);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
@@ -17563,7 +17559,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 action;
       switch (request->action_enum_case()) {
         case nidaqmx_grpc::TaskControlRequest::ActionEnumCase::kAction: {
@@ -17643,7 +17639,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       float64 timeout = request->timeout();
       bool32 is_late {};
       auto status = library_->WaitForNextSampleClock(task, timeout, &is_late);
@@ -17668,7 +17664,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 timestamp_event;
       switch (request->timestamp_event_enum_case()) {
         case nidaqmx_grpc::WaitForValidTimestampRequest::TimestampEventEnumCase::kTimestampEvent: {
@@ -17709,7 +17705,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       float64 time_to_wait = request->time_to_wait();
       auto status = library_->WaitUntilTaskDone(task, time_to_wait);
       if (!status_ok(status)) {
@@ -17732,7 +17728,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 num_samps_per_chan = request->num_samps_per_chan();
       bool32 auto_start = request->auto_start();
       float64 timeout = request->timeout();
@@ -17777,7 +17773,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       bool32 auto_start = request->auto_start();
       float64 timeout = request->timeout();
       float64 value = request->value();
@@ -17803,7 +17799,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 num_samps_per_chan = request->num_samps_per_chan();
       bool32 auto_start = request->auto_start();
       float64 timeout = request->timeout();
@@ -17865,7 +17861,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 num_samps_per_chan = request->num_samps_per_chan();
       bool32 auto_start = request->auto_start();
       float64 timeout = request->timeout();
@@ -17910,7 +17906,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 num_samps_per_chan = request->num_samps_per_chan();
       bool32 auto_start = request->auto_start();
       float64 timeout = request->timeout();
@@ -17972,7 +17968,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 num_samps_per_chan = request->num_samps_per_chan();
       bool32 auto_start = request->auto_start();
       float64 timeout = request->timeout();
@@ -18017,7 +18013,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 num_samps_per_chan = request->num_samps_per_chan();
       bool32 auto_start = request->auto_start();
       float64 timeout = request->timeout();
@@ -18063,7 +18059,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       bool32 auto_start = request->auto_start();
       float64 timeout = request->timeout();
       float64 frequency = request->frequency();
@@ -18090,7 +18086,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 num_samps_per_chan = request->num_samps_per_chan();
       bool32 auto_start = request->auto_start();
       float64 timeout = request->timeout();
@@ -18136,7 +18132,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       bool32 auto_start = request->auto_start();
       float64 timeout = request->timeout();
       uInt32 high_ticks = request->high_ticks();
@@ -18163,7 +18159,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 num_samps_per_chan = request->num_samps_per_chan();
       bool32 auto_start = request->auto_start();
       float64 timeout = request->timeout();
@@ -18209,7 +18205,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       bool32 auto_start = request->auto_start();
       float64 timeout = request->timeout();
       float64 high_time = request->high_time();
@@ -18236,7 +18232,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 num_samps_per_chan = request->num_samps_per_chan();
       bool32 auto_start = request->auto_start();
       float64 timeout = request->timeout();
@@ -18281,7 +18277,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       bool32 auto_start = request->auto_start();
       float64 timeout = request->timeout();
       uInt32 value = request->value();
@@ -18307,7 +18303,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 num_samps_per_chan = request->num_samps_per_chan();
       bool32 auto_start = request->auto_start();
       float64 timeout = request->timeout();
@@ -18369,7 +18365,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 num_samps_per_chan = request->num_samps_per_chan();
       bool32 auto_start = request->auto_start();
       float64 timeout = request->timeout();
@@ -18414,7 +18410,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 num_samps_per_chan = request->num_samps_per_chan();
       bool32 auto_start = request->auto_start();
       float64 timeout = request->timeout();
@@ -18459,7 +18455,7 @@ namespace nidaqmx_grpc {
     }
     try {
       auto task_grpc_session = request->task();
-      TaskHandle task = session_repository_->access_session(task_grpc_session.id(), task_grpc_session.name());
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
       int32 num_samps = request->num_samps();
       bool32 auto_start = request->auto_start();
       float64 timeout = request->timeout();

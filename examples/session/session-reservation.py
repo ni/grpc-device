@@ -80,7 +80,7 @@ try:
         )
     )
     vi = init_with_options_response.vi
-    print(f"Session initialized with name {session_name} and id {vi.id}.\n")
+    print(f"Session initialized with name {session_name}.\n")
 
     # Check if session is reserved by client 1.
     # Note: The reservation_id is defined by and has meaning only for the client + Session

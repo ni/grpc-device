@@ -132,7 +132,7 @@ class NiDAQmxDriverApiTests : public Test {
   CreateAIVoltageChanRequest create_ai_voltage_request(double min_val, double max_val, const std::string& custom_scale_name = "")
   {
     CreateAIVoltageChanRequest request;
-    set_request_session_id(request);
+    set_request_session_name(request);
     request.set_physical_channel("gRPCSystemTestDAQ/ai0");
     request.set_name_to_assign_to_channel("ai0");
     request.set_terminal_config(InputTermCfgWithDefault::INPUT_TERM_CFG_WITH_DEFAULT_CFG_DEFAULT);
@@ -163,7 +163,7 @@ class NiDAQmxDriverApiTests : public Test {
   CreateAOVoltageChanRequest create_ao_voltage_chan_request(double min_val, double max_val, const std::string& name = "ao0")
   {
     CreateAOVoltageChanRequest request;
-    set_request_session_id(request);
+    set_request_session_name(request);
 
     request.set_physical_channel("gRPCSystemTestDAQ/ao0");
     request.set_name_to_assign_to_channel(name);
@@ -190,7 +190,7 @@ class NiDAQmxDriverApiTests : public Test {
   {
     ::grpc::ClientContext context;
     CreateDIChanRequest request;
-    set_request_session_id(request);
+    set_request_session_name(request);
     request.set_lines("gRPCSystemTestDAQ/port0/line0");
     request.set_name_to_assign_to_lines("di");
     request.set_line_grouping(LineGrouping::LINE_GROUPING_CHAN_PER_LINE);
@@ -206,7 +206,7 @@ class NiDAQmxDriverApiTests : public Test {
   {
     ::grpc::ClientContext context;
     CreateCIFreqChanRequest request;
-    set_request_session_id(request);
+    set_request_session_name(request);
     request.set_counter("gRPCSystemTestDAQ/ctr0");
     request.set_name_to_assign_to_channel("ctr");
     request.set_min_val(1.19209);
@@ -231,7 +231,7 @@ class NiDAQmxDriverApiTests : public Test {
   {
     ::grpc::ClientContext context;
     StartTaskRequest request;
-    set_request_session_id(request, session);
+    set_request_session_name(request, session);
     return stub()->StartTask(&context, request, &response);
   }
 
@@ -244,7 +244,7 @@ class NiDAQmxDriverApiTests : public Test {
   {
     ::grpc::ClientContext context;
     StopTaskRequest request;
-    set_request_session_id(request);
+    set_request_session_name(request);
     return stub()->StopTask(&context, request, &response);
   }
 
@@ -255,7 +255,7 @@ class NiDAQmxDriverApiTests : public Test {
   {
     ::grpc::ClientContext context;
     ReadAnalogF64Request request;
-    set_request_session_id(request);
+    set_request_session_name(request);
     request.set_num_samps_per_chan(samps_per_chan);
     request.set_array_size_in_samps(array_size_in_samps);
     request.set_fill_mode(GroupBy::GROUP_BY_GROUP_BY_CHANNEL);
@@ -269,7 +269,7 @@ class NiDAQmxDriverApiTests : public Test {
   {
     ::grpc::ClientContext context;
     WriteAnalogF64Request request;
-    set_request_session_id(request);
+    set_request_session_name(request);
     request.set_num_samps_per_chan(static_cast<int32_t>(data.size()));
     request.set_auto_start(false);
     request.mutable_write_array()->Add(data.cbegin(), data.cend());
@@ -283,7 +283,7 @@ class NiDAQmxDriverApiTests : public Test {
   {
     ::grpc::ClientContext context;
     WriteDigitalU32Request request;
-    set_request_session_id(request);
+    set_request_session_name(request);
     request.set_data_layout(GroupBy::GROUP_BY_GROUP_BY_CHANNEL);
     request.set_num_samps_per_chan(4);
     request.add_write_array(1000000);
@@ -297,7 +297,7 @@ class NiDAQmxDriverApiTests : public Test {
   {
     ::grpc::ClientContext context;
     ReadDigitalU32Request request;
-    set_request_session_id(request);
+    set_request_session_name(request);
     request.set_num_samps_per_chan(4);
     request.set_array_size_in_samps(4);
     request.set_fill_mode(GroupBy::GROUP_BY_GROUP_BY_CHANNEL);
@@ -308,7 +308,7 @@ class NiDAQmxDriverApiTests : public Test {
   {
     ::grpc::ClientContext context;
     WriteDigitalU16Request request;
-    set_request_session_id(request);
+    set_request_session_name(request);
     request.set_data_layout(GroupBy::GROUP_BY_GROUP_BY_CHANNEL);
     request.set_num_samps_per_chan(4);
     request.add_write_array(65535);
@@ -322,7 +322,7 @@ class NiDAQmxDriverApiTests : public Test {
   {
     ::grpc::ClientContext context;
     ReadDigitalU16Request request;
-    set_request_session_id(request);
+    set_request_session_name(request);
     request.set_num_samps_per_chan(4);
     request.set_array_size_in_samps(4);
     request.set_fill_mode(GroupBy::GROUP_BY_GROUP_BY_CHANNEL);
@@ -333,7 +333,7 @@ class NiDAQmxDriverApiTests : public Test {
   {
     ::grpc::ClientContext context;
     WriteDigitalU8Request request;
-    set_request_session_id(request);
+    set_request_session_name(request);
     request.set_data_layout(GroupBy::GROUP_BY_GROUP_BY_CHANNEL);
     request.set_num_samps_per_chan(4);
     uint8_t data[4] = {255, 10, 1, 0};
@@ -345,7 +345,7 @@ class NiDAQmxDriverApiTests : public Test {
   {
     ::grpc::ClientContext context;
     ReadDigitalU8Request request;
-    set_request_session_id(request);
+    set_request_session_name(request);
     request.set_num_samps_per_chan(4);
     request.set_array_size_in_samps(4);
     request.set_fill_mode(GroupBy::GROUP_BY_GROUP_BY_CHANNEL);
@@ -356,7 +356,7 @@ class NiDAQmxDriverApiTests : public Test {
   {
     ::grpc::ClientContext context;
     WriteBinaryI16Request request;
-    set_request_session_id(request);
+    set_request_session_name(request);
     request.set_num_samps_per_chan(static_cast<uint32>(data.size()));
     request.mutable_write_array()->CopyFrom({data.cbegin(), data.cend()});
     request.set_data_layout(GroupBy::GROUP_BY_GROUP_BY_CHANNEL);
@@ -367,7 +367,7 @@ class NiDAQmxDriverApiTests : public Test {
   {
     ::grpc::ClientContext context;
     GetNthTaskDeviceRequest request;
-    set_request_session_id(request);
+    set_request_session_name(request);
     request.set_index(index);
 
     return stub()->GetNthTaskDevice(&context, request, &response);
@@ -377,7 +377,7 @@ class NiDAQmxDriverApiTests : public Test {
   {
     ::grpc::ClientContext context;
     IsTaskDoneRequest request;
-    set_request_session_id(request);
+    set_request_session_name(request);
     IsTaskDoneResponse response;
     auto status = stub()->IsTaskDone(&context, request, &response);
     EXPECT_SUCCESS(status, response);
@@ -388,7 +388,7 @@ class NiDAQmxDriverApiTests : public Test {
   {
     ::grpc::ClientContext context;
     TaskControlRequest request;
-    set_request_session_id(request);
+    set_request_session_name(request);
     request.set_action(action);
     return stub()->TaskControl(&context, request, &response);
   }
@@ -396,14 +396,14 @@ class NiDAQmxDriverApiTests : public Test {
   auto register_done_event(::grpc::ClientContext& context)
   {
     RegisterDoneEventRequest request;
-    set_request_session_id(request);
+    set_request_session_name(request);
     return stub()->RegisterDoneEvent(&context, request);
   }
 
   auto register_every_n_samples_event(::grpc::ClientContext& context, uint32 n_samples)
   {
     RegisterEveryNSamplesEventRequest request;
-    set_request_session_id(request);
+    set_request_session_name(request);
     request.set_n_samples(n_samples);
     request.set_every_n_samples_event_type(EveryNSamplesEventType::EVERY_N_SAMPLES_EVENT_TYPE_ACQUIRED_INTO_BUFFER);
     return stub()->RegisterEveryNSamplesEvent(&context, request);
@@ -412,7 +412,7 @@ class NiDAQmxDriverApiTests : public Test {
   auto register_signal_event(::grpc::ClientContext& context, Signal2 signal_id)
   {
     RegisterSignalEventRequest request;
-    set_request_session_id(request);
+    set_request_session_name(request);
     request.set_signal_id(Signal2::SIGNAL2_SAMPLE_CLOCK);
     return stub()->RegisterSignalEvent(&context, request);
   }
@@ -420,7 +420,7 @@ class NiDAQmxDriverApiTests : public Test {
   CfgSampClkTimingRequest create_cfg_samp_clk_timing_request(double rate, Edge1 active_edge, AcquisitionType sample_mode, uInt64 samples_per_chan)
   {
     CfgSampClkTimingRequest request;
-    set_request_session_id(request);
+    set_request_session_name(request);
     request.set_rate(rate);
     request.set_active_edge(active_edge);
     request.set_sample_mode(sample_mode);
@@ -443,7 +443,7 @@ class NiDAQmxDriverApiTests : public Test {
   CfgChangeDetectionTimingRequest create_cfg_change_detection_timing(const std::string& channel)
   {
     CfgChangeDetectionTimingRequest request;
-    set_request_session_id(request);
+    set_request_session_name(request);
     request.set_falling_edge_chan(channel);
     request.set_rising_edge_chan(channel);
     request.set_sample_mode(AcquisitionType::ACQUISITION_TYPE_HW_TIMED_SINGLE_POINT);
@@ -460,7 +460,7 @@ class NiDAQmxDriverApiTests : public Test {
   {
     ::grpc::ClientContext context;
     CfgInputBufferRequest request;
-    set_request_session_id(request);
+    set_request_session_name(request);
     request.set_num_samps_per_chan(1024U);
     return stub()->CfgInputBuffer(&context, request, &response);
   }
@@ -469,7 +469,7 @@ class NiDAQmxDriverApiTests : public Test {
   {
     ::grpc::ClientContext context;
     CfgOutputBufferRequest request;
-    set_request_session_id(request);
+    set_request_session_name(request);
     request.set_num_samps_per_chan(1024U);
     return stub()->CfgOutputBuffer(&context, request, &response);
   }
@@ -510,7 +510,7 @@ class NiDAQmxDriverApiTests : public Test {
   {
     ::grpc::ClientContext context;
     CreateAIThrmcplChanRequest request;
-    set_request_session_id(request);
+    set_request_session_name(request);
     request.set_physical_channel("gRPCSystemTestDAQ/ai0");
     request.set_units(TemperatureUnits::TEMPERATURE_UNITS_DEG_C);
     request.set_min_val(min_val);
@@ -548,7 +548,7 @@ class NiDAQmxDriverApiTests : public Test {
   {
     ::grpc::ClientContext context;
     ReadRawRequest request;
-    set_request_session_id(request);
+    set_request_session_name(request);
     request.set_num_samps_per_chan(samples_to_read);
     request.set_array_size_in_bytes(samples_to_read * sizeof(TRaw));
     request.set_timeout(1000.0);
@@ -560,7 +560,7 @@ class NiDAQmxDriverApiTests : public Test {
   {
     ::grpc::ClientContext context;
     WriteRawRequest request;
-    set_request_session_id(request);
+    set_request_session_name(request);
     auto byte_data = reinterpret_cast<const char*>(data.data());
     auto write_data = request.mutable_write_array();
     write_data->insert(write_data->cbegin(), byte_data, byte_data + data.size() * sizeof(TRaw));
@@ -573,7 +573,7 @@ class NiDAQmxDriverApiTests : public Test {
   {
     ::grpc::ClientContext context;
     WaitForValidTimestampRequest request;
-    set_request_session_id(request);
+    set_request_session_name(request);
     request.set_timestamp_event(TimestampEvent::TIMESTAMP_EVENT_FIRST_SAMPLE_TIMESTAMP);
     request.set_timeout(1.000);
     auto status = stub()->WaitForValidTimestamp(&context, request, &response);
@@ -585,7 +585,7 @@ class NiDAQmxDriverApiTests : public Test {
   {
     ::grpc::ClientContext context;
     CfgTimeStartTrigRequest request;
-    set_request_session_id(request);
+    set_request_session_name(request);
     auto time = google::protobuf::util::TimeUtil::GetCurrentTime();
     auto duration = google::protobuf::Duration{};
     duration.set_seconds(10);
@@ -601,7 +601,7 @@ class NiDAQmxDriverApiTests : public Test {
   {
     ::grpc::ClientContext context;
     SaveTaskRequest request;
-    set_request_session_id(request);
+    set_request_session_name(request);
     request.set_author("grpc.tester@ni.com");
     request.set_options_raw(SaveOptions::SAVE_OPTIONS_OVERWRITE | SaveOptions::SAVE_OPTIONS_ALLOW_INTERACTIVE_DELETION);
     request.set_save_as("saved_task");
@@ -615,7 +615,7 @@ class NiDAQmxDriverApiTests : public Test {
     request.set_session_name("saved_task");
     auto status = stub()->LoadTask(&context, request, &response);
     if (status.ok()) {
-      EXPECT_NE(driver_session_->id(), response.task().id());
+      EXPECT_NE(driver_session_->name(), response.task().name());
       driver_session_ = std::make_unique<nidevice_grpc::Session>(response.task());
     }
     return status;
@@ -643,7 +643,7 @@ class NiDAQmxDriverApiTests : public Test {
   {
     ::grpc::ClientContext context;
     WaitForNextSampleClockRequest request;
-    set_request_session_id(request);
+    set_request_session_name(request);
     request.set_timeout(10.0);
     auto status = stub()->WaitForNextSampleClock(&context, request, &response);
     nidevice_grpc::experimental::client::raise_if_error(status, context);
@@ -677,7 +677,7 @@ class NiDAQmxDriverApiTests : public Test {
     ::grpc::ClientContext context;
     CfgWatchdogDOExpirStatesRequest request;
 
-    set_request_session_id(request, watchdog_session);
+    set_request_session_name(request, watchdog_session);
     request.set_channel_names("gRPCSystemTestDAQ/port1/line0:1");
     auto expir_states = std::vector<DigitalLineState>{
         DigitalLineState::DIGITAL_LINE_STATE_HIGH,
@@ -697,15 +697,15 @@ class NiDAQmxDriverApiTests : public Test {
   }
 
   template <typename TRequest>
-  void set_request_session_id(TRequest& request)
+  void set_request_session_name(TRequest& request)
   {
-    set_request_session_id(request, *driver_session_);
+    set_request_session_name(request, *driver_session_);
   }
 
   template <typename TRequest>
-  void set_request_session_id(TRequest& request, const nidevice_grpc::Session& session)
+  void set_request_session_name(TRequest& request, const nidevice_grpc::Session& session)
   {
-    request.mutable_task()->set_id(session.id());
+    request.mutable_task()->set_name(session.name());
   }
 
   template <typename TResponse>
