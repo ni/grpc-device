@@ -231,7 +231,7 @@ void CheckStatus(int status)
 
     response->mutable_meas_wfm()->Resize(num_waveforms * measurement_waveform_size, 0);
     ViReal64* meas_wfm = response->mutable_meas_wfm()->mutable_data();
-    std::vector<niScope_wfmInfo> waveform_info(measurement_waveform_size, niScope_wfmInfo());
+    std::vector<niScope_wfmInfo> waveform_info(num_waveforms, niScope_wfmInfo());
     auto status = library_->FetchArrayMeasurement(vi, channel_list, timeout, array_meas_function, measurement_waveform_size, meas_wfm, waveform_info.data());
     if (status < VI_SUCCESS) {
       return ConvertApiErrorStatusForViSession(context, status, vi);

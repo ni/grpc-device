@@ -296,7 +296,7 @@ TEST_F(NiScopeDriverApiTest, NiScopeFetchArrayMeasurement_SendRequest_FetchCompl
   EXPECT_TRUE(status.ok());
   expect_api_success(response.status());
   EXPECT_EQ(expected_num_waveforms * expected_waveform_size, response.meas_wfm_size());
-  EXPECT_EQ(expected_waveform_size, response.wfm_info_size());
+  EXPECT_EQ(expected_num_waveforms, response.wfm_info_size());
 }
 
 TEST_F(NiScopeDriverApiTest, NiScopeFetchBinary16_SendRequest_FetchCompletesWithCorrectSizes)
