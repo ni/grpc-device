@@ -33,8 +33,8 @@ ${initialize_output_params(output_parameters_to_initialize)}\
         ${resource_handle_type} ${session_output_var_name};
 % endif
 ${call_library_method(
-  function_name=function_name, 
-  function_data=function_data, 
+  function_name=function_name,
+  function_data=function_data,
   arg_string=service_helpers.create_args(parameters),
   indent_level=1,
   library_lval=service_helpers.get_library_lval_for_potentially_umockable_function(config, parameters))
@@ -130,8 +130,8 @@ ${initialize_input_params(function_name, non_ivi_params)}\
 ${initialize_output_params(scalar_output_parameters)}\
       while (true) {
 ${call_library_method(
-  function_name=function_name, 
-  function_data=function_data, 
+  function_name=function_name,
+  function_data=function_data,
   arg_string=service_helpers.create_args_for_ivi_dance_with_a_twist(parameters),
   indent_level=1)
 }\
@@ -264,8 +264,8 @@ ${initialize_output_params(output_parameters)}\
       ${service_helpers.session_repository_field_name(session_param, config)}->remove_session(${session_param_name}.name());
 % endif
 ${call_library_method(
-  function_name=function_name, 
-  function_data=function_data, 
+  function_name=function_name,
+  function_data=function_data,
   arg_string=service_helpers.create_args(parameters))
 }\
 ${populate_response(function_data=function_data, parameters=parameters)}\
@@ -314,7 +314,7 @@ ${initialize_standard_input_param(function_name, parameter)}
 <%
   stripped_grpc_type = common_helpers.strip_repeated_from_grpc_type(input_vararg_parameter['grpc_type'])
   if stripped_grpc_type == 'string':
-      stripped_grpc_type = 'std::string'
+    stripped_grpc_type = 'std::string'
   parameter_c_type = parameter['type']
   parameter_c_type_pointer = parameter_c_type.replace('[]','*')
   parameter_name = common_helpers.get_grpc_field_name(parameter)
@@ -322,13 +322,17 @@ ${initialize_standard_input_param(function_name, parameter)}
       auto get_${parameter['name']}_if = [](const google::protobuf::RepeatedPtrField<${stripped_grpc_type}>& vector, int n) -> ${parameter_c_type_pointer} {
             if (vector.size() > n) {
 <%
-    ## Note that this code will not handle every datatype, but it works for all
-    ## the ones we currently use with repeated varargs.
+    # Note that this code will not handle every datatype, but it works for all
+    # the ones we currently use with repeated varargs.
     return_snippet = ''
     if input_vararg_parameter.get("is_compound_type", False):
-          return_snippet += f'.{parameter_name}()'
+      return_snippet += f'.{parameter_name}()'
     if common_helpers.is_string_arg(parameter):
-          return_snippet += f'.c_str()'
+      # Warning: We don't convert_from_grpc here (converting from utf-8) because we would need to
+      # store the converted string in a buffer until the extracted c_str() is no longer needed. For
+      # now this is fine, though, because the only driver that uses this is NI-DAQmx, for strings
+      # that are ASCII-only. (For physical channels and lines.)
+      return_snippet += f'.c_str()'
 %>\
                   return vector[n]${return_snippet};
             }
@@ -418,6 +422,9 @@ ${initialize_standard_input_param(function_name, parameter)}
   validate_attribute_enum = parameter.get("raw_attribute", False)
 %>\
       ${parameter_type_pointer} ${parameter_name};
+% if parameter['grpc_type'] == "string":
+      std::string ${parameter_name}_buffer;
+% endif
       switch (request->${field_name}_enum_case()) {
 % if has_unmapped_enum:
         case ${one_of_case_prefix}::k${pascal_field_name}: {
@@ -452,7 +459,8 @@ ${initialize_standard_input_param(function_name, parameter)}
 % endif
         case ${one_of_case_prefix}::k${pascal_field_name}Raw: {
 % if parameter['grpc_type'] == "string":
-          ${parameter_name} = const_cast<${parameter_type_pointer}>(${raw_request_snippet}.c_str());
+          ${parameter_name}_buffer = convert_from_grpc<std::string>(${raw_request_snippet});
+          ${parameter_name} = const_cast<${parameter_type_pointer}>(${parameter_name}_buffer.c_str());
 % else:
           ${parameter_name} = static_cast<${parameter['type']}>(${raw_request_snippet});
 % endif
@@ -516,6 +524,8 @@ ${initialize_standard_input_param(function_name, parameter)}
 %>\
   %if calculate_len_in_bytes:
       ${parameter['type']} ${parameter_name} = static_cast<${parameter['type']}>(request->${size_field_name}().size() * sizeof(${linked_array_param_underlying_type}));\
+  %elif linked_array_param['type'] in ['ViConstString', 'const char[]']:
+      ${parameter['type']} ${parameter_name} = static_cast<${parameter['type']}>(convert_from_grpc<std::string>(request->${size_field_name}()).size());\
   %else:
       ${parameter['type']} ${parameter_name} = static_cast<${parameter['type']}>(request->${size_field_name}().size());\
   %endif
@@ -565,9 +575,11 @@ ${initialize_standard_input_param(function_name, parameter)}
   c_element_type_that_needs_coercion = service_helpers.get_c_element_type_for_array_that_needs_coercion(parameter)
 %>\
 % if c_type in ['ViConstString', 'const char[]']:
-      auto ${parameter_name} = ${request_snippet}.c_str();\
+      auto ${parameter_name}_mbcs = convert_from_grpc<std::string>(${request_snippet});
+      auto ${parameter_name} = ${parameter_name}_mbcs.c_str();\
 % elif common_helpers.is_string_arg(parameter):
-      ${c_type_pointer} ${parameter_name} = (${c_type_pointer})${request_snippet}.c_str();\
+      auto ${parameter_name}_mbcs = convert_from_grpc<std::string>(${request_snippet});
+      ${c_type_pointer} ${parameter_name} = (${c_type_pointer})${parameter_name}_mbcs.c_str();\
 % elif common_helpers.supports_standard_copy_conversion_routines(parameter):
       auto ${parameter_name} = convert_from_grpc<${c_type_underlying_type}>(${str.join(", ", [request_snippet] + parameter.get("additional_arguments_to_copy_convert", []))});\
 % elif grpc_type == 'repeated nidevice_grpc.Session':
@@ -857,7 +869,9 @@ ${copy_to_response_with_transform(source_buffer=parameter_name, parameter_name=p
 %   elif common_helpers.supports_standard_copy_conversion_routines(parameter):
       convert_to_grpc(${str.join(", ", [f'{parameter_name}', f'response->mutable_{field_name}()'] + parameter.get("additional_arguments_to_copy_convert", []))});
 %   elif common_helpers.is_string_arg(parameter):
-      response->set_${field_name}(${parameter_name});
+      std::string ${parameter_name}_utf8;
+      convert_to_grpc(${parameter_name}, &${parameter_name}_utf8);
+      response->set_${field_name}(${parameter_name}_utf8);
 %   elif parameter['grpc_type'] == 'nidevice_grpc.Session':
 %      if not init_method: # Non-init methods need to resolve the session ID from the out param.
       auto grpc_device_session_name = ${service_helpers.session_repository_field_name(parameter, config)}->resolve_session_name(${parameter_name});
@@ -927,9 +941,9 @@ ${copy_to_response_with_transform(source_buffer=parameter_name, parameter_name=p
 ## library_lval: (Optional) variable or expression to use as the left-hand-side for the library pointer (default: this->library_).
 ## declare_outputs: (Optional) If this is true, variables will be declared as "auto". If false, variables will just be assigned (default: False).
 <%def name="call_library_method(
-  function_name, 
-  function_data, 
-  arg_string, 
+  function_name,
+  function_data,
+  arg_string,
   indent_level=0,
   library_lval='library_',
   declare_outputs=True)">\

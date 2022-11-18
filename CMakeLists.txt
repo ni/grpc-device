@@ -66,6 +66,7 @@ else()
   set(_PROTOBUF_LIBPROTOBUF libprotobuf)
 endif()
 
+#----------------------------------------------------------------------
 CreateVirtualEnvironment(virtual_environment
   REQUIREMENTS_TXT
     ${CMAKE_SOURCE_DIR}/python_build_requirements.txt
@@ -73,6 +74,18 @@ CreateVirtualEnvironment(virtual_environment
     venv
   OUT_PYTHON_EXE
     PYTHON_EXE
+)
+
+#----------------------------------------------------------------------
+# Use the utfcpp targets directly from this build, only when not cross-compiling.
+#----------------------------------------------------------------------
+if(CMAKE_CROSSCOMPILING AND NOT _GRPC_DEVICE_NILRT_LEGACY_TOOLCHAIN)
+  find_package(utf8cpp REQUIRED)
+else()
+  add_subdirectory(third_party/utfcpp ${CMAKE_CURRENT_BINARY_DIR}/utfcpp EXCLUDE_FROM_ALL)
+endif()
+include_directories(
+  "./third_party/utfcpp/source"
 )
 
 #----------------------------------------------------------------------
@@ -369,6 +382,7 @@ target_link_libraries(ni_grpc_device_server
    ${_PROTOBUF_LIBPROTOBUF}
    ${CMAKE_DL_LIBS}
    nlohmann_json::nlohmann_json
+   utf8cpp
    )
 
 set_target_properties(ni_grpc_device_server PROPERTIES BUILD_WITH_INSTALL_RPATH TRUE)

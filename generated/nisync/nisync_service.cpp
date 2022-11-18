@@ -52,7 +52,8 @@ namespace nisync_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      ViRsrc resource_name = (ViRsrc)request->resource_name().c_str();
+      auto resource_name_mbcs = convert_from_grpc<std::string>(request->resource_name());
+      ViRsrc resource_name = (ViRsrc)resource_name_mbcs.c_str();
       ViBoolean id_query = request->id_query();
       ViBoolean reset_device = request->reset_device();
 
@@ -116,7 +117,9 @@ namespace nisync_grpc {
         return ConvertApiErrorStatusForViSession(context, status, vi);
       }
       response->set_status(status);
-      response->set_error_message(error_message);
+      std::string error_message_utf8;
+      convert_to_grpc(error_message, &error_message_utf8);
+      response->set_error_message(error_message_utf8);
       nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_message()));
       return ::grpc::Status::OK;
     }
@@ -187,7 +190,9 @@ namespace nisync_grpc {
       }
       response->set_status(status);
       response->set_self_test_result(self_test_result);
-      response->set_self_test_message(self_test_message);
+      std::string self_test_message_utf8;
+      convert_to_grpc(self_test_message, &self_test_message_utf8);
+      response->set_self_test_message(self_test_message_utf8);
       nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_self_test_message()));
       return ::grpc::Status::OK;
     }
@@ -213,9 +218,13 @@ namespace nisync_grpc {
         return ConvertApiErrorStatusForViSession(context, status, vi);
       }
       response->set_status(status);
-      response->set_driver_revision(driver_revision);
+      std::string driver_revision_utf8;
+      convert_to_grpc(driver_revision, &driver_revision_utf8);
+      response->set_driver_revision(driver_revision_utf8);
       nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_driver_revision()));
-      response->set_firmware_revision(firmware_revision);
+      std::string firmware_revision_utf8;
+      convert_to_grpc(firmware_revision, &firmware_revision_utf8);
+      response->set_firmware_revision(firmware_revision_utf8);
       nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_firmware_revision()));
       return ::grpc::Status::OK;
     }
@@ -234,9 +243,12 @@ namespace nisync_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      auto src_terminal = request->src_terminal().c_str();
-      auto dest_terminal = request->dest_terminal().c_str();
-      auto sync_clock = request->sync_clock().c_str();
+      auto src_terminal_mbcs = convert_from_grpc<std::string>(request->src_terminal());
+      auto src_terminal = src_terminal_mbcs.c_str();
+      auto dest_terminal_mbcs = convert_from_grpc<std::string>(request->dest_terminal());
+      auto dest_terminal = dest_terminal_mbcs.c_str();
+      auto sync_clock_mbcs = convert_from_grpc<std::string>(request->sync_clock());
+      auto sync_clock = sync_clock_mbcs.c_str();
       ViInt32 invert = request->invert();
       ViInt32 update_edge = request->update_edge();
       auto status = library_->ConnectTrigTerminals(vi, src_terminal, dest_terminal, sync_clock, invert, update_edge);
@@ -261,8 +273,10 @@ namespace nisync_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      auto src_terminal = request->src_terminal().c_str();
-      auto dest_terminal = request->dest_terminal().c_str();
+      auto src_terminal_mbcs = convert_from_grpc<std::string>(request->src_terminal());
+      auto src_terminal = src_terminal_mbcs.c_str();
+      auto dest_terminal_mbcs = convert_from_grpc<std::string>(request->dest_terminal());
+      auto dest_terminal = dest_terminal_mbcs.c_str();
       auto status = library_->DisconnectTrigTerminals(vi, src_terminal, dest_terminal);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -285,9 +299,12 @@ namespace nisync_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      auto src_terminal = request->src_terminal().c_str();
-      auto dest_terminal = request->dest_terminal().c_str();
-      auto sync_clock = request->sync_clock().c_str();
+      auto src_terminal_mbcs = convert_from_grpc<std::string>(request->src_terminal());
+      auto src_terminal = src_terminal_mbcs.c_str();
+      auto dest_terminal_mbcs = convert_from_grpc<std::string>(request->dest_terminal());
+      auto dest_terminal = dest_terminal_mbcs.c_str();
+      auto sync_clock_mbcs = convert_from_grpc<std::string>(request->sync_clock());
+      auto sync_clock = sync_clock_mbcs.c_str();
       ViInt32 invert = request->invert();
       ViInt32 update_edge = request->update_edge();
       ViReal64 delay = request->delay();
@@ -313,8 +330,10 @@ namespace nisync_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      auto src_terminal = request->src_terminal().c_str();
-      auto dest_terminal = request->dest_terminal().c_str();
+      auto src_terminal_mbcs = convert_from_grpc<std::string>(request->src_terminal());
+      auto src_terminal = src_terminal_mbcs.c_str();
+      auto dest_terminal_mbcs = convert_from_grpc<std::string>(request->dest_terminal());
+      auto dest_terminal = dest_terminal_mbcs.c_str();
       auto status = library_->DisconnectSWTrigFromTerminal(vi, src_terminal, dest_terminal);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -337,7 +356,8 @@ namespace nisync_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      auto src_terminal = request->src_terminal().c_str();
+      auto src_terminal_mbcs = convert_from_grpc<std::string>(request->src_terminal());
+      auto src_terminal = src_terminal_mbcs.c_str();
       auto status = library_->SendSoftwareTrigger(vi, src_terminal);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -360,8 +380,10 @@ namespace nisync_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      auto src_terminal = request->src_terminal().c_str();
-      auto dest_terminal = request->dest_terminal().c_str();
+      auto src_terminal_mbcs = convert_from_grpc<std::string>(request->src_terminal());
+      auto src_terminal = src_terminal_mbcs.c_str();
+      auto dest_terminal_mbcs = convert_from_grpc<std::string>(request->dest_terminal());
+      auto dest_terminal = dest_terminal_mbcs.c_str();
       auto status = library_->ConnectClkTerminals(vi, src_terminal, dest_terminal);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -384,8 +406,10 @@ namespace nisync_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      auto src_terminal = request->src_terminal().c_str();
-      auto dest_terminal = request->dest_terminal().c_str();
+      auto src_terminal_mbcs = convert_from_grpc<std::string>(request->src_terminal());
+      auto src_terminal = src_terminal_mbcs.c_str();
+      auto dest_terminal_mbcs = convert_from_grpc<std::string>(request->dest_terminal());
+      auto dest_terminal = dest_terminal_mbcs.c_str();
       auto status = library_->DisconnectClkTerminals(vi, src_terminal, dest_terminal);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -408,7 +432,8 @@ namespace nisync_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      auto src_terminal = request->src_terminal().c_str();
+      auto src_terminal_mbcs = convert_from_grpc<std::string>(request->src_terminal());
+      auto src_terminal = src_terminal_mbcs.c_str();
       ViReal64 duration = request->duration();
       ViReal64 actual_duration {};
       ViReal64 frequency {};
@@ -438,7 +463,8 @@ namespace nisync_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      auto src_terminal = request->src_terminal().c_str();
+      auto src_terminal_mbcs = convert_from_grpc<std::string>(request->src_terminal());
+      auto src_terminal = src_terminal_mbcs.c_str();
       ViReal64 duration = request->duration();
       ViUInt32 decimation_count = request->decimation_count();
       ViReal64 actual_duration {};
@@ -633,7 +659,8 @@ namespace nisync_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      auto terminal = request->terminal().c_str();
+      auto terminal_mbcs = convert_from_grpc<std::string>(request->terminal());
+      auto terminal = terminal_mbcs.c_str();
       ViInt32 output_level = request->output_level();
       ViUInt32 time_seconds = request->time_seconds();
       ViUInt32 time_nanoseconds = request->time_nanoseconds();
@@ -660,7 +687,8 @@ namespace nisync_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      auto terminal = request->terminal().c_str();
+      auto terminal_mbcs = convert_from_grpc<std::string>(request->terminal());
+      auto terminal = terminal_mbcs.c_str();
       auto status = library_->ClearFutureTimeEvents(vi, terminal);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -683,7 +711,8 @@ namespace nisync_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      auto terminal = request->terminal().c_str();
+      auto terminal_mbcs = convert_from_grpc<std::string>(request->terminal());
+      auto terminal = terminal_mbcs.c_str();
       ViInt32 active_edge = request->active_edge();
       auto status = library_->EnableTimeStampTrigger(vi, terminal, active_edge);
       if (!status_ok(status)) {
@@ -707,7 +736,8 @@ namespace nisync_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      auto terminal = request->terminal().c_str();
+      auto terminal_mbcs = convert_from_grpc<std::string>(request->terminal());
+      auto terminal = terminal_mbcs.c_str();
       ViInt32 active_edge = request->active_edge();
       ViUInt32 decimation_count = request->decimation_count();
       auto status = library_->EnableTimeStampTriggerWithDecimation(vi, terminal, active_edge, decimation_count);
@@ -732,7 +762,8 @@ namespace nisync_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      auto terminal = request->terminal().c_str();
+      auto terminal_mbcs = convert_from_grpc<std::string>(request->terminal());
+      auto terminal = terminal_mbcs.c_str();
       ViReal64 timeout = request->timeout();
       ViUInt32 time_seconds {};
       ViUInt32 time_nanoseconds {};
@@ -764,7 +795,8 @@ namespace nisync_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      auto terminal = request->terminal().c_str();
+      auto terminal_mbcs = convert_from_grpc<std::string>(request->terminal());
+      auto terminal = terminal_mbcs.c_str();
       auto status = library_->DisableTimeStampTrigger(vi, terminal);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -787,7 +819,8 @@ namespace nisync_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      auto terminal = request->terminal().c_str();
+      auto terminal_mbcs = convert_from_grpc<std::string>(request->terminal());
+      auto terminal = terminal_mbcs.c_str();
       ViUInt32 high_ticks = request->high_ticks();
       ViUInt32 low_ticks = request->low_ticks();
       ViUInt32 start_time_seconds = request->start_time_seconds();
@@ -818,7 +851,8 @@ namespace nisync_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      auto terminal = request->terminal().c_str();
+      auto terminal_mbcs = convert_from_grpc<std::string>(request->terminal());
+      auto terminal = terminal_mbcs.c_str();
       auto status = library_->ClearClock(vi, terminal);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -886,7 +920,8 @@ namespace nisync_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViInt32 irig_type = request->irig_type();
-      auto terminal_name = request->terminal_name().c_str();
+      auto terminal_name_mbcs = convert_from_grpc<std::string>(request->terminal_name());
+      auto terminal_name = terminal_name_mbcs.c_str();
       auto status = library_->SetTimeReferenceIRIG(vi, irig_type, terminal_name);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -909,7 +944,8 @@ namespace nisync_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      auto terminal_name = request->terminal_name().c_str();
+      auto terminal_name_mbcs = convert_from_grpc<std::string>(request->terminal_name());
+      auto terminal_name = terminal_name_mbcs.c_str();
       ViBoolean use_manual_time = request->use_manual_time();
       ViUInt32 initial_time_seconds = request->initial_time_seconds();
       ViUInt32 initial_time_nanoseconds = request->initial_time_nanoseconds();
@@ -1003,7 +1039,8 @@ namespace nisync_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViInt32 irig_type = request->irig_type();
-      auto terminal_name = request->terminal_name().c_str();
+      auto terminal_name_mbcs = convert_from_grpc<std::string>(request->terminal_name());
+      auto terminal_name = terminal_name_mbcs.c_str();
       auto status = library_->EnableIRIGTimestamping(vi, irig_type, terminal_name);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -1060,7 +1097,8 @@ namespace nisync_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      auto terminal = request->terminal().c_str();
+      auto terminal_mbcs = convert_from_grpc<std::string>(request->terminal());
+      auto terminal = terminal_mbcs.c_str();
       ViUInt32 timestamp_seconds {};
       ViUInt32 timestamp_nanoseconds {};
       ViUInt16 timestamp_fractional_nanoseconds {};
@@ -1117,7 +1155,8 @@ namespace nisync_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      auto terminal_name = request->terminal_name().c_str();
+      auto terminal_name_mbcs = convert_from_grpc<std::string>(request->terminal_name());
+      auto terminal_name = terminal_name_mbcs.c_str();
       auto status = library_->DisableIRIGTimestamping(vi, terminal_name);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -1217,7 +1256,9 @@ namespace nisync_grpc {
           return ConvertApiErrorStatusForViSession(context, status, vi);
         }
         response->set_status(status);
-        response->set_time_reference_names(time_reference_names);
+        std::string time_reference_names_utf8;
+        convert_to_grpc(time_reference_names, &time_reference_names_utf8);
+        response->set_time_reference_names(time_reference_names_utf8);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_time_reference_names()));
         return ::grpc::Status::OK;
       }
@@ -1237,7 +1278,8 @@ namespace nisync_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      auto active_item = request->active_item().c_str();
+      auto active_item_mbcs = convert_from_grpc<std::string>(request->active_item());
+      auto active_item = active_item_mbcs.c_str();
       ViAttr attribute = request->attribute();
       ViInt32 value {};
       auto status = library_->GetAttributeViInt32(vi, active_item, attribute, &value);
@@ -1263,7 +1305,8 @@ namespace nisync_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      auto active_item = request->active_item().c_str();
+      auto active_item_mbcs = convert_from_grpc<std::string>(request->active_item());
+      auto active_item = active_item_mbcs.c_str();
       ViAttr attribute = request->attribute();
       ViReal64 value {};
       auto status = library_->GetAttributeViReal64(vi, active_item, attribute, &value);
@@ -1289,7 +1332,8 @@ namespace nisync_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      auto active_item = request->active_item().c_str();
+      auto active_item_mbcs = convert_from_grpc<std::string>(request->active_item());
+      auto active_item = active_item_mbcs.c_str();
       ViAttr attribute = request->attribute();
       ViBoolean value {};
       auto status = library_->GetAttributeViBoolean(vi, active_item, attribute, &value);
@@ -1315,7 +1359,8 @@ namespace nisync_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      auto active_item = request->active_item().c_str();
+      auto active_item_mbcs = convert_from_grpc<std::string>(request->active_item());
+      auto active_item = active_item_mbcs.c_str();
       ViAttr attribute = request->attribute();
 
       while (true) {
@@ -1338,7 +1383,9 @@ namespace nisync_grpc {
           return ConvertApiErrorStatusForViSession(context, status, vi);
         }
         response->set_status(status);
-        response->set_value(value);
+        std::string value_utf8;
+        convert_to_grpc(value, &value_utf8);
+        response->set_value(value_utf8);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
         return ::grpc::Status::OK;
       }
@@ -1358,7 +1405,8 @@ namespace nisync_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      auto active_item = request->active_item().c_str();
+      auto active_item_mbcs = convert_from_grpc<std::string>(request->active_item());
+      auto active_item = active_item_mbcs.c_str();
       ViAttr attribute = request->attribute();
       ViInt32 value = request->value_raw();
       auto status = library_->SetAttributeViInt32(vi, active_item, attribute, value);
@@ -1383,7 +1431,8 @@ namespace nisync_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      auto active_item = request->active_item().c_str();
+      auto active_item_mbcs = convert_from_grpc<std::string>(request->active_item());
+      auto active_item = active_item_mbcs.c_str();
       ViAttr attribute = request->attribute();
       ViReal64 value = request->value_raw();
       auto status = library_->SetAttributeViReal64(vi, active_item, attribute, value);
@@ -1408,7 +1457,8 @@ namespace nisync_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      auto active_item = request->active_item().c_str();
+      auto active_item_mbcs = convert_from_grpc<std::string>(request->active_item());
+      auto active_item = active_item_mbcs.c_str();
       ViAttr attribute = request->attribute();
       ViBoolean value = request->value();
       auto status = library_->SetAttributeViBoolean(vi, active_item, attribute, value);
@@ -1433,9 +1483,11 @@ namespace nisync_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      auto active_item = request->active_item().c_str();
+      auto active_item_mbcs = convert_from_grpc<std::string>(request->active_item());
+      auto active_item = active_item_mbcs.c_str();
       ViAttr attribute = request->attribute();
-      auto value = request->value_raw().c_str();
+      auto value_mbcs = convert_from_grpc<std::string>(request->value_raw());
+      auto value = value_mbcs.c_str();
       auto status = library_->SetAttributeViString(vi, active_item, attribute, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -1538,8 +1590,10 @@ namespace nisync_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      auto old_password = request->old_password().c_str();
-      auto new_password = request->new_password().c_str();
+      auto old_password_mbcs = convert_from_grpc<std::string>(request->old_password());
+      auto old_password = old_password_mbcs.c_str();
+      auto new_password_mbcs = convert_from_grpc<std::string>(request->new_password());
+      auto new_password = new_password_mbcs.c_str();
       auto status = library_->ChangeExtCalPassword(vi, old_password, new_password);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -1680,8 +1734,10 @@ namespace nisync_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      ViRsrc resource_name = (ViRsrc)request->resource_name().c_str();
-      auto password = request->password().c_str();
+      auto resource_name_mbcs = convert_from_grpc<std::string>(request->resource_name());
+      ViRsrc resource_name = (ViRsrc)resource_name_mbcs.c_str();
+      auto password_mbcs = convert_from_grpc<std::string>(request->password());
+      auto password = password_mbcs.c_str();
 
       auto init_lambda = [&] () {
         ViSession vi;

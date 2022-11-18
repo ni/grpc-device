@@ -50,7 +50,8 @@ namespace nimxlcterminaladaptor_restricted_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto hostname = request->hostname().c_str();
+      auto hostname_mbcs = convert_from_grpc<std::string>(request->hostname());
+      auto hostname = hostname_mbcs.c_str();
 
       auto c_status = allocate_output_storage<nierr_Status, NIErrStatus>(context);
       auto init_lambda = [&] () {

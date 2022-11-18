@@ -52,7 +52,7 @@ static std::mutex server_mutex;
 static std::unique_ptr<grpc::Server> server;
 static bool shutdown = false;
 
-static void StopServer() 
+static void StopServer()
 {
   std::lock_guard<std::mutex> guard(server_mutex);
   shutdown = true;
@@ -114,8 +114,7 @@ static void RunServer(const ServerConfiguration& config)
   server->Wait();
 
   // destroy services in reverse order
-  while (!services->empty())
-  {
+  while (!services->empty()) {
     services->pop_back();
   }
 }
@@ -198,6 +197,7 @@ int main(int argc, char** argv)
 {
   auto options = parse_options(argc, argv);
   auto config = GetConfiguration(options.config_file_path);
+  setlocale(LC_ALL, "");
 #if defined(__GNUC__)
   if (options.use_syslog) {
     nidevice_grpc::logging::setup_syslog(options.daemonize, options.identity);

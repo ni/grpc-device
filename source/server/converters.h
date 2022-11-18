@@ -7,6 +7,7 @@
 #include <nidevice.pb.h>          // For common grpc types.
 #include <server/common_types.h>  // For common C types.
 #include <server/exceptions.h>
+#include <utf8.h>
 
 #include <algorithm>
 #include <limits>
@@ -111,6 +112,75 @@ template <typename CType, typename GrpcType>
 CType convert_from_grpc(const GrpcType& value)
 {
   return static_cast<CType>(value);
+}
+
+inline bool is_ascii(const char* str)
+{
+  for (; *str != '\0'; ++str) {
+    if (static_cast<unsigned char>(*str) > 0x7f) {
+      return false;
+    }
+  }
+  return true;
+}
+
+template <>
+inline std::string convert_from_grpc(const std::string& value)
+{
+  if (is_ascii(value.c_str())) {
+    return value;
+  }
+#if WIN32
+  std::wstring utf16value;
+  utf8::utf8to16(value.begin(), value.end(), std::back_inserter(utf16value));
+  int flags = GetACP() == 54936 ? 0 : 0x400;  // WC_NO_BEST_FIT_CHARS
+  int mbs_len = WideCharToMultiByte(CP_ACP, flags, utf16value.c_str(), -1, NULL, 0, NULL, NULL);
+  if (mbs_len == 0) {
+    throw new std::exception("Unknown character in string");
+  }
+  --mbs_len;  // don't include trailing null
+  std::string converted(mbs_len, '\0');
+  WideCharToMultiByte(CP_ACP, flags, utf16value.c_str(), -1, &converted[0], mbs_len, NULL, NULL);
+  return converted;
+#else
+  std::wstring utf32value;
+  utf8::utf8to32(value.begin(), value.end(), std::back_inserter(utf32value));
+  size_t mbs_len = wcstombs(NULL, utf32value.c_str(), 0);
+  if (mbs_len == (size_t)-1) {
+    throw new std::exception("Unknown character in string");
+  }
+  std::string converted(mbs_len, '\0');
+  wcstombs(&converted[0], utf32value.c_str(), mbs_len);
+  return converted;
+#endif
+}
+
+template <>
+inline void convert_to_grpc(const std::string& value, std::string* value_out)
+{
+  if (is_ascii(value.c_str())) {
+    *value_out = value;
+    return;
+  }
+#if WIN32
+  int flags = MB_ERR_INVALID_CHARS | (GetACP() == 54936 ? 0 : MB_PRECOMPOSED);
+  int wcs_len = MultiByteToWideChar(CP_ACP, flags, value.c_str(), -1, NULL, 0);
+  if (wcs_len == 0) {
+    throw new std::exception("Unknown character in string");
+  }
+  --wcs_len;  // don't include trailing null
+  std::wstring utf16value(wcs_len, '\0');
+  MultiByteToWideChar(CP_ACP, flags, value.c_str(), -1, &utf16value[0], wcs_len);
+  utf8::utf16to8(utf16value.begin(), utf16value.end(), std::back_inserter(*value_out));
+#else
+  size_t wcs_len = mbstowcs(NULL, value.c_str(), 0);
+  if (wcs_len == (size_t)-1) {
+    throw new std::exception("Unknown character in string");
+  }
+  std::wstring utf32value(wcs_len, '\0');
+  mbstowcs(&utf32value[0], value.c_str(), wcs_len);
+  utf8::utf32to8(utf32value.begin(), utf32value.end(), std::back_inserter(*value_out));
+#endif
 }
 
 template <typename CType, typename GrpcType>

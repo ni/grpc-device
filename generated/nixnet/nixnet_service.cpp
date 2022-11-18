@@ -116,6 +116,7 @@ namespace nixnet_grpc {
       auto session_grpc_session = request->session();
       nxSessionRef_t session = session_repository_->access_session(session_grpc_session.name());
       const char* source;
+      std::string source_buffer;
       switch (request->source_enum_case()) {
         case nixnet_grpc::ConnectTerminalsRequest::SourceEnumCase::kSourceMapped: {
           auto source_imap_it = terminalname_input_map_.find(request->source_mapped());
@@ -126,7 +127,8 @@ namespace nixnet_grpc {
           break;
         }
         case nixnet_grpc::ConnectTerminalsRequest::SourceEnumCase::kSourceRaw: {
-          source = const_cast<const char*>(request->source_raw().c_str());
+          source_buffer = convert_from_grpc<std::string>(request->source_raw());
+          source = const_cast<const char*>(source_buffer.c_str());
           break;
         }
         case nixnet_grpc::ConnectTerminalsRequest::SourceEnumCase::SOURCE_ENUM_NOT_SET: {
@@ -136,6 +138,7 @@ namespace nixnet_grpc {
       }
 
       const char* destination;
+      std::string destination_buffer;
       switch (request->destination_enum_case()) {
         case nixnet_grpc::ConnectTerminalsRequest::DestinationEnumCase::kDestinationMapped: {
           auto destination_imap_it = terminalname_input_map_.find(request->destination_mapped());
@@ -146,7 +149,8 @@ namespace nixnet_grpc {
           break;
         }
         case nixnet_grpc::ConnectTerminalsRequest::DestinationEnumCase::kDestinationRaw: {
-          destination = const_cast<const char*>(request->destination_raw().c_str());
+          destination_buffer = convert_from_grpc<std::string>(request->destination_raw());
+          destination = const_cast<const char*>(destination_buffer.c_str());
           break;
         }
         case nixnet_grpc::ConnectTerminalsRequest::DestinationEnumCase::DESTINATION_ENUM_NOT_SET: {
@@ -177,7 +181,8 @@ namespace nixnet_grpc {
     try {
       auto session_grpc_session = request->session();
       nxSessionRef_t session = session_repository_->access_session(session_grpc_session.name());
-      u8* value_buffer = (u8*)request->value_buffer().c_str();
+      auto value_buffer_mbcs = convert_from_grpc<std::string>(request->value_buffer());
+      u8* value_buffer = (u8*)value_buffer_mbcs.c_str();
       u32 size_of_value_buffer = static_cast<u32>(request->value_buffer().size() * sizeof(u8));
       u32 number_of_frames = request->number_of_frames();
       u32 max_payload_per_frame = request->max_payload_per_frame();
@@ -232,7 +237,9 @@ namespace nixnet_grpc {
         return ConvertApiErrorStatusForNxSessionRef_t(context, status, session);
       }
       response->set_status(status);
-      response->set_value_buffer(value_buffer);
+      std::string value_buffer_utf8;
+      convert_to_grpc(value_buffer, &value_buffer_utf8);
+      response->set_value_buffer(value_buffer_utf8);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
@@ -371,10 +378,14 @@ namespace nixnet_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto database_name = request->database_name().c_str();
-      auto cluster_name = request->cluster_name().c_str();
-      auto list = request->list().c_str();
-      auto interface_name = request->interface_name().c_str();
+      auto database_name_mbcs = convert_from_grpc<std::string>(request->database_name());
+      auto database_name = database_name_mbcs.c_str();
+      auto cluster_name_mbcs = convert_from_grpc<std::string>(request->cluster_name());
+      auto cluster_name = cluster_name_mbcs.c_str();
+      auto list_mbcs = convert_from_grpc<std::string>(request->list());
+      auto list = list_mbcs.c_str();
+      auto interface_name_mbcs = convert_from_grpc<std::string>(request->interface_name());
+      auto interface_name = interface_name_mbcs.c_str();
       u32 mode;
       switch (request->mode_enum_case()) {
         case nixnet_grpc::CreateSessionRequest::ModeEnumCase::kMode: {
@@ -428,7 +439,8 @@ namespace nixnet_grpc {
         array_of_database_ref_request.end(),
         std::back_inserter(array_of_database_ref),
         [&](auto session) { return nx_database_ref_t_resource_repository_->access_session(session.name()); }); 
-      auto interface_name = request->interface_name().c_str();
+      auto interface_name_mbcs = convert_from_grpc<std::string>(request->interface_name());
+      auto interface_name = interface_name_mbcs.c_str();
       u32 mode;
       switch (request->mode_enum_case()) {
         case nixnet_grpc::CreateSessionByRefRequest::ModeEnumCase::kMode: {
@@ -474,8 +486,10 @@ namespace nixnet_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto database_alias = request->database_alias().c_str();
-      auto database_filepath = request->database_filepath().c_str();
+      auto database_alias_mbcs = convert_from_grpc<std::string>(request->database_alias());
+      auto database_alias = database_alias_mbcs.c_str();
+      auto database_filepath_mbcs = convert_from_grpc<std::string>(request->database_filepath());
+      auto database_filepath = database_filepath_mbcs.c_str();
       u32 default_baud_rate = request->default_baud_rate();
       auto status = library_->DbAddAlias(database_alias, database_filepath, default_baud_rate);
       if (!status_ok(status)) {
@@ -497,8 +511,10 @@ namespace nixnet_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto database_alias = request->database_alias().c_str();
-      auto database_filepath = request->database_filepath().c_str();
+      auto database_alias_mbcs = convert_from_grpc<std::string>(request->database_alias());
+      auto database_alias = database_alias_mbcs.c_str();
+      auto database_filepath_mbcs = convert_from_grpc<std::string>(request->database_filepath());
+      auto database_filepath = database_filepath_mbcs.c_str();
       u64 default_baud_rate = request->default_baud_rate();
       auto status = library_->DbAddAlias64(database_alias, database_filepath, default_baud_rate);
       if (!status_ok(status)) {
@@ -547,7 +563,8 @@ namespace nixnet_grpc {
       auto parent_object_grpc_session = request->parent_object();
       nxDatabaseRef_t parent_object = nx_database_ref_t_resource_repository_->access_session(parent_object_grpc_session.name());
       u32 object_class = request->object_class();
-      auto object_name = request->object_name().c_str();
+      auto object_name_mbcs = convert_from_grpc<std::string>(request->object_name());
+      auto object_name = object_name_mbcs.c_str();
 
       auto initiating_session_name = parent_object_grpc_session.name();
       auto init_lambda = [&] () {
@@ -599,8 +616,10 @@ namespace nixnet_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto ip_address = request->ip_address().c_str();
-      auto database_alias = request->database_alias().c_str();
+      auto ip_address_mbcs = convert_from_grpc<std::string>(request->ip_address());
+      auto ip_address = ip_address_mbcs.c_str();
+      auto database_alias_mbcs = convert_from_grpc<std::string>(request->database_alias());
+      auto database_alias = database_alias_mbcs.c_str();
       u32 wait_for_complete = request->wait_for_complete();
       u32 percent_complete {};
       auto status = library_->DbDeploy(ip_address, database_alias, wait_for_complete, &percent_complete);
@@ -627,7 +646,8 @@ namespace nixnet_grpc {
       auto parent_object_grpc_session = request->parent_object();
       nxDatabaseRef_t parent_object = nx_database_ref_t_resource_repository_->access_session(parent_object_grpc_session.name());
       u32 object_class = request->object_class();
-      auto object_name = request->object_name().c_str();
+      auto object_name_mbcs = convert_from_grpc<std::string>(request->object_name());
+      auto object_name = object_name_mbcs.c_str();
 
       auto initiating_session_name = parent_object_grpc_session.name();
       auto init_lambda = [&] () {
@@ -674,7 +694,8 @@ namespace nixnet_grpc {
         }
       }
 
-      auto attribute_name = request->attribute_name().c_str();
+      auto attribute_name_mbcs = convert_from_grpc<std::string>(request->attribute_name());
+      auto attribute_name = attribute_name_mbcs.c_str();
       u32 attribute_text_size {};
       auto status = library_->DbGetDBCAttributeSize(db_object, mode, attribute_name, &attribute_text_size);
       if (!status_ok(status)) {
@@ -697,7 +718,8 @@ namespace nixnet_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto ip_address = request->ip_address().c_str();
+      auto ip_address_mbcs = convert_from_grpc<std::string>(request->ip_address());
+      auto ip_address = ip_address_mbcs.c_str();
       u32 sizeof_alias_buffer {};
       u32 sizeof_filepath_buffer {};
       auto status = library_->DbGetDatabaseListSizes(ip_address, &sizeof_alias_buffer, &sizeof_filepath_buffer);
@@ -782,7 +804,8 @@ namespace nixnet_grpc {
         }
       }
 
-      char* prefix = (char*)request->prefix().c_str();
+      auto prefix_mbcs = convert_from_grpc<std::string>(request->prefix());
+      char* prefix = (char*)prefix_mbcs.c_str();
       u32 wait_for_complete = request->wait_for_complete();
       u32 percent_complete {};
       auto status = library_->DbMerge(target_cluster, source_obj, copy_mode, prefix, wait_for_complete, &percent_complete);
@@ -806,7 +829,8 @@ namespace nixnet_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto database_name = request->database_name().c_str();
+      auto database_name_mbcs = convert_from_grpc<std::string>(request->database_name());
+      auto database_name = database_name_mbcs.c_str();
 
       auto init_lambda = [&] () {
         nxDatabaseRef_t database;
@@ -836,7 +860,8 @@ namespace nixnet_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto database_alias = request->database_alias().c_str();
+      auto database_alias_mbcs = convert_from_grpc<std::string>(request->database_alias());
+      auto database_alias = database_alias_mbcs.c_str();
       auto status = library_->DbRemoveAlias(database_alias);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNxSessionRef_t(context, status, 0);
@@ -859,7 +884,8 @@ namespace nixnet_grpc {
     try {
       auto database_grpc_session = request->database();
       nxDatabaseRef_t database = nx_database_ref_t_resource_repository_->access_session(database_grpc_session.name());
-      auto db_filepath = request->db_filepath().c_str();
+      auto db_filepath_mbcs = convert_from_grpc<std::string>(request->db_filepath());
+      auto db_filepath = db_filepath_mbcs.c_str();
       auto status = library_->DbSaveDatabase(database, db_filepath);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNxDatabaseRef_t(context, status, database);
@@ -880,8 +906,10 @@ namespace nixnet_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto ip_address = request->ip_address().c_str();
-      auto database_alias = request->database_alias().c_str();
+      auto ip_address_mbcs = convert_from_grpc<std::string>(request->ip_address());
+      auto ip_address = ip_address_mbcs.c_str();
+      auto database_alias_mbcs = convert_from_grpc<std::string>(request->database_alias());
+      auto database_alias = database_alias_mbcs.c_str();
       auto status = library_->DbUndeploy(ip_address, database_alias);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNxSessionRef_t(context, status, 0);
@@ -905,6 +933,7 @@ namespace nixnet_grpc {
       auto session_grpc_session = request->session();
       nxSessionRef_t session = session_repository_->access_session(session_grpc_session.name());
       const char* source;
+      std::string source_buffer;
       switch (request->source_enum_case()) {
         case nixnet_grpc::DisconnectTerminalsRequest::SourceEnumCase::kSourceMapped: {
           auto source_imap_it = terminalname_input_map_.find(request->source_mapped());
@@ -915,7 +944,8 @@ namespace nixnet_grpc {
           break;
         }
         case nixnet_grpc::DisconnectTerminalsRequest::SourceEnumCase::kSourceRaw: {
-          source = const_cast<const char*>(request->source_raw().c_str());
+          source_buffer = convert_from_grpc<std::string>(request->source_raw());
+          source = const_cast<const char*>(source_buffer.c_str());
           break;
         }
         case nixnet_grpc::DisconnectTerminalsRequest::SourceEnumCase::SOURCE_ENUM_NOT_SET: {
@@ -925,6 +955,7 @@ namespace nixnet_grpc {
       }
 
       const char* destination;
+      std::string destination_buffer;
       switch (request->destination_enum_case()) {
         case nixnet_grpc::DisconnectTerminalsRequest::DestinationEnumCase::kDestinationMapped: {
           auto destination_imap_it = terminalname_input_map_.find(request->destination_mapped());
@@ -935,7 +966,8 @@ namespace nixnet_grpc {
           break;
         }
         case nixnet_grpc::DisconnectTerminalsRequest::DestinationEnumCase::kDestinationRaw: {
-          destination = const_cast<const char*>(request->destination_raw().c_str());
+          destination_buffer = convert_from_grpc<std::string>(request->destination_raw());
+          destination = const_cast<const char*>(destination_buffer.c_str());
           break;
         }
         case nixnet_grpc::DisconnectTerminalsRequest::DestinationEnumCase::DESTINATION_ENUM_NOT_SET: {
@@ -1365,7 +1397,9 @@ namespace nixnet_grpc {
         return ConvertApiErrorStatusForNxSessionRef_t(context, status, 0);
       }
       response->set_status(status);
-      response->set_status_description(status_description);
+      std::string status_description_utf8;
+      convert_to_grpc(status_description, &status_description_utf8);
+      response->set_status_description(status_description_utf8);
       nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_status_description()));
       return ::grpc::Status::OK;
     }
