@@ -31,6 +31,13 @@ jobs:
 
     - name: Validate RFmx, XNET, and session examples
       run: |
-        python source/codegen/validate_examples.py -p "*rfmx*"
+        python source/codegen/validate_examples.py -p "*dcpower*"
+        python source/codegen/validate_examples.py -p "*digital*"
+        python source/codegen/validate_examples.py -p "*dmm*"
+        python source/codegen/validate_examples.py -p "*fgen*"
+        python source/codegen/validate_examples.py -p "*rf*"
+        python source/codegen/validate_examples.py -p "*scope*"
+        python source/codegen/validate_examples.py -p "*switch*"
+        python source/codegen/validate_examples.py -p "*tclk*"
         python source/codegen/validate_examples.py -p "*xnet*"
         python source/codegen/validate_examples.py -p "session"
