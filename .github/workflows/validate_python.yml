@@ -29,7 +29,7 @@ jobs:
       with:
         poetry-version: 1.1.5
 
-    - name: Validate RFmx, XNET, and session examples
+    - name: Validate examples (except DAQmx)
       run: |
         python source/codegen/validate_examples.py -p "*dcpower*"
         python source/codegen/validate_examples.py -p "*digital*"
