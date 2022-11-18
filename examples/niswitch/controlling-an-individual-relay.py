@@ -108,5 +108,5 @@ except grpc.RpcError as rpc_error:
 
 finally:
     # Close the session.
-    if "vi" in vars() and vi.id != 0:
+    if "vi" in vars() and vi.name != "":
         niswitch_client.Close(niswitch_types.CloseRequest(vi=vi))

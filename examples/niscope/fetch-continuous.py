@@ -180,6 +180,6 @@ except grpc.RpcError as rpc_error:
     print(f"{error_message}")
 
 finally:
-    if "vi" in vars() and vi.id != 0:
+    if "vi" in vars() and vi.name != "":
         # close the session.
         niscope_client.Close(niscope_types.CloseRequest(vi=vi))

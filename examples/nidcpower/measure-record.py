@@ -105,7 +105,7 @@ try:
         nidcpower_types.SetAttributeViInt32Request(
             vi=vi,
             attribute_id=nidcpower_types.NiDCPowerAttribute.NIDCPOWER_ATTRIBUTE_MEASURE_RECORD_LENGTH,
-            attribute_value=RECORD_LENGTH,
+            attribute_value_raw=RECORD_LENGTH,
         )
     )
 
@@ -180,11 +180,11 @@ try:
 
             # Updating the precision of the fetched values.
             y_axis_new = []
-            for value in y_axis:
-                if value < VOLTAGE_LEVEL:
-                    y_axis_new.append(math.floor(value * 100) / 100)
+            for y_value in y_axis:
+                if y_value < VOLTAGE_LEVEL:
+                    y_axis_new.append(math.floor(y_value * 100) / 100)
                 else:
-                    y_axis_new.append(math.ceil(value * 100) / 100)
+                    y_axis_new.append(math.ceil(y_value * 100) / 100)
 
             # Plotting
             y_axis = y_axis_new
@@ -216,6 +216,6 @@ except grpc.RpcError as rpc_error:
     print(f"{error_message}")
 
 finally:
-    if "vi" in vars() and vi.id != 0:
+    if "vi" in vars() and vi.name != "":
         # Close the session.
         client.Close(nidcpower_types.CloseRequest(vi=vi))

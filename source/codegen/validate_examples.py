@@ -79,7 +79,7 @@ def _validate_examples(
             _system(f"poetry run black --check --line-length 100 {dir}")
 
             print(f" -> Running mypy")
-            _system(f"poetry run mypy {dir} --check-untyped-defs")
+            _system(f"poetry run mypy {dir} --check-untyped-defs --ignore-missing-imports")
 
             if ip_address:
                 for file in dir.glob("*.py"):

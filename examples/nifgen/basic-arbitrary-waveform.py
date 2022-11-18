@@ -168,6 +168,6 @@ except grpc.RpcError as rpc_error:
         )
     print(f"{error_message}")
 finally:
-    if "vi" in vars() and vi.id != 0:
+    if "vi" in vars() and vi.name != "":
         # Close NI-FGEN session
         nifgen_client.Close(nifgen_types.CloseRequest(vi=vi))
