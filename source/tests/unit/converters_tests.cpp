@@ -112,7 +112,7 @@ class TempIsoLocale {
   }
   char* old_locale;
   bool updated_locale;
-}
+};
 #endif
 
 TEST(ConvertersTests, AsciiString_ConvertFromGrpc_Unchanged)
