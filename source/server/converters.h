@@ -132,8 +132,9 @@ inline std::string convert_from_grpc(const std::string& value)
   }
 #if WIN32
   std::wstring utf16value;
+  utf16value.reserve(value.length());  // often too much, but that's okay
   utf8::utf8to16(value.begin(), value.end(), std::back_inserter(utf16value));
-  int flags = GetACP() == 54936 ? 0 : 0x400;  // WC_NO_BEST_FIT_CHARS
+  int flags = GetACP() == 54936 ? 0 : 0x400;  // WC_NO_BEST_FIT_CHARS; not supported for GB18030
   int mbs_len = WideCharToMultiByte(CP_ACP, flags, utf16value.c_str(), -1, NULL, 0, NULL, NULL);
   if (mbs_len == 0) {
     throw new std::runtime_error("Unknown character in string");
@@ -144,6 +145,7 @@ inline std::string convert_from_grpc(const std::string& value)
   return converted;
 #else
   std::wstring utf32value;
+  utf32value.reserve(utf8::distance(value.begin(), value.end()));
   utf8::utf8to32(value.begin(), value.end(), std::back_inserter(utf32value));
   size_t mbs_len = wcstombs(NULL, utf32value.c_str(), 0);
   if (mbs_len == (size_t)-1) {
@@ -171,6 +173,7 @@ inline void convert_to_grpc(const std::string& value, std::string* value_out)
   --wcs_len;  // don't include trailing null
   std::wstring utf16value(wcs_len, '\0');
   MultiByteToWideChar(CP_ACP, flags, value.c_str(), -1, &utf16value[0], wcs_len);
+  value_out->reserve(utf16value.length());  // not perfect, but better than nothing
   utf8::utf16to8(utf16value.begin(), utf16value.end(), std::back_inserter(*value_out));
 #else
   size_t wcs_len = mbstowcs(NULL, value.c_str(), 0);
@@ -179,6 +182,7 @@ inline void convert_to_grpc(const std::string& value, std::string* value_out)
   }
   std::wstring utf32value(wcs_len, '\0');
   mbstowcs(&utf32value[0], value.c_str(), wcs_len);
+  value_out->reserve(utf32value.length());  // not perfect, but better than nothing
   utf8::utf32to8(utf32value.begin(), utf32value.end(), std::back_inserter(*value_out));
 #endif
 }
