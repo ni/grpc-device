@@ -692,8 +692,7 @@ namespace nifake_non_ivi_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto u8_array_mbcs = convert_from_grpc<std::string>(request->u8_array());
-      const myUInt8* u8_array = (const myUInt8*)u8_array_mbcs.c_str();
+      const myUInt8* u8_array = (const myUInt8*)request->u8_array().c_str();
       auto status = library_->InputArrayOfBytes(u8_array);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForFakeHandle(context, status, 0);

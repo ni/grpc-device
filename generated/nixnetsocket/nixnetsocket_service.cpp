@@ -811,8 +811,7 @@ namespace nixnetsocket_grpc {
     try {
       auto socket_grpc_session = request->socket();
       nxSOCKET socket = session_repository_->access_session(socket_grpc_session.name());
-      auto data_mbcs = convert_from_grpc<std::string>(request->data());
-      char* data = (char*)data_mbcs.c_str();
+      char* data = (char*)request->data().c_str();
       int32_t size = static_cast<int32_t>(request->data().size());
       int32_t flags_raw = request->flags_raw();
       auto status = library_->Send(socket, data, size, flags_raw);
@@ -837,8 +836,7 @@ namespace nixnetsocket_grpc {
     try {
       auto socket_grpc_session = request->socket();
       nxSOCKET socket = session_repository_->access_session(socket_grpc_session.name());
-      auto data_mbcs = convert_from_grpc<std::string>(request->data());
-      char* data = (char*)data_mbcs.c_str();
+      char* data = (char*)request->data().c_str();
       int32_t size = static_cast<int32_t>(request->data().size());
       int32_t flags_raw = request->flags_raw();
       auto to = convert_from_grpc<nxsockaddr>(request->to());

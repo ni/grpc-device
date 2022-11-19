@@ -926,8 +926,7 @@ namespace nirfsg_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViInt32 number_of_samples = static_cast<ViInt32>(request->user_defined_waveform().size());
-      auto user_defined_waveform_mbcs = convert_from_grpc<std::string>(request->user_defined_waveform());
-      ViInt8* user_defined_waveform = (ViInt8*)user_defined_waveform_mbcs.c_str();
+      ViInt8* user_defined_waveform = (ViInt8*)request->user_defined_waveform().c_str();
       auto status = library_->ConfigureDigitalModulationUserDefinedWaveform(vi, number_of_samples, user_defined_waveform);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -3346,8 +3345,7 @@ namespace nirfsg_grpc {
       auto identifier_mbcs = convert_from_grpc<std::string>(request->identifier());
       auto identifier = identifier_mbcs.c_str();
       ViInt32 buffer_size = static_cast<ViInt32>(request->data().size());
-      auto data_mbcs = convert_from_grpc<std::string>(request->data());
-      ViInt8* data = (ViInt8*)data_mbcs.c_str();
+      ViInt8* data = (ViInt8*)request->data().c_str();
       auto status = library_->SetUserData(vi, identifier, buffer_size, data);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);

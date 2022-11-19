@@ -3120,8 +3120,7 @@ namespace nirfmxinstr_grpc {
       auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
       char* channel_name = (char*)channel_name_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
-      auto attr_val_mbcs = convert_from_grpc<std::string>(request->attr_val());
-      uInt8* attr_val = (uInt8*)attr_val_mbcs.c_str();
+      uInt8* attr_val = (uInt8*)request->attr_val().c_str();
       int32 array_size = static_cast<int32>(request->attr_val().size());
       auto status = library_->SetAttributeU8Array(instrument, channel_name, attribute_id, attr_val, array_size);
       if (!status_ok(status)) {

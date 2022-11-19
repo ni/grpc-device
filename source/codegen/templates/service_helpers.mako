@@ -577,9 +577,11 @@ ${initialize_standard_input_param(function_name, parameter)}
 % if c_type in ['ViConstString', 'const char[]']:
       auto ${parameter_name}_mbcs = convert_from_grpc<std::string>(${request_snippet});
       auto ${parameter_name} = ${parameter_name}_mbcs.c_str();\
-% elif common_helpers.is_string_arg(parameter):
+% elif grpc_type == 'string':
       auto ${parameter_name}_mbcs = convert_from_grpc<std::string>(${request_snippet});
       ${c_type_pointer} ${parameter_name} = (${c_type_pointer})${parameter_name}_mbcs.c_str();\
+% elif common_helpers.is_string_arg(parameter):
+      ${c_type_pointer} ${parameter_name} = (${c_type_pointer})${request_snippet}.c_str();\
 % elif common_helpers.supports_standard_copy_conversion_routines(parameter):
       auto ${parameter_name} = convert_from_grpc<${c_type_underlying_type}>(${str.join(", ", [request_snippet] + parameter.get("additional_arguments_to_copy_convert", []))});\
 % elif grpc_type == 'repeated nidevice_grpc.Session':

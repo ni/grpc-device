@@ -18690,8 +18690,7 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto write_array_mbcs = convert_from_grpc<std::string>(request->write_array());
-      const uInt8* write_array = (const uInt8*)write_array_mbcs.c_str();
+      const uInt8* write_array = (const uInt8*)request->write_array().c_str();
       auto reserved = nullptr;
       int32 samps_per_chan_written {};
       auto status = library_->WriteDigitalLines(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array, &samps_per_chan_written, reserved);
@@ -18869,8 +18868,7 @@ namespace nidaqmx_grpc {
         }
       }
 
-      auto write_array_mbcs = convert_from_grpc<std::string>(request->write_array());
-      const uInt8* write_array = (const uInt8*)write_array_mbcs.c_str();
+      const uInt8* write_array = (const uInt8*)request->write_array().c_str();
       auto reserved = nullptr;
       int32 samps_per_chan_written {};
       auto status = library_->WriteDigitalU8(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array, &samps_per_chan_written, reserved);
@@ -18899,8 +18897,7 @@ namespace nidaqmx_grpc {
       int32 num_samps = request->num_samps();
       bool32 auto_start = request->auto_start();
       float64 timeout = request->timeout();
-      auto write_array_mbcs = convert_from_grpc<std::string>(request->write_array());
-      const uInt8* write_array = (const uInt8*)write_array_mbcs.c_str();
+      const uInt8* write_array = (const uInt8*)request->write_array().c_str();
       auto reserved = nullptr;
       int32 samps_per_chan_written {};
       auto status = library_->WriteRaw(task, num_samps, auto_start, timeout, write_array, &samps_per_chan_written, reserved);
@@ -18926,8 +18923,7 @@ namespace nidaqmx_grpc {
     try {
       auto physical_channel_mbcs = convert_from_grpc<std::string>(request->physical_channel());
       auto physical_channel = physical_channel_mbcs.c_str();
-      auto bit_stream_mbcs = convert_from_grpc<std::string>(request->bit_stream());
-      const uInt8* bit_stream = (const uInt8*)bit_stream_mbcs.c_str();
+      const uInt8* bit_stream = (const uInt8*)request->bit_stream().c_str();
       uInt32 array_size = static_cast<uInt32>(request->bit_stream().size());
       int32 basic_teds_options;
       switch (request->basic_teds_options_enum_case()) {

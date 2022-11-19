@@ -181,8 +181,7 @@ namespace nixnet_grpc {
     try {
       auto session_grpc_session = request->session();
       nxSessionRef_t session = session_repository_->access_session(session_grpc_session.name());
-      auto value_buffer_mbcs = convert_from_grpc<std::string>(request->value_buffer());
-      u8* value_buffer = (u8*)value_buffer_mbcs.c_str();
+      u8* value_buffer = (u8*)request->value_buffer().c_str();
       u32 size_of_value_buffer = static_cast<u32>(request->value_buffer().size() * sizeof(u8));
       u32 number_of_frames = request->number_of_frames();
       u32 max_payload_per_frame = request->max_payload_per_frame();

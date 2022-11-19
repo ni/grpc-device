@@ -1434,8 +1434,7 @@ namespace nifake_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViInt32 size_in_bytes = static_cast<ViInt32>(request->configuration().size());
-      auto configuration_mbcs = convert_from_grpc<std::string>(request->configuration());
-      ViInt8* configuration = (ViInt8*)configuration_mbcs.c_str();
+      ViInt8* configuration = (ViInt8*)request->configuration().c_str();
       auto status = library_->ImportAttributeConfigurationBuffer(vi, size_in_bytes, configuration);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -2641,8 +2640,7 @@ namespace nifake_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViInt32 number_of_elements = request->number_of_elements();
-      auto an_array_mbcs = convert_from_grpc<std::string>(request->an_array());
-      ViUInt8* an_array = (ViUInt8*)an_array_mbcs.c_str();
+      ViUInt8* an_array = (ViUInt8*)request->an_array().c_str();
       auto status = library_->ViUInt8ArrayInputFunction(vi, number_of_elements, an_array);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);

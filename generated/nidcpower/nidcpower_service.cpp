@@ -930,8 +930,7 @@ namespace nidcpower_grpc {
       auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
       auto channel_name = channel_name_mbcs.c_str();
       ViInt32 compensation_data_size = static_cast<ViInt32>(request->compensation_data().size());
-      auto compensation_data_mbcs = convert_from_grpc<std::string>(request->compensation_data());
-      ViInt8* compensation_data = (ViInt8*)compensation_data_mbcs.c_str();
+      ViInt8* compensation_data = (ViInt8*)request->compensation_data().c_str();
       auto status = library_->ConfigureLCRCompensation(vi, channel_name, compensation_data_size, compensation_data);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -957,8 +956,7 @@ namespace nidcpower_grpc {
       auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
       auto channel_name = channel_name_mbcs.c_str();
       ViInt32 custom_cable_compensation_data_size = static_cast<ViInt32>(request->custom_cable_compensation_data().size());
-      auto custom_cable_compensation_data_mbcs = convert_from_grpc<std::string>(request->custom_cable_compensation_data());
-      ViInt8* custom_cable_compensation_data = (ViInt8*)custom_cable_compensation_data_mbcs.c_str();
+      ViInt8* custom_cable_compensation_data = (ViInt8*)request->custom_cable_compensation_data().c_str();
       auto status = library_->ConfigureLCRCustomCableCompensation(vi, channel_name, custom_cable_compensation_data_size, custom_cable_compensation_data);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -3283,8 +3281,7 @@ namespace nidcpower_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViInt32 size = static_cast<ViInt32>(request->configuration().size());
-      auto configuration_mbcs = convert_from_grpc<std::string>(request->configuration());
-      ViInt8* configuration = (ViInt8*)configuration_mbcs.c_str();
+      ViInt8* configuration = (ViInt8*)request->configuration().c_str();
       auto status = library_->ImportAttributeConfigurationBuffer(vi, size, configuration);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
