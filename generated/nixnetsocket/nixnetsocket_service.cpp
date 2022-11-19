@@ -732,9 +732,7 @@ namespace nixnetsocket_grpc {
         return ConvertApiErrorStatusForNxSOCKET(context, status, socket);
       }
       response->set_status(status);
-      std::string data_utf8;
-      convert_to_grpc(data, &data_utf8);
-      response->set_data(data_utf8);
+      response->set_data(data);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
@@ -765,9 +763,7 @@ namespace nixnetsocket_grpc {
         return ConvertApiErrorStatusForNxSOCKET(context, status, socket);
       }
       response->set_status(status);
-      std::string data_utf8;
-      convert_to_grpc(data, &data_utf8);
-      response->set_data(data_utf8);
+      response->set_data(data);
       convert_to_grpc(from_addr, response->mutable_from_addr());
       return ::grpc::Status::OK;
     }

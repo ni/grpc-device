@@ -2415,9 +2415,7 @@ namespace nidcpower_grpc {
           return ConvertApiErrorStatusForViSession(context, status, vi);
         }
         response->set_status(status);
-        std::string configuration_utf8;
-        convert_to_grpc(configuration, &configuration_utf8);
-        response->set_configuration(configuration_utf8);
+        response->set_configuration(configuration);
         return ::grpc::Status::OK;
       }
     }
@@ -3026,9 +3024,7 @@ namespace nidcpower_grpc {
           return ConvertApiErrorStatusForViSession(context, status, vi);
         }
         response->set_status(status);
-        std::string compensation_data_utf8;
-        convert_to_grpc(compensation_data, &compensation_data_utf8);
-        response->set_compensation_data(compensation_data_utf8);
+        response->set_compensation_data(compensation_data);
         return ::grpc::Status::OK;
       }
     }
@@ -3117,9 +3113,7 @@ namespace nidcpower_grpc {
           return ConvertApiErrorStatusForViSession(context, status, vi);
         }
         response->set_status(status);
-        std::string custom_cable_compensation_data_utf8;
-        convert_to_grpc(custom_cable_compensation_data, &custom_cable_compensation_data_utf8);
-        response->set_custom_cable_compensation_data(custom_cable_compensation_data_utf8);
+        response->set_custom_cable_compensation_data(custom_cable_compensation_data);
         return ::grpc::Status::OK;
       }
     }

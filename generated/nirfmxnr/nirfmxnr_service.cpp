@@ -3465,9 +3465,7 @@ namespace nirfmxnr_grpc {
           return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
-        std::string attr_val_utf8;
-        convert_to_grpc(attr_val, &attr_val_utf8);
-        response->set_attr_val(attr_val_utf8);
+        response->set_attr_val(attr_val);
         response->mutable_attr_val()->resize(actual_array_size);
         response->set_actual_array_size(actual_array_size);
         return ::grpc::Status::OK;

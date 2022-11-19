@@ -236,9 +236,7 @@ namespace nixnet_grpc {
         return ConvertApiErrorStatusForNxSessionRef_t(context, status, session);
       }
       response->set_status(status);
-      std::string value_buffer_utf8;
-      convert_to_grpc(value_buffer, &value_buffer_utf8);
-      response->set_value_buffer(value_buffer_utf8);
+      response->set_value_buffer(value_buffer);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {

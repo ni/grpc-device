@@ -720,9 +720,7 @@ namespace nifake_non_ivi_grpc {
         return ConvertApiErrorStatusForFakeHandle(context, status, 0);
       }
       response->set_status(status);
-      std::string u8_data_utf8;
-      convert_to_grpc(u8_data, &u8_data_utf8);
-      response->set_u8_data(u8_data_utf8);
+      response->set_u8_data(u8_data);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {

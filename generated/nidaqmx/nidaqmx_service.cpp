@@ -9864,9 +9864,7 @@ namespace nidaqmx_grpc {
           return ConvertApiErrorStatusForTaskHandle(context, status, 0);
         }
         response->set_status(status);
-        std::string value_utf8;
-        convert_to_grpc(value, &value_utf8);
-        response->set_value(value_utf8);
+        response->set_value(value);
         return ::grpc::Status::OK;
       }
     }
@@ -13660,9 +13658,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
       response->set_status(status);
-      std::string read_array_utf8;
-      convert_to_grpc(read_array, &read_array_utf8);
-      response->set_read_array(read_array_utf8);
+      response->set_read_array(read_array);
       response->set_samps_per_chan_read(samps_per_chan_read);
       response->set_num_bytes_per_samp(num_bytes_per_samp);
       return ::grpc::Status::OK;
@@ -13835,9 +13831,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
       response->set_status(status);
-      std::string read_array_utf8;
-      convert_to_grpc(read_array, &read_array_utf8);
-      response->set_read_array(read_array_utf8);
+      response->set_read_array(read_array);
       response->set_samps_per_chan_read(samps_per_chan_read);
       return ::grpc::Status::OK;
     }
@@ -13868,9 +13862,7 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
       response->set_status(status);
-      std::string read_array_utf8;
-      convert_to_grpc(read_array, &read_array_utf8);
-      response->set_read_array(read_array_utf8);
+      response->set_read_array(read_array);
       response->set_samps_read(samps_read);
       response->set_num_bytes_per_samp(num_bytes_per_samp);
       return ::grpc::Status::OK;

@@ -1982,9 +1982,7 @@ namespace nifgen_grpc {
           return ConvertApiErrorStatusForViSession(context, status, vi);
         }
         response->set_status(status);
-        std::string configuration_utf8;
-        convert_to_grpc(configuration, &configuration_utf8);
-        response->set_configuration(configuration_utf8);
+        response->set_configuration(configuration);
         return ::grpc::Status::OK;
       }
     }

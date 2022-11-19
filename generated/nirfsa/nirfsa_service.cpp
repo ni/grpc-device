@@ -2454,9 +2454,7 @@ namespace nirfsa_grpc {
           return ConvertApiErrorStatusForViSession(context, status, vi);
         }
         response->set_status(status);
-        std::string data_utf8;
-        convert_to_grpc(data, &data_utf8);
-        response->set_data(data_utf8);
+        response->set_data(data);
         response->mutable_data()->resize(actual_data_size);
         response->set_actual_data_size(actual_data_size);
         return ::grpc::Status::OK;
@@ -3305,9 +3303,7 @@ namespace nirfsa_grpc {
         return ConvertApiErrorStatusForViSession(context, status, vi);
       }
       response->set_status(status);
-      std::string data_utf8;
-      convert_to_grpc(data, &data_utf8);
-      response->set_data(data_utf8);
+      response->set_data(data);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {

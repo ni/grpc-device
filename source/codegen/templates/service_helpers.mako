@@ -870,10 +870,12 @@ ${initialize_response_buffer(parameter_name=parameter_name, parameter=parameter)
 ${copy_to_response_with_transform(source_buffer=parameter_name, parameter_name=parameter_name, transform_x="x", size=common_helpers.get_size_expression(parameter))}\
 %   elif common_helpers.supports_standard_copy_conversion_routines(parameter):
       convert_to_grpc(${str.join(", ", [f'{parameter_name}', f'response->mutable_{field_name}()'] + parameter.get("additional_arguments_to_copy_convert", []))});
-%   elif common_helpers.is_string_arg(parameter):
+%   elif parameter['grpc_type'] == 'string':
       std::string ${parameter_name}_utf8;
       convert_to_grpc(${parameter_name}, &${parameter_name}_utf8);
       response->set_${field_name}(${parameter_name}_utf8);
+%   elif common_helpers.is_string_arg(parameter):
+      response->set_${field_name}(${parameter_name});
 %   elif parameter['grpc_type'] == 'nidevice_grpc.Session':
 %      if not init_method: # Non-init methods need to resolve the session ID from the out param.
       auto grpc_device_session_name = ${service_helpers.session_repository_field_name(parameter, config)}->resolve_session_name(${parameter_name});

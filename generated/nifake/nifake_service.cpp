@@ -472,9 +472,7 @@ namespace nifake_grpc {
           return ConvertApiErrorStatusForViSession(context, status, vi);
         }
         response->set_status(status);
-        std::string configuration_utf8;
-        convert_to_grpc(configuration, &configuration_utf8);
-        response->set_configuration(configuration_utf8);
+        response->set_configuration(configuration);
         return ::grpc::Status::OK;
       }
     }
@@ -775,9 +773,7 @@ namespace nifake_grpc {
           return ConvertApiErrorStatusForViSession(context, status, 0);
         }
         response->set_status(status);
-        std::string array_out_utf8;
-        convert_to_grpc(array_out, &array_out_utf8);
-        response->set_array_out(array_out_utf8);
+        response->set_array_out(array_out);
         response->mutable_array_out()->resize(actual_size);
         response->set_actual_size(actual_size);
         return ::grpc::Status::OK;
@@ -2670,9 +2666,7 @@ namespace nifake_grpc {
         return ConvertApiErrorStatusForViSession(context, status, vi);
       }
       response->set_status(status);
-      std::string an_array_utf8;
-      convert_to_grpc(an_array, &an_array_utf8);
-      response->set_an_array(an_array_utf8);
+      response->set_an_array(an_array);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
