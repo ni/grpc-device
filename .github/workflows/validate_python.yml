@@ -29,8 +29,6 @@ jobs:
       with:
         poetry-version: 1.1.5
 
-    - name: Validate RFmx, XNET, and session examples
+    - name: Validate examples (except DAQmx)
       run: |
-        python source/codegen/validate_examples.py -p "*rfmx*"
-        python source/codegen/validate_examples.py -p "*xnet*"
-        python source/codegen/validate_examples.py -p "session"
+        python source/codegen/validate_examples.py -e "nidaqmx"
