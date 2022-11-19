@@ -136,7 +136,7 @@ inline std::string convert_from_grpc(const std::string& value)
   int flags = GetACP() == 54936 ? 0 : 0x400;  // WC_NO_BEST_FIT_CHARS
   int mbs_len = WideCharToMultiByte(CP_ACP, flags, utf16value.c_str(), -1, NULL, 0, NULL, NULL);
   if (mbs_len == 0) {
-    throw new std::exception("Unknown character in string");
+    throw new std::runtime_error("Unknown character in string");
   }
   --mbs_len;  // don't include trailing null
   std::string converted(mbs_len, '\0');
@@ -147,7 +147,7 @@ inline std::string convert_from_grpc(const std::string& value)
   utf8::utf8to32(value.begin(), value.end(), std::back_inserter(utf32value));
   size_t mbs_len = wcstombs(NULL, utf32value.c_str(), 0);
   if (mbs_len == (size_t)-1) {
-    throw new std::exception("Unknown character in string");
+    throw new std::runtime_error("Unknown character in string");
   }
   std::string converted(mbs_len, '\0');
   wcstombs(&converted[0], utf32value.c_str(), mbs_len);
@@ -166,7 +166,7 @@ inline void convert_to_grpc(const std::string& value, std::string* value_out)
   int flags = MB_ERR_INVALID_CHARS | (GetACP() == 54936 ? 0 : MB_PRECOMPOSED);
   int wcs_len = MultiByteToWideChar(CP_ACP, flags, value.c_str(), -1, NULL, 0);
   if (wcs_len == 0) {
-    throw new std::exception("Unknown character in string");
+    throw new std::runtime_error("Unknown character in string");
   }
   --wcs_len;  // don't include trailing null
   std::wstring utf16value(wcs_len, '\0');
@@ -175,7 +175,7 @@ inline void convert_to_grpc(const std::string& value, std::string* value_out)
 #else
   size_t wcs_len = mbstowcs(NULL, value.c_str(), 0);
   if (wcs_len == (size_t)-1) {
-    throw new std::exception("Unknown character in string");
+    throw new std::runtime_error("Unknown character in string");
   }
   std::wstring utf32value(wcs_len, '\0');
   mbstowcs(&utf32value[0], value.c_str(), wcs_len);
