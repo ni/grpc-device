@@ -36,8 +36,8 @@ import sys
 import grpc
 import niscope_pb2 as niscope_types
 import niscope_pb2_grpc as grpc_niscope
-import session_pb2 as session_types
-import session_pb2_grpc as grpc_session
+import session_utilities_pb2 as session_types
+import session_utilities_pb2_grpc as grpc_session
 
 SERVER_ADDRESS = "localhost"
 SERVER_PORT = "31763"
