@@ -227,6 +227,7 @@ set(nidriver_service_srcs
 # Proto file
 #----------------------------------------------------------------------
 get_filename_component(session_proto "source/protobuf/session.proto" ABSOLUTE)
+get_filename_component(session_utilities_proto "source/protobuf/session_utilities.proto" ABSOLUTE)
 get_filename_component(nidevice_proto "source/protobuf/nidevice.proto" ABSOLUTE)
 get_filename_component(debugsessionproperties_restricted_proto "source/protobuf_restricted/debugsessionproperties_restricted.proto" ABSOLUTE)
 get_filename_component(session_proto_path "${session_proto}" PATH)
@@ -262,6 +263,10 @@ set(session_proto_srcs "${proto_srcs_dir}/session.pb.cc")
 set(session_proto_hdrs "${proto_srcs_dir}/session.pb.h")
 set(session_grpc_srcs "${proto_srcs_dir}/session.grpc.pb.cc")
 set(session_grpc_hdrs "${proto_srcs_dir}/session.grpc.pb.h")
+set(session_utilities_proto_srcs "${proto_srcs_dir}/session_utilities.pb.cc")
+set(session_utilities_proto_hdrs "${proto_srcs_dir}/session_utilities.pb.h")
+set(session_utilities_grpc_srcs "${proto_srcs_dir}/session_utilities.grpc.pb.cc")
+set(session_utilities_grpc_hdrs "${proto_srcs_dir}/session_utilities.grpc.pb.h")
 set(nidevice_proto_srcs "${proto_srcs_dir}/nidevice.pb.cc")
 set(nidevice_proto_hdrs "${proto_srcs_dir}/nidevice.pb.h")
 set(debugsessionproperties_restricted_proto_srcs "${proto_srcs_dir}/debugsessionproperties_restricted.pb.cc")
@@ -278,6 +283,16 @@ GenerateGrpcSources(
     "${session_proto_hdrs}"
     "${session_grpc_srcs}"
     "${session_grpc_hdrs}"
+)
+
+GenerateGrpcSources(
+  PROTO
+    ${session_utilities_proto}
+  OUTPUT
+    "${session_utilities_proto_srcs}"
+    "${session_utilities_proto_hdrs}"
+    "${session_utilities_grpc_srcs}"
+    "${session_utilities_grpc_hdrs}"
 )
 
 GenerateGrpcSources(
@@ -338,6 +353,8 @@ add_executable(ni_grpc_device_server
    ${nidevice_proto_srcs}
    ${session_proto_srcs}
    ${session_grpc_srcs}
+   ${session_utilities_proto_srcs}
+   ${session_utilities_grpc_srcs}
    ${debugsessionproperties_restricted_proto_srcs}
    ${debugsessionproperties_restricted_grpc_srcs}
    ${nidriver_service_srcs})
@@ -428,6 +445,8 @@ add_executable(IntegrationTestsRunner
     ${nidevice_proto_srcs}
     ${session_proto_srcs}
     ${session_grpc_srcs}
+    ${session_utilities_proto_srcs}
+    ${session_utilities_grpc_srcs}
     ${debugsessionproperties_restricted_proto_srcs}
     ${debugsessionproperties_restricted_grpc_srcs}
     "${proto_srcs_dir}/nifake.pb.cc"
@@ -491,6 +510,8 @@ add_executable(UnitTestsRunner
     ${nidevice_proto_srcs}
     ${session_proto_srcs}
     ${session_grpc_srcs}
+    ${session_utilities_proto_srcs}
+    ${session_utilities_grpc_srcs}
     ${debugsessionproperties_restricted_proto_srcs}
     ${debugsessionproperties_restricted_grpc_srcs}
     "${proto_srcs_dir}/nifake.pb.cc"
@@ -589,7 +610,9 @@ set(system_test_runner_sources
   ${nidevice_proto_srcs}
   ${session_proto_srcs}
   ${session_grpc_srcs}
-  ${debugsessionproperties_restricted_proto_srcs}
+  ${session_utilities_proto_srcs}
+  ${session_utilities_grpc_srcs}
+${debugsessionproperties_restricted_proto_srcs}
   ${debugsessionproperties_restricted_grpc_srcs}
   ${nidriver_service_srcs}
   ${nidriver_client_srcs}

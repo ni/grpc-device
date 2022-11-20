@@ -4,6 +4,7 @@
 #include <register_all_services.h>
 #include <server/feature_toggles.h>
 #include <session.grpc.pb.h>
+#include <session_utilities.grpc.pb.h>
 
 namespace ni {
 namespace tests {
