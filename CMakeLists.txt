@@ -612,7 +612,7 @@ set(system_test_runner_sources
   ${session_grpc_srcs}
   ${session_utilities_proto_srcs}
   ${session_utilities_grpc_srcs}
-${debugsessionproperties_restricted_proto_srcs}
+  ${debugsessionproperties_restricted_proto_srcs}
   ${debugsessionproperties_restricted_grpc_srcs}
   ${nidriver_service_srcs}
   ${nidriver_client_srcs}
