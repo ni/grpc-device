@@ -31,8 +31,8 @@ subcommands:
 import argparse
 
 import grpc
-import session_pb2 as session_types
-import session_pb2_grpc as grpc_session
+import session_utilities_pb2 as session_types
+import session_utilities_pb2_grpc as grpc_session
 
 
 def main(args):
