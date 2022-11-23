@@ -92,8 +92,8 @@ GetUserDataResponse get_user_data(const StubPtr& stub, const nidevice_grpc::Sess
 GetWaveformBurstStartLocationsResponse get_waveform_burst_start_locations(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name);
 GetWaveformBurstStopLocationsResponse get_waveform_burst_stop_locations(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name);
 GetWaveformMarkerEventLocationsResponse get_waveform_marker_event_locations(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name);
-InitResponse init(const StubPtr& stub, const pb::string& resource_name, const bool& id_query, const bool& reset_device, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior = nidevice_grpc::SessionInitializationBehavior::SESSION_INITIALIZATION_BEHAVIOR_UNSPECIFIED);
-InitWithOptionsResponse init_with_options(const StubPtr& stub, const pb::string& resource_name, const bool& id_query, const bool& reset_device, const pb::string& option_string, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior = nidevice_grpc::SessionInitializationBehavior::SESSION_INITIALIZATION_BEHAVIOR_UNSPECIFIED);
+InitResponse init(const StubPtr& stub, const pb::string& resource_name, const bool& id_query, const bool& reset_device, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior = nidevice_grpc::SESSION_INITIALIZATION_BEHAVIOR_UNSPECIFIED);
+InitWithOptionsResponse init_with_options(const StubPtr& stub, const pb::string& resource_name, const bool& id_query, const bool& reset_device, const pb::string& option_string, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior = nidevice_grpc::SESSION_INITIALIZATION_BEHAVIOR_UNSPECIFIED);
 InitiateResponse initiate(const StubPtr& stub, const nidevice_grpc::Session& vi);
 InvalidateAllAttributesResponse invalidate_all_attributes(const StubPtr& stub, const nidevice_grpc::Session& vi);
 LoadConfigurationsFromFileResponse load_configurations_from_file(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const pb::string& file_path);
