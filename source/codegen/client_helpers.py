@@ -148,8 +148,8 @@ def _get_param_mechanism(param: dict) -> ParamMechanism:
 
 
 def _get_param_default(param: dict) -> str:
-    if param['grpc_type'] == 'nidevice_grpc.SessionInitializationBehavior':
-        return 'nidevice_grpc::SESSION_INITIALIZATION_BEHAVIOR_UNSPECIFIED'
+    if param["grpc_type"] == "nidevice_grpc.SessionInitializationBehavior":
+        return "nidevice_grpc::SESSION_INITIALIZATION_BEHAVIOR_UNSPECIFIED"
     return None
 
 
