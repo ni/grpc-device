@@ -333,7 +333,7 @@ db_close_database(const StubPtr& stub, const nidevice_grpc::Session& database, c
 }
 
 DbCreateObjectResponse
-db_create_object(const StubPtr& stub, const nidevice_grpc::Session& parent_object, const pb::uint32& object_class, const pb::string& object_name, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
+db_create_object(const StubPtr& stub, const nidevice_grpc::Session& parent_object, const pb::uint32& object_class, const pb::string& object_name)
 {
   ::grpc::ClientContext context;
 
@@ -341,7 +341,6 @@ db_create_object(const StubPtr& stub, const nidevice_grpc::Session& parent_objec
   request.mutable_parent_object()->CopyFrom(parent_object);
   request.set_object_class(object_class);
   request.set_object_name(object_name);
-  request.set_initialization_behavior(initialization_behavior);
 
   auto response = DbCreateObjectResponse{};
 
@@ -389,7 +388,7 @@ db_deploy(const StubPtr& stub, const pb::string& ip_address, const pb::string& d
 }
 
 DbFindObjectResponse
-db_find_object(const StubPtr& stub, const nidevice_grpc::Session& parent_object, const pb::uint32& object_class, const pb::string& object_name, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
+db_find_object(const StubPtr& stub, const nidevice_grpc::Session& parent_object, const pb::uint32& object_class, const pb::string& object_name)
 {
   ::grpc::ClientContext context;
 
@@ -397,7 +396,6 @@ db_find_object(const StubPtr& stub, const nidevice_grpc::Session& parent_object,
   request.mutable_parent_object()->CopyFrom(parent_object);
   request.set_object_class(object_class);
   request.set_object_name(object_name);
-  request.set_initialization_behavior(initialization_behavior);
 
   auto response = DbFindObjectResponse{};
 

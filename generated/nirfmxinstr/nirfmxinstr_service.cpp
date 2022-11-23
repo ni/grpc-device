@@ -1756,9 +1756,7 @@ namespace nirfmxinstr_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      auto initialization_behavior = request->initialization_behavior();
 
-      bool new_session_initialized {};
       auto initiating_session_name = instrument_grpc_session.name();
       auto init_lambda = [&] () {
         ViSession nirfsa_session;

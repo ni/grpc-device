@@ -554,9 +554,7 @@ namespace nixnet_grpc {
       nxDatabaseRef_t parent_object = nx_database_ref_t_resource_repository_->access_session(parent_object_grpc_session.name());
       u32 object_class = request->object_class();
       auto object_name = request->object_name().c_str();
-      auto initialization_behavior = request->initialization_behavior();
 
-      bool new_session_initialized {};
       auto initiating_session_name = parent_object_grpc_session.name();
       auto init_lambda = [&] () {
         nxDatabaseRef_t db_object;
@@ -636,9 +634,7 @@ namespace nixnet_grpc {
       nxDatabaseRef_t parent_object = nx_database_ref_t_resource_repository_->access_session(parent_object_grpc_session.name());
       u32 object_class = request->object_class();
       auto object_name = request->object_name().c_str();
-      auto initialization_behavior = request->initialization_behavior();
 
-      bool new_session_initialized {};
       auto initiating_session_name = parent_object_grpc_session.name();
       auto init_lambda = [&] () {
         nxDatabaseRef_t db_object;
