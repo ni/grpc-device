@@ -7281,7 +7281,7 @@ functions = {
             },
             {
                 'direction': 'out',
-                'get_last_error': 'get_last_error_message',
+                'get_last_error': 'deprecated',
                 'name': 'errorMessage',
                 'type': 'char[]'
             },
@@ -7323,7 +7323,7 @@ functions = {
             },
             {
                 'direction': 'out',
-                'get_last_error': 'get_last_error_message',
+                'get_last_error': 'deprecated',
                 'name': 'errorMessage',
                 'type': 'char[]'
             },
