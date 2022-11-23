@@ -69,13 +69,13 @@ class NiRFmxBluetoothDriverApiTests : public Test {
 InitializeResponse init(const client::StubPtr& stub, const std::string& model)
 {
   auto options = std::string("Simulate=1, DriverSetup=Model:") + model;
-  return client::initialize(stub, "FakeDevice", options);
+  return client::initialize(stub, "FakeDevice", options, nidevice_grpc::SessionInitializationBehavior::SESSION_INITIALIZATION_BEHAVIOR_UNSPECIFIED);
 }
 
 InitializeResponse init(const client::StubPtr& stub, const std::string& model, const std::string& resource_name)
 {
   auto options = std::string("Simulate=1, DriverSetup=Model:") + model;
-  return client::initialize(stub, resource_name, options);
+  return client::initialize(stub, resource_name, options, nidevice_grpc::SessionInitializationBehavior::SESSION_INITIALIZATION_BEHAVIOR_UNSPECIFIED);
 }
 
 nidevice_grpc::Session init_session(const client::StubPtr& stub, const std::string& model, const std::string& resource_name)
@@ -119,7 +119,7 @@ TEST_F(NiRFmxBluetoothDriverApiTests, InitializeFromNIRFSA_Close_Succeeds)
   auto rfsa_stub = create_stub<nirfsa_grpc::NiRFSA>();
   auto init_rfsa_response = init_rfsa(rfsa_stub, "Sim");
   EXPECT_RESPONSE_SUCCESS(init_rfsa_response);
-  auto init_response = client::initialize_from_nirfsa_session(stub(), init_rfsa_response.vi());
+  auto init_response = client::initialize_from_nirfsa_session(stub(), init_rfsa_response.vi(), nidevice_grpc::SessionInitializationBehavior::SESSION_INITIALIZATION_BEHAVIOR_UNSPECIFIED);
   auto session = init_response.instrument();
   EXPECT_SUCCESS(session, init_response);
 

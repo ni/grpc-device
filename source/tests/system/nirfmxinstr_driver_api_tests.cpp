@@ -66,7 +66,7 @@ class NiRFmxInstrDriverApiTests : public Test {
 InitializeResponse init(const client::StubPtr& stub, const std::string& model)
 {
   auto options = std::string("Simulate=1, DriverSetup=Model:") + model;
-  return client::initialize(stub, "FakeDevice", options);
+  return client::initialize(stub, "FakeDevice", options, nidevice_grpc::SessionInitializationBehavior::SESSION_INITIALIZATION_BEHAVIOR_UNSPECIFIED);
 }
 
 nirfsa_grpc::InitWithOptionsResponse init_rfsa(const nirfsa_client::StubPtr& stub, const std::string& resource_name)
@@ -113,7 +113,7 @@ nidevice_grpc::Session init_from_rfsa_session_array(const client::StubPtr& stub,
     rfsa_sessions.push_back(init_rfsa_response.vi());
   }
 
-  auto init_response = client::initialize_from_nirfsa_session_array(stub, rfsa_sessions);
+  auto init_response = client::initialize_from_nirfsa_session_array(stub, rfsa_sessions, nidevice_grpc::SessionInitializationBehavior::SESSION_INITIALIZATION_BEHAVIOR_UNSPECIFIED);
   auto session = init_response.instrument();
   EXPECT_RESPONSE_SUCCESS(init_response);
   return session;
@@ -186,7 +186,7 @@ TEST_F(NiRFmxInstrDriverApiTests, InitializeFromNIRFSA_SelfCalibrate_Succeeds)
   auto rfsa_stub = create_stub<nirfsa_grpc::NiRFSA>();
   auto init_rfsa_response = init_rfsa(rfsa_stub, "Sim");
   EXPECT_RESPONSE_SUCCESS(init_rfsa_response);
-  auto init_response = client::initialize_from_nirfsa_session(stub(), init_rfsa_response.vi());
+  auto init_response = client::initialize_from_nirfsa_session(stub(), init_rfsa_response.vi(), nidevice_grpc::SessionInitializationBehavior::SESSION_INITIALIZATION_BEHAVIOR_UNSPECIFIED);
   auto session = init_response.instrument();
   EXPECT_SUCCESS(session, init_response);
 

@@ -237,8 +237,8 @@ IQCfgAcquisitionResponse iq_cfg_acquisition(const StubPtr& stub, const nidevice_
 IQCfgBandwidthResponse iq_cfg_bandwidth(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<IQBandwidthAuto, pb::int32>& bandwidth_auto, const double& bandwidth);
 IQFetchDataResponse iq_fetch_data(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const double& timeout, const pb::int32& record_to_fetch, const pb::int64& samples_to_read);
 IQGetRecordsDoneResponse iq_get_records_done(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string);
-InitializeResponse initialize(const StubPtr& stub, const pb::string& resource_name, const pb::string& option_string);
-InitializeFromNIRFSASessionResponse initialize_from_nirfsa_session(const StubPtr& stub, const nidevice_grpc::Session& nirfsa_session);
+InitializeResponse initialize(const StubPtr& stub, const pb::string& resource_name, const pb::string& option_string, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior);
+InitializeFromNIRFSASessionResponse initialize_from_nirfsa_session(const StubPtr& stub, const nidevice_grpc::Session& nirfsa_session, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior);
 InitiateResponse initiate(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::string& result_name);
 MarkerCfgNumberOfMarkersResponse marker_cfg_number_of_markers(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const pb::int32& number_of_markers);
 MarkerCfgPeakExcursionResponse marker_cfg_peak_excursion(const StubPtr& stub, const nidevice_grpc::Session& instrument, const pb::string& selector_string, const simple_variant<MarkerPeakExcursionEnabled, pb::int32>& peak_excursion_enabled, const double& peak_excursion);
