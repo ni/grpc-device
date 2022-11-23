@@ -986,12 +986,13 @@ get_list_names(const StubPtr& stub, const nidevice_grpc::Session& instrument, co
 }
 
 GetNIRFSASessionResponse
-get_nirfsa_session(const StubPtr& stub, const nidevice_grpc::Session& instrument)
+get_nirfsa_session(const StubPtr& stub, const nidevice_grpc::Session& instrument, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
 {
   ::grpc::ClientContext context;
 
   auto request = GetNIRFSASessionRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
+  request.set_initialization_behavior(initialization_behavior);
 
   auto response = GetNIRFSASessionResponse{};
 
@@ -1003,12 +1004,13 @@ get_nirfsa_session(const StubPtr& stub, const nidevice_grpc::Session& instrument
 }
 
 GetNIRFSASessionArrayResponse
-get_nirfsa_session_array(const StubPtr& stub, const nidevice_grpc::Session& instrument)
+get_nirfsa_session_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
 {
   ::grpc::ClientContext context;
 
   auto request = GetNIRFSASessionArrayRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
+  request.set_initialization_behavior(initialization_behavior);
 
   auto response = GetNIRFSASessionArrayResponse{};
 

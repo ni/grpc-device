@@ -1379,11 +1379,13 @@ message CreateSessionRequest {
     CreateSessionMode mode = 6;
     uint32 mode_raw = 7;
   }
+  nidevice_grpc.SessionInitializationBehavior initialization_behavior = 8;
 }
 
 message CreateSessionResponse {
   int32 status = 1;
   nidevice_grpc.Session session = 2;
+  bool new_session_initialized = 3;
 }
 
 message CreateSessionByRefRequest {
@@ -1394,11 +1396,13 @@ message CreateSessionByRefRequest {
     CreateSessionMode mode = 4;
     uint32 mode_raw = 5;
   }
+  nidevice_grpc.SessionInitializationBehavior initialization_behavior = 6;
 }
 
 message CreateSessionByRefResponse {
   int32 status = 1;
   nidevice_grpc.Session session = 2;
+  bool new_session_initialized = 3;
 }
 
 message DbAddAliasRequest {
@@ -1435,11 +1439,13 @@ message DbCreateObjectRequest {
   nidevice_grpc.Session parent_object = 2;
   uint32 object_class = 3;
   string object_name = 4;
+  nidevice_grpc.SessionInitializationBehavior initialization_behavior = 5;
 }
 
 message DbCreateObjectResponse {
   int32 status = 1;
   nidevice_grpc.Session db_object = 2;
+  bool new_session_initialized = 3;
 }
 
 message DbDeleteObjectRequest {
@@ -1466,11 +1472,13 @@ message DbFindObjectRequest {
   nidevice_grpc.Session parent_object = 2;
   uint32 object_class = 3;
   string object_name = 4;
+  nidevice_grpc.SessionInitializationBehavior initialization_behavior = 5;
 }
 
 message DbFindObjectResponse {
   int32 status = 1;
   nidevice_grpc.Session db_object = 2;
+  bool new_session_initialized = 3;
 }
 
 message DbGetDBCAttributeRequest {
@@ -1555,11 +1563,13 @@ message DbMergeResponse {
 message DbOpenDatabaseRequest {
   string session_name = 1;
   string database_name = 2;
+  nidevice_grpc.SessionInitializationBehavior initialization_behavior = 3;
 }
 
 message DbOpenDatabaseResponse {
   int32 status = 1;
   nidevice_grpc.Session database = 2;
+  bool new_session_initialized = 3;
 }
 
 message DbRemoveAliasRequest {
@@ -1783,11 +1793,13 @@ message SystemCloseResponse {
 
 message SystemOpenRequest {
   string session_name = 1;
+  nidevice_grpc.SessionInitializationBehavior initialization_behavior = 2;
 }
 
 message SystemOpenResponse {
   int32 status = 1;
   nidevice_grpc.Session system = 2;
+  bool new_session_initialized = 3;
 }
 
 message WaitRequest {

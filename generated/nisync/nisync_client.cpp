@@ -18,7 +18,7 @@
 namespace nisync_grpc::experimental::client {
 
 InitResponse
-init(const StubPtr& stub, const pb::string& resource_name, const bool& id_query, const bool& reset_device)
+init(const StubPtr& stub, const pb::string& resource_name, const bool& id_query, const bool& reset_device, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
 {
   ::grpc::ClientContext context;
 
@@ -26,6 +26,7 @@ init(const StubPtr& stub, const pb::string& resource_name, const bool& id_query,
   request.set_resource_name(resource_name);
   request.set_id_query(id_query);
   request.set_reset_device(reset_device);
+  request.set_initialization_behavior(initialization_behavior);
 
   auto response = InitResponse{};
 
@@ -1198,13 +1199,14 @@ cal_get_dds_initial_phase(const StubPtr& stub, const nidevice_grpc::Session& vi)
 }
 
 InitExtCalResponse
-init_ext_cal(const StubPtr& stub, const pb::string& resource_name, const pb::string& password)
+init_ext_cal(const StubPtr& stub, const pb::string& resource_name, const pb::string& password, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
 {
   ::grpc::ClientContext context;
 
   auto request = InitExtCalRequest{};
   request.set_resource_name(resource_name);
   request.set_password(password);
+  request.set_initialization_behavior(initialization_behavior);
 
   auto response = InitExtCalResponse{};
 

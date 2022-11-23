@@ -69,7 +69,7 @@ class NiRFmxSpecAnRestrictedDriverApiTests : public ::testing::Test {
 InitializeResponse init(const client::StubPtr& stub, const std::string& model, const std::string& resource_name)
 {
   auto options = std::string("Simulate=1, DriverSetup=Model:") + model;
-  return client::initialize(stub, resource_name, options, nidevice_grpc::SessionInitializationBehavior::SESSION_INITIALIZATION_BEHAVIOR_UNSPECIFIED);
+  return client::initialize(stub, resource_name, options);
 }
 
 nidevice_grpc::Session init_session(const client::StubPtr& stub, const std::string& model, const std::string& resource_name)

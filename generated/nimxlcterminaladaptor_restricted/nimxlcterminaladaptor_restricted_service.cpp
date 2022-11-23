@@ -51,8 +51,10 @@ namespace nimxlcterminaladaptor_restricted_grpc {
     }
     try {
       auto hostname = request->hostname().c_str();
+      auto initialization_behavior = request->initialization_behavior();
 
       auto c_status = allocate_output_storage<nierr_Status, NIErrStatus>(context);
+      bool new_session_initialized {};
       auto init_lambda = [&] () {
         auto handle = library_->createSession(hostname, &c_status);
         auto status = (&c_status)->code;
@@ -60,13 +62,14 @@ namespace nimxlcterminaladaptor_restricted_grpc {
       };
       std::string grpc_device_session_name = request->session_name();
       auto cleanup_lambda = [&] (nimxlc_Session id) { library_->destroySession(id); };
-      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda);
+      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, initialization_behavior, &new_session_initialized);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNimxlc_Session(context, status, 0);
       }
       response->set_status(status);
       convert_to_grpc(c_status, response->mutable_c_status());
       response->mutable_handle()->set_name(grpc_device_session_name);
+      response->set_new_session_initialized(new_session_initialized);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {

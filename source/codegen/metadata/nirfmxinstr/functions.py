@@ -1504,6 +1504,22 @@ functions = {
                 'grpc_type': 'nidevice_grpc.Session',
                 'name': 'niRfsaSession',
                 'type': 'uInt32'
+            },
+            {
+                'cppName': 'initializationBehavior',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.SessionInitializationBehavior',
+                'name': 'initializationBehavior',
+                'proto_only': True,
+                'type': 'int32'
+            },
+            {
+                'cppName': 'newSessionInitialized',
+                'direction': 'out',
+                'grpc_type': 'bool',
+                'name': 'newSessionInitialized',
+                'proto_only': True,
+                'type': 'bool'
             }
         ],
         'returns': 'int32'
@@ -1539,6 +1555,22 @@ functions = {
                 'direction': 'out',
                 'name': 'actualArraySize',
                 'type': 'int32'
+            },
+            {
+                'cppName': 'initializationBehavior',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.SessionInitializationBehavior',
+                'name': 'initializationBehavior',
+                'proto_only': True,
+                'type': 'int32'
+            },
+            {
+                'cppName': 'newSessionInitialized',
+                'direction': 'out',
+                'grpc_type': 'bool',
+                'name': 'newSessionInitialized',
+                'proto_only': True,
+                'type': 'bool'
             }
         ],
         'returns': 'int32'

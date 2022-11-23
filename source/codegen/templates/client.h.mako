@@ -53,9 +53,9 @@ using namespace nidevice_grpc::experimental::client;
   client_params = client_helpers.get_client_parameters(f, enums)
 %>\
 %   if is_streaming:
-${client_helpers.streaming_response_type(response_type)} ${client_method_name}(${client_helpers.create_streaming_params(client_params)});
+${client_helpers.streaming_response_type(response_type)} ${client_method_name}(${client_helpers.create_streaming_params(client_params, for_header = True)});
 %   else:
-${response_type} ${client_method_name}(${client_helpers.create_unary_params(client_params)});
+${response_type} ${client_method_name}(${client_helpers.create_unary_params(client_params, for_header = True)});
 %   endif
 % endfor
 

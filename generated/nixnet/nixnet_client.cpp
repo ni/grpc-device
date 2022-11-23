@@ -221,7 +221,7 @@ convert_timestamp1ns_to100ns(const StubPtr& stub, const pb::uint64& from_timesta
 }
 
 CreateSessionResponse
-create_session(const StubPtr& stub, const pb::string& database_name, const pb::string& cluster_name, const pb::string& list, const pb::string& interface_name, const simple_variant<CreateSessionMode, pb::uint32>& mode)
+create_session(const StubPtr& stub, const pb::string& database_name, const pb::string& cluster_name, const pb::string& list, const pb::string& interface_name, const simple_variant<CreateSessionMode, pb::uint32>& mode, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
 {
   ::grpc::ClientContext context;
 
@@ -238,6 +238,7 @@ create_session(const StubPtr& stub, const pb::string& database_name, const pb::s
   else if (mode_raw_ptr) {
     request.set_mode_raw(*mode_raw_ptr);
   }
+  request.set_initialization_behavior(initialization_behavior);
 
   auto response = CreateSessionResponse{};
 
@@ -249,7 +250,7 @@ create_session(const StubPtr& stub, const pb::string& database_name, const pb::s
 }
 
 CreateSessionByRefResponse
-create_session_by_ref(const StubPtr& stub, const std::vector<nidevice_grpc::Session>& array_of_database_ref, const pb::string& interface_name, const simple_variant<CreateSessionMode, pb::uint32>& mode)
+create_session_by_ref(const StubPtr& stub, const std::vector<nidevice_grpc::Session>& array_of_database_ref, const pb::string& interface_name, const simple_variant<CreateSessionMode, pb::uint32>& mode, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
 {
   ::grpc::ClientContext context;
 
@@ -264,6 +265,7 @@ create_session_by_ref(const StubPtr& stub, const std::vector<nidevice_grpc::Sess
   else if (mode_raw_ptr) {
     request.set_mode_raw(*mode_raw_ptr);
   }
+  request.set_initialization_behavior(initialization_behavior);
 
   auto response = CreateSessionByRefResponse{};
 
@@ -331,7 +333,7 @@ db_close_database(const StubPtr& stub, const nidevice_grpc::Session& database, c
 }
 
 DbCreateObjectResponse
-db_create_object(const StubPtr& stub, const nidevice_grpc::Session& parent_object, const pb::uint32& object_class, const pb::string& object_name)
+db_create_object(const StubPtr& stub, const nidevice_grpc::Session& parent_object, const pb::uint32& object_class, const pb::string& object_name, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
 {
   ::grpc::ClientContext context;
 
@@ -339,6 +341,7 @@ db_create_object(const StubPtr& stub, const nidevice_grpc::Session& parent_objec
   request.mutable_parent_object()->CopyFrom(parent_object);
   request.set_object_class(object_class);
   request.set_object_name(object_name);
+  request.set_initialization_behavior(initialization_behavior);
 
   auto response = DbCreateObjectResponse{};
 
@@ -386,7 +389,7 @@ db_deploy(const StubPtr& stub, const pb::string& ip_address, const pb::string& d
 }
 
 DbFindObjectResponse
-db_find_object(const StubPtr& stub, const nidevice_grpc::Session& parent_object, const pb::uint32& object_class, const pb::string& object_name)
+db_find_object(const StubPtr& stub, const nidevice_grpc::Session& parent_object, const pb::uint32& object_class, const pb::string& object_name, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
 {
   ::grpc::ClientContext context;
 
@@ -394,6 +397,7 @@ db_find_object(const StubPtr& stub, const nidevice_grpc::Session& parent_object,
   request.mutable_parent_object()->CopyFrom(parent_object);
   request.set_object_class(object_class);
   request.set_object_name(object_name);
+  request.set_initialization_behavior(initialization_behavior);
 
   auto response = DbFindObjectResponse{};
 
@@ -527,12 +531,13 @@ db_merge(const StubPtr& stub, const nidevice_grpc::Session& target_cluster, cons
 }
 
 DbOpenDatabaseResponse
-db_open_database(const StubPtr& stub, const pb::string& database_name)
+db_open_database(const StubPtr& stub, const pb::string& database_name, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
 {
   ::grpc::ClientContext context;
 
   auto request = DbOpenDatabaseRequest{};
   request.set_database_name(database_name);
+  request.set_initialization_behavior(initialization_behavior);
 
   auto response = DbOpenDatabaseResponse{};
 
@@ -958,11 +963,12 @@ system_close(const StubPtr& stub, const nidevice_grpc::Session& system)
 }
 
 SystemOpenResponse
-system_open(const StubPtr& stub)
+system_open(const StubPtr& stub, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
 {
   ::grpc::ClientContext context;
 
   auto request = SystemOpenRequest{};
+  request.set_initialization_behavior(initialization_behavior);
 
   auto response = SystemOpenResponse{};
 

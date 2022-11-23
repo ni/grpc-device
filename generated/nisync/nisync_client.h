@@ -22,7 +22,7 @@ using StubPtr = std::unique_ptr<NiSync::Stub>;
 using namespace nidevice_grpc::experimental::client;
 
 
-InitResponse init(const StubPtr& stub, const pb::string& resource_name, const bool& id_query, const bool& reset_device);
+InitResponse init(const StubPtr& stub, const pb::string& resource_name, const bool& id_query, const bool& reset_device, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior = nidevice_grpc::SessionInitializationBehavior::SESSION_INITIALIZATION_BEHAVIOR_UNSPECIFIED);
 CloseResponse close(const StubPtr& stub, const nidevice_grpc::Session& vi);
 ErrorMessageResponse error_message(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& error_code);
 ResetResponse reset(const StubPtr& stub, const nidevice_grpc::Session& vi);
@@ -86,7 +86,7 @@ CalGetOscillatorVoltageResponse cal_get_oscillator_voltage(const StubPtr& stub, 
 CalGetClk10PhaseVoltageResponse cal_get_clk10_phase_voltage(const StubPtr& stub, const nidevice_grpc::Session& vi);
 CalGetDDSStartPulsePhaseVoltageResponse cal_get_dds_start_pulse_phase_voltage(const StubPtr& stub, const nidevice_grpc::Session& vi);
 CalGetDDSInitialPhaseResponse cal_get_dds_initial_phase(const StubPtr& stub, const nidevice_grpc::Session& vi);
-InitExtCalResponse init_ext_cal(const StubPtr& stub, const pb::string& resource_name, const pb::string& password);
+InitExtCalResponse init_ext_cal(const StubPtr& stub, const pb::string& resource_name, const pb::string& password, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior = nidevice_grpc::SessionInitializationBehavior::SESSION_INITIALIZATION_BEHAVIOR_UNSPECIFIED);
 CloseExtCalResponse close_ext_cal(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& action);
 CalAdjustOscillatorVoltageResponse cal_adjust_oscillator_voltage(const StubPtr& stub, const nidevice_grpc::Session& vi, const double& measured_voltage);
 CalAdjustClk10PhaseVoltageResponse cal_adjust_clk10_phase_voltage(const StubPtr& stub, const nidevice_grpc::Session& vi, const double& measured_voltage);

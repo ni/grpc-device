@@ -55,9 +55,11 @@ namespace nixnetsocket_grpc {
     try {
       auto socket_grpc_session = request->socket();
       nxSOCKET socket = session_repository_->access_session(socket_grpc_session.name());
+      auto initialization_behavior = request->initialization_behavior();
 
       auto addr = allocate_output_storage<nxsockaddr, SockAddr>();
       nxsocklen_t addrlen {};
+      bool new_session_initialized {};
       auto init_lambda = [&] () {
         auto socket_out = library_->Accept(socket, &addr, &addrlen);
         auto status = socket_out == -1 ? -1 : 0;
@@ -65,13 +67,14 @@ namespace nixnetsocket_grpc {
       };
       std::string grpc_device_session_name = request->session_name();
       auto cleanup_lambda = [&] (nxSOCKET id) { library_->Close(id); };
-      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda);
+      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, initialization_behavior, &new_session_initialized);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNxSOCKET(context, status, socket);
       }
       response->set_status(status);
       convert_to_grpc(addr, response->mutable_addr());
       response->mutable_socket()->set_name(grpc_device_session_name);
+      response->set_new_session_initialized(new_session_initialized);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
@@ -532,7 +535,9 @@ namespace nixnetsocket_grpc {
     try {
       char* stack_name = (char*)request->stack_name().c_str();
       char* config = (char*)request->config().c_str();
+      auto initialization_behavior = request->initialization_behavior();
 
+      bool new_session_initialized {};
       auto init_lambda = [&] () {
         nxIpStackRef_t stack_ref;
         auto status = library_->IpStackCreate(stack_name, config, &stack_ref);
@@ -540,12 +545,13 @@ namespace nixnetsocket_grpc {
       };
       std::string grpc_device_session_name = request->session_name();
       auto cleanup_lambda = [&] (nxIpStackRef_t id) { library_->IpStackClear(id); };
-      int status = nx_ip_stack_ref_t_resource_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda);
+      int status = nx_ip_stack_ref_t_resource_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, initialization_behavior, &new_session_initialized);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNxSOCKET(context, status, 0);
       }
       response->set_status(status);
       response->mutable_stack_ref()->set_name(grpc_device_session_name);
+      response->set_new_session_initialized(new_session_initialized);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
@@ -626,7 +632,9 @@ namespace nixnetsocket_grpc {
     }
     try {
       char* stack_name = (char*)request->stack_name().c_str();
+      auto initialization_behavior = request->initialization_behavior();
 
+      bool new_session_initialized {};
       auto init_lambda = [&] () {
         nxIpStackRef_t stack_ref;
         auto status = library_->IpStackOpen(stack_name, &stack_ref);
@@ -634,12 +642,13 @@ namespace nixnetsocket_grpc {
       };
       std::string grpc_device_session_name = request->session_name();
       auto cleanup_lambda = [&] (nxIpStackRef_t id) { library_->IpStackClear(id); };
-      int status = nx_ip_stack_ref_t_resource_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda);
+      int status = nx_ip_stack_ref_t_resource_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, initialization_behavior, &new_session_initialized);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNxSOCKET(context, status, 0);
       }
       response->set_status(status);
       response->mutable_stack_ref()->set_name(grpc_device_session_name);
+      response->set_new_session_initialized(new_session_initialized);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
@@ -985,7 +994,9 @@ namespace nixnetsocket_grpc {
         }
       }
 
+      auto initialization_behavior = request->initialization_behavior();
 
+      bool new_session_initialized {};
       auto init_lambda = [&] () {
         auto socket = library_->Socket(stack_ref, domain, type, protocol);
         auto status = socket == -1 ? -1 : 0;
@@ -993,12 +1004,13 @@ namespace nixnetsocket_grpc {
       };
       std::string grpc_device_session_name = request->session_name();
       auto cleanup_lambda = [&] (nxSOCKET id) { library_->Close(id); };
-      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda);
+      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, initialization_behavior, &new_session_initialized);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNxIpStackRef_t(context, status, stack_ref);
       }
       response->set_status(status);
       response->mutable_socket()->set_name(grpc_device_session_name);
+      response->set_new_session_initialized(new_session_initialized);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
