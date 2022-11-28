@@ -173,7 +173,8 @@ inline void convert_to_grpc(const std::string& value, std::string* value_out)
   --wcs_len;  // don't include trailing null
   std::wstring utf16value(wcs_len, '\0');
   MultiByteToWideChar(CP_ACP, flags, value.c_str(), -1, &utf16value[0], wcs_len);
-  value_out->reserve(utf16value.length());  // not perfect, but better than nothing
+  // Pre-reserve something close to the target byte count, for performance; doesn't have to be exact
+  value_out->reserve(utf16value.length());
   utf8::utf16to8(utf16value.begin(), utf16value.end(), std::back_inserter(*value_out));
 #else
   size_t wcs_len = mbstowcs(NULL, value.c_str(), 0);
@@ -182,7 +183,8 @@ inline void convert_to_grpc(const std::string& value, std::string* value_out)
   }
   std::wstring utf32value(wcs_len, '\0');
   mbstowcs(&utf32value[0], value.c_str(), wcs_len);
-  value_out->reserve(utf32value.length());  // not perfect, but better than nothing
+  // Pre-reserve something close to the target byte count, for performance; doesn't have to be exact
+  value_out->reserve(utf32value.length());
   utf8::utf32to8(utf32value.begin(), utf32value.end(), std::back_inserter(*value_out));
 #endif
 }
