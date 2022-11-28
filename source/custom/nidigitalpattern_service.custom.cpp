@@ -1,6 +1,7 @@
 #include <nidigitalpattern/nidigitalpattern_service.h>
 
 namespace nidigitalpattern_grpc {
+using nidevice_grpc::converters::convert_from_grpc;
 
 const auto kErrorReadBufferTooSmall = -200229;
 const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
@@ -35,8 +36,10 @@ inline bool status_ok(int32 status)
   try {
     auto vi_grpc_session = request->vi();
     ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-    auto site_list = request->site_list().c_str();
-    auto waveform_name = request->waveform_name().c_str();
+    auto site_list_mbcs = convert_from_grpc<std::string>(request->site_list());
+    auto site_list = site_list_mbcs.c_str();
+    auto waveform_name_mbcs = convert_from_grpc<std::string>(request->waveform_name());
+    auto waveform_name = waveform_name_mbcs.c_str();
     ViInt32 samples_to_read = request->samples_to_read();
     ViReal64 timeout = request->timeout();
     ViInt32 actual_num_waveforms{};

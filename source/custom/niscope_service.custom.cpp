@@ -32,7 +32,8 @@ void CheckStatus(int status)
   try {
     auto session = request->vi();
     vi = session_repository_->access_session(session.name());
-    ViConstString channel_list = request->channel_list().c_str();
+    auto channel_list_mbcs = convert_from_grpc<std::string>(request->channel_list());
+    ViConstString channel_list = channel_list_mbcs.c_str();
     ViReal64 timeout = request->timeout();
     ViInt32 num_samples = request->num_samples();
     if (num_samples < 0) {
@@ -76,7 +77,8 @@ void CheckStatus(int status)
   try {
     auto session = request->vi();
     vi = session_repository_->access_session(session.name());
-    ViConstString channel_list = request->channel_list().c_str();
+    auto channel_list_mbcs = convert_from_grpc<std::string>(request->channel_list());
+    ViConstString channel_list = channel_list_mbcs.c_str();
     ViReal64 timeout = request->timeout();
     ViInt32 num_samples = request->num_samples();
     if (num_samples < 0) {
@@ -120,7 +122,8 @@ void CheckStatus(int status)
   try {
     auto session = request->vi();
     vi = session_repository_->access_session(session.name());
-    ViConstString channel_list = request->channel_list().c_str();
+    auto channel_list_mbcs = convert_from_grpc<std::string>(request->channel_list());
+    ViConstString channel_list = channel_list_mbcs.c_str();
     ViReal64 timeout = request->timeout();
     ViInt32 num_samples = request->num_samples();
     if (num_samples < 0) {
@@ -164,7 +167,8 @@ void CheckStatus(int status)
   try {
     auto session = request->vi();
     vi = session_repository_->access_session(session.name());
-    ViConstString channel_list = request->channel_list().c_str();
+    auto channel_list_mbcs = convert_from_grpc<std::string>(request->channel_list());
+    ViConstString channel_list = channel_list_mbcs.c_str();
     ViReal64 timeout = request->timeout();
     ViInt32 num_samples = request->num_samples();
     if (num_samples < 0) {
@@ -208,7 +212,8 @@ void CheckStatus(int status)
   try {
     auto session = request->vi();
     vi = session_repository_->access_session(session.name());
-    ViConstString channel_list = request->channel_list().c_str();
+    auto channel_list_mbcs = convert_from_grpc<std::string>(request->channel_list());
+    ViConstString channel_list = channel_list_mbcs.c_str();
     ViReal64 timeout = request->timeout();
     ViInt32 array_meas_function;
     switch (request->array_meas_function_enum_case()) {
@@ -263,7 +268,8 @@ void CheckStatus(int status)
   try {
     auto session = request->vi();
     vi = session_repository_->access_session(session.name());
-    ViConstString channel_list = request->channel_list().c_str();
+    auto channel_list_mbcs = convert_from_grpc<std::string>(request->channel_list());
+    ViConstString channel_list = channel_list_mbcs.c_str();
     ViReal64 timeout = request->timeout();
     ViInt32 scalar_meas_function;
     switch (request->scalar_meas_function_enum_case()) {
@@ -323,7 +329,8 @@ void CheckStatus(int status)
   try {
     auto session = request->vi();
     vi = session_repository_->access_session(session.name());
-    ViConstString channel_list = request->channel_list().c_str();
+    auto channel_list_mbcs = convert_from_grpc<std::string>(request->channel_list());
+    ViConstString channel_list = channel_list_mbcs.c_str();
     ViReal64 timeout = request->timeout();
     ViInt32 num_samples = request->num_samples();
     if (num_samples < 0) {
@@ -367,7 +374,8 @@ void CheckStatus(int status)
   try {
     auto session = request->vi();
     vi = session_repository_->access_session(session.name());
-    ViConstString channel_list = request->channel_list().c_str();
+    auto channel_list_mbcs = convert_from_grpc<std::string>(request->channel_list());
+    ViConstString channel_list = channel_list_mbcs.c_str();
     ViReal64 timeout = request->timeout();
     ViInt32 num_samples = request->num_samples();
     if (num_samples < 0) {
@@ -411,7 +419,8 @@ void CheckStatus(int status)
   try {
     auto session = request->vi();
     vi = session_repository_->access_session(session.name());
-    ViConstString channel_list = request->channel_list().c_str();
+    auto channel_list_mbcs = convert_from_grpc<std::string>(request->channel_list());
+    ViConstString channel_list = channel_list_mbcs.c_str();
     ViReal64 timeout = request->timeout();
     ViInt32 num_samples = request->num_samples();
     if (num_samples < 0) {
@@ -455,7 +464,8 @@ void CheckStatus(int status)
   try {
     auto session = request->vi();
     vi = session_repository_->access_session(session.name());
-    ViConstString channel_list = request->channel_list().c_str();
+    auto channel_list_mbcs = convert_from_grpc<std::string>(request->channel_list());
+    ViConstString channel_list = channel_list_mbcs.c_str();
     ViReal64 timeout = request->timeout();
     ViInt32 scalar_meas_function;
     switch (request->scalar_meas_function_enum_case()) {
@@ -505,7 +515,8 @@ void CheckStatus(int status)
   try {
     auto session = request->vi();
     vi = session_repository_->access_session(session.name());
-    ViConstString channel_list = request->channel_list().c_str();
+    auto channel_list_mbcs = convert_from_grpc<std::string>(request->channel_list());
+    ViConstString channel_list = channel_list_mbcs.c_str();
     ViReal64 timeout = request->timeout();
     ViInt32 scalar_meas_function;
     switch (request->scalar_meas_function_enum_case()) {
