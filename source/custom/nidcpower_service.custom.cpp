@@ -88,7 +88,7 @@ static void CheckStatus(int status)
       return ConvertApiErrorStatusForViSession(context, status, vi);
     }
     response->set_status(status);
-    nidevice_grpc::converters::convert_to_grpc(measurements, response->mutable_measurements());
+    convert_to_grpc(measurements, response->mutable_measurements());
     return ::grpc::Status::OK;
   }
   catch (nidevice_grpc::LibraryLoadException& ex) {
