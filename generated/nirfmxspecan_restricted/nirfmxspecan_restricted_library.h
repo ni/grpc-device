@@ -12,6 +12,7 @@
 
 namespace nirfmxspecan_restricted_grpc {
 
+
 class NiRFmxSpecAnRestrictedLibrary : public nirfmxspecan_restricted_grpc::NiRFmxSpecAnRestrictedLibraryInterface {
  public:
   NiRFmxSpecAnRestrictedLibrary();

@@ -23,6 +23,7 @@ c_function_prefix = config["c_function_prefix"]
 
 namespace ${config["namespace_component"]}_grpc {
 
+
 class ${service_class_prefix}Library : public ${namespace_prefix}::${service_class_prefix}LibraryInterface {
  public:
   ${service_class_prefix}Library();

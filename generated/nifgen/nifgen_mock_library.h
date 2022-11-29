@@ -15,6 +15,7 @@ namespace ni {
 namespace tests {
 namespace unit {
 
+
 class NiFgenMockLibrary : public nifgen_grpc::NiFgenLibraryInterface {
  public:
   MOCK_METHOD(ViStatus, AbortGeneration, (ViSession vi), (override));

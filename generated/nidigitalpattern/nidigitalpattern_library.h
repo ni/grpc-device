@@ -12,6 +12,7 @@
 
 namespace nidigitalpattern_grpc {
 
+
 class NiDigitalLibrary : public nidigitalpattern_grpc::NiDigitalLibraryInterface {
  public:
   NiDigitalLibrary();

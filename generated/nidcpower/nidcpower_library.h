@@ -12,6 +12,7 @@
 
 namespace nidcpower_grpc {
 
+
 class NiDCPowerLibrary : public nidcpower_grpc::NiDCPowerLibraryInterface {
  public:
   NiDCPowerLibrary();

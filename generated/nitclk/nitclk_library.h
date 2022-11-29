@@ -12,6 +12,7 @@
 
 namespace nitclk_grpc {
 
+
 class NiTClkLibrary : public nitclk_grpc::NiTClkLibraryInterface {
  public:
   NiTClkLibrary();

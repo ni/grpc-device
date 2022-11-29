@@ -7,6 +7,7 @@
 #ifndef NIFGEN_GRPC_CLIENT_H
 #define NIFGEN_GRPC_CLIENT_H
 
+
 #include <grpcpp/grpcpp.h>
 
 #include <nifgen.grpc.pb.h>

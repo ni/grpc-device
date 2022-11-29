@@ -7,6 +7,7 @@
 #ifndef NISCOPE_GRPC_CLIENT_H
 #define NISCOPE_GRPC_CLIENT_H
 
+
 #include <grpcpp/grpcpp.h>
 
 #include <niscope.grpc.pb.h>

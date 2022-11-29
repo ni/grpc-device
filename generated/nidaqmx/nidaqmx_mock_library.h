@@ -15,6 +15,7 @@ namespace ni {
 namespace tests {
 namespace unit {
 
+
 class NiDAQmxMockLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
  public:
   MOCK_METHOD(int32, AddCDAQSyncConnection, (const char portList[]), (override));

@@ -27,6 +27,7 @@ namespace ni {
 namespace tests {
 namespace unit {
 
+
 class ${service_class_prefix}MockLibrary : public ${namespace_prefix}::${service_class_prefix}LibraryInterface {
  public:
 % for method_name in service_helpers.filter_api_functions(functions):

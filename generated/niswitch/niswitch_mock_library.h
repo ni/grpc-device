@@ -15,6 +15,7 @@ namespace ni {
 namespace tests {
 namespace unit {
 
+
 class NiSwitchMockLibrary : public niswitch_grpc::NiSwitchLibraryInterface {
  public:
   MOCK_METHOD(ViStatus, AbortScan, (ViSession vi), (override));

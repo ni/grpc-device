@@ -11,6 +11,7 @@
 
 namespace nirfmxnr_grpc {
 
+
 class NiRFmxNRLibraryInterface {
  public:
   virtual ~NiRFmxNRLibraryInterface() {}

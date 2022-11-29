@@ -12,6 +12,7 @@
 
 namespace nirfmxnr_grpc {
 
+
 class NiRFmxNRLibrary : public nirfmxnr_grpc::NiRFmxNRLibraryInterface {
  public:
   NiRFmxNRLibrary();

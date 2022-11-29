@@ -8,6 +8,7 @@
 
 #include <grpcpp/server_builder.h>
 
+
 #include "nimxlcterminaladaptor_restricted_service.h"
 #include "nimxlcterminaladaptor_restricted_service_registrar.h"
 

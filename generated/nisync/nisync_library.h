@@ -12,6 +12,7 @@
 
 namespace nisync_grpc {
 
+
 class NiSyncLibrary : public nisync_grpc::NiSyncLibraryInterface {
  public:
   NiSyncLibrary();

@@ -19,6 +19,7 @@ service_class_prefix = config["service_class_prefix"]
 
 #include <grpcpp/server_builder.h>
 
+
 #include "${module_name}_service.h"
 #include "${module_name}_service_registrar.h"
 

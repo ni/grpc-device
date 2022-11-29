@@ -11,6 +11,7 @@
 
 namespace nirfmxspecan_restricted_grpc {
 
+
 class NiRFmxSpecAnRestrictedLibraryInterface {
  public:
   virtual ~NiRFmxSpecAnRestrictedLibraryInterface() {}

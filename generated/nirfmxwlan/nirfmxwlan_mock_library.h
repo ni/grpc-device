@@ -15,6 +15,7 @@ namespace ni {
 namespace tests {
 namespace unit {
 
+
 class NiRFmxWLANMockLibrary : public nirfmxwlan_grpc::NiRFmxWLANLibraryInterface {
  public:
   MOCK_METHOD(int32, AbortMeasurements, (niRFmxInstrHandle instrumentHandle, char selectorString[]), (override));

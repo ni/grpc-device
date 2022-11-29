@@ -12,6 +12,7 @@
 
 namespace niswitch_grpc {
 
+
 class NiSwitchLibrary : public niswitch_grpc::NiSwitchLibraryInterface {
  public:
   NiSwitchLibrary();

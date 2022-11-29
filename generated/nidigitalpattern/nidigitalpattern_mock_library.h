@@ -15,6 +15,7 @@ namespace ni {
 namespace tests {
 namespace unit {
 
+
 class NiDigitalMockLibrary : public nidigitalpattern_grpc::NiDigitalLibraryInterface {
  public:
   MOCK_METHOD(ViStatus, Abort, (ViSession vi), (override));

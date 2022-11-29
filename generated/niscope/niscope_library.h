@@ -12,6 +12,7 @@
 
 namespace niscope_grpc {
 
+
 class NiScopeLibrary : public niscope_grpc::NiScopeLibraryInterface {
  public:
   NiScopeLibrary();

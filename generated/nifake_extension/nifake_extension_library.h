@@ -12,6 +12,7 @@
 
 namespace nifake_extension_grpc {
 
+
 class NiFakeExtensionLibrary : public nifake_extension_grpc::NiFakeExtensionLibraryInterface {
  public:
   NiFakeExtensionLibrary();

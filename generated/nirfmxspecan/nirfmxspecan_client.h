@@ -7,6 +7,7 @@
 #ifndef NIRFMXSPECAN_GRPC_CLIENT_H
 #define NIRFMXSPECAN_GRPC_CLIENT_H
 
+
 #include <grpcpp/grpcpp.h>
 
 #include <nirfmxspecan.grpc.pb.h>

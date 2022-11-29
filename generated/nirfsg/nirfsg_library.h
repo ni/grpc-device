@@ -12,6 +12,7 @@
 
 namespace nirfsg_grpc {
 
+
 class NiRFSGLibrary : public nirfsg_grpc::NiRFSGLibraryInterface {
  public:
   NiRFSGLibrary();

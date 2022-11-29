@@ -147,6 +147,7 @@ NiRFSGLibrary::~NiRFSGLibrary()
 
 ViStatus NiRFSGLibrary::Abort(ViSession vi)
 {
+
   if (!function_pointers_.Abort) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_Abort.");
   }
@@ -159,6 +160,7 @@ ViStatus NiRFSGLibrary::Abort(ViSession vi)
 
 ViStatus NiRFSGLibrary::AllocateArbWaveform(ViSession vi, ViConstString waveformName, ViInt32 sizeInSamples)
 {
+
   if (!function_pointers_.AllocateArbWaveform) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_AllocateArbWaveform.");
   }
@@ -171,6 +173,7 @@ ViStatus NiRFSGLibrary::AllocateArbWaveform(ViSession vi, ViConstString waveform
 
 ViStatus NiRFSGLibrary::CheckAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean value)
 {
+
   if (!function_pointers_.CheckAttributeViBoolean) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_CheckAttributeViBoolean.");
   }
@@ -183,6 +186,7 @@ ViStatus NiRFSGLibrary::CheckAttributeViBoolean(ViSession vi, ViConstString chan
 
 ViStatus NiRFSGLibrary::CheckAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 value)
 {
+
   if (!function_pointers_.CheckAttributeViInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_CheckAttributeViInt32.");
   }
@@ -195,6 +199,7 @@ ViStatus NiRFSGLibrary::CheckAttributeViInt32(ViSession vi, ViConstString channe
 
 ViStatus NiRFSGLibrary::CheckAttributeViInt64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt64 value)
 {
+
   if (!function_pointers_.CheckAttributeViInt64) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_CheckAttributeViInt64.");
   }
@@ -207,6 +212,7 @@ ViStatus NiRFSGLibrary::CheckAttributeViInt64(ViSession vi, ViConstString channe
 
 ViStatus NiRFSGLibrary::CheckAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64 value)
 {
+
   if (!function_pointers_.CheckAttributeViReal64) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_CheckAttributeViReal64.");
   }
@@ -219,6 +225,7 @@ ViStatus NiRFSGLibrary::CheckAttributeViReal64(ViSession vi, ViConstString chann
 
 ViStatus NiRFSGLibrary::CheckAttributeViSession(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession value)
 {
+
   if (!function_pointers_.CheckAttributeViSession) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_CheckAttributeViSession.");
   }
@@ -231,6 +238,7 @@ ViStatus NiRFSGLibrary::CheckAttributeViSession(ViSession vi, ViConstString chan
 
 ViStatus NiRFSGLibrary::CheckAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViConstString value)
 {
+
   if (!function_pointers_.CheckAttributeViString) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_CheckAttributeViString.");
   }
@@ -243,6 +251,7 @@ ViStatus NiRFSGLibrary::CheckAttributeViString(ViSession vi, ViConstString chann
 
 ViStatus NiRFSGLibrary::CheckGenerationStatus(ViSession vi, ViBoolean* isDone)
 {
+
   if (!function_pointers_.CheckGenerationStatus) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_CheckGenerationStatus.");
   }
@@ -255,6 +264,7 @@ ViStatus NiRFSGLibrary::CheckGenerationStatus(ViSession vi, ViBoolean* isDone)
 
 ViStatus NiRFSGLibrary::CheckIfConfigurationListExists(ViSession vi, ViConstString listName, ViBoolean* listExists)
 {
+
   if (!function_pointers_.CheckIfConfigurationListExists) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_CheckIfConfigurationListExists.");
   }
@@ -267,6 +277,7 @@ ViStatus NiRFSGLibrary::CheckIfConfigurationListExists(ViSession vi, ViConstStri
 
 ViStatus NiRFSGLibrary::CheckIfScriptExists(ViSession vi, ViConstString scriptName, ViBoolean* scriptExists)
 {
+
   if (!function_pointers_.CheckIfScriptExists) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_CheckIfScriptExists.");
   }
@@ -279,6 +290,7 @@ ViStatus NiRFSGLibrary::CheckIfScriptExists(ViSession vi, ViConstString scriptNa
 
 ViStatus NiRFSGLibrary::CheckIfWaveformExists(ViSession vi, ViConstString waveformName, ViBoolean* waveformExists)
 {
+
   if (!function_pointers_.CheckIfWaveformExists) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_CheckIfWaveformExists.");
   }
@@ -291,6 +303,7 @@ ViStatus NiRFSGLibrary::CheckIfWaveformExists(ViSession vi, ViConstString wavefo
 
 ViStatus NiRFSGLibrary::ClearAllArbWaveforms(ViSession vi)
 {
+
   if (!function_pointers_.ClearAllArbWaveforms) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_ClearAllArbWaveforms.");
   }
@@ -303,6 +316,7 @@ ViStatus NiRFSGLibrary::ClearAllArbWaveforms(ViSession vi)
 
 ViStatus NiRFSGLibrary::ClearArbWaveform(ViSession vi, ViConstString name)
 {
+
   if (!function_pointers_.ClearArbWaveform) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_ClearArbWaveform.");
   }
@@ -315,6 +329,7 @@ ViStatus NiRFSGLibrary::ClearArbWaveform(ViSession vi, ViConstString name)
 
 ViStatus NiRFSGLibrary::ClearError(ViSession vi)
 {
+
   if (!function_pointers_.ClearError) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_ClearError.");
   }
@@ -327,6 +342,7 @@ ViStatus NiRFSGLibrary::ClearError(ViSession vi)
 
 ViStatus NiRFSGLibrary::ClearSelfCalibrateRange(ViSession vi)
 {
+
   if (!function_pointers_.ClearSelfCalibrateRange) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_ClearSelfCalibrateRange.");
   }
@@ -339,6 +355,7 @@ ViStatus NiRFSGLibrary::ClearSelfCalibrateRange(ViSession vi)
 
 ViStatus NiRFSGLibrary::Close(ViSession vi)
 {
+
   if (!function_pointers_.Close) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_close.");
   }
@@ -351,6 +368,7 @@ ViStatus NiRFSGLibrary::Close(ViSession vi)
 
 ViStatus NiRFSGLibrary::Commit(ViSession vi)
 {
+
   if (!function_pointers_.Commit) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_Commit.");
   }
@@ -363,6 +381,7 @@ ViStatus NiRFSGLibrary::Commit(ViSession vi)
 
 ViStatus NiRFSGLibrary::ConfigureDeembeddingTableInterpolationLinear(ViSession vi, ViConstString port, ViConstString tableName, ViInt32 format)
 {
+
   if (!function_pointers_.ConfigureDeembeddingTableInterpolationLinear) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_ConfigureDeembeddingTableInterpolationLinear.");
   }
@@ -375,6 +394,7 @@ ViStatus NiRFSGLibrary::ConfigureDeembeddingTableInterpolationLinear(ViSession v
 
 ViStatus NiRFSGLibrary::ConfigureDeembeddingTableInterpolationNearest(ViSession vi, ViConstString port, ViConstString tableName)
 {
+
   if (!function_pointers_.ConfigureDeembeddingTableInterpolationNearest) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_ConfigureDeembeddingTableInterpolationNearest.");
   }
@@ -387,6 +407,7 @@ ViStatus NiRFSGLibrary::ConfigureDeembeddingTableInterpolationNearest(ViSession 
 
 ViStatus NiRFSGLibrary::ConfigureDeembeddingTableInterpolationSpline(ViSession vi, ViConstString port, ViConstString tableName)
 {
+
   if (!function_pointers_.ConfigureDeembeddingTableInterpolationSpline) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_ConfigureDeembeddingTableInterpolationSpline.");
   }
@@ -399,6 +420,7 @@ ViStatus NiRFSGLibrary::ConfigureDeembeddingTableInterpolationSpline(ViSession v
 
 ViStatus NiRFSGLibrary::ConfigureDigitalEdgeConfigurationListStepTrigger(ViSession vi, ViConstString source, ViInt32 edge)
 {
+
   if (!function_pointers_.ConfigureDigitalEdgeConfigurationListStepTrigger) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_ConfigureDigitalEdgeConfigurationListStepTrigger.");
   }
@@ -411,6 +433,7 @@ ViStatus NiRFSGLibrary::ConfigureDigitalEdgeConfigurationListStepTrigger(ViSessi
 
 ViStatus NiRFSGLibrary::ConfigureDigitalEdgeScriptTrigger(ViSession vi, ViConstString triggerID, ViConstString source, ViInt32 edge)
 {
+
   if (!function_pointers_.ConfigureDigitalEdgeScriptTrigger) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_ConfigureDigitalEdgeScriptTrigger.");
   }
@@ -423,6 +446,7 @@ ViStatus NiRFSGLibrary::ConfigureDigitalEdgeScriptTrigger(ViSession vi, ViConstS
 
 ViStatus NiRFSGLibrary::ConfigureDigitalEdgeStartTrigger(ViSession vi, ViConstString source, ViInt32 edge)
 {
+
   if (!function_pointers_.ConfigureDigitalEdgeStartTrigger) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_ConfigureDigitalEdgeStartTrigger.");
   }
@@ -435,6 +459,7 @@ ViStatus NiRFSGLibrary::ConfigureDigitalEdgeStartTrigger(ViSession vi, ViConstSt
 
 ViStatus NiRFSGLibrary::ConfigureDigitalLevelScriptTrigger(ViSession vi, ViConstString triggerID, ViConstString source, ViInt32 level)
 {
+
   if (!function_pointers_.ConfigureDigitalLevelScriptTrigger) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_ConfigureDigitalLevelScriptTrigger.");
   }
@@ -447,6 +472,7 @@ ViStatus NiRFSGLibrary::ConfigureDigitalLevelScriptTrigger(ViSession vi, ViConst
 
 ViStatus NiRFSGLibrary::ConfigureDigitalModulationUserDefinedWaveform(ViSession vi, ViInt32 numberOfSamples, ViInt8 userDefinedWaveform[])
 {
+
   if (!function_pointers_.ConfigureDigitalModulationUserDefinedWaveform) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_ConfigureDigitalModulationUserDefinedWaveform.");
   }
@@ -459,6 +485,7 @@ ViStatus NiRFSGLibrary::ConfigureDigitalModulationUserDefinedWaveform(ViSession 
 
 ViStatus NiRFSGLibrary::ConfigureGenerationMode(ViSession vi, ViInt32 generationMode)
 {
+
   if (!function_pointers_.ConfigureGenerationMode) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_ConfigureGenerationMode.");
   }
@@ -471,6 +498,7 @@ ViStatus NiRFSGLibrary::ConfigureGenerationMode(ViSession vi, ViInt32 generation
 
 ViStatus NiRFSGLibrary::ConfigureOutputEnabled(ViSession vi, ViBoolean outputEnabled)
 {
+
   if (!function_pointers_.ConfigureOutputEnabled) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_ConfigureOutputEnabled.");
   }
@@ -483,6 +511,7 @@ ViStatus NiRFSGLibrary::ConfigureOutputEnabled(ViSession vi, ViBoolean outputEna
 
 ViStatus NiRFSGLibrary::ConfigureP2PEndpointFullnessStartTrigger(ViSession vi, ViInt64 p2pEndpointFullnessLevel)
 {
+
   if (!function_pointers_.ConfigureP2PEndpointFullnessStartTrigger) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_ConfigureP2PEndpointFullnessStartTrigger.");
   }
@@ -495,6 +524,7 @@ ViStatus NiRFSGLibrary::ConfigureP2PEndpointFullnessStartTrigger(ViSession vi, V
 
 ViStatus NiRFSGLibrary::ConfigurePXIChassisClk10(ViSession vi, ViConstString pxiClk10Source)
 {
+
   if (!function_pointers_.ConfigurePXIChassisClk10) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_ConfigurePXIChassisClk10.");
   }
@@ -507,6 +537,7 @@ ViStatus NiRFSGLibrary::ConfigurePXIChassisClk10(ViSession vi, ViConstString pxi
 
 ViStatus NiRFSGLibrary::ConfigurePowerLevelType(ViSession vi, ViInt32 powerLevelType)
 {
+
   if (!function_pointers_.ConfigurePowerLevelType) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_ConfigurePowerLevelType.");
   }
@@ -519,6 +550,7 @@ ViStatus NiRFSGLibrary::ConfigurePowerLevelType(ViSession vi, ViInt32 powerLevel
 
 ViStatus NiRFSGLibrary::ConfigureRF(ViSession vi, ViReal64 frequency, ViReal64 powerLevel)
 {
+
   if (!function_pointers_.ConfigureRF) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_ConfigureRF.");
   }
@@ -531,6 +563,7 @@ ViStatus NiRFSGLibrary::ConfigureRF(ViSession vi, ViReal64 frequency, ViReal64 p
 
 ViStatus NiRFSGLibrary::ConfigureRefClock(ViSession vi, ViConstString refClockSource, ViReal64 refClockRate)
 {
+
   if (!function_pointers_.ConfigureRefClock) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_ConfigureRefClock.");
   }
@@ -543,6 +576,7 @@ ViStatus NiRFSGLibrary::ConfigureRefClock(ViSession vi, ViConstString refClockSo
 
 ViStatus NiRFSGLibrary::ConfigureSignalBandwidth(ViSession vi, ViReal64 signalBandwidth)
 {
+
   if (!function_pointers_.ConfigureSignalBandwidth) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_ConfigureSignalBandwidth.");
   }
@@ -555,6 +589,7 @@ ViStatus NiRFSGLibrary::ConfigureSignalBandwidth(ViSession vi, ViReal64 signalBa
 
 ViStatus NiRFSGLibrary::ConfigureSoftwareScriptTrigger(ViSession vi, ViConstString triggerID)
 {
+
   if (!function_pointers_.ConfigureSoftwareScriptTrigger) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_ConfigureSoftwareScriptTrigger.");
   }
@@ -567,6 +602,7 @@ ViStatus NiRFSGLibrary::ConfigureSoftwareScriptTrigger(ViSession vi, ViConstStri
 
 ViStatus NiRFSGLibrary::ConfigureSoftwareStartTrigger(ViSession vi)
 {
+
   if (!function_pointers_.ConfigureSoftwareStartTrigger) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_ConfigureSoftwareStartTrigger.");
   }
@@ -579,6 +615,7 @@ ViStatus NiRFSGLibrary::ConfigureSoftwareStartTrigger(ViSession vi)
 
 ViStatus NiRFSGLibrary::ConfigureUpconverterPLLSettlingTime(ViSession vi, ViReal64 pllSettlingTime, ViBoolean ensurePLLLocked, ViInt32 reservedForFutureUse)
 {
+
   if (!function_pointers_.ConfigureUpconverterPLLSettlingTime) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_ConfigureUpconverterPLLSettlingTime.");
   }
@@ -591,6 +628,7 @@ ViStatus NiRFSGLibrary::ConfigureUpconverterPLLSettlingTime(ViSession vi, ViReal
 
 ViStatus NiRFSGLibrary::CreateConfigurationList(ViSession vi, ViConstString listName, ViInt32 numberOfAttributes, ViAttr configurationListAttributes[], ViBoolean setAsActiveList)
 {
+
   if (!function_pointers_.CreateConfigurationList) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_CreateConfigurationList.");
   }
@@ -603,6 +641,7 @@ ViStatus NiRFSGLibrary::CreateConfigurationList(ViSession vi, ViConstString list
 
 ViStatus NiRFSGLibrary::CreateConfigurationListStep(ViSession vi, ViBoolean setAsActiveStep)
 {
+
   if (!function_pointers_.CreateConfigurationListStep) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_CreateConfigurationListStep.");
   }
@@ -615,6 +654,7 @@ ViStatus NiRFSGLibrary::CreateConfigurationListStep(ViSession vi, ViBoolean setA
 
 ViStatus NiRFSGLibrary::CreateDeembeddingSparameterTableArray(ViSession vi, ViConstString port, ViConstString tableName, ViReal64 frequencies[], ViInt32 frequenciesSize, NIComplexNumber_struct sparameterTable[], ViInt32 sparameterTableSize, ViInt32 numberOfPorts, ViInt32 sparameterOrientation)
 {
+
   if (!function_pointers_.CreateDeembeddingSparameterTableArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_CreateDeembeddingSparameterTableArray.");
   }
@@ -627,6 +667,7 @@ ViStatus NiRFSGLibrary::CreateDeembeddingSparameterTableArray(ViSession vi, ViCo
 
 ViStatus NiRFSGLibrary::CreateDeembeddingSparameterTableS2PFile(ViSession vi, ViConstString port, ViConstString tableName, ViConstString s2pFilePath, ViInt32 sparameterOrientation)
 {
+
   if (!function_pointers_.CreateDeembeddingSparameterTableS2PFile) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_CreateDeembeddingSparameterTableS2PFile.");
   }
@@ -639,6 +680,7 @@ ViStatus NiRFSGLibrary::CreateDeembeddingSparameterTableS2PFile(ViSession vi, Vi
 
 ViStatus NiRFSGLibrary::DeleteAllDeembeddingTables(ViSession vi)
 {
+
   if (!function_pointers_.DeleteAllDeembeddingTables) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_DeleteAllDeembeddingTables.");
   }
@@ -651,6 +693,7 @@ ViStatus NiRFSGLibrary::DeleteAllDeembeddingTables(ViSession vi)
 
 ViStatus NiRFSGLibrary::DeleteConfigurationList(ViSession vi, ViConstString listName)
 {
+
   if (!function_pointers_.DeleteConfigurationList) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_DeleteConfigurationList.");
   }
@@ -663,6 +706,7 @@ ViStatus NiRFSGLibrary::DeleteConfigurationList(ViSession vi, ViConstString list
 
 ViStatus NiRFSGLibrary::DeleteDeembeddingTable(ViSession vi, ViConstString port, ViConstString tableName)
 {
+
   if (!function_pointers_.DeleteDeembeddingTable) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_DeleteDeembeddingTable.");
   }
@@ -675,6 +719,7 @@ ViStatus NiRFSGLibrary::DeleteDeembeddingTable(ViSession vi, ViConstString port,
 
 ViStatus NiRFSGLibrary::DeleteScript(ViSession vi, ViConstString scriptName)
 {
+
   if (!function_pointers_.DeleteScript) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_DeleteScript.");
   }
@@ -687,6 +732,7 @@ ViStatus NiRFSGLibrary::DeleteScript(ViSession vi, ViConstString scriptName)
 
 ViStatus NiRFSGLibrary::Disable(ViSession vi)
 {
+
   if (!function_pointers_.Disable) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_Disable.");
   }
@@ -699,6 +745,7 @@ ViStatus NiRFSGLibrary::Disable(ViSession vi)
 
 ViStatus NiRFSGLibrary::DisableAllModulation(ViSession vi)
 {
+
   if (!function_pointers_.DisableAllModulation) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_DisableAllModulation.");
   }
@@ -711,6 +758,7 @@ ViStatus NiRFSGLibrary::DisableAllModulation(ViSession vi)
 
 ViStatus NiRFSGLibrary::DisableConfigurationListStepTrigger(ViSession vi)
 {
+
   if (!function_pointers_.DisableConfigurationListStepTrigger) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_DisableConfigurationListStepTrigger.");
   }
@@ -723,6 +771,7 @@ ViStatus NiRFSGLibrary::DisableConfigurationListStepTrigger(ViSession vi)
 
 ViStatus NiRFSGLibrary::DisableScriptTrigger(ViSession vi, ViConstString triggerID)
 {
+
   if (!function_pointers_.DisableScriptTrigger) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_DisableScriptTrigger.");
   }
@@ -735,6 +784,7 @@ ViStatus NiRFSGLibrary::DisableScriptTrigger(ViSession vi, ViConstString trigger
 
 ViStatus NiRFSGLibrary::DisableStartTrigger(ViSession vi)
 {
+
   if (!function_pointers_.DisableStartTrigger) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_DisableStartTrigger.");
   }
@@ -747,6 +797,7 @@ ViStatus NiRFSGLibrary::DisableStartTrigger(ViSession vi)
 
 ViStatus NiRFSGLibrary::ErrorMessage(ViSession vi, ViStatus errorCode, ViChar errorMessage[1024])
 {
+
   if (!function_pointers_.ErrorMessage) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_error_message.");
   }
@@ -759,6 +810,7 @@ ViStatus NiRFSGLibrary::ErrorMessage(ViSession vi, ViStatus errorCode, ViChar er
 
 ViStatus NiRFSGLibrary::ErrorQuery(ViSession vi, ViInt32* errorCode, ViChar errorMessage[1024])
 {
+
   if (!function_pointers_.ErrorQuery) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_error_query.");
   }
@@ -771,6 +823,7 @@ ViStatus NiRFSGLibrary::ErrorQuery(ViSession vi, ViInt32* errorCode, ViChar erro
 
 ViStatus NiRFSGLibrary::ExportSignal(ViSession vi, ViInt32 signal, ViConstString signalIdentifier, ViConstString outputTerminal)
 {
+
   if (!function_pointers_.ExportSignal) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_ExportSignal.");
   }
@@ -783,6 +836,7 @@ ViStatus NiRFSGLibrary::ExportSignal(ViSession vi, ViInt32 signal, ViConstString
 
 ViStatus NiRFSGLibrary::GetAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean* value)
 {
+
   if (!function_pointers_.GetAttributeViBoolean) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_GetAttributeViBoolean.");
   }
@@ -795,6 +849,7 @@ ViStatus NiRFSGLibrary::GetAttributeViBoolean(ViSession vi, ViConstString channe
 
 ViStatus NiRFSGLibrary::GetAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32* value)
 {
+
   if (!function_pointers_.GetAttributeViInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_GetAttributeViInt32.");
   }
@@ -807,6 +862,7 @@ ViStatus NiRFSGLibrary::GetAttributeViInt32(ViSession vi, ViConstString channelN
 
 ViStatus NiRFSGLibrary::GetAttributeViInt64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt64* value)
 {
+
   if (!function_pointers_.GetAttributeViInt64) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_GetAttributeViInt64.");
   }
@@ -819,6 +875,7 @@ ViStatus NiRFSGLibrary::GetAttributeViInt64(ViSession vi, ViConstString channelN
 
 ViStatus NiRFSGLibrary::GetAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64* value)
 {
+
   if (!function_pointers_.GetAttributeViReal64) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_GetAttributeViReal64.");
   }
@@ -831,6 +888,7 @@ ViStatus NiRFSGLibrary::GetAttributeViReal64(ViSession vi, ViConstString channel
 
 ViStatus NiRFSGLibrary::GetAttributeViSession(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession* value)
 {
+
   if (!function_pointers_.GetAttributeViSession) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_GetAttributeViSession.");
   }
@@ -843,6 +901,7 @@ ViStatus NiRFSGLibrary::GetAttributeViSession(ViSession vi, ViConstString channe
 
 ViStatus NiRFSGLibrary::GetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 bufSize, ViChar value[])
 {
+
   if (!function_pointers_.GetAttributeViString) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_GetAttributeViString.");
   }
@@ -855,6 +914,7 @@ ViStatus NiRFSGLibrary::GetAttributeViString(ViSession vi, ViConstString channel
 
 ViStatus NiRFSGLibrary::GetChannelName(ViSession vi, ViInt32 index, ViInt32 bufferSize, ViChar name[])
 {
+
   if (!function_pointers_.GetChannelName) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_GetChannelName.");
   }
@@ -867,6 +927,7 @@ ViStatus NiRFSGLibrary::GetChannelName(ViSession vi, ViInt32 index, ViInt32 buff
 
 ViStatus NiRFSGLibrary::GetDeembeddingSparameters(ViSession vi, NIComplexNumber_struct sparameters[], ViInt32 sparametersArraySize, ViInt32* numberOfSparameters, ViInt32* numberOfPorts)
 {
+
   if (!function_pointers_.GetDeembeddingSparameters) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_GetDeembeddingSparameters.");
   }
@@ -879,6 +940,7 @@ ViStatus NiRFSGLibrary::GetDeembeddingSparameters(ViSession vi, NIComplexNumber_
 
 ViStatus NiRFSGLibrary::GetError(ViSession vi, ViStatus* errorCode, ViInt32 errorDescriptionBufferSize, ViChar errorDescription[])
 {
+
   if (!function_pointers_.GetError) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_GetError.");
   }
@@ -891,6 +953,7 @@ ViStatus NiRFSGLibrary::GetError(ViSession vi, ViStatus* errorCode, ViInt32 erro
 
 ViStatus NiRFSGLibrary::GetExternalCalibrationLastDateAndTime(ViSession vi, ViInt32* year, ViInt32* month, ViInt32* day, ViInt32* hour, ViInt32* minute, ViInt32* second)
 {
+
   if (!function_pointers_.GetExternalCalibrationLastDateAndTime) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_GetExternalCalibrationLastDateAndTime.");
   }
@@ -903,6 +966,7 @@ ViStatus NiRFSGLibrary::GetExternalCalibrationLastDateAndTime(ViSession vi, ViIn
 
 ViStatus NiRFSGLibrary::GetSelfCalibrationDateAndTime(ViSession vi, ViInt32 module, ViInt32* year, ViInt32* month, ViInt32* day, ViInt32* hour, ViInt32* minute, ViInt32* second)
 {
+
   if (!function_pointers_.GetSelfCalibrationDateAndTime) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_GetSelfCalibrationDateAndTime.");
   }
@@ -915,6 +979,7 @@ ViStatus NiRFSGLibrary::GetSelfCalibrationDateAndTime(ViSession vi, ViInt32 modu
 
 ViStatus NiRFSGLibrary::GetSelfCalibrationTemperature(ViSession vi, ViInt32 module, ViReal64* temperature)
 {
+
   if (!function_pointers_.GetSelfCalibrationTemperature) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_GetSelfCalibrationTemperature.");
   }
@@ -927,6 +992,7 @@ ViStatus NiRFSGLibrary::GetSelfCalibrationTemperature(ViSession vi, ViInt32 modu
 
 ViStatus NiRFSGLibrary::GetTerminalName(ViSession vi, ViInt32 signal, ViConstString signalIdentifier, ViInt32 bufferSize, ViChar terminalName[])
 {
+
   if (!function_pointers_.GetTerminalName) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_GetTerminalName.");
   }
@@ -939,6 +1005,7 @@ ViStatus NiRFSGLibrary::GetTerminalName(ViSession vi, ViInt32 signal, ViConstStr
 
 ViStatus NiRFSGLibrary::GetUserData(ViSession vi, ViConstString identifier, ViInt32 bufferSize, ViInt8 data[], ViInt32* actualDataSize)
 {
+
   if (!function_pointers_.GetUserData) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_GetUserData.");
   }
@@ -951,6 +1018,7 @@ ViStatus NiRFSGLibrary::GetUserData(ViSession vi, ViConstString identifier, ViIn
 
 ViStatus NiRFSGLibrary::GetWaveformBurstStartLocations(ViSession vi, ViConstString channelName, ViInt32 numberOfLocations, ViReal64 locations[], ViInt32* requiredSize)
 {
+
   if (!function_pointers_.GetWaveformBurstStartLocations) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_GetWaveformBurstStartLocations.");
   }
@@ -963,6 +1031,7 @@ ViStatus NiRFSGLibrary::GetWaveformBurstStartLocations(ViSession vi, ViConstStri
 
 ViStatus NiRFSGLibrary::GetWaveformBurstStopLocations(ViSession vi, ViConstString channelName, ViInt32 numberOfLocations, ViReal64 locations[], ViInt32* requiredSize)
 {
+
   if (!function_pointers_.GetWaveformBurstStopLocations) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_GetWaveformBurstStopLocations.");
   }
@@ -975,6 +1044,7 @@ ViStatus NiRFSGLibrary::GetWaveformBurstStopLocations(ViSession vi, ViConstStrin
 
 ViStatus NiRFSGLibrary::GetWaveformMarkerEventLocations(ViSession vi, ViConstString channelName, ViInt32 numberOfLocations, ViReal64 locations[], ViInt32* requiredSize)
 {
+
   if (!function_pointers_.GetWaveformMarkerEventLocations) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_GetWaveformMarkerEventLocations.");
   }
@@ -987,6 +1057,7 @@ ViStatus NiRFSGLibrary::GetWaveformMarkerEventLocations(ViSession vi, ViConstStr
 
 ViStatus NiRFSGLibrary::Init(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* newVi)
 {
+
   if (!function_pointers_.Init) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_init.");
   }
@@ -999,6 +1070,7 @@ ViStatus NiRFSGLibrary::Init(ViRsrc resourceName, ViBoolean idQuery, ViBoolean r
 
 ViStatus NiRFSGLibrary::InitWithOptions(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViConstString optionString, ViSession* vi)
 {
+
   if (!function_pointers_.InitWithOptions) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_InitWithOptions.");
   }
@@ -1011,6 +1083,7 @@ ViStatus NiRFSGLibrary::InitWithOptions(ViRsrc resourceName, ViBoolean idQuery, 
 
 ViStatus NiRFSGLibrary::Initiate(ViSession vi)
 {
+
   if (!function_pointers_.Initiate) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_Initiate.");
   }
@@ -1023,6 +1096,7 @@ ViStatus NiRFSGLibrary::Initiate(ViSession vi)
 
 ViStatus NiRFSGLibrary::InvalidateAllAttributes(ViSession vi)
 {
+
   if (!function_pointers_.InvalidateAllAttributes) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_InvalidateAllAttributes.");
   }
@@ -1035,6 +1109,7 @@ ViStatus NiRFSGLibrary::InvalidateAllAttributes(ViSession vi)
 
 ViStatus NiRFSGLibrary::LoadConfigurationsFromFile(ViSession vi, ViConstString channelName, ViConstString filePath)
 {
+
   if (!function_pointers_.LoadConfigurationsFromFile) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_LoadConfigurationsFromFile.");
   }
@@ -1047,6 +1122,7 @@ ViStatus NiRFSGLibrary::LoadConfigurationsFromFile(ViSession vi, ViConstString c
 
 ViStatus NiRFSGLibrary::LockSession(ViSession vi, ViBoolean* callerHasLock)
 {
+
   if (!function_pointers_.LockSession) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_LockSession.");
   }
@@ -1055,6 +1131,7 @@ ViStatus NiRFSGLibrary::LockSession(ViSession vi, ViBoolean* callerHasLock)
 
 ViStatus NiRFSGLibrary::PerformPowerSearch(ViSession vi)
 {
+
   if (!function_pointers_.PerformPowerSearch) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_PerformPowerSearch.");
   }
@@ -1067,6 +1144,7 @@ ViStatus NiRFSGLibrary::PerformPowerSearch(ViSession vi)
 
 ViStatus NiRFSGLibrary::PerformThermalCorrection(ViSession vi)
 {
+
   if (!function_pointers_.PerformThermalCorrection) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_PerformThermalCorrection.");
   }
@@ -1079,6 +1157,7 @@ ViStatus NiRFSGLibrary::PerformThermalCorrection(ViSession vi)
 
 ViStatus NiRFSGLibrary::QueryArbWaveformCapabilities(ViSession vi, ViInt32* maxNumberWaveforms, ViInt32* waveformQuantum, ViInt32* minWaveformSize, ViInt32* maxWaveformSize)
 {
+
   if (!function_pointers_.QueryArbWaveformCapabilities) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_QueryArbWaveformCapabilities.");
   }
@@ -1091,6 +1170,7 @@ ViStatus NiRFSGLibrary::QueryArbWaveformCapabilities(ViSession vi, ViInt32* maxN
 
 ViStatus NiRFSGLibrary::ReadAndDownloadWaveformFromFileTDMS(ViSession vi, ViConstString waveformName, ViConstString filePath, ViUInt32 waveformIndex)
 {
+
   if (!function_pointers_.ReadAndDownloadWaveformFromFileTDMS) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_ReadAndDownloadWaveformFromFileTDMS.");
   }
@@ -1103,6 +1183,7 @@ ViStatus NiRFSGLibrary::ReadAndDownloadWaveformFromFileTDMS(ViSession vi, ViCons
 
 ViStatus NiRFSGLibrary::Reset(ViSession vi)
 {
+
   if (!function_pointers_.Reset) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_reset.");
   }
@@ -1115,6 +1196,7 @@ ViStatus NiRFSGLibrary::Reset(ViSession vi)
 
 ViStatus NiRFSGLibrary::ResetAttribute(ViSession vi, ViConstString channelName, ViAttr attributeId)
 {
+
   if (!function_pointers_.ResetAttribute) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_ResetAttribute.");
   }
@@ -1127,6 +1209,7 @@ ViStatus NiRFSGLibrary::ResetAttribute(ViSession vi, ViConstString channelName, 
 
 ViStatus NiRFSGLibrary::ResetDevice(ViSession vi)
 {
+
   if (!function_pointers_.ResetDevice) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_ResetDevice.");
   }
@@ -1139,6 +1222,7 @@ ViStatus NiRFSGLibrary::ResetDevice(ViSession vi)
 
 ViStatus NiRFSGLibrary::ResetWithDefaults(ViSession vi)
 {
+
   if (!function_pointers_.ResetWithDefaults) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_ResetWithDefaults.");
   }
@@ -1151,6 +1235,7 @@ ViStatus NiRFSGLibrary::ResetWithDefaults(ViSession vi)
 
 ViStatus NiRFSGLibrary::ResetWithOptions(ViSession vi, ViUInt64 stepsToOmit)
 {
+
   if (!function_pointers_.ResetWithOptions) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_ResetWithOptions.");
   }
@@ -1163,6 +1248,7 @@ ViStatus NiRFSGLibrary::ResetWithOptions(ViSession vi, ViUInt64 stepsToOmit)
 
 ViStatus NiRFSGLibrary::RevisionQuery(ViSession vi, ViChar instrumentDriverRevision[256], ViChar firmwareRevision[256])
 {
+
   if (!function_pointers_.RevisionQuery) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_revision_query.");
   }
@@ -1175,6 +1261,7 @@ ViStatus NiRFSGLibrary::RevisionQuery(ViSession vi, ViChar instrumentDriverRevis
 
 ViStatus NiRFSGLibrary::SaveConfigurationsToFile(ViSession vi, ViConstString channelName, ViConstString filePath)
 {
+
   if (!function_pointers_.SaveConfigurationsToFile) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_SaveConfigurationsToFile.");
   }
@@ -1187,6 +1274,7 @@ ViStatus NiRFSGLibrary::SaveConfigurationsToFile(ViSession vi, ViConstString cha
 
 ViStatus NiRFSGLibrary::SelectArbWaveform(ViSession vi, ViConstString name)
 {
+
   if (!function_pointers_.SelectArbWaveform) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_SelectArbWaveform.");
   }
@@ -1199,6 +1287,7 @@ ViStatus NiRFSGLibrary::SelectArbWaveform(ViSession vi, ViConstString name)
 
 ViStatus NiRFSGLibrary::SelfCal(ViSession vi)
 {
+
   if (!function_pointers_.SelfCal) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_SelfCal.");
   }
@@ -1211,6 +1300,7 @@ ViStatus NiRFSGLibrary::SelfCal(ViSession vi)
 
 ViStatus NiRFSGLibrary::SelfCalibrateRange(ViSession vi, ViInt64 stepsToOmit, ViReal64 minFrequency, ViReal64 maxFrequency, ViReal64 minPowerLevel, ViReal64 maxPowerLevel)
 {
+
   if (!function_pointers_.SelfCalibrateRange) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_SelfCalibrateRange.");
   }
@@ -1223,6 +1313,7 @@ ViStatus NiRFSGLibrary::SelfCalibrateRange(ViSession vi, ViInt64 stepsToOmit, Vi
 
 ViStatus NiRFSGLibrary::SelfTest(ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[2048])
 {
+
   if (!function_pointers_.SelfTest) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_self_test.");
   }
@@ -1235,6 +1326,7 @@ ViStatus NiRFSGLibrary::SelfTest(ViSession vi, ViInt16* selfTestResult, ViChar s
 
 ViStatus NiRFSGLibrary::SendSoftwareEdgeTrigger(ViSession vi, ViInt32 trigger, ViConstString triggerIdentifier)
 {
+
   if (!function_pointers_.SendSoftwareEdgeTrigger) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_SendSoftwareEdgeTrigger.");
   }
@@ -1247,6 +1339,7 @@ ViStatus NiRFSGLibrary::SendSoftwareEdgeTrigger(ViSession vi, ViInt32 trigger, V
 
 ViStatus NiRFSGLibrary::SetArbWaveformNextWritePosition(ViSession vi, ViConstString waveformName, ViInt32 relativeTo, ViInt32 offset)
 {
+
   if (!function_pointers_.SetArbWaveformNextWritePosition) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_SetArbWaveformNextWritePosition.");
   }
@@ -1259,6 +1352,7 @@ ViStatus NiRFSGLibrary::SetArbWaveformNextWritePosition(ViSession vi, ViConstStr
 
 ViStatus NiRFSGLibrary::SetAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean value)
 {
+
   if (!function_pointers_.SetAttributeViBoolean) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_SetAttributeViBoolean.");
   }
@@ -1271,6 +1365,7 @@ ViStatus NiRFSGLibrary::SetAttributeViBoolean(ViSession vi, ViConstString channe
 
 ViStatus NiRFSGLibrary::SetAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 value)
 {
+
   if (!function_pointers_.SetAttributeViInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_SetAttributeViInt32.");
   }
@@ -1283,6 +1378,7 @@ ViStatus NiRFSGLibrary::SetAttributeViInt32(ViSession vi, ViConstString channelN
 
 ViStatus NiRFSGLibrary::SetAttributeViInt64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt64 value)
 {
+
   if (!function_pointers_.SetAttributeViInt64) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_SetAttributeViInt64.");
   }
@@ -1295,6 +1391,7 @@ ViStatus NiRFSGLibrary::SetAttributeViInt64(ViSession vi, ViConstString channelN
 
 ViStatus NiRFSGLibrary::SetAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64 value)
 {
+
   if (!function_pointers_.SetAttributeViReal64) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_SetAttributeViReal64.");
   }
@@ -1307,6 +1404,7 @@ ViStatus NiRFSGLibrary::SetAttributeViReal64(ViSession vi, ViConstString channel
 
 ViStatus NiRFSGLibrary::SetAttributeViSession(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession value)
 {
+
   if (!function_pointers_.SetAttributeViSession) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_SetAttributeViSession.");
   }
@@ -1319,6 +1417,7 @@ ViStatus NiRFSGLibrary::SetAttributeViSession(ViSession vi, ViConstString channe
 
 ViStatus NiRFSGLibrary::SetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViConstString value)
 {
+
   if (!function_pointers_.SetAttributeViString) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_SetAttributeViString.");
   }
@@ -1331,6 +1430,7 @@ ViStatus NiRFSGLibrary::SetAttributeViString(ViSession vi, ViConstString channel
 
 ViStatus NiRFSGLibrary::SetUserData(ViSession vi, ViConstString identifier, ViInt32 bufferSize, ViInt8 data[])
 {
+
   if (!function_pointers_.SetUserData) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_SetUserData.");
   }
@@ -1343,6 +1443,7 @@ ViStatus NiRFSGLibrary::SetUserData(ViSession vi, ViConstString identifier, ViIn
 
 ViStatus NiRFSGLibrary::SetWaveformBurstStartLocations(ViSession vi, ViConstString channelName, ViInt32 numberOfLocations, ViReal64 locations[])
 {
+
   if (!function_pointers_.SetWaveformBurstStartLocations) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_SetWaveformBurstStartLocations.");
   }
@@ -1355,6 +1456,7 @@ ViStatus NiRFSGLibrary::SetWaveformBurstStartLocations(ViSession vi, ViConstStri
 
 ViStatus NiRFSGLibrary::SetWaveformBurstStopLocations(ViSession vi, ViConstString channelName, ViInt32 numberOfLocations, ViReal64 locations[])
 {
+
   if (!function_pointers_.SetWaveformBurstStopLocations) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_SetWaveformBurstStopLocations.");
   }
@@ -1367,6 +1469,7 @@ ViStatus NiRFSGLibrary::SetWaveformBurstStopLocations(ViSession vi, ViConstStrin
 
 ViStatus NiRFSGLibrary::SetWaveformMarkerEventLocations(ViSession vi, ViConstString channelName, ViInt32 numberOfLocations, ViReal64 locations[])
 {
+
   if (!function_pointers_.SetWaveformMarkerEventLocations) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_SetWaveformMarkerEventLocations.");
   }
@@ -1379,6 +1482,7 @@ ViStatus NiRFSGLibrary::SetWaveformMarkerEventLocations(ViSession vi, ViConstStr
 
 ViStatus NiRFSGLibrary::UnlockSession(ViSession vi, ViBoolean* callerHasLock)
 {
+
   if (!function_pointers_.UnlockSession) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_UnlockSession.");
   }
@@ -1387,6 +1491,7 @@ ViStatus NiRFSGLibrary::UnlockSession(ViSession vi, ViBoolean* callerHasLock)
 
 ViStatus NiRFSGLibrary::WaitUntilSettled(ViSession vi, ViInt32 maxTimeMilliseconds)
 {
+
   if (!function_pointers_.WaitUntilSettled) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_WaitUntilSettled.");
   }
@@ -1399,6 +1504,7 @@ ViStatus NiRFSGLibrary::WaitUntilSettled(ViSession vi, ViInt32 maxTimeMillisecon
 
 ViStatus NiRFSGLibrary::WriteArbWaveform(ViSession vi, ViConstString waveformName, ViInt32 numberOfSamples, ViReal64 iData[], ViReal64 qData[], ViBoolean moreDataPending)
 {
+
   if (!function_pointers_.WriteArbWaveform) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_WriteArbWaveform.");
   }
@@ -1411,6 +1517,7 @@ ViStatus NiRFSGLibrary::WriteArbWaveform(ViSession vi, ViConstString waveformNam
 
 ViStatus NiRFSGLibrary::WriteArbWaveformComplexF32(ViSession vi, ViConstString waveformName, ViInt32 numberOfSamples, NIComplexNumberF32_struct wfmData[], ViBoolean moreDataPending)
 {
+
   if (!function_pointers_.WriteArbWaveformComplexF32) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_WriteArbWaveformComplexF32.");
   }
@@ -1423,6 +1530,7 @@ ViStatus NiRFSGLibrary::WriteArbWaveformComplexF32(ViSession vi, ViConstString w
 
 ViStatus NiRFSGLibrary::WriteArbWaveformComplexF64(ViSession vi, ViConstString waveformName, ViInt32 numberOfSamples, NIComplexNumber_struct wfmData[], ViBoolean moreDataPending)
 {
+
   if (!function_pointers_.WriteArbWaveformComplexF64) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_WriteArbWaveformComplexF64.");
   }
@@ -1435,6 +1543,7 @@ ViStatus NiRFSGLibrary::WriteArbWaveformComplexF64(ViSession vi, ViConstString w
 
 ViStatus NiRFSGLibrary::WriteArbWaveformComplexI16(ViSession vi, ViConstString waveformName, ViInt32 numberOfSamples, NIComplexI16_struct wfmData[])
 {
+
   if (!function_pointers_.WriteArbWaveformComplexI16) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_WriteArbWaveformComplexI16.");
   }
@@ -1447,6 +1556,7 @@ ViStatus NiRFSGLibrary::WriteArbWaveformComplexI16(ViSession vi, ViConstString w
 
 ViStatus NiRFSGLibrary::WriteArbWaveformF32(ViSession vi, ViConstString waveformName, ViInt32 numberOfSamples, ViReal32 iData[], ViReal32 qData[], ViBoolean moreDataPending)
 {
+
   if (!function_pointers_.WriteArbWaveformF32) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_WriteArbWaveformF32.");
   }
@@ -1459,6 +1569,7 @@ ViStatus NiRFSGLibrary::WriteArbWaveformF32(ViSession vi, ViConstString waveform
 
 ViStatus NiRFSGLibrary::WriteScript(ViSession vi, ViConstString script)
 {
+
   if (!function_pointers_.WriteScript) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_WriteScript.");
   }

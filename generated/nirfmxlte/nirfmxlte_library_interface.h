@@ -11,6 +11,7 @@
 
 namespace nirfmxlte_grpc {
 
+
 class NiRFmxLTELibraryInterface {
  public:
   virtual ~NiRFmxLTELibraryInterface() {}

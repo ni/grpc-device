@@ -8,6 +8,7 @@
 
 #include <grpcpp/server_builder.h>
 
+
 #include "nidcpower_service.h"
 #include "nidcpower_service_registrar.h"
 

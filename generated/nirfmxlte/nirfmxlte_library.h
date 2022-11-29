@@ -12,6 +12,7 @@
 
 namespace nirfmxlte_grpc {
 
+
 class NiRFmxLTELibrary : public nirfmxlte_grpc::NiRFmxLTELibraryInterface {
  public:
   NiRFmxLTELibrary();

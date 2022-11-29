@@ -12,6 +12,7 @@
 
 namespace nidmm_grpc {
 
+
 class NiDmmLibrary : public nidmm_grpc::NiDmmLibraryInterface {
  public:
   NiDmmLibrary();

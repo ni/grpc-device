@@ -15,6 +15,7 @@ namespace ni {
 namespace tests {
 namespace unit {
 
+
 class NiRFmxSpecAnRestrictedMockLibrary : public nirfmxspecan_restricted_grpc::NiRFmxSpecAnRestrictedLibraryInterface {
  public:
   MOCK_METHOD(int32, CacheResult, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32 selectorStringOutSize, char selectorStringOut[]), (override));

@@ -8,6 +8,7 @@
 
 #include <grpcpp/server_builder.h>
 
+
 #include "nidigitalpattern_service.h"
 #include "nidigitalpattern_service_registrar.h"
 

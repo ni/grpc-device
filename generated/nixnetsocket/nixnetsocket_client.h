@@ -7,6 +7,7 @@
 #ifndef NIXNETSOCKET_GRPC_CLIENT_H
 #define NIXNETSOCKET_GRPC_CLIENT_H
 
+
 #include <grpcpp/grpcpp.h>
 
 #include <nixnetsocket.grpc.pb.h>

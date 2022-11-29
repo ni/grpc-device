@@ -12,6 +12,7 @@
 
 namespace nifake_non_ivi_grpc {
 
+
 class NiFakeNonIviLibrary : public nifake_non_ivi_grpc::NiFakeNonIviLibraryInterface {
  public:
   NiFakeNonIviLibrary();

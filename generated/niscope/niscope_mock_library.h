@@ -15,6 +15,7 @@ namespace ni {
 namespace tests {
 namespace unit {
 
+
 class NiScopeMockLibrary : public niscope_grpc::NiScopeLibraryInterface {
  public:
   MOCK_METHOD(ViStatus, Abort, (ViSession vi), (override));

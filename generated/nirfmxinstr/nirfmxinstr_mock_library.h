@@ -15,6 +15,7 @@ namespace ni {
 namespace tests {
 namespace unit {
 
+
 class NiRFmxInstrMockLibrary : public nirfmxinstr_grpc::NiRFmxInstrLibraryInterface {
  public:
   MOCK_METHOD(int32, BuildCalibrationPlaneString, (char calibrationPlaneName[], int32 selectorStringLength, char selectorString[]), (override));

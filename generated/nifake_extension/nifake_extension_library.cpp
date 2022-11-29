@@ -37,6 +37,7 @@ NiFakeExtensionLibrary::~NiFakeExtensionLibrary()
 
 ViStatus NiFakeExtensionLibrary::AddCoolFunctionality(ViSession vi, ViInt32 param)
 {
+
   if (!function_pointers_.AddCoolFunctionality) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFakeExtension_AddCoolFunctionality.");
   }

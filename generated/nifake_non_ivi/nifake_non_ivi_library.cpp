@@ -71,6 +71,7 @@ NiFakeNonIviLibrary::~NiFakeNonIviLibrary()
 
 int32 NiFakeNonIviLibrary::Close(FakeHandle handle)
 {
+
   if (!function_pointers_.Close) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFakeNonIvi_Close.");
   }
@@ -83,6 +84,7 @@ int32 NiFakeNonIviLibrary::Close(FakeHandle handle)
 
 int32 NiFakeNonIviLibrary::CloseSecondarySession(SecondarySessionHandle secondarySessionHandle)
 {
+
   if (!function_pointers_.CloseSecondarySession) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFakeNonIvi_CloseSecondarySession.");
   }
@@ -95,6 +97,7 @@ int32 NiFakeNonIviLibrary::CloseSecondarySession(SecondarySessionHandle secondar
 
 int32 NiFakeNonIviLibrary::GetCrossDriverSession(FakeHandle handle, int32* crossDriverSession)
 {
+
   if (!function_pointers_.GetCrossDriverSession) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFakeNonIvi_GetCrossDriverSession.");
   }
@@ -107,6 +110,7 @@ int32 NiFakeNonIviLibrary::GetCrossDriverSession(FakeHandle handle, int32* cross
 
 int32 NiFakeNonIviLibrary::GetLatestErrorMessage(char message[], uInt32 size)
 {
+
   if (!function_pointers_.GetLatestErrorMessage) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFakeNonIvi_GetLatestErrorMessage.");
   }
@@ -119,6 +123,7 @@ int32 NiFakeNonIviLibrary::GetLatestErrorMessage(char message[], uInt32 size)
 
 const char* NiFakeNonIviLibrary::GetStringAsReturnedValue(char buf[512])
 {
+
   if (!function_pointers_.GetStringAsReturnedValue) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFakeNonIvi_GetStringAsReturnedValue.");
   }
@@ -131,6 +136,7 @@ const char* NiFakeNonIviLibrary::GetStringAsReturnedValue(char buf[512])
 
 int32 NiFakeNonIviLibrary::GetMarbleAttributeDouble(FakeHandle handle, int32 attribute, double* value)
 {
+
   if (!function_pointers_.GetMarbleAttributeDouble) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFakeNonIvi_GetMarbleAttributeDouble.");
   }
@@ -143,6 +149,7 @@ int32 NiFakeNonIviLibrary::GetMarbleAttributeDouble(FakeHandle handle, int32 att
 
 int32 NiFakeNonIviLibrary::GetMarbleAttributeInt32(FakeHandle handle, int32 attribute, int32* value)
 {
+
   if (!function_pointers_.GetMarbleAttributeInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFakeNonIvi_GetMarbleAttributeInt32.");
   }
@@ -155,6 +162,7 @@ int32 NiFakeNonIviLibrary::GetMarbleAttributeInt32(FakeHandle handle, int32 attr
 
 int32 NiFakeNonIviLibrary::GetMarbleAttributeInt32Array(FakeHandle handle, int32 attribute, int32 value[])
 {
+
   if (!function_pointers_.GetMarbleAttributeInt32Array) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFakeNonIvi_GetMarbleAttributeInt32Array.");
   }
@@ -167,6 +175,7 @@ int32 NiFakeNonIviLibrary::GetMarbleAttributeInt32Array(FakeHandle handle, int32
 
 int32 NiFakeNonIviLibrary::Init(const char sessionName[], FakeHandle* handle)
 {
+
   if (!function_pointers_.Init) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFakeNonIvi_Init.");
   }
@@ -179,6 +188,7 @@ int32 NiFakeNonIviLibrary::Init(const char sessionName[], FakeHandle* handle)
 
 int32 NiFakeNonIviLibrary::InitFromCrossDriverSession(int32 crossDriverSession, FakeHandle* handle)
 {
+
   if (!function_pointers_.InitFromCrossDriverSession) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFakeNonIvi_InitFromCrossDriverSession.");
   }
@@ -191,6 +201,7 @@ int32 NiFakeNonIviLibrary::InitFromCrossDriverSession(int32 crossDriverSession, 
 
 int32 NiFakeNonIviLibrary::InitFromCrossDriverSessionArray(int32 crossDriverSessionArray[], int32 numberOfCrossDriverSessions, FakeHandle* handle)
 {
+
   if (!function_pointers_.InitFromCrossDriverSessionArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFakeNonIvi_InitFromCrossDriverSessionArray.");
   }
@@ -203,6 +214,7 @@ int32 NiFakeNonIviLibrary::InitFromCrossDriverSessionArray(int32 crossDriverSess
 
 int32 NiFakeNonIviLibrary::InitSecondarySession(SecondarySessionHandle* secondarySessionHandle)
 {
+
   if (!function_pointers_.InitSecondarySession) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFakeNonIvi_InitSecondarySession.");
   }
@@ -215,6 +227,7 @@ int32 NiFakeNonIviLibrary::InitSecondarySession(SecondarySessionHandle* secondar
 
 int32 NiFakeNonIviLibrary::InitWithHandleNameAsSessionName(const char handleName[], FakeHandle* handle)
 {
+
   if (!function_pointers_.InitWithHandleNameAsSessionName) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFakeNonIvi_InitWithHandleNameAsSessionName.");
   }
@@ -227,6 +240,7 @@ int32 NiFakeNonIviLibrary::InitWithHandleNameAsSessionName(const char handleName
 
 FakeHandle NiFakeNonIviLibrary::InitWithReturnedSession(const char handleName[])
 {
+
   if (!function_pointers_.InitWithReturnedSession) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFakeNonIvi_InitWithReturnedSession.");
   }
@@ -239,6 +253,7 @@ FakeHandle NiFakeNonIviLibrary::InitWithReturnedSession(const char handleName[])
 
 int32 NiFakeNonIviLibrary::InputArraysWithNarrowIntegerTypes(const myUInt16 u16Array[], const myInt16 i16Array[], const myInt8 i8Array[])
 {
+
   if (!function_pointers_.InputArraysWithNarrowIntegerTypes) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFakeNonIvi_InputArraysWithNarrowIntegerTypes.");
   }
@@ -251,6 +266,7 @@ int32 NiFakeNonIviLibrary::InputArraysWithNarrowIntegerTypes(const myUInt16 u16A
 
 int32 NiFakeNonIviLibrary::IotaWithCustomSize(int32 sizeOne, int32 sizeTwo, int32 data[])
 {
+
   if (!function_pointers_.IotaWithCustomSize) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFakeNonIvi_IotaWithCustomSize.");
   }
@@ -263,6 +279,7 @@ int32 NiFakeNonIviLibrary::IotaWithCustomSize(int32 sizeOne, int32 sizeTwo, int3
 
 int32 NiFakeNonIviLibrary::OutputArraysWithNarrowIntegerTypes(int32 numberOfU16Samples, myUInt16 u16Data[], int32 numberOfI16Samples, myInt16 i16Data[], int32 numberOfI8Samples, myInt8 i8Data[])
 {
+
   if (!function_pointers_.OutputArraysWithNarrowIntegerTypes) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFakeNonIvi_OutputArraysWithNarrowIntegerTypes.");
   }
@@ -275,6 +292,7 @@ int32 NiFakeNonIviLibrary::OutputArraysWithNarrowIntegerTypes(int32 numberOfU16S
 
 int32 NiFakeNonIviLibrary::InputArrayOfBytes(const myUInt8 u8Array[])
 {
+
   if (!function_pointers_.InputArrayOfBytes) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFakeNonIvi_InputArrayOfBytes.");
   }
@@ -287,6 +305,7 @@ int32 NiFakeNonIviLibrary::InputArrayOfBytes(const myUInt8 u8Array[])
 
 int32 NiFakeNonIviLibrary::OutputArrayOfBytes(int32 numberOfU8Samples, myUInt8 u8Data[])
 {
+
   if (!function_pointers_.OutputArrayOfBytes) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFakeNonIvi_OutputArrayOfBytes.");
   }
@@ -299,6 +318,7 @@ int32 NiFakeNonIviLibrary::OutputArrayOfBytes(int32 numberOfU8Samples, myUInt8 u
 
 int32 NiFakeNonIviLibrary::OutputArraysWithPassedInByPtrMechanism(int32 i32Data[], myUInt16 u16Data[], int32* arraySize)
 {
+
   if (!function_pointers_.OutputArraysWithPassedInByPtrMechanism) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFakeNonIvi_OutputArraysWithPassedInByPtrMechanism.");
   }
@@ -311,6 +331,7 @@ int32 NiFakeNonIviLibrary::OutputArraysWithPassedInByPtrMechanism(int32 i32Data[
 
 int32 NiFakeNonIviLibrary::RegisterCallback(myInt16 inputData, CallbackPtr callbackFunction, void* callbackData)
 {
+
   if (!function_pointers_.RegisterCallback) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFakeNonIvi_RegisterCallback.");
   }
@@ -323,6 +344,7 @@ int32 NiFakeNonIviLibrary::RegisterCallback(myInt16 inputData, CallbackPtr callb
 
 int32 NiFakeNonIviLibrary::ReadStream(int32 start, int32 stop, int32* value)
 {
+
   if (!function_pointers_.ReadStream) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFakeNonIvi_ReadStream.");
   }
@@ -335,6 +357,7 @@ int32 NiFakeNonIviLibrary::ReadStream(int32 start, int32 stop, int32* value)
 
 int32 NiFakeNonIviLibrary::InputTimestamp(CVIAbsoluteTime when)
 {
+
   if (!function_pointers_.InputTimestamp) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFakeNonIvi_InputTimestamp.");
   }
@@ -347,6 +370,7 @@ int32 NiFakeNonIviLibrary::InputTimestamp(CVIAbsoluteTime when)
 
 int32 NiFakeNonIviLibrary::OutputTimestamp(CVIAbsoluteTime* when)
 {
+
   if (!function_pointers_.OutputTimestamp) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFakeNonIvi_OutputTimestamp.");
   }
@@ -359,6 +383,7 @@ int32 NiFakeNonIviLibrary::OutputTimestamp(CVIAbsoluteTime* when)
 
 int32 NiFakeNonIviLibrary::InputVarArgs(const char inputName[], const char channelName[], int32 color, double powerUpState, const char channelName0[], int32 color0, double powerUpState0, const char channelName1[], int32 color1, double powerUpState1, const char channelName2[], int32 color2, double powerUpState2)
 {
+
   if (!function_pointers_.InputVarArgs) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFakeNonIvi_InputVarArgs.");
   }
@@ -371,6 +396,7 @@ int32 NiFakeNonIviLibrary::InputVarArgs(const char inputName[], const char chann
 
 int32 NiFakeNonIviLibrary::OutputVarArgs(const char inputName[], const char channelName[], int32* color, const char channelName0[], int32* color0, const char channelName1[], int32* color1, const char channelName2[], int32* color2)
 {
+
   if (!function_pointers_.OutputVarArgs) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFakeNonIvi_OutputVarArgs.");
   }
@@ -383,6 +409,7 @@ int32 NiFakeNonIviLibrary::OutputVarArgs(const char inputName[], const char chan
 
 int32 NiFakeNonIviLibrary::ResetMarbleAttribute(FakeHandle handle, int32 attribute)
 {
+
   if (!function_pointers_.ResetMarbleAttribute) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFakeNonIvi_ResetMarbleAttribute.");
   }
@@ -395,6 +422,7 @@ int32 NiFakeNonIviLibrary::ResetMarbleAttribute(FakeHandle handle, int32 attribu
 
 int32 NiFakeNonIviLibrary::ScalarsWithNarrowIntegerTypes(myUInt16 u16, myInt16 i16, myInt8 i8)
 {
+
   if (!function_pointers_.ScalarsWithNarrowIntegerTypes) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFakeNonIvi_ScalarsWithNarrowIntegerTypes.");
   }
@@ -407,6 +435,7 @@ int32 NiFakeNonIviLibrary::ScalarsWithNarrowIntegerTypes(myUInt16 u16, myInt16 i
 
 int32 NiFakeNonIviLibrary::SetMarbleAttributeDouble(FakeHandle handle, int32 attribute, double value)
 {
+
   if (!function_pointers_.SetMarbleAttributeDouble) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFakeNonIvi_SetMarbleAttributeDouble.");
   }
@@ -419,6 +448,7 @@ int32 NiFakeNonIviLibrary::SetMarbleAttributeDouble(FakeHandle handle, int32 att
 
 int32 NiFakeNonIviLibrary::SetMarbleAttributeInt32(FakeHandle handle, int32 attribute, int32 value)
 {
+
   if (!function_pointers_.SetMarbleAttributeInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFakeNonIvi_SetMarbleAttributeInt32.");
   }
@@ -431,6 +461,7 @@ int32 NiFakeNonIviLibrary::SetMarbleAttributeInt32(FakeHandle handle, int32 attr
 
 int32 NiFakeNonIviLibrary::SetColors(int32 colors[3], int32 size)
 {
+
   if (!function_pointers_.SetColors) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFakeNonIvi_SetColors.");
   }
@@ -443,6 +474,7 @@ int32 NiFakeNonIviLibrary::SetColors(int32 colors[3], int32 size)
 
 int32 NiFakeNonIviLibrary::GetStructsWithCoercion(int32 numberOfStructs, StructWithCoercion_struct structs[])
 {
+
   if (!function_pointers_.GetStructsWithCoercion) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFakeNonIvi_GetStructsWithCoercion.");
   }
@@ -455,6 +487,7 @@ int32 NiFakeNonIviLibrary::GetStructsWithCoercion(int32 numberOfStructs, StructW
 
 int32 NiFakeNonIviLibrary::SetStructsWithCoercion(StructWithCoercion_struct structs[3])
 {
+
   if (!function_pointers_.SetStructsWithCoercion) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFakeNonIvi_SetStructsWithCoercion.");
   }
@@ -467,6 +500,7 @@ int32 NiFakeNonIviLibrary::SetStructsWithCoercion(StructWithCoercion_struct stru
 
 int32 NiFakeNonIviLibrary::InputStringValuedEnum(char aName[])
 {
+
   if (!function_pointers_.InputStringValuedEnum) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFakeNonIvi_InputStringValuedEnum.");
   }
@@ -479,6 +513,7 @@ int32 NiFakeNonIviLibrary::InputStringValuedEnum(char aName[])
 
 int32 NiFakeNonIviLibrary::WriteBooleanArray(int32 bools[], int32 size)
 {
+
   if (!function_pointers_.WriteBooleanArray) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFakeNonIvi_WriteBooleanArray.");
   }

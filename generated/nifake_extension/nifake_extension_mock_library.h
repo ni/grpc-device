@@ -15,6 +15,7 @@ namespace ni {
 namespace tests {
 namespace unit {
 
+
 class NiFakeExtensionMockLibrary : public nifake_extension_grpc::NiFakeExtensionLibraryInterface {
  public:
   MOCK_METHOD(ViStatus, AddCoolFunctionality, (ViSession vi, ViInt32 param), (override));

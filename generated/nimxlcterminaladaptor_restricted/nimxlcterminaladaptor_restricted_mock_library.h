@@ -15,6 +15,7 @@ namespace ni {
 namespace tests {
 namespace unit {
 
+
 class NimxlcTerminalAdaptorRestrictedMockLibrary : public nimxlcterminaladaptor_restricted_grpc::NimxlcTerminalAdaptorRestrictedLibraryInterface {
  public:
   MOCK_METHOD(nimxlc_Session, createSession, (const char hostname[], nierr_Status* c_status), (override));

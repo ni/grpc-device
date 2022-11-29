@@ -12,6 +12,7 @@
 
 namespace nirfmxbluetooth_grpc {
 
+
 class NiRFmxBluetoothLibrary : public nirfmxbluetooth_grpc::NiRFmxBluetoothLibraryInterface {
  public:
   NiRFmxBluetoothLibrary();

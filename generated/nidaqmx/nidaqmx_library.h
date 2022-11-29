@@ -12,6 +12,7 @@
 
 namespace nidaqmx_grpc {
 
+
 class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
  public:
   NiDAQmxLibrary();

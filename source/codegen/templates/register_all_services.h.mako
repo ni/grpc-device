@@ -20,6 +20,7 @@ class ServerBuilder;
 
 namespace ${namespace} {
 
+
 std::shared_ptr<std::vector<std::shared_ptr<void>>> register_all_services(
   grpc::ServerBuilder& server_builder,
   const nidevice_grpc::FeatureToggles& feature_toggles);

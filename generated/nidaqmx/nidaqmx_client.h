@@ -7,6 +7,7 @@
 #ifndef NIDAQMX_GRPC_CLIENT_H
 #define NIDAQMX_GRPC_CLIENT_H
 
+
 #include <grpcpp/grpcpp.h>
 
 #include <nidaqmx.grpc.pb.h>

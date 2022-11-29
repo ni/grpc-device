@@ -11,6 +11,7 @@
 
 namespace nirfmxinstr_restricted_grpc {
 
+
 class NiRFmxInstrRestrictedLibraryInterface {
  public:
   virtual ~NiRFmxInstrRestrictedLibraryInterface() {}

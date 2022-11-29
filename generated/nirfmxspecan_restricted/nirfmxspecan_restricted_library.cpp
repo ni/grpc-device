@@ -40,6 +40,7 @@ NiRFmxSpecAnRestrictedLibrary::~NiRFmxSpecAnRestrictedLibrary()
 
 int32 NiRFmxSpecAnRestrictedLibrary::CacheResult(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 selectorStringOutSize, char selectorStringOut[])
 {
+
   if (!function_pointers_.CacheResult) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_CacheResult.");
   }
@@ -48,6 +49,7 @@ int32 NiRFmxSpecAnRestrictedLibrary::CacheResult(niRFmxInstrHandle instrumentHan
 
 int32 NiRFmxSpecAnRestrictedLibrary::GetError(niRFmxInstrHandle instrumentHandle, int32* errorCode, int32 errorDescriptionBufferSize, char errorDescription[])
 {
+
   if (!function_pointers_.GetError) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_GetError.");
   }
@@ -56,6 +58,7 @@ int32 NiRFmxSpecAnRestrictedLibrary::GetError(niRFmxInstrHandle instrumentHandle
 
 int32 NiRFmxSpecAnRestrictedLibrary::GetErrorString(niRFmxInstrHandle instrumentHandle, int32 errorCode, int32 errorDescriptionBufferSize, char errorDescription[])
 {
+
   if (!function_pointers_.GetErrorString) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_GetErrorString.");
   }
@@ -64,6 +67,7 @@ int32 NiRFmxSpecAnRestrictedLibrary::GetErrorString(niRFmxInstrHandle instrument
 
 int32 NiRFmxSpecAnRestrictedLibrary::IQFetchDataOverrideBehavior(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 recordToFetch, int64 samplesToRead, int32 deleteOnFetch, float64* t0, float64* dt, NIComplexSingle data[], int32 arraySize, int32* actualArraySize)
 {
+
   if (!function_pointers_.IQFetchDataOverrideBehavior) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_IQFetchDataOverrideBehavior.");
   }

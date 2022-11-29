@@ -12,6 +12,7 @@
 
 namespace nirfmxinstr_restricted_grpc {
 
+
 class NiRFmxInstrRestrictedLibrary : public nirfmxinstr_restricted_grpc::NiRFmxInstrRestrictedLibraryInterface {
  public:
   NiRFmxInstrRestrictedLibrary();

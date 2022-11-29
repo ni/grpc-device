@@ -11,6 +11,7 @@
 
 namespace nifake_grpc {
 
+
 class NiFakeLibraryInterface {
  public:
   virtual ~NiFakeLibraryInterface() {}

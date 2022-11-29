@@ -15,6 +15,7 @@ namespace ni {
 namespace tests {
 namespace unit {
 
+
 class NiXnetMockLibrary : public nixnet_grpc::NiXnetLibraryInterface {
  public:
   MOCK_METHOD(nxStatus_t, Blink, (nxSessionRef_t interfaceRef, u32 modifier), (override));

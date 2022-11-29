@@ -12,6 +12,7 @@
 
 namespace nixnetsocket_grpc {
 
+
 class NiXnetSocketLibrary : public nixnetsocket_grpc::NiXnetSocketLibraryInterface {
  public:
   NiXnetSocketLibrary();
