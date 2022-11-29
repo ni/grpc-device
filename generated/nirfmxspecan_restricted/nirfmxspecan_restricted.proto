@@ -1,0 +1,60 @@
+
+//---------------------------------------------------------------------
+// This file is generated from NI-RFMXSPECAN-RESTRICTED API metadata version 21.0.0
+//---------------------------------------------------------------------
+// Proto file for the NI-RFMXSPECAN-RESTRICTED Metadata
+//---------------------------------------------------------------------
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.ni.grpc.nirfmxspecanrestricted";
+option java_outer_classname = "NiRFmxSpecAnRestricted";
+option csharp_namespace = "NationalInstruments.Grpc.NiRFmxSpecAnRestricted";
+
+package nirfmxspecan_restricted_grpc;
+
+import "nidevice.proto";
+import "session.proto";
+
+service NiRFmxSpecAnRestricted {
+  rpc CacheResult(CacheResultRequest) returns (CacheResultResponse);
+  rpc IQFetchDataOverrideBehavior(IQFetchDataOverrideBehaviorRequest) returns (IQFetchDataOverrideBehaviorResponse);
+}
+
+enum IQDeleteOnFetch {
+  IQ_DELETE_ON_FETCH_DEFAULT = 0;
+  IQ_DELETE_ON_FETCH_TRUE = 1;
+  IQ_DELETE_ON_FETCH_FALSE = 2;
+}
+
+message CacheResultRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  int32 selector_string_out_size = 3;
+}
+
+message CacheResultResponse {
+  int32 status = 1;
+  string selector_string_out = 2;
+}
+
+message IQFetchDataOverrideBehaviorRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+  int32 record_to_fetch = 4;
+  int64 samples_to_read = 5;
+  oneof delete_on_fetch_enum {
+    IQDeleteOnFetch delete_on_fetch = 6;
+    int32 delete_on_fetch_raw = 7;
+  }
+}
+
+message IQFetchDataOverrideBehaviorResponse {
+  int32 status = 1;
+  double t0 = 2;
+  double dt = 3;
+  repeated nidevice_grpc.NIComplexNumberF32 data = 4;
+  int32 actual_array_size = 5;
+}
+
