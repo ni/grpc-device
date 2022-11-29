@@ -7,7 +7,7 @@ namespace nidevice_restricted_grpc {
 DebugSessionPropertiesRestrictedFeatureToggles::DebugSessionPropertiesRestrictedFeatureToggles(
   const nidevice_grpc::FeatureToggles& feature_toggles)
   : is_enabled(
-      feature_toggles.is_feature_enabled("debugsessionproperties_restricted", CodeReadiness::kRestrictedNextRelease))
+      feature_toggles.is_feature_enabled("debugsessionproperties_restricted", CodeReadiness::kRestrictedRelease))
 {
 }
 
