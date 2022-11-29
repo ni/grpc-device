@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 config = {
-    "code_readiness": "RestrictedNextRelease",
+    "code_readiness": "RestrictedRelease",
     "api_version": "21.0.0",
     "c_header": "niRFmxSpecAn.h",
     "c_function_prefix": "RFmxSpecAn_",
