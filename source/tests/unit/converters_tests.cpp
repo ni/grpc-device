@@ -88,6 +88,93 @@ TEST(ConvertersTests, ZeroSizesDisallowOptional_Mismatch)
   EXPECT_EQ(MatchState::MISMATCH, calculation.match_state);
 }
 
+#if !WIN32
+class TempIsoLocale {
+ public:
+  TempIsoLocale()
+  {
+    old_locale = strdup(setlocale(LC_ALL, NULL));
+    updated_locale = true;
+    char* new_locale = setlocale(LC_ALL, "en_US.ISO8859-1");
+    if (new_locale == NULL) {
+      new_locale = setlocale(LC_ALL, "en_US.ISO8859-15");
+      if (new_locale == NULL) {
+        updated_locale = false;
+      }
+    }
+  }
+  ~TempIsoLocale()
+  {
+    if (updated_locale) {
+      setlocale(LC_ALL, old_locale);
+    }
+    free(old_locale);
+  }
+  char* old_locale;
+  bool updated_locale;
+};
+#endif
+
+TEST(ConvertersTests, AsciiString_ConvertFromGrpc_Unchanged)
+{
+  std::string ascii = "Hello, world";
+
+  std::string result = convert_from_grpc<std::string>(ascii);
+
+  EXPECT_EQ(result, ascii);
+}
+
+TEST(ConvertersTests, Utf8String_ConvertFromGrpc_LocalizedString)
+{
+#if WIN32
+  if (GetACP() != 1252) {
+    GTEST_SKIP() << "Test requires a Windows-1252 codepage";
+  }
+#else
+  TempIsoLocale temp_locale;
+  if (!temp_locale.updated_locale) {
+    GTEST_SKIP() << "ISO-8859 locale not installed";
+  }
+#endif
+  std::string utf8 = "\xC3\xAB";  // Latin Small Letter E with Diaeresis
+  std::string localized = "\xEB";
+
+  std::string result = convert_from_grpc<std::string>(utf8);
+
+  EXPECT_EQ(result, localized);
+}
+
+TEST(ConvertersTests, AsciiString_ConvertToGrpc_Unchanged)
+{
+  std::string ascii = "Hello, world";
+
+  std::string result;
+  convert_to_grpc(ascii, &result);
+
+  EXPECT_EQ(result, ascii);
+}
+
+TEST(ConvertersTests, LocalizedString_ConvertToGrpc_Utf8String)
+{
+#if WIN32
+  if (GetACP() != 1252) {
+    GTEST_SKIP() << "Test requires a Windows-1252 codepage";
+  }
+#else
+  TempIsoLocale temp_locale;
+  if (!temp_locale.updated_locale) {
+    GTEST_SKIP() << "ISO-8859 locale not installed";
+  }
+#endif
+  std::string utf8 = "\xC3\xAB";  // Latin Small Letter E with Diaeresis
+  std::string localized = "\xEB";
+
+  std::string result;
+  convert_to_grpc(localized, &result);
+
+  EXPECT_EQ(result, utf8);
+}
+
 TEST(ConvertersTests, NullableVectorInitializedNull_GetData_ReturnsNull)
 {
   const auto vec = nullable_vector<int32_t>(nullptr);

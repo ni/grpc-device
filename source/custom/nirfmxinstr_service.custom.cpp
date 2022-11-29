@@ -4,6 +4,9 @@
 #include <sstream>
 
 namespace nirfmxinstr_grpc {
+using nidevice_grpc::converters::convert_from_grpc;
+using nidevice_grpc::converters::convert_to_grpc;
+
 const auto kErrorReadBufferTooSmall = -200229;
 const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
 
@@ -73,9 +76,12 @@ const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
     return ::grpc::Status::CANCELLED;
   }
   try {
-    char* selector_string = (char*)request->selector_string().c_str();
-    char* port_name = (char*)request->port_name().c_str();
-    char* device_name = (char*)request->device_name().c_str();
+    auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+    char* selector_string = const_cast<char*>(selector_string_mbcs.c_str());
+    auto port_name_mbcs = convert_from_grpc<std::string>(request->port_name());
+    char* port_name = const_cast<char*>(port_name_mbcs.c_str());
+    auto device_name_mbcs = convert_from_grpc<std::string>(request->device_name());
+    char* device_name = const_cast<char*>(device_name_mbcs.c_str());
     int32 channel_number = request->channel_number();
 
     while (true) {
@@ -98,7 +104,9 @@ const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
       }
       response->set_status(status);
-      response->set_selector_string_out(selector_string_out);
+      std::string selector_string_out_utf8;
+      convert_to_grpc(selector_string_out, &selector_string_out_utf8);
+      response->set_selector_string_out(selector_string_out_utf8);
       nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_selector_string_out()));
       return ::grpc::Status::OK;
     }

@@ -426,7 +426,9 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
         if (!status_ok(status)) {
           return ConvertApiErrorStatusForNxSessionRef_t(context, status, session);
         }
-        response->set_str(property_value.c_str());
+        std::string property_value_utf8;
+        convert_to_grpc(property_value, &property_value_utf8);
+        response->set_str(property_value_utf8);
         break;
       }
       case u32_array_: {
@@ -640,7 +642,9 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
         if (!status_ok(status)) {
           return ConvertApiErrorStatusForNxSessionRef_t(context, status, session);
         }
-        response->set_str(property_value.c_str());
+        std::string property_value_utf8;
+        convert_to_grpc(property_value, &property_value_utf8);
+        response->set_str(property_value_utf8);
         break;
       }
       default: {
@@ -732,7 +736,9 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
         if (!status_ok(status)) {
           return ConvertApiErrorStatusForNxDatabaseRef_t(context, status, dbobject);
         }
-        response->set_str(property_value.c_str());
+        std::string property_value_utf8;
+        convert_to_grpc(property_value, &property_value_utf8);
+        response->set_str(property_value_utf8);
         break;
       }
       case u32_array_: {
@@ -873,9 +879,9 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
         break;
       }
       case string_: {
-        std::string property_value = request->str();
-        u32 property_size = property_value.size();
-        status = library_->SetProperty(session, property_id, property_size, const_cast<char*>(property_value.c_str()));
+        auto property_value_mbcs = convert_from_grpc<std::string>(request->str());
+        u32 property_size = property_value_mbcs.size();
+        status = library_->SetProperty(session, property_id, property_size, const_cast<char*>(property_value_mbcs.c_str()));
         break;
       }
       case u32_array_: {
@@ -971,9 +977,9 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
         break;
       }
       case string_: {
-        std::string property_value = request->str();
-        u32 property_size = property_value.size();
-        status = library_->SetSubProperty(session, active_index, property_id, property_size, const_cast<char*>(property_value.c_str()));
+        auto property_value_mbcs = convert_from_grpc<std::string>(request->str());
+        u32 property_size = property_value_mbcs.size();
+        status = library_->SetSubProperty(session, active_index, property_id, property_size, const_cast<char*>(property_value_mbcs.c_str()));
         break;
       }
       default: {
@@ -1046,9 +1052,9 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
         break;
       }
       case string_: {
-        std::string property_value = request->str();
-        u32 property_size = property_value.size();
-        status = library_->DbSetProperty(dbobject, property_id, property_size, const_cast<char*>(property_value.c_str()));
+        auto property_value_mbcs = convert_from_grpc<std::string>(request->str());
+        u32 property_size = property_value_mbcs.size();
+        status = library_->DbSetProperty(dbobject, property_id, property_size, const_cast<char*>(property_value_mbcs.c_str()));
         break;
       }
       case u32_array_: {
@@ -1124,8 +1130,12 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
       return ConvertApiErrorStatusForNxDatabaseRef_t(context, status, 0);
     }
     response->set_status(status);
-    response->set_alias_buffer(alias_buffer.c_str());
-    response->set_filepath_buffer(file_path_buffer.c_str());
+    std::string alias_buffer_utf8;
+    convert_to_grpc(alias_buffer, &alias_buffer_utf8);
+    response->set_alias_buffer(alias_buffer_utf8.c_str());
+    std::string file_path_buffer_utf8;
+    convert_to_grpc(file_path_buffer, &file_path_buffer_utf8);
+    response->set_filepath_buffer(file_path_buffer_utf8.c_str());
     response->set_number_of_databases(number_of_databases);
     return ::grpc::Status::OK;
   }
@@ -1161,7 +1171,8 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
       }
     }
 
-    auto attribute_name = request->attribute_name().c_str();
+    auto attribute_name_mbcs = convert_from_grpc<std::string>(request->attribute_name());
+    auto attribute_name = attribute_name_mbcs.c_str();
     u32 attribute_text_size{};
     auto status = library_->DbGetDBCAttributeSize(dbobject, mode, attribute_name, &attribute_text_size);
     if (!status_ok(status)) {
@@ -1177,7 +1188,9 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
     }
     response->set_status(status);
     response->set_is_default(is_default);
-    response->set_attribute_text(attribute_text.c_str());
+    std::string attribute_text_utf8;
+    convert_to_grpc(attribute_text, &attribute_text_utf8);
+    response->set_attribute_text(attribute_text_utf8.c_str());
     return ::grpc::Status::OK;
   }
   catch (nidevice_grpc::NonDriverException& ex) {

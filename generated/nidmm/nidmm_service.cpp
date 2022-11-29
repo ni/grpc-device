@@ -77,7 +77,8 @@ namespace nidmm_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      auto channel_name = request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      auto channel_name = channel_name_mbcs.c_str();
       ViAttr attribute_id = request->attribute_id();
       ViBoolean attribute_value = request->attribute_value();
       auto status = library_->CheckAttributeViBoolean(vi, channel_name, attribute_id, attribute_value);
@@ -102,7 +103,8 @@ namespace nidmm_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      auto channel_name = request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      auto channel_name = channel_name_mbcs.c_str();
       ViAttr attribute_id = request->attribute_id();
       ViInt32 attribute_value;
       switch (request->attribute_value_enum_case()) {
@@ -142,7 +144,8 @@ namespace nidmm_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      auto channel_name = request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      auto channel_name = channel_name_mbcs.c_str();
       ViAttr attribute_id = request->attribute_id();
       ViReal64 attribute_value;
       switch (request->attribute_value_enum_case()) {
@@ -190,7 +193,8 @@ namespace nidmm_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      auto channel_name = request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      auto channel_name = channel_name_mbcs.c_str();
       ViAttr attribute_id = request->attribute_id();
       auto attribute_value_grpc_session = request->attribute_value();
       ViSession attribute_value = session_repository_->access_session(attribute_value_grpc_session.name());
@@ -216,9 +220,11 @@ namespace nidmm_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      auto channel_name = request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      auto channel_name = channel_name_mbcs.c_str();
       ViAttr attribute_id = request->attribute_id();
-      ViString attribute_value = (ViString)request->attribute_value_raw().c_str();
+      auto attribute_value_mbcs = convert_from_grpc<std::string>(request->attribute_value_raw());
+      ViString attribute_value = (ViString)attribute_value_mbcs.c_str();
       auto status = library_->CheckAttributeViString(vi, channel_name, attribute_id, attribute_value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -1301,7 +1307,8 @@ namespace nidmm_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      auto file_path = request->file_path().c_str();
+      auto file_path_mbcs = convert_from_grpc<std::string>(request->file_path());
+      auto file_path = file_path_mbcs.c_str();
       auto status = library_->ExportAttributeConfigurationFile(vi, file_path);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -1480,7 +1487,8 @@ namespace nidmm_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      auto channel_name = request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      auto channel_name = channel_name_mbcs.c_str();
       ViAttr attribute_id = request->attribute_id();
       ViBoolean attribute_value {};
       auto status = library_->GetAttributeViBoolean(vi, channel_name, attribute_id, &attribute_value);
@@ -1506,7 +1514,8 @@ namespace nidmm_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      auto channel_name = request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      auto channel_name = channel_name_mbcs.c_str();
       ViAttr attribute_id = request->attribute_id();
       ViInt32 attribute_value {};
       auto status = library_->GetAttributeViInt32(vi, channel_name, attribute_id, &attribute_value);
@@ -1532,7 +1541,8 @@ namespace nidmm_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      auto channel_name = request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      auto channel_name = channel_name_mbcs.c_str();
       ViAttr attribute_id = request->attribute_id();
       ViReal64 attribute_value {};
       auto status = library_->GetAttributeViReal64(vi, channel_name, attribute_id, &attribute_value);
@@ -1558,7 +1568,8 @@ namespace nidmm_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      auto channel_name = request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      auto channel_name = channel_name_mbcs.c_str();
       ViAttr attribute_id = request->attribute_id();
       ViSession attribute_value {};
       auto status = library_->GetAttributeViSession(vi, channel_name, attribute_id, &attribute_value);
@@ -1585,7 +1596,8 @@ namespace nidmm_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      auto channel_name = request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      auto channel_name = channel_name_mbcs.c_str();
       ViAttr attribute_id = request->attribute_id();
 
       while (true) {
@@ -1608,7 +1620,9 @@ namespace nidmm_grpc {
           return ConvertApiErrorStatusForViSession(context, status, vi);
         }
         response->set_status(status);
-        response->set_attribute_value(attribute_value);
+        std::string attribute_value_utf8;
+        convert_to_grpc(attribute_value, &attribute_value_utf8);
+        response->set_attribute_value(attribute_value_utf8);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_attribute_value()));
         return ::grpc::Status::OK;
       }
@@ -1722,7 +1736,9 @@ namespace nidmm_grpc {
           return ConvertApiErrorStatusForViSession(context, status, vi);
         }
         response->set_status(status);
-        response->set_channel_string(channel_string);
+        std::string channel_string_utf8;
+        convert_to_grpc(channel_string, &channel_string_utf8);
+        response->set_channel_string(channel_string_utf8);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_channel_string()));
         return ::grpc::Status::OK;
       }
@@ -1742,7 +1758,8 @@ namespace nidmm_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      ViString options = (ViString)request->options().c_str();
+      auto options_mbcs = convert_from_grpc<std::string>(request->options());
+      ViString options = (ViString)options_mbcs.c_str();
       ViReal64 temperature {};
       auto status = library_->GetDevTemp(vi, options, &temperature);
       if (!status_ok(status)) {
@@ -1790,7 +1807,9 @@ namespace nidmm_grpc {
         }
         response->set_status(status);
         response->set_error_code(error_code);
-        response->set_description(description);
+        std::string description_utf8;
+        convert_to_grpc(description, &description_utf8);
+        response->set_description(description_utf8);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_description()));
         return ::grpc::Status::OK;
       }
@@ -1832,7 +1851,9 @@ namespace nidmm_grpc {
           return ConvertApiErrorStatusForViSession(context, status, vi);
         }
         response->set_status(status);
-        response->set_error_message(error_message);
+        std::string error_message_utf8;
+        convert_to_grpc(error_message, &error_message_utf8);
+        response->set_error_message(error_message_utf8);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_message()));
         return ::grpc::Status::OK;
       }
@@ -1961,7 +1982,9 @@ namespace nidmm_grpc {
           return ConvertApiErrorStatusForViSession(context, status, vi);
         }
         response->set_status(status);
-        response->set_coercion_record(coercion_record);
+        std::string coercion_record_utf8;
+        convert_to_grpc(coercion_record, &coercion_record_utf8);
+        response->set_coercion_record(coercion_record_utf8);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_coercion_record()));
         return ::grpc::Status::OK;
       }
@@ -2002,7 +2025,9 @@ namespace nidmm_grpc {
           return ConvertApiErrorStatusForViSession(context, status, vi);
         }
         response->set_status(status);
-        response->set_interchange_warning(interchange_warning);
+        std::string interchange_warning_utf8;
+        convert_to_grpc(interchange_warning, &interchange_warning_utf8);
+        response->set_interchange_warning(interchange_warning_utf8);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_interchange_warning()));
         return ::grpc::Status::OK;
       }
@@ -2070,7 +2095,8 @@ namespace nidmm_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      auto file_path = request->file_path().c_str();
+      auto file_path_mbcs = convert_from_grpc<std::string>(request->file_path());
+      auto file_path = file_path_mbcs.c_str();
       auto status = library_->ImportAttributeConfigurationFile(vi, file_path);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -2091,7 +2117,8 @@ namespace nidmm_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      ViString resource_name = (ViString)request->resource_name().c_str();
+      auto resource_name_mbcs = convert_from_grpc<std::string>(request->resource_name());
+      ViString resource_name = (ViString)resource_name_mbcs.c_str();
       ViBoolean id_query = request->id_query();
       ViBoolean reset_device = request->reset_device();
       auto initialization_behavior = request->initialization_behavior();
@@ -2126,10 +2153,12 @@ namespace nidmm_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      ViString resource_name = (ViString)request->resource_name().c_str();
+      auto resource_name_mbcs = convert_from_grpc<std::string>(request->resource_name());
+      ViString resource_name = (ViString)resource_name_mbcs.c_str();
       ViBoolean id_query = request->id_query();
       ViBoolean reset_device = request->reset_device();
-      ViString option_string = (ViString)request->option_string().c_str();
+      auto option_string_mbcs = convert_from_grpc<std::string>(request->option_string());
+      ViString option_string = (ViString)option_string_mbcs.c_str();
       auto initialization_behavior = request->initialization_behavior();
 
       bool new_session_initialized {};
@@ -2536,9 +2565,13 @@ namespace nidmm_grpc {
         return ConvertApiErrorStatusForViSession(context, status, vi);
       }
       response->set_status(status);
-      response->set_instrument_driver_revision(instrument_driver_revision);
+      std::string instrument_driver_revision_utf8;
+      convert_to_grpc(instrument_driver_revision, &instrument_driver_revision_utf8);
+      response->set_instrument_driver_revision(instrument_driver_revision_utf8);
       nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_instrument_driver_revision()));
-      response->set_firmware_revision(firmware_revision);
+      std::string firmware_revision_utf8;
+      convert_to_grpc(firmware_revision, &firmware_revision_utf8);
+      response->set_firmware_revision(firmware_revision_utf8);
       nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_firmware_revision()));
       return ::grpc::Status::OK;
     }
@@ -2587,7 +2620,9 @@ namespace nidmm_grpc {
       }
       response->set_status(status);
       response->set_self_test_result(self_test_result);
-      response->set_self_test_message(self_test_message);
+      std::string self_test_message_utf8;
+      convert_to_grpc(self_test_message, &self_test_message_utf8);
+      response->set_self_test_message(self_test_message_utf8);
       nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_self_test_message()));
       return ::grpc::Status::OK;
     }
@@ -2628,7 +2663,8 @@ namespace nidmm_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      auto channel_name = request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      auto channel_name = channel_name_mbcs.c_str();
       ViAttr attribute_id = request->attribute_id();
       ViBoolean attribute_value = request->attribute_value();
       auto status = library_->SetAttributeViBoolean(vi, channel_name, attribute_id, attribute_value);
@@ -2653,7 +2689,8 @@ namespace nidmm_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      auto channel_name = request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      auto channel_name = channel_name_mbcs.c_str();
       ViAttr attribute_id = request->attribute_id();
       ViInt32 attribute_value;
       switch (request->attribute_value_enum_case()) {
@@ -2693,7 +2730,8 @@ namespace nidmm_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      auto channel_name = request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      auto channel_name = channel_name_mbcs.c_str();
       ViAttr attribute_id = request->attribute_id();
       ViReal64 attribute_value;
       switch (request->attribute_value_enum_case()) {
@@ -2741,7 +2779,8 @@ namespace nidmm_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      auto channel_name = request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      auto channel_name = channel_name_mbcs.c_str();
       ViAttr attribute_id = request->attribute_id();
       auto attribute_value_grpc_session = request->attribute_value();
       ViSession attribute_value = session_repository_->access_session(attribute_value_grpc_session.name());
@@ -2767,9 +2806,11 @@ namespace nidmm_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      auto channel_name = request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      auto channel_name = channel_name_mbcs.c_str();
       ViAttr attribute_id = request->attribute_id();
-      ViString attribute_value = (ViString)request->attribute_value_raw().c_str();
+      auto attribute_value_mbcs = convert_from_grpc<std::string>(request->attribute_value_raw());
+      ViString attribute_value = (ViString)attribute_value_mbcs.c_str();
       auto status = library_->SetAttributeViString(vi, channel_name, attribute_id, attribute_value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);

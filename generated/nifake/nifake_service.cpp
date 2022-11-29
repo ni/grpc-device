@@ -279,7 +279,8 @@ namespace nifake_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      ViString resource_name = (ViString)request->resource_name().c_str();
+      auto resource_name_mbcs = convert_from_grpc<std::string>(request->resource_name());
+      ViString resource_name = (ViString)resource_name_mbcs.c_str();
       ViInt32 configuration = request->configuration();
       auto status = library_->Control4022(resource_name, configuration);
       if (!status_ok(status)) {
@@ -432,7 +433,9 @@ namespace nifake_grpc {
         return ConvertApiErrorStatusForViSession(context, status, vi);
       }
       response->set_status(status);
-      response->set_error_message(error_message);
+      std::string error_message_utf8;
+      convert_to_grpc(error_message, &error_message_utf8);
+      response->set_error_message(error_message_utf8);
       nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_message()));
       return ::grpc::Status::OK;
     }
@@ -569,7 +572,9 @@ namespace nifake_grpc {
         return ConvertApiErrorStatusForViSession(context, status, vi);
       }
       response->set_status(status);
-      response->set_a_string(a_string);
+      std::string a_string_utf8;
+      convert_to_grpc(a_string, &a_string_utf8);
+      response->set_a_string(a_string_utf8);
       nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_a_string()));
       return ::grpc::Status::OK;
     }
@@ -609,7 +614,9 @@ namespace nifake_grpc {
           return ConvertApiErrorStatusForViSession(context, status, vi);
         }
         response->set_status(status);
-        response->set_a_string(a_string);
+        std::string a_string_utf8;
+        convert_to_grpc(a_string, &a_string_utf8);
+        response->set_a_string(a_string_utf8);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_a_string()));
         return ::grpc::Status::OK;
       }
@@ -629,7 +636,8 @@ namespace nifake_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      auto a_string = request->a_string().c_str();
+      auto a_string_mbcs = convert_from_grpc<std::string>(request->a_string());
+      auto a_string = a_string_mbcs.c_str();
       ViInt32 actual_size {};
       while (true) {
         auto status = library_->GetAnIviDanceWithATwistArray(vi, a_string, 0, nullptr, &actual_size);
@@ -806,7 +814,9 @@ namespace nifake_grpc {
           return ConvertApiErrorStatusForViSession(context, status, vi);
         }
         response->set_status(status);
-        response->set_a_string(a_string);
+        std::string a_string_utf8;
+        convert_to_grpc(a_string, &a_string_utf8);
+        response->set_a_string(a_string_utf8);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_a_string()));
         response->set_actual_size(actual_size);
         return ::grpc::Status::OK;
@@ -845,7 +855,9 @@ namespace nifake_grpc {
           return ConvertApiErrorStatusForViSession(context, status, 0);
         }
         response->set_status(status);
-        response->set_string_out(string_out);
+        std::string string_out_utf8;
+        convert_to_grpc(string_out, &string_out_utf8);
+        response->set_string_out(string_out_utf8);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_string_out()));
         response->set_actual_size(actual_size);
         return ::grpc::Status::OK;
@@ -953,7 +965,8 @@ namespace nifake_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      auto channel_name = request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      auto channel_name = channel_name_mbcs.c_str();
       ViAttr attribute_id = request->attribute_id();
       ViBoolean attribute_value {};
       auto status = library_->GetAttributeViBoolean(vi, channel_name, attribute_id, &attribute_value);
@@ -979,7 +992,8 @@ namespace nifake_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      auto channel_name = request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      auto channel_name = channel_name_mbcs.c_str();
       ViAttr attribute_id = request->attribute_id();
       ViInt32 attribute_value {};
       auto status = library_->GetAttributeViInt32(vi, channel_name, attribute_id, &attribute_value);
@@ -1005,7 +1019,8 @@ namespace nifake_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      auto channel_name = request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      auto channel_name = channel_name_mbcs.c_str();
       ViAttr attribute_id = request->attribute_id();
       ViInt64 attribute_value {};
       auto status = library_->GetAttributeViInt64(vi, channel_name, attribute_id, &attribute_value);
@@ -1031,7 +1046,8 @@ namespace nifake_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      auto channel_name = request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      auto channel_name = channel_name_mbcs.c_str();
       ViAttr attribute_id = request->attribute_id();
       ViReal64 attribute_value {};
       auto status = library_->GetAttributeViReal64(vi, channel_name, attribute_id, &attribute_value);
@@ -1057,7 +1073,8 @@ namespace nifake_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      auto channel_name = request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      auto channel_name = channel_name_mbcs.c_str();
       ViAttr attribute_id = request->attribute_id();
       ViSession attribute_value {};
       auto status = library_->GetAttributeViSession(vi, channel_name, attribute_id, &attribute_value);
@@ -1084,7 +1101,8 @@ namespace nifake_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      auto channel_name = request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      auto channel_name = channel_name_mbcs.c_str();
       ViAttr attribute_id = request->attribute_id();
 
       while (true) {
@@ -1107,7 +1125,9 @@ namespace nifake_grpc {
           return ConvertApiErrorStatusForViSession(context, status, vi);
         }
         response->set_status(status);
-        response->set_attribute_value(attribute_value);
+        std::string attribute_value_utf8;
+        convert_to_grpc(attribute_value, &attribute_value_utf8);
+        response->set_attribute_value(attribute_value_utf8);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_attribute_value()));
         return ::grpc::Status::OK;
       }
@@ -1313,7 +1333,9 @@ namespace nifake_grpc {
         }
         response->set_status(status);
         response->set_error_code(error_code);
-        response->set_description(description);
+        std::string description_utf8;
+        convert_to_grpc(description, &description_utf8);
+        response->set_description(description_utf8);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_description()));
         return ::grpc::Status::OK;
       }
@@ -1429,8 +1451,10 @@ namespace nifake_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      ViRsrc resource_name = (ViRsrc)request->resource_name().c_str();
-      ViString calibration_password = (ViString)request->calibration_password().c_str();
+      auto resource_name_mbcs = convert_from_grpc<std::string>(request->resource_name());
+      ViRsrc resource_name = (ViRsrc)resource_name_mbcs.c_str();
+      auto calibration_password_mbcs = convert_from_grpc<std::string>(request->calibration_password());
+      ViString calibration_password = (ViString)calibration_password_mbcs.c_str();
 
       auto init_lambda = [&] () {
         ViSession vi;
@@ -1460,10 +1484,12 @@ namespace nifake_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      ViString resource_name = (ViString)request->resource_name().c_str();
+      auto resource_name_mbcs = convert_from_grpc<std::string>(request->resource_name());
+      ViString resource_name = (ViString)resource_name_mbcs.c_str();
       ViBoolean id_query = request->id_query();
       ViBoolean reset_device = request->reset_device();
-      auto option_string = request->option_string().c_str();
+      auto option_string_mbcs = convert_from_grpc<std::string>(request->option_string());
+      auto option_string = option_string_mbcs.c_str();
       auto initialization_behavior = request->initialization_behavior();
 
       bool new_session_initialized {};
@@ -1496,7 +1522,8 @@ namespace nifake_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      ViRsrc resource_name = (ViRsrc)request->resource_name().c_str();
+      auto resource_name_mbcs = convert_from_grpc<std::string>(request->resource_name());
+      ViRsrc resource_name = (ViRsrc)resource_name_mbcs.c_str();
       auto get_stringArg_if = [](const google::protobuf::RepeatedPtrField<StringAndTurtle>& vector, int n) -> ViConstString {
             if (vector.size() > n) {
                   return vector[n].string_arg().c_str();
@@ -1924,8 +1951,9 @@ namespace nifake_grpc {
         }
       }
 
-      ViInt32 string_size = static_cast<ViInt32>(request->a_string().size());
-      auto a_string = request->a_string().c_str();
+      ViInt32 string_size = static_cast<ViInt32>(convert_from_grpc<std::string>(request->a_string()).size());
+      auto a_string_mbcs = convert_from_grpc<std::string>(request->a_string());
+      auto a_string = a_string_mbcs.c_str();
       auto status = library_->ParametersAreMultipleTypes(vi, a_boolean, an_int32, an_int64, an_int_enum, a_float, a_float_enum, string_size, a_string);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -2072,7 +2100,8 @@ namespace nifake_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      auto channel_name = request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      auto channel_name = channel_name_mbcs.c_str();
       ViInt32 maximum_time = request->maximum_time();
       ViReal64 reading {};
       auto status = library_->ReadFromChannel(vi, channel_name, maximum_time, &reading);
@@ -2106,7 +2135,9 @@ namespace nifake_grpc {
       }
       response->set_status(status);
       response->set_a_number(a_number);
-      response->set_a_string(a_string);
+      std::string a_string_utf8;
+      convert_to_grpc(a_string, &a_string_utf8);
+      response->set_a_string(a_string_utf8);
       nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_a_string()));
       return ::grpc::Status::OK;
     }
@@ -2215,7 +2246,9 @@ namespace nifake_grpc {
           response->set_a_float_enum_mapped(static_cast<nifake_grpc::FloatEnum>(a_float_enum_omap_it->second));
         }
         response->set_a_float_enum_raw(a_float_enum);
-        response->set_a_string(a_string);
+        std::string a_string_utf8;
+        convert_to_grpc(a_string, &a_string_utf8);
+        response->set_a_string(a_string_utf8);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_a_string()));
         return ::grpc::Status::OK;
       }
@@ -2235,7 +2268,8 @@ namespace nifake_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      auto channel_name = request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      auto channel_name = channel_name_mbcs.c_str();
       ViAttr attribute_id = request->attribute_id();
       ViBoolean attribute_value = request->attribute_value();
       auto status = library_->SetAttributeViBoolean(vi, channel_name, attribute_id, attribute_value);
@@ -2260,7 +2294,8 @@ namespace nifake_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      auto channel_name = request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      auto channel_name = channel_name_mbcs.c_str();
       ViAttr attribute_id = request->attribute_id();
       ViInt32 attribute_value;
       switch (request->attribute_value_enum_case()) {
@@ -2300,7 +2335,8 @@ namespace nifake_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      auto channel_name = request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      auto channel_name = channel_name_mbcs.c_str();
       ViAttr attribute_id = request->attribute_id();
       ViInt64 attribute_value = request->attribute_value_raw();
       auto status = library_->SetAttributeViInt64(vi, channel_name, attribute_id, attribute_value);
@@ -2325,7 +2361,8 @@ namespace nifake_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      auto channel_name = request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      auto channel_name = channel_name_mbcs.c_str();
       ViAttr attribute_id = request->attribute_id();
       ViReal64 attribute_value;
       switch (request->attribute_value_enum_case()) {
@@ -2369,9 +2406,11 @@ namespace nifake_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      auto channel_name = request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      auto channel_name = channel_name_mbcs.c_str();
       ViAttr attribute_id = request->attribute_id();
-      auto attribute_value = request->attribute_value_raw().c_str();
+      auto attribute_value_mbcs = convert_from_grpc<std::string>(request->attribute_value_raw());
+      auto attribute_value = attribute_value_mbcs.c_str();
       auto status = library_->SetAttributeViString(vi, channel_name, attribute_id, attribute_value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -2442,6 +2481,7 @@ namespace nifake_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViConstString a_mobile_os_name;
+      std::string a_mobile_os_name_buffer;
       switch (request->a_mobile_os_name_enum_case()) {
         case nifake_grpc::StringValuedEnumInputFunctionWithDefaultsRequest::AMobileOsNameEnumCase::kAMobileOsNameMapped: {
           auto a_mobile_os_name_imap_it = mobileosnames_input_map_.find(request->a_mobile_os_name_mapped());
@@ -2452,7 +2492,8 @@ namespace nifake_grpc {
           break;
         }
         case nifake_grpc::StringValuedEnumInputFunctionWithDefaultsRequest::AMobileOsNameEnumCase::kAMobileOsNameRaw: {
-          a_mobile_os_name = const_cast<ViConstString>(request->a_mobile_os_name_raw().c_str());
+          a_mobile_os_name_buffer = convert_from_grpc<std::string>(request->a_mobile_os_name_raw());
+          a_mobile_os_name = const_cast<ViConstString>(a_mobile_os_name_buffer.c_str());
           break;
         }
         case nifake_grpc::StringValuedEnumInputFunctionWithDefaultsRequest::AMobileOsNameEnumCase::A_MOBILE_OS_NAME_ENUM_NOT_SET: {
@@ -2484,7 +2525,8 @@ namespace nifake_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViReal64 a_number = request->a_number();
-      ViString a_string = (ViString)request->a_string().c_str();
+      auto a_string_mbcs = convert_from_grpc<std::string>(request->a_string());
+      ViString a_string = (ViString)a_string_mbcs.c_str();
       auto status = library_->TwoInputFunction(vi, a_number, a_string);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);

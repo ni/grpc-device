@@ -185,9 +185,11 @@ namespace nixnetsocket_grpc {
     try {
       auto stack_ref_grpc_session = request->stack_ref();
       nxIpStackRef_t stack_ref = nx_ip_stack_ref_t_resource_repository_->access_session(stack_ref_grpc_session.name());
-      auto node = request->node().c_str();
+      auto node_mbcs = convert_from_grpc<std::string>(request->node());
+      auto node = node_mbcs.c_str();
       auto node_api = request->node() == "" ? nullptr : node;
-      auto service = request->service().c_str();
+      auto service_mbcs = convert_from_grpc<std::string>(request->service());
+      auto service = service_mbcs.c_str();
       auto service_api = request->service() == "" ? nullptr : service;
       auto hints = convert_from_grpc<nxaddrinfo>(request->hints());
       auto res = allocate_output_storage<nxaddrinfo, google::protobuf::RepeatedPtrField<AddrInfo>>(library_);
@@ -235,9 +237,13 @@ namespace nixnetsocket_grpc {
         return ConvertApiErrorStatusForNxIpStackRef_t(context, status, stack_ref);
       }
       response->set_status(status);
-      response->set_host(host);
+      std::string host_utf8;
+      convert_to_grpc(host, &host_utf8);
+      response->set_host(host_utf8);
       nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_host()));
-      response->set_serv(serv);
+      std::string serv_utf8;
+      convert_to_grpc(serv, &serv_utf8);
+      response->set_serv(serv_utf8);
       nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_serv()));
       return ::grpc::Status::OK;
     }
@@ -363,7 +369,8 @@ namespace nixnetsocket_grpc {
     try {
       auto stack_ref_grpc_session = request->stack_ref();
       nxIpStackRef_t stack_ref = nx_ip_stack_ref_t_resource_repository_->access_session(stack_ref_grpc_session.name());
-      auto cp = request->cp().c_str();
+      auto cp_mbcs = convert_from_grpc<std::string>(request->cp());
+      auto cp = cp_mbcs.c_str();
       auto addr = library_->InetAddr(stack_ref, cp);
       auto status = addr == -1 ? -1 : 0;
       if (!status_ok(status)) {
@@ -388,7 +395,8 @@ namespace nixnetsocket_grpc {
     try {
       auto stack_ref_grpc_session = request->stack_ref();
       nxIpStackRef_t stack_ref = nx_ip_stack_ref_t_resource_repository_->access_session(stack_ref_grpc_session.name());
-      auto cp = request->cp().c_str();
+      auto cp_mbcs = convert_from_grpc<std::string>(request->cp());
+      auto cp = cp_mbcs.c_str();
       auto name = allocate_output_storage<nxin_addr, InAddr>();
       auto status = library_->InetAToN(stack_ref, cp, &name);
       if (!status_ok(status)) {
@@ -420,7 +428,9 @@ namespace nixnetsocket_grpc {
         return ConvertApiErrorStatusForNxIpStackRef_t(context, status, stack_ref);
       }
       response->set_status(status);
-      response->set_address(address);
+      std::string address_utf8;
+      convert_to_grpc(address, &address_utf8);
+      response->set_address(address_utf8);
       nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_address()));
       return ::grpc::Status::OK;
     }
@@ -449,7 +459,9 @@ namespace nixnetsocket_grpc {
         return ConvertApiErrorStatusForNxIpStackRef_t(context, status, stack_ref);
       }
       response->set_status(status);
-      response->set_address(address);
+      std::string address_utf8;
+      convert_to_grpc(address, &address_utf8);
+      response->set_address(address_utf8);
       nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_address()));
       return ::grpc::Status::OK;
     }
@@ -484,7 +496,8 @@ namespace nixnetsocket_grpc {
         }
       }
 
-      auto address = request->address().c_str();
+      auto address_mbcs = convert_from_grpc<std::string>(request->address());
+      auto address = address_mbcs.c_str();
       auto addr = allocate_output_storage<void, Addr>(af);
       auto status = library_->InetPToN(stack_ref, af, address, &addr);
       if (!status_ok(status)) {
@@ -530,8 +543,10 @@ namespace nixnetsocket_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      char* stack_name = (char*)request->stack_name().c_str();
-      char* config = (char*)request->config().c_str();
+      auto stack_name_mbcs = convert_from_grpc<std::string>(request->stack_name());
+      char* stack_name = (char*)stack_name_mbcs.c_str();
+      auto config_mbcs = convert_from_grpc<std::string>(request->config());
+      char* config = (char*)config_mbcs.c_str();
 
       auto init_lambda = [&] () {
         nxIpStackRef_t stack_ref;
@@ -625,7 +640,8 @@ namespace nixnetsocket_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      char* stack_name = (char*)request->stack_name().c_str();
+      auto stack_name_mbcs = convert_from_grpc<std::string>(request->stack_name());
+      char* stack_name = (char*)stack_name_mbcs.c_str();
 
       auto init_lambda = [&] () {
         nxIpStackRef_t stack_ref;
@@ -657,7 +673,8 @@ namespace nixnetsocket_grpc {
     try {
       auto stack_ref_grpc_session = request->stack_ref();
       nxIpStackRef_t stack_ref = nx_ip_stack_ref_t_resource_repository_->access_session(stack_ref_grpc_session.name());
-      auto local_interface = request->local_interface().c_str();
+      auto local_interface_mbcs = convert_from_grpc<std::string>(request->local_interface());
+      auto local_interface = local_interface_mbcs.c_str();
       int32_t timeout_ms = request->timeout_ms();
       auto status = library_->IpStackWaitForInterface(stack_ref, local_interface, timeout_ms);
       if (!status_ok(status)) {
@@ -1026,7 +1043,9 @@ namespace nixnetsocket_grpc {
         return nidevice_grpc::ApiErrorToStatus(context, status);
       }
       response->set_status(status);
-      response->set_error(error);
+      std::string error_utf8;
+      convert_to_grpc(error, &error_utf8);
+      response->set_error(error_utf8);
       nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error()));
       return ::grpc::Status::OK;
     }
