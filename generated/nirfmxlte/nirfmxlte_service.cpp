@@ -57,7 +57,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 averaging_enabled;
       switch (request->averaging_enabled_enum_case()) {
         case nirfmxlte_grpc::ACPCfgAveragingRequest::AveragingEnabledEnumCase::kAveragingEnabled: {
@@ -113,7 +114,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 configurable_number_of_offsets_enabled;
       switch (request->configurable_number_of_offsets_enabled_enum_case()) {
         case nirfmxlte_grpc::ACPCfgConfigurableNumberOfOffsetsEnabledRequest::ConfigurableNumberOfOffsetsEnabledEnumCase::kConfigurableNumberOfOffsetsEnabled: {
@@ -152,7 +154,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 measurement_method;
       switch (request->measurement_method_enum_case()) {
         case nirfmxlte_grpc::ACPCfgMeasurementMethodRequest::MeasurementMethodEnumCase::kMeasurementMethod: {
@@ -191,7 +194,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 noise_compensation_enabled;
       switch (request->noise_compensation_enabled_enum_case()) {
         case nirfmxlte_grpc::ACPCfgNoiseCompensationEnabledRequest::NoiseCompensationEnabledEnumCase::kNoiseCompensationEnabled: {
@@ -230,7 +234,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 number_of_eutra_offsets = request->number_of_eutra_offsets();
       auto status = library_->ACPCfgNumberOfEUTRAOffsets(instrument, selector_string, number_of_eutra_offsets);
       if (!status_ok(status)) {
@@ -254,7 +259,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 number_of_gsm_offsets = request->number_of_gsm_offsets();
       auto status = library_->ACPCfgNumberOfGSMOffsets(instrument, selector_string, number_of_gsm_offsets);
       if (!status_ok(status)) {
@@ -278,7 +284,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 number_of_utra_offsets = request->number_of_utra_offsets();
       auto status = library_->ACPCfgNumberOfUTRAOffsets(instrument, selector_string, number_of_utra_offsets);
       if (!status_ok(status)) {
@@ -302,7 +309,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 power_units;
       switch (request->power_units_enum_case()) {
         case nirfmxlte_grpc::ACPCfgPowerUnitsRequest::PowerUnitsEnumCase::kPowerUnits: {
@@ -341,7 +349,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 rbw_auto;
       switch (request->rbw_auto_enum_case()) {
         case nirfmxlte_grpc::ACPCfgRBWFilterRequest::RbwAutoEnumCase::kRbwAuto: {
@@ -397,7 +406,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 sweep_time_auto;
       switch (request->sweep_time_auto_enum_case()) {
         case nirfmxlte_grpc::ACPCfgSweepTimeRequest::SweepTimeAutoEnumCase::kSweepTimeAuto: {
@@ -437,7 +447,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 number_of_utra_offsets = request->number_of_utra_offsets();
       int32 number_of_eutra_offsets = request->number_of_eutra_offsets();
       auto status = library_->ACPCfgUTRAAndEUTRAOffsets(instrument, selector_string, number_of_utra_offsets, number_of_eutra_offsets);
@@ -462,7 +473,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 trace_index = request->trace_index();
       float64 x0 {};
@@ -507,7 +519,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 absolute_power {};
       float64 relative_power {};
@@ -535,7 +548,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
@@ -578,7 +592,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 lower_relative_power {};
       float64 upper_relative_power {};
@@ -610,7 +625,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
@@ -659,7 +675,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 trace_index = request->trace_index();
       float64 x0 {};
@@ -704,7 +721,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
       float64 dx {};
@@ -748,7 +766,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 subblock_power {};
       float64 integration_bandwidth {};
@@ -778,7 +797,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 total_aggregated_power {};
       auto status = library_->ACPFetchTotalAggregatedPower(instrument, selector_string, timeout, &total_aggregated_power);
@@ -804,7 +824,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 noise_calibration_data_valid {};
       auto status = library_->ACPValidateNoiseCalibrationData(instrument, selector_string, &noise_calibration_data_valid);
       if (!status_ok(status)) {
@@ -830,7 +851,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       auto status = library_->AbortMeasurements(instrument, selector_string);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -853,8 +875,10 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
-      char* result_name = (char*)request->result_name().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto result_name_mbcs = convert_from_grpc<std::string>(request->result_name());
+      char* result_name = (char*)result_name_mbcs.c_str();
       float64 x0 = request->x0();
       float64 dx = request->dx();
       auto iq = convert_from_grpc<NIComplexSingle>(request->iq());
@@ -883,8 +907,10 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
-      char* result_name = (char*)request->result_name().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto result_name_mbcs = convert_from_grpc<std::string>(request->result_name());
+      char* result_name = (char*)result_name_mbcs.c_str();
       float64 x0 = request->x0();
       float64 dx = request->dx();
       auto spectrum = const_cast<float32*>(request->spectrum().data());
@@ -913,7 +939,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 measurement_interval = request->measurement_interval();
       float64 reference_level {};
       auto status = library_->AutoLevel(instrument, selector_string, measurement_interval, &reference_level);
@@ -937,7 +964,8 @@ namespace nirfmxlte_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 carrier_number = request->carrier_number();
 
       while (true) {
@@ -960,7 +988,9 @@ namespace nirfmxlte_grpc {
           return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
         }
         response->set_status(status);
-        response->set_selector_string_out(selector_string_out);
+        std::string selector_string_out_utf8;
+        convert_to_grpc(selector_string_out, &selector_string_out_utf8);
+        response->set_selector_string_out(selector_string_out_utf8);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_selector_string_out()));
         return ::grpc::Status::OK;
       }
@@ -978,7 +1008,8 @@ namespace nirfmxlte_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 cluster_number = request->cluster_number();
 
       while (true) {
@@ -1001,7 +1032,9 @@ namespace nirfmxlte_grpc {
           return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
         }
         response->set_status(status);
-        response->set_selector_string_out(selector_string_out);
+        std::string selector_string_out_utf8;
+        convert_to_grpc(selector_string_out, &selector_string_out_utf8);
+        response->set_selector_string_out(selector_string_out_utf8);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_selector_string_out()));
         return ::grpc::Status::OK;
       }
@@ -1019,7 +1052,8 @@ namespace nirfmxlte_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 offset_number = request->offset_number();
 
       while (true) {
@@ -1042,7 +1076,9 @@ namespace nirfmxlte_grpc {
           return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
         }
         response->set_status(status);
-        response->set_selector_string_out(selector_string_out);
+        std::string selector_string_out_utf8;
+        convert_to_grpc(selector_string_out, &selector_string_out_utf8);
+        response->set_selector_string_out(selector_string_out_utf8);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_selector_string_out()));
         return ::grpc::Status::OK;
       }
@@ -1060,7 +1096,8 @@ namespace nirfmxlte_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 pdsch_number = request->pdsch_number();
 
       while (true) {
@@ -1083,7 +1120,9 @@ namespace nirfmxlte_grpc {
           return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
         }
         response->set_status(status);
-        response->set_selector_string_out(selector_string_out);
+        std::string selector_string_out_utf8;
+        convert_to_grpc(selector_string_out, &selector_string_out_utf8);
+        response->set_selector_string_out(selector_string_out_utf8);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_selector_string_out()));
         return ::grpc::Status::OK;
       }
@@ -1101,8 +1140,10 @@ namespace nirfmxlte_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      char* signal_name = (char*)request->signal_name().c_str();
-      char* result_name = (char*)request->result_name().c_str();
+      auto signal_name_mbcs = convert_from_grpc<std::string>(request->signal_name());
+      char* signal_name = (char*)signal_name_mbcs.c_str();
+      auto result_name_mbcs = convert_from_grpc<std::string>(request->result_name());
+      char* result_name = (char*)result_name_mbcs.c_str();
 
       while (true) {
         auto status = library_->BuildSignalString(signal_name, result_name, 0, nullptr);
@@ -1124,7 +1165,9 @@ namespace nirfmxlte_grpc {
           return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
         }
         response->set_status(status);
-        response->set_selector_string(selector_string);
+        std::string selector_string_utf8;
+        convert_to_grpc(selector_string, &selector_string_utf8);
+        response->set_selector_string(selector_string_utf8);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_selector_string()));
         return ::grpc::Status::OK;
       }
@@ -1142,7 +1185,8 @@ namespace nirfmxlte_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 subblock_number = request->subblock_number();
 
       while (true) {
@@ -1165,7 +1209,9 @@ namespace nirfmxlte_grpc {
           return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
         }
         response->set_status(status);
-        response->set_selector_string_out(selector_string_out);
+        std::string selector_string_out_utf8;
+        convert_to_grpc(selector_string_out, &selector_string_out_utf8);
+        response->set_selector_string_out(selector_string_out_utf8);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_selector_string_out()));
         return ::grpc::Status::OK;
       }
@@ -1183,7 +1229,8 @@ namespace nirfmxlte_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 subframe_number = request->subframe_number();
 
       while (true) {
@@ -1206,7 +1253,9 @@ namespace nirfmxlte_grpc {
           return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
         }
         response->set_status(status);
-        response->set_selector_string_out(selector_string_out);
+        std::string selector_string_out_utf8;
+        convert_to_grpc(selector_string_out, &selector_string_out_utf8);
+        response->set_selector_string_out(selector_string_out_utf8);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_selector_string_out()));
         return ::grpc::Status::OK;
       }
@@ -1226,7 +1275,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 averaging_enabled;
       switch (request->averaging_enabled_enum_case()) {
         case nirfmxlte_grpc::CHPCfgAveragingRequest::AveragingEnabledEnumCase::kAveragingEnabled: {
@@ -1282,7 +1332,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 integration_bandwidth_type;
       switch (request->integration_bandwidth_type_enum_case()) {
         case nirfmxlte_grpc::CHPCfgIntegrationBandwidthTypeRequest::IntegrationBandwidthTypeEnumCase::kIntegrationBandwidthType: {
@@ -1321,7 +1372,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 rbw_auto;
       switch (request->rbw_auto_enum_case()) {
         case nirfmxlte_grpc::CHPCfgRBWFilterRequest::RbwAutoEnumCase::kRbwAuto: {
@@ -1377,7 +1429,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 sweep_time_auto;
       switch (request->sweep_time_auto_enum_case()) {
         case nirfmxlte_grpc::CHPCfgSweepTimeRequest::SweepTimeAutoEnumCase::kSweepTimeAuto: {
@@ -1417,7 +1470,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 absolute_power {};
       float64 relative_power {};
@@ -1445,7 +1499,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
@@ -1488,7 +1543,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
       float64 dx {};
@@ -1532,7 +1588,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 subblock_power {};
       float64 integration_bandwidth {};
@@ -1562,7 +1619,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 total_aggregated_power {};
       auto status = library_->CHPFetchTotalAggregatedPower(instrument, selector_string, timeout, &total_aggregated_power);
@@ -1588,7 +1646,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 noise_calibration_data_valid {};
       auto status = library_->CHPValidateNoiseCalibrationData(instrument, selector_string, &noise_calibration_data_valid);
       if (!status_ok(status)) {
@@ -1614,7 +1673,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 auto_dmrs_detection_enabled;
       switch (request->auto_dmrs_detection_enabled_enum_case()) {
         case nirfmxlte_grpc::CfgAutoDMRSDetectionEnabledRequest::AutoDmrsDetectionEnabledEnumCase::kAutoDmrsDetectionEnabled: {
@@ -1653,7 +1713,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 auto_npusch_channel_detection_enabled;
       switch (request->auto_npusch_channel_detection_enabled_enum_case()) {
         case nirfmxlte_grpc::CfgAutoNPUSCHChannelDetectionEnabledRequest::AutoNpuschChannelDetectionEnabledEnumCase::kAutoNpuschChannelDetectionEnabled: {
@@ -1692,7 +1753,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 auto_resource_block_detection_enabled;
       switch (request->auto_resource_block_detection_enabled_enum_case()) {
         case nirfmxlte_grpc::CfgAutoResourceBlockDetectionEnabledRequest::AutoResourceBlockDetectionEnabledEnumCase::kAutoResourceBlockDetectionEnabled: {
@@ -1731,7 +1793,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 band = request->band();
       auto status = library_->CfgBand(instrument, selector_string, band);
       if (!status_ok(status)) {
@@ -1755,7 +1818,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 cell_specific_ratio;
       switch (request->cell_specific_ratio_enum_case()) {
         case nirfmxlte_grpc::CfgCellSpecificRatioRequest::CellSpecificRatioEnumCase::kCellSpecificRatio: {
@@ -1794,7 +1858,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 component_carrier_bandwidth = request->component_carrier_bandwidth();
       float64 component_carrier_frequency = request->component_carrier_frequency();
       int32 cell_id = request->cell_id();
@@ -1820,7 +1885,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       auto component_carrier_bandwidth = const_cast<float64*>(request->component_carrier_bandwidth().data());
       auto component_carrier_frequency = const_cast<float64*>(request->component_carrier_frequency().data());
       auto cell_id = const_cast<int32*>(reinterpret_cast<const int32*>(request->cell_id().data()));
@@ -1865,7 +1931,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 component_carrier_spacing_type;
       switch (request->component_carrier_spacing_type_enum_case()) {
         case nirfmxlte_grpc::CfgComponentCarrierSpacingRequest::ComponentCarrierSpacingTypeEnumCase::kComponentCarrierSpacingType: {
@@ -1905,8 +1972,10 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       char* digital_edge_source;
+      std::string digital_edge_source_buffer;
       switch (request->digital_edge_source_enum_case()) {
         case nirfmxlte_grpc::CfgDigitalEdgeTriggerRequest::DigitalEdgeSourceEnumCase::kDigitalEdgeSourceMapped: {
           auto digital_edge_source_imap_it = digitaledgetriggersource_input_map_.find(request->digital_edge_source_mapped());
@@ -1917,7 +1986,8 @@ namespace nirfmxlte_grpc {
           break;
         }
         case nirfmxlte_grpc::CfgDigitalEdgeTriggerRequest::DigitalEdgeSourceEnumCase::kDigitalEdgeSourceRaw: {
-          digital_edge_source = const_cast<char*>(request->digital_edge_source_raw().c_str());
+          digital_edge_source_buffer = convert_from_grpc<std::string>(request->digital_edge_source_raw());
+          digital_edge_source = const_cast<char*>(digital_edge_source_buffer.c_str());
           break;
         }
         case nirfmxlte_grpc::CfgDigitalEdgeTriggerRequest::DigitalEdgeSourceEnumCase::DIGITAL_EDGE_SOURCE_ENUM_NOT_SET: {
@@ -1966,7 +2036,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 auto_cell_id_detection_enabled;
       switch (request->auto_cell_id_detection_enabled_enum_case()) {
         case nirfmxlte_grpc::CfgDownlinkAutoCellIDDetectionEnabledRequest::AutoCellIdDetectionEnabledEnumCase::kAutoCellIdDetectionEnabled: {
@@ -2005,7 +2076,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 auto_pdsch_channel_detection_enabled;
       switch (request->auto_pdsch_channel_detection_enabled_enum_case()) {
         case nirfmxlte_grpc::CfgDownlinkAutoChannelDetectionRequest::AutoPdschChannelDetectionEnabledEnumCase::kAutoPdschChannelDetectionEnabled: {
@@ -2077,7 +2149,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 channel_configuration_mode;
       switch (request->channel_configuration_mode_enum_case()) {
         case nirfmxlte_grpc::CfgDownlinkChannelConfigurationModeRequest::ChannelConfigurationModeEnumCase::kChannelConfigurationMode: {
@@ -2116,7 +2189,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 number_of_subframes = request->number_of_subframes();
       auto status = library_->CfgDownlinkNumberOfSubframes(instrument, selector_string, number_of_subframes);
       if (!status_ok(status)) {
@@ -2140,7 +2214,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 pss_power = request->pss_power();
       float64 sss_power = request->sss_power();
       auto status = library_->CfgDownlinkSynchronizationSignal(instrument, selector_string, pss_power, sss_power);
@@ -2165,7 +2240,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 downlink_test_model;
       switch (request->downlink_test_model_enum_case()) {
         case nirfmxlte_grpc::CfgDownlinkTestModelRequest::DownlinkTestModelEnumCase::kDownlinkTestModel: {
@@ -2204,7 +2280,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       auto downlink_test_model_vector = std::vector<int32>();
       downlink_test_model_vector.reserve(request->downlink_test_model().size());
       std::transform(
@@ -2237,7 +2314,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 duplex_scheme;
       switch (request->duplex_scheme_enum_case()) {
         case nirfmxlte_grpc::CfgDuplexSchemeRequest::DuplexSchemeEnumCase::kDuplexScheme: {
@@ -2292,7 +2370,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 emtc_analysis_enabled;
       switch (request->emtc_analysis_enabled_enum_case()) {
         case nirfmxlte_grpc::CfgEMTCAnalysisEnabledRequest::EmtcAnalysisEnabledEnumCase::kEmtcAnalysisEnabled: {
@@ -2331,7 +2410,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 external_attenuation = request->external_attenuation();
       auto status = library_->CfgExternalAttenuation(instrument, selector_string, external_attenuation);
       if (!status_ok(status)) {
@@ -2355,7 +2435,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 center_frequency = request->center_frequency();
       auto status = library_->CfgFrequency(instrument, selector_string, center_frequency);
       if (!status_ok(status)) {
@@ -2379,7 +2460,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 link_direction;
       switch (request->link_direction_enum_case()) {
         case nirfmxlte_grpc::CfgFrequencyEARFCNRequest::LinkDirectionEnumCase::kLinkDirection: {
@@ -2420,8 +2502,10 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* channel_name = (char*)request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      char* channel_name = (char*)channel_name_mbcs.c_str();
       char* frequency_reference_source;
+      std::string frequency_reference_source_buffer;
       switch (request->frequency_reference_source_enum_case()) {
         case nirfmxlte_grpc::CfgFrequencyReferenceRequest::FrequencyReferenceSourceEnumCase::kFrequencyReferenceSourceMapped: {
           auto frequency_reference_source_imap_it = frequencyreferencesource_input_map_.find(request->frequency_reference_source_mapped());
@@ -2432,7 +2516,8 @@ namespace nirfmxlte_grpc {
           break;
         }
         case nirfmxlte_grpc::CfgFrequencyReferenceRequest::FrequencyReferenceSourceEnumCase::kFrequencyReferenceSourceRaw: {
-          frequency_reference_source = const_cast<char*>(request->frequency_reference_source_raw().c_str());
+          frequency_reference_source_buffer = convert_from_grpc<std::string>(request->frequency_reference_source_raw());
+          frequency_reference_source = const_cast<char*>(frequency_reference_source_buffer.c_str());
           break;
         }
         case nirfmxlte_grpc::CfgFrequencyReferenceRequest::FrequencyReferenceSourceEnumCase::FREQUENCY_REFERENCE_SOURCE_ENUM_NOT_SET: {
@@ -2464,8 +2549,10 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
-      char* iq_power_edge_source = (char*)request->iq_power_edge_source().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto iq_power_edge_source_mbcs = convert_from_grpc<std::string>(request->iq_power_edge_source());
+      char* iq_power_edge_source = (char*)iq_power_edge_source_mbcs.c_str();
       int32 iq_power_edge_slope;
       switch (request->iq_power_edge_slope_enum_case()) {
         case nirfmxlte_grpc::CfgIQPowerEdgeTriggerRequest::IqPowerEdgeSlopeEnumCase::kIqPowerEdgeSlope: {
@@ -2540,7 +2627,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 link_direction;
       switch (request->link_direction_enum_case()) {
         case nirfmxlte_grpc::CfgLinkDirectionRequest::LinkDirectionEnumCase::kLinkDirection: {
@@ -2579,7 +2667,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* channel_name = (char*)request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      char* channel_name = (char*)channel_name_mbcs.c_str();
       int32 mechanical_attenuation_auto;
       switch (request->mechanical_attenuation_auto_enum_case()) {
         case nirfmxlte_grpc::CfgMechanicalAttenuationRequest::MechanicalAttenuationAutoEnumCase::kMechanicalAttenuationAuto: {
@@ -2619,7 +2708,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 n_cell_id = request->n_cell_id();
       int32 uplink_subcarrier_spacing;
       switch (request->uplink_subcarrier_spacing_enum_case()) {
@@ -2659,7 +2749,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 npusch_dmrs_base_sequence_mode;
       switch (request->npusch_dmrs_base_sequence_mode_enum_case()) {
         case nirfmxlte_grpc::CfgNPUSCHDMRSRequest::NpuschDmrsBaseSequenceModeEnumCase::kNpuschDmrsBaseSequenceMode: {
@@ -2717,7 +2808,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 format = request->format();
       auto status = library_->CfgNPUSCHFormat(instrument, selector_string, format);
       if (!status_ok(status)) {
@@ -2741,7 +2833,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 starting_slot = request->starting_slot();
       auto status = library_->CfgNPUSCHStartingSlot(instrument, selector_string, starting_slot);
       if (!status_ok(status)) {
@@ -2765,7 +2858,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 tone_offset = request->tone_offset();
       int32 number_of_tones = request->number_of_tones();
       int32 modulation_type;
@@ -2806,7 +2900,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 number_of_component_carriers = request->number_of_component_carriers();
       auto status = library_->CfgNumberOfComponentCarriers(instrument, selector_string, number_of_component_carriers);
       if (!status_ok(status)) {
@@ -2830,7 +2925,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 number_of_dut_antennas = request->number_of_dut_antennas();
       auto status = library_->CfgNumberOfDUTAntennas(instrument, selector_string, number_of_dut_antennas);
       if (!status_ok(status)) {
@@ -2854,7 +2950,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 number_of_pdsch_channels = request->number_of_pdsch_channels();
       auto status = library_->CfgNumberOfPDSCHChannels(instrument, selector_string, number_of_pdsch_channels);
       if (!status_ok(status)) {
@@ -2878,7 +2975,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 number_of_resource_block_clusters = request->number_of_resource_block_clusters();
       auto status = library_->CfgNumberOfPUSCHResourceBlockClusters(instrument, selector_string, number_of_resource_block_clusters);
       if (!status_ok(status)) {
@@ -2902,7 +3000,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 number_of_subblocks = request->number_of_subblocks();
       auto status = library_->CfgNumberOfSubblocks(instrument, selector_string, number_of_subblocks);
       if (!status_ok(status)) {
@@ -2926,7 +3025,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 pbch_power = request->pbch_power();
       auto status = library_->CfgPBCH(instrument, selector_string, pbch_power);
       if (!status_ok(status)) {
@@ -2950,7 +3050,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 cfi = request->cfi();
       float64 power = request->power();
       auto status = library_->CfgPCFICH(instrument, selector_string, cfi, power);
@@ -2975,7 +3076,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 pdcch_power = request->pdcch_power();
       auto status = library_->CfgPDCCH(instrument, selector_string, pdcch_power);
       if (!status_ok(status)) {
@@ -2999,7 +3101,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 cw0_modulation_type;
       switch (request->cw0_modulation_type_enum_case()) {
         case nirfmxlte_grpc::CfgPDSCHRequest::Cw0ModulationTypeEnumCase::kCw0ModulationType: {
@@ -3016,7 +3119,8 @@ namespace nirfmxlte_grpc {
         }
       }
 
-      char* resource_block_allocation = (char*)request->resource_block_allocation().c_str();
+      auto resource_block_allocation_mbcs = convert_from_grpc<std::string>(request->resource_block_allocation());
+      char* resource_block_allocation = (char*)resource_block_allocation_mbcs.c_str();
       float64 power = request->power();
       auto status = library_->CfgPDSCH(instrument, selector_string, cw0_modulation_type, resource_block_allocation, power);
       if (!status_ok(status)) {
@@ -3040,7 +3144,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 resource;
       switch (request->resource_enum_case()) {
         case nirfmxlte_grpc::CfgPHICHRequest::ResourceEnumCase::kResource: {
@@ -3096,7 +3201,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 modulation_type = request->modulation_type();
       auto status = library_->CfgPSSCHModulationType(instrument, selector_string, modulation_type);
       if (!status_ok(status)) {
@@ -3120,7 +3226,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 resource_block_offset = request->resource_block_offset();
       int32 number_of_resource_blocks = request->number_of_resource_blocks();
       auto status = library_->CfgPSSCHResourceBlocks(instrument, selector_string, resource_block_offset, number_of_resource_blocks);
@@ -3145,7 +3252,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 modulation_type;
       switch (request->modulation_type_enum_case()) {
         case nirfmxlte_grpc::CfgPUSCHModulationTypeRequest::ModulationTypeEnumCase::kModulationType: {
@@ -3184,7 +3292,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 resource_block_offset = request->resource_block_offset();
       int32 number_of_resource_blocks = request->number_of_resource_blocks();
       auto status = library_->CfgPUSCHResourceBlocks(instrument, selector_string, resource_block_offset, number_of_resource_blocks);
@@ -3209,7 +3318,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 center_frequency = request->center_frequency();
       float64 reference_level = request->reference_level();
       float64 external_attenuation = request->external_attenuation();
@@ -3235,7 +3345,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* channel_name = (char*)request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      char* channel_name = (char*)channel_name_mbcs.c_str();
       int32 rf_attenuation_auto;
       switch (request->rf_attenuation_auto_enum_case()) {
         case nirfmxlte_grpc::CfgRFAttenuationRequest::RfAttenuationAutoEnumCase::kRfAttenuationAuto: {
@@ -3275,7 +3386,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 reference_level = request->reference_level();
       auto status = library_->CfgReferenceLevel(instrument, selector_string, reference_level);
       if (!status_ok(status)) {
@@ -3299,7 +3411,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 trigger_delay = request->trigger_delay();
       int32 enable_trigger = request->enable_trigger();
       auto status = library_->CfgSoftwareEdgeTrigger(instrument, selector_string, trigger_delay, enable_trigger);
@@ -3324,7 +3437,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 transmit_antenna_to_analyze = request->transmit_antenna_to_analyze();
       auto status = library_->CfgTransmitAntennaToAnalyze(instrument, selector_string, transmit_antenna_to_analyze);
       if (!status_ok(status)) {
@@ -3348,7 +3462,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 enodeb_category;
       switch (request->enodeb_category_enum_case()) {
         case nirfmxlte_grpc::CfgeNodeBCategoryRequest::EnodebCategoryEnumCase::kEnodebCategory: {
@@ -3387,7 +3502,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 is_done {};
       auto status = library_->CheckMeasurementStatus(instrument, selector_string, &is_done);
       if (!status_ok(status)) {
@@ -3412,7 +3528,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       auto status = library_->ClearAllNamedResults(instrument, selector_string);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -3435,7 +3552,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       auto status = library_->ClearNamedResult(instrument, selector_string);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -3458,7 +3576,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       auto status = library_->ClearNoiseCalibrationDatabase(instrument, selector_string);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -3481,8 +3600,10 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* old_signal_name = (char*)request->old_signal_name().c_str();
-      char* new_signal_name = (char*)request->new_signal_name().c_str();
+      auto old_signal_name_mbcs = convert_from_grpc<std::string>(request->old_signal_name());
+      char* old_signal_name = (char*)old_signal_name_mbcs.c_str();
+      auto new_signal_name_mbcs = convert_from_grpc<std::string>(request->new_signal_name());
+      char* new_signal_name = (char*)new_signal_name_mbcs.c_str();
       auto status = library_->CloneSignalConfiguration(instrument, old_signal_name, new_signal_name);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -3529,7 +3650,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       auto status = library_->Commit(instrument, selector_string);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -3552,7 +3674,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* signal_name = (char*)request->signal_name().c_str();
+      auto signal_name_mbcs = convert_from_grpc<std::string>(request->signal_name());
+      char* signal_name = (char*)signal_name_mbcs.c_str();
       auto status = library_->CreateSignalConfiguration(instrument, signal_name);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -3575,7 +3698,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* signal_name = (char*)request->signal_name().c_str();
+      auto signal_name_mbcs = convert_from_grpc<std::string>(request->signal_name());
+      char* signal_name = (char*)signal_name_mbcs.c_str();
       auto status = library_->DeleteSignalConfiguration(instrument, signal_name);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -3598,7 +3722,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       auto status = library_->DisableTrigger(instrument, selector_string);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -3621,7 +3746,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 actual_result_names_size {};
       int32 default_result_exists {};
       while (true) {
@@ -3643,7 +3769,9 @@ namespace nirfmxlte_grpc {
           return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
-        response->set_result_names(result_names);
+        std::string result_names_utf8;
+        convert_to_grpc(result_names, &result_names_utf8);
+        response->set_result_names(result_names_utf8);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_result_names()));
         response->set_actual_result_names_size(actual_result_names_size);
         response->set_default_result_exists(default_result_exists);
@@ -3665,7 +3793,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       float32 attr_val {};
       auto status = library_->GetAttributeF32(instrument, selector_string, attribute_id, &attr_val);
@@ -3691,7 +3820,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_array_size {};
       while (true) {
@@ -3731,7 +3861,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       float64 attr_val {};
       auto status = library_->GetAttributeF64(instrument, selector_string, attribute_id, &attr_val);
@@ -3757,7 +3888,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_array_size {};
       while (true) {
@@ -3797,7 +3929,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       int16 attr_val {};
       auto status = library_->GetAttributeI16(instrument, selector_string, attribute_id, &attr_val);
@@ -3823,7 +3956,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       int32 attr_val {};
       auto status = library_->GetAttributeI32(instrument, selector_string, attribute_id, &attr_val);
@@ -3855,7 +3989,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_array_size {};
       while (true) {
@@ -3909,7 +4044,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       int64 attr_val {};
       auto status = library_->GetAttributeI64(instrument, selector_string, attribute_id, &attr_val);
@@ -3935,7 +4071,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_array_size {};
       while (true) {
@@ -3975,7 +4112,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       int8 attr_val {};
       auto status = library_->GetAttributeI8(instrument, selector_string, attribute_id, &attr_val);
@@ -4001,7 +4139,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_array_size {};
       while (true) {
@@ -4049,7 +4188,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_array_size {};
       while (true) {
@@ -4095,7 +4235,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_array_size {};
       while (true) {
@@ -4141,7 +4282,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
 
       while (true) {
@@ -4164,7 +4306,9 @@ namespace nirfmxlte_grpc {
           return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
-        response->set_attr_val(attr_val);
+        std::string attr_val_utf8;
+        convert_to_grpc(attr_val, &attr_val_utf8);
+        response->set_attr_val(attr_val_utf8);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_attr_val()));
         return ::grpc::Status::OK;
       }
@@ -4184,7 +4328,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       uInt16 attr_val {};
       auto status = library_->GetAttributeU16(instrument, selector_string, attribute_id, &attr_val);
@@ -4210,7 +4355,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       uInt32 attr_val {};
       auto status = library_->GetAttributeU32(instrument, selector_string, attribute_id, &attr_val);
@@ -4236,7 +4382,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_array_size {};
       while (true) {
@@ -4276,7 +4423,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_array_size {};
       while (true) {
@@ -4316,7 +4464,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       uInt8 attr_val {};
       auto status = library_->GetAttributeU8(instrument, selector_string, attribute_id, &attr_val);
@@ -4342,7 +4491,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_array_size {};
       while (true) {
@@ -4405,7 +4555,9 @@ namespace nirfmxlte_grpc {
         }
         response->set_status(status);
         response->set_error_code(error_code);
-        response->set_error_description(error_description);
+        std::string error_description_utf8;
+        convert_to_grpc(error_description, &error_description_utf8);
+        response->set_error_description(error_description_utf8);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_description()));
         return ::grpc::Status::OK;
       }
@@ -4447,7 +4599,9 @@ namespace nirfmxlte_grpc {
           return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
-        response->set_error_description(error_description);
+        std::string error_description_utf8;
+        convert_to_grpc(error_description, &error_description_utf8);
+        response->set_error_description(error_description_utf8);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_description()));
         return ::grpc::Status::OK;
       }
@@ -4465,12 +4619,12 @@ namespace nirfmxlte_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      char* resource_name = (char*)request->resource_name().c_str();
-      char* option_string = (char*)request->option_string().c_str();
-      auto initialization_behavior = request->initialization_behavior();
+      auto resource_name_mbcs = convert_from_grpc<std::string>(request->resource_name());
+      char* resource_name = (char*)resource_name_mbcs.c_str();
+      auto option_string_mbcs = convert_from_grpc<std::string>(request->option_string());
+      char* option_string = (char*)option_string_mbcs.c_str();
 
       int32 is_new_session {};
-      bool new_session_initialized {};
       auto init_lambda = [&] () {
         niRFmxInstrHandle instrument;
         auto status = library_->Initialize(resource_name, option_string, &instrument, &is_new_session);
@@ -4478,14 +4632,13 @@ namespace nirfmxlte_grpc {
       };
       std::string grpc_device_session_name = request->session_name();
       auto cleanup_lambda = [&] (niRFmxInstrHandle id) { library_->Close(id, RFMXLTE_VAL_FALSE); };
-      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, initialization_behavior, &new_session_initialized);
+      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
       }
       response->set_status(status);
       response->mutable_instrument()->set_name(grpc_device_session_name);
       response->set_is_new_session(is_new_session);
-      response->set_new_session_initialized(new_session_initialized);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
@@ -4503,9 +4656,7 @@ namespace nirfmxlte_grpc {
     try {
       auto nirfsa_session_grpc_session = request->nirfsa_session();
       uInt32 nirfsa_session = vi_session_resource_repository_->access_session(nirfsa_session_grpc_session.name());
-      auto initialization_behavior = request->initialization_behavior();
 
-      bool new_session_initialized {};
       auto init_lambda = [&] () {
         niRFmxInstrHandle instrument;
         auto status = library_->InitializeFromNIRFSASession(nirfsa_session, &instrument);
@@ -4513,13 +4664,12 @@ namespace nirfmxlte_grpc {
       };
       std::string grpc_device_session_name = request->session_name();
       auto cleanup_lambda = [&] (niRFmxInstrHandle id) { library_->Close(id, RFMXLTE_VAL_FALSE); };
-      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, initialization_behavior, &new_session_initialized);
+      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
       }
       response->set_status(status);
       response->mutable_instrument()->set_name(grpc_device_session_name);
-      response->set_new_session_initialized(new_session_initialized);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
@@ -4537,8 +4687,10 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
-      char* result_name = (char*)request->result_name().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto result_name_mbcs = convert_from_grpc<std::string>(request->result_name());
+      char* result_name = (char*)result_name_mbcs.c_str();
       auto status = library_->Initiate(instrument, selector_string, result_name);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -4561,7 +4713,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 averaging_enabled;
       switch (request->averaging_enabled_enum_case()) {
         case nirfmxlte_grpc::ModAccCfgAveragingRequest::AveragingEnabledEnumCase::kAveragingEnabled: {
@@ -4601,7 +4754,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 common_clock_source_enabled;
       switch (request->common_clock_source_enabled_enum_case()) {
         case nirfmxlte_grpc::ModAccCfgCommonClockSourceEnabledRequest::CommonClockSourceEnabledEnumCase::kCommonClockSourceEnabled: {
@@ -4640,7 +4794,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 evm_unit;
       switch (request->evm_unit_enum_case()) {
         case nirfmxlte_grpc::ModAccCfgEVMUnitRequest::EvmUnitEnumCase::kEvmUnit: {
@@ -4679,7 +4834,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 fft_window_offset = request->fft_window_offset();
       auto status = library_->ModAccCfgFFTWindowOffset(instrument, selector_string, fft_window_offset);
       if (!status_ok(status)) {
@@ -4703,7 +4859,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 fft_window_type;
       switch (request->fft_window_type_enum_case()) {
         case nirfmxlte_grpc::ModAccCfgFFTWindowPositionRequest::FftWindowTypeEnumCase::kFftWindowType: {
@@ -4744,7 +4901,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 in_band_emission_mask_type;
       switch (request->in_band_emission_mask_type_enum_case()) {
         case nirfmxlte_grpc::ModAccCfgInBandEmissionMaskTypeRequest::InBandEmissionMaskTypeEnumCase::kInBandEmissionMaskType: {
@@ -4783,7 +4941,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 synchronization_mode;
       switch (request->synchronization_mode_enum_case()) {
         case nirfmxlte_grpc::ModAccCfgSynchronizationModeAndIntervalRequest::SynchronizationModeEnumCase::kSynchronizationMode: {
@@ -4824,7 +4983,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
@@ -4870,7 +5030,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 mean_rms_csrs_evm {};
       auto status = library_->ModAccFetchCSRSEVM(instrument, selector_string, timeout, &mean_rms_csrs_evm);
@@ -4896,7 +5057,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
@@ -4936,7 +5098,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 mean_rms_composite_evm {};
       float64 maximum_peak_composite_evm {};
@@ -4972,7 +5135,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
@@ -5027,7 +5191,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 mean_rms_composite_magnitude_error {};
       float64 max_peak_composite_magnitude_error {};
@@ -5059,7 +5224,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
@@ -5108,7 +5274,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 detected_cell_id {};
       auto status = library_->ModAccFetchDownlinkDetectedCellID(instrument, selector_string, timeout, &detected_cell_id);
@@ -5134,7 +5301,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
@@ -5174,7 +5342,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
@@ -5220,7 +5389,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
@@ -5266,7 +5436,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
@@ -5312,7 +5483,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
@@ -5358,7 +5530,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       auto reserved1 = nullptr;
       auto reserved2 = nullptr;
@@ -5388,7 +5561,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       auto reserved1 = nullptr;
       auto reserved2 = nullptr;
@@ -5433,7 +5607,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
       float64 dx {};
@@ -5477,7 +5652,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
       float64 dx {};
@@ -5521,7 +5697,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
       float64 dx {};
@@ -5565,7 +5742,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
       float64 dx {};
@@ -5609,7 +5787,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
       float64 dx {};
@@ -5653,7 +5832,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 mean_iq_origin_offset {};
       float64 mean_iq_gain_imbalance {};
@@ -5683,7 +5863,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
@@ -5729,7 +5910,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 in_band_emission_margin {};
       auto status = library_->ModAccFetchInBandEmissionMargin(instrument, selector_string, timeout, &in_band_emission_margin);
@@ -5755,7 +5937,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
@@ -5795,7 +5978,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
       float64 dx {};
@@ -5842,7 +6026,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
       float64 dx {};
@@ -5886,7 +6071,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
       float64 dx {};
@@ -5930,7 +6116,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
       float64 dx {};
@@ -5974,7 +6161,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
       float64 dx {};
@@ -6018,7 +6206,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
       float64 dx {};
@@ -6062,7 +6251,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 data_constellation_actual_array_size {};
       int32 dmrs_constellation_actual_array_size {};
@@ -6120,7 +6310,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 npusch_mean_rms_dmrs_evm {};
       float64 npusch_maximum_peak_dmrs_evm {};
@@ -6148,7 +6339,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 npusch_mean_rms_data_evm {};
       float64 npusch_maximum_peak_data_evm {};
@@ -6176,7 +6368,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 npusch_mean_data_power {};
       float64 npusch_mean_dmrs_power {};
@@ -6204,7 +6397,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
@@ -6250,7 +6444,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 mean_rms_1024qam_evm {};
       auto status = library_->ModAccFetchPDSCH1024QAMEVM(instrument, selector_string, timeout, &mean_rms_1024qam_evm);
@@ -6276,7 +6471,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
@@ -6316,7 +6512,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
@@ -6362,7 +6559,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
@@ -6408,7 +6606,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
@@ -6454,7 +6653,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 mean_rms_evm {};
       float64 mean_rms_qpsk_evm {};
@@ -6488,7 +6688,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
@@ -6540,7 +6741,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
@@ -6586,7 +6788,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 data_constellation_actual_array_size {};
       int32 dmrs_constellation_actual_array_size {};
@@ -6644,7 +6847,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 pssch_mean_rms_dmrs_evm {};
       float64 pssch_maximum_peak_dmrs_evm {};
@@ -6672,7 +6876,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
@@ -6715,7 +6920,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 pssch_mean_rms_data_evm {};
       float64 pssch_maximum_peak_data_evm {};
@@ -6743,7 +6949,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
@@ -6786,7 +6993,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 pssch_mean_data_power {};
       float64 pssch_mean_dmrs_power {};
@@ -6814,7 +7022,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
@@ -6857,7 +7066,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 data_constellation_actual_array_size {};
       int32 dmrs_constellation_actual_array_size {};
@@ -6915,7 +7125,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 mean_rms_dmrs_evm {};
       float64 maximum_peak_dmrs_evm {};
@@ -6943,7 +7154,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
@@ -6986,7 +7198,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 mean_rms_data_evm {};
       float64 maximum_peak_data_evm {};
@@ -7014,7 +7227,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
@@ -7057,7 +7271,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
@@ -7105,7 +7320,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 pusch_mean_data_power {};
       float64 pusch_mean_dmrs_power {};
@@ -7133,7 +7349,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
@@ -7176,7 +7393,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
       float64 dx {};
@@ -7220,7 +7438,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
       float64 dx {};
@@ -7264,7 +7483,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
@@ -7310,7 +7530,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 mean_rms_srs_evm {};
       float64 mean_srs_power {};
@@ -7338,7 +7559,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
@@ -7381,7 +7603,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 range1_maximum_to_range1_minimum {};
       float64 range2_maximum_to_range2_minimum {};
@@ -7413,7 +7636,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
@@ -7462,7 +7686,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
       float64 dx {};
@@ -7512,7 +7737,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 subblock_mean_iq_origin_offset {};
       float64 subblock_mean_iq_gain_imbalance {};
@@ -7542,7 +7768,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 subblock_in_band_emission_margin {};
       auto status = library_->ModAccFetchSubblockInBandEmissionMargin(instrument, selector_string, timeout, &subblock_in_band_emission_margin);
@@ -7568,7 +7795,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
@@ -7614,7 +7842,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
@@ -7669,7 +7898,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 mean_rms_pss_evm {};
       float64 mean_rms_sss_evm {};
@@ -7697,7 +7927,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
@@ -7740,7 +7971,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 averaging_enabled;
       switch (request->averaging_enabled_enum_case()) {
         case nirfmxlte_grpc::OBWCfgAveragingRequest::AveragingEnabledEnumCase::kAveragingEnabled: {
@@ -7796,7 +8028,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 rbw_auto;
       switch (request->rbw_auto_enum_case()) {
         case nirfmxlte_grpc::OBWCfgRBWFilterRequest::RbwAutoEnumCase::kRbwAuto: {
@@ -7852,7 +8085,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 sweep_time_auto;
       switch (request->sweep_time_auto_enum_case()) {
         case nirfmxlte_grpc::OBWCfgSweepTimeRequest::SweepTimeAutoEnumCase::kSweepTimeAuto: {
@@ -7892,7 +8126,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 occupied_bandwidth {};
       float64 absolute_power {};
@@ -7924,7 +8159,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
       float64 dx {};
@@ -7968,7 +8204,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 averaging_enabled;
       switch (request->averaging_enabled_enum_case()) {
         case nirfmxlte_grpc::PVTCfgAveragingRequest::AveragingEnabledEnumCase::kAveragingEnabled: {
@@ -8024,7 +8261,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 measurement_method;
       switch (request->measurement_method_enum_case()) {
         case nirfmxlte_grpc::PVTCfgMeasurementMethodRequest::MeasurementMethodEnumCase::kMeasurementMethod: {
@@ -8063,7 +8301,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 off_power_exclusion_before = request->off_power_exclusion_before();
       float64 off_power_exclusion_after = request->off_power_exclusion_after();
       auto status = library_->PVTCfgOFFPowerExclusionPeriods(instrument, selector_string, off_power_exclusion_before, off_power_exclusion_after);
@@ -8088,7 +8327,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 measurement_status {};
       float64 mean_absolute_off_power_before {};
@@ -8123,7 +8363,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
@@ -8184,7 +8425,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
       float64 dx {};
@@ -8231,7 +8473,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       auto status = library_->ResetAttribute(instrument, selector_string, attribute_id);
       if (!status_ok(status)) {
@@ -8255,7 +8498,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       auto status = library_->ResetToDefault(instrument, selector_string);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -8278,7 +8522,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 averaging_enabled;
       switch (request->averaging_enabled_enum_case()) {
         case nirfmxlte_grpc::SEMCfgAveragingRequest::AveragingEnabledEnumCase::kAveragingEnabled: {
@@ -8334,7 +8579,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 component_carrier_maximum_output_power = request->component_carrier_maximum_output_power();
       auto status = library_->SEMCfgComponentCarrierMaximumOutputPower(instrument, selector_string, component_carrier_maximum_output_power);
       if (!status_ok(status)) {
@@ -8358,7 +8604,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       auto component_carrier_maximum_output_power = const_cast<float64*>(request->component_carrier_maximum_output_power().data());
       int32 number_of_elements = static_cast<int32>(request->component_carrier_maximum_output_power().size());
       auto status = library_->SEMCfgComponentCarrierMaximumOutputPowerArray(instrument, selector_string, component_carrier_maximum_output_power, number_of_elements);
@@ -8383,7 +8630,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 downlink_mask_type;
       switch (request->downlink_mask_type_enum_case()) {
         case nirfmxlte_grpc::SEMCfgDownlinkMaskRequest::DownlinkMaskTypeEnumCase::kDownlinkMaskType: {
@@ -8424,7 +8672,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 number_of_offsets = request->number_of_offsets();
       auto status = library_->SEMCfgNumberOfOffsets(instrument, selector_string, number_of_offsets);
       if (!status_ok(status)) {
@@ -8448,7 +8697,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 offset_absolute_limit_start = request->offset_absolute_limit_start();
       float64 offset_absolute_limit_stop = request->offset_absolute_limit_stop();
       auto status = library_->SEMCfgOffsetAbsoluteLimit(instrument, selector_string, offset_absolute_limit_start, offset_absolute_limit_stop);
@@ -8473,7 +8723,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       auto offset_absolute_limit_start = const_cast<float64*>(request->offset_absolute_limit_start().data());
       auto offset_absolute_limit_stop = const_cast<float64*>(request->offset_absolute_limit_stop().data());
       auto number_of_elements_determine_from_sizes = std::array<int, 2>
@@ -8515,7 +8766,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 offset_bandwidth_integral = request->offset_bandwidth_integral();
       auto status = library_->SEMCfgOffsetBandwidthIntegral(instrument, selector_string, offset_bandwidth_integral);
       if (!status_ok(status)) {
@@ -8539,7 +8791,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       auto offset_bandwidth_integral = const_cast<int32*>(reinterpret_cast<const int32*>(request->offset_bandwidth_integral().data()));
       int32 number_of_elements = static_cast<int32>(request->offset_bandwidth_integral().size());
       auto status = library_->SEMCfgOffsetBandwidthIntegralArray(instrument, selector_string, offset_bandwidth_integral, number_of_elements);
@@ -8564,7 +8817,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 offset_start_frequency = request->offset_start_frequency();
       float64 offset_stop_frequency = request->offset_stop_frequency();
       int32 offset_sideband;
@@ -8605,7 +8859,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       auto offset_start_frequency = const_cast<float64*>(request->offset_start_frequency().data());
       auto offset_stop_frequency = const_cast<float64*>(request->offset_stop_frequency().data());
       auto offset_sideband_vector = std::vector<int32>();
@@ -8658,7 +8913,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 limit_fail_mask;
       switch (request->limit_fail_mask_enum_case()) {
         case nirfmxlte_grpc::SEMCfgOffsetLimitFailMaskRequest::LimitFailMaskEnumCase::kLimitFailMask: {
@@ -8697,7 +8953,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       auto limit_fail_mask_vector = std::vector<int32>();
       limit_fail_mask_vector.reserve(request->limit_fail_mask().size());
       std::transform(
@@ -8730,7 +8987,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 offset_rbw = request->offset_rbw();
       int32 offset_rbw_filter_type;
       switch (request->offset_rbw_filter_type_enum_case()) {
@@ -8770,7 +9028,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       auto offset_rbw = const_cast<float64*>(request->offset_rbw().data());
       auto offset_rbw_filter_type_vector = std::vector<int32>();
       offset_rbw_filter_type_vector.reserve(request->offset_rbw_filter_type().size());
@@ -8820,7 +9079,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 relative_limit_start = request->relative_limit_start();
       float64 relative_limit_stop = request->relative_limit_stop();
       auto status = library_->SEMCfgOffsetRelativeLimit(instrument, selector_string, relative_limit_start, relative_limit_stop);
@@ -8845,7 +9105,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       auto relative_limit_start = const_cast<float64*>(request->relative_limit_start().data());
       auto relative_limit_stop = const_cast<float64*>(request->relative_limit_stop().data());
       auto number_of_elements_determine_from_sizes = std::array<int, 2>
@@ -8887,7 +9148,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 sweep_time_auto;
       switch (request->sweep_time_auto_enum_case()) {
         case nirfmxlte_grpc::SEMCfgSweepTimeRequest::SweepTimeAutoEnumCase::kSweepTimeAuto: {
@@ -8927,7 +9189,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 uplink_mask_type;
       switch (request->uplink_mask_type_enum_case()) {
         case nirfmxlte_grpc::SEMCfgUplinkMaskTypeRequest::UplinkMaskTypeEnumCase::kUplinkMaskType: {
@@ -8966,7 +9229,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 absolute_integrated_power {};
       float64 relative_integrated_power {};
@@ -8994,7 +9258,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
@@ -9037,7 +9302,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 measurement_status {};
       float64 margin {};
@@ -9072,7 +9338,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
@@ -9133,7 +9400,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 absolute_integrated_power {};
       float64 relative_integrated_power {};
@@ -9167,7 +9435,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
@@ -9219,7 +9488,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 measurement_status {};
       auto status = library_->SEMFetchMeasurementStatus(instrument, selector_string, timeout, &measurement_status);
@@ -9246,7 +9516,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
       float64 dx {};
@@ -9293,7 +9564,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 subblock_power {};
       float64 integration_bandwidth {};
@@ -9323,7 +9595,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 total_aggregated_power {};
       auto status = library_->SEMFetchTotalAggregatedPower(instrument, selector_string, timeout, &total_aggregated_power);
@@ -9349,7 +9622,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 measurement_status {};
       float64 margin {};
@@ -9384,7 +9658,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
@@ -9445,7 +9720,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 absolute_integrated_power {};
       float64 relative_integrated_power {};
@@ -9479,7 +9755,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
@@ -9531,7 +9808,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       uInt32 measurements;
       switch (request->measurements_enum_case()) {
         case nirfmxlte_grpc::SelectMeasurementsRequest::MeasurementsEnumCase::kMeasurements: {
@@ -9593,7 +9871,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       float32 attr_val = request->attr_val();
       auto status = library_->SetAttributeF32(instrument, selector_string, attribute_id, attr_val);
@@ -9618,7 +9897,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = const_cast<float32*>(request->attr_val().data());
       int32 array_size = static_cast<int32>(request->attr_val().size());
@@ -9644,7 +9924,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       float64 attr_val = request->attr_val();
       auto status = library_->SetAttributeF64(instrument, selector_string, attribute_id, attr_val);
@@ -9669,7 +9950,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = const_cast<float64*>(request->attr_val().data());
       int32 array_size = static_cast<int32>(request->attr_val().size());
@@ -9695,7 +9977,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val_raw = request->attr_val();
       if (attr_val_raw < std::numeric_limits<int16>::min() || attr_val_raw > std::numeric_limits<int16>::max()) {
@@ -9729,7 +10012,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       int32 attr_val;
       switch (request->attr_val_enum_case()) {
@@ -9769,7 +10053,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val_vector = std::vector<int32>();
       attr_val_vector.reserve(request->attr_val().size());
@@ -9803,7 +10088,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       int64 attr_val = request->attr_val();
       auto status = library_->SetAttributeI64(instrument, selector_string, attribute_id, attr_val);
@@ -9828,7 +10114,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = const_cast<int64*>(reinterpret_cast<const int64*>(request->attr_val().data()));
       int32 array_size = static_cast<int32>(request->attr_val().size());
@@ -9854,7 +10141,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val_raw = request->attr_val();
       if (attr_val_raw < std::numeric_limits<int8>::min() || attr_val_raw > std::numeric_limits<int8>::max()) {
@@ -9888,7 +10176,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val_raw = request->attr_val();
       auto attr_val = std::vector<int8>();
@@ -9931,7 +10220,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = convert_from_grpc<NIComplexDouble>(request->attr_val());
       int32 array_size = static_cast<int32>(request->attr_val().size());
@@ -9957,7 +10247,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = convert_from_grpc<NIComplexSingle>(request->attr_val());
       int32 array_size = static_cast<int32>(request->attr_val().size());
@@ -9983,9 +10274,11 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       char* attr_val;
+      std::string attr_val_buffer;
       switch (request->attr_val_enum_case()) {
         case nirfmxlte_grpc::SetAttributeStringRequest::AttrValEnumCase::kAttrValMapped: {
           auto attr_val_imap_it = nirfmxltestringattributevaluesmapped_input_map_.find(request->attr_val_mapped());
@@ -9996,7 +10289,8 @@ namespace nirfmxlte_grpc {
           break;
         }
         case nirfmxlte_grpc::SetAttributeStringRequest::AttrValEnumCase::kAttrValRaw: {
-          attr_val = const_cast<char*>(request->attr_val_raw().c_str());
+          attr_val_buffer = convert_from_grpc<std::string>(request->attr_val_raw());
+          attr_val = const_cast<char*>(attr_val_buffer.c_str());
           break;
         }
         case nirfmxlte_grpc::SetAttributeStringRequest::AttrValEnumCase::ATTR_VAL_ENUM_NOT_SET: {
@@ -10027,7 +10321,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val_raw = request->attr_val();
       if (attr_val_raw < std::numeric_limits<uInt16>::min() || attr_val_raw > std::numeric_limits<uInt16>::max()) {
@@ -10061,7 +10356,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       uInt32 attr_val = request->attr_val();
       auto status = library_->SetAttributeU32(instrument, selector_string, attribute_id, attr_val);
@@ -10086,7 +10382,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = const_cast<uInt32*>(reinterpret_cast<const uInt32*>(request->attr_val().data()));
       int32 array_size = static_cast<int32>(request->attr_val().size());
@@ -10112,7 +10409,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = const_cast<uInt64*>(reinterpret_cast<const uInt64*>(request->attr_val().data()));
       int32 array_size = static_cast<int32>(request->attr_val().size());
@@ -10138,7 +10436,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       uInt8 attr_val = request->attr_val();
       auto status = library_->SetAttributeU8(instrument, selector_string, attribute_id, attr_val);
@@ -10163,7 +10462,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       uInt8* attr_val = (uInt8*)request->attr_val().c_str();
       int32 array_size = static_cast<int32>(request->attr_val().size());
@@ -10189,7 +10489,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 synchronization_mode;
       switch (request->synchronization_mode_enum_case()) {
         case nirfmxlte_grpc::SlotPhaseCfgSynchronizationModeAndIntervalRequest::SynchronizationModeEnumCase::kSynchronizationMode: {
@@ -10230,7 +10531,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 maximum_phase_discontinuity {};
       auto status = library_->SlotPhaseFetchMaximumPhaseDiscontinuity(instrument, selector_string, timeout, &maximum_phase_discontinuity);
@@ -10256,7 +10558,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
@@ -10296,7 +10599,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
@@ -10336,7 +10640,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
       float64 dx {};
@@ -10380,7 +10685,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
       float64 dx {};
@@ -10424,7 +10730,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 measurement_offset = request->measurement_offset();
       int32 measurement_length = request->measurement_length();
       auto status = library_->SlotPowerCfgMeasurementInterval(instrument, selector_string, measurement_offset, measurement_length);
@@ -10449,7 +10756,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
@@ -10515,7 +10823,8 @@ namespace nirfmxlte_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       auto status = library_->WaitForMeasurementComplete(instrument, selector_string, timeout);
       if (!status_ok(status)) {

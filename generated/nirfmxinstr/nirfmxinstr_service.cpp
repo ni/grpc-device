@@ -55,7 +55,8 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      char* calibration_plane_name = (char*)request->calibration_plane_name().c_str();
+      auto calibration_plane_name_mbcs = convert_from_grpc<std::string>(request->calibration_plane_name());
+      char* calibration_plane_name = (char*)calibration_plane_name_mbcs.c_str();
 
       while (true) {
         auto status = library_->BuildCalibrationPlaneString(calibration_plane_name, 0, nullptr);
@@ -77,7 +78,9 @@ namespace nirfmxinstr_grpc {
           return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
         }
         response->set_status(status);
-        response->set_selector_string(selector_string);
+        std::string selector_string_utf8;
+        convert_to_grpc(selector_string, &selector_string_utf8);
+        response->set_selector_string(selector_string_utf8);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_selector_string()));
         return ::grpc::Status::OK;
       }
@@ -95,7 +98,8 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 instrument_number = request->instrument_number();
 
       while (true) {
@@ -118,7 +122,9 @@ namespace nirfmxinstr_grpc {
           return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
         }
         response->set_status(status);
-        response->set_selector_string_out(selector_string_out);
+        std::string selector_string_out_utf8;
+        convert_to_grpc(selector_string_out, &selector_string_out_utf8);
+        response->set_selector_string_out(selector_string_out_utf8);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_selector_string_out()));
         return ::grpc::Status::OK;
       }
@@ -136,7 +142,8 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 lo_index = request->lo_index();
 
       while (true) {
@@ -159,7 +166,9 @@ namespace nirfmxinstr_grpc {
           return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
         }
         response->set_status(status);
-        response->set_selector_string_out(selector_string_out);
+        std::string selector_string_out_utf8;
+        convert_to_grpc(selector_string_out, &selector_string_out_utf8);
+        response->set_selector_string_out(selector_string_out_utf8);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_selector_string_out()));
         return ::grpc::Status::OK;
       }
@@ -177,8 +186,10 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      char* selector_string = (char*)request->selector_string().c_str();
-      char* module_name = (char*)request->module_name().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto module_name_mbcs = convert_from_grpc<std::string>(request->module_name());
+      char* module_name = (char*)module_name_mbcs.c_str();
 
       while (true) {
         auto status = library_->BuildModuleString(selector_string, module_name, 0, nullptr);
@@ -200,7 +211,9 @@ namespace nirfmxinstr_grpc {
           return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
         }
         response->set_status(status);
-        response->set_selector_string_out(selector_string_out);
+        std::string selector_string_out_utf8;
+        convert_to_grpc(selector_string_out, &selector_string_out_utf8);
+        response->set_selector_string_out(selector_string_out_utf8);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_selector_string_out()));
         return ::grpc::Status::OK;
       }
@@ -220,8 +233,10 @@ namespace nirfmxinstr_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
-      char* table_name = (char*)request->table_name().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto table_name_mbcs = convert_from_grpc<std::string>(request->table_name());
+      char* table_name = (char*)table_name_mbcs.c_str();
       int32 format;
       switch (request->format_enum_case()) {
         case nirfmxinstr_grpc::CfgExternalAttenuationInterpolationLinearRequest::FormatEnumCase::kFormat: {
@@ -260,8 +275,10 @@ namespace nirfmxinstr_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
-      char* table_name = (char*)request->table_name().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto table_name_mbcs = convert_from_grpc<std::string>(request->table_name());
+      char* table_name = (char*)table_name_mbcs.c_str();
       auto status = library_->CfgExternalAttenuationInterpolationNearest(instrument, selector_string, table_name);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -284,8 +301,10 @@ namespace nirfmxinstr_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
-      char* table_name = (char*)request->table_name().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto table_name_mbcs = convert_from_grpc<std::string>(request->table_name());
+      char* table_name = (char*)table_name_mbcs.c_str();
       auto status = library_->CfgExternalAttenuationInterpolationSpline(instrument, selector_string, table_name);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -308,8 +327,10 @@ namespace nirfmxinstr_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
-      char* table_name = (char*)request->table_name().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto table_name_mbcs = convert_from_grpc<std::string>(request->table_name());
+      char* table_name = (char*)table_name_mbcs.c_str();
       auto frequency = const_cast<float64*>(request->frequency().data());
       auto external_attenuation = const_cast<float64*>(request->external_attenuation().data());
       auto array_size_determine_from_sizes = std::array<int, 2>
@@ -351,8 +372,10 @@ namespace nirfmxinstr_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* channel_name = (char*)request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      char* channel_name = (char*)channel_name_mbcs.c_str();
       char* frequency_reference_source;
+      std::string frequency_reference_source_buffer;
       switch (request->frequency_reference_source_enum_case()) {
         case nirfmxinstr_grpc::CfgFrequencyReferenceRequest::FrequencyReferenceSourceEnumCase::kFrequencyReferenceSourceMapped: {
           auto frequency_reference_source_imap_it = frequencyreferencesource_input_map_.find(request->frequency_reference_source_mapped());
@@ -363,7 +386,8 @@ namespace nirfmxinstr_grpc {
           break;
         }
         case nirfmxinstr_grpc::CfgFrequencyReferenceRequest::FrequencyReferenceSourceEnumCase::kFrequencyReferenceSourceRaw: {
-          frequency_reference_source = const_cast<char*>(request->frequency_reference_source_raw().c_str());
+          frequency_reference_source_buffer = convert_from_grpc<std::string>(request->frequency_reference_source_raw());
+          frequency_reference_source = const_cast<char*>(frequency_reference_source_buffer.c_str());
           break;
         }
         case nirfmxinstr_grpc::CfgFrequencyReferenceRequest::FrequencyReferenceSourceEnumCase::FREQUENCY_REFERENCE_SOURCE_ENUM_NOT_SET: {
@@ -395,7 +419,8 @@ namespace nirfmxinstr_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* channel_name = (char*)request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      char* channel_name = (char*)channel_name_mbcs.c_str();
       int32 mechanical_attenuation_auto;
       switch (request->mechanical_attenuation_auto_enum_case()) {
         case nirfmxinstr_grpc::CfgMechanicalAttenuationRequest::MechanicalAttenuationAutoEnumCase::kMechanicalAttenuationAuto: {
@@ -435,7 +460,8 @@ namespace nirfmxinstr_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* channel_name = (char*)request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      char* channel_name = (char*)channel_name_mbcs.c_str();
       int32 rf_attenuation_auto;
       switch (request->rf_attenuation_auto_enum_case()) {
         case nirfmxinstr_grpc::CfgRFAttenuationRequest::RfAttenuationAutoEnumCase::kRfAttenuationAuto: {
@@ -475,8 +501,10 @@ namespace nirfmxinstr_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
-      char* table_name = (char*)request->table_name().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto table_name_mbcs = convert_from_grpc<std::string>(request->table_name());
+      char* table_name = (char*)table_name_mbcs.c_str();
       auto frequency = const_cast<float64*>(request->frequency().data());
       int32 frequency_array_size = static_cast<int32>(request->frequency().size());
       auto s_parameters = convert_from_grpc<NIComplexDouble>(request->s_parameters());
@@ -520,7 +548,8 @@ namespace nirfmxinstr_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 s_parameter_type;
       switch (request->s_parameter_type_enum_case()) {
         case nirfmxinstr_grpc::CfgSParameterExternalAttenuationTypeRequest::SParameterTypeEnumCase::kSParameterType: {
@@ -583,7 +612,8 @@ namespace nirfmxinstr_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* list_name = (char*)request->list_name().c_str();
+      auto list_name_mbcs = convert_from_grpc<std::string>(request->list_name());
+      char* list_name = (char*)list_name_mbcs.c_str();
       int32 list_exists {};
       int32 personality {};
       auto status = library_->CheckIfListExists(instrument, list_name, &list_exists, &personality);
@@ -611,7 +641,8 @@ namespace nirfmxinstr_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* signal_name = (char*)request->signal_name().c_str();
+      auto signal_name_mbcs = convert_from_grpc<std::string>(request->signal_name());
+      char* signal_name = (char*)signal_name_mbcs.c_str();
       int32 signal_configuration_exists {};
       int32 personality {};
       auto status = library_->CheckIfSignalConfigurationExists(instrument, signal_name, &signal_configuration_exists, &personality);
@@ -663,7 +694,8 @@ namespace nirfmxinstr_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       auto status = library_->DeleteAllExternalAttenuationTables(instrument, selector_string);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -686,8 +718,10 @@ namespace nirfmxinstr_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
-      char* table_name = (char*)request->table_name().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto table_name_mbcs = convert_from_grpc<std::string>(request->table_name());
+      char* table_name = (char*)table_name_mbcs.c_str();
       auto status = library_->DeleteExternalAttenuationTable(instrument, selector_string, table_name);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -710,7 +744,8 @@ namespace nirfmxinstr_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       auto status = library_->DisableCalibrationPlane(instrument, selector_string);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -733,7 +768,8 @@ namespace nirfmxinstr_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       auto status = library_->EnableCalibrationPlane(instrument, selector_string);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -773,6 +809,7 @@ namespace nirfmxinstr_grpc {
       }
 
       char* export_signal_output_terminal;
+      std::string export_signal_output_terminal_buffer;
       switch (request->export_signal_output_terminal_enum_case()) {
         case nirfmxinstr_grpc::ExportSignalRequest::ExportSignalOutputTerminalEnumCase::kExportSignalOutputTerminalMapped: {
           auto export_signal_output_terminal_imap_it = outputterminal_input_map_.find(request->export_signal_output_terminal_mapped());
@@ -783,7 +820,8 @@ namespace nirfmxinstr_grpc {
           break;
         }
         case nirfmxinstr_grpc::ExportSignalRequest::ExportSignalOutputTerminalEnumCase::kExportSignalOutputTerminalRaw: {
-          export_signal_output_terminal = const_cast<char*>(request->export_signal_output_terminal_raw().c_str());
+          export_signal_output_terminal_buffer = convert_from_grpc<std::string>(request->export_signal_output_terminal_raw());
+          export_signal_output_terminal = const_cast<char*>(export_signal_output_terminal_buffer.c_str());
           break;
         }
         case nirfmxinstr_grpc::ExportSignalRequest::ExportSignalOutputTerminalEnumCase::EXPORT_SIGNAL_OUTPUT_TERMINAL_ENUM_NOT_SET: {
@@ -814,7 +852,8 @@ namespace nirfmxinstr_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* channel_name = (char*)request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      char* channel_name = (char*)channel_name_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       float32 attr_val {};
       auto status = library_->GetAttributeF32(instrument, channel_name, attribute_id, &attr_val);
@@ -840,7 +879,8 @@ namespace nirfmxinstr_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* channel_name = (char*)request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      char* channel_name = (char*)channel_name_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_array_size {};
       while (true) {
@@ -880,7 +920,8 @@ namespace nirfmxinstr_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* channel_name = (char*)request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      char* channel_name = (char*)channel_name_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       float64 attr_val {};
       auto status = library_->GetAttributeF64(instrument, channel_name, attribute_id, &attr_val);
@@ -906,7 +947,8 @@ namespace nirfmxinstr_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* channel_name = (char*)request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      char* channel_name = (char*)channel_name_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_array_size {};
       while (true) {
@@ -946,7 +988,8 @@ namespace nirfmxinstr_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* channel_name = (char*)request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      char* channel_name = (char*)channel_name_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       int16 attr_val {};
       auto status = library_->GetAttributeI16(instrument, channel_name, attribute_id, &attr_val);
@@ -972,7 +1015,8 @@ namespace nirfmxinstr_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* channel_name = (char*)request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      char* channel_name = (char*)channel_name_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       int32 attr_val {};
       auto status = library_->GetAttributeI32(instrument, channel_name, attribute_id, &attr_val);
@@ -1004,7 +1048,8 @@ namespace nirfmxinstr_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* channel_name = (char*)request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      char* channel_name = (char*)channel_name_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_array_size {};
       while (true) {
@@ -1058,7 +1103,8 @@ namespace nirfmxinstr_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* channel_name = (char*)request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      char* channel_name = (char*)channel_name_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       int64 attr_val {};
       auto status = library_->GetAttributeI64(instrument, channel_name, attribute_id, &attr_val);
@@ -1084,7 +1130,8 @@ namespace nirfmxinstr_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* channel_name = (char*)request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      char* channel_name = (char*)channel_name_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_array_size {};
       while (true) {
@@ -1124,7 +1171,8 @@ namespace nirfmxinstr_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* channel_name = (char*)request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      char* channel_name = (char*)channel_name_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       int8 attr_val {};
       auto status = library_->GetAttributeI8(instrument, channel_name, attribute_id, &attr_val);
@@ -1150,7 +1198,8 @@ namespace nirfmxinstr_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* channel_name = (char*)request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      char* channel_name = (char*)channel_name_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_array_size {};
       while (true) {
@@ -1198,7 +1247,8 @@ namespace nirfmxinstr_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* channel_name = (char*)request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      char* channel_name = (char*)channel_name_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_array_size {};
       while (true) {
@@ -1244,7 +1294,8 @@ namespace nirfmxinstr_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* channel_name = (char*)request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      char* channel_name = (char*)channel_name_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_array_size {};
       while (true) {
@@ -1290,7 +1341,8 @@ namespace nirfmxinstr_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* channel_name = (char*)request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      char* channel_name = (char*)channel_name_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
 
       while (true) {
@@ -1313,7 +1365,9 @@ namespace nirfmxinstr_grpc {
           return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
-        response->set_attr_val(attr_val);
+        std::string attr_val_utf8;
+        convert_to_grpc(attr_val, &attr_val_utf8);
+        response->set_attr_val(attr_val_utf8);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_attr_val()));
         return ::grpc::Status::OK;
       }
@@ -1333,7 +1387,8 @@ namespace nirfmxinstr_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* channel_name = (char*)request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      char* channel_name = (char*)channel_name_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       uInt16 attr_val {};
       auto status = library_->GetAttributeU16(instrument, channel_name, attribute_id, &attr_val);
@@ -1359,7 +1414,8 @@ namespace nirfmxinstr_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* channel_name = (char*)request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      char* channel_name = (char*)channel_name_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       uInt32 attr_val {};
       auto status = library_->GetAttributeU32(instrument, channel_name, attribute_id, &attr_val);
@@ -1385,7 +1441,8 @@ namespace nirfmxinstr_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* channel_name = (char*)request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      char* channel_name = (char*)channel_name_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_array_size {};
       while (true) {
@@ -1425,7 +1482,8 @@ namespace nirfmxinstr_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* channel_name = (char*)request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      char* channel_name = (char*)channel_name_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_array_size {};
       while (true) {
@@ -1465,7 +1523,8 @@ namespace nirfmxinstr_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* channel_name = (char*)request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      char* channel_name = (char*)channel_name_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       uInt8 attr_val {};
       auto status = library_->GetAttributeU8(instrument, channel_name, attribute_id, &attr_val);
@@ -1491,7 +1550,8 @@ namespace nirfmxinstr_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* channel_name = (char*)request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      char* channel_name = (char*)channel_name_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_array_size {};
       while (true) {
@@ -1531,7 +1591,8 @@ namespace nirfmxinstr_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
 
       while (true) {
         auto status = library_->GetAvailablePorts(instrument, selector_string, 0, nullptr);
@@ -1553,7 +1614,9 @@ namespace nirfmxinstr_grpc {
           return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
-        response->set_available_ports(available_ports);
+        std::string available_ports_utf8;
+        convert_to_grpc(available_ports, &available_ports_utf8);
+        response->set_available_ports(available_ports_utf8);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_available_ports()));
         return ::grpc::Status::OK;
       }
@@ -1596,7 +1659,9 @@ namespace nirfmxinstr_grpc {
         }
         response->set_status(status);
         response->set_error_code(error_code);
-        response->set_error_description(error_description);
+        std::string error_description_utf8;
+        convert_to_grpc(error_description, &error_description_utf8);
+        response->set_error_description(error_description_utf8);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_description()));
         return ::grpc::Status::OK;
       }
@@ -1638,7 +1703,9 @@ namespace nirfmxinstr_grpc {
           return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
-        response->set_error_description(error_description);
+        std::string error_description_utf8;
+        convert_to_grpc(error_description, &error_description_utf8);
+        response->set_error_description(error_description_utf8);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_description()));
         return ::grpc::Status::OK;
       }
@@ -1658,7 +1725,8 @@ namespace nirfmxinstr_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 external_attenuation {};
       auto status = library_->GetExternalAttenuationTableActualValue(instrument, selector_string, &external_attenuation);
       if (!status_ok(status)) {
@@ -1683,7 +1751,8 @@ namespace nirfmxinstr_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 personality_filter;
       switch (request->personality_filter_enum_case()) {
         case nirfmxinstr_grpc::GetListNamesRequest::PersonalityFilterEnumCase::kPersonalityFilter: {
@@ -1724,7 +1793,9 @@ namespace nirfmxinstr_grpc {
           return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
-        response->set_list_names(list_names);
+        std::string list_names_utf8;
+        convert_to_grpc(list_names, &list_names_utf8);
+        response->set_list_names(list_names_utf8);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_list_names()));
         response->set_actual_list_names_size(actual_list_names_size);
           response->mutable_personality()->Clear();
@@ -1786,7 +1857,8 @@ namespace nirfmxinstr_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 s_parameter_type {};
       auto status = library_->GetSParameterExternalAttenuationType(instrument, selector_string, &s_parameter_type);
       if (!status_ok(status)) {
@@ -1812,7 +1884,8 @@ namespace nirfmxinstr_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int64 self_calibrate_step;
       switch (request->self_calibrate_step_enum_case()) {
         case nirfmxinstr_grpc::GetSelfCalibrateLastDateAndTimeRequest::SelfCalibrateStepEnumCase::kSelfCalibrateStep: {
@@ -1853,7 +1926,8 @@ namespace nirfmxinstr_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int64 self_calibrate_step;
       switch (request->self_calibrate_step_enum_case()) {
         case nirfmxinstr_grpc::GetSelfCalibrateLastTemperatureRequest::SelfCalibrateStepEnumCase::kSelfCalibrateStep: {
@@ -1894,7 +1968,8 @@ namespace nirfmxinstr_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 personality_filter;
       switch (request->personality_filter_enum_case()) {
         case nirfmxinstr_grpc::GetSignalConfigurationNamesRequest::PersonalityFilterEnumCase::kPersonalityFilter: {
@@ -1935,7 +2010,9 @@ namespace nirfmxinstr_grpc {
           return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
-        response->set_signal_names(signal_names);
+        std::string signal_names_utf8;
+        convert_to_grpc(signal_names, &signal_names_utf8);
+        response->set_signal_names(signal_names_utf8);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_signal_names()));
         response->set_actual_signal_names_size(actual_signal_names_size);
         response->mutable_personality()->Resize(actual_personality_array_size, 0);
@@ -1956,12 +2033,12 @@ namespace nirfmxinstr_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      char* resource_name = (char*)request->resource_name().c_str();
-      char* option_string = (char*)request->option_string().c_str();
-      auto initialization_behavior = request->initialization_behavior();
+      auto resource_name_mbcs = convert_from_grpc<std::string>(request->resource_name());
+      char* resource_name = (char*)resource_name_mbcs.c_str();
+      auto option_string_mbcs = convert_from_grpc<std::string>(request->option_string());
+      char* option_string = (char*)option_string_mbcs.c_str();
 
       int32 is_new_session {};
-      bool new_session_initialized {};
       auto init_lambda = [&] () {
         niRFmxInstrHandle instrument;
         auto status = library_->Initialize(resource_name, option_string, &instrument, &is_new_session);
@@ -1969,14 +2046,13 @@ namespace nirfmxinstr_grpc {
       };
       std::string grpc_device_session_name = request->session_name();
       auto cleanup_lambda = [&] (niRFmxInstrHandle id) { library_->Close(id, RFMXINSTR_VAL_FALSE); };
-      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, initialization_behavior, &new_session_initialized);
+      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
       }
       response->set_status(status);
       response->mutable_instrument()->set_name(grpc_device_session_name);
       response->set_is_new_session(is_new_session);
-      response->set_new_session_initialized(new_session_initialized);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
@@ -1994,9 +2070,7 @@ namespace nirfmxinstr_grpc {
     try {
       auto nirfsa_session_grpc_session = request->nirfsa_session();
       uInt32 nirfsa_session = vi_session_resource_repository_->access_session(nirfsa_session_grpc_session.name());
-      auto initialization_behavior = request->initialization_behavior();
 
-      bool new_session_initialized {};
       auto init_lambda = [&] () {
         niRFmxInstrHandle instrument;
         auto status = library_->InitializeFromNIRFSASession(nirfsa_session, &instrument);
@@ -2004,13 +2078,12 @@ namespace nirfmxinstr_grpc {
       };
       std::string grpc_device_session_name = request->session_name();
       auto cleanup_lambda = [&] (niRFmxInstrHandle id) { library_->Close(id, RFMXINSTR_VAL_FALSE); };
-      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, initialization_behavior, &new_session_initialized);
+      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
       }
       response->set_status(status);
       response->mutable_instrument()->set_name(grpc_device_session_name);
-      response->set_new_session_initialized(new_session_initialized);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
@@ -2034,9 +2107,7 @@ namespace nirfmxinstr_grpc {
         std::back_inserter(nirfsa_sessions),
         [&](auto session) { return vi_session_resource_repository_->access_session(session.name()); }); 
       int32 number_of_nirfsa_sessions = static_cast<int32>(request->nirfsa_sessions().size());
-      auto initialization_behavior = request->initialization_behavior();
 
-      bool new_session_initialized {};
       auto init_lambda = [&] () {
         niRFmxInstrHandle instrument;
         auto status = library_->InitializeFromNIRFSASessionArray(nirfsa_sessions.data(), number_of_nirfsa_sessions, &instrument);
@@ -2044,13 +2115,12 @@ namespace nirfmxinstr_grpc {
       };
       std::string grpc_device_session_name = request->session_name();
       auto cleanup_lambda = [&] (niRFmxInstrHandle id) { library_->Close(id, RFMXINSTR_VAL_FALSE); };
-      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, initialization_behavior, &new_session_initialized);
+      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
       }
       response->set_status(status);
       response->mutable_instrument()->set_name(grpc_device_session_name);
-      response->set_new_session_initialized(new_session_initialized);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
@@ -2068,7 +2138,8 @@ namespace nirfmxinstr_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 self_calibrate_valid {};
       int32 valid_steps {};
       auto status = library_->IsSelfCalibrateValid(instrument, selector_string, &self_calibrate_valid, &valid_steps);
@@ -2115,7 +2186,8 @@ namespace nirfmxinstr_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* file_path = (char*)request->file_path().c_str();
+      auto file_path_mbcs = convert_from_grpc<std::string>(request->file_path());
+      char* file_path = (char*)file_path_mbcs.c_str();
       int32 load_rf_instr_configuration = request->load_rf_instr_configuration();
       auto status = library_->LoadAllConfigurations(instrument, file_path, load_rf_instr_configuration);
       if (!status_ok(status)) {
@@ -2139,9 +2211,12 @@ namespace nirfmxinstr_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
-      char* table_name = (char*)request->table_name().c_str();
-      char* s2p_file_path = (char*)request->s2p_file_path().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto table_name_mbcs = convert_from_grpc<std::string>(request->table_name());
+      char* table_name = (char*)table_name_mbcs.c_str();
+      auto s2p_file_path_mbcs = convert_from_grpc<std::string>(request->s2p_file_path());
+      char* s2p_file_path = (char*)s2p_file_path_mbcs.c_str();
       int32 s_parameter_orientation;
       switch (request->s_parameter_orientation_enum_case()) {
         case nirfmxinstr_grpc::LoadSParameterExternalAttenuationTableFromS2PFileRequest::SParameterOrientationEnumCase::kSParameterOrientation: {
@@ -2180,7 +2255,8 @@ namespace nirfmxinstr_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* channel_name = (char*)request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      char* channel_name = (char*)channel_name_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       auto status = library_->ResetAttribute(instrument, channel_name, attribute_id);
       if (!status_ok(status)) {
@@ -2270,7 +2346,8 @@ namespace nirfmxinstr_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* file_path = (char*)request->file_path().c_str();
+      auto file_path_mbcs = convert_from_grpc<std::string>(request->file_path());
+      char* file_path = (char*)file_path_mbcs.c_str();
       auto status = library_->SaveAllConfigurations(instrument, file_path);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -2293,8 +2370,10 @@ namespace nirfmxinstr_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
-      char* table_name = (char*)request->table_name().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto table_name_mbcs = convert_from_grpc<std::string>(request->table_name());
+      char* table_name = (char*)table_name_mbcs.c_str();
       auto status = library_->SelectActiveExternalAttenuationTable(instrument, selector_string, table_name);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -2317,7 +2396,8 @@ namespace nirfmxinstr_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 steps_to_omit;
       switch (request->steps_to_omit_enum_case()) {
         case nirfmxinstr_grpc::SelfCalibrateRequest::StepsToOmitEnumCase::kStepsToOmit: {
@@ -2356,7 +2436,8 @@ namespace nirfmxinstr_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 steps_to_omit;
       switch (request->steps_to_omit_enum_case()) {
         case nirfmxinstr_grpc::SelfCalibrateRangeRequest::StepsToOmitEnumCase::kStepsToOmit: {
@@ -2443,7 +2524,8 @@ namespace nirfmxinstr_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* channel_name = (char*)request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      char* channel_name = (char*)channel_name_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       float32 attr_val = request->attr_val();
       auto status = library_->SetAttributeF32(instrument, channel_name, attribute_id, attr_val);
@@ -2468,7 +2550,8 @@ namespace nirfmxinstr_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* channel_name = (char*)request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      char* channel_name = (char*)channel_name_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = const_cast<float32*>(request->attr_val().data());
       int32 array_size = static_cast<int32>(request->attr_val().size());
@@ -2494,7 +2577,8 @@ namespace nirfmxinstr_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* channel_name = (char*)request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      char* channel_name = (char*)channel_name_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       float64 attr_val = request->attr_val();
       auto status = library_->SetAttributeF64(instrument, channel_name, attribute_id, attr_val);
@@ -2519,7 +2603,8 @@ namespace nirfmxinstr_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* channel_name = (char*)request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      char* channel_name = (char*)channel_name_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = const_cast<float64*>(request->attr_val().data());
       int32 array_size = static_cast<int32>(request->attr_val().size());
@@ -2545,7 +2630,8 @@ namespace nirfmxinstr_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* channel_name = (char*)request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      char* channel_name = (char*)channel_name_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val_raw = request->attr_val();
       if (attr_val_raw < std::numeric_limits<int16>::min() || attr_val_raw > std::numeric_limits<int16>::max()) {
@@ -2579,7 +2665,8 @@ namespace nirfmxinstr_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* channel_name = (char*)request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      char* channel_name = (char*)channel_name_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       int32 attr_val;
       switch (request->attr_val_enum_case()) {
@@ -2619,7 +2706,8 @@ namespace nirfmxinstr_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* channel_name = (char*)request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      char* channel_name = (char*)channel_name_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val_vector = std::vector<int32>();
       attr_val_vector.reserve(request->attr_val().size());
@@ -2653,7 +2741,8 @@ namespace nirfmxinstr_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* channel_name = (char*)request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      char* channel_name = (char*)channel_name_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       int64 attr_val = request->attr_val();
       auto status = library_->SetAttributeI64(instrument, channel_name, attribute_id, attr_val);
@@ -2678,7 +2767,8 @@ namespace nirfmxinstr_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* channel_name = (char*)request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      char* channel_name = (char*)channel_name_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = const_cast<int64*>(reinterpret_cast<const int64*>(request->attr_val().data()));
       int32 array_size = static_cast<int32>(request->attr_val().size());
@@ -2704,7 +2794,8 @@ namespace nirfmxinstr_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* channel_name = (char*)request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      char* channel_name = (char*)channel_name_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val_raw = request->attr_val();
       if (attr_val_raw < std::numeric_limits<int8>::min() || attr_val_raw > std::numeric_limits<int8>::max()) {
@@ -2738,7 +2829,8 @@ namespace nirfmxinstr_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* channel_name = (char*)request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      char* channel_name = (char*)channel_name_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val_raw = request->attr_val();
       auto attr_val = std::vector<int8>();
@@ -2781,7 +2873,8 @@ namespace nirfmxinstr_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* channel_name = (char*)request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      char* channel_name = (char*)channel_name_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = convert_from_grpc<NIComplexDouble>(request->attr_val());
       int32 array_size = static_cast<int32>(request->attr_val().size());
@@ -2807,7 +2900,8 @@ namespace nirfmxinstr_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* channel_name = (char*)request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      char* channel_name = (char*)channel_name_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = convert_from_grpc<NIComplexSingle>(request->attr_val());
       int32 array_size = static_cast<int32>(request->attr_val().size());
@@ -2833,9 +2927,11 @@ namespace nirfmxinstr_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* channel_name = (char*)request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      char* channel_name = (char*)channel_name_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       char* attr_val;
+      std::string attr_val_buffer;
       switch (request->attr_val_enum_case()) {
         case nirfmxinstr_grpc::SetAttributeStringRequest::AttrValEnumCase::kAttrValMapped: {
           auto attr_val_imap_it = nirfmxinstrstringattributevaluesmapped_input_map_.find(request->attr_val_mapped());
@@ -2846,7 +2942,8 @@ namespace nirfmxinstr_grpc {
           break;
         }
         case nirfmxinstr_grpc::SetAttributeStringRequest::AttrValEnumCase::kAttrValRaw: {
-          attr_val = const_cast<char*>(request->attr_val_raw().c_str());
+          attr_val_buffer = convert_from_grpc<std::string>(request->attr_val_raw());
+          attr_val = const_cast<char*>(attr_val_buffer.c_str());
           break;
         }
         case nirfmxinstr_grpc::SetAttributeStringRequest::AttrValEnumCase::ATTR_VAL_ENUM_NOT_SET: {
@@ -2877,7 +2974,8 @@ namespace nirfmxinstr_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* channel_name = (char*)request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      char* channel_name = (char*)channel_name_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val_raw = request->attr_val();
       if (attr_val_raw < std::numeric_limits<uInt16>::min() || attr_val_raw > std::numeric_limits<uInt16>::max()) {
@@ -2911,7 +3009,8 @@ namespace nirfmxinstr_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* channel_name = (char*)request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      char* channel_name = (char*)channel_name_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       uInt32 attr_val = request->attr_val();
       auto status = library_->SetAttributeU32(instrument, channel_name, attribute_id, attr_val);
@@ -2936,7 +3035,8 @@ namespace nirfmxinstr_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* channel_name = (char*)request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      char* channel_name = (char*)channel_name_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = const_cast<uInt32*>(reinterpret_cast<const uInt32*>(request->attr_val().data()));
       int32 array_size = static_cast<int32>(request->attr_val().size());
@@ -2962,7 +3062,8 @@ namespace nirfmxinstr_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* channel_name = (char*)request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      char* channel_name = (char*)channel_name_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = const_cast<uInt64*>(reinterpret_cast<const uInt64*>(request->attr_val().data()));
       int32 array_size = static_cast<int32>(request->attr_val().size());
@@ -2988,7 +3089,8 @@ namespace nirfmxinstr_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* channel_name = (char*)request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      char* channel_name = (char*)channel_name_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       uInt8 attr_val = request->attr_val();
       auto status = library_->SetAttributeU8(instrument, channel_name, attribute_id, attr_val);
@@ -3013,7 +3115,8 @@ namespace nirfmxinstr_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* channel_name = (char*)request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      char* channel_name = (char*)channel_name_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       uInt8* attr_val = (uInt8*)request->attr_val().c_str();
       int32 array_size = static_cast<int32>(request->attr_val().size());

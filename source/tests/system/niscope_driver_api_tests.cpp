@@ -431,6 +431,27 @@ TEST_F(NiScopeDriverApiTest, NiScopeSetViStringAttribute_SendRequest_GetViString
   EXPECT_STREQ(expected_value.c_str(), get_attribute_value.c_str());
 }
 
+TEST_F(NiScopeDriverApiTest, NiScopeSetViStringAttributeUtf8Convert_SendRequest_GetViStringAttributeMatches)
+{
+  const char* channel_list = "";
+  const scope::NiScopeAttribute attribute_to_set = scope::NiScopeAttribute::NISCOPE_ATTRIBUTE_MEAS_OTHER_CHANNEL;
+  const std::string expected_value = "\xC2\xAE \xE2\x80\xA0 \xC3\xAB";  // "\u00AE \u2020 \u00EB"
+  ::grpc::ClientContext context;
+  scope::SetAttributeViStringRequest request;
+  request.mutable_vi()->set_name(GetSessionName());
+  request.set_channel_list(channel_list);
+  request.set_attribute_id(attribute_to_set);
+  request.set_value_raw(expected_value);
+  scope::SetAttributeViStringResponse response;
+
+  ::grpc::Status status = GetStub()->SetAttributeViString(&context, request, &response);
+  EXPECT_TRUE(status.ok());
+  expect_api_success(response.status());
+
+  std::string get_attribute_value = get_string_attribute(channel_list, attribute_to_set);
+  EXPECT_STREQ(expected_value.c_str(), get_attribute_value.c_str());
+}
+
 TEST_F(NiScopeDriverApiTest, NiScopeSetBoolAttribute_SendRequest_GetBoolAttributeMatches)
 {
   const char* channel_list = "0";

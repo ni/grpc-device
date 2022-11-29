@@ -111,7 +111,8 @@ namespace nitclk_grpc {
     try {
       auto session_grpc_session = request->session();
       ViSession session = session_repository_->access_session(session_grpc_session.name());
-      auto channel_name = request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      auto channel_name = channel_name_mbcs.c_str();
       ViAttr attribute_id = request->attribute_id();
       ViReal64 value {};
       auto status = library_->GetAttributeViReal64(session, channel_name, attribute_id, &value);
@@ -137,7 +138,8 @@ namespace nitclk_grpc {
     try {
       auto session_grpc_session = request->session();
       ViSession session = session_repository_->access_session(session_grpc_session.name());
-      auto channel_name = request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      auto channel_name = channel_name_mbcs.c_str();
       ViAttr attribute_id = request->attribute_id();
       ViSession value {};
       auto status = library_->GetAttributeViSession(session, channel_name, attribute_id, &value);
@@ -164,7 +166,8 @@ namespace nitclk_grpc {
     try {
       auto session_grpc_session = request->session();
       ViSession session = session_repository_->access_session(session_grpc_session.name());
-      auto channel_name = request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      auto channel_name = channel_name_mbcs.c_str();
       ViAttr attribute_id = request->attribute_id();
 
       while (true) {
@@ -187,7 +190,9 @@ namespace nitclk_grpc {
           return ConvertApiErrorStatusForViSession(context, status, session);
         }
         response->set_status(status);
-        response->set_value(value);
+        std::string value_utf8;
+        convert_to_grpc(value, &value_utf8);
+        response->set_value(value_utf8);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
         return ::grpc::Status::OK;
       }
@@ -226,7 +231,9 @@ namespace nitclk_grpc {
           return ConvertApiErrorStatusForViSession(context, status, 0);
         }
         response->set_status(status);
-        response->set_error_string(error_string);
+        std::string error_string_utf8;
+        convert_to_grpc(error_string, &error_string_utf8);
+        response->set_error_string(error_string_utf8);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_string()));
         return ::grpc::Status::OK;
       }
@@ -304,7 +311,8 @@ namespace nitclk_grpc {
     try {
       auto session_grpc_session = request->session();
       ViSession session = session_repository_->access_session(session_grpc_session.name());
-      auto channel_name = request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      auto channel_name = channel_name_mbcs.c_str();
       ViAttr attribute_id = request->attribute_id();
       ViReal64 value = request->value_raw();
       auto status = library_->SetAttributeViReal64(session, channel_name, attribute_id, value);
@@ -329,7 +337,8 @@ namespace nitclk_grpc {
     try {
       auto session_grpc_session = request->session();
       ViSession session = session_repository_->access_session(session_grpc_session.name());
-      auto channel_name = request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      auto channel_name = channel_name_mbcs.c_str();
       ViAttr attribute_id = request->attribute_id();
       auto value_grpc_session = request->value();
       ViSession value = session_repository_->access_session(value_grpc_session.name());
@@ -355,9 +364,11 @@ namespace nitclk_grpc {
     try {
       auto session_grpc_session = request->session();
       ViSession session = session_repository_->access_session(session_grpc_session.name());
-      auto channel_name = request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      auto channel_name = channel_name_mbcs.c_str();
       ViAttr attribute_id = request->attribute_id();
-      auto value = request->value_raw().c_str();
+      auto value_mbcs = convert_from_grpc<std::string>(request->value_raw());
+      auto value = value_mbcs.c_str();
       auto status = library_->SetAttributeViString(session, channel_name, attribute_id, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, session);

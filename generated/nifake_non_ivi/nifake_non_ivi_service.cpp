@@ -156,7 +156,9 @@ namespace nifake_non_ivi_grpc {
           return ConvertApiErrorStatusForFakeHandle(context, status, 0);
         }
         response->set_status(status);
-        response->set_message(message);
+        std::string message_utf8;
+        convert_to_grpc(message, &message_utf8);
+        response->set_message(message_utf8);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_message()));
         return ::grpc::Status::OK;
       }
@@ -181,7 +183,9 @@ namespace nifake_non_ivi_grpc {
         return ConvertApiErrorStatusForFakeHandle(context, status, 0);
       }
       response->set_status(status);
-      response->set_string_out(string_out);
+      std::string string_out_utf8;
+      convert_to_grpc(string_out, &string_out_utf8);
+      response->set_string_out(string_out_utf8);
       nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_string_out()));
       return ::grpc::Status::OK;
     }
@@ -347,7 +351,8 @@ namespace nifake_non_ivi_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto session_name = request->session_name().c_str();
+      auto session_name_mbcs = convert_from_grpc<std::string>(request->session_name());
+      auto session_name = session_name_mbcs.c_str();
 
       auto init_lambda = [&] () {
         FakeHandle handle;
@@ -474,7 +479,8 @@ namespace nifake_non_ivi_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto handle_name = request->handle_name().c_str();
+      auto handle_name_mbcs = convert_from_grpc<std::string>(request->handle_name());
+      auto handle_name = handle_name_mbcs.c_str();
 
       auto init_lambda = [&] () {
         FakeHandle handle;
@@ -504,7 +510,8 @@ namespace nifake_non_ivi_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto handle_name = request->handle_name().c_str();
+      auto handle_name_mbcs = convert_from_grpc<std::string>(request->handle_name());
+      auto handle_name = handle_name_mbcs.c_str();
 
       auto init_lambda = [&] () {
         auto handle = library_->InitWithReturnedSession(handle_name);
@@ -860,7 +867,8 @@ namespace nifake_non_ivi_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto input_name = request->input_name().c_str();
+      auto input_name_mbcs = convert_from_grpc<std::string>(request->input_name());
+      auto input_name = input_name_mbcs.c_str();
       auto get_channelName_if = [](const google::protobuf::RepeatedPtrField<StringAndEnum>& vector, int n) -> const char* {
             if (vector.size() > n) {
                   return vector[n].channel_name().c_str();
@@ -907,7 +915,8 @@ namespace nifake_non_ivi_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto input_name = request->input_name().c_str();
+      auto input_name_mbcs = convert_from_grpc<std::string>(request->input_name());
+      auto input_name = input_name_mbcs.c_str();
       auto get_channelName_if = [](const google::protobuf::RepeatedPtrField<std::string>& vector, int n) -> const char* {
             if (vector.size() > n) {
                   return vector[n].c_str();
@@ -1218,6 +1227,7 @@ namespace nifake_non_ivi_grpc {
     }
     try {
       char* a_name;
+      std::string a_name_buffer;
       switch (request->a_name_enum_case()) {
         case nifake_non_ivi_grpc::InputStringValuedEnumRequest::ANameEnumCase::kANameMapped: {
           auto a_name_imap_it = mobileosnames_input_map_.find(request->a_name_mapped());
@@ -1228,7 +1238,8 @@ namespace nifake_non_ivi_grpc {
           break;
         }
         case nifake_non_ivi_grpc::InputStringValuedEnumRequest::ANameEnumCase::kANameRaw: {
-          a_name = const_cast<char*>(request->a_name_raw().c_str());
+          a_name_buffer = convert_from_grpc<std::string>(request->a_name_raw());
+          a_name = const_cast<char*>(a_name_buffer.c_str());
           break;
         }
         case nifake_non_ivi_grpc::InputStringValuedEnumRequest::ANameEnumCase::A_NAME_ENUM_NOT_SET: {

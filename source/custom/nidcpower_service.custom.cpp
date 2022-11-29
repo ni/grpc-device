@@ -3,6 +3,8 @@
 #include <stdexcept>
 
 namespace nidcpower_grpc {
+using nidevice_grpc::converters::convert_from_grpc;
+using nidevice_grpc::converters::convert_to_grpc;
 
 class DriverWarningOrErrorException : public std::runtime_error {
  private:
@@ -34,7 +36,8 @@ static void CheckStatus(int status)
   try {
     auto vi_grpc_session = request->vi();
     vi = session_repository_->access_session(vi_grpc_session.name());
-    ViConstString channel_name = request->channel_name().c_str();
+    auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+    ViConstString channel_name = channel_name_mbcs.c_str();
 
     ViUInt32 number_of_channels;
     CheckStatus(library_->ParseChannelCount(vi, channel_name, &number_of_channels));
@@ -73,7 +76,8 @@ static void CheckStatus(int status)
   try {
     auto vi_grpc_session = request->vi();
     vi = session_repository_->access_session(vi_grpc_session.name());
-    ViConstString channel_name = request->channel_name().c_str();
+    auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+    ViConstString channel_name = channel_name_mbcs.c_str();
 
     ViUInt32 number_of_channels;
     CheckStatus(library_->ParseChannelCount(vi, channel_name, &number_of_channels));
@@ -84,7 +88,7 @@ static void CheckStatus(int status)
       return ConvertApiErrorStatusForViSession(context, status, vi);
     }
     response->set_status(status);
-    nidevice_grpc::converters::convert_to_grpc(measurements, response->mutable_measurements());
+    convert_to_grpc(measurements, response->mutable_measurements());
     return ::grpc::Status::OK;
   }
   catch (nidevice_grpc::LibraryLoadException& ex) {

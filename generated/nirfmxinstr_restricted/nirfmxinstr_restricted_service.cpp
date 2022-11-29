@@ -84,7 +84,8 @@ namespace nirfmxinstr_restricted_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       int32 personality = request->personality();
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       auto status = library_->DeleteSnapshot(instrument, personality, selector_string);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -107,7 +108,8 @@ namespace nirfmxinstr_restricted_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* signal_name = (char*)request->signal_name().c_str();
+      auto signal_name_mbcs = convert_from_grpc<std::string>(request->signal_name());
+      char* signal_name = (char*)signal_name_mbcs.c_str();
       uInt32 signal_type = request->signal_type();
       int32 actual_result_size {};
       int32 result_state {};
@@ -130,7 +132,9 @@ namespace nirfmxinstr_restricted_grpc {
           return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
-        response->set_result_name(result_name);
+        std::string result_name_utf8;
+        convert_to_grpc(result_name, &result_name_utf8);
+        response->set_result_name(result_name_utf8);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_result_name()));
         response->set_actual_result_size(actual_result_size);
         response->set_result_state(result_state);
@@ -152,7 +156,8 @@ namespace nirfmxinstr_restricted_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
 
       while (true) {
         auto status = library_->GetActiveTableName(instrument, selector_string, 0, nullptr);
@@ -174,7 +179,9 @@ namespace nirfmxinstr_restricted_grpc {
           return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
-        response->set_active_table_name(active_table_name);
+        std::string active_table_name_utf8;
+        convert_to_grpc(active_table_name, &active_table_name_utf8);
+        response->set_active_table_name(active_table_name_utf8);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_active_table_name()));
         return ::grpc::Status::OK;
       }
@@ -194,7 +201,8 @@ namespace nirfmxinstr_restricted_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       int32 attr_val {};
       auto status = library_->GetAttributeAuthor(instrument, selector_string, attribute_id, &attr_val);
@@ -220,7 +228,8 @@ namespace nirfmxinstr_restricted_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* channel_name = (char*)request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      char* channel_name = (char*)channel_name_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       float32 attr_val {};
       auto status = library_->GetAttributeDesiredF32(instrument, channel_name, attribute_id, &attr_val);
@@ -246,7 +255,8 @@ namespace nirfmxinstr_restricted_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* channel_name = (char*)request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      char* channel_name = (char*)channel_name_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_array_size {};
       while (true) {
@@ -286,7 +296,8 @@ namespace nirfmxinstr_restricted_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* channel_name = (char*)request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      char* channel_name = (char*)channel_name_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       float64 attr_val {};
       auto status = library_->GetAttributeDesiredF64(instrument, channel_name, attribute_id, &attr_val);
@@ -312,7 +323,8 @@ namespace nirfmxinstr_restricted_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* channel_name = (char*)request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      char* channel_name = (char*)channel_name_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_array_size {};
       while (true) {
@@ -352,7 +364,8 @@ namespace nirfmxinstr_restricted_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* channel_name = (char*)request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      char* channel_name = (char*)channel_name_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       int32 attr_val {};
       auto status = library_->GetAttributeDesiredI32(instrument, channel_name, attribute_id, &attr_val);
@@ -378,7 +391,8 @@ namespace nirfmxinstr_restricted_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* channel_name = (char*)request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      char* channel_name = (char*)channel_name_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       int64 attr_val {};
       auto status = library_->GetAttributeDesiredI64(instrument, channel_name, attribute_id, &attr_val);
@@ -404,7 +418,8 @@ namespace nirfmxinstr_restricted_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* channel_name = (char*)request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      char* channel_name = (char*)channel_name_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
 
       while (true) {
@@ -427,7 +442,9 @@ namespace nirfmxinstr_restricted_grpc {
           return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
-        response->set_attr_val(attr_val);
+        std::string attr_val_utf8;
+        convert_to_grpc(attr_val, &attr_val_utf8);
+        response->set_attr_val(attr_val_utf8);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_attr_val()));
         return ::grpc::Status::OK;
       }
@@ -447,7 +464,8 @@ namespace nirfmxinstr_restricted_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 calibration_plane_enabled {};
       auto status = library_->GetCalibrationPlaneEnabled(instrument, selector_string, &calibration_plane_enabled);
       if (!status_ok(status)) {
@@ -472,7 +490,8 @@ namespace nirfmxinstr_restricted_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
 
       while (true) {
         auto status = library_->GetCalibrationPlaneNames(instrument, selector_string, 0, nullptr);
@@ -494,7 +513,9 @@ namespace nirfmxinstr_restricted_grpc {
           return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
-        response->set_calibration_plane_names(calibration_plane_names);
+        std::string calibration_plane_names_utf8;
+        convert_to_grpc(calibration_plane_names, &calibration_plane_names_utf8);
+        response->set_calibration_plane_names(calibration_plane_names_utf8);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_calibration_plane_names()));
         return ::grpc::Status::OK;
       }
@@ -514,7 +535,8 @@ namespace nirfmxinstr_restricted_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
 
       while (true) {
         auto status = library_->GetExternalAttenuationTableNames(instrument, selector_string, 0, nullptr);
@@ -536,7 +558,9 @@ namespace nirfmxinstr_restricted_grpc {
           return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
-        response->set_external_attenuation_table_names(external_attenuation_table_names);
+        std::string external_attenuation_table_names_utf8;
+        convert_to_grpc(external_attenuation_table_names, &external_attenuation_table_names_utf8);
+        response->set_external_attenuation_table_names(external_attenuation_table_names_utf8);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_external_attenuation_table_names()));
         return ::grpc::Status::OK;
       }
@@ -556,7 +580,8 @@ namespace nirfmxinstr_restricted_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* channel_name = (char*)request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      char* channel_name = (char*)channel_name_mbcs.c_str();
       int32 attr_val {};
       auto status = library_->GetForceAllTracesEnabled(instrument, channel_name, &attr_val);
       if (!status_ok(status)) {
@@ -579,7 +604,8 @@ namespace nirfmxinstr_restricted_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      char* resource_name = (char*)request->resource_name().c_str();
+      auto resource_name_mbcs = convert_from_grpc<std::string>(request->resource_name());
+      char* resource_name = (char*)resource_name_mbcs.c_str();
 
       while (true) {
         auto status = library_->GetOpenSessionsInformation(resource_name, 0, nullptr);
@@ -601,7 +627,9 @@ namespace nirfmxinstr_restricted_grpc {
           return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
         }
         response->set_status(status);
-        response->set_info_json(info_json);
+        std::string info_json_utf8;
+        convert_to_grpc(info_json, &info_json_utf8);
+        response->set_info_json(info_json_utf8);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_info_json()));
         return ::grpc::Status::OK;
       }
@@ -668,7 +696,9 @@ namespace nirfmxinstr_restricted_grpc {
           return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
-        response->set_version(version);
+        std::string version_utf8;
+        convert_to_grpc(version, &version_utf8);
+        response->set_version(version_utf8);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_version()));
         return ::grpc::Status::OK;
       }
@@ -686,8 +716,10 @@ namespace nirfmxinstr_restricted_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      char* resource_names = (char*)request->resource_names().c_str();
-      char* option_string = (char*)request->option_string().c_str();
+      auto resource_names_mbcs = convert_from_grpc<std::string>(request->resource_names());
+      char* resource_names = (char*)resource_names_mbcs.c_str();
+      auto option_string_mbcs = convert_from_grpc<std::string>(request->option_string());
+      char* option_string = (char*)option_string_mbcs.c_str();
 
       while (true) {
         auto status = library_->GetSessionUniqueIdentifier(resource_names, option_string, 0, nullptr);
@@ -709,7 +741,9 @@ namespace nirfmxinstr_restricted_grpc {
           return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
         }
         response->set_status(status);
-        response->set_session_unique_identifier(session_unique_identifier);
+        std::string session_unique_identifier_utf8;
+        convert_to_grpc(session_unique_identifier, &session_unique_identifier_utf8);
+        response->set_session_unique_identifier(session_unique_identifier_utf8);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_session_unique_identifier()));
         return ::grpc::Status::OK;
       }
@@ -729,7 +763,8 @@ namespace nirfmxinstr_restricted_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* signal_name = (char*)request->signal_name().c_str();
+      auto signal_name_mbcs = convert_from_grpc<std::string>(request->signal_name());
+      char* signal_name = (char*)signal_name_mbcs.c_str();
       uInt32 signal_type = request->signal_type();
       int32 signal_state {};
       uInt64 time_stamp {};
@@ -758,7 +793,8 @@ namespace nirfmxinstr_restricted_grpc {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       int32 personality = request->personality();
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 snapshot_state {};
       auto status = library_->GetSnapshotState(instrument, personality, selector_string, &snapshot_state);
       if (!status_ok(status)) {
@@ -783,7 +819,8 @@ namespace nirfmxinstr_restricted_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 all_traces_enabled {};
       auto status = library_->GetTracesInfoForMonitorSnapshot(instrument, selector_string, &all_traces_enabled);
       if (!status_ok(status)) {
@@ -808,7 +845,8 @@ namespace nirfmxinstr_restricted_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* file_path = (char*)request->file_path().c_str();
+      auto file_path_mbcs = convert_from_grpc<std::string>(request->file_path());
+      char* file_path = (char*)file_path_mbcs.c_str();
       auto status = library_->LoadAllForRevert(instrument, file_path);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -831,7 +869,8 @@ namespace nirfmxinstr_restricted_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* json_string = (char*)request->json_string().c_str();
+      auto json_string_mbcs = convert_from_grpc<std::string>(request->json_string());
+      char* json_string = (char*)json_string_mbcs.c_str();
       int32 array_size = static_cast<int32>(request->json_string().size());
       auto status = library_->LoadConfigurationsFromJSON(instrument, json_string, array_size);
       if (!status_ok(status)) {
@@ -853,7 +892,8 @@ namespace nirfmxinstr_restricted_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      char* resource_name = (char*)request->resource_name().c_str();
+      auto resource_name_mbcs = convert_from_grpc<std::string>(request->resource_name());
+      char* resource_name = (char*)resource_name_mbcs.c_str();
       auto status = library_->RegisterSpecialClientSnapshotInterest(resource_name);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
@@ -899,7 +939,8 @@ namespace nirfmxinstr_restricted_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* file_path = (char*)request->file_path().c_str();
+      auto file_path_mbcs = convert_from_grpc<std::string>(request->file_path());
+      char* file_path = (char*)file_path_mbcs.c_str();
       auto status = library_->SaveAllForRevert(instrument, file_path);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -922,7 +963,8 @@ namespace nirfmxinstr_restricted_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* signal_names = (char*)request->signal_names().c_str();
+      auto signal_names_mbcs = convert_from_grpc<std::string>(request->signal_names());
+      char* signal_names = (char*)signal_names_mbcs.c_str();
       int32 actual_array_size {};
       while (true) {
         auto status = library_->SaveConfigurationsToJSON(instrument, signal_names, nullptr, 0, &actual_array_size);
@@ -943,7 +985,9 @@ namespace nirfmxinstr_restricted_grpc {
           return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
-        response->set_json_string_out(json_string_out);
+        std::string json_string_out_utf8;
+        convert_to_grpc(json_string_out, &json_string_out_utf8);
+        response->set_json_string_out(json_string_out_utf8);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_json_string_out()));
         response->set_actual_array_size(actual_array_size);
         return ::grpc::Status::OK;
@@ -964,7 +1008,8 @@ namespace nirfmxinstr_restricted_grpc {
     try {
       auto instrument_grpc_session = request->instrument();
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      char* channel_name = (char*)request->channel_name().c_str();
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      char* channel_name = (char*)channel_name_mbcs.c_str();
       int32 attr_val = request->attr_val();
       auto status = library_->SetForceAllTracesEnabled(instrument, channel_name, attr_val);
       if (!status_ok(status)) {
@@ -1009,7 +1054,8 @@ namespace nirfmxinstr_restricted_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      char* resource_name = (char*)request->resource_name().c_str();
+      auto resource_name_mbcs = convert_from_grpc<std::string>(request->resource_name());
+      char* resource_name = (char*)resource_name_mbcs.c_str();
       auto status = library_->UnregisterSpecialClientSnapshotInterest(resource_name);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
