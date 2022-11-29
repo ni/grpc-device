@@ -4,7 +4,7 @@
 //---------------------------------------------------------------------
 // EXPERIMENTAL Client convenience wrapper for NI-DAQMX.
 //---------------------------------------------------------------------
-#include "nidaqmx_client.h" 
+#include "nidaqmx_client.h"
 
 #include <grpcpp/grpcpp.h>
 
