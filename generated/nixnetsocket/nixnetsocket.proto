@@ -1,0 +1,661 @@
+
+//---------------------------------------------------------------------
+// This file is generated from NI-XNETSOCKET API metadata version 21.8.0
+//---------------------------------------------------------------------
+// Proto file for the NI-XNETSOCKET Metadata
+//---------------------------------------------------------------------
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.ni.grpc.xnetsocket";
+option java_outer_classname = "NiXnetSocket";
+option csharp_namespace = "NationalInstruments.Grpc.NiXnetSocket";
+
+package nixnetsocket_grpc;
+
+import "session.proto";
+import "google/protobuf/duration.proto";
+
+service NiXnetSocket {
+  rpc Accept(AcceptRequest) returns (AcceptResponse);
+  rpc Bind(BindRequest) returns (BindResponse);
+  rpc Close(CloseRequest) returns (CloseResponse);
+  rpc Connect(ConnectRequest) returns (ConnectResponse);
+  rpc FdIsSet(FdIsSetRequest) returns (FdIsSetResponse);
+  rpc GetAddrInfo(GetAddrInfoRequest) returns (GetAddrInfoResponse);
+  rpc GetNameInfo(GetNameInfoRequest) returns (GetNameInfoResponse);
+  rpc GetPeerName(GetPeerNameRequest) returns (GetPeerNameResponse);
+  rpc GetSockName(GetSockNameRequest) returns (GetSockNameResponse);
+  rpc GetSockOpt(GetSockOptRequest) returns (GetSockOptResponse);
+  rpc InetAddr(InetAddrRequest) returns (InetAddrResponse);
+  rpc InetAToN(InetAToNRequest) returns (InetAToNResponse);
+  rpc InetNToA(InetNToARequest) returns (InetNToAResponse);
+  rpc InetNToP(InetNToPRequest) returns (InetNToPResponse);
+  rpc InetPToN(InetPToNRequest) returns (InetPToNResponse);
+  rpc IpStackClear(IpStackClearRequest) returns (IpStackClearResponse);
+  rpc IpStackCreate(IpStackCreateRequest) returns (IpStackCreateResponse);
+  rpc IpStackGetAllStacksInfoStr(IpStackGetAllStacksInfoStrRequest) returns (IpStackGetAllStacksInfoStrResponse);
+  rpc IpStackGetInfo(IpStackGetInfoRequest) returns (IpStackGetInfoResponse);
+  rpc IpStackOpen(IpStackOpenRequest) returns (IpStackOpenResponse);
+  rpc IpStackWaitForInterface(IpStackWaitForInterfaceRequest) returns (IpStackWaitForInterfaceResponse);
+  rpc Listen(ListenRequest) returns (ListenResponse);
+  rpc Recv(RecvRequest) returns (RecvResponse);
+  rpc RecvFrom(RecvFromRequest) returns (RecvFromResponse);
+  rpc Select(SelectRequest) returns (SelectResponse);
+  rpc Send(SendRequest) returns (SendResponse);
+  rpc SendTo(SendToRequest) returns (SendToResponse);
+  rpc SetSockOpt(SetSockOptRequest) returns (SetSockOptResponse);
+  rpc Shutdown(ShutdownRequest) returns (ShutdownResponse);
+  rpc Socket(SocketRequest) returns (SocketResponse);
+  rpc StrErrR(StrErrRRequest) returns (StrErrRResponse);
+}
+
+enum AddressFamily {
+  ADDRESS_FAMILY_UNSPECIFIED = 0;
+  ADDRESS_FAMILY_INET = 2;
+  ADDRESS_FAMILY_INET6 = 10;
+}
+
+enum GetAddrInfoFlags {
+  GET_ADDR_INFO_FLAGS_UNSPECIFIED = 0;
+  GET_ADDR_INFO_FLAGS_PASSIVE = 1;
+  GET_ADDR_INFO_FLAGS_CANONNAME = 2;
+  GET_ADDR_INFO_FLAGS_NUMERICHOST = 4;
+  GET_ADDR_INFO_FLAGS_NUMERICSERV = 8;
+  GET_ADDR_INFO_FLAGS_V4MAPPED = 16;
+  GET_ADDR_INFO_FLAGS_ALL = 32;
+  GET_ADDR_INFO_FLAGS_ADDRCONFIG = 64;
+  GET_ADDR_INFO_FLAGS_LOCALQUERY = 128;
+  GET_ADDR_INFO_FLAGS_PREFER_V4 = 256;
+  GET_ADDR_INFO_FLAGS_UNICAST_REPLY = 512;
+  GET_ADDR_INFO_FLAGS_SHARED_RRSET = 1024;
+  GET_ADDR_INFO_FLAGS_BYPASS_CACHE = 2048;
+}
+
+enum GetNameInfoFlags {
+  GET_NAME_INFO_FLAGS_UNSPECIFIED = 0;
+  GET_NAME_INFO_FLAGS_NOFQDN = 1;
+  GET_NAME_INFO_FLAGS_NUMERICHOST = 2;
+  GET_NAME_INFO_FLAGS_NAMEREQD = 4;
+  GET_NAME_INFO_FLAGS_NUMERICSERV = 8;
+  GET_NAME_INFO_FLAGS_DGRAM = 16;
+}
+
+enum IPProtocol {
+  IP_PROTOCOL_IP = 0;
+  IP_PROTOCOL_TCP = 6;
+  IP_PROTOCOL_UDP = 8;
+  IP_PROTOCOL_IPV6 = 12;
+}
+
+enum IPStackInfoStringFormat {
+  IPSTACK_INFO_STR_FORMAT_JSON = 0;
+  IPSTACK_INFO_STR_FORMAT_TEXT = 1;
+}
+
+enum OperationalStatus {
+  OPERATIONAL_STATUS_DOWN = 0;
+  OPERATIONAL_STATUS_UP = 1;
+}
+
+enum OptName {
+  option allow_alias = true;
+  OPT_NAME_UNSPECIFIED = 0;
+  OPT_NAME_TCP_NODELAY = 1;
+  OPT_NAME_IP_ADD_MEMBERSHIP = 3;
+  OPT_NAME_IP_DROP_MEMBERSHIP = 4;
+  OPT_NAME_IP_MULTICAST_IF = 5;
+  OPT_NAME_IP_MULTICAST_TTL = 6;
+  OPT_NAME_IPV6_JOIN_GROUP = 12;
+  OPT_NAME_IPV6_LEAVE_GROUP = 13;
+  OPT_NAME_IPV6_ADD_MEMBERSHIP = 12;
+  OPT_NAME_IPV6_DROP_MEMBERSHIP = 13;
+  OPT_NAME_IPV6_MULTICAST_IF = 14;
+  OPT_NAME_IPV6_MULTICAST_HOPS = 15;
+  OPT_NAME_IPV6_V6ONLY = 16;
+  OPT_NAME_SO_RXDATA = 257;
+  OPT_NAME_SO_RCVBUF = 258;
+  OPT_NAME_SO_SNDBUF = 259;
+  OPT_NAME_SO_NONBLOCK = 260;
+  OPT_NAME_SO_BINDTODEVICE = 261;
+  OPT_NAME_SO_ERROR = 262;
+  OPT_NAME_SO_LINGER = 263;
+  OPT_NAME_SO_REUSEADDR = 264;
+}
+
+enum RecvFlags {
+  RECV_FLAGS_UNSPECIFIED = 0;
+  RECV_FLAGS_MSG_PEEK = 1;
+}
+
+enum Shutdown {
+  SHUTDOWN_RD = 0;
+  SHUTDOWN_WR = 1;
+  SHUTDOWN_RDWR = 2;
+}
+
+enum SocketOptionLevel {
+  SOCKET_OPTION_LEVEL_PROTO_IP = 0;
+  SOCKET_OPTION_LEVEL_PROTO_TCP = 6;
+  SOCKET_OPTION_LEVEL_PROTO_UDP = 8;
+  SOCKET_OPTION_LEVEL_PROTO_IPV6 = 12;
+  SOCKET_OPTION_LEVEL_SOCKET = 13;
+}
+
+enum SocketProtocolType {
+  SOCKET_PROTOCOL_TYPE_UNSPECIFIED = 0;
+  SOCKET_PROTOCOL_TYPE_STREAM = 1;
+  SOCKET_PROTOCOL_TYPE_DGRAM = 2;
+}
+
+message IPAddress {
+  AddressFamily family = 1;
+  string address = 2;
+  string net_mask = 3;
+  uint32 prefix_length = 4;
+}
+
+message GatewayAddress {
+  AddressFamily family = 1;
+  string address = 2;
+}
+
+message VirtualInterface {
+  string xnet_interface_name = 1;
+  string vlan_name = 2;
+  string mac_address = 3;
+  uint32 mac_mtu = 4;
+  OperationalStatus operational_status = 5;
+  uint32 if_index = 6;
+  repeated IPAddress ip_addresses = 7;
+  repeated GatewayAddress gateway_addresses = 8;
+}
+
+message InAddr {
+  uint32 addr = 1;
+}
+
+message In6Addr {
+  bytes addr = 1;
+}
+
+message Addr {
+  oneof addr {
+    InAddr ipv4 = 1;
+    In6Addr ipv6 = 2;
+  }
+}
+
+message SockAddrIn {
+  uint32 port = 1;
+  InAddr addr = 2;
+}
+
+message SockAddrIn6 {
+  uint32 port = 1;
+  uint32 flowinfo = 2;
+  In6Addr addr = 3;
+  uint32 scope_id = 4;
+}
+
+message SockAddr {
+  oneof addr {
+    SockAddrIn ipv4 = 1;
+    SockAddrIn6 ipv6 = 2;
+  }
+}
+
+message AddrInfo {
+  repeated GetAddrInfoFlags flags_array = 1;
+  int32 flags_raw = 2;
+  AddressFamily family = 3;
+  SocketProtocolType sock_type = 4;
+  IPProtocol protocol = 5;
+  SockAddr addr = 6;
+  string canon_name = 7;
+}
+
+message AddrInfoHint {
+  repeated GetAddrInfoFlags flags_array = 1;
+  int32 flags_raw = 2;
+  AddressFamily family = 3;
+  SocketProtocolType sock_type = 4;
+  IPProtocol protocol = 5;
+}
+
+message Linger {
+  int32 onoff = 1;
+  int32 linger = 2;
+}
+
+message IPMReq {
+  InAddr multiaddr = 1;
+  InAddr imr_interface = 2;
+}
+
+message IPv6MReq {
+  In6Addr multiaddr = 1;
+  int32 ipv6mr_interface = 2;
+}
+
+message SockOptData {
+  oneof data {
+    int32 data_int32 = 1;
+    bool data_bool = 2;
+    string data_string = 3;
+    Linger data_linger = 4;
+    IPMReq data_ip_mreq = 5;
+    IPv6MReq data_ipv6_mreq = 6;
+  }
+}
+
+message AcceptRequest {
+  string session_name = 1;
+  nidevice_grpc.Session socket = 2;
+}
+
+message AcceptResponse {
+  int32 status = 1;
+  SockAddr addr = 2;
+  nidevice_grpc.Session socket = 3;
+  string error_message = 4 [deprecated = true];
+  int32 error_num = 5 [deprecated = true];
+}
+
+message BindRequest {
+  nidevice_grpc.Session socket = 1;
+  SockAddr name = 2;
+}
+
+message BindResponse {
+  int32 status = 1;
+  string error_message = 2 [deprecated = true];
+  int32 error_num = 3 [deprecated = true];
+}
+
+message CloseRequest {
+  nidevice_grpc.Session socket = 1;
+}
+
+message CloseResponse {
+  int32 status = 1;
+  string error_message = 2 [deprecated = true];
+  int32 error_num = 3 [deprecated = true];
+}
+
+message ConnectRequest {
+  nidevice_grpc.Session socket = 1;
+  SockAddr name = 2;
+}
+
+message ConnectResponse {
+  int32 status = 1;
+  string error_message = 2 [deprecated = true];
+  int32 error_num = 3 [deprecated = true];
+}
+
+message FdIsSetRequest {
+  nidevice_grpc.Session fd = 1;
+  repeated nidevice_grpc.Session set = 2;
+}
+
+message FdIsSetResponse {
+  int32 status = 1;
+  int32 is_set = 2;
+  string error_message = 3 [deprecated = true];
+  int32 error_num = 4 [deprecated = true];
+}
+
+message GetAddrInfoRequest {
+  nidevice_grpc.Session stack_ref = 1;
+  string node = 2;
+  string service = 3;
+  AddrInfoHint hints = 4;
+}
+
+message GetAddrInfoResponse {
+  int32 status = 1;
+  repeated AddrInfo res = 2;
+  string error_message = 3 [deprecated = true];
+  int32 error_num = 4 [deprecated = true];
+}
+
+message GetNameInfoRequest {
+  nidevice_grpc.Session stack_ref = 1;
+  SockAddr addr = 2;
+  int32 hostlen = 3;
+  int32 servlen = 4;
+  repeated GetNameInfoFlags flags_array = 5;
+  int32 flags_raw = 6;
+}
+
+message GetNameInfoResponse {
+  int32 status = 1;
+  string host = 2;
+  string serv = 3;
+  string error_message = 4 [deprecated = true];
+  int32 error_num = 5 [deprecated = true];
+}
+
+message GetPeerNameRequest {
+  nidevice_grpc.Session socket = 1;
+}
+
+message GetPeerNameResponse {
+  int32 status = 1;
+  SockAddr addr = 2;
+  string error_message = 3 [deprecated = true];
+  int32 error_num = 4 [deprecated = true];
+}
+
+message GetSockNameRequest {
+  nidevice_grpc.Session socket = 1;
+}
+
+message GetSockNameResponse {
+  int32 status = 1;
+  SockAddr addr = 2;
+  string error_message = 3 [deprecated = true];
+  int32 error_num = 4 [deprecated = true];
+}
+
+message GetSockOptRequest {
+  nidevice_grpc.Session socket = 1;
+  oneof level_enum {
+    SocketOptionLevel level = 2;
+    int32 level_raw = 3;
+  }
+  oneof optname_enum {
+    OptName optname = 4;
+    int32 optname_raw = 5;
+  }
+}
+
+message GetSockOptResponse {
+  int32 status = 1;
+  SockOptData optval = 2;
+  string error_message = 3 [deprecated = true];
+  int32 error_num = 4 [deprecated = true];
+}
+
+message InetAddrRequest {
+  nidevice_grpc.Session stack_ref = 1;
+  string cp = 2;
+}
+
+message InetAddrResponse {
+  int32 status = 1;
+  uint32 addr = 2;
+  string error_message = 3 [deprecated = true];
+  int32 error_num = 4 [deprecated = true];
+}
+
+message InetAToNRequest {
+  nidevice_grpc.Session stack_ref = 1;
+  string cp = 2;
+}
+
+message InetAToNResponse {
+  int32 status = 1;
+  InAddr name = 2;
+  string error_message = 3 [deprecated = true];
+  int32 error_num = 4 [deprecated = true];
+}
+
+message InetNToARequest {
+  nidevice_grpc.Session stack_ref = 1;
+  InAddr in_addr = 2;
+}
+
+message InetNToAResponse {
+  int32 status = 1;
+  string address = 2;
+  string error_message = 3 [deprecated = true];
+  int32 error_num = 4 [deprecated = true];
+}
+
+message InetNToPRequest {
+  nidevice_grpc.Session stack_ref = 1;
+  Addr addr = 2;
+}
+
+message InetNToPResponse {
+  int32 status = 1;
+  string address = 2;
+  string error_message = 3 [deprecated = true];
+  int32 error_num = 4 [deprecated = true];
+}
+
+message InetPToNRequest {
+  nidevice_grpc.Session stack_ref = 1;
+  oneof af_enum {
+    AddressFamily af = 2;
+    int32 af_raw = 3;
+  }
+  string address = 4;
+}
+
+message InetPToNResponse {
+  int32 status = 1;
+  Addr addr = 2;
+  string error_message = 3 [deprecated = true];
+  int32 error_num = 4 [deprecated = true];
+}
+
+message IpStackClearRequest {
+  nidevice_grpc.Session stack_ref = 1;
+}
+
+message IpStackClearResponse {
+  int32 status = 1;
+  string error_message = 2 [deprecated = true];
+  int32 error_num = 3 [deprecated = true];
+}
+
+message IpStackCreateRequest {
+  string session_name = 1;
+  string stack_name = 2;
+  string config = 3;
+}
+
+message IpStackCreateResponse {
+  int32 status = 1;
+  nidevice_grpc.Session stack_ref = 2;
+  string error_message = 3 [deprecated = true];
+  int32 error_num = 4 [deprecated = true];
+}
+
+message IpStackGetAllStacksInfoStrRequest {
+  oneof format_enum {
+    IPStackInfoStringFormat format = 1;
+    uint32 format_raw = 2;
+  }
+}
+
+message IpStackGetAllStacksInfoStrResponse {
+  int32 status = 1;
+  string info = 2;
+  string error_message = 3 [deprecated = true];
+  int32 error_num = 4 [deprecated = true];
+}
+
+message IpStackGetInfoRequest {
+  nidevice_grpc.Session stack_ref = 1;
+}
+
+message IpStackGetInfoResponse {
+  int32 status = 1;
+  repeated VirtualInterface virtual_interfaces = 2;
+  string error_message = 3 [deprecated = true];
+  int32 error_num = 4 [deprecated = true];
+}
+
+message IpStackOpenRequest {
+  string session_name = 1;
+  string stack_name = 2;
+}
+
+message IpStackOpenResponse {
+  int32 status = 1;
+  nidevice_grpc.Session stack_ref = 2;
+  string error_message = 3 [deprecated = true];
+  int32 error_num = 4 [deprecated = true];
+}
+
+message IpStackWaitForInterfaceRequest {
+  nidevice_grpc.Session stack_ref = 1;
+  string local_interface = 2;
+  int32 timeout_ms = 3;
+}
+
+message IpStackWaitForInterfaceResponse {
+  int32 status = 1;
+  string error_message = 2 [deprecated = true];
+  int32 error_num = 3 [deprecated = true];
+}
+
+message ListenRequest {
+  nidevice_grpc.Session socket = 1;
+  int32 backlog = 2;
+}
+
+message ListenResponse {
+  int32 status = 1;
+  string error_message = 2 [deprecated = true];
+  int32 error_num = 3 [deprecated = true];
+}
+
+message RecvRequest {
+  nidevice_grpc.Session socket = 1;
+  int32 size = 2;
+  repeated RecvFlags flags_array = 3;
+  int32 flags_raw = 4;
+}
+
+message RecvResponse {
+  int32 status = 1;
+  bytes data = 2;
+  string error_message = 3 [deprecated = true];
+  int32 error_num = 4 [deprecated = true];
+}
+
+message RecvFromRequest {
+  nidevice_grpc.Session socket = 1;
+  int32 size = 2;
+  repeated RecvFlags flags_array = 3;
+  int32 flags_raw = 4;
+}
+
+message RecvFromResponse {
+  int32 status = 1;
+  bytes data = 2;
+  SockAddr from_addr = 3;
+  string error_message = 4 [deprecated = true];
+  int32 error_num = 5 [deprecated = true];
+}
+
+message SelectRequest {
+  repeated nidevice_grpc.Session readfds = 1;
+  repeated nidevice_grpc.Session writefds = 2;
+  repeated nidevice_grpc.Session exceptfds = 3;
+  google.protobuf.Duration timeout = 4;
+}
+
+message SelectResponse {
+  int32 status = 1;
+  string error_message = 2 [deprecated = true];
+  int32 error_num = 3 [deprecated = true];
+}
+
+message SendRequest {
+  nidevice_grpc.Session socket = 1;
+  bytes data = 2;
+  int32 flags_raw = 3;
+}
+
+message SendResponse {
+  int32 status = 1;
+  string error_message = 2 [deprecated = true];
+  int32 error_num = 3 [deprecated = true];
+}
+
+message SendToRequest {
+  nidevice_grpc.Session socket = 1;
+  bytes data = 2;
+  int32 flags_raw = 3;
+  SockAddr to = 4;
+}
+
+message SendToResponse {
+  int32 status = 1;
+  string error_message = 2 [deprecated = true];
+  int32 error_num = 3 [deprecated = true];
+}
+
+message SetSockOptRequest {
+  nidevice_grpc.Session socket = 1;
+  oneof level_enum {
+    SocketOptionLevel level = 2;
+    int32 level_raw = 3;
+  }
+  oneof optname_enum {
+    OptName optname = 4;
+    int32 optname_raw = 5;
+  }
+  SockOptData opt_data = 6;
+}
+
+message SetSockOptResponse {
+  int32 status = 1;
+  string error_message = 2 [deprecated = true];
+  int32 error_num = 3 [deprecated = true];
+}
+
+message ShutdownRequest {
+  nidevice_grpc.Session socket = 1;
+  oneof how_enum {
+    Shutdown how = 2;
+    int32 how_raw = 3;
+  }
+}
+
+message ShutdownResponse {
+  int32 status = 1;
+  string error_message = 2 [deprecated = true];
+  int32 error_num = 3 [deprecated = true];
+}
+
+message SocketRequest {
+  string session_name = 1;
+  nidevice_grpc.Session stack_ref = 2;
+  oneof domain_enum {
+    AddressFamily domain = 3;
+    int32 domain_raw = 4;
+  }
+  oneof type_enum {
+    SocketProtocolType type = 5;
+    int32 type_raw = 6;
+  }
+  oneof protocol_enum {
+    IPProtocol protocol = 7;
+    int32 protocol_raw = 8;
+  }
+}
+
+message SocketResponse {
+  int32 status = 1;
+  nidevice_grpc.Session socket = 2;
+  string error_message = 3 [deprecated = true];
+  int32 error_num = 4 [deprecated = true];
+}
+
+message StrErrRRequest {
+  int32 errnum = 1;
+  uint64 buf_len = 2;
+}
+
+message StrErrRResponse {
+  int32 status = 1;
+  string error = 2;
+}
+

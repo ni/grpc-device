@@ -1,0 +1,2087 @@
+
+//---------------------------------------------------------------------
+// This file is generated from NI-RFMXBLUETOOTH API metadata version 21.0.0
+//---------------------------------------------------------------------
+// Proto file for the NI-RFMXBLUETOOTH Metadata
+//---------------------------------------------------------------------
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.ni.grpc.nirfmxbluetooth";
+option java_outer_classname = "NiRFmxBluetooth";
+option csharp_namespace = "NationalInstruments.Grpc.NiRFmxBluetooth";
+
+package nirfmxbluetooth_grpc;
+
+import "nidevice.proto";
+import "session.proto";
+
+service NiRFmxBluetooth {
+  rpc ACPCfgAveraging(ACPCfgAveragingRequest) returns (ACPCfgAveragingResponse);
+  rpc ACPCfgBurstSynchronizationType(ACPCfgBurstSynchronizationTypeRequest) returns (ACPCfgBurstSynchronizationTypeResponse);
+  rpc ACPCfgNumberOfOffsets(ACPCfgNumberOfOffsetsRequest) returns (ACPCfgNumberOfOffsetsResponse);
+  rpc ACPCfgOffsetChannelMode(ACPCfgOffsetChannelModeRequest) returns (ACPCfgOffsetChannelModeResponse);
+  rpc ACPFetchAbsolutePowerTrace(ACPFetchAbsolutePowerTraceRequest) returns (ACPFetchAbsolutePowerTraceResponse);
+  rpc ACPFetchMaskTrace(ACPFetchMaskTraceRequest) returns (ACPFetchMaskTraceResponse);
+  rpc ACPFetchMeasurementStatus(ACPFetchMeasurementStatusRequest) returns (ACPFetchMeasurementStatusResponse);
+  rpc ACPFetchOffsetMeasurement(ACPFetchOffsetMeasurementRequest) returns (ACPFetchOffsetMeasurementResponse);
+  rpc ACPFetchOffsetMeasurementArray(ACPFetchOffsetMeasurementArrayRequest) returns (ACPFetchOffsetMeasurementArrayResponse);
+  rpc ACPFetchReferenceChannelPower(ACPFetchReferenceChannelPowerRequest) returns (ACPFetchReferenceChannelPowerResponse);
+  rpc ACPFetchSpectrum(ACPFetchSpectrumRequest) returns (ACPFetchSpectrumResponse);
+  rpc AbortMeasurements(AbortMeasurementsRequest) returns (AbortMeasurementsResponse);
+  rpc AnalyzeIQ1Waveform(AnalyzeIQ1WaveformRequest) returns (AnalyzeIQ1WaveformResponse);
+  rpc AutoDetectSignal(AutoDetectSignalRequest) returns (AutoDetectSignalResponse);
+  rpc AutoLevel(AutoLevelRequest) returns (AutoLevelResponse);
+  rpc BuildOffsetString(BuildOffsetStringRequest) returns (BuildOffsetStringResponse);
+  rpc BuildSignalString(BuildSignalStringRequest) returns (BuildSignalStringResponse);
+  rpc BuildSlotString(BuildSlotStringRequest) returns (BuildSlotStringResponse);
+  rpc CfgChannelNumber(CfgChannelNumberRequest) returns (CfgChannelNumberResponse);
+  rpc CfgDataRate(CfgDataRateRequest) returns (CfgDataRateResponse);
+  rpc CfgDigitalEdgeTrigger(CfgDigitalEdgeTriggerRequest) returns (CfgDigitalEdgeTriggerResponse);
+  rpc CfgExternalAttenuation(CfgExternalAttenuationRequest) returns (CfgExternalAttenuationResponse);
+  rpc CfgFrequency(CfgFrequencyRequest) returns (CfgFrequencyResponse);
+  rpc CfgFrequencyChannelNumber(CfgFrequencyChannelNumberRequest) returns (CfgFrequencyChannelNumberResponse);
+  rpc CfgFrequencyReference(CfgFrequencyReferenceRequest) returns (CfgFrequencyReferenceResponse);
+  rpc CfgIQPowerEdgeTrigger(CfgIQPowerEdgeTriggerRequest) returns (CfgIQPowerEdgeTriggerResponse);
+  rpc CfgLEDirectionFinding(CfgLEDirectionFindingRequest) returns (CfgLEDirectionFindingResponse);
+  rpc CfgMechanicalAttenuation(CfgMechanicalAttenuationRequest) returns (CfgMechanicalAttenuationResponse);
+  rpc CfgPacketType(CfgPacketTypeRequest) returns (CfgPacketTypeResponse);
+  rpc CfgPayloadBitPattern(CfgPayloadBitPatternRequest) returns (CfgPayloadBitPatternResponse);
+  rpc CfgPayloadLength(CfgPayloadLengthRequest) returns (CfgPayloadLengthResponse);
+  rpc CfgRF(CfgRFRequest) returns (CfgRFResponse);
+  rpc CfgRFAttenuation(CfgRFAttenuationRequest) returns (CfgRFAttenuationResponse);
+  rpc CfgReferenceLevel(CfgReferenceLevelRequest) returns (CfgReferenceLevelResponse);
+  rpc CfgSoftwareEdgeTrigger(CfgSoftwareEdgeTriggerRequest) returns (CfgSoftwareEdgeTriggerResponse);
+  rpc CheckMeasurementStatus(CheckMeasurementStatusRequest) returns (CheckMeasurementStatusResponse);
+  rpc ClearAllNamedResults(ClearAllNamedResultsRequest) returns (ClearAllNamedResultsResponse);
+  rpc ClearNamedResult(ClearNamedResultRequest) returns (ClearNamedResultResponse);
+  rpc CloneSignalConfiguration(CloneSignalConfigurationRequest) returns (CloneSignalConfigurationResponse);
+  rpc Close(CloseRequest) returns (CloseResponse);
+  rpc Commit(CommitRequest) returns (CommitResponse);
+  rpc CreateSignalConfiguration(CreateSignalConfigurationRequest) returns (CreateSignalConfigurationResponse);
+  rpc DeleteSignalConfiguration(DeleteSignalConfigurationRequest) returns (DeleteSignalConfigurationResponse);
+  rpc DisableTrigger(DisableTriggerRequest) returns (DisableTriggerResponse);
+  rpc FrequencyRangeCfgAveraging(FrequencyRangeCfgAveragingRequest) returns (FrequencyRangeCfgAveragingResponse);
+  rpc FrequencyRangeCfgSpan(FrequencyRangeCfgSpanRequest) returns (FrequencyRangeCfgSpanResponse);
+  rpc FrequencyRangeFetchMeasurement(FrequencyRangeFetchMeasurementRequest) returns (FrequencyRangeFetchMeasurementResponse);
+  rpc FrequencyRangeFetchSpectrum(FrequencyRangeFetchSpectrumRequest) returns (FrequencyRangeFetchSpectrumResponse);
+  rpc GetAllNamedResultNames(GetAllNamedResultNamesRequest) returns (GetAllNamedResultNamesResponse);
+  rpc GetAttributeF32(GetAttributeF32Request) returns (GetAttributeF32Response);
+  rpc GetAttributeF32Array(GetAttributeF32ArrayRequest) returns (GetAttributeF32ArrayResponse);
+  rpc GetAttributeF64(GetAttributeF64Request) returns (GetAttributeF64Response);
+  rpc GetAttributeF64Array(GetAttributeF64ArrayRequest) returns (GetAttributeF64ArrayResponse);
+  rpc GetAttributeI16(GetAttributeI16Request) returns (GetAttributeI16Response);
+  rpc GetAttributeI32(GetAttributeI32Request) returns (GetAttributeI32Response);
+  rpc GetAttributeI32Array(GetAttributeI32ArrayRequest) returns (GetAttributeI32ArrayResponse);
+  rpc GetAttributeI64(GetAttributeI64Request) returns (GetAttributeI64Response);
+  rpc GetAttributeI64Array(GetAttributeI64ArrayRequest) returns (GetAttributeI64ArrayResponse);
+  rpc GetAttributeI8(GetAttributeI8Request) returns (GetAttributeI8Response);
+  rpc GetAttributeI8Array(GetAttributeI8ArrayRequest) returns (GetAttributeI8ArrayResponse);
+  rpc GetAttributeNIComplexDoubleArray(GetAttributeNIComplexDoubleArrayRequest) returns (GetAttributeNIComplexDoubleArrayResponse);
+  rpc GetAttributeNIComplexSingleArray(GetAttributeNIComplexSingleArrayRequest) returns (GetAttributeNIComplexSingleArrayResponse);
+  rpc GetAttributeString(GetAttributeStringRequest) returns (GetAttributeStringResponse);
+  rpc GetAttributeU16(GetAttributeU16Request) returns (GetAttributeU16Response);
+  rpc GetAttributeU32(GetAttributeU32Request) returns (GetAttributeU32Response);
+  rpc GetAttributeU32Array(GetAttributeU32ArrayRequest) returns (GetAttributeU32ArrayResponse);
+  rpc GetAttributeU64Array(GetAttributeU64ArrayRequest) returns (GetAttributeU64ArrayResponse);
+  rpc GetAttributeU8(GetAttributeU8Request) returns (GetAttributeU8Response);
+  rpc GetAttributeU8Array(GetAttributeU8ArrayRequest) returns (GetAttributeU8ArrayResponse);
+  rpc GetError(GetErrorRequest) returns (GetErrorResponse);
+  rpc GetErrorString(GetErrorStringRequest) returns (GetErrorStringResponse);
+  rpc Initialize(InitializeRequest) returns (InitializeResponse);
+  rpc InitializeFromNIRFSASession(InitializeFromNIRFSASessionRequest) returns (InitializeFromNIRFSASessionResponse);
+  rpc Initiate(InitiateRequest) returns (InitiateResponse);
+  rpc ModAccCfgAveraging(ModAccCfgAveragingRequest) returns (ModAccCfgAveragingResponse);
+  rpc ModAccCfgBurstSynchronizationType(ModAccCfgBurstSynchronizationTypeRequest) returns (ModAccCfgBurstSynchronizationTypeResponse);
+  rpc ModAccFetchConstellationTrace(ModAccFetchConstellationTraceRequest) returns (ModAccFetchConstellationTraceResponse);
+  rpc ModAccFetchDEVM(ModAccFetchDEVMRequest) returns (ModAccFetchDEVMResponse);
+  rpc ModAccFetchDEVMMagnitudeError(ModAccFetchDEVMMagnitudeErrorRequest) returns (ModAccFetchDEVMMagnitudeErrorResponse);
+  rpc ModAccFetchDEVMPerSymbolTrace(ModAccFetchDEVMPerSymbolTraceRequest) returns (ModAccFetchDEVMPerSymbolTraceResponse);
+  rpc ModAccFetchDEVMPhaseError(ModAccFetchDEVMPhaseErrorRequest) returns (ModAccFetchDEVMPhaseErrorResponse);
+  rpc ModAccFetchDemodulatedBitTrace(ModAccFetchDemodulatedBitTraceRequest) returns (ModAccFetchDemodulatedBitTraceResponse);
+  rpc ModAccFetchDf1(ModAccFetchDf1Request) returns (ModAccFetchDf1Response);
+  rpc ModAccFetchDf1maxTrace(ModAccFetchDf1maxTraceRequest) returns (ModAccFetchDf1maxTraceResponse);
+  rpc ModAccFetchDf2(ModAccFetchDf2Request) returns (ModAccFetchDf2Response);
+  rpc ModAccFetchDf2maxTrace(ModAccFetchDf2maxTraceRequest) returns (ModAccFetchDf2maxTraceResponse);
+  rpc ModAccFetchFrequencyErrorBR(ModAccFetchFrequencyErrorBRRequest) returns (ModAccFetchFrequencyErrorBRResponse);
+  rpc ModAccFetchFrequencyErrorEDR(ModAccFetchFrequencyErrorEDRRequest) returns (ModAccFetchFrequencyErrorEDRResponse);
+  rpc ModAccFetchFrequencyErrorLE(ModAccFetchFrequencyErrorLERequest) returns (ModAccFetchFrequencyErrorLEResponse);
+  rpc ModAccFetchFrequencyErrorTraceBR(ModAccFetchFrequencyErrorTraceBRRequest) returns (ModAccFetchFrequencyErrorTraceBRResponse);
+  rpc ModAccFetchFrequencyErrorTraceLE(ModAccFetchFrequencyErrorTraceLERequest) returns (ModAccFetchFrequencyErrorTraceLEResponse);
+  rpc ModAccFetchFrequencyErrorWiPlusW0TraceEDR(ModAccFetchFrequencyErrorWiPlusW0TraceEDRRequest) returns (ModAccFetchFrequencyErrorWiPlusW0TraceEDRResponse);
+  rpc ModAccFetchFrequencyTrace(ModAccFetchFrequencyTraceRequest) returns (ModAccFetchFrequencyTraceResponse);
+  rpc ModAccFetchRMSDEVMTrace(ModAccFetchRMSDEVMTraceRequest) returns (ModAccFetchRMSDEVMTraceResponse);
+  rpc ResetAttribute(ResetAttributeRequest) returns (ResetAttributeResponse);
+  rpc ResetToDefault(ResetToDefaultRequest) returns (ResetToDefaultResponse);
+  rpc SelectMeasurements(SelectMeasurementsRequest) returns (SelectMeasurementsResponse);
+  rpc SendSoftwareEdgeTrigger(SendSoftwareEdgeTriggerRequest) returns (SendSoftwareEdgeTriggerResponse);
+  rpc SetAttributeF32(SetAttributeF32Request) returns (SetAttributeF32Response);
+  rpc SetAttributeF32Array(SetAttributeF32ArrayRequest) returns (SetAttributeF32ArrayResponse);
+  rpc SetAttributeF64(SetAttributeF64Request) returns (SetAttributeF64Response);
+  rpc SetAttributeF64Array(SetAttributeF64ArrayRequest) returns (SetAttributeF64ArrayResponse);
+  rpc SetAttributeI16(SetAttributeI16Request) returns (SetAttributeI16Response);
+  rpc SetAttributeI32(SetAttributeI32Request) returns (SetAttributeI32Response);
+  rpc SetAttributeI32Array(SetAttributeI32ArrayRequest) returns (SetAttributeI32ArrayResponse);
+  rpc SetAttributeI64(SetAttributeI64Request) returns (SetAttributeI64Response);
+  rpc SetAttributeI64Array(SetAttributeI64ArrayRequest) returns (SetAttributeI64ArrayResponse);
+  rpc SetAttributeI8(SetAttributeI8Request) returns (SetAttributeI8Response);
+  rpc SetAttributeI8Array(SetAttributeI8ArrayRequest) returns (SetAttributeI8ArrayResponse);
+  rpc SetAttributeNIComplexDoubleArray(SetAttributeNIComplexDoubleArrayRequest) returns (SetAttributeNIComplexDoubleArrayResponse);
+  rpc SetAttributeNIComplexSingleArray(SetAttributeNIComplexSingleArrayRequest) returns (SetAttributeNIComplexSingleArrayResponse);
+  rpc SetAttributeString(SetAttributeStringRequest) returns (SetAttributeStringResponse);
+  rpc SetAttributeU16(SetAttributeU16Request) returns (SetAttributeU16Response);
+  rpc SetAttributeU32(SetAttributeU32Request) returns (SetAttributeU32Response);
+  rpc SetAttributeU32Array(SetAttributeU32ArrayRequest) returns (SetAttributeU32ArrayResponse);
+  rpc SetAttributeU64Array(SetAttributeU64ArrayRequest) returns (SetAttributeU64ArrayResponse);
+  rpc SetAttributeU8(SetAttributeU8Request) returns (SetAttributeU8Response);
+  rpc SetAttributeU8Array(SetAttributeU8ArrayRequest) returns (SetAttributeU8ArrayResponse);
+  rpc TXPCfgAveraging(TXPCfgAveragingRequest) returns (TXPCfgAveragingResponse);
+  rpc TXPCfgBurstSynchronizationType(TXPCfgBurstSynchronizationTypeRequest) returns (TXPCfgBurstSynchronizationTypeResponse);
+  rpc TXPFetchEDRPowers(TXPFetchEDRPowersRequest) returns (TXPFetchEDRPowersResponse);
+  rpc TXPFetchLECTEReferencePeriodPowers(TXPFetchLECTEReferencePeriodPowersRequest) returns (TXPFetchLECTEReferencePeriodPowersResponse);
+  rpc TXPFetchLECTETransmitSlotPowers(TXPFetchLECTETransmitSlotPowersRequest) returns (TXPFetchLECTETransmitSlotPowersResponse);
+  rpc TXPFetchLECTETransmitSlotPowersArray(TXPFetchLECTETransmitSlotPowersArrayRequest) returns (TXPFetchLECTETransmitSlotPowersArrayResponse);
+  rpc TXPFetchPowerTrace(TXPFetchPowerTraceRequest) returns (TXPFetchPowerTraceResponse);
+  rpc TXPFetchPowers(TXPFetchPowersRequest) returns (TXPFetchPowersResponse);
+  rpc TwentydBBandwidthCfgAveraging(TwentydBBandwidthCfgAveragingRequest) returns (TwentydBBandwidthCfgAveragingResponse);
+  rpc TwentydBBandwidthFetchMeasurement(TwentydBBandwidthFetchMeasurementRequest) returns (TwentydBBandwidthFetchMeasurementResponse);
+  rpc TwentydBBandwidthFetchSpectrum(TwentydBBandwidthFetchSpectrumRequest) returns (TwentydBBandwidthFetchSpectrumResponse);
+  rpc WaitForAcquisitionComplete(WaitForAcquisitionCompleteRequest) returns (WaitForAcquisitionCompleteResponse);
+  rpc WaitForMeasurementComplete(WaitForMeasurementCompleteRequest) returns (WaitForMeasurementCompleteResponse);
+}
+
+enum NiRFmxBluetoothAttribute {
+  NIRFMXBLUETOOTH_ATTRIBUTE_UNSPECIFIED = 0;
+  NIRFMXBLUETOOTH_ATTRIBUTE_CENTER_FREQUENCY = 11534337;
+  NIRFMXBLUETOOTH_ATTRIBUTE_REFERENCE_LEVEL = 11534338;
+  NIRFMXBLUETOOTH_ATTRIBUTE_EXTERNAL_ATTENUATION = 11534339;
+  NIRFMXBLUETOOTH_ATTRIBUTE_TRIGGER_TYPE = 11534340;
+  NIRFMXBLUETOOTH_ATTRIBUTE_DIGITAL_EDGE_TRIGGER_SOURCE = 11534341;
+  NIRFMXBLUETOOTH_ATTRIBUTE_DIGITAL_EDGE_TRIGGER_EDGE = 11534342;
+  NIRFMXBLUETOOTH_ATTRIBUTE_IQ_POWER_EDGE_TRIGGER_SOURCE = 11534343;
+  NIRFMXBLUETOOTH_ATTRIBUTE_IQ_POWER_EDGE_TRIGGER_LEVEL = 11534344;
+  NIRFMXBLUETOOTH_ATTRIBUTE_IQ_POWER_EDGE_TRIGGER_SLOPE = 11534345;
+  NIRFMXBLUETOOTH_ATTRIBUTE_TRIGGER_DELAY = 11534346;
+  NIRFMXBLUETOOTH_ATTRIBUTE_TRIGGER_MINIMUM_QUIET_TIME_MODE = 11534347;
+  NIRFMXBLUETOOTH_ATTRIBUTE_TRIGGER_MINIMUM_QUIET_TIME_DURATION = 11534348;
+  NIRFMXBLUETOOTH_ATTRIBUTE_PACKET_TYPE = 11534349;
+  NIRFMXBLUETOOTH_ATTRIBUTE_DATA_RATE = 11534350;
+  NIRFMXBLUETOOTH_ATTRIBUTE_BD_ADDRESS_LAP = 11534351;
+  NIRFMXBLUETOOTH_ATTRIBUTE_ACCESS_ADDRESS = 11534353;
+  NIRFMXBLUETOOTH_ATTRIBUTE_PAYLOAD_BIT_PATTERN = 11534354;
+  NIRFMXBLUETOOTH_ATTRIBUTE_PAYLOAD_LENGTH_MODE = 11534355;
+  NIRFMXBLUETOOTH_ATTRIBUTE_PAYLOAD_LENGTH = 11534356;
+  NIRFMXBLUETOOTH_ATTRIBUTE_CHANNEL_NUMBER = 11534359;
+  NIRFMXBLUETOOTH_ATTRIBUTE_DETECTED_PACKET_TYPE = 11534361;
+  NIRFMXBLUETOOTH_ATTRIBUTE_DETECTED_DATA_RATE = 11534378;
+  NIRFMXBLUETOOTH_ATTRIBUTE_DETECTED_PAYLOAD_LENGTH = 11534379;
+  NIRFMXBLUETOOTH_ATTRIBUTE_DIRECTION_FINDING_MODE = 11534380;
+  NIRFMXBLUETOOTH_ATTRIBUTE_CTE_LENGTH = 11534381;
+  NIRFMXBLUETOOTH_ATTRIBUTE_CTE_SLOT_DURATION = 11534382;
+  NIRFMXBLUETOOTH_ATTRIBUTE_CTE_NUMBER_OF_TRANSMIT_SLOTS = 11534383;
+  NIRFMXBLUETOOTH_ATTRIBUTE_REFERENCE_LEVEL_HEADROOM = 11538428;
+  NIRFMXBLUETOOTH_ATTRIBUTE_SELECTED_PORTS = 11538429;
+  NIRFMXBLUETOOTH_ATTRIBUTE_IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE = 11538431;
+  NIRFMXBLUETOOTH_ATTRIBUTE_TXP_MEASUREMENT_ENABLED = 11538432;
+  NIRFMXBLUETOOTH_ATTRIBUTE_TXP_AVERAGING_ENABLED = 11538434;
+  NIRFMXBLUETOOTH_ATTRIBUTE_TXP_AVERAGING_COUNT = 11538435;
+  NIRFMXBLUETOOTH_ATTRIBUTE_TXP_ALL_TRACES_ENABLED = 11538436;
+  NIRFMXBLUETOOTH_ATTRIBUTE_TXP_NUMBER_OF_ANALYSIS_THREADS = 11538437;
+  NIRFMXBLUETOOTH_ATTRIBUTE_TXP_RESULTS_AVERAGE_POWER_MEAN = 11538439;
+  NIRFMXBLUETOOTH_ATTRIBUTE_TXP_RESULTS_AVERAGE_POWER_MAXIMUM = 11538440;
+  NIRFMXBLUETOOTH_ATTRIBUTE_TXP_RESULTS_AVERAGE_POWER_MINIMUM = 11538441;
+  NIRFMXBLUETOOTH_ATTRIBUTE_TXP_RESULTS_PEAK_POWER_MAXIMUM = 11538442;
+  NIRFMXBLUETOOTH_ATTRIBUTE_TXP_RESULTS_PEAK_TO_AVERAGE_POWER_RATIO_MAXIMUM = 11538443;
+  NIRFMXBLUETOOTH_ATTRIBUTE_TXP_RESULTS_EDR_GFSK_AVERAGE_POWER_MEAN = 11538444;
+  NIRFMXBLUETOOTH_ATTRIBUTE_TXP_RESULTS_EDR_DPSK_AVERAGE_POWER_MEAN = 11538445;
+  NIRFMXBLUETOOTH_ATTRIBUTE_TXP_BURST_SYNCHRONIZATION_TYPE = 11538448;
+  NIRFMXBLUETOOTH_ATTRIBUTE_TXP_RESULTS_EDR_DPSK_GFSK_AVERAGE_POWER_RATIO_MEAN = 11538451;
+  NIRFMXBLUETOOTH_ATTRIBUTE_TXP_RESULTS_LE_CTE_REFERENCE_PERIOD_AVERAGE_POWER_MEAN = 11538452;
+  NIRFMXBLUETOOTH_ATTRIBUTE_TXP_RESULTS_LE_CTE_REFERENCE_PERIOD_PEAK_ABSOLUTE_POWER_DEVIATION_MAXIMUM = 11538453;
+  NIRFMXBLUETOOTH_ATTRIBUTE_TXP_RESULTS_LE_CTE_TRANSMIT_SLOT_AVERAGE_POWER_MEAN = 11538454;
+  NIRFMXBLUETOOTH_ATTRIBUTE_TXP_RESULTS_LE_CTE_TRANSMIT_SLOT_PEAK_ABSOLUTE_POWER_DEVIATION_MAXIMUM = 11538455;
+  NIRFMXBLUETOOTH_ATTRIBUTE_TWENTY_DB_BANDWIDTH_MEASUREMENT_ENABLED = 11542528;
+  NIRFMXBLUETOOTH_ATTRIBUTE_TWENTY_DB_BANDWIDTH_AVERAGING_ENABLED = 11542530;
+  NIRFMXBLUETOOTH_ATTRIBUTE_TWENTY_DB_BANDWIDTH_AVERAGING_COUNT = 11542531;
+  NIRFMXBLUETOOTH_ATTRIBUTE_TWENTY_DB_BANDWIDTH_ALL_TRACES_ENABLED = 11542532;
+  NIRFMXBLUETOOTH_ATTRIBUTE_TWENTY_DB_BANDWIDTH_NUMBER_OF_ANALYSIS_THREADS = 11542533;
+  NIRFMXBLUETOOTH_ATTRIBUTE_TWENTY_DB_BANDWIDTH_RESULTS_PEAK_POWER = 11542535;
+  NIRFMXBLUETOOTH_ATTRIBUTE_TWENTY_DB_BANDWIDTH_RESULTS_BANDWIDTH = 11542536;
+  NIRFMXBLUETOOTH_ATTRIBUTE_TWENTY_DB_BANDWIDTH_RESULTS_HIGH_FREQUENCY = 11542537;
+  NIRFMXBLUETOOTH_ATTRIBUTE_TWENTY_DB_BANDWIDTH_RESULTS_LOW_FREQUENCY = 11542538;
+  NIRFMXBLUETOOTH_ATTRIBUTE_FREQUENCY_RANGE_MEASUREMENT_ENABLED = 11546624;
+  NIRFMXBLUETOOTH_ATTRIBUTE_FREQUENCY_RANGE_SPAN = 11546626;
+  NIRFMXBLUETOOTH_ATTRIBUTE_FREQUENCY_RANGE_AVERAGING_ENABLED = 11546627;
+  NIRFMXBLUETOOTH_ATTRIBUTE_FREQUENCY_RANGE_AVERAGING_COUNT = 11546628;
+  NIRFMXBLUETOOTH_ATTRIBUTE_FREQUENCY_RANGE_ALL_TRACES_ENABLED = 11546629;
+  NIRFMXBLUETOOTH_ATTRIBUTE_FREQUENCY_RANGE_NUMBER_OF_ANALYSIS_THREADS = 11546630;
+  NIRFMXBLUETOOTH_ATTRIBUTE_FREQUENCY_RANGE_RESULTS_HIGH_FREQUENCY = 11546632;
+  NIRFMXBLUETOOTH_ATTRIBUTE_FREQUENCY_RANGE_RESULTS_LOW_FREQUENCY = 11546633;
+  NIRFMXBLUETOOTH_ATTRIBUTE_MODACC_MEASUREMENT_ENABLED = 11550720;
+  NIRFMXBLUETOOTH_ATTRIBUTE_MODACC_IQ_ORIGIN_OFFSET_CORRECTION_ENABLED = 11550723;
+  NIRFMXBLUETOOTH_ATTRIBUTE_MODACC_AVERAGING_ENABLED = 11550724;
+  NIRFMXBLUETOOTH_ATTRIBUTE_MODACC_AVERAGING_COUNT = 11550725;
+  NIRFMXBLUETOOTH_ATTRIBUTE_MODACC_ALL_TRACES_ENABLED = 11550726;
+  NIRFMXBLUETOOTH_ATTRIBUTE_MODACC_NUMBER_OF_ANALYSIS_THREADS = 11550727;
+  NIRFMXBLUETOOTH_ATTRIBUTE_MODACC_RESULTS_DF1AVG_MEAN = 11550729;
+  NIRFMXBLUETOOTH_ATTRIBUTE_MODACC_RESULTS_DF1AVG_MAXIMUM = 11550730;
+  NIRFMXBLUETOOTH_ATTRIBUTE_MODACC_RESULTS_DF1AVG_MINIMUM = 11550731;
+  NIRFMXBLUETOOTH_ATTRIBUTE_MODACC_RESULTS_PEAK_DF1MAX_MAXIMUM = 11550732;
+  NIRFMXBLUETOOTH_ATTRIBUTE_MODACC_RESULTS_MINIMUM_DF1MAX_MINIMUM = 11550733;
+  NIRFMXBLUETOOTH_ATTRIBUTE_MODACC_RESULTS_DF2AVG_MEAN = 11550734;
+  NIRFMXBLUETOOTH_ATTRIBUTE_MODACC_RESULTS_DF2AVG_MAXIMUM = 11550735;
+  NIRFMXBLUETOOTH_ATTRIBUTE_MODACC_RESULTS_DF2AVG_MINIMUM = 11550736;
+  NIRFMXBLUETOOTH_ATTRIBUTE_MODACC_RESULTS_PEAK_DF2MAX_MAXIMUM = 11550737;
+  NIRFMXBLUETOOTH_ATTRIBUTE_MODACC_RESULTS_MINIMUM_DF2MAX_MINIMUM = 11550738;
+  NIRFMXBLUETOOTH_ATTRIBUTE_MODACC_RESULTS_PERCENTAGE_OF_SYMBOLS_ABOVE_DF2MAX_THRESHOLD = 11550739;
+  NIRFMXBLUETOOTH_ATTRIBUTE_MODACC_RESULTS_BR_INITIAL_FREQUENCY_ERROR_MAXIMUM = 11550740;
+  NIRFMXBLUETOOTH_ATTRIBUTE_MODACC_RESULTS_BR_PEAK_FREQUENCY_DRIFT_MAXIMUM = 11550741;
+  NIRFMXBLUETOOTH_ATTRIBUTE_MODACC_RESULTS_BR_PEAK_FREQUENCY_DRIFT_RATE_MAXIMUM = 11550742;
+  NIRFMXBLUETOOTH_ATTRIBUTE_MODACC_RESULTS_EDR_HEADER_FREQUENCY_ERROR_WI_MAXIMUM = 11550743;
+  NIRFMXBLUETOOTH_ATTRIBUTE_MODACC_RESULTS_EDR_PEAK_FREQUENCY_ERROR_WI_PLUS_W0_MAXIMUM = 11550744;
+  NIRFMXBLUETOOTH_ATTRIBUTE_MODACC_RESULTS_EDR_PEAK_FREQUENCY_ERROR_W0_MAXIMUM = 11550745;
+  NIRFMXBLUETOOTH_ATTRIBUTE_MODACC_RESULTS_LE_PEAK_FREQUENCY_ERROR_MAXIMUM = 11550746;
+  NIRFMXBLUETOOTH_ATTRIBUTE_MODACC_RESULTS_LE_INITIAL_FREQUENCY_DRIFT_MAXIMUM = 11550747;
+  NIRFMXBLUETOOTH_ATTRIBUTE_MODACC_RESULTS_LE_PEAK_FREQUENCY_DRIFT_MAXIMUM = 11550748;
+  NIRFMXBLUETOOTH_ATTRIBUTE_MODACC_RESULTS_LE_PEAK_FREQUENCY_DRIFT_RATE_MAXIMUM = 11550749;
+  NIRFMXBLUETOOTH_ATTRIBUTE_MODACC_RESULTS_PEAK_RMS_DEVM_MAXIMUM = 11550750;
+  NIRFMXBLUETOOTH_ATTRIBUTE_MODACC_RESULTS_RMS_DEVM_MEAN = 11550751;
+  NIRFMXBLUETOOTH_ATTRIBUTE_MODACC_RESULTS_PEAK_DEVM_MAXIMUM = 11550752;
+  NIRFMXBLUETOOTH_ATTRIBUTE_MODACC_RESULTS_99_PERCENT_DEVM = 11550753;
+  NIRFMXBLUETOOTH_ATTRIBUTE_MODACC_RESULTS_PERCENTAGE_OF_SYMBOLS_BELOW_99_PERCENT_DEVM_LIMIT = 11550754;
+  NIRFMXBLUETOOTH_ATTRIBUTE_MODACC_RESULTS_IQ_ORIGIN_OFFSET_MEAN = 11550755;
+  NIRFMXBLUETOOTH_ATTRIBUTE_MODACC_BURST_SYNCHRONIZATION_TYPE = 11550763;
+  NIRFMXBLUETOOTH_ATTRIBUTE_MODACC_RESULTS_PERCENTAGE_OF_SYMBOLS_ABOVE_DF1MAX_THRESHOLD = 11550764;
+  NIRFMXBLUETOOTH_ATTRIBUTE_MODACC_RESULTS_AVERAGE_RMS_MAGNITUDE_ERROR_MEAN = 11550765;
+  NIRFMXBLUETOOTH_ATTRIBUTE_MODACC_RESULTS_PEAK_RMS_MAGNITUDE_ERROR_MAXIMUM = 11550766;
+  NIRFMXBLUETOOTH_ATTRIBUTE_MODACC_RESULTS_AVERAGE_RMS_PHASE_ERROR_MEAN = 11550767;
+  NIRFMXBLUETOOTH_ATTRIBUTE_MODACC_RESULTS_PEAK_RMS_PHASE_ERROR_MAXIMUM = 11550768;
+  NIRFMXBLUETOOTH_ATTRIBUTE_MODACC_RESULTS_LE_INITIAL_FREQUENCY_ERROR_MAXIMUM = 11550769;
+  NIRFMXBLUETOOTH_ATTRIBUTE_ACP_MEASUREMENT_ENABLED = 11554816;
+  NIRFMXBLUETOOTH_ATTRIBUTE_ACP_OFFSET_CHANNEL_MODE = 11554818;
+  NIRFMXBLUETOOTH_ATTRIBUTE_ACP_NUMBER_OF_OFFSETS = 11554819;
+  NIRFMXBLUETOOTH_ATTRIBUTE_ACP_OFFSET_FREQUENCY = 11554820;
+  NIRFMXBLUETOOTH_ATTRIBUTE_ACP_AVERAGING_ENABLED = 11554821;
+  NIRFMXBLUETOOTH_ATTRIBUTE_ACP_AVERAGING_COUNT = 11554822;
+  NIRFMXBLUETOOTH_ATTRIBUTE_ACP_ALL_TRACES_ENABLED = 11554823;
+  NIRFMXBLUETOOTH_ATTRIBUTE_ACP_NUMBER_OF_ANALYSIS_THREADS = 11554824;
+  NIRFMXBLUETOOTH_ATTRIBUTE_ACP_RESULTS_MEASUREMENT_STATUS = 11554826;
+  NIRFMXBLUETOOTH_ATTRIBUTE_ACP_RESULTS_REFERENCE_CHANNEL_POWER = 11554827;
+  NIRFMXBLUETOOTH_ATTRIBUTE_ACP_RESULTS_LOWER_OFFSET_ABSOLUTE_POWER = 11554828;
+  NIRFMXBLUETOOTH_ATTRIBUTE_ACP_RESULTS_LOWER_OFFSET_RELATIVE_POWER = 11554829;
+  NIRFMXBLUETOOTH_ATTRIBUTE_ACP_RESULTS_LOWER_OFFSET_MARGIN = 11554830;
+  NIRFMXBLUETOOTH_ATTRIBUTE_ACP_RESULTS_UPPER_OFFSET_ABSOLUTE_POWER = 11554831;
+  NIRFMXBLUETOOTH_ATTRIBUTE_ACP_RESULTS_UPPER_OFFSET_RELATIVE_POWER = 11554832;
+  NIRFMXBLUETOOTH_ATTRIBUTE_ACP_RESULTS_UPPER_OFFSET_MARGIN = 11554833;
+  NIRFMXBLUETOOTH_ATTRIBUTE_ACP_BURST_SYNCHRONIZATION_TYPE = 11554834;
+  NIRFMXBLUETOOTH_ATTRIBUTE_RESULT_FETCH_TIMEOUT = 11583488;
+  NIRFMXBLUETOOTH_ATTRIBUTE_LIMITED_CONFIGURATION_CHANGE = 11587584;
+  NIRFMXBLUETOOTH_ATTRIBUTE_AUTO_LEVEL_INITIAL_REFERENCE_LEVEL = 11587585;
+}
+
+enum AcpAveragingEnabled {
+  ACP_AVERAGING_ENABLED_FALSE = 0;
+  ACP_AVERAGING_ENABLED_TRUE = 1;
+}
+
+enum AcpBurstSynchronizationType {
+  ACP_BURST_SYNCHRONIZATION_TYPE_NONE = 0;
+  ACP_BURST_SYNCHRONIZATION_TYPE_PREAMBLE = 1;
+  ACP_BURST_SYNCHRONIZATION_TYPE_SYNC_WORD = 2;
+}
+
+enum AcpOffsetChannelMode {
+  ACP_OFFSET_CHANNEL_MODE_SYMMETRIC = 0;
+  ACP_OFFSET_CHANNEL_MODE_INBAND = 1;
+}
+
+enum AcpResultsMeasurementStatus {
+  ACP_RESULTS_MEASUREMENT_STATUS_FAIL = 0;
+  ACP_RESULTS_MEASUREMENT_STATUS_NOT_APPLICABLE = -1;
+  ACP_RESULTS_MEASUREMENT_STATUS_PASS = 1;
+}
+
+enum DigitalEdgeTriggerEdge {
+  DIGITAL_EDGE_TRIGGER_EDGE_RISING = 0;
+  DIGITAL_EDGE_TRIGGER_EDGE_FALLING = 1;
+}
+
+enum DirectionFindingMode {
+  DIRECTION_FINDING_MODE_DISABLED = 0;
+  DIRECTION_FINDING_MODE_ANGLE_OF_ARRIVAL = 1;
+  DIRECTION_FINDING_MODE_ANGLE_OF_DEPARTURE = 2;
+}
+
+enum FrequencyRangeAveragingEnabled {
+  FREQUENCY_RANGE_AVERAGING_ENABLED_FALSE = 0;
+  FREQUENCY_RANGE_AVERAGING_ENABLED_TRUE = 1;
+}
+
+enum FrequencyReferenceSource {
+  FREQUENCY_REFERENCE_SOURCE_UNSPECIFIED = 0;
+  FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK = 1;
+  FREQUENCY_REFERENCE_SOURCE_REF_IN = 2;
+  FREQUENCY_REFERENCE_SOURCE_PXI_CLK = 3;
+  FREQUENCY_REFERENCE_SOURCE_CLK_IN = 4;
+}
+
+enum IQPowerEdgeTriggerLevelType {
+  IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE = 0;
+  IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_ABSOLUTE = 1;
+}
+
+enum IQPowerEdgeTriggerSlope {
+  IQ_POWER_EDGE_TRIGGER_SLOPE_RISING = 0;
+  IQ_POWER_EDGE_TRIGGER_SLOPE_FALLING = 1;
+}
+
+enum MeasurementTypes {
+  MEASUREMENT_TYPES_UNSPECIFIED = 0;
+  MEASUREMENT_TYPES_TXP = 1;
+  MEASUREMENT_TYPES_MODACC = 2;
+  MEASUREMENT_TYPES_TWENTY_DB_BANDWIDTH = 4;
+  MEASUREMENT_TYPES_FREQUENCY_RANGE = 8;
+  MEASUREMENT_TYPES_ACP = 16;
+}
+
+enum MechanicalAttenuationAuto {
+  MECHANICAL_ATTENUATION_AUTO_FALSE = 0;
+  MECHANICAL_ATTENUATION_AUTO_TRUE = 1;
+}
+
+enum ModAccAveragingEnabled {
+  MODACC_AVERAGING_ENABLED_FALSE = 0;
+  MODACC_AVERAGING_ENABLED_TRUE = 1;
+}
+
+enum ModAccBurstSynchronizationType {
+  MODACC_BURST_SYNCHRONIZATION_TYPE_NONE = 0;
+  MODACC_BURST_SYNCHRONIZATION_TYPE_PREAMBLE = 1;
+  MODACC_BURST_SYNCHRONIZATION_TYPE_SYNC_WORD = 2;
+}
+
+enum PacketType {
+  PACKET_TYPE_DH1 = 0;
+  PACKET_TYPE_UNKNOWN = -1;
+  PACKET_TYPE_DH3 = 1;
+  PACKET_TYPE_DH5 = 2;
+  PACKET_TYPE_DM1 = 3;
+  PACKET_TYPE_DM3 = 4;
+  PACKET_TYPE_DM5 = 5;
+  PACKET_TYPE_2_DH1 = 6;
+  PACKET_TYPE_2_DH3 = 7;
+  PACKET_TYPE_2_DH5 = 8;
+  PACKET_TYPE_3_DH1 = 9;
+  PACKET_TYPE_3_DH3 = 10;
+  PACKET_TYPE_3_DH5 = 11;
+  PACKET_TYPE_2_EV3 = 12;
+  PACKET_TYPE_2_EV5 = 13;
+  PACKET_TYPE_3_EV3 = 14;
+  PACKET_TYPE_3_EV5 = 15;
+  PACKET_TYPE_LE = 16;
+}
+
+enum PayloadBitPattern {
+  PAYLOAD_BIT_PATTERN_STANDARD_DEFINED = 0;
+  PAYLOAD_BIT_PATTERN_11110000 = 1;
+  PAYLOAD_BIT_PATTERN_10101010 = 2;
+}
+
+enum PayloadLengthMode {
+  PAYLOAD_LENGTH_MODE_MANUAL = 0;
+  PAYLOAD_LENGTH_MODE_AUTO = 1;
+}
+
+enum RFAttenuationAuto {
+  RF_ATTENUATION_AUTO_FALSE = 0;
+  RF_ATTENUATION_AUTO_TRUE = 1;
+}
+
+enum Standard {
+  option allow_alias = true;
+  STANDARD_BR = 0;
+  STANDARD_EDR = 0;
+  STANDARD_LE = 1;
+}
+
+enum TriggerMinimumQuietTimeMode {
+  TRIGGER_MINIMUM_QUIET_TIME_MODE_MANUAL = 0;
+  TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO = 1;
+}
+
+enum TwentydBBandwidthAveragingEnabled {
+  TWENTY_DB_BANDWIDTH_AVERAGING_ENABLED_FALSE = 0;
+  TWENTY_DB_BANDWIDTH_AVERAGING_ENABLED_TRUE = 1;
+}
+
+enum TxpAveragingEnabled {
+  TXP_AVERAGING_ENABLED_FALSE = 0;
+  TXP_AVERAGING_ENABLED_TRUE = 1;
+}
+
+enum TxpBurstSynchronizationType {
+  TXP_BURST_SYNCHRONIZATION_TYPE_NONE = 0;
+  TXP_BURST_SYNCHRONIZATION_TYPE_PREAMBLE = 1;
+  TXP_BURST_SYNCHRONIZATION_TYPE_SYNC_WORD = 2;
+}
+
+enum NiRFmxBluetoothInt32AttributeValues {
+  option allow_alias = true;
+  NIRFMXBLUETOOTH_INT32_UNSPECIFIED = 0;
+  NIRFMXBLUETOOTH_INT32_ACP_AVERAGING_ENABLED_FALSE = 0;
+  NIRFMXBLUETOOTH_INT32_ACP_AVERAGING_ENABLED_TRUE = 1;
+  NIRFMXBLUETOOTH_INT32_ACP_BURST_SYNCHRONIZATION_TYPE_NONE = 0;
+  NIRFMXBLUETOOTH_INT32_ACP_BURST_SYNCHRONIZATION_TYPE_PREAMBLE = 1;
+  NIRFMXBLUETOOTH_INT32_ACP_BURST_SYNCHRONIZATION_TYPE_SYNC_WORD = 2;
+  NIRFMXBLUETOOTH_INT32_ACP_OFFSET_CHANNEL_MODE_SYMMETRIC = 0;
+  NIRFMXBLUETOOTH_INT32_ACP_OFFSET_CHANNEL_MODE_INBAND = 1;
+  NIRFMXBLUETOOTH_INT32_ACP_RESULTS_MEASUREMENT_STATUS_FAIL = 0;
+  NIRFMXBLUETOOTH_INT32_ACP_RESULTS_MEASUREMENT_STATUS_NOT_APPLICABLE = -1;
+  NIRFMXBLUETOOTH_INT32_ACP_RESULTS_MEASUREMENT_STATUS_PASS = 1;
+  NIRFMXBLUETOOTH_INT32_DIGITAL_EDGE_TRIGGER_EDGE_RISING = 0;
+  NIRFMXBLUETOOTH_INT32_DIGITAL_EDGE_TRIGGER_EDGE_FALLING = 1;
+  NIRFMXBLUETOOTH_INT32_DIRECTION_FINDING_MODE_DISABLED = 0;
+  NIRFMXBLUETOOTH_INT32_DIRECTION_FINDING_MODE_ANGLE_OF_ARRIVAL = 1;
+  NIRFMXBLUETOOTH_INT32_DIRECTION_FINDING_MODE_ANGLE_OF_DEPARTURE = 2;
+  NIRFMXBLUETOOTH_INT32_FREQUENCY_RANGE_AVERAGING_ENABLED_FALSE = 0;
+  NIRFMXBLUETOOTH_INT32_FREQUENCY_RANGE_AVERAGING_ENABLED_TRUE = 1;
+  NIRFMXBLUETOOTH_INT32_IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE = 0;
+  NIRFMXBLUETOOTH_INT32_IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_ABSOLUTE = 1;
+  NIRFMXBLUETOOTH_INT32_IQ_POWER_EDGE_TRIGGER_SLOPE_RISING = 0;
+  NIRFMXBLUETOOTH_INT32_IQ_POWER_EDGE_TRIGGER_SLOPE_FALLING = 1;
+  NIRFMXBLUETOOTH_INT32_LIMITED_CONFIGURATION_CHANGE_DISABLED = 0;
+  NIRFMXBLUETOOTH_INT32_LIMITED_CONFIGURATION_CHANGE_NO_CHANGE = 1;
+  NIRFMXBLUETOOTH_INT32_LIMITED_CONFIGURATION_CHANGE_FREQUENCY = 2;
+  NIRFMXBLUETOOTH_INT32_LIMITED_CONFIGURATION_CHANGE_REFERENCE_LEVEL = 3;
+  NIRFMXBLUETOOTH_INT32_LIMITED_CONFIGURATION_CHANGE_FREQUENCY_AND_REFERENCE_LEVEL = 4;
+  NIRFMXBLUETOOTH_INT32_LIMITED_CONFIGURATION_CHANGE_SELECTED_PORTS_FREQUENCY_AND_REFERENCE_LEVEL = 5;
+  NIRFMXBLUETOOTH_INT32_MODACC_AVERAGING_ENABLED_FALSE = 0;
+  NIRFMXBLUETOOTH_INT32_MODACC_AVERAGING_ENABLED_TRUE = 1;
+  NIRFMXBLUETOOTH_INT32_MODACC_BURST_SYNCHRONIZATION_TYPE_NONE = 0;
+  NIRFMXBLUETOOTH_INT32_MODACC_BURST_SYNCHRONIZATION_TYPE_PREAMBLE = 1;
+  NIRFMXBLUETOOTH_INT32_MODACC_BURST_SYNCHRONIZATION_TYPE_SYNC_WORD = 2;
+  NIRFMXBLUETOOTH_INT32_MODACC_IQ_ORIGIN_OFFSET_CORRECTION_ENABLED_FALSE = 0;
+  NIRFMXBLUETOOTH_INT32_MODACC_IQ_ORIGIN_OFFSET_CORRECTION_ENABLED_TRUE = 1;
+  NIRFMXBLUETOOTH_INT32_PACKET_TYPE_DH1 = 0;
+  NIRFMXBLUETOOTH_INT32_PACKET_TYPE_UNKNOWN = -1;
+  NIRFMXBLUETOOTH_INT32_PACKET_TYPE_DH3 = 1;
+  NIRFMXBLUETOOTH_INT32_PACKET_TYPE_DH5 = 2;
+  NIRFMXBLUETOOTH_INT32_PACKET_TYPE_DM1 = 3;
+  NIRFMXBLUETOOTH_INT32_PACKET_TYPE_DM3 = 4;
+  NIRFMXBLUETOOTH_INT32_PACKET_TYPE_DM5 = 5;
+  NIRFMXBLUETOOTH_INT32_PACKET_TYPE_2_DH1 = 6;
+  NIRFMXBLUETOOTH_INT32_PACKET_TYPE_2_DH3 = 7;
+  NIRFMXBLUETOOTH_INT32_PACKET_TYPE_2_DH5 = 8;
+  NIRFMXBLUETOOTH_INT32_PACKET_TYPE_3_DH1 = 9;
+  NIRFMXBLUETOOTH_INT32_PACKET_TYPE_3_DH3 = 10;
+  NIRFMXBLUETOOTH_INT32_PACKET_TYPE_3_DH5 = 11;
+  NIRFMXBLUETOOTH_INT32_PACKET_TYPE_2_EV3 = 12;
+  NIRFMXBLUETOOTH_INT32_PACKET_TYPE_2_EV5 = 13;
+  NIRFMXBLUETOOTH_INT32_PACKET_TYPE_3_EV3 = 14;
+  NIRFMXBLUETOOTH_INT32_PACKET_TYPE_3_EV5 = 15;
+  NIRFMXBLUETOOTH_INT32_PACKET_TYPE_LE = 16;
+  NIRFMXBLUETOOTH_INT32_PAYLOAD_BIT_PATTERN_STANDARD_DEFINED = 0;
+  NIRFMXBLUETOOTH_INT32_PAYLOAD_BIT_PATTERN_11110000 = 1;
+  NIRFMXBLUETOOTH_INT32_PAYLOAD_BIT_PATTERN_10101010 = 2;
+  NIRFMXBLUETOOTH_INT32_PAYLOAD_LENGTH_MODE_MANUAL = 0;
+  NIRFMXBLUETOOTH_INT32_PAYLOAD_LENGTH_MODE_AUTO = 1;
+  NIRFMXBLUETOOTH_INT32_TRIGGER_MINIMUM_QUIET_TIME_MODE_MANUAL = 0;
+  NIRFMXBLUETOOTH_INT32_TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO = 1;
+  NIRFMXBLUETOOTH_INT32_TRIGGER_TYPE_NONE = 0;
+  NIRFMXBLUETOOTH_INT32_TRIGGER_TYPE_DIGITAL_EDGE = 1;
+  NIRFMXBLUETOOTH_INT32_TRIGGER_TYPE_IQ_POWER_EDGE = 2;
+  NIRFMXBLUETOOTH_INT32_TRIGGER_TYPE_SOFTWARE = 3;
+  NIRFMXBLUETOOTH_INT32_TWENTY_DB_BANDWIDTH_AVERAGING_ENABLED_FALSE = 0;
+  NIRFMXBLUETOOTH_INT32_TWENTY_DB_BANDWIDTH_AVERAGING_ENABLED_TRUE = 1;
+  NIRFMXBLUETOOTH_INT32_TXP_AVERAGING_ENABLED_FALSE = 0;
+  NIRFMXBLUETOOTH_INT32_TXP_AVERAGING_ENABLED_TRUE = 1;
+  NIRFMXBLUETOOTH_INT32_TXP_BURST_SYNCHRONIZATION_TYPE_NONE = 0;
+  NIRFMXBLUETOOTH_INT32_TXP_BURST_SYNCHRONIZATION_TYPE_PREAMBLE = 1;
+  NIRFMXBLUETOOTH_INT32_TXP_BURST_SYNCHRONIZATION_TYPE_SYNC_WORD = 2;
+}
+
+enum NiRFmxBluetoothStringAttributeValuesMapped {
+  NIRFMXBLUETOOTH_STRING_MAPPED_UNSPECIFIED = 0;
+  NIRFMXBLUETOOTH_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_PFI0 = 1;
+  NIRFMXBLUETOOTH_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_PFI1 = 2;
+  NIRFMXBLUETOOTH_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG0 = 3;
+  NIRFMXBLUETOOTH_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG1 = 4;
+  NIRFMXBLUETOOTH_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG2 = 5;
+  NIRFMXBLUETOOTH_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG3 = 6;
+  NIRFMXBLUETOOTH_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG4 = 7;
+  NIRFMXBLUETOOTH_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG5 = 8;
+  NIRFMXBLUETOOTH_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG6 = 9;
+  NIRFMXBLUETOOTH_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG7 = 10;
+  NIRFMXBLUETOOTH_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_PXI_STAR = 11;
+  NIRFMXBLUETOOTH_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_PXIE_DSTARB = 12;
+  NIRFMXBLUETOOTH_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_TIMER_EVENT = 13;
+}
+
+message ACPCfgAveragingRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof averaging_enabled_enum {
+    AcpAveragingEnabled averaging_enabled = 3;
+    int32 averaging_enabled_raw = 4;
+  }
+  int32 averaging_count = 5;
+}
+
+message ACPCfgAveragingResponse {
+  int32 status = 1;
+}
+
+message ACPCfgBurstSynchronizationTypeRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof burst_synchronization_type_enum {
+    AcpBurstSynchronizationType burst_synchronization_type = 3;
+    int32 burst_synchronization_type_raw = 4;
+  }
+}
+
+message ACPCfgBurstSynchronizationTypeResponse {
+  int32 status = 1;
+}
+
+message ACPCfgNumberOfOffsetsRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  int32 number_of_offsets = 3;
+}
+
+message ACPCfgNumberOfOffsetsResponse {
+  int32 status = 1;
+}
+
+message ACPCfgOffsetChannelModeRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof offset_channel_mode_enum {
+    AcpOffsetChannelMode offset_channel_mode = 3;
+    int32 offset_channel_mode_raw = 4;
+  }
+}
+
+message ACPCfgOffsetChannelModeResponse {
+  int32 status = 1;
+}
+
+message ACPFetchAbsolutePowerTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ACPFetchAbsolutePowerTraceResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float absolute_power = 4;
+  int32 actual_array_size = 5;
+}
+
+message ACPFetchMaskTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ACPFetchMaskTraceResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float limit_with_exception_mask = 4;
+  repeated float limit_without_exception_mask = 5;
+  int32 actual_array_size = 6;
+}
+
+message ACPFetchMeasurementStatusRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ACPFetchMeasurementStatusResponse {
+  int32 status = 1;
+  AcpResultsMeasurementStatus measurement_status = 2;
+  int32 measurement_status_raw = 3;
+}
+
+message ACPFetchOffsetMeasurementRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ACPFetchOffsetMeasurementResponse {
+  int32 status = 1;
+  double lower_absolute_power = 2;
+  double upper_absolute_power = 3;
+  double lower_relative_power = 4;
+  double upper_relative_power = 5;
+  double lower_margin = 6;
+  double upper_margin = 7;
+}
+
+message ACPFetchOffsetMeasurementArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ACPFetchOffsetMeasurementArrayResponse {
+  int32 status = 1;
+  repeated double lower_absolute_power = 2;
+  repeated double upper_absolute_power = 3;
+  repeated double lower_relative_power = 4;
+  repeated double upper_relative_power = 5;
+  repeated double lower_margin = 6;
+  repeated double upper_margin = 7;
+  int32 actual_array_size = 8;
+}
+
+message ACPFetchReferenceChannelPowerRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ACPFetchReferenceChannelPowerResponse {
+  int32 status = 1;
+  double reference_channel_power = 2;
+}
+
+message ACPFetchSpectrumRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ACPFetchSpectrumResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float spectrum = 4;
+  int32 actual_array_size = 5;
+}
+
+message AbortMeasurementsRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message AbortMeasurementsResponse {
+  int32 status = 1;
+}
+
+message AnalyzeIQ1WaveformRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string result_name = 3;
+  double x0 = 4;
+  double dx = 5;
+  repeated nidevice_grpc.NIComplexNumberF32 iq = 6;
+  int32 reset = 7;
+}
+
+message AnalyzeIQ1WaveformResponse {
+  int32 status = 1;
+}
+
+message AutoDetectSignalRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message AutoDetectSignalResponse {
+  int32 status = 1;
+}
+
+message AutoLevelRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double measurement_interval = 3;
+}
+
+message AutoLevelResponse {
+  int32 status = 1;
+  double reference_level = 2;
+}
+
+message BuildOffsetStringRequest {
+  string selector_string = 1;
+  int32 offset_number = 2;
+}
+
+message BuildOffsetStringResponse {
+  int32 status = 1;
+  string selector_string_out = 2;
+}
+
+message BuildSignalStringRequest {
+  string signal_name = 1;
+  string result_name = 2;
+}
+
+message BuildSignalStringResponse {
+  int32 status = 1;
+  string selector_string = 2;
+}
+
+message BuildSlotStringRequest {
+  string selector_string = 1;
+  int32 slot_number = 2;
+}
+
+message BuildSlotStringResponse {
+  int32 status = 1;
+  string selector_string_out = 2;
+}
+
+message CfgChannelNumberRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  int32 channel_number = 3;
+}
+
+message CfgChannelNumberResponse {
+  int32 status = 1;
+}
+
+message CfgDataRateRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  int32 data_rate = 3;
+}
+
+message CfgDataRateResponse {
+  int32 status = 1;
+}
+
+message CfgDigitalEdgeTriggerRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string digital_edge_source = 3;
+  oneof digital_edge_enum {
+    DigitalEdgeTriggerEdge digital_edge = 4;
+    int32 digital_edge_raw = 5;
+  }
+  double trigger_delay = 6;
+  int32 enable_trigger = 7;
+}
+
+message CfgDigitalEdgeTriggerResponse {
+  int32 status = 1;
+}
+
+message CfgExternalAttenuationRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double external_attenuation = 3;
+}
+
+message CfgExternalAttenuationResponse {
+  int32 status = 1;
+}
+
+message CfgFrequencyRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double center_frequency = 3;
+}
+
+message CfgFrequencyResponse {
+  int32 status = 1;
+}
+
+message CfgFrequencyChannelNumberRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof standard_enum {
+    Standard standard = 3;
+    int32 standard_raw = 4;
+  }
+  int32 channel_number = 5;
+}
+
+message CfgFrequencyChannelNumberResponse {
+  int32 status = 1;
+}
+
+message CfgFrequencyReferenceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string channel_name = 2;
+  oneof frequency_reference_source_enum {
+    FrequencyReferenceSource frequency_reference_source_mapped = 3;
+    string frequency_reference_source_raw = 4;
+  }
+  double frequency_reference_frequency = 5;
+}
+
+message CfgFrequencyReferenceResponse {
+  int32 status = 1;
+}
+
+message CfgIQPowerEdgeTriggerRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string iq_power_edge_source = 3;
+  oneof iq_power_edge_slope_enum {
+    IQPowerEdgeTriggerSlope iq_power_edge_slope = 4;
+    int32 iq_power_edge_slope_raw = 5;
+  }
+  double iq_power_edge_level = 6;
+  double trigger_delay = 7;
+  oneof trigger_min_quiet_time_mode_enum {
+    TriggerMinimumQuietTimeMode trigger_min_quiet_time_mode = 8;
+    int32 trigger_min_quiet_time_mode_raw = 9;
+  }
+  double trigger_min_quiet_time_duration = 10;
+  oneof iq_power_edge_level_type_enum {
+    IQPowerEdgeTriggerLevelType iq_power_edge_level_type = 11;
+    int32 iq_power_edge_level_type_raw = 12;
+  }
+  int32 enable_trigger = 13;
+}
+
+message CfgIQPowerEdgeTriggerResponse {
+  int32 status = 1;
+}
+
+message CfgLEDirectionFindingRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof direction_finding_mode_enum {
+    DirectionFindingMode direction_finding_mode = 3;
+    int32 direction_finding_mode_raw = 4;
+  }
+  double cte_length = 5;
+  double cte_slot_duration = 6;
+}
+
+message CfgLEDirectionFindingResponse {
+  int32 status = 1;
+}
+
+message CfgMechanicalAttenuationRequest {
+  nidevice_grpc.Session instrument = 1;
+  string channel_name = 2;
+  oneof mechanical_attenuation_auto_enum {
+    MechanicalAttenuationAuto mechanical_attenuation_auto = 3;
+    int32 mechanical_attenuation_auto_raw = 4;
+  }
+  double mechanical_attenuation_value = 5;
+}
+
+message CfgMechanicalAttenuationResponse {
+  int32 status = 1;
+}
+
+message CfgPacketTypeRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof packet_type_enum {
+    PacketType packet_type = 3;
+    int32 packet_type_raw = 4;
+  }
+}
+
+message CfgPacketTypeResponse {
+  int32 status = 1;
+}
+
+message CfgPayloadBitPatternRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof payload_bit_pattern_enum {
+    PayloadBitPattern payload_bit_pattern = 3;
+    int32 payload_bit_pattern_raw = 4;
+  }
+}
+
+message CfgPayloadBitPatternResponse {
+  int32 status = 1;
+}
+
+message CfgPayloadLengthRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof payload_length_mode_enum {
+    PayloadLengthMode payload_length_mode = 3;
+    int32 payload_length_mode_raw = 4;
+  }
+  int32 payload_length = 5;
+}
+
+message CfgPayloadLengthResponse {
+  int32 status = 1;
+}
+
+message CfgRFRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double center_frequency = 3;
+  double reference_level = 4;
+  double external_attenuation = 5;
+}
+
+message CfgRFResponse {
+  int32 status = 1;
+}
+
+message CfgRFAttenuationRequest {
+  nidevice_grpc.Session instrument = 1;
+  string channel_name = 2;
+  oneof rf_attenuation_auto_enum {
+    RFAttenuationAuto rf_attenuation_auto = 3;
+    int32 rf_attenuation_auto_raw = 4;
+  }
+  double rf_attenuation_value = 5;
+}
+
+message CfgRFAttenuationResponse {
+  int32 status = 1;
+}
+
+message CfgReferenceLevelRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double reference_level = 3;
+}
+
+message CfgReferenceLevelResponse {
+  int32 status = 1;
+}
+
+message CfgSoftwareEdgeTriggerRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double trigger_delay = 3;
+  int32 enable_trigger = 4;
+}
+
+message CfgSoftwareEdgeTriggerResponse {
+  int32 status = 1;
+}
+
+message CheckMeasurementStatusRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message CheckMeasurementStatusResponse {
+  int32 status = 1;
+  bool is_done = 2;
+}
+
+message ClearAllNamedResultsRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message ClearAllNamedResultsResponse {
+  int32 status = 1;
+}
+
+message ClearNamedResultRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message ClearNamedResultResponse {
+  int32 status = 1;
+}
+
+message CloneSignalConfigurationRequest {
+  nidevice_grpc.Session instrument = 1;
+  string old_signal_name = 2;
+  string new_signal_name = 3;
+}
+
+message CloneSignalConfigurationResponse {
+  int32 status = 1;
+}
+
+message CloseRequest {
+  nidevice_grpc.Session instrument = 1;
+  bool force_destroy = 2;
+}
+
+message CloseResponse {
+  int32 status = 1;
+}
+
+message CommitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message CommitResponse {
+  int32 status = 1;
+}
+
+message CreateSignalConfigurationRequest {
+  nidevice_grpc.Session instrument = 1;
+  string signal_name = 2;
+}
+
+message CreateSignalConfigurationResponse {
+  int32 status = 1;
+}
+
+message DeleteSignalConfigurationRequest {
+  nidevice_grpc.Session instrument = 1;
+  string signal_name = 2;
+}
+
+message DeleteSignalConfigurationResponse {
+  int32 status = 1;
+}
+
+message DisableTriggerRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message DisableTriggerResponse {
+  int32 status = 1;
+}
+
+message FrequencyRangeCfgAveragingRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof averaging_enabled_enum {
+    FrequencyRangeAveragingEnabled averaging_enabled = 3;
+    int32 averaging_enabled_raw = 4;
+  }
+  int32 averaging_count = 5;
+}
+
+message FrequencyRangeCfgAveragingResponse {
+  int32 status = 1;
+}
+
+message FrequencyRangeCfgSpanRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double span = 3;
+}
+
+message FrequencyRangeCfgSpanResponse {
+  int32 status = 1;
+}
+
+message FrequencyRangeFetchMeasurementRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message FrequencyRangeFetchMeasurementResponse {
+  int32 status = 1;
+  double high_frequency = 2;
+  double low_frequency = 3;
+}
+
+message FrequencyRangeFetchSpectrumRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message FrequencyRangeFetchSpectrumResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float spectrum = 4;
+  int32 actual_array_size = 5;
+}
+
+message GetAllNamedResultNamesRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message GetAllNamedResultNamesResponse {
+  int32 status = 1;
+  string result_names = 2;
+  int32 actual_result_names_size = 3;
+  int32 default_result_exists = 4;
+}
+
+message GetAttributeF32Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxBluetoothAttribute attribute_id = 3;
+}
+
+message GetAttributeF32Response {
+  int32 status = 1;
+  float attr_val = 2;
+}
+
+message GetAttributeF32ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxBluetoothAttribute attribute_id = 3;
+}
+
+message GetAttributeF32ArrayResponse {
+  int32 status = 1;
+  repeated float attr_val = 2;
+  int32 actual_array_size = 3;
+}
+
+message GetAttributeF64Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxBluetoothAttribute attribute_id = 3;
+}
+
+message GetAttributeF64Response {
+  int32 status = 1;
+  double attr_val = 2;
+}
+
+message GetAttributeF64ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxBluetoothAttribute attribute_id = 3;
+}
+
+message GetAttributeF64ArrayResponse {
+  int32 status = 1;
+  repeated double attr_val = 2;
+  int32 actual_array_size = 3;
+}
+
+message GetAttributeI16Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxBluetoothAttribute attribute_id = 3;
+}
+
+message GetAttributeI16Response {
+  int32 status = 1;
+  int32 attr_val = 2;
+}
+
+message GetAttributeI32Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxBluetoothAttribute attribute_id = 3;
+}
+
+message GetAttributeI32Response {
+  int32 status = 1;
+  NiRFmxBluetoothInt32AttributeValues attr_val = 2;
+  int32 attr_val_raw = 3;
+}
+
+message GetAttributeI32ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxBluetoothAttribute attribute_id = 3;
+}
+
+message GetAttributeI32ArrayResponse {
+  int32 status = 1;
+  repeated NiRFmxBluetoothInt32AttributeValues attr_val = 2;
+  repeated int32 attr_val_raw = 3;
+  int32 actual_array_size = 4;
+}
+
+message GetAttributeI64Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxBluetoothAttribute attribute_id = 3;
+}
+
+message GetAttributeI64Response {
+  int32 status = 1;
+  int64 attr_val = 2;
+}
+
+message GetAttributeI64ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxBluetoothAttribute attribute_id = 3;
+}
+
+message GetAttributeI64ArrayResponse {
+  int32 status = 1;
+  repeated int64 attr_val = 2;
+  int32 actual_array_size = 3;
+}
+
+message GetAttributeI8Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxBluetoothAttribute attribute_id = 3;
+}
+
+message GetAttributeI8Response {
+  int32 status = 1;
+  int32 attr_val = 2;
+}
+
+message GetAttributeI8ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxBluetoothAttribute attribute_id = 3;
+}
+
+message GetAttributeI8ArrayResponse {
+  int32 status = 1;
+  repeated int32 attr_val = 2;
+  int32 actual_array_size = 3;
+}
+
+message GetAttributeNIComplexDoubleArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxBluetoothAttribute attribute_id = 3;
+}
+
+message GetAttributeNIComplexDoubleArrayResponse {
+  int32 status = 1;
+  repeated nidevice_grpc.NIComplexNumber attr_val = 2;
+  int32 actual_array_size = 3;
+}
+
+message GetAttributeNIComplexSingleArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxBluetoothAttribute attribute_id = 3;
+}
+
+message GetAttributeNIComplexSingleArrayResponse {
+  int32 status = 1;
+  repeated nidevice_grpc.NIComplexNumberF32 attr_val = 2;
+  int32 actual_array_size = 3;
+}
+
+message GetAttributeStringRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxBluetoothAttribute attribute_id = 3;
+}
+
+message GetAttributeStringResponse {
+  int32 status = 1;
+  string attr_val = 2;
+}
+
+message GetAttributeU16Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxBluetoothAttribute attribute_id = 3;
+}
+
+message GetAttributeU16Response {
+  int32 status = 1;
+  uint32 attr_val = 2;
+}
+
+message GetAttributeU32Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxBluetoothAttribute attribute_id = 3;
+}
+
+message GetAttributeU32Response {
+  int32 status = 1;
+  uint32 attr_val = 2;
+}
+
+message GetAttributeU32ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxBluetoothAttribute attribute_id = 3;
+}
+
+message GetAttributeU32ArrayResponse {
+  int32 status = 1;
+  repeated uint32 attr_val = 2;
+  int32 actual_array_size = 3;
+}
+
+message GetAttributeU64ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxBluetoothAttribute attribute_id = 3;
+}
+
+message GetAttributeU64ArrayResponse {
+  int32 status = 1;
+  repeated uint64 attr_val = 2;
+  int32 actual_array_size = 3;
+}
+
+message GetAttributeU8Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxBluetoothAttribute attribute_id = 3;
+}
+
+message GetAttributeU8Response {
+  int32 status = 1;
+  uint32 attr_val = 2;
+}
+
+message GetAttributeU8ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxBluetoothAttribute attribute_id = 3;
+}
+
+message GetAttributeU8ArrayResponse {
+  int32 status = 1;
+  bytes attr_val = 2;
+  int32 actual_array_size = 3;
+}
+
+message GetErrorRequest {
+  nidevice_grpc.Session instrument = 1;
+}
+
+message GetErrorResponse {
+  int32 status = 1;
+  int32 error_code = 2;
+  string error_description = 3;
+}
+
+message GetErrorStringRequest {
+  nidevice_grpc.Session instrument = 1;
+  int32 error_code = 2;
+}
+
+message GetErrorStringResponse {
+  int32 status = 1;
+  string error_description = 2;
+}
+
+message InitializeRequest {
+  string session_name = 1;
+  string resource_name = 2;
+  string option_string = 3;
+}
+
+message InitializeResponse {
+  int32 status = 1;
+  nidevice_grpc.Session instrument = 2;
+  int32 is_new_session = 3;
+  string error_message = 4 [deprecated = true];
+}
+
+message InitializeFromNIRFSASessionRequest {
+  string session_name = 1;
+  nidevice_grpc.Session nirfsa_session = 2;
+}
+
+message InitializeFromNIRFSASessionResponse {
+  int32 status = 1;
+  nidevice_grpc.Session instrument = 2;
+  string error_message = 3 [deprecated = true];
+}
+
+message InitiateRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string result_name = 3;
+}
+
+message InitiateResponse {
+  int32 status = 1;
+}
+
+message ModAccCfgAveragingRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof averaging_enabled_enum {
+    ModAccAveragingEnabled averaging_enabled = 3;
+    int32 averaging_enabled_raw = 4;
+  }
+  int32 averaging_count = 5;
+}
+
+message ModAccCfgAveragingResponse {
+  int32 status = 1;
+}
+
+message ModAccCfgBurstSynchronizationTypeRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof burst_synchronization_type_enum {
+    ModAccBurstSynchronizationType burst_synchronization_type = 3;
+    int32 burst_synchronization_type_raw = 4;
+  }
+}
+
+message ModAccCfgBurstSynchronizationTypeResponse {
+  int32 status = 1;
+}
+
+message ModAccFetchConstellationTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchConstellationTraceResponse {
+  int32 status = 1;
+  repeated nidevice_grpc.NIComplexNumberF32 constellation = 2;
+  int32 actual_array_size = 3;
+}
+
+message ModAccFetchDEVMRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchDEVMResponse {
+  int32 status = 1;
+  double peak_rms_devm_maximum = 2;
+  double peak_devm_maximum = 3;
+  double ninetynine_percent_devm = 4;
+}
+
+message ModAccFetchDEVMMagnitudeErrorRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchDEVMMagnitudeErrorResponse {
+  int32 status = 1;
+  double average_rms_magnitude_error_mean = 2;
+  double peak_rms_magnitude_error_maximum = 3;
+}
+
+message ModAccFetchDEVMPerSymbolTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchDEVMPerSymbolTraceResponse {
+  int32 status = 1;
+  repeated float devm_per_symbol = 2;
+  int32 actual_array_size = 3;
+}
+
+message ModAccFetchDEVMPhaseErrorRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchDEVMPhaseErrorResponse {
+  int32 status = 1;
+  double average_rms_phase_error_mean = 2;
+  double peak_rms_phase_error_maximum = 3;
+}
+
+message ModAccFetchDemodulatedBitTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchDemodulatedBitTraceResponse {
+  int32 status = 1;
+  repeated int32 demodulated_bits = 2;
+  int32 actual_array_size = 3;
+}
+
+message ModAccFetchDf1Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchDf1Response {
+  int32 status = 1;
+  double df1avg_maximum = 2;
+  double df1avg_minimum = 3;
+}
+
+message ModAccFetchDf1maxTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchDf1maxTraceResponse {
+  int32 status = 1;
+  repeated float time = 2;
+  repeated float df1max = 3;
+  int32 actual_array_size = 4;
+}
+
+message ModAccFetchDf2Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchDf2Response {
+  int32 status = 1;
+  double df2avg_minimum = 2;
+  double percentage_of_symbols_above_df2max_threshold = 3;
+}
+
+message ModAccFetchDf2maxTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchDf2maxTraceResponse {
+  int32 status = 1;
+  repeated float time = 2;
+  repeated float df2max = 3;
+  int32 actual_array_size = 4;
+}
+
+message ModAccFetchFrequencyErrorBRRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchFrequencyErrorBRResponse {
+  int32 status = 1;
+  double initial_frequency_error_maximum = 2;
+  double peak_frequency_drift_maximum = 3;
+  double peak_frequency_drift_rate_maximum = 4;
+}
+
+message ModAccFetchFrequencyErrorEDRRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchFrequencyErrorEDRResponse {
+  int32 status = 1;
+  double header_frequency_error_wi_maximum = 2;
+  double peak_frequency_error_wi_plus_w0_maximum = 3;
+  double peak_frequency_error_w0_maximum = 4;
+}
+
+message ModAccFetchFrequencyErrorLERequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchFrequencyErrorLEResponse {
+  int32 status = 1;
+  double peak_frequency_error_maximum = 2;
+  double initial_frequency_drift_maximum = 3;
+  double peak_frequency_drift_maximum = 4;
+  double peak_frequency_drift_rate_maximum = 5;
+}
+
+message ModAccFetchFrequencyErrorTraceBRRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchFrequencyErrorTraceBRResponse {
+  int32 status = 1;
+  repeated float time = 2;
+  repeated float frequency_error = 3;
+  int32 actual_array_size = 4;
+}
+
+message ModAccFetchFrequencyErrorTraceLERequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchFrequencyErrorTraceLEResponse {
+  int32 status = 1;
+  repeated float time = 2;
+  repeated float frequency_error = 3;
+  int32 actual_array_size = 4;
+}
+
+message ModAccFetchFrequencyErrorWiPlusW0TraceEDRRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchFrequencyErrorWiPlusW0TraceEDRResponse {
+  int32 status = 1;
+  repeated float time = 2;
+  repeated float frequency_error_wi_plus_w0 = 3;
+  int32 actual_array_size = 4;
+}
+
+message ModAccFetchFrequencyTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchFrequencyTraceResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float frequency = 4;
+  int32 actual_array_size = 5;
+}
+
+message ModAccFetchRMSDEVMTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchRMSDEVMTraceResponse {
+  int32 status = 1;
+  repeated float rms_devm = 2;
+  int32 actual_array_size = 3;
+}
+
+message ResetAttributeRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxBluetoothAttribute attribute_id = 3;
+}
+
+message ResetAttributeResponse {
+  int32 status = 1;
+}
+
+message ResetToDefaultRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message ResetToDefaultResponse {
+  int32 status = 1;
+}
+
+message SelectMeasurementsRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof measurements_enum {
+    MeasurementTypes measurements = 3;
+    uint32 measurements_raw = 4;
+  }
+  bool enable_all_traces = 5;
+}
+
+message SelectMeasurementsResponse {
+  int32 status = 1;
+}
+
+message SendSoftwareEdgeTriggerRequest {
+  nidevice_grpc.Session instrument = 1;
+}
+
+message SendSoftwareEdgeTriggerResponse {
+  int32 status = 1;
+}
+
+message SetAttributeF32Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxBluetoothAttribute attribute_id = 3;
+  float attr_val = 4;
+}
+
+message SetAttributeF32Response {
+  int32 status = 1;
+}
+
+message SetAttributeF32ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxBluetoothAttribute attribute_id = 3;
+  repeated float attr_val = 4;
+}
+
+message SetAttributeF32ArrayResponse {
+  int32 status = 1;
+}
+
+message SetAttributeF64Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxBluetoothAttribute attribute_id = 3;
+  double attr_val = 4;
+}
+
+message SetAttributeF64Response {
+  int32 status = 1;
+}
+
+message SetAttributeF64ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxBluetoothAttribute attribute_id = 3;
+  repeated double attr_val = 4;
+}
+
+message SetAttributeF64ArrayResponse {
+  int32 status = 1;
+}
+
+message SetAttributeI16Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxBluetoothAttribute attribute_id = 3;
+  int32 attr_val = 4;
+}
+
+message SetAttributeI16Response {
+  int32 status = 1;
+}
+
+message SetAttributeI32Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxBluetoothAttribute attribute_id = 3;
+  oneof attr_val_enum {
+    NiRFmxBluetoothInt32AttributeValues attr_val = 4;
+    int32 attr_val_raw = 5;
+  }
+}
+
+message SetAttributeI32Response {
+  int32 status = 1;
+}
+
+message SetAttributeI32ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxBluetoothAttribute attribute_id = 3;
+  repeated NiRFmxBluetoothInt32AttributeValues attr_val = 4;
+}
+
+message SetAttributeI32ArrayResponse {
+  int32 status = 1;
+}
+
+message SetAttributeI64Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxBluetoothAttribute attribute_id = 3;
+  int64 attr_val = 4;
+}
+
+message SetAttributeI64Response {
+  int32 status = 1;
+}
+
+message SetAttributeI64ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxBluetoothAttribute attribute_id = 3;
+  repeated int64 attr_val = 4;
+}
+
+message SetAttributeI64ArrayResponse {
+  int32 status = 1;
+}
+
+message SetAttributeI8Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxBluetoothAttribute attribute_id = 3;
+  int32 attr_val = 4;
+}
+
+message SetAttributeI8Response {
+  int32 status = 1;
+}
+
+message SetAttributeI8ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxBluetoothAttribute attribute_id = 3;
+  repeated int32 attr_val = 4;
+}
+
+message SetAttributeI8ArrayResponse {
+  int32 status = 1;
+}
+
+message SetAttributeNIComplexDoubleArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxBluetoothAttribute attribute_id = 3;
+  repeated nidevice_grpc.NIComplexNumber attr_val = 4;
+}
+
+message SetAttributeNIComplexDoubleArrayResponse {
+  int32 status = 1;
+}
+
+message SetAttributeNIComplexSingleArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxBluetoothAttribute attribute_id = 3;
+  repeated nidevice_grpc.NIComplexNumberF32 attr_val = 4;
+}
+
+message SetAttributeNIComplexSingleArrayResponse {
+  int32 status = 1;
+}
+
+message SetAttributeStringRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxBluetoothAttribute attribute_id = 3;
+  oneof attr_val_enum {
+    NiRFmxBluetoothStringAttributeValuesMapped attr_val_mapped = 4;
+    string attr_val_raw = 5;
+  }
+}
+
+message SetAttributeStringResponse {
+  int32 status = 1;
+}
+
+message SetAttributeU16Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxBluetoothAttribute attribute_id = 3;
+  uint32 attr_val = 4;
+}
+
+message SetAttributeU16Response {
+  int32 status = 1;
+}
+
+message SetAttributeU32Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxBluetoothAttribute attribute_id = 3;
+  uint32 attr_val = 4;
+}
+
+message SetAttributeU32Response {
+  int32 status = 1;
+}
+
+message SetAttributeU32ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxBluetoothAttribute attribute_id = 3;
+  repeated uint32 attr_val = 4;
+}
+
+message SetAttributeU32ArrayResponse {
+  int32 status = 1;
+}
+
+message SetAttributeU64ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxBluetoothAttribute attribute_id = 3;
+  repeated uint64 attr_val = 4;
+}
+
+message SetAttributeU64ArrayResponse {
+  int32 status = 1;
+}
+
+message SetAttributeU8Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxBluetoothAttribute attribute_id = 3;
+  uint32 attr_val = 4;
+}
+
+message SetAttributeU8Response {
+  int32 status = 1;
+}
+
+message SetAttributeU8ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxBluetoothAttribute attribute_id = 3;
+  bytes attr_val = 4;
+}
+
+message SetAttributeU8ArrayResponse {
+  int32 status = 1;
+}
+
+message TXPCfgAveragingRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof averaging_enabled_enum {
+    TxpAveragingEnabled averaging_enabled = 3;
+    int32 averaging_enabled_raw = 4;
+  }
+  int32 averaging_count = 5;
+}
+
+message TXPCfgAveragingResponse {
+  int32 status = 1;
+}
+
+message TXPCfgBurstSynchronizationTypeRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof burst_synchronization_type_enum {
+    TxpBurstSynchronizationType burst_synchronization_type = 3;
+    int32 burst_synchronization_type_raw = 4;
+  }
+}
+
+message TXPCfgBurstSynchronizationTypeResponse {
+  int32 status = 1;
+}
+
+message TXPFetchEDRPowersRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message TXPFetchEDRPowersResponse {
+  int32 status = 1;
+  double edr_gfsk_average_power_mean = 2;
+  double edr_dpsk_average_power_mean = 3;
+  double edr_dpsk_gfsk_average_power_ratio_mean = 4;
+}
+
+message TXPFetchLECTEReferencePeriodPowersRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message TXPFetchLECTEReferencePeriodPowersResponse {
+  int32 status = 1;
+  double reference_period_average_power_mean = 2;
+  double reference_period_peak_absolute_power_deviation_maximum = 3;
+}
+
+message TXPFetchLECTETransmitSlotPowersRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message TXPFetchLECTETransmitSlotPowersResponse {
+  int32 status = 1;
+  double transmit_slot_average_power_mean = 2;
+  double transmit_slot_peak_absolute_power_deviation_maximum = 3;
+}
+
+message TXPFetchLECTETransmitSlotPowersArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message TXPFetchLECTETransmitSlotPowersArrayResponse {
+  int32 status = 1;
+  repeated double transmit_slot_average_power_mean = 2;
+  repeated double transmit_slot_peak_absolute_power_deviation_maximum = 3;
+  int32 actual_array_size = 4;
+}
+
+message TXPFetchPowerTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message TXPFetchPowerTraceResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float power = 4;
+  int32 actual_array_size = 5;
+}
+
+message TXPFetchPowersRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message TXPFetchPowersResponse {
+  int32 status = 1;
+  double average_power_mean = 2;
+  double average_power_maximum = 3;
+  double average_power_minimum = 4;
+  double peak_to_average_power_ratio_maximum = 5;
+}
+
+message TwentydBBandwidthCfgAveragingRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof averaging_enabled_enum {
+    TwentydBBandwidthAveragingEnabled averaging_enabled = 3;
+    int32 averaging_enabled_raw = 4;
+  }
+  int32 averaging_count = 5;
+}
+
+message TwentydBBandwidthCfgAveragingResponse {
+  int32 status = 1;
+}
+
+message TwentydBBandwidthFetchMeasurementRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message TwentydBBandwidthFetchMeasurementResponse {
+  int32 status = 1;
+  double peak_power = 2;
+  double bandwidth = 3;
+  double high_frequency = 4;
+  double low_frequency = 5;
+}
+
+message TwentydBBandwidthFetchSpectrumRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message TwentydBBandwidthFetchSpectrumResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float spectrum = 4;
+  int32 actual_array_size = 5;
+}
+
+message WaitForAcquisitionCompleteRequest {
+  nidevice_grpc.Session instrument = 1;
+  double timeout = 2;
+}
+
+message WaitForAcquisitionCompleteResponse {
+  int32 status = 1;
+}
+
+message WaitForMeasurementCompleteRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message WaitForMeasurementCompleteResponse {
+  int32 status = 1;
+}
+

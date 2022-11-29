@@ -33,7 +33,7 @@ jobs:
         sudo ./oecore-x86_64-core2-64-toolchain-6.0.sh -y -d ${GITHUB_WORKSPACE}/nilrt-toolchain/
         echo "${GITHUB_WORKSPACE}/nilrt-toolchain/sysroots/x86_64-nilrtsdk-linux/usr/bin/x86_64-nilrt-linux" >> ${GITHUB_PATH}
 
-    - name: Update Submodules 
+    - name: Update Submodules
       id: submodules
       run: |
         git submodule update --init --recursive
