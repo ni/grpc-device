@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.12.0)
 
-project(ni_grpc_device_server C CXX)
+project(ni_grpc_device_server
+  LANGUAGES C CXX
+  VERSION 1.5.2)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 include(CreateVirtualEnvironment)
@@ -8,34 +10,6 @@ include(CreateVirtualEnvironment)
 # Workaround for: https://bugs.chromium.org/p/boringssl/issues/detail?id=423
 if (CMAKE_SYSTEM_PROCESSOR STREQUAL "AMD64")
   set(CMAKE_SYSTEM_PROCESSOR "amd64")
-endif()
-
-#----------------------------------------------------------------------
-# Determine version using current branch Git tag (e.g. v1.5.2)
-#----------------------------------------------------------------------
-if(EXISTS "${CMAKE_SOURCE_DIR}/.git")
-  execute_process(
-    COMMAND git describe --tags
-    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-    OUTPUT_VARIABLE GIT_TAG
-    OUTPUT_STRIP_TRAILING_WHITESPACE
-  )
-else(EXISTS "${CMAKE_SOURCE_DIR}/.git")
-  set(GIT_TAG "v0.0.0")
-endif(EXISTS "${CMAKE_SOURCE_DIR}/.git")
-
-message(STATUS "Parsing Git tag ${GIT_TAG}.")
-
-if(GIT_TAG MATCHES "^v([0-9]+)\\.([0-9]+)\\.?([0-9]+)?")
-  set(GIT_TAG_MAJOR ${CMAKE_MATCH_1})
-  set(GIT_TAG_MINOR ${CMAKE_MATCH_2})
-  if(CMAKE_MATCH_3)
-    set(GIT_TAG_PATCH ${CMAKE_MATCH_3})
-  else()
-    set(GIT_TAG_PATCH "0")
-  endif()
-else()
-  message(FATAL_ERROR "Unable to parse Git tag. Tag must contain major and minor version with optional patch. e.g. \"v1.33.7\"")
 endif()
 
 #----------------------------------------------------------------------
