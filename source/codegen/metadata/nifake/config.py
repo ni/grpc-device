@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-FAKE API metadata version 23.0.0d26
+# This file is generated from NI-FAKE API metadata version 23.0.0d9999
 config = {
     'additional_headers': {
     },
@@ -77,8 +77,7 @@ config = {
                 },
                 {
                     'coerced': True,
-                    'enum': 'Turtle',
-                    'grpc_type': 'Turtle',
+                    'grpc_type': 'sint32',
                     'name': 'turtle',
                     'type': 'ViInt16'
                 }
