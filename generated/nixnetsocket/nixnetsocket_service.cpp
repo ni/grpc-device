@@ -54,7 +54,7 @@ namespace nixnetsocket_grpc {
     }
     try {
       auto socket_grpc_session = request->socket();
-      nxSOCKET socket = session_repository_->access_session(socket_grpc_session.id(), socket_grpc_session.name());
+      nxSOCKET socket = session_repository_->access_session(socket_grpc_session.name());
 
       auto addr = allocate_output_storage<nxsockaddr, SockAddr>();
       nxsocklen_t addrlen {};
@@ -63,16 +63,15 @@ namespace nixnetsocket_grpc {
         auto status = socket_out == -1 ? -1 : 0;
         return std::make_tuple(status, socket_out);
       };
-      uint32_t session_id = 0;
-      const std::string& grpc_device_session_name = request->session_name();
+      std::string grpc_device_session_name = request->session_name();
       auto cleanup_lambda = [&] (nxSOCKET id) { library_->Close(id); };
-      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
+      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNxSOCKET(context, status, socket);
       }
       response->set_status(status);
       convert_to_grpc(addr, response->mutable_addr());
-      response->mutable_socket()->set_id(session_id);
+      response->mutable_socket()->set_name(grpc_device_session_name);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
@@ -89,7 +88,7 @@ namespace nixnetsocket_grpc {
     }
     try {
       auto socket_grpc_session = request->socket();
-      nxSOCKET socket = session_repository_->access_session(socket_grpc_session.id(), socket_grpc_session.name());
+      nxSOCKET socket = session_repository_->access_session(socket_grpc_session.name());
       auto name = convert_from_grpc<nxsockaddr>(request->name());
       auto namelen = name.size();
       auto status = library_->Bind(socket, name, namelen);
@@ -113,8 +112,8 @@ namespace nixnetsocket_grpc {
     }
     try {
       auto socket_grpc_session = request->socket();
-      nxSOCKET socket = session_repository_->access_session(socket_grpc_session.id(), socket_grpc_session.name());
-      session_repository_->remove_session(socket_grpc_session.id(), socket_grpc_session.name());
+      nxSOCKET socket = session_repository_->access_session(socket_grpc_session.name());
+      session_repository_->remove_session(socket_grpc_session.name());
       auto status = library_->Close(socket);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNxSOCKET(context, status, socket);
@@ -136,7 +135,7 @@ namespace nixnetsocket_grpc {
     }
     try {
       auto socket_grpc_session = request->socket();
-      nxSOCKET socket = session_repository_->access_session(socket_grpc_session.id(), socket_grpc_session.name());
+      nxSOCKET socket = session_repository_->access_session(socket_grpc_session.name());
       auto name = convert_from_grpc<nxsockaddr>(request->name());
       auto namelen = name.size();
       auto status = library_->Connect(socket, name, namelen);
@@ -160,7 +159,7 @@ namespace nixnetsocket_grpc {
     }
     try {
       auto fd_grpc_session = request->fd();
-      nxSOCKET fd = session_repository_->access_session(fd_grpc_session.id(), fd_grpc_session.name());
+      nxSOCKET fd = session_repository_->access_session(fd_grpc_session.name());
       auto set = convert_from_grpc<nxfd_set>(request->set(), session_repository_);
       auto is_set = library_->FdIsSet(fd, set);
       auto status = 0;
@@ -185,10 +184,12 @@ namespace nixnetsocket_grpc {
     }
     try {
       auto stack_ref_grpc_session = request->stack_ref();
-      nxIpStackRef_t stack_ref = nx_ip_stack_ref_t_resource_repository_->access_session(stack_ref_grpc_session.id(), stack_ref_grpc_session.name());
-      auto node = request->node().c_str();
+      nxIpStackRef_t stack_ref = nx_ip_stack_ref_t_resource_repository_->access_session(stack_ref_grpc_session.name());
+      auto node_mbcs = convert_from_grpc<std::string>(request->node());
+      auto node = node_mbcs.c_str();
       auto node_api = request->node() == "" ? nullptr : node;
-      auto service = request->service().c_str();
+      auto service_mbcs = convert_from_grpc<std::string>(request->service());
+      auto service = service_mbcs.c_str();
       auto service_api = request->service() == "" ? nullptr : service;
       auto hints = convert_from_grpc<nxaddrinfo>(request->hints());
       auto res = allocate_output_storage<nxaddrinfo, google::protobuf::RepeatedPtrField<AddrInfo>>(library_);
@@ -214,7 +215,7 @@ namespace nixnetsocket_grpc {
     }
     try {
       auto stack_ref_grpc_session = request->stack_ref();
-      nxIpStackRef_t stack_ref = nx_ip_stack_ref_t_resource_repository_->access_session(stack_ref_grpc_session.id(), stack_ref_grpc_session.name());
+      nxIpStackRef_t stack_ref = nx_ip_stack_ref_t_resource_repository_->access_session(stack_ref_grpc_session.name());
       auto addr = convert_from_grpc<nxsockaddr>(request->addr());
       auto addrlen = addr.size();
       nxsocklen_t hostlen = request->hostlen();
@@ -236,9 +237,13 @@ namespace nixnetsocket_grpc {
         return ConvertApiErrorStatusForNxIpStackRef_t(context, status, stack_ref);
       }
       response->set_status(status);
-      response->set_host(host);
+      std::string host_utf8;
+      convert_to_grpc(host, &host_utf8);
+      response->set_host(host_utf8);
       nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_host()));
-      response->set_serv(serv);
+      std::string serv_utf8;
+      convert_to_grpc(serv, &serv_utf8);
+      response->set_serv(serv_utf8);
       nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_serv()));
       return ::grpc::Status::OK;
     }
@@ -256,7 +261,7 @@ namespace nixnetsocket_grpc {
     }
     try {
       auto socket_grpc_session = request->socket();
-      nxSOCKET socket = session_repository_->access_session(socket_grpc_session.id(), socket_grpc_session.name());
+      nxSOCKET socket = session_repository_->access_session(socket_grpc_session.name());
       auto addr = allocate_output_storage<nxsockaddr, SockAddr>();
       auto addrlen = static_cast<nxsocklen_t>(sizeof(addr.storage));
       auto status = library_->GetPeerName(socket, &addr, &addrlen);
@@ -281,7 +286,7 @@ namespace nixnetsocket_grpc {
     }
     try {
       auto socket_grpc_session = request->socket();
-      nxSOCKET socket = session_repository_->access_session(socket_grpc_session.id(), socket_grpc_session.name());
+      nxSOCKET socket = session_repository_->access_session(socket_grpc_session.name());
       auto addr = allocate_output_storage<nxsockaddr, SockAddr>();
       auto addrlen = static_cast<nxsocklen_t>(sizeof(addr.storage));
       auto status = library_->GetSockName(socket, &addr, &addrlen);
@@ -306,7 +311,7 @@ namespace nixnetsocket_grpc {
     }
     try {
       auto socket_grpc_session = request->socket();
-      nxSOCKET socket = session_repository_->access_session(socket_grpc_session.id(), socket_grpc_session.name());
+      nxSOCKET socket = session_repository_->access_session(socket_grpc_session.name());
       int32_t level;
       switch (request->level_enum_case()) {
         case nixnetsocket_grpc::GetSockOptRequest::LevelEnumCase::kLevel: {
@@ -363,8 +368,9 @@ namespace nixnetsocket_grpc {
     }
     try {
       auto stack_ref_grpc_session = request->stack_ref();
-      nxIpStackRef_t stack_ref = nx_ip_stack_ref_t_resource_repository_->access_session(stack_ref_grpc_session.id(), stack_ref_grpc_session.name());
-      auto cp = request->cp().c_str();
+      nxIpStackRef_t stack_ref = nx_ip_stack_ref_t_resource_repository_->access_session(stack_ref_grpc_session.name());
+      auto cp_mbcs = convert_from_grpc<std::string>(request->cp());
+      auto cp = cp_mbcs.c_str();
       auto addr = library_->InetAddr(stack_ref, cp);
       auto status = addr == -1 ? -1 : 0;
       if (!status_ok(status)) {
@@ -388,8 +394,9 @@ namespace nixnetsocket_grpc {
     }
     try {
       auto stack_ref_grpc_session = request->stack_ref();
-      nxIpStackRef_t stack_ref = nx_ip_stack_ref_t_resource_repository_->access_session(stack_ref_grpc_session.id(), stack_ref_grpc_session.name());
-      auto cp = request->cp().c_str();
+      nxIpStackRef_t stack_ref = nx_ip_stack_ref_t_resource_repository_->access_session(stack_ref_grpc_session.name());
+      auto cp_mbcs = convert_from_grpc<std::string>(request->cp());
+      auto cp = cp_mbcs.c_str();
       auto name = allocate_output_storage<nxin_addr, InAddr>();
       auto status = library_->InetAToN(stack_ref, cp, &name);
       if (!status_ok(status)) {
@@ -413,7 +420,7 @@ namespace nixnetsocket_grpc {
     }
     try {
       auto stack_ref_grpc_session = request->stack_ref();
-      nxIpStackRef_t stack_ref = nx_ip_stack_ref_t_resource_repository_->access_session(stack_ref_grpc_session.id(), stack_ref_grpc_session.name());
+      nxIpStackRef_t stack_ref = nx_ip_stack_ref_t_resource_repository_->access_session(stack_ref_grpc_session.name());
       auto in_addr = convert_from_grpc<nxin_addr>(request->in_addr());
       auto address = library_->InetNToA(stack_ref, in_addr);
       auto status = address ? 0 : -1;
@@ -421,7 +428,9 @@ namespace nixnetsocket_grpc {
         return ConvertApiErrorStatusForNxIpStackRef_t(context, status, stack_ref);
       }
       response->set_status(status);
-      response->set_address(address);
+      std::string address_utf8;
+      convert_to_grpc(address, &address_utf8);
+      response->set_address(address_utf8);
       nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_address()));
       return ::grpc::Status::OK;
     }
@@ -439,7 +448,7 @@ namespace nixnetsocket_grpc {
     }
     try {
       auto stack_ref_grpc_session = request->stack_ref();
-      nxIpStackRef_t stack_ref = nx_ip_stack_ref_t_resource_repository_->access_session(stack_ref_grpc_session.id(), stack_ref_grpc_session.name());
+      nxIpStackRef_t stack_ref = nx_ip_stack_ref_t_resource_repository_->access_session(stack_ref_grpc_session.name());
       auto af = get_address_family(request->addr().addr_case());
       auto addr = convert_from_grpc<void>(request->addr());
       auto size = nxINET6_ADDRSTRLEN;
@@ -450,7 +459,9 @@ namespace nixnetsocket_grpc {
         return ConvertApiErrorStatusForNxIpStackRef_t(context, status, stack_ref);
       }
       response->set_status(status);
-      response->set_address(address);
+      std::string address_utf8;
+      convert_to_grpc(address, &address_utf8);
+      response->set_address(address_utf8);
       nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_address()));
       return ::grpc::Status::OK;
     }
@@ -468,7 +479,7 @@ namespace nixnetsocket_grpc {
     }
     try {
       auto stack_ref_grpc_session = request->stack_ref();
-      nxIpStackRef_t stack_ref = nx_ip_stack_ref_t_resource_repository_->access_session(stack_ref_grpc_session.id(), stack_ref_grpc_session.name());
+      nxIpStackRef_t stack_ref = nx_ip_stack_ref_t_resource_repository_->access_session(stack_ref_grpc_session.name());
       int32_t af;
       switch (request->af_enum_case()) {
         case nixnetsocket_grpc::InetPToNRequest::AfEnumCase::kAf: {
@@ -485,7 +496,8 @@ namespace nixnetsocket_grpc {
         }
       }
 
-      auto address = request->address().c_str();
+      auto address_mbcs = convert_from_grpc<std::string>(request->address());
+      auto address = address_mbcs.c_str();
       auto addr = allocate_output_storage<void, Addr>(af);
       auto status = library_->InetPToN(stack_ref, af, address, &addr);
       if (!status_ok(status)) {
@@ -509,8 +521,8 @@ namespace nixnetsocket_grpc {
     }
     try {
       auto stack_ref_grpc_session = request->stack_ref();
-      nxIpStackRef_t stack_ref = nx_ip_stack_ref_t_resource_repository_->access_session(stack_ref_grpc_session.id(), stack_ref_grpc_session.name());
-      nx_ip_stack_ref_t_resource_repository_->remove_session(stack_ref_grpc_session.id(), stack_ref_grpc_session.name());
+      nxIpStackRef_t stack_ref = nx_ip_stack_ref_t_resource_repository_->access_session(stack_ref_grpc_session.name());
+      nx_ip_stack_ref_t_resource_repository_->remove_session(stack_ref_grpc_session.name());
       auto status = library_->IpStackClear(stack_ref);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNxIpStackRef_t(context, status, stack_ref);
@@ -531,23 +543,24 @@ namespace nixnetsocket_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      char* stack_name = (char*)request->stack_name().c_str();
-      char* config = (char*)request->config().c_str();
+      auto stack_name_mbcs = convert_from_grpc<std::string>(request->stack_name());
+      char* stack_name = (char*)stack_name_mbcs.c_str();
+      auto config_mbcs = convert_from_grpc<std::string>(request->config());
+      char* config = (char*)config_mbcs.c_str();
 
       auto init_lambda = [&] () {
         nxIpStackRef_t stack_ref;
         auto status = library_->IpStackCreate(stack_name, config, &stack_ref);
         return std::make_tuple(status, stack_ref);
       };
-      uint32_t session_id = 0;
-      const std::string& grpc_device_session_name = request->session_name();
+      std::string grpc_device_session_name = request->session_name();
       auto cleanup_lambda = [&] (nxIpStackRef_t id) { library_->IpStackClear(id); };
-      int status = nx_ip_stack_ref_t_resource_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
+      int status = nx_ip_stack_ref_t_resource_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNxSOCKET(context, status, 0);
       }
       response->set_status(status);
-      response->mutable_stack_ref()->set_id(session_id);
+      response->mutable_stack_ref()->set_name(grpc_device_session_name);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
@@ -603,7 +616,7 @@ namespace nixnetsocket_grpc {
     }
     try {
       auto stack_ref_grpc_session = request->stack_ref();
-      nxIpStackRef_t stack_ref = nx_ip_stack_ref_t_resource_repository_->access_session(stack_ref_grpc_session.id(), stack_ref_grpc_session.name());
+      nxIpStackRef_t stack_ref = nx_ip_stack_ref_t_resource_repository_->access_session(stack_ref_grpc_session.name());
       auto info_id = nxIPSTACK_INFO_ID;
       auto virtual_interfaces = allocate_output_storage<nxVirtualInterface_t, google::protobuf::RepeatedPtrField<VirtualInterface>>(library_);
       auto status = library_->IpStackGetInfo(stack_ref, info_id, &virtual_interfaces);
@@ -627,22 +640,22 @@ namespace nixnetsocket_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      char* stack_name = (char*)request->stack_name().c_str();
+      auto stack_name_mbcs = convert_from_grpc<std::string>(request->stack_name());
+      char* stack_name = (char*)stack_name_mbcs.c_str();
 
       auto init_lambda = [&] () {
         nxIpStackRef_t stack_ref;
         auto status = library_->IpStackOpen(stack_name, &stack_ref);
         return std::make_tuple(status, stack_ref);
       };
-      uint32_t session_id = 0;
-      const std::string& grpc_device_session_name = request->session_name();
+      std::string grpc_device_session_name = request->session_name();
       auto cleanup_lambda = [&] (nxIpStackRef_t id) { library_->IpStackClear(id); };
-      int status = nx_ip_stack_ref_t_resource_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
+      int status = nx_ip_stack_ref_t_resource_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNxSOCKET(context, status, 0);
       }
       response->set_status(status);
-      response->mutable_stack_ref()->set_id(session_id);
+      response->mutable_stack_ref()->set_name(grpc_device_session_name);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
@@ -659,8 +672,9 @@ namespace nixnetsocket_grpc {
     }
     try {
       auto stack_ref_grpc_session = request->stack_ref();
-      nxIpStackRef_t stack_ref = nx_ip_stack_ref_t_resource_repository_->access_session(stack_ref_grpc_session.id(), stack_ref_grpc_session.name());
-      auto local_interface = request->local_interface().c_str();
+      nxIpStackRef_t stack_ref = nx_ip_stack_ref_t_resource_repository_->access_session(stack_ref_grpc_session.name());
+      auto local_interface_mbcs = convert_from_grpc<std::string>(request->local_interface());
+      auto local_interface = local_interface_mbcs.c_str();
       int32_t timeout_ms = request->timeout_ms();
       auto status = library_->IpStackWaitForInterface(stack_ref, local_interface, timeout_ms);
       if (!status_ok(status)) {
@@ -683,7 +697,7 @@ namespace nixnetsocket_grpc {
     }
     try {
       auto socket_grpc_session = request->socket();
-      nxSOCKET socket = session_repository_->access_session(socket_grpc_session.id(), socket_grpc_session.name());
+      nxSOCKET socket = session_repository_->access_session(socket_grpc_session.name());
       int32_t backlog = request->backlog();
       auto status = library_->Listen(socket, backlog);
       if (!status_ok(status)) {
@@ -706,7 +720,7 @@ namespace nixnetsocket_grpc {
     }
     try {
       auto socket_grpc_session = request->socket();
-      nxSOCKET socket = session_repository_->access_session(socket_grpc_session.id(), socket_grpc_session.name());
+      nxSOCKET socket = session_repository_->access_session(socket_grpc_session.name());
       int32_t size = request->size();
       const auto flags = nidevice_grpc::converters::convert_bitfield_as_enum_array_input(
         request->flags_array(),
@@ -735,7 +749,7 @@ namespace nixnetsocket_grpc {
     }
     try {
       auto socket_grpc_session = request->socket();
-      nxSOCKET socket = session_repository_->access_session(socket_grpc_session.id(), socket_grpc_session.name());
+      nxSOCKET socket = session_repository_->access_session(socket_grpc_session.name());
       int32_t size = request->size();
       const auto flags = nidevice_grpc::converters::convert_bitfield_as_enum_array_input(
         request->flags_array(),
@@ -792,7 +806,7 @@ namespace nixnetsocket_grpc {
     }
     try {
       auto socket_grpc_session = request->socket();
-      nxSOCKET socket = session_repository_->access_session(socket_grpc_session.id(), socket_grpc_session.name());
+      nxSOCKET socket = session_repository_->access_session(socket_grpc_session.name());
       char* data = (char*)request->data().c_str();
       int32_t size = static_cast<int32_t>(request->data().size());
       int32_t flags_raw = request->flags_raw();
@@ -817,7 +831,7 @@ namespace nixnetsocket_grpc {
     }
     try {
       auto socket_grpc_session = request->socket();
-      nxSOCKET socket = session_repository_->access_session(socket_grpc_session.id(), socket_grpc_session.name());
+      nxSOCKET socket = session_repository_->access_session(socket_grpc_session.name());
       char* data = (char*)request->data().c_str();
       int32_t size = static_cast<int32_t>(request->data().size());
       int32_t flags_raw = request->flags_raw();
@@ -844,7 +858,7 @@ namespace nixnetsocket_grpc {
     }
     try {
       auto socket_grpc_session = request->socket();
-      nxSOCKET socket = session_repository_->access_session(socket_grpc_session.id(), socket_grpc_session.name());
+      nxSOCKET socket = session_repository_->access_session(socket_grpc_session.name());
       int32_t level;
       switch (request->level_enum_case()) {
         case nixnetsocket_grpc::SetSockOptRequest::LevelEnumCase::kLevel: {
@@ -901,7 +915,7 @@ namespace nixnetsocket_grpc {
     }
     try {
       auto socket_grpc_session = request->socket();
-      nxSOCKET socket = session_repository_->access_session(socket_grpc_session.id(), socket_grpc_session.name());
+      nxSOCKET socket = session_repository_->access_session(socket_grpc_session.name());
       int32_t how;
       switch (request->how_enum_case()) {
         case nixnetsocket_grpc::ShutdownRequest::HowEnumCase::kHow: {
@@ -939,7 +953,7 @@ namespace nixnetsocket_grpc {
     }
     try {
       auto stack_ref_grpc_session = request->stack_ref();
-      nxIpStackRef_t stack_ref = nx_ip_stack_ref_t_resource_repository_->access_session(stack_ref_grpc_session.id(), stack_ref_grpc_session.name());
+      nxIpStackRef_t stack_ref = nx_ip_stack_ref_t_resource_repository_->access_session(stack_ref_grpc_session.name());
       int32_t domain;
       switch (request->domain_enum_case()) {
         case nixnetsocket_grpc::SocketRequest::DomainEnumCase::kDomain: {
@@ -994,15 +1008,14 @@ namespace nixnetsocket_grpc {
         auto status = socket == -1 ? -1 : 0;
         return std::make_tuple(status, socket);
       };
-      uint32_t session_id = 0;
-      const std::string& grpc_device_session_name = request->session_name();
+      std::string grpc_device_session_name = request->session_name();
       auto cleanup_lambda = [&] (nxSOCKET id) { library_->Close(id); };
-      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
+      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNxIpStackRef_t(context, status, stack_ref);
       }
       response->set_status(status);
-      response->mutable_socket()->set_id(session_id);
+      response->mutable_socket()->set_name(grpc_device_session_name);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
@@ -1030,7 +1043,9 @@ namespace nixnetsocket_grpc {
         return nidevice_grpc::ApiErrorToStatus(context, status);
       }
       response->set_status(status);
-      response->set_error(error);
+      std::string error_utf8;
+      convert_to_grpc(error, &error_utf8);
+      response->set_error(error_utf8);
       nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error()));
       return ::grpc::Status::OK;
     }

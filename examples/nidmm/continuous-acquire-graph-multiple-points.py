@@ -162,7 +162,7 @@ try:
                 fetch_multipoints_response = nidmm_client.FetchMultiPoint(
                     nidmm_types.FetchMultiPointRequest(
                         vi=vi,
-                        maximum_time=-1,
+                        maximum_time_raw=-1,
                         array_size=pts_available,
                     )
                 )
@@ -209,6 +209,6 @@ except grpc.RpcError as rpc_error:
         )
     print(f"{error_message}")
 finally:
-    if "vi" in vars() and vi.id != 0:
+    if "vi" in vars() and vi.name != "":
         # Close NI-DMM session
         nidmm_client.Close(nidmm_types.CloseRequest(vi=vi))

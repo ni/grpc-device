@@ -56,7 +56,7 @@ class NiScopeSessionTest : public ::testing::Test {
 
     ::grpc::ClientContext context;
     scope::GetErrorMessageRequest request;
-    request.mutable_vi()->set_id(session.id());
+    request.mutable_vi()->set_name(session.name());
     request.set_error_code(error_status);
     scope::GetErrorMessageResponse error_response;
 
@@ -77,7 +77,7 @@ TEST_F(NiScopeSessionTest, InitializeSessionWithDeviceAndSessionName_CreatesDriv
 
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(0, response.status());
-  EXPECT_NE(0, response.vi().id());
+  EXPECT_NE("", response.vi().name());
   EXPECT_EQ("", response.error_message());
 }
 
@@ -88,7 +88,7 @@ TEST_F(NiScopeSessionTest, InitializeSessionWithDeviceAndNoSessionName_CreatesDr
 
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(0, response.status());
-  EXPECT_NE(0, response.vi().id());
+  EXPECT_NE("", response.vi().name());
   EXPECT_EQ("", response.error_message());
 }
 
@@ -100,7 +100,7 @@ TEST_F(NiScopeSessionTest, InitializedSession_CloseSession_ClosesDriverSession)
 
   ::grpc::ClientContext context;
   scope::CloseRequest close_request;
-  close_request.mutable_vi()->set_id(session.id());
+  close_request.mutable_vi()->set_name(session.name());
   scope::CloseResponse close_response;
   ::grpc::Status status = GetStub()->Close(&context, close_request, &close_response);
 
@@ -111,12 +111,12 @@ TEST_F(NiScopeSessionTest, InitializedSession_CloseSession_ClosesDriverSession)
 TEST_F(NiScopeSessionTest, InvalidSession_CloseSession_ReturnsInvalidSesssionError)
 {
   nidevice_grpc::Session session;
-  session.set_id(NULL);
+  session.set_name("");
 
   try {
     ::grpc::ClientContext context;
     scope::CloseRequest request;
-    request.mutable_vi()->set_id(session.id());
+    request.mutable_vi()->set_name(session.name());
     scope::CloseResponse response;
     ::grpc::Status status = GetStub()->Close(&context, request, &response);
     nidevice_grpc::experimental::client::raise_if_error(status, context);

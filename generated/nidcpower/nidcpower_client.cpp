@@ -104,6 +104,32 @@ clear_interchange_warnings(const StubPtr& stub, const nidevice_grpc::Session& vi
   return response;
 }
 
+ClearLatchedOutputCutoffStateResponse
+clear_latched_output_cutoff_state(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const simple_variant<OutputCutoffReason, pb::int32>& output_cutoff_reason)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ClearLatchedOutputCutoffStateRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_channel_name(channel_name);
+  const auto output_cutoff_reason_ptr = output_cutoff_reason.get_if<OutputCutoffReason>();
+  const auto output_cutoff_reason_raw_ptr = output_cutoff_reason.get_if<pb::int32>();
+  if (output_cutoff_reason_ptr) {
+    request.set_output_cutoff_reason(*output_cutoff_reason_ptr);
+  }
+  else if (output_cutoff_reason_raw_ptr) {
+    request.set_output_cutoff_reason_raw(*output_cutoff_reason_raw_ptr);
+  }
+
+  auto response = ClearLatchedOutputCutoffStateResponse{};
+
+  raise_if_error(
+      stub->ClearLatchedOutputCutoffState(&context, request, &response),
+      context);
+
+  return response;
+}
+
 CloseResponse
 close(const StubPtr& stub, const nidevice_grpc::Session& vi)
 {
@@ -2185,7 +2211,7 @@ import_attribute_configuration_file(const StubPtr& stub, const nidevice_grpc::Se
 }
 
 InitializeWithChannelsResponse
-initialize_with_channels(const StubPtr& stub, const pb::string& resource_name, const pb::string& channels, const bool& reset, const pb::string& option_string)
+initialize_with_channels(const StubPtr& stub, const pb::string& resource_name, const pb::string& channels, const bool& reset, const pb::string& option_string, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
 {
   ::grpc::ClientContext context;
 
@@ -2194,6 +2220,7 @@ initialize_with_channels(const StubPtr& stub, const pb::string& resource_name, c
   request.set_channels(channels);
   request.set_reset(reset);
   request.set_option_string(option_string);
+  request.set_initialization_behavior(initialization_behavior);
 
   auto response = InitializeWithChannelsResponse{};
 
@@ -2205,7 +2232,7 @@ initialize_with_channels(const StubPtr& stub, const pb::string& resource_name, c
 }
 
 InitializeWithIndependentChannelsResponse
-initialize_with_independent_channels(const StubPtr& stub, const pb::string& resource_name, const bool& reset, const pb::string& option_string)
+initialize_with_independent_channels(const StubPtr& stub, const pb::string& resource_name, const bool& reset, const pb::string& option_string, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior)
 {
   ::grpc::ClientContext context;
 
@@ -2213,6 +2240,7 @@ initialize_with_independent_channels(const StubPtr& stub, const pb::string& reso
   request.set_resource_name(resource_name);
   request.set_reset(reset);
   request.set_option_string(option_string);
+  request.set_initialization_behavior(initialization_behavior);
 
   auto response = InitializeWithIndependentChannelsResponse{};
 
@@ -2443,6 +2471,32 @@ query_in_compliance(const StubPtr& stub, const nidevice_grpc::Session& vi, const
 
   raise_if_error(
       stub->QueryInCompliance(&context, request, &response),
+      context);
+
+  return response;
+}
+
+QueryLatchedOutputCutoffStateResponse
+query_latched_output_cutoff_state(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::string& channel_name, const simple_variant<OutputCutoffReason, pb::int32>& output_cutoff_reason)
+{
+  ::grpc::ClientContext context;
+
+  auto request = QueryLatchedOutputCutoffStateRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_channel_name(channel_name);
+  const auto output_cutoff_reason_ptr = output_cutoff_reason.get_if<OutputCutoffReason>();
+  const auto output_cutoff_reason_raw_ptr = output_cutoff_reason.get_if<pb::int32>();
+  if (output_cutoff_reason_ptr) {
+    request.set_output_cutoff_reason(*output_cutoff_reason_ptr);
+  }
+  else if (output_cutoff_reason_raw_ptr) {
+    request.set_output_cutoff_reason_raw(*output_cutoff_reason_raw_ptr);
+  }
+
+  auto response = QueryLatchedOutputCutoffStateResponse{};
+
+  raise_if_error(
+      stub->QueryLatchedOutputCutoffState(&context, request, &response),
       context);
 
   return response;

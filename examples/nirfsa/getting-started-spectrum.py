@@ -68,7 +68,7 @@ def check_for_warning(response, vi):
     """Print to console if the status indicates a warning."""
     if response.status > 0:
         warning_message = client.ErrorMessage(
-            nirfsa_types.ErrorMessageRequest(vi=vi, error_code=response.status)
+            nirfsa_types.ErrorMessageRequest(vi=vi, status_code=response.status)
         )
         sys.stderr.write(f"{warning_message.error_message}\nWarning status: {response.status}\n")
 

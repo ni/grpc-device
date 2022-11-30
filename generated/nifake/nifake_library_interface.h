@@ -73,6 +73,7 @@ class NiFakeLibraryInterface {
   virtual ViStatus MethodWithGetLastErrorParam() = 0;
   virtual ViStatus MethodWithGrpcFieldNumber(ViInt32 attributeValue) = 0;
   virtual ViStatus MethodWithGrpcOnlyParam(ViInt32 simpleParam, ViInt32* grpcOnlyParam) = 0;
+  virtual ViStatus MethodWithProtoOnlyParameter() = 0;
   virtual ViStatus MultipleArrayTypes(ViSession vi, ViInt32 outputArraySize, ViReal64 outputArray[], ViReal64 outputArrayOfFixedLength[3], ViInt32 inputArraySizes, ViReal64 inputArrayOfFloats[], ViInt16 inputArrayOfIntegers[]) = 0;
   virtual ViStatus MultipleArraysSameSize(ViSession vi, ViReal64 values1[], ViReal64 values2[], ViReal64 values3[], ViReal64 values4[], ViInt32 size) = 0;
   virtual ViStatus MultipleArraysSameSizeWithOptional(ViSession vi, ViReal64 values1[], ViReal64 values2[], ViReal64 values3[], ViReal64 values4[], CustomStruct values5[], ViInt32 size) = 0;

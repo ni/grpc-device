@@ -11,7 +11,7 @@
 
 #include <memory>
 
-#include <niScope.h> // for ViSession
+#include <niScopeCal.h> // for ViSession
 
 namespace grpc {
 class ServerBuilder;

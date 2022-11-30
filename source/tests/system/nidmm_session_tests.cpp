@@ -65,7 +65,7 @@ class NiDmmSessionTest : public ::testing::Test {
 
     ::grpc::ClientContext context;
     dmm::GetErrorMessageRequest error_request;
-    error_request.mutable_vi()->set_id(session.id());
+    error_request.mutable_vi()->set_name(session.name());
     error_request.set_error_code(error_status);
     dmm::GetErrorMessageResponse error_response;
 
@@ -87,7 +87,7 @@ TEST_F(NiDmmSessionTest, InitializeSessionWithDeviceAndSessionName_CreatesDriver
 
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(0, response.status());
-  EXPECT_NE(0, response.vi().id());
+  EXPECT_NE("", response.vi().name());
   EXPECT_EQ("", response.error_message());
 }
 
@@ -98,7 +98,7 @@ TEST_F(NiDmmSessionTest, InitializeSessionWithDeviceAndNoSessionName_CreatesDriv
 
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(0, response.status());
-  EXPECT_NE(0, response.vi().id());
+  EXPECT_NE("", response.vi().name());
   EXPECT_EQ("", response.error_message());
 }
 
@@ -110,7 +110,7 @@ TEST_F(NiDmmSessionTest, InitializedSession_CloseSession_ClosesDriverSession)
 
   ::grpc::ClientContext context;
   dmm::CloseRequest close_request;
-  close_request.mutable_vi()->set_id(session.id());
+  close_request.mutable_vi()->set_name(session.name());
   dmm::CloseResponse close_response;
   ::grpc::Status status = GetStub()->Close(&context, close_request, &close_response);
 
@@ -121,12 +121,12 @@ TEST_F(NiDmmSessionTest, InitializedSession_CloseSession_ClosesDriverSession)
 TEST_F(NiDmmSessionTest, InvalidSession_CloseSession_ReturnsInvalidSesssionError)
 {
   nidevice_grpc::Session session;
-  session.set_id(NULL);
+  session.set_name("");
 
   try {
     ::grpc::ClientContext context;
     dmm::CloseRequest request;
-    request.mutable_vi()->set_id(session.id());
+    request.mutable_vi()->set_name(session.name());
     dmm::CloseResponse response;
     ::grpc::Status status = GetStub()->Close(&context, request, &response);
     nidevice_grpc::experimental::client::raise_if_error(status, context);

@@ -46,7 +46,11 @@ def _stage_client_files(artifact_location: Optional[str], staging_dir: Path) -> 
 
 
 def _validate_examples(
-    driver_glob_expression: str, ip_address: str, device_name: str, artifact_location: Optional[str]
+    driver_glob_expression: str,
+    driver_exclusions: List[str],
+    ip_address: str,
+    device_name: str,
+    artifact_location: Optional[str],
 ) -> None:
     staging_dir = Path(__file__).parent.parent.parent / "build" / "validate_examples"
     staging_dir = staging_dir.resolve()
@@ -72,6 +76,8 @@ def _validate_examples(
             rf"poetry run python -m grpc_tools.protoc -I{proto_dir} --python_out=. --grpc_python_out=. --mypy_out=. --mypy_grpc_out=. {proto_files_str}"
         )
         for dir in examples_dir.glob(driver_glob_expression):
+            if dir.name in driver_exclusions:
+                continue
             print()
             print(f"-- Validating: {dir.name}")
 
@@ -79,7 +85,7 @@ def _validate_examples(
             _system(f"poetry run black --check --line-length 100 {dir}")
 
             print(f" -> Running mypy")
-            _system(f"poetry run mypy {dir} --check-untyped-defs")
+            _system(f"poetry run mypy {dir} --check-untyped-defs --ignore-missing-imports")
 
             if ip_address:
                 for file in dir.glob("*.py"):
@@ -94,6 +100,14 @@ if __name__ == "__main__":
         "-p",
         "--pattern",
         help="Glob expression for scrapigen driver names to validate (i.e., *rfmx*).",
+        default="*",
+    )
+
+    parser.add_argument(
+        "-e",
+        "--exclusions",
+        help='Space delimited list of driver names to exclude from validation (e.g., "nidaqmx nidcpower").',
+        default="",
     )
 
     parser.add_argument(
@@ -118,7 +132,8 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    _validate_examples(args.pattern, args.server, args.device, args.artifacts)
+    exclusions = args.exclusions.split(" ")
+    _validate_examples(args.pattern, exclusions, args.server, args.device, args.artifacts)
 
     if any(_FAILED_COMMANDS):
         for code, command in _FAILED_COMMANDS:

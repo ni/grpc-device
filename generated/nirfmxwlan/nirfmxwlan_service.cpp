@@ -57,8 +57,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       auto status = library_->AbortMeasurements(instrument, selector_string);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -80,9 +81,11 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
-      char* result_name = (char*)request->result_name().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto result_name_mbcs = convert_from_grpc<std::string>(request->result_name());
+      char* result_name = (char*)result_name_mbcs.c_str();
       float64 x0 = request->x0();
       float64 dx = request->dx();
       auto iq = convert_from_grpc<NIComplexSingle>(request->iq());
@@ -110,9 +113,11 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
-      char* result_name = (char*)request->result_name().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto result_name_mbcs = convert_from_grpc<std::string>(request->result_name());
+      char* result_name = (char*)result_name_mbcs.c_str();
       auto x0 = const_cast<float64*>(request->x0().data());
       auto dx = const_cast<float64*>(request->dx().data());
       auto iq = convert_from_grpc<NIComplexSingle>(request->iq());
@@ -158,9 +163,11 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
-      char* result_name = (char*)request->result_name().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto result_name_mbcs = convert_from_grpc<std::string>(request->result_name());
+      char* result_name = (char*)result_name_mbcs.c_str();
       auto x0 = const_cast<float64*>(request->x0().data());
       auto dx = const_cast<float64*>(request->dx().data());
       auto spectrum = const_cast<float32*>(request->spectrum().data());
@@ -206,9 +213,11 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
-      char* result_name = (char*)request->result_name().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto result_name_mbcs = convert_from_grpc<std::string>(request->result_name());
+      char* result_name = (char*)result_name_mbcs.c_str();
       float64 x0 = request->x0();
       float64 dx = request->dx();
       auto spectrum = const_cast<float32*>(request->spectrum().data());
@@ -236,8 +245,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       auto status = library_->AutoDetectSignal(instrument, selector_string, timeout);
       if (!status_ok(status)) {
@@ -260,8 +270,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 measurement_interval = request->measurement_interval();
       auto status = library_->AutoLevel(instrument, selector_string, measurement_interval);
       if (!status_ok(status)) {
@@ -283,7 +294,8 @@ namespace nirfmxwlan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 chain_number = request->chain_number();
 
       while (true) {
@@ -306,7 +318,9 @@ namespace nirfmxwlan_grpc {
           return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
         }
         response->set_status(status);
-        response->set_selector_string_out(selector_string_out);
+        std::string selector_string_out_utf8;
+        convert_to_grpc(selector_string_out, &selector_string_out_utf8);
+        response->set_selector_string_out(selector_string_out_utf8);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_selector_string_out()));
         return ::grpc::Status::OK;
       }
@@ -324,7 +338,8 @@ namespace nirfmxwlan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 gate_number = request->gate_number();
 
       while (true) {
@@ -347,7 +362,9 @@ namespace nirfmxwlan_grpc {
           return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
         }
         response->set_status(status);
-        response->set_selector_string_out(selector_string_out);
+        std::string selector_string_out_utf8;
+        convert_to_grpc(selector_string_out, &selector_string_out_utf8);
+        response->set_selector_string_out(selector_string_out_utf8);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_selector_string_out()));
         return ::grpc::Status::OK;
       }
@@ -365,7 +382,8 @@ namespace nirfmxwlan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 offset_number = request->offset_number();
 
       while (true) {
@@ -388,7 +406,9 @@ namespace nirfmxwlan_grpc {
           return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
         }
         response->set_status(status);
-        response->set_selector_string_out(selector_string_out);
+        std::string selector_string_out_utf8;
+        convert_to_grpc(selector_string_out, &selector_string_out_utf8);
+        response->set_selector_string_out(selector_string_out_utf8);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_selector_string_out()));
         return ::grpc::Status::OK;
       }
@@ -406,7 +426,8 @@ namespace nirfmxwlan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 segment_number = request->segment_number();
 
       while (true) {
@@ -429,7 +450,9 @@ namespace nirfmxwlan_grpc {
           return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
         }
         response->set_status(status);
-        response->set_selector_string_out(selector_string_out);
+        std::string selector_string_out_utf8;
+        convert_to_grpc(selector_string_out, &selector_string_out_utf8);
+        response->set_selector_string_out(selector_string_out_utf8);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_selector_string_out()));
         return ::grpc::Status::OK;
       }
@@ -447,8 +470,10 @@ namespace nirfmxwlan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      char* signal_name = (char*)request->signal_name().c_str();
-      char* result_name = (char*)request->result_name().c_str();
+      auto signal_name_mbcs = convert_from_grpc<std::string>(request->signal_name());
+      char* signal_name = (char*)signal_name_mbcs.c_str();
+      auto result_name_mbcs = convert_from_grpc<std::string>(request->result_name());
+      char* result_name = (char*)result_name_mbcs.c_str();
 
       while (true) {
         auto status = library_->BuildSignalString(signal_name, result_name, 0, nullptr);
@@ -470,7 +495,9 @@ namespace nirfmxwlan_grpc {
           return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
         }
         response->set_status(status);
-        response->set_selector_string(selector_string);
+        std::string selector_string_utf8;
+        convert_to_grpc(selector_string, &selector_string_utf8);
+        response->set_selector_string(selector_string_utf8);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_selector_string()));
         return ::grpc::Status::OK;
       }
@@ -488,7 +515,8 @@ namespace nirfmxwlan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 stream_number = request->stream_number();
 
       while (true) {
@@ -511,7 +539,9 @@ namespace nirfmxwlan_grpc {
           return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
         }
         response->set_status(status);
-        response->set_selector_string_out(selector_string_out);
+        std::string selector_string_out_utf8;
+        convert_to_grpc(selector_string_out, &selector_string_out_utf8);
+        response->set_selector_string_out(selector_string_out_utf8);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_selector_string_out()));
         return ::grpc::Status::OK;
       }
@@ -529,7 +559,8 @@ namespace nirfmxwlan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      char* selector_string = (char*)request->selector_string().c_str();
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 user_number = request->user_number();
 
       while (true) {
@@ -552,7 +583,9 @@ namespace nirfmxwlan_grpc {
           return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
         }
         response->set_status(status);
-        response->set_selector_string_out(selector_string_out);
+        std::string selector_string_out_utf8;
+        convert_to_grpc(selector_string_out, &selector_string_out_utf8);
+        response->set_selector_string_out(selector_string_out_utf8);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_selector_string_out()));
         return ::grpc::Status::OK;
       }
@@ -571,8 +604,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 channel_bandwidth = request->channel_bandwidth();
       auto status = library_->CfgChannelBandwidth(instrument, selector_string, channel_bandwidth);
       if (!status_ok(status)) {
@@ -595,9 +629,11 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
-      char* digital_edge_source = (char*)request->digital_edge_source().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto digital_edge_source_mbcs = convert_from_grpc<std::string>(request->digital_edge_source());
+      char* digital_edge_source = (char*)digital_edge_source_mbcs.c_str();
       int32 digital_edge;
       switch (request->digital_edge_enum_case()) {
         case nirfmxwlan_grpc::CfgDigitalEdgeTriggerRequest::DigitalEdgeEnumCase::kDigitalEdge: {
@@ -637,8 +673,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 external_attenuation = request->external_attenuation();
       auto status = library_->CfgExternalAttenuation(instrument, selector_string, external_attenuation);
       if (!status_ok(status)) {
@@ -661,8 +698,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 center_frequency = request->center_frequency();
       auto status = library_->CfgFrequency(instrument, selector_string, center_frequency);
       if (!status_ok(status)) {
@@ -685,8 +723,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       auto center_frequency = const_cast<float64*>(request->center_frequency().data());
       int32 number_of_elements = static_cast<int32>(request->center_frequency().size());
       auto status = library_->CfgFrequencyArray(instrument, selector_string, center_frequency, number_of_elements);
@@ -710,9 +749,11 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* channel_name = (char*)request->channel_name().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      char* channel_name = (char*)channel_name_mbcs.c_str();
       char* frequency_reference_source;
+      std::string frequency_reference_source_buffer;
       switch (request->frequency_reference_source_enum_case()) {
         case nirfmxwlan_grpc::CfgFrequencyReferenceRequest::FrequencyReferenceSourceEnumCase::kFrequencyReferenceSourceMapped: {
           auto frequency_reference_source_imap_it = frequencyreferencesource_input_map_.find(request->frequency_reference_source_mapped());
@@ -723,7 +764,8 @@ namespace nirfmxwlan_grpc {
           break;
         }
         case nirfmxwlan_grpc::CfgFrequencyReferenceRequest::FrequencyReferenceSourceEnumCase::kFrequencyReferenceSourceRaw: {
-          frequency_reference_source = const_cast<char*>(request->frequency_reference_source_raw().c_str());
+          frequency_reference_source_buffer = convert_from_grpc<std::string>(request->frequency_reference_source_raw());
+          frequency_reference_source = const_cast<char*>(frequency_reference_source_buffer.c_str());
           break;
         }
         case nirfmxwlan_grpc::CfgFrequencyReferenceRequest::FrequencyReferenceSourceEnumCase::FREQUENCY_REFERENCE_SOURCE_ENUM_NOT_SET: {
@@ -754,9 +796,11 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
-      char* iq_power_edge_source = (char*)request->iq_power_edge_source().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto iq_power_edge_source_mbcs = convert_from_grpc<std::string>(request->iq_power_edge_source());
+      char* iq_power_edge_source = (char*)iq_power_edge_source_mbcs.c_str();
       int32 iq_power_edge_slope;
       switch (request->iq_power_edge_slope_enum_case()) {
         case nirfmxwlan_grpc::CfgIQPowerEdgeTriggerRequest::IqPowerEdgeSlopeEnumCase::kIqPowerEdgeSlope: {
@@ -830,8 +874,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* channel_name = (char*)request->channel_name().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      char* channel_name = (char*)channel_name_mbcs.c_str();
       int32 mechanical_attenuation_auto;
       switch (request->mechanical_attenuation_auto_enum_case()) {
         case nirfmxwlan_grpc::CfgMechanicalAttenuationRequest::MechanicalAttenuationAutoEnumCase::kMechanicalAttenuationAuto: {
@@ -870,8 +915,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 number_of_frequency_segments = request->number_of_frequency_segments();
       int32 number_of_receive_chains = request->number_of_receive_chains();
       auto status = library_->CfgNumberOfFrequencySegmentsAndReceiveChains(instrument, selector_string, number_of_frequency_segments, number_of_receive_chains);
@@ -895,8 +941,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* channel_name = (char*)request->channel_name().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      char* channel_name = (char*)channel_name_mbcs.c_str();
       int32 rf_attenuation_auto;
       switch (request->rf_attenuation_auto_enum_case()) {
         case nirfmxwlan_grpc::CfgRFAttenuationRequest::RfAttenuationAutoEnumCase::kRfAttenuationAuto: {
@@ -935,8 +982,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 reference_level = request->reference_level();
       auto status = library_->CfgReferenceLevel(instrument, selector_string, reference_level);
       if (!status_ok(status)) {
@@ -959,9 +1007,11 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
-      char* selected_ports = (char*)request->selected_ports().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto selected_ports_mbcs = convert_from_grpc<std::string>(request->selected_ports());
+      char* selected_ports = (char*)selected_ports_mbcs.c_str();
       auto status = library_->CfgSelectedPortsMultiple(instrument, selector_string, selected_ports);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -983,8 +1033,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 trigger_delay = request->trigger_delay();
       int32 enable_trigger = request->enable_trigger();
       auto status = library_->CfgSoftwareEdgeTrigger(instrument, selector_string, trigger_delay, enable_trigger);
@@ -1008,8 +1059,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 standard;
       switch (request->standard_enum_case()) {
         case nirfmxwlan_grpc::CfgStandardRequest::StandardEnumCase::kStandard: {
@@ -1047,8 +1099,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 is_done {};
       auto status = library_->CheckMeasurementStatus(instrument, selector_string, &is_done);
       if (!status_ok(status)) {
@@ -1072,8 +1125,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       auto status = library_->ClearAllNamedResults(instrument, selector_string);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -1095,8 +1149,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       auto status = library_->ClearNamedResult(instrument, selector_string);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -1118,9 +1173,11 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* old_signal_name = (char*)request->old_signal_name().c_str();
-      char* new_signal_name = (char*)request->new_signal_name().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto old_signal_name_mbcs = convert_from_grpc<std::string>(request->old_signal_name());
+      char* old_signal_name = (char*)old_signal_name_mbcs.c_str();
+      auto new_signal_name_mbcs = convert_from_grpc<std::string>(request->new_signal_name());
+      char* new_signal_name = (char*)new_signal_name_mbcs.c_str();
       auto status = library_->CloneSignalConfiguration(instrument, old_signal_name, new_signal_name);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -1142,9 +1199,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       int32 force_destroy = request->force_destroy();
-      session_repository_->remove_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      session_repository_->remove_session(instrument_grpc_session.name());
       auto status = library_->Close(instrument, force_destroy);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -1166,8 +1223,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       auto status = library_->Commit(instrument, selector_string);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -1189,8 +1247,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* signal_name = (char*)request->signal_name().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto signal_name_mbcs = convert_from_grpc<std::string>(request->signal_name());
+      char* signal_name = (char*)signal_name_mbcs.c_str();
       auto status = library_->CreateSignalConfiguration(instrument, signal_name);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -1212,8 +1271,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 acquisition_length_mode;
       switch (request->acquisition_length_mode_enum_case()) {
         case nirfmxwlan_grpc::DSSSModAccCfgAcquisitionLengthRequest::AcquisitionLengthModeEnumCase::kAcquisitionLengthMode: {
@@ -1252,8 +1312,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 averaging_enabled;
       switch (request->averaging_enabled_enum_case()) {
         case nirfmxwlan_grpc::DSSSModAccCfgAveragingRequest::AveragingEnabledEnumCase::kAveragingEnabled: {
@@ -1292,8 +1353,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 evm_unit;
       switch (request->evm_unit_enum_case()) {
         case nirfmxwlan_grpc::DSSSModAccCfgEVMUnitRequest::EvmUnitEnumCase::kEvmUnit: {
@@ -1331,8 +1393,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 measurement_offset = request->measurement_offset();
       int32 maximum_measurement_length = request->maximum_measurement_length();
       auto status = library_->DSSSModAccCfgMeasurementLength(instrument, selector_string, measurement_offset, maximum_measurement_length);
@@ -1356,8 +1419,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       auto start_time = const_cast<float64*>(request->start_time().data());
       auto stop_time = const_cast<float64*>(request->stop_time().data());
       auto number_of_elements_determine_from_sizes = std::array<int, 2>
@@ -1398,8 +1462,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 power_measurement_enabled;
       switch (request->power_measurement_enabled_enum_case()) {
         case nirfmxwlan_grpc::DSSSModAccCfgPowerMeasurementEnabledRequest::PowerMeasurementEnabledEnumCase::kPowerMeasurementEnabled: {
@@ -1437,8 +1502,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 number_of_custom_gates = request->number_of_custom_gates();
       auto status = library_->DSSSModAccCfgPowerMeasurementNumberOfCustomGates(instrument, selector_string, number_of_custom_gates);
       if (!status_ok(status)) {
@@ -1461,8 +1527,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 preamble_average_power_mean {};
       float64 header_average_power_mean {};
@@ -1493,8 +1560,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
@@ -1539,8 +1607,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
@@ -1582,8 +1651,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
@@ -1622,8 +1692,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
@@ -1662,8 +1733,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 rms_evm_mean {};
       float64 peak_evm_80211_2016_maximum {};
@@ -1700,8 +1772,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
       float64 dx {};
@@ -1744,8 +1817,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 iq_origin_offset_mean {};
       float64 iq_gain_imbalance_mean {};
@@ -1774,8 +1848,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 data_modulation_format {};
       int32 payload_length {};
@@ -1814,8 +1889,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 preamble_peak_power_maximum {};
       float64 header_peak_power_maximum {};
@@ -1846,8 +1922,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* signal_name = (char*)request->signal_name().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto signal_name_mbcs = convert_from_grpc<std::string>(request->signal_name());
+      char* signal_name = (char*)signal_name_mbcs.c_str();
       auto status = library_->DeleteSignalConfiguration(instrument, signal_name);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -1869,8 +1946,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       auto status = library_->DisableTrigger(instrument, selector_string);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -1892,8 +1970,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 actual_result_names_size {};
       int32 default_result_exists {};
       while (true) {
@@ -1915,7 +1994,9 @@ namespace nirfmxwlan_grpc {
           return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
-        response->set_result_names(result_names);
+        std::string result_names_utf8;
+        convert_to_grpc(result_names, &result_names_utf8);
+        response->set_result_names(result_names_utf8);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_result_names()));
         response->set_actual_result_names_size(actual_result_names_size);
         response->set_default_result_exists(default_result_exists);
@@ -1936,8 +2017,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       float32 attr_val {};
       auto status = library_->GetAttributeF32(instrument, selector_string, attribute_id, &attr_val);
@@ -1962,8 +2044,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_array_size {};
       while (true) {
@@ -2002,8 +2085,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       float64 attr_val {};
       auto status = library_->GetAttributeF64(instrument, selector_string, attribute_id, &attr_val);
@@ -2028,8 +2112,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_array_size {};
       while (true) {
@@ -2068,8 +2153,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       int16 attr_val {};
       auto status = library_->GetAttributeI16(instrument, selector_string, attribute_id, &attr_val);
@@ -2094,8 +2180,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       int32 attr_val {};
       auto status = library_->GetAttributeI32(instrument, selector_string, attribute_id, &attr_val);
@@ -2126,8 +2213,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_array_size {};
       while (true) {
@@ -2180,8 +2268,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       int64 attr_val {};
       auto status = library_->GetAttributeI64(instrument, selector_string, attribute_id, &attr_val);
@@ -2206,8 +2295,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_array_size {};
       while (true) {
@@ -2246,8 +2336,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       int8 attr_val {};
       auto status = library_->GetAttributeI8(instrument, selector_string, attribute_id, &attr_val);
@@ -2272,8 +2363,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_array_size {};
       while (true) {
@@ -2320,8 +2412,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_array_size {};
       while (true) {
@@ -2366,8 +2459,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_array_size {};
       while (true) {
@@ -2412,8 +2506,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
 
       while (true) {
@@ -2436,7 +2531,9 @@ namespace nirfmxwlan_grpc {
           return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
-        response->set_attr_val(attr_val);
+        std::string attr_val_utf8;
+        convert_to_grpc(attr_val, &attr_val_utf8);
+        response->set_attr_val(attr_val_utf8);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_attr_val()));
         return ::grpc::Status::OK;
       }
@@ -2455,8 +2552,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       uInt16 attr_val {};
       auto status = library_->GetAttributeU16(instrument, selector_string, attribute_id, &attr_val);
@@ -2481,8 +2579,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       uInt32 attr_val {};
       auto status = library_->GetAttributeU32(instrument, selector_string, attribute_id, &attr_val);
@@ -2507,8 +2606,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_array_size {};
       while (true) {
@@ -2547,8 +2647,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_array_size {};
       while (true) {
@@ -2587,8 +2688,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       uInt8 attr_val {};
       auto status = library_->GetAttributeU8(instrument, selector_string, attribute_id, &attr_val);
@@ -2613,8 +2715,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_array_size {};
       while (true) {
@@ -2653,7 +2756,7 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
 
       while (true) {
         auto status = library_->GetError(instrument, nullptr, 0, nullptr);
@@ -2677,7 +2780,9 @@ namespace nirfmxwlan_grpc {
         }
         response->set_status(status);
         response->set_error_code(error_code);
-        response->set_error_description(error_description);
+        std::string error_description_utf8;
+        convert_to_grpc(error_description, &error_description_utf8);
+        response->set_error_description(error_description_utf8);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_description()));
         return ::grpc::Status::OK;
       }
@@ -2696,7 +2801,7 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       int32 error_code = request->error_code();
 
       while (true) {
@@ -2719,7 +2824,9 @@ namespace nirfmxwlan_grpc {
           return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
-        response->set_error_description(error_description);
+        std::string error_description_utf8;
+        convert_to_grpc(error_description, &error_description_utf8);
+        response->set_error_description(error_description_utf8);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_description()));
         return ::grpc::Status::OK;
       }
@@ -2737,8 +2844,10 @@ namespace nirfmxwlan_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      char* resource_name = (char*)request->resource_name().c_str();
-      char* option_string = (char*)request->option_string().c_str();
+      auto resource_name_mbcs = convert_from_grpc<std::string>(request->resource_name());
+      char* resource_name = (char*)resource_name_mbcs.c_str();
+      auto option_string_mbcs = convert_from_grpc<std::string>(request->option_string());
+      char* option_string = (char*)option_string_mbcs.c_str();
 
       int32 is_new_session {};
       auto init_lambda = [&] () {
@@ -2746,15 +2855,14 @@ namespace nirfmxwlan_grpc {
         auto status = library_->Initialize(resource_name, option_string, &instrument, &is_new_session);
         return std::make_tuple(status, instrument);
       };
-      uint32_t session_id = 0;
-      const std::string& grpc_device_session_name = request->session_name();
+      std::string grpc_device_session_name = request->session_name();
       auto cleanup_lambda = [&] (niRFmxInstrHandle id) { library_->Close(id, RFMXWLAN_VAL_FALSE); };
-      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
+      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
       }
       response->set_status(status);
-      response->mutable_instrument()->set_id(session_id);
+      response->mutable_instrument()->set_name(grpc_device_session_name);
       response->set_is_new_session(is_new_session);
       return ::grpc::Status::OK;
     }
@@ -2772,22 +2880,21 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto nirfsa_session_grpc_session = request->nirfsa_session();
-      uInt32 nirfsa_session = vi_session_resource_repository_->access_session(nirfsa_session_grpc_session.id(), nirfsa_session_grpc_session.name());
+      uInt32 nirfsa_session = vi_session_resource_repository_->access_session(nirfsa_session_grpc_session.name());
 
       auto init_lambda = [&] () {
         niRFmxInstrHandle instrument;
         auto status = library_->InitializeFromNIRFSASession(nirfsa_session, &instrument);
         return std::make_tuple(status, instrument);
       };
-      uint32_t session_id = 0;
-      const std::string& grpc_device_session_name = request->session_name();
+      std::string grpc_device_session_name = request->session_name();
       auto cleanup_lambda = [&] (niRFmxInstrHandle id) { library_->Close(id, RFMXWLAN_VAL_FALSE); };
-      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
+      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
       }
       response->set_status(status);
-      response->mutable_instrument()->set_id(session_id);
+      response->mutable_instrument()->set_name(grpc_device_session_name);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
@@ -2804,9 +2911,11 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
-      char* result_name = (char*)request->result_name().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto result_name_mbcs = convert_from_grpc<std::string>(request->result_name());
+      char* result_name = (char*)result_name_mbcs.c_str();
       auto status = library_->Initiate(instrument, selector_string, result_name);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -2828,8 +2937,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       auto status = library_->OFDMModAccAutoLevel(instrument, selector_string, timeout);
       if (!status_ok(status)) {
@@ -2852,8 +2962,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 x0 = request->x0();
       float64 dx = request->dx();
       auto reference_waveform = convert_from_grpc<NIComplexSingle>(request->reference_waveform());
@@ -2879,8 +2990,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 acquisition_length_mode;
       switch (request->acquisition_length_mode_enum_case()) {
         case nirfmxwlan_grpc::OFDMModAccCfgAcquisitionLengthRequest::AcquisitionLengthModeEnumCase::kAcquisitionLengthMode: {
@@ -2919,8 +3031,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 amplitude_tracking_enabled;
       switch (request->amplitude_tracking_enabled_enum_case()) {
         case nirfmxwlan_grpc::OFDMModAccCfgAmplitudeTrackingEnabledRequest::AmplitudeTrackingEnabledEnumCase::kAmplitudeTrackingEnabled: {
@@ -2958,8 +3071,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 averaging_enabled;
       switch (request->averaging_enabled_enum_case()) {
         case nirfmxwlan_grpc::OFDMModAccCfgAveragingRequest::AveragingEnabledEnumCase::kAveragingEnabled: {
@@ -2998,8 +3112,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 channel_estimation_type;
       switch (request->channel_estimation_type_enum_case()) {
         case nirfmxwlan_grpc::OFDMModAccCfgChannelEstimationTypeRequest::ChannelEstimationTypeEnumCase::kChannelEstimationType: {
@@ -3037,8 +3152,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 common_clock_source_enabled;
       switch (request->common_clock_source_enabled_enum_case()) {
         case nirfmxwlan_grpc::OFDMModAccCfgCommonClockSourceEnabledRequest::CommonClockSourceEnabledEnumCase::kCommonClockSourceEnabled: {
@@ -3076,8 +3192,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 evm_unit;
       switch (request->evm_unit_enum_case()) {
         case nirfmxwlan_grpc::OFDMModAccCfgEVMUnitRequest::EvmUnitEnumCase::kEvmUnit: {
@@ -3115,8 +3232,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 frequency_error_estimation_method;
       switch (request->frequency_error_estimation_method_enum_case()) {
         case nirfmxwlan_grpc::OFDMModAccCfgFrequencyErrorEstimationMethodRequest::FrequencyErrorEstimationMethodEnumCase::kFrequencyErrorEstimationMethod: {
@@ -3154,8 +3272,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 measurement_offset = request->measurement_offset();
       int32 maximum_measurement_length = request->maximum_measurement_length();
       auto status = library_->OFDMModAccCfgMeasurementLength(instrument, selector_string, measurement_offset, maximum_measurement_length);
@@ -3179,8 +3298,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 measurement_mode;
       switch (request->measurement_mode_enum_case()) {
         case nirfmxwlan_grpc::OFDMModAccCfgMeasurementModeRequest::MeasurementModeEnumCase::kMeasurementMode: {
@@ -3218,8 +3338,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       auto x0 = const_cast<float64*>(request->x0().data());
       auto dx = const_cast<float64*>(request->dx().data());
       auto reference_waveform = convert_from_grpc<NIComplexSingle>(request->reference_waveform());
@@ -3264,8 +3385,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 noise_compensation_enabled;
       switch (request->noise_compensation_enabled_enum_case()) {
         case nirfmxwlan_grpc::OFDMModAccCfgNoiseCompensationEnabledRequest::NoiseCompensationEnabledEnumCase::kNoiseCompensationEnabled: {
@@ -3303,8 +3425,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 optimize_dynamic_range_for_evm_enabled;
       switch (request->optimize_dynamic_range_for_evm_enabled_enum_case()) {
         case nirfmxwlan_grpc::OFDMModAccCfgOptimizeDynamicRangeForEVMRequest::OptimizeDynamicRangeForEvmEnabledEnumCase::kOptimizeDynamicRangeForEvmEnabled: {
@@ -3343,8 +3466,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 phase_tracking_enabled;
       switch (request->phase_tracking_enabled_enum_case()) {
         case nirfmxwlan_grpc::OFDMModAccCfgPhaseTrackingEnabledRequest::PhaseTrackingEnabledEnumCase::kPhaseTrackingEnabled: {
@@ -3382,8 +3506,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 symbol_clock_error_correction_enabled;
       switch (request->symbol_clock_error_correction_enabled_enum_case()) {
         case nirfmxwlan_grpc::OFDMModAccCfgSymbolClockErrorCorrectionEnabledRequest::SymbolClockErrorCorrectionEnabledEnumCase::kSymbolClockErrorCorrectionEnabled: {
@@ -3421,7 +3546,7 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       auto status = library_->OFDMModAccClearNoiseCalibrationDatabase(instrument);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -3443,8 +3568,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
       float64 dx {};
@@ -3487,8 +3613,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
       float64 dx {};
@@ -3531,8 +3658,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 chain_rms_evm_mean {};
       float64 chain_data_rms_evm_mean {};
@@ -3561,8 +3689,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
       float64 dx {};
@@ -3605,8 +3734,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
       float64 dx {};
@@ -3649,8 +3779,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
       float64 dx {};
@@ -3696,8 +3827,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
       float64 dx {};
@@ -3743,8 +3875,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 composite_rms_evm_mean {};
       float64 composite_data_rms_evm_mean {};
@@ -3773,8 +3906,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 cross_power_mean {};
       auto status = library_->OFDMModAccFetchCrossPower(instrument, selector_string, timeout, &cross_power_mean);
@@ -3799,8 +3933,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
@@ -3842,8 +3977,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 data_average_power_mean {};
       auto status = library_->OFDMModAccFetchDataAveragePower(instrument, selector_string, timeout, &data_average_power_mean);
@@ -3868,8 +4004,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
@@ -3914,8 +4051,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 data_peak_power_maximum {};
       auto status = library_->OFDMModAccFetchDataPeakPower(instrument, selector_string, timeout, &data_peak_power_maximum);
@@ -3940,8 +4078,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
@@ -3980,8 +4119,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
@@ -4020,8 +4160,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
@@ -4060,8 +4201,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
@@ -4100,8 +4242,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
@@ -4140,8 +4283,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
@@ -4180,8 +4324,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
@@ -4220,8 +4365,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
@@ -4260,8 +4406,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 frequency_error_ccdf_10_percent {};
       auto status = library_->OFDMModAccFetchFrequencyErrorCCDF10Percent(instrument, selector_string, timeout, &frequency_error_ccdf_10_percent);
@@ -4286,8 +4433,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 frequency_error_mean {};
       auto status = library_->OFDMModAccFetchFrequencyErrorMean(instrument, selector_string, timeout, &frequency_error_mean);
@@ -4312,8 +4460,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
       float64 dx {};
@@ -4356,8 +4505,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 guard_interval_type {};
       auto status = library_->OFDMModAccFetchGuardIntervalType(instrument, selector_string, timeout, &guard_interval_type);
@@ -4383,8 +4533,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
       float64 dx {};
@@ -4427,8 +4578,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 relative_iq_origin_offset_mean {};
       float64 iq_gain_imbalance_mean {};
@@ -4461,8 +4613,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
       float64 dx {};
@@ -4505,8 +4658,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 l_sig_parity_check_status {};
       auto status = library_->OFDMModAccFetchLSIGParityCheckStatus(instrument, selector_string, timeout, &l_sig_parity_check_status);
@@ -4532,8 +4686,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 ltf_size {};
       auto status = library_->OFDMModAccFetchLTFSize(instrument, selector_string, timeout, &ltf_size);
@@ -4559,8 +4714,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 mcs_index {};
       auto status = library_->OFDMModAccFetchMCSIndex(instrument, selector_string, timeout, &mcs_index);
@@ -4585,8 +4741,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 number_of_he_sig_b_symbols {};
       auto status = library_->OFDMModAccFetchNumberOfHESIGBSymbols(instrument, selector_string, timeout, &number_of_he_sig_b_symbols);
@@ -4611,8 +4768,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 number_of_space_time_streams {};
       auto status = library_->OFDMModAccFetchNumberOfSpaceTimeStreams(instrument, selector_string, timeout, &number_of_space_time_streams);
@@ -4637,8 +4795,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 number_of_users {};
       auto status = library_->OFDMModAccFetchNumberOfUsers(instrument, selector_string, timeout, &number_of_users);
@@ -4663,8 +4822,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 number_of_symbols_used {};
       auto status = library_->OFDMModAccFetchNumberofSymbolsUsed(instrument, selector_string, timeout, &number_of_symbols_used);
@@ -4689,8 +4849,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 pe_average_power_mean {};
       auto status = library_->OFDMModAccFetchPEAveragePower(instrument, selector_string, timeout, &pe_average_power_mean);
@@ -4715,8 +4876,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 pe_duration {};
       auto status = library_->OFDMModAccFetchPEDuration(instrument, selector_string, timeout, &pe_duration);
@@ -4741,8 +4903,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 pe_peak_power_maximum {};
       auto status = library_->OFDMModAccFetchPEPeakPower(instrument, selector_string, timeout, &pe_peak_power_maximum);
@@ -4767,8 +4930,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 ppdu_average_power_mean {};
       auto status = library_->OFDMModAccFetchPPDUAveragePower(instrument, selector_string, timeout, &ppdu_average_power_mean);
@@ -4793,8 +4957,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 ppdu_peak_power_maximum {};
       auto status = library_->OFDMModAccFetchPPDUPeakPower(instrument, selector_string, timeout, &ppdu_peak_power_maximum);
@@ -4819,8 +4984,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 ppdu_type {};
       auto status = library_->OFDMModAccFetchPPDUType(instrument, selector_string, timeout, &ppdu_type);
@@ -4846,8 +5012,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 psdu_crc_status {};
       auto status = library_->OFDMModAccFetchPSDUCRCStatus(instrument, selector_string, timeout, &psdu_crc_status);
@@ -4873,8 +5040,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
       float64 dx {};
@@ -4917,8 +5085,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
@@ -4963,8 +5132,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 vht_sig_a_average_power_mean {};
       float64 vht_stf_average_power_mean {};
@@ -4995,8 +5165,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 rl_sig_average_power_mean {};
       float64 he_sig_a_average_power_mean {};
@@ -5029,8 +5200,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 ht_sig_average_power_mean {};
       float64 ht_stf_average_power_mean {};
@@ -5061,8 +5233,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 l_stf_average_power_mean {};
       float64 l_ltf_average_power_mean {};
@@ -5091,8 +5264,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
       float64 dx {};
@@ -5135,8 +5309,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 vht_sig_a_peak_power_maximum {};
       float64 vht_stf_peak_power_maximum {};
@@ -5167,8 +5342,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 rl_sig_peak_power_maximum {};
       float64 he_sig_a_peak_power_maximum {};
@@ -5201,8 +5377,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 ht_sig_peak_power_maximum {};
       float64 ht_stf_peak_power_maximum {};
@@ -5233,8 +5410,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 l_stf_peak_power_maximum {};
       float64 l_ltf_peak_power_maximum {};
@@ -5263,8 +5441,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 ru_offset {};
       int32 ru_size {};
@@ -5291,8 +5470,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 sig_b_crc_status {};
       auto status = library_->OFDMModAccFetchSIGBCRCStatus(instrument, selector_string, timeout, &sig_b_crc_status);
@@ -5318,8 +5498,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 sig_crc_status {};
       auto status = library_->OFDMModAccFetchSIGCRCStatus(instrument, selector_string, timeout, &sig_crc_status);
@@ -5345,8 +5526,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 spectral_flatness_margin {};
       int32 spectral_flatness_margin_subcarrier_index {};
@@ -5373,8 +5555,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
       float64 dx {};
@@ -5423,8 +5606,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
       float64 dx {};
@@ -5467,8 +5651,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
       float64 dx {};
@@ -5511,8 +5696,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 stream_rms_evm_mean {};
       float64 stream_data_rms_evm_mean {};
@@ -5541,8 +5727,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
       float64 dx {};
@@ -5585,8 +5772,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
       float64 dx {};
@@ -5629,8 +5817,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 subcarrier_index = request->subcarrier_index();
       float64 x0 {};
@@ -5674,8 +5863,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 subcarrier_index = request->subcarrier_index();
       float64 x0 {};
@@ -5719,8 +5909,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 symbol_index = request->symbol_index();
       float64 x0 {};
@@ -5764,8 +5955,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 symbol_clock_error_mean {};
       auto status = library_->OFDMModAccFetchSymbolClockErrorMean(instrument, selector_string, timeout, &symbol_clock_error_mean);
@@ -5790,8 +5982,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 symbol_index = request->symbol_index();
       float64 x0 {};
@@ -5835,8 +6028,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 unused_tone_error_margin {};
       int32 unused_tone_error_margin_ru_index {};
@@ -5863,8 +6057,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
@@ -5903,8 +6098,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
       float64 dx {};
@@ -5950,8 +6146,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
@@ -5996,8 +6193,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
@@ -6042,8 +6240,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 user_power_mean {};
       auto status = library_->OFDMModAccFetchUserPower(instrument, selector_string, timeout, &user_power_mean);
@@ -6068,8 +6267,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
       float64 dx {};
@@ -6112,8 +6312,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
       float64 dx {};
@@ -6156,8 +6357,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 user_stream_rms_evm_mean {};
       float64 user_stream_data_rms_evm_mean {};
@@ -6186,8 +6388,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
       float64 dx {};
@@ -6230,8 +6433,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
       float64 dx {};
@@ -6274,8 +6478,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 calibration_data_valid {};
       auto status = library_->OFDMModAccValidateCalibrationData(instrument, selector_string, &calibration_data_valid);
       if (!status_ok(status)) {
@@ -6300,8 +6505,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 acquisition_length = request->acquisition_length();
       auto status = library_->PowerRampCfgAcquisitionLength(instrument, selector_string, acquisition_length);
       if (!status_ok(status)) {
@@ -6324,8 +6530,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 averaging_enabled;
       switch (request->averaging_enabled_enum_case()) {
         case nirfmxwlan_grpc::PowerRampCfgAveragingRequest::AveragingEnabledEnumCase::kAveragingEnabled: {
@@ -6364,8 +6571,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
       float64 dx {};
@@ -6417,8 +6625,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 rise_time_mean {};
       float64 fall_time_mean {};
@@ -6445,8 +6654,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
       float64 dx {};
@@ -6498,8 +6708,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       auto status = library_->ResetAttribute(instrument, selector_string, attribute_id);
       if (!status_ok(status)) {
@@ -6522,8 +6733,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       auto status = library_->ResetToDefault(instrument, selector_string);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -6545,8 +6757,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 averaging_enabled;
       switch (request->averaging_enabled_enum_case()) {
         case nirfmxwlan_grpc::SEMCfgAveragingRequest::AveragingEnabledEnumCase::kAveragingEnabled: {
@@ -6601,8 +6814,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 mask_type;
       switch (request->mask_type_enum_case()) {
         case nirfmxwlan_grpc::SEMCfgMaskTypeRequest::MaskTypeEnumCase::kMaskType: {
@@ -6640,8 +6854,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 number_of_offsets = request->number_of_offsets();
       auto status = library_->SEMCfgNumberOfOffsets(instrument, selector_string, number_of_offsets);
       if (!status_ok(status)) {
@@ -6664,8 +6879,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       auto offset_start_frequency = const_cast<float64*>(request->offset_start_frequency().data());
       auto offset_stop_frequency = const_cast<float64*>(request->offset_stop_frequency().data());
       auto offset_sideband_vector = std::vector<int32>();
@@ -6717,8 +6933,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       auto relative_limit_start = const_cast<float64*>(request->relative_limit_start().data());
       auto relative_limit_stop = const_cast<float64*>(request->relative_limit_stop().data());
       auto number_of_elements_determine_from_sizes = std::array<int, 2>
@@ -6759,8 +6976,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 span_auto;
       switch (request->span_auto_enum_case()) {
         case nirfmxwlan_grpc::SEMCfgSpanRequest::SpanAutoEnumCase::kSpanAuto: {
@@ -6799,8 +7017,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 sweep_time_auto;
       switch (request->sweep_time_auto_enum_case()) {
         case nirfmxwlan_grpc::SEMCfgSweepTimeRequest::SweepTimeAutoEnumCase::kSweepTimeAuto: {
@@ -6839,8 +7058,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 absolute_power {};
       float64 relative_power {};
@@ -6867,8 +7087,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 measurement_status {};
       float64 margin {};
@@ -6902,8 +7123,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
@@ -6963,8 +7185,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 total_absolute_power {};
       float64 total_relative_power {};
@@ -6997,8 +7220,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
@@ -7049,8 +7273,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 measurement_status {};
       auto status = library_->SEMFetchMeasurementStatus(instrument, selector_string, timeout, &measurement_status);
@@ -7076,8 +7301,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
       float64 dx {};
@@ -7123,8 +7349,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 measurement_status {};
       float64 margin {};
@@ -7158,8 +7385,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
@@ -7219,8 +7447,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 total_absolute_power {};
       float64 total_relative_power {};
@@ -7253,8 +7482,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 actual_array_size {};
       while (true) {
@@ -7305,8 +7535,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       uInt32 measurements;
       switch (request->measurements_enum_case()) {
         case nirfmxwlan_grpc::SelectMeasurementsRequest::MeasurementsEnumCase::kMeasurements: {
@@ -7345,7 +7576,7 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       auto status = library_->SendSoftwareEdgeTrigger(instrument);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -7367,8 +7598,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       float32 attr_val = request->attr_val();
       auto status = library_->SetAttributeF32(instrument, selector_string, attribute_id, attr_val);
@@ -7392,8 +7624,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = const_cast<float32*>(request->attr_val().data());
       int32 array_size = static_cast<int32>(request->attr_val().size());
@@ -7418,8 +7651,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       float64 attr_val = request->attr_val();
       auto status = library_->SetAttributeF64(instrument, selector_string, attribute_id, attr_val);
@@ -7443,8 +7677,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = const_cast<float64*>(request->attr_val().data());
       int32 array_size = static_cast<int32>(request->attr_val().size());
@@ -7469,8 +7704,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val_raw = request->attr_val();
       if (attr_val_raw < std::numeric_limits<int16>::min() || attr_val_raw > std::numeric_limits<int16>::max()) {
@@ -7503,8 +7739,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       int32 attr_val;
       switch (request->attr_val_enum_case()) {
@@ -7543,8 +7780,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val_vector = std::vector<int32>();
       attr_val_vector.reserve(request->attr_val().size());
@@ -7577,8 +7815,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       int64 attr_val = request->attr_val();
       auto status = library_->SetAttributeI64(instrument, selector_string, attribute_id, attr_val);
@@ -7602,8 +7841,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = const_cast<int64*>(reinterpret_cast<const int64*>(request->attr_val().data()));
       int32 array_size = static_cast<int32>(request->attr_val().size());
@@ -7628,8 +7868,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val_raw = request->attr_val();
       if (attr_val_raw < std::numeric_limits<int8>::min() || attr_val_raw > std::numeric_limits<int8>::max()) {
@@ -7662,8 +7903,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val_raw = request->attr_val();
       auto attr_val = std::vector<int8>();
@@ -7705,8 +7947,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = convert_from_grpc<NIComplexDouble>(request->attr_val());
       int32 array_size = static_cast<int32>(request->attr_val().size());
@@ -7731,8 +7974,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = convert_from_grpc<NIComplexSingle>(request->attr_val());
       int32 array_size = static_cast<int32>(request->attr_val().size());
@@ -7757,10 +8001,12 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       char* attr_val;
+      std::string attr_val_buffer;
       switch (request->attr_val_enum_case()) {
         case nirfmxwlan_grpc::SetAttributeStringRequest::AttrValEnumCase::kAttrValMapped: {
           auto attr_val_imap_it = nirfmxwlanstringattributevaluesmapped_input_map_.find(request->attr_val_mapped());
@@ -7771,7 +8017,8 @@ namespace nirfmxwlan_grpc {
           break;
         }
         case nirfmxwlan_grpc::SetAttributeStringRequest::AttrValEnumCase::kAttrValRaw: {
-          attr_val = const_cast<char*>(request->attr_val_raw().c_str());
+          attr_val_buffer = convert_from_grpc<std::string>(request->attr_val_raw());
+          attr_val = const_cast<char*>(attr_val_buffer.c_str());
           break;
         }
         case nirfmxwlan_grpc::SetAttributeStringRequest::AttrValEnumCase::ATTR_VAL_ENUM_NOT_SET: {
@@ -7801,8 +8048,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val_raw = request->attr_val();
       if (attr_val_raw < std::numeric_limits<uInt16>::min() || attr_val_raw > std::numeric_limits<uInt16>::max()) {
@@ -7835,8 +8083,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       uInt32 attr_val = request->attr_val();
       auto status = library_->SetAttributeU32(instrument, selector_string, attribute_id, attr_val);
@@ -7860,8 +8109,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = const_cast<uInt32*>(reinterpret_cast<const uInt32*>(request->attr_val().data()));
       int32 array_size = static_cast<int32>(request->attr_val().size());
@@ -7886,8 +8136,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = const_cast<uInt64*>(reinterpret_cast<const uInt64*>(request->attr_val().data()));
       int32 array_size = static_cast<int32>(request->attr_val().size());
@@ -7912,8 +8163,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       uInt8 attr_val = request->attr_val();
       auto status = library_->SetAttributeU8(instrument, selector_string, attribute_id, attr_val);
@@ -7937,8 +8189,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       uInt8* attr_val = (uInt8*)request->attr_val().c_str();
       int32 array_size = static_cast<int32>(request->attr_val().size());
@@ -7963,8 +8216,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 averaging_enabled;
       switch (request->averaging_enabled_enum_case()) {
         case nirfmxwlan_grpc::TXPCfgAveragingRequest::AveragingEnabledEnumCase::kAveragingEnabled: {
@@ -8003,8 +8257,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 burst_detection_enabled;
       switch (request->burst_detection_enabled_enum_case()) {
         case nirfmxwlan_grpc::TXPCfgBurstDetectionEnabledRequest::BurstDetectionEnabledEnumCase::kBurstDetectionEnabled: {
@@ -8042,8 +8297,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 maximum_measurement_interval = request->maximum_measurement_interval();
       auto status = library_->TXPCfgMaximumMeasurementInterval(instrument, selector_string, maximum_measurement_interval);
       if (!status_ok(status)) {
@@ -8066,8 +8322,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 average_power_mean {};
       float64 peak_power_maximum {};
@@ -8094,8 +8351,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       float64 x0 {};
       float64 dx {};
@@ -8138,7 +8396,7 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       float64 timeout = request->timeout();
       auto status = library_->WaitForAcquisitionComplete(instrument, timeout);
       if (!status_ok(status)) {
@@ -8161,8 +8419,9 @@ namespace nirfmxwlan_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       auto status = library_->WaitForMeasurementComplete(instrument, selector_string, timeout);
       if (!status_ok(status)) {

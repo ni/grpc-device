@@ -190,22 +190,22 @@ class NiFakeNonIviServiceTests : public ::testing::Test {
 
   virtual ~NiFakeNonIviServiceTests() {}
 
-  uint32_t init(const std::string& session_name, FakeHandle handle)
+  std::string init(const std::string& session_name, FakeHandle handle)
   {
     EXPECT_CALL(library_, Init(StrEq(session_name.c_str()), _))
         .WillOnce(DoAll(SetArgPointee<1>(handle), Return(kDriverSuccess)));
 
     ::grpc::ServerContext context;
     InitRequest request;
-    request.set_session_name(session_name.c_str());
+    request.set_session_name(session_name);
     InitResponse response;
 
     service_.Init(&context, &request, &response);
 
-    return response.handle().id();
+    return response.handle().name();
   }
 
-  uint32_t init_secondary_session(const std::string& session_name, SecondarySessionHandle handle)
+  std::string init_secondary_session(const std::string& session_name, SecondarySessionHandle handle)
   {
     EXPECT_CALL(library_, InitSecondarySession(_))
         .WillOnce(DoAll(SetArgPointee<0>(handle), Return(kDriverSuccess)));
@@ -217,10 +217,10 @@ class NiFakeNonIviServiceTests : public ::testing::Test {
 
     service_.InitSecondarySession(&context, &request, &response);
 
-    return response.secondary_session_handle().id();
+    return response.secondary_session_handle().name();
   }
 
-  uint32_t init_with_handle_name_as_session_name(const std::string& handle_name, FakeHandle handle)
+  std::string init_with_handle_name_as_session_name(const std::string& handle_name, FakeHandle handle)
   {
     EXPECT_CALL(library_, InitWithHandleNameAsSessionName(StrEq(handle_name.c_str()), _))
         .WillOnce(DoAll(SetArgPointee<1>(handle), Return(kDriverSuccess)));
@@ -232,29 +232,29 @@ class NiFakeNonIviServiceTests : public ::testing::Test {
 
     service_.InitWithHandleNameAsSessionName(&context, &request, &response);
 
-    return response.handle().id();
+    return response.handle().name();
   }
 
-  int32 close_secondary_session_with_expected_handle(uint32_t session_id, SecondarySessionHandle expected_closed_handle)
+  int32 close_secondary_session_with_expected_handle(std::string session_name, SecondarySessionHandle expected_closed_handle)
   {
     EXPECT_CALL(library_, CloseSecondarySession(expected_closed_handle))
         .WillOnce(Return(kDriverSuccess));
     ::grpc::ServerContext context;
     CloseSecondarySessionRequest request;
-    request.mutable_secondary_session_handle()->set_id(session_id);
+    request.mutable_secondary_session_handle()->set_name(session_name);
     CloseSecondarySessionResponse response;
     service_.CloseSecondarySession(&context, &request, &response);
 
     return response.status();
   }
 
-  int32 close_with_expected_handle(uint32_t session_id, FakeHandle expected_closed_handle)
+  int32 close_with_expected_handle(std::string session_name, FakeHandle expected_closed_handle)
   {
     EXPECT_CALL(library_, Close(expected_closed_handle))
         .WillOnce(Return(kDriverSuccess));
     ::grpc::ServerContext context;
     CloseRequest request;
-    request.mutable_handle()->set_id(session_id);
+    request.mutable_handle()->set_name(session_name);
     CloseResponse response;
     service_.Close(&context, &request, &response);
 
@@ -288,8 +288,8 @@ TEST_F(NiFakeNonIviServiceTests, InitSecondarySession_AddsSessionHandleToSeconda
   const SecondarySessionHandle kHandle = 1234UL;
   auto session = init_secondary_session("test", kHandle);
 
-  EXPECT_NE(0, session);
-  EXPECT_EQ(kHandle, secondary_resource_repository_->access_session(session, ""));
+  EXPECT_NE("", session);
+  EXPECT_EQ(kHandle, secondary_resource_repository_->access_session(session));
 }
 
 TEST_F(NiFakeNonIviServiceTests, InitSecondarySession_CloseSecondarySession_ClosesSecondarySession)
@@ -297,7 +297,7 @@ TEST_F(NiFakeNonIviServiceTests, InitSecondarySession_CloseSecondarySession_Clos
   const SecondarySessionHandle kHandle = 1234UL;
   auto session = init_secondary_session("test", kHandle);
 
-  EXPECT_NE(0, session);
+  EXPECT_NE("", session);
   EXPECT_EQ(kDriverSuccess, close_secondary_session_with_expected_handle(session, kHandle));
 }
 
@@ -305,7 +305,7 @@ TEST_F(NiFakeNonIviServiceTests, InitSession_CloseSession_ClosesHandleAndSucceed
 {
   const FakeHandle kHandle = 1234UL;
   auto session = init("test", kHandle);
-  EXPECT_NE(0, session);
+  EXPECT_NE("", session);
 
   auto status = close_with_expected_handle(session, kHandle);
 
@@ -316,7 +316,7 @@ TEST_F(NiFakeNonIviServiceTests, InitWithHandleNameAsSessionName_CloseSession_Cl
 {
   const FakeHandle kHandle = 99999UL;
   auto session = init_with_handle_name_as_session_name("test", kHandle);
-  EXPECT_NE(0, session);
+  EXPECT_NE("", session);
 
   auto status = close_with_expected_handle(session, kHandle);
 
@@ -1540,12 +1540,11 @@ TEST_F(NiFakeNonIviServiceTests, WriteBooleanArray_PassesBooleansAsInt32s)
 template <typename TSessionRepository, typename TResource>
 void add_session(TSessionRepository& repository, TResource resource_handle, const std::string name)
 {
-  uint32_t session_id;
+  std::string session_name = name;
   repository->add_session(
-      name,
+      session_name,
       [resource_handle]() { return std::make_tuple(0, resource_handle); },
-      [](TResource handle) {},
-      session_id);
+      [](TResource handle) {});
 }
 
 TEST_F(NiFakeNonIviServiceTests, InitFromCrossDriverSession_PassesSessionResourcesAndSucceeds)
@@ -1565,7 +1564,7 @@ TEST_F(NiFakeNonIviServiceTests, InitFromCrossDriverSession_PassesSessionResourc
   service_.InitFromCrossDriverSession(&context, &request, &response);
 
   EXPECT_EQ(kDriverSuccess, response.status());
-  EXPECT_EQ(DRIVER_SESSION, resource_repository_->access_session(response.handle().id(), ""));
+  EXPECT_EQ(DRIVER_SESSION, resource_repository_->access_session(response.handle().name()));
 }
 
 template <size_t N>
@@ -1597,7 +1596,7 @@ TEST_F(NiFakeNonIviServiceTests, InitFromCrossDriverSessionArray_PassesSessionRe
   service_.InitFromCrossDriverSessionArray(&context, &request, &response);
 
   EXPECT_EQ(kDriverSuccess, response.status());
-  EXPECT_EQ(DRIVER_SESSION, resource_repository_->access_session(response.handle().id(), ""));
+  EXPECT_EQ(DRIVER_SESSION, resource_repository_->access_session(response.handle().name()));
 }
 
 TEST_F(NiFakeNonIviServiceTests, GetCrossDriverSession_CloseInitiatingSession_RemovesBothSessions)
@@ -1606,7 +1605,7 @@ TEST_F(NiFakeNonIviServiceTests, GetCrossDriverSession_CloseInitiatingSession_Re
   constexpr auto CROSS_DRIVER_HANDLE = 1234;
   constexpr auto INITIATING_SESSION_NAME = "initiating_session";
   constexpr auto CROSS_DRIVER_SESSION_NAME = "cross_driver_session";
-  const auto initiating_session_id = init(INITIATING_SESSION_NAME, INITIATING_DRIVER_HANDLE);
+  const auto initiating_session_name = init(INITIATING_SESSION_NAME, INITIATING_DRIVER_HANDLE);
   EXPECT_CALL(library_, GetCrossDriverSession(INITIATING_DRIVER_HANDLE, _))
       .WillOnce(DoAll(
           SetArgPointee<1, FakeCrossDriverHandle>(CROSS_DRIVER_HANDLE), Return(kDriverSuccess)));
@@ -1617,11 +1616,11 @@ TEST_F(NiFakeNonIviServiceTests, GetCrossDriverSession_CloseInitiatingSession_Re
   request.set_session_name(CROSS_DRIVER_SESSION_NAME);
   service_.GetCrossDriverSession(&context, &request, &response);
   EXPECT_EQ(kDriverSuccess, response.status());
-  EXPECT_EQ(cross_driver_resource_repository_->access_session(0, CROSS_DRIVER_SESSION_NAME), CROSS_DRIVER_HANDLE);
+  EXPECT_EQ(cross_driver_resource_repository_->access_session(CROSS_DRIVER_SESSION_NAME), CROSS_DRIVER_HANDLE);
 
-  close_with_expected_handle(initiating_session_id, INITIATING_DRIVER_HANDLE);
+  close_with_expected_handle(initiating_session_name, INITIATING_DRIVER_HANDLE);
 
-  EXPECT_EQ(cross_driver_resource_repository_->access_session(0, CROSS_DRIVER_SESSION_NAME), 0);
+  EXPECT_EQ(cross_driver_resource_repository_->access_session(CROSS_DRIVER_SESSION_NAME), 0);
 }
 
 TEST_F(NiFakeNonIviServiceTests, GetCrossDriverSession_ResetServer_RemovesBothSessions)
@@ -1630,7 +1629,7 @@ TEST_F(NiFakeNonIviServiceTests, GetCrossDriverSession_ResetServer_RemovesBothSe
   constexpr auto CROSS_DRIVER_HANDLE = 1234;
   constexpr auto INITIATING_SESSION_NAME = "initiating_session";
   constexpr auto CROSS_DRIVER_SESSION_NAME = "cross_driver_session";
-  const auto initiating_session_id = init(INITIATING_SESSION_NAME, INITIATING_DRIVER_HANDLE);
+  const auto initiating_session_name = init(INITIATING_SESSION_NAME, INITIATING_DRIVER_HANDLE);
   EXPECT_CALL(library_, GetCrossDriverSession(INITIATING_DRIVER_HANDLE, _))
       .WillOnce(DoAll(
           SetArgPointee<1, FakeCrossDriverHandle>(CROSS_DRIVER_HANDLE), Return(kDriverSuccess)));
@@ -1643,8 +1642,8 @@ TEST_F(NiFakeNonIviServiceTests, GetCrossDriverSession_ResetServer_RemovesBothSe
 
   session_repository_.reset_server();
 
-  EXPECT_EQ(cross_driver_resource_repository_->access_session(0, CROSS_DRIVER_SESSION_NAME), 0);
-  EXPECT_EQ(resource_repository_->access_session(0, INITIATING_SESSION_NAME), 0);
+  EXPECT_EQ(cross_driver_resource_repository_->access_session(CROSS_DRIVER_SESSION_NAME), 0);
+  EXPECT_EQ(resource_repository_->access_session(INITIATING_SESSION_NAME), 0);
 }
 
 TEST_F(NiFakeNonIviServiceTests, SessionAlreadyInCrossDriverSessionRepository_GetCrossDriverSessionForSameResourceHandle_ReverseLookupStillReturnsOriginalSession)
@@ -1654,14 +1653,14 @@ TEST_F(NiFakeNonIviServiceTests, SessionAlreadyInCrossDriverSessionRepository_Ge
   constexpr auto INITIATING_SESSION_NAME = "initiating_session";
   constexpr auto CROSS_DRIVER_SESSION_NAME = "cross_driver_session";
   constexpr auto ORIGINAL_NAME_FOR_CROSS_DRIVER_RESOURCE = "original_cross_driver_resource_name";
-  uint32_t original_session_id;
-  cross_driver_resource_repository_->add_session(
-      ORIGINAL_NAME_FOR_CROSS_DRIVER_RESOURCE,
-      [&]() { return std::make_tuple(0, CROSS_DRIVER_HANDLE); },
-      [](FakeCrossDriverHandle handle) {},
-      original_session_id);
 
-  const auto initiating_session_id = init(INITIATING_SESSION_NAME, INITIATING_DRIVER_HANDLE);
+  std::string session_name = ORIGINAL_NAME_FOR_CROSS_DRIVER_RESOURCE;
+  cross_driver_resource_repository_->add_session(
+      session_name,
+      [&]() { return std::make_tuple(0, CROSS_DRIVER_HANDLE); },
+      [](FakeCrossDriverHandle handle) {});
+
+  const auto initiating_session_name = init(INITIATING_SESSION_NAME, INITIATING_DRIVER_HANDLE);
   EXPECT_CALL(library_, GetCrossDriverSession(INITIATING_DRIVER_HANDLE, _))
       .WillOnce(DoAll(
           SetArgPointee<1, FakeCrossDriverHandle>(CROSS_DRIVER_HANDLE), Return(kDriverSuccess)));
@@ -1672,7 +1671,7 @@ TEST_F(NiFakeNonIviServiceTests, SessionAlreadyInCrossDriverSessionRepository_Ge
   request.set_session_name(CROSS_DRIVER_SESSION_NAME);
   service_.GetCrossDriverSession(&context, &request, &response);
 
-  EXPECT_EQ(original_session_id, cross_driver_resource_repository_->resolve_session_id(CROSS_DRIVER_HANDLE));
+  EXPECT_EQ(session_name, cross_driver_resource_repository_->resolve_session_name(CROSS_DRIVER_HANDLE));
 }
 
 TEST_F(NiFakeNonIviServiceTests, InitWithReturnedSession_AccessSession_ReturnsInitializeSessionHandle)
@@ -1687,7 +1686,7 @@ TEST_F(NiFakeNonIviServiceTests, InitWithReturnedSession_AccessSession_ReturnsIn
   request.set_handle_name(SESSION_NAME);
   service_.InitWithReturnedSession(&context, &request, &response);
 
-  const auto accessed_handle = resource_repository_->access_session(response.handle().id(), "");
+  const auto accessed_handle = resource_repository_->access_session(response.handle().name());
 
   EXPECT_EQ(kDriverSuccess, response.status());
   EXPECT_EQ(SESSION_HANDLE, accessed_handle);
@@ -1706,7 +1705,7 @@ TEST_F(NiFakeNonIviServiceTests, InitWithReturnedSessionFailsInit_AccessSession_
   request.set_handle_name(SESSION_NAME);
   auto status = service_.InitWithReturnedSession(&context, &request, &response);
 
-  const auto accessed_handle = resource_repository_->access_session(response.handle().id(), "");
+  const auto accessed_handle = resource_repository_->access_session(response.handle().name());
 
   EXPECT_FALSE(status.ok());
   EXPECT_EQ(::grpc::StatusCode::UNKNOWN, status.error_code());

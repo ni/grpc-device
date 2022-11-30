@@ -136,6 +136,7 @@ jobs:
         -C ${GITHUB_WORKSPACE}/build
         ni_grpc_device_server
         server_config.json
+        server_capabilities.json
         -C ${GITHUB_WORKSPACE}
         LICENSE
         ThirdPartyNotices.txt
@@ -157,6 +158,7 @@ jobs:
         IntegrationTestsRunner
         libTestApi.so
         SystemTestsRunner
+        test_localhost_config.json
         test_mutual_tls_config.json
         UnitTestsRunner
         -C ${GITHUB_WORKSPACE}

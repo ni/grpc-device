@@ -243,7 +243,7 @@ struct SetInputConverter {
   {
     nxFD_ZERO(&set);
     for (const auto& session : input) {
-      const auto socket = resource_repository->access_session(session.id(), session.name());
+      const auto socket = resource_repository->access_session(session.name());
       nxFD_SET(socket, &set);
     }
   }

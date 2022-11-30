@@ -1,6 +1,8 @@
 #include <nirfmxinstr_restricted/nirfmxinstr_restricted_service.h>
 
 namespace nirfmxinstr_restricted_grpc {
+using nidevice_grpc::converters::convert_to_grpc;
+
 // Returns true if it's safe to use outputs of a method with the given status.
 inline bool status_ok(int32 status)
 {
@@ -35,7 +37,7 @@ inline bool status_ok(int32 status)
   }
   try {
     auto instrument_grpc_session = request->instrument();
-    niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+    niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
     uInt64 snapshot_info_cache_index{};
     int32 personality_id_array_actual_size{};
     int32 signal_names_actual_size{};
@@ -107,12 +109,21 @@ inline bool status_ok(int32 status)
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->mutable_personality_id_array()->Resize(personality_id_array_actual_size, 0);
-      response->set_signal_names(signal_names);
+      std::string signal_names_utf8;
+      convert_to_grpc(signal_names, &signal_names_utf8);
+      response->set_signal_names(signal_names_utf8);
       nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_signal_names()));
-      response->set_result_names(result_names);
+      signal_names_actual_size = signal_names_utf8.length() + 1;
+      std::string result_names_utf8;
+      convert_to_grpc(result_names, &result_names_utf8);
+      response->set_result_names(result_names_utf8);
       nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_result_names()));
-      response->set_snapshot_identifiers(snapshot_identifiers);
+      result_names_actual_size = result_names_utf8.length() + 1;
+      std::string snapshot_identifiers_utf8;
+      convert_to_grpc(snapshot_identifiers, &snapshot_identifiers_utf8);
+      response->set_snapshot_identifiers(snapshot_identifiers_utf8);
       nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_snapshot_identifiers()));
+      snapshot_identifiers_actual_size = snapshot_identifiers_utf8.length() + 1;
       response->mutable_snapshot_timestamp_array()->Resize(snapshot_timestamp_array_actual_size, 0);
     }
     response->set_status(status);
@@ -140,7 +151,7 @@ inline bool status_ok(int32 status)
   }
   try {
     auto instrument_grpc_session = request->instrument();
-    niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
+    niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
     uInt64 snapshot_info_cache_index{};
     int32 personality_id{};
     int32 signal_name_actual_size{};
@@ -194,10 +205,16 @@ inline bool status_ok(int32 status)
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
-      response->set_signal_name(signal_name);
+      std::string signal_name_utf8;
+      convert_to_grpc(signal_name, &signal_name_utf8);
+      response->set_signal_name(signal_name_utf8);
       nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_signal_name()));
-      response->set_snapshot_identifier(snapshot_identifier);
+      signal_name_actual_size = signal_name_utf8.length() + 1;
+      std::string snapshot_identifier_utf8;
+      convert_to_grpc(snapshot_identifier, &snapshot_identifier_utf8);
+      response->set_snapshot_identifier(snapshot_identifier_utf8);
       nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_snapshot_identifier()));
+      snapshot_identifier_actual_size = snapshot_identifier_utf8.length() + 1;
     }
     response->set_status(status);
     response->set_personality_id(personality_id);

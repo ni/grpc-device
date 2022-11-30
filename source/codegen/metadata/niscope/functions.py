@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-SCOPE API metadata version 23.0.0d42
+# This file is generated from NI-SCOPE API metadata version 23.0.0d87
 functions = {
     'Abort': {
         'codegen_method': 'public',
@@ -193,6 +193,76 @@ functions = {
                 'grpc_type': 'nidevice_grpc.Session',
                 'name': 'vi',
                 'type': 'ViSession'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'CalFetchDate': {
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'cppName': 'vi',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.Session',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'cppName': 'whichOne',
+                'direction': 'in',
+                'enum': 'CalibrationTypes',
+                'grpc_type': 'sint32',
+                'name': 'whichOne',
+                'type': 'ViInt32'
+            },
+            {
+                'cppName': 'year',
+                'direction': 'out',
+                'grpc_type': 'sint32',
+                'name': 'year',
+                'type': 'ViInt32'
+            },
+            {
+                'cppName': 'month',
+                'direction': 'out',
+                'grpc_type': 'sint32',
+                'name': 'month',
+                'type': 'ViInt32'
+            },
+            {
+                'cppName': 'day',
+                'direction': 'out',
+                'grpc_type': 'sint32',
+                'name': 'day',
+                'type': 'ViInt32'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'CalFetchTemperature': {
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'cppName': 'vi',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.Session',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'cppName': 'whichOne',
+                'direction': 'in',
+                'enum': 'CalibrationTypes',
+                'grpc_type': 'sint32',
+                'name': 'whichOne',
+                'type': 'ViInt32'
+            },
+            {
+                'cppName': 'temperature',
+                'direction': 'out',
+                'grpc_type': 'double',
+                'name': 'temperature',
+                'type': 'ViReal64'
             }
         ],
         'returns': 'ViStatus'
@@ -2726,6 +2796,22 @@ functions = {
                 'grpc_type': 'string',
                 'name': 'errorMessage',
                 'type': 'ViChar[]'
+            },
+            {
+                'cppName': 'initializationBehavior',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.SessionInitializationBehavior',
+                'name': 'initializationBehavior',
+                'proto_only': True,
+                'type': 'ViInt32'
+            },
+            {
+                'cppName': 'newSessionInitialized',
+                'direction': 'out',
+                'grpc_type': 'bool',
+                'name': 'newSessionInitialized',
+                'proto_only': True,
+                'type': 'bool'
             }
         ],
         'returns': 'ViStatus'
@@ -2776,6 +2862,22 @@ functions = {
                 'grpc_type': 'string',
                 'name': 'errorMessage',
                 'type': 'ViChar[]'
+            },
+            {
+                'cppName': 'initializationBehavior',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.SessionInitializationBehavior',
+                'name': 'initializationBehavior',
+                'proto_only': True,
+                'type': 'ViInt32'
+            },
+            {
+                'cppName': 'newSessionInitialized',
+                'direction': 'out',
+                'grpc_type': 'bool',
+                'name': 'newSessionInitialized',
+                'proto_only': True,
+                'type': 'bool'
             }
         ],
         'returns': 'ViStatus'

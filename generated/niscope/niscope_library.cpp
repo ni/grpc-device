@@ -31,6 +31,8 @@ NiScopeLibrary::NiScopeLibrary() : shared_library_(kLibraryName)
   function_pointers_.AutoSetup = reinterpret_cast<AutoSetupPtr>(shared_library_.get_function_pointer("niScope_AutoSetup"));
   function_pointers_.CableSenseSignalStart = reinterpret_cast<CableSenseSignalStartPtr>(shared_library_.get_function_pointer("niScope_CableSenseSignalStart"));
   function_pointers_.CableSenseSignalStop = reinterpret_cast<CableSenseSignalStopPtr>(shared_library_.get_function_pointer("niScope_CableSenseSignalStop"));
+  function_pointers_.CalFetchDate = reinterpret_cast<CalFetchDatePtr>(shared_library_.get_function_pointer("niScope_CalFetchDate"));
+  function_pointers_.CalFetchTemperature = reinterpret_cast<CalFetchTemperaturePtr>(shared_library_.get_function_pointer("niScope_CalFetchTemperature"));
   function_pointers_.CalSelfCalibrate = reinterpret_cast<CalSelfCalibratePtr>(shared_library_.get_function_pointer("niScope_CalSelfCalibrate"));
   function_pointers_.CheckAttributeViBoolean = reinterpret_cast<CheckAttributeViBooleanPtr>(shared_library_.get_function_pointer("niScope_CheckAttributeViBoolean"));
   function_pointers_.CheckAttributeViInt32 = reinterpret_cast<CheckAttributeViInt32Ptr>(shared_library_.get_function_pointer("niScope_CheckAttributeViInt32"));
@@ -241,6 +243,30 @@ ViStatus NiScopeLibrary::CableSenseSignalStop(ViSession vi)
   return niScope_CableSenseSignalStop(vi);
 #else
   return function_pointers_.CableSenseSignalStop(vi);
+#endif
+}
+
+ViStatus NiScopeLibrary::CalFetchDate(ViSession vi, ViInt32 whichOne, ViInt32* year, ViInt32* month, ViInt32* day)
+{
+  if (!function_pointers_.CalFetchDate) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niScope_CalFetchDate.");
+  }
+#if defined(_MSC_VER)
+  return niScope_CalFetchDate(vi, whichOne, year, month, day);
+#else
+  return function_pointers_.CalFetchDate(vi, whichOne, year, month, day);
+#endif
+}
+
+ViStatus NiScopeLibrary::CalFetchTemperature(ViSession vi, ViInt32 whichOne, ViReal64* temperature)
+{
+  if (!function_pointers_.CalFetchTemperature) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niScope_CalFetchTemperature.");
+  }
+#if defined(_MSC_VER)
+  return niScope_CalFetchTemperature(vi, whichOne, temperature);
+#else
+  return function_pointers_.CalFetchTemperature(vi, whichOne, temperature);
 #endif
 }
 

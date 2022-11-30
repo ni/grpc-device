@@ -20,6 +20,7 @@ class NiDCPowerLibraryInterface {
   virtual ViStatus CalSelfCalibrate(ViSession vi, ViConstString channelName) = 0;
   virtual ViStatus ClearError(ViSession vi) = 0;
   virtual ViStatus ClearInterchangeWarnings(ViSession vi) = 0;
+  virtual ViStatus ClearLatchedOutputCutoffState(ViSession vi, ViConstString channelName, ViInt32 outputCutoffReason) = 0;
   virtual ViStatus Close(ViSession vi) = 0;
   virtual ViStatus Commit(ViSession vi) = 0;
   virtual ViStatus CommitWithChannels(ViSession vi, ViConstString channelName) = 0;
@@ -140,6 +141,7 @@ class NiDCPowerLibraryInterface {
   virtual ViStatus PerformLCRShortCompensation(ViSession vi, ViConstString channelName, ViInt32 numFrequencies, ViReal64 additionalFrequencies[]) = 0;
   virtual ViStatus PerformLCRShortCustomCableCompensation(ViSession vi, ViConstString channelName) = 0;
   virtual ViStatus QueryInCompliance(ViSession vi, ViConstString channelName, ViBoolean* inCompliance) = 0;
+  virtual ViStatus QueryLatchedOutputCutoffState(ViSession vi, ViConstString channelName, ViInt32 outputCutoffReason, ViBoolean* outputCutoffState) = 0;
   virtual ViStatus QueryMaxCurrentLimit(ViSession vi, ViConstString channelName, ViReal64 voltageLevel, ViReal64* maxCurrentLimit) = 0;
   virtual ViStatus QueryMaxVoltageLevel(ViSession vi, ViConstString channelName, ViReal64 currentLimit, ViReal64* maxVoltageLevel) = 0;
   virtual ViStatus QueryMinCurrentLimit(ViSession vi, ViConstString channelName, ViReal64 voltageLevel, ViReal64* minCurrentLimit) = 0;

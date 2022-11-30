@@ -46,6 +46,7 @@ public:
   ::grpc::Status CalSelfCalibrate(::grpc::ServerContext* context, const CalSelfCalibrateRequest* request, CalSelfCalibrateResponse* response) override;
   ::grpc::Status ClearError(::grpc::ServerContext* context, const ClearErrorRequest* request, ClearErrorResponse* response) override;
   ::grpc::Status ClearInterchangeWarnings(::grpc::ServerContext* context, const ClearInterchangeWarningsRequest* request, ClearInterchangeWarningsResponse* response) override;
+  ::grpc::Status ClearLatchedOutputCutoffState(::grpc::ServerContext* context, const ClearLatchedOutputCutoffStateRequest* request, ClearLatchedOutputCutoffStateResponse* response) override;
   ::grpc::Status Close(::grpc::ServerContext* context, const CloseRequest* request, CloseResponse* response) override;
   ::grpc::Status Commit(::grpc::ServerContext* context, const CommitRequest* request, CommitResponse* response) override;
   ::grpc::Status CommitWithChannels(::grpc::ServerContext* context, const CommitWithChannelsRequest* request, CommitWithChannelsResponse* response) override;
@@ -164,6 +165,7 @@ public:
   ::grpc::Status PerformLCRShortCompensation(::grpc::ServerContext* context, const PerformLCRShortCompensationRequest* request, PerformLCRShortCompensationResponse* response) override;
   ::grpc::Status PerformLCRShortCustomCableCompensation(::grpc::ServerContext* context, const PerformLCRShortCustomCableCompensationRequest* request, PerformLCRShortCustomCableCompensationResponse* response) override;
   ::grpc::Status QueryInCompliance(::grpc::ServerContext* context, const QueryInComplianceRequest* request, QueryInComplianceResponse* response) override;
+  ::grpc::Status QueryLatchedOutputCutoffState(::grpc::ServerContext* context, const QueryLatchedOutputCutoffStateRequest* request, QueryLatchedOutputCutoffStateResponse* response) override;
   ::grpc::Status QueryMaxCurrentLimit(::grpc::ServerContext* context, const QueryMaxCurrentLimitRequest* request, QueryMaxCurrentLimitResponse* response) override;
   ::grpc::Status QueryMaxVoltageLevel(::grpc::ServerContext* context, const QueryMaxVoltageLevelRequest* request, QueryMaxVoltageLevelResponse* response) override;
   ::grpc::Status QueryMinCurrentLimit(::grpc::ServerContext* context, const QueryMinCurrentLimitRequest* request, QueryMinCurrentLimitResponse* response) override;

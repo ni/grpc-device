@@ -71,7 +71,7 @@ TEST_F(NiSyncSessionTest, InitializeSessionWithDeviceAndSessionName_CreatesDrive
 
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(0, response.status());
-  EXPECT_NE(0, response.vi().id());
+  EXPECT_NE("", response.vi().name());
 }
 
 TEST_F(NiSyncSessionTest, InitializeSessionWithDeviceAndNoSessionName_CreatesDriverSession)
@@ -81,7 +81,7 @@ TEST_F(NiSyncSessionTest, InitializeSessionWithDeviceAndNoSessionName_CreatesDri
 
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(0, response.status());
-  EXPECT_NE(0, response.vi().id());
+  EXPECT_NE("", response.vi().name());
 }
 
 TEST_F(NiSyncSessionTest, InitializeSessionWithoutDevice_ReturnsDriverError)
@@ -91,7 +91,7 @@ TEST_F(NiSyncSessionTest, InitializeSessionWithoutDevice_ReturnsDriverError)
 
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(kSyncDeviceNotFound, response.status());
-  EXPECT_EQ(0, response.vi().id());
+  EXPECT_EQ("", response.vi().name());
 }
 
 TEST_F(NiSyncSessionTest, InitializedSession_CloseSession_ClosesDriverSession)
@@ -103,7 +103,7 @@ TEST_F(NiSyncSessionTest, InitializedSession_CloseSession_ClosesDriverSession)
 
   ::grpc::ClientContext context;
   nisync::CloseRequest close_request;
-  close_request.mutable_vi()->set_id(session.id());
+  close_request.mutable_vi()->set_name(session.name());
   nisync::CloseResponse close_response;
   ::grpc::Status status = GetStub()->Close(&context, close_request, &close_response);
 
@@ -114,11 +114,11 @@ TEST_F(NiSyncSessionTest, InitializedSession_CloseSession_ClosesDriverSession)
 TEST_F(NiSyncSessionTest, InvalidSession_CloseSession_NoErrorReported)
 {
   nidevice_grpc::Session session;
-  session.set_id(NULL);
+  session.set_name("");
 
   ::grpc::ClientContext context;
   nisync::CloseRequest request;
-  request.mutable_vi()->set_id(session.id());
+  request.mutable_vi()->set_name(session.name());
   nisync::CloseResponse response;
   ::grpc::Status status = GetStub()->Close(&context, request, &response);
 

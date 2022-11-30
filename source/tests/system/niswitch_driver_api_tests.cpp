@@ -48,9 +48,9 @@ class NiSwitchDriverApiTest : public ::testing::Test {
     return niswitch_stub_;
   }
 
-  int GetSessionId()
+  std::string GetSessionName()
   {
-    return driver_session_->id();
+    return driver_session_->name();
   }
 
   void expect_api_success(int error_status)
@@ -62,7 +62,7 @@ class NiSwitchDriverApiTest : public ::testing::Test {
   {
     ::grpc::ClientContext context;
     niswitch::ErrorMessageRequest request;
-    request.mutable_vi()->set_id(GetSessionId());
+    request.mutable_vi()->set_name(GetSessionName());
     request.set_error_code(error_status);
     niswitch::ErrorMessageResponse response;
 
@@ -95,7 +95,7 @@ class NiSwitchDriverApiTest : public ::testing::Test {
   {
     ::grpc::ClientContext context;
     niswitch::CloseRequest request;
-    request.mutable_vi()->set_id(driver_session_->id());
+    request.mutable_vi()->set_name(driver_session_->name());
     niswitch::CloseResponse response;
 
     ::grpc::Status status = GetStub()->Close(&context, request, &response);
@@ -108,7 +108,7 @@ class NiSwitchDriverApiTest : public ::testing::Test {
   {
     ::grpc::ClientContext context;
     niswitch::WaitForDebounceRequest request;
-    request.mutable_vi()->set_id(GetSessionId());
+    request.mutable_vi()->set_name(GetSessionName());
     request.set_maximum_time_ms(kWaitForDebounceMaxTime);
     niswitch::WaitForDebounceResponse response;
 
@@ -122,7 +122,7 @@ class NiSwitchDriverApiTest : public ::testing::Test {
   {
     ::grpc::ClientContext context;
     niswitch::CanConnectRequest request;
-    request.mutable_vi()->set_id(GetSessionId());
+    request.mutable_vi()->set_name(GetSessionName());
     request.set_channel1(channel1);
     request.set_channel2(channel2);
     niswitch::CanConnectResponse response;
@@ -138,7 +138,7 @@ class NiSwitchDriverApiTest : public ::testing::Test {
   {
     ::grpc::ClientContext context;
     niswitch::ConnectRequest request;
-    request.mutable_vi()->set_id(GetSessionId());
+    request.mutable_vi()->set_name(GetSessionName());
     request.set_channel1(channel1);
     request.set_channel2(channel2);
     niswitch::ConnectResponse response;
@@ -153,7 +153,7 @@ class NiSwitchDriverApiTest : public ::testing::Test {
   {
     ::grpc::ClientContext context;
     niswitch::DisconnectAllRequest request;
-    request.mutable_vi()->set_id(GetSessionId());
+    request.mutable_vi()->set_name(GetSessionName());
     niswitch::DisconnectAllResponse response;
 
     ::grpc::Status status = GetStub()->DisconnectAll(&context, request, &response);
@@ -166,7 +166,7 @@ class NiSwitchDriverApiTest : public ::testing::Test {
   {
     ::grpc::ClientContext context;
     niswitch::GetRelayPositionRequest request;
-    request.mutable_vi()->set_id(GetSessionId());
+    request.mutable_vi()->set_name(GetSessionName());
     request.set_relay_name(relay_name);
     niswitch::GetRelayPositionResponse response;
 
@@ -181,7 +181,7 @@ class NiSwitchDriverApiTest : public ::testing::Test {
   {
     ::grpc::ClientContext context;
     niswitch::GetAttributeViReal64Request request;
-    request.mutable_vi()->set_id(GetSessionId());
+    request.mutable_vi()->set_name(GetSessionName());
     request.set_channel_name(channel_name);
     request.set_attribute_id(attribute_id);
     niswitch::GetAttributeViReal64Response response;
@@ -197,7 +197,7 @@ class NiSwitchDriverApiTest : public ::testing::Test {
   {
     ::grpc::ClientContext context;
     niswitch::GetAttributeViStringRequest request;
-    request.mutable_vi()->set_id(GetSessionId());
+    request.mutable_vi()->set_name(GetSessionName());
     request.set_channel_name(channel_name);
     request.set_attribute_id(attribute_id);
     niswitch::GetAttributeViStringResponse response;
@@ -219,7 +219,7 @@ TEST_F(NiSwitchDriverApiTest, NiSwitchSelfTest_SendRequest_SelfTestCompletesSucc
 {
   ::grpc::ClientContext context;
   niswitch::SelfTestRequest request;
-  request.mutable_vi()->set_id(GetSessionId());
+  request.mutable_vi()->set_name(GetSessionName());
   niswitch::SelfTestResponse response;
 
   ::grpc::Status status = GetStub()->SelfTest(&context, request, &response);
@@ -234,7 +234,7 @@ TEST_F(NiSwitchDriverApiTest, NiSwitchReset_SendRequest_ResetCompletesSuccessful
 {
   ::grpc::ClientContext context;
   niswitch::ResetRequest request;
-  request.mutable_vi()->set_id(GetSessionId());
+  request.mutable_vi()->set_name(GetSessionName());
   niswitch::ResetResponse response;
 
   ::grpc::Status status = GetStub()->Reset(&context, request, &response);
@@ -250,7 +250,7 @@ TEST_F(NiSwitchDriverApiTest, NiSwitchSetViReal64Attribute_SendRequest_GetViReal
   const double expected_value = 402.24;
   ::grpc::ClientContext context;
   niswitch::SetAttributeViReal64Request request;
-  request.mutable_vi()->set_id(GetSessionId());
+  request.mutable_vi()->set_name(GetSessionName());
   request.set_channel_name(channel_name);
   request.set_attribute_id(attribute_to_set);
   request.set_attribute_value_raw(expected_value);
@@ -271,7 +271,7 @@ TEST_F(NiSwitchDriverApiTest, NiSwitchSetViStringAttribute_SendRequest_GetViStri
   const std::string expected_value = "b0r1->b0c1;b0r1->b0c2;b0r2->b0c3";
   ::grpc::ClientContext context;
   niswitch::SetAttributeViStringRequest request;
-  request.mutable_vi()->set_id(GetSessionId());
+  request.mutable_vi()->set_name(GetSessionName());
   request.set_channel_name(channel_name);
   request.set_attribute_id(attribute_to_set);
   request.set_attribute_value_raw(expected_value);
@@ -291,7 +291,7 @@ TEST_F(NiSwitchDriverApiTest, NiSwitchRelayControl_SendRequest_RelayPositionMatc
   const niswitch::RelayPosition expected_value = niswitch::RelayPosition::RELAY_POSITION_NISWITCH_VAL_CLOSED;
   ::grpc::ClientContext context;
   niswitch::RelayControlRequest request;
-  request.mutable_vi()->set_id(GetSessionId());
+  request.mutable_vi()->set_name(GetSessionName());
   request.set_relay_name(kRelayName);
   request.set_relay_action(relay_action);
   niswitch::RelayControlResponse response;

@@ -1,6 +1,7 @@
 #include <nisync/nisync_service.h>
 
 namespace nisync_grpc {
+using nidevice_grpc::converters::convert_from_grpc;
 
 //---------------------------------------------------------------------
 //---------------------------------------------------------------------
@@ -11,8 +12,9 @@ namespace nisync_grpc {
   }
   try {
     auto vi_grpc_session = request->vi();
-    ViSession vi = session_repository_->access_session(vi_grpc_session.id(), vi_grpc_session.name());
-    ViConstString terminal = request->terminal().c_str();
+    ViSession vi = session_repository_->access_session(vi_grpc_session.name());
+    auto terminal_mbcs = convert_from_grpc<std::string>(request->terminal());
+    ViConstString terminal = terminal_mbcs.c_str();
     ViUInt32 timestamps_to_read = request->timestamps_to_read();
     ViReal64 timeout = request->timeout();
     response->mutable_time_seconds_buffer()->Resize(timestamps_to_read, 0);

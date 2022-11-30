@@ -59,7 +59,7 @@ namespace nitclk_grpc {
         sessions_request.begin(),
         sessions_request.end(),
         std::back_inserter(sessions),
-        [&](auto session) { return session_repository_->access_session(session.id(), session.name()); }); 
+        [&](auto session) { return session_repository_->access_session(session.name()); }); 
       auto status = library_->ConfigureForHomogeneousTriggers(session_count, sessions.data());
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, 0);
@@ -87,7 +87,7 @@ namespace nitclk_grpc {
         sessions_request.begin(),
         sessions_request.end(),
         std::back_inserter(sessions),
-        [&](auto session) { return session_repository_->access_session(session.id(), session.name()); }); 
+        [&](auto session) { return session_repository_->access_session(session.name()); }); 
       ViReal64 min_time = request->min_time();
       auto status = library_->FinishSyncPulseSenderSynchronize(session_count, sessions.data(), min_time);
       if (!status_ok(status)) {
@@ -110,8 +110,9 @@ namespace nitclk_grpc {
     }
     try {
       auto session_grpc_session = request->session();
-      ViSession session = session_repository_->access_session(session_grpc_session.id(), session_grpc_session.name());
-      auto channel_name = request->channel_name().c_str();
+      ViSession session = session_repository_->access_session(session_grpc_session.name());
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      auto channel_name = channel_name_mbcs.c_str();
       ViAttr attribute_id = request->attribute_id();
       ViReal64 value {};
       auto status = library_->GetAttributeViReal64(session, channel_name, attribute_id, &value);
@@ -136,8 +137,9 @@ namespace nitclk_grpc {
     }
     try {
       auto session_grpc_session = request->session();
-      ViSession session = session_repository_->access_session(session_grpc_session.id(), session_grpc_session.name());
-      auto channel_name = request->channel_name().c_str();
+      ViSession session = session_repository_->access_session(session_grpc_session.name());
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      auto channel_name = channel_name_mbcs.c_str();
       ViAttr attribute_id = request->attribute_id();
       ViSession value {};
       auto status = library_->GetAttributeViSession(session, channel_name, attribute_id, &value);
@@ -145,8 +147,8 @@ namespace nitclk_grpc {
         return ConvertApiErrorStatusForViSession(context, status, session);
       }
       response->set_status(status);
-      auto session_id = session_repository_->resolve_session_id(value);
-      response->mutable_value()->set_id(session_id);
+      auto grpc_device_session_name = session_repository_->resolve_session_name(value);
+      response->mutable_value()->set_name(grpc_device_session_name);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
@@ -163,8 +165,9 @@ namespace nitclk_grpc {
     }
     try {
       auto session_grpc_session = request->session();
-      ViSession session = session_repository_->access_session(session_grpc_session.id(), session_grpc_session.name());
-      auto channel_name = request->channel_name().c_str();
+      ViSession session = session_repository_->access_session(session_grpc_session.name());
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      auto channel_name = channel_name_mbcs.c_str();
       ViAttr attribute_id = request->attribute_id();
 
       while (true) {
@@ -187,7 +190,9 @@ namespace nitclk_grpc {
           return ConvertApiErrorStatusForViSession(context, status, session);
         }
         response->set_status(status);
-        response->set_value(value);
+        std::string value_utf8;
+        convert_to_grpc(value, &value_utf8);
+        response->set_value(value_utf8);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_value()));
         return ::grpc::Status::OK;
       }
@@ -226,7 +231,9 @@ namespace nitclk_grpc {
           return ConvertApiErrorStatusForViSession(context, status, 0);
         }
         response->set_status(status);
-        response->set_error_string(error_string);
+        std::string error_string_utf8;
+        convert_to_grpc(error_string, &error_string_utf8);
+        response->set_error_string(error_string_utf8);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_string()));
         return ::grpc::Status::OK;
       }
@@ -251,7 +258,7 @@ namespace nitclk_grpc {
         sessions_request.begin(),
         sessions_request.end(),
         std::back_inserter(sessions),
-        [&](auto session) { return session_repository_->access_session(session.id(), session.name()); }); 
+        [&](auto session) { return session_repository_->access_session(session.name()); }); 
       auto status = library_->Initiate(session_count, sessions.data());
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, 0);
@@ -279,7 +286,7 @@ namespace nitclk_grpc {
         sessions_request.begin(),
         sessions_request.end(),
         std::back_inserter(sessions),
-        [&](auto session) { return session_repository_->access_session(session.id(), session.name()); }); 
+        [&](auto session) { return session_repository_->access_session(session.name()); }); 
       ViBoolean done {};
       auto status = library_->IsDone(session_count, sessions.data(), &done);
       if (!status_ok(status)) {
@@ -303,8 +310,9 @@ namespace nitclk_grpc {
     }
     try {
       auto session_grpc_session = request->session();
-      ViSession session = session_repository_->access_session(session_grpc_session.id(), session_grpc_session.name());
-      auto channel_name = request->channel_name().c_str();
+      ViSession session = session_repository_->access_session(session_grpc_session.name());
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      auto channel_name = channel_name_mbcs.c_str();
       ViAttr attribute_id = request->attribute_id();
       ViReal64 value = request->value_raw();
       auto status = library_->SetAttributeViReal64(session, channel_name, attribute_id, value);
@@ -328,11 +336,12 @@ namespace nitclk_grpc {
     }
     try {
       auto session_grpc_session = request->session();
-      ViSession session = session_repository_->access_session(session_grpc_session.id(), session_grpc_session.name());
-      auto channel_name = request->channel_name().c_str();
+      ViSession session = session_repository_->access_session(session_grpc_session.name());
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      auto channel_name = channel_name_mbcs.c_str();
       ViAttr attribute_id = request->attribute_id();
       auto value_grpc_session = request->value();
-      ViSession value = session_repository_->access_session(value_grpc_session.id(), value_grpc_session.name());
+      ViSession value = session_repository_->access_session(value_grpc_session.name());
       auto status = library_->SetAttributeViSession(session, channel_name, attribute_id, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, session);
@@ -354,10 +363,12 @@ namespace nitclk_grpc {
     }
     try {
       auto session_grpc_session = request->session();
-      ViSession session = session_repository_->access_session(session_grpc_session.id(), session_grpc_session.name());
-      auto channel_name = request->channel_name().c_str();
+      ViSession session = session_repository_->access_session(session_grpc_session.name());
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      auto channel_name = channel_name_mbcs.c_str();
       ViAttr attribute_id = request->attribute_id();
-      auto value = request->value_raw().c_str();
+      auto value_mbcs = convert_from_grpc<std::string>(request->value_raw());
+      auto value = value_mbcs.c_str();
       auto status = library_->SetAttributeViString(session, channel_name, attribute_id, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, session);
@@ -385,7 +396,7 @@ namespace nitclk_grpc {
         sessions_request.begin(),
         sessions_request.end(),
         std::back_inserter(sessions),
-        [&](auto session) { return session_repository_->access_session(session.id(), session.name()); }); 
+        [&](auto session) { return session_repository_->access_session(session.name()); }); 
       ViReal64 min_time = request->min_time();
       auto status = library_->SetupForSyncPulseSenderSynchronize(session_count, sessions.data(), min_time);
       if (!status_ok(status)) {
@@ -414,7 +425,7 @@ namespace nitclk_grpc {
         sessions_request.begin(),
         sessions_request.end(),
         std::back_inserter(sessions),
-        [&](auto session) { return session_repository_->access_session(session.id(), session.name()); }); 
+        [&](auto session) { return session_repository_->access_session(session.name()); }); 
       ViReal64 min_tclk_period = request->min_tclk_period();
       auto status = library_->Synchronize(session_count, sessions.data(), min_tclk_period);
       if (!status_ok(status)) {
@@ -443,7 +454,7 @@ namespace nitclk_grpc {
         sessions_request.begin(),
         sessions_request.end(),
         std::back_inserter(sessions),
-        [&](auto session) { return session_repository_->access_session(session.id(), session.name()); }); 
+        [&](auto session) { return session_repository_->access_session(session.name()); }); 
       ViReal64 min_time = request->min_time();
       auto status = library_->SynchronizeToSyncPulseSender(session_count, sessions.data(), min_time);
       if (!status_ok(status)) {
@@ -472,7 +483,7 @@ namespace nitclk_grpc {
         sessions_request.begin(),
         sessions_request.end(),
         std::back_inserter(sessions),
-        [&](auto session) { return session_repository_->access_session(session.id(), session.name()); }); 
+        [&](auto session) { return session_repository_->access_session(session.name()); }); 
       ViReal64 timeout = request->timeout();
       auto status = library_->WaitUntilDone(session_count, sessions.data(), timeout);
       if (!status_ok(status)) {

@@ -15,6 +15,7 @@
 namespace nidevice_grpc {
 
 static const char* kDefaultFilename = "server_config.json";
+static const char* kAddressJsonKey = "address";
 static const char* kPortJsonKey = "port";
 static const char* kServerCertJsonKey = "server_cert";
 static const char* kServerKeyJsonKey = "server_key";
@@ -94,25 +95,8 @@ nlohmann::json ServerConfigurationParser::load(const std::string& config_file_pa
 
 std::string ServerConfigurationParser::parse_address() const
 {
-  int parsed_port = -1;
-
-  auto it = config_file_.find(kPortJsonKey);
-  if (it != config_file_.end()) {
-    try {
-      parsed_port = it->get<int>();
-    }
-    catch (const nlohmann::json::type_error& ex) {
-      throw WrongPortTypeException(ex.what());
-    }
-  }
-  else {
-    throw UnspecifiedPortException();
-  }
-
-  if (parsed_port < 0 || parsed_port > USHRT_MAX) {
-    throw InvalidPortException();
-  }
-  return kDefaultAddressPrefix + std::to_string(parsed_port);
+  auto address = parse_bind_address() + ":" + std::to_string(parse_port());
+  return address;
 }
 
 std::string ServerConfigurationParser::parse_server_cert() const
@@ -237,8 +221,64 @@ std::string ServerConfigurationParser::read_keycert(const std::string& filename)
   return data;
 }
 
+std::string ServerConfigurationParser::parse_bind_address() const
+{
+  // Use default address if none is specified
+  std::string parsed_bind_address = kDefaultAddress;
+
+  auto it = config_file_.find(kAddressJsonKey);
+  if (it != config_file_.end()) {
+    try {
+      parsed_bind_address = it->get<std::string>();
+    }
+    catch (const nlohmann::json::type_error& ex) {
+      throw WrongAddressTypeException(ex.what());
+    }
+
+    if (parsed_bind_address.empty()) {
+      throw InvalidAddressException();
+    }
+  }
+
+  return parsed_bind_address;
+}
+
+int ServerConfigurationParser::parse_port() const
+{
+  int parsed_port = -1;
+
+  auto it = config_file_.find(kPortJsonKey);
+  if (it != config_file_.end()) {
+    try {
+      parsed_port = it->get<int>();
+    }
+    catch (const nlohmann::json::type_error& ex) {
+      throw WrongPortTypeException(ex.what());
+    }
+  }
+  else {
+    throw UnspecifiedPortException();
+  }
+
+  if (parsed_port < 0 || parsed_port > USHRT_MAX) {
+    throw InvalidPortException();
+  }
+
+  return parsed_port;
+}
+
 ServerConfigurationParser::ConfigFileNotFoundException::ConfigFileNotFoundException(const std::string& config_file_path)
     : std::runtime_error(kConfigFileNotFoundMessage + config_file_path)
+{
+}
+
+ServerConfigurationParser::InvalidAddressException::InvalidAddressException()
+    : std::runtime_error(kInvalidAddressMessage)
+{
+}
+
+ServerConfigurationParser::WrongAddressTypeException::WrongAddressTypeException(const std::string& type_error_details)
+    : std::runtime_error(kWrongAddressTypeMessage + type_error_details)
 {
 }
 

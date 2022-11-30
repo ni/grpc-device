@@ -48,9 +48,9 @@ class NiFgenDriverApiTest : public ::testing::Test {
     return nifgen_stub_;
   }
 
-  int GetSessionId()
+  std::string GetSessionName()
   {
-    return driver_session_->id();
+    return driver_session_->name();
   }
 
   void expect_api_success(int error_status)
@@ -80,7 +80,7 @@ class NiFgenDriverApiTest : public ::testing::Test {
     fgen::InitiateGenerationRequest request;
     fgen::InitiateGenerationResponse response;
     ::grpc::ClientContext context;
-    request.mutable_vi()->set_id(GetSessionId());
+    request.mutable_vi()->set_name(GetSessionName());
 
     ::grpc::Status status = GetStub()->InitiateGeneration(&context, request, &response);
 
@@ -96,7 +96,7 @@ class NiFgenDriverApiTest : public ::testing::Test {
 
     ::grpc::ClientContext context;
     fgen::CloseRequest request;
-    request.mutable_vi()->set_id(driver_session_->id());
+    request.mutable_vi()->set_name(driver_session_->name());
     fgen::CloseResponse response;
 
     ::grpc::Status status = GetStub()->Close(&context, request, &response);
@@ -109,7 +109,7 @@ class NiFgenDriverApiTest : public ::testing::Test {
   {
     ::grpc::ClientContext context;
     fgen::ErrorHandlerRequest request;
-    request.mutable_vi()->set_id(GetSessionId());
+    request.mutable_vi()->set_name(GetSessionName());
     request.set_error_code(error_status);
     fgen::ErrorHandlerResponse response;
     ::grpc::Status status = GetStub()->ErrorHandler(&context, request, &response);
@@ -124,7 +124,7 @@ class NiFgenDriverApiTest : public ::testing::Test {
   {
     ::grpc::ClientContext context;
     fgen::GetAttributeViBooleanRequest request;
-    request.mutable_vi()->set_id(GetSessionId());
+    request.mutable_vi()->set_name(GetSessionName());
     request.set_channel_name(channel_list);
     request.set_attribute_id(attribute_id);
     fgen::GetAttributeViBooleanResponse response;
@@ -140,7 +140,7 @@ class NiFgenDriverApiTest : public ::testing::Test {
   {
     ::grpc::ClientContext context;
     fgen::GetAttributeViInt32Request request;
-    request.mutable_vi()->set_id(GetSessionId());
+    request.mutable_vi()->set_name(GetSessionName());
     request.set_channel_name(channel_list);
     request.set_attribute_id(attribute_id);
     fgen::GetAttributeViInt32Response response;
@@ -156,7 +156,7 @@ class NiFgenDriverApiTest : public ::testing::Test {
   {
     ::grpc::ClientContext context;
     fgen::GetAttributeViInt64Request request;
-    request.mutable_vi()->set_id(GetSessionId());
+    request.mutable_vi()->set_name(GetSessionName());
     request.set_channel_name(channel_list);
     request.set_attribute_id(attribute_id);
     fgen::GetAttributeViInt64Response response;
@@ -172,7 +172,7 @@ class NiFgenDriverApiTest : public ::testing::Test {
   {
     ::grpc::ClientContext context;
     fgen::GetAttributeViReal64Request request;
-    request.mutable_vi()->set_id(GetSessionId());
+    request.mutable_vi()->set_name(GetSessionName());
     request.set_channel_name(channel_list);
     request.set_attribute_id(attribute_id);
     fgen::GetAttributeViReal64Response response;
@@ -188,7 +188,7 @@ class NiFgenDriverApiTest : public ::testing::Test {
   {
     ::grpc::ClientContext context;
     fgen::GetAttributeViStringRequest request;
-    request.mutable_vi()->set_id(GetSessionId());
+    request.mutable_vi()->set_name(GetSessionName());
     request.set_channel_name(channel_list);
     request.set_attribute_id(attribute_id);
     fgen::GetAttributeViStringResponse response;
@@ -204,7 +204,7 @@ class NiFgenDriverApiTest : public ::testing::Test {
   {
     ::grpc::ClientContext context;
     fgen::SetAttributeViInt32Request request;
-    request.mutable_vi()->set_id(GetSessionId());
+    request.mutable_vi()->set_name(GetSessionName());
     request.set_channel_name(channel_list);
     request.set_attribute_id(attribute_id);
     request.set_attribute_value(attribute_value);
@@ -220,7 +220,7 @@ class NiFgenDriverApiTest : public ::testing::Test {
   {
     ::grpc::ClientContext context;
     fgen::SetAttributeViBooleanRequest request;
-    request.mutable_vi()->set_id(GetSessionId());
+    request.mutable_vi()->set_name(GetSessionName());
     request.set_channel_name(channel_name);
     request.set_attribute_id(attribute);
     request.set_attribute_value(value);
@@ -236,7 +236,7 @@ class NiFgenDriverApiTest : public ::testing::Test {
   {
     ::grpc::ClientContext context;
     fgen::ConfigureTriggerModeRequest request;
-    request.mutable_vi()->set_id(GetSessionId());
+    request.mutable_vi()->set_name(GetSessionName());
     request.set_channel_name(channel_name);
     request.set_trigger_mode(trigger_mode);
     fgen::ConfigureTriggerModeResponse response;
@@ -251,7 +251,7 @@ class NiFgenDriverApiTest : public ::testing::Test {
   {
     ::grpc::ClientContext context;
     fgen::ExportAttributeConfigurationBufferRequest request;
-    request.mutable_vi()->set_id(GetSessionId());
+    request.mutable_vi()->set_name(GetSessionName());
     fgen::ExportAttributeConfigurationBufferResponse response;
 
     ::grpc::Status status = GetStub()->ExportAttributeConfigurationBuffer(&context, request, &response);
@@ -265,7 +265,7 @@ class NiFgenDriverApiTest : public ::testing::Test {
   {
     ::grpc::ClientContext context;
     fgen::ImportAttributeConfigurationBufferRequest import_request;
-    import_request.mutable_vi()->set_id(GetSessionId());
+    import_request.mutable_vi()->set_name(GetSessionName());
     auto exported_configuration = export_buffer_response.configuration();
     import_request.mutable_configuration()->append(exported_configuration.begin(), exported_configuration.end());
     fgen::ImportAttributeConfigurationBufferResponse import_response;
@@ -280,7 +280,7 @@ class NiFgenDriverApiTest : public ::testing::Test {
   {
     ::grpc::ClientContext context;
     fgen::ResetRequest request;
-    request.mutable_vi()->set_id(GetSessionId());
+    request.mutable_vi()->set_name(GetSessionName());
     fgen::ResetResponse response;
 
     ::grpc::Status status = GetStub()->Reset(&context, request, &response);
@@ -293,7 +293,7 @@ class NiFgenDriverApiTest : public ::testing::Test {
   {
     ::grpc::ClientContext context;
     fgen::ConfigureOutputModeRequest request;
-    request.mutable_vi()->set_id(GetSessionId());
+    request.mutable_vi()->set_name(GetSessionName());
     request.set_output_mode(output_mode);
     fgen::ConfigureOutputModeResponse response;
 
@@ -308,7 +308,7 @@ class NiFgenDriverApiTest : public ::testing::Test {
     ::grpc::ClientContext context;
     fgen::CreateWaveformF64Request request;
     const double waveform_data_array[] = {1, 0, 0, 1};
-    request.mutable_vi()->set_id(GetSessionId());
+    request.mutable_vi()->set_name(GetSessionName());
     request.set_channel_name(channel_name);
     for (double waveform_data : waveform_data_array) {
       request.add_waveform_data_array(waveform_data);
@@ -326,7 +326,7 @@ class NiFgenDriverApiTest : public ::testing::Test {
   {
     ::grpc::ClientContext context;
     fgen::CreateAdvancedArbSequenceRequest request;
-    request.mutable_vi()->set_id(GetSessionId());
+    request.mutable_vi()->set_name(GetSessionName());
     request.mutable_waveform_handles_array()->Add(waveform_handles_array, waveform_handles_array + sequence_length);
     request.mutable_loop_counts_array()->Add(loop_counts_array, loop_counts_array + sequence_length);
     request.mutable_marker_location_array()->Add(marker_location_array, marker_location_array + sequence_length);
@@ -342,7 +342,7 @@ class NiFgenDriverApiTest : public ::testing::Test {
   {
     ::grpc::ClientContext context;
     fgen::AllocateNamedWaveformRequest request;
-    request.mutable_vi()->set_id(GetSessionId());
+    request.mutable_vi()->set_name(GetSessionName());
     request.set_channel_name(channel_name);
     request.set_waveform_name(waveform_name);
     request.set_waveform_size(waveform_size);
@@ -358,7 +358,7 @@ class NiFgenDriverApiTest : public ::testing::Test {
   {
     ::grpc::ClientContext context;
     fgen::WriteNamedWaveformF64Request request;
-    request.mutable_vi()->set_id(GetSessionId());
+    request.mutable_vi()->set_name(GetSessionName());
     request.set_channel_name(channel_name);
     request.set_waveform_name(waveform_name);
     request.mutable_data()->CopyFrom(google::protobuf::RepeatedField<double>(waveform, waveform + waveform_size));
@@ -374,7 +374,7 @@ class NiFgenDriverApiTest : public ::testing::Test {
   {
     ::grpc::ClientContext context;
     fgen::AllocateWaveformRequest request;
-    request.mutable_vi()->set_id(GetSessionId());
+    request.mutable_vi()->set_name(GetSessionName());
     request.set_channel_name(channel_name);
     request.set_waveform_size(waveform_size);
     fgen::AllocateWaveformResponse response;
@@ -390,7 +390,7 @@ class NiFgenDriverApiTest : public ::testing::Test {
   {
     ::grpc::ClientContext context;
     fgen::WriteWaveformComplexF64Request request;
-    request.mutable_vi()->set_id(GetSessionId());
+    request.mutable_vi()->set_name(GetSessionName());
     request.set_channel_name(channel_name);
     request.set_waveform_handle(waveform_handle);
     for (int i = 0; i < waveform_size; i++) {
@@ -423,7 +423,7 @@ TEST_F(NiFgenDriverApiTest, PerformSelfTest_CompletesSuccessfuly)
 {
   ::grpc::ClientContext context;
   fgen::SelfTestRequest request;
-  request.mutable_vi()->set_id(GetSessionId());
+  request.mutable_vi()->set_name(GetSessionName());
   fgen::SelfTestResponse response;
   ::grpc::Status status = GetStub()->SelfTest(&context, request, &response);
 
@@ -437,7 +437,7 @@ TEST_F(NiFgenDriverApiTest, PerformReset_CompletesSuccessfuly)
 {
   ::grpc::ClientContext context;
   fgen::ResetRequest request;
-  request.mutable_vi()->set_id(GetSessionId());
+  request.mutable_vi()->set_name(GetSessionName());
   fgen::ResetResponse response;
   ::grpc::Status status = GetStub()->Reset(&context, request, &response);
 
@@ -452,7 +452,7 @@ TEST_F(NiFgenDriverApiTest, SetAttributeViInt32_GetAttributeViInt32_ValueMatches
   const auto expected_value = fgen::NiFgenInt32AttributeValues::NIFGEN_INT32_OUTPUT_MODE_VAL_OUTPUT_ARB;
   ::grpc::ClientContext context;
   fgen::SetAttributeViInt32Request request;
-  request.mutable_vi()->set_id(GetSessionId());
+  request.mutable_vi()->set_name(GetSessionName());
   request.set_channel_name(channel_name);
   request.set_attribute_id(attribute_to_set);
   request.set_attribute_value(expected_value);
@@ -473,7 +473,7 @@ TEST_F(NiFgenDriverApiTest, SetAttributeViReal64_GetAttributeViReal64_ValueMatch
   const double expected_value = -1.0;
   ::grpc::ClientContext context;
   fgen::SetAttributeViReal64Request request;
-  request.mutable_vi()->set_id(GetSessionId());
+  request.mutable_vi()->set_name(GetSessionName());
   request.set_channel_name(channel_name);
   request.set_attribute_id(attribute_to_set);
   request.set_attribute_value_raw(expected_value);
@@ -506,7 +506,7 @@ TEST_F(NiFgenDriverApiTest, SetAttributeViString_GetAttributeViString_ValueMatch
   const std::string expected_value = "sample";
   ::grpc::ClientContext context;
   fgen::SetAttributeViStringRequest request;
-  request.mutable_vi()->set_id(GetSessionId());
+  request.mutable_vi()->set_name(GetSessionName());
   request.set_channel_name(channel_name);
   request.set_attribute_id(attribute_to_set);
   request.set_attribute_value_raw(expected_value);
@@ -536,7 +536,7 @@ TEST_F(NiFgenDriverApiTest, ResetInterchangeCheck_ResetsSuccessfully)
   double expected_current_level = 3.0;
   ::grpc::ClientContext context;
   fgen::ResetInterchangeCheckRequest request;
-  request.mutable_vi()->set_id(GetSessionId());
+  request.mutable_vi()->set_name(GetSessionName());
   fgen::ResetInterchangeCheckResponse response;
   ::grpc::Status status = GetStub()->ResetInterchangeCheck(&context, request, &response);
 
@@ -548,7 +548,7 @@ TEST_F(NiFgenDriverApiTest, SendSoftwareEdgeTrigger_TriggersSuccessfully)
 {
   ::grpc::ClientContext context;
   fgen::SendSoftwareEdgeTriggerRequest request;
-  request.mutable_vi()->set_id(GetSessionId());
+  request.mutable_vi()->set_name(GetSessionName());
   request.set_trigger(fgen::Trigger::TRIGGER_NIFGEN_VAL_SCRIPT_TRIGGER);
   request.set_trigger_id("ScriptTrigger0");
   fgen::SendSoftwareEdgeTriggerResponse response;
@@ -623,7 +623,7 @@ TEST_F(NiFgenDriverApiTest, OutputModeConfiguredToArb_CreateWaveformI16_CreatesS
 
   ::grpc::ClientContext context;
   fgen::CreateWaveformI16Request request;
-  request.mutable_vi()->set_id(GetSessionId());
+  request.mutable_vi()->set_name(GetSessionName());
   request.set_channel_name(channel_name);
   for (auto waveform_data : waveform_data_array) {
     request.add_waveform_data_array(waveform_data);

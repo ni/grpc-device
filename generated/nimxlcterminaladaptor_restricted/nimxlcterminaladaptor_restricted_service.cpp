@@ -50,7 +50,8 @@ namespace nimxlcterminaladaptor_restricted_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto hostname = request->hostname().c_str();
+      auto hostname_mbcs = convert_from_grpc<std::string>(request->hostname());
+      auto hostname = hostname_mbcs.c_str();
 
       auto c_status = allocate_output_storage<nierr_Status, NIErrStatus>(context);
       auto init_lambda = [&] () {
@@ -58,16 +59,15 @@ namespace nimxlcterminaladaptor_restricted_grpc {
         auto status = (&c_status)->code;
         return std::make_tuple(status, handle);
       };
-      uint32_t session_id = 0;
-      const std::string& grpc_device_session_name = request->session_name();
+      std::string grpc_device_session_name = request->session_name();
       auto cleanup_lambda = [&] (nimxlc_Session id) { library_->destroySession(id); };
-      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
+      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNimxlc_Session(context, status, 0);
       }
       response->set_status(status);
       convert_to_grpc(c_status, response->mutable_c_status());
-      response->mutable_handle()->set_id(session_id);
+      response->mutable_handle()->set_name(grpc_device_session_name);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
@@ -84,8 +84,8 @@ namespace nimxlcterminaladaptor_restricted_grpc {
     }
     try {
       auto session_grpc_session = request->session();
-      nimxlc_Session session = session_repository_->access_session(session_grpc_session.id(), session_grpc_session.name());
-      session_repository_->remove_session(session_grpc_session.id(), session_grpc_session.name());
+      nimxlc_Session session = session_repository_->access_session(session_grpc_session.name());
+      session_repository_->remove_session(session_grpc_session.name());
       library_->destroySession(session);
       auto status = 0;
       if (!status_ok(status)) {
@@ -108,7 +108,7 @@ namespace nimxlcterminaladaptor_restricted_grpc {
     }
     try {
       auto session_grpc_session = request->session();
-      nimxlc_Session session = session_repository_->access_session(session_grpc_session.id(), session_grpc_session.name());
+      nimxlc_Session session = session_repository_->access_session(session_grpc_session.name());
       auto c_status = allocate_output_storage<nierr_Status, NIErrStatus>(context);
       library_->refreshTerminalCache(session, &c_status);
       auto status = (&c_status)->code;
@@ -133,7 +133,7 @@ namespace nimxlcterminaladaptor_restricted_grpc {
     }
     try {
       auto session_grpc_session = request->session();
-      nimxlc_Session session = session_repository_->access_session(session_grpc_session.id(), session_grpc_session.name());
+      nimxlc_Session session = session_repository_->access_session(session_grpc_session.name());
       uint32_t system_change_number = request->system_change_number();
       auto c_status = allocate_output_storage<nierr_Status, NIErrStatus>(context);
       auto terminal_information_changed = library_->hasTerminalInformationChanged(session, system_change_number, &c_status);
@@ -160,7 +160,7 @@ namespace nimxlcterminaladaptor_restricted_grpc {
     }
     try {
       auto session_grpc_session = request->session();
-      nimxlc_Session session = session_repository_->access_session(session_grpc_session.id(), session_grpc_session.name());
+      nimxlc_Session session = session_repository_->access_session(session_grpc_session.name());
       auto c_status = allocate_output_storage<nierr_Status, NIErrStatus>(context);
       auto system_change_number = library_->getSystemChangeNumber(session, &c_status);
       auto status = (&c_status)->code;
@@ -181,7 +181,7 @@ namespace nimxlcterminaladaptor_restricted_grpc {
   NimxlcTerminalAdaptorRestrictedFeatureToggles::NimxlcTerminalAdaptorRestrictedFeatureToggles(
     const nidevice_grpc::FeatureToggles& feature_toggles)
     : is_enabled(
-        feature_toggles.is_feature_enabled("nimxlcterminaladaptor_restricted", CodeReadiness::kRestrictedNextRelease))
+        feature_toggles.is_feature_enabled("nimxlcterminaladaptor_restricted", CodeReadiness::kRestrictedRelease))
   {
   }
 } // namespace nimxlcterminaladaptor_restricted_grpc

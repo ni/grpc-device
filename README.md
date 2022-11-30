@@ -63,23 +63,23 @@ There are two ways to start the server:
 1. Launch the server application without specifying a path to a configuration file (use the default configuration file):
 
     **Windows**
-    
+
     `.\ni_grpc_device_server.exe`
-    
+
    **Note:** It is also possible to start the server by double-clicking the executable. Starting the server through a command prompt, however, allows for observation of [startup errors](#common-server-startup-errors).
-   
+
     **Linux and Linux RT**
-    
+
     `./ni_grpc_device_server`
 
 2. Launch the server application by specifying a path (relative or absolute) to the configuration file:
 
     **Windows**
-    
+
     `.\ni_grpc_device_server.exe C:\path\to\config\file\server_config.json`
 
     **Linux and Linux RT**
-    
+
     `./ni_grpc_device_server /path/to/config/file/server_config.json`
 
 
@@ -96,26 +96,32 @@ If the server fails to start (i.e. a port is not specified in the configuration 
 ### Common Server Startup Errors
 
 1. The datatypes of the values in the configuration file don't match the expected datatypes. For example, the port must be an integer type and not a string. The error message will provide specific details on the type requirements.
-2. The configuration file can't be found at the provided location. This error can also occur if the user lacks read permissions for the file.
-3. The server configuration file is malformed and is not in proper JSON format. Refer to the JSON configuration file in this readme for an example of the expected format.
-4. The specified port is out of the allowed port range. The solution is to select a port in the allowable range (0-65535).
-5. The specified port is already in use. The solution is to select another port or terminate the other application using the port.
-6. Security configuration errors. See [Server Security Support wiki page](https://github.com/ni/grpc-device/wiki/Server-Security-Support).
+1. The configuration file can't be found at the provided location. This error can also occur if the user lacks read permissions for the file.
+1. The server configuration file is malformed and is not in proper JSON format. Refer to the JSON configuration file in this readme for an example of the expected format.
+1. The specified address is not valid. The solution is to select a valid IPv4 or IPv6 address.
+1. The specified port is out of the allowed port range. The solution is to select a port in the allowable range (0-65535).
+1. The specified port is already in use. The solution is to select another port or terminate the other application using the port.
+1. Security configuration errors. See [Server Security Support wiki page](https://github.com/ni/grpc-device/wiki/Server-Security-Support).
 
-### Default Configuration File (insecure):
+### Default Configuration File (localhost):
 
-Below are the contents of a default configuration file using port `31763` and configured without SSL/TLS.  A configuration file with these contents also exists in the same directory as the `ni_grpc_device_server` binary.
+Below are the contents of a default configuration file accepting localhost connections on port `31763` and configured without SSL/TLS.  A configuration file with these contents also exists in the same directory as the `ni_grpc_device_server` binary.
 
 ```json
 {
-   "port": 31763,
-   "security" : {
-      "server_cert": "",
-      "server_key": "",
-      "root_cert": ""
-   }
-}
+    "address": "[::1]",
+    "port": 31763,
+    "security" : {
+       "server_cert": "",
+       "server_key": "",
+       "root_cert": ""
+    }
+ }
 ```
+
+### Bind Address Support
+
+The server supports specifying the address to bind to. The address can be used to enable local or remote connections. Address values include any valid IPv4 or IPv6 address. To bind to local (loopback) connection, specify address `"[::1]"`. To bind to any address, specify address `"[::]"`. If no address is specified, the server configuration defaults to any address `"[::]"`.
 
 ## Creating a gRPC Client
 

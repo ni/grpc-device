@@ -60,8 +60,8 @@ namespace nifake_non_ivi_grpc {
     }
     try {
       auto handle_grpc_session = request->handle();
-      FakeHandle handle = session_repository_->access_session(handle_grpc_session.id(), handle_grpc_session.name());
-      session_repository_->remove_session(handle_grpc_session.id(), handle_grpc_session.name());
+      FakeHandle handle = session_repository_->access_session(handle_grpc_session.name());
+      session_repository_->remove_session(handle_grpc_session.name());
       auto status = library_->Close(handle);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForFakeHandle(context, status, handle);
@@ -83,8 +83,8 @@ namespace nifake_non_ivi_grpc {
     }
     try {
       auto secondary_session_handle_grpc_session = request->secondary_session_handle();
-      SecondarySessionHandle secondary_session_handle = secondary_session_handle_resource_repository_->access_session(secondary_session_handle_grpc_session.id(), secondary_session_handle_grpc_session.name());
-      secondary_session_handle_resource_repository_->remove_session(secondary_session_handle_grpc_session.id(), secondary_session_handle_grpc_session.name());
+      SecondarySessionHandle secondary_session_handle = secondary_session_handle_resource_repository_->access_session(secondary_session_handle_grpc_session.name());
+      secondary_session_handle_resource_repository_->remove_session(secondary_session_handle_grpc_session.name());
       auto status = library_->CloseSecondarySession(secondary_session_handle);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForSecondarySessionHandle(context, status, secondary_session_handle);
@@ -106,20 +106,19 @@ namespace nifake_non_ivi_grpc {
     }
     try {
       auto handle_grpc_session = request->handle();
-      FakeHandle handle = session_repository_->access_session(handle_grpc_session.id(), handle_grpc_session.name());
+      FakeHandle handle = session_repository_->access_session(handle_grpc_session.name());
 
-      auto initiating_session_id = session_repository_->access_session_id(handle_grpc_session.id(), handle_grpc_session.name());
+      auto initiating_session_name = handle_grpc_session.name();
       auto init_lambda = [&] () {
         FakeCrossDriverHandle cross_driver_session;
         int status = library_->GetCrossDriverSession(handle, &cross_driver_session);
         return std::make_tuple(status, cross_driver_session);
       };
-      uint32_t session_id = 0;
-      const std::string& grpc_device_session_name = request->session_name();
-      int status = fake_cross_driver_handle_resource_repository_->add_dependent_session(grpc_device_session_name, init_lambda, initiating_session_id, session_id);
+      std::string session_name = request->session_name();
+      int status = fake_cross_driver_handle_resource_repository_->add_dependent_session(session_name, init_lambda, initiating_session_name);
       response->set_status(status);
       if (status == 0) {
-        response->mutable_cross_driver_session()->set_id(session_id);
+        response->mutable_cross_driver_session()->set_name(session_name);
       }
       return ::grpc::Status::OK;
     }
@@ -157,7 +156,9 @@ namespace nifake_non_ivi_grpc {
           return ConvertApiErrorStatusForFakeHandle(context, status, 0);
         }
         response->set_status(status);
-        response->set_message(message);
+        std::string message_utf8;
+        convert_to_grpc(message, &message_utf8);
+        response->set_message(message_utf8);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_message()));
         return ::grpc::Status::OK;
       }
@@ -182,7 +183,9 @@ namespace nifake_non_ivi_grpc {
         return ConvertApiErrorStatusForFakeHandle(context, status, 0);
       }
       response->set_status(status);
-      response->set_string_out(string_out);
+      std::string string_out_utf8;
+      convert_to_grpc(string_out, &string_out_utf8);
+      response->set_string_out(string_out_utf8);
       nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_string_out()));
       return ::grpc::Status::OK;
     }
@@ -200,7 +203,7 @@ namespace nifake_non_ivi_grpc {
     }
     try {
       auto handle_grpc_session = request->handle();
-      FakeHandle handle = session_repository_->access_session(handle_grpc_session.id(), handle_grpc_session.name());
+      FakeHandle handle = session_repository_->access_session(handle_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nifake_non_ivi_grpc::GetMarbleAttributeDoubleRequest::AttributeEnumCase::kAttribute: {
@@ -243,7 +246,7 @@ namespace nifake_non_ivi_grpc {
     }
     try {
       auto handle_grpc_session = request->handle();
-      FakeHandle handle = session_repository_->access_session(handle_grpc_session.id(), handle_grpc_session.name());
+      FakeHandle handle = session_repository_->access_session(handle_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nifake_non_ivi_grpc::GetMarbleAttributeInt32Request::AttributeEnumCase::kAttribute: {
@@ -292,7 +295,7 @@ namespace nifake_non_ivi_grpc {
     }
     try {
       auto handle_grpc_session = request->handle();
-      FakeHandle handle = session_repository_->access_session(handle_grpc_session.id(), handle_grpc_session.name());
+      FakeHandle handle = session_repository_->access_session(handle_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nifake_non_ivi_grpc::GetMarbleAttributeInt32ArrayRequest::AttributeEnumCase::kAttribute: {
@@ -348,22 +351,22 @@ namespace nifake_non_ivi_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto session_name = request->session_name().c_str();
+      auto session_name_mbcs = convert_from_grpc<std::string>(request->session_name());
+      auto session_name = session_name_mbcs.c_str();
 
       auto init_lambda = [&] () {
         FakeHandle handle;
         auto status = library_->Init(session_name, &handle);
         return std::make_tuple(status, handle);
       };
-      uint32_t session_id = 0;
-      const std::string& grpc_device_session_name = request->session_name();
+      std::string grpc_device_session_name = request->session_name();
       auto cleanup_lambda = [&] (FakeHandle id) { library_->Close(id); };
-      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
+      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForFakeHandle(context, status, 0);
       }
       response->set_status(status);
-      response->mutable_handle()->set_id(session_id);
+      response->mutable_handle()->set_name(grpc_device_session_name);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
@@ -380,22 +383,21 @@ namespace nifake_non_ivi_grpc {
     }
     try {
       auto cross_driver_session_grpc_session = request->cross_driver_session();
-      int32 cross_driver_session = fake_cross_driver_handle_resource_repository_->access_session(cross_driver_session_grpc_session.id(), cross_driver_session_grpc_session.name());
+      int32 cross_driver_session = fake_cross_driver_handle_resource_repository_->access_session(cross_driver_session_grpc_session.name());
 
       auto init_lambda = [&] () {
         FakeHandle handle;
         auto status = library_->InitFromCrossDriverSession(cross_driver_session, &handle);
         return std::make_tuple(status, handle);
       };
-      uint32_t session_id = 0;
-      const std::string& grpc_device_session_name = request->session_name();
+      std::string grpc_device_session_name = request->session_name();
       auto cleanup_lambda = [&] (FakeHandle id) { library_->Close(id); };
-      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
+      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForFakeHandle(context, status, 0);
       }
       response->set_status(status);
-      response->mutable_handle()->set_id(session_id);
+      response->mutable_handle()->set_name(grpc_device_session_name);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
@@ -417,7 +419,7 @@ namespace nifake_non_ivi_grpc {
         cross_driver_session_array_request.begin(),
         cross_driver_session_array_request.end(),
         std::back_inserter(cross_driver_session_array),
-        [&](auto session) { return fake_cross_driver_handle_resource_repository_->access_session(session.id(), session.name()); }); 
+        [&](auto session) { return fake_cross_driver_handle_resource_repository_->access_session(session.name()); }); 
       int32 number_of_cross_driver_sessions = static_cast<int32>(request->cross_driver_session_array().size());
 
       auto init_lambda = [&] () {
@@ -425,15 +427,14 @@ namespace nifake_non_ivi_grpc {
         auto status = library_->InitFromCrossDriverSessionArray(cross_driver_session_array.data(), number_of_cross_driver_sessions, &handle);
         return std::make_tuple(status, handle);
       };
-      uint32_t session_id = 0;
-      const std::string& grpc_device_session_name = request->session_name();
+      std::string grpc_device_session_name = request->session_name();
       auto cleanup_lambda = [&] (FakeHandle id) { library_->Close(id); };
-      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
+      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForFakeHandle(context, status, 0);
       }
       response->set_status(status);
-      response->mutable_handle()->set_id(session_id);
+      response->mutable_handle()->set_name(grpc_device_session_name);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
@@ -455,15 +456,14 @@ namespace nifake_non_ivi_grpc {
         auto status = library_->InitSecondarySession(&secondary_session_handle);
         return std::make_tuple(status, secondary_session_handle);
       };
-      uint32_t session_id = 0;
-      const std::string& grpc_device_session_name = request->session_name();
+      std::string grpc_device_session_name = request->session_name();
       auto cleanup_lambda = [&] (SecondarySessionHandle id) { library_->CloseSecondarySession(id); };
-      int status = secondary_session_handle_resource_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
+      int status = secondary_session_handle_resource_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForFakeHandle(context, status, 0);
       }
       response->set_status(status);
-      response->mutable_secondary_session_handle()->set_id(session_id);
+      response->mutable_secondary_session_handle()->set_name(grpc_device_session_name);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
@@ -479,22 +479,22 @@ namespace nifake_non_ivi_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto handle_name = request->handle_name().c_str();
+      auto handle_name_mbcs = convert_from_grpc<std::string>(request->handle_name());
+      auto handle_name = handle_name_mbcs.c_str();
 
       auto init_lambda = [&] () {
         FakeHandle handle;
         auto status = library_->InitWithHandleNameAsSessionName(handle_name, &handle);
         return std::make_tuple(status, handle);
       };
-      uint32_t session_id = 0;
-      const std::string& grpc_device_session_name = request->handle_name();
+      std::string grpc_device_session_name = request->handle_name();
       auto cleanup_lambda = [&] (FakeHandle id) { library_->Close(id); };
-      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
+      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForFakeHandle(context, status, 0);
       }
       response->set_status(status);
-      response->mutable_handle()->set_id(session_id);
+      response->mutable_handle()->set_name(grpc_device_session_name);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
@@ -510,22 +510,22 @@ namespace nifake_non_ivi_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto handle_name = request->handle_name().c_str();
+      auto handle_name_mbcs = convert_from_grpc<std::string>(request->handle_name());
+      auto handle_name = handle_name_mbcs.c_str();
 
       auto init_lambda = [&] () {
         auto handle = library_->InitWithReturnedSession(handle_name);
         auto status = handle == 0xDEADBEEF ? -1 : 0;
         return std::make_tuple(status, handle);
       };
-      uint32_t session_id = 0;
-      const std::string& grpc_device_session_name = request->handle_name();
+      std::string grpc_device_session_name = request->handle_name();
       auto cleanup_lambda = [&] (FakeHandle id) { library_->Close(id); };
-      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda, session_id);
+      int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForFakeHandle(context, status, 0);
       }
       response->set_status(status);
-      response->mutable_handle()->set_id(session_id);
+      response->mutable_handle()->set_name(grpc_device_session_name);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
@@ -867,7 +867,8 @@ namespace nifake_non_ivi_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto input_name = request->input_name().c_str();
+      auto input_name_mbcs = convert_from_grpc<std::string>(request->input_name());
+      auto input_name = input_name_mbcs.c_str();
       auto get_channelName_if = [](const google::protobuf::RepeatedPtrField<StringAndEnum>& vector, int n) -> const char* {
             if (vector.size() > n) {
                   return vector[n].channel_name().c_str();
@@ -914,7 +915,8 @@ namespace nifake_non_ivi_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto input_name = request->input_name().c_str();
+      auto input_name_mbcs = convert_from_grpc<std::string>(request->input_name());
+      auto input_name = input_name_mbcs.c_str();
       auto get_channelName_if = [](const google::protobuf::RepeatedPtrField<std::string>& vector, int n) -> const char* {
             if (vector.size() > n) {
                   return vector[n].c_str();
@@ -961,7 +963,7 @@ namespace nifake_non_ivi_grpc {
     }
     try {
       auto handle_grpc_session = request->handle();
-      FakeHandle handle = session_repository_->access_session(handle_grpc_session.id(), handle_grpc_session.name());
+      FakeHandle handle = session_repository_->access_session(handle_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nifake_non_ivi_grpc::ResetMarbleAttributeRequest::AttributeEnumCase::kAttribute: {
@@ -1052,7 +1054,7 @@ namespace nifake_non_ivi_grpc {
     }
     try {
       auto handle_grpc_session = request->handle();
-      FakeHandle handle = session_repository_->access_session(handle_grpc_session.id(), handle_grpc_session.name());
+      FakeHandle handle = session_repository_->access_session(handle_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nifake_non_ivi_grpc::SetMarbleAttributeDoubleRequest::AttributeEnumCase::kAttribute: {
@@ -1094,7 +1096,7 @@ namespace nifake_non_ivi_grpc {
     }
     try {
       auto handle_grpc_session = request->handle();
-      FakeHandle handle = session_repository_->access_session(handle_grpc_session.id(), handle_grpc_session.name());
+      FakeHandle handle = session_repository_->access_session(handle_grpc_session.name());
       int32 attribute;
       switch (request->attribute_enum_case()) {
         case nifake_non_ivi_grpc::SetMarbleAttributeInt32Request::AttributeEnumCase::kAttribute: {
@@ -1225,6 +1227,7 @@ namespace nifake_non_ivi_grpc {
     }
     try {
       char* a_name;
+      std::string a_name_buffer;
       switch (request->a_name_enum_case()) {
         case nifake_non_ivi_grpc::InputStringValuedEnumRequest::ANameEnumCase::kANameMapped: {
           auto a_name_imap_it = mobileosnames_input_map_.find(request->a_name_mapped());
@@ -1235,7 +1238,8 @@ namespace nifake_non_ivi_grpc {
           break;
         }
         case nifake_non_ivi_grpc::InputStringValuedEnumRequest::ANameEnumCase::kANameRaw: {
-          a_name = const_cast<char*>(request->a_name_raw().c_str());
+          a_name_buffer = convert_from_grpc<std::string>(request->a_name_raw());
+          a_name = const_cast<char*>(a_name_buffer.c_str());
           break;
         }
         case nifake_non_ivi_grpc::InputStringValuedEnumRequest::ANameEnumCase::A_NAME_ENUM_NOT_SET: {

@@ -53,8 +53,9 @@ namespace nirfmxspecan_restricted_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 selector_string_out_size = request->selector_string_out_size();
       std::string selector_string_out;
       if (selector_string_out_size > 0) {
@@ -65,7 +66,9 @@ namespace nirfmxspecan_restricted_grpc {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
-      response->set_selector_string_out(selector_string_out);
+      std::string selector_string_out_utf8;
+      convert_to_grpc(selector_string_out, &selector_string_out_utf8);
+      response->set_selector_string_out(selector_string_out_utf8);
       nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_selector_string_out()));
       return ::grpc::Status::OK;
     }
@@ -83,8 +86,9 @@ namespace nirfmxspecan_restricted_grpc {
     }
     try {
       auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.id(), instrument_grpc_session.name());
-      char* selector_string = (char*)request->selector_string().c_str();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
       int32 record_to_fetch = request->record_to_fetch();
       int64 samples_to_read = request->samples_to_read();
@@ -146,7 +150,7 @@ namespace nirfmxspecan_restricted_grpc {
   NiRFmxSpecAnRestrictedFeatureToggles::NiRFmxSpecAnRestrictedFeatureToggles(
     const nidevice_grpc::FeatureToggles& feature_toggles)
     : is_enabled(
-        feature_toggles.is_feature_enabled("nirfmxspecan_restricted", CodeReadiness::kRestrictedNextRelease))
+        feature_toggles.is_feature_enabled("nirfmxspecan_restricted", CodeReadiness::kRestrictedRelease))
   {
   }
 } // namespace nirfmxspecan_restricted_grpc

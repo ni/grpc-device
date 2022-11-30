@@ -44,9 +44,9 @@ class NiScopeDriverApiTest : public ::testing::Test {
     return niscope_stub_;
   }
 
-  int GetSessionId()
+  std::string GetSessionName()
   {
-    return driver_session_->id();
+    return driver_session_->name();
   }
 
   void initialize_driver_session()
@@ -71,7 +71,7 @@ class NiScopeDriverApiTest : public ::testing::Test {
   {
     ::grpc::ClientContext context;
     scope::CloseRequest request;
-    request.mutable_vi()->set_id(driver_session_->id());
+    request.mutable_vi()->set_name(driver_session_->name());
     scope::CloseResponse response;
 
     ::grpc::Status status = GetStub()->Close(&context, request, &response);
@@ -84,7 +84,7 @@ class NiScopeDriverApiTest : public ::testing::Test {
   {
     ::grpc::ClientContext context;
     scope::ActualNumWfmsRequest request;
-    request.mutable_vi()->set_id(GetSessionId());
+    request.mutable_vi()->set_name(GetSessionName());
     request.set_channel_list(channel_list);
     scope::ActualNumWfmsResponse response;
     auto status = GetStub()->ActualNumWfms(&context, request, &response);
@@ -98,7 +98,7 @@ class NiScopeDriverApiTest : public ::testing::Test {
   {
     ::grpc::ClientContext context;
     scope::ActualMeasWfmSizeRequest request;
-    request.mutable_vi()->set_id(GetSessionId());
+    request.mutable_vi()->set_name(GetSessionName());
     request.set_array_meas_function(array_measurement);
     scope::ActualMeasWfmSizeResponse response;
     auto status = GetStub()->ActualMeasWfmSize(&context, request, &response);
@@ -111,7 +111,7 @@ class NiScopeDriverApiTest : public ::testing::Test {
   {
     ::grpc::ClientContext context;
     scope::InitiateAcquisitionRequest request;
-    request.mutable_vi()->set_id(GetSessionId());
+    request.mutable_vi()->set_name(GetSessionName());
     scope::InitiateAcquisitionResponse response;
     auto status = GetStub()->InitiateAcquisition(&context, request, &response);
     EXPECT_TRUE(status.ok());
@@ -127,7 +127,7 @@ class NiScopeDriverApiTest : public ::testing::Test {
   {
     ::grpc::ClientContext context;
     scope::GetErrorMessageRequest request;
-    request.mutable_vi()->set_id(GetSessionId());
+    request.mutable_vi()->set_name(GetSessionName());
     request.set_error_code(error_status);
     scope::GetErrorMessageResponse response;
 
@@ -141,7 +141,7 @@ class NiScopeDriverApiTest : public ::testing::Test {
   {
     ::grpc::ClientContext context;
     scope::AutoSetupRequest request;
-    request.mutable_vi()->set_id(GetSessionId());
+    request.mutable_vi()->set_name(GetSessionName());
     scope::AutoSetupResponse response;
 
     ::grpc::Status status = GetStub()->AutoSetup(&context, request, &response);
@@ -153,7 +153,7 @@ class NiScopeDriverApiTest : public ::testing::Test {
   {
     ::grpc::ClientContext context;
     scope::GetAttributeViBooleanRequest request;
-    request.mutable_vi()->set_id(GetSessionId());
+    request.mutable_vi()->set_name(GetSessionName());
     request.set_channel_list(channel_list);
     request.set_attribute_id(attribute_id);
     scope::GetAttributeViBooleanResponse response;
@@ -167,7 +167,7 @@ class NiScopeDriverApiTest : public ::testing::Test {
   {
     ::grpc::ClientContext context;
     scope::GetAttributeViInt32Request request;
-    request.mutable_vi()->set_id(GetSessionId());
+    request.mutable_vi()->set_name(GetSessionName());
     request.set_channel_list(channel_list);
     request.set_attribute_id(attribute_id);
     scope::GetAttributeViInt32Response response;
@@ -181,7 +181,7 @@ class NiScopeDriverApiTest : public ::testing::Test {
   {
     ::grpc::ClientContext context;
     scope::GetAttributeViInt64Request request;
-    request.mutable_vi()->set_id(GetSessionId());
+    request.mutable_vi()->set_name(GetSessionName());
     request.set_channel_list(channel_list);
     request.set_attribute_id(attribute_id);
     scope::GetAttributeViInt64Response response;
@@ -195,7 +195,7 @@ class NiScopeDriverApiTest : public ::testing::Test {
   {
     ::grpc::ClientContext context;
     scope::GetAttributeViReal64Request request;
-    request.mutable_vi()->set_id(GetSessionId());
+    request.mutable_vi()->set_name(GetSessionName());
     request.set_channel_list(channel_list);
     request.set_attribute_id(attribute_id);
     scope::GetAttributeViReal64Response response;
@@ -209,7 +209,7 @@ class NiScopeDriverApiTest : public ::testing::Test {
   {
     ::grpc::ClientContext context;
     scope::GetAttributeViStringRequest request;
-    request.mutable_vi()->set_id(GetSessionId());
+    request.mutable_vi()->set_name(GetSessionName());
     request.set_channel_list(channel_list);
     request.set_attribute_id(attribute_id);
     scope::GetAttributeViStringResponse response;
@@ -229,7 +229,7 @@ TEST_F(NiScopeDriverApiTest, NiScopeSelfTest_SendRequest_SelfTestCompletesSucces
 {
   ::grpc::ClientContext context;
   scope::SelfTestRequest request;
-  request.mutable_vi()->set_id(GetSessionId());
+  request.mutable_vi()->set_name(GetSessionName());
   scope::SelfTestResponse response;
 
   ::grpc::Status status = GetStub()->SelfTest(&context, request, &response);
@@ -244,7 +244,7 @@ TEST_F(NiScopeDriverApiTest, NiScopeReset_SendRequest_ResetCompletesSuccessfully
 {
   ::grpc::ClientContext context;
   scope::ResetRequest request;
-  request.mutable_vi()->set_id(GetSessionId());
+  request.mutable_vi()->set_name(GetSessionName());
   scope::ResetResponse response;
 
   ::grpc::Status status = GetStub()->Reset(&context, request, &response);
@@ -260,7 +260,7 @@ TEST_F(NiScopeDriverApiTest, NiScopeRead_SendRequest_ReadCompletesWithCorrectSiz
   const int32 expected_num_waveforms = get_actual_num_wfms(channel_list);
   ::grpc::ClientContext context;
   scope::ReadRequest request;
-  request.mutable_vi()->set_id(GetSessionId());
+  request.mutable_vi()->set_name(GetSessionName());
   request.set_channel_list(channel_list);
   request.set_timeout(10000);
   request.set_num_samples(expected_num_samples);
@@ -285,7 +285,7 @@ TEST_F(NiScopeDriverApiTest, NiScopeFetchArrayMeasurement_SendRequest_FetchCompl
   const int32 expected_waveform_size = get_actual_measurement_waveform_size(measurement_func);
   ::grpc::ClientContext context;
   scope::FetchArrayMeasurementRequest request;
-  request.mutable_vi()->set_id(GetSessionId());
+  request.mutable_vi()->set_name(GetSessionName());
   request.set_channel_list(channel_list);
   request.set_timeout(10000);
   request.set_array_meas_function(measurement_func);
@@ -296,7 +296,7 @@ TEST_F(NiScopeDriverApiTest, NiScopeFetchArrayMeasurement_SendRequest_FetchCompl
   EXPECT_TRUE(status.ok());
   expect_api_success(response.status());
   EXPECT_EQ(expected_num_waveforms * expected_waveform_size, response.meas_wfm_size());
-  EXPECT_EQ(expected_waveform_size, response.wfm_info_size());
+  EXPECT_EQ(expected_num_waveforms, response.wfm_info_size());
 }
 
 TEST_F(NiScopeDriverApiTest, NiScopeFetchBinary16_SendRequest_FetchCompletesWithCorrectSizes)
@@ -308,7 +308,7 @@ TEST_F(NiScopeDriverApiTest, NiScopeFetchBinary16_SendRequest_FetchCompletesWith
   const int32 expected_num_waveforms = get_actual_num_wfms(channel_list);
   ::grpc::ClientContext context;
   scope::FetchBinary16Request request;
-  request.mutable_vi()->set_id(GetSessionId());
+  request.mutable_vi()->set_name(GetSessionName());
   request.set_channel_list(channel_list);
   request.set_timeout(10000);
   request.set_num_samples(expected_num_samples);
@@ -331,7 +331,7 @@ TEST_F(NiScopeDriverApiTest, NiScopeFetchBinary8_SendRequest_FetchCompletesWithC
   const int32 expected_num_waveforms = get_actual_num_wfms(channel_list);
   ::grpc::ClientContext context;
   scope::FetchBinary8Request request;
-  request.mutable_vi()->set_id(GetSessionId());
+  request.mutable_vi()->set_name(GetSessionName());
   request.set_channel_list(channel_list);
   request.set_timeout(10000);
   request.set_num_samples(expected_num_samples);
@@ -352,7 +352,7 @@ TEST_F(NiScopeDriverApiTest, NiScopeSetViInt32Attribute_SendRequest_GetViInt32At
   const int32 expected_value = 4;
   ::grpc::ClientContext context;
   scope::SetAttributeViInt32Request request;
-  request.mutable_vi()->set_id(GetSessionId());
+  request.mutable_vi()->set_name(GetSessionName());
   request.set_channel_list(channel_list);
   request.set_attribute_id(attribute_to_set);
   request.set_value_raw(expected_value);
@@ -375,7 +375,7 @@ TEST_F(NiScopeDriverApiTest, NiScopeSetViInt64Attribute_SendRequest_GetViInt64At
   const int64 expected_value = 4;
   ::grpc::ClientContext context;
   scope::SetAttributeViInt64Request request;
-  request.mutable_vi()->set_id(GetSessionId());
+  request.mutable_vi()->set_name(GetSessionName());
   request.set_channel_list(channel_list);
   request.set_attribute_id(attribute_to_set);
   request.set_value_raw(expected_value);
@@ -396,7 +396,7 @@ TEST_F(NiScopeDriverApiTest, NiScopeSetViReal64Attribute_SendRequest_GetViReal64
   const double expected_value = 42.24;
   ::grpc::ClientContext context;
   scope::SetAttributeViReal64Request request;
-  request.mutable_vi()->set_id(GetSessionId());
+  request.mutable_vi()->set_name(GetSessionName());
   request.set_channel_list(channel_list);
   request.set_attribute_id(attribute_to_set);
   request.set_value_raw(expected_value);
@@ -417,7 +417,28 @@ TEST_F(NiScopeDriverApiTest, NiScopeSetViStringAttribute_SendRequest_GetViString
   const std::string expected_value = "Hello world!";
   ::grpc::ClientContext context;
   scope::SetAttributeViStringRequest request;
-  request.mutable_vi()->set_id(GetSessionId());
+  request.mutable_vi()->set_name(GetSessionName());
+  request.set_channel_list(channel_list);
+  request.set_attribute_id(attribute_to_set);
+  request.set_value_raw(expected_value);
+  scope::SetAttributeViStringResponse response;
+
+  ::grpc::Status status = GetStub()->SetAttributeViString(&context, request, &response);
+  EXPECT_TRUE(status.ok());
+  expect_api_success(response.status());
+
+  std::string get_attribute_value = get_string_attribute(channel_list, attribute_to_set);
+  EXPECT_STREQ(expected_value.c_str(), get_attribute_value.c_str());
+}
+
+TEST_F(NiScopeDriverApiTest, NiScopeSetViStringAttributeUtf8Convert_SendRequest_GetViStringAttributeMatches)
+{
+  const char* channel_list = "";
+  const scope::NiScopeAttribute attribute_to_set = scope::NiScopeAttribute::NISCOPE_ATTRIBUTE_MEAS_OTHER_CHANNEL;
+  const std::string expected_value = "\xC2\xAE \xE2\x80\xA0 \xC3\xAB";  // "\u00AE \u2020 \u00EB"
+  ::grpc::ClientContext context;
+  scope::SetAttributeViStringRequest request;
+  request.mutable_vi()->set_name(GetSessionName());
   request.set_channel_list(channel_list);
   request.set_attribute_id(attribute_to_set);
   request.set_value_raw(expected_value);
@@ -438,7 +459,7 @@ TEST_F(NiScopeDriverApiTest, NiScopeSetBoolAttribute_SendRequest_GetBoolAttribut
   const bool expected_value = true;
   ::grpc::ClientContext context;
   scope::SetAttributeViBooleanRequest request;
-  request.mutable_vi()->set_id(GetSessionId());
+  request.mutable_vi()->set_name(GetSessionName());
   request.set_channel_list(channel_list);
   request.set_attribute_id(attribute_to_set);
   request.set_value(expected_value);
@@ -456,7 +477,7 @@ TEST_F(NiScopeDriverApiTest, NiScopeConfigureHorizontalTiming_SendRequest_Config
 {
   ::grpc::ClientContext context;
   scope::ConfigureHorizontalTimingRequest request;
-  request.mutable_vi()->set_id(GetSessionId());
+  request.mutable_vi()->set_name(GetSessionName());
   request.set_min_sample_rate(1000000);
   request.set_min_num_pts(100000);
   request.set_ref_position(50);
@@ -474,7 +495,7 @@ TEST_F(NiScopeDriverApiTest, NiScopeConfigureVertical_SendRequest_ConfigureCompl
 {
   ::grpc::ClientContext context;
   scope::ConfigureVerticalRequest request;
-  request.mutable_vi()->set_id(GetSessionId());
+  request.mutable_vi()->set_name(GetSessionName());
   request.set_channel_list("0");
   request.set_range(30.0);
   request.set_offset(0);
@@ -494,7 +515,7 @@ TEST_F(NiScopeDriverApiTest, NiScopeGetScalingCoefficients_SendRequest_NonZeroCo
   auto_setup();
   ::grpc::ClientContext context;
   scope::GetScalingCoefficientsRequest request;
-  request.mutable_vi()->set_id(GetSessionId());
+  request.mutable_vi()->set_name(GetSessionName());
   request.set_channel_list("0, 1");
   scope::GetScalingCoefficientsResponse response;
 
@@ -512,7 +533,7 @@ TEST_F(NiScopeDriverApiTest, NiScopeGetNormalizationCoefficients_SendRequest_Non
   auto_setup();
   ::grpc::ClientContext context;
   scope::GetNormalizationCoefficientsRequest request;
-  request.mutable_vi()->set_id(GetSessionId());
+  request.mutable_vi()->set_name(GetSessionName());
   request.set_channel_list("0, 1");
   scope::GetNormalizationCoefficientsResponse response;
 

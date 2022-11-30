@@ -15,7 +15,7 @@ class _ArtifactReadiness:
 
     _module_to_readiness = {}  # type: Dict[str, str]
 
-    def __init__(self, metadata_dir: Path, include_prerelease: bool):
+    def __init__(self, metadata_dir: Path, ignore_release_readiness: bool):
         modules = [
             load_metadata(p) for p in metadata_dir.iterdir() if p.is_dir() and "fake" not in p.name
         ]
@@ -24,7 +24,7 @@ class _ArtifactReadiness:
             d["config"]["module_name"]: get_driver_readiness(d["config"]) for d in modules
         }
 
-        self.include_prerelease = include_prerelease
+        self.ignore_release_readiness = ignore_release_readiness
 
     def is_release_ready(self, module_path: Path) -> bool:
         """Determine release-readiness.
@@ -49,7 +49,7 @@ class _ArtifactReadiness:
         return (
             d
             for d in directory.iterdir()
-            if d.is_dir() and (self.is_release_ready(d) or self.include_prerelease)
+            if d.is_dir() and (self.is_release_ready(d) or self.ignore_release_readiness)
         )
 
 
@@ -72,6 +72,10 @@ class _ArtifactLocations:
         return self.repo_root / "source" / "protobuf"
 
     @property
+    def restricted_protos(self) -> Path:
+        return self.repo_root / "source" / "protobuf_restricted"
+
+    @property
     def metadata_dir(self) -> Path:
         return self.repo_root / "source" / "codegen" / "metadata"
 
@@ -90,11 +94,11 @@ def _get_release_example_directories(
     return readiness.get_release_ready_subdirs(artifact_locations.examples)
 
 
-def stage_client_files(output_path: Path, include_prerelease: bool):
+def stage_client_files(output_path: Path, ignore_release_readiness: bool):
     """Stage the client files into the given output path."""
     repo_root = Path(__file__).parent.parent.parent
     artifact_locations = _ArtifactLocations(repo_root)
-    readiness = _ArtifactReadiness(artifact_locations.metadata_dir, include_prerelease)
+    readiness = _ArtifactReadiness(artifact_locations.metadata_dir, ignore_release_readiness)
 
     proto_path = output_path / "proto"
     proto_path.mkdir(parents=True)
@@ -104,6 +108,10 @@ def stage_client_files(output_path: Path, include_prerelease: bool):
 
     for file in _get_release_proto_files(artifact_locations, readiness):
         copy2(file, proto_path)
+
+    if readiness.ignore_release_readiness:
+        for file in artifact_locations.restricted_protos.iterdir():
+            copy2(file, proto_path)
 
     examples_path = output_path / "examples"
     examples_path.mkdir(parents=True)
@@ -124,13 +132,13 @@ if __name__ == "__main__":
     )
 
     parser.add_argument(
-        "--include-prerelease", action="store_true", help="Include pre-release artifacts."
+        "--ignore-release-readiness", action="store_true", help="Force-include all artifacts."
     )
 
     args = parser.parse_args()
 
     if args.output:
-        stage_client_files(Path(args.output), args.include_prerelease)
+        stage_client_files(Path(args.output), args.ignore_release_readiness)
     else:
         print(
             """
@@ -140,7 +148,7 @@ Performing Dry Run.
         )
         with TemporaryDirectory() as tempdir:
             tempdirpath = Path(tempdir)
-            stage_client_files(tempdirpath, args.include_prerelease)
+            stage_client_files(tempdirpath, args.ignore_release_readiness)
             created_files = (f for f in tempdirpath.glob("**/*") if not f.is_dir())
             for out_file in created_files:
                 print(out_file.relative_to(tempdirpath))

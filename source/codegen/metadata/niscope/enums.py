@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-SCOPE API metadata version 23.0.0d42
+# This file is generated from NI-SCOPE API metadata version 23.0.0d87
 enums = {
     'AcquisitionStatus': {
         'codegen_method': 'public',
@@ -171,6 +171,23 @@ enums = {
             {
                 'name': 'NISCOPE_VAL_CABLE_SENSE_MODE_ON_DEMAND',
                 'value': 1
+            }
+        ]
+    },
+    'CalibrationTypes': {
+        'codegen_method': 'public',
+        'values': [
+            {
+                'name': 'NISCOPE_VAL_CAL_EXTERNAL',
+                'value': 0
+            },
+            {
+                'name': 'NISCOPE_VAL_CAL_SELF',
+                'value': 1
+            },
+            {
+                'name': 'NISCOPE_VAL_CAL_MANUFACTURE',
+                'value': 2
             }
         ]
     },
