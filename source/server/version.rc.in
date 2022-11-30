@@ -15,8 +15,8 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 #pragma code_page(1252)
 
 VS_VERSION_INFO VERSIONINFO
-    FILEVERSION @GIT_TAG_MAJOR@,@GIT_TAG_MINOR@,@GIT_TAG_PATCH@,0
-    PRODUCTVERSION @GIT_TAG_MAJOR@,@GIT_TAG_MINOR@,0,0
+    FILEVERSION @PROJECT_VERSION_MAJOR@,@PROJECT_VERSION_MINOR@,@PROJECT_VERSION_PATCH@,0
+    PRODUCTVERSION @PROJECT_VERSION_MAJOR@,@PROJECT_VERSION_MINOR@,0,0
     FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
     FILEFLAGS 0x1L
@@ -33,12 +33,12 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "NI"
             VALUE "FileDescription", ""
-            VALUE "FileVersion", "@GIT_TAG_MAJOR@.@GIT_TAG_MINOR@.@GIT_TAG_PATCH@.0"
+            VALUE "FileVersion", "@PROJECT_VERSION_MAJOR@.@PROJECT_VERSION_MINOR@.@PROJECT_VERSION_PATCH@.0"
             VALUE "InternalName", ""
             VALUE "LegalCopyright", "Copyright (C) 2021 - 2022"
             VALUE "OriginalFilename", "ni_grpc_device_server.exe"
             VALUE "ProductName", "NI gRPC Device Server"
-            VALUE "ProductVersion", "@GIT_TAG_MAJOR@.@GIT_TAG_MINOR@"
+            VALUE "ProductVersion", "@PROJECT_VERSION_MAJOR@.@PROJECT_VERSION_MINOR@"
         END
     END
     BLOCK "VarFileInfo"
